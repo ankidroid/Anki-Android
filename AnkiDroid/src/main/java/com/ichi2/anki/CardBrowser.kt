@@ -166,9 +166,8 @@ open class CardBrowser :
      * True by default.
      * */
     @get:VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    var cardsOrNotes
+    val cardsOrNotes
         get() = viewModel.cardsOrNotes
-        set(value) { viewModel.cardsOrNotes = value }
 
     // card that was clicked (not marked)
     private var mCurrentCardId
@@ -620,7 +619,6 @@ open class CardBrowser :
             alwaysShowDefault = false,
             showFilteredDecks = true
         )
-        cardsOrNotes = CardsOrNotes.fromCollection(col)
         deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
         selectDeckAndSave(deckId)
 

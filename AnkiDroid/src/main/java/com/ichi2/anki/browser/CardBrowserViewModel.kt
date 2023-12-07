@@ -46,6 +46,7 @@ class CardBrowserViewModel(
     var currentFlag = 0
 
     var cardsOrNotes = CardsOrNotes.CARDS
+        private set
 
     // card that was clicked (not marked)
     var currentCardId: CardId = 0
@@ -73,6 +74,12 @@ class CardBrowserViewModel(
             val firstSelectedCard = selectedCardIds.firstOrNull() ?: return null
             return CardInfoDestination(firstSelectedCard)
         }
+
+    init {
+        viewModelScope.launch {
+            cardsOrNotes = withCol { CardsOrNotes.fromCollection(this) }
+        }
+    }
 
     fun hasSelectedCards(): Boolean = checkedCards.isNotEmpty()
 
