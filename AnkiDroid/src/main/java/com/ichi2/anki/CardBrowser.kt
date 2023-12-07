@@ -543,7 +543,7 @@ open class CardBrowser :
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
                 cb.toggle()
-                onCheck(position, view)
+                onCheck(position)
             } else {
                 // load up the card selected on the list
                 val clickedCardId = mCards[position].id
@@ -575,7 +575,7 @@ open class CardBrowser :
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
                 cb.toggle()
-                onCheck(position, view)
+                onCheck(position)
                 recenterListView(view)
                 cardsAdapter.notifyDataSetChanged()
             }
@@ -1848,7 +1848,7 @@ open class CardBrowser :
                 checkBox.visibility = View.GONE
             }
             // change bg color on check changed
-            checkBox.setOnClickListener { onCheck(position, v) }
+            checkBox.setOnClickListener { onCheck(position) }
             val column1 = v.findViewById<FixedTextView>(R.id.card_sfld)
             val column2 = v.findViewById<FixedTextView>(R.id.card_column2)
 
@@ -1907,14 +1907,8 @@ open class CardBrowser :
         }
     }
 
-    private fun onCheck(position: Int, cell: View) {
-        val checkBox = cell.findViewById<CheckBox>(R.id.card_checkbox)
-        val card = mCards[position]
-        if (checkBox.isChecked) {
-            mCheckedCards.add(card)
-        } else {
-            mCheckedCards.remove(card)
-        }
+    private fun onCheck(position: Int) {
+        viewModel.toggleRowSelectionAtPosition(position)
         onSelectionChanged()
     }
 

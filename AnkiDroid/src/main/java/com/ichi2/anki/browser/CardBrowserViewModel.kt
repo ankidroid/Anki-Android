@@ -162,6 +162,15 @@ class CardBrowserViewModel(
 
     fun selectNone() = checkedCards.clear()
 
+    fun toggleRowSelectionAtPosition(position: Int) {
+        val card = cards[position]
+        if (checkedCards.contains(card)) {
+            checkedCards.remove(card)
+        } else {
+            checkedCards.add(card)
+        }
+    }
+
     fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
 
     fun setColumn2Index(value: Int) = column2IndexFlow.update { value }
