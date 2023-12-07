@@ -82,6 +82,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.*
+import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
@@ -102,6 +103,19 @@ open class Reviewer :
     private var mPrefFullscreenReview = false
     private lateinit var mColorPalette: LinearLayout
     private var toggleStylus = false
+
+    // A flag that determines if the SchedulingStates in CurrentQueueState are
+    // safe to persist in the database when answering a card. This is used to
+    // ensure that the custom JS scheduler has persisted its SchedulingStates
+    // back to the Reviewer before we save it to the database. If the custom
+    // scheduler has not been configured, then it is safe to immediately set
+    // this to true
+    //
+    // This flag should be set to false when we show the front of the card
+    // and only set to true once we know the custom scheduler has finished its
+    // execution, or set to true immediately if the custom scheduler has not
+    // been configured
+    var statesMutated = false
 
     // TODO: Consider extracting to ViewModel
     // Card counts
@@ -1064,6 +1078,7 @@ open class Reviewer :
     }
 
     override fun displayCardQuestion() {
+        statesMutated = false
         // show timer, if activated in the deck's preferences
         answerTimer.setupForCard(currentCard!!)
         delayedHide(100)
@@ -1072,6 +1087,14 @@ open class Reviewer :
 
     @VisibleForTesting
     override fun displayCardAnswer() {
+        if (queueState?.customSchedulingJs?.isEmpty() == true) {
+            statesMutated = true
+        }
+        if (!statesMutated) {
+            executeFunctionWithDelay(50) { displayCardAnswer() }
+            return
+        }
+
         delayedHide(100)
         if (stopTimerOnAnswer) {
             answerTimer.pause()
@@ -1082,6 +1105,7 @@ open class Reviewer :
     private fun runStateMutationHook() {
         val state = queueState ?: return
         if (state.customSchedulingJs.isEmpty()) {
+            statesMutated = true
             return
         }
         val key = customSchedulingKey
@@ -1091,7 +1115,13 @@ open class Reviewer :
         anki.mutateNextCardStates('$key', async (states, customData, ctx) => {{ $js }})
             .catch(err => console.log(err));
 """
-        ) {}
+        ) { result ->
+            if ("null" == result) {
+                // eval failed, usually a syntax error
+                // Note, we get "null" (string) and not null
+                statesMutated = true
+            }
+        }
     }
 
     override fun initLayout() {

@@ -394,7 +394,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-contrib:$espresso_version") {
         exclude module: "protobuf-lite"
     }
-    androidTestImplementation "androidx.test.espresso:espresso-web:$espresso_version"
     androidTestImplementation "androidx.test:core:$androidx_test_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_test_junit_version"
     androidTestImplementation "androidx.test:rules:$androidx_test_version"
