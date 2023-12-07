@@ -2282,15 +2282,6 @@ open class CardBrowser :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun hasCheckedCardAtPosition(i: Int): Boolean {
-        return mCheckedCards.contains(mCards[i])
-    }
-
-    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    val checkedCardIds: List<Long>
-        get() = mCheckedCards.map { c -> c.id }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun getPropertiesForCardId(cardId: CardId): CardCache {
         return mCards.find { c -> c.id == cardId } ?: throw IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId))
     }
