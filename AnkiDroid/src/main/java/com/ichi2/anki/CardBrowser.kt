@@ -160,15 +160,6 @@ open class CardBrowser :
 
     private lateinit var mExportingDelegate: ActivityExportingDelegate
 
-    /**
-     * Boolean that keeps track of whether the browser is working in
-     * Cards mode or Notes mode.
-     * True by default.
-     * */
-    @get:VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val cardsOrNotes
-        get() = viewModel.cardsOrNotes
-
     // card that was clicked (not marked)
     private var mCurrentCardId
         get() = viewModel.currentCardId
@@ -929,14 +920,14 @@ open class CardBrowser :
             }
         }
         mActionBarMenu!!.findItem(R.id.action_export_selected).apply {
-            this.title = if (cardsOrNotes == CARDS) {
+            this.title = if (viewModel.cardsOrNotes == CARDS) {
                 resources.getQuantityString(R.plurals.card_browser_export_cards, checkedCardCount())
             } else {
                 resources.getQuantityString(R.plurals.card_browser_export_notes, checkedCardCount())
             }
         }
         mActionBarMenu!!.findItem(R.id.action_delete_card).apply {
-            this.title = if (cardsOrNotes == CARDS) {
+            this.title = if (viewModel.cardsOrNotes == CARDS) {
                 resources.getQuantityString(R.plurals.card_browser_delete_cards, checkedCardCount())
             } else {
                 resources.getQuantityString(R.plurals.card_browser_delete_notes, checkedCardCount())
@@ -1221,7 +1212,7 @@ open class CardBrowser :
             return
         }
 
-        if (cardsOrNotes == CARDS) {
+        if (viewModel.cardsOrNotes == CARDS) {
             mExportingDelegate.showExportDialog(
                 ExportDialogParams(
                     message = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_cards, selectedCardIds.size, selectedCardIds.size),
@@ -1428,7 +1419,7 @@ open class CardBrowser :
     }
 
     private fun showOptionsDialog() {
-        val dialog = BrowserOptionsDialog(cardsOrNotes, viewModel.isTruncated)
+        val dialog = BrowserOptionsDialog(viewModel.cardsOrNotes, viewModel.isTruncated)
         dialog.show(supportFragmentManager, "browserOptionsDialog")
     }
 
@@ -1488,7 +1479,7 @@ open class CardBrowser :
         val order = mOrder.toSortOrder()
         launchCatchingTask {
             Timber.d("performing search")
-            val cards = withProgress { searchForCards(query, order, cardsOrNotes) }
+            val cards = withProgress { searchForCards(query, order, viewModel.cardsOrNotes) }
             Timber.d("Search returned %d cards", cards.size)
             // Render the first few items
             for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
@@ -1567,7 +1558,7 @@ open class CardBrowser :
         get() {
             val count = cardCount
 
-            @androidx.annotation.StringRes val subtitleId = if (cardsOrNotes == CARDS) {
+            @androidx.annotation.StringRes val subtitleId = if (viewModel.cardsOrNotes == CARDS) {
                 R.plurals.card_browser_subtitle
             } else {
                 R.plurals.card_browser_subtitle_notes_mode
