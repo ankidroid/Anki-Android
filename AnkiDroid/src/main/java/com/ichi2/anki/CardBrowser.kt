@@ -170,10 +170,6 @@ open class CardBrowser :
     private var mOrderAsc
         get() = viewModel.orderAsc
         set(value) { viewModel.orderAsc = value }
-    private val mColumn1Index
-        get() = viewModel.column1Index
-    private val mColumn2Index
-        get() = viewModel.column2Index
 
     // DEFECT: Doesn't need to be a local
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
@@ -432,7 +428,10 @@ open class CardBrowser :
         // get the font and font size from the preferences
         val sflRelativeFontSize =
             preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
-        val columnsContent = arrayOf(COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index])
+        val columnsContent = arrayOf(
+            COLUMN1_KEYS[viewModel.column1Index],
+            COLUMN2_KEYS[viewModel.column2Index]
+        )
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         cardsAdapter = MultiColumnListAdapter(
             this,
@@ -522,7 +521,7 @@ open class CardBrowser :
             onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
                 viewModel.setColumn1Index(pos)
             }
-            setSelection(mColumn1Index)
+            setSelection(viewModel.column1Index)
         }
         // Setup the column 2 heading as a spinner so that users can easily change the column type
         findViewById<Spinner>(R.id.browser_column2_spinner).apply {
@@ -538,7 +537,7 @@ open class CardBrowser :
             onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
                 viewModel.setColumn2Index(pos)
             }
-            setSelection(mColumn2Index)
+            setSelection(viewModel.column2Index)
         }
 
         cardsListView.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
@@ -1462,7 +1461,7 @@ open class CardBrowser :
             Timber.d("Search returned %d cards", cards.size)
             // Render the first few items
             for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
-                cards[i].load(false, mColumn1Index, mColumn2Index)
+                cards[i].load(false, viewModel.column1Index, viewModel.column2Index)
             }
             redrawAfterSearch(cards)
         }
@@ -1622,7 +1621,7 @@ open class CardBrowser :
         cards
             .mapNotNull { c -> idToPos[c.id] }
             .filterNot { pos -> pos >= cardCount }
-            .forEach { pos -> mCards[pos].load(true, mColumn1Index, mColumn2Index) }
+            .forEach { pos -> mCards[pos].load(true, viewModel.column1Index, viewModel.column2Index) }
         updateList()
     }
 
@@ -1828,8 +1827,8 @@ open class CardBrowser :
             cards,
             firstVisibleItem,
             visibleItemCount,
-            mColumn1Index,
-            mColumn2Index
+            viewModel.column1Index,
+            viewModel.column2Index
         ) {
             // Note: This is called every time a card is rendered.
             // It blocks the long-click callback while the task is running, so usage of the task should be minimized
