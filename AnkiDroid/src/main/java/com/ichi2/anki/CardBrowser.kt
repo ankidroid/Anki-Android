@@ -25,7 +25,6 @@ import android.text.TextUtils
 import android.util.TypedValue
 import android.view.*
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
@@ -74,6 +73,7 @@ import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
@@ -519,14 +519,8 @@ open class CardBrowser :
         )
         column1Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
         cardsColumn1Spinner.adapter = column1Adapter
-        cardsColumn1Spinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-                viewModel.setColumn1Index(pos)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do Nothing
-            }
+        cardsColumn1Spinner.onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
+            viewModel.setColumn1Index(pos)
         }
         // Setup the column 2 heading as a spinner so that users can easily change the column type
         val cardsColumn2Spinner = findViewById<Spinner>(R.id.browser_column2_spinner)
@@ -539,14 +533,8 @@ open class CardBrowser :
         column2Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
         cardsColumn2Spinner.adapter = column2Adapter
         // Create a new list adapter with updated column map any time the user changes the column
-        cardsColumn2Spinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-                viewModel.setColumn2Index(pos)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do Nothing
-            }
+        cardsColumn2Spinner.onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
+            viewModel.setColumn2Index(pos)
         }
         // set the spinner index
         cardsColumn1Spinner.setSelection(mColumn1Index)
