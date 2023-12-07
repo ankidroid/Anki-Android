@@ -708,4 +708,22 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
         return backend.clozeNumbersInNote(n.toBackendNote())
             .sorted()
     }
+
+    fun getImageForOcclusionRaw(input: ByteArray): ByteArray {
+        return backend.getImageForOcclusionRaw(input = input)
+    }
+
+    fun getImageOcclusionNoteRaw(input: ByteArray): ByteArray {
+        return backend.getImageOcclusionNoteRaw(input = input)
+    }
+    fun getImageOcclusionFieldsRaw(input: ByteArray): ByteArray {
+        return backend.getImageOcclusionFieldsRaw(input = input)
+    }
+    fun addImageOcclusionNoteRaw(input: ByteArray): ByteArray {
+        return backend.addImageOcclusionNoteRaw(input = input)
+    }
+
+    fun updateImageOcclusionNoteRaw(input: ByteArray): ByteArray {
+        return backend.updateImageOcclusionNoteRaw(input = input)
+    }
 }
