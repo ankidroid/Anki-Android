@@ -292,11 +292,13 @@ open class CardBrowser :
             mOrderAsc = false
             which.save(getColUnsafe.config, baseContext.sharedPrefs())
             getColUnsafe.config.set("sortBackwards", mOrderAsc)
+            getColUnsafe.config.set("browserNoteSortBackwards", mOrderAsc)
             searchCards()
         } else if (which != SortType.NO_SORTING) {
             // if the same element is selected again, reverse the order
             mOrderAsc = !mOrderAsc
             getColUnsafe.config.set("sortBackwards", mOrderAsc)
+            getColUnsafe.config.set("browserNoteSortBackwards", mOrderAsc)
             mCards.reverse()
             updateList()
         }
@@ -2518,7 +2520,7 @@ suspend fun searchForCards(
     cardsOrNotes: CardsOrNotes
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
-        (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query)).asSequence()
+        (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query, order)).asSequence()
             .toCardCache(this, cardsOrNotes)
             .toMutableList()
     }

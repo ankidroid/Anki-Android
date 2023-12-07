@@ -755,6 +755,29 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
+    /** PR #14859  */
+    @Test
+    fun checkDisplayOrderAfterTogglingCardsToNotes() {
+        browserWithNoNewCards.apply {
+            changeCardOrder(SortType.EASE) // order no. 7 corresponds to "cardEase"
+            changeCardOrder(SortType.EASE) // reverse the list
+
+            cardsOrNotes == NOTES
+            searchCards()
+
+            assertThat(
+                "Card Browser has the new noteSortType field",
+                col.config.get<String>("noteSortType"),
+                equalTo("cardEase")
+            )
+            assertThat(
+                "Card Browser has the new browserNoteSortBackwards field",
+                col.config.get<Boolean>("browserNoteSortBackwards"),
+                equalTo(true)
+            )
+        }
+    }
+
     private fun assertUndoDoesNotContain(browser: CardBrowser, @StringRes resId: Int) {
         val shadowActivity = shadowOf(browser)
         val item = shadowActivity.optionsMenu.findItem(R.id.action_undo)

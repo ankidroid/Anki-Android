@@ -51,6 +51,7 @@ enum class SortType(val ankiSortType: String?, val cardBrowserLabelIndex: Int) {
         // in the case of 'no sorting', we still need a sort type.
         // The inverse is handled in `fromCol`
         config.set("sortType", this.ankiSortType ?: SORT_FIELD.ankiSortType)
+        config.set("noteSortType", this.ankiSortType ?: SORT_FIELD.ankiSortType)
         preferences.edit {
             putBoolean("cardBrowserNoSorting", this@SortType == NO_SORTING)
         }
