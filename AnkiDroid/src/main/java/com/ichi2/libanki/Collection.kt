@@ -709,6 +709,10 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
             .sorted()
     }
 
+    fun addImageOcclusionNotetype() {
+        backend.addImageOcclusionNotetype()
+    }
+
     fun getImageForOcclusionRaw(input: ByteArray): ByteArray {
         return backend.getImageForOcclusionRaw(input = input)
     }

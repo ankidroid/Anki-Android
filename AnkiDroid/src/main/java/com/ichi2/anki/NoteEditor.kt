@@ -55,6 +55,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
@@ -461,7 +462,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             else -> {}
         }
 
-        col.backend.addImageOcclusionNotetype()
+        launchCatchingTask {
+            withCol {
+                addImageOcclusionNotetype()
+            }
+        }
 
         val imageOcclusionButton: Button = findViewById(R.id.ImageOcclusionButton)
         if (addNote) {
