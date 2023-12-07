@@ -26,6 +26,11 @@ import java.io.FileInputStream
 
 class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiServer(activity) {
     var reviewerHtml: String = ""
+    private val jsApi = if (activity is Reviewer) {
+        reviewer().javaScriptFunction()
+    } else {
+        cardTemplatePreviewer().javaScriptFunction()
+    }
 
     override fun start() {
         super.start()
@@ -72,6 +77,11 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
                     handlePostRequest(uri.substring(ANKI_PREFIX.length), inputBytes)
                 }
             }
+            if (uri.startsWith(ANKIDROID_JS_PREFIX)) {
+                return buildResponse {
+                    jsApi.handleJsApiRequest(uri.substring(ANKIDROID_JS_PREFIX.length), inputBytes, activity is Reviewer)
+                }
+            }
         }
 
         Timber.w("not found: $uri")
@@ -90,6 +100,10 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
 
     private fun reviewer(): Reviewer {
         return (activity as Reviewer)
+    }
+
+    private fun cardTemplatePreviewer(): CardTemplatePreviewer {
+        return (activity as CardTemplatePreviewer)
     }
 
     private fun getSchedulingStatesWithContext(): ByteArray {

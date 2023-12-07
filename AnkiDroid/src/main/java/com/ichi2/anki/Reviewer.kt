@@ -32,7 +32,6 @@ import android.os.Parcelable
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
-import android.webkit.JavascriptInterface
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.*
@@ -48,10 +47,6 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
-import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
-import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
@@ -1567,83 +1562,21 @@ open class Reviewer :
     }
 
     override fun javaScriptFunction(): AnkiDroidJsAPI {
-        return ReviewerJavaScriptFunction(this)
+        return AnkiDroidJsAPI(this)
     }
 
-    inner class ReviewerJavaScriptFunction(activity: AbstractFlashcardViewer) : AnkiDroidJsAPI(activity) {
-        @JavascriptInterface
-        override fun ankiGetNewCardCount(): String {
-            return mNewCount.toString()
+    override fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
+        val cardDataForJsAPI = AnkiDroidJsAPI.CardDataForJsApi().apply {
+            newCardCount = mNewCount.toString()
+            lrnCardCount = mLrnCount.toString()
+            revCardCount = mRevCount.toString()
+            nextTime1 = easeButton1!!.nextTime
+            nextTime2 = easeButton2!!.nextTime
+            nextTime3 = easeButton3!!.nextTime
+            nextTime4 = easeButton4!!.nextTime
+            eta = mEta
         }
-
-        @JavascriptInterface
-        override fun ankiGetLrnCardCount(): String {
-            return mLrnCount.toString()
-        }
-
-        @JavascriptInterface
-        override fun ankiGetRevCardCount(): String {
-            return mRevCount.toString()
-        }
-
-        @JavascriptInterface
-        override fun ankiGetETA(): Int {
-            return mEta
-        }
-
-        @JavascriptInterface
-        override fun ankiGetNextTime1(): String {
-            return easeButton1!!.nextTime
-        }
-
-        @JavascriptInterface
-        override fun ankiGetNextTime2(): String {
-            return easeButton2!!.nextTime
-        }
-
-        @JavascriptInterface
-        override fun ankiGetNextTime3(): String {
-            return easeButton3!!.nextTime
-        }
-
-        @JavascriptInterface
-        override fun ankiGetNextTime4(): String {
-            return easeButton4!!.nextTime
-        }
-
-        @JavascriptInterface
-        override fun ankiSetCardDue(days: Int): Boolean {
-            val apiList = getJsApiListMap()!!
-            if (!apiList[SET_CARD_DUE]!!) {
-                showDeveloperContact(ankiJsErrorCodeDefault)
-                return false
-            }
-
-            if (days < 0 || days > 9999) {
-                showDeveloperContact(ankiJsErrorCodeSetDue)
-                return false
-            }
-
-            val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                rescheduleCards(cardIds, days)
-            }
-            return true
-        }
-
-        @JavascriptInterface
-        override fun ankiResetProgress(): Boolean {
-            val apiList = getJsApiListMap()!!
-            if (!apiList[RESET_PROGRESS]!!) {
-                showDeveloperContact(ankiJsErrorCodeDefault)
-                return false
-            }
-            val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                resetCards(cardIds)
-            }
-            return true
-        }
+        return cardDataForJsAPI
     }
 
     companion object {

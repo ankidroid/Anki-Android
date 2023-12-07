@@ -1065,7 +1065,6 @@ abstract class AbstractFlashcardViewer :
 
         // Javascript interface for calling AnkiDroid functions in webview, see card.js
         mAnkiDroidJsAPI = javaScriptFunction()
-        webView.addJavascriptInterface(mAnkiDroidJsAPI!!, "AnkiDroidJS")
 
         // enable dom storage so that sessionStorage & localStorage can be used in webview
         webView.settings.domStorageEnabled = true
@@ -1325,9 +1324,6 @@ abstract class AbstractFlashcardViewer :
 
     open fun displayCardQuestion() {
         displayCardQuestion(false)
-
-        // js api initialisation / reset
-        mAnkiDroidJsAPI!!.init()
     }
 
     private fun displayCardQuestion(reload: Boolean) {
@@ -2311,58 +2307,6 @@ abstract class AbstractFlashcardViewer :
                 redrawCard()
                 return true
             }
-            // mark card using javascript
-            if (url.startsWith("signal:mark_current_card")) {
-                if (!mAnkiDroidJsAPI!!.isInit(AnkiDroidJsAPIConstants.MARK_CARD, AnkiDroidJsAPIConstants.ankiJsErrorCodeMarkCard)) {
-                    return true
-                }
-                executeCommand(ViewerCommand.MARK)
-                return true
-            }
-            // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
-            if (url.startsWith("signal:flag_")) {
-                if (!mAnkiDroidJsAPI!!.isInit(AnkiDroidJsAPIConstants.TOGGLE_FLAG, AnkiDroidJsAPIConstants.ankiJsErrorCodeFlagCard)) {
-                    return true
-                }
-                return when (url.replaceFirst("signal:flag_".toRegex(), "")) {
-                    "none" -> {
-                        executeCommand(ViewerCommand.UNSET_FLAG)
-                        true
-                    }
-                    "red" -> {
-                        executeCommand(ViewerCommand.TOGGLE_FLAG_RED)
-                        true
-                    }
-                    "orange" -> {
-                        executeCommand(ViewerCommand.TOGGLE_FLAG_ORANGE)
-                        true
-                    }
-                    "green" -> {
-                        executeCommand(ViewerCommand.TOGGLE_FLAG_GREEN)
-                        true
-                    }
-                    "blue" -> {
-                        executeCommand(ViewerCommand.TOGGLE_FLAG_BLUE)
-                        true
-                    }
-                    "pink" -> {
-                        executeCommand(ViewerCommand.TOGGLE_FLAG_PINK)
-                        true
-                    }
-                    "turquoise" -> {
-                        executeCommand(ViewerCommand.TOGGLE_FLAG_TURQUOISE)
-                        true
-                    }
-                    "purple" -> {
-                        executeCommand(ViewerCommand.TOGGLE_FLAG_PURPLE)
-                        true
-                    }
-                    else -> {
-                        Timber.d("No such Flag found.")
-                        true
-                    }
-                }
-            }
 
             // Show toast using JS
             if (url.startsWith("signal:anki_show_toast:")) {
@@ -2571,7 +2515,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    open fun javaScriptFunction(): AnkiDroidJsAPI? {
+    open fun javaScriptFunction(): AnkiDroidJsAPI {
         return AnkiDroidJsAPI(this)
     }
 
@@ -2579,6 +2523,10 @@ abstract class AbstractFlashcardViewer :
         if (handler === this) return
         refreshRequired = ViewerRefresh.updateState(refreshRequired, changes)
         refreshIfRequired()
+    }
+
+    open fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
+        return AnkiDroidJsAPI.CardDataForJsApi()
     }
 
     companion object {
