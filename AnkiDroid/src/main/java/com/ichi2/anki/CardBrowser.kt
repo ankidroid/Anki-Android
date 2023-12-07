@@ -94,8 +94,6 @@ import java.util.*
 import java.util.function.Consumer
 import kotlin.math.abs
 import kotlin.math.ceil
-import kotlin.math.max
-import kotlin.math.min
 
 @Suppress("LeakingThis")
 // The class is only 'open' due to testing
@@ -554,17 +552,7 @@ open class CardBrowser :
         @KotlinCleanup("helper function for min/max range")
         cardsListView.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (isInMultiSelectMode) {
-                var hasChanged = false
-                for (i in min(mLastSelectedPosition, position)..max(
-                    mLastSelectedPosition,
-                    position
-                )) {
-                    val card = cardsListView.getItemAtPosition(i) as CardCache
-
-                    // Add to the set of checked cards
-                    hasChanged = hasChanged or mCheckedCards.add(card)
-                }
-                if (hasChanged) {
+                if (viewModel.selectRowsBetweenPositions(mLastSelectedPosition, position)) {
                     onSelectionChanged()
                 }
             } else {

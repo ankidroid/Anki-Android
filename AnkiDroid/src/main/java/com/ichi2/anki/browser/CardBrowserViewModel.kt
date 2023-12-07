@@ -45,6 +45,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Collections
 import java.util.LinkedHashSet
+import kotlin.math.max
+import kotlin.math.min
 
 class CardBrowserViewModel(
     preferences: SharedPreferencesProvider
@@ -169,6 +171,15 @@ class CardBrowserViewModel(
         } else {
             checkedCards.add(card)
         }
+    }
+
+    /**
+     * Selects the cards between [startPos] and [endPos]
+     * @return whether the selection has changed
+     */
+    fun selectRowsBetweenPositions(startPos: Int, endPos: Int): Boolean {
+        val cards = (min(startPos, endPos)..max(startPos, endPos)).map { cards[it] }
+        return checkedCards.addAll(cards)
     }
 
     fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
