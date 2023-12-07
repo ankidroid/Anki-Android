@@ -58,8 +58,8 @@ class CardBrowserViewModel(
     var currentCardId: CardId = 0
     var order = SortType.NO_SORTING
     var orderAsc = false
-    var column1Index = 0
-    var column2Index = 0
+    var column1Index = sharedPrefs().getInt(CardBrowser.DISPLAY_COLUMN_1_KEY, 0)
+    var column2Index = sharedPrefs().getInt(CardBrowser.DISPLAY_COLUMN_2_KEY, 0)
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
     var tempSearchQuery: String? = null

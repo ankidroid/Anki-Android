@@ -431,9 +431,6 @@ open class CardBrowser :
         mActionBarTitle = findViewById(R.id.toolbar_title)
         cardsListView = findViewById(R.id.card_browser_list)
         val preferences = baseContext.sharedPrefs()
-        mColumn1Index = preferences.getInt(DISPLAY_COLUMN_1_KEY, 0)
-        // Load default value for column2 selection
-        mColumn2Index = preferences.getInt(DISPLAY_COLUMN_2_KEY, 0)
         // get the font and font size from the preferences
         val sflRelativeFontSize =
             preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
