@@ -240,7 +240,7 @@ open class CardBrowser :
         get() = viewModel.isInMultiSelectMode
         private set(value) { viewModel.isInMultiSelectMode = value }
 
-    private val mCheckedCards get() = viewModel.checkedCards
+    private val mCheckedCards: Set<CardCache> get() = viewModel.checkedCards
     private var mLastSelectedPosition
         get() = viewModel.lastSelectedPosition
         set(value) { viewModel.lastSelectedPosition = value }
@@ -1389,7 +1389,7 @@ open class CardBrowser :
     private fun invalidate() {
         renderBrowserQAJob?.cancel()
         mCards.clear()
-        mCheckedCards.clear()
+        viewModel.selectNone()
     }
 
     /** Currently unused - to be used in #7676  */
@@ -2237,7 +2237,7 @@ open class CardBrowser :
      */
     private fun endMultiSelectMode() {
         Timber.d("endMultiSelectMode()")
-        mCheckedCards.clear()
+        viewModel.selectNone()
         isInMultiSelectMode = false
         // If view which was originally selected when entering multi-select is visible then maintain its position
         val view = cardsListView.getChildAt(mLastSelectedPosition - cardsListView.firstVisiblePosition)
@@ -2295,7 +2295,7 @@ open class CardBrowser :
             check(pos < mCards.size()) {
                 "Attempted to check card at index $pos. ${mCards.size()} cards available"
             }
-            mCheckedCards.add(mCards[pos])
+            viewModel.selectRowAtPosition(pos)
         }
         onSelectionChanged()
     }
@@ -2329,7 +2329,7 @@ open class CardBrowser :
 
     @VisibleForTesting
     fun replaceSelectionWith(positions: IntArray) {
-        mCheckedCards.clear()
+        viewModel.selectNone()
         checkCardsAtPositions(*positions)
     }
 
