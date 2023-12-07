@@ -240,7 +240,7 @@ open class CardBrowser :
         get() = viewModel.isInMultiSelectMode
         private set(value) { viewModel.isInMultiSelectMode = value }
 
-    private val mCheckedCards: Set<CardCache> get() = viewModel.checkedCards
+    private val mCheckedCards: Set<CardCache> get() = viewModel.selectedCards
     private var mLastSelectedPosition
         get() = viewModel.lastSelectedPosition
         set(value) { viewModel.lastSelectedPosition = value }

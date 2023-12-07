@@ -87,14 +87,14 @@ class CardBrowserViewModel(
 
     private val selectedRowsPrivateFlow: MutableStateFlow<MutableSet<CardBrowser.CardCache>> =
         MutableStateFlow(Collections.synchronizedSet(LinkedHashSet()))
-    val checkedCards: MutableSet<CardBrowser.CardCache> get() = selectedRowsPrivateFlow.value
+    val selectedCards: MutableSet<CardBrowser.CardCache> get() = selectedRowsPrivateFlow.value
 
     private val refreshSelectedRowsFlow = MutableSharedFlow<Unit>()
     val selectedRowsFlow: Flow<MutableSet<CardBrowser.CardCache>> =
         selectedRowsPrivateFlow.combine(refreshSelectedRowsFlow) { row, _ -> row }
 
     val selectedCardIds: List<Long>
-        get() = checkedCards.map { c -> c.id }
+        get() = selectedCards.map { c -> c.id }
     var lastSelectedPosition = 0
 
     val cardInfoDestination: CardInfoDestination?
@@ -118,7 +118,7 @@ class CardBrowserViewModel(
         }
     }
 
-    fun hasSelectedCards(): Boolean = checkedCards.isNotEmpty()
+    fun hasSelectedCards(): Boolean = selectedCards.isNotEmpty()
 
     /**
      * All the notes of the selected cards will be marked
@@ -170,29 +170,29 @@ class CardBrowserViewModel(
     }
 
     fun selectAll() {
-        if (checkedCards.addAll(cards.wrapped)) {
+        if (selectedCards.addAll(cards.wrapped)) {
             refreshSelectedRowsFlow()
         }
     }
 
     fun selectNone() {
-        if (checkedCards.isEmpty()) return
-        checkedCards.clear()
+        if (selectedCards.isEmpty()) return
+        selectedCards.clear()
         refreshSelectedRowsFlow()
     }
 
     fun toggleRowSelectionAtPosition(position: Int) {
         val card = cards[position]
-        if (checkedCards.contains(card)) {
-            checkedCards.remove(card)
+        if (selectedCards.contains(card)) {
+            selectedCards.remove(card)
         } else {
-            checkedCards.add(card)
+            selectedCards.add(card)
         }
         refreshSelectedRowsFlow()
     }
 
     fun selectRowAtPosition(pos: Int) {
-        if (checkedCards.add(cards[pos])) {
+        if (selectedCards.add(cards[pos])) {
             refreshSelectedRowsFlow()
         }
     }
@@ -202,7 +202,7 @@ class CardBrowserViewModel(
      */
     fun selectRowsBetweenPositions(startPos: Int, endPos: Int) {
         val cards = (min(startPos, endPos)..max(startPos, endPos)).map { cards[it] }
-        if (checkedCards.addAll(cards)) {
+        if (selectedCards.addAll(cards)) {
             refreshSelectedRowsFlow()
         }
     }
