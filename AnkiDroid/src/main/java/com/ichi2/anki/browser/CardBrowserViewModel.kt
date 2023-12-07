@@ -32,6 +32,8 @@ import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -85,6 +87,14 @@ class CardBrowserViewModel(
         }
 
     init {
+        column1IndexFlow
+            .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
+            .launchIn(viewModelScope)
+
+        column2IndexFlow
+            .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) } }
+            .launchIn(viewModelScope)
+
         viewModelScope.launch {
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this) }
             cardsOrNotesFlow.update { cardsOrNotes }
@@ -142,21 +152,9 @@ class CardBrowserViewModel(
         }
     }
 
-    fun setColumn1Index(value: Int) {
-        if (column1Index == value) return
-        column1IndexFlow.update { value }
-        sharedPrefs().edit {
-            putInt(DISPLAY_COLUMN_1_KEY, value)
-        }
-    }
+    fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
 
-    fun setColumn2Index(value: Int) {
-        if (column2Index == value) return
-        column2IndexFlow.update { value }
-        sharedPrefs().edit {
-            putInt(DISPLAY_COLUMN_2_KEY, value)
-        }
-    }
+    fun setColumn2Index(value: Int) = column2IndexFlow.update { value }
 
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
