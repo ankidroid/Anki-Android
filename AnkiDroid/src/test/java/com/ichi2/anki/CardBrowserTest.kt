@@ -750,7 +750,7 @@ class CardBrowserTest : RobolectricTest() {
         browserWithNoNewCards.apply {
             searchAllDecks()
             assertThat("Result should contain 4 cards", cardCount, equalTo(4))
-            switchCardOrNote(newCardsMode = NOTES)
+            viewModel.setCardsOrNotes(NOTES)
             assertThat("Result should contain 2 cards (one per note)", cardCount, equalTo(2))
         }
     }

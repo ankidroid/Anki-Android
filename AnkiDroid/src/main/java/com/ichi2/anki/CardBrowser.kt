@@ -489,6 +489,11 @@ open class CardBrowser :
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { cardsAdapter.notifyDataSetChanged() }
             .launchIn(lifecycleScope)
+
+        viewModel.cardsOrNotesFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { runOnUiThread { searchCards() } }
+            .launchIn(lifecycleScope)
     }
 
     fun searchWithFilterQuery(filterQuery: String) {
@@ -1209,13 +1214,6 @@ open class CardBrowser :
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    fun switchCardOrNote(newCardsMode: CardsOrNotes) {
-        launchCatchingTask {
-            viewModel.setCardsOrNotes(newCardsMode)
-            searchCards()
-        }
     }
 
     fun exportSelected() {
