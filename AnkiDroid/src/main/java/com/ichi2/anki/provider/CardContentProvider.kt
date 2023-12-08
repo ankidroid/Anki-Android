@@ -30,6 +30,8 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Notetypes
+import com.ichi2.libanki.TemplateManager.*
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.*
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.EmptyMediaException
@@ -1041,8 +1043,8 @@ class CardContentProvider : ContentProvider() {
         } catch (je: JSONException) {
             throw IllegalArgumentException("Card is using an invalid template", je)
         }
-        val question = currentCard.question()
-        val answer = currentCard.answer()
+        val question = currentCard.renderOutput().questionWithFixedSoundTags()
+        val answer = currentCard.renderOutput().answerWithFixedSoundTags()
         val rb = rv.newRow()
         for (column in columns) {
             when (column) {
@@ -1235,3 +1237,11 @@ class CardContentProvider : ContentProvider() {
     private fun knownRogueClient(): Boolean =
         !context!!.arePermissionsDefinedInManifest(callingPackage!!, FlashCardsContract.READ_WRITE_PERMISSION)
 }
+
+/** replaces [anki:play...] with [sound:] */
+private fun TemplateRenderOutput.questionWithFixedSoundTags() =
+    replaceWithSoundTags(questionText, this)
+
+/** replaces [anki:play...] with [sound:] */
+private fun TemplateRenderOutput.answerWithFixedSoundTags() =
+    replaceWithSoundTags(answerText, this)
