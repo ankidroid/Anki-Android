@@ -733,6 +733,8 @@ abstract class AbstractFlashcardViewer :
             } else if (resultCode == RESULT_CANCELED && !reloadRequired) {
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard()
+            } else if (resultCode == NoteEditor.RESULT_UPDATED_IO_NOTE) {
+                displayCardQuestion(true)
             }
         }
     }

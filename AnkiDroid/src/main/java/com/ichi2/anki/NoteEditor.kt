@@ -255,6 +255,19 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     )
 
+    private val requestIOEditorCloser = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        NoteEditorActivityResultCallback { result ->
+            if (result.resultCode != RESULT_CANCELED) {
+                changed = true
+                if (!addNote) {
+                    mReloadRequired = true
+                    closeNoteEditor(RESULT_UPDATED_IO_NOTE, null)
+                }
+            }
+        }
+    )
+
     private inner class NoteEditorActivityResultCallback(private val callback: (result: ActivityResult) -> Unit) : ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
             Timber.d("onActivityResult() with result: %s", result.resultCode)
@@ -1999,7 +2012,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             id = mEditorNote?.id!!
         }
         val intent = ImageOcclusion.getIntent(this@NoteEditor, kind, id, imagePath)
-        startActivity(intent)
+        launchActivityForResultWithAnimation(intent, requestIOEditorCloser, START)
     }
 
     // ----------------------------------------------------------------------------
@@ -2267,6 +2280,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         const val CALLER_CARDBROWSER_ADD = 7
         const val CALLER_NOTEEDITOR = 8
         const val CALLER_NOTEEDITOR_INTENT_ADD = 10
+
+        const val RESULT_UPDATED_IO_NOTE = 11
 
         // preferences keys
         const val PREF_NOTE_EDITOR_SCROLL_TOOLBAR = "noteEditorScrollToolbar"
