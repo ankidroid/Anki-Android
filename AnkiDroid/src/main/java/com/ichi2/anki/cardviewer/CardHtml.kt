@@ -18,12 +18,13 @@ package com.ichi2.anki.cardviewer
 
 import android.content.Context
 import com.ichi2.anki.R
+import com.ichi2.anki.Sound
+import com.ichi2.anki.Sound.SingleSoundSide
+import com.ichi2.anki.Sound.SingleSoundSide.ANSWER
+import com.ichi2.anki.Sound.SingleSoundSide.QUESTION
 import com.ichi2.anki.TtsParser
 import com.ichi2.anki.cardviewer.CardAppearance.Companion.hasUserDefinedNightMode
 import com.ichi2.libanki.*
-import com.ichi2.libanki.Sound.SingleSoundSide
-import com.ichi2.libanki.Sound.SingleSoundSide.ANSWER
-import com.ichi2.libanki.Sound.SingleSoundSide.QUESTION
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
 import com.ichi2.themes.Themes.currentTheme

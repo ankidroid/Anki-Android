@@ -15,7 +15,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki
+package com.ichi2.anki
 
 import android.content.Context
 import android.media.*
@@ -26,10 +26,8 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.ReadText
-import com.ichi2.libanki.Sound.OnErrorListener.ErrorHandling.CONTINUE_AUDIO
-import com.ichi2.libanki.Sound.SoundSide.*
+import com.ichi2.libanki.SoundOrVideoTag
+import com.ichi2.libanki.addPlayIcons
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
@@ -80,8 +78,8 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
     }
 
     private fun getSoundList(side: SoundSide): List<SoundPath> {
-        if (side == QUESTION_AND_ANSWER) {
-            return getSoundList(QUESTION) + getSoundList(ANSWER)
+        if (side == SoundSide.QUESTION_AND_ANSWER) {
+            return getSoundList(SoundSide.QUESTION) + getSoundList(SoundSide.ANSWER)
         }
         return soundPaths[side] ?: emptyList()
     }
@@ -178,9 +176,9 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
         ReadText.stopTts() // TODO: Reconsider design
     }
 
-    fun hasQuestion(): Boolean = getSounds(QUESTION) != null
+    fun hasQuestion(): Boolean = getSounds(SoundSide.QUESTION) != null
 
-    fun hasAnswer(): Boolean = getSounds(ANSWER) != null
+    fun hasAnswer(): Boolean = getSounds(SoundSide.ANSWER) != null
 
     fun interface OnErrorListener {
         fun onError(mp: MediaPlayer?, which: Int, extra: Int, path: String?): ErrorHandling
@@ -294,7 +292,7 @@ open class SoundPlayer {
         val errorHandler = errorListener
             ?: Sound.OnErrorListener { _: MediaPlayer?, what: Int, extra: Int, _: String? ->
                 Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra)
-                CONTINUE_AUDIO
+                Sound.OnErrorListener.ErrorHandling.CONTINUE_AUDIO
             }
         playSoundInternal(soundPath, completionListener, errorHandler)
     }
@@ -333,7 +331,7 @@ open class SoundPlayer {
                     )
                     // returning false calls onComplete()
                     return@setOnErrorListener when (errorHandling) {
-                        CONTINUE_AUDIO -> false
+                        Sound.OnErrorListener.ErrorHandling.CONTINUE_AUDIO -> false
                         Sound.OnErrorListener.ErrorHandling.RETRY_AUDIO -> {
                             playMedia()
                             true
@@ -370,7 +368,7 @@ open class SoundPlayer {
                         soundPath
                     )
                 ) {
-                    CONTINUE_AUDIO -> {
+                    Sound.OnErrorListener.ErrorHandling.CONTINUE_AUDIO -> {
                         Timber.d("Force playing next sound.")
                         completionListener.onCompletion(mMediaPlayer)
                     }

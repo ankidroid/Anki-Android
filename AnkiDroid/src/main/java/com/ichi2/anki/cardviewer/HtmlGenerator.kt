@@ -20,11 +20,11 @@ import android.content.Context
 import android.content.res.Resources
 import androidx.annotation.CheckResult
 import anki.config.ConfigKey
+import com.ichi2.anki.Sound
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Sound
 import com.ichi2.libanki.stripAvRefs
 import timber.log.Timber
 import java.io.BufferedReader
