@@ -327,7 +327,7 @@ open class Scheduler(val col: Collection) {
     /**
      * @param ids Ids of cards to put at the end of the new queue.
      */
-    open fun forgetCards(ids: List<Long>): OpChanges {
+    open fun forgetCards(ids: List<CardId>): OpChanges {
         val request = scheduleCardsAsNewRequest {
             cardIds.addAll(ids)
             log = true
@@ -344,7 +344,7 @@ open class Scheduler(val col: Collection) {
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
      */
-    open fun reschedCards(ids: List<Long>, imin: Int, imax: Int): OpChanges {
+    open fun reschedCards(ids: List<CardId>, imin: Int, imax: Int): OpChanges {
         return col.backend.setDueDate(ids, "$imin-$imax!", OptionalStringConfigKey.getDefaultInstance())
     }
 
@@ -356,7 +356,7 @@ open class Scheduler(val col: Collection) {
      * @param shift Whether the cards already new should be shifted to make room for cards of cids
      */
     open fun sortCards(
-        cids: List<Long>,
+        cids: List<CardId>,
         start: Int,
         step: Int = 1,
         shuffle: Boolean = false,
