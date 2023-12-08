@@ -1096,7 +1096,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_mark_card -> {
-                launchCatchingTask { toggleMark() }
+                toggleMark()
                 return true
             }
             R.id.action_suspend_card -> {
