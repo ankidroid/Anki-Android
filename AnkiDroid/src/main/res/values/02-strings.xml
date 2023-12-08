@@ -417,7 +417,7 @@ allows them to use the voice without installing it">Use anyway
     </string>
 
     <string name="tts_voices_playback_error" comment="an error occurred when playing a text to speech
-voice. The string is a technical error code such as 'ERROR_NOT_INSTALLED_YET' or ''">
+voice. The parameter is a technical error code such as 'ERROR_NOT_INSTALLED_YET' or 'ERROR_NETWORK_TIMEOUT'">
         Audio error (%s)
     </string>
 
