@@ -899,19 +899,21 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 mCurrentEditedCard!!.did = deckId
                 modified = true
             }
-            // now load any changes to the fields from the form
-            for (f in mEditFields!!) {
-                modified = modified or updateField(f)
-            }
-            // added tag?
-            for (t in mSelectedTags!!) {
-                modified = modified || !mEditorNote!!.hasTag(t)
-            }
-            // removed tag?
-            modified = modified || mEditorNote!!.tags.size > mSelectedTags!!.size
-            if (modified) {
-                mEditorNote!!.setTagsFromStr(tagsAsString(mSelectedTags!!))
-                changed = true
+            if (!currentNotetypeIsImageOcclusion()) {
+                // now load any changes to the fields from the form
+                for (f in mEditFields!!) {
+                    modified = modified or updateField(f)
+                }
+                // added tag?
+                for (t in mSelectedTags!!) {
+                    modified = modified || !mEditorNote!!.hasTag(t)
+                }
+                // removed tag?
+                modified = modified || mEditorNote!!.tags.size > mSelectedTags!!.size
+                if (modified) {
+                    mEditorNote!!.setTagsFromStr(tagsAsString(mSelectedTags!!))
+                    changed = true
+                }
             }
             closeNoteEditor()
         }
