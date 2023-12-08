@@ -104,6 +104,8 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var selectImageLauncher: ActivityResultLauncher<Intent?>
 
+    private lateinit var drawingLauncher: ActivityResultLauncher<Intent?>
+
     private inner class BasicImageFieldControllerResultCallback(
         private val onSuccess: (result: ActivityResult) -> Unit,
         private val onFailure: (result: ActivityResult) -> Unit = {}
@@ -192,7 +194,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         val btnDraw = Button(mActivity).apply {
             text = gtxt(R.string.drawing)
             setOnClickListener {
-                mActivity.startActivityForResultWithoutAnimation(Intent(mActivity, DrawingActivity::class.java), ACTIVITY_DRAWING)
+                mActivity.launchActivityForResultWithAnimation(Intent(mActivity, DrawingActivity::class.java), drawingLauncher, ActivityTransitionAnimation.Direction.NONE)
             }
         }
 
@@ -273,6 +275,22 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                         Timber.e(e, "Failed to select image")
                         showSomethingWentWrong()
                     }
+                }
+            )
+        )
+
+        drawingLauncher = registryToUse.register(
+            DRAWING_LAUNCHER_KEY,
+            ActivityResultContracts.StartActivityForResult(),
+            BasicImageFieldControllerResultCallback(
+                onSuccess = { result ->
+                    // receive image from drawing activity
+                    val savedImagePath = BundleCompat.getParcelable(
+                        result.data!!.extras!!,
+                        DrawingActivity.EXTRA_RESULT_WHITEBOARD,
+                        Uri::class.java
+                    )
+                    handleDrawingResult(savedImagePath)
                 }
             )
         )
@@ -394,36 +412,12 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // All image modification methods come through here - this ensures that the state is consistent
-
-        Timber.d("onActivityResult()")
-        if (resultCode != Activity.RESULT_OK) {
-            Timber.d("Activity was not successful")
-
-            // Some apps send this back with app-specific data, direct the user to another app
-            if (resultCode >= Activity.RESULT_FIRST_USER) {
-                UIUtils.showThemedToast(mActivity, mActivity.getString(R.string.activity_result_unexpected), true)
-            }
-            return
-        }
-
-        mImageFileSizeWarning.visibility = View.GONE
-        when (requestCode) {
-            ACTIVITY_DRAWING -> {
-                // receive image from drawing activity
-                val savedImagePath = BundleCompat.getParcelable(
-                    data!!.extras!!,
-                    DrawingActivity.EXTRA_RESULT_WHITEBOARD,
-                    Uri::class.java
-                )
-                handleDrawingResult(savedImagePath)
-            }
-            else -> {
-                Timber.w("Unhandled request code: %d", requestCode)
-                return
-            }
-        }
-        setPreviewImage(mViewModel.imagePath, maxImageSize)
+        // TODO: Delete function from interface once migration is complete. See below comment.
+        // Do Nothing
+        // the only reference to this function is in
+        // MultimediaEditFieldActivity::onActivityResult, and that's still only being used because
+        // BasicMediaClipFieldController hasn't been migrated over to the
+        // start register for activity result API yet.
     }
 
     private fun cancelImageCapture() {
@@ -550,6 +544,9 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
         if (::selectImageLauncher.isInitialized) {
             selectImageLauncher.unregister()
+        }
+        if (::drawingLauncher.isInitialized) {
+            drawingLauncher.unregister()
         }
     }
 
@@ -867,11 +864,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     companion object {
-        private const val ACTIVITY_DRAWING = 4
         private const val IMAGE_SAVE_MAX_WIDTH = 1920
         private const val CROP_IMAGE_LAUNCHER_KEY = "crop_image_launcher_key"
         private const val TAKE_PICTURE_LAUNCHER_KEY = "take_picture_launcher_key"
         private const val SELECT_IMAGE_LAUNCHER_KEY = "select_image_launcher_key"
+        private const val DRAWING_LAUNCHER_KEY = "drawing_launcher_key"
 
         /**
          * Get Uri based on current image path
