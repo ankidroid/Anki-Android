@@ -30,6 +30,7 @@ import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -155,6 +156,24 @@ class CardBrowserViewModel(
     fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
 
     fun setColumn2Index(value: Int) = column2IndexFlow.update { value }
+    suspend fun suspendCards() {
+        val cardIds = selectedCardIds
+        if (cardIds.isEmpty()) {
+            return
+        }
+
+        undoableOp {
+            // if all cards are suspended, unsuspend all
+            // if no cards are suspended, suspend all
+            // if there is a mix, suspend all
+            val wantUnsuspend = cardIds.all { getCard(it).queue == Consts.QUEUE_TYPE_SUSPENDED }
+            if (wantUnsuspend) {
+                sched.unsuspendCards(cardIds)
+            } else {
+                sched.suspendCards(cardIds).changes
+            }
+        }
+    }
 
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
