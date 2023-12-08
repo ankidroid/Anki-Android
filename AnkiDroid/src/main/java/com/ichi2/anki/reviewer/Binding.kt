@@ -33,6 +33,36 @@ sealed interface Binding {
         }
     }
 
+    /**
+     * Maps an extremity on an [Axis] to a button press
+     *
+     * Example: [Axis.X] with a thresholds of {-1, 1} may be mapped to different actions
+     * (signifying moving left/right on a gamepad joystick)
+     */
+    data class AxisButtonBinding(val axis: Axis, val threshold: Float) : Binding {
+        private val plusOrMinus get() = if (threshold == -1f) "-" else "+"
+
+        override fun toDisplayString(context: Context) = "$JOYSTICK_STRING_PREFIX $axis [$plusOrMinus]"
+
+        override fun toString() = buildString {
+            append(JOYSTICK_CHAR_PREFIX)
+            append(axis.motionEventValue)
+            append(" ")
+            append(threshold)
+        }
+
+        companion object {
+            fun from(preferenceString: String): AxisButtonBinding {
+                val s = preferenceString.split(" ")
+
+                val axis = Axis.fromInt(s[0].toInt())
+                val threshold = s[1].toFloat()
+
+                return AxisButtonBinding(axis, threshold)
+            }
+        }
+    }
+
     interface KeyBinding : Binding {
         val modifierKeys: ModifierKeys
     }
@@ -84,6 +114,7 @@ sealed interface Binding {
 
     fun toDisplayString(context: Context): String
 
+    /** how the binding is serialised to preferences */
     abstract override fun toString(): String
 
     val isValid get() = true
@@ -179,6 +210,12 @@ sealed interface Binding {
         /** https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger)  */
         const val GESTURE_PREFIX = '\u235D'
 
+        /** 🕹️*/
+        const val JOYSTICK_STRING_PREFIX = "\uD83D\uDD79\uFE0F"
+
+        /** Can only use one char - pick a circle (wheel) */
+        const val JOYSTICK_CHAR_PREFIX: Char = '◯'
+
         /** https://www.fileformat.info/info/unicode/char/2705/index.htm - checkmark (often used in URLs for unicode)
          * Only used for serialisation. [KEY_PREFIX] is used for display.
          */
@@ -213,6 +250,7 @@ sealed interface Binding {
             if (from.isEmpty()) return UnknownBinding
             try {
                 return when (from[0]) {
+                    JOYSTICK_CHAR_PREFIX -> AxisButtonBinding.from(from.substring(1))
                     GESTURE_PREFIX -> GestureInput(Gesture.valueOf(from.substring(1)))
                     UNICODE_PREFIX -> {
                         val (modifierKeys, char) = ModifierKeys.parse(from.substring(1))

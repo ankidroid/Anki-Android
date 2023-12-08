@@ -23,6 +23,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.Binding.*
+import com.ichi2.utils.hash
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
@@ -44,6 +45,7 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
             binding is KeyCode && otherBinding is KeyCode -> binding.keycode == otherBinding.keycode && modifierEquals(otherBinding)
             binding is UnicodeCharacter && otherBinding is UnicodeCharacter -> binding.unicodeCharacter == otherBinding.unicodeCharacter && modifierEquals(otherBinding)
             binding is GestureInput && otherBinding is GestureInput -> binding.gesture == otherBinding.gesture
+            binding is AxisButtonBinding && otherBinding is AxisButtonBinding -> binding.axis == otherBinding.axis && binding.threshold == otherBinding.threshold
             else -> false
         }
         if (!bindingEquals) {
@@ -59,6 +61,7 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
             is KeyCode -> binding.keycode
             is UnicodeCharacter -> binding.unicodeCharacter
             is GestureInput -> binding.gesture
+            is AxisButtonBinding -> hash(binding.axis.motionEventValue, binding.threshold.toInt())
             else -> 0
         }
         return Objects.hash(bindingHash, screen.prefix)

@@ -36,3 +36,6 @@ object HashUtil {
         return HashMap(capacity(size))
     }
 }
+
+/** Provides a hashcode given a series of ints */
+fun hash(vararg values: Int): Int = values.fold(0) { acc, value -> 31 * acc + value }
