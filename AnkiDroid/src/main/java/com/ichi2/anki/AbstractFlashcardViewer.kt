@@ -227,6 +227,10 @@ abstract class AbstractFlashcardViewer :
      */
     protected val mGestureProcessor = GestureProcessor(this)
 
+    /** Handle joysticks/pedals */
+    // needs to be lateinit due to a reliance on Context
+    protected lateinit var motionEventHandler: MotionEventHandler
+
     @get:VisibleForTesting
     var cardContent: String? = null
         private set
@@ -536,6 +540,7 @@ abstract class AbstractFlashcardViewer :
         restorePreferences()
         mTagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         super.onCreate(savedInstanceState)
+        motionEventHandler = MotionEventHandler.createInstance(this)
 
         // Issue 14142: The reviewer had a focus highlight after answering using a keyboard.
         // This theme removes the highlight, but there is likely a better way.

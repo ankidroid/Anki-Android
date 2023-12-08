@@ -20,6 +20,8 @@ import android.content.Context
 import android.graphics.Point
 import android.view.Window
 import android.view.WindowManager
+import com.ichi2.anki.AnkiDroidApp
+import kotlin.math.roundToInt
 
 object DisplayUtils {
 
@@ -42,4 +44,9 @@ object DisplayUtils {
     fun resizeWhenSoftInputShown(window: Window) {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
+}
+
+fun dpToPixels(dp: Float): Int {
+    val scale = AnkiDroidApp.instance.resources.displayMetrics.density
+    return (dp * scale).roundToInt()
 }

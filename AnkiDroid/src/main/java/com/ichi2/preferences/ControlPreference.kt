@@ -36,6 +36,7 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromGesture
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.ui.AxisPicker
 import com.ichi2.ui.KeyPicker
 import com.ichi2.utils.*
 import java.util.*
@@ -69,6 +70,9 @@ class ControlPreference : ListPreference {
         // negative indices are "add"
         entryTitles.add(context.getString(R.string.binding_add_key))
         entryIndices.add(ADD_KEY_INDEX)
+        // Add a joystick/motion controller
+        entryTitles.add(context.getString(R.string.binding_add_axis))
+        entryIndices.add(ADD_AXIS_INDEX)
         // Put "Add gesture" option if gestures are enabled
         if (context.sharedPrefs().getBoolean(GestureProcessor.PREF_KEY, false)) {
             entryTitles.add(context.getString(R.string.binding_add_gesture))
@@ -154,6 +158,7 @@ class ControlPreference : ListPreference {
                     noAutoDismiss()
                 }
             }
+            ADD_AXIS_INDEX -> displayAddAxisDialog()
             else -> {
                 val bindings: MutableList<MappableBinding> = MappableBinding.fromPreferenceString(value)
                 bindings.removeAt(index)
@@ -162,6 +167,34 @@ class ControlPreference : ListPreference {
         }
         // don't persist the value
         return false
+    }
+
+    @SuppressLint("CheckResult") // noAutoDismiss
+    private fun displayAddAxisDialog() {
+        val actionName = title
+        MaterialDialog(context).show {
+            val axisPicker: AxisPicker = AxisPicker.inflate(context)
+            customView(view = axisPicker.rootLayout)
+            title(text = actionName.toString())
+
+            axisPicker.setBindingChangedListener { binding ->
+                showToastIfBindingIsUsed(MappableBinding(binding, MappableBinding.Screen.Reviewer(CardSide.BOTH)))
+                // Use CardSide.BOTH as placeholder just to check if binding exists
+                CardSideSelectionDialog.displayInstance(context) { side ->
+                    val mappableBinding = MappableBinding(binding, MappableBinding.Screen.Reviewer(side))
+                    if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
+                        showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_key), this)
+                    } else {
+                        addBinding(mappableBinding)
+                        dismiss()
+                    }
+                }
+            }
+
+            negativeButton(R.string.dialog_cancel) { dismiss() }
+
+            noAutoDismiss()
+        }
     }
 
     /**
@@ -227,6 +260,7 @@ class ControlPreference : ListPreference {
     }
 
     companion object {
+        private const val ADD_AXIS_INDEX = -3
         private const val ADD_KEY_INDEX = -2
         private const val ADD_GESTURE_INDEX = -1
     }

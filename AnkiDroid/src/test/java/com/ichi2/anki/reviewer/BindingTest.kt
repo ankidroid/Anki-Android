@@ -91,6 +91,7 @@ class BindingTest {
         const val gesturePrefix = '\u235D'
         const val keyPrefix = '\u2328'
         const val unicodePrefix = '\u2705'
+        const val joystickPrefix = '◯'
 
         fun allModifierKeys() = Binding.ModifierKeys(true, true, true)
 
