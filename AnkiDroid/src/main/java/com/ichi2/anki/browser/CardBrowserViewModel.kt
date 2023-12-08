@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.browser
 
+import android.content.res.Resources
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,11 +25,15 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.ExportDialogParams
+import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.servicelayer.CardService
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.undoableOp
@@ -171,6 +176,35 @@ class CardBrowserViewModel(
                 sched.unsuspendCards(cardIds)
             } else {
                 sched.suspendCards(cardIds).changes
+            }
+        }
+    }
+
+    /** @return an [ExportDialogParams] based on the current screen state */
+    suspend fun getExportDialogParams(resources: Resources): ExportDialogParams? {
+        if (!isInMultiSelectMode) return null
+        return when (cardsOrNotes) {
+            CARDS -> {
+                val selectedCardIds = selectedCardIds
+                ExportDialogParams(
+                    message = resources.getQuantityString(
+                        R.plurals.confirm_apkg_export_selected_cards,
+                        selectedCardIds.size,
+                        selectedCardIds.size
+                    ),
+                    exportType = ExportType.ExportCards(selectedCardIds)
+                )
+            }
+            NOTES -> {
+                val selectedNoteIds = withCol { CardService.selectedNoteIds(selectedCardIds, this) }
+                ExportDialogParams(
+                    message = resources.getQuantityString(
+                        R.plurals.confirm_apkg_export_selected_notes,
+                        selectedNoteIds.size,
+                        selectedNoteIds.size
+                    ),
+                    exportType = ExportType.ExportNotes(selectedNoteIds)
+                )
             }
         }
     }
