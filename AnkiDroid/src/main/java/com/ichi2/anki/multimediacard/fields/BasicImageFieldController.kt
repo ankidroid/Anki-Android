@@ -43,6 +43,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
@@ -98,6 +100,29 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     lateinit var registryToUse: ActivityResultRegistry
 
     private lateinit var takePictureLauncher: ActivityResultLauncher<Intent?>
+
+    private inner class BasicImageFieldControllerResultCallback(
+        private val onSuccess: (result: ActivityResult) -> Unit,
+        private val onFailure: (result: ActivityResult) -> Unit = {}
+    ) : ActivityResultCallback<ActivityResult> {
+        override fun onActivityResult(result: ActivityResult) {
+            if (result.resultCode != Activity.RESULT_OK) {
+                Timber.d("Activity was not successful")
+
+                onFailure(result)
+
+                // Some apps send this back with app-specific data, direct the user to another app
+                if (result.resultCode >= Activity.RESULT_FIRST_USER) {
+                    UIUtils.showThemedToast(mActivity, mActivity.getString(R.string.activity_result_unexpected), true)
+                }
+                return
+            }
+
+            mImageFileSizeWarning.visibility = View.GONE
+            onSuccess(result)
+            setPreviewImage(mViewModel.imagePath, maxImageSize)
+        }
+    }
 
     override fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
@@ -218,14 +243,19 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 }
             }
         }
-        takePictureLauncher = registryToUse.register(TAKE_PICTURE_LAUNCHER_KEY, ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                handleTakePictureResult()
-                setPreviewImage(mViewModel.imagePath, maxImageSize)
-            } else {
-                cancelImageCapture()
-            }
-        }
+
+        takePictureLauncher = registryToUse.register(
+            TAKE_PICTURE_LAUNCHER_KEY,
+            ActivityResultContracts.StartActivityForResult(),
+            BasicImageFieldControllerResultCallback(
+                onSuccess = {
+                    handleTakePictureResult()
+                },
+                onFailure = {
+                    cancelImageCapture()
+                }
+            )
+        )
     }
 
     @SuppressLint("UnsupportedChromeOsCameraSystemFeature")
