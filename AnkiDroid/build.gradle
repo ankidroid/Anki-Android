@@ -321,7 +321,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2"
 
     // Backend libraries
 
@@ -373,7 +373,7 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
     testImplementation 'org.mockito:mockito-inline:5.2.0'
-    testImplementation "org.mockito.kotlin:mockito-kotlin:5.1.0"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:5.2.1"
     testImplementation "org.hamcrest:hamcrest:$hamcrest_version"
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
