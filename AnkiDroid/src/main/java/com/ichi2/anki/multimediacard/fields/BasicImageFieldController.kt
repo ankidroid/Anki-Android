@@ -45,6 +45,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContentResolverCompat
@@ -52,6 +53,7 @@ import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
 import androidx.core.os.BundleCompat
 import com.canhub.cropper.*
+import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DrawingActivity
@@ -94,6 +96,8 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     @VisibleForTesting
     lateinit var registryToUse: ActivityResultRegistry
+
+    private lateinit var takePictureLauncher: ActivityResultLauncher<Intent?>
 
     override fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
@@ -214,6 +218,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 }
             }
         }
+        takePictureLauncher = registryToUse.register(TAKE_PICTURE_LAUNCHER_KEY, ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                handleTakePictureResult()
+                setPreviewImage(mViewModel.imagePath, maxImageSize)
+            } else {
+                cancelImageCapture()
+            }
+        }
     }
 
     @SuppressLint("UnsupportedChromeOsCameraSystemFeature")
@@ -249,16 +261,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             if (cameraIntent.resolveActivity(context.packageManager) == null) {
                 Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent")
                 showSomethingWentWrong()
-                onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null)
+                cancelImageCapture()
                 return toReturn
             }
-            try {
-                mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE)
-            } catch (e: Exception) {
-                Timber.w(e, "Unable to take picture")
-                showSomethingWentWrong()
-                onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null)
-            }
+            mActivity.launchActivityForResultWithAnimation(cameraIntent, takePictureLauncher, ActivityTransitionAnimation.Direction.NONE)
         } catch (e: IOException) {
             Timber.w(e, "mBtnCamera::onClickListener() unable to prepare file and launch camera")
         }
@@ -343,14 +349,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         Timber.d("onActivityResult()")
         if (resultCode != Activity.RESULT_OK) {
             Timber.d("Activity was not successful")
-            // Restore the old version of the image if the user cancelled
-            when (requestCode) {
-                ACTIVITY_TAKE_PICTURE ->
-                    if (!mPreviousImagePath.isNullOrEmpty()) {
-                        revertToPreviousImage()
-                    }
-                else -> {}
-            }
 
             // Some apps send this back with app-specific data, direct the user to another app
             if (resultCode >= Activity.RESULT_FIRST_USER) {
@@ -372,7 +370,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                     return
                 }
             }
-            ACTIVITY_TAKE_PICTURE -> handleTakePictureResult()
             ACTIVITY_DRAWING -> {
                 // receive image from drawing activity
                 val savedImagePath = BundleCompat.getParcelable(
@@ -388,6 +385,12 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             }
         }
         setPreviewImage(mViewModel.imagePath, maxImageSize)
+    }
+
+    private fun cancelImageCapture() {
+        if (!mPreviousImagePath.isNullOrEmpty()) {
+            revertToPreviousImage()
+        }
     }
 
     private fun revertToPreviousImage() {
@@ -500,8 +503,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     override fun onDone() {
         deletePreviousImage()
-        if (this::cropImageRequest.isInitialized) {
+        if (::cropImageRequest.isInitialized) {
             cropImageRequest.unregister()
+        }
+        if (::takePictureLauncher.isInitialized) {
+            takePictureLauncher.unregister()
         }
     }
 
@@ -821,10 +827,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     companion object {
         @VisibleForTesting
         val ACTIVITY_SELECT_IMAGE = 1
-        private const val ACTIVITY_TAKE_PICTURE = 2
         private const val ACTIVITY_DRAWING = 4
         private const val IMAGE_SAVE_MAX_WIDTH = 1920
         private const val CROP_IMAGE_LAUNCHER_KEY = "crop_image_launcher_key"
+        private const val TAKE_PICTURE_LAUNCHER_KEY = "take_picture_launcher_key"
 
         /**
          * Get Uri based on current image path
