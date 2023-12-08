@@ -519,7 +519,7 @@ class CardBrowserTest : RobolectricTest() {
             equalTo("1")
         )
 
-        b.repositionCardsNoValidation(listOf(card.id), 2)
+        b.viewModel.repositionSelectedRows(2)
 
         card.reload()
 
@@ -601,7 +601,7 @@ class CardBrowserTest : RobolectricTest() {
             equalTo("1")
         )
 
-        b.repositionCardsNoValidation(listOf(card.id), 2)
+        b.repositionCardsNoValidation(2)
 
         assertThat(
             "Position of checked card after reposition",

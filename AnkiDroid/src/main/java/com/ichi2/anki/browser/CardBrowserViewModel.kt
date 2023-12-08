@@ -209,6 +209,14 @@ class CardBrowserViewModel(
         }
     }
 
+    /**
+     * @see [com.ichi2.libanki.sched.Scheduler.sortCards]
+     * @return the number of cards which were repositioned
+     */
+    suspend fun repositionSelectedRows(position: Int) = undoableOp {
+        sched.sortCards(selectedCardIds, position, 1, shuffle = false, shift = true)
+    }.count
+
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"

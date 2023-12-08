@@ -1154,7 +1154,7 @@ open class CardBrowser :
                         prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
                         digits = 5
                     )
-                    setCallbackRunnable { pos -> repositionCardsNoValidation(selectedCardIds, pos) }
+                    setCallbackRunnable(::repositionCardsNoValidation)
                 }
                 showDialogFragment(repositionDialog)
                 return true
@@ -1226,23 +1226,16 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun repositionCardsNoValidation(cardIds: List<CardId>, position: Int) {
-        launchCatchingTask {
-            val changes = withProgress {
-                undoableOp {
-                    sched.sortCards(cardIds, position, 1, false, true)
-                }
-            }
-            val count = changes.count
-            showSnackbar(
-                resources.getQuantityString(
-                    R.plurals.reposition_card_dialog_acknowledge,
-                    count,
-                    count
-                ),
-                Snackbar.LENGTH_SHORT
-            )
-        }
+    fun repositionCardsNoValidation(position: Int) = launchCatchingTask {
+        val count = withProgress { viewModel.repositionSelectedRows(position) }
+        showSnackbar(
+            resources.getQuantityString(
+                R.plurals.reposition_card_dialog_acknowledge,
+                count,
+                count
+            ),
+            Snackbar.LENGTH_SHORT
+        )
     }
 
     protected fun onPreview() {
