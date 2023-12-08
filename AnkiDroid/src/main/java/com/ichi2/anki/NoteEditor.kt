@@ -732,9 +732,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // SAVE NOTE METHODS
     // ----------------------------------------------------------------------------
 
-    /**
-     * @param noOfAddedCards
-     */
     @KotlinCleanup("return early and simplify if possible")
     private fun onNoteAdded() {
         var closeEditorAfterSave = false
