@@ -1100,7 +1100,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_suspend_card -> {
-                launchCatchingTask { suspendCards(selectedCardIds) }
+                suspendCards()
                 return true
             }
             R.id.action_change_deck -> {
@@ -1659,24 +1659,7 @@ open class CardBrowser :
         updateList()
     }
 
-    private suspend fun suspendCards(cardIds: List<Long>) {
-        if (cardIds.isEmpty()) {
-            return
-        }
-        withProgress {
-            undoableOp {
-                // if all cards are suspended, unsuspend all
-                // if no cards are suspended, suspend all
-                // if there is a mix, suspend all
-                val wantUnsuspend = cardIds.all { getCard(it).queue == Consts.QUEUE_TYPE_SUSPENDED }
-                if (wantUnsuspend) {
-                    sched.unsuspendCards(cardIds)
-                } else {
-                    sched.suspendCards(cardIds).changes
-                }
-            }
-        }
-    }
+    private fun suspendCards() = launchCatchingTask { withProgress { viewModel.suspendCards() } }
 
     private fun showUndoSnackbar(message: CharSequence) {
         showSnackbar(message, Snackbar.LENGTH_LONG) {
