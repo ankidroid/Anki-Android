@@ -57,7 +57,6 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
-import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
@@ -65,7 +64,6 @@ import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
-import com.ichi2.anki.servicelayer.CardService.selectedNoteIds
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
 import com.ichi2.anki.servicelayer.rescheduleCards
@@ -1185,27 +1183,9 @@ open class CardBrowser :
         return super.onOptionsItemSelected(item)
     }
 
-    fun exportSelected() {
-        if (!isInMultiSelectMode) {
-            return
-        }
-
-        if (viewModel.cardsOrNotes == CARDS) {
-            mExportingDelegate.showExportDialog(
-                ExportDialogParams(
-                    message = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_cards, selectedCardIds.size, selectedCardIds.size),
-                    exportType = ExportType.ExportCards(selectedCardIds)
-                )
-            )
-        } else {
-            val selectedNoteIds = selectedNoteIds(selectedCardIds, getColUnsafe)
-            mExportingDelegate.showExportDialog(
-                ExportDialogParams(
-                    message = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_notes, selectedNoteIds.size, selectedNoteIds.size),
-                    exportType = ExportType.ExportNotes(selectedNoteIds)
-                )
-            )
-        }
+    private fun exportSelected() = launchCatchingTask {
+        val exportDialogParameters = viewModel.getExportDialogParams(resources) ?: return@launchCatchingTask
+        mExportingDelegate.showExportDialog(exportDialogParameters)
     }
 
     private fun deleteSelectedNotes() = launchCatchingTask {
