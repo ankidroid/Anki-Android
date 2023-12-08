@@ -101,6 +101,9 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     private lateinit var takePictureLauncher: ActivityResultLauncher<Intent?>
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var selectImageLauncher: ActivityResultLauncher<Intent?>
+
     private inner class BasicImageFieldControllerResultCallback(
         private val onSuccess: (result: ActivityResult) -> Unit,
         private val onFailure: (result: ActivityResult) -> Unit = {}
@@ -182,7 +185,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             setOnClickListener {
                 val i = Intent(Intent.ACTION_PICK)
                 i.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-                mActivity.startActivityForResultWithoutAnimation(i, ACTIVITY_SELECT_IMAGE)
+                mActivity.launchActivityForResultWithAnimation(i, selectImageLauncher, ActivityTransitionAnimation.Direction.NONE)
             }
         }
 
@@ -253,6 +256,23 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 },
                 onFailure = {
                     cancelImageCapture()
+                }
+            )
+        )
+
+        selectImageLauncher = registryToUse.register(
+            SELECT_IMAGE_LAUNCHER_KEY,
+            ActivityResultContracts.StartActivityForResult(),
+            BasicImageFieldControllerResultCallback(
+                onSuccess = {
+                    try {
+                        handleSelectImageIntent(it.data)
+                        mImageFileSizeWarning.visibility = View.GONE
+                    } catch (e: Exception) {
+                        CrashReportService.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent")
+                        Timber.e(e, "Failed to select image")
+                        showSomethingWentWrong()
+                    }
                 }
             )
         )
@@ -389,17 +409,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
         mImageFileSizeWarning.visibility = View.GONE
         when (requestCode) {
-            ACTIVITY_SELECT_IMAGE -> {
-                try {
-                    handleSelectImageIntent(data)
-                    mImageFileSizeWarning.visibility = View.GONE
-                } catch (e: Exception) {
-                    CrashReportService.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent")
-                    Timber.e(e, "Failed to select image")
-                    showSomethingWentWrong()
-                    return
-                }
-            }
             ACTIVITY_DRAWING -> {
                 // receive image from drawing activity
                 val savedImagePath = BundleCompat.getParcelable(
@@ -538,6 +547,9 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
         if (::takePictureLauncher.isInitialized) {
             takePictureLauncher.unregister()
+        }
+        if (::selectImageLauncher.isInitialized) {
+            selectImageLauncher.unregister()
         }
     }
 
@@ -855,12 +867,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     companion object {
-        @VisibleForTesting
-        val ACTIVITY_SELECT_IMAGE = 1
         private const val ACTIVITY_DRAWING = 4
         private const val IMAGE_SAVE_MAX_WIDTH = 1920
         private const val CROP_IMAGE_LAUNCHER_KEY = "crop_image_launcher_key"
         private const val TAKE_PICTURE_LAUNCHER_KEY = "take_picture_launcher_key"
+        private const val SELECT_IMAGE_LAUNCHER_KEY = "select_image_launcher_key"
 
         /**
          * Get Uri based on current image path
