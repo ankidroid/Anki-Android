@@ -1019,4 +1019,4 @@ fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
 }
 
 fun CardBrowser.getPropertiesForCardId(cardId: CardId): CardCache =
-    viewModel.cards.find { c -> c.id == cardId } ?: throw IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId))
+    viewModel.cards.find { c -> c.id == cardId } ?: throw IllegalStateException("Card '$cardId' not found")
