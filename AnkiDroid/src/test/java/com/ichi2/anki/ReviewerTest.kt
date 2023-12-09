@@ -76,7 +76,6 @@ class ReviewerTest : RobolectricTest() {
         moveToReviewQueue(firstNote.firstCard())
 
         val reviewer = startReviewer()
-        reviewer.generateQuestionSoundList()
         reviewer.displayCardQuestion()
 
         assertThat("If the sound file with given name is not present, then no error occurs", true)
