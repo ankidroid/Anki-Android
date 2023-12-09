@@ -1822,7 +1822,7 @@ open class CardBrowser :
         @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
-            val card = mCards[position]
+            val card = getItem(position)
             (v.tag as Array<*>)
                 .forEachIndexed { i, col ->
                     setFont(col as TextView) // set font for column
