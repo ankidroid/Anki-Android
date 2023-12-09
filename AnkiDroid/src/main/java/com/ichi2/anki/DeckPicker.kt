@@ -374,7 +374,7 @@ open class DeckPicker :
             Timber.i("Displaying app intro")
             val appIntro = Intent(this, IntroductionActivity::class.java)
             appIntro.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivityWithoutAnimation(appIntro)
+            startActivity(appIntro)
             finish() // calls onDestroy() immediately
             return
         } else {
@@ -1660,7 +1660,7 @@ open class DeckPicker :
 
     fun openAnkiWebSharedDecks() {
         val intent = Intent(this, SharedDecksActivity::class.java)
-        startActivityWithoutAnimation(intent)
+        startActivity(intent)
     }
 
     private fun openFilteredDeckOptions() {

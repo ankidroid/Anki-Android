@@ -2575,7 +2575,7 @@ abstract class AbstractFlashcardViewer :
                 Timber.d("Opening resolved external link \"%s\" with an Intent: %s", url, intent)
             }
             try {
-                startActivityWithoutAnimation(intent)
+                startActivity(intent)
             } catch (e: ActivityNotFoundException) {
                 Timber.w(e) // Don't crash if the intent is not handled
             }

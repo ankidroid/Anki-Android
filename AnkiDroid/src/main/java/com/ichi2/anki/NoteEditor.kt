@@ -1136,7 +1136,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         addInstanceStateToBundle(noteEditorBundle)
         noteEditorBundle.putBundle("editFields", fieldsAsBundleForPreview)
         previewer.putExtra("noteEditorBundle", noteEditorBundle)
-        startActivityWithoutAnimation(previewer)
+        startActivity(previewer)
     }
 
     /**

@@ -503,7 +503,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         if (reload) {
             val deckPicker = Intent(this, DeckPicker::class.java)
             deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivityWithoutAnimation(deckPicker)
+            startActivity(deckPicker)
         }
     }
 
