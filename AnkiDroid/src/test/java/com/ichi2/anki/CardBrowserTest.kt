@@ -1017,3 +1017,13 @@ fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
         viewModel.selectRowAtPosition(pos)
     }
 }
+
+val CardBrowser.cardIds: LongArray
+    get() {
+        val cardsCopy = mCards.wrapped.toTypedArray()
+        val ret = LongArray(cardsCopy.size)
+        for (i in cardsCopy.indices) {
+            ret[i] = cardsCopy[i].id
+        }
+        return ret
+    }

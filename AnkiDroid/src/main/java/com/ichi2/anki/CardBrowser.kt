@@ -2257,17 +2257,6 @@ open class CardBrowser :
         renderBrowserQAParams(0, viewModel.rowCount - 1, mCards.toList())
     }
 
-    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    val cardIds: LongArray
-        get() {
-            val cardsCopy = mCards.wrapped.toTypedArray()
-            val ret = LongArray(cardsCopy.size)
-            for (i in cardsCopy.indices) {
-                ret[i] = cardsCopy[i].id
-            }
-            return ret
-        }
-
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun getPropertiesForCardId(cardId: CardId): CardCache {
         return mCards.find { c -> c.id == cardId } ?: throw IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId))
