@@ -585,7 +585,7 @@ open class DeckPicker :
                     showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL)
                 } else {
                     val i = AdvancedSettingsFragment.getSubscreenIntent(this)
-                    launchActivityForResultWithAnimation(i, requestPathUpdateLauncher, NONE)
+                    requestPathUpdateLauncher.launch(i)
                     showThemedToast(this, R.string.directory_inaccessible, false)
                 }
             }
@@ -1330,8 +1330,7 @@ open class DeckPicker :
                 Timber.i("Displaying new features")
                 val infoIntent = Intent(this, Info::class.java)
                 infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
-                val transition = if (skip != 0) START else NONE
-                launchActivityForResultWithAnimation(infoIntent, showNewVersionInfoLauncher, transition)
+                showNewVersionInfoLauncher.launch(infoIntent)
             } else {
                 Timber.i("Dev Build - not showing 'new features'")
                 // Don't show new features dialog for development builds
@@ -1599,7 +1598,7 @@ open class DeckPicker :
     override fun loginToSyncServer() {
         val myAccount = Intent(this, MyAccount::class.java)
         myAccount.putExtra("notLoggedIn", true)
-        launchActivityForResultWithAnimation(myAccount, loginForSyncLauncher, FADE)
+        loginForSyncLauncher.launch(myAccount)
     }
 
     // Callback to import a file -- adding it to existing collection
@@ -1677,7 +1676,7 @@ open class DeckPicker :
             val intent = Intent()
             intent.putExtra("withDeckOptions", withDeckOptions)
             intent.setClass(this, StudyOptionsActivity::class.java)
-            launchActivityForResultWithAnimation(intent, reviewLauncher, START)
+            reviewLauncher.launch(intent)
         }
     }
 
@@ -2054,7 +2053,7 @@ open class DeckPicker :
 
     private fun openReviewer() {
         val reviewer = Intent(this, Reviewer::class.java)
-        launchActivityForResultWithAnimation(reviewer, reviewLauncher, START)
+        reviewLauncher.launch(reviewer)
     }
 
     override fun onCreateCustomStudySession() {

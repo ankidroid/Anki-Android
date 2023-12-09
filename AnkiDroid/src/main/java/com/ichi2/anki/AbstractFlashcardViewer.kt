@@ -858,7 +858,7 @@ abstract class AbstractFlashcardViewer :
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
         editCard.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         editorCard = currentCard
-        launchActivityForResultWithAnimation(editCard, editCurrentCardLauncher, animation)
+        editCurrentCardLauncher.launch(editCard)
     }
 
     fun generateQuestionSoundList() {

@@ -1114,7 +1114,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         intent.putExtra(EXTRA_DID, deckId)
         // mutate event with additional properties
         intentEnricher.accept(intent)
-        launchActivityForResultWithAnimation(intent, requestAddLauncher, START)
+        requestAddLauncher.launch(intent)
     }
 
     // ----------------------------------------------------------------------------
@@ -1252,7 +1252,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             intent.putExtra("ordId", mCurrentEditedCard!!.ord)
             Timber.d("showCardTemplateEditor() with ord %s", mCurrentEditedCard!!.ord)
         }
-        launchActivityForResultWithAnimation(intent, requestTemplateEditLauncher, START)
+        requestTemplateEditLauncher.launch(intent)
     }
 
     /** Appends a string at the selection point, or appends to the end if not in focus  */
@@ -1552,7 +1552,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         val field = note!!.getField(index)!!
         val editCard = Intent(this@NoteEditor, MultimediaEditFieldActivity::class.java)
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY, MultimediaEditFieldActivityExtra(index, field, note))
-        launchActivityForResultWithAnimation(editCard, requestMultiMediaEditLauncher, NONE)
+        requestMultiMediaEditLauncher.launch(editCard)
     }
 
     private fun initFieldEditText(editText: FieldEditText?, index: Int, enabled: Boolean) {

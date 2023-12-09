@@ -664,7 +664,7 @@ open class Reviewer :
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
-        launchActivityForResultWithAnimation(intent, addNoteLauncher, animation)
+        addNoteLauncher.launch(intent)
     }
 
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")

@@ -317,14 +317,8 @@ abstract class NavigationDrawerActivity :
 
                 R.id.nav_settings -> {
                     Timber.i("Navigating to settings")
-                    launchActivityForResultWithAnimation(
-                        Intent(
-                            this@NavigationDrawerActivity,
-                            Preferences::class.java
-                        ),
-                        mPreferencesLauncher,
-                        FADE
-                    )
+                    val intent = Intent(this, Preferences::class.java)
+                    mPreferencesLauncher.launch(intent)
                 }
 
                 R.id.nav_help -> {

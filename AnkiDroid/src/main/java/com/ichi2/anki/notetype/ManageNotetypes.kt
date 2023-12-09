@@ -38,7 +38,6 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
@@ -287,11 +286,7 @@ class ManageNotetypes : AnkiActivity() {
         val targetIntent = Intent(this@ManageNotetypes, T::class.java).apply {
             extras.forEach { toExtra(it) }
         }
-        launchActivityForResultWithAnimation(
-            targetIntent,
-            outsideChangesLauncher,
-            ActivityTransitionAnimation.Direction.START
-        )
+        outsideChangesLauncher.launch(targetIntent)
     }
 
     private fun Intent.toExtra(newExtra: Map.Entry<String, Any>) {
