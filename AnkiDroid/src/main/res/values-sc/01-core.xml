@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Ismànnia</string>
     <string name="collapse">Mìnima</string>
-    <string name="study_more">Istùdia de prus</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Mancat %d minutu</item>
         <item quantity="other">Mancant %d minutos</item>
@@ -140,10 +139,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Chirca de matzos</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Chirca de matzos</string>
     <string name="invalid_deck_name">Nùmene de su matzu non vàlidu</string>
-    <string name="studyoptions_empty">Su matzu est bòidu. Incarca su butone + pro annànghere cuntenutos noos.</string>
-    <string name="studyoptions_limit_reached">Ses arribbadu a su lìmite de istùdiu pro oe</string>
-    <string name="studyoptions_empty_schedule">Peruna carta pranificada de istudiare</string>
-    <string name="studyoptions_congrats_finished">Bene meda! Pro como as agabbadu.</string>
     <string name="studyoptions_no_cards_due">Peruna carta de revisionare como</string>
     <string name="sd_card_not_mounted">Sa memòria de su dispositivu no est montada</string>
     <string name="button_sync" comment="Text of the sync button">Sincroniza</string>

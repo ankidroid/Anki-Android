@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Palawakin</string>
     <string name="collapse">Ipakita lamang ang balangkas</string>
-    <string name="study_more">Pagaralan pa</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d natitirang minuto</item>
         <item quantity="other">%d natitirang mga minuto</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">Walang laman ang deck na ito. Pindutin and + na butones upang magdagdag ng bago.</string>
-    <string name="studyoptions_limit_reached">Naabot na ang limitasyon ng arawang pagaaral</string>
-    <string name="studyoptions_empty_schedule">Wala pang barahahang kailangang pagaralan</string>
-    <string name="studyoptions_congrats_finished">Maligayang pagbati! Natapos ka na sa ngayon.</string>
     <string name="studyoptions_no_cards_due">Wala pang barahang kailangan</string>
     <string name="sd_card_not_mounted">Hindi nakamount ang storage ng aparato</string>
     <string name="button_sync" comment="Text of the sync button">I-singkronisa</string>

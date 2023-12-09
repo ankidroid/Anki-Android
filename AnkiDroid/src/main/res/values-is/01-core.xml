@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
-    <string name="study_more">Læra meira</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d mínuta enn</item>
         <item quantity="other">%d mínutur enn</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="button_sync" comment="Text of the sync button">Sync</string>

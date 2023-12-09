@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">विस्तृत करा</string>
     <string name="collapse">कोसळणे</string>
-    <string name="study_more">अधिक अभ्यास करा</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d मिनिट शिल्लक आहे</item>
         <item quantity="other">%d मिनिटे शिल्लक आहेत</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">डेक शोध</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">डेक शोध</string>
     <string name="invalid_deck_name">अवैध डेक नाव</string>
-    <string name="studyoptions_empty">हा डेक रिक्त आहे. नवीन सामग्री जोडण्यासाठी + बटण दाबा.</string>
-    <string name="studyoptions_limit_reached">दररोज अभ्यासाची मर्यादा गाठली</string>
-    <string name="studyoptions_empty_schedule">अभ्यासासाठी कोणतेही कार्ड शेड्यूल केलेले नाही</string>
-    <string name="studyoptions_congrats_finished">अभिनंदन! आपण आत्ताच संपविले आहे.</string>
     <string name="studyoptions_no_cards_due">अद्याप कोणतीही कार्ड शिल्लक नाही</string>
     <string name="sd_card_not_mounted">डिव्हाइस संचयन आरोहित नाही</string>
     <string name="button_sync" comment="Text of the sync button">समक्रमित करा</string>

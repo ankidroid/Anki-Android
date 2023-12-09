@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Desplegar</string>
     <string name="collapse">Ocultar</string>
-    <string name="study_more">Estudiar más</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuto restante</item>
         <item quantity="other">%d minutos restantes</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Buscar Mazos</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Búsqueda de Mazo</string>
     <string name="invalid_deck_name">Nombre de mazo no válido</string>
-    <string name="studyoptions_empty">Este mazo está vacío. Pulsa el botón + para añadir contenido nuevo.</string>
-    <string name="studyoptions_limit_reached">Límite de estudio diario alcanzado</string>
-    <string name="studyoptions_empty_schedule">Sin tarjetas programadas para estudiar</string>
-    <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
     <string name="studyoptions_no_cards_due">Todavía no hay ninguna tarjeta pendiente.</string>
     <string name="sd_card_not_mounted">Almacenamiento del dispositivo no montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>

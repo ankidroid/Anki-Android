@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Прошири</string>
     <string name="collapse">Колапс</string>
-    <string name="study_more">Учи повеке</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">остана %d минута</item>
         <item quantity="other">останаа %d минути</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Невалидно име за шпил</string>
-    <string name="studyoptions_empty">Овој deck е празен. Притиснете го копчето + за да додадете нова содржина.</string>
-    <string name="studyoptions_limit_reached">Достигнато дневно ниво на студирање</string>
-    <string name="studyoptions_empty_schedule">Нема картички за планирано учење</string>
-    <string name="studyoptions_congrats_finished">Честитки! Вие за сега завршивте.</string>
     <string name="studyoptions_no_cards_due">Ниедна картичка не е доспеана</string>
     <string name="sd_card_not_mounted">Уредот за складирање не е монтиран</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизирај</string>

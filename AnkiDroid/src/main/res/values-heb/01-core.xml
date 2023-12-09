@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">הרחב</string>
     <string name="collapse">צמצם</string>
-    <string name="study_more">למידה נוספת</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">נותרה דקה %d</item>
         <item quantity="two">נותרו %d דקות</item>
@@ -145,10 +144,6 @@
     <string name="search_deck" comment="Deck search for selecting it">חיפוש חפיסה</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">חיפוש חפיסה</string>
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
-    <string name="studyoptions_empty">החפיסה ריקה. לחץ על כפתור ה+ להוספת תוכן חדש.</string>
-    <string name="studyoptions_limit_reached">יעד הלמידה היומי הושלם</string>
-    <string name="studyoptions_empty_schedule">אין קלפים מתוכננים ללמידה</string>
-    <string name="studyoptions_congrats_finished">מזל טוב! סיימת לרגע.‏</string>
     <string name="studyoptions_no_cards_due">אין כרטיסים נוספים</string>
     <string name="sd_card_not_mounted">התקן אחסון לא מחובר</string>
     <string name="button_sync" comment="Text of the sync button">סנכרון</string>

@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ପ୍ରସାରଣ</string>
     <string name="collapse">ସଙ୍କୋଚନ</string>
-    <string name="study_more">ଆହୁରି ଅଧ୍ୟୟନ କରିବେ</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d ମିନିଟ୍ ବାକି ଅଛି</item>
         <item quantity="other">%d ମିନିଟ୍ ବାକି ଅଛି</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
-    <string name="studyoptions_empty">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି। ନୂଆ ଵିଷୟଵସ୍ତୁ ଯୋଡ଼ିବା ପାଇଁ + ବଟନ୍ ଦବାନ୍ତୁ।</string>
-    <string name="studyoptions_limit_reached">ଦୈନିକ ଅଧ୍ୟୟନ ସୀମା ପହଞ୍ଚିଛି</string>
-    <string name="studyoptions_empty_schedule">ଅଧ୍ୟୟନ ପାଇଁ କୌଣସି ପତ୍ର ନିର୍ଦ୍ଧାରିତ ହୋଇନାହିଁ</string>
-    <string name="studyoptions_congrats_finished">ଅଭିନନ୍ଦନ! ଆପଣ ଏବେ ପାଇଁ ସବୁ ସାରିଛନ୍ତି।</string>
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
     <string name="sd_card_not_mounted">ଡିଵାଇସ୍ ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
     <string name="button_sync" comment="Text of the sync button">ସୀଙ୍କ୍</string>

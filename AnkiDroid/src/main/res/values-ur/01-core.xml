@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">پھیلائیں</string>
     <string name="collapse">بند کریں</string>
-    <string name="study_more">مزید مطالعہ کریں</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d منٹ باقی</item>
         <item quantity="other">%d منٹ باقی</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">ڈیک تلاش</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ڈیک تلاش</string>
     <string name="invalid_deck_name">ڈیک کا نام غلط ہے</string>
-    <string name="studyoptions_empty">یہ ڈیک خالی ہے ۔ + کے بٹن کو دبا کر نیا مواد ڈالیں.</string>
-    <string name="studyoptions_limit_reached">روزانہ مطالعہ کی حد تک پہنچ گئے ہیں</string>
-    <string name="studyoptions_empty_schedule">مطالعہ کرنے کے لیے کوئی کارڈ شیڈول نہیں ہے</string>
-    <string name="studyoptions_congrats_finished">مبارک ہو! آپ فی الحال کے لیے کام ختم کر چکے ہیں.</string>
     <string name="studyoptions_no_cards_due">ابھی تک کوئی کارڈ باقی نہیں ہے</string>
     <string name="sd_card_not_mounted">ڈیوائس اسٹوریج نصب نہیں ہے</string>
     <string name="button_sync" comment="Text of the sync button">ہم وقت سازی</string>

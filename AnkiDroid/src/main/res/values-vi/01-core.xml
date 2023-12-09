@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Mở rộng</string>
     <string name="collapse">Thu gọn</string>
-    <string name="study_more">Học thêm</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">còn %d phút</item>
     </plurals>
@@ -135,10 +134,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Tìm kiếm bộ thẻ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Tìm kiếm bộ thẻ</string>
     <string name="invalid_deck_name">Tên bộ thẻ không hợp lệ</string>
-    <string name="studyoptions_empty">Bộ thẻ này rỗng. Bấm bút + để thêm nội dung mới.</string>
-    <string name="studyoptions_limit_reached">Đã đạt giới hạn học hằng ngày</string>
-    <string name="studyoptions_empty_schedule">Không có thẻ nào được lên lịch học</string>
-    <string name="studyoptions_congrats_finished">Chúc mừng! Bạn đã tạm thời hoàn thành.</string>
     <string name="studyoptions_no_cards_due">Chưa có thẻ nào tới hạn</string>
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
     <string name="button_sync" comment="Text of the sync button">Đồng bộ</string>

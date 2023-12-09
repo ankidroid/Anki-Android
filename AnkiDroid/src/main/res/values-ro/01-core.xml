@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Extindeți</string>
     <string name="collapse">Restrângeți</string>
-    <string name="study_more">Studiaza mai mult </string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minut rămas</item>
         <item quantity="few">%d minute rămase</item>
@@ -141,10 +140,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Căutare Pachete</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Căutare Pachete</string>
     <string name="invalid_deck_name">Nume pachet invalid</string>
-    <string name="studyoptions_empty">Acest pachet este gol. Apăsați butonul + pentru a adăuga conținut nou.</string>
-    <string name="studyoptions_limit_reached">Limita zilnică a fost atinsă</string>
-    <string name="studyoptions_empty_schedule">Niciun cartonaș programat de studiat</string>
-    <string name="studyoptions_congrats_finished">Felicitări! Aţi terminat pentru moment.</string>
     <string name="studyoptions_no_cards_due">Niciun cartonaș scadent</string>
     <string name="sd_card_not_mounted">Cardul SD nu a fost găsit</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizare</string>

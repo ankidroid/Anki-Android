@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Ընդարձակել</string>
     <string name="collapse">Կոծկել</string>
-    <string name="study_more">Սովորել ավելին</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d րոպե է մնացել</item>
         <item quantity="other">%d րոպե է մնացել</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">Կապուկը դատարկ է: Սեղմեք + կոճակը նոր բովանդակություն ավելացնելու համար:</string>
-    <string name="studyoptions_limit_reached">Հասաք օրական սահմանափակման շեմին</string>
-    <string name="studyoptions_empty_schedule">Սովորելու համար հերթագրված քարտեր չկան</string>
-    <string name="studyoptions_congrats_finished">Դուք այս պահի դրությամբ ավարտել եք սույն կապուկը:</string>
     <string name="studyoptions_no_cards_due">Կրկնելիք քարտեր դեռ չկան</string>
     <string name="sd_card_not_mounted">Սարքի պահեստը տեղադրված չէ</string>
     <string name="button_sync" comment="Text of the sync button">Համաժամեցում</string>

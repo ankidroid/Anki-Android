@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Expandera</string>
     <string name="collapse">Minimera</string>
-    <string name="study_more">Studera mer</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minut kvar</item>
         <item quantity="other">%d minuter kvar</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kortlekssökning</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
-    <string name="studyoptions_empty">Den här leken är tom. Använd +-knappen för att lägga till nytt innehåll.</string>
-    <string name="studyoptions_limit_reached">Den dagliga studiegränsen har nåtts</string>
-    <string name="studyoptions_empty_schedule">Inga kort finns schemalagda</string>
-    <string name="studyoptions_congrats_finished">Grattis! Du är klar för stunden.</string>
     <string name="studyoptions_no_cards_due">Inga kort i kö.</string>
     <string name="sd_card_not_mounted">Lagringsenheten inte monterad</string>
     <string name="button_sync" comment="Text of the sync button">Synkronisera</string>

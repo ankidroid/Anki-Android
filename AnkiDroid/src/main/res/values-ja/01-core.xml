@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
-    <string name="study_more">さらに学習</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">残り約 %d 分</item>
     </plurals>
@@ -135,10 +134,6 @@
     <string name="search_deck" comment="Deck search for selecting it">デッキ検索</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">デッキを検索</string>
     <string name="invalid_deck_name">無効なデッキ名です</string>
-    <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
-    <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
-    <string name="studyoptions_empty_schedule">このデッキでは、今日このあと予定されている課題はありません</string>
-    <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの現在の課題をすべて達成しました！</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>

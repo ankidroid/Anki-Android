@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Développer</string>
     <string name="collapse">Regrouper</string>
-    <string name="study_more">Réviser davantage</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute restante</item>
         <item quantity="other">%d minutes restantes</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Recherche de paquet</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Chercher un deck</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
-    <string name="studyoptions_empty">Ce paquet est vide. Appuyez sur le bouton + pour ajouter du contenu.</string>
-    <string name="studyoptions_limit_reached">Vous avez révisé toutes vos cartes d\'aujourd\'hui</string>
-    <string name="studyoptions_empty_schedule">Aucune carte à réviser actuellement</string>
-    <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé&#8230; pour l’instant !</string>
     <string name="studyoptions_no_cards_due">Aucune carte due actuellement</string>
     <string name="sd_card_not_mounted">Aucune carte SD</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniser</string>

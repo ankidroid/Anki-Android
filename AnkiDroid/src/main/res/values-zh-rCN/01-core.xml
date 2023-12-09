@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">展开</string>
     <string name="collapse">折叠</string>
-    <string name="study_more">学习更多</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">剩余 %d 分钟</item>
     </plurals>
@@ -135,10 +134,6 @@
     <string name="search_deck" comment="Deck search for selecting it">牌组搜索</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">牌组搜索</string>
     <string name="invalid_deck_name">无效的牌组名称</string>
-    <string name="studyoptions_empty">这个牌组是空的，请点击 + 按钮来添加内容。</string>
-    <string name="studyoptions_limit_reached">达到每日学习限制</string>
-    <string name="studyoptions_empty_schedule">计划中没有需要学习的卡片</string>
-    <string name="studyoptions_congrats_finished">恭喜！你已经完成了目前的学习任务。</string>
     <string name="studyoptions_no_cards_due">没有卡片待复习。</string>
     <string name="sd_card_not_mounted">未挂载储存设备</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
