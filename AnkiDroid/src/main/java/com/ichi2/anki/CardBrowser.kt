@@ -1397,8 +1397,7 @@ open class CardBrowser :
 
     private fun invalidate() {
         renderBrowserQAJob?.cancel()
-        mCards.clear()
-        viewModel.selectNone()
+        viewModel.invalidate()
     }
 
     /** Currently unused - to be used in #7676  */
