@@ -45,7 +45,6 @@ import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
@@ -170,7 +169,7 @@ open class Reviewer :
         super.onCreate(savedInstanceState)
         if (handledLaunchFromWebBrowser(intent, this)) {
             this.setResult(RESULT_CANCELED)
-            finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+            finish()
             return
         }
         mColorPalette = findViewById(R.id.whiteboard_editor)
@@ -1057,7 +1056,7 @@ open class Reviewer :
             message(text = timeboxMessage)
             positiveButton(R.string.dialog_continue) {}
             negativeButton(text = CollectionManager.TR.studyingFinish()) {
-                finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+                finish()
             }
             cancelable(true)
             setOnCancelListener { }

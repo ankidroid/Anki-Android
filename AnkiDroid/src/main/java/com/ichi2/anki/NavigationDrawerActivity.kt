@@ -276,7 +276,7 @@ abstract class NavigationDrawerActivity :
      */
     protected open fun onNavigationPressed() {
         if (mNavButtonGoesBack) {
-            finishWithAnimation(END)
+            finish()
         } else {
             openDrawer()
         }

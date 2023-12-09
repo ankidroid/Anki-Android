@@ -1100,7 +1100,7 @@ open class DeckPicker :
                     ) || mBackButtonPressedToExit
                 ) {
                     automaticSync()
-                    finishWithAnimation()
+                    finish()
                 } else {
                     showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
                 }
@@ -1110,10 +1110,6 @@ open class DeckPicker :
                 }
             }
         }
-    }
-
-    private fun finishWithAnimation() {
-        super.finishWithAnimation(DEFAULT)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {

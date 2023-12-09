@@ -1700,7 +1700,7 @@ open class CardBrowser :
     private fun closeCardBrowser(result: Int, data: Intent? = null) {
         // Set result and finish
         setResult(result, data)
-        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+        finish()
     }
 
     /**

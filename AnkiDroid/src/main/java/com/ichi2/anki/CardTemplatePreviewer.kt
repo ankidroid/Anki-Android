@@ -18,7 +18,6 @@ package com.ichi2.anki
 
 import android.os.Bundle
 import android.view.View
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.PreviewLayout.Companion.createAndDisplay
@@ -117,7 +116,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         Timber.d("CardTemplatePreviewer:: closeCardTemplatePreviewer()")
         setResult(RESULT_OK)
         CardTemplateNotetype.clearTempModelFiles()
-        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+        finish()
     }
 
     @Deprecated("Deprecated in Java")
@@ -130,7 +129,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     override fun performReload() {
         // This should not happen.
-        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+        finish()
     }
 
     override fun onNavigationPressed() {

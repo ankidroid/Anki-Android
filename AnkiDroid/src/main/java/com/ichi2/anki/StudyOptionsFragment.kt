@@ -365,7 +365,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)
                 icon!!.isAutoMirrored = true
                 mToolbar!!.navigationIcon = icon
-                mToolbar!!.setNavigationOnClickListener { (activity as AnkiActivity).finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
+                mToolbar!!.setNavigationOnClickListener { (activity as AnkiActivity).finish() }
             }
         } catch (e: IllegalStateException) {
             if (!CollectionHelper.instance.colIsOpenUnsafe()) {

@@ -1942,7 +1942,7 @@ abstract class AbstractFlashcardViewer :
         mPreviousAnswerIndicator!!.stopAutomaticHide()
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
         this@AbstractFlashcardViewer.setResult(result)
-        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+        finish()
     }
 
     protected fun refreshActionBar() {

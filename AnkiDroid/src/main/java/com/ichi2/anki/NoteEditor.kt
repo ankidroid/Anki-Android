@@ -1209,13 +1209,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         )
         if (animation != null) {
             finishWithAnimation(animation)
-            return
-        }
-
-        if (caller == CALLER_NOTEEDITOR_INTENT_ADD) {
-            finishWithAnimation(NONE)
         } else {
-            finishWithAnimation(END)
+            finish()
         }
     }
 
