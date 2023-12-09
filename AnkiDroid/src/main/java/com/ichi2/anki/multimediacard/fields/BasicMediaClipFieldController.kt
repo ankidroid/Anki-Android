@@ -24,11 +24,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
+import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
@@ -42,6 +46,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
 
     private lateinit var tvAudioClip: FixedTextView
 
+    private lateinit var selectMediaLauncher: ActivityResultLauncher<Intent?>
+
     override fun createUI(context: Context, layout: LinearLayout) {
         ankiCacheDirectory = context.externalCacheDir?.absolutePath
         // #9639: .opus is application/octet-stream in API 26,
@@ -52,8 +58,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             openChooserPrompt(
                 "audio/*",
                 arrayOf("audio/*", "application/ogg"), // #9226: allows ogg on Android 8
-                R.string.multimedia_editor_popup_audio_clip,
-                ACTIVITY_SELECT_AUDIO_CLIP
+                R.string.multimedia_editor_popup_audio_clip
             )
         }
         layout.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -63,8 +68,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                 openChooserPrompt(
                     "video/*",
                     emptyArray(),
-                    R.string.multimedia_editor_popup_video_clip,
-                    ACTIVITY_SELECT_VIDEO_CLIP
+                    R.string.multimedia_editor_popup_video_clip
                 )
             }
         }
@@ -79,7 +83,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         layout.addView(tvAudioClip, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
-    private fun openChooserPrompt(initialMimeType: String, extraMimeTypes: Array<String>, @StringRes prompt: Int, resultCode: Int) {
+    private fun openChooserPrompt(initialMimeType: String, extraMimeTypes: Array<String>, @StringRes prompt: Int) {
         val allowAllFiles =
             this.mActivity.sharedPrefs().getBoolean("mediaImportAllowAllFiles", false)
         val i = Intent()
@@ -93,22 +97,30 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         // Only get openable files, to avoid virtual files issues with Android 7+
         i.addCategory(Intent.CATEGORY_OPENABLE)
         val chooserPrompt = mActivity.resources.getString(prompt)
-        mActivity.startActivityForResultWithoutAnimation(
+        mActivity.launchActivityForResultWithAnimation(
             Intent.createChooser(i, chooserPrompt),
-            resultCode
+            selectMediaLauncher,
+            ActivityTransitionAnimation.Direction.NONE
         )
     }
 
     @KotlinCleanup("make data non-null")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode != Activity.RESULT_CANCELED && requestCode == ACTIVITY_SELECT_AUDIO_CLIP) {
-            executeSafe(mActivity, "handleMediaSelection:unhandled") {
-                handleMediaSelection(data!!)
-            }
-        }
-        if (resultCode != Activity.RESULT_CANCELED && requestCode == ACTIVITY_SELECT_VIDEO_CLIP) {
-            executeSafe(mActivity, "handleMediaSelection:unhandled") {
-                handleMediaSelection(data!!)
+        // TODO: Delete function from interface once migration is complete. See below comment.
+        // Do Nothing
+        // once everything is migrated over to the register for activity results api,
+        // this will no longer be needed
+    }
+
+    override fun setEditingActivity(activity: MultimediaEditFieldActivity) {
+        super.setEditingActivity(activity)
+        val registry = mActivity.activityResultRegistry
+
+        selectMediaLauncher = registry.register(SELECT_MEDIA_LAUNCHER_KEY, ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode != Activity.RESULT_CANCELED) {
+                executeSafe(mActivity, "handleMediaSelection:unhandled") {
+                    handleMediaSelection(result.data!!)
+                }
             }
         }
     }
@@ -196,7 +208,9 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
     }
 
     override fun onDone() {
-        /* nothing */
+        if (::selectMediaLauncher.isInitialized) {
+            selectMediaLauncher.unregister()
+        }
     }
 
     override fun onFocusLost() {
@@ -208,7 +222,6 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
     }
 
     companion object {
-        private const val ACTIVITY_SELECT_AUDIO_CLIP = 1
-        private const val ACTIVITY_SELECT_VIDEO_CLIP = 2
+        private const val SELECT_MEDIA_LAUNCHER_KEY = "select_media_launcher_key"
     }
 }
