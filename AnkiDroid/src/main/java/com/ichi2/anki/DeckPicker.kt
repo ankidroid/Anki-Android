@@ -484,59 +484,23 @@ open class DeckPicker :
     }
 
     /**
-     * Check if the current WebView version is older than the last supported version, inform the
-     * user with an alarm dialog if it is and provide options to update it.
+     * Check if the current WebView version is older than the last supported version and if it is,
+     * inform the user with a snackbar.
      */
     private fun checkWebviewVersion() {
         // Specifically check for Android System WebView
-        val androidSystemWebViewPackage = "com.google.android.webview"
         try {
+            val androidSystemWebViewPackage = "com.google.android.webview"
             val webviewPackageInfo = packageManager.getPackageInfo(androidSystemWebViewPackage, 0)
             val versionCode = webviewPackageInfo.versionName.split(".")[0].toInt()
             if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
-                val alertDialogBuilder = AlertDialog.Builder(this)
-                val dialogMessage = "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION)."
-                val playStoreURL = "https://play.google.com/store/apps/details?id=com.google.android.webview"
-                val updateGuideURL = "https://gist.github.com/ppoffice/9ce9790708eeabbec1281467e25139e4#file-readme-md"
-                alertDialogBuilder.apply {
-                    setMessage(dialogMessage)
-                    setPositiveButton("Update from Play Store") { _, _ ->
-                        val playStoreIntent = Intent(Intent.ACTION_VIEW).apply {
-                            data = Uri.parse(playStoreURL)
-                        }
-                        startActivity(playStoreIntent)
-                    }
-                    setNegativeButton("Open update guide") { _, _ ->
-                        val guideIntent = Intent(Intent.ACTION_VIEW).apply {
-                            data = Uri.parse(updateGuideURL)
-                        }
-                        startActivity(guideIntent)
-                    }
-                    setNeutralButton("Dismiss") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    setTitle("Update WebView")
-                    create().show()
-                }
+                val snackbarMessage =
+                    "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION)."
+                showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
             }
-        } catch (e: PackageManager.NameNotFoundException) {
-            val alertDialogBuilder = AlertDialog.Builder(this)
-            val dialogMessage = String.format("No Android System Webview found.")
-            val stackOverFlowURL = "https://stackoverflow.com/a/66560291"
-            alertDialogBuilder.apply {
-                setMessage(dialogMessage)
-                setPositiveButton("Info (StackOverFlow)") { _, _ ->
-                    val stackOverFlowIntent = Intent(Intent.ACTION_VIEW).apply {
-                        data = Uri.parse(stackOverFlowURL)
-                    }
-                    startActivity(stackOverFlowIntent)
-                }
-                setNegativeButton("Dismiss") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                setTitle("Missing WebView")
-                create().show()
-            }
+        } catch (_: PackageManager.NameNotFoundException) {
+            val snackbarMessage = "No Android System WebView found"
+            showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
         }
     }
 
