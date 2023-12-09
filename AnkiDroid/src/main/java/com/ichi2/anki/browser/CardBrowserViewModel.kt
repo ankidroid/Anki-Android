@@ -285,6 +285,8 @@ class CardBrowserViewModel(
 
     fun getCardIdAtPosition(position: Int): CardId = cards[position].id
 
+    fun getRowAtPosition(position: Int) = cards[position]
+
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"

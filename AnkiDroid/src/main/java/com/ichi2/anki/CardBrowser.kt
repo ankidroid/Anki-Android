@@ -1588,10 +1588,12 @@ open class CardBrowser :
      */
     private fun updateCardsInList(cards: List<Card>) {
         val idToPos = getPositionMap(mCards)
+        // TODO: Inefficient
         cards
             .mapNotNull { c -> idToPos[c.id] }
             .filterNot { pos -> pos >= viewModel.rowCount }
-            .forEach { pos -> mCards[pos].load(true, viewModel.column1Index, viewModel.column2Index) }
+            .map { pos -> viewModel.getRowAtPosition(pos) }
+            .forEach { it.load(true, viewModel.column1Index, viewModel.column2Index) }
         updateList()
     }
 
@@ -1720,7 +1722,6 @@ open class CardBrowser :
         override fun onScroll(view: AbsListView, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
             val lastVisibleItem = firstVisibleItem + visibleItemCount - 1
-            val cards = mCards
             // List is never cleared, only reset to a new list. So it's safe here.
             val size = viewModel.rowCount
             if (size > 0 && visibleItemCount <= 0) {
@@ -1742,9 +1743,9 @@ open class CardBrowser :
             if (size <= 0 || firstVisibleItem >= size || lastVisibleItem >= size || visibleItemCount <= 0) {
                 return
             }
-            val firstLoaded = cards[firstVisibleItem].isLoaded
+            val firstLoaded = viewModel.getRowAtPosition(firstVisibleItem).isLoaded
             // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
-            val lastLoaded = cards[lastVisibleItem].isLoaded
+            val lastLoaded = viewModel.getRowAtPosition(lastVisibleItem).isLoaded
             if (!firstLoaded || !lastLoaded) {
                 if (!mPostAutoScroll) {
                     showProgressBar()
@@ -1754,7 +1755,7 @@ open class CardBrowser :
                 if (currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount) {
                     mLastRenderStart = currentTime
                     renderBrowserQAJob?.cancel()
-                    launchCatchingTask { renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards.toList()) }
+                    launchCatchingTask { renderBrowserQAParams(firstVisibleItem, visibleItemCount, mCards.toList()) }
                 }
             }
         }
@@ -1891,9 +1892,7 @@ open class CardBrowser :
             return viewModel.rowCount
         }
 
-        override fun getItem(position: Int): CardCache {
-            return mCards[position]
-        }
+        override fun getItem(position: Int): CardCache = viewModel.getRowAtPosition(position)
 
         override fun getItemId(position: Int): Long {
             return position.toLong()
@@ -2250,7 +2249,7 @@ open class CardBrowser :
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun clearCardData(position: Int) {
-        mCards[position].reload()
+        viewModel.getRowAtPosition(position).reload()
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
