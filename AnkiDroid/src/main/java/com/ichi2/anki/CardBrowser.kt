@@ -125,8 +125,7 @@ open class CardBrowser :
 
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val mCards get() = viewModel.cards
+    private val mCards get() = viewModel.cards
     var deckSpinnerSelection: DeckSpinnerSelection? = null
 
     @VisibleForTesting
