@@ -548,7 +548,7 @@ open class CardBrowser :
                 viewModel.selectRowAtPosition(position)
             } else {
                 // load up the card selected on the list
-                val clickedCardId = mCards[position].id
+                val clickedCardId = viewModel.getCardIdAtPosition(position)
                 saveScrollingState(position)
                 openNoteEditorForCard(clickedCardId)
             }
@@ -1652,7 +1652,7 @@ open class CardBrowser :
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
     private fun saveScrollingState(position: Int) {
-        mOldCardId = mCards[position].id
+        mOldCardId = viewModel.getCardIdAtPosition(position)
         mOldCardTopOffset = calculateTopOffset(position)
     }
 

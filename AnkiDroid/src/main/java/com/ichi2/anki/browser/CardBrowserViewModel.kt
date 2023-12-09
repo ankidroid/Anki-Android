@@ -276,6 +276,8 @@ class CardBrowserViewModel(
         sched.sortCards(selectedCardIds, position, 1, shuffle = false, shift = true)
     }.count
 
+    fun getCardIdAtPosition(position: Int): CardId = cards[position].id
+
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
