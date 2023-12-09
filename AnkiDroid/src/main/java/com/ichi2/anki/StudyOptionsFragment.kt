@@ -77,7 +77,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var textTodayRev: TextView
     private lateinit var textNewTotal: TextView
     private lateinit var textTotal: TextView
-    private lateinit var textCongratsMessage: TextView
     private var mToolbar: Toolbar? = null
 
     // Flag to indicate if the fragment should load the deck options immediately after it loads
@@ -207,7 +206,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         // make links clickable
         textDeckDescription.movementMethod = LinkMovementMethod.getInstance()
         buttonStart = studyOptionsView.findViewById(R.id.studyoptions_start)
-        textCongratsMessage = studyOptionsView.findViewById(R.id.studyoptions_congrats_message)
         // Code common to both fragmented and non-fragmented view
         textTodayNew = studyOptionsView.findViewById(R.id.studyoptions_new)
         textTodayLrn = studyOptionsView.findViewById(R.id.studyoptions_lrn)
@@ -570,8 +568,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             if (result.numberOfCardsInDeck == 0 && !isDynamic) {
                 mCurrentContentView = CONTENT_EMPTY
                 deckInfoLayout.visibility = View.VISIBLE
-                textCongratsMessage.visibility = View.VISIBLE
-                textCongratsMessage.setText(R.string.studyoptions_empty)
                 buttonStart.visibility = View.GONE
             } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
                 mCurrentContentView = CONTENT_CONGRATS
@@ -582,12 +578,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 } else {
                     buttonStart.visibility = View.GONE
                 }
-                textCongratsMessage.visibility = View.VISIBLE
-                textCongratsMessage.text = col.sched.finishedMsg()
             } else {
                 mCurrentContentView = CONTENT_STUDY_OPTIONS
                 deckInfoLayout.visibility = View.VISIBLE
-                textCongratsMessage.visibility = View.GONE
                 buttonStart.visibility = View.VISIBLE
                 buttonStart.setText(R.string.studyoptions_start)
             }

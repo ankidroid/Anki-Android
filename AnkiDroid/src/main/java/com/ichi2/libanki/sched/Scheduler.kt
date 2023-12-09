@@ -17,9 +17,6 @@
 package com.ichi2.libanki.sched
 
 import android.app.Activity
-import android.graphics.Typeface
-import android.text.SpannableStringBuilder
-import android.text.style.StyleSpan
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.ankidroid.schedTimingTodayLegacyRequest
@@ -42,7 +39,6 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager.time
-import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
 data class CurrentQueueState(
@@ -423,42 +419,6 @@ open class Scheduler(val col: Collection) {
 
     fun deckTree(includeCounts: Boolean): DeckNode {
         return DeckNode(col.backend.deckTree(now = if (includeCounts) time.intTime() else 0), "")
-    }
-
-    /**
-     * @param context Some Context to access the lang
-     * @return A message to show to user when they reviewed the last card. Let them know if they can see learning card later today
-     * or if they could see more card today by extending review.
-     */
-    @RustCleanup("remove once new congrats screen is the default")
-    fun finishedMsg(): CharSequence {
-        val sb = SpannableStringBuilder()
-        sb.append(col.tr.schedulingCongratulationsFinished())
-        val boldSpan = StyleSpan(Typeface.BOLD)
-        sb.setSpan(boldSpan, 0, sb.length, 0)
-        sb.append(nextDueMsg())
-        return sb
-    }
-
-    fun nextDueMsg(): String {
-        val sb = StringBuilder()
-        if (revDue()) {
-            sb.append("\n\n")
-            sb.append(col.tr.schedulingTodayReviewLimitReached())
-        }
-        if (newDue()) {
-            sb.append("\n\n")
-            sb.append(col.tr.schedulingTodayNewLimitReached())
-        }
-        if (haveBuriedInCurrentDeck()) {
-            sb.append("\n\n")
-            sb.append(col.tr.schedulingBuriedCardsFound(col.tr.schedulingUnburyThem()))
-        }
-        if (col.decks.current().isNormal) {
-            sb.append("\n\n")
-            sb.append(col.tr.schedulingHowToCustomStudy(col.tr.schedulingCustomStudy()))
-        }
-        return sb.toString()
     }
 
     fun deckLimit(): String {
