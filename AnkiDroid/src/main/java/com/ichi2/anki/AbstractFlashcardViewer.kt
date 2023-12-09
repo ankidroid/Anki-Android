@@ -68,6 +68,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.reviewer.*
@@ -508,7 +509,7 @@ abstract class AbstractFlashcardViewer :
             closeReviewer(RESULT_NO_MORE_CARDS)
             // When launched with a shortcut, we want to display a message when finishing
             if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
-                showThemedToast(baseContext, R.string.studyoptions_congrats_finished, false)
+                startActivity(CongratsPage.getIntent(this))
             }
             return
         }

@@ -45,7 +45,6 @@ import org.mockito.Mockito.*
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
-import org.robolectric.shadows.ShadowToast
 import java.util.*
 import java.util.stream.Stream
 import com.ichi2.anim.ActivityTransitionAnimation.Direction as Direction
@@ -250,14 +249,6 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         assertThat("no auto answer after pause", viewer.hasAutomaticAnswerQueued(), equalTo(false))
         viewer.mOnRenderProcessGoneDelegate.onRenderProcessGone(viewer.webView!!, mock(RenderProcessGoneDetail::class.java))
         assertThat("no auto answer after onRenderProcessGone when paused", viewer.hasAutomaticAnswerQueued(), equalTo(false))
-    }
-
-    @Test
-    fun shortcutShowsToastOnFinish() = runTest {
-        val viewer: NonAbstractFlashcardViewer = getViewer(true, true)
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
-        assertEquals(getResourceString(R.string.studyoptions_congrats_finished), ShadowToast.getTextOfLatestToast())
     }
 
     @Test
