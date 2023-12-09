@@ -161,16 +161,6 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:orientation="vertical">
-                    <com.ichi2.ui.FixedTextView
-                        android:id="@+id/studyoptions_congrats_message"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:minLines="2"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center"
-                        android:paddingLeft="2dp"
-                        android:paddingRight="2dp"
-                        android:paddingBottom="8dp"/>
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/studyoptions_start"
                         android:layout_width="wrap_content"

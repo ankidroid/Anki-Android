@@ -618,47 +618,6 @@ open class SchedulerTest : JvmTest() {
 
     @Test
     @Throws(Exception::class)
-    fun test_finishedV2() {
-        val col = col
-        // nothing due
-        MatcherAssert.assertThat(
-            col.sched.finishedMsg().toString(),
-            Matchers.containsString("Congratulations")
-        )
-        MatcherAssert.assertThat(
-            col.sched.finishedMsg().toString(),
-            Matchers.not(
-                Matchers.containsString("limit")
-            )
-        )
-        val note = col.newNote()
-        note.setItem("Front", "one")
-        note.setItem("Back", "two")
-        col.addNote(note)
-        // have a new card
-        MatcherAssert.assertThat(
-            col.sched.finishedMsg().toString(),
-            Matchers.containsString("new cards available")
-        )
-        // turn it into a review
-        val c = note.cards()[0]
-        c.startTimer()
-        col.sched.answerCard(c, BUTTON_THREE)
-        // nothing should be due tomorrow, as it's due in a week
-        MatcherAssert.assertThat(
-            col.sched.finishedMsg().toString(),
-            Matchers.containsString("Congratulations")
-        )
-        MatcherAssert.assertThat(
-            col.sched.finishedMsg().toString(),
-            Matchers.not(
-                Matchers.containsString("limit")
-            )
-        )
-    }
-
-    @Test
-    @Throws(Exception::class)
     fun test_nextIvlV2() {
         val col = col
         val note = col.newNote()
