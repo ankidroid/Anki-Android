@@ -286,7 +286,14 @@ class CardBrowserViewModel(
     fun getCardIdAtPosition(position: Int): CardId = cards[position].id
 
     fun getRowAtPosition(position: Int) = cards[position]
-    fun invalidate() {
+
+    override fun onCleared() {
+        super.onCleared()
+        invalidate()
+    }
+
+    private fun invalidate() {
+        // TODO: this may no longer be needed now we call invalidate from onCleared
         cards.clear()
         selectNone()
     }

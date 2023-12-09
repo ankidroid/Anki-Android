@@ -713,10 +713,7 @@ open class CardBrowser :
     }
 
     override fun onDestroy() {
-        // TODO: Most of this should be handled in viewModel.onCleared
-        if (this::viewModel.isInitialized) {
-            invalidate()
-        }
+        invalidate()
         super.onDestroy()
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver)
@@ -1397,7 +1394,6 @@ open class CardBrowser :
 
     private fun invalidate() {
         renderBrowserQAJob?.cancel()
-        viewModel.invalidate()
     }
 
     /** Currently unused - to be used in #7676  */
