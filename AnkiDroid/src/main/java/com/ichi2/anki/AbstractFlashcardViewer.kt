@@ -27,7 +27,6 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.hardware.SensorManager
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.view.*
@@ -45,7 +44,6 @@ import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.core.net.toFile
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
@@ -60,8 +58,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
 import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
-import com.ichi2.anki.cardviewer.CardSoundConfig
-import com.ichi2.anki.cardviewer.CardSoundConfig.Companion.create
 import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
@@ -88,7 +84,6 @@ import com.ichi2.compat.ResolveInfoFlagsCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
-import com.ichi2.libanki.Sound.OnErrorListener.ErrorHandling
 import com.ichi2.libanki.Sound.SingleSoundSide
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.themes.Themes
@@ -103,7 +98,7 @@ import com.ichi2.utils.HashUtil.hashSetInit
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
 import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
-import net.ankiweb.rsdroid.RustCleanup
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.*
 import java.net.URLDecoder
@@ -113,7 +108,6 @@ import java.util.concurrent.locks.ReadWriteLock
 import java.util.concurrent.locks.ReentrantReadWriteLock
 import java.util.function.Consumer
 import java.util.function.Function
-import java.util.function.Supplier
 import kotlin.math.abs
 
 @KotlinCleanup("lots to deal with")
@@ -172,7 +166,6 @@ abstract class AbstractFlashcardViewer :
     private var mShowNextReviewTime = false
     private var mIsSelecting = false
     private var mInAnswer = false
-    private var mAnswerSoundsAdded = false
 
     /**
      * Variables to hold layout objects that we need to update or handle events for
@@ -200,8 +193,6 @@ abstract class AbstractFlashcardViewer :
     private val mClipboard: ClipboardManager? = null
     private var mPreviousAnswerIndicator: PreviousAnswerIndicator? = null
 
-    /** set when [currentCard] is */
-    private var mCardSoundConfig: CardSoundConfig? = null
     private var mCurrentEase = 0
     private var mInitialFlipCardHeight = 0
     private var mButtonHeightSet = false
@@ -240,13 +231,7 @@ abstract class AbstractFlashcardViewer :
     private val mFadeDuration = 300
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal lateinit var mSoundPlayer: Sound
-
-    /**
-     * Time taken to play all medias in [mSoundPlayer]
-     * This is 0 if we have "Read card" enabled, as we can't calculate the duration.
-     */
-    private var mUseTimerDynamicMS: Long = 0
+    internal lateinit var soundPlayer: SoundPlayer
 
     /** Reference to the parent of the cardFrame to allow regeneration of the cardFrame in case of crash  */
     private var mCardFrameParent: ViewGroup? = null
@@ -279,7 +264,7 @@ abstract class AbstractFlashcardViewer :
         displayCardAnswer()
     }
 
-    private val migrationService by migrationServiceWhileStartedOrNull()
+    internal val migrationService by migrationServiceWhileStartedOrNull()
 
     /**
      * Changes which were received when the viewer was in the background
@@ -472,9 +457,6 @@ abstract class AbstractFlashcardViewer :
         }
         onCardEdited(currentCard!!)
         if (displayAnswer) {
-            mSoundPlayer.resetSounds() // load sounds from scratch, to expose any edit changes
-            mAnswerSoundsAdded = false // causes answer sounds to be reloaded
-            generateQuestionSoundList() // questions must be intentionally regenerated
             displayCardAnswer()
         } else {
             displayCardQuestion()
@@ -580,7 +562,7 @@ abstract class AbstractFlashcardViewer :
         super.onCollectionLoaded(col)
         val mediaDir = col.media.dir
         mBaseUrl = getBaseUrl(mediaDir).also { baseUrl ->
-            mSoundPlayer = Sound(baseUrl)
+            soundPlayer = SoundPlayer.newInstance(this, baseUrl)
             mViewerUrl = baseUrl + "__viewer__.html"
         }
         mAssetLoader = WebViewAssetLoader.Builder()
@@ -632,9 +614,6 @@ abstract class AbstractFlashcardViewer :
         automaticAnswer.disable()
         mGestureDetectorImpl.stopShakeDetector()
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
-        if (this::mSoundPlayer.isInitialized) {
-            mSoundPlayer.stopSounds()
-        }
         // Prevent loss of data in Cookies
         CookieManager.getInstance().flush()
     }
@@ -865,11 +844,6 @@ abstract class AbstractFlashcardViewer :
         editCurrentCardLauncher.launch(editCard)
     }
 
-    fun generateQuestionSoundList() {
-        val tags = Sound.extractTagsFromLegacyContent(currentCard!!.qSimple())
-        mSoundPlayer.addSounds(tags, SingleSoundSide.QUESTION)
-    }
-
     protected fun showDeleteNoteDialog() {
         AlertDialog.Builder(this).show {
             title(R.string.delete_card_title)
@@ -885,7 +859,7 @@ abstract class AbstractFlashcardViewer :
                     "AbstractFlashcardViewer:: OK button pressed to delete note %d",
                     currentCard!!.nid
                 )
-                mSoundPlayer.stopSounds()
+                launchCatchingTask { soundPlayer.stopSounds() }
                 deleteNoteWithoutConfirmation()
             }
             negativeButton(R.string.dialog_cancel)
@@ -924,7 +898,7 @@ abstract class AbstractFlashcardViewer :
             }
             // Temporarily sets the answer indicator dots appearing below the toolbar
             mPreviousAnswerIndicator?.displayAnswerIndicator(ease)
-            mSoundPlayer.stopSounds()
+            soundPlayer.stopSounds()
             mCurrentEase = ease
 
             answerCardInner(ease)
@@ -1356,11 +1330,7 @@ abstract class AbstractFlashcardViewer :
     internal inner class ReadTextListener : ReadText.ReadTextListener {
         override fun onDone(playedSide: SoundSide?) {
             Timber.d("done reading text")
-            if (playedSide == SoundSide.QUESTION) {
-                automaticAnswer.scheduleAutomaticDisplayAnswer()
-            } else if (playedSide == SoundSide.ANSWER) {
-                automaticAnswer.scheduleAutomaticDisplayQuestion()
-            }
+            this@AbstractFlashcardViewer.onSoundGroupCompleted()
         }
     }
 
@@ -1379,13 +1349,10 @@ abstract class AbstractFlashcardViewer :
             answerField?.visibility = View.GONE
         }
         val content = mHtmlGenerator!!.generateHtml(currentCard!!, Side.FRONT)
+        automaticAnswer.onDisplayQuestion()
         updateCard(content)
         hideEaseButtons()
-        automaticAnswer.onDisplayQuestion()
         // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
-        if (!mTTS.enabled) {
-            automaticAnswer.scheduleAutomaticDisplayAnswer(mUseTimerDynamicMS)
-        }
         Timber.i(
             "AbstractFlashcardViewer:: Question successfully shown for card id %d",
             currentCard!!.id
@@ -1416,7 +1383,6 @@ abstract class AbstractFlashcardViewer :
             inputMethodManager.hideSoftInputFromWindow(answerField!!.windowToken, 0)
         }
         displayAnswer = true
-        mSoundPlayer.stopSounds()
         answerField!!.visibility = View.GONE
         // Clean up the user answer and the correct answer
         if (!typeAnswer!!.useInputTag) {
@@ -1424,13 +1390,9 @@ abstract class AbstractFlashcardViewer :
         }
         mIsSelecting = false
         val answerContent = mHtmlGenerator!!.generateHtml(currentCard!!, Side.BACK)
+        automaticAnswer.onDisplayAnswer()
         updateCard(answerContent)
         displayAnswerBottomBar()
-        automaticAnswer.onDisplayAnswer()
-        // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
-        if (!mTTS.enabled) {
-            automaticAnswer.scheduleAutomaticDisplayQuestion(mUseTimerDynamicMS)
-        }
     }
 
     override fun scrollCurrentCardBy(dy: Int) {
@@ -1475,34 +1437,15 @@ abstract class AbstractFlashcardViewer :
         processCardAction { cardWebView: WebView? -> cardWebView!!.dispatchTouchEvent(eUp) }
     }
 
-    @RustCleanup("mAnswerSoundsAdded is no longer necessary once we transition as it's a fast operation")
-    private fun addAnswerSounds(answerSounds: Supplier<List<SoundOrVideoTag>>) {
-        // don't add answer sounds multiple times, such as when reshowing card after exiting editor
-        // additionally, this condition reduces computation time
-        if (!mAnswerSoundsAdded) {
-            mSoundPlayer.addSounds(answerSounds.get(), SingleSoundSide.ANSWER)
-            mAnswerSoundsAdded = true
-        }
-    }
-
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal val isInNightMode: Boolean
         get() = Themes.currentTheme.isNightMode
 
     private fun updateCard(content: CardHtml) {
         Timber.d("updateCard()")
-        mUseTimerDynamicMS = 0
-        if (displayAnswer) {
-            addAnswerSounds { content.getSoundTags(Side.BACK) }
-        } else {
-            // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
-            // leaving the card (such as when edited)
-            mSoundPlayer.resetSounds()
-            mAnswerSoundsAdded = false
-            mSoundPlayer.addSounds(content.getSoundTags(Side.FRONT), SingleSoundSide.QUESTION)
-            if (automaticAnswer.isEnabled() && !mAnswerSoundsAdded && mCardSoundConfig!!.autoplay) {
-                addAnswerSounds { content.getSoundTags(Side.BACK) }
-            }
+        // TODO: This doesn't need to be blocking
+        runBlocking {
+            soundPlayer.loadCardSounds(currentCard!!, if (displayAnswer) Side.BACK else Side.FRONT)
         }
         cardContent = content.getTemplateHtml()
         Timber.d("base url = %s", mBaseUrl)
@@ -1522,11 +1465,6 @@ abstract class AbstractFlashcardViewer :
         playSounds(false) // Play sounds if appropriate
     }
 
-    private fun currentSideHasSounds(): Boolean = when (displayAnswer) {
-        false -> mSoundPlayer.hasQuestion()
-        true -> mSoundPlayer.hasAnswer()
-    }
-
     /**
      * Plays sounds (or TTS, if configured) for currently shown side of card.
      *
@@ -1540,41 +1478,32 @@ abstract class AbstractFlashcardViewer :
             Timber.w("sounds are not played as the activity is inactive")
             return
         }
-        val replayQuestion = mCardSoundConfig!!.replayQuestion
-        if (mCardSoundConfig!!.autoplay || doAudioReplay) {
-            // Use TTS if TTS preference enabled and no other sound source
-            val useTTS = mTTS.enabled && !currentSideHasSounds()
-            // We need to play the sounds from the proper side of the card
-            if (!useTTS) { // Text to speech not in effect here
-                if (doAudioReplay && replayQuestion && displayAnswer) {
-                    // only when all of the above are true will question be played with answer, to match desktop
-                    playSounds(SoundSide.QUESTION_AND_ANSWER)
-                } else if (displayAnswer) {
-                    playSounds(SoundSide.ANSWER)
-                    if (automaticAnswer.isEnabled()) {
-                        mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.ANSWER)
-                    }
-                } else { // question is displayed
-                    playSounds(SoundSide.QUESTION)
-                    // If the user wants to show the answer automatically
-                    if (automaticAnswer.isEnabled()) {
-                        mUseTimerDynamicMS =
-                            mSoundPlayer.getSoundsLength(SoundSide.QUESTION_AND_ANSWER)
-                    }
-                }
-            } else { // Text to speech is in effect here
-                // If the question is displayed or if the question should be replayed, read the question
-                if (mTtsInitialized) {
-                    if (!displayAnswer || doAudioReplay && replayQuestion) {
-                        readCardTts(SingleSoundSide.QUESTION)
-                    }
-                    if (displayAnswer) {
-                        readCardTts(SingleSoundSide.ANSWER)
-                    }
-                } else {
-                    mReplayOnTtsInit = true
+        if (!soundPlayer.config.autoplay && !doAudioReplay) return
+        // Use TTS if TTS preference enabled and no other sound source
+        val useTTS = mTTS.enabled && !soundPlayer.hasSounds(displayAnswer)
+        // We need to play the sounds from the proper side of the card
+        if (!useTTS) {
+            launchCatchingTask {
+                when (doAudioReplay) {
+                    true -> soundPlayer.replayAllSounds()
+                    false -> soundPlayer.playAllSounds()
                 }
             }
+            return
+        }
+
+        val replayQuestion = soundPlayer.config.replayQuestion
+        // Text to speech is in effect here
+        // If the question is displayed or if the question should be replayed, read the question
+        if (mTtsInitialized) {
+            if (!displayAnswer || doAudioReplay && replayQuestion) {
+                readCardTts(SingleSoundSide.QUESTION)
+            }
+            if (displayAnswer) {
+                readCardTts(SingleSoundSide.ANSWER)
+            }
+        } else {
+            mReplayOnTtsInit = true
         }
     }
 
@@ -1584,48 +1513,17 @@ abstract class AbstractFlashcardViewer :
         mTTS.readCardText(tags, currentCard!!, side.toSoundSide())
     }
 
-    private fun playSounds(questionAndAnswer: SoundSide) {
-        mSoundPlayer.playSounds(questionAndAnswer, soundErrorListener)
-    }
-
-    private val soundErrorListener: Sound.OnErrorListener
-        get() = object : Sound.OnErrorListener {
-            private var handledError: HashSet<String> = hashSetOf()
-
-            override fun onError(
-                mp: MediaPlayer?,
-                which: Int,
-                extra: Int,
-                path: String?
-            ): ErrorHandling {
-                Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", which, extra)
-                try {
-                    val file = Uri.parse(path).toFile()
-                    if (!file.exists()) {
-                        if (handleStorageMigrationError(file)) {
-                            return ErrorHandling.RETRY_AUDIO
-                        }
-                        mMissingImageHandler.processMissingSound(file) { filename: String? ->
-                            displayCouldNotFindMediaSnackbar(
-                                filename
-                            )
-                        }
-                    }
-                } catch (e: Exception) {
-                    Timber.w(e)
-                }
-                return ErrorHandling.CONTINUE_AUDIO
-            }
-
-            private fun handleStorageMigrationError(file: File): Boolean {
-                val migrationService = migrationService ?: return false
-                if (handledError.contains(file.absolutePath)) {
-                    return false
-                }
-                handledError.add(file.absolutePath)
-                return migrationService.migrateFileImmediately(file)
-            }
+    /**
+     * @see SoundPlayer.onSoundGroupCompleted
+     */
+    open fun onSoundGroupCompleted() {
+        Timber.v("onSoundGroupCompleted")
+        if (isDisplayingAnswer) {
+            automaticAnswer.scheduleAutomaticDisplayQuestion()
+        } else {
+            automaticAnswer.scheduleAutomaticDisplayAnswer()
         }
+    }
 
     /**
      * Shows the dialogue for selecting TTS for the current card and cardside.
@@ -1660,7 +1558,7 @@ abstract class AbstractFlashcardViewer :
             asyncCreateJob?.join()
             server?.reviewerHtml = content
             if (card != null) {
-                card.settings.mediaPlaybackRequiresUserGesture = !mCardSoundConfig!!.autoplay
+                card.settings.mediaPlaybackRequiresUserGesture = !soundPlayer.config.autoplay
                 Timber.v("*** set server %s content to %s", server, content)
                 card.loadUrl(server?.baseUrl() + "reviewer.html")
             }
@@ -1689,7 +1587,7 @@ abstract class AbstractFlashcardViewer :
                     sched.buryCards(listOf(currentCard!!.id))
                 }
             }
-            mSoundPlayer.stopSounds()
+            soundPlayer.stopSounds()
             showSnackbar(R.string.card_buried, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1703,7 +1601,7 @@ abstract class AbstractFlashcardViewer :
                     sched.suspendCards(listOf(currentCard!!.id))
                 }
             }
-            mSoundPlayer.stopSounds()
+            soundPlayer.stopSounds()
             showSnackbar(TR.studyingCardSuspended(), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1719,7 +1617,7 @@ abstract class AbstractFlashcardViewer :
             }
             val count = changed.count
             val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, count, count)
-            mSoundPlayer.stopSounds()
+            soundPlayer.stopSounds()
             showSnackbar(noteSuspended, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1733,7 +1631,7 @@ abstract class AbstractFlashcardViewer :
                     sched.buryNotes(listOf(currentCard!!.nid))
                 }
             }
-            mSoundPlayer.stopSounds()
+            soundPlayer.stopSounds()
             showSnackbar(TR.studyingCardsBuried(changed.count), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1978,13 +1876,9 @@ abstract class AbstractFlashcardViewer :
                 answerField?.visibility = View.GONE
             }
             val content = mHtmlGenerator!!.generateHtml(currentCard!!, Side.FRONT)
+            automaticAnswer.onDisplayQuestion()
             updateCard(content)
             hideEaseButtons()
-            automaticAnswer.onDisplayQuestion()
-            // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
-            if (!mTTS.enabled) {
-                automaticAnswer.scheduleAutomaticDisplayAnswer(mUseTimerDynamicMS)
-            }
             Timber.i(
                 "AbstractFlashcardViewer:: Question successfully shown for card id %d",
                 currentCard!!.id
@@ -2292,17 +2186,6 @@ abstract class AbstractFlashcardViewer :
     val writeLock: Lock
         get() = mCardLock.writeLock()
     open var currentCard: Card? = null
-        set(card) {
-            field = card
-            mCardSoundConfig = if (card == null) {
-                null
-            } else {
-                if (mCardSoundConfig?.appliesTo(card) == true) {
-                    return
-                }
-                create(getColUnsafe, card)
-            }
-        }
 
     /** Refreshes the WebView after a crash  */
     fun destroyWebViewFrame() {
@@ -2639,16 +2522,13 @@ abstract class AbstractFlashcardViewer :
         @NeedsTest("14221: 'playsound' should play the sound from the start")
         @BlocksSchemaUpgrade("handle TTS tags")
         private suspend fun controlSound(url: String) {
-            val filename = when (val tag = currentCard?.let { getAvTag(it, url) }) {
-                is SoundOrVideoTag -> tag.filename
+            val avTag = when (val tag = currentCard?.let { getAvTag(it, url) }) {
+                is SoundOrVideoTag -> tag
+                is TTSTag -> tag
                 // not currently supported
-                is TTSTag -> null
-                else -> null
+                else -> return
             }
-            val replacedUrl = filename?.let {
-                Sound.getSoundPath(mBaseUrl!!, it)
-            } ?: return
-            mSoundPlayer.playSound(replacedUrl, null, soundErrorListener)
+            soundPlayer.playOneSound(avTag)
         }
 
         private fun decodeUrl(url: String): String {
@@ -2690,7 +2570,7 @@ abstract class AbstractFlashcardViewer :
         Timber.w("state mutation error, see console log")
     }
 
-    private fun displayCouldNotFindMediaSnackbar(filename: String?) {
+    internal fun displayCouldNotFindMediaSnackbar(filename: String?) {
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
             setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
         }
@@ -2788,7 +2668,7 @@ abstract class AbstractFlashcardViewer :
         const val DEFAULT_DOUBLE_TAP_TIME_INTERVAL = 200
 
         /** Handle providing help for "Image Not Found"  */
-        private val mMissingImageHandler = MissingImageHandler()
+        internal val mMissingImageHandler = MissingImageHandler()
 
         @KotlinCleanup("moved from MyGestureDetector")
         // Android design spec for the size of the status bar.

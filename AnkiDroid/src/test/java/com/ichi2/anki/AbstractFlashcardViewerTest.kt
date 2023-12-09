@@ -45,6 +45,7 @@ import org.mockito.Mockito.*
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
+import timber.log.Timber
 import java.util.*
 import java.util.stream.Stream
 import com.ichi2.anim.ActivityTransitionAnimation.Direction as Direction
@@ -80,6 +81,34 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         fun hasAutomaticAnswerQueued(): Boolean {
             return automaticAnswer.timeoutHandler.hasMessages(0)
+        }
+
+        /**
+         * Fixes an issue with noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632
+         * where [onSoundGroupCompleted] executed AFTER [executeCommand] completed
+         * this lead to an assertion which sometimes occurred before [onSoundGroupCompleted] had
+         * been called, which failed
+         *
+         * This is fine in real life, as we have sounds to play
+         */
+        private var soundGroupCompleted = false
+
+        override fun onSoundGroupCompleted() {
+            super.onSoundGroupCompleted()
+            soundGroupCompleted = true
+        }
+
+        override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
+            soundGroupCompleted = false
+            return super.executeCommand(which, fromGesture).also {
+                if (which != ViewerCommand.SHOW_ANSWER) return@also
+                Timber.v("waiting for onSoundGroupCompleted")
+                for (i in 0..100) {
+                    if (soundGroupCompleted) break
+                    Thread.sleep(10)
+                }
+                require(soundGroupCompleted) { "soundGroupCompleted never occurred" }
+            }
         }
     }
 
@@ -238,7 +267,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    fun noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() {
+    fun noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() = runTest {
         val controller = getViewerController(true, false)
         val viewer = controller.get()
         viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5))
