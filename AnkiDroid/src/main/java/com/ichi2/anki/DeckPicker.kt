@@ -83,13 +83,13 @@ import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLaunche
 import com.ichi2.anki.dialogs.MediaCheckDialog.MediaCheckDialogListener
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
+import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -966,12 +966,7 @@ open class DeckPicker :
 
     private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-            // Show a message when reviewing has finished
-            if (getColUnsafe.sched.totalCount() == 0) {
-                showSnackbar(R.string.studyoptions_congrats_finished)
-            } else {
-                showSnackbar(R.string.studyoptions_no_cards_due)
-            }
+            startActivity(CongratsPage.getIntent(this))
         } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
             Timber.i("Obtained Abort and Sync result")
             sync()
@@ -1720,34 +1715,9 @@ open class DeckPicker :
 
     @NeedsTest("14608: Ensure that the deck options refer to the selected deck")
     private suspend fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
-        fun showStudyMoreSnackbar(did: DeckId) =
-            showSnackbar(R.string.studyoptions_limit_reached) {
-                addCallback(mSnackbarShowHideCallback)
-                setAction(R.string.study_more) {
-                    val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
-                        CustomStudyDialog.ContextMenuConfiguration.LIMITS,
-                        did,
-                        true
-                    )
-                    showDialogFragment(d)
-                }
-            }
-
         fun showEmptyDeckSnackbar() = showSnackbar(R.string.empty_deck) {
             addCallback(mSnackbarShowHideCallback)
             setAction(R.string.menu_add) { addNote() }
-        }
-
-        fun showCustomStudySnackbar() = showSnackbar(R.string.studyoptions_empty_schedule) {
-            addCallback(mSnackbarShowHideCallback)
-            setAction(R.string.custom_study) {
-                val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
-                    CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE,
-                    did,
-                    true
-                )
-                showDialogFragment(d)
-            }
         }
 
         /** Check if we need to update the fragment or update the deck list */
@@ -1779,27 +1749,15 @@ open class DeckPicker :
         }
 
         when (queryCompletedDeckCustomStudyAction(did)) {
-            CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED -> {
-                // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
-                openStudyOptions(withDeckOptions = false)
-            }
+            CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED,
+            CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY,
+            CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED,
             CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED -> {
-                // If there are no cards to review because of the daily study limit then give "Study more" option
-                showStudyMoreSnackbar(did)
-                updateUi()
-            }
-            CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED -> {
-                // Go to the study options screen if filtered deck with no cards to study
-                openStudyOptions(withDeckOptions = false)
+                startActivity(CongratsPage.getIntent(this))
             }
             CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
                 // If the deck is empty (& has no children) then show a message saying it's empty
                 showEmptyDeckSnackbar()
-                updateUi()
-            }
-            CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY -> {
-                // Otherwise say there are no cards scheduled to study, and give option to do custom study
-                showCustomStudySnackbar()
                 updateUi()
             }
         }

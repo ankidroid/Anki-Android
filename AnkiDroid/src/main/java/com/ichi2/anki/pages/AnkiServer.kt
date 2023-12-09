@@ -93,6 +93,7 @@ open class AnkiServer(
             "setWantsAbort" -> CollectionManager.getBackend().setWantsAbortRaw(bytes)
             "evaluateWeights" -> withCol { evaluateWeightsRaw(bytes) }
             "latestProgress" -> CollectionManager.getBackend().latestProgressRaw(bytes)
+            "congratsInfo" -> withCol { congratsInfoRaw(bytes) }
             else -> { throw Exception("unhandled request: $methodName") }
         }
     }
