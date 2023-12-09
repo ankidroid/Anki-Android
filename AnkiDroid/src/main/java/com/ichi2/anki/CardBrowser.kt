@@ -863,12 +863,8 @@ open class CardBrowser :
     }
 
     private fun updatePreviewMenuItem() {
-        mPreviewItem?.isVisible = cardCount > 0
+        mPreviewItem?.isVisible = viewModel.rowCount > 0
     }
-
-    /** Returns the number of cards that are visible on the screen  */
-    val cardCount: Int
-        get() = mCards.size()
 
     private fun updateMultiselectMenu() {
         Timber.d("updateMultiselectMenu()")
@@ -920,7 +916,7 @@ open class CardBrowser :
     }
 
     private fun hasSelectedAllCards(): Boolean {
-        return viewModel.selectedRowCount() >= cardCount // must handle 0.
+        return viewModel.selectedRowCount() >= viewModel.rowCount // must handle 0.
     }
 
     private fun updateFlagForSelectedRows(flag: Int) {
@@ -1454,7 +1450,7 @@ open class CardBrowser :
             showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
         } else {
             // If we haven't selected all decks, allow the user the option to search all decks.
-            val message = if (cardCount == 0) {
+            val message = if (viewModel.rowCount == 0) {
                 getString(R.string.card_browser_no_cards_in_deck, selectedDeckNameForUi)
             } else {
                 subtitleText
@@ -1508,7 +1504,7 @@ open class CardBrowser :
      */
     override val subtitleText: String
         get() {
-            val count = cardCount
+            val count = viewModel.rowCount
 
             @androidx.annotation.StringRes val subtitleId = if (viewModel.cardsOrNotes == CARDS) {
                 R.plurals.card_browser_subtitle
@@ -1594,7 +1590,7 @@ open class CardBrowser :
         val idToPos = getPositionMap(mCards)
         cards
             .mapNotNull { c -> idToPos[c.id] }
-            .filterNot { pos -> pos >= cardCount }
+            .filterNot { pos -> pos >= viewModel.rowCount }
             .forEach { pos -> mCards[pos].load(true, viewModel.column1Index, viewModel.column2Index) }
         updateList()
     }
@@ -1726,7 +1722,7 @@ open class CardBrowser :
             val lastVisibleItem = firstVisibleItem + visibleItemCount - 1
             val cards = mCards
             // List is never cleared, only reset to a new list. So it's safe here.
-            val size = cardCount
+            val size = viewModel.rowCount
             if (size > 0 && visibleItemCount <= 0) {
                 // According to Mike, there used to be 5 to 10 report by hour on the beta version. All with
                 // > com.ichi2.anki.exception.ManuallyReportedException: Useless onScroll call, with size 0 firstVisibleItem 0,
@@ -1892,7 +1888,7 @@ open class CardBrowser :
         }
 
         override fun getCount(): Int {
-            return cardCount
+            return viewModel.rowCount
         }
 
         override fun getItem(position: Int): CardCache {
@@ -1922,7 +1918,7 @@ open class CardBrowser :
             // If we're not in mutliselect, we can select cards if there are cards to select
             if (!isInMultiSelectMode) {
                 mActionBarMenu?.findItem(R.id.action_select_all)?.apply {
-                    isVisible = cardCount() != 0
+                    isVisible = viewModel.rowCount != 0
                 }
                 return
             }
@@ -2246,11 +2242,6 @@ open class CardBrowser :
         mActionBarTitle.visibility = View.GONE
     }
 
-    @VisibleForTesting
-    fun cardCount(): Int {
-        return cardCount
-    }
-
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val isShowingSelectAll: Boolean
         get() = mActionBarMenu?.findItem(R.id.action_select_all)?.isVisible == true
@@ -2266,7 +2257,7 @@ open class CardBrowser :
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     suspend fun rerenderAllCards() {
-        renderBrowserQAParams(0, cardCount - 1, mCards.toList())
+        renderBrowserQAParams(0, viewModel.rowCount - 1, mCards.toList())
     }
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)

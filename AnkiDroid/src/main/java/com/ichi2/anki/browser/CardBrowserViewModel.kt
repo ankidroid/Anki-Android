@@ -276,6 +276,10 @@ class CardBrowserViewModel(
         sched.sortCards(selectedCardIds, position, 1, shuffle = false, shift = true)
     }.count
 
+    /** Returns the number of rows of the current result set  */
+    val rowCount: Int
+        get() = cards.size()
+
     fun getCardIdAtPosition(position: Int): CardId = cards[position].id
 
     companion object {
