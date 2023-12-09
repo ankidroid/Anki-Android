@@ -844,7 +844,7 @@ open class CardBrowser :
         deckPicker.action = Intent.ACTION_MAIN
         deckPicker.addCategory(Intent.CATEGORY_LAUNCHER)
         deckPicker.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.FADE)
+        startActivity(deckPicker)
         finishActivityWithFade(this)
         this.setResult(RESULT_CANCELED)
     }
@@ -1159,7 +1159,7 @@ open class CardBrowser :
             R.id.action_view_card_info -> {
                 viewModel.cardInfoDestination?.let { destination ->
                     val intent: Intent = destination.toIntent(this)
-                    startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.FADE)
+                    startActivity(intent)
                 }
                 return true
             }

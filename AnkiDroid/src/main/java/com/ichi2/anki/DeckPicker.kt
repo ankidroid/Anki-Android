@@ -939,7 +939,7 @@ open class DeckPicker :
                 val manageNoteTypesTarget =
                     ManageNotetypes::class.java
                 val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
-                startActivityWithAnimation(noteTypeBrowser, START)
+                startActivity(noteTypeBrowser)
                 return true
             }
             R.id.action_restore_backup -> {
@@ -1202,7 +1202,7 @@ open class DeckPicker :
     fun addNote() {
         val intent = Intent(this@DeckPicker, NoteEditor::class.java)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-        startActivityWithAnimation(intent, START)
+        startActivity(intent)
     }
 
     private fun showStartupScreensAndDialogs(preferences: SharedPreferences, skip: Int) {
@@ -1666,7 +1666,7 @@ open class DeckPicker :
     private fun openFilteredDeckOptions() {
         val intent = Intent()
         intent.setClass(this, FilteredDeckOptions::class.java)
-        startActivityWithAnimation(intent, START)
+        startActivity(intent)
     }
 
     private fun openStudyOptions(@Suppress("SameParameterValue") withDeckOptions: Boolean) {
@@ -1920,11 +1920,11 @@ open class DeckPicker :
             // open cram options if filtered deck
             val i = Intent(this@DeckPicker, FilteredDeckOptions::class.java)
             i.putExtra("did", did)
-            startActivityWithAnimation(i, FADE)
+            startActivity(i)
         } else {
             // otherwise open regular options
             val intent = com.ichi2.anki.pages.DeckOptions.getIntent(this, did)
-            startActivityWithAnimation(intent, FADE)
+            startActivity(intent)
         }
     }
 

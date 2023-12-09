@@ -302,7 +302,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.putExtra("collectionLoadError", true) // don't currently do anything with this
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivityWithAnimation(deckPicker, START)
+        startActivity(deckPicker)
     }
 
     fun showProgressBar() {
