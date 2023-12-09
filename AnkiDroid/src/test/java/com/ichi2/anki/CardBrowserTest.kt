@@ -331,7 +331,7 @@ class CardBrowserTest : RobolectricTest() {
         // check if all card flags turned to flag = 3
         assertThat(
             "All cards should be flagged",
-            cardBrowser.cardIds
+            cardBrowser.viewModel.allCardIds
                 .map { cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId) }
                 .all { flag1 -> flag1 == flagForAll }
         )
@@ -816,7 +816,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     private fun deleteCardAtPosition(browser: CardBrowser, positionToCorrupt: Int) {
-        removeCardFromCollection(browser.cardIds[positionToCorrupt])
+        removeCardFromCollection(browser.viewModel.allCardIds[positionToCorrupt])
         browser.clearCardData(positionToCorrupt)
     }
 
@@ -1017,13 +1017,3 @@ fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
         viewModel.selectRowAtPosition(pos)
     }
 }
-
-val CardBrowser.cardIds: LongArray
-    get() {
-        val cardsCopy = mCards.wrapped.toTypedArray()
-        val ret = LongArray(cardsCopy.size)
-        for (i in cardsCopy.indices) {
-            ret[i] = cardsCopy[i].id
-        }
-        return ret
-    }
