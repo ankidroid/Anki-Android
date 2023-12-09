@@ -1248,7 +1248,7 @@ open class CardBrowser :
         } else {
             // Preview all cards, starting from the one that is currently selected
             val startIndex = viewModel.selectedRows.firstOrNull()?.position ?: 0
-            getPreviewIntent(startIndex, allCardIds)
+            getPreviewIntent(startIndex, viewModel.allCardIds)
         }
 
     private fun getPreviewIntent(index: Int, selectedCardIds: LongArray): Intent {
@@ -1943,8 +1943,6 @@ open class CardBrowser :
         defaultViewModelCreationExtras
     )[CardBrowserViewModel::class.java]
 
-    private val allCardIds: LongArray
-        get() = mCards.map { c -> c.id }.toLongArray()
     // This could be better: use a wrapper class PositionAware<T> to store the position so it's
     // no longer a responsibility of CardCache and we can guarantee it's consistent just by using this collection
     /** A position-aware collection to ensure consistency between the position of items and the collection  */

@@ -56,6 +56,9 @@ class CardBrowserViewModel(
 ) : ViewModel(), SharedPreferencesProvider by preferences {
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
 
+    /** The CardIds of all the cards in the results */
+    val allCardIds get() = cards.map { c -> c.id }.toLongArray()
+
     var searchTerms: String = ""
     var restrictOnDeck: String = ""
     var currentFlag = 0
