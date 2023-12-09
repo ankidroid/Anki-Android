@@ -85,7 +85,7 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun selectAllIsVisibleWhenCardsInDeck() {
         val browser = browserWithMultipleNotes
-        assertThat(browser.cardCount(), greaterThan(0L))
+        assertThat(browser.cardCount(), greaterThan(0))
         assertThat(browser.isShowingSelectAll, equalTo(true))
     }
 
@@ -148,7 +148,7 @@ class CardBrowserTest : RobolectricTest() {
         // Sometimes an async operation deletes a card, we clear the data and rerender it to simulate this
         deleteCardAtPosition(browser, 0)
         assertDoesNotThrowSuspend { browser.rerenderAllCards() }
-        assertThat(browser.cardCount(), equalTo(5L))
+        assertThat(browser.cardCount(), equalTo(5))
     }
 
     @Test
@@ -1009,8 +1009,8 @@ fun CardBrowser.replaceSelectionWith(positions: IntArray) {
 fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
     // PREF: inefficient as the card flow is updated each iteration
     positions.forEach { pos ->
-        check(pos < mCards.size()) {
-            "Attempted to check card at index $pos. ${mCards.size()} cards available"
+        check(pos < cardCount) {
+            "Attempted to check card at index $pos. $cardCount cards available"
         }
         viewModel.selectRowAtPosition(pos)
     }

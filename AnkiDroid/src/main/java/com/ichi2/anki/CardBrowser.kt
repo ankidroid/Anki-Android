@@ -1726,7 +1726,7 @@ open class CardBrowser :
             val lastVisibleItem = firstVisibleItem + visibleItemCount - 1
             val cards = mCards
             // List is never cleared, only reset to a new list. So it's safe here.
-            val size = cards.size()
+            val size = cardCount
             if (size > 0 && visibleItemCount <= 0) {
                 // According to Mike, there used to be 5 to 10 report by hour on the beta version. All with
                 // > com.ichi2.anki.exception.ManuallyReportedException: Useless onScroll call, with size 0 firstVisibleItem 0,
@@ -1922,7 +1922,7 @@ open class CardBrowser :
             // If we're not in mutliselect, we can select cards if there are cards to select
             if (!isInMultiSelectMode) {
                 mActionBarMenu?.findItem(R.id.action_select_all)?.apply {
-                    isVisible = cardCount() != 0L
+                    isVisible = cardCount() != 0
                 }
                 return
             }
@@ -2247,8 +2247,8 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun cardCount(): Long {
-        return mCards.size().toLong()
+    fun cardCount(): Int {
+        return cardCount
     }
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -2266,7 +2266,7 @@ open class CardBrowser :
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     suspend fun rerenderAllCards() {
-        renderBrowserQAParams(0, mCards.size() - 1, mCards.toList())
+        renderBrowserQAParams(0, cardCount - 1, mCards.toList())
     }
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
