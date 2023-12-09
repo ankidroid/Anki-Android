@@ -265,7 +265,7 @@ object ImportUtils {
                 setCancelable(false)
                 positiveButton(R.string.dialog_ok) {
                     if (exitActivity) {
-                        AnkiActivity.finishActivityWithFade(activity)
+                        activity.finish()
                     }
                 }
             }

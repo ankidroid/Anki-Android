@@ -844,7 +844,7 @@ open class CardBrowser :
         deckPicker.addCategory(Intent.CATEGORY_LAUNCHER)
         deckPicker.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(deckPicker)
-        finishActivityWithFade(this)
+        finish()
         this.setResult(RESULT_CANCELED)
     }
 

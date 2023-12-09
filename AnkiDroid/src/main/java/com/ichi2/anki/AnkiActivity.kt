@@ -3,7 +3,6 @@
 
 package com.ichi2.anki
 
-import android.app.Activity
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
@@ -553,12 +552,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
         /** Extra key to set the finish animation of an activity  */
         const val FINISH_ANIMATION_EXTRA = "finishAnimation"
-
-        /** Finish Activity using FADE animation  */
-        fun finishActivityWithFade(activity: Activity) {
-            activity.finish()
-            ActivityTransitionAnimation.slide(activity, FADE)
-        }
 
         fun showDialogFragment(activity: AnkiActivity, newFragment: DialogFragment) {
             showDialogFragment(activity.supportFragmentManager, newFragment)
