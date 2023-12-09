@@ -27,6 +27,7 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.content.*
+import android.content.pm.PackageManager
 import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
@@ -134,6 +135,7 @@ import kotlin.time.measureTimedValue
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
 const val TIMES_STORAGE_MIGRATION_POSTPONED_KEY = "timesStorageMigrationPostponed"
+const val OLDEST_WORKING_WEBVIEW_VERSION = 77
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -461,6 +463,7 @@ open class DeckPicker :
         Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate()
 
         launchShowingHidingEssentialFileMigrationProgressDialog()
+        checkWebviewVersion()
     }
 
     private fun hasShownAppIntro(): Boolean {
@@ -478,6 +481,63 @@ open class DeckPicker :
         }
 
         return prefs.getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
+    }
+
+    /**
+     * Check if the current WebView version is older than the last supported version, inform the
+     * user with an alarm dialog if it is and provide options to update it.
+     */
+    private fun checkWebviewVersion() {
+        // Specifically check for Android System WebView
+        val androidSystemWebViewPackage = "com.google.android.webview"
+        try {
+            val webviewPackageInfo = packageManager.getPackageInfo(androidSystemWebViewPackage, 0)
+            val versionCode = webviewPackageInfo.versionName.split(".")[0].toInt()
+            if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
+                val alertDialogBuilder = AlertDialog.Builder(this)
+                val dialogMessage = "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION)."
+                val playStoreURL = "https://play.google.com/store/apps/details?id=com.google.android.webview"
+                val updateGuideURL = "https://gist.github.com/ppoffice/9ce9790708eeabbec1281467e25139e4#file-readme-md"
+                alertDialogBuilder.apply {
+                    setMessage(dialogMessage)
+                    setPositiveButton("Update from Play Store") { _, _ ->
+                        val playStoreIntent = Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse(playStoreURL)
+                        }
+                        startActivity(playStoreIntent)
+                    }
+                    setNegativeButton("Open update guide") { _, _ ->
+                        val guideIntent = Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse(updateGuideURL)
+                        }
+                        startActivity(guideIntent)
+                    }
+                    setNeutralButton("Dismiss") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    setTitle("Update WebView")
+                    create().show()
+                }
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            val alertDialogBuilder = AlertDialog.Builder(this)
+            val dialogMessage = String.format("No Android System Webview found.")
+            val stackOverFlowURL = "https://stackoverflow.com/a/66560291"
+            alertDialogBuilder.apply {
+                setMessage(dialogMessage)
+                setPositiveButton("Info (StackOverFlow)") { _, _ ->
+                    val stackOverFlowIntent = Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse(stackOverFlowURL)
+                    }
+                    startActivity(stackOverFlowIntent)
+                }
+                setNegativeButton("Dismiss") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                setTitle("Missing WebView")
+                create().show()
+            }
+        }
     }
 
     /**
