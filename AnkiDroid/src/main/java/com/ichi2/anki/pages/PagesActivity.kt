@@ -64,7 +64,7 @@ class PagesActivity : AnkiActivity() {
         supportFragmentManager.commit {
             replace(R.id.page_container, pageFragment)
         }
-        setTitle(pageFragment.title)
+        setTitle(pageFragment.title ?: R.string.empty_string)
     }
 
     override fun onDestroy() {

@@ -32,7 +32,7 @@ import timber.log.Timber
 abstract class PageFragment : Fragment() {
     @get:StringRes
     /** Title string resource of the page */
-    abstract val title: Int
+    abstract val title: Int?
     abstract val pageName: String
     abstract var webViewClient: PageWebViewClient
     abstract var webChromeClient: PageChromeClient
