@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Rozbalit</string>
     <string name="collapse">Sbalit</string>
-    <string name="study_more">Studovat více</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Zbývá %d minuta</item>
         <item quantity="few">Zbývají %d minuty</item>
@@ -144,10 +143,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Hledat balíček</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Hledat balíček</string>
     <string name="invalid_deck_name">Neplatný název balíčku</string>
-    <string name="studyoptions_empty">Tento balíček je prázdný. Stiskněte tlačítko +, abyste přidali nový obsah.</string>
-    <string name="studyoptions_limit_reached">Denní limit studia dosažen</string>
-    <string name="studyoptions_empty_schedule">Žádné další karty ke studiu</string>
-    <string name="studyoptions_congrats_finished">Blahopřejeme! Prozatím máte hotovo</string>
     <string name="studyoptions_no_cards_due">Žádné karty ještě nejsou ke zkoušení</string>
     <string name="sd_card_not_mounted">Zařízení úložiště není připojeno</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizovat</string>

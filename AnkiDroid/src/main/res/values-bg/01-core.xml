@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Разширяване</string>
     <string name="collapse">Свиване</string>
-    <string name="study_more">Учи повече</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d минута остава</item>
         <item quantity="other">%d минути остава</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Потърси тесте</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Потърси тесте</string>
     <string name="invalid_deck_name">Невалидно име на тесте</string>
-    <string name="studyoptions_empty">Това тесте е празно. Натиснете бутона + за добавяне на ново съдържание.</string>
-    <string name="studyoptions_limit_reached">Дневен лимит на учене достигнат</string>
-    <string name="studyoptions_empty_schedule">Няма насрочени карти за учене</string>
-    <string name="studyoptions_congrats_finished">Поздравления! Вие сте приключили за сега.</string>
     <string name="studyoptions_no_cards_due">Няма оставащи карти</string>
     <string name="sd_card_not_mounted">Не е поставена SD-карта памет</string>
     <string name="button_sync" comment="Text of the sync button">Синхрон</string>

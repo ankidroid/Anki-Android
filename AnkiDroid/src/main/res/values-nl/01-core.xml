@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Uitklappen</string>
     <string name="collapse">Inklappen</string>
-    <string name="study_more">Studeer meer</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuut over</item>
         <item quantity="other">%d minuten over</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Leerset zoeken</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Set doorzoeken</string>
     <string name="invalid_deck_name">Ongeldige setnaam</string>
-    <string name="studyoptions_empty">Deze leerset is leeg. Druk op de + knop om nieuwe inhoud toe te voegen.</string>
-    <string name="studyoptions_limit_reached">De dagelijkse studielimiet is bereikt</string>
-    <string name="studyoptions_empty_schedule">Er zijn geen kaarten gepland om te studeren</string>
-    <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
     <string name="studyoptions_no_cards_due">Nog geen kaarten te doen.</string>
     <string name="sd_card_not_mounted">Apparaatopslag niet aangesloten</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniseer</string>

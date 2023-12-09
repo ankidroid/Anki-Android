@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">വികസിപ്പിക്കുക</string>
     <string name="collapse">ചുരുക്കുക</string>
-    <string name="study_more">കൂടുതൽ പഠിക്കുക</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d മിനിറ്റ് ശേഷിക്കുന്നു</item>
         <item quantity="other">%d മിനിറ്റ് ശേഷിക്കുന്നു</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">ഡെക്ക് തിരയൽ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">ഡെക്കിന്റെ പേര് അസാധുവാണ്</string>
-    <string name="studyoptions_empty">ഈ ഡെക്ക് ശൂന്യമാണ്. പുതിയ ഉള്ളടക്കം ചേർക്കാൻ + ബട്ടൺ അമർത്തുക</string>
-    <string name="studyoptions_limit_reached"> ദൈനംദിന പഠന പരിധിയിലെത്തി</string>
-    <string name="studyoptions_empty_schedule">കാർഡുകളൊന്നും പഠിക്കാൻ ഷെഡ്യൂൾ ചെയ്തിട്ടില്ല</string>
-    <string name="studyoptions_congrats_finished">അഭിനന്ദനങ്ങൾ! നിങ്ങൾ ഇപ്പോൾ പൂർത്തിയാക്കി.</string>
     <string name="studyoptions_no_cards_due">കാർഡുകളൊന്നും ഇതുവരെ ലഭിച്ചിട്ടില്ല</string>
     <string name="sd_card_not_mounted">ഉപകരണ സംഭരണം മ .ണ്ട് ചെയ്തിട്ടില്ല</string>
     <string name="button_sync" comment="Text of the sync button">സമന്വയിപ്പിക്കുക</string>

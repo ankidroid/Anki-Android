@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">விரிவாக்கு</string>
     <string name="collapse">சரிவு</string>
-    <string name="study_more">இன்னும் படி</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d நிமிடம் விட்டுவிட்டது</item>
         <item quantity="other">%d நிமிடம் விட்டுவிட்டது</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">இந்த கட்டு காலியாக உள்ளது. பத்திரிகை, + புதிய உள்ளடக்கம் சேர்க்க பொத்தான்.</string>
-    <string name="studyoptions_limit_reached">தினசரி படிப்பு வரம்பை அடைந்தது</string>
-    <string name="studyoptions_empty_schedule">ஆய்வு செய்ய திட்டமிட்ட அட்டைகள் இல்லை</string>
-    <string name="studyoptions_congrats_finished">வாழ்த்துக்கள்! நீ இப்போது முடித்துவிட்டாய்.</string>
     <string name="studyoptions_no_cards_due">இல்லை அட்டைகள் இன்னும் காரணமாக உள்ளன</string>
     <string name="sd_card_not_mounted">சாதன சேமிப்பகம் பொருத்தப்படவில்லை</string>
     <string name="button_sync" comment="Text of the sync button">ஒத்திசைக்க</string>

@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Etendi</string>
     <string name="collapse">Maletendi</string>
-    <string name="study_more">Lerni pli</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">ankoraŭ %d minuto</item>
         <item quantity="other">ankoraŭ %d minutoj</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Serĉi kartaron</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Serĉi kartaron</string>
     <string name="invalid_deck_name">Malĝusta nomo por kartaro</string>
-    <string name="studyoptions_empty">Tiu ĉi kartaro estas malplena. Frapetu la butonon “+” por aldoni novan enhavon.</string>
-    <string name="studyoptions_limit_reached">Limigo de taga lernado atingita</string>
-    <string name="studyoptions_empty_schedule">Neniu karto planita por lerni</string>
-    <string name="studyoptions_congrats_finished">Gratulon! Vi finis hodiaŭan lernadon.</string>
     <string name="studyoptions_no_cards_due">Neniu karto por ripeti</string>
     <string name="sd_card_not_mounted">Aparata konservejo ne muntita</string>
     <string name="button_sync" comment="Text of the sync button">Samtempigi</string>

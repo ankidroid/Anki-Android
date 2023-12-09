@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Razširi</string>
     <string name="collapse">Strni</string>
-    <string name="study_more">Preuči več</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Še %d min.</item>
         <item quantity="two">Še %d min.</item>
@@ -144,10 +143,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">Ta komplet je prazen. Pritisnite na gumb +, da dodate novo vsebino.</string>
-    <string name="studyoptions_limit_reached">Dosežena omejitev dnevnega učenja</string>
-    <string name="studyoptions_empty_schedule">Ni načrtovanih kartic za učenje</string>
-    <string name="studyoptions_congrats_finished">Čestitke! Za zdaj ste končali.</string>
     <string name="studyoptions_no_cards_due">Nobena kartica še ni zapadla</string>
     <string name="sd_card_not_mounted">Pomnilniška naprava ni priklopljena</string>
     <string name="button_sync" comment="Text of the sync button">Sinhroniziraj</string>

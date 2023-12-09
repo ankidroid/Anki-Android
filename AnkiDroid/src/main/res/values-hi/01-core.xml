@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">विस्तार करें</string>
     <string name="collapse">संक्षिप्त करें</string>
-    <string name="study_more">अधिक अध्ययन करें</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d मिनट शेष</item>
         <item quantity="other">%d मिनट बचे हैं</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">डेक खोज</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">डेक खोज</string>
     <string name="invalid_deck_name">अमान्य डेक नाम</string>
-    <string name="studyoptions_empty">यह डेक खाली है । नई सामग्री जोड़ने के लिए + बटन दबाएँ.</string>
-    <string name="studyoptions_limit_reached">दैनिक अध्ययन सीमा तक पहुंच गई</string>
-    <string name="studyoptions_empty_schedule">कोई कार्ड अध्ययन के लिए अनुसूचित</string>
-    <string name="studyoptions_congrats_finished">बधाइयाँ! आप अभी के लिए समाप्त कर दिया है।</string>
     <string name="studyoptions_no_cards_due">कोई कार्ड अभी तक देय नहीं है</string>
     <string name="sd_card_not_mounted">डिवाइस संग्रह माउंट नहीं</string>
     <string name="button_sync" comment="Text of the sync button">सिंक</string>

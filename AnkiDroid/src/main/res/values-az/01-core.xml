@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Genişləndir</string>
     <string name="collapse">Daralt</string>
-    <string name="study_more">Daha çox öyrən</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d dəqiqə qaldı</item>
         <item quantity="other">%d dəqiqə qaldı</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Dəstə axtar</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Dəstə axtar</string>
     <string name="invalid_deck_name">Etibarsız kart adı</string>
-    <string name="studyoptions_empty">Bu dəstə boşdur. Yeni məzmun əlavə etmək üçün + düyməsinə basın.</string>
-    <string name="studyoptions_limit_reached">Gündəlik öyrənmə limitinə çatıldı</string>
-    <string name="studyoptions_empty_schedule">Öyrənmək üçün planlaşdırılmış kart yoxdur</string>
-    <string name="studyoptions_congrats_finished">Təbriklər! Hələlik bitirdiniz.</string>
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
     <string name="sd_card_not_mounted">Cihaz yaddaşı bağlı deyil</string>
     <string name="button_sync" comment="Text of the sync button">Sinxronlaşdır</string>

@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Vergroot</string>
     <string name="collapse">Verklein</string>
-    <string name="study_more">Leer meer/Meer inligting </string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuut oor</item>
         <item quantity="other">%d minute oor</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Pak Soek</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pak Soek</string>
     <string name="invalid_deck_name">Ongeldige pak naam</string>
-    <string name="studyoptions_empty">Hierdie pak is leeg. Druk die + knoppie om nuwe inhoud by te voeg.</string>
-    <string name="studyoptions_limit_reached">Daaglikse studie limiet bereik</string>
-    <string name="studyoptions_empty_schedule">Geen kaarte vir studie geskeduleerd</string>
-    <string name="studyoptions_congrats_finished">Geluk! Jy is klaar vir nou.</string>
     <string name="studyoptions_no_cards_due">Geen kaarte is al verskulding nie</string>
     <string name="sd_card_not_mounted">Toestel bergplek is nie heg nie</string>
     <string name="button_sync" comment="Text of the sync button">Sinkroniseer</string>

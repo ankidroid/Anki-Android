@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Genişlet</string>
     <string name="collapse">Daralt</string>
-    <string name="study_more">Daha fazla çalış</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d dakika kaldı</item>
         <item quantity="other">%d dakika kaldı</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Deste Ara</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deste Ara</string>
     <string name="invalid_deck_name">Geçersiz deste adı</string>
-    <string name="studyoptions_empty">Bu deste boş. Yeni içerik eklemek için + düğmesine basın.</string>
-    <string name="studyoptions_limit_reached">Günlük çalışma sınırına ulaşıldı</string>
-    <string name="studyoptions_empty_schedule">Çalışılması planlanmış kart yok</string>
-    <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
     <string name="studyoptions_no_cards_due">Henüz sırası gelmiş kart yok</string>
     <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
     <string name="button_sync" comment="Text of the sync button">Senkronize et</string>
