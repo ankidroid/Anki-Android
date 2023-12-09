@@ -2258,11 +2258,6 @@ open class CardBrowser :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun getPropertiesForCardId(cardId: CardId): CardCache {
-        return mCards.find { c -> c.id == cardId } ?: throw IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId))
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun filterByTag(vararg tags: String) {
         mTagsDialogListenerAction = TagsDialogListenerAction.FILTER
         onSelectedTags(tags.toList(), emptyList(), CardStateFilter.ALL_CARDS)
