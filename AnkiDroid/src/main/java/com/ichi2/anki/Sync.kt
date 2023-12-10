@@ -194,6 +194,7 @@ private suspend fun handleNormalSync(
     auth: SyncAuth,
     syncMedia: Boolean
 ) {
+    var auth2 = auth
     val output = deckPicker.withProgress(
         extractProgress = {
             if (progress.hasNormalSync()) {
@@ -202,13 +203,14 @@ private suspend fun handleNormalSync(
         },
         onCancel = ::cancelSync
     ) {
-        withCol { syncCollection(auth, media = syncMedia) }
+        withCol { syncCollection(auth2, media = syncMedia) }
     }
 
     if (output.hasNewEndpoint()) {
         deckPicker.sharedPrefs().edit {
             putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
         }
+        auth2 = syncAuth { this.hkey = auth.hkey; endpoint = output.newEndpoint }
     }
     val mediaUsn = if (syncMedia) { output.serverMediaUsn } else { null }
 
@@ -225,11 +227,11 @@ private suspend fun handleNormalSync(
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD -> {
-            handleDownload(deckPicker, auth, mediaUsn)
+            handleDownload(deckPicker, auth2, mediaUsn)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> {
-            handleUpload(deckPicker, auth, mediaUsn)
+            handleUpload(deckPicker, auth2, mediaUsn)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {
