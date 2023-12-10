@@ -53,6 +53,10 @@ open class AnkiServer(
         return "http://$LOCALHOST:$listeningPort/"
     }
 
+    // it's faster to serve local files without GZip. see 'page render' in logs
+    // This also removes 'W/System: A resource failed to call end.'
+    override fun useGzipWhenAccepted(r: Response?) = false
+
     override fun serve(session: IHTTPSession): Response {
         val uri = session.uri
         val mime = getMimeFromUri(uri)
