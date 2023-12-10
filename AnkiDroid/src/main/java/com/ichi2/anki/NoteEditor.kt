@@ -520,7 +520,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
         } else {
             mSelectImageForOcclusionButton?.visibility = View.GONE
-            mEditOcclusionsButton?.visibility = View.GONE
+            mPasteImaegOcclusionImageButton?.visibility = View.GONE
+            mEditOcclusionsButton?.visibility = View.VISIBLE
+            mEditOcclusionsButton?.text = resources.getString(R.string.edit_occlusions)
             mEditOcclusionsButton?.setOnClickListener {
                 setupImageOcclusionEditor()
             }
