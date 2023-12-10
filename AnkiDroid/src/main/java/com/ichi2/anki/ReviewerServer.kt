@@ -16,7 +16,6 @@
 
 package com.ichi2.anki
 
-import androidx.fragment.app.FragmentActivity
 import anki.frontend.SetSchedulingStatesRequest
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.utils.AssetHelper
@@ -24,13 +23,9 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 
-class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiServer(activity) {
+class ReviewerServer(activity: AbstractFlashcardViewer, private val mediaDir: String) : AnkiServer(activity) {
     var reviewerHtml: String = ""
-    private val jsApi = if (activity is Reviewer) {
-        reviewer().javaScriptFunction()
-    } else {
-        cardTemplatePreviewer().javaScriptFunction()
-    }
+    private val jsApi = activity.javaScriptFunction()
 
     override fun start() {
         super.start()
@@ -100,10 +95,6 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
 
     private fun reviewer(): Reviewer {
         return (activity as Reviewer)
-    }
-
-    private fun cardTemplatePreviewer(): CardTemplatePreviewer {
-        return (activity as CardTemplatePreviewer)
     }
 
     private fun getSchedulingStatesWithContext(): ByteArray {

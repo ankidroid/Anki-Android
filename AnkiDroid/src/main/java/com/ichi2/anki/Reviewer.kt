@@ -1579,10 +1579,6 @@ open class Reviewer :
         }
     }
 
-    override fun javaScriptFunction(): AnkiDroidJsAPI {
-        return AnkiDroidJsAPI(this)
-    }
-
     override fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
         val cardDataForJsAPI = AnkiDroidJsAPI.CardDataForJsApi().apply {
             newCardCount = mNewCount.toString()
