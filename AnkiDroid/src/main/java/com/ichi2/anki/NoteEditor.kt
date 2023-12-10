@@ -2024,7 +2024,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         get() = mEditorNote!!.items().map { it.requireNoNulls() }.toTypedArray()
 
     private fun currentNotetypeIsImageOcclusion(): Boolean {
-        println("currentNotetypeIsImageOcclusion: ${currentlySelectedNotetype?.fieldsNames}")
         try {
             return currentlySelectedNotetype?.getInt("originalStockKind") == StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
         } catch (j: JSONException) {
