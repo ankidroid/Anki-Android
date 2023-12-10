@@ -19,6 +19,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
+import androidx.core.os.bundleOf
 import com.ichi2.anki.CollectionManager.TR
 import org.json.JSONObject
 
@@ -60,11 +61,7 @@ class ImageOcclusion : PageFragment() {
         private const val ARG_KEY_PATH = "path"
 
         fun getIntent(context: Context, kind: String, noteOrNotetypeId: Long, imagePath: String?): Intent {
-            val arguments = Bundle().apply {
-                putString(ARG_KEY_KIND, kind)
-                putLong(ARG_KEY_ID, noteOrNotetypeId)
-                putString(ARG_KEY_PATH, imagePath)
-            }
+            val arguments = bundleOf(ARG_KEY_KIND to kind, ARG_KEY_ID to noteOrNotetypeId, ARG_KEY_PATH to imagePath)
             return PagesActivity.getIntent(context, ImageOcclusion::class, arguments)
         }
     }
