@@ -503,11 +503,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         if (addNote) {
             mEditOcclusionsButton?.visibility = View.GONE
             mSelectImageForOcclusionButton?.setOnClickListener {
-                val i = Intent()
-                i.type = "image/*"
-                i.action = Intent.ACTION_GET_CONTENT
-                i.addCategory(Intent.CATEGORY_OPENABLE)
-                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                val i = Intent().apply {
+                    type = "image/*"
+                    action = Intent.ACTION_GET_CONTENT
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
                 launchActivityForResultWithAnimation(Intent.createChooser(i, resources.getString(R.string.choose_an_image)), requestIOEditorLauncher, START)
             }
             mPasteImaegOcclusionImageButton?.text = TR.notetypesIoPasteImageFromClipboard()
