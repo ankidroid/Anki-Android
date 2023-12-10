@@ -20,6 +20,8 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -138,6 +140,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private var mCardsButton: AppCompatButton? = null
     private var mNoteTypeSpinner: Spinner? = null
     private var mDeckSpinnerSelection: DeckSpinnerSelection? = null
+    private var mImageOcclusionButtonsContainer: LinearLayout? = null
+    private var mSelectImageForOcclusionButton: Button? = null
+    private var mEditOcclusionsButton: Button? = null
+    private var mPasteImaegOcclusionImageButton: Button? = null
 
     // non-null after onCollectionLoaded
     private var mEditorNote: Note? = null
@@ -173,6 +179,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     private var mToggleStickyText: HashMap<Int, String?> = HashMap()
     private val mOnboarding = Onboarding.NoteEditor(this)
+
+    var clipboard: ClipboardManager? = null
 
     private val requestAddLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
@@ -431,6 +439,17 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             Timber.i("NoteEditor:: Cards button pressed. Opening template editor")
             showCardTemplateEditor()
         }
+        mImageOcclusionButtonsContainer = findViewById(R.id.ImageOcclusionButtonsLayout)
+        mEditOcclusionsButton = findViewById(R.id.EditOcclusionsButton)
+        mSelectImageForOcclusionButton = findViewById(R.id.SelectImageForOcclusionButton)
+        mPasteImaegOcclusionImageButton = findViewById(R.id.PasteImageForOcclusionButton)
+
+        try {
+            clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        } catch (e: Exception) {
+            Timber.w(e)
+        }
+
         aedictIntent = false
         mCurrentEditedCard = null
         when (caller) {
@@ -481,19 +500,35 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
         }
 
-        val imageOcclusionButton: Button = findViewById(R.id.ImageOcclusionButton)
         if (addNote) {
-            imageOcclusionButton.setText(R.string.choose_an_image)
-            imageOcclusionButton.setOnClickListener {
+            mEditOcclusionsButton?.visibility = View.GONE
+            mSelectImageForOcclusionButton?.setOnClickListener {
                 val i = Intent()
                 i.type = "image/*"
                 i.action = Intent.ACTION_GET_CONTENT
                 i.addCategory(Intent.CATEGORY_OPENABLE)
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 launchActivityForResultWithAnimation(Intent.createChooser(i, resources.getString(R.string.choose_an_image)), requestIOEditorLauncher, START)
             }
+            mPasteImaegOcclusionImageButton?.text = TR.notetypesIoPasteImageFromClipboard()
+            mPasteImaegOcclusionImageButton?.setOnClickListener {
+                if (ClipboardUtil.hasImage(clipboard)) {
+                    val uri = ClipboardUtil.getImageUri(clipboard)
+                    val i = Intent().apply {
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        clipData = ClipData.newUri(contentResolver, uri.toString(), uri)
+                    }
+                    ImportUtils.getFileCachedCopy(this, i)?.let { path ->
+                        setupImageOcclusionEditor(path)
+                    }
+                } else {
+                    showSnackbar(TR.editingNoImageFoundOnClipboard())
+                }
+            }
         } else {
-            imageOcclusionButton.setText(R.string.edit_occlusions)
-            imageOcclusionButton.setOnClickListener {
+            mSelectImageForOcclusionButton?.visibility = View.GONE
+            mEditOcclusionsButton?.visibility = View.GONE
+            mEditOcclusionsButton?.setOnClickListener {
                 setupImageOcclusionEditor()
             }
         }
@@ -1309,8 +1344,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             setImageOcclusionButton()
             return
         } else {
-            val imageOcclusionButton: Button = findViewById(R.id.ImageOcclusionButton)
-            imageOcclusionButton.visibility = View.GONE
+            mImageOcclusionButtonsContainer?.visibility = View.GONE
             mFieldsLayoutContainer?.visibility = View.VISIBLE
         }
 
@@ -1998,8 +2032,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun setImageOcclusionButton() {
-        val imageOcclusionButton: Button = findViewById(R.id.ImageOcclusionButton)
-        imageOcclusionButton.visibility = View.VISIBLE
+        mImageOcclusionButtonsContainer?.visibility = View.VISIBLE
         mFieldsLayoutContainer?.visibility = View.GONE
     }
 

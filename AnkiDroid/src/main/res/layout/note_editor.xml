@@ -86,11 +86,31 @@
                     android:paddingVertical="@dimen/keyline_1"
                     android:paddingHorizontal="6dip" />
 
-                <Button
-                    android:id="@+id/ImageOcclusionButton"
+                <LinearLayout
+                    android:id="@+id/ImageOcclusionButtonsLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="Select Image" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/EditOcclusionsButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_occlusions" />
+
+                    <Button
+                        android:id="@+id/SelectImageForOcclusionButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/choose_an_image" />
+
+                    <Button
+                        android:id="@+id/PasteImageForOcclusionButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="Paste Image from Clipboard" />
+
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/CardEditorTagButton"
