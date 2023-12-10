@@ -252,16 +252,15 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     )
 
-    private val requestIOEditorLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        NoteEditorActivityResultCallback { result ->
-            if (result.resultCode != RESULT_CANCELED) {
-                ImportUtils.getFileCachedCopy(this@NoteEditor, result.data!!)?.let { path ->
-                    setupImageOcclusionEditor(path)
-                }
+    private val ioEditorLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri !== null) {
+            ImportUtils.getFileCachedCopy(this@NoteEditor, uri)?.let { path ->
+                setupImageOcclusionEditor(path)
             }
         }
-    )
+    }
 
     private val requestIOEditorCloser = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
@@ -503,13 +502,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         if (addNote) {
             mEditOcclusionsButton?.visibility = View.GONE
             mSelectImageForOcclusionButton?.setOnClickListener {
-                val i = Intent().apply {
-                    type = "image/*"
-                    action = Intent.ACTION_GET_CONTENT
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                }
-                launchActivityForResultWithAnimation(Intent.createChooser(i, resources.getString(R.string.choose_an_image)), requestIOEditorLauncher, START)
+                ioEditorLauncher.launch("image/*")
             }
             mPasteImaegOcclusionImageButton?.text = TR.notetypesIoPasteImageFromClipboard()
             mPasteImaegOcclusionImageButton?.setOnClickListener {

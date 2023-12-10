@@ -63,6 +63,10 @@ object ImportUtils {
         return FileImporter().getFileCachedCopy(context, intent)
     }
 
+    fun getFileCachedCopy(context: Context, uri: Uri): String? {
+        return FileImporter().getFileCachedCopy(context, uri)
+    }
+
     fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
         FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity)
     }
@@ -122,11 +126,7 @@ object ImportUtils {
             }
         }
 
-        /**
-         * Makes a cached copy of the file selected on [intent] and returns its path
-         */
-        fun getFileCachedCopy(context: Context, intent: Intent): String? {
-            val uri = getDataUri(intent) ?: return null
+        fun getFileCachedCopy(context: Context, uri: Uri): String? {
             val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
             val tempPath = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
             return if (copyFileToCache(context, uri, tempPath)) {
@@ -134,6 +134,14 @@ object ImportUtils {
             } else {
                 null
             }
+        }
+
+        /**
+         * Makes a cached copy of the file selected on [intent] and returns its path
+         */
+        fun getFileCachedCopy(context: Context, intent: Intent): String? {
+            val uri = getDataUri(intent) ?: return null
+            return getFileCachedCopy(context, uri)
         }
 
         private fun handleContentProviderFile(
