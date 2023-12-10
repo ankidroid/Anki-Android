@@ -16,6 +16,7 @@
 package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
+import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.GestureMapper
 import com.ichi2.anki.reviewer.MappableBinding
 
@@ -54,8 +55,8 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         val associatedCommands = HashMap<Gesture, ViewerCommand>()
         for (command in ViewerCommand.entries) {
             for (mappableBinding in MappableBinding.fromPreference(preferences, command)) {
-                if (mappableBinding.binding.isGesture) {
-                    associatedCommands[mappableBinding.binding.gesture!!] = command
+                if (mappableBinding.binding is Binding.GestureInput) {
+                    associatedCommands[mappableBinding.binding.gesture] = command
                 }
             }
         }

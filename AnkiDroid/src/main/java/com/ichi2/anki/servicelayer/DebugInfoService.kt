@@ -26,11 +26,12 @@ import org.acra.util.Installation
 
 object DebugInfoService {
     fun getDebugInfo(info: Context): String {
-        val dbV2Enabled = true
         val webviewUserAgent = getWebviewUserAgent(info)
         return """
                AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
                
+               Backend Version = ${BuildConfig.BACKEND_VERSION}
+              
                Android Version = ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})
                
                ProductFlavor = ${BuildConfig.FLAVOR}
@@ -46,9 +47,6 @@ object DebugInfoService {
                ACRA UUID = ${Installation.id(info)}
                
                Crash Reports Enabled = ${isSendingCrashReports(info)}
-               
-               DatabaseV2 Enabled = $dbV2Enabled
-               
         """.trimIndent()
     }
 

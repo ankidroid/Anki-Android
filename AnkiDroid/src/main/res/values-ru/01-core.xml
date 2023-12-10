@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Развернуть</string>
     <string name="collapse">Свернуть</string>
-    <string name="study_more">Учить ещё</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Осталась %d минута</item>
         <item quantity="few">Осталось %d минуты</item>
@@ -144,10 +143,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Поиск колод</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Поиск колоды</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
-    <string name="studyoptions_empty">Эта колода пуста. Нажмите кнопку +, чтобы добавить что-нибудь.</string>
-    <string name="studyoptions_limit_reached">На сегодня всё</string>
-    <string name="studyoptions_empty_schedule">Нет запланированых карточек</string>
-    <string name="studyoptions_congrats_finished">Ура! На сегодня всё.</string>
     <string name="studyoptions_no_cards_due">Нет карточек на сегодня</string>
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизировать</string>

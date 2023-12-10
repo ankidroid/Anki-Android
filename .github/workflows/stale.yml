@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/stale@v8
+    - uses: actions/stale@v9
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-issue-message: 'Hello 👋, this issue has been opened for more than 3 months with no activity on it. If the issue is still here, please keep in mind that we need community support and help to fix it! Just comment something like _still searching for solutions_ and if you found one, please open a pull request! You have 7 days until this gets closed automatically'

@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Дэд цуглуулгуудыг харах</string>
     <string name="collapse">Дэд цуглуулгуудыг нуух</string>
-    <string name="study_more">Илүү карт сурах</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d минут үлдлээ</item>
         <item quantity="other">%d минут үлдлээ</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Багц хайх</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Интернетээс багц хайх</string>
     <string name="invalid_deck_name">Ингэж нэрлэх боломжгүй байна</string>
-    <string name="studyoptions_empty">Энэ цуглуулга хоосон байна. Шинэ зүйлс нэмэхийн тулд, +  товчийг дарна уу</string>
-    <string name="studyoptions_limit_reached">Өдрийн тогтоосон  хэмжээнд хүрсэн байна</string>
-    <string name="studyoptions_empty_schedule">Суралцах ёстой карт алга байна</string>
-    <string name="studyoptions_congrats_finished">Баяр хүргэе! Та одоохондоо цуглуулгаа дуусгалаа</string>
     <string name="studyoptions_no_cards_due">Одоохондоо сурах, давтах карт алга байна</string>
     <string name="sd_card_not_mounted">Багтаамжийн  хэрэгсэл холбогдоогүй байна</string>
     <string name="button_sync" comment="Text of the sync button">Зэрэгцүүлэх</string>

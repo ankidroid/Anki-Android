@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Ανάπτυξη</string>
     <string name="collapse">Σύμπτυξη</string>
-    <string name="study_more">Περισσότερη μελέτη</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Απομένει %d λεπτό</item>
         <item quantity="other">Απομένουν %d λεπτά</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Αναζήτηση</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Αναζήτηση</string>
     <string name="invalid_deck_name">Μη έγκυρο όνομα</string>
-    <string name="studyoptions_empty">Αυτή η τράπουλα είναι κενή. Πατήστε το κουμπί + για να προσθέσετε πριεχόμενο.</string>
-    <string name="studyoptions_limit_reached">Φτάσατε το ημερήσιο όριο μελέτης</string>
-    <string name="studyoptions_empty_schedule">Δεν έχουν προγραμματιστεί κάρτες για μελέτη</string>
-    <string name="studyoptions_congrats_finished">Συγχαρητήρια! Έχετε τελειώσει για τώρα.</string>
     <string name="studyoptions_no_cards_due">Δεν υπάρχουν ακόμη κάρτες για επανάληψη</string>
     <string name="sd_card_not_mounted">O χώρος αποθήκευσης συσκευής δεν έχει προσαρτηθεί</string>
     <string name="button_sync" comment="Text of the sync button">Συγχρονισμός</string>

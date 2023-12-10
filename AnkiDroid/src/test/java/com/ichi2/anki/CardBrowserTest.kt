@@ -27,6 +27,8 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
+import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
+import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.libanki.CardId
@@ -517,7 +519,7 @@ class CardBrowserTest : RobolectricTest() {
             equalTo("1")
         )
 
-        b.repositionCardsNoValidation(listOf(card.id), 2)
+        b.viewModel.repositionSelectedRows(2)
 
         card.reload()
 
@@ -599,7 +601,7 @@ class CardBrowserTest : RobolectricTest() {
             equalTo("1")
         )
 
-        b.repositionCardsNoValidation(listOf(card.id), 2)
+        b.repositionCardsNoValidation(2)
 
         assertThat(
             "Position of checked card after reposition",
@@ -750,8 +752,31 @@ class CardBrowserTest : RobolectricTest() {
         browserWithNoNewCards.apply {
             searchAllDecks()
             assertThat("Result should contain 4 cards", cardCount, equalTo(4))
-            switchCardOrNote(newCardsMode = NOTES)
+            viewModel.setCardsOrNotes(NOTES)
             assertThat("Result should contain 2 cards (one per note)", cardCount, equalTo(2))
+        }
+    }
+
+    /** PR #14859  */
+    @Test
+    fun checkDisplayOrderAfterTogglingCardsToNotes() {
+        browserWithNoNewCards.apply {
+            changeCardOrder(SortType.EASE) // order no. 7 corresponds to "cardEase"
+            changeCardOrder(SortType.EASE) // reverse the list
+
+            viewModel.setCardsOrNotes(NOTES)
+            searchCards()
+
+            assertThat(
+                "Card Browser has the new noteSortType field",
+                col.config.get<String>("noteSortType"),
+                equalTo("cardEase")
+            )
+            assertThat(
+                "Card Browser has the new browserNoteSortBackwards field",
+                col.config.get<Boolean>("browserNoteSortBackwards"),
+                equalTo(true)
+            )
         }
     }
 
@@ -872,8 +897,7 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun truncateAndExpand() {
         val cardBrowser = getBrowserWithNotes(3)
-        // "isTruncated" variable set to true
-        cardBrowser.isTruncated = true
+        cardBrowser.viewModel.setTruncated(true)
 
         // Testing whether each card is truncated and ellipsized
         for (i in 0 until (cardBrowser.cardsListView.childCount)) {
@@ -890,8 +914,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(column2.ellipsize, equalTo(TextUtils.TruncateAt.END))
         }
 
-        // "isTruncate" variable set to false
-        cardBrowser.isTruncated = false
+        cardBrowser.viewModel.setTruncated(false)
 
         // Testing whether each card is expanded and not ellipsized
         for (i in 0 until (cardBrowser.cardsListView.childCount)) {
@@ -914,14 +937,14 @@ class CardBrowserTest : RobolectricTest() {
     fun checkCardsNotesMode() = runTest {
         val cardBrowser = getBrowserWithNotes(3, true)
 
-        cardBrowser.cardsOrNotes = CARDS
+        cardBrowser.viewModel.setCardsOrNotes(CARDS)
         cardBrowser.searchCards()
 
         advanceRobolectricUiLooper()
         // check if we get both cards of each note
         assertThat(cardBrowser.mCards.size(), equalTo(6))
 
-        cardBrowser.cardsOrNotes = NOTES
+        cardBrowser.viewModel.setCardsOrNotes(NOTES)
         cardBrowser.searchCards()
 
         // check if we get one card per note
@@ -933,8 +956,8 @@ class CardBrowserTest : RobolectricTest() {
     fun `column spinner positions are set to 0 if no preferences exist`() = runBlocking {
         // GIVEN: No shared preferences exist for display column selections
         getSharedPrefs().edit {
-            remove(CardBrowser.DISPLAY_COLUMN_1_KEY)
-            remove(CardBrowser.DISPLAY_COLUMN_2_KEY)
+            remove(DISPLAY_COLUMN_1_KEY)
+            remove(DISPLAY_COLUMN_2_KEY)
         }
 
         // WHEN: CardBrowser is created
@@ -957,8 +980,8 @@ class CardBrowserTest : RobolectricTest() {
         val index2 = 5
 
         getSharedPrefs().edit {
-            putInt(CardBrowser.DISPLAY_COLUMN_1_KEY, index1)
-            putInt(CardBrowser.DISPLAY_COLUMN_2_KEY, index2)
+            putInt(DISPLAY_COLUMN_1_KEY, index1)
+            putInt(DISPLAY_COLUMN_2_KEY, index2)
         }
 
         // WHEN: CardBrowser is created

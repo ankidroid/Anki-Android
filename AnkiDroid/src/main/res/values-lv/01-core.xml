@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Paplašināt</string>
     <string name="collapse">Sakļaut</string>
-    <string name="study_more">Mācīties vairāk</string>
     <plurals name="reviewer_window_title">
         <item quantity="zero">%d minūtes atlikušas</item>
         <item quantity="one">%d minūte atlikusi</item>
@@ -141,10 +140,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Kavu pārlūks</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kavu meklētājs</string>
     <string name="invalid_deck_name">Nederīgs kavas nosaukums</string>
-    <string name="studyoptions_empty">Šī kava ir tukša. Spied +, lai pievienotu kārtis</string>
-    <string name="studyoptions_limit_reached">Ikdienas ierobežojums sasniegts</string>
-    <string name="studyoptions_empty_schedule">Nav nekas paredzēts</string>
-    <string name="studyoptions_congrats_finished">Apsveicu! Pagaidām viss pabeigts</string>
     <string name="studyoptions_no_cards_due">Nav gaidāmu kāršu</string>
     <string name="sd_card_not_mounted">Ierīces krātuve nav uzstādīta</string>
     <string name="button_sync" comment="Text of the sync button">Saskaņošana</string>

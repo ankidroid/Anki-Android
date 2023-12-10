@@ -25,6 +25,7 @@
 package com.ichi2.libanki
 
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.utils.KotlinCleanup
 
 @KotlinCleanup("combine file with Sound.kt if done in libAnki")
@@ -70,6 +71,28 @@ fun addPlayIcons(content: String): String {
                     <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill = "lightgrey"/>
                     <path d="M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z" fill=black />Replay</svg>
                     </span></a>"""
+    }
+}
+
+/**
+ * Replaces [anki:play:q:0] with [sound:...]
+ */
+fun replaceWithSoundTags(content: String, renderOutput: TemplateRenderOutput): String {
+    return AV_REF_RE.replace(content) { match ->
+        val groups = match.groupValues
+
+        val index = groups[3].toIntOrNull() ?: return@replace match.value
+
+        val tag = when (groups[2]) {
+            "q" -> renderOutput.questionAvTags.getOrNull(index)
+            "a" -> renderOutput.answerAvTags.getOrNull(index)
+            else -> null
+        }
+        if (tag !is SoundOrVideoTag) {
+            return@replace match.value
+        } else {
+            return@replace "[sound:${tag.filename}]"
+        }
     }
 }
 

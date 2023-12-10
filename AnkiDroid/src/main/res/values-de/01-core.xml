@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Ausklappen</string>
     <string name="collapse">Einklappen</string>
-    <string name="study_more">Weiter lernen</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">noch %d Minute</item>
         <item quantity="other">noch %d Minuten</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Stapelsuche</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Stapelsuche</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
-    <string name="studyoptions_empty">Dieser Stapel ist leer. Berühren Sie die »+«-Schaltfläche, um neue Inhalte hinzuzufügen.</string>
-    <string name="studyoptions_limit_reached">Tageslimit erreicht</string>
-    <string name="studyoptions_empty_schedule">Keine Karten zum Lernen eingeplant</string>
-    <string name="studyoptions_congrats_finished">Herzlichen Glückwunsch! Sie sind für heute fertig.</string>
     <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
     <string name="sd_card_not_mounted">Gerätespeicher nicht eingebunden</string>
     <string name="button_sync" comment="Text of the sync button">Synchronisieren</string>

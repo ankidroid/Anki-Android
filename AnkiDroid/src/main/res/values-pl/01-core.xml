@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Rozwiń</string>
     <string name="collapse">Zwiń</string>
-    <string name="study_more">Studiuj więcej</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Została %d minuta</item>
         <item quantity="few">Zostały %d minuty</item>
@@ -144,10 +143,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Przeszukaj talię</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Wyszukiwanie talii</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
-    <string name="studyoptions_empty">Talia jest pusta. Wybierz przycisk + żeby dodać karty.</string>
-    <string name="studyoptions_limit_reached">Dzienny limit nauki został osiągnięty</string>
-    <string name="studyoptions_empty_schedule">Nie ma zaplanowanych kart do nauki</string>
-    <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
     <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
     <string name="sd_card_not_mounted">Urządzenie pamięci masowej nie zostało zamontowane</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizuj</string>

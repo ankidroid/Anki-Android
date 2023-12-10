@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">إسدال</string>
     <string name="collapse">إخفاء</string>
-    <string name="study_more">ادرس أكثر</string>
     <plurals name="reviewer_window_title">
         <item quantity="zero">%d دقيقة متبقية</item>
         <item quantity="one">دقيقة واحدة متبقية</item>
@@ -97,7 +96,7 @@
     <string name="ease_button_easy">سهل</string>
     <string name="menu_import">استيراد</string>
     <string name="undo">تراجع</string>
-    <string name="redo">Redo</string>
+    <string name="redo">إعادة تطبيق</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">أمحي الخط</string>
     <string name="move_all_to_deck">نقل الكل إلى الرزمة</string>
     <string name="unbury">نكش</string>
@@ -150,10 +149,6 @@
     <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">بحث عن رزمة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
-    <string name="studyoptions_empty">هذه الرزمة فارغة. اضغط زر + لإضافة محتوى جديد.</string>
-    <string name="studyoptions_limit_reached">بلغت حد الدراسة اليومي</string>
-    <string name="studyoptions_empty_schedule">لا توجد بطاقات مُجَدْوَلة للدراسة</string>
-    <string name="studyoptions_congrats_finished">تهانينا! لقد انتهيت لهذا الوقت.</string>
     <string name="studyoptions_no_cards_due">لا توجد بطاقات مستحقة بعد</string>
     <string name="sd_card_not_mounted">لا توجد وحدة تخزين خارجية</string>
     <string name="button_sync" comment="Text of the sync button">مزامنة</string>

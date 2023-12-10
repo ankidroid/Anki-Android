@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">გაშლა</string>
     <string name="collapse">ჩაკეცვა</string>
-    <string name="study_more">მეტის სწავლა</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">დარჩა %d წუთი</item>
         <item quantity="other">დარჩა %d წუთი</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">დასტის ძებნა</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">დასტის ძიება</string>
     <string name="invalid_deck_name">დასტის სახელი არასწორია</string>
-    <string name="studyoptions_empty">დასტა ცარიელია. დააჭირეთ + ნიშანს, რომ დაამატოთ ახალი კონტენტი.</string>
-    <string name="studyoptions_limit_reached">დღიური სწავლის ლიმიტი მიღწეულია</string>
-    <string name="studyoptions_empty_schedule">ბარათები სასწავლად არაა დაგეგმილი</string>
-    <string name="studyoptions_congrats_finished">გილოცავთ! ამჯერად დაასრულეთ.</string>
     <string name="studyoptions_no_cards_due">ჯერ ბარათები არ არის</string>
     <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
     <string name="button_sync" comment="Text of the sync button">სინქრონიზაცია</string>
@@ -253,7 +248,7 @@
     <string name="new_unsafe_collection">ახალი კოლექცია წაიშლება თქვენი მოწყობილობიდან თუკი მოახდენთ AnkiDroid-ის დეინსტალაციას</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
+    <string name="storage_access_title">წვდომა მეხსიერებაზე</string>
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">წვდომა ყველა ფაილზე</string>
 </resources>

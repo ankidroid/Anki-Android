@@ -65,7 +65,7 @@ import java.util.regex.Pattern
  */
 @KotlinCleanup("lots to do")
 @KotlinCleanup("IDE Lint")
-open class AnkiDroidApp : Application(), SharedPreferencesProvider {
+open class AnkiDroidApp : Application() {
     /** An exception if the WebView subsystem fails to load  */
     private var mWebViewError: Throwable? = null
     private val mNotifications = MutableLiveData<Void?>()
@@ -227,6 +227,8 @@ open class AnkiDroidApp : Application(), SharedPreferencesProvider {
 
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         TtsVoices.launchBuildLocalesJob()
+        // enable {{tts-voices:}} field filter
+        TtsVoicesFieldFilter.ensureApplied()
     }
 
     /**
@@ -345,6 +347,13 @@ open class AnkiDroidApp : Application(), SharedPreferencesProvider {
          * This replicates the manner which `lifecycleScope`/`viewModelScope` is exposed in Android
          */
         val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
+        /**
+         * A [SharedPreferencesProvider] which does not require [onCreate] when run from tests
+         *
+         * @see sharedPreferencesTestingOverride
+         */
+        val sharedPreferencesProvider get() = SharedPreferencesProvider { sharedPrefs() }
 
         /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection  */
         var INSTRUMENTATION_TESTING = false
@@ -555,6 +564,4 @@ open class AnkiDroidApp : Application(), SharedPreferencesProvider {
             Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onDetach")
         }
     }
-
-    override fun sharedPrefs(): SharedPreferences = (this as Context).sharedPrefs()
 }

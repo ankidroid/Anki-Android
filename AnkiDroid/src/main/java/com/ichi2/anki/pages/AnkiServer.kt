@@ -116,6 +116,7 @@ open class AnkiServer(
                     activity.finish()
                 }
             }
+            "congratsInfo" -> withCol { congratsInfoRaw(bytes) }
             else -> { throw Exception("unhandled request: $methodName") }
         }
     }
@@ -143,6 +144,7 @@ open class AnkiServer(
     companion object {
         /** Common prefix used on Anki requests */
         const val ANKI_PREFIX = "/_anki/"
+        const val ANKIDROID_JS_PREFIX = "/jsapi/"
 
         fun getMimeFromUri(uri: String): String {
             return when (uri.substringAfterLast(".")) {

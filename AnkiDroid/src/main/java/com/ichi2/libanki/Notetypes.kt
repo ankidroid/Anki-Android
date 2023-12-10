@@ -39,6 +39,7 @@ import anki.notetypes.NotetypeNameIdUseCount
 import anki.notetypes.StockNotetype
 import com.google.protobuf.ByteString
 import com.ichi2.anki.CrashReportService
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.BackendUtils
@@ -47,7 +48,6 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.utils.*
 import com.ichi2.utils.Assert
 import com.ichi2.utils.HashUtil
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.jsonObjectIterable
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
@@ -114,6 +114,9 @@ class Notetypes(val col: Collection) {
     private fun _get_cached(ntid: int): NotetypeJson? {
         return _cache.get(ntid)
     }
+
+    @NeedsTest("14827: styles are updated after syncing style changes")
+    fun _clear_cache() = _cache.clear()
 
     /*
     # Listing note types
@@ -509,7 +512,10 @@ class Notetypes(val col: Collection) {
     # - newModel should be same as m if model is not changing
      */
 
-    /** A compatibility wrapper that converts legacy-style arguments and
+    /**
+     * Modifies the backend schema. Ask the user to confirm schema changes before calling
+     *
+     * A compatibility wrapper that converts legacy-style arguments and
      * feeds them into a backend request, so that AnkiDroid's editor-bound
      * notetype changing can be used. Changing the notetype via the editor is
      * not ideal: it doesn't let users re-order fields in a 2 element note,
@@ -529,8 +535,7 @@ class Notetypes(val col: Collection) {
         newModel: NotetypeJson,
         fmap: Map<Int, Int?>,
         cmap: Map<Int, Int?>
-    ) {
-        col.modSchema()
+    ): OpChanges {
         val fieldMap = convertLegacyMap(fmap, newModel.fieldsNames.size)
         val templateMap =
             if (cmap.isEmpty() || m.type == MODEL_CLOZE || newModel.type == MODEL_CLOZE) {
@@ -539,7 +544,7 @@ class Notetypes(val col: Collection) {
                 convertLegacyMap(cmap, newModel.templatesNames.size)
             }
         val isCloze = newModel.isCloze || m.isCloze
-        col.backend.changeNotetype(
+        return col.backend.changeNotetype(
             noteIds = listOf(nid),
             newFields = fieldMap,
             newTemplates = templateMap,
@@ -631,11 +636,8 @@ class Notetypes(val col: Collection) {
     companion object {
         const val NOT_FOUND_NOTE_TYPE = -1L
 
-        @KotlinCleanup("direct return and use scope function")
-        fun newTemplate(name: String?): JSONObject {
-            val t = JSONObject(defaultTemplate)
-            t.put("name", name)
-            return t
+        fun newTemplate(name: String): JSONObject = JSONObject(defaultTemplate).also {
+            it.put("name", name)
         }
 
         private const val defaultTemplate =

@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ዘርግሕ</string>
     <string name="collapse">ኣብ ሓደ ኣኪብ</string>
-    <string name="study_more">መጽናዕቲ ወስኽ</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">ተሪፉካ ዘሎ ደቒቕ %d</item>
         <item quantity="other">%d ተሪፊካ ዘሎ ደቓይቕ</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">ባይታ ጥርሑ ኣሎ። መልጎም + ጠውቅ ሓዲሽ ትሕዝቶ ክትውስኹ።</string>
-    <string name="studyoptions_limit_reached">መዓልታዊ መጽናዕቲ ክትበጽሖ ትኽእል።</string>
-    <string name="studyoptions_empty_schedule">ኣብ መጽናዕቲ ዝተመደቡ ካርድታት የለውን</string>
-    <string name="studyoptions_congrats_finished">እንቋዕ ሓጎሰኩም ንሕጂ ወዲእኩም ኣለኹም</string>
     <string name="studyoptions_no_cards_due">ክሳብ ሕጂ ዝተገብኡ ካርድታ የለውን</string>
     <string name="sd_card_not_mounted">ናይ መባይል ቦታ ኣይተጻዕነን ኣሎ።</string>
     <string name="button_sync" comment="Text of the sync button">ምውህሃድ</string>

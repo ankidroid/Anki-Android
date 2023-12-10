@@ -96,7 +96,6 @@ import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Note.DupeOrEmpty
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
-import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
@@ -813,9 +812,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // SAVE NOTE METHODS
     // ----------------------------------------------------------------------------
 
-    /**
-     * @param noOfAddedCards
-     */
     @KotlinCleanup("return early and simplify if possible")
     private fun onNoteAdded() {
         var closeEditorAfterSave = false
@@ -845,6 +841,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     @VisibleForTesting
     @NeedsTest("14664: 'first field must not be empty' no longer applies after saving the note")
+    @KotlinCleanup("fix !! on oldModel/newModel")
     suspend fun saveNote() {
         val res = resources
         if (mSelectedTags == null) {
@@ -904,13 +901,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing))
                     val confirm = Runnable {
                         // Bypass the check once the user confirms
-                        changeNoteTypeWithErrorHandling(oldModel, newModel)
+                        changeNoteType(oldModel!!, newModel!!)
                     }
                     dialog.setConfirm(confirm)
                     showDialogFragment(dialog)
                 } else {
                     // Otherwise go straight to changing note type
-                    changeNoteTypeWithErrorHandling(oldModel, newModel)
+                    changeNoteType(oldModel!!, newModel!!)
                 }
                 return
             }
@@ -951,38 +948,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /**
      * Change the note type from oldModel to newModel, handling the case where a full sync will be required
      */
-    private fun changeNoteTypeWithErrorHandling(oldNotetype: NotetypeJson?, newNotetype: NotetypeJson?) {
-        val res = resources
-        try {
-            changeNoteType(oldNotetype, newNotetype)
-        } catch (e: ConfirmModSchemaException) {
-            e.log()
-            // Libanki has determined we should ask the user to confirm first
-            val dialog = ConfirmationDialog()
-            dialog.setArgs(res.getString(R.string.full_sync_confirmation))
-            val confirm = Runnable {
-                // Bypass the check once the user confirms
-                getColUnsafe.modSchemaNoCheck()
-                try {
-                    changeNoteType(oldNotetype, newNotetype)
-                } catch (e2: ConfirmModSchemaException) {
-                    // This should never be reached as we explicitly called modSchemaNoCheck()
-                    throw RuntimeException(e2)
-                }
-            }
-            dialog.setConfirm(confirm)
-            showDialogFragment(dialog)
-        }
-    }
+    private fun changeNoteType(oldNotetype: NotetypeJson, newNotetype: NotetypeJson) = launchCatchingTask {
+        if (!userAcceptsSchemaChange()) return@launchCatchingTask
 
-    /**
-     * Change the note type from oldModel to newModel
-     * @throws ConfirmModSchemaException If a full sync will be required
-     */
-    @Throws(ConfirmModSchemaException::class)
-    private fun changeNoteType(oldNotetype: NotetypeJson?, newNotetype: NotetypeJson?) {
         val noteId = mEditorNote!!.id
-        getColUnsafe.notetypes.change(oldNotetype!!, noteId, newNotetype!!, mModelChangeFieldMap!!, mModelChangeCardMap!!)
+        undoableOp {
+            notetypes.change(oldNotetype, noteId, newNotetype, mModelChangeFieldMap!!, mModelChangeCardMap!!)
+        }
         // refresh the note object to reflect the database changes
         mEditorNote!!.load()
         // close note editor
@@ -1420,7 +1392,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun setMMButtonListener(mediaButton: ImageButton, index: Int) {
         mediaButton.setOnClickListener { v: View ->
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index)
-            if (mEditorNote!!.items()[index][1]!!.isNotEmpty()) {
+            if (mEditorNote!!.items()[index][1].isNotEmpty()) {
                 val col = CollectionHelper.instance.getColUnsafe(this@NoteEditor)!!
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
@@ -2012,9 +1984,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         return mEditorNote!!.items().size > 2
     }
 
-    @KotlinCleanup("remove 'requireNoNulls")
     val fieldsFromSelectedNote: Array<Array<String>>
-        get() = mEditorNote!!.items().map { it.requireNoNulls() }.toTypedArray()
+        get() = mEditorNote!!.items()
 
     private fun currentNotetypeIsImageOcclusion(): Boolean {
         try {

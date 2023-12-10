@@ -32,8 +32,8 @@ import android.os.Parcelable
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
-import android.webkit.JavascriptInterface
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
@@ -47,10 +47,6 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
-import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
-import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
@@ -86,6 +82,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.*
+import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
@@ -106,6 +103,19 @@ open class Reviewer :
     private var mPrefFullscreenReview = false
     private lateinit var mColorPalette: LinearLayout
     private var toggleStylus = false
+
+    // A flag that determines if the SchedulingStates in CurrentQueueState are
+    // safe to persist in the database when answering a card. This is used to
+    // ensure that the custom JS scheduler has persisted its SchedulingStates
+    // back to the Reviewer before we save it to the database. If the custom
+    // scheduler has not been configured, then it is safe to immediately set
+    // this to true
+    //
+    // This flag should be set to false when we show the front of the card
+    // and only set to true once we know the custom scheduler has finished its
+    // execution, or set to true immediately if the custom scheduler has not
+    // been configured
+    var statesMutated = false
 
     // TODO: Consider extracting to ViewModel
     // Card counts
@@ -151,6 +161,11 @@ open class Reviewer :
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)
 
+    private val addNoteLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        FlashCardViewerResultCallback()
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -177,7 +192,10 @@ open class Reviewer :
     }
 
     override fun onResume() {
-        answerTimer.resume()
+        when {
+            stopTimerOnAnswer && isDisplayingAnswer -> {}
+            else -> answerTimer.resume()
+        }
         super.onResume()
         if (answerField != null) {
             answerField!!.focusWithKeyboard()
@@ -657,7 +675,7 @@ open class Reviewer :
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
-        startActivityForResultWithAnimation(intent, ADD_NOTE, animation)
+        launchActivityForResultWithAnimation(intent, addNoteLauncher, animation)
     }
 
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
@@ -1060,6 +1078,7 @@ open class Reviewer :
     }
 
     override fun displayCardQuestion() {
+        statesMutated = false
         // show timer, if activated in the deck's preferences
         answerTimer.setupForCard(currentCard!!)
         delayedHide(100)
@@ -1068,6 +1087,14 @@ open class Reviewer :
 
     @VisibleForTesting
     override fun displayCardAnswer() {
+        if (queueState?.customSchedulingJs?.isEmpty() == true) {
+            statesMutated = true
+        }
+        if (!statesMutated) {
+            executeFunctionWithDelay(50) { displayCardAnswer() }
+            return
+        }
+
         delayedHide(100)
         if (stopTimerOnAnswer) {
             answerTimer.pause()
@@ -1078,6 +1105,7 @@ open class Reviewer :
     private fun runStateMutationHook() {
         val state = queueState ?: return
         if (state.customSchedulingJs.isEmpty()) {
+            statesMutated = true
             return
         }
         val key = customSchedulingKey
@@ -1087,7 +1115,13 @@ open class Reviewer :
         anki.mutateNextCardStates('$key', async (states, customData, ctx) => {{ $js }})
             .catch(err => console.log(err));
 """
-        ) {}
+        ) { result ->
+            if ("null" == result) {
+                // eval failed, usually a syntax error
+                // Note, we get "null" (string) and not null
+                statesMutated = true
+            }
+        }
     }
 
     override fun initLayout() {
@@ -1558,87 +1592,24 @@ open class Reviewer :
     }
 
     override fun javaScriptFunction(): AnkiDroidJsAPI {
-        return ReviewerJavaScriptFunction(this)
+        return AnkiDroidJsAPI(this)
     }
 
-    inner class ReviewerJavaScriptFunction(activity: AbstractFlashcardViewer) : AnkiDroidJsAPI(activity) {
-        @JavascriptInterface
-        override fun ankiGetNewCardCount(): String {
-            return mNewCount.toString()
+    override fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
+        val cardDataForJsAPI = AnkiDroidJsAPI.CardDataForJsApi().apply {
+            newCardCount = mNewCount.toString()
+            lrnCardCount = mLrnCount.toString()
+            revCardCount = mRevCount.toString()
+            nextTime1 = easeButton1!!.nextTime
+            nextTime2 = easeButton2!!.nextTime
+            nextTime3 = easeButton3!!.nextTime
+            nextTime4 = easeButton4!!.nextTime
+            eta = mEta
         }
-
-        @JavascriptInterface
-        override fun ankiGetLrnCardCount(): String {
-            return mLrnCount.toString()
-        }
-
-        @JavascriptInterface
-        override fun ankiGetRevCardCount(): String {
-            return mRevCount.toString()
-        }
-
-        @JavascriptInterface
-        override fun ankiGetETA(): Int {
-            return mEta
-        }
-
-        @JavascriptInterface
-        override fun ankiGetNextTime1(): String {
-            return easeButton1!!.nextTime
-        }
-
-        @JavascriptInterface
-        override fun ankiGetNextTime2(): String {
-            return easeButton2!!.nextTime
-        }
-
-        @JavascriptInterface
-        override fun ankiGetNextTime3(): String {
-            return easeButton3!!.nextTime
-        }
-
-        @JavascriptInterface
-        override fun ankiGetNextTime4(): String {
-            return easeButton4!!.nextTime
-        }
-
-        @JavascriptInterface
-        override fun ankiSetCardDue(days: Int): Boolean {
-            val apiList = getJsApiListMap()!!
-            if (!apiList[SET_CARD_DUE]!!) {
-                showDeveloperContact(ankiJsErrorCodeDefault)
-                return false
-            }
-
-            if (days < 0 || days > 9999) {
-                showDeveloperContact(ankiJsErrorCodeSetDue)
-                return false
-            }
-
-            val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                rescheduleCards(cardIds, days)
-            }
-            return true
-        }
-
-        @JavascriptInterface
-        override fun ankiResetProgress(): Boolean {
-            val apiList = getJsApiListMap()!!
-            if (!apiList[RESET_PROGRESS]!!) {
-                showDeveloperContact(ankiJsErrorCodeDefault)
-                return false
-            }
-            val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                resetCards(cardIds)
-            }
-            return true
-        }
+        return cardDataForJsAPI
     }
 
     companion object {
-        private const val ADD_NOTE = 12
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val ANIMATION_DURATION = 200
         private const val TRANSPARENCY = 0.90f

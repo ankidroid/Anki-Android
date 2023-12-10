@@ -299,7 +299,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "Options menu displayed when collection is accessible",
                 d.optionsMenuState,
-                `is`(notNullValue())
+                notNullValue()
             )
         } finally {
             revokeWritePermissions()

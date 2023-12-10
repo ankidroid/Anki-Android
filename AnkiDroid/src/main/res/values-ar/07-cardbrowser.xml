@@ -63,20 +63,20 @@
     </plurals>
     <string name="card_browser_all_decks">كل الرزم</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="zero">Delete cards</item>
-        <item quantity="one">Delete card</item>
-        <item quantity="two">Delete cards</item>
-        <item quantity="few">Delete cards</item>
-        <item quantity="many">Delete cards</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="zero">حذف البطاقة</item>
+        <item quantity="one">حذف البطاقة</item>
+        <item quantity="two">حذف البطاقتين</item>
+        <item quantity="few">حذف البطاقات</item>
+        <item quantity="many">حذف البطاقات</item>
+        <item quantity="other">حذف البطاقات</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="zero">Delete notes</item>
-        <item quantity="one">Delete note</item>
-        <item quantity="two">Delete notes</item>
-        <item quantity="few">Delete notes</item>
-        <item quantity="many">Delete notes</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="zero">حذف الملحوظة</item>
+        <item quantity="one">حذف الملحوظة</item>
+        <item quantity="two">حذف الملحوظتين</item>
+        <item quantity="few">حذف الملحوظات</item>
+        <item quantity="many">حذف الملحوظات</item>
+        <item quantity="other">حذف الملحوظات</item>
     </plurals>
     <string name="card_browser_change_deck">تغيير الرزمة</string>
     <string name="delete_card_title">هل تريد حذف الملحوظة؟</string>

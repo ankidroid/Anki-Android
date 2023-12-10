@@ -27,6 +27,7 @@ import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
+import anki.scheduler.CongratsInfoResponse
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
@@ -37,9 +38,9 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.sched.DummyScheduler
 import com.ichi2.libanki.sched.Scheduler
-import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.*
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.VersionUtils
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
@@ -52,13 +53,11 @@ import java.util.*
 // tracked, so unused tags can only be removed from the list with a DB check.
 //
 // This module manages the tag cache and tags for notes.
-@KotlinCleanup("TextUtils -> Kotlin isNotEmpty()")
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
-@KotlinCleanup("ids.size != 0")
 @WorkerThread
 open class Collection(
     /**
-     *  @param Path The path to the collection.anki2 database. Must be unicode and openable with [File].
+     *  The path to the collection.anki2 database. Must be unicode and openable with [File].
      */
     val path: String,
     private var debugLog: Boolean, // Not in libAnki.
@@ -104,10 +103,6 @@ open class Collection(
 
     val tags: Tags
 
-    @KotlinCleanup(
-        "move accessor methods here, maybe reconsider return type." +
-            "See variable: conf"
-    )
     lateinit var config: Config
 
     @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
@@ -322,7 +317,7 @@ open class Collection(
 
     // NOT IN LIBANKI //
     fun cardCount(vararg dids: Long): Int {
-        return db.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids))
+        return db.queryScalar("SELECT count() FROM cards WHERE did IN " + ids2str(dids))
     }
 
     fun isEmptyDeck(vararg dids: Long): Boolean {
@@ -357,14 +352,19 @@ open class Collection(
             val text = col.buildSearchString(node)
         }
     */
+    @Suppress("unused")
     fun buildSearchString(node: SearchNode): String {
         return backend.buildSearchString(node)
     }
 
+    /**
+     * Return a list of card ids
+     * @throws InvalidSearchException
+     */
     fun findCards(
         search: String,
-        order: SortOrder
-    ): List<Long> {
+        order: SortOrder = SortOrder.NoOrdering()
+    ): List<CardId> {
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             SortOrder.BuiltinSortKind(
                 config.get("sortType") ?: "noteFld",
@@ -373,12 +373,11 @@ open class Collection(
         } else {
             order
         }
-        val cardIdsList = try {
+        return try {
             backend.searchCards(search, adjustedOrder.toProtoBuf())
         } catch (e: BackendInvalidInputException) {
             throw InvalidSearchException(e)
         }
-        return cardIdsList
     }
 
     fun findNotes(
@@ -401,32 +400,44 @@ open class Collection(
         return noteIDsList
     }
 
-    /** Return a list of card ids  */
-    @KotlinCleanup("set reasonable defaults")
-    fun findCards(search: String): List<Long> {
-        return findCards(search, SortOrder.NoOrdering())
-    }
+    data class CardIdToNoteId(val id: Long, val nid: Long)
 
     /** Return a list of card ids  */
     @RustCleanup("Remove in V16.") // Not in libAnki
-    fun findOneCardByNote(query: String): List<CardId> {
+    fun findOneCardByNote(query: String, order: SortOrder): List<CardId> {
         // This function shouldn't exist and CardBrowser should be modified to use Notes,
         // so not much effort was expended here
 
-        val noteIds = findNotes(query, SortOrder.NoOrdering())
+        val noteIds = findNotes(query, order)
+
         // select the card with the lowest `ord` to show
-        return db.queryLongList(
+        val cursor = db.query(
             """
-SELECT c.id
-FROM (
-  SELECT nid, MIN(ord) AS ord
-  FROM cards
-  WHERE nid IN ${Utils.ids2str(noteIds)} 
-  GROUP BY nid
-) AS card_with_min_ord
-JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.ord;
+    SELECT c.id, card_with_min_ord.nid
+    FROM (
+      SELECT nid, MIN(ord) AS ord
+      FROM cards
+      WHERE nid IN ${ids2str(noteIds)} 
+      GROUP BY nid
+    ) AS card_with_min_ord
+    JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.ord
             """.trimMargin()
         )
+        val resultList = mutableListOf<CardIdToNoteId>()
+
+        cursor.use { cur ->
+            while (cur.moveToNext()) {
+                val id = cur.getLong(cur.getColumnIndex("id"))
+                val nid = cur.getLong(cur.getColumnIndex("nid"))
+                resultList.add(CardIdToNoteId(id, nid))
+            }
+        }
+
+        // sort resultList by nid
+        val noteIdMap = noteIds.mapIndexed { index, id -> id to index }.toMap()
+        val sortedResultList = resultList.sortedBy { noteIdMap[it.nid] }
+        // Extract ids from sortedResultList
+        return sortedResultList.map { it.id }
     }
 
     @RustCleanup("Calling code should handle returned OpChanges")
@@ -537,7 +548,7 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
         }
         val badNotes = db.queryScalar(
             "select 1 from notes where id not in (select distinct nid from cards) " +
-                "or mid not in " + Utils.ids2str(notetypes.ids()) + " limit 1"
+                "or mid not in " + ids2str(notetypes.ids()) + " limit 1"
         ) > 0
         // notes without cards or models
         if (badNotes) {
@@ -626,7 +637,7 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
     fun setUserFlag(flag: Int, cids: List<Long>) {
         assert(flag in (0..7))
         db.execute(
-            "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
+            "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + ids2str(
                 cids
             ),
             7,
@@ -641,14 +652,10 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
 
     //endregion
 
-    fun crtGregorianCalendar(): GregorianCalendar {
-        return Time.gregorianCalendar((crt * 1000))
-    }
-
     /** Not in libAnki  */
     @CheckResult
     fun filterToValidCards(cards: LongArray?): List<Long> {
-        return db.queryLongList("select id from cards where id in " + Utils.ids2str(cards))
+        return db.queryLongList("select id from cards where id in " + ids2str(cards))
     }
 
     fun setDeck(cids: Iterable<CardId>, did: DeckId): OpChangesWithCount {
@@ -684,6 +691,7 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
         return backend.getEmptyCards()
     }
 
+    @Suppress("unused")
     fun syncStatus(auth: SyncAuth): SyncStatusResponse {
         return backend.syncStatus(input = auth)
     }
@@ -708,7 +716,6 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
         return backend.clozeNumbersInNote(n.toBackendNote())
             .sorted()
     }
-
     fun addImageOcclusionNotetype() {
         backend.addImageOcclusionNotetype()
     }
@@ -729,5 +736,17 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
 
     fun updateImageOcclusionNoteRaw(input: ByteArray): ByteArray {
         return backend.updateImageOcclusionNoteRaw(input = input)
+    }
+
+    // TODO either support bridgeCommand here
+    //   or replace it with POST requests in Anki Desktop (preferable)
+    //   https://github.com/ankidroid/Anki-Android/issues/14361#issuecomment-1701946364
+    fun congratsInfoRaw(input: ByteArray): ByteArray {
+        val byteArray = backend.congratsInfoRaw(input = input)
+        val response = CongratsInfoResponse.parseFrom(byteArray)
+        return CongratsInfoResponse.newBuilder(response)
+            .setBridgeCommandsSupported(false)
+            .build()
+            .toByteArray()
     }
 }

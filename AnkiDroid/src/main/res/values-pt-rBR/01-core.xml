@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Expandir</string>
     <string name="collapse">Fechar</string>
-    <string name="study_more">Estudar mais</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuto restante</item>
         <item quantity="other">%d minutos restantes</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralho</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralho</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
-    <string name="studyoptions_empty">Este baralho está vazio. Pressione o botão + para adicionar novos conteúdos.</string>
-    <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
-    <string name="studyoptions_empty_schedule">Sem cartões programados para estudar</string>
-    <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
     <string name="studyoptions_no_cards_due">Sem cartões programados por enquanto.</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>

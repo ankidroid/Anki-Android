@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Kengaytirish</string>
     <string name="collapse">Toraytirish</string>
-    <string name="study_more">Ko\'proq o\'rganish</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minut qoldi</item>
         <item quantity="other">%d minutes left</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">To\'plam qidirish</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">To\'plam qidirish</string>
     <string name="invalid_deck_name">To\'plamning nomi yaroqsiz</string>
-    <string name="studyoptions_empty">Bu to\'plam bo\'sh. Yangi karta qo\'shish uchun + tugmasini bosing.</string>
-    <string name="studyoptions_limit_reached">Kunlik o\'rganish limitiga yetdingiz</string>
-    <string name="studyoptions_empty_schedule">O\'rganilishi rejalashtirilgan karta yo\'q</string>
-    <string name="studyoptions_congrats_finished">Tabriklaymiz! Siz hozircha tugatdingiz</string>
     <string name="studyoptions_no_cards_due">Tugashi lozim kartalar halicha yo\'q</string>
     <string name="sd_card_not_mounted">Qurilma xotirasi o\'rnatilmagan</string>
     <string name="button_sync" comment="Text of the sync button">Sinxronlash</string>

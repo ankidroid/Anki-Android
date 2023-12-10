@@ -22,6 +22,7 @@ import androidx.annotation.CheckResult
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.reviewer.Binding.*
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
@@ -32,51 +33,43 @@ import kotlin.collections.ArrayList
  * https://stackoverflow.com/questions/5453226/java-need-a-hash-map-where-one-supplies-a-function-to-do-the-hashing
  */
 class MappableBinding(val binding: Binding, private val screen: Screen) {
-    val isKey: Boolean get() = binding.isKey
+    val isKey: Boolean get() = binding is KeyBinding
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-        if (other == null || javaClass != other.javaClass) {
-            return false
-        }
-        val otherMappableBinding = other as MappableBinding
+        if (this === other) return true
+        if (other == null) return false
 
-        val otherBinding = otherMappableBinding.binding
-        val bindingEquals = binding.keycode == otherBinding.keycode &&
-            binding.unicodeCharacter == otherBinding.unicodeCharacter &&
-            binding.gesture == otherBinding.gesture &&
-            modifierEquals(otherBinding.modifierKeys)
-
+        val otherBinding = (other as MappableBinding).binding
+        val bindingEquals = when {
+            binding is KeyCode && otherBinding is KeyCode -> binding.keycode == otherBinding.keycode && modifierEquals(otherBinding)
+            binding is UnicodeCharacter && otherBinding is UnicodeCharacter -> binding.unicodeCharacter == otherBinding.unicodeCharacter && modifierEquals(otherBinding)
+            binding is GestureInput && otherBinding is GestureInput -> binding.gesture == otherBinding.gesture
+            else -> false
+        }
         if (!bindingEquals) {
             return false
         }
 
-        return screen.screenEquals(otherMappableBinding.screen)
+        return screen.screenEquals(other.screen)
     }
 
     override fun hashCode(): Int {
         // don't include the modifierKeys or mSide
-        return Objects.hash(binding.keycode, binding.unicodeCharacter, binding.gesture, screen.prefix)
+        val bindingHash = when (binding) {
+            is KeyCode -> binding.keycode
+            is UnicodeCharacter -> binding.unicodeCharacter
+            is GestureInput -> binding.gesture
+            else -> 0
+        }
+        return Objects.hash(bindingHash, screen.prefix)
     }
 
-    private fun modifierEquals(keys: Binding.ModifierKeys?): Boolean {
+    private fun modifierEquals(otherBinding: KeyBinding): Boolean {
         // equals allowing subclasses
-        val thisKeys = binding.modifierKeys
-        if (thisKeys === keys) {
-            return true
-        }
-        // one is null
-        return if (keys == null || thisKeys == null) {
-            false
-        } else {
-            (thisKeys.shiftMatches(true) == keys.shiftMatches(true) || thisKeys.shiftMatches(false) == keys.shiftMatches(false)) &&
-                (thisKeys.ctrlMatches(true) == keys.ctrlMatches(true) || thisKeys.ctrlMatches(false) == keys.ctrlMatches(false)) &&
-                (thisKeys.altMatches(true) == keys.altMatches(true) || thisKeys.altMatches(false) == keys.altMatches(false))
-        }
-
-        // Perf: Could get a slight improvement if we check that both instances are not subclasses
+        val keys = otherBinding.modifierKeys
+        val thisKeys = (this.binding as KeyBinding).modifierKeys
+        if (thisKeys === keys) return true
+        return thisKeys.semiStructuralEquals(keys)
 
         // allow subclasses to work - a subclass which overrides shiftMatches will return true on one of the tests
     }
@@ -157,7 +150,7 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
         const val PREF_SEPARATOR = '|'
 
         @CheckResult
-        fun fromGesture(gesture: Gesture): MappableBinding = MappableBinding(Binding(gesture), Screen.Reviewer(CardSide.BOTH))
+        fun fromGesture(gesture: Gesture): MappableBinding = MappableBinding(GestureInput(gesture), Screen.Reviewer(CardSide.BOTH))
 
         @CheckResult
         fun List<MappableBinding>.toPreferenceString(): String = this.mapNotNull { it.toPreferenceString() }

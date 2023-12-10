@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Laajenna</string>
     <string name="collapse">Pienennä</string>
-    <string name="study_more">Opiskele lisää</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuutti jäljellä</item>
         <item quantity="other">%d minuuttia jäljellä</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Hae pakkaa</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Hae pakkaa</string>
     <string name="invalid_deck_name">Virheellinen pakan nimi</string>
-    <string name="studyoptions_empty">Tämä pakka on tyhjä. Paina + painiketta lisätäksesi uutta sisältöä.</string>
-    <string name="studyoptions_limit_reached">Päivittäinen opiskeluraja saavutettu</string>
-    <string name="studyoptions_empty_schedule">Ei opeteltavaksi ajoitettuja kortteja</string>
-    <string name="studyoptions_congrats_finished">Onnittelut! Homma hoidettu toistaiseksi.</string>
     <string name="studyoptions_no_cards_due">Kortteja ei tarvitse vielä kerrata</string>
     <string name="sd_card_not_mounted">Laitteen tallennustilaa ei ole kiinnitetty</string>
     <string name="button_sync" comment="Text of the sync button">Synkronoi</string>

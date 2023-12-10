@@ -69,7 +69,6 @@ object ReadText {
             if (textToSpeech!!.isSpeaking && queueMode == TextToSpeech.QUEUE_FLUSH) {
                 Timber.d("tts engine appears to be busy... clearing queue")
                 stopTts()
-                // sTextQueue.add(new String[] { text, loc });
             }
             Timber.d("tts text '%s' to be played for locale (%s)", text, loc)
             textToSpeech!!.speak(textToSpeak, queueMode, mTtsParams, "stringId")
@@ -244,6 +243,7 @@ object ReadText {
         // Store weak reference to Activity to prevent memory leak
         flashCardViewer = WeakReference(context)
         mCompletionListener = listener
+        val ankiActivityContext = context as? AnkiActivity
         // Create new TTS object and setup its onInit Listener
         textToSpeech = TextToSpeech(context) { status: Int ->
             if (status == TextToSpeech.SUCCESS) {
@@ -252,26 +252,14 @@ object ReadText {
                     Timber.d("TTS initialized and available languages found")
                     (context as AbstractFlashcardViewer).ttsInitialized()
                 } else {
-                    showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
+                    if (ankiActivityContext != null) {
+                        ankiActivityContext.showSnackbar(R.string.no_tts_available_message)
+                    }
                     Timber.w("TTS initialized but no available languages found")
                 }
                 textToSpeech!!.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                     override fun onDone(arg0: String) {
                         listener.onDone(questionAnswer)
-                    }
-
-                    fun errorToDeveloperString(errorCode: Int): String {
-                        return when (errorCode) {
-                            TextToSpeech.ERROR -> "Generic failure"
-                            TextToSpeech.ERROR_SYNTHESIS -> "TTS engine failed to synthesize input"
-                            TextToSpeech.ERROR_INVALID_REQUEST -> "Invalid request"
-                            TextToSpeech.ERROR_NETWORK -> "Network connectivity problem"
-                            TextToSpeech.ERROR_NETWORK_TIMEOUT -> "Network timeout"
-                            TextToSpeech.ERROR_NOT_INSTALLED_YET -> "Unfinished download of the voice data"
-                            TextToSpeech.ERROR_OUTPUT -> "Output error (audio device or a file)"
-                            TextToSpeech.ERROR_SERVICE -> "TTS service"
-                            else -> "Unhandled Error [$errorCode]"
-                        }
                     }
 
                     override fun onError(utteranceId: String?, errorCode: Int) {
@@ -301,10 +289,26 @@ object ReadText {
             }
         }
         // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
-        showThemedToast(context, context.getString(R.string.initializing_tts), false)
+        if (ankiActivityContext != null) {
+            ankiActivityContext.showSnackbar(R.string.initializing_tts)
+        }
     }
 
-    private fun openTtsHelpUrl(helpUrl: Uri) {
+    fun errorToDeveloperString(errorCode: Int): String {
+        return when (errorCode) {
+            TextToSpeech.ERROR -> "Generic failure"
+            TextToSpeech.ERROR_SYNTHESIS -> "TTS engine failed to synthesize input"
+            TextToSpeech.ERROR_INVALID_REQUEST -> "Invalid request"
+            TextToSpeech.ERROR_NETWORK -> "Network connectivity problem"
+            TextToSpeech.ERROR_NETWORK_TIMEOUT -> "Network timeout"
+            TextToSpeech.ERROR_NOT_INSTALLED_YET -> "Unfinished download of the voice data"
+            TextToSpeech.ERROR_OUTPUT -> "Output error (audio device or a file)"
+            TextToSpeech.ERROR_SERVICE -> "TTS service"
+            else -> "Unhandled Error [$errorCode]"
+        }
+    }
+
+    fun openTtsHelpUrl(helpUrl: Uri) {
         val activity = flashCardViewer.get() as AnkiActivity?
         activity!!.openUrl(helpUrl)
     }

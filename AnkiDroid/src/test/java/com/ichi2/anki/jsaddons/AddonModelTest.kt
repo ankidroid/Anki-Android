@@ -68,7 +68,7 @@ class AddonModelTest : RobolectricTest() {
         assertEquals(addon.name, "valid-ankidroid-js-addon-test")
         assertEquals(addon.addonTitle, "Valid AnkiDroid JS Addon")
         assertEquals(addon.version, "1.0.0")
-        assertEquals(addon.ankidroidJsApi, "0.0.1")
+        assertEquals(addon.ankidroidJsApi, "0.0.2")
         assertEquals(addon.addonType, "reviewer")
         assertEquals(addon.icon, "") // reviewer icon is empty
 

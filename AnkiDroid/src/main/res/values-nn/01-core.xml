@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Utvid</string>
     <string name="collapse">Skjul</string>
-    <string name="study_more">Gransk meir</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minutt att</item>
         <item quantity="other">%d minutt att</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Finn kortstokk</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Finn kortstokk</string>
     <string name="invalid_deck_name">Ugildt namn på kortleik</string>
-    <string name="studyoptions_empty">Denne kortleiken er tom. Trykk på +-knappen for å leggja til nytt innhald.</string>
-    <string name="studyoptions_limit_reached">Grensen for daglig studie er nådd</string>
-    <string name="studyoptions_empty_schedule">Ingen kort planlagt for i dag</string>
-    <string name="studyoptions_congrats_finished">Gratulerer! Du er ferdig for i dag.</string>
     <string name="studyoptions_no_cards_due">Ingen kort forfaller ennå</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="button_sync" comment="Text of the sync button">Synkroniser</string>

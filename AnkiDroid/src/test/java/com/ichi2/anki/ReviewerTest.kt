@@ -21,6 +21,9 @@ import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_DEFAULT
+import com.ichi2.anki.AnkiDroidJsAPITest.Companion.formatApiResult
+import com.ichi2.anki.AnkiDroidJsAPITest.Companion.getDataFromRequest
+import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
 import com.ichi2.anki.cardviewer.ViewerCommand.MARK
@@ -222,7 +225,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
-    fun jsAnkiGetDeckName() {
+    fun jsAnkiGetDeckName() = runTest {
         val models = col.notetypes
         val decks = col.decks
 
@@ -238,7 +241,11 @@ class ReviewerTest : RobolectricTest() {
         val javaScriptFunction = reviewer.javaScriptFunction()
 
         waitForAsyncTasksToComplete()
-        assertThat(javaScriptFunction.ankiGetDeckName(), equalTo("B"))
+        assertThat(
+            javaScriptFunction.handleJsApiRequest("deckName", jsApiContract(), true)
+                .decodeToString(),
+            equalTo(formatApiResult("B"))
+        )
     }
 
     @Ignore("needs update for v3")
@@ -267,7 +274,7 @@ class ReviewerTest : RobolectricTest() {
         assertThat(
             "Counts after an undo should be the same as before an undo",
             countsAfterUndo,
-            `is`(countsBeforeUndo)
+            equalTo(countsBeforeUndo)
         )
     }
 
@@ -324,20 +331,18 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Suppress("SameParameterValue")
-    private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) {
+    private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) = runTest {
         val jsApi = r.javaScriptFunction()
         val countList = listOf(
-            jsApi.ankiGetNewCardCount(),
-            jsApi.ankiGetLrnCardCount(),
-            jsApi.ankiGetRevCardCount()
+            getDataFromRequest("newCardCount", jsApi),
+            getDataFromRequest("lrnCardCount", jsApi),
+            getDataFromRequest("revCardCount", jsApi)
         )
-
         val expected = listOf(
-            newCount,
-            stepCount,
-            revCount
+            formatApiResult(newCount),
+            formatApiResult(stepCount),
+            formatApiResult(revCount)
         )
-
         assertThat(
             countList.toString(),
             equalTo(expected.toString())

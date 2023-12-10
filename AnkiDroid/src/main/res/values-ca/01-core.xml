@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Desplega</string>
     <string name="collapse">Replega</string>
-    <string name="study_more">Estudia més</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Queda %d minut</item>
         <item quantity="other">Queden %d minuts</item>
@@ -138,10 +137,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Cerca un paquet</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Cerca un paquet</string>
     <string name="invalid_deck_name">El nom del paquet no és vàlid</string>
-    <string name="studyoptions_empty">Aquest paquet és buit. Premeu el botó + per afegir nou contingut.</string>
-    <string name="studyoptions_limit_reached">Heu arribat al límit d\'estudi diari</string>
-    <string name="studyoptions_empty_schedule">No hi ha targetes previstes per a estudiar</string>
-    <string name="studyoptions_congrats_finished">Felicitats! De moment ja heu acabat.</string>
     <string name="studyoptions_no_cards_due">No hi ha cartes previstes.</string>
     <string name="sd_card_not_mounted">La tarjeta SD no funciona correctament</string>
     <string name="button_sync" comment="Text of the sync button">Sincronització</string>

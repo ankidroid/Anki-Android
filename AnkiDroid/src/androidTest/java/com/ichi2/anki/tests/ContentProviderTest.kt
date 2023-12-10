@@ -53,7 +53,6 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
  *
  * These tests should cover all supported operations for each URI.
  */
-@KotlinCleanup("is -> equalTo")
 class ContentProviderTest : InstrumentedTest() {
     @get:Rule
     var runtimePermissionRule = grantPermissions(storagePermission, FlashCardsContract.READ_WRITE_PERMISSION)
@@ -184,8 +183,8 @@ class ContentProviderTest : InstrumentedTest() {
         // Note: We duplicated the code as it did not appear to be accessible via reflection
         val initialPosition = cursor.position
         cursorFillWindow(cursor, 0, window)
-        assertThat("position should not change", cursor.position, `is`(initialPosition))
-        assertThat("Count should be copied", window.numRows, `is`(cursor.count))
+        assertThat("position should not change", cursor.position, equalTo(initialPosition))
+        assertThat("Count should be copied", window.numRows, equalTo(cursor.count))
     }
 
     /**
@@ -567,7 +566,7 @@ class ContentProviderTest : InstrumentedTest() {
             cv.put(FlashCardsContract.Model.CSS, TEST_MODEL_CSS)
             assertThat(
                 cr.update(modelUri, cv, null, null),
-                `is`(greaterThan(0))
+                greaterThan(0)
             )
             col = reopenCol()
             model = col.notetypes.get(mid)
@@ -589,9 +588,7 @@ class ContentProviderTest : InstrumentedTest() {
                 assertThat(
                     "Update rows",
                     cr.update(tmplUri, cv, null, null),
-                    `is`(
-                        greaterThan(0)
-                    )
+                    greaterThan(0)
                 )
                 col = reopenCol()
                 model = col.notetypes.get(mid)
@@ -633,7 +630,7 @@ class ContentProviderTest : InstrumentedTest() {
             assertThat(
                 "Check that there is at least one result",
                 allModels.count,
-                `is`(greaterThan(0))
+                greaterThan(0)
             )
             while (allModels.moveToNext()) {
                 val modelId =
@@ -665,18 +662,14 @@ class ContentProviderTest : InstrumentedTest() {
                     assertThat(
                         "Check that valid number of fields",
                         Utils.splitFields(flds).size,
-                        `is`(
-                            greaterThanOrEqualTo(1)
-                        )
+                        greaterThanOrEqualTo(1)
                     )
                     val numCards =
                         allModels.getInt(allModels.getColumnIndex(FlashCardsContract.Model.NUM_CARDS))
                     assertThat(
                         "Check that valid number of cards",
                         numCards,
-                        `is`(
-                            greaterThanOrEqualTo(1)
-                        )
+                        greaterThanOrEqualTo(1)
                     )
                 }
             }
@@ -716,9 +709,7 @@ class ContentProviderTest : InstrumentedTest() {
                     assertThat(
                         "Check that there is at least one result for cards",
                         cardsCursor!!.count,
-                        `is`(
-                            greaterThan(0)
-                        )
+                        greaterThan(0)
                     )
                     while (cardsCursor.moveToNext()) {
                         val targetDid = mTestDeckIds[0]
@@ -1248,6 +1239,44 @@ class ContentProviderTest : InstrumentedTest() {
         assertNotNull(allModels)
     }
 
+    @Test
+    fun testRenderCardWithAudio() {
+        // issue 14866 - regression from 2.16
+        val sound = "[sound:ankidroid_audiorec3272438736816461323.3gp]"
+        val invalid1 = "[anki:play:q:100]" // index
+        val invalid2 = "[anki:play:f:0]" // f doesn't exist
+        val invalid3 = "[anki:play:a:text]" // string instead of text
+
+        val back = "$invalid1$invalid2$invalid3"
+        val note = addNoteUsingBasicModel("Hello$sound", back)
+        val ord = 0
+
+        val noteUri = Uri.withAppendedPath(
+            FlashCardsContract.Note.CONTENT_URI,
+            note.id.toString()
+        )
+        val cardsUri = Uri.withAppendedPath(noteUri, "cards")
+        val specificCardUri = Uri.withAppendedPath(cardsUri, ord.toString())
+
+        contentResolver.query(
+            specificCardUri,
+            arrayOf(FlashCardsContract.Card.QUESTION, FlashCardsContract.Card.ANSWER), // projection
+            null, // selection is ignored for this URI
+            null, // selectionArgs is ignored for this URI
+            null // sortOrder is ignored for this URI
+        )?.let { cursor ->
+            if (!cursor.moveToFirst()) {
+                fail("no rows in cursor")
+            }
+            fun getString(id: String) = cursor.getString(cursor.getColumnIndex(id))
+            val question = getString(FlashCardsContract.Card.QUESTION)
+            val answer = getString(FlashCardsContract.Card.ANSWER)
+
+            assertThat("[sound: tag should remain", question, containsString(sound))
+            assertThat("[sound: tag should remain", answer, containsString(sound))
+        } ?: fail("query returned null")
+    }
+
     private fun reopenCol(): com.ichi2.libanki.Collection {
         CollectionHelper.instance.closeCollection("ContentProviderTest: reopenCol")
         return col
@@ -1295,9 +1324,7 @@ class ContentProviderTest : InstrumentedTest() {
             assertThat(
                 "At least one card added for note",
                 col.addNote(newNote),
-                `is`(
-                    greaterThanOrEqualTo(1)
-                )
+                greaterThanOrEqualTo(1)
             )
             for (c in newNote.cards()) {
                 c.did = did

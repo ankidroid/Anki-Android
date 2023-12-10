@@ -20,6 +20,7 @@ package com.ichi2.libanki
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.exception.WrongId
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.emptyStringArray
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
@@ -152,13 +153,12 @@ class Note : Cloneable {
         return fields
     }
 
-    @KotlinCleanup("make non-null")
-    fun items(): Array<Array<String?>> {
+    fun items(): Array<Array<String>> {
         // TODO: Revisit this method. The field order returned differs from Anki.
         // The items here are only used in the note editor, so it's a low priority.
         val result = Array(
             mFMap!!.size
-        ) { arrayOfNulls<String>(2) }
+        ) { emptyStringArray(2) }
         for (fname in mFMap!!.keys) {
             val i = mFMap!![fname]!!.first
             result[i][0] = fname
