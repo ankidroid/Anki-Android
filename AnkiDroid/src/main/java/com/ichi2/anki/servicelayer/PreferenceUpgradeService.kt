@@ -93,6 +93,7 @@ object PreferenceUpgradeService {
                 yield(RemoveAnswerRecommended())
                 yield(RemoveBackupMax())
                 yield(RemoveInCardsMode())
+                yield(RemoveReviewerETA())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -453,6 +454,11 @@ object PreferenceUpgradeService {
                     remove("inCardsMode")
                 }
             }
+        }
+
+        internal class RemoveReviewerETA : PreferenceUpgrade(15) {
+            override fun upgrade(preferences: SharedPreferences) =
+                preferences.edit { remove("showETA") }
         }
     }
 }
