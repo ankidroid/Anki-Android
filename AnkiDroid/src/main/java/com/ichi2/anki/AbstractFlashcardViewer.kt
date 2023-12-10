@@ -554,6 +554,7 @@ abstract class AbstractFlashcardViewer :
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         mGestureDetectorImpl = LinkDetectingGestureDetector()
         TtsVoicesFieldFilter.ensureApplied()
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
@@ -1319,11 +1320,6 @@ abstract class AbstractFlashcardViewer :
 
     private fun updateDeckName() {
         if (currentCard == null) return
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            val title = Decks.basename(getColUnsafe.decks.name(currentCard!!.did))
-            actionBar.title = title
-        }
         if (!prefShowTopbar) {
             topBarLayout!!.visibility = View.GONE
         }

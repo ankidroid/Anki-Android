@@ -206,25 +206,6 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
-    @Flaky(os = OS.WINDOWS, "startReviewer: NullPointerException - baseDeckName")
-    fun baseDeckName() {
-        val models = col.notetypes
-
-        val decks = col.decks
-        val didAb = addDeck("A::B")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
-        basic!!.put("did", didAb)
-        addNoteUsingBasicModel("foo", "bar")
-        // This deck already exists. This gets the deck, not create it.
-        val didA = addDeck("A")
-        decks.select(didA)
-        val reviewer = startReviewer()
-        waitForAsyncTasksToComplete()
-        // The only card is in deck A::B, so the title should be B
-        assertThat(reviewer.supportActionBar!!.title, equalTo("B"))
-    }
-
-    @Test
     fun jsAnkiGetDeckName() = runTest {
         val models = col.notetypes
         val decks = col.decks
