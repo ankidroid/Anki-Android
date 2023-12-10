@@ -140,11 +140,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         /** @return Whether the dialog was shown */
         suspend fun showIfAvailable(deckPicker: DeckPicker): Boolean {
             val backupPrompt = BackupPromptDialog(deckPicker)
-            val isDisabledPermanently = deckPicker.sharedPrefs().getBoolean("backupPromptDisabled", false)
-            if (!backupPrompt.shouldShowDialog()) {
-                return false
-            }
-            if (isDisabledPermanently) {
+            if (!backupPrompt.shouldShowDialog() && backupPrompt.dialogPermanentlyDismissed) {
                 return false
             }
             val isLoggedIn = isLoggedIn()
