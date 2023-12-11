@@ -433,6 +433,8 @@ class CardBrowserViewModel(
         this.filterQueryFlow.emit(filterQuery)
     }
 
+    suspend fun searchForMarkedNotes() = setFilterQuery("tag:marked")
+
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"

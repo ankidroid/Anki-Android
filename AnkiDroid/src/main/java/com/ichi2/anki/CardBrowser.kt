@@ -976,8 +976,7 @@ open class CardBrowser :
 
             @NeedsTest("filter-marked query needs testing")
             R.id.action_show_marked -> {
-                mSearchTerms = "tag:marked"
-                searchWithFilterQuery(mSearchTerms)
+                launchCatchingTask { viewModel.searchForMarkedNotes() }
                 return true
             }
 
