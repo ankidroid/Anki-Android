@@ -89,11 +89,11 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         if (userCheckedDoNotShowAgain) {
             showPermanentlyDismissDialog(
                 this.windowContext,
-                onCancel = { dialogPermanentlyDismissed = true },
-                onDisableReminder = {
+                onCancel = {
                     userCheckedDoNotShowAgain = false
                     onDismiss()
-                }
+                },
+                onDisableReminder = { dialogPermanentlyDismissed = true }
             )
         } else {
             timesDialogDismissed += 1
@@ -140,7 +140,8 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         /** @return Whether the dialog was shown */
         suspend fun showIfAvailable(deckPicker: DeckPicker): Boolean {
             val backupPrompt = BackupPromptDialog(deckPicker)
-            if (!backupPrompt.shouldShowDialog() && backupPrompt.dialogPermanentlyDismissed) {
+
+            if (!backupPrompt.shouldShowDialog()) {
                 return false
             }
             val isLoggedIn = isLoggedIn()
@@ -204,7 +205,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
             val message = getPermanentlyDismissDialogMessageOrImmediatelyDismiss(context)
             if (message == null) {
                 Timber.i("permanently disabling 'Backup Prompt' reminder - no confirmation")
-                onCancel()
+                onDisableReminder()
                 return
             }
 
@@ -254,7 +255,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     }
 
     private fun timeToShowDialogAgain(): Boolean =
-        nextTimeToShowDialog <= TimeManager.time.intTimeMS()
+        !dialogPermanentlyDismissed && nextTimeToShowDialog <= TimeManager.time.intTimeMS()
 
     private suspend fun userIsNewToAnkiDroid(): Boolean {
         // A user is new if the app was installed > 7 days ago  OR if they have no cards
