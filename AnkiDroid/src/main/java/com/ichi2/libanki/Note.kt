@@ -47,7 +47,6 @@ class Note : Cloneable {
         private set
     lateinit var fields: MutableList<String>
         private set
-    private var mData: String? = null
     private var mFMap: Map<String, Pair<Int, JSONObject>>? = null
     var usn = 0
         private set
@@ -68,14 +67,13 @@ class Note : Cloneable {
         mid = notetype.getLong("id")
         tags = mutableListOf()
         fields = emptyStringMutableList(notetype.getJSONArray("flds").length())
-        mData = ""
         mFMap = Notetypes.fieldMap(this.notetype)
     }
 
     fun load() {
         col.db
             .query(
-                "SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = ?",
+                "SELECT guid, mid, mod, usn, tags, flds FROM notes WHERE id = ?",
                 this.id
             ).use { cursor ->
                 if (!cursor.moveToFirst()) {
@@ -87,7 +85,6 @@ class Note : Cloneable {
                 usn = cursor.getInt(3)
                 tags = col.tags.split(cursor.getString(4))
                 fields = Utils.splitFields(cursor.getString(5))
-                mData = cursor.getString(7)
                 notetype = col.notetypes.get(mid)!!
                 mFMap = Notetypes.fieldMap(notetype)
             }
