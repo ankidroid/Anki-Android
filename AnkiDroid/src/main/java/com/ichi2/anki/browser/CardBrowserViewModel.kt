@@ -69,6 +69,7 @@ class CardBrowserViewModel(
 
     var searchTerms: String = ""
     var restrictOnDeck: String = ""
+        private set
     var currentFlag = 0
 
     /**
@@ -114,12 +115,19 @@ class CardBrowserViewModel(
         get() = selectedRows.map { c -> c.id }
     var lastSelectedPosition = 0
 
-    var lastDeckId: DeckId?
+    val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
-        set(value) {
-            lastDeckIdRepository.lastDeckId = value
-            lastDeckIdFlow.update { value }
+
+    suspend fun setLastDeckId(deckId: DeckId) {
+        lastDeckIdRepository.lastDeckId = deckId
+        restrictOnDeck = if (deckId == ALL_DECKS_ID) {
+            ""
+        } else {
+            val deckName = withCol { decks.name(deckId) }
+            "deck:\"$deckName\" "
         }
+        lastDeckIdFlow.update { deckId }
+    }
 
     val lastDeckIdFlow = MutableStateFlow(lastDeckId)
 

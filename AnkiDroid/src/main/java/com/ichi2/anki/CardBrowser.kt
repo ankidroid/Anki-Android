@@ -112,7 +112,7 @@ open class CardBrowser :
         deck?.let {
             val deckId = deck.deckId
             deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-            selectDeckAndSave(deckId)
+            launchCatchingTask { selectDeckAndSave(deckId) }
         }
     }
 
@@ -143,9 +143,6 @@ open class CardBrowser :
     private var mSearchTerms
         get() = viewModel.searchTerms
         set(value) { viewModel.searchTerms = value }
-    private var mRestrictOnDeck
-        get() = viewModel.restrictOnDeck
-        set(value) { viewModel.restrictOnDeck = value }
     private var mCurrentFlag
         get() = viewModel.currentFlag
         set(value) { viewModel.currentFlag = value }
@@ -545,7 +542,6 @@ open class CardBrowser :
             true
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        val deckId = col.decks.selected()
         deckSpinnerSelection = DeckSpinnerSelection(
             this,
             col,
@@ -555,9 +551,11 @@ open class CardBrowser :
             showFilteredDecks = true
         )
         deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-        selectDeckAndSave(deckId)
 
         launchCatchingTask {
+            val deckId = withCol { decks.selected() }
+            // WARN: This is required to set `restrictOnDeck`
+            selectDeckAndSave(deckId)
             when (viewModel.getInitialDeck()) {
                 ALL_DECKS_ID -> selectAllDecks()
                 else -> deckSpinnerSelection!!.selectDeckById(viewModel.lastDeckId!!, false)
@@ -565,14 +563,8 @@ open class CardBrowser :
         }
     }
 
-    fun selectDeckAndSave(deckId: DeckId) {
-        mRestrictOnDeck = if (deckId == ALL_DECKS_ID) {
-            ""
-        } else {
-            val deckName = getColUnsafe.decks.name(deckId)
-            "deck:\"$deckName\" "
-        }
-        viewModel.lastDeckId = deckId
+    suspend fun selectDeckAndSave(deckId: DeckId) {
+        viewModel.setLastDeckId(deckId)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -639,9 +631,8 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun selectAllDecks() {
-        mRestrictOnDeck = ""
-        viewModel.lastDeckId = ALL_DECKS_ID
+    suspend fun selectAllDecks() {
+        viewModel.setLastDeckId(ALL_DECKS_ID)
     }
 
     /** Opens the note editor for a card.
@@ -1388,7 +1379,7 @@ open class CardBrowser :
         val searchText: String? = if (mSearchTerms.contains("deck:")) {
             "($mSearchTerms)"
         } else {
-            if ("" != mSearchTerms) "$mRestrictOnDeck($mSearchTerms)" else mRestrictOnDeck
+            if ("" != mSearchTerms) "${viewModel.restrictOnDeck}($mSearchTerms)" else viewModel.restrictOnDeck
         }
         // clear the existing card list
         mCards.reset()
@@ -1635,9 +1626,9 @@ open class CardBrowser :
 
     fun hasSelectedAllDecks(): Boolean = viewModel.lastDeckId == ALL_DECKS_ID
 
-    fun searchAllDecks() {
+    fun searchAllDecks() = launchCatchingTask {
         // all we need to do is select all decks
-        selectAllDecks()
+        viewModel.setLastDeckId(ALL_DECKS_ID)
     }
 
     /**
