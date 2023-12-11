@@ -55,8 +55,15 @@
         style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
         tools:text="13 Apr 2023" />
+
+    <TextView
+        android:id="@+id/about_backend"
+        style="?android:textAppearanceSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        tools:text="(anki 23.10.1 / be74babb0)" />
 
     <TextView
         android:id="@+id/about_contributors_title"

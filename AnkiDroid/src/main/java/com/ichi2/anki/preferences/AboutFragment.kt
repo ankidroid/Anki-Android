@@ -40,6 +40,7 @@ import com.ichi2.utils.show
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
 class AboutFragment : Fragment() {
     override fun onCreateView(
@@ -57,6 +58,10 @@ class AboutFragment : Fragment() {
         // Version text
         layoutView.findViewById<TextView>(R.id.about_version).text =
             pkgVersionName
+
+        // Backend version text
+        layoutView.findViewById<TextView>(R.id.about_backend).text =
+            "(anki " + BackendBuildConfig.ANKI_DESKTOP_VERSION + " / " + BackendBuildConfig.ANKI_COMMIT_HASH.subSequence(0, 8) + ")"
 
         // Logo secret
         layoutView.findViewById<ImageView>(R.id.about_app_logo)
