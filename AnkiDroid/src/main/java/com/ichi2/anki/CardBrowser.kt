@@ -913,7 +913,8 @@ open class CardBrowser :
     }
 
     /** Updates flag icon color and cards shown with given color  */
-    private fun selectionWithFlagTask(flag: Int) {
+    @VisibleForTesting
+    fun selectionWithFlagTask(flag: Int) {
         mCurrentFlag = flag
         filterByFlag()
     }
@@ -2223,12 +2224,6 @@ open class CardBrowser :
         mTagsDialogListenerAction = TagsDialogListenerAction.FILTER
         onSelectedTags(tags.toList(), emptyList(), CardStateFilter.ALL_CARDS)
         filterByTags(tags.toList(), CardStateFilter.ALL_CARDS)
-    }
-
-    @VisibleForTesting
-    fun filterByFlag(flag: Int) {
-        mCurrentFlag = flag
-        filterByFlag()
     }
 
     @VisibleForTesting
