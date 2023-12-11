@@ -143,8 +143,8 @@ class NotetypeTest : JvmTest() {
         // add a field
         var field: JSONObject? = col.notetypes.newField("foo")
         col.notetypes.addField(m, field!!)
-        assertArrayEquals(
-            arrayOf("1", "2", ""),
+        assertEquals(
+            listOf("1", "2", ""),
             col.getNote(
                 col.notetypes.nids(
                     m
@@ -158,8 +158,8 @@ class NotetypeTest : JvmTest() {
         assertEquals("", col.getNote(col.notetypes.nids(m)[0]).getItem("bar"))
         // delete back
         col.notetypes.remField(m, m.getJSONArray("flds").getJSONObject(1))
-        assertArrayEquals(
-            arrayOf("1", ""),
+        assertEquals(
+            listOf("1", ""),
             col.getNote(
                 col.notetypes.nids(
                     m
@@ -168,8 +168,8 @@ class NotetypeTest : JvmTest() {
         )
         // move 0 -> 1
         col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
-        assertArrayEquals(
-            arrayOf("", "1"),
+        assertEquals(
+            listOf("", "1"),
             col.getNote(
                 col.notetypes.nids(
                     m
@@ -178,8 +178,8 @@ class NotetypeTest : JvmTest() {
         )
         // move 1 -> 0
         col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(1), 0)
-        assertArrayEquals(
-            arrayOf("1", ""),
+        assertEquals(
+            listOf("1", ""),
             col.getNote(
                 col.notetypes.nids(
                     m
@@ -192,8 +192,8 @@ class NotetypeTest : JvmTest() {
         note = col.getNote(col.notetypes.nids(m)[0])
         note.setItem("baz", "2")
         note.flush()
-        assertArrayEquals(
-            arrayOf("1", "", "2"),
+        assertEquals(
+            listOf("1", "", "2"),
             col.getNote(
                 col.notetypes.nids(
                     m
@@ -202,8 +202,8 @@ class NotetypeTest : JvmTest() {
         )
         // move 2 -> 1
         col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(2), 1)
-        assertArrayEquals(
-            arrayOf("1", "2", ""),
+        assertEquals(
+            listOf("1", "2", ""),
             col.getNote(
                 col.notetypes.nids(
                     m
@@ -212,8 +212,8 @@ class NotetypeTest : JvmTest() {
         )
         // move 0 -> 2
         col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(0), 2)
-        assertArrayEquals(
-            arrayOf("2", "", "1"),
+        assertEquals(
+            listOf("2", "", "1"),
             col.getNote(
                 col.notetypes.nids(
                     m
@@ -222,8 +222,8 @@ class NotetypeTest : JvmTest() {
         )
         // move 0 -> 1
         col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
-        assertArrayEquals(
-            arrayOf("", "2", "1"),
+        assertEquals(
+            listOf("", "2", "1"),
             col.getNote(
                 col.notetypes.nids(
                     m

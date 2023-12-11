@@ -199,9 +199,9 @@ object Utils {
     }
 
     // TODO ensure manual conversion is correct
-    fun splitFields(fields: String): Array<String> {
+    fun splitFields(fields: String): MutableList<String> {
         // -1 ensures that we don't drop empty fields at the ends
-        return fields.split(FIELD_SEPARATOR).toTypedArray()
+        return fields.split(FIELD_SEPARATOR).toMutableList()
     }
 
     /*
@@ -250,7 +250,7 @@ object Utils {
      * @param sortIdx An index of the field
      * @return The field at sortIdx, without html media, and the csum of the first field.
      */
-    fun sfieldAndCsum(fields: Array<String>, sortIdx: Int): Pair<String, Long> {
+    fun sfieldAndCsum(fields: List<String>, sortIdx: Int): Pair<String, Long> {
         val firstStripped = stripHTMLMedia(fields[0])
         val sortStripped = if (sortIdx == 0) firstStripped else stripHTMLMedia(fields[sortIdx])
         return Pair(sortStripped, fieldChecksumWithoutHtmlMedia(firstStripped))

@@ -21,6 +21,7 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.exception.WrongId
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
+import com.ichi2.utils.emptyStringMutableList
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import java.util.*
@@ -44,7 +45,7 @@ class Note : Cloneable {
         private set
     lateinit var tags: MutableList<String>
         private set
-    lateinit var fields: Array<String>
+    lateinit var fields: MutableList<String>
         private set
     private var mFlags = 0
     private var mData: String? = null
@@ -68,7 +69,7 @@ class Note : Cloneable {
         this.notetype = notetype
         mid = notetype.getLong("id")
         tags = mutableListOf()
-        fields = Array(notetype.getJSONArray("flds").length()) { "" }
+        fields = emptyStringMutableList(notetype.getJSONArray("flds").length())
         mFlags = 0
         mData = ""
         mFMap = Notetypes.fieldMap(this.notetype)
@@ -147,7 +148,8 @@ class Note : Cloneable {
         return mFMap!!.keys.toTypedArray()
     }
 
-    fun values(): Array<String> {
+    @KotlinCleanup("see if we can make this immutable")
+    fun values(): MutableList<String> {
         return fields
     }
 

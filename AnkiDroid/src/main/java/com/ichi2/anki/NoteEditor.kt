@@ -1525,7 +1525,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun setEditFieldTexts(contents: String?) {
-        var fields: Array<String>? = null
+        var fields: List<String>? = null
         val len: Int
         if (contents == null) {
             len = 0
