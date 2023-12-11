@@ -29,6 +29,7 @@ import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ExportDialogParams
 import com.ichi2.anki.export.ExportType
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
@@ -445,6 +446,16 @@ class CardBrowserViewModel(
             else -> flagSearchTerm
         }
         setFilterQuery(searchTerms)
+    }
+
+    suspend fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) {
+        val sb = StringBuilder(cardState.toSearch)
+        // join selectedTags as "tag:$tag" with " or " between them
+        val tagsConcat = selectedTags.joinToString(" or ") { tag -> "\"tag:$tag\"" }
+        if (selectedTags.isNotEmpty()) {
+            sb.append("($tagsConcat)") // Only if we added anything to the tag list
+        }
+        setFilterQuery(sb.toString())
     }
 
     companion object {

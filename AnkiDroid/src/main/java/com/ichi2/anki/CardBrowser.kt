@@ -1516,16 +1516,10 @@ open class CardBrowser :
         }
     }
 
-    private fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) {
-        val sb = StringBuilder(cardState.toSearch)
-        // join selectedTags as "tag:$tag" with " or " between them
-        val tagsConcat = selectedTags.joinToString(" or ") { tag -> "\"tag:$tag\"" }
-        if (selectedTags.isNotEmpty()) {
-            sb.append("($tagsConcat)") // Only if we added anything to the tag list
+    private fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) =
+        launchCatchingTask {
+            viewModel.filterByTags(selectedTags, cardState)
         }
-        mSearchTerms = sb.toString()
-        searchWithFilterQuery(mSearchTerms)
-    }
 
     /** Updates search terms to only show cards with selected flag.  */
     @VisibleForTesting
