@@ -23,7 +23,6 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
-import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
 
@@ -77,7 +76,6 @@ class Note : Cloneable {
     }
 
     fun load() {
-        Timber.d("load()")
         col.db
             .query(
                 "SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = ?",
