@@ -155,7 +155,7 @@ class CardBrowserTest : RobolectricTest() {
     @Ignore("Not yet implemented, feature has performance implications in large collections, instead we remove selections")
     fun selectionsAreCorrectWhenNonExistingCardIsRemoved() = runTest {
         val browser = getBrowserWithNotes(7)
-        browser.checkCardsAtPositions(1, 3, 5, 6)
+        browser.selectRowsWithPositions(1, 3, 5, 6)
         deleteCardAtPosition(browser, 2) // delete non-selected
         deleteCardAtPosition(browser, 3) // delete selected, ensure it's not still selected
 
@@ -165,22 +165,22 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(browser.cardCount(), equalTo(6L))
         assertThat(
             "A checked card should have been removed",
-            browser.checkedCardCount(),
+            browser.viewModel.selectedRowCount(),
             equalTo(3)
         )
         assertThat(
             "Checked card before should not have changed",
-            browser.hasCheckedCardAtPosition(1),
+            browser.hasSelectedCardAtPosition(1),
             equalTo(true)
         )
         assertThat(
             "Checked card after should have changed by 2 places",
-            browser.hasCheckedCardAtPosition(3),
+            browser.hasSelectedCardAtPosition(3),
             equalTo(true)
         )
         assertThat(
             "Checked card after should have changed by 2 places",
-            browser.hasCheckedCardAtPosition(4),
+            browser.hasSelectedCardAtPosition(4),
             equalTo(true)
         )
     }
@@ -237,9 +237,9 @@ class CardBrowserTest : RobolectricTest() {
         addDeck("ZZ")
         selectDefaultDeck()
         val b = getBrowserWithNotes(5)
-        b.checkCardsAtPositions(0, 2)
+        b.selectRowsWithPositions(0, 2)
 
-        val cardIds = b.checkedCardIds
+        val cardIds = b.viewModel.selectedCardIds
 
         for (cardId in cardIds) {
             assertThat(
@@ -263,9 +263,9 @@ class CardBrowserTest : RobolectricTest() {
         val dynId = addDynamicDeck("World")
         selectDefaultDeck()
         val b = getBrowserWithNotes(5)
-        b.checkCardsAtPositions(0, 2)
+        b.selectRowsWithPositions(0, 2)
 
-        val cardIds = b.checkedCardIds
+        val cardIds = b.viewModel.selectedCardIds
 
         b.moveSelectedCardsToDeck(dynId).join()
 
@@ -296,10 +296,10 @@ class CardBrowserTest : RobolectricTest() {
         val random = Random(1)
         val cardPosition = random.nextInt(numberOfNotes)
         assumeThat("card position to select is 60", cardPosition, equalTo(60))
-        cardBrowser.checkCardsAtPositions(cardPosition)
+        cardBrowser.selectRowsWithPositions(cardPosition)
         assumeTrue(
             "card at position 60 is selected",
-            cardBrowser.hasCheckedCardAtPosition(cardPosition)
+            cardBrowser.hasSelectedCardAtPosition(cardPosition)
         )
 
         // flag the selected card with flag = 1
@@ -323,8 +323,8 @@ class CardBrowserTest : RobolectricTest() {
         )
 
         // deselect and select all cards
-        cardBrowser.onSelectNone()
-        cardBrowser.onSelectAll()
+        cardBrowser.viewModel.selectNone()
+        cardBrowser.viewModel.selectAll()
         // flag all the cards with flag = 3
         val flagForAll = 3
         cardBrowser.updateSelectedCardsFlag(flagForAll)
@@ -424,7 +424,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(b.getPropertiesForCardId(cid1).position, equalTo(0))
         assertThat(b.getPropertiesForCardId(cid2).position, equalTo(1))
 
-        b.checkCardsAtPositions(0)
+        b.selectRowsWithPositions(0)
         val previewIntent = b.previewIntent
         assertThat("before: index", previewIntent.getIntExtra("index", -100), equalTo(0))
         assertThat(
@@ -509,7 +509,7 @@ class CardBrowserTest : RobolectricTest() {
     fun repositionDataTest() = runTest {
         val b = getBrowserWithNotes(1)
 
-        b.checkCardsAtPositions(0)
+        b.selectRowsWithPositions(0)
 
         val card = getCheckedCard(b)
 
@@ -542,7 +542,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val b = browserWithNoNewCards
 
-        b.checkCardsAtPositions(0)
+        b.selectRowsWithPositions(0)
 
         val card = getCheckedCard(b)
 
@@ -569,7 +569,7 @@ class CardBrowserTest : RobolectricTest() {
         TimeManager.reset()
         val b = getBrowserWithNotes(1)
 
-        b.checkCardsAtPositions(0)
+        b.selectRowsWithPositions(0)
 
         val card = getCheckedCard(b)
 
@@ -591,7 +591,7 @@ class CardBrowserTest : RobolectricTest() {
     fun dataUpdatesAfterUndoReposition() {
         val b = getBrowserWithNotes(1)
 
-        b.checkCardsAtPositions(0)
+        b.selectRowsWithPositions(0)
 
         val card = getCheckedCard(b)
 
@@ -625,7 +625,7 @@ class CardBrowserTest : RobolectricTest() {
 
         assertUndoDoesNotContain(b, R.string.deck_conf_cram_reschedule)
 
-        b.checkCardsAtPositions(0)
+        b.selectRowsWithPositions(0)
 
         b.rescheduleWithoutValidation(listOf(getCheckedCard(b).id), 2)
 
@@ -718,7 +718,7 @@ class CardBrowserTest : RobolectricTest() {
         val browser = getBrowserWithNotes(25)
         selectOneOfManyCards(browser, 7) // HACK: Fix a bug in tests by choosing a value < 8
         selectOneOfManyCards(browser, 24)
-        assertThat(browser.checkedCardCount(), equalTo(18))
+        assertThat(browser.viewModel.selectedRowCount(), equalTo(18))
     }
 
     @Test
@@ -798,7 +798,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     private fun getCheckedCard(b: CardBrowser): CardCache {
-        val ids = b.checkedCardIds
+        val ids = b.viewModel.selectedCardIds
         assertThat("only one card expected to be checked", ids, hasSize(1))
         return b.getPropertiesForCardId(ids[0])
     }
@@ -995,5 +995,23 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat(column1SpinnerPosition, equalTo(index1))
         assertThat(column2SpinnerPosition, equalTo(index2))
+    }
+}
+
+fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean =
+    viewModel.selectedRows.contains(mCards[i])
+
+fun CardBrowser.replaceSelectionWith(positions: IntArray) {
+    viewModel.selectNone()
+    selectRowsWithPositions(*positions)
+}
+
+fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
+    // PREF: inefficient as the card flow is updated each iteration
+    positions.forEach { pos ->
+        check(pos < mCards.size()) {
+            "Attempted to check card at index $pos. ${mCards.size()} cards available"
+        }
+        viewModel.selectRowAtPosition(pos)
     }
 }

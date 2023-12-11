@@ -37,14 +37,19 @@ import com.ichi2.anki.servicelayer.CardService
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.undoableOp
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Collections
-import java.util.LinkedHashSet
+import kotlin.math.max
+import kotlin.math.min
 
 class CardBrowserViewModel(
     preferences: SharedPreferencesProvider
@@ -81,9 +86,17 @@ class CardBrowserViewModel(
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
     val isTruncated get() = isTruncatedFlow.value
 
-    val checkedCards: MutableSet<CardBrowser.CardCache> = Collections.synchronizedSet(LinkedHashSet())
+    private val _selectedRows: MutableSet<CardBrowser.CardCache> = Collections.synchronizedSet(LinkedHashSet())
+
+    // immutable accessor for _selectedRows
+    val selectedRows: Set<CardBrowser.CardCache> get() = _selectedRows
+
+    private val refreshSelectedRowsFlow = MutableSharedFlow<Unit>()
+    val selectedRowsFlow: Flow<Set<CardBrowser.CardCache>> =
+        flowOf(selectedRows).combine(refreshSelectedRowsFlow) { row, _ -> row }
+
     val selectedCardIds: List<Long>
-        get() = checkedCards.map { c -> c.id }
+        get() = selectedRows.map { c -> c.id }
     var lastSelectedPosition = 0
 
     val cardInfoDestination: CardInfoDestination?
@@ -107,7 +120,8 @@ class CardBrowserViewModel(
         }
     }
 
-    fun hasSelectedCards(): Boolean = checkedCards.isNotEmpty()
+    /** Whether any rows are selected */
+    fun hasSelectedAnyRows(): Boolean = selectedRows.isNotEmpty()
 
     /**
      * All the notes of the selected cards will be marked
@@ -115,7 +129,7 @@ class CardBrowserViewModel(
      * otherwise, they will be unmarked
      */
     suspend fun toggleMark(cardIds: List<CardId>) {
-        if (!hasSelectedCards()) {
+        if (!hasSelectedAnyRows()) {
             Timber.i("Not marking cards - nothing selected")
             return
         }
@@ -157,6 +171,51 @@ class CardBrowserViewModel(
             putBoolean("isTruncated", value)
         }
     }
+
+    fun selectAll() {
+        if (_selectedRows.addAll(cards.wrapped)) {
+            refreshSelectedRowsFlow()
+        }
+    }
+
+    fun selectNone() {
+        if (_selectedRows.isEmpty()) return
+        _selectedRows.clear()
+        refreshSelectedRowsFlow()
+    }
+
+    fun toggleRowSelectionAtPosition(position: Int) {
+        val card = cards[position]
+        if (_selectedRows.contains(card)) {
+            _selectedRows.remove(card)
+        } else {
+            _selectedRows.add(card)
+        }
+        refreshSelectedRowsFlow()
+    }
+
+    fun selectRowAtPosition(pos: Int) {
+        if (_selectedRows.add(cards[pos])) {
+            refreshSelectedRowsFlow()
+        }
+    }
+
+    /**
+     * Selects the cards between [startPos] and [endPos]
+     */
+    fun selectRowsBetweenPositions(startPos: Int, endPos: Int) {
+        val cards = (min(startPos, endPos)..max(startPos, endPos)).map { cards[it] }
+        if (_selectedRows.addAll(cards)) {
+            refreshSelectedRowsFlow()
+        }
+    }
+
+    /** emits a new value in [selectedRowsFlow] */
+    private fun refreshSelectedRowsFlow() = viewModelScope.launch {
+        refreshSelectedRowsFlow.emit(Unit)
+    }
+
+    fun selectedRowCount(): Int = selectedRows.size
 
     fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
 

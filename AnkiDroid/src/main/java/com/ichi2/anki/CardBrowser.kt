@@ -94,8 +94,6 @@ import java.util.*
 import java.util.function.Consumer
 import kotlin.math.abs
 import kotlin.math.ceil
-import kotlin.math.max
-import kotlin.math.min
 
 @Suppress("LeakingThis")
 // The class is only 'open' due to testing
@@ -242,7 +240,6 @@ open class CardBrowser :
         get() = viewModel.isInMultiSelectMode
         private set(value) { viewModel.isInMultiSelectMode = value }
 
-    private val mCheckedCards get() = viewModel.checkedCards
     private var mLastSelectedPosition
         get() = viewModel.lastSelectedPosition
         set(value) { viewModel.lastSelectedPosition = value }
@@ -356,12 +353,12 @@ open class CardBrowser :
         get() = viewModel.selectedCardIds
 
     private fun canPerformCardInfo(): Boolean {
-        return checkedCardCount() == 1
+        return viewModel.selectedRowCount() == 1
     }
 
     private fun canPerformMultiSelectEditNote(): Boolean {
         // The noteId is not currently available. Only allow if a single card is selected for now.
-        return checkedCardCount() == 1
+        return viewModel.selectedRowCount() == 1
     }
 
     /**
@@ -480,6 +477,11 @@ open class CardBrowser :
             .onEach { runOnUiThread { searchCards() } }
             .launchIn(lifecycleScope)
 
+        viewModel.selectedRowsFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { runOnUiThread { onSelectionChanged() } }
+            .launchIn(lifecycleScope)
+
         viewModel.column1IndexFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { index -> cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] } }
@@ -543,7 +545,7 @@ open class CardBrowser :
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
                 cb.toggle()
-                onCheck(position, view)
+                viewModel.selectRowAtPosition(position)
             } else {
                 // load up the card selected on the list
                 val clickedCardId = mCards[position].id
@@ -554,19 +556,7 @@ open class CardBrowser :
         @KotlinCleanup("helper function for min/max range")
         cardsListView.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (isInMultiSelectMode) {
-                var hasChanged = false
-                for (i in min(mLastSelectedPosition, position)..max(
-                    mLastSelectedPosition,
-                    position
-                )) {
-                    val card = cardsListView.getItemAtPosition(i) as CardCache
-
-                    // Add to the set of checked cards
-                    hasChanged = hasChanged or mCheckedCards.add(card)
-                }
-                if (hasChanged) {
-                    onSelectionChanged()
-                }
+                viewModel.selectRowsBetweenPositions(mLastSelectedPosition, position)
             } else {
                 mLastSelectedPosition = position
                 saveScrollingState(position)
@@ -575,7 +565,7 @@ open class CardBrowser :
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
                 cb.toggle()
-                onCheck(position, view)
+                viewModel.toggleRowSelectionAtPosition(position)
                 recenterListView(view)
                 cardsAdapter.notifyDataSetChanged()
             }
@@ -622,7 +612,7 @@ open class CardBrowser :
             KeyEvent.KEYCODE_A -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+A - Select All")
-                    onSelectAll()
+                    viewModel.selectAll()
                     return true
                 }
             }
@@ -885,7 +875,7 @@ open class CardBrowser :
         if (mActionBarMenu == null || mActionBarMenu!!.findItem(R.id.action_suspend_card) == null) {
             return
         }
-        if (mCheckedCards.isNotEmpty()) {
+        if (viewModel.hasSelectedAnyRows()) {
             mActionBarMenu!!.findItem(R.id.action_suspend_card).apply {
                 title = TR.browsingToggleSuspend()
                 setIcon(R.drawable.ic_pause_circle_outline)
@@ -897,29 +887,40 @@ open class CardBrowser :
         }
         mActionBarMenu!!.findItem(R.id.action_export_selected).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
-                resources.getQuantityString(R.plurals.card_browser_export_cards, checkedCardCount())
+                resources.getQuantityString(
+                    R.plurals.card_browser_export_cards,
+                    viewModel.selectedRowCount()
+                )
             } else {
-                resources.getQuantityString(R.plurals.card_browser_export_notes, checkedCardCount())
+                resources.getQuantityString(
+                    R.plurals.card_browser_export_notes,
+                    viewModel.selectedRowCount()
+                )
             }
         }
         mActionBarMenu!!.findItem(R.id.action_delete_card).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
-                resources.getQuantityString(R.plurals.card_browser_delete_cards, checkedCardCount())
+                resources.getQuantityString(
+                    R.plurals.card_browser_delete_cards,
+                    viewModel.selectedRowCount()
+                )
             } else {
-                resources.getQuantityString(R.plurals.card_browser_delete_notes, checkedCardCount())
+                resources.getQuantityString(
+                    R.plurals.card_browser_delete_notes,
+                    viewModel.selectedRowCount()
+                )
             }
         }
         mActionBarMenu!!.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
         // Note: Theoretically should not happen, as this should kick us back to the menu
-        mActionBarMenu!!.findItem(R.id.action_select_none).isVisible = hasSelectedCards()
+        mActionBarMenu!!.findItem(R.id.action_select_none).isVisible =
+            viewModel.hasSelectedAnyRows()
         mActionBarMenu!!.findItem(R.id.action_edit_note).isVisible = canPerformMultiSelectEditNote()
         mActionBarMenu!!.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
     }
 
-    private fun hasSelectedCards(): Boolean = viewModel.hasSelectedCards()
-
     private fun hasSelectedAllCards(): Boolean {
-        return checkedCardCount() >= cardCount // must handle 0.
+        return viewModel.selectedRowCount() >= cardCount // must handle 0.
     }
 
     private fun updateFlagForSelectedRows(flag: Int) {
@@ -1111,11 +1112,11 @@ open class CardBrowser :
                 return true
             }
             R.id.action_select_none -> {
-                onSelectNone()
+                viewModel.selectNone()
                 return true
             }
             R.id.action_select_all -> {
-                onSelectAll()
+                viewModel.selectAll()
                 return true
             }
             R.id.action_preview -> {
@@ -1245,12 +1246,12 @@ open class CardBrowser :
     // Multiple cards have been explicitly selected, so preview only those cards
     @get:VisibleForTesting
     val previewIntent: Intent
-        get() = if (isInMultiSelectMode && checkedCardCount() > 1) {
+        get() = if (isInMultiSelectMode && viewModel.selectedRowCount() > 1) {
             // Multiple cards have been explicitly selected, so preview only those cards
             getPreviewIntent(0, selectedCardIds.toLongArray())
         } else {
             // Preview all cards, starting from the one that is currently selected
-            val startIndex = if (mCheckedCards.isEmpty()) 0 else mCheckedCards.iterator().next().position
+            val startIndex = viewModel.selectedRows.firstOrNull()?.position ?: 0
             getPreviewIntent(startIndex, allCardIds)
         }
 
@@ -1259,7 +1260,7 @@ open class CardBrowser :
     }
 
     private fun rescheduleSelectedCards() {
-        if (!hasSelectedCards()) {
+        if (!viewModel.hasSelectedAnyRows()) {
             Timber.i("Attempted reschedule - no cards selected")
             return
         }
@@ -1297,7 +1298,7 @@ open class CardBrowser :
     }
 
     private fun showChangeDeckDialog() {
-        if (!hasSelectedCards()) {
+        if (!viewModel.hasSelectedAnyRows()) {
             Timber.i("Not showing Change Deck - No Cards")
             return
         }
@@ -1401,7 +1402,7 @@ open class CardBrowser :
     private fun invalidate() {
         renderBrowserQAJob?.cancel()
         mCards.clear()
-        mCheckedCards.clear()
+        viewModel.selectNone()
     }
 
     /** Currently unused - to be used in #7676  */
@@ -1627,7 +1628,7 @@ open class CardBrowser :
             // but this is only hit on a rare sad path and we'd need to rejig the data structures to allow an efficient
             // search
             Timber.w("Removing current selection due to unexpected removal of cards")
-            onSelectNone()
+            viewModel.selectNone()
         }
         updateList()
     }
@@ -1839,7 +1840,7 @@ open class CardBrowser :
             // if in multi-select mode, be sure to show the checkboxes
             if (isInMultiSelectMode) {
                 checkBox.visibility = View.VISIBLE
-                checkBox.isChecked = mCheckedCards.contains(card)
+                checkBox.isChecked = viewModel.selectedRows.contains(card)
                 // this prevents checkboxes from showing an animation from selected -> unselected when
                 // checkbox was selected, then selection mode was ended and now restarted
                 checkBox.jumpDrawablesToCurrentState()
@@ -1848,7 +1849,7 @@ open class CardBrowser :
                 checkBox.visibility = View.GONE
             }
             // change bg color on check changed
-            checkBox.setOnClickListener { onCheck(position, v) }
+            checkBox.setOnClickListener { viewModel.toggleRowSelectionAtPosition(position) }
             val column1 = v.findViewById<FixedTextView>(R.id.card_sfld)
             val column2 = v.findViewById<FixedTextView>(R.id.card_column2)
 
@@ -1907,36 +1908,13 @@ open class CardBrowser :
         }
     }
 
-    private fun onCheck(position: Int, cell: View) {
-        val checkBox = cell.findViewById<CheckBox>(R.id.card_checkbox)
-        val card = mCards[position]
-        if (checkBox.isChecked) {
-            mCheckedCards.add(card)
-        } else {
-            mCheckedCards.remove(card)
-        }
-        onSelectionChanged()
-    }
-
-    @VisibleForTesting
-    fun onSelectAll() {
-        mCheckedCards.addAll(mCards.wrapped)
-        onSelectionChanged()
-    }
-
-    @VisibleForTesting
-    fun onSelectNone() {
-        mCheckedCards.clear()
-        onSelectionChanged()
-    }
-
-    private fun onSelectionChanged() {
+    fun onSelectionChanged() {
         Timber.d("onSelectionChanged()")
         try {
-            if (!isInMultiSelectMode && mCheckedCards.isNotEmpty()) {
+            if (!isInMultiSelectMode && viewModel.hasSelectedAnyRows()) {
                 // If we have selected cards, load multiselect
                 loadMultiSelectMode()
-            } else if (isInMultiSelectMode && mCheckedCards.isEmpty()) {
+            } else if (isInMultiSelectMode && !viewModel.hasSelectedAnyRows()) {
                 // If we don't have cards, unload multiselect
                 endMultiSelectMode()
             }
@@ -1949,7 +1927,7 @@ open class CardBrowser :
                 return
             }
             updateMultiselectMenu()
-            mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
+            mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
         } finally {
             if (colIsOpenUnsafe()) {
                 cardsAdapter.notifyDataSetChanged()
@@ -2244,7 +2222,7 @@ open class CardBrowser :
         isInMultiSelectMode = true
         // show title and hide spinner
         mActionBarTitle.visibility = View.VISIBLE
-        mActionBarTitle.text = checkedCardCount().toString()
+        mActionBarTitle.text = viewModel.selectedRowCount().toString()
         deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
         // reload the actionbar using the multi-select mode actionbar
         invalidateOptionsMenu()
@@ -2255,7 +2233,7 @@ open class CardBrowser :
      */
     private fun endMultiSelectMode() {
         Timber.d("endMultiSelectMode()")
-        mCheckedCards.clear()
+        viewModel.selectNone()
         isInMultiSelectMode = false
         // If view which was originally selected when entering multi-select is visible then maintain its position
         val view = cardsListView.getChildAt(mLastSelectedPosition - cardsListView.firstVisiblePosition)
@@ -2266,11 +2244,6 @@ open class CardBrowser :
         invalidateOptionsMenu()
         deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
         mActionBarTitle.visibility = View.GONE
-    }
-
-    @VisibleForTesting
-    fun checkedCardCount(): Int {
-        return mCheckedCards.size
     }
 
     @VisibleForTesting
@@ -2308,26 +2281,6 @@ open class CardBrowser :
         }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun checkCardsAtPositions(vararg positions: Int) {
-        positions.forEach { pos ->
-            check(pos < mCards.size()) {
-                "Attempted to check card at index $pos. ${mCards.size()} cards available"
-            }
-            mCheckedCards.add(mCards[pos])
-        }
-        onSelectionChanged()
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun hasCheckedCardAtPosition(i: Int): Boolean {
-        return mCheckedCards.contains(mCards[i])
-    }
-
-    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    val checkedCardIds: List<Long>
-        get() = mCheckedCards.map { c -> c.id }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun getPropertiesForCardId(cardId: CardId): CardCache {
         return mCards.find { c -> c.id == cardId } ?: throw IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId))
     }
@@ -2343,12 +2296,6 @@ open class CardBrowser :
     fun filterByFlag(flag: Int) {
         mCurrentFlag = flag
         filterByFlag()
-    }
-
-    @VisibleForTesting
-    fun replaceSelectionWith(positions: IntArray) {
-        mCheckedCards.clear()
-        checkCardsAtPositions(*positions)
     }
 
     @VisibleForTesting
