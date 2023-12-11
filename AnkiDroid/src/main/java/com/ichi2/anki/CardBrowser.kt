@@ -982,8 +982,7 @@ open class CardBrowser :
 
             @NeedsTest("filter-suspended query needs testing")
             R.id.action_show_suspended -> {
-                mSearchTerms = "is:suspended"
-                searchWithFilterQuery(mSearchTerms)
+                launchCatchingTask { viewModel.searchForSuspendedCards() }
                 return true
             }
             R.id.action_search_by_tag -> {

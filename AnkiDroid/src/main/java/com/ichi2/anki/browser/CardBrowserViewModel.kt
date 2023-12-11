@@ -435,6 +435,8 @@ class CardBrowserViewModel(
 
     suspend fun searchForMarkedNotes() = setFilterQuery("tag:marked")
 
+    suspend fun searchForSuspendedCards() = setFilterQuery("is:suspended")
+
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
