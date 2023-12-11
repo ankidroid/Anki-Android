@@ -1581,7 +1581,7 @@ open class CardBrowser :
      * @param cards Cards that were changed
      */
     private fun updateCardsInList(cards: List<Card>) {
-        val idToPos = getPositionMap(mCards)
+        val idToPos = viewModel.cardIdToPositionMap
         // TODO: Inefficient
         cards
             .mapNotNull { c -> idToPos[c.id] }
@@ -1607,7 +1607,7 @@ open class CardBrowser :
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
     private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
-        val idToPos = getPositionMap(mCards)
+        val idToPos = viewModel.cardIdToPositionMap
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
         mReloadRequired = mReloadRequired || cardsIds.contains(reviewerCardId)
         val newMCards: MutableList<CardCache> = mCards
@@ -2313,10 +2313,6 @@ open class CardBrowser :
             context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
                 remove(LAST_DECK_ID_KEY)
             }
-        }
-
-        private fun getPositionMap(cards: CardCollection<CardCache>): Map<Long, Int> {
-            return cards.mapIndexed { i, c -> c.id to i }.toMap()
         }
 
         @CheckResult

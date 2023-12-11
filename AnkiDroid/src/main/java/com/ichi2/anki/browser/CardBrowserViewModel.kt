@@ -287,6 +287,9 @@ class CardBrowserViewModel(
 
     fun getRowAtPosition(position: Int) = cards[position]
 
+    val cardIdToPositionMap: Map<CardId, Int>
+        get() = cards.mapIndexed { i, c -> c.id to i }.toMap()
+
     override fun onCleared() {
         super.onCleared()
         invalidate()
