@@ -98,13 +98,6 @@ open class AnkiServer(
         }
     }
 
-    fun getSessionBytes(session: IHTTPSession): ByteArray {
-        val contentLength = session.headers["content-length"]!!.toInt()
-        val bytes = ByteArray(contentLength)
-        session.inputStream.read(bytes, 0, contentLength)
-        return bytes
-    }
-
     fun buildResponse(
         block: suspend CoroutineScope.() -> ByteArray
     ): Response {
@@ -133,6 +126,13 @@ open class AnkiServer(
                 "html" -> "text/html"
                 else -> "application/binary"
             }
+        }
+
+        fun getSessionBytes(session: IHTTPSession): ByteArray {
+            val contentLength = session.headers["content-length"]!!.toInt()
+            val bytes = ByteArray(contentLength)
+            session.inputStream.read(bytes, 0, contentLength)
+            return bytes
         }
 
         fun newChunkedResponse(
