@@ -42,10 +42,10 @@ private const val PORT = 0
 
 open class AnkiServer(
     val activity: FragmentActivity
-) : NanoHTTPD("127.0.0.1", PORT) {
+) : NanoHTTPD(LOCALHOST, PORT) {
 
     fun baseUrl(): String {
-        return "http://127.0.0.1:$listeningPort/"
+        return "http://$LOCALHOST:$listeningPort/"
     }
 
     override fun serve(session: IHTTPSession): Response {
@@ -119,6 +119,8 @@ open class AnkiServer(
     }
 
     companion object {
+        const val LOCALHOST = "127.0.0.1"
+
         /** Common prefix used on Anki requests */
         const val ANKI_PREFIX = "/_anki/"
         const val ANKIDROID_JS_PREFIX = "/jsapi/"
