@@ -176,8 +176,6 @@
     <string name="show_top_bar_summ">Hiển thị số lượng thẻ, gắn cờ và đánh dấu trên thanh trên cùng</string>
     <string name="show_progress" maxLength="41">Hiển thị còn lại</string>
     <string name="show_progress_summ">Hiển thị số thẻ còn lại</string>
-    <string name="show_eta" maxLength="41">Hiển thị ETA</string>
-    <string name="show_eta_summ">Hiển thị thời gian còn lại</string>
     <string name="use_current" maxLength="41">Bộ thẻ cho thẻ mới</string>
     <string name="learn_cutoff" maxLength="41">Tìm hiểu trước giới hạn</string>
     <string name="time_limit" maxLength="41">Giới hạn thời gian của hộp thời gian</string>

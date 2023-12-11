@@ -59,15 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Mở rộng</string>
     <string name="collapse">Thu gọn</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="other">còn %d phút</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">Còn %1$d giờ %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">Còn %1$d ngày %2$d</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Bộ sưu tập đang trống</string>
     <string name="no_cards_placeholder_description">Hãy thêm thẻ\nbằng biểu tượng +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

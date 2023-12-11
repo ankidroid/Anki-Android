@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Vergroot</string>
     <string name="collapse">Verklein</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minuut oor</item>
-        <item quantity="other">%d minute oor</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d uur %2$d oor</item>
-        <item quantity="other">%1$d ure %2$d oor</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d dag %2$d oor</item>
-        <item quantity="other">%1$d dae %2$s oor</item>
-    </plurals>
     <string name="no_cards_placeholder_title">U versameling is leeg</string>
     <string name="no_cards_placeholder_description">Druk die \"+\" om flitskaarte te maak</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

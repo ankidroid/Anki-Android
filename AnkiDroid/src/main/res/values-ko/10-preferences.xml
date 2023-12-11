@@ -176,8 +176,6 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">남은 개수 표시</string>
     <string name="show_progress_summ">남은 카드 개수 표시</string>
-    <string name="show_eta" maxLength="41">예상 완료일 표시</string>
-    <string name="show_eta_summ">남은 시간 표시</string>
     <string name="use_current" maxLength="41">새 카드의 카드 묶음</string>
     <string name="learn_cutoff" maxLength="41">미리 학습하기 시간 설정</string>
     <string name="time_limit" maxLength="41">타임박스 시간 설정</string>

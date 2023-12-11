@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">გაშლა</string>
     <string name="collapse">ჩაკეცვა</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">დარჩა %d წუთი</item>
-        <item quantity="other">დარჩა %d წუთი</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">დარჩა %1$d საათი %2$d</item>
-        <item quantity="other">დარჩა %1$d საათი %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">დარჩა %1$d დღე %2$d</item>
-        <item quantity="other">დარჩა %1$d დღე %2$d</item>
-    </plurals>
     <string name="no_cards_placeholder_title">კოლექცია ცარიელია</string>
     <string name="no_cards_placeholder_description">ატვირთეთ ბარათები\n+ნიშნით</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

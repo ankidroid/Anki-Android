@@ -180,8 +180,6 @@
     <string name="show_top_bar_summ">הצג ספירת כרטיסים, דגל וסמן בסרגל העליון</string>
     <string name="show_progress" maxLength="41">הצג נותרים</string>
     <string name="show_progress_summ">הצג את מספר הכרטיסים שנותרו</string>
-    <string name="show_eta" maxLength="41">הצג הערכת זמן לסיום</string>
-    <string name="show_eta_summ">הצג זמן שנותר</string>
     <string name="use_current" maxLength="41">חפיסה לכרטיסים חדשים</string>
     <string name="learn_cutoff" maxLength="41">לימוד מעבר למכסה</string>
     <string name="time_limit" maxLength="41">מגבלת זמן בתיבת-זמן</string>

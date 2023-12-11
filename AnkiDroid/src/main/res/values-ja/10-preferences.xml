@@ -176,8 +176,6 @@
     <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>
     <string name="show_progress_summ">トップバーに、残りのカード枚数を表示します（青: 新規、赤: 習得中および再習得中、緑: 復習）</string>
-    <string name="show_eta" maxLength="41">推定学習時間を表示</string>
-    <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの学習終了までの推定所要時間を表示します</string>
     <string name="use_current" maxLength="41">新規カードの既定の追加先デッキ</string>
     <string name="learn_cutoff" maxLength="41">習得学習の前倒し許容時間</string>
     <string name="time_limit" maxLength="41">タイムボックス（学習時間の目標・区切り）</string>

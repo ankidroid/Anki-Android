@@ -177,8 +177,6 @@
     <string name="show_top_bar_summ">ᱪᱮᱛᱟᱱ ᱵᱟᱨ ᱨᱮ ᱠᱟᱰ ᱦᱤᱥᱟᱹᱵ ᱠᱚ, ᱯᱚᱛᱠᱟ ᱟᱨ ᱪᱤᱱᱦᱟᱹ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_progress" maxLength="41">ᱵᱟᱹᱠᱤ ᱠᱚ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_progress_summ">ᱥᱟᱨᱮᱡ ᱠᱟᱱ ᱠᱟᱰ ᱦᱤᱥᱟᱹᱵ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="show_eta" maxLength="41">ETA ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="show_eta_summ">ᱥᱚᱢᱚᱭ ᱥᱟᱨᱮᱡ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="use_current" maxLength="41">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱰᱮᱠ</string>
     <string name="learn_cutoff" maxLength="41">ᱢᱟᱲᱟᱝ ᱥᱮᱫ ᱯᱟᱲᱦᱟᱣ ᱪᱮᱫᱚᱜ</string>
     <string name="time_limit" maxLength="41">ᱥᱚᱢᱚᱭ ᱵᱟᱠᱥᱚ ᱚᱠᱛᱚ ᱥᱤᱢᱟᱹ</string>

@@ -59,15 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">확장</string>
     <string name="collapse">감추기</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="other">%d분 남음</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d일 %2$d시간 남음</item>
-    </plurals>
     <string name="no_cards_placeholder_title">이 컬렉션은 비어 있습니다</string>
     <string name="no_cards_placeholder_description">＋아이콘을 눌러 \n카드를 추가해 주십시오</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

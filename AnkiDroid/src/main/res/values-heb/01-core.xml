@@ -59,24 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">הרחב</string>
     <string name="collapse">צמצם</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">נותרה דקה %d</item>
-        <item quantity="two">נותרו %d דקות</item>
-        <item quantity="many">נותרו %d דקות</item>
-        <item quantity="other">נותרו %d דקות</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">שעה %2$d %1$d נותרה</item>
-        <item quantity="two">%1$d שעות %2$d נותרו</item>
-        <item quantity="many">%1$d שעות %2$d נותרו</item>
-        <item quantity="other">%1$d שעות %2$d נותרו</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">יום %2$d  %1$d נותר</item>
-        <item quantity="two">%1$d ימים %2$d נותרו</item>
-        <item quantity="many">%1$d ימים %2$d נותרו</item>
-        <item quantity="other">%1$d ימים %2$d נותרו</item>
-    </plurals>
     <string name="no_cards_placeholder_title">האוסף ריק</string>
     <string name="no_cards_placeholder_description">אפשר להוסיף כרטיסים\n
 באמצעות הסמל +.</string>

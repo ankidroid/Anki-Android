@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Espandi</string>
     <string name="collapse">Nascondi</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">Resta %d minuto</item>
-        <item quantity="other">Restano %d minuti</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d ora %2$d rimanente</item>
-        <item quantity="other">%1$d ore %2$d rimanenti</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d giorno %2$d rimanente</item>
-        <item quantity="other">%1$d giorni %2$d rimanenti</item>
-    </plurals>
     <string name="no_cards_placeholder_title">La collezione è vuota</string>
     <string name="no_cards_placeholder_description">Inizia ad aggiungere carte\nusando l\'icona +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

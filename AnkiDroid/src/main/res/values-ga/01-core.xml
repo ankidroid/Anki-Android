@@ -59,27 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Méadaigh</string>
     <string name="collapse">Cuir i gceilt</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="two">%d minutes left</item>
-        <item quantity="few">%d minutes left</item>
-        <item quantity="many">%d minutes left</item>
-        <item quantity="other">%d nóiméad fágtha </item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d uair %2$d fagtha</item>
-        <item quantity="two">%1$d hours %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="two">%1$d days %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

@@ -179,8 +179,6 @@
     <string name="show_top_bar_summ">Показывает счётчик карточек и кнопки «Флажок» и «Отметить»</string>
     <string name="show_progress" maxLength="41">Показать оставшиеся</string>
     <string name="show_progress_summ">Показывает число оставшихся карточек</string>
-    <string name="show_eta" maxLength="41">Показывать оценку времени</string>
-    <string name="show_eta_summ">Показывает оставшееся время</string>
     <string name="use_current" maxLength="41">Колода для новых карточек</string>
     <string name="learn_cutoff" maxLength="41">Лимит опережения</string>
     <string name="time_limit" maxLength="41">Лимит учебного блока</string>

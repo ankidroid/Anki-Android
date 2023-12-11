@@ -177,8 +177,6 @@
     <string name="show_top_bar_summ">Kartenanzahl, Flagge und Markierung in oberer Leiste anzeigen</string>
     <string name="show_progress" maxLength="41">Fällige anzeigen</string>
     <string name="show_progress_summ">Verbleibende Anzahl der Karten anzeigen</string>
-    <string name="show_eta" maxLength="41">ETA anzeigen</string>
-    <string name="show_eta_summ">Verbleibende Zeit anzeigen</string>
     <string name="use_current" maxLength="41">Stapel für neue Karten</string>
     <string name="learn_cutoff" maxLength="41">Grenzwert für vorzeitiges Lernen</string>
     <string name="time_limit" maxLength="41">Zeitlimitwert</string>

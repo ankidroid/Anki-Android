@@ -177,8 +177,6 @@
     <string name="show_top_bar_summ">Näytä korttien lukumäärät, liput ja merkinnät yläpalkissa</string>
     <string name="show_progress" maxLength="41">Näytä jäljelläoleva</string>
     <string name="show_progress_summ">Näytä jäljelläolevien korttien määrä</string>
-    <string name="show_eta" maxLength="41">Näytä ETA</string>
-    <string name="show_eta_summ">Näytä jäljellä oleva aika</string>
     <string name="use_current" maxLength="41">Pakka uusille korteille</string>
     <string name="learn_cutoff" maxLength="41">Ennalta oppimisen aikaraja</string>
     <string name="time_limit" maxLength="41">Edistymisen näyttämisen aikaväli</string>

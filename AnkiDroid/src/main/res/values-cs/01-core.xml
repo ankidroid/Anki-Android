@@ -59,24 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Rozbalit</string>
     <string name="collapse">Sbalit</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">Zbývá %d minuta</item>
-        <item quantity="few">Zbývají %d minuty</item>
-        <item quantity="many">Zbývá %d minuty</item>
-        <item quantity="other">Zbývá %d minut</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">Zbývá %1$d hodina %2$d</item>
-        <item quantity="few">Zbývají %1$d hodiny %2$d</item>
-        <item quantity="many">Zbývá %1$d hodiny %2$d</item>
-        <item quantity="other">Zbývá %1$d hodin %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Zbývá %1$d den %2$d</item>
-        <item quantity="few">Zbývají %1$d dny %2$d</item>
-        <item quantity="many">Zbývá %1$d dne %2$d</item>
-        <item quantity="other">Zbývá %1$d dní %2$d</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Kolekce je prázdná</string>
     <string name="no_cards_placeholder_description">Začněte přidávat karty\npoužitím ikony +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

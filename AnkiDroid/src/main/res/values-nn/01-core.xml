@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Utvid</string>
     <string name="collapse">Skjul</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minutt att</item>
-        <item quantity="other">%d minutt att</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d time %2$d att</item>
-        <item quantity="other">%1$d timar %2$d att</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d dag %2$d att</item>
-        <item quantity="other">%1$d dagar %2$d att</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Samlinga er tom</string>
     <string name="no_cards_placeholder_description">Trykk på + for\nå leggja til kort</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

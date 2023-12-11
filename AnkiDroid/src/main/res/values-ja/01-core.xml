@@ -59,15 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="other">残り約 %d 分</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">残り約%1$d時間%2$d分</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">残り約%1$d日と%2$d時間</item>
-    </plurals>
     <string name="no_cards_placeholder_title">まだカードがありません</string>
     <string name="no_cards_placeholder_description">画面右下の「＋」ボタンから\nカードを追加してください</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

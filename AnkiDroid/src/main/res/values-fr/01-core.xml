@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Développer</string>
     <string name="collapse">Regrouper</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute restante</item>
-        <item quantity="other">%d minutes restantes</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d heure %2$d restant</item>
-        <item quantity="other">%1$d heures %2$d restantes</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d jour %2$d restant</item>
-        <item quantity="other">%1$d jours %2$d restants</item>
-    </plurals>
     <string name="no_cards_placeholder_title">La collection est vide</string>
     <string name="no_cards_placeholder_description">Ajoutez de nouvelles cartes\nen utilisant l\'icône +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

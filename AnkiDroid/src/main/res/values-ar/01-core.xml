@@ -59,30 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">إسدال</string>
     <string name="collapse">إخفاء</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="zero">%d دقيقة متبقية</item>
-        <item quantity="one">دقيقة واحدة متبقية</item>
-        <item quantity="two">%d دقائق متبقية</item>
-        <item quantity="few">%d دقائق متبقية</item>
-        <item quantity="many">%d دقيقة متبقية</item>
-        <item quantity="other">%d دقيقة متبقية</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="zero">تبقى %1$d ساعة و%2$d دقيقة</item>
-        <item quantity="one">تبقى %1$d ساعة و%2$d دقيقة</item>
-        <item quantity="two">تبقى %1$d ساعة و%2$d دقيقة</item>
-        <item quantity="few">تبقى %1$d ساعات و%2$d دقيقة</item>
-        <item quantity="many">تبقى %1$d ساعة و%2$d دقيقة</item>
-        <item quantity="other">تبقى %1$d ساعة و%2$d دقيقة</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="zero">تبقى %1$d يوم و%2$d ساعة</item>
-        <item quantity="one">تبقى %1$d يوم و%2$d ساعة</item>
-        <item quantity="two">تبقى %1$d يوم و%2$d ساعة</item>
-        <item quantity="few">تبقى %1$d أيام و%2$d ساعات</item>
-        <item quantity="many">تبقى %1$d يوم و%2$d ساعة</item>
-        <item quantity="other">تبقى %1$d يوم و%2$d ساعة</item>
-    </plurals>
     <string name="no_cards_placeholder_title">المجموعة فارغة</string>
     <string name="no_cards_placeholder_description">ابدأ بإضافة بطاقات\nباستخدام أيقونة +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

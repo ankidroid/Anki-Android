@@ -177,8 +177,6 @@
     <string name="show_top_bar_summ">शीर्ष बार में कार्ड की संख्या, ध्वज और चिह्न दिखाएं</string>
     <string name="show_progress" maxLength="41">शेष दिखाएं</string>
     <string name="show_progress_summ">शेष कार्ड गणना दिखाएं</string>
-    <string name="show_eta" maxLength="41">ईटीए दिखाएं</string>
-    <string name="show_eta_summ">शेष समय दिखाएँ</string>
     <string name="use_current" maxLength="41">नए कार्ड के लिए डेक</string>
     <string name="learn_cutoff" maxLength="41">आगे की सीमा जानें</string>
     <string name="time_limit" maxLength="41">Timebox समय सीमा</string>

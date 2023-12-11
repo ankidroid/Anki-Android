@@ -59,15 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Perluas</string>
     <string name="collapse">Tutup</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="other">%d menit lagi</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d jam %2$d tersisa</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d hari %2$d tersisa</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Koleksi kosong</string>
     <string name="no_cards_placeholder_description">Mulai tambahkan kartu\nmenggunakan ikon +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

@@ -180,8 +180,6 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Prikaži preostale</string>
     <string name="show_progress_summ">Prikaži število preostalih kartic</string>
-    <string name="show_eta" maxLength="41">Prikaži pre. čas</string>
-    <string name="show_eta_summ">Prikaži preostali čas</string>
     <string name="use_current" maxLength="41">Komplet za nove kartice</string>
     <string name="learn_cutoff" maxLength="41">Omejitev vnaprejšnjega učenja</string>
     <string name="time_limit" maxLength="41">Omejitev časovnega obdobja</string>

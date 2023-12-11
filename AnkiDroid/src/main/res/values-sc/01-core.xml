@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Ismànnia</string>
     <string name="collapse">Mìnima</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">Mancat %d minutu</item>
-        <item quantity="other">Mancant %d minutos</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">Mancat %1$d ora %2$d</item>
-        <item quantity="other">Mancant %1$d oras %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Mancat %1$d die %2$d</item>
-        <item quantity="other">Mancant %1$d dies %2$d</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Sa colletzione est bòida</string>
     <string name="no_cards_placeholder_description">Incumintza a annànghere cartas\n
                         impreende s\'icona +.</string>

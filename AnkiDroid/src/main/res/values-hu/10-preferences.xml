@@ -178,8 +178,6 @@
     <string name="show_top_bar_summ">Kártya számlálók, jelölők és jelölések mutatása a felső bárban,</string>
     <string name="show_progress" maxLength="41">Hátralévő mutatása</string>
     <string name="show_progress_summ">Hátralévő kártyák számának megjelenítése</string>
-    <string name="show_eta" maxLength="41">ETA megjelenítése</string>
-    <string name="show_eta_summ">Hátralévő idő mutatása</string>
     <string name="use_current" maxLength="41">Új kártyák paklija</string>
     <string name="learn_cutoff" maxLength="41">Korai tanulás korlátai</string>
     <string name="time_limit" maxLength="41">Időkorlát érték</string>

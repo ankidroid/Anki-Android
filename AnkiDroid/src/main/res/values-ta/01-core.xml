@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">விரிவாக்கு</string>
     <string name="collapse">சரிவு</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d நிமிடம் விட்டுவிட்டது</item>
-        <item quantity="other">%d நிமிடம் விட்டுவிட்டது</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
-    </plurals>
     <string name="no_cards_placeholder_title">தொகுப்பு காலியாக  உள்ளது</string>
     <string name="no_cards_placeholder_description">+ பொத்தானை அழுத்தி /n சேர்க்கவும்</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

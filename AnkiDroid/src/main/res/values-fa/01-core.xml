@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">گسترش</string>
     <string name="collapse">بستن</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d دقیقه باقیمانده</item>
-        <item quantity="other">%d دقیقه باقیمانده</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d ساعت %2$d مانده</item>
-        <item quantity="other">%1$d ساعت %2$d مانده</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
-    </plurals>
     <string name="no_cards_placeholder_title">مجموعه خالی است</string>
     <string name="no_cards_placeholder_description">با استفاده از دکمه +\nشروع به اضافه کردن کارت‌ها کنيد</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

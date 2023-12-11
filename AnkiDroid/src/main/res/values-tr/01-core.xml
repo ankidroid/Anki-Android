@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Genişlet</string>
     <string name="collapse">Daralt</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d dakika kaldı</item>
-        <item quantity="other">%d dakika kaldı</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d saat %2$d kaldı</item>
-        <item quantity="other">%1$d saat %2$d kaldı</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d gün %2$d kaldı</item>
-        <item quantity="other">%1$d gün %2$d kaldı</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Bu koleksiyon boş</string>
     <string name="no_cards_placeholder_description">+ ikonunu kullanarak\nkart eklemeye başlayın.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

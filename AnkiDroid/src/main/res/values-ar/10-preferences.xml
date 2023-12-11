@@ -181,8 +181,6 @@
     <string name="show_top_bar_summ">إظهار عدد البطاقات، والتأشير والتعليم في الشريط العلوي</string>
     <string name="show_progress" maxLength="41">إظهار المتبقي</string>
     <string name="show_progress_summ">إظهار عدد البطاقات المتبقية</string>
-    <string name="show_eta" maxLength="41">إظهار الوقت التقديري المتبقي للدراسة</string>
-    <string name="show_eta_summ">إظهار الوقت المتبقي</string>
     <string name="use_current" maxLength="41">رزمة البطاقات الجديدة</string>
     <string name="learn_cutoff" maxLength="41">حد التعلم المبكر</string>
     <string name="time_limit" maxLength="41">مهلة مربع الوقت</string>

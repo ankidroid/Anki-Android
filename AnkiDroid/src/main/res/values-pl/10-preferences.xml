@@ -179,8 +179,6 @@
     <string name="show_top_bar_summ">Wyświetl licznik kart, zakreślenie i oznaczenie w górnym pasku</string>
     <string name="show_progress" maxLength="41">Pokaż pozostałe</string>
     <string name="show_progress_summ">Pokazuj licznik pozostałych kart</string>
-    <string name="show_eta" maxLength="41">Pokaż ETA</string>
-    <string name="show_eta_summ">Pokaż pozostały czas</string>
     <string name="use_current" maxLength="41">Talia dla nowych kart</string>
     <string name="learn_cutoff" maxLength="41">Limit nauki z wyprzedzeniem</string>
     <string name="time_limit" maxLength="41">Ograniczenie czasu</string>

@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Palawakin</string>
     <string name="collapse">Itiklop</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d natitirang minuto</item>
-        <item quantity="other">%d mga natitirang minuto</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d oras %2$d pa ang natititra</item>
-        <item quantity="other">%1$d oras %2$d pa ang natititra</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d araw %2$d pa ang natititra</item>
-        <item quantity="other">%1$d araw %2$d pa ang natititra</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Walang laman ang tipon</string>
     <string name="no_cards_placeholder_description">Magsimulang magdadag ng mga cards\n gamit ang + na aykon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
