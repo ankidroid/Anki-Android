@@ -115,7 +115,12 @@ class CardBrowserViewModel(
 
     var lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
-        set(value) { lastDeckIdRepository.lastDeckId = value }
+        set(value) {
+            lastDeckIdRepository.lastDeckId = value
+            lastDeckIdFlow.update { value }
+        }
+
+    val lastDeckIdFlow = MutableStateFlow(lastDeckId)
 
     val cardInfoDestination: CardInfoDestination?
         get() {

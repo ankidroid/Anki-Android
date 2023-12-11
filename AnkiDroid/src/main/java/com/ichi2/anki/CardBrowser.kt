@@ -89,6 +89,7 @@ import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import net.ankiweb.rsdroid.RustCleanup
@@ -458,6 +459,12 @@ open class CardBrowser :
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
             .launchIn(lifecycleScope)
+
+        viewModel.lastDeckIdFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .filterNotNull()
+            .onEach { searchCards() }
+            .launchIn(lifecycleScope)
     }
 
     fun searchWithFilterQuery(filterQuery: String) {
@@ -566,7 +573,6 @@ open class CardBrowser :
             "deck:\"$deckName\" "
         }
         viewModel.lastDeckId = deckId
-        searchCards()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -637,7 +643,6 @@ open class CardBrowser :
         deckSpinnerSelection!!.selectAllDecks()
         mRestrictOnDeck = ""
         viewModel.lastDeckId = ALL_DECKS_ID
-        searchCards()
     }
 
     /** Opens the note editor for a card.
