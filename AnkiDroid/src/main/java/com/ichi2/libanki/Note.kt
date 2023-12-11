@@ -42,7 +42,7 @@ class Note : Cloneable {
 
     var mid: Long = 0
         private set
-    lateinit var tags: ArrayList<String>
+    lateinit var tags: MutableList<String>
         private set
     lateinit var fields: Array<String>
         private set
@@ -67,7 +67,7 @@ class Note : Cloneable {
         guId = Utils.guid64()
         this.notetype = notetype
         mid = notetype.getLong("id")
-        tags = ArrayList()
+        tags = mutableListOf()
         fields = Array(notetype.getJSONArray("flds").length()) { "" }
         mFlags = 0
         mData = ""
@@ -88,7 +88,7 @@ class Note : Cloneable {
                 mid = cursor.getLong(1)
                 mod = cursor.getLong(2)
                 usn = cursor.getInt(3)
-                tags = ArrayList(col.tags.split(cursor.getString(4)))
+                tags = col.tags.split(cursor.getString(4))
                 fields = Utils.splitFields(cursor.getString(5))
                 mFlags = cursor.getInt(6)
                 mData = cursor.getString(7)
@@ -201,7 +201,7 @@ class Note : Cloneable {
     }
 
     fun setTagsFromStr(str: String?) {
-        tags = ArrayList(col.tags.split(str!!))
+        tags = col.tags.split(str!!)
     }
 
     fun delTag(tag: String?) {

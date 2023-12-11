@@ -98,6 +98,7 @@ import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import java.util.function.Consumer
+import kotlin.collections.ArrayList
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -139,7 +140,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
     private var mCurrentEditedCard: Card? = null
-    private var mSelectedTags: ArrayList<String>? = null
+    private var mSelectedTags: MutableList<String>? = null
 
     @get:VisibleForTesting
     var deckId: DeckId = 0
@@ -383,7 +384,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         if (mSelectedTags == null) {
             mSelectedTags = ArrayList(0)
         }
-        savedInstanceState.putStringArrayList("tags", mSelectedTags)
+        savedInstanceState.putStringArrayList("tags", mSelectedTags?.let { ArrayList(it) })
     }
 
     private val fieldsAsBundleForPreview: Bundle
