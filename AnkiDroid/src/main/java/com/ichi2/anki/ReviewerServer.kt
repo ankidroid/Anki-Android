@@ -29,7 +29,7 @@ class ReviewerServer(activity: AbstractFlashcardViewer, private val mediaDir: St
 
     override fun start() {
         super.start()
-        Timber.i("Starting server on http://127.0.0.1:$listeningPort")
+        Timber.i("Starting server on http://$LOCALHOST:$listeningPort")
     }
 
     override fun serve(session: IHTTPSession): Response {
