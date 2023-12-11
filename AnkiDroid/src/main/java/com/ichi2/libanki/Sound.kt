@@ -234,7 +234,7 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
          * @return -- the same content but in a format that will render working play buttons when audio was embedded
          */
         fun expandSounds(content: String): String {
-            return addPlayIcons(content)
+            return avRefsToPlayIcons(content)
         }
 
         /**
