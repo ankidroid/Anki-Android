@@ -462,7 +462,11 @@ open class CardBrowser :
         viewModel.lastDeckIdFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .filterNotNull()
-            .onEach { searchCards() }
+            .onEach { deckId ->
+                // this handles ALL_DECKS_ID
+                deckSpinnerSelection!!.selectDeckById(deckId, true)
+                searchCards()
+            }
             .launchIn(lifecycleScope)
     }
 
@@ -562,7 +566,6 @@ open class CardBrowser :
     }
 
     fun selectDeckAndSave(deckId: DeckId) {
-        deckSpinnerSelection!!.selectDeckById(deckId, true)
         mRestrictOnDeck = if (deckId == ALL_DECKS_ID) {
             ""
         } else {
@@ -637,7 +640,6 @@ open class CardBrowser :
 
     @VisibleForTesting
     fun selectAllDecks() {
-        deckSpinnerSelection!!.selectAllDecks()
         mRestrictOnDeck = ""
         viewModel.lastDeckId = ALL_DECKS_ID
     }
