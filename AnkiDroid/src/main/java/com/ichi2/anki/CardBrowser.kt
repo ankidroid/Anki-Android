@@ -30,7 +30,6 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
@@ -46,7 +45,9 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.*
+import com.ichi2.anki.browser.LastDeckIdRepository
 import com.ichi2.anki.browser.SaveSearchResult
+import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
@@ -123,6 +124,8 @@ open class CardBrowser :
     private enum class TagsDialogListenerAction {
         FILTER, EDIT_TAGS
     }
+
+    private val lastDeckIdRepository: LastDeckIdRepository = SharedPreferencesLastDeckIdRepository()
 
     lateinit var viewModel: CardBrowserViewModel
 
@@ -358,20 +361,9 @@ open class CardBrowser :
     }
 
     @get:VisibleForTesting
-    val lastDeckId: DeckId?
-        get() = getSharedPreferences(PERSISTENT_STATE_FILE, 0)
-            .getLong(LAST_DECK_ID_KEY, Decks.NOT_FOUND_DECK_ID)
-            .takeUnless { it == Decks.NOT_FOUND_DECK_ID }
-
-    private fun saveLastDeckId(id: Long?) {
-        if (id == null) {
-            clearLastDeckId()
-            return
-        }
-        getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
-            putLong(LAST_DECK_ID_KEY, id)
-        }
-    }
+    var lastDeckId: DeckId?
+        get() = lastDeckIdRepository.lastDeckId
+        set(value) { lastDeckIdRepository.lastDeckId = value }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -581,7 +573,7 @@ open class CardBrowser :
             val deckName = getColUnsafe.decks.name(deckId)
             "deck:\"$deckName\" "
         }
-        saveLastDeckId(deckId)
+        lastDeckId = deckId
         searchCards()
     }
 
@@ -652,7 +644,7 @@ open class CardBrowser :
     fun selectAllDecks() {
         deckSpinnerSelection!!.selectAllDecks()
         mRestrictOnDeck = ""
-        saveLastDeckId(ALL_DECKS_ID)
+        lastDeckId = ALL_DECKS_ID
         searchCards()
     }
 
@@ -2286,16 +2278,9 @@ open class CardBrowser :
 
         // Values related to persistent state data
         private const val ALL_DECKS_ID = 0L
-        private const val PERSISTENT_STATE_FILE = "DeckPickerState"
-        private const val LAST_DECK_ID_KEY = "lastDeckId"
         const val CARD_NOT_AVAILABLE = -1
 
-        fun clearLastDeckId() {
-            val context: Context = AnkiDroidApp.instance
-            context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
-                remove(LAST_DECK_ID_KEY)
-            }
-        }
+        fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
         @CheckResult
         private fun formatQA(text: String, context: Context): String {
