@@ -37,6 +37,7 @@ import com.ichi2.anki.servicelayer.CardService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -57,6 +58,7 @@ import kotlin.math.min
 
 @NeedsTest("reverseDirectionFlow/sortTypeFlow are not updated on .launch { }")
 class CardBrowserViewModel(
+    private val lastDeckIdRepository: LastDeckIdRepository,
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
@@ -110,6 +112,10 @@ class CardBrowserViewModel(
     val selectedCardIds: List<Long>
         get() = selectedRows.map { c -> c.id }
     var lastSelectedPosition = 0
+
+    var lastDeckId: DeckId?
+        get() = lastDeckIdRepository.lastDeckId
+        set(value) { lastDeckIdRepository.lastDeckId = value }
 
     val cardInfoDestination: CardInfoDestination?
         get() {
@@ -395,9 +401,12 @@ class CardBrowserViewModel(
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
-        fun factory(preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
+        fun factory(lastDeckIdRepository: LastDeckIdRepository, preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
             initializer {
-                CardBrowserViewModel(preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider)
+                CardBrowserViewModel(
+                    lastDeckIdRepository,
+                    preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider
+                )
             }
         }
     }

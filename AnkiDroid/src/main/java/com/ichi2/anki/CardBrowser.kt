@@ -45,7 +45,6 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.*
-import com.ichi2.anki.browser.LastDeckIdRepository
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
@@ -124,8 +123,6 @@ open class CardBrowser :
     private enum class TagsDialogListenerAction {
         FILTER, EDIT_TAGS
     }
-
-    private val lastDeckIdRepository: LastDeckIdRepository = SharedPreferencesLastDeckIdRepository()
 
     lateinit var viewModel: CardBrowserViewModel
 
@@ -362,8 +359,8 @@ open class CardBrowser :
 
     @get:VisibleForTesting
     var lastDeckId: DeckId?
-        get() = lastDeckIdRepository.lastDeckId
-        set(value) { lastDeckIdRepository.lastDeckId = value }
+        get() = viewModel.lastDeckId
+        set(value) { viewModel.lastDeckId = value }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -1906,7 +1903,7 @@ open class CardBrowser :
      */
     private fun createViewModel() = ViewModelProvider(
         viewModelStore,
-        CardBrowserViewModel.factory(),
+        CardBrowserViewModel.factory(SharedPreferencesLastDeckIdRepository()),
         defaultViewModelCreationExtras
     )[CardBrowserViewModel::class.java]
 
