@@ -1660,7 +1660,7 @@ open class CardBrowser :
     }
 
     private val newPositionOfSelectedCard: Int
-        get() = mCards.find { c -> c.id == mOldCardId }?.position
+        get() = viewModel.findCardById(mOldCardId)?.position
             ?: CARD_NOT_AVAILABLE
 
     fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID

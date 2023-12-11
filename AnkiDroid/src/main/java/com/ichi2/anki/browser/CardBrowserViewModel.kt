@@ -287,6 +287,9 @@ class CardBrowserViewModel(
 
     fun getRowAtPosition(position: Int) = cards[position]
 
+    /** Given a card ID, returns a position-aware card */
+    fun findCardById(id: CardId): CardBrowser.CardCache? = cards.find { it.id == id }
+
     val cardIdToPositionMap: Map<CardId, Int>
         get() = cards.mapIndexed { i, c -> c.id to i }.toMap()
 
