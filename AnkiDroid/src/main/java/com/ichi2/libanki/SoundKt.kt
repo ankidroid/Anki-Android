@@ -24,6 +24,7 @@
 
 package com.ichi2.libanki
 
+import anki.config.ConfigKey
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.utils.KotlinCleanup
@@ -46,8 +47,6 @@ data class TTSTag(
 
 /**
  * Contains the filename inside a [sound:...] tag.
- *
- * Video files also use [sound:...].
  */
 data class SoundOrVideoTag(val filename: String) : AvTag()
 
@@ -61,16 +60,28 @@ val AV_PLAYLINK_RE = Regex("playsound:(.):(\\d+)")
 
 fun stripAvRefs(text: String) = AV_REF_RE.replace(text, "")
 
-fun addPlayIcons(content: String): String {
-    return AV_REF_RE.replace(content) { match ->
+/** Return card text with play buttons added, or stripped. */
+suspend fun addPlayButtons(text: String): String {
+    return if (withCol { config.getBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS) }) {
+        stripAvRefs(text)
+    } else {
+        avRefsToPlayIcons(text)
+    }
+}
+
+/** Add play icons into the HTML */
+fun avRefsToPlayIcons(text: String): String {
+    return AV_REF_RE.replace(text) { match ->
         val groups = match.groupValues
         val side = groups[2]
         val index = groups[3]
         val playsound = "playsound:$side:$index"
-        """<a class='replay-button replaybutton' href="$playsound"><span>
-                    <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill = "lightgrey"/>
-                    <path d="M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z" fill=black />Replay</svg>
-                    </span></a>"""
+        """<a class="replay-button soundLink" href=$playsound>
+    <svg class="playImage" viewBox="0 0 64 64" version="1.1">
+        <circle cx="32" cy="32" r="29" />
+        <path d="M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z" />
+    </svg>
+</a>"""
     }
 }
 
