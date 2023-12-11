@@ -912,13 +912,6 @@ open class CardBrowser :
         }
     }
 
-    /** Updates flag icon color and cards shown with given color  */
-    @VisibleForTesting
-    fun selectionWithFlagTask(flag: Int) {
-        mCurrentFlag = flag
-        filterByFlag()
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when {
             drawerToggle.onOptionsItemSelected(item) -> return true
@@ -1023,35 +1016,35 @@ open class CardBrowser :
                 return true
             }
             R.id.action_select_flag_zero -> {
-                selectionWithFlagTask(0)
+                filterByFlag(0)
                 return true
             }
             R.id.action_select_flag_one -> {
-                selectionWithFlagTask(1)
+                filterByFlag(1)
                 return true
             }
             R.id.action_select_flag_two -> {
-                selectionWithFlagTask(2)
+                filterByFlag(2)
                 return true
             }
             R.id.action_select_flag_three -> {
-                selectionWithFlagTask(3)
+                filterByFlag(3)
                 return true
             }
             R.id.action_select_flag_four -> {
-                selectionWithFlagTask(4)
+                filterByFlag(4)
                 return true
             }
             R.id.action_select_flag_five -> {
-                selectionWithFlagTask(5)
+                filterByFlag(5)
                 return true
             }
             R.id.action_select_flag_six -> {
-                selectionWithFlagTask(6)
+                filterByFlag(6)
                 return true
             }
             R.id.action_select_flag_seven -> {
-                selectionWithFlagTask(7)
+                filterByFlag(7)
                 return true
             }
             R.id.action_delete_card -> {
@@ -1538,7 +1531,9 @@ open class CardBrowser :
     }
 
     /** Updates search terms to only show cards with selected flag.  */
-    private fun filterByFlag() {
+    @VisibleForTesting
+    fun filterByFlag(flag: Int) {
+        mCurrentFlag = flag
         val flagSearchTerm = "flag:$mCurrentFlag"
         mSearchTerms = when {
             mSearchTerms.contains("flag:") -> mSearchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
