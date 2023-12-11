@@ -50,7 +50,6 @@ class Note : Cloneable {
     private var mFlags = 0
     private var mData: String? = null
     private var mFMap: Map<String, Pair<Int, JSONObject>>? = null
-    private var mScm: Long = 0
     var usn = 0
         private set
     var mod: Int = 0
@@ -73,7 +72,6 @@ class Note : Cloneable {
         mFlags = 0
         mData = ""
         mFMap = Notetypes.fieldMap(this.notetype)
-        mScm = col.scm
     }
 
     fun load() {
@@ -95,7 +93,6 @@ class Note : Cloneable {
                 mData = cursor.getString(7)
                 notetype = col.notetypes.get(mid)!!
                 mFMap = Notetypes.fieldMap(notetype)
-                mScm = col.scm
             }
     }
 
