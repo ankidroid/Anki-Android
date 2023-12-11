@@ -72,6 +72,8 @@ class CardBrowserViewModel(
         private set
     var currentFlag = 0
 
+    val filterQueryFlow = MutableSharedFlow<String>()
+
     /**
      * Whether the browser is working in Cards mode or Notes mode.
      * default: [CARDS]
@@ -426,6 +428,10 @@ class CardBrowserViewModel(
     /** Ignores any values before [initCompleted] is set */
     private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> =
         this.filter { initCompleted }
+
+    suspend fun setFilterQuery(filterQuery: String) {
+        this.filterQueryFlow.emit(filterQuery)
+    }
 
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"

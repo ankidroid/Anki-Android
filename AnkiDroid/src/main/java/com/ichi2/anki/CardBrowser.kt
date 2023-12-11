@@ -457,6 +457,16 @@ open class CardBrowser :
             .onEach { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
             .launchIn(lifecycleScope)
 
+        viewModel.filterQueryFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { filterQuery ->
+                mSearchView!!.setQuery("", false)
+                mSearchTerms = filterQuery
+                mSearchView!!.setQuery(mSearchTerms, true)
+                searchCards()
+            }
+            .launchIn(lifecycleScope)
+
         viewModel.deckIdFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .filterNotNull()
@@ -468,11 +478,8 @@ open class CardBrowser :
             .launchIn(lifecycleScope)
     }
 
-    fun searchWithFilterQuery(filterQuery: String) {
-        mSearchView!!.setQuery("", false)
-        mSearchTerms = filterQuery
-        mSearchView!!.setQuery(mSearchTerms, true)
-        searchCards()
+    fun searchWithFilterQuery(filterQuery: String) = launchCatchingTask {
+        viewModel.setFilterQuery(filterQuery)
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
