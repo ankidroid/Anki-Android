@@ -469,6 +469,7 @@ open class CardBrowser :
     }
 
     fun searchWithFilterQuery(filterQuery: String) {
+        mSearchView!!.setQuery("", false)
         mSearchTerms = filterQuery
         mSearchView!!.setQuery(mSearchTerms, true)
         searchCards()
@@ -969,7 +970,6 @@ open class CardBrowser :
             @NeedsTest("filter-marked query needs testing")
             R.id.action_show_marked -> {
                 mSearchTerms = "tag:marked"
-                mSearchView!!.setQuery("", false)
                 searchWithFilterQuery(mSearchTerms)
                 return true
             }
@@ -977,7 +977,6 @@ open class CardBrowser :
             @NeedsTest("filter-suspended query needs testing")
             R.id.action_show_suspended -> {
                 mSearchTerms = "is:suspended"
-                mSearchView!!.setQuery("", false)
                 searchWithFilterQuery(mSearchTerms)
                 return true
             }
@@ -1522,8 +1521,6 @@ open class CardBrowser :
     }
 
     private fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) {
-        mSearchView!!.setQuery("", false)
-
         val sb = StringBuilder(cardState.toSearch)
         // join selectedTags as "tag:$tag" with " or " between them
         val tagsConcat = selectedTags.joinToString(" or ") { tag -> "\"tag:$tag\"" }
@@ -1536,7 +1533,6 @@ open class CardBrowser :
 
     /** Updates search terms to only show cards with selected flag.  */
     private fun filterByFlag() {
-        mSearchView!!.setQuery("", false)
         val flagSearchTerm = "flag:$mCurrentFlag"
         mSearchTerms = when {
             mSearchTerms.contains("flag:") -> mSearchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
