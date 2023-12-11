@@ -204,35 +204,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         enableActivityAnimation(animation)
     }
 
-    @Deprecated("")
-    @Suppress("DEPRECATION") // startActivityForResult
-    override fun startActivityForResult(intent: Intent, requestCode: Int) {
-        try {
-            super.startActivityForResult(intent, requestCode)
-        } catch (e: ActivityNotFoundException) {
-            Timber.w(e)
-            this.showSnackbar(R.string.activity_start_failed)
-        }
-    }
-
-    @Suppress("DEPRECATION") // startActivityForResult
-    fun startActivityForResultWithoutAnimation(intent: Intent, requestCode: Int) {
-        disableIntentAnimation(intent)
-        startActivityForResult(intent, requestCode)
-        disableActivityAnimation()
-    }
-
-    @Suppress("DEPRECATION") // startActivityForResult
-    fun startActivityForResultWithAnimation(
-        intent: Intent,
-        requestCode: Int,
-        animation: Direction
-    ) {
-        enableIntentAnimation(intent)
-        startActivityForResult(intent, requestCode)
-        enableActivityAnimation(animation)
-    }
-
     private fun launchActivityForResult(
         intent: Intent?,
         launcher: ActivityResultLauncher<Intent?>,
@@ -578,7 +549,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         )
 
     companion object {
-        const val REQUEST_REVIEW = 901
         const val DIALOG_FRAGMENT_TAG = "dialog"
 
         /** Extra key to set the finish animation of an activity  */
