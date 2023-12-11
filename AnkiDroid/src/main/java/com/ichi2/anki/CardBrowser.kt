@@ -144,9 +144,6 @@ open class CardBrowser :
     private var mSearchTerms
         get() = viewModel.searchTerms
         set(value) { viewModel.searchTerms = value }
-    private var mCurrentFlag
-        get() = viewModel.currentFlag
-        set(value) { viewModel.currentFlag = value }
     private lateinit var mTagsDialogFactory: TagsDialogFactory
     private var mSearchItem: MenuItem? = null
     private var mSaveSearchItem: MenuItem? = null
@@ -1532,16 +1529,7 @@ open class CardBrowser :
 
     /** Updates search terms to only show cards with selected flag.  */
     @VisibleForTesting
-    fun filterByFlag(flag: Int) {
-        mCurrentFlag = flag
-        val flagSearchTerm = "flag:$mCurrentFlag"
-        mSearchTerms = when {
-            mSearchTerms.contains("flag:") -> mSearchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
-            mSearchTerms.isNotEmpty() -> "$flagSearchTerm $mSearchTerms"
-            else -> flagSearchTerm
-        }
-        searchWithFilterQuery(mSearchTerms)
-    }
+    fun filterByFlag(flag: Int) = launchCatchingTask { viewModel.setFlagFilter(flag) }
 
     /**
      * Loads/Reloads (Updates the Q, A & etc) of cards in the [cards] list
