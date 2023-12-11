@@ -357,11 +357,6 @@ open class CardBrowser :
         }
     }
 
-    @get:VisibleForTesting
-    var lastDeckId: DeckId?
-        get() = viewModel.lastDeckId
-        set(value) { viewModel.lastDeckId = value }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -553,10 +548,10 @@ open class CardBrowser :
         selectDeckAndSave(deckId)
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
-        if (lastDeckId != null && lastDeckId == ALL_DECKS_ID) {
+        if (viewModel.lastDeckId == ALL_DECKS_ID) {
             selectAllDecks()
-        } else if (lastDeckId != null && col.decks.get(lastDeckId!!) != null) {
-            deckSpinnerSelection!!.selectDeckById(lastDeckId!!, false)
+        } else if (viewModel.lastDeckId != null && col.decks.get(viewModel.lastDeckId!!) != null) {
+            deckSpinnerSelection!!.selectDeckById(viewModel.lastDeckId!!, false)
         } else {
             deckSpinnerSelection!!.selectDeckById(col.decks.selected(), false)
         }
@@ -570,7 +565,7 @@ open class CardBrowser :
             val deckName = getColUnsafe.decks.name(deckId)
             "deck:\"$deckName\" "
         }
-        lastDeckId = deckId
+        viewModel.lastDeckId = deckId
         searchCards()
     }
 
@@ -641,7 +636,7 @@ open class CardBrowser :
     fun selectAllDecks() {
         deckSpinnerSelection!!.selectAllDecks()
         mRestrictOnDeck = ""
-        lastDeckId = ALL_DECKS_ID
+        viewModel.lastDeckId = ALL_DECKS_ID
         searchCards()
     }
 
@@ -1281,8 +1276,8 @@ open class CardBrowser :
         get() {
             val intent = Intent(this@CardBrowser, NoteEditor::class.java)
             intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD)
-            if (lastDeckId?.let { id -> id > 0 } == true) {
-                intent.putExtra(NoteEditor.EXTRA_DID, lastDeckId)
+            if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
+                intent.putExtra(NoteEditor.EXTRA_DID, viewModel.lastDeckId)
             }
             intent.putExtra(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, mSearchTerms)
             return intent
@@ -1634,7 +1629,7 @@ open class CardBrowser :
         return v?.top ?: 0
     }
 
-    fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
+    fun hasSelectedAllDecks(): Boolean = viewModel.lastDeckId == ALL_DECKS_ID
 
     fun searchAllDecks() {
         // all we need to do is select all decks
@@ -1648,10 +1643,10 @@ open class CardBrowser :
      */
     val selectedDeckNameForUi: String
         get() = try {
-            when (lastDeckId) {
+            when (val deckId = viewModel.lastDeckId) {
                 null -> getString(R.string.card_browser_unknown_deck_name)
                 ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
-                else -> getColUnsafe.decks.name(lastDeckId!!)
+                else -> getColUnsafe.decks.name(deckId)
             }
         } catch (e: Exception) {
             Timber.w(e, "Unable to get selected deck name")
