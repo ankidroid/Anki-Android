@@ -112,7 +112,6 @@ open class CardBrowser :
         deck?.let {
             val deckId = deck.deckId
             deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-            deckSpinnerSelection!!.selectDeckById(deckId, true)
             selectDeckAndSave(deckId)
         }
     }
