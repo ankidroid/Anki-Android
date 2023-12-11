@@ -35,6 +35,8 @@ import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
+import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -63,6 +65,10 @@ suspend fun <T> FragmentActivity.runCatchingTask(
             is BackendInterruptedException -> {
                 Timber.e(exc, errorMessage)
                 exc.localizedMessage?.let { showSnackbar(it) }
+            }
+            is BackendNetworkException, is BackendSyncException -> {
+                // these exceptions do not generate worthwhile crash reports
+                showError(this, exc.localizedMessage!!, exc, false)
             }
             is BackendException -> {
                 Timber.e(exc, errorMessage)
@@ -131,17 +137,19 @@ fun Fragment.launchCatchingTask(
     }
 }
 
-private fun showError(context: Context, msg: String, exception: Throwable) {
+private fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
     try {
         AlertDialog.Builder(context).show {
             title(R.string.vague_error)
             message(text = msg)
             positiveButton(R.string.dialog_ok)
-            setOnDismissListener {
-                CrashReportService.sendExceptionReport(
-                    exception,
-                    origin = context::class.java.simpleName
-                )
+            if (crashReport) {
+                setOnDismissListener {
+                    CrashReportService.sendExceptionReport(
+                        exception,
+                        origin = context::class.java.simpleName
+                    )
+                }
             }
         }
     } catch (ex: BadTokenException) {
