@@ -23,6 +23,7 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CrashReportService
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import org.acra.util.Installation
+import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
 object DebugInfoService {
     fun getDebugInfo(info: Context): String {
@@ -30,7 +31,7 @@ object DebugInfoService {
         return """
                AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
                
-               Backend Version = ${BuildConfig.BACKEND_VERSION}
+               Backend Version = ${BuildConfig.BACKEND_VERSION} (${BackendBuildConfig.ANKI_DESKTOP_VERSION} ${BackendBuildConfig.ANKI_COMMIT_HASH})
               
                Android Version = ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})
                
