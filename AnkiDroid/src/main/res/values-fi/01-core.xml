@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Laajenna</string>
     <string name="collapse">Pienennä</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minuutti jäljellä</item>
-        <item quantity="other">%d minuuttia jäljellä</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d tunti %2$d jäljellä</item>
-        <item quantity="other">%1$d tuntia %2$d jäljellä</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d päivä %2$d jäljellä</item>
-        <item quantity="other">%1$d päivää %2$d jäljellä</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Kokoelma on tyhjä</string>
     <string name="no_cards_placeholder_description">Aloita korttien lisääminen\nkäyttäen + kuvaketta</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

@@ -177,8 +177,6 @@
     <string name="show_top_bar_summ">Afficher le nombre de cartes, la balise et la marque dans la barre supérieure</string>
     <string name="show_progress" maxLength="41">Afficher le nombre restant de révision</string>
     <string name="show_progress_summ">Montrer le nombre de cartes restantes</string>
-    <string name="show_eta" maxLength="41">Afficher le temps restant</string>
-    <string name="show_eta_summ">Afficher le temps restant</string>
     <string name="use_current" maxLength="41">Paquet pour les nouvelles cartes</string>
     <string name="learn_cutoff" maxLength="41">Limite d’apprentissage</string>
     <string name="time_limit" maxLength="41">Limite de temps</string>

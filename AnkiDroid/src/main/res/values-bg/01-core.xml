@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Разширяване</string>
     <string name="collapse">Свиване</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d минута остава</item>
-        <item quantity="other">%d минути остава</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d час %2$d остава</item>
-        <item quantity="other">%1$d часа %2$d остават</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d ден %2$d остава</item>
-        <item quantity="other">%1$d дни %2$d остават</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Колекцията е празна</string>
     <string name="no_cards_placeholder_description">Започнете да добавяте карти\nкато използвате иконата +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

@@ -180,8 +180,6 @@
     <string name="show_top_bar_summ">Паказваць лічыльнік картак, сцяжок і пазнаку на верхняй панэлі</string>
     <string name="show_progress" maxLength="41">Паказаць тое, што засталося</string>
     <string name="show_progress_summ">Паказваць лічыльнік картак, якія засталіся</string>
-    <string name="show_eta" maxLength="41">Паказваць час</string>
-    <string name="show_eta_summ">Паказваць колькі часу засталося</string>
     <string name="use_current" maxLength="41">Калода для новых картак</string>
     <string name="learn_cutoff" maxLength="41">Вучыць наперад</string>
     <string name="time_limit" maxLength="41">Абмежаванне навучальнага блока</string>

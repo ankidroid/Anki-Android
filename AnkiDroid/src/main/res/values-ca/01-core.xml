@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Desplega</string>
     <string name="collapse">Replega</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">Queda %d minut</item>
-        <item quantity="other">Queden %d minuts</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">Queda %1$d hora i %2$d minuts</item>
-        <item quantity="other">Queden %1$d hores i %2$d minuts</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Queda %1$d dia i %2$d hores</item>
-        <item quantity="other">Queden %1$d dies i %2$d hores</item>
-    </plurals>
     <string name="no_cards_placeholder_title">La col·lecció és buida</string>
     <string name="no_cards_placeholder_description">Comenceu a afegir cartes\n amb la icona +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

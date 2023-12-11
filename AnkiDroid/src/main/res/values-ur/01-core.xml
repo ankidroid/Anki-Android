@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">پھیلائیں</string>
     <string name="collapse">بند کریں</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d منٹ باقی</item>
-        <item quantity="other">%d منٹ باقی</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d گھنٹہ %2$d باقی</item>
-        <item quantity="other">%1$d گھنٹے %2$d باقی</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d دن %2$d باقی</item>
-        <item quantity="other">%1$d دن %2$d باقی</item>
-    </plurals>
     <string name="no_cards_placeholder_title">مجموعہ خالی ہے</string>
     <string name="no_cards_placeholder_description">+ آئیکن کو استعمال کرتے ہوئے کارڈز شامل کرنا شروع کریں۔</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

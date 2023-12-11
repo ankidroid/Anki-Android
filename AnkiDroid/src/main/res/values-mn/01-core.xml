@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Дэд цуглуулгуудыг харах</string>
     <string name="collapse">Дэд цуглуулгуудыг нуух</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d минут үлдлээ</item>
-        <item quantity="other">%d минут үлдлээ</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d цаг %2$d үлдлээ</item>
-        <item quantity="other">%1$d цаг %2$d үлдлээ</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d өдөр %2$d үлдлээ</item>
-        <item quantity="other">%1$d өдөр %2$d үлдлээ</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Таны том  цуглуулга хоосон  байна</string>
     <string name="no_cards_placeholder_description">+ товчийг ашиглан шинэ карт нэмээрэй</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

@@ -59,15 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Тулысынча күрсәтү</string>
     <string name="collapse">Борып ябу</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="other">%d минут калды</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d сәгатъ %2$d калды</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d көн %2$d калды</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Коллекция буш</string>
     <string name="no_cards_placeholder_description">Кәртләрне\n+ төймәсена басып беркетә башлагыз.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Ausklappen</string>
     <string name="collapse">Einklappen</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">noch %d Minute</item>
-        <item quantity="other">noch %d Minuten</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d Stunde %2$d verbleibend</item>
-        <item quantity="other">%1$d Stunden %2$d verbleibend</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d Tag %2$d verbleibend</item>
-        <item quantity="other">%1$d Tage %2$d verbleibend</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>
     <string name="no_cards_placeholder_description">Fügen Sie Karten \nmit dem + -Symbol hinzu.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

@@ -180,8 +180,6 @@
     <string name="show_top_bar_summ">Показувати кількість карт, прапорець та зірочку на верхній панелі</string>
     <string name="show_progress" maxLength="41">Показати ті, що залишилися</string>
     <string name="show_progress_summ">Показувати кількість карток, що залишилися</string>
-    <string name="show_eta" maxLength="41">Показувати залишок часу</string>
-    <string name="show_eta_summ">Показувати скільки залишилося часу навчання</string>
     <string name="use_current" maxLength="41">Колода для нових карт</string>
     <string name="learn_cutoff" maxLength="41">Ліміт вивчення карток наперед</string>
     <string name="time_limit" maxLength="41">Період лічильника переглядів</string>

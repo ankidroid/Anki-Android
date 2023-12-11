@@ -179,8 +179,6 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Прикажи преостале</string>
     <string name="show_progress_summ">Прикажи број остале картице</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">Шпил за нове картице</string>
     <string name="learn_cutoff" maxLength="41">Учити више од задатог лимита</string>
     <string name="time_limit" maxLength="41">Ограничење времена</string>

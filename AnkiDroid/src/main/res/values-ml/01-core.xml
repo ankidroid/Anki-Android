@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">വികസിപ്പിക്കുക</string>
     <string name="collapse">ചുരുക്കുക</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d മിനിറ്റ് ശേഷിക്കുന്നു</item>
-        <item quantity="other">%d മിനിറ്റ് ശേഷിക്കുന്നു</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
-    </plurals>
     <string name="no_cards_placeholder_title">ശേഖരം ശൂന്യമാണ്</string>
     <string name="no_cards_placeholder_description">കാർഡുകൾ ചേർക്കാൻ ആരംഭിക്കുക +  ഐക്കൺ ഉപയോഗിച്ച്</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

@@ -177,8 +177,6 @@
     <string name="show_top_bar_summ">Ammustra su nùmeru de cartas, sa bandera e su marcadore in sa barra de susu</string>
     <string name="show_progress" maxLength="41">Ammustra ite mancat</string>
     <string name="show_progress_summ">Ammustra su nùmeru de cartas chi mancant</string>
-    <string name="show_eta" maxLength="41">Ammustra su tempus chi mancat</string>
-    <string name="show_eta_summ">Ammustra su tempus chi mancat</string>
     <string name="use_current" maxLength="41">Matzu pro sas cartas noas</string>
     <string name="learn_cutoff" maxLength="41">Lìmite pro s\'antitzipatzione de s\'imparu</string>
     <string name="time_limit" maxLength="41">Lìmite de tempus pro sessione</string>

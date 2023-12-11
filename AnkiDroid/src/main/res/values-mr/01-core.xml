@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">विस्तृत करा</string>
     <string name="collapse">कोसळणे</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d मिनिट शिल्लक आहे</item>
-        <item quantity="other">%d मिनिटे शिल्लक आहेत</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d तास %2$d शिल्लक</item>
-        <item quantity="other">%1$d तास %2$d शिल्लक</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d दिवस %2$d बाकी</item>
-        <item quantity="other">%1$d दिवस %2$d शिल्लक</item>
-    </plurals>
     <string name="no_cards_placeholder_title">संग्रह रिक्त आहे</string>
     <string name="no_cards_placeholder_description">कार्ड जोडण्यास प्रारंभ करण्यासाठी + चिन्हाचा उपयोग करा.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

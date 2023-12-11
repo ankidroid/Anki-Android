@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Uitklappen</string>
     <string name="collapse">Inklappen</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minuut over</item>
-        <item quantity="other">%d minuten over</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d Uur %2$d Over</item>
-        <item quantity="other">%1$d Uren %2$d over</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d Dag %2$d over</item>
-        <item quantity="other">%1$d Dagen %2$d Over</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Collectie is leeg</string>
     <string name="no_cards_placeholder_description">Begin kaarten toe te voegen\nmet het + icoon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

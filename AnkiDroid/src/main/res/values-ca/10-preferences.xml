@@ -177,8 +177,6 @@
     <string name="show_top_bar_summ">Mostra contadors de carta, bandera i marca a la barra de dalt</string>
     <string name="show_progress" maxLength="41">Mostra el romanent</string>
     <string name="show_progress_summ">Mostra el recompte de cartes restants</string>
-    <string name="show_eta" maxLength="41">Mostra el temps restant</string>
-    <string name="show_eta_summ">Mostra el temps restant</string>
     <string name="use_current" maxLength="41">Paquet per a cartes noves</string>
     <string name="learn_cutoff" maxLength="41">Informeu-vos de límit per davant</string>
     <string name="time_limit" maxLength="41">Límit de temps de Timebox</string>

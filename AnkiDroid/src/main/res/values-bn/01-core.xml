@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">প্রসারণ করুন</string>
     <string name="collapse">সঙ্কোচন</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d মিনিট বাকি আছে</item>
-        <item quantity="other">%d মিনিট বাকি আছে</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d ঘণ্টা %2$d মিনিট বাকি</item>
-        <item quantity="other">%1$d ঘণ্টা %2$d মিনিট বাকি</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d দিন %2$d ঘন্টা বাকি</item>
-        <item quantity="other">%1$d দিন %2$d ঘন্টা বাকি</item>
-    </plurals>
     <string name="no_cards_placeholder_title">সংগ্রহ টি খালি</string>
     <string name="no_cards_placeholder_description">কার্ড অ্যাড করা শুরু করুন\n+ আইকন চেপে</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

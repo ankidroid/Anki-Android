@@ -181,8 +181,6 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Show remaining</string>
     <string name="show_progress_summ">Show remaining card count</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">Deck for new cards</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>

@@ -59,21 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Extindeți</string>
     <string name="collapse">Restrângeți</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minut rămas</item>
-        <item quantity="few">%d minute rămase</item>
-        <item quantity="other">%d minute rămase</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d ore rămase %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="other">%1$d zile %2$d rămase</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Colecția este goală</string>
     <string name="no_cards_placeholder_description">Puteți începe a adăuga\ncarduri folosind iconiţa +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

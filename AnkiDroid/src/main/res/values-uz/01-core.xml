@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Kengaytirish</string>
     <string name="collapse">Toraytirish</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minut qoldi</item>
-        <item quantity="other">%d minutes left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d soat %2$d qoldi</item>
-        <item quantity="other">%1$d soatlar %2$d qoldi</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d kun %2$d qoldi</item>
-        <item quantity="other">%1$d kunlar %2$d qoldi</item>
-    </plurals>
     <string name="no_cards_placeholder_title">To\'plam bo\'sh</string>
     <string name="no_cards_placeholder_description">Kartalar qo\'shishni\n+ belgisi orqali boshlang</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

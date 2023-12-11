@@ -177,8 +177,6 @@
     <string name="show_top_bar_summ">نمایش تعداد کارت‌ها، پرچم‌ها و نشان‌ها در نوار بالا</string>
     <string name="show_progress" maxLength="41">نمایش باقیمانده</string>
     <string name="show_progress_summ">نمایش تعداد کارت‌های باقیمانده</string>
-    <string name="show_eta" maxLength="41">نمایش زمان تخمینی</string>
-    <string name="show_eta_summ">نمایش زمان باقیمانده</string>
     <string name="use_current" maxLength="41">دسته برای کارتهای جدید</string>
     <string name="learn_cutoff" maxLength="41">محدودیت های پیش رو را یاد بگیرید</string>
     <string name="time_limit" maxLength="41">محدوده زمانی جعبه زمان</string>

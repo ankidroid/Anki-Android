@@ -178,8 +178,6 @@
     <string name="show_top_bar_summ">Mostrar contagem de cartões, bandeiras e marcas na barra superior</string>
     <string name="show_progress" maxLength="41">Mostrar restantes</string>
     <string name="show_progress_summ">Mostrar o contador de fichas restantes</string>
-    <string name="show_eta" maxLength="41">Mostrar o tempo restante</string>
-    <string name="show_eta_summ">Mostrar o tempo restante</string>
     <string name="use_current" maxLength="41">Baralho para as fichas novas</string>
     <string name="learn_cutoff" maxLength="41">Limite para antecipação de aprendizagem</string>
     <string name="time_limit" maxLength="41">Limite de tempo para Timebox</string>

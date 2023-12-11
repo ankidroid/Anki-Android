@@ -59,24 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Разгарнуць</string>
     <string name="collapse">Згарнуць</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">Засталася %d хвіліна</item>
-        <item quantity="few">Засталося %d хвіліны</item>
-        <item quantity="many">Засталося %d хвілін</item>
-        <item quantity="other">Засталося %d хвілін</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">Засталася %1$d гадзіна %2$d</item>
-        <item quantity="few">Засталося %1$d гадзіны %2$d</item>
-        <item quantity="many">Засталося %1$d гадзін %2$d</item>
-        <item quantity="other">Засталося %1$d гадзін %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Застаўся %1$d дзень %2$d</item>
-        <item quantity="few">Засталося %1$d дні %2$d</item>
-        <item quantity="many">Засталося %1$d дзён %2$d</item>
-        <item quantity="other">Засталося %1$d дзён %2$d</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Калекцыя пустая</string>
     <string name="no_cards_placeholder_description">Пачніце дадаваць карткі\nз дапамогай значка \"+\"</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

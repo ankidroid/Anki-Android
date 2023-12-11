@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ವಿಸ್ತರಿಸಿ </string>
     <string name="collapse">ಬೀಳಿಸಿ</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d ನಿಮಿಷ ಉಳಿದಿದೆ</item>
-        <item quantity="other">%d ನಿಮಿಷಗಳು ಉಳಿದಿವೆ</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d ಗಂಟೆ %2$d ಉಳಿದಿದೆ</item>
-        <item quantity="other">%1$d ಗಂಟೆಗಳು %2$d ಉಳಿದಿದೆ</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$dದಿನ %2$d ಉಳಿದಿದೆ</item>
-        <item quantity="other">%1$d ದಿನಗಳು ಉಳಿದಿವೆ %2$d ದಿನಗಳು ಉಳಿದಿವೆ</item>
-    </plurals>
     <string name="no_cards_placeholder_title">ಸಂಗ್ರಹ ಖಾಲಿಯಾಗಿದೆ </string>
     <string name="no_cards_placeholder_description">ಕಾರ್ಡ್‌ಗಳನ್ನು ಸೇರಿಸಲು ಪ್ರಾರಂಭಿಸಿ \n  + ಐಕಾನ್ ಬಳಸಿ</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

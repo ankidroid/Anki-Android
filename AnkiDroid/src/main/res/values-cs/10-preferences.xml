@@ -179,8 +179,6 @@
     <string name="show_top_bar_summ">Zobrazit počty karet, příznak a označení v horní liště</string>
     <string name="show_progress" maxLength="41">Zobrazit zbývající</string>
     <string name="show_progress_summ">Zobrazit zbývající počet karet</string>
-    <string name="show_eta" maxLength="41">Zobrazit ETA</string>
-    <string name="show_eta_summ">Zobrazit zbývající čas</string>
     <string name="use_current" maxLength="41">Balíček pro nové karty</string>
     <string name="learn_cutoff" maxLength="41">Limit učení se napřed</string>
     <string name="time_limit" maxLength="41">Časové omezení</string>

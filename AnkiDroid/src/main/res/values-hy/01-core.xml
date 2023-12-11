@@ -59,18 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Ընդարձակել</string>
     <string name="collapse">Կոծկել</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d րոպե է մնացել</item>
-        <item quantity="other">%d րոպե է մնացել</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">Մնաց %1$d ժամ %2$d</item>
-        <item quantity="other">Մնաց %1$d ժամ %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Մնաց %1$d օր %2$d</item>
-        <item quantity="other">Մնաց %1$d օր %2$d</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Ավելացրեք քարտեր\n+ կոճակի միջոցով։</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

@@ -177,8 +177,6 @@
     <string name="show_top_bar_summ">Tunjuk bilangan kad, tanda dan cap pada bar atas</string>
     <string name="show_progress" maxLength="41">Tunjuk baki</string>
     <string name="show_progress_summ">Tunjuk bilangan baki kad</string>
-    <string name="show_eta" maxLength="41">Tunjuk ETA</string>
-    <string name="show_eta_summ">Tunjuk baki masa</string>
     <string name="use_current" maxLength="41">Dek untuk kad baru</string>
     <string name="learn_cutoff" maxLength="41">Had belajar awal</string>
     <string name="time_limit" maxLength="41">Had kotak masa</string>

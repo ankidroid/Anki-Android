@@ -177,8 +177,6 @@
     <string name="show_top_bar_summ">Üst çubukta kart sayılarını ve işaretlemeleri göster</string>
     <string name="show_progress" maxLength="41">Kalanı göster</string>
     <string name="show_progress_summ">Kalan kart sayısını göster</string>
-    <string name="show_eta" maxLength="41">ETA göster</string>
-    <string name="show_eta_summ">Kalan zamanı göster</string>
     <string name="use_current" maxLength="41">Yeni kartlar için deste</string>
     <string name="learn_cutoff" maxLength="41">Önceden öğrenme sınırı</string>
     <string name="time_limit" maxLength="41">Zaman sınırı</string>
