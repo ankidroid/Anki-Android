@@ -55,17 +55,24 @@ suspend fun <T> FragmentActivity.runCatchingTask(
 ): T? {
     try {
         return block()
-    } catch (cancellationException: CancellationException) {
-        throw cancellationException // CancellationException should be re-thrown to propagate it to the parent coroutine
-    } catch (exc: BackendInterruptedException) {
-        Timber.e(exc, errorMessage)
-        exc.localizedMessage?.let { showSnackbar(it) }
-    } catch (exc: BackendException) {
-        Timber.e(exc, errorMessage)
-        showError(this, exc.localizedMessage!!, exc)
     } catch (exc: Exception) {
-        Timber.e(exc, errorMessage)
-        showError(this, exc.toString(), exc)
+        when (exc) {
+            is CancellationException -> {
+                throw exc // CancellationException should be re-thrown to propagate it to the parent coroutine
+            }
+            is BackendInterruptedException -> {
+                Timber.e(exc, errorMessage)
+                exc.localizedMessage?.let { showSnackbar(it) }
+            }
+            is BackendException -> {
+                Timber.e(exc, errorMessage)
+                showError(this, exc.localizedMessage!!, exc)
+            }
+            else -> {
+                Timber.e(exc, errorMessage)
+                showError(this, exc.toString(), exc)
+            }
+        }
     }
     return null
 }
