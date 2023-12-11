@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ExportDialogParams
 import com.ichi2.anki.export.ExportType
@@ -127,6 +128,21 @@ class CardBrowserViewModel(
             val firstSelectedCard = selectedCardIds.firstOrNull() ?: return null
             return CardInfoDestination(firstSelectedCard)
         }
+
+    suspend fun getInitialDeck(): DeckId {
+        // TODO: Handle the launch intent
+        val lastDeckId = lastDeckId
+        if (lastDeckId == ALL_DECKS_ID) {
+            return ALL_DECKS_ID
+        }
+
+        // If a valid value for last deck exists then use it, otherwise use libanki selected deck
+        return if (lastDeckId != null && withCol { decks.get(lastDeckId) != null }) {
+            lastDeckId
+        } else {
+            withCol { decks.selected() }
+        }
+    }
 
     private val initCompletedFlow = MutableStateFlow(false)
 

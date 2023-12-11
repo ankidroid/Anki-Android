@@ -554,13 +554,11 @@ open class CardBrowser :
         deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
         selectDeckAndSave(deckId)
 
-        // If a valid value for last deck exists then use it, otherwise use libanki selected deck
-        if (viewModel.lastDeckId == ALL_DECKS_ID) {
-            selectAllDecks()
-        } else if (viewModel.lastDeckId != null && col.decks.get(viewModel.lastDeckId!!) != null) {
-            deckSpinnerSelection!!.selectDeckById(viewModel.lastDeckId!!, false)
-        } else {
-            deckSpinnerSelection!!.selectDeckById(col.decks.selected(), false)
+        launchCatchingTask {
+            when (viewModel.getInitialDeck()) {
+                ALL_DECKS_ID -> selectAllDecks()
+                else -> deckSpinnerSelection!!.selectDeckById(viewModel.lastDeckId!!, false)
+            }
         }
     }
 
