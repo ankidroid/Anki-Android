@@ -43,9 +43,11 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.*
 import com.ichi2.anki.browser.SaveSearchResult
+import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
@@ -123,6 +125,8 @@ open class CardBrowser :
     }
 
     lateinit var viewModel: CardBrowserViewModel
+
+    private var launchOptions: CardBrowserLaunchOptions? = null
 
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
@@ -390,6 +394,7 @@ open class CardBrowser :
             displayDeckPickerForPermissionsDialog()
             return
         }
+        launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
         setContentView(R.layout.card_browser)
         initNavigationDrawer(findViewById(android.R.id.content))
         // initialize the lateinit variables
@@ -418,19 +423,19 @@ open class CardBrowser :
         cardsListView.setOnScrollListener(RenderOnScroll())
         startLoadingCollection()
 
-        // search card using deep links
-        intent.data?.getQueryParameter("search")?.let {
-            mSearchTerms = it
-            searchCards()
-        }
-
-        // for intent coming from search query js api
-        intent.getStringExtra("search_query")?.let {
-            mSearchTerms = it
-            if (intent.getBooleanExtra("all_decks", false)) {
-                onDeckSelected(SelectableDeck(ALL_DECKS_ID, getString(R.string.card_browser_all_decks)))
+        when (val options = launchOptions) {
+            is CardBrowserLaunchOptions.DeepLink -> {
+                mSearchTerms = options.search
+                searchCards()
             }
-            searchCards()
+            is CardBrowserLaunchOptions.SearchQueryJs -> {
+                mSearchTerms = options.search
+                if (options.allDecks) {
+                    onDeckSelected(SelectableDeck(ALL_DECKS_ID, getString(R.string.card_browser_all_decks)))
+                }
+                searchCards()
+            }
+            else -> {} // Context Menu handled in onCreateOptionsMenu
         }
         mExportingDelegate.onRestoreInstanceState(savedInstanceState)
 
@@ -792,16 +797,14 @@ open class CardBrowser :
             title = getColUnsafe.undoLabel()
         }
 
-        // Maybe we were called from ACTION_PROCESS_TEXT.
-        // In that case we already fill in the search.
-        if (Intent.ACTION_PROCESS_TEXT == intent.action) {
-            intent.action = Intent.ACTION_DEFAULT
-            val search = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)
-            if (!search.isNullOrEmpty()) {
-                Timber.i("CardBrowser :: Called with search intent: %s", search.toString())
-                searchWithFilterQuery(search.toString())
-            }
+        launchOptions?.let { options ->
+            if (options !is CardBrowserLaunchOptions.SystemContextMenu) return@let
+            // Fill in the search.
+            Timber.i("CardBrowser :: Called with search intent: %s", launchOptions.toString())
+            searchWithFilterQuery(options.search.toString())
+            launchOptions = null
         }
+
         mPreviewItem = menu.findItem(R.id.action_preview)
         onSelectionChanged()
         updatePreviewMenuItem()
