@@ -158,7 +158,7 @@
     <string name="import_title">Імпортування</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додати</string>
     <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">Додати \"%s\" до колекції? Це може зайняти багато часу</string>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Помилка</string>
     <string name="import_error_handle_exception">Не вдалося імпортувати пакет\n\n%s</string>
@@ -365,21 +365,20 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Натисніть, щоб почати перенесення сховища</string>
     <string name="media_sync_required_title">Необхідна синхронізація медіа</string>
     <string name="media_sync_unavailable_message">Синхронізацію мультимедійних файлів вимкнено в налаштуваннях. Будь ласка, синхронізуйте та створіть резервну копію всіх медіафайлів, які не були синхронізовані, перш ніж продовжити</string>
-    <string name="audio_saved">Recording saved</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    <string name="audio_saved">Запис аудіо збережено</string>
+    <string name="deleting_selected_notes">Видалення вибраних записів</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Натисніть на голос, щоб прослухати
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Перед використанням слід встановити голос</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Все одно використати
     </string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
-    </string>
-    <string name="tts_voices_playback_error" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">        Audio error (%s)
+    <string name="tts_voices_playback_error" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">        Помилка зі звуком(%s)
     </string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
-    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Інтернет
     </string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Встановити
     </string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Не вдалося відкрити налаштування синтезу мовлення
     </string>
 </resources>
