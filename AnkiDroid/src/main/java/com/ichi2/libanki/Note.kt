@@ -53,7 +53,7 @@ class Note : Cloneable {
     private var mScm: Long = 0
     var usn = 0
         private set
-    var mod: Long = 0
+    var mod: Int = 0
         private set
 
     constructor(col: Collection, id: Long) {
@@ -87,7 +87,7 @@ class Note : Cloneable {
                 }
                 guId = cursor.getString(0)
                 mid = cursor.getLong(1)
-                mod = cursor.getLong(2)
+                mod = cursor.getLong(2).toInt()
                 usn = cursor.getInt(3)
                 tags = col.tags.split(cursor.getString(4))
                 fields = Utils.splitFields(cursor.getString(5))
