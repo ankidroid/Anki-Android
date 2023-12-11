@@ -1467,11 +1467,9 @@ open class CardBrowser :
             return
         }
         mShouldRestoreScroll = false
-        val newPosition = newPositionOfSelectedCard
-        if (newPosition != CARD_NOT_AVAILABLE) {
-            Timber.d("Restoring scroll position after search")
-            autoScrollTo(newPosition)
-        }
+        val card = viewModel.findCardById(mOldCardId) ?: return
+        Timber.d("Restoring scroll position after search")
+        autoScrollTo(card.position)
     }
 
     @VisibleForTesting
@@ -1658,10 +1656,6 @@ open class CardBrowser :
         val v = cardsListView.getChildAt(cardPosition - firstVisiblePosition)
         return v?.top ?: 0
     }
-
-    private val newPositionOfSelectedCard: Int
-        get() = viewModel.findCardById(mOldCardId)?.position
-            ?: CARD_NOT_AVAILABLE
 
     fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
 
