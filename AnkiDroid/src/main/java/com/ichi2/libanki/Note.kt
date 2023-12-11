@@ -18,7 +18,6 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.libanki.exception.WrongId
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
 import com.ichi2.utils.emptyStringMutableList
@@ -71,23 +70,21 @@ class Note : Cloneable {
     }
 
     fun load() {
-        col.db
-            .query(
-                "SELECT guid, mid, mod, usn, tags, flds FROM notes WHERE id = ?",
-                this.id
-            ).use { cursor ->
-                if (!cursor.moveToFirst()) {
-                    throw WrongId(this.id, "note")
-                }
-                guId = cursor.getString(0)
-                mid = cursor.getLong(1)
-                mod = cursor.getLong(2).toInt()
-                usn = cursor.getInt(3)
-                tags = col.tags.split(cursor.getString(4))
-                fields = Utils.splitFields(cursor.getString(5))
-                notetype = col.notetypes.get(mid)!!
-                mFMap = Notetypes.fieldMap(notetype)
-            }
+        val note = col.backend.getNote(this.id)
+        loadFromBackendNote(note)
+    }
+
+    private fun loadFromBackendNote(note: anki.notes.Note) {
+        this.id = note.id
+        this.guId = note.guid
+        this.mid = note.notetypeId
+        this.notetype = col.notetypes.get(mid)!! // not in libAnki
+        this.mod = note.mtimeSecs
+        this.usn = note.usn
+        // the lists in the protobuf are NOT mutable, even though they cast to MutableList
+        this.tags = note.tagsList.toMutableList()
+        this.fields = note.fieldsList.toMutableList()
+        this.mFMap = Notetypes.fieldMap(notetype)
     }
 
     fun reloadModel() {
