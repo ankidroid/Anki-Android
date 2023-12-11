@@ -63,7 +63,7 @@ suspend fun <T> FragmentActivity.runCatchingTask(
                 throw exc // CancellationException should be re-thrown to propagate it to the parent coroutine
             }
             is BackendInterruptedException -> {
-                Timber.e(exc, errorMessage)
+                Timber.w(exc, errorMessage)
                 exc.localizedMessage?.let { showSnackbar(it) }
             }
             is BackendNetworkException, is BackendSyncException -> {
