@@ -346,6 +346,10 @@
             android:exported="false"
             />
         <activity
+            android:name="com.ichi2.anki.SingleFragmentActivity"
+            android:exported="false"
+            />
+        <activity
             android:name="com.ichi2.anki.CardTemplatePreviewer"
             android:label="@string/preview_title"
             android:exported="false"
