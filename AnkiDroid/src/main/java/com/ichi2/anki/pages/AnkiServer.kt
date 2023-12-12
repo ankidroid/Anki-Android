@@ -19,6 +19,7 @@ package com.ichi2.anki.pages
 
 import android.app.Activity
 import androidx.fragment.app.FragmentActivity
+import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteEditor
@@ -100,21 +101,31 @@ open class AnkiServer(
             "getImageForOcclusion" -> withCol { getImageForOcclusionRaw(bytes) }
             "getImageOcclusionNote" -> withCol { getImageOcclusionNoteRaw(bytes) }
             "getImageForOcclusionFields" -> withCol { getImageOcclusionFieldsRaw(bytes) }
-            "addImageOcclusionNote" -> withCol { addImageOcclusionNoteRaw(bytes) }.also {
+            "addImageOcclusionNote" -> {
+                val data = withCol {
+                    addImageOcclusionNoteRaw(bytes)
+                }
+                undoableOp { OpChanges.parseFrom(data) }
                 activity.launchCatchingTask {
                     // Allow time for toast message to appear before closing editor
                     delay(1000)
                     activity.setResult(Activity.RESULT_OK)
                     activity.finish()
                 }
+                data
             }
-            "updateImageOcclusionNote" -> withCol { updateImageOcclusionNoteRaw(bytes) }.also {
+            "updateImageOcclusionNote" -> {
+                val data = withCol {
+                    updateImageOcclusionNoteRaw(bytes)
+                }
+                undoableOp { OpChanges.parseFrom(data) }
                 activity.launchCatchingTask {
                     // Allow time for toast message to appear before closing editor
                     delay(1000)
                     activity.setResult(NoteEditor.RESULT_UPDATED_IO_NOTE)
                     activity.finish()
                 }
+                data
             }
             "congratsInfo" -> withCol { congratsInfoRaw(bytes) }
             else -> { throw Exception("unhandled request: $methodName") }

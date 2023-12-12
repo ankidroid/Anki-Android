@@ -297,9 +297,6 @@ abstract class AbstractFlashcardViewer :
             } else if (result.resultCode == RESULT_CANCELED && !reloadRequired) {
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard()
-            } else if (result.resultCode == NoteEditor.RESULT_UPDATED_IO_NOTE) {
-                reloadWebViewContent()
-                onEditedNoteChanged()
             }
         }
     )
