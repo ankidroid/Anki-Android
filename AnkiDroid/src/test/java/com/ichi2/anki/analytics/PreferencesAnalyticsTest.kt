@@ -29,7 +29,12 @@ import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class PreferencesAnalyticsTest : RobolectricTest() {
+    private val devOptionsKeys =
+        PreferenceTestUtils.getKeysFromXml(targetContext, R.xml.preferences_dev_options).toSet()
+
+    /** All preference keys besides dev options */
     private val allKeys = PreferenceTestUtils.getAllPreferenceKeys(targetContext)
+        .subtract(devOptionsKeys)
 
     /** Keys of preferences that shouldn't be reported */
     private val excludedPrefs = setOf(
@@ -45,18 +50,6 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         "appBarButtonsScreen",
         "pref_screen_advanced",
         "backups_help",
-        // Dev options: only aimed at devs
-        "devOptionsKey",
-        "devOptionsEnabledByUser",
-        "html_javascript_debugging",
-        "trigger_crash_preference",
-        "analytics_debug_preference",
-        "debug_lock_database",
-        "showOnboarding",
-        "resetOnboarding",
-        "fillCollectionNumberFile",
-        "fillCollectionSizeFile",
-        "fillCollection",
         // Categories: don't have a value
         "appearance_preference_group",
         "category_plugins",
