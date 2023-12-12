@@ -21,7 +21,6 @@ package com.ichi2.anki.multimediacard.fields
 
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -107,15 +106,6 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
                 fragment.show(mActivity.supportFragmentManager, "pick.clone")
             }
         }
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see com.ichi2.anki.IFieldController#onActivityResult(int, int, android.content.Intent) When activity started
-     * from here returns, the MultimediaEditFieldActivity passes control here back. And the results from the started before
-     * activity are received.
-     */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     }
 
     override fun onFocusLost() {

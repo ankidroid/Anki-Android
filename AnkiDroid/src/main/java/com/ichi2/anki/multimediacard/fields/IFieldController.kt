@@ -20,7 +20,6 @@
 package com.ichi2.anki.multimediacard.fields
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
@@ -59,10 +58,6 @@ interface IFieldController {
 
     // Layout is vertical inside a scroll view already
     fun createUI(context: Context, layout: LinearLayout)
-
-    // If the controller ever starts an activity for result, this is going to be
-    // called back on result.
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
     // Called when the controller has stopped showing the field in favor of another one
     fun onFocusLost()
