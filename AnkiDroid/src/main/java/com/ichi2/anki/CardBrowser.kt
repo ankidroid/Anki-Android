@@ -544,7 +544,7 @@ open class CardBrowser :
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
                 cb.toggle()
-                viewModel.selectRowAtPosition(position)
+                viewModel.toggleRowSelectionAtPosition(position)
             } else {
                 // load up the card selected on the list
                 val clickedCardId = viewModel.getCardIdAtPosition(position)
