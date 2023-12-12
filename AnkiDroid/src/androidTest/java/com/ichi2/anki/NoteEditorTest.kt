@@ -28,7 +28,6 @@ import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TestRule
-import java.util.ArrayList
 
 abstract class NoteEditorTest protected constructor() {
     @get:Rule
