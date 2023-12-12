@@ -463,7 +463,9 @@ open class DeckPicker :
         Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate()
 
         launchShowingHidingEssentialFileMigrationProgressDialog()
-        checkWebviewVersion()
+        if (BuildConfig.DEBUG) {
+            checkWebviewVersion()
+        }
     }
 
     private fun hasShownAppIntro(): Boolean {
