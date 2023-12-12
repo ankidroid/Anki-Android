@@ -411,15 +411,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // TODO: Delete function from interface once migration is complete. See below comment.
-        // Do Nothing
-        // the only reference to this function is in
-        // MultimediaEditFieldActivity::onActivityResult, and that's still only being used because
-        // BasicMediaClipFieldController hasn't been migrated over to the
-        // start register for activity result API yet.
-    }
-
     private fun cancelImageCapture() {
         if (!mPreviousImagePath.isNullOrEmpty()) {
             revertToPreviousImage()

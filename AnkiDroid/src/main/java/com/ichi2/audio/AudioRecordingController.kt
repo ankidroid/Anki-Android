@@ -17,7 +17,6 @@ package com.ichi2.audio
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -238,10 +237,6 @@ class AudioRecordingController :
             }
             audioTimeView.text = DEFAULT_TIME
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // do nothing
     }
 
     private fun startRecording(context: Context, audioPath: String) {

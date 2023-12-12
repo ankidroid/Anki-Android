@@ -37,7 +37,6 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.ExceptionUtil.executeSafe
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
 
@@ -102,14 +101,6 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             selectMediaLauncher,
             ActivityTransitionAnimation.Direction.NONE
         )
-    }
-
-    @KotlinCleanup("make data non-null")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // TODO: Delete function from interface once migration is complete. See below comment.
-        // Do Nothing
-        // once everything is migrated over to the register for activity results api,
-        // this will no longer be needed
     }
 
     override fun setEditingActivity(activity: MultimediaEditFieldActivity) {
