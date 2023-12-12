@@ -28,6 +28,7 @@
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)"
         name="pref_summary_percentage">%s\%%</string>
+    <string  name="pref_summary_text">%s\sp</string>
     <string name="pref_search_no_results">No results</string>
 
     <!-- preferences.xml categories-->
@@ -57,6 +58,8 @@
     <string name="reset_confirmation">All states reset</string>
     <string name="card_zoom" maxLength="41">Card zoom</string>
     <string name="image_zoom" maxLength="41">Image zoom</string>
+    <string name="deck_title_zoom" maxLength="41">Deck title zoom</string>
+    <string name="deck_title_bold" maxLength="41">Deck title bold</string>
     <string name="button_size" maxLength="41">Answer button size</string>
     <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
@@ -152,6 +155,7 @@
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="deck_bold_summ">Deck text title bold effect</string>
     <string name="show_top_bar" maxLength="41">Show top bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Show remaining</string>

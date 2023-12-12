@@ -35,6 +35,19 @@
         android:stepSize="10"
         app:displayFormat="@string/pref_summary_percentage"/>
     <com.ichi2.preferences.SliderPreference
+        android:key="@string/deck_title_zoom_preference"
+        android:title="@string/deck_title_zoom"
+        android:defaultValue="20"
+        android:valueFrom="12"
+        android:valueTo="30"
+        android:stepSize="1"
+        app:displayFormat="@string/pref_summary_text"/>
+    <SwitchPreferenceCompat
+        android:key="@string/deck_title_bold_preference"
+        android:defaultValue="true"
+        android:summary="@string/deck_bold_summ"
+        android:title="@string/deck_title_bold"/>
+    <com.ichi2.preferences.SliderPreference
         android:title="@string/button_size"
         android:key="@string/answer_button_size_preference"
         app:defaultValue="100"

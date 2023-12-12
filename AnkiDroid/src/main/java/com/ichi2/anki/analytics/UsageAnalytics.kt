@@ -533,6 +533,8 @@ object UsageAnalytics {
         "binding_RESCHEDULE_NOTE",
         // Accessibility
         "cardZoom",
+        "deckTitleZoom",
+        "deckTitleBold",
         "imageZoom",
         "answerButtonSize",
         "showLargeAnswerButtons",

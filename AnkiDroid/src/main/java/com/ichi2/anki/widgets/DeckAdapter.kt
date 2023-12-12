@@ -17,6 +17,7 @@
 package com.ichi2.anki.widgets
 
 import android.content.Context
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.utils.KotlinCleanup
@@ -191,7 +193,15 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             holder.deckLayout.setBackgroundResource(ta.getResourceId(0, 0))
             ta.recycle()
         }
-        // Set deck name and colour. Filtered decks have their own colour
+        // Setting the text size and style using the preferences set by user or the default ones
+        holder.deckName.textSize = holder.deckName.context.sharedPrefs().getInt("deckTitleZoom", 20).toFloat()
+        val isBoldText = holder.deckName.context.sharedPrefs().getBoolean("deckTitleBold", true)
+        if (isBoldText) {
+            holder.deckName.setTypeface(holder.deckName.typeface, Typeface.BOLD)
+        } else {
+            holder.deckName.setTypeface(holder.deckName.typeface, Typeface.NORMAL)
+        }
+
         holder.deckName.text = node.lastDeckNameComponent
         val filtered =
             node.filtered

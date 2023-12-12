@@ -119,6 +119,8 @@
     <string name="pref_accessibility_screen_key">accessibilityScreen</string>
     <string name="card_zoom_preference">cardZoom</string>
     <string name="image_zoom_preference">imageZoom</string>
+    <string name="deck_title_zoom_preference">deckTitleZoom</string>
+    <string name="deck_title_bold_preference">deckTitleBold</string>
     <string name="answer_button_size_preference">answerButtonSize</string>
     <string name="show_large_answer_buttons_preference">showLargeAnswerButtons</string>
     <string name="pref_card_minimal_click_time">showCardAnswerButtonTime</string>
