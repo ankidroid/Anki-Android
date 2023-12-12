@@ -34,6 +34,7 @@ import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.servicelayer.CardService
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.undoableOp
@@ -41,6 +42,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -53,6 +55,7 @@ import java.util.HashMap
 import kotlin.math.max
 import kotlin.math.min
 
+@NeedsTest("reverseDirectionFlow/sortTypeFlow are not updated on .launch { }")
 class CardBrowserViewModel(
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
@@ -114,6 +117,16 @@ class CardBrowserViewModel(
             return CardInfoDestination(firstSelectedCard)
         }
 
+    private val initCompletedFlow = MutableStateFlow(false)
+
+    /**
+     * Whether the task launched from CardBrowserViewModel.init has completed.
+     *
+     * If `false`, we don't have the initial values to perform the first search
+     */
+    @get:VisibleForTesting
+    val initCompleted get() = initCompletedFlow.value
+
     init {
         column1IndexFlow
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
@@ -121,6 +134,16 @@ class CardBrowserViewModel(
 
         column2IndexFlow
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) } }
+            .launchIn(viewModelScope)
+
+        reverseDirectionFlow
+            .ignoreValuesFromViewModelLaunch()
+            .onEach { newValue -> withCol { newValue.updateConfig(config) } }
+            .launchIn(viewModelScope)
+
+        sortTypeFlow
+            .ignoreValuesFromViewModelLaunch()
+            .onEach { sortType -> withCol { sortType.save(config, sharedPrefs()) } }
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
@@ -131,15 +154,9 @@ class CardBrowserViewModel(
                 sortTypeFlow.update { SortType.fromCol(config, sharedPrefs()) }
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
             }
+            Timber.i("initCompleted")
+            initCompletedFlow.update { true }
         }
-
-        reverseDirectionFlow
-            .onEach { newValue -> withCol { newValue.updateConfig(config) } }
-            .launchIn(viewModelScope)
-
-        sortTypeFlow
-            .onEach { sortType -> withCol { sortType.save(config, sharedPrefs()) } }
-            .launchIn(viewModelScope)
     }
 
     /** Whether any rows are selected */
@@ -370,6 +387,10 @@ class CardBrowserViewModel(
         }
         return if (alreadyExists) SaveSearchResult.ALREADY_EXISTS else SaveSearchResult.SUCCESS
     }
+
+    /** Ignores any values before [initCompleted] is set */
+    private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> =
+        this.filter { initCompleted }
 
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
