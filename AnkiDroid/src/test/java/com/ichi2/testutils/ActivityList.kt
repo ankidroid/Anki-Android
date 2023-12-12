@@ -74,7 +74,8 @@ object ActivityList {
             get(IntroductionActivity::class.java),
             get(ManageNotetypes::class.java),
             get(ManageSpaceActivity::class.java),
-            get(PermissionsActivity::class.java)
+            get(PermissionsActivity::class.java),
+            get(SingleFragmentActivity::class.java)
         )
     }
 
