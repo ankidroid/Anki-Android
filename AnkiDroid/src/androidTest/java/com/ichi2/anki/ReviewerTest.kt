@@ -102,6 +102,7 @@ class ReviewerTest : InstrumentedTest() {
     }
 
     private fun clickOnDeckWithName(deckName: String) {
+        onView(withId(R.id.files)).checkWithTimeout(matches(hasDescendant(withText(deckName))))
         onView(withId(R.id.files)).perform(
             RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                 hasDescendant(withText(deckName)),
