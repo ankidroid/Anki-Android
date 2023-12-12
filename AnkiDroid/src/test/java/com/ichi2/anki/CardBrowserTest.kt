@@ -19,6 +19,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.widget.ListView
 import android.widget.Spinner
 import androidx.annotation.StringRes
@@ -998,6 +999,19 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(column1SpinnerPosition, equalTo(index1))
         assertThat(column2SpinnerPosition, equalTo(index2))
     }
+
+    @Test
+    fun `tapping row toggles state - Issue 14952`() = runTest {
+        // tapping the row was broken, checkbox was fine
+        browserWithMultipleNotes.apply {
+            longClickRowAtPosition(0)
+            assertThat("select first row: long press", viewModel.selectedRowCount(), equalTo(1))
+            clickRowAtPosition(1)
+            assertThat("select row 2: tap", viewModel.selectedRowCount(), equalTo(2))
+            clickRowAtPosition(0)
+            assertThat("deselect row: tap", viewModel.selectedRowCount(), equalTo(1))
+        }
+    }
 }
 
 fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean =
@@ -1020,3 +1034,23 @@ fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
 
 fun CardBrowser.getPropertiesForCardId(cardId: CardId): CardCache =
     viewModel.cards.find { c -> c.id == cardId } ?: throw IllegalStateException("Card '$cardId' not found")
+
+fun CardBrowser.clickRowAtPosition(pos: Int) = shadowOf(cardsListView).performItemClick(pos)
+fun CardBrowser.longClickRowAtPosition(pos: Int) = cardsListView.getViewByPosition(pos).performLongClick()
+
+// https://stackoverflow.com/a/24864536/13121290
+fun ListView.getViewByPosition(pos: Int): View {
+    val firstListItemPosition = firstVisiblePosition
+    val lastListItemPosition = firstListItemPosition + childCount - 1
+    return if (pos < firstListItemPosition || pos > lastListItemPosition) {
+        requireNotNull(adapter.getView(pos, null, this)) { "failed to find item at pos: $pos" }
+    } else {
+        val childIndex = pos - firstListItemPosition
+        requireNotNull(getChildAt(childIndex)) {
+            "failed to find item at pos: $pos; " +
+                "first: $firstListItemPosition; " +
+                "last: $lastListItemPosition"
+            "childIndex: $childIndex"
+        }
+    }
+}

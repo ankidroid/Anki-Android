@@ -46,6 +46,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import java.util.Collections
 import kotlin.math.max
@@ -197,6 +198,7 @@ class CardBrowserViewModel(
         refreshSelectedRowsFlow()
     }
 
+    @VisibleForTesting
     fun selectRowAtPosition(pos: Int) {
         if (_selectedRows.add(cards[pos])) {
             refreshSelectedRowsFlow()
