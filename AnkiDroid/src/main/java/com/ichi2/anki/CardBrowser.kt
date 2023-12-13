@@ -125,8 +125,7 @@ open class CardBrowser :
 
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val mCards get() = viewModel.cards
+    private val mCards get() = viewModel.cards
     var deckSpinnerSelection: DeckSpinnerSelection? = null
 
     @VisibleForTesting
@@ -548,7 +547,7 @@ open class CardBrowser :
                 viewModel.selectRowAtPosition(position)
             } else {
                 // load up the card selected on the list
-                val clickedCardId = mCards[position].id
+                val clickedCardId = viewModel.getCardIdAtPosition(position)
                 saveScrollingState(position)
                 openNoteEditorForCard(clickedCardId)
             }
@@ -713,10 +712,7 @@ open class CardBrowser :
     }
 
     override fun onDestroy() {
-        // TODO: Most of this should be handled in viewModel.onCleared
-        if (this::viewModel.isInitialized) {
-            invalidate()
-        }
+        invalidate()
         super.onDestroy()
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver)
@@ -863,12 +859,8 @@ open class CardBrowser :
     }
 
     private fun updatePreviewMenuItem() {
-        mPreviewItem?.isVisible = cardCount > 0
+        mPreviewItem?.isVisible = viewModel.rowCount > 0
     }
-
-    /** Returns the number of cards that are visible on the screen  */
-    val cardCount: Int
-        get() = mCards.size()
 
     private fun updateMultiselectMenu() {
         Timber.d("updateMultiselectMenu()")
@@ -920,7 +912,7 @@ open class CardBrowser :
     }
 
     private fun hasSelectedAllCards(): Boolean {
-        return viewModel.selectedRowCount() >= cardCount // must handle 0.
+        return viewModel.selectedRowCount() >= viewModel.rowCount // must handle 0.
     }
 
     private fun updateFlagForSelectedRows(flag: Int) {
@@ -1252,7 +1244,7 @@ open class CardBrowser :
         } else {
             // Preview all cards, starting from the one that is currently selected
             val startIndex = viewModel.selectedRows.firstOrNull()?.position ?: 0
-            getPreviewIntent(startIndex, allCardIds)
+            getPreviewIntent(startIndex, viewModel.allCardIds)
         }
 
     private fun getPreviewIntent(index: Int, selectedCardIds: LongArray): Intent {
@@ -1401,8 +1393,6 @@ open class CardBrowser :
 
     private fun invalidate() {
         renderBrowserQAJob?.cancel()
-        mCards.clear()
-        viewModel.selectNone()
     }
 
     /** Currently unused - to be used in #7676  */
@@ -1454,7 +1444,7 @@ open class CardBrowser :
             showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
         } else {
             // If we haven't selected all decks, allow the user the option to search all decks.
-            val message = if (cardCount == 0) {
+            val message = if (viewModel.rowCount == 0) {
                 getString(R.string.card_browser_no_cards_in_deck, selectedDeckNameForUi)
             } else {
                 subtitleText
@@ -1477,11 +1467,9 @@ open class CardBrowser :
             return
         }
         mShouldRestoreScroll = false
-        val newPosition = newPositionOfSelectedCard
-        if (newPosition != CARD_NOT_AVAILABLE) {
-            Timber.d("Restoring scroll position after search")
-            autoScrollTo(newPosition)
-        }
+        val card = viewModel.findCardById(mOldCardId) ?: return
+        Timber.d("Restoring scroll position after search")
+        autoScrollTo(card.position)
     }
 
     @VisibleForTesting
@@ -1508,7 +1496,7 @@ open class CardBrowser :
      */
     override val subtitleText: String
         get() {
-            val count = cardCount
+            val count = viewModel.rowCount
 
             @androidx.annotation.StringRes val subtitleId = if (viewModel.cardsOrNotes == CARDS) {
                 R.plurals.card_browser_subtitle
@@ -1591,11 +1579,13 @@ open class CardBrowser :
      * @param cards Cards that were changed
      */
     private fun updateCardsInList(cards: List<Card>) {
-        val idToPos = getPositionMap(mCards)
+        val idToPos = viewModel.cardIdToPositionMap
+        // TODO: Inefficient
         cards
             .mapNotNull { c -> idToPos[c.id] }
-            .filterNot { pos -> pos >= cardCount }
-            .forEach { pos -> mCards[pos].load(true, viewModel.column1Index, viewModel.column2Index) }
+            .filterNot { pos -> pos >= viewModel.rowCount }
+            .map { pos -> viewModel.getRowAtPosition(pos) }
+            .forEach { it.load(true, viewModel.column1Index, viewModel.column2Index) }
         updateList()
     }
 
@@ -1615,7 +1605,7 @@ open class CardBrowser :
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
     private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
-        val idToPos = getPositionMap(mCards)
+        val idToPos = viewModel.cardIdToPositionMap
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
         mReloadRequired = mReloadRequired || cardsIds.contains(reviewerCardId)
         val newMCards: MutableList<CardCache> = mCards
@@ -1652,7 +1642,7 @@ open class CardBrowser :
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
     private fun saveScrollingState(position: Int) {
-        mOldCardId = mCards[position].id
+        mOldCardId = viewModel.getCardIdAtPosition(position)
         mOldCardTopOffset = calculateTopOffset(position)
     }
 
@@ -1666,10 +1656,6 @@ open class CardBrowser :
         val v = cardsListView.getChildAt(cardPosition - firstVisiblePosition)
         return v?.top ?: 0
     }
-
-    private val newPositionOfSelectedCard: Int
-        get() = mCards.find { c -> c.id == mOldCardId }?.position
-            ?: CARD_NOT_AVAILABLE
 
     fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
 
@@ -1724,9 +1710,8 @@ open class CardBrowser :
         override fun onScroll(view: AbsListView, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
             val lastVisibleItem = firstVisibleItem + visibleItemCount - 1
-            val cards = mCards
             // List is never cleared, only reset to a new list. So it's safe here.
-            val size = cards.size()
+            val size = viewModel.rowCount
             if (size > 0 && visibleItemCount <= 0) {
                 // According to Mike, there used to be 5 to 10 report by hour on the beta version. All with
                 // > com.ichi2.anki.exception.ManuallyReportedException: Useless onScroll call, with size 0 firstVisibleItem 0,
@@ -1746,9 +1731,9 @@ open class CardBrowser :
             if (size <= 0 || firstVisibleItem >= size || lastVisibleItem >= size || visibleItemCount <= 0) {
                 return
             }
-            val firstLoaded = cards[firstVisibleItem].isLoaded
+            val firstLoaded = viewModel.getRowAtPosition(firstVisibleItem).isLoaded
             // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
-            val lastLoaded = cards[lastVisibleItem].isLoaded
+            val lastLoaded = viewModel.getRowAtPosition(lastVisibleItem).isLoaded
             if (!firstLoaded || !lastLoaded) {
                 if (!mPostAutoScroll) {
                     showProgressBar()
@@ -1758,7 +1743,7 @@ open class CardBrowser :
                 if (currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount) {
                     mLastRenderStart = currentTime
                     renderBrowserQAJob?.cancel()
-                    launchCatchingTask { renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards.toList()) }
+                    launchCatchingTask { renderBrowserQAParams(firstVisibleItem, visibleItemCount, mCards.toList()) }
                 }
             }
         }
@@ -1826,7 +1811,7 @@ open class CardBrowser :
         @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
-            val card = mCards[position]
+            val card = getItem(position)
             (v.tag as Array<*>)
                 .forEachIndexed { i, col ->
                     setFont(col as TextView) // set font for column
@@ -1892,12 +1877,10 @@ open class CardBrowser :
         }
 
         override fun getCount(): Int {
-            return cardCount
+            return viewModel.rowCount
         }
 
-        override fun getItem(position: Int): CardCache {
-            return mCards[position]
-        }
+        override fun getItem(position: Int): CardCache = viewModel.getRowAtPosition(position)
 
         override fun getItemId(position: Int): Long {
             return position.toLong()
@@ -1922,7 +1905,7 @@ open class CardBrowser :
             // If we're not in mutliselect, we can select cards if there are cards to select
             if (!isInMultiSelectMode) {
                 mActionBarMenu?.findItem(R.id.action_select_all)?.apply {
-                    isVisible = cardCount() != 0L
+                    isVisible = viewModel.rowCount != 0
                 }
                 return
             }
@@ -1947,8 +1930,6 @@ open class CardBrowser :
         defaultViewModelCreationExtras
     )[CardBrowserViewModel::class.java]
 
-    private val allCardIds: LongArray
-        get() = mCards.map { c -> c.id }.toLongArray()
     // This could be better: use a wrapper class PositionAware<T> to store the position so it's
     // no longer a responsibility of CardCache and we can guarantee it's consistent just by using this collection
     /** A position-aware collection to ensure consistency between the position of items and the collection  */
@@ -2246,11 +2227,6 @@ open class CardBrowser :
         mActionBarTitle.visibility = View.GONE
     }
 
-    @VisibleForTesting
-    fun cardCount(): Long {
-        return mCards.size().toLong()
-    }
-
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val isShowingSelectAll: Boolean
         get() = mActionBarMenu?.findItem(R.id.action_select_all)?.isVisible == true
@@ -2261,28 +2237,12 @@ open class CardBrowser :
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun clearCardData(position: Int) {
-        mCards[position].reload()
+        viewModel.getRowAtPosition(position).reload()
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     suspend fun rerenderAllCards() {
-        renderBrowserQAParams(0, mCards.size() - 1, mCards.toList())
-    }
-
-    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    val cardIds: LongArray
-        get() {
-            val cardsCopy = mCards.wrapped.toTypedArray()
-            val ret = LongArray(cardsCopy.size)
-            for (i in cardsCopy.indices) {
-                ret[i] = cardsCopy[i].id
-            }
-            return ret
-        }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun getPropertiesForCardId(cardId: CardId): CardCache {
-        return mCards.find { c -> c.id == cardId } ?: throw IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId))
+        renderBrowserQAParams(0, viewModel.rowCount - 1, mCards.toList())
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -2347,10 +2307,6 @@ open class CardBrowser :
             context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
                 remove(LAST_DECK_ID_KEY)
             }
-        }
-
-        private fun getPositionMap(cards: CardCollection<CardCache>): Map<Long, Int> {
-            return cards.mapIndexed { i, c -> c.id to i }.toMap()
         }
 
         @CheckResult

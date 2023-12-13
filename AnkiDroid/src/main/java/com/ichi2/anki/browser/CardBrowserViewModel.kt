@@ -56,6 +56,9 @@ class CardBrowserViewModel(
 ) : ViewModel(), SharedPreferencesProvider by preferences {
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
 
+    /** The CardIds of all the cards in the results */
+    val allCardIds get() = cards.map { c -> c.id }.toLongArray()
+
     var searchTerms: String = ""
     var restrictOnDeck: String = ""
     var currentFlag = 0
@@ -275,6 +278,31 @@ class CardBrowserViewModel(
     suspend fun repositionSelectedRows(position: Int) = undoableOp {
         sched.sortCards(selectedCardIds, position, 1, shuffle = false, shift = true)
     }.count
+
+    /** Returns the number of rows of the current result set  */
+    val rowCount: Int
+        get() = cards.size()
+
+    fun getCardIdAtPosition(position: Int): CardId = cards[position].id
+
+    fun getRowAtPosition(position: Int) = cards[position]
+
+    /** Given a card ID, returns a position-aware card */
+    fun findCardById(id: CardId): CardBrowser.CardCache? = cards.find { it.id == id }
+
+    val cardIdToPositionMap: Map<CardId, Int>
+        get() = cards.mapIndexed { i, c -> c.id to i }.toMap()
+
+    override fun onCleared() {
+        super.onCleared()
+        invalidate()
+    }
+
+    private fun invalidate() {
+        // TODO: this may no longer be needed now we call invalidate from onCleared
+        cards.clear()
+        selectNone()
+    }
 
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"

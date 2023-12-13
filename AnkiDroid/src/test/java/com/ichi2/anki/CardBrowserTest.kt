@@ -85,7 +85,7 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun selectAllIsVisibleWhenCardsInDeck() {
         val browser = browserWithMultipleNotes
-        assertThat(browser.cardCount(), greaterThan(0L))
+        assertThat(browser.viewModel.rowCount, greaterThan(0))
         assertThat(browser.isShowingSelectAll, equalTo(true))
     }
 
@@ -148,7 +148,7 @@ class CardBrowserTest : RobolectricTest() {
         // Sometimes an async operation deletes a card, we clear the data and rerender it to simulate this
         deleteCardAtPosition(browser, 0)
         assertDoesNotThrowSuspend { browser.rerenderAllCards() }
-        assertThat(browser.cardCount(), equalTo(5L))
+        assertThat(browser.viewModel.rowCount, equalTo(5))
     }
 
     @Test
@@ -162,7 +162,7 @@ class CardBrowserTest : RobolectricTest() {
         // ACT
         browser.rerenderAllCards()
         // ASSERT
-        assertThat(browser.cardCount(), equalTo(6L))
+        assertThat(browser.viewModel.rowCount, equalTo(6L))
         assertThat(
             "A checked card should have been removed",
             browser.viewModel.selectedRowCount(),
@@ -331,7 +331,7 @@ class CardBrowserTest : RobolectricTest() {
         // check if all card flags turned to flag = 3
         assertThat(
             "All cards should be flagged",
-            cardBrowser.cardIds
+            cardBrowser.viewModel.allCardIds
                 .map { cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId) }
                 .all { flag1 -> flag1 == flagForAll }
         )
@@ -392,7 +392,7 @@ class CardBrowserTest : RobolectricTest() {
         val b = browserWithNoNewCards
         b.filterByTag("sketchy::(1)")
 
-        assertThat("tagged card should be returned", b.cardCount, equalTo(1))
+        assertThat("tagged card should be returned", b.viewModel.rowCount, equalTo(1))
     }
 
     @Test
@@ -409,7 +409,7 @@ class CardBrowserTest : RobolectricTest() {
         val b = browserWithNoNewCards
         b.filterByFlag(1)
 
-        assertThat("Flagged cards should be returned", b.cardCount, equalTo(2))
+        assertThat("Flagged cards should be returned", b.viewModel.rowCount, equalTo(2))
     }
 
     @Test
@@ -668,7 +668,7 @@ class CardBrowserTest : RobolectricTest() {
         )
         assertThat(
             "Results should only be from the selected deck",
-            cardBrowser.cardCount,
+            cardBrowser.viewModel.rowCount,
             equalTo(1)
         )
     }
@@ -737,10 +737,10 @@ class CardBrowserTest : RobolectricTest() {
             cardBrowser.selectedDeckNameForUi,
             equalTo("Test Deck")
         )
-        assertThat("Result should be empty", cardBrowser.cardCount, equalTo(0))
+        assertThat("Result should be empty", cardBrowser.viewModel.rowCount, equalTo(0))
 
         cardBrowser.searchAllDecks()
-        assertThat("Result should contain one card", cardBrowser.cardCount, equalTo(1))
+        assertThat("Result should contain one card", cardBrowser.viewModel.rowCount, equalTo(1))
     }
 
     @Test
@@ -751,9 +751,11 @@ class CardBrowserTest : RobolectricTest() {
 
         browserWithNoNewCards.apply {
             searchAllDecks()
-            assertThat("Result should contain 4 cards", cardCount, equalTo(4))
-            viewModel.setCardsOrNotes(NOTES)
-            assertThat("Result should contain 2 cards (one per note)", cardCount, equalTo(2))
+            with(viewModel) {
+                assertThat("Result should contain 4 cards", rowCount, equalTo(4))
+                setCardsOrNotes(NOTES)
+                assertThat("Result should contain 2 cards (one per note)", rowCount, equalTo(2))
+            }
         }
     }
 
@@ -814,7 +816,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     private fun deleteCardAtPosition(browser: CardBrowser, positionToCorrupt: Int) {
-        removeCardFromCollection(browser.cardIds[positionToCorrupt])
+        removeCardFromCollection(browser.viewModel.allCardIds[positionToCorrupt])
         browser.clearCardData(positionToCorrupt)
     }
 
@@ -942,14 +944,14 @@ class CardBrowserTest : RobolectricTest() {
 
         advanceRobolectricUiLooper()
         // check if we get both cards of each note
-        assertThat(cardBrowser.mCards.size(), equalTo(6))
+        assertThat(cardBrowser.viewModel.rowCount, equalTo(6))
 
         cardBrowser.viewModel.setCardsOrNotes(NOTES)
         cardBrowser.searchCards()
 
         // check if we get one card per note
         advanceRobolectricUiLooper()
-        assertThat(cardBrowser.mCards.size(), equalTo(3))
+        assertThat(cardBrowser.viewModel.rowCount, equalTo(3))
     }
 
     @Test
@@ -999,7 +1001,7 @@ class CardBrowserTest : RobolectricTest() {
 }
 
 fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean =
-    viewModel.selectedRows.contains(mCards[i])
+    viewModel.selectedRows.contains(viewModel.getRowAtPosition(i))
 
 fun CardBrowser.replaceSelectionWith(positions: IntArray) {
     viewModel.selectNone()
@@ -1009,9 +1011,12 @@ fun CardBrowser.replaceSelectionWith(positions: IntArray) {
 fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
     // PREF: inefficient as the card flow is updated each iteration
     positions.forEach { pos ->
-        check(pos < mCards.size()) {
-            "Attempted to check card at index $pos. ${mCards.size()} cards available"
+        check(pos < viewModel.rowCount) {
+            "Attempted to check row at index $pos. ${viewModel.rowCount} rows available"
         }
         viewModel.selectRowAtPosition(pos)
     }
 }
+
+fun CardBrowser.getPropertiesForCardId(cardId: CardId): CardCache =
+    viewModel.cards.find { c -> c.id == cardId } ?: throw IllegalStateException("Card '$cardId' not found")
