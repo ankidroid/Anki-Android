@@ -27,6 +27,7 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.content.*
+import android.content.pm.PackageManager
 import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
@@ -134,6 +135,7 @@ import kotlin.time.measureTimedValue
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
 const val TIMES_STORAGE_MIGRATION_POSTPONED_KEY = "timesStorageMigrationPostponed"
+const val OLDEST_WORKING_WEBVIEW_VERSION = 77
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -461,6 +463,9 @@ open class DeckPicker :
         Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate()
 
         launchShowingHidingEssentialFileMigrationProgressDialog()
+        if (BuildConfig.DEBUG) {
+            checkWebviewVersion()
+        }
     }
 
     private fun hasShownAppIntro(): Boolean {
@@ -478,6 +483,28 @@ open class DeckPicker :
         }
 
         return prefs.getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
+    }
+
+    /**
+     * Check if the current WebView version is older than the last supported version and if it is,
+     * inform the developer with a snackbar.
+     */
+    private fun checkWebviewVersion() {
+        // Doesn't need to be translated as it's debug only
+        // Specifically check for Android System WebView
+        try {
+            val androidSystemWebViewPackage = "com.google.android.webview"
+            val webviewPackageInfo = packageManager.getPackageInfo(androidSystemWebViewPackage, 0)
+            val versionCode = webviewPackageInfo.versionName.split(".")[0].toInt()
+            if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
+                val snackbarMessage =
+                    "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION)."
+                showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
+            }
+        } catch (_: PackageManager.NameNotFoundException) {
+            val snackbarMessage = "No Android System WebView found"
+            showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
+        }
     }
 
     /**
