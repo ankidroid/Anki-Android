@@ -62,7 +62,6 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.*
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getTextColors
-import com.ichi2.anki.reviewer.CardMarker.FlagDef
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.isFullScreenReview
 import com.ichi2.anki.servicelayer.NoteService.isMarked
@@ -246,14 +245,14 @@ open class Reviewer :
         mCardMarker!!.displayMark(shouldDisplayMark())
     }
 
-    protected open fun onFlag(card: Card?, flag: Int) {
+    protected open fun onFlag(card: Card?, flag: Flag) {
         if (card == null) {
             return
         }
         launchCatchingTask {
-            card.setUserFlag(flag)
+            card.setUserFlag(flag.code)
             withCol {
-                setUserFlagForCards(listOf(card.id), flag)
+                setUserFlagForCards(listOf(card.id), flag.code)
             }
             refreshActionBar()
             onFlagChanged()
@@ -264,7 +263,7 @@ open class Reviewer :
         if (currentCard == null) {
             return
         }
-        mCardMarker!!.displayFlag(flagToDisplay)
+        mCardMarker!!.displayFlag(Flag.fromCode(flagToDisplay))
     }
 
     private fun selectDeckFromExtra() {
@@ -451,35 +450,35 @@ open class Reviewer :
             }
             R.id.action_flag_zero -> {
                 Timber.i("Reviewer:: No flag")
-                onFlag(currentCard, CardMarker.FLAG_NONE)
+                onFlag(currentCard, Flag.NONE)
             }
             R.id.action_flag_one -> {
                 Timber.i("Reviewer:: Flag one")
-                onFlag(currentCard, CardMarker.FLAG_RED)
+                onFlag(currentCard, Flag.RED)
             }
             R.id.action_flag_two -> {
                 Timber.i("Reviewer:: Flag two")
-                onFlag(currentCard, CardMarker.FLAG_ORANGE)
+                onFlag(currentCard, Flag.ORANGE)
             }
             R.id.action_flag_three -> {
                 Timber.i("Reviewer:: Flag three")
-                onFlag(currentCard, CardMarker.FLAG_GREEN)
+                onFlag(currentCard, Flag.GREEN)
             }
             R.id.action_flag_four -> {
                 Timber.i("Reviewer:: Flag four")
-                onFlag(currentCard, CardMarker.FLAG_BLUE)
+                onFlag(currentCard, Flag.BLUE)
             }
             R.id.action_flag_five -> {
                 Timber.i("Reviewer:: Flag five")
-                onFlag(currentCard, CardMarker.FLAG_PINK)
+                onFlag(currentCard, Flag.PINK)
             }
             R.id.action_flag_six -> {
                 Timber.i("Reviewer:: Flag six")
-                onFlag(currentCard, CardMarker.FLAG_TURQUOISE)
+                onFlag(currentCard, Flag.TURQUOISE)
             }
             R.id.action_flag_seven -> {
                 Timber.i("Reviewer:: Flag seven")
-                onFlag(currentCard, CardMarker.FLAG_PURPLE)
+                onFlag(currentCard, Flag.PURPLE)
             }
             R.id.action_card_info -> {
                 Timber.i("Card Viewer:: Card Info")
@@ -1161,35 +1160,35 @@ open class Reviewer :
         }
         when (which) {
             ViewerCommand.TOGGLE_FLAG_RED -> {
-                toggleFlag(CardMarker.FLAG_RED)
+                toggleFlag(Flag.RED)
                 return true
             }
             ViewerCommand.TOGGLE_FLAG_ORANGE -> {
-                toggleFlag(CardMarker.FLAG_ORANGE)
+                toggleFlag(Flag.ORANGE)
                 return true
             }
             ViewerCommand.TOGGLE_FLAG_GREEN -> {
-                toggleFlag(CardMarker.FLAG_GREEN)
+                toggleFlag(Flag.GREEN)
                 return true
             }
             ViewerCommand.TOGGLE_FLAG_BLUE -> {
-                toggleFlag(CardMarker.FLAG_BLUE)
+                toggleFlag(Flag.BLUE)
                 return true
             }
             ViewerCommand.TOGGLE_FLAG_PINK -> {
-                toggleFlag(CardMarker.FLAG_PINK)
+                toggleFlag(Flag.PINK)
                 return true
             }
             ViewerCommand.TOGGLE_FLAG_TURQUOISE -> {
-                toggleFlag(CardMarker.FLAG_TURQUOISE)
+                toggleFlag(Flag.TURQUOISE)
                 return true
             }
             ViewerCommand.TOGGLE_FLAG_PURPLE -> {
-                toggleFlag(CardMarker.FLAG_PURPLE)
+                toggleFlag(Flag.PURPLE)
                 return true
             }
             ViewerCommand.UNSET_FLAG -> {
-                onFlag(currentCard, CardMarker.FLAG_NONE)
+                onFlag(currentCard, Flag.NONE)
                 return true
             }
             ViewerCommand.MARK -> {
@@ -1216,12 +1215,12 @@ open class Reviewer :
         }
     }
 
-    private fun toggleFlag(@FlagDef flag: Int) {
-        if (currentCard!!.userFlag() == flag) {
+    private fun toggleFlag(flag: Flag) {
+        if (currentCard!!.userFlag() == flag.code) {
             Timber.i("Toggle flag: unsetting flag")
-            onFlag(currentCard, CardMarker.FLAG_NONE)
+            onFlag(currentCard, Flag.NONE)
         } else {
-            Timber.i("Toggle flag: Setting flag to %d", flag)
+            Timber.i("Toggle flag: Setting flag to %d", flag.code)
             onFlag(currentCard, flag)
         }
     }
