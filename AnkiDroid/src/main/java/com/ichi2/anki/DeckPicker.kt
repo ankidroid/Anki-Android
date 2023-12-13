@@ -487,9 +487,10 @@ open class DeckPicker :
 
     /**
      * Check if the current WebView version is older than the last supported version and if it is,
-     * inform the user with a snackbar.
+     * inform the developer with a snackbar.
      */
     private fun checkWebviewVersion() {
+        // Doesn't need to be translated as it's debug only
         // Specifically check for Android System WebView
         try {
             val androidSystemWebViewPackage = "com.google.android.webview"
