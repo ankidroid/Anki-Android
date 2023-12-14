@@ -59,7 +59,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             // intentionally blank
         }
 
-        val typedInput get() = super.typedInputText
+        val typedInput get() = typedInputText
 
         override fun answerCard(ease: Int) {
             super.answerCard(ease)
@@ -354,3 +354,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         }
     }
 }
+
+fun AbstractFlashcardViewer.loadInitialCard() = launchCatchingTask { updateCardAndRedraw() }
+
+val AbstractFlashcardViewer.typedInputText get() = typeAnswer!!.input
+val AbstractFlashcardViewer.correctTypedAnswer get() = typeAnswer!!.correct
