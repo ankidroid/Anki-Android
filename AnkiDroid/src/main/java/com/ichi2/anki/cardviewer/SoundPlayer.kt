@@ -16,9 +16,6 @@
 
 package com.ichi2.anki.cardviewer
 
-import com.ichi2.anki.CardUtils
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TTSTag
 
@@ -40,21 +37,5 @@ import com.ichi2.libanki.TTSTag
  *
  * I hope that we can then test and reduce the complexity of this class.
  */
-class SoundPlayer {
-
-    /** The options for playing sound for a given card */
-    class CardSoundConfig(val replayQuestion: Boolean, val autoplay: Boolean) {
-
-        companion object {
-            fun create(col: Collection, card: Card): CardSoundConfig {
-                val deckConfig = col.decks.confForDid(CardUtils.getDeckIdForCard(card))
-
-                val autoPlay = deckConfig.optBoolean("autoplay", false)
-
-                val replayQuestion: Boolean = deckConfig.optBoolean("replayq", true)
-
-                return CardSoundConfig(replayQuestion, autoPlay)
-            }
-        }
-    }
-}
+@Suppress("unused")
+class SoundPlayer

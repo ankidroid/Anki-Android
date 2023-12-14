@@ -59,9 +59,9 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
 import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
+import com.ichi2.anki.cardviewer.CardSoundConfig
+import com.ichi2.anki.cardviewer.CardSoundConfig.Companion.create
 import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
-import com.ichi2.anki.cardviewer.SoundPlayer.CardSoundConfig
-import com.ichi2.anki.cardviewer.SoundPlayer.CardSoundConfig.Companion.create
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialog
