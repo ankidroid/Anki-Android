@@ -118,7 +118,7 @@ class CardBrowserViewModel(
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
 
-    suspend fun setLastDeckId(deckId: DeckId) {
+    suspend fun setDeckId(deckId: DeckId) {
         lastDeckIdRepository.lastDeckId = deckId
         restrictOnDeck = if (deckId == ALL_DECKS_ID) {
             ""
@@ -126,10 +126,10 @@ class CardBrowserViewModel(
             val deckName = withCol { decks.name(deckId) }
             "deck:\"$deckName\" "
         }
-        lastDeckIdFlow.update { deckId }
+        deckIdFlow.update { deckId }
     }
 
-    val lastDeckIdFlow = MutableStateFlow(lastDeckId)
+    val deckIdFlow = MutableStateFlow(lastDeckId)
 
     val cardInfoDestination: CardInfoDestination?
         get() {

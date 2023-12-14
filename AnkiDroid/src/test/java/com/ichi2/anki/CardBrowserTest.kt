@@ -470,7 +470,7 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat("All decks should not be selected", b.hasSelectedAllDecks(), equalTo(false))
 
-        b.viewModel.setLastDeckId(ALL_DECKS_ID)
+        b.viewModel.setDeckId(ALL_DECKS_ID)
 
         assertThat("All decks should be selected", b.hasSelectedAllDecks(), equalTo(true))
 
@@ -492,7 +492,7 @@ class CardBrowserTest : RobolectricTest() {
             not(equalTo(targetDid))
         )
 
-        b.viewModel.setLastDeckId(targetDid)
+        b.viewModel.setDeckId(targetDid)
 
         assertThat("The target deck should be selected", b.lastDeckId, equalTo(targetDid))
 

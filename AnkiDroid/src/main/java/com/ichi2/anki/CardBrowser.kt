@@ -456,7 +456,7 @@ open class CardBrowser :
             .onEach { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
             .launchIn(lifecycleScope)
 
-        viewModel.lastDeckIdFlow
+        viewModel.deckIdFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .filterNotNull()
             .onEach { deckId ->
@@ -564,7 +564,7 @@ open class CardBrowser :
     }
 
     suspend fun selectDeckAndSave(deckId: DeckId) {
-        viewModel.setLastDeckId(deckId)
+        viewModel.setDeckId(deckId)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -632,7 +632,7 @@ open class CardBrowser :
 
     @VisibleForTesting
     suspend fun selectAllDecks() {
-        viewModel.setLastDeckId(ALL_DECKS_ID)
+        viewModel.setDeckId(ALL_DECKS_ID)
     }
 
     /** Opens the note editor for a card.
@@ -1628,7 +1628,7 @@ open class CardBrowser :
 
     fun searchAllDecks() = launchCatchingTask {
         // all we need to do is select all decks
-        viewModel.setLastDeckId(ALL_DECKS_ID)
+        viewModel.setDeckId(ALL_DECKS_ID)
     }
 
     /**
