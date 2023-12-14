@@ -27,6 +27,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AbstractFlashcardViewer
+import com.ichi2.anki.AndroidTtsError
+import com.ichi2.anki.AndroidTtsError.TtsErrorCode
 import com.ichi2.anki.AndroidTtsPlayer
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
@@ -130,7 +132,7 @@ class SoundPlayer(
         cancelPlaySoundsJob()
         Timber.i("playing sounds for %s", soundSide)
         this.playSoundsJob = scope.launch(Dispatchers.IO) {
-            playAllSoundsInternal(soundSide)
+            playAllSoundsInternal(soundSide, isAutomaticPlayback = true)
             playSoundsJob = null
         }
         return this.playSoundsJob
@@ -142,6 +144,8 @@ class SoundPlayer(
         }
         cancelPlaySoundsJob()
         Timber.i("playing one sound")
+
+        suspend fun play(tag: AvTag) = play(tag, isAutomaticPlayback = false)
 
         suspend fun retry() {
             try {
@@ -198,7 +202,7 @@ class SoundPlayer(
     /**
      * Obtains all the sounds for the [soundSide] and plays them sequentially
      */
-    private suspend fun playAllSoundsInternal(soundSide: SoundSide) {
+    private suspend fun playAllSoundsInternal(soundSide: SoundSide, isAutomaticPlayback: Boolean) {
         if (!canPlaySounds()) {
             return
         }
@@ -211,7 +215,7 @@ class SoundPlayer(
         try {
             for ((index, sound) in soundList.withIndex()) {
                 Timber.d("playing sound %d/%d", index + 1, soundList.size)
-                if (!play(sound)) {
+                if (!play(sound, isAutomaticPlayback)) {
                     Timber.d("stopping sound playback early")
                     return
                 }
@@ -226,13 +230,15 @@ class SoundPlayer(
      * Plays the provided [tag] and returns whether playback should continue
      * @return whether playback should continue: `true`: continue, `false`: stop playback
      */
-    private suspend fun play(tag: AvTag): Boolean = withContext(Dispatchers.IO) {
+    private suspend fun play(tag: AvTag, isAutomaticPlayback: Boolean): Boolean = withContext(Dispatchers.IO) {
         suspend fun play() {
             ensureActive()
             when (tag) {
                 is SoundOrVideoTag -> soundTagPlayer.play(tag, soundErrorListener)
                 is TTSTag -> {
-                    awaitTtsPlayer()?.play(tag)
+                    awaitTtsPlayer(isAutomaticPlayback)?.play(tag)?.error?.let {
+                        soundErrorListener.onTtsError(it, isAutomaticPlayback)
+                    }
                 }
                 else -> Timber.w("unknown audio: ${tag.javaClass}")
             }
@@ -256,7 +262,7 @@ class SoundPlayer(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Timber.w("Unexpected audio exception. Continuing", e)
+            Timber.w(e, "Unexpected audio exception. Continuing")
         }
         return@withContext true
     }
@@ -280,10 +286,16 @@ class SoundPlayer(
         Side.FRONT -> playAllSoundsForSide(QUESTION)
     }
 
-    private suspend fun awaitTtsPlayer(): TtsPlayer? {
-        return withTimeoutOrNull(TTS_PLAYER_TIMEOUT_MS) {
+    private suspend fun awaitTtsPlayer(isAutomaticPlayback: Boolean): TtsPlayer? {
+        val player = withTimeoutOrNull(TTS_PLAYER_TIMEOUT_MS) {
             ttsPlayer.await()
         }
+        if (player == null) {
+            Timber.v("timeout waiting for TTS Player")
+            val error = AndroidTtsError(TtsErrorCode.APP_TTS_INIT_TIMEOUT)
+            soundErrorListener.onTtsError(error, isAutomaticPlayback)
+        }
+        return player
     }
 
     @VisibleForTesting
@@ -328,6 +340,7 @@ interface SoundErrorListener {
 
     @CheckResult
     fun onMediaPlayerError(mp: MediaPlayer?, which: Int, extra: Int, tag: SoundOrVideoTag): SoundErrorBehavior
+    fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean)
 }
 
 enum class SoundErrorBehavior {
@@ -342,6 +355,7 @@ enum class SoundErrorBehavior {
 }
 
 fun AbstractFlashcardViewer.createSoundErrorListener(baseUri: String): SoundErrorListener {
+    val activity = this
     return object : SoundErrorListener {
         private var handledError: HashSet<String> = hashSetOf()
 
@@ -368,6 +382,10 @@ fun AbstractFlashcardViewer.createSoundErrorListener(baseUri: String): SoundErro
                 return CONTINUE_AUDIO
             }
             return onError(uri)
+        }
+
+        override fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean) {
+            AbstractFlashcardViewer.mMissingImageHandler.processTtsFailure(activity, error, isAutomaticPlayback)
         }
 
         override fun onError(uri: Uri): SoundErrorBehavior {
