@@ -126,9 +126,10 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
         @CheckResult
         suspend fun createInstance(context: Context, scope: CoroutineScope): AndroidTtsPlayer {
             val voices = TtsVoices.allTtsVoices().toList()
-            val player = AndroidTtsPlayer(context, voices)
-            player.init(scope)
-            return player
+            return AndroidTtsPlayer(context, voices).apply {
+                init(scope)
+                Timber.v("TTS creation: initialized player instance")
+            }
         }
     }
 
