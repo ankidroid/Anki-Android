@@ -254,7 +254,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private val ioEditorLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        if (uri !== null) {
+        if (uri != null) {
             ImportUtils.getFileCachedCopy(this@NoteEditor, uri)?.let { path ->
                 setupImageOcclusionEditor(path)
             }
