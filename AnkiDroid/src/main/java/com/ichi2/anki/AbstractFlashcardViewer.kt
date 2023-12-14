@@ -156,7 +156,9 @@ abstract class AbstractFlashcardViewer :
 
     // Android WebView
     var automaticAnswer = AutomaticAnswer.defaultInstance(this)
-    protected var typeAnswer: TypeAnswer? = null
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal var typeAnswer: TypeAnswer? = null
 
     /** Generates HTML content  */
     private var mHtmlGenerator: HtmlGenerator? = null
@@ -2662,9 +2664,6 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    protected val typedInputText get() = typeAnswer!!.input
-
     @SuppressLint("WebViewApiAvailability")
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun handleUrlFromJavascript(url: String) {
@@ -2678,20 +2677,11 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    @VisibleForTesting
-    fun loadInitialCard() {
-        launchCatchingTask { updateCardAndRedraw() }
-    }
-
     val isDisplayingAnswer
         get() = displayAnswer
 
     open val isControlBlocked: Boolean
         get() = controlBlocked !== ControlBlock.UNBLOCKED
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    @KotlinCleanup("move to test class as extension")
-    val correctTypedAnswer get() = typeAnswer!!.correct
 
     internal fun showTagsDialog() {
         val tags = ArrayList(getColUnsafe.tags.all())
