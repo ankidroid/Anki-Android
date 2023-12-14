@@ -53,7 +53,7 @@ interface TestClass {
         return note
     }
 
-    fun addNoteUsingBasicAndReversedModel(front: String, back: String): Note {
+    fun addNoteUsingBasicAndReversedModel(front: String = "Front", back: String = "Back"): Note {
         return addNoteUsingModelName("Basic (and reversed card)", front, back)
     }
 
@@ -123,6 +123,9 @@ interface TestClass {
             throw RuntimeException(filteredAncestor)
         }
     }
+
+    /** Adds [count] notes in the same deck with the same front & back */
+    fun addNotes(count: Int): List<Note> = (0..count).map { addNoteUsingBasicModel() }
 
     /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
      * takes care of updating the dispatcher used by CollectionManager as well.
