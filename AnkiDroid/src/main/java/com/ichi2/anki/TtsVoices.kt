@@ -178,14 +178,17 @@ object TtsVoices {
         suspendCancellableCoroutine { continuation ->
             var textToSpeech: TextToSpeech? = null
             continuation.invokeOnCancellation {
+                Timber.v("TTS creation cancelled")
                 textToSpeech?.stop()
                 textToSpeech?.shutdown()
             }
+            Timber.v("begin TTS creation")
             textToSpeech = TextToSpeech(context) { status ->
                 if (status == TextToSpeech.SUCCESS) {
+                    Timber.v("TTS creation success")
                     continuation.resume(textToSpeech)
                 } else {
-                    Timber.e("TTS Creation failed. status: %d", status)
+                    Timber.e("TTS creation failed. status: %d", status)
                     textToSpeech?.shutdown()
                     continuation.resume(null)
                 }
