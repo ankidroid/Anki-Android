@@ -26,6 +26,7 @@ import android.content.*
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.hardware.SensorManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
@@ -101,6 +102,7 @@ import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.hashSetInit
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
+import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -552,7 +554,8 @@ abstract class AbstractFlashcardViewer :
         initNavigationDrawer(mainView)
         mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
-        mGestureDetectorImpl = LinkDetectingGestureDetector()
+        val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        mGestureDetectorImpl = LinkDetectingGestureDetector(sensorManager)
         TtsVoicesFieldFilter.ensureApplied()
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
@@ -2172,12 +2175,23 @@ abstract class AbstractFlashcardViewer :
 
     /** #6141 - blocks clicking links from executing "touch" gestures.
      * COULD_BE_BETTER: Make base class static and move this out of the CardViewer  */
-    internal inner class LinkDetectingGestureDetector : MyGestureDetector() {
+    internal inner class LinkDetectingGestureDetector(private val sensorManager: SensorManager) :
+        MyGestureDetector(), ShakeDetector.Listener {
+        init {
+            val sd = ShakeDetector(this)
+            sd.start(sensorManager, SensorManager.SENSOR_DELAY_UI)
+        }
+
         /** A list of events to process when listening to WebView touches   */
         private val mDesiredTouchEvents = hashSetInit<MotionEvent>(2)
 
         /** A list of events we sent to the WebView (to block double-processing)  */
         private val mDispatchedTouchEvents = hashSetInit<MotionEvent>(2)
+
+        override fun hearShake() {
+            Timber.d("Shake detected!")
+            mGestureProcessor.onShake()
+        }
         override fun onFillFlashcard() {
             Timber.d("Removing pending touch events for gestures")
             mDesiredTouchEvents.clear()

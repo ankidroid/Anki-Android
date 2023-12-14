@@ -34,6 +34,7 @@ fun interface GestureListener {
 enum class Gesture(
     @get:JvmName("getResourceId") val resourceId: Int
 ) {
+    SHAKE(R.string.gestures_shake),
     SWIPE_UP(R.string.gestures_swipe_up),
     SWIPE_DOWN(R.string.gestures_swipe_down),
     SWIPE_LEFT(R.string.gestures_swipe_left),
