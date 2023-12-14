@@ -23,7 +23,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.ichi2.anki.preferences.sharedPrefs
 
 /** Marker interface for classes annotated with `@RunWith(AndroidJUnit4.class)` */
-interface AndroidTest
+interface AndroidTest : TestClass
 
 val AndroidTest.targetContext: Context
     get() {
