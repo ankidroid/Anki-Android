@@ -35,11 +35,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
+import kotlin.coroutines.resume
 
 class AndroidTtsPlayer(private val context: Context, private val voices: List<TtsVoice>) :
     TtsPlayer(),
     DefaultLifecycleObserver {
+
+    private lateinit var scope: CoroutineScope
 
     // this can be null in the case that TTS failed to load
     private var tts: TextToSpeech? = null
@@ -49,7 +53,8 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
 
     private val ttsCompletedChannel: Channel<TtsCompletionStatus> = Channel()
     suspend fun init(scope: CoroutineScope) {
-        tts = TtsVoices.createTts(context)?.apply {
+        this.scope = scope
+        this.tts = TtsVoices.createTts(context)?.apply {
             setOnUtteranceProgressListener(object : UtteranceProgressListenerCompat() {
                 override fun onStart(utteranceId: String?) { }
 
@@ -98,22 +103,34 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
         return play(tag, voice)
     }
 
-    private suspend fun play(tag: TTSTag, voice: AndroidTtsVoice): TtsCompletionStatus {
-        val tts = tts?.also {
-            it.voice = voice.voice
-            if (it.setSpeechRate(tag.speed) == ERROR) {
-                return AndroidTtsError.failure(TtsErrorCode.APP_SPEECH_RATE_FAILED)
-            }
-            // if it's already playing: stop it
-            it.stopPlaying()
-        } ?: return AndroidTtsError.failure(TtsErrorCode.APP_TTS_INIT_FAILED)
+    private suspend fun play(tag: TTSTag, voice: AndroidTtsVoice): TtsCompletionStatus =
+        suspendCancellableCoroutine { continuation ->
+            val tts = tts?.also {
+                it.voice = voice.voice
+                if (it.setSpeechRate(tag.speed) == ERROR) {
+                    return@suspendCancellableCoroutine continuation.resume(AndroidTtsError.failure(TtsErrorCode.APP_SPEECH_RATE_FAILED))
+                }
+                // if it's already playing: stop it
+                it.stopPlaying()
+            } ?: return@suspendCancellableCoroutine continuation.resume(AndroidTtsError.failure(TtsErrorCode.APP_TTS_INIT_FAILED))
 
-        Timber.d("tts text '%s' to be played for locale (%s)", tag.fieldText, tag.lang)
-        tts.speak(tag.fieldText, TextToSpeech.QUEUE_FLUSH, bundleFlyweight, "stringId")
-        return ttsCompletedChannel.receive().also {
-            Timber.v("tts completed")
+            Timber.d("tts text '%s' to be played for locale (%s)", tag.fieldText, tag.lang)
+            tts.speak(tag.fieldText, TextToSpeech.QUEUE_FLUSH, bundleFlyweight, "stringId")
+
+            continuation.invokeOnCancellation {
+                Timber.d("stopping tts due to cancellation")
+                tts.stopPlaying()
+            }
+
+            scope.launch(Dispatchers.IO) {
+                Timber.v("awaiting tts completion")
+                continuation.resume(
+                    ttsCompletedChannel.receive().also {
+                        Timber.v("tts completed")
+                    }
+                )
+            }
         }
-    }
 
     companion object {
         private fun TextToSpeech.stopPlaying() {
