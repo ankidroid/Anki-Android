@@ -718,7 +718,18 @@ abstract class AbstractFlashcardViewer :
                 return true
             }
         }
+
+        if (webView.handledGamepadKeyDown(keyCode, event)) {
+            return true
+        }
         return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        if (webView.handledGamepadKeyUp(keyCode, event)) {
+            return true
+        }
+        return super.onKeyUp(keyCode, event)
     }
 
     public override val currentCardId: CardId? get() = currentCard?.id
