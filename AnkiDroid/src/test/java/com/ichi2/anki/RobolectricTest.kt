@@ -40,8 +40,6 @@ import com.ichi2.async.*
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.*
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
@@ -63,9 +61,6 @@ import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.time.Duration.Companion.milliseconds
 
 open class RobolectricTest : AndroidTest {
 
@@ -332,7 +327,7 @@ open class RobolectricTest : AndroidTest {
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
-    val col: Collection
+    override val col: Collection
         get() = try {
             CollectionHelper.instance.getColUnsafe(targetContext)!!
         } catch (e: UnsatisfiedLinkError) {
@@ -374,101 +369,6 @@ open class RobolectricTest : AndroidTest {
 
     protected inline fun <reified T : AnkiActivity?> startRegularActivity(i: Intent? = null): T {
         return startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
-    }
-
-    protected fun addNoteUsingBasicModel(front: String = "Front", back: String = "Back"): Note {
-        return addNoteUsingModelName("Basic", front, back)
-    }
-
-    protected fun addRevNoteUsingBasicModelDueToday(@Suppress("SameParameterValue") front: String, @Suppress("SameParameterValue") back: String): Note {
-        val note = addNoteUsingBasicModel(front, back)
-        val card = note.firstCard()
-        card.queue = Consts.QUEUE_TYPE_REV
-        card.type = Consts.CARD_TYPE_REV
-        card.due = col.sched.today.toLong()
-        return note
-    }
-
-    protected fun addNoteUsingBasicAndReversedModel(front: String, back: String): Note {
-        return addNoteUsingModelName("Basic (and reversed card)", front, back)
-    }
-
-    protected fun addNoteUsingBasicTypedModel(@Suppress("SameParameterValue") front: String, @Suppress("SameParameterValue") back: String): Note {
-        return addNoteUsingModelName("Basic (type in the answer)", front, back)
-    }
-
-    protected fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
-        val model = col.notetypes.byName((name)!!)
-            ?: throw IllegalArgumentException("Could not find model '$name'")
-        // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
-        // Saves a database trip afterwards.
-        val n = col.newNote(model)
-        for ((i, field) in fields.withIndex()) {
-            n.setField(i, field)
-        }
-        check(col.addNote(n) != 0) { "Could not add note: {${fields.joinToString(separator = ", ")}}" }
-        return n
-    }
-
-    protected fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
-        val model = col.notetypes.newModel(name)
-        for (field in fields) {
-            col.notetypes.addFieldInNewModel(model, col.notetypes.newField(field))
-        }
-        val t = Notetypes.newTemplate("Card 1")
-        t.put("qfmt", qfmt)
-        t.put("afmt", afmt)
-        col.notetypes.addTemplateInNewModel(model, t)
-        col.notetypes.add(model)
-        return name
-    }
-
-    /** Adds a note with Text to Speech functionality */
-    @Suppress("SameParameterValue")
-    protected fun addNoteUsingTextToSpeechNoteType(front: String, back: String) {
-        addNonClozeModel("TTS", arrayOf("Front", "Back"), "{{Front}}{{tts en_GB:Front}}", "{{tts en_GB:Front}}<br>{{Back}}")
-        addNoteUsingModelName("TTS", front, back)
-    }
-
-    private fun addField(notetype: NotetypeJson, name: String) {
-        val models = col.notetypes
-        try {
-            models.addField(notetype, models.newField(name))
-        } catch (e: ConfirmModSchemaException) {
-            throw RuntimeException(e)
-        }
-    }
-
-    /**
-     * Return a new standard deck and set it as the current deck.
-     * If a deck with this name already exists, returns it instead.
-     * It may be dynamic.
-     */
-    protected fun addDeck(deckName: String): Long {
-        return try {
-            col.decks.id(deckName)
-        } catch (filteredAncestor: DeckRenameException) {
-            throw RuntimeException(filteredAncestor)
-        }
-    }
-
-    /**
-     * Return a new dynamic deck and set it as the current deck.
-     * If a deck with this name already exists, returns it instead.
-     * It may be non-dynamic.
-     */
-    protected fun addDynamicDeck(name: String): Long {
-        return try {
-            col.decks.newDyn(name)
-        } catch (filteredAncestor: DeckRenameException) {
-            throw RuntimeException(filteredAncestor)
-        }
-    }
-
-    protected fun ensureCollectionLoadIsSynchronous() {
-        // HACK: We perform this to ensure that onCollectionLoaded is performed synchronously when startLoadingCollection
-        // is called.
-        col
     }
 
     /**
@@ -577,34 +477,6 @@ open class RobolectricTest : AndroidTest {
                 )
             }
             throw e
-        }
-    }
-
-    /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
-     * takes care of updating the dispatcher used by CollectionManager as well.
-     * * An argument could be made for using [StandardTestDispatcher] and
-     * explicitly advanced coroutines with advanceUntilIdle(), but there are
-     * issues with using it at the moment:
-     * * - Any usage of CollectionManager with runBlocking() will hang. tearDown()
-     * calls runBlocking() twice, which prevents tests from finishing.
-     * - The hang is not limited to the scope of runTest(). Even if the runBlocking
-     * calls in tearDown() are selectively moved into this function,
-     * when a coroutine test fails, the next regular test
-     * that executes after it will call runBlocking(), and it then hangs.
-     *
-     * A fix for this might require either wrapping all tests in runTest(),
-     * or finding some other way to isolate the coroutine and non-coroutine tests
-     * on separate threads/processes.
-     * */
-    fun runTest(
-        context: CoroutineContext = EmptyCoroutineContext,
-        dispatchTimeoutMs: Long = 60_000L,
-        testBody: suspend TestScope.() -> Unit
-    ) {
-        Dispatchers.setMain(UnconfinedTestDispatcher())
-        runTest(context, dispatchTimeoutMs.milliseconds) {
-            CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
-            testBody()
         }
     }
 }
