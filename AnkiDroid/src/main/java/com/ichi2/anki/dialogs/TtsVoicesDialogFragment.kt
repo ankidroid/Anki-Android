@@ -40,12 +40,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.ichi2.anki.AndroidTtsError
 import com.ichi2.anki.AndroidTtsVoice
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.dialogs.viewmodel.TtsVoicesViewModel
+import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.TtsVoice
 import com.ichi2.themes.Themes
@@ -185,14 +185,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
         }
 
         viewModel.ttsPlaybackErrorFlow.observe {
-            val string = if (it is AndroidTtsError) {
-                // TODO: Do we want a human readable string here as well - snackbar has limited room
-                // but developerString is currently not translated as it returns
-                // developerString: ERROR_NETWORK_TIMEOUT, so "Audio error (ERROR_NETWORK_TIMEOUT)"
-                requireContext().getString(R.string.tts_voices_playback_error, it.errorCode.developerString)
-            } else {
-                it.toString()
-            }
+            val string = it.localizedErrorMessage(requireContext())
             dialog?.window?.decorView?.showSnackbar(string) {
                 setAction(R.string.help) {
                     // TODO: Should do this in ViewModel, but we need an Activity

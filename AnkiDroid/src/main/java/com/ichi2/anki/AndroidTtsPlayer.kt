@@ -178,7 +178,8 @@ class AndroidTtsError(@Suppress("unused") val errorCode: TtsErrorCode) : TtsPlay
         APP_MISSING_VOICE(2),
         APP_INVALID_VOICE(3),
         APP_SPEECH_RATE_FAILED(4),
-        APP_TTS_INIT_FAILED(5)
+        APP_TTS_INIT_FAILED(5),
+        APP_TTS_INIT_TIMEOUT(6)
         ;
 
         /** A string which google will relate to the TTS Engine in most cases */
@@ -198,6 +199,7 @@ class AndroidTtsError(@Suppress("unused") val errorCode: TtsErrorCode) : TtsPlay
                     APP_INVALID_VOICE -> "APP_INVALID_VOICE"
                     APP_SPEECH_RATE_FAILED -> "APP_SPEECH_RATE_FAILED"
                     APP_TTS_INIT_FAILED -> "APP_TTS_INIT_FAILED"
+                    APP_TTS_INIT_TIMEOUT -> "APP_TTS_INIT_TIMEOUT"
                     APP_UNKNOWN -> "APP_UNKNOWN"
                 }
 
@@ -215,3 +217,13 @@ class AndroidTtsError(@Suppress("unused") val errorCode: TtsErrorCode) : TtsPlay
             failure(TtsErrorCode.fromErrorCode(errorCode))
     }
 }
+
+fun TtsPlayer.TtsError.localizedErrorMessage(context: Context): String =
+    if (this is AndroidTtsError) {
+        // TODO: Do we want a human readable string here as well - snackbar has limited room
+        // but developerString is currently not translated as it returns
+        // developerString: ERROR_NETWORK_TIMEOUT, so "Audio error (ERROR_NETWORK_TIMEOUT)"
+        context.getString(R.string.tts_voices_playback_error_new, this.errorCode.developerString)
+    } else {
+        this.toString()
+    }
