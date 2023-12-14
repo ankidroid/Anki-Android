@@ -2272,6 +2272,9 @@ abstract class AbstractFlashcardViewer :
             mCardSoundConfig = if (card == null) {
                 null
             } else {
+                if (mCardSoundConfig?.appliesTo(card) == true) {
+                    return
+                }
                 create(getColUnsafe, card)
             }
         }
