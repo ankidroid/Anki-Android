@@ -24,7 +24,9 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.viewModelScope
 import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -40,6 +42,46 @@ import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+/**
+ * Runs a suspend function that catches any uncaught errors and reports them to the user.
+ * Errors from the backend contain localized text that is often suitable to show to the user as-is.
+ * Other errors should ideally be handled in the block.
+ */
+fun CoroutineScope.launchCatching(
+    block: suspend () -> Unit,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    errorMessageHandler: suspend (String) -> Unit
+): Job {
+    return launch(dispatcher) {
+        try {
+            block.invoke()
+        } catch (cancellationException: CancellationException) {
+            // CancellationException should be re-thrown to propagate it to the parent coroutine
+            throw cancellationException
+        } catch (backendException: BackendException) {
+            Timber.w(backendException)
+            val message = backendException.localizedMessage ?: backendException.toString()
+            errorMessageHandler.invoke(message)
+        } catch (exception: Exception) {
+            Timber.w(exception)
+            errorMessageHandler.invoke(exception.toString())
+        }
+    }
+}
+
+@Suppress("UNCHECKED_CAST")
+fun <T> ViewModel.launchCatching(
+    block: suspend T.() -> Unit,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    errorMessageHandler: suspend (String) -> Unit
+): Job {
+    return viewModelScope.launchCatching(
+        { block.invoke(this as T) },
+        dispatcher,
+        errorMessageHandler
+    )
+}
 
 /**
  * Runs a suspend function that catches any uncaught errors and reports them to the user.

@@ -18,7 +18,6 @@ package com.ichi2.anki.previewer
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.android.material.color.MaterialColors.getColor
@@ -26,20 +25,19 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.LanguageUtils
+import com.ichi2.anki.launchCatching
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.addPlayButtons
 import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import net.ankiweb.rsdroid.BackendException
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
@@ -170,21 +168,9 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
         showAnswerOrDisplayCard(currentIndex.value + 1)
     }
 
-    fun launchCatching(block: suspend PreviewerViewModel.() -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                block.invoke(this@PreviewerViewModel)
-            } catch (cancellationException: CancellationException) {
-                // CancellationException should be re-thrown to propagate it to the parent coroutine
-                throw cancellationException
-            } catch (backendException: BackendException) {
-                Timber.w(backendException)
-                val message = backendException.localizedMessage ?: backendException.toString()
-                onError.emit(message)
-            } catch (exception: Exception) {
-                Timber.w(exception)
-                onError.emit(exception.toString())
-            }
+    fun launchCatching(block: suspend PreviewerViewModel.() -> Unit): Job {
+        return launchCatching(block, Dispatchers.IO) { message ->
+            onError.emit(message)
         }
     }
 
