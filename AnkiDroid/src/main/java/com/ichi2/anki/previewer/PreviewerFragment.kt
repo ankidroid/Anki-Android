@@ -19,12 +19,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -35,6 +38,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.previewer.PreviewerViewModel.Companion.stdHtml
@@ -45,7 +49,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.io.File
 
-class PreviewerFragment : Fragment() {
+class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var viewModel: PreviewerViewModel
 
     override fun onCreateView(
@@ -156,10 +160,34 @@ class PreviewerFragment : Fragment() {
         }
 
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
+            setOnMenuItemClickListener(this@PreviewerFragment)
             setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         }
 
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_edit -> editCard()
+        }
+        return true
+    }
+
+    private val editCardLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
+            result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
+        ) {
+            viewModel.loadCurrentCard(reload = true)
+        }
+    }
+
+    private fun editCard() {
+        val intent = Intent(requireContext(), NoteEditor::class.java).apply {
+            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
+            putExtra(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, viewModel.cardId())
+        }
+        editCardLauncher.launch(intent)
     }
 
     companion object {
