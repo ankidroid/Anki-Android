@@ -19,6 +19,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +52,12 @@ import java.io.File
 
 class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var viewModel: PreviewerViewModel
+
+    private val menu: Menu
+        get() = requireView().findViewById<Toolbar>(R.id.toolbar).menu
+
+    private val backsideOnlyOption: MenuItem
+        get() = menu.findItem(R.id.action_back_side_only)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -117,6 +124,13 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 webView.evaluateJavascript(eval, null)
             }
             .launchIn(lifecycleScope)
+        lifecycleScope.launch {
+            viewModel.backsideOnly
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { isBacksideOnly ->
+                    setBacksideOnlyButtonIcon(isBacksideOnly)
+                }
+        }
 
         val cardsCount = selectedCardIds.count()
         lifecycleScope.launch {
@@ -170,8 +184,21 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_edit -> editCard()
+            R.id.action_back_side_only -> viewModel.toggleBacksideOnly()
         }
         return true
+    }
+
+    private fun setBacksideOnlyButtonIcon(isBacksideOnly: Boolean) {
+        backsideOnlyOption.apply {
+            if (isBacksideOnly) {
+                setIcon(R.drawable.ic_card_answer)
+                setTitle(R.string.card_side_answer)
+            } else {
+                setIcon(R.drawable.ic_card_question)
+                setTitle(R.string.card_side_both)
+            }
+        }
     }
 
     private val editCardLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

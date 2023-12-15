@@ -44,12 +44,23 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
     val eval = MutableSharedFlow<String>()
     val onError = MutableSharedFlow<String>()
     val currentIndex = MutableStateFlow(firstIndex)
+    val backsideOnly = MutableStateFlow(false)
 
     private var showingAnswer = false
 
     // TODO maybe move the server to a Service and move it out of here?
     private val server = PreviewerServer(mediaDir).also { it.start() }
     private lateinit var currentCard: Card
+
+    fun toggleBacksideOnly() {
+        Timber.v("toggleBacksideOnly() %b", !backsideOnly.value)
+        launchCatching {
+            backsideOnly.emit(!backsideOnly.value)
+            if (backsideOnly.value && !showingAnswer) {
+                showAnswer()
+            }
+        }
+    }
 
     fun serverBaseUrl() = server.baseUrl()
 
@@ -66,7 +77,7 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
             if (!this::currentCard.isInitialized || reload) {
                 currentCard = withCol { getCard(selectedCardIds[currentIndex.value]) }
             }
-            val answerShouldBeShown = showingAnswer
+            val answerShouldBeShown = showingAnswer || backsideOnly.value
             showQuestion()
             if (answerShouldBeShown) {
                 showAnswer()
@@ -105,10 +116,13 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
         currentIndex.emit(index)
         currentCard = withCol { getCard(selectedCardIds[index]) }
         showQuestion()
+        if (backsideOnly.value) {
+            showAnswer()
+        }
     }
 
     private suspend fun showAnswerOrDisplayCard(index: Int) {
-        if (!showingAnswer) {
+        if (!showingAnswer && !backsideOnly.value) {
             showAnswer()
         } else {
             displayCard(index)
