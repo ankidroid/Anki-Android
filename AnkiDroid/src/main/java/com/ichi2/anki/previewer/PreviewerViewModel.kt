@@ -24,6 +24,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.android.material.color.MaterialColors.getColor
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.Flag
 import com.ichi2.anki.LanguageUtils
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
@@ -48,6 +49,7 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
     val currentIndex = MutableStateFlow(firstIndex)
     val backsideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
+    val flagCode: MutableStateFlow<Int> = MutableStateFlow(Flag.NONE.code)
 
     private var showingAnswer = false
 
@@ -70,6 +72,15 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
             val note = currentCard.note()
             NoteService.toggleMark(note)
             isMarked.emit(NoteService.isMarked(note))
+        }
+    }
+
+    fun setFlag(flag: Flag) {
+        launchCatching {
+            withCol {
+                setUserFlagForCards(listOf(currentCard.id), flag.code)
+            }
+            flagCode.emit(flag.code)
         }
     }
 
@@ -96,6 +107,10 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
         }
     }
 
+    private suspend fun updateFlagIcon() {
+        flagCode.emit(currentCard.userFlag())
+    }
+
     private suspend fun updateMarkIcon() {
         isMarked.emit(currentCard.note().hasTag(MARKED_TAG))
     }
@@ -110,6 +125,7 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
 
         eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '$bodyClass');")
 
+        updateFlagIcon()
         updateMarkIcon()
     }
 
