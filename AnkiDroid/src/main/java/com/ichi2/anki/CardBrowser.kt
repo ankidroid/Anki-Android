@@ -309,7 +309,7 @@ open class CardBrowser :
         override fun onRemoveSearch(searchName: String?) {
             Timber.d("OnRemoveSelection using search named: %s", searchName)
             updateFilters {
-                remove("searchName")
+                remove(searchName)
                 if (this.isEmpty()) {
                     mMySearchesItem!!.isVisible = false
                 }
