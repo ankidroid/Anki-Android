@@ -67,6 +67,7 @@ import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
@@ -1214,7 +1215,11 @@ open class CardBrowser :
         }
 
     private fun getPreviewIntent(index: Int, selectedCardIds: LongArray): Intent {
-        return PreviewDestination(index, selectedCardIds).toIntent(this)
+        return if (sharedPrefs().getBoolean("new_previewer", false)) {
+            Previewer2Destination(index, selectedCardIds).toIntent(this)
+        } else {
+            PreviewDestination(index, selectedCardIds).toIntent(this)
+        }
     }
 
     private fun rescheduleSelectedCards() {
@@ -2315,3 +2320,9 @@ suspend fun searchForCards(
 private fun Sequence<CardId>.toCardCache(col: com.ichi2.libanki.Collection, isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
 }
+
+class Previewer2Destination(val currentIndex: Int, val selectedCardIds: LongArray)
+
+@CheckResult
+fun Previewer2Destination.toIntent(context: Context) =
+    PreviewerFragment.getIntent(context, selectedCardIds, currentIndex)
