@@ -201,4 +201,25 @@ interface Compat {
      */
     @CheckResult
     fun normalize(locale: Locale): Locale
+
+    @Suppress("PropertyName")
+    val AXIS_RELATIVE_X: Int
+
+    @Suppress("PropertyName")
+    val AXIS_RELATIVE_Y: Int
+
+    @Suppress("PropertyName")
+    val AXIS_GESTURE_X_OFFSET: Int
+
+    @Suppress("PropertyName")
+    val AXIS_GESTURE_Y_OFFSET: Int
+
+    @Suppress("PropertyName")
+    val AXIS_GESTURE_PINCH_SCALE_FACTOR: Int
+
+    @Suppress("PropertyName")
+    val AXIS_GESTURE_SCROLL_X_DISTANCE: Int
+
+    @Suppress("PropertyName")
+    val AXIS_GESTURE_SCROLL_Y_DISTANCE: Int
 }

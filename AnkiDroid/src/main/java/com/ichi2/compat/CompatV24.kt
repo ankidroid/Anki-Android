@@ -18,6 +18,7 @@ package com.ichi2.compat
 
 import android.annotation.TargetApi
 import android.icu.util.ULocale
+import android.view.MotionEvent
 import com.ichi2.utils.isRobolectric
 import timber.log.Timber
 import java.util.Locale
@@ -38,4 +39,7 @@ open class CompatV24 : CompatV23(), Compat {
             locale
         }
     }
+
+    override val AXIS_RELATIVE_X: Int = MotionEvent.AXIS_RELATIVE_X
+    override val AXIS_RELATIVE_Y: Int = MotionEvent.AXIS_RELATIVE_Y
 }

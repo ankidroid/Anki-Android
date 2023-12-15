@@ -42,6 +42,7 @@ class CompatHelper private constructor() {
 
     // Note: Needs ": Compat" or the type system assumes `Compat21`
     private val compatValue: Compat = when {
+        sdkVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> CompatV34()
         sdkVersion >= Build.VERSION_CODES.TIRAMISU -> CompatV33()
         sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
         sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
