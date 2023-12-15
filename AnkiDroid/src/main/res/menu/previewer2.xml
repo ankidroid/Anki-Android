@@ -17,6 +17,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_back_side_only"
+        android:icon="@drawable/ic_card_question"
+        android:title="@string/card_side_both"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_mode_edit_white"
         android:title="@string/cardeditor_title_edit_card"
