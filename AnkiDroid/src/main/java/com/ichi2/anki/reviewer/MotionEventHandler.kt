@@ -22,6 +22,7 @@ import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 
 /**
@@ -217,18 +218,29 @@ enum class Axis(val motionEventValue: Int) {
     HAT_X(MotionEvent.AXIS_HAT_X),
 
     /** @see MotionEvent.AXIS_HAT_Y */
-    HAT_Y(MotionEvent.AXIS_HAT_Y)
+    HAT_Y(MotionEvent.AXIS_HAT_Y),
 
-    //  API Level 24:
-    //  AXIS_RELATIVE_X,
-    //  AXIS_RELATIVE_Y,
+    /** @see MotionEvent.AXIS_RELATIVE_X */
+    AXIS_RELATIVE_X(CompatHelper.compat.AXIS_RELATIVE_X),
 
-    //  API Level 34:
-    //  AXIS_GESTURE_X_OFFSET,
-    //  AXIS_GESTURE_Y_OFFSET,
-    //  AXIS_GESTURE_PINCH_SCALE_FACTOR,
-    //  AXIS_GESTURE_SCROLL_X_DISTANCE,
-    //  AXIS_GESTURE_SCROLL_Y_DISTANCE,
+    /** @see MotionEvent.AXIS_RELATIVE_Y */
+    AXIS_RELATIVE_Y(CompatHelper.compat.AXIS_RELATIVE_Y),
+
+    /** @see MotionEvent.AXIS_GESTURE_X_OFFSET */
+    AXIS_GESTURE_X_OFFSET(CompatHelper.compat.AXIS_GESTURE_X_OFFSET),
+
+    /** @see MotionEvent.AXIS_GESTURE_Y_OFFSET */
+    AXIS_GESTURE_Y_OFFSET(CompatHelper.compat.AXIS_GESTURE_Y_OFFSET),
+
+    /** @see MotionEvent.AXIS_GESTURE_PINCH_SCALE_FACTOR */
+    AXIS_GESTURE_PINCH_SCALE_FACTOR(CompatHelper.compat.AXIS_GESTURE_PINCH_SCALE_FACTOR),
+
+    /** @see MotionEvent.AXIS_GESTURE_SCROLL_X_DISTANCE */
+    AXIS_GESTURE_SCROLL_X_DISTANCE(CompatHelper.compat.AXIS_GESTURE_SCROLL_X_DISTANCE),
+
+    /** @see MotionEvent.AXIS_GESTURE_SCROLL_Y_DISTANCE */
+    AXIS_GESTURE_SCROLL_Y_DISTANCE(CompatHelper.compat.AXIS_GESTURE_SCROLL_Y_DISTANCE)
+
     ;
 
     /**

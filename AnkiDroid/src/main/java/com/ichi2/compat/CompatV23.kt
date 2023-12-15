@@ -253,6 +253,15 @@ open class CompatV23 : Compat {
         // convert back from this key to a two-letter mapping
         return twoLetterSystemLocaleMapping[iso3Code] ?: locale
     }
+
+    override val AXIS_RELATIVE_X: Int = 27
+    override val AXIS_RELATIVE_Y: Int = 28
+    override val AXIS_GESTURE_X_OFFSET: Int = 48
+    override val AXIS_GESTURE_Y_OFFSET: Int = 49
+    override val AXIS_GESTURE_SCROLL_X_DISTANCE: Int = 50
+    override val AXIS_GESTURE_SCROLL_Y_DISTANCE: Int = 51
+    override val AXIS_GESTURE_PINCH_SCALE_FACTOR: Int = 52
+
     companion object {
         /**
          * Maps from the ISO 3 code of a locale to the locale in
