@@ -22,6 +22,11 @@
         android:title="@string/card_side_both"
         app:showAsAction="always"/>
     <item
+        android:id="@+id/action_mark"
+        android:icon="@drawable/ic_star_border_white"
+        android:title="@string/menu_mark_note"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_mode_edit_white"
         android:title="@string/cardeditor_title_edit_card"
