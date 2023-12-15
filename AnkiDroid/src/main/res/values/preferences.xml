@@ -157,6 +157,7 @@
     <string name="pref_trigger_crash_key">trigger_crash_preference</string>
     <string name="pref_analytics_debug_key">analytics_debug_preference</string>
     <string name="pref_lock_database_key">debug_lock_database</string>
+    <string name="new_previewer_pref_key">new_previewer</string>
     <string name="pref_show_onboarding_key">showOnboarding</string>
     <string name="pref_reset_onboarding_key">resetOnboarding</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
