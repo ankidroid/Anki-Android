@@ -1012,6 +1012,17 @@ class CardBrowserTest : RobolectricTest() {
             assertThat("deselect row: tap", viewModel.selectedRowCount(), equalTo(1))
         }
     }
+
+    @Test
+    @Ignore("Issue 14989")
+    fun `delete search history - Issue 14989`() = runTest {
+        browserWithNoNewCards.apply {
+            mMySearchesDialogListener.onSaveSearch("hello", "aa")
+            assertThat("filters after saving", savedFilters(col).size, equalTo(1))
+            mMySearchesDialogListener.onRemoveSearch("hello")
+            assertThat("filters should be empty after removing", savedFilters(col).size, equalTo(0))
+        }
+    }
 }
 
 fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean =
