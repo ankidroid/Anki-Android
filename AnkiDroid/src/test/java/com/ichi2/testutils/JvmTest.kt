@@ -16,8 +16,8 @@
 
 package com.ichi2.testutils
 
+import android.annotation.SuppressLint
 import androidx.annotation.CallSuper
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
@@ -33,6 +33,7 @@ import org.junit.After
 import org.junit.Assume
 import org.junit.Before
 import timber.log.Timber
+import timber.log.Timber.Forest.plant
 
 open class JvmTest : TestClass {
     private fun maybeSetupBackend() {
@@ -58,7 +59,20 @@ open class JvmTest : TestClass {
 
         maybeSetupBackend()
 
-        Timber.plant(AnkiDroidApp.RobolectricDebugTree())
+        plant(object : Timber.DebugTree() {
+            @SuppressLint("PrintStackTraceUsage")
+            override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+                // This is noisy in test environments
+                if (tag == "Backend\$checkMainThreadOp") {
+                    return
+                }
+                // use println(): Timber may not work under the Jvm
+                System.out.println(tag + ": " + message)
+                if (t != null) {
+                    t.printStackTrace()
+                }
+            }
+        })
 
         Storage.setUseInMemory(true)
     }
