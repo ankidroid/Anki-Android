@@ -282,11 +282,13 @@ open class CardBrowser :
         }
     }
 
-    private fun savedFilters(col: com.ichi2.libanki.Collection): HashMap<String, String> {
+    @VisibleForTesting
+    internal fun savedFilters(col: com.ichi2.libanki.Collection): HashMap<String, String> {
         return col.config.get("savedFilters") ?: hashMapOf()
     }
 
-    private val mMySearchesDialogListener: MySearchesDialogListener = object : MySearchesDialogListener {
+    @VisibleForTesting
+    internal val mMySearchesDialogListener: MySearchesDialogListener = object : MySearchesDialogListener {
         fun updateFilters(func: HashMap<String, String>.() -> Unit) {
             val filters = savedFilters(getColUnsafe)
             func(filters)
