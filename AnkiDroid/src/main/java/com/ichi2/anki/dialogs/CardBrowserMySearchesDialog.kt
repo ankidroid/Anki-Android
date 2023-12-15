@@ -29,9 +29,9 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
     private var savedFilterKeys: ArrayList<String>? = null
 
     interface MySearchesDialogListener {
-        fun onSelection(searchName: String?)
-        fun onRemoveSearch(searchName: String?)
-        fun onSaveSearch(searchName: String?, searchTerms: String?)
+        fun onSelection(searchName: String)
+        fun onRemoveSearch(searchName: String)
+        fun onSaveSearch(searchName: String, searchTerms: String?)
     }
 
     @SuppressLint("CheckResult")
