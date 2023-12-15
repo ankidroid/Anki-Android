@@ -45,6 +45,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
@@ -283,60 +284,52 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    internal fun savedFilters(col: com.ichi2.libanki.Collection): HashMap<String, String> {
-        return col.config.get("savedFilters") ?: hashMapOf()
-    }
-
-    @VisibleForTesting
     internal val mMySearchesDialogListener: MySearchesDialogListener = object : MySearchesDialogListener {
-        fun updateFilters(func: HashMap<String, String>.() -> Unit) {
-            val filters = savedFilters(getColUnsafe)
-            func(filters)
-            getColUnsafe.config.set("savedFilters", filters)
-        }
 
-        override fun onSelection(searchName: String?) {
+        override fun onSelection(searchName: String) {
             Timber.d("OnSelection using search named: %s", searchName)
-            savedFilters(getColUnsafe).get(searchName)?.apply {
-                Timber.d("OnSelection using search terms: %s", this)
-                mSearchTerms = this
-                mSearchView!!.setQuery(this, false)
-                mSearchItem!!.expandActionView()
-                searchCards()
+            launchCatchingTask {
+                viewModel.savedSearches()[searchName]?.apply {
+                    Timber.d("OnSelection using search terms: %s", this)
+                    mSearchTerms = this
+                    mSearchView!!.setQuery(this, false)
+                    mSearchItem!!.expandActionView()
+                    searchCards()
+                }
             }
         }
 
-        override fun onRemoveSearch(searchName: String?) {
+        override fun onRemoveSearch(searchName: String) {
             Timber.d("OnRemoveSelection using search named: %s", searchName)
-            updateFilters {
-                remove(searchName)
-                if (this.isEmpty()) {
+            launchCatchingTask {
+                val updatedFilters = viewModel.removeSavedSearch(searchName)
+                if (updatedFilters.isEmpty()) {
                     mMySearchesItem!!.isVisible = false
                 }
             }
         }
 
-        override fun onSaveSearch(searchName: String?, searchTerms: String?) {
+        override fun onSaveSearch(searchName: String, searchTerms: String?) {
             if (searchTerms == null) {
                 return
             }
-            if (searchName.isNullOrEmpty()) {
+            if (searchName.isEmpty()) {
                 showSnackbar(
                     R.string.card_browser_list_my_searches_new_search_error_empty_name,
                     Snackbar.LENGTH_SHORT
                 )
                 return
             }
-            updateFilters {
-                if (get(searchName) != null) {
-                    showSnackbar(
+            launchCatchingTask {
+                when (viewModel.saveSearch(searchName, searchTerms)) {
+                    SaveSearchResult.ALREADY_EXISTS -> showSnackbar(
                         R.string.card_browser_list_my_searches_new_search_error_dup,
                         Snackbar.LENGTH_SHORT
                     )
-                } else {
-                    set(searchName, searchTerms)
-                    mSearchView!!.setQuery("", false)
-                    mMySearchesItem!!.isVisible = true
+                    SaveSearchResult.SUCCESS -> {
+                        mSearchView!!.setQuery("", false)
+                        mMySearchesItem!!.isVisible = true
+                    }
                 }
             }
         }
@@ -761,7 +754,7 @@ open class CardBrowser :
             mSaveSearchItem = menu.findItem(R.id.action_save_search)
             mSaveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mMySearchesItem = menu.findItem(R.id.action_list_my_searches)
-            val savedFiltersObj = savedFilters(getColUnsafe)
+            val savedFiltersObj = viewModel.savedSearchesUnsafe(getColUnsafe)
             mMySearchesItem!!.isVisible = savedFiltersObj.size > 0
             mSearchItem = menu.findItem(R.id.action_search)
             mSearchItem!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
@@ -985,15 +978,18 @@ open class CardBrowser :
                 return true
             }
             R.id.action_list_my_searches -> {
-                val savedFilters = savedFilters(getColUnsafe)
-                showDialogFragment(
-                    newInstance(
-                        savedFilters,
-                        mMySearchesDialogListener,
-                        "",
-                        CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST
+                launchCatchingTask {
+                    val savedFilters = viewModel.savedSearches()
+                    showDialogFragment(
+                        newInstance(
+                            savedFilters,
+                            mMySearchesDialogListener,
+                            "",
+                            CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST
+                        )
                     )
-                )
+                }
+
                 return true
             }
             R.id.action_sort_by_size -> {

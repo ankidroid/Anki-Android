@@ -49,6 +49,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import java.util.Collections
+import java.util.HashMap
 import kotlin.math.max
 import kotlin.math.min
 
@@ -306,6 +307,38 @@ class CardBrowserViewModel(
         selectNone()
     }
 
+    private suspend fun updateSavedSearches(func: HashMap<String, String>.() -> Unit): HashMap<String, String> {
+        val filters = savedSearches()
+        func(filters)
+        withCol { config.set("savedFilters", filters) }
+        return filters
+    }
+    suspend fun savedSearches(): HashMap<String, String> =
+        withCol { config.get("savedFilters") } ?: hashMapOf()
+
+    fun savedSearchesUnsafe(col: com.ichi2.libanki.Collection): HashMap<String, String> =
+        col.config.get("savedFilters") ?: hashMapOf()
+
+    suspend fun removeSavedSearch(searchName: String): HashMap<String, String> {
+        Timber.d("removing user search")
+        return updateSavedSearches {
+            remove(searchName)
+        }
+    }
+
+    suspend fun saveSearch(searchName: String, searchTerms: String): SaveSearchResult {
+        Timber.d("saving user search")
+        var alreadyExists = false
+        updateSavedSearches {
+            if (get(searchName) != null) {
+                alreadyExists = true
+            } else {
+                set(searchName, searchTerms)
+            }
+        }
+        return if (alreadyExists) SaveSearchResult.ALREADY_EXISTS else SaveSearchResult.SUCCESS
+    }
+
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
@@ -315,4 +348,9 @@ class CardBrowserViewModel(
             }
         }
     }
+}
+
+enum class SaveSearchResult {
+    ALREADY_EXISTS,
+    SUCCESS
 }
