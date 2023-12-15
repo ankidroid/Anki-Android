@@ -1014,7 +1014,6 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("Issue 14989")
     fun `delete search history - Issue 14989`() = runTest {
         browserWithNoNewCards.apply {
             mMySearchesDialogListener.onSaveSearch("hello", "aa")
