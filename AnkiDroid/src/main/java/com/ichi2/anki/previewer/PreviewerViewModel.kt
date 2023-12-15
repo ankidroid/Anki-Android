@@ -25,6 +25,8 @@ import com.google.android.material.color.MaterialColors.getColor
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.LanguageUtils
+import com.ichi2.anki.servicelayer.MARKED_TAG
+import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.addPlayButtons
 import com.ichi2.themes.Themes
@@ -45,6 +47,7 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
     val onError = MutableSharedFlow<String>()
     val currentIndex = MutableStateFlow(firstIndex)
     val backsideOnly = MutableStateFlow(false)
+    val isMarked = MutableStateFlow(false)
 
     private var showingAnswer = false
 
@@ -59,6 +62,14 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
             if (backsideOnly.value && !showingAnswer) {
                 showAnswer()
             }
+        }
+    }
+
+    fun toggleMark() {
+        launchCatching {
+            val note = currentCard.note()
+            NoteService.toggleMark(note)
+            isMarked.emit(NoteService.isMarked(note))
         }
     }
 
@@ -85,6 +96,10 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
         }
     }
 
+    private suspend fun updateMarkIcon() {
+        isMarked.emit(currentCard.note().hasTag(MARKED_TAG))
+    }
+
     private suspend fun showQuestion() {
         Timber.v("showQuestion()")
         showingAnswer = false
@@ -94,6 +109,8 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
         val bodyClass = bodyClassForCardOrd(currentCard.ord)
 
         eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '$bodyClass');")
+
+        updateMarkIcon()
     }
 
     /** Needs the question already being displayed to work (i.e. [showQuestion]),

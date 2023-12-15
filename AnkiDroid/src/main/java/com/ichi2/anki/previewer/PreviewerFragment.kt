@@ -59,6 +59,9 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val backsideOnlyOption: MenuItem
         get() = menu.findItem(R.id.action_back_side_only)
 
+    private val markOption: MenuItem
+        get() = menu.findItem(R.id.action_mark)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -143,6 +146,20 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                         getString(R.string.preview_progress_bar_text, displayIndex, cardsCount)
                 }
         }
+        lifecycleScope.launch {
+            viewModel.isMarked
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { isMarked ->
+                    if (isMarked) {
+                        markOption.setIcon(R.drawable.ic_star)
+                        markOption.setTitle(R.string.menu_unmark_note)
+                    } else {
+                        markOption.setIcon(R.drawable.ic_star_border_white)
+                        markOption.setTitle(R.string.menu_mark_note)
+                    }
+                }
+        }
+
         if (cardsCount == 1) {
             slider.visibility = View.GONE
             progressIndicator.visibility = View.GONE
@@ -184,6 +201,7 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_edit -> editCard()
+            R.id.action_mark -> viewModel.toggleMark()
             R.id.action_back_side_only -> viewModel.toggleBacksideOnly()
         }
         return true
