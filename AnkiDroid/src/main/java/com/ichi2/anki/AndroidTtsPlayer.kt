@@ -62,6 +62,10 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
                     scope.launch(Dispatchers.IO) { ttsCompletedChannel.send(TtsCompletionStatus.success()) }
                 }
 
+                override fun onStop(utteranceId: String?, interrupted: Boolean) {
+                    scope.launch(Dispatchers.IO) { ttsCompletedChannel.send(TtsCompletionStatus.stopped()) }
+                }
+
                 override fun onError(utteranceId: String?, errorCode: Int) {
                     scope.launch(Dispatchers.IO) { ttsCompletedChannel.send(AndroidTtsError.failure(errorCode)) }
                 }
