@@ -163,11 +163,13 @@ class AutomaticAnswer(
 
     /** Stops the current automatic display if the user has selected an answer */
     fun onSelectEase() {
+        Timber.v("onSelectEase")
         stopShowQuestionTask()
     }
 
     /** Stops the current automatic display if the user has flipped the card */
     fun onShowAnswer() {
+        Timber.v("onShowAnswer")
         stopShowAnswerTask()
     }
 
