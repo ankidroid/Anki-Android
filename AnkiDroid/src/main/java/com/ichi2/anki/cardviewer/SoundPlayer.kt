@@ -19,6 +19,7 @@ package com.ichi2.anki.cardviewer
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
 import androidx.core.net.toFile
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
@@ -122,9 +123,9 @@ class SoundPlayer(
         }
     }
 
-    private suspend fun playAllSoundsForSide(soundSide: SoundSide) {
+    private suspend fun playAllSoundsForSide(soundSide: SoundSide): Job? {
         if (!canPlaySounds()) {
-            return
+            return null
         }
         cancelPlaySoundsJob()
         Timber.i("playing sounds for %s", soundSide)
@@ -132,11 +133,12 @@ class SoundPlayer(
             playAllSoundsInternal(soundSide)
             playSoundsJob = null
         }
+        return this.playSoundsJob
     }
 
-    suspend fun playOneSound(tag: AvTag) {
+    suspend fun playOneSound(tag: AvTag): Job? {
         if (!canPlaySounds()) {
-            return
+            return null
         }
         cancelPlaySoundsJob()
         Timber.i("playing one sound")
@@ -167,6 +169,7 @@ class SoundPlayer(
             Timber.v("completed playing one sound")
             playSoundsJob = null
         }
+        return playSoundsJob
     }
 
     suspend fun stopSounds() {
@@ -283,7 +286,8 @@ class SoundPlayer(
         }
     }
 
-    private fun canPlaySounds(): Boolean {
+    @VisibleForTesting
+    internal fun canPlaySounds(): Boolean {
         if (!lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
             Timber.w("sounds are not played as the activity is inactive")
             return false

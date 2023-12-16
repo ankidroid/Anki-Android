@@ -358,15 +358,15 @@ open class RobolectricTest : AndroidTest {
         return NotetypeJson(collectionModels.byName(modelName).toString().trim { it <= ' ' })
     }
 
-    protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {
+    internal fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {
         return startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
     }
 
-    protected inline fun <reified T : AnkiActivity?> startRegularActivity(): T {
+    internal inline fun <reified T : AnkiActivity?> startRegularActivity(): T {
         return startRegularActivity(null)
     }
 
-    protected inline fun <reified T : AnkiActivity?> startRegularActivity(i: Intent? = null): T {
+    internal inline fun <reified T : AnkiActivity?> startRegularActivity(i: Intent? = null): T {
         return startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
     }
 
