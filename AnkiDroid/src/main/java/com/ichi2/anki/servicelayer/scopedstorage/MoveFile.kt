@@ -106,7 +106,8 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
                 }
             }
             FileUtil.FilePrefix.STRICT_SUFFIX,
-            FileUtil.FilePrefix.NOT_PREFIX -> {
+            FileUtil.FilePrefix.NOT_PREFIX,
+            -> {
                 conflictingFileInDestination(context)
             }
         }

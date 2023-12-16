@@ -116,7 +116,7 @@ class TemplateManager {
         browser: Boolean = false,
         notetype: NotetypeJson? = null,
         template: JSONObject? = null,
-        fill_empty: Boolean = false
+        fill_empty: Boolean = false,
     ) {
         @RustCleanup("this was a WeakRef")
         private val _col: Collection = col
@@ -139,7 +139,7 @@ class TemplateManager {
                 card: Card,
                 notetype: NotetypeJson,
                 template: JSONObject,
-                fillEmpty: Boolean
+                fillEmpty: Boolean,
             ): TemplateRenderContext {
                 return TemplateRenderContext(
                     note.col,
@@ -252,7 +252,7 @@ class TemplateManager {
             var answerText: String,
             val questionAvTags: List<AvTag>,
             val answerAvTags: List<AvTag>,
-            val css: String = ""
+            val css: String = "",
         ) {
 
             fun questionAndStyle() = "<style>$css</style>$questionText"
@@ -263,7 +263,7 @@ class TemplateManager {
         fun applyCustomFilters(
             rendered: TemplateReplacementList,
             ctx: TemplateRenderContext,
-            front_side: String?
+            front_side: String?,
         ): String {
             // template already fully rendered?
             if (len(rendered) == 1 && rendered[0].first != null) {
@@ -306,7 +306,7 @@ class TemplateManager {
             fieldText: String,
             fieldName: String,
             filterName: String,
-            ctx: TemplateRenderContext
+            ctx: TemplateRenderContext,
         ): String
     }
     companion object {

@@ -33,7 +33,7 @@ import kotlin.test.assertFailsWith
 class CompatDeleteFileTest(
     val compat: Compat,
     /** Used in the "Test Results" Window */
-    @Suppress("unused") private val unitTestDescription: String
+    @Suppress("unused") private val unitTestDescription: String,
 ) {
     companion object {
         @JvmStatic // required for Parameters

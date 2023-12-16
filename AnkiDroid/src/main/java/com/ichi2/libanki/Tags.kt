@@ -57,7 +57,7 @@ class Tags(private val col: Collection) {
     /* Remove space-separated tags from provided notes. */
     fun bulkRemove(
         noteIds: List<Long>,
-        tags: String
+        tags: String,
     ): OpChangesWithCount {
         return col.backend.removeNoteTags(
             noteIds = noteIds,

@@ -46,7 +46,7 @@ open class MockMigrationContext : MigrationContext() {
 
     override fun execSafe(
         operation: Operation,
-        op: (Operation) -> Unit
+        op: (Operation) -> Unit,
     ) {
         this.executed.add(operation)
         super.execSafe(operation, op)

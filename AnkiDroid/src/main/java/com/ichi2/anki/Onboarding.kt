@@ -54,7 +54,7 @@ import com.ichi2.utils.HandlerUtils.executeFunctionUsingHandler
 // TODO: Move OnboardingUtils.featureConstants to a DI container rather than a mutable singleton
 abstract class Onboarding<Feature>(
     private val context: Context,
-    val tutorials: MutableList<TutorialArguments<Feature>>
+    val tutorials: MutableList<TutorialArguments<Feature>>,
 ) where Feature : Enum<Feature>, Feature : OnboardingFlag {
 
     companion object {
@@ -118,13 +118,13 @@ abstract class Onboarding<Feature>(
     data class TutorialArguments<Feature>(
         val featureIdentifier: Feature,
         val onboardingFunction: () -> Unit,
-        val onboardingCondition: (() -> Boolean)? = null
+        val onboardingCondition: (() -> Boolean)? = null,
     )
             where Feature : Enum<Feature>, Feature : OnboardingFlag
 
     class DeckPicker(
         private val activityContext: com.ichi2.anki.DeckPicker,
-        private val recyclerViewLayoutManager: LinearLayoutManager
+        private val recyclerViewLayoutManager: LinearLayoutManager,
     ) : Onboarding<DeckPicker.DeckPickerOnboardingEnum>(activityContext, mutableListOf()) {
 
         init {

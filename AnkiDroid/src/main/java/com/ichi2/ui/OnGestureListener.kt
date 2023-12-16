@@ -28,7 +28,7 @@ import java.util.function.Consumer
 class OnGestureListener(
     private val view: View,
     private val gestureMapper: GestureMapper,
-    private val consumer: Consumer<Gesture>
+    private val consumer: Consumer<Gesture>,
 ) : GestureDetector.SimpleOnGestureListener() {
 
     fun getTapGestureMode() = gestureMapper.tapGestureMode
@@ -50,7 +50,7 @@ class OnGestureListener(
         e1: MotionEvent?,
         e2: MotionEvent,
         velocityX: Float,
-        velocityY: Float
+        velocityY: Float,
     ): Boolean {
         if (e1 != null) {
             val dx = e2.x - e1.x

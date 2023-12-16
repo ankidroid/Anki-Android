@@ -26,7 +26,7 @@ import java.io.Closeable
 
 open class TtsVoice(
     val name: String,
-    val lang: String
+    val lang: String,
 ) {
 
     override fun toString(): String {

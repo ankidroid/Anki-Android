@@ -114,7 +114,7 @@ class Preferences :
 
     override fun onPreferenceStartFragment(
         caller: PreferenceFragmentCompat,
-        pref: Preference
+        pref: Preference,
     ): Boolean {
         // avoid reopening the same fragment if already active
         val currentFragment = supportFragmentManager.findFragmentById(R.id.settings_container)

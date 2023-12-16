@@ -82,7 +82,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         var subtreeSize: Int,
         var isExpanded: Boolean,
         var subtreeCheckedCnt: Int,
-        var vh: ViewHolder?
+        var vh: ViewHolder?,
     ) {
         /**
          * Get or set the checkbox state of the currently bound ViewHolder.

@@ -25,7 +25,7 @@ import anki.notetypes.NotetypeNameIdUseCount
 internal data class NoteTypeUiModel(
     val id: Long,
     val name: String,
-    val useCount: Int
+    val useCount: Int,
 )
 
 internal fun NotetypeNameIdUseCount.toUiModel(): NoteTypeUiModel =
@@ -37,7 +37,7 @@ internal fun NotetypeNameIdUseCount.toUiModel(): NoteTypeUiModel =
 internal data class NotetypeBasicUiModel(
     val id: Long,
     val name: String,
-    val isStandard: Boolean = false
+    val isStandard: Boolean = false,
 )
 
 internal fun NotetypeNameId.toUiModel(isStandard: Boolean = false): NotetypeBasicUiModel =

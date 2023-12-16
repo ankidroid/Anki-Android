@@ -72,6 +72,6 @@ enum class Channel(val id: String, @StringRes val nameId: Int) {
     SYNC("Synchronization", R.string.sync_title),
     GLOBAL_REMINDERS("Global Reminders", R.string.widget_minimum_cards_due_notification_ticker_title),
     DECK_REMINDERS("Deck Reminders", R.string.deck_conf_reminders),
-    SCOPED_STORAGE_MIGRATION("Scoped Storage", R.string.scoped_storage_title) ;
+    SCOPED_STORAGE_MIGRATION("Scoped Storage", R.string.scoped_storage_title), ;
     fun getName(res: Resources) = res.getString(nameId)
 }

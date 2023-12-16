@@ -66,7 +66,7 @@ open class Collection(
      * Operations that work on a closed collection (eg importing), or do not require a collection
      * at all (eg translations) are the exception.
      */
-    val backend: Backend
+    val backend: Backend,
 ) {
     /** Access backend translations */
     val tr = backend.tr
@@ -363,7 +363,7 @@ open class Collection(
      */
     fun findCards(
         search: String,
-        order: SortOrder = SortOrder.NoOrdering()
+        order: SortOrder = SortOrder.NoOrdering(),
     ): List<CardId> {
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             SortOrder.BuiltinSortKind(
@@ -382,7 +382,7 @@ open class Collection(
 
     fun findNotes(
         query: String,
-        order: SortOrder = SortOrder.NoOrdering()
+        order: SortOrder = SortOrder.NoOrdering(),
     ): List<Long> {
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             SortOrder.BuiltinSortKind(

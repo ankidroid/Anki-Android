@@ -71,7 +71,8 @@ enum class ViewerCommand(val resourceId: Int) {
     SHOW_HINT(R.string.gesture_show_hint),
     SHOW_ALL_HINTS(R.string.gesture_show_all_hints),
     ADD_NOTE(R.string.menu_add_note),
-    RESCHEDULE_NOTE(R.string.card_editor_reschedule_card);
+    RESCHEDULE_NOTE(R.string.card_editor_reschedule_card),
+    ;
 
     companion object {
         val allDefaultBindings: List<MappableBinding>

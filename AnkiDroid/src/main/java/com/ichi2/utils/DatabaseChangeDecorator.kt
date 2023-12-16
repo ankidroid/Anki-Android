@@ -77,7 +77,7 @@ class DatabaseChangeDecorator(val wrapped: SupportSQLiteDatabase) : SupportSQLit
         conflictAlgorithm: Int,
         values: ContentValues,
         whereClause: String?,
-        whereArgs: Array<out Any?>?
+        whereArgs: Array<out Any?>?,
     ): Int {
         val update = wrapped.update(table, conflictAlgorithm, values, whereClause, whereArgs)
         markDataAsChanged()

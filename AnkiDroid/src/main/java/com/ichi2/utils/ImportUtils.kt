@@ -147,7 +147,7 @@ object ImportUtils {
         private fun handleContentProviderFile(
             context: Context,
             intent: Intent,
-            importPathUri: Uri
+            importPathUri: Uri,
         ): ImportResult {
             // Note: intent.getData() can be null. Use data instead.
             if (!isValidImportType(context, importPathUri)) {

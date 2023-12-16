@@ -134,7 +134,7 @@ object FileUtil {
         /**
          * Number of files contained in `d` directly or indirectly.
          */
-        val numberOfFiles: Int
+        val numberOfFiles: Int,
     ) {
         companion object {
             /**
@@ -213,7 +213,7 @@ object FileUtil {
         EQUAL,
         STRICT_PREFIX,
         STRICT_SUFFIX,
-        NOT_PREFIX
+        NOT_PREFIX,
     }
 
     /**

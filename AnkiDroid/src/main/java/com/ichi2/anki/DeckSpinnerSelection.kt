@@ -53,7 +53,7 @@ class DeckSpinnerSelection(
     private val spinner: Spinner,
     private val showAllDecks: Boolean,
     private val alwaysShowDefault: Boolean,
-    private val showFilteredDecks: Boolean
+    private val showFilteredDecks: Boolean,
 ) {
     /**
      * All of the decks shown to the user.

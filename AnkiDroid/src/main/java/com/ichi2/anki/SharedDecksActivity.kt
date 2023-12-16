@@ -186,5 +186,5 @@ data class DownloadFile(
     val url: String,
     val userAgent: String,
     val contentDisposition: String,
-    val mimeType: String
+    val mimeType: String,
 ) : Serializable

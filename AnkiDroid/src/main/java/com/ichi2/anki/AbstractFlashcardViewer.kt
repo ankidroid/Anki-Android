@@ -307,7 +307,7 @@ abstract class AbstractFlashcardViewer :
     )
 
     protected inner class FlashCardViewerResultCallback(
-        private val callback: (result: ActivityResult, reloadRequired: Boolean) -> Unit = { _, _ -> }
+        private val callback: (result: ActivityResult, reloadRequired: Boolean) -> Unit = { _, _ -> },
     ) : ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
             if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -1051,7 +1051,8 @@ abstract class AbstractFlashcardViewer :
             }
 
             "bottom",
-            "none" -> {
+            "none",
+            -> {
                 whiteboardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
                 whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 flashcardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
@@ -1596,7 +1597,7 @@ abstract class AbstractFlashcardViewer :
                 mp: MediaPlayer?,
                 which: Int,
                 extra: Int,
-                path: String?
+                path: String?,
             ): ErrorHandling {
                 Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", which, extra)
                 try {
@@ -1962,7 +1963,7 @@ abstract class AbstractFlashcardViewer :
             view: WebView,
             url: String,
             message: String,
-            result: JsResult
+            result: JsResult,
         ): Boolean {
             Timber.i("AbstractFlashcardViewer:: onJsAlert: %s", message)
             result.confirm()
@@ -2030,7 +2031,7 @@ abstract class AbstractFlashcardViewer :
             data: String,
             mimeType: String?,
             encoding: String?,
-            historyUrl: String?
+            historyUrl: String?,
         ) {
             if (!this@AbstractFlashcardViewer.isDestroyed) {
                 super.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl)
@@ -2064,7 +2065,7 @@ abstract class AbstractFlashcardViewer :
             scrollX: Int,
             scrollY: Int,
             clampedX: Boolean,
-            clampedY: Boolean
+            clampedY: Boolean,
         ) {
             if (clampedX) {
                 val scrollParent = findScrollParent(this)
@@ -2096,7 +2097,7 @@ abstract class AbstractFlashcardViewer :
             e1: MotionEvent?,
             e2: MotionEvent,
             velocityX: Float,
-            velocityY: Float
+            velocityY: Float,
         ): Boolean {
             Timber.d("onFling")
 
@@ -2362,7 +2363,7 @@ abstract class AbstractFlashcardViewer :
 
     protected inner class CardViewerWebClient internal constructor(
         private val loader: WebViewAssetLoader?,
-        private val onPageFinishedCallback: OnPageFinishedCallback? = null
+        private val onPageFinishedCallback: OnPageFinishedCallback? = null,
     ) : WebViewClient() {
         private var pageFinishedFired = true
         private val pageRenderStopwatch = Stopwatch.init("page render")
@@ -2391,7 +2392,7 @@ abstract class AbstractFlashcardViewer :
         @TargetApi(Build.VERSION_CODES.N)
         override fun shouldInterceptRequest(
             view: WebView,
-            request: WebResourceRequest
+            request: WebResourceRequest,
         ): WebResourceResponse? {
             val url = request.url
             val result = loader!!.shouldInterceptRequest(url)
@@ -2416,7 +2417,7 @@ abstract class AbstractFlashcardViewer :
         override fun onReceivedError(
             view: WebView,
             request: WebResourceRequest,
-            error: WebResourceError
+            error: WebResourceError,
         ) {
             super.onReceivedError(view, request, error)
             mMissingImageHandler.processFailure(request) { filename: String? ->
@@ -2429,7 +2430,7 @@ abstract class AbstractFlashcardViewer :
         override fun onReceivedHttpError(
             view: WebView,
             request: WebResourceRequest,
-            errorResponse: WebResourceResponse
+            errorResponse: WebResourceResponse,
         ) {
             super.onReceivedHttpError(view, request, errorResponse)
             mMissingImageHandler.processFailure(request) { filename: String? ->
@@ -2722,7 +2723,7 @@ abstract class AbstractFlashcardViewer :
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
-        stateFilter: CardStateFilter
+        stateFilter: CardStateFilter,
     ) {
         if (currentCard!!.note().tags != selectedTags) {
             val tagString = selectedTags.joinToString(" ")

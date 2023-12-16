@@ -205,7 +205,7 @@ class TtsVoicesFieldFilter : TemplateManager.FieldFilter() {
         fieldText: String,
         fieldName: String,
         filterName: String,
-        ctx: TemplateManager.TemplateRenderContext
+        ctx: TemplateManager.TemplateRenderContext,
     ): String {
         if (filterName != "tts-voices") {
             return fieldText

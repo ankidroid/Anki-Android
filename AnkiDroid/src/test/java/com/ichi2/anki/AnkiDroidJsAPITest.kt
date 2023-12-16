@@ -438,7 +438,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         suspend fun getDataFromRequest(
             methodName: String,
             jsAPI: AnkiDroidJsAPI,
-            apiData: String = ""
+            apiData: String = "",
         ): String {
             return jsAPI.handleJsApiRequest(methodName, jsApiContract(apiData), true)
                 .decodeToString()

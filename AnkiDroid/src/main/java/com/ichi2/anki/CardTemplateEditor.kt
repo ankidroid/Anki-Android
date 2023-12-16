@@ -882,7 +882,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 cardIndex: Int,
                 noteId: NoteId,
                 cursorPosition: Int,
-                viewId: Int
+                viewId: Int,
             ): CardTemplateFragment {
                 val f = CardTemplateFragment()
                 val args = Bundle()

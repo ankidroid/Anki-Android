@@ -146,7 +146,7 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
 
     /** the serialisation version */
     enum class Version {
-        ONE
+        ONE,
     }
 
     companion object {

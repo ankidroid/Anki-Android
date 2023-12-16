@@ -66,7 +66,7 @@ fun AlertDialog.Builder.message(@StringRes stringRes: Int? = null, text: CharSeq
  * Shows an icon to the left of the dialog title.
  */
 fun AlertDialog.Builder.iconAttr(
-    @DrawableRes res: Int
+    @DrawableRes res: Int,
 ) = apply {
     return this.setIcon(Themes.getResFromAttr(this.context, res))
 }
@@ -74,7 +74,7 @@ fun AlertDialog.Builder.iconAttr(
 fun AlertDialog.Builder.positiveButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
-    click: DialogInterfaceListener? = null
+    click: DialogInterfaceListener? = null,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -89,7 +89,7 @@ fun AlertDialog.Builder.positiveButton(
 fun AlertDialog.Builder.neutralButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
-    click: DialogInterfaceListener? = null
+    click: DialogInterfaceListener? = null,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -104,7 +104,7 @@ fun AlertDialog.Builder.neutralButton(
 fun AlertDialog.Builder.negativeButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
-    click: DialogInterfaceListener? = null
+    click: DialogInterfaceListener? = null,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -140,7 +140,7 @@ fun AlertDialog.Builder.checkBoxPrompt(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
     isCheckedDefault: Boolean = false,
-    onToggle: (checked: Boolean) -> Unit
+    onToggle: (checked: Boolean) -> Unit,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -164,7 +164,7 @@ fun AlertDialog.Builder.customView(
     paddingTop: Int = 0,
     paddingBottom: Int = 0,
     paddingLeft: Int = 0,
-    paddingRight: Int = 0
+    paddingRight: Int = 0,
 ): AlertDialog.Builder {
     val container = FrameLayout(context)
 

@@ -54,7 +54,7 @@ class CardBrowserOrderDialog : AnalyticsDialogFragment() {
         fun newInstance(
             order: SortType,
             isOrderAsc: Boolean,
-            orderSingleChoiceDialogListener: DialogInterface.OnClickListener
+            orderSingleChoiceDialogListener: DialogInterface.OnClickListener,
         ): CardBrowserOrderDialog {
             val f = CardBrowserOrderDialog()
             val args = Bundle()

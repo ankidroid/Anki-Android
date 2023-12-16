@@ -32,7 +32,7 @@ fun interface GestureListener {
 }
 
 enum class Gesture(
-    @get:JvmName("getResourceId") val resourceId: Int
+    @get:JvmName("getResourceId") val resourceId: Int,
 ) {
     SWIPE_UP(R.string.gestures_swipe_up),
     SWIPE_DOWN(R.string.gestures_swipe_down),
@@ -48,7 +48,8 @@ enum class Gesture(
     TAP_RIGHT(R.string.gestures_tap_right),
     TAP_BOTTOM_LEFT(R.string.gestures_corner_tap_bottom_left),
     TAP_BOTTOM(R.string.gestures_tap_bottom),
-    TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right);
+    TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right),
+    ;
 
     fun toDisplayString(context: Context): String =
         getDisplayPrefix() + ' ' + context.getString(resourceId)
@@ -77,7 +78,9 @@ enum class TapGestureMode {
      * Better for tablets
      * See: #7537
      */
-    NINE_POINT;
+    NINE_POINT,
+
+    ;
 
     companion object {
         fun fromPreference(preferences: SharedPreferences): TapGestureMode =

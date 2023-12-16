@@ -146,7 +146,7 @@ interface TestClass {
     fun runTest(
         context: CoroutineContext = EmptyCoroutineContext,
         dispatchTimeoutMs: Long = 60_000L,
-        testBody: suspend TestScope.() -> Unit
+        testBody: suspend TestScope.() -> Unit,
     ) {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs.milliseconds) {

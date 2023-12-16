@@ -87,7 +87,7 @@ class SetupCollectionFragment : Fragment() {
         DeckPickerWithNewCollection,
 
         /** Syncs an existing profile from AnkiWeb */
-        SyncFromExistingAccount
+        SyncFromExistingAccount,
     }
 
     companion object {

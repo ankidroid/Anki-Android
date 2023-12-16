@@ -998,7 +998,8 @@ open class CardBrowser :
             }
 
             @NeedsTest("filter-marked query needs testing")
-            R.id.action_show_marked -> {
+            R.id.action_show_marked,
+            -> {
                 mSearchTerms = "tag:marked"
                 mSearchView!!.setQuery("", false)
                 searchWithFilterQuery(mSearchTerms)
@@ -1006,7 +1007,8 @@ open class CardBrowser :
             }
 
             @NeedsTest("filter-suspended query needs testing")
-            R.id.action_show_suspended -> {
+            R.id.action_show_suspended,
+            -> {
                 mSearchTerms = "is:suspended"
                 mSearchView!!.setQuery("", false)
                 searchWithFilterQuery(mSearchTerms)
@@ -1783,7 +1785,7 @@ open class CardBrowser :
         private val resource: Int,
         private var fromKeys: Array<Column>,
         private val toIds: IntArray,
-        private val fontSizeScalePcent: Int
+        private val fontSizeScalePcent: Int,
     ) : BaseAdapter() {
         private var mOriginalTextSize = -1.0f
         private val mInflater: LayoutInflater
@@ -2341,7 +2343,7 @@ open class CardBrowser :
 suspend fun searchForCards(
     query: String,
     order: SortOrder,
-    cardsOrNotes: CardsOrNotes
+    cardsOrNotes: CardsOrNotes,
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
         (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query, order)).asSequence()

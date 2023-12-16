@@ -67,7 +67,9 @@ enum class AnswerButtons {
      *
      * In Review mode, easy adds additional bonuses to the interval and increases the ease by 15%
      */
-    EASY;
+    EASY,
+
+    ;
 
     fun toViewerCommand(numberOfButtons: Int): ViewerCommand {
         return when (numberOfButtons) {

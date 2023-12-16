@@ -38,7 +38,7 @@ constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = androidx.preference.R.attr.editTextPreferenceStyle,
-    defStyleRes: Int = androidx.preference.R.style.Preference_DialogPreference_EditTextPreference
+    defStyleRes: Int = androidx.preference.R.style.Preference_DialogPreference_EditTextPreference,
 ) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes), DialogFragmentProvider {
 
     var defaultValue: String? = null

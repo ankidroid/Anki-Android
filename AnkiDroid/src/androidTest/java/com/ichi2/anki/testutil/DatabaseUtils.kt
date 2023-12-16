@@ -51,7 +51,7 @@ object DatabaseUtils {
     fun cursorFillWindow(
         cursor: Cursor,
         positionParam: Int,
-        window: CursorWindow
+        window: CursorWindow,
     ) {
         var position = positionParam
         if (position < 0 || position >= cursor.count) {

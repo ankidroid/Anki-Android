@@ -197,7 +197,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
     fun startActivityWithAnimation(
         intent: Intent,
-        animation: Direction
+        animation: Direction,
     ) {
         enableIntentAnimation(intent)
         super.startActivity(intent)
@@ -207,7 +207,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
     private fun launchActivityForResult(
         intent: Intent?,
         launcher: ActivityResultLauncher<Intent?>,
-        animation: Direction?
+        animation: Direction?,
     ) {
         try {
             launcher.launch(
@@ -223,7 +223,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
     fun launchActivityForResultWithAnimation(
         intent: Intent,
         launcher: ActivityResultLauncher<Intent?>,
-        animation: Direction?
+        animation: Direction?,
     ) {
         enableIntentAnimation(intent)
         launchActivityForResult(intent, launcher, animation)
@@ -411,7 +411,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
      */
     fun showAsyncDialogFragment(
         newFragment: AsyncDialogFragment,
-        channel: Channel
+        channel: Channel,
     ) {
         try {
             showDialogFragment(newFragment)
@@ -438,7 +438,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
     open fun showSimpleMessageDialog(
         message: String?,
         title: String = "",
-        reload: Boolean = false
+        reload: Boolean = false,
     ) {
         val newFragment: AsyncDialogFragment =
             SimpleMessageDialog.newInstance(title, message, reload)
@@ -448,7 +448,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
     fun showSimpleNotification(
         title: String,
         message: String?,
-        channel: Channel
+        channel: Channel,
     ) {
         val prefs = this.sharedPrefs()
         // Show a notification unless all notifications have been totally disabled

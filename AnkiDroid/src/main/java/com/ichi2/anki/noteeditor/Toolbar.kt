@@ -376,6 +376,6 @@ class Toolbar : FrameLayout {
     data class StringFormat(
         var result: String = "",
         var selectionStart: Int = 0,
-        var selectionEnd: Int = 0
+        var selectionEnd: Int = 0,
     )
 }

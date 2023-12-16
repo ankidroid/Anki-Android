@@ -74,7 +74,7 @@ private fun obtainMotionEvent(
     action: Int,
     x: Float,
     y: Float,
-    metaState: Int
+    metaState: Int,
 ): MotionEvent {
     return MotionEvent.obtain(
         downTime,

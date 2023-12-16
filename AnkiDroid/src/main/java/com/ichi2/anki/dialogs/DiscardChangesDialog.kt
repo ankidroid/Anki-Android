@@ -27,7 +27,7 @@ class DiscardChangesDialog {
     companion object {
         fun showDialog(
             context: Context,
-            positiveMethod: () -> Unit
+            positiveMethod: () -> Unit,
         ) = AlertDialog.Builder(context).show {
             message(R.string.discard_unsaved_changes)
             positiveButton(R.string.dialog_ok) { positiveMethod() }

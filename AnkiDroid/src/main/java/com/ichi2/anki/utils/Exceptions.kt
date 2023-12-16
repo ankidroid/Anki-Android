@@ -86,7 +86,7 @@ fun interface TranslatableException {
 class TranslatableAggregateException(
     message: String? = null,
     private val translatableMessage: TranslatableString? = null,
-    causes: List<Exception>
+    causes: List<Exception>,
 ) : AggregateException(message, causes), TranslatableException {
 
     @Suppress("IfThenToElvis")

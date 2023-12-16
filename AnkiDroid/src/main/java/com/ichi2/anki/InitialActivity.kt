@@ -163,7 +163,8 @@ enum class PermissionSet(val permissions: List<String>, val permissionsFragment:
         permissionsFragment = TiramisuPermissionsFragment::class.java
     ),
 
-    APP_PRIVATE(emptyList(), null);
+    APP_PRIVATE(emptyList(), null),
+    ;
 }
 
 /**
@@ -174,7 +175,7 @@ enum class PermissionSet(val permissions: List<String>, val permissionsFragment:
  */
 internal fun selectAnkiDroidFolder(
     canManageExternalStorage: Boolean,
-    currentFolderIsAccessibleAndLegacy: Boolean
+    currentFolderIsAccessibleAndLegacy: Boolean,
 ): AnkiDroidFolder {
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q || currentFolderIsAccessibleAndLegacy) {
         // match AnkiDroid behaviour before scoped storage - force the use of ~/AnkiDroid,

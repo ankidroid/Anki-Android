@@ -424,7 +424,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             {
                 this.displayResetToNewDirectoryDialog(it)
             }
-        );
+        ),
+        ;
 
         companion object {
             /** A dialog which creates a new collection in an unsafe location */
@@ -547,7 +548,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         DIALOG_DISK_FULL,
 
         /** If [android.R.attr.preserveLegacyExternalStorage] is no longer active */
-        DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL;
+        DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL,
+
+        ;
     }
 
     companion object {

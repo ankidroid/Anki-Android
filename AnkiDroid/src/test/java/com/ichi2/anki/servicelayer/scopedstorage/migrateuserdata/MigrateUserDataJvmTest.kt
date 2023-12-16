@@ -108,6 +108,6 @@ class MigrateUserDataJvmTest {
     enum class SourceType {
         NOT_SET,
         MISSING_DIR,
-        VALID_DIR
+        VALID_DIR,
     }
 }

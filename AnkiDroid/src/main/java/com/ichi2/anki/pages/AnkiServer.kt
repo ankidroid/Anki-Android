@@ -46,7 +46,7 @@ private const val PORT = 0
 // ~/Local/Android/Sdk/platform-tools/adb forward tcp:40001 tcp:40001
 
 open class AnkiServer(
-    val activity: FragmentActivity
+    val activity: FragmentActivity,
 ) : NanoHTTPD(LOCALHOST, PORT) {
 
     fun baseUrl(): String {
@@ -137,7 +137,7 @@ open class AnkiServer(
     }
 
     fun buildResponse(
-        block: suspend CoroutineScope.() -> ByteArray
+        block: suspend CoroutineScope.() -> ByteArray,
     ): Response {
         return try {
             val data = runBlocking {
@@ -176,7 +176,7 @@ open class AnkiServer(
         fun newChunkedResponse(
             data: ByteArray?,
             mimeType: String = "application/binary",
-            status: Response.IStatus = Response.Status.OK
+            status: Response.IStatus = Response.Status.OK,
         ): Response {
             return if (data == null) {
                 newFixedLengthResponse(null)

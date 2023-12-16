@@ -24,7 +24,8 @@ enum class Theme(val id: String, @StyleRes val resId: Int, val isNightMode: Bool
     LIGHT("1", R.style.Theme_Light, false),
     PLAIN("2", R.style.Theme_Light_Plain, false),
     BLACK("3", R.style.Theme_Dark_Black, true),
-    DARK("4", R.style.Theme_Dark, true);
+    DARK("4", R.style.Theme_Dark, true),
+    ;
 
     companion object {
         val fallback: Theme

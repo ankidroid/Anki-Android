@@ -178,7 +178,8 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         CREATE_SUBDECK(R.string.create_subdeck),
         CREATE_SHORTCUT(R.string.create_shortcut),
         BROWSE_CARDS(R.string.browse_cards),
-        ADD_CARD(R.string.menu_add);
+        ADD_CARD(R.string.menu_add),
+        ;
     }
 
     class Factory(val collectionSupplier: Supplier<Collection>) : ExtendedFragmentFactory() {

@@ -422,7 +422,7 @@ open class BackupManager {
         fun deleteColBackups(
             colPath: String,
             backupLimits: BackupLimits,
-            today: LocalDate = LocalDate.now()
+            today: LocalDate = LocalDate.now(),
         ): Boolean {
             return deleteColBackups(getBackups(File(colPath)), backupLimits, today)
         }
@@ -430,7 +430,7 @@ open class BackupManager {
         private fun deleteColBackups(
             backups: Array<File>,
             backupLimits: BackupLimits,
-            today: LocalDate
+            today: LocalDate,
         ): Boolean {
             val unpackedBackups = backups.map {
                 // based on the format used, 0 is for "collection|backup" prefix and 1,2,3 are for
@@ -504,7 +504,7 @@ class LocalizedUnambiguousBackupTimeFormatter {
 
 private data class UnpackedBackup(
     val file: File,
-    val date: LocalDate
+    val date: LocalDate,
 ) : Comparable<UnpackedBackup> {
     override fun compareTo(other: UnpackedBackup): Int = date.compareTo(other.date)
     private val epoch = LocalDate.ofEpochDay(0)

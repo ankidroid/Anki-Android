@@ -1233,7 +1233,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
-        stateFilter: CardStateFilter
+        stateFilter: CardStateFilter,
     ) {
         if (mSelectedTags != selectedTags) {
             isTagsEdited = true
@@ -1819,7 +1819,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         buttonText: String,
         prefix: String,
         suffix: String,
-        currentButton: CustomToolbarButton
+        currentButton: CustomToolbarButton,
     ) {
         val toolbarButtons = toolbarButtons
         val currentButtonIndex = currentButton.index
@@ -1837,7 +1837,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun suggestRemoveButton(
         button: CustomToolbarButton,
-        editToolbarItemDialog: AlertDialog
+        editToolbarItemDialog: AlertDialog,
     ) {
         AlertDialog.Builder(this).show {
             title(R.string.remove_toolbar_item)
@@ -2118,7 +2118,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      * button in the text selection menu.
      */
     private inner class ActionModeCallback(
-        private val textBox: FieldEditText
+        private val textBox: FieldEditText,
     ) : ActionMode.Callback {
         private val mClozeMenuId = View.generateViewId()
 

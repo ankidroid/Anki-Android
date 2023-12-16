@@ -150,7 +150,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
             activity: Activity,
             customTabsIntent: CustomTabsIntent,
             uri: Uri,
-            fallback: CustomTabFallback?
+            fallback: CustomTabFallback?,
         ) {
             val packageName = CustomTabsHelper.getPackageNameToUse(activity)
 

@@ -32,7 +32,7 @@ import timber.log.Timber
 class DeckPickerFloatingActionMenu(
     private val context: Context,
     view: View,
-    private val deckPicker: DeckPicker
+    private val deckPicker: DeckPicker,
 ) {
     private val mFabMain: FloatingActionButton = view.findViewById(R.id.fab_main)
     private val mAddSharedLayout: LinearLayout = view.findViewById(R.id.add_shared_layout)

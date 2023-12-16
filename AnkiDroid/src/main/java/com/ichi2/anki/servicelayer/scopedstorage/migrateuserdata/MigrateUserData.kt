@@ -302,7 +302,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      */
     class SingleRetryDecorator(
         internal val standardOperation: Operation,
-        private val retryOperation: Operation
+        private val retryOperation: Operation,
     ) : Operation() {
         override fun execute(context: MigrationContext) = standardOperation.execute(context)
         override val retryOperations get() = listOf(retryOperation)
@@ -351,7 +351,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         @VisibleForTesting
         internal open fun executeOperationInternal(
             it: Operation,
-            context: MigrationContext
+            context: MigrationContext,
         ) = it.execute(context)
 
         /**

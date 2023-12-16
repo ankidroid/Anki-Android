@@ -29,7 +29,8 @@ enum class FullScreenMode(private val prefValue: String) {
     BUTTONS_ONLY("1"),
 
     /** Remove both menu bar and buttons. Can only be set if gesture is on. */
-    FULLSCREEN_ALL_GONE("2");
+    FULLSCREEN_ALL_GONE("2"),
+    ;
 
     fun getPreferenceValue() = prefValue
     fun isFullScreenReview() = this != BUTTONS_AND_MENU

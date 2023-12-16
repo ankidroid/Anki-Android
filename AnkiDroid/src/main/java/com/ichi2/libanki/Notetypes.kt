@@ -534,7 +534,7 @@ class Notetypes(val col: Collection) {
         nid: NoteId,
         newModel: NotetypeJson,
         fmap: Map<Int, Int?>,
-        cmap: Map<Int, Int?>
+        cmap: Map<Int, Int?>,
     ): OpChanges {
         val fieldMap = convertLegacyMap(fmap, newModel.fieldsNames.size)
         val templateMap =

@@ -297,7 +297,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         action: () -> Boolean,
         apiContract: ApiContract,
         errorCode: Int,
-        conversion: (ApiContract, Boolean) -> ByteArray
+        conversion: (ApiContract, Boolean) -> ByteArray,
     ): ByteArray {
         val status = action()
         if (!status) {

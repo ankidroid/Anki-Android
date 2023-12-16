@@ -32,7 +32,7 @@ class PreviewLayout(
     private val buttonsLayout: FrameLayout,
     @VisibleForTesting val prevCard: ImageView,
     @VisibleForTesting val nextCard: ImageView,
-    private val toggleAnswerText: TextView
+    private val toggleAnswerText: TextView,
 ) {
     fun displayAndInit(toggleAnswerHandler: View.OnClickListener) {
         buttonsLayout.visibility = View.VISIBLE

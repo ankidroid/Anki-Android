@@ -78,7 +78,7 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
     @Throws(Throwable::class)
     private fun onActivity(
         scenario: ActivityScenario<NoteEditor>,
-        noteEditorActivityAction: ActivityAction<NoteEditor>
+        noteEditorActivityAction: ActivityAction<NoteEditor>,
     ) {
         val wrapped = AtomicReference<Throwable?>(null)
         scenario.onActivity { a: NoteEditor ->

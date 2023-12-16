@@ -67,7 +67,7 @@ class ModelEditorContextMenuTest : InstrumentedTest() {
     }
 
     class MockModelEditorContextMenu(
-        private val isAtLeastAtN: Boolean
+        private val isAtLeastAtN: Boolean,
     ) : ModelEditorContextMenu() {
         override fun isAtLeastAtN(): Boolean = isAtLeastAtN
     }

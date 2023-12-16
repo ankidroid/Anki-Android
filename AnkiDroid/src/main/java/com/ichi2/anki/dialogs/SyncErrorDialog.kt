@@ -257,7 +257,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
     class SyncErrorDialogMessageHandler(
         private val dialogType: Int,
-        private val dialogMessage: String?
+        private val dialogMessage: String?,
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG, "SyncErrorDialog") {
         override fun handleAsyncMessage(deckPicker: DeckPicker) {
             deckPicker.showSyncErrorDialog(dialogType, dialogMessage)

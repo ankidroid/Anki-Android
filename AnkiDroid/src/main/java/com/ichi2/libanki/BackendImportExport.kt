@@ -37,7 +37,7 @@ import net.ankiweb.rsdroid.Backend
 fun Collection.createBackup(
     backupFolder: String,
     force: Boolean,
-    waitForCompletion: Boolean
+    waitForCompletion: Boolean,
 ): Boolean {
     return backend.createBackup(
         backupFolder = backupFolder,
@@ -62,7 +62,7 @@ fun Collection.awaitBackupCompletion() {
 fun importCollectionPackage(
     backend: Backend,
     colPath: String,
-    colpkgPath: String
+    colpkgPath: String,
 ) {
     backend.importCollectionPackage(
         colPath = colPath,
@@ -80,7 +80,7 @@ fun importCollectionPackage(
 fun Collection.exportCollectionPackage(
     outPath: String,
     includeMedia: Boolean,
-    legacy: Boolean = true
+    legacy: Boolean = true,
 ) {
     close(downgrade = false, forFullSync = true)
     backend.exportCollectionPackage(
@@ -105,7 +105,7 @@ fun Collection.exportAnkiPackage(
     withScheduling: Boolean,
     withMedia: Boolean,
     limit: ExportLimit,
-    legacy: Boolean = true
+    legacy: Boolean = true,
 ) {
     backend.exportAnkiPackage(outPath, withScheduling, withMedia, legacy, limit)
 }

@@ -120,7 +120,7 @@ object ScopedStorageService {
         // used for testing
         sourceOverride: File? = null,
         destOverride: DestFolderOverride = DestFolderOverride.None,
-        checkSourceDir: Boolean = true
+        checkSourceDir: Boolean = true,
     ): ValidatedMigrationSourceAndDestination {
         // this is checked by deckpicker already, but left here for unit tests
         if (mediaMigrationIsInProgress(context)) {

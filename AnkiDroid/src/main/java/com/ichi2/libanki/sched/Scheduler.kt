@@ -49,7 +49,7 @@ data class CurrentQueueState(
     val counts: Counts,
     val timeboxReached: Collection.TimeboxReached?,
     val learnAheadSecs: Int,
-    val customSchedulingJs: String
+    val customSchedulingJs: String,
 ) {
     fun schedulingStatesWithContext(): SchedulingStatesWithContext {
         return anki.frontend.schedulingStatesWithContext {
@@ -285,7 +285,7 @@ open class Scheduler(val col: Collection) {
         /**
          * Represents cards that were buried because they are the siblings of a reviewed cards.
          */
-        SIBLINGS
+        SIBLINGS,
     }
 
     /**
@@ -356,7 +356,7 @@ open class Scheduler(val col: Collection) {
         start: Int,
         step: Int = 1,
         shuffle: Boolean = false,
-        shift: Boolean = false
+        shift: Boolean = false,
     ): OpChangesWithCount {
         return col.backend.sortCards(
             cardIds = cids,

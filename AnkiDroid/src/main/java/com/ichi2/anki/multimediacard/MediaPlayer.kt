@@ -62,7 +62,7 @@ class MediaPlayer :
         context: Context,
         uri: Uri,
         headers: MutableMap<String, String>?,
-        cookies: MutableList<HttpCookie>?
+        cookies: MutableList<HttpCookie>?,
     ) {
         super.setDataSource(context, uri, headers, cookies)
         if (state == IDLE) {
@@ -239,7 +239,7 @@ class MediaPlayer :
         PAUSED,
         STOPPED,
         PLAYBACK_COMPLETE,
-        END
+        END,
     }
 
     interface MediaPlayerStateListener {

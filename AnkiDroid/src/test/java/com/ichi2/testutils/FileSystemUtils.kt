@@ -63,7 +63,7 @@ object FileSystemUtils {
     private fun printDirectoryTree(
         directory: File,
         indent: Int,
-        sb: StringBuilder
+        sb: StringBuilder,
     ) {
         require(directory.isDirectory) { "directory is not a Directory" }
         sb.append(getIndentString(indent))

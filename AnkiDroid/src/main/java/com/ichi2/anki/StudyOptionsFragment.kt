@@ -479,7 +479,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         /**
          * Number of cards in this decks and its subdecks.
          */
-        val numberOfCardsInDeck: Int
+        val numberOfCardsInDeck: Int,
     )
 
     /** Open cram deck option if deck is opened for the first time

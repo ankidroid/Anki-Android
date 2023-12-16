@@ -70,7 +70,7 @@ interface BaseSnackbarBuilderProvider {
 fun Activity.showSnackbar(
     @StringRes textResource: Int,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val text = getText(textResource)
     showSnackbar(text, duration, snackbarBuilder)
@@ -104,7 +104,7 @@ fun Activity.showSnackbar(
 fun Activity.showSnackbar(
     text: CharSequence,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val view: View? = findViewById(R.id.root_layout) as? CoordinatorLayout
 
@@ -156,7 +156,7 @@ fun Activity.showSnackbar(
 fun View.showSnackbar(
     @StringRes textResource: Int,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val text = resources.getText(textResource)
     showSnackbar(text, duration, snackbarBuilder)
@@ -191,7 +191,7 @@ fun View.showSnackbar(
 fun View.showSnackbar(
     text: CharSequence,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val snackbar = Snackbar.make(this, text, duration)
     snackbar.setMaxLines(4)
@@ -235,7 +235,7 @@ fun View.showSnackbar(
 fun Fragment.showSnackbar(
     text: CharSequence,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
     requireActivity().showSnackbar(text, duration) {
@@ -273,7 +273,7 @@ fun Fragment.showSnackbar(
 fun Fragment.showSnackbar(
     @StringRes textResource: Int,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val text = resources.getText(textResource)
     showSnackbar(text, duration, snackbarBuilder)

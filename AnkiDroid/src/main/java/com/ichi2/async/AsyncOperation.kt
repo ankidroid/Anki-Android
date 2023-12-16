@@ -39,7 +39,7 @@ fun DeckPicker.sendNotificationForAsyncOperation(operation: AsyncOperation, chan
 @Suppress("unused")
 fun DeckPicker.performAsyncOperation(
     operation: AsyncOperation,
-    channel: Channel
+    channel: Channel,
 ) {
     if (mActivityPaused) {
         sendNotificationForAsyncOperation(operation, channel)

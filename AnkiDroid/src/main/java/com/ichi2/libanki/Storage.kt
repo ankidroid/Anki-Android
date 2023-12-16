@@ -35,7 +35,7 @@ object Storage {
     fun collection(
         path: String,
         log: Boolean = false,
-        backend: Backend? = null
+        backend: Backend? = null,
     ): Collection {
         val backend2 = backend ?: BackendFactory.getBackend()
         return Collection(path, log, backend2)

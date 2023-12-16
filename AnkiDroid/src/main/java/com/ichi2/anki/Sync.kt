@@ -61,7 +61,8 @@ object SyncPreferences {
 
 enum class ConflictResolution {
     FULL_DOWNLOAD,
-    FULL_UPLOAD;
+    FULL_UPLOAD,
+    ;
 }
 
 data class SyncCompletion(val isSuccess: Boolean)
@@ -134,7 +135,7 @@ fun canSync(context: Context) = !ScopedStorageService.mediaMigrationIsInProgress
 
 fun DeckPicker.handleNewSync(
     conflict: ConflictResolution?,
-    syncMedia: Boolean
+    syncMedia: Boolean,
 ) {
     val auth = this.syncAuth() ?: return
     val deckPicker = this
@@ -192,7 +193,7 @@ private fun cancelSync(backend: Backend) {
 private suspend fun handleNormalSync(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    syncMedia: Boolean
+    syncMedia: Boolean,
 ) {
     var auth2 = auth
     val output = deckPicker.withProgress(
@@ -241,7 +242,8 @@ private suspend fun handleNormalSync(
 
         SyncCollectionResponse.ChangesRequired.NORMAL_SYNC,
         SyncCollectionResponse.ChangesRequired.UNRECOGNIZED,
-        null -> {
+        null,
+        -> {
             TODO("should never happen")
         }
     }
@@ -259,7 +261,7 @@ private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit {
 private suspend fun handleDownload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    mediaUsn: Int?
+    mediaUsn: Int?,
 ) {
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
@@ -291,7 +293,7 @@ private suspend fun handleDownload(
 private suspend fun handleUpload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    mediaUsn: Int?
+    mediaUsn: Int?,
 ) {
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
@@ -337,7 +339,7 @@ fun DeckPicker.shouldFetchMedia(preferences: SharedPreferences): Boolean {
 }
 
 private suspend fun monitorMediaSync(
-    deckPicker: DeckPicker
+    deckPicker: DeckPicker,
 ) {
     val backend = CollectionManager.getBackend()
     // TODO: show this in a way that is clear it can be continued in background,

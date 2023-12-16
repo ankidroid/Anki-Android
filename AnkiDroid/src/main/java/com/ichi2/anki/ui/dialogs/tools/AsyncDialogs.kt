@@ -55,7 +55,7 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
     fun setMultiChoiceItems(
         items: List<CharSequence>,
         checkedItems: CheckedItems,
-        disablePositiveButtonIfNoItemsChosen: Boolean = true
+        disablePositiveButtonIfNoItemsChosen: Boolean = true,
     ) {
         this.checkedItems = when (checkedItems) {
             is CheckedItems.All -> BooleanArray(items.size) { true }

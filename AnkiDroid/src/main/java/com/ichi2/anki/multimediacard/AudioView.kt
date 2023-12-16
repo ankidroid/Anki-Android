@@ -59,7 +59,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
         PLAYING, PAUSED, STOPPED, // The different possible states once playing
 
         // has started
-        RECORDING // The recorder being played status
+        RECORDING, // The recorder being played status
     }
 
     private fun gtxt(id: Int): String {
@@ -73,7 +73,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
         resStop: Int,
         resRecord: Int,
         resRecordStop: Int,
-        audioPath: String
+        audioPath: String,
     ) : this(context, resPlay, resPause, resStop, audioPath) {
         mResRecordImage = resRecord
         mResRecordStopImage = resRecordStop
@@ -325,7 +325,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
             resStop: Int,
             resRecord: Int,
             resRecordStop: Int,
-            audioPath: String
+            audioPath: String,
         ): AudioView? {
             return try {
                 AudioView(context, resPlay, resPause, resStop, resRecord, resRecordStop, audioPath)

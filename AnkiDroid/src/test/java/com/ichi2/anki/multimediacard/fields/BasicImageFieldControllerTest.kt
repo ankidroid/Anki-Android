@@ -108,7 +108,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
                 requestCode: Int,
                 contract: ActivityResultContract<I, O>,
                 input: I,
-                options: ActivityOptionsCompat?
+                options: ActivityOptionsCompat?,
             ) {
                 dispatchResult(requestCode, ActivityResult(Activity.RESULT_OK, Intent()))
             }

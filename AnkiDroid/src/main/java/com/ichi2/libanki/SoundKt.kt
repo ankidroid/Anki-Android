@@ -42,7 +42,7 @@ data class TTSTag(
     val voices: List<String>,
     val speed: Float,
     /** each arg should be in the form 'foo=bar' */
-    val otherArgs: List<String>
+    val otherArgs: List<String>,
 ) : AvTag()
 
 /**

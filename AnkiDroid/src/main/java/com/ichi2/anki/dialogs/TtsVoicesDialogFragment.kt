@@ -87,7 +87,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         voicesAdapter = TtsVoiceAdapter()
         Themes.setTheme(requireContext()) // (re)-enable selectableItemBackground on theme change
@@ -224,7 +224,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
 
         override fun areContentsTheSame(
             oldItem: AndroidTtsVoice,
-            newItem: AndroidTtsVoice
+            newItem: AndroidTtsVoice,
         ): Boolean = oldItem.unavailable() == newItem.unavailable()
     }
 

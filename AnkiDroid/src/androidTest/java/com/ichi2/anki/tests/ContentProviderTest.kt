@@ -1314,7 +1314,7 @@ class ContentProviderTest : InstrumentedTest() {
             mid: Long,
             did: Long,
             fields: Array<String>,
-            tag: String
+            tag: String,
         ): Uri {
             val newNote = Note(col, col.notetypes.get(mid)!!)
             for (idx in fields.indices) {

@@ -54,7 +54,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 class CardBrowserViewModel(
-    preferences: SharedPreferencesProvider
+    preferences: SharedPreferencesProvider,
 ) : ViewModel(), SharedPreferencesProvider by preferences {
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
 
@@ -352,5 +352,5 @@ class CardBrowserViewModel(
 
 enum class SaveSearchResult {
     ALREADY_EXISTS,
-    SUCCESS
+    SUCCESS,
 }

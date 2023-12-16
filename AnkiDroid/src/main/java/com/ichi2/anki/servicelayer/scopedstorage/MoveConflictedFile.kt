@@ -45,7 +45,7 @@ import java.io.File
 /* In AnkiDroid planned use, proposedDestinationFile is assumed to be topLevel/conflict/relativePathOfSourceFile */
 class MoveConflictedFile private constructor(
     val sourceFile: DiskFile,
-    val proposedDestinationFile: File
+    val proposedDestinationFile: File,
 ) : Operation() {
 
     override fun execute(context: MigrationContext): List<Operation> {
@@ -97,7 +97,7 @@ class MoveConflictedFile private constructor(
         fun createInstance(
             sourceFile: DiskFile,
             destinationTopLevel: Directory,
-            sourceRelativePath: RelativeFilePath
+            sourceRelativePath: RelativeFilePath,
         ): MoveConflictedFile {
             // we add /conflict/ to the path inside this method. If this already occurred, something was wrong
             if (sourceRelativePath.path.firstOrNull() == CONFLICT_DIRECTORY) {
@@ -141,7 +141,7 @@ class MoveConflictedFile private constructor(
      */
     class ContextHandlingFileConflictException(
         private val wrappedContext: MigrationContext,
-        private val operation: Operation
+        private val operation: Operation,
     ) : MigrationContext() {
 
         /** Whether at least one [FileConflictException] was handled and ignored */

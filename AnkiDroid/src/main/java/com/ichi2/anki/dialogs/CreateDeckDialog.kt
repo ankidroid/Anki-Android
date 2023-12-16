@@ -46,7 +46,7 @@ class CreateDeckDialog(
     private val context: Context,
     private val title: Int,
     private val deckDialogType: DeckDialogType,
-    private val parentId: Long?
+    private val parentId: Long?,
 ) {
     private var mPreviousDeckName: String? = null
     private var mOnNewDeckCreated: Consumer<Long>? = null

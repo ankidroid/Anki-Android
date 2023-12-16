@@ -1529,7 +1529,7 @@ open class Reviewer :
         menuItem: MenuItem,
         @MenuRes subMenuRes: Int,
         onMenuItemSelection: (MenuItem) -> Boolean,
-        showsSubMenu: () -> Boolean
+        showsSubMenu: () -> Boolean,
     ): View = ImageButton(context, null, android.R.attr.actionButtonStyle).apply {
         TooltipCompat.setTooltipText(this, menuItem.title)
         menuItem.icon?.isAutoMirrored = true

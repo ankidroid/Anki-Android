@@ -99,7 +99,8 @@ class OnboardingFlagTest : RobolectricTest() {
 
     private enum class FirstEnum(var valueFirst: Int) : OnboardingFlag {
         FIRST(0),
-        MIDDLE(1);
+        MIDDLE(1),
+        ;
 
         override fun getOnboardingEnumValue(): Int {
             return valueFirst
@@ -112,7 +113,8 @@ class OnboardingFlagTest : RobolectricTest() {
 
     private enum class SecondEnum(var valueSecond: Int) : OnboardingFlag {
         MIDDLE(0),
-        LAST(1);
+        LAST(1),
+        ;
 
         override fun getOnboardingEnumValue(): Int {
             return valueSecond

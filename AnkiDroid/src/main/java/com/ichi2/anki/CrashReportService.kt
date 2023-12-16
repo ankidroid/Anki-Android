@@ -75,7 +75,8 @@ object CrashReportService {
 
     private enum class ToastType(@StringRes private val toastMessageRes: Int) {
         AUTO_TOAST(R.string.feedback_auto_toast_text),
-        MANUAL_TOAST(R.string.feedback_for_manual_toast_text);
+        MANUAL_TOAST(R.string.feedback_for_manual_toast_text),
+        ;
 
         fun getToastMessage(context: Context) = context.getString(toastMessageRes)
     }

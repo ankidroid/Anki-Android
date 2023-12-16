@@ -1779,7 +1779,8 @@ open class DeckPicker :
             CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED,
             CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY,
             CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED,
-            CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED -> {
+            CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED,
+            -> {
                 startActivity(CongratsPage.getIntent(this))
             }
             CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
@@ -2149,7 +2150,7 @@ open class DeckPicker :
         SHOW_STUDY_OPTIONS,
 
         /** Always open reviewer (keyboard shortcut)  */
-        SKIP_STUDY_OPTIONS
+        SKIP_STUDY_OPTIONS,
     }
 
     companion object {
@@ -2429,7 +2430,7 @@ open class DeckPicker :
      * @param did The id of a deck with no pending cards to review
      */
     private suspend fun queryCompletedDeckCustomStudyAction(
-        did: DeckId
+        did: DeckId,
     ): CompletedDeckStatus = withCol {
         when {
             sched.hasCardsTodayAfterStudyAheadLimit() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
@@ -2455,7 +2456,7 @@ open class DeckPicker :
         EMPTY_REGULAR_DECK,
 
         /** The user has completed their studying for today, and there are future reviews */
-        REGULAR_DECK_NO_MORE_CARDS_TODAY
+        REGULAR_DECK_NO_MORE_CARDS_TODAY,
     }
 
     override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent?> {
@@ -2479,14 +2480,14 @@ data class OptionsMenuState(
     val undoLabel: String?,
     val syncIcon: SyncIconState,
     val shouldShowStartMigrationButton: Boolean,
-    val mediaMigrationState: MediaMigrationState
+    val mediaMigrationState: MediaMigrationState,
 )
 
 enum class SyncIconState {
     Normal,
     PendingChanges,
     FullSync,
-    NotLoggedIn
+    NotLoggedIn,
 }
 
 class CollectionLoadingErrorDialog : DialogHandlerMessage(

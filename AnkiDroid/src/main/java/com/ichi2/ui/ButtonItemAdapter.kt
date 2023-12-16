@@ -40,7 +40,7 @@ import com.ichi2.ui.ButtonItemAdapter.ButtonVH
 class ButtonItemAdapter(
     private val items: ArrayList<String>,
     private val itemCallback: ItemCallback,
-    private val buttonCallback: ButtonCallback
+    private val buttonCallback: ButtonCallback,
 ) : RecyclerView.Adapter<ButtonVH>() {
     fun remove(searchName: String) {
         items.remove(searchName)

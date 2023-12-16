@@ -59,7 +59,7 @@ open class MigrateEssentialFiles
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
 internal constructor(
     private val context: Context,
-    private val folders: ValidatedMigrationSourceAndDestination
+    private val folders: ValidatedMigrationSourceAndDestination,
 ) {
     private var oldPrefValues: Map<String, String?>? = null
 

@@ -141,7 +141,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
 
         override fun onCreateViewHolder(
             parent: ViewGroup,
-            viewType: Int
+            viewType: Int,
         ): TextViewHolder {
             val v = LayoutInflater.from(parent.context)
                 .inflate(R.layout.locale_dialog_fragment_textview, parent, false) as TextView

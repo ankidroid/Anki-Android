@@ -31,7 +31,7 @@ constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = androidx.preference.R.attr.preferenceStyle,
-    defStyleRes: Int = androidx.preference.R.style.Preference
+    defStyleRes: Int = androidx.preference.R.style.Preference,
 ) : Preference(context, attrs, defStyleAttr, defStyleRes) {
 
     init {

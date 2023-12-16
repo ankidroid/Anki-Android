@@ -63,7 +63,7 @@ class DirectSystemTimeInstantiation : Detector(), SourceCodeScanner {
     override fun visitConstructor(
         context: JavaContext,
         node: UCallExpression,
-        constructor: PsiMethod
+        constructor: PsiMethod,
     ) {
         super.visitConstructor(context, node, constructor)
         val foundClasses = context.uastFile!!.classes

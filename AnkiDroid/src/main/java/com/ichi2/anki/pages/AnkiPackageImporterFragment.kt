@@ -50,7 +50,7 @@ class AnkiPackageImporterFragment : PageFragment() {
 
     class AnkiPackageImporterWebViewClient(
         private val path: String,
-        private val backCallback: OnBackPressedCallback
+        private val backCallback: OnBackPressedCallback,
     ) : PageWebViewClient() {
         /**
          * Ideally, to handle the state of the back callback, we would just need to check for

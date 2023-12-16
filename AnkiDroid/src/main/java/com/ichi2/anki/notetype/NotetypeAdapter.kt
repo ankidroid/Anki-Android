@@ -30,13 +30,13 @@ private val notetypeNamesAndCountDiff =
     object : DiffUtil.ItemCallback<NoteTypeUiModel>() {
         override fun areItemsTheSame(
             oldItem: NoteTypeUiModel,
-            newItem: NoteTypeUiModel
+            newItem: NoteTypeUiModel,
         ): Boolean =
             oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
 
         override fun areContentsTheSame(
             oldItem: NoteTypeUiModel,
-            newItem: NoteTypeUiModel
+            newItem: NoteTypeUiModel,
         ): Boolean =
             oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
     }
@@ -46,7 +46,7 @@ internal class NotetypesAdapter(
     private val onShowFields: (NoteTypeUiModel) -> Unit,
     private val onEditCards: (NoteTypeUiModel) -> Unit,
     private val onRename: (NoteTypeUiModel) -> Unit,
-    private val onDelete: (NoteTypeUiModel) -> Unit
+    private val onDelete: (NoteTypeUiModel) -> Unit,
 ) : ListAdapter<NoteTypeUiModel, NotetypeViewHolder>(notetypeNamesAndCountDiff) {
     private val layoutInflater = LayoutInflater.from(context)
 
@@ -70,7 +70,7 @@ internal class NotetypeViewHolder(
     onShowFields: (NoteTypeUiModel) -> Unit,
     onEditCards: (NoteTypeUiModel) -> Unit,
     onRename: (NoteTypeUiModel) -> Unit,
-    onDelete: (NoteTypeUiModel) -> Unit
+    onDelete: (NoteTypeUiModel) -> Unit,
 ) : RecyclerView.ViewHolder(rowView) {
     val name: TextView = rowView.findViewById(R.id.note_name)
     val useCount: TextView = rowView.findViewById(R.id.note_use_count)

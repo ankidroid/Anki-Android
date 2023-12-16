@@ -109,7 +109,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
             savedFilters: HashMap<String, String>?,
             mySearchesDialogListener: MySearchesDialogListener?,
             currentSearchTerms: String?,
-            type: Int
+            type: Int,
         ): CardBrowserMySearchesDialog {
             this.mySearchesDialogListener = mySearchesDialogListener
             val cardBrowserMySearchesDialog = CardBrowserMySearchesDialog()

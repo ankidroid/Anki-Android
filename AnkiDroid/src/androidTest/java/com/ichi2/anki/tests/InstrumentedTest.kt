@@ -174,7 +174,7 @@ abstract class InstrumentedTest {
     protected fun ViewInteraction.checkWithTimeout(
         viewAssertion: ViewAssertion,
         retryWaitTimeInMilliseconds: Long = 100,
-        maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10)
+        maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10),
     ) {
         val startTime = TimeManager.time.intTimeMS()
 

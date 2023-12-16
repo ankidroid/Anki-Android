@@ -42,7 +42,7 @@ class LintReleaseFileTest {
                     uri: String?,
                     localName: String?,
                     qName: String?,
-                    attributes: Attributes?
+                    attributes: Attributes?,
                 ) {
                     if (qName != null && qName == "issue") {
                         if (attributes != null) {

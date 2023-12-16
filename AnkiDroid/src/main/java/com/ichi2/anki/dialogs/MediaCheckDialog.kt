@@ -164,7 +164,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
         private val dialogType: Int,
         private val noHave: ArrayList<String>?,
         private val unused: ArrayList<String>?,
-        private val invalid: ArrayList<String>?
+        private val invalid: ArrayList<String>?,
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG, "MediaCheckCompleteDialog") {
         override fun handleAsyncMessage(deckPicker: DeckPicker) {
             // Media check results

@@ -198,7 +198,7 @@ open class CompatV23 : Compat {
     override fun resolveActivity(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo? {
         return packageManager.resolveActivity(intent, flags.value.toInt())
     }
@@ -207,7 +207,7 @@ open class CompatV23 : Compat {
     override fun resolveService(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo? {
         return packageManager.resolveService(intent, flags.value.toInt())
     }
@@ -216,7 +216,7 @@ open class CompatV23 : Compat {
     override fun queryIntentActivities(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): List<ResolveInfo> {
         return packageManager.queryIntentActivities(intent, flags.value.toInt())
     }
@@ -225,7 +225,7 @@ open class CompatV23 : Compat {
     override fun <T : Serializable?> getSerializableExtra(
         intent: Intent,
         name: String,
-        className: Class<T>
+        className: Class<T>,
     ): T? {
         return try {
             @Suppress("UNCHECKED_CAST")
@@ -244,7 +244,7 @@ open class CompatV23 : Compat {
     override fun <T : Serializable?> getSerializable(
         bundle: Bundle,
         key: String,
-        clazz: Class<T>
+        clazz: Class<T>,
     ): T? = bundle.getSerializable(key) as? T?
 
     override fun normalize(locale: Locale): Locale {

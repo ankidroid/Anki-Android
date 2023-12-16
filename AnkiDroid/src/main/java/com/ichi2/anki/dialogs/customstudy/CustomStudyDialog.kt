@@ -272,7 +272,8 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     }
                     STUDY_TAGS,
                     DECK_OPTIONS,
-                    MORE_OPTIONS -> TODO("This branch has not been covered before")
+                    MORE_OPTIONS,
+                    -> TODO("This branch has not been covered before")
                 }
             }
             .negativeButton(R.string.dialog_cancel) {
@@ -517,7 +518,8 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     enum class ContextMenuConfiguration(override val value: Int, override val stringResource: Int? = null) : ContextMenuAttribute<ContextMenuConfiguration> {
         STANDARD(1),
         LIMITS(2),
-        EMPTY_SCHEDULE(3);
+        EMPTY_SCHEDULE(3),
+        ;
 
         companion object {
             fun fromInt(value: Int): ContextMenuConfiguration = values().first { it.value == value }
@@ -539,7 +541,8 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         STUDY_PREVIEW(105, R.string.custom_study_preview_new),
         STUDY_TAGS(106, R.string.custom_study_limit_tags),
         DECK_OPTIONS(107, R.string.menu__deck_options),
-        MORE_OPTIONS(108, R.string.more_options);
+        MORE_OPTIONS(108, R.string.more_options),
+        ;
 
         companion object {
             fun fromInt(value: Int): ContextMenuOption = values().first { it.value == value }

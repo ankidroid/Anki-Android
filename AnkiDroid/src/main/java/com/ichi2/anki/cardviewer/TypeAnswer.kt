@@ -38,7 +38,7 @@ class TypeAnswer(
     @get:JvmName("useInputTag") val useInputTag: Boolean,
     @get:JvmName("doNotUseCodeFormatting") val doNotUseCodeFormatting: Boolean,
     /** Preference: Whether the user wants to focus "type in answer" */
-    val autoFocus: Boolean
+    val autoFocus: Boolean,
 ) {
 
     /** The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected. */

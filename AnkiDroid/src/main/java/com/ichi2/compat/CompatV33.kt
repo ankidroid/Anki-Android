@@ -30,7 +30,7 @@ open class CompatV33 : CompatV31(), Compat {
     override fun resolveActivity(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo? {
         return packageManager.resolveActivity(intent, PackageManager.ResolveInfoFlags.of(flags.value))
     }
@@ -49,7 +49,7 @@ open class CompatV33 : CompatV31(), Compat {
     override fun resolveService(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo? {
         return packageManager.resolveService(intent, PackageManager.ResolveInfoFlags.of(flags.value))
     }

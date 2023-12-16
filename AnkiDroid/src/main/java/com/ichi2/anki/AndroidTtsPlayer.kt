@@ -172,7 +172,8 @@ class AndroidTtsError(@Suppress("unused") val errorCode: TtsErrorCode) : TtsPlay
         APP_MISSING_VOICE(2),
         APP_INVALID_VOICE(3),
         APP_SPEECH_RATE_FAILED(4),
-        APP_TTS_INIT_FAILED(5)
+        APP_TTS_INIT_FAILED(5),
+
         ;
 
         /** A string which google will relate to the TTS Engine in most cases */

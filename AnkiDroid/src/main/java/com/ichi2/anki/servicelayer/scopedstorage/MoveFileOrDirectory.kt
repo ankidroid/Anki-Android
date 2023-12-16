@@ -44,7 +44,7 @@ data class MoveFileOrDirectory(
     /** Source, known to exist */
     val sourceFile: File,
     /** Destination: known to exist */
-    val destination: File
+    val destination: File,
 ) : Operation() {
 
     override fun execute(context: MigrationContext): List<Operation> {

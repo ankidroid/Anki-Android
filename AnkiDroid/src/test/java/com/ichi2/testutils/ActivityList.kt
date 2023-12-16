@@ -93,7 +93,7 @@ object ActivityList {
 
     class ActivityLaunchParam(
         var activity: Class<out Activity>,
-        private var intentBuilder: Function<Context, Intent>
+        private var intentBuilder: Function<Context, Intent>,
     ) {
         val simpleName: String = activity.simpleName
 
@@ -105,7 +105,7 @@ object ActivityList {
         companion object {
             operator fun get(
                 clazz: Class<out Activity>,
-                i: Function<Context, Intent> = Function { Intent() }
+                i: Function<Context, Intent> = Function { Intent() },
             ): ActivityLaunchParam = ActivityLaunchParam(clazz, i)
         }
     }

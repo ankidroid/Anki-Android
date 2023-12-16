@@ -18,5 +18,5 @@ package com.ichi2.anki.cardviewer
 
 enum class Side {
     FRONT,
-    BACK
+    BACK,
 }

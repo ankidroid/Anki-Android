@@ -24,7 +24,8 @@ package com.ichi2.anki.model
 enum class CardStateFilter {
     ALL_CARDS,
     NEW,
-    DUE
+    DUE,
+
     ;
 
     val toSearch: String

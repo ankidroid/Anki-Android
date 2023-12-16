@@ -400,7 +400,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
 
         /* if we have an unsaved note saved, use it instead of a collection lookup */ override fun note(
-            reload: Boolean
+            reload: Boolean,
         ): Note {
             return mNote ?: super.note(reload)
         }

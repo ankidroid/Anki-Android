@@ -136,5 +136,5 @@ fun getCollectionMediaPath(collectionPath: String): String {
 data class MediaCheckResult(
     val missingFileNames: List<String>,
     val unusedFileNames: List<String>,
-    val invalidFileNames: List<String>
+    val invalidFileNames: List<String>,
 )

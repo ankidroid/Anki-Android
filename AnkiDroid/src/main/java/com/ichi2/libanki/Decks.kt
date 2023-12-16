@@ -72,7 +72,7 @@ class Decks(private val col: Collection) {
     /** A sorted sequence of deck names and IDs. */
     fun allNamesAndIds(
         skipEmptyDefault: Boolean = false,
-        includeFiltered: Boolean = true
+        includeFiltered: Boolean = true,
     ): List<DeckNameId> {
         return col.backend.getDeckNames(skipEmptyDefault = skipEmptyDefault, includeFiltered = includeFiltered).map { entry ->
             DeckNameId(entry.name, entry.id)
@@ -172,7 +172,7 @@ class Decks(private val col: Collection) {
     }
 
     private fun addConfig(
-        name: String
+        name: String,
     ): DeckConfig {
         val conf = DeckConfig(newDeckConfigLegacy())
         conf.name = name

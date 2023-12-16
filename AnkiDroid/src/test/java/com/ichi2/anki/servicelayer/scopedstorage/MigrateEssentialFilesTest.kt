@@ -195,7 +195,7 @@ suspend fun migrateEssentialFilesForTest(
     context: Context,
     ankiDroidFolder: String,
     destOverride: DestFolderOverride = DestFolderOverride.None,
-    checkSourceDir: Boolean = false
+    checkSourceDir: Boolean = false,
 ): File {
     val destOverrideUpdated = when (destOverride) {
         is DestFolderOverride.None -> DestFolderOverride.Root(getMigrationDestinationPath(context))

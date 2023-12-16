@@ -67,7 +67,7 @@ public class AddContentApi(context: Context) {
         modelId: Long,
         deckId: Long,
         fields: Array<String>,
-        tags: Set<String>?
+        tags: Set<String>?,
     ): Uri? {
         val values = ContentValues().apply {
             put(Note.MID, modelId)
@@ -106,7 +106,7 @@ public class AddContentApi(context: Context) {
         modelId: Long,
         deckId: Long,
         fieldsList: List<Array<String>>,
-        tagsList: List<Set<String>?>?
+        tagsList: List<Set<String>?>?,
     ): Int {
         require(!(tagsList != null && fieldsList.size != tagsList.size)) { "fieldsList and tagsList different length" }
         val newNoteValuesList: MutableList<ContentValues> = ArrayList(fieldsList.size)
@@ -160,7 +160,7 @@ public class AddContentApi(context: Context) {
     public fun addMediaFromUri(
         fileUri: Uri,
         preferredName: String,
-        mimeType: String
+        mimeType: String,
     ): String? {
         val contentValues = ContentValues().apply {
             put(AnkiMedia.FILE_URI, fileUri.toString())
@@ -358,7 +358,7 @@ public class AddContentApi(context: Context) {
         afmt: Array<String>,
         css: String?,
         did: Long?,
-        sortf: Int?
+        sortf: Int?,
     ): Long? {
         // Check that size of arrays are consistent
         require(!(qfmt.size != cards.size || afmt.size != cards.size)) { "cards, qfmt, and afmt arrays must all be same length" }
@@ -608,7 +608,7 @@ public class AddContentApi(context: Context) {
          */
         fun findDuplicateNotes(
             modelId: Long,
-            keys: List<String?>
+            keys: List<String?>,
         ): SparseArray<MutableList<NoteInfo?>>?
     }
 
@@ -630,7 +630,7 @@ public class AddContentApi(context: Context) {
 
         override fun findDuplicateNotes(
             modelId: Long,
-            keys: List<String?>
+            keys: List<String?>,
         ): SparseArray<MutableList<NoteInfo?>>? {
             // Content provider spec v1 does not support direct querying of the notes table, so use Anki browser syntax
             val modelName = getModelName(modelId) ?: return null
@@ -664,7 +664,7 @@ public class AddContentApi(context: Context) {
         protected fun addNoteToDuplicatesArray(
             note: NoteInfo?,
             duplicates: SparseArray<MutableList<NoteInfo?>>,
-            position: Int
+            position: Int,
         ) {
             val sparseArrayIndex = duplicates.indexOfKey(position)
             if (sparseArrayIndex < 0) {
@@ -697,7 +697,7 @@ public class AddContentApi(context: Context) {
 
         override fun findDuplicateNotes(
             modelId: Long,
-            keys: List<String?>
+            keys: List<String?>,
         ): SparseArray<MutableList<NoteInfo?>>? {
             // Build set of checksums and a HashMap from the key (first field) back to the original index in fieldsArray
             val csums: MutableSet<Long?> = HashSet(keys.size)

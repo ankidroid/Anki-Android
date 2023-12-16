@@ -197,7 +197,7 @@ class DB(db: SupportSQLiteDatabase) {
         table: String,
         values: ContentValues,
         whereClause: String? = null,
-        whereArgs: Array<String>? = null
+        whereArgs: Array<String>? = null,
     ): Int {
         return database.update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs)
     }

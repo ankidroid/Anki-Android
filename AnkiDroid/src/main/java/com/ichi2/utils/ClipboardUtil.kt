@@ -96,7 +96,7 @@ fun Context.copyToClipboard(text: String): Boolean {
 fun Context.copyToClipboardAndShowConfirmation(
     text: String,
     @StringRes successMessageId: Int,
-    @StringRes failureMessageId: Int
+    @StringRes failureMessageId: Int,
 ) {
     val successfullyCopied = copyToClipboard(text)
 

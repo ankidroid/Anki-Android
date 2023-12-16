@@ -108,7 +108,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     private inner class BasicImageFieldControllerResultCallback(
         private val onSuccess: (result: ActivityResult) -> Unit,
-        private val onFailure: (result: ActivityResult) -> Unit = {}
+        private val onFailure: (result: ActivityResult) -> Unit = {},
     ) : ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
             if (result.resultCode != Activity.RESULT_OK) {

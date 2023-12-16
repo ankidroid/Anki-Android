@@ -49,7 +49,7 @@ sealed interface Size {
     class FilesAndBytes(val files: Collection<File>, val totalSize: Long) : Size
     class Error(
         val exception: Exception,
-        @StringRes val widgetTextId: Int = R.string.pref__widget_text__error
+        @StringRes val widgetTextId: Int = R.string.pref__widget_text__error,
     ) : Size
 }
 

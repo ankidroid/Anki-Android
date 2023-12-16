@@ -40,7 +40,7 @@ import java.util.*
  */
 fun deleteMedia(
     col: Collection,
-    unused: List<String>
+    unused: List<String>,
 ): Int {
     // FIXME: this provides progress info that is not currently used
     col.media.removeFiles(unused)
@@ -50,7 +50,7 @@ fun deleteMedia(
 // TODO: Once [com.ichi2.async.CollectionTask.RebuildCram] and [com.ichi2.async.CollectionTask.EmptyCram]
 // are migrated to Coroutines, move this function to [com.ichi2.anki.StudyOptionsFragment]
 fun updateValuesFromDeck(
-    col: Collection
+    col: Collection,
 ): StudyOptionsFragment.DeckStudyData? {
     Timber.d("doInBackgroundUpdateValuesFromDeck")
     return try {
@@ -77,7 +77,7 @@ suspend fun renderBrowserQA(
     n: Int,
     column1Index: Int,
     column2Index: Int,
-    onProgressUpdate: (Int) -> Unit
+    onProgressUpdate: (Int) -> Unit,
 ): Pair<List<CardBrowser.CardCache>, MutableList<Long>> = withContext(Dispatchers.IO) {
     Timber.d("doInBackgroundRenderBrowserQA")
     val invalidCardIds: MutableList<Long> = ArrayList()
@@ -146,7 +146,7 @@ suspend fun checkCardSelection(checkedCards: Set<CardBrowser.CardCache>): Pair<B
 fun saveModel(
     col: Collection,
     notetype: NotetypeJson,
-    templateChanges: ArrayList<Array<Any>>
+    templateChanges: ArrayList<Array<Any>>,
 ) {
     Timber.d("doInBackgroundSaveModel")
     val oldModel = col.notetypes.get(notetype.getLong("id"))

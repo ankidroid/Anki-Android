@@ -30,7 +30,7 @@ import java.nio.file.Path
 class RelativeFilePath private constructor(
     /** Relative path, as a sequence of directory, excluding the file name. */
     val path: List<String>,
-    val fileName: String
+    val fileName: String,
 ) {
     /**
      * Combination of [baseDir] and this relative Path.

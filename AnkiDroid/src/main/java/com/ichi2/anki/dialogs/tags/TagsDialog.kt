@@ -50,7 +50,7 @@ class TagsDialog : AnalyticsDialogFragment {
         /**
          * A custom study session filtered by tags
          */
-        CUSTOM_STUDY_TAGS
+        CUSTOM_STUDY_TAGS,
     }
 
     private var mType: DialogType? = null
@@ -106,7 +106,7 @@ class TagsDialog : AnalyticsDialogFragment {
         type: DialogType,
         checkedTags: List<String?>,
         uncheckedTags: List<String>?,
-        allTags: List<String?>
+        allTags: List<String?>,
     ): TagsDialog {
         val args = this.arguments ?: Bundle()
         args.putInt(DIALOG_TYPE_KEY, type.ordinal)

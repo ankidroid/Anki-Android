@@ -20,7 +20,7 @@ import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 
 class InMemorySQLiteOpenHelperFactory : SupportSQLiteOpenHelper.Factory {
     override fun create(
-        configuration: SupportSQLiteOpenHelper.Configuration
+        configuration: SupportSQLiteOpenHelper.Configuration,
     ): SupportSQLiteOpenHelper {
         val inMemoryConfig = SupportSQLiteOpenHelper.Configuration
             .builder(configuration.context)

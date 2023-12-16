@@ -36,7 +36,7 @@ import java.util.*
 class TagsList constructor(
     allTags: List<String>,
     checkedTags: List<String>,
-    uncheckedTags: List<String>? = null
+    uncheckedTags: List<String>? = null,
 ) : Iterable<String> {
     /**
      * A Set containing the currently selected tags

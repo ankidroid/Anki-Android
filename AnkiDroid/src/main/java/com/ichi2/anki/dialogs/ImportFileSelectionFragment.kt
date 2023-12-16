@@ -117,14 +117,14 @@ class ImportFileSelectionFragment : DialogFragment() {
         val type: ImportFileType,
         var multiple: Boolean = false,
         val mimeType: String = "*/*",
-        val extraMimes: Array<String>? = null
+        val extraMimes: Array<String>? = null,
     )
 
     @Parcelize
     data class ImportOptions(
         val importColpkg: Boolean,
         val importApkg: Boolean,
-        val importTextFile: Boolean
+        val importTextFile: Boolean,
     ) : Parcelable
 
     enum class ImportFileType {
@@ -154,7 +154,7 @@ class ImportFileSelectionFragment : DialogFragment() {
             fileType: ImportFileType,
             multiple: Boolean = false,
             mimeType: String = "*/*",
-            extraMimes: Array<String>? = null
+            extraMimes: Array<String>? = null,
         ) {
             Timber.d("openImportFilePicker() delegating to file picker intent")
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)

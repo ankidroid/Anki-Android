@@ -131,7 +131,7 @@ class Info : AnkiActivity() {
 
                     override fun shouldOverrideUrlLoading(
                         view: WebView?,
-                        request: WebResourceRequest?
+                        request: WebResourceRequest?,
                     ): Boolean {
                         // Excludes the url that are opened inside the changelog.html
                         // and redirect the user to the browser
@@ -155,7 +155,7 @@ class Info : AnkiActivity() {
                     override fun doUpdateVisitedHistory(
                         view: WebView?,
                         url: String?,
-                        isReload: Boolean
+                        isReload: Boolean,
                     ) {
                         super.doUpdateVisitedHistory(view, url, isReload)
                         onBackPressedCallback.isEnabled = view != null && view.canGoBack()

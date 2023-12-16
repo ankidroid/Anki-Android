@@ -28,7 +28,7 @@ class MutableTime : MockTime {
         minute: Int,
         second: Int,
         milliseconds: Int,
-        step: Int
+        step: Int,
     ) : super(year, month, date, hourOfDay, minute, second, milliseconds, step)
 
     fun getInternalTimeMs() = time

@@ -53,7 +53,7 @@ import kotlin.coroutines.suspendCoroutine
  */
 suspend fun <T> FragmentActivity.runCatchingTask(
     errorMessage: String? = null,
-    block: suspend () -> T?
+    block: suspend () -> T?,
 ): T? {
     try {
         return block()
@@ -120,7 +120,7 @@ fun getCoroutineExceptionHandler(activity: Activity, errorMessage: String? = nul
  */
 fun FragmentActivity.launchCatchingTask(
     errorMessage: String? = null,
-    block: suspend CoroutineScope.() -> Unit
+    block: suspend CoroutineScope.() -> Unit,
 ): Job {
     return lifecycle.coroutineScope.launch {
         runCatchingTask(errorMessage) { block() }
@@ -130,7 +130,7 @@ fun FragmentActivity.launchCatchingTask(
 /** See [FragmentActivity.launchCatchingTask] */
 fun Fragment.launchCatchingTask(
     errorMessage: String? = null,
-    block: suspend CoroutineScope.() -> Unit
+    block: suspend CoroutineScope.() -> Unit,
 ): Job {
     return lifecycle.coroutineScope.launch {
         requireActivity().runCatchingTask(errorMessage) { block() }
@@ -165,7 +165,7 @@ private fun showError(context: Context, msg: String, exception: Throwable, crash
 suspend fun <T> Backend.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     updateUi: ProgressContext.() -> Unit,
-    block: suspend CoroutineScope.() -> T
+    block: suspend CoroutineScope.() -> T,
 ): T {
     return coroutineScope {
         val monitor = launch {
@@ -189,7 +189,7 @@ suspend fun <T> Backend.withProgress(
 suspend fun <T> FragmentActivity.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
-    op: suspend () -> T
+    op: suspend () -> T,
 ): T {
     val backend = CollectionManager.getBackend()
     return withProgressDialog(
@@ -218,7 +218,7 @@ suspend fun <T> FragmentActivity.withProgress(
  */
 suspend fun <T> Activity.withProgress(
     message: String = resources.getString(R.string.dialog_processing),
-    op: suspend () -> T
+    op: suspend () -> T,
 ): T = withProgressDialog(
     context = this@withProgress,
     onCancel = null
@@ -245,7 +245,7 @@ suspend fun <T> withProgressDialog(
     context: Activity,
     onCancel: (() -> Unit)?,
     delayMillis: Long = 600,
-    op: suspend (android.app.ProgressDialog) -> T
+    op: suspend (android.app.ProgressDialog) -> T,
 ): T = coroutineScope {
     val dialog = android.app.ProgressDialog(context).apply {
         setCancelable(onCancel != null)
@@ -286,7 +286,7 @@ suspend fun <T> withProgressDialog(
 private suspend fun monitorProgress(
     backend: Backend,
     extractProgress: ProgressContext.() -> Unit,
-    updateUi: ProgressContext.() -> Unit
+    updateUi: ProgressContext.() -> Unit,
 ) {
     val state = ProgressContext(Progress.getDefaultInstance())
     while (true) {
@@ -307,7 +307,7 @@ data class ProgressContext(
     var progress: Progress,
     var text: String = "",
     /** If set, shows progress bar with a of b complete. */
-    var amount: Pair<Int, Int>? = null
+    var amount: Pair<Int, Int>? = null,
 )
 
 @Suppress("Deprecation") // ProgressDialog deprecation

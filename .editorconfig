@@ -1,3 +1,5 @@
 [*.{kt,kts}]
 ktlint_disabled_rules = no-wildcard-imports
 # ktlint_standard_no-wildcard-imports = disabled
+trailing-comma-on-declaration-site = true
+ij_kotlin_allow_trailing_comma = true

@@ -112,7 +112,7 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
     fun playSound(
         replacedUrl: String,
         onCompletionListener: OnCompletionListener?,
-        soundErrorListener: OnErrorListener
+        soundErrorListener: OnErrorListener,
     ) {
         soundPlayer.playSound(replacedUrl, onCompletionListener, soundErrorListener)
     }
@@ -154,7 +154,7 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
      */
     private inner class PlayAllCompletionListener(
         private val side: SoundSide,
-        private val errorListener: OnErrorListener?
+        private val errorListener: OnErrorListener?,
     ) : OnCompletionListener {
         /** Index of next sound to play inside `getSounds(side)` */
         // this is a completion listener: [onCompletion] is first called after the first sound
@@ -193,7 +193,7 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
             CONTINUE_AUDIO,
 
             /** Retry the current audio */
-            RETRY_AUDIO
+            RETRY_AUDIO,
         }
     }
 
@@ -287,7 +287,7 @@ open class SoundPlayer {
     fun playSound(
         soundPath: String,
         onCompletionListener: OnCompletionListener?,
-        errorListener: Sound.OnErrorListener?
+        errorListener: Sound.OnErrorListener?,
     ) {
         Timber.d("Playing single sound")
         val completionListener = onCompletionListener ?: SingleSoundCompletionListener()
@@ -305,7 +305,7 @@ open class SoundPlayer {
     private fun playSoundInternal(
         soundPath: String,
         completionListener: OnCompletionListener,
-        errorHandler: Sound.OnErrorListener
+        errorHandler: Sound.OnErrorListener,
     ) {
         Timber.d("Playing %s", soundPath)
         val soundUri = Uri.parse(soundPath)

@@ -21,7 +21,7 @@ class DeckRenameException(val errorCode: Int) : Exception() {
         /** Generates a [DeckRenameException] with additional information in the message */
         fun filteredAncestor(
             deckName: String?,
-            filteredAncestorName: String?
+            filteredAncestorName: String?,
         ): DeckRenameException = DeckRenameException(FILTERED_NOSUBDECKS).apply {
             this.filteredAncestorName = filteredAncestorName
             this.deckName = deckName

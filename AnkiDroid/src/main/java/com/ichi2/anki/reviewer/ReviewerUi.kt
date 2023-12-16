@@ -30,7 +30,7 @@ interface ReviewerUi {
         /**Don't record click; as it's ambiguous whether it would apply to next or previous card.
          * We expect the next card may take time to load, as scheduler needs to recompute its queues;
          * so we show the button get deactivated.  */
-        SLOW
+        SLOW,
     }
 
     val controlBlocked: ControlBlock?

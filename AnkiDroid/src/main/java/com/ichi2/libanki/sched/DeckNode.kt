@@ -24,7 +24,7 @@ import java.util.*
 data class DeckNode(
     val node: DeckTreeNode,
     val fullDeckName: String,
-    val parent: WeakReference<DeckNode>? = null
+    val parent: WeakReference<DeckNode>? = null,
 ) {
     var collapsed = node.collapsed
     val revCount = node.reviewCount

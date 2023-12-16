@@ -229,7 +229,7 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
     private class InputParameters constructor(
         private vararg val directoryComponents: String,
         val sourceFileName: String,
-        val content: String = "source content"
+        val content: String = "source content",
     ) {
         val sourceTopLevel: File by lazy { createTransientDirectory() }
         val sourceFile: File by lazy {

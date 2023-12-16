@@ -46,7 +46,7 @@ class AboutFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val layoutView = inflater.inflate(R.layout.about_layout, container, false)
 

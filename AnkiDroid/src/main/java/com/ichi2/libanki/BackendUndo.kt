@@ -27,7 +27,7 @@ data class UndoStatus(
     val undo: String?,
     val redo: String?,
     // not currently used
-    val lastStep: Int
+    val lastStep: Int,
 ) {
     companion object {
         fun from(proto: UndoStatusProto): UndoStatus {

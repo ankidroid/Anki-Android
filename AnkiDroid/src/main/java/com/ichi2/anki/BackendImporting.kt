@@ -93,7 +93,7 @@ suspend fun AnkiActivity.exportApkg(
     apkgPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
-    limit: ExportLimit
+    limit: ExportLimit,
 ) {
     withProgress(
         extractProgress = {
@@ -110,7 +110,7 @@ suspend fun AnkiActivity.exportApkg(
 
 suspend fun AnkiActivity.exportColpkg(
     colpkgPath: String,
-    withMedia: Boolean
+    withMedia: Boolean,
 ) {
     withProgress(
         extractProgress = {

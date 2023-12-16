@@ -30,7 +30,7 @@ class RescheduleDialog : IntegerDialog() {
         fun rescheduleSingleCard(
             resources: Resources,
             currentCard: Card,
-            consumer: Consumer<Int>?
+            consumer: Consumer<Int>?,
         ): RescheduleDialog {
             val rescheduleDialog = RescheduleDialog()
             val content = getContentString(resources, currentCard)
@@ -54,7 +54,7 @@ class RescheduleDialog : IntegerDialog() {
         fun rescheduleMultipleCards(
             resources: Resources,
             consumer: Consumer<Int>?,
-            cardCount: Int
+            cardCount: Int,
         ): RescheduleDialog {
             val rescheduleDialog = RescheduleDialog()
             rescheduleDialog.setArgs(

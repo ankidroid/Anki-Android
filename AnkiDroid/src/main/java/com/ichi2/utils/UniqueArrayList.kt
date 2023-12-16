@@ -65,7 +65,7 @@ private constructor(
      * Modification to this list reference should be done with cautious to avoid having the internal [Set] out of sync
      */
     private val list: MutableList<E>,
-    set: Set<E>?
+    set: Set<E>?,
 ) : SetUniqueList<E>(list, set), MutableList<E>, MutableSet<E> {
     /**
      * Constructs a new empty [UniqueArrayList]

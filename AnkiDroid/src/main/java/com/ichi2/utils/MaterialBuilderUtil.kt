@@ -43,7 +43,7 @@ fun MaterialDialog.displayKeyboard(editText: EditText) {
  * Shows an icon to the left of the dialog title.
  */
 fun MaterialDialog.iconAttr(
-    @DrawableRes res: Int
+    @DrawableRes res: Int,
 ): MaterialDialog = apply {
     this.icon(Themes.getResFromAttr(this.context, res))
 }

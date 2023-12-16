@@ -52,7 +52,7 @@ class AddonData(
     val author: Map<String, String>? = null,
     val license: String? = null,
     val homepage: String? = null,
-    val dist: DistInfo? = null
+    val dist: DistInfo? = null,
 )
 
 @Serializable

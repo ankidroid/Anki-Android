@@ -200,7 +200,7 @@ class InitialActivityTest : RobolectricTest() {
      */
     private fun selectAnkiDroidFolder(
         canManageExternalStorage: Boolean,
-        currentFolderIsAccessibleAndLegacy: Boolean = false
+        currentFolderIsAccessibleAndLegacy: Boolean = false,
     ): AnkiDroidFolder {
         return com.ichi2.anki.selectAnkiDroidFolder(
             canManageExternalStorage = canManageExternalStorage,

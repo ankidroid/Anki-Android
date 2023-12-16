@@ -61,7 +61,7 @@ import timber.log.Timber
  */
 class AutomaticAnswer(
     target: AutomaticallyAnswered,
-    @VisibleForTesting val settings: AutomaticAnswerSettings
+    @VisibleForTesting val settings: AutomaticAnswerSettings,
 ) {
 
     /** Whether any tasks should be executed/scheduled.
@@ -226,7 +226,7 @@ class AutomaticAnswerSettings(
     val answerAction: AutomaticAnswerAction = AutomaticAnswerAction.BURY_CARD,
     @get:JvmName("useTimer") val useTimer: Boolean = false,
     private val questionDelaySeconds: Int = 60,
-    private val answerDelaySeconds: Int = 20
+    private val answerDelaySeconds: Int = 20,
 ) {
 
     val questionDelayMilliseconds = questionDelaySeconds * 1000L
@@ -245,7 +245,7 @@ class AutomaticAnswerSettings(
         fun queryDeckSpecificOptions(
             action: AutomaticAnswerAction,
             col: Collection,
-            selectedDid: DeckId
+            selectedDid: DeckId,
         ): AutomaticAnswerSettings? {
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck
@@ -301,7 +301,8 @@ enum class AutomaticAnswerAction(private val preferenceValue: Int) {
     ANSWER_AGAIN(1),
     ANSWER_HARD(2),
     ANSWER_GOOD(3),
-    ANSWER_EASY(4);
+    ANSWER_EASY(4),
+    ;
 
     fun execute(reviewer: Reviewer) {
         val numberOfButtons = 4

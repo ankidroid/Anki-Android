@@ -59,7 +59,7 @@ class GestureMapper {
         velocityY: Float,
         isSelecting: Boolean,
         isXScrolling: Boolean,
-        isYScrolling: Boolean
+        isYScrolling: Boolean,
     ): Gesture? {
         try {
             if (abs(dx) > abs(dy)) {

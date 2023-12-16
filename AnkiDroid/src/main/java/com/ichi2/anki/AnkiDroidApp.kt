@@ -501,12 +501,12 @@ open class AnkiDroidApp : Application() {
     }
 
     private class FragmentLifecycleLogger(
-        private val activity: Activity
+        private val activity: Activity,
     ) : FragmentManager.FragmentLifecycleCallbacks() {
         override fun onFragmentAttached(
             fm: FragmentManager,
             f: Fragment,
-            context: Context
+            context: Context,
         ) {
             Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onAttach")
         }
@@ -514,7 +514,7 @@ open class AnkiDroidApp : Application() {
         override fun onFragmentCreated(
             fm: FragmentManager,
             f: Fragment,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
         ) {
             Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onCreate")
         }
@@ -523,7 +523,7 @@ open class AnkiDroidApp : Application() {
             fm: FragmentManager,
             f: Fragment,
             v: View,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
         ) {
             Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onViewCreated")
         }
@@ -547,7 +547,7 @@ open class AnkiDroidApp : Application() {
         override fun onFragmentSaveInstanceState(
             fm: FragmentManager,
             f: Fragment,
-            outState: Bundle
+            outState: Bundle,
         ) {
             Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onSaveInstanceState")
         }
