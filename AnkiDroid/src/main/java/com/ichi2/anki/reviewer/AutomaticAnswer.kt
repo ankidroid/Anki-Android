@@ -187,6 +187,11 @@ class AutomaticAnswer(
         return settings.useTimer
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    internal fun simulateCardFlip() {
+        Timber.d("simulateCardFlip")
+    }
+
     interface AutomaticallyAnswered {
         fun automaticShowAnswer()
         fun automaticShowQuestion(action: AutomaticAnswerAction)
