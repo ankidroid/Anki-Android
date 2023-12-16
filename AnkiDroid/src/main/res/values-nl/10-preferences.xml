@@ -269,6 +269,8 @@
     <string name="binding_add_key">Sleutel toevoegen</string>
     <string name="binding_replace_key">Vervang sleutel</string>
     <string name="key_picker_default_press_key">Druk op een toets</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecteer kaart zijde</string>
     <string name="card_side_question">Vraag</string>

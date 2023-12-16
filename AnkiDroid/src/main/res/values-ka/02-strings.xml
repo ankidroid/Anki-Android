@@ -52,6 +52,7 @@
     <string name="CardEditorModel">ტიპი:</string>
     <string name="CardEditorTags">იარლიყები: %1$s</string>
     <string name="CardEditorCards">ბარათები: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">იარლიყის სახელი</string>
     <string name="add_new_filter_tags">იარლიყების დამატება/გაფილტვრა</string>
     <string name="add_tag">იარლიყის დამატება</string>

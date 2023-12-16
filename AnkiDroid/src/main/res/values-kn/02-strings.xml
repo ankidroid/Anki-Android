@@ -52,6 +52,7 @@
     <string name="CardEditorModel">ಮಾದರಿ:</string>
     <string name="CardEditorTags">ಟ್ಯಾಗ್ಗಳು:%1$s</string>
     <string name="CardEditorCards">ಕಾರ್ಡ್‌ಗಳು: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">ಟ್ಯಾಗ್ ಹೆಸರು</string>
     <string name="add_new_filter_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸೇರಿಸಿ / ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
     <string name="add_tag">ಟ್ಯಾಗ್ ಸೇರಿಸಿ</string>

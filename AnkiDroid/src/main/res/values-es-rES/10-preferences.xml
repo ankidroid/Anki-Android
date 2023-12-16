@@ -269,6 +269,8 @@
     <string name="binding_add_key">Añadir botón</string>
     <string name="binding_replace_key">Reemplazar clave</string>
     <string name="key_picker_default_press_key">Presione una tecla</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecciona el lado de la tarjeta</string>
     <string name="card_side_question">Pregunta</string>

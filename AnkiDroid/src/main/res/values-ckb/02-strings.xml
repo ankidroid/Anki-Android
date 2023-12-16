@@ -52,6 +52,7 @@
     <string name="CardEditorModel">جۆر:</string>
     <string name="CardEditorTags">Nîşan: %1$s</string>
     <string name="CardEditorCards">کارتەکان: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Tag name</string>
     <string name="add_new_filter_tags">Nîşanan lê zêde/fîlître bike</string>
     <string name="add_tag">Add tag</string>

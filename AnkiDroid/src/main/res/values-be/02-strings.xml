@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Тып:</string>
     <string name="CardEditorTags">Меткі: %1$s</string>
     <string name="CardEditorCards">Карткі: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Назва меткі</string>
     <string name="add_new_filter_tags">Дадаць/фільтраваць меткі</string>
     <string name="add_tag">Дадаць метку</string>

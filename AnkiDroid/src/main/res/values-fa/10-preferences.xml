@@ -269,6 +269,8 @@
     <string name="binding_add_key">کلید اضافه کن</string>
     <string name="binding_replace_key">کلید را جایگذین کن</string>
     <string name="key_picker_default_press_key">یک کلید را انتخاب کنید</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">طرف کارت را انتخاب کنید</string>
     <string name="card_side_question">سوال</string>

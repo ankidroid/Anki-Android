@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Τύπος:</string>
     <string name="CardEditorTags">Ετικέτες:%1$s</string>
     <string name="CardEditorCards">Κάρτες %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Όνομα ετικέτας</string>
     <string name="add_new_filter_tags">Προσθήκη/φιλτράρισμα ετικετών</string>
     <string name="add_tag">Προσθήκη ετικέτας</string>

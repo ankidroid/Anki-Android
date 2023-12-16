@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Type:</string>
     <string name="CardEditorTags">Kenmerken: %1$s</string>
     <string name="CardEditorCards">Kaarten: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Labelnaam</string>
     <string name="add_new_filter_tags">Labels toevoegen/filteren</string>
     <string name="add_tag">Label toevoegen</string>

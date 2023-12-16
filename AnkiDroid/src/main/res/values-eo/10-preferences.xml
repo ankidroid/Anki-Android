@@ -269,6 +269,8 @@
     <string name="binding_add_key">Aldoni klavon</string>
     <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Premu klavon</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Elekti kartflankon</string>
     <string name="card_side_question">Demando</string>

@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Vrsta:</string>
     <string name="CardEditorTags">Oznake: %1$s</string>
     <string name="CardEditorCards">Kartice: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Ime oznake</string>
     <string name="add_new_filter_tags">Dodaj/Filtriraj oznake</string>
     <string name="add_tag">Dodaj oznako</string>

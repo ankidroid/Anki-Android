@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Loại:</string>
     <string name="CardEditorTags">Các đuôi: %1$s</string>
     <string name="CardEditorCards">Các thẻ: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Tên đuôi</string>
     <string name="add_new_filter_tags">Thêm/lọc các đuôi</string>
     <string name="add_tag">Thêm đuôi</string>

@@ -269,6 +269,8 @@
     <string name="binding_add_key">Lägg till knapp</string>
     <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Tryck på en knapp</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Välj kortsida</string>
     <string name="card_side_question">Fråga</string>

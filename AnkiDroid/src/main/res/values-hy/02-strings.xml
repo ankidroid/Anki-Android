@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Տեսակ՝</string>
     <string name="CardEditorTags">Պիտակներ՝ %1$s</string>
     <string name="CardEditorCards">Քարտեր՝ %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Պիտակի անվանում</string>
     <string name="add_new_filter_tags">Ավելացնել/զտել պիտակները</string>
     <string name="add_tag">Ավելացնել պիտակ</string>

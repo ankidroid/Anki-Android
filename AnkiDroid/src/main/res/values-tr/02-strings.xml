@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Tür:</string>
     <string name="CardEditorTags">Etiketler: %1$s</string>
     <string name="CardEditorCards">Kartlar: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Etiket adı</string>
     <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
     <string name="add_tag">Etiket ekle</string>

@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Type:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">การ์ด: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">ชื่อเเท็ก</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
     <string name="add_tag">เพิ่มเเท็ก</string>

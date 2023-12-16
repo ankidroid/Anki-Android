@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etikedoj: %1$s</string>
     <string name="CardEditorCards">Kartoj: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Nomo de etikedo</string>
     <string name="add_new_filter_tags">Aldoni/filtri etikedojn</string>
     <string name="add_tag">Aldoni etikedon</string>

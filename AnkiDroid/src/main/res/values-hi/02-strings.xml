@@ -52,6 +52,7 @@
     <string name="CardEditorModel">प्रकार:</string>
     <string name="CardEditorTags">टैग: %1$s</string>
     <string name="CardEditorCards">पत्ते: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">टैग नाम</string>
     <string name="add_new_filter_tags">टैग को जोड़ें/छानें</string>
     <string name="add_tag">टैग जोड़ें</string>

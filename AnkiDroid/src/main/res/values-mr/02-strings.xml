@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Prakāra:</string>
     <string name="CardEditorTags">Ṭĕgja:%1$s</string>
     <string name="CardEditorCards">Kārḍa:%1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Ṭĕga nāva</string>
     <string name="add_new_filter_tags">Ṭĕga jōḍā/ philṭara karā</string>
     <string name="add_tag">Ṭĕga jōḍā</string>

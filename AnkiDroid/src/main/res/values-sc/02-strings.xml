@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Casta:</string>
     <string name="CardEditorTags">Etichetas: %1$s</string>
     <string name="CardEditorCards">Cartas: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Nùmene de s\'eticheta</string>
     <string name="add_new_filter_tags">Annanghe/filtra etichetas</string>
     <string name="add_tag">Annanghe un\'eticheta</string>

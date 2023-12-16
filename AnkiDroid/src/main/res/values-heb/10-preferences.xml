@@ -273,6 +273,8 @@
     <string name="binding_add_key">הוסף כפתור</string>
     <string name="binding_replace_key">החלף כפתור</string>
     <string name="key_picker_default_press_key">לחץ על כפתור</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">בחר צד קלף</string>
     <string name="card_side_question">שאלה</string>

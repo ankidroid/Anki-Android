@@ -277,6 +277,8 @@
     <string name="binding_add_key">إضافة مفتاح</string>
     <string name="binding_replace_key">استبدال المفتاح</string>
     <string name="key_picker_default_press_key">ضغط مفتاح</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">حدد جانب بطاقة</string>
     <string name="card_side_question">سؤال</string>

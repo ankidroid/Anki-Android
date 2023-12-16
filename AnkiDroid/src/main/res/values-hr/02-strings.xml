@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Tip:</string>
     <string name="CardEditorTags">Oznake: %1$s</string>
     <string name="CardEditorCards">Karte: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Naziv oznake</string>
     <string name="add_new_filter_tags">Dodaj / filtriraj oznake</string>
     <string name="add_tag">Dodaj oznaku</string>

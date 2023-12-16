@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Тип:</string>
     <string name="CardEditorTags">Етикети:%1$s</string>
     <string name="CardEditorCards">Карти: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Име на етикет</string>
     <string name="add_new_filter_tags">Добавяне/филтър на тагове</string>
     <string name="add_tag">Нов етикет</string>

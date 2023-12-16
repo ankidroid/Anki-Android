@@ -52,6 +52,7 @@
     <string name="CardEditorModel">סוג:</string>
     <string name="CardEditorTags">תגיות: %1$s</string>
     <string name="CardEditorCards">כרטסיות: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">שם התיוג</string>
     <string name="add_new_filter_tags">הוסף/סנן תגיות</string>
     <string name="add_tag">הוסף תג</string>
