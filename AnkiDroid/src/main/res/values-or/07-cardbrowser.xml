@@ -55,12 +55,12 @@
     </plurals>
     <string name="card_browser_all_decks">ସମସ୍ତ ତାସଖଣ୍ଡ</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">ପତ୍ର ବିଲୋପ କରିବା</item>
+        <item quantity="other">ପତ୍ରଗୁଡ଼ିକୁ ବିଲୋପ କରିବା</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">ନୋଟ୍ ବିଲୋପ କରିବା</item>
+        <item quantity="other">ନୋଟଗୁଡ଼ିକୁ ବିଲୋପ କରିବା</item>
     </plurals>
     <string name="card_browser_change_deck">ତାସଖଣ୍ଡ ବଦଳାନ୍ତୁ</string>
     <string name="delete_card_title">ନୋଟ୍ ଵିଲୋପ କରିବେ ତ?</string>
