@@ -100,7 +100,9 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
             return AndroidTtsError.failure(TtsErrorCode.APP_INVALID_VOICE)
         }
 
-        return play(tag, voice)
+        return play(tag, voice).also { result ->
+            Timber.d("TTS result %s", result)
+        }
     }
 
     private suspend fun play(tag: TTSTag, voice: AndroidTtsVoice): TtsCompletionStatus =
