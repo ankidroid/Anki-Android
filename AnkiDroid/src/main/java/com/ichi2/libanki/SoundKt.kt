@@ -76,12 +76,12 @@ fun avRefsToPlayIcons(text: String): String {
         val side = groups[2]
         val index = groups[3]
         val playsound = "playsound:$side:$index"
-        """<a class="replay-button soundLink" href=$playsound>
+        """<a class="replay-button soundLink" href=$playsound><span>
     <svg class="playImage" viewBox="0 0 64 64" version="1.1">
-        <circle cx="32" cy="32" r="29" />
-        <path d="M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z" />
+        <circle cx="32" cy="32" r="29" fill="lightgrey"/>
+        <path d="M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z" fill="black"/>Replay
     </svg>
-</a>"""
+</span></a>"""
     }
 }
 
