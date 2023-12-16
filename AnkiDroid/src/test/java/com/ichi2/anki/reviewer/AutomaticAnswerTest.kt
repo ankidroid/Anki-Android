@@ -118,14 +118,31 @@ class AutomaticAnswerTest {
         runUiThreadTasksIncludingDelayedTasks()
     }
 
-    private fun validAnswer(automaticallyAnswered: AutomaticallyAnswered? = null) = AutomaticAnswer(
-        target = automaticallyAnswered ?: automaticallyAnsweredMock(),
-        settings = AutomaticAnswerSettings(
-            useTimer = true,
-            questionDelaySeconds = 10,
-            answerDelaySeconds = 10
-        )
-    )
+    private fun validAnswer(automaticallyAnswered: AutomaticallyAnswered? = null): AutomaticAnswer {
+        var automaticAnswerHandle: AutomaticAnswer? = null
+
+        val automaticAnswerHandler = object : AutomaticallyAnswered {
+            override fun automaticShowAnswer() {
+                automaticAnswerHandle?.simulateCardFlip()
+                automaticallyAnswered?.automaticShowAnswer()
+            }
+
+            override fun automaticShowQuestion(action: AutomaticAnswerAction) {
+                automaticAnswerHandle?.simulateCardFlip()
+                automaticallyAnswered?.automaticShowQuestion(action)
+            }
+        }
+        return AutomaticAnswer(
+            target = automaticAnswerHandler,
+            settings = AutomaticAnswerSettings(
+                useTimer = true,
+                questionDelaySeconds = 10,
+                answerDelaySeconds = 10
+            )
+        ).apply {
+            automaticAnswerHandle = this
+        }
+    }
 
     private class AutoAnswerMock(var answerShown: Boolean = false, var questionShown: Boolean = false) : AutomaticallyAnswered {
         override fun automaticShowAnswer() {
