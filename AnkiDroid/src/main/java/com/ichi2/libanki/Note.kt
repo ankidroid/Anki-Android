@@ -17,6 +17,7 @@
 
 package com.ichi2.libanki
 
+import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
@@ -119,6 +120,7 @@ class Note : Cloneable {
     }
 
     /** The first card, assuming it exists. */
+    @CheckResult
     fun firstCard(): Card {
         return col.getCard(
             col.db.queryLongScalar(
