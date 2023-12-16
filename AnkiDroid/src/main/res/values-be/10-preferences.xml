@@ -274,6 +274,8 @@
     <string name="binding_add_key">Дадаць кнопку</string>
     <string name="binding_replace_key">Замяніць ключ</string>
     <string name="key_picker_default_press_key">Націсніце кнопку</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберыце бок карткі</string>
     <string name="card_side_question">Пытанне</string>

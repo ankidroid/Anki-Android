@@ -52,6 +52,7 @@
     <string name="CardEditorModel">തരം:</string>
     <string name="CardEditorTags">ടാഗുകൾ‌:%1$s</string>
     <string name="CardEditorCards">കാർഡുകൾ:%1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">ടാഗ് നാമം</string>
     <string name="add_new_filter_tags">ടാഗുകൾ ചേർക്കുക / ഫിൽട്ടർ ചെയ്യുക</string>
     <string name="add_tag">ടാഗ് ചേർക്കുക</string>

@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etichette: %1$s</string>
     <string name="CardEditorCards">Carte : %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Nome etichetta</string>
     <string name="add_new_filter_tags">Aggiungi/filtra etichette</string>
     <string name="add_tag">Aggiungi etichetta</string>

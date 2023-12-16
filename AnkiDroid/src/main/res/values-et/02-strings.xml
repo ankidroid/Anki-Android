@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Tüüp:</string>
     <string name="CardEditorTags">Sildid: %1$s</string>
     <string name="CardEditorCards">Kaardid: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Sildi nimi</string>
     <string name="add_new_filter_tags">Lisa/filtri silte</string>
     <string name="add_tag">Lisa silt</string>

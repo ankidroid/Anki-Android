@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Mengetik:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Kartu: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Nama tag</string>
     <string name="add_new_filter_tags">Tambahkan / filter tag</string>
     <string name="add_tag">Tambahkan tag</string>

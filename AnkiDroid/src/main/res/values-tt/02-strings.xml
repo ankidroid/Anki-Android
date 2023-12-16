@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Төр:</string>
     <string name="CardEditorTags">Тамгалар: %1$s</string>
     <string name="CardEditorCards">Кәртләр: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Тамга исеме</string>
     <string name="add_new_filter_tags">Тамгалар өстәү/фильтрлау</string>
     <string name="add_tag">Тамга кушу</string>

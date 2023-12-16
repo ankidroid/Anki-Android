@@ -52,6 +52,7 @@
     <string name="CardEditorModel">النوع:</string>
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">اسم الوسم</string>
     <string name="add_new_filter_tags">إضافة/فلترة الوسوم</string>
     <string name="add_tag">إضافة وسم</string>

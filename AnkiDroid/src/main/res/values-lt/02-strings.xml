@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Tipas:</string>
     <string name="CardEditorTags">Žymės: %1$s</string>
     <string name="CardEditorCards">Kortelės: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Žymės pavadinimas</string>
     <string name="add_new_filter_tags">Pridėti/filtruoti žymes</string>
     <string name="add_tag">Pridėti žymę</string>

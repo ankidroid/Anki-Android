@@ -267,6 +267,8 @@
     <string name="binding_add_key">添加按键</string>
     <string name="binding_replace_key">替换按键</string>
     <string name="key_picker_default_press_key">按下按键</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">选择卡片正/反面</string>
     <string name="card_side_question">问题</string>

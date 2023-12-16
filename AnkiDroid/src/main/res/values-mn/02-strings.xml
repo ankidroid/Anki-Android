@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Төрөл:</string>
     <string name="CardEditorTags">Шошгонууд:%1$s</string>
     <string name="CardEditorCards">Картнууд: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Шошгоны нэр</string>
     <string name="add_new_filter_tags">Шошго нэмэх/ангилах</string>
     <string name="add_tag">Шошго нэмэх</string>

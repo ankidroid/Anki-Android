@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Uri:</string>
     <string name="CardEditorTags">Mga Tag:%1$s</string>
     <string name="CardEditorCards">Mga Card: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Pangalan ng tag</string>
     <string name="add_new_filter_tags">Magdagdag / mag-filter ng mga tag</string>
     <string name="add_tag">Magdagdag ng tag</string>

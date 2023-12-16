@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Haidus:</string>
     <string name="CardEditorTags">Sokeiniwaurda: %1$s</string>
     <string name="CardEditorCards">Kartos: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Namo sokeiniwaurdis</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
     <string name="add_tag">Biaik sokeiniwaurd</string>

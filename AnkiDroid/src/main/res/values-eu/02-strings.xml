@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Mota:</string>
     <string name="CardEditorTags">Etiketak: %1$s</string>
     <string name="CardEditorCards">Cards: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Etiketaren izena</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
     <string name="add_tag">Etiketa gehitu</string>

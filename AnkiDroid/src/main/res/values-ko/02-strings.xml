@@ -52,6 +52,7 @@
     <string name="CardEditorModel">유형:</string>
     <string name="CardEditorTags">태그: %1$s</string>
     <string name="CardEditorCards">카드: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">태그 이름</string>
     <string name="add_new_filter_tags">태그 추가/필터링</string>
     <string name="add_tag">태그 추가</string>

@@ -52,6 +52,7 @@
     <string name="CardEditorModel">ପ୍ରକାର:</string>
     <string name="CardEditorTags">ଟ୍ୟାଗ୍: %1$s</string>
     <string name="CardEditorCards">ପତ୍ର: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">ଟ୍ୟାଗ୍ ନାମ</string>
     <string name="add_new_filter_tags">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ ଅବା ଶୋଧନ କରନ୍ତୁ</string>
     <string name="add_tag">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ</string>

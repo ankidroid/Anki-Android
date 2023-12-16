@@ -269,6 +269,8 @@
     <string name="binding_add_key">Anahtar ekle</string>
     <string name="binding_replace_key">Tuşu değiştir</string>
     <string name="key_picker_default_press_key">Bir tuşa basın</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartın tarafını seç</string>
     <string name="card_side_question">Soru</string>

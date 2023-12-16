@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Típus:</string>
     <string name="CardEditorTags">Címkék: %1$s</string>
     <string name="CardEditorCards">Címkék: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Címke neve</string>
     <string name="add_new_filter_tags">Címkék hozzáadása/szűrése</string>
     <string name="add_tag">Címke hozzáadása</string>

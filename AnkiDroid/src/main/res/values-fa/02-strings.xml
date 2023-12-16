@@ -52,6 +52,7 @@
     <string name="CardEditorModel">نوع:</string>
     <string name="CardEditorTags">برچسب ها: %1$s</string>
     <string name="CardEditorCards">کارت‌ها: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">نام برچسب</string>
     <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب‌ها</string>
     <string name="add_tag">اضافه نمودن برچسب</string>

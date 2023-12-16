@@ -52,6 +52,7 @@
     <string name="CardEditorModel">ᱯᱨᱚᱠᱟᱨᱺ </string>
     <string name="CardEditorTags">ᱴᱮᱜᱥᱺ%1$s </string>
     <string name="CardEditorCards">ᱠᱟᱰᱺ%1$s </string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">ᱴᱮᱜ ᱧᱩᱛᱩᱢ </string>
     <string name="add_new_filter_tags">ᱥᱮᱞᱮᱫ/ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ </string>
     <string name="add_tag">ᱴᱮᱜ ᱥᱮᱞᱮᱫ ᱢᱮ </string>

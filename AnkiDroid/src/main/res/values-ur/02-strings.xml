@@ -52,6 +52,7 @@
     <string name="CardEditorModel">قسم:</string>
     <string name="CardEditorTags">ٹیگز: %1$s</string>
     <string name="CardEditorCards">کارڈ: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">ٹیگ کا نام</string>
     <string name="add_new_filter_tags">شامل/فلٹر کریں ٹیگ</string>
     <string name="add_tag">ٹیگ شامل کریں</string>

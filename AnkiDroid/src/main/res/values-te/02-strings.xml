@@ -52,6 +52,7 @@
     <string name="CardEditorModel">రకం:</string>
     <string name="CardEditorTags">టాగ్లు:%1$s</string>
     <string name="CardEditorCards">కార్డులు:%1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">ట్యాగ్ పేరు</string>
     <string name="add_new_filter_tags">జోడించు / వడపోత టాగ్లు</string>
     <string name="add_tag">ట్యాగ్ను జోడించండి</string>

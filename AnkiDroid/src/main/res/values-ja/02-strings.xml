@@ -52,6 +52,7 @@
     <string name="CardEditorModel">ノートタイプ:</string>
     <string name="CardEditorTags">タグ: %1$s</string>
     <string name="CardEditorCards">カード: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">タグ名</string>
     <string name="add_new_filter_tags">タグフィルター / 新規タグ追加</string>
     <string name="add_tag">タグを追加</string>

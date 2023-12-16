@@ -269,6 +269,8 @@
     <string name="binding_add_key">Key ᱡᱚᱲᱟᱣ</string>
     <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">ᱢᱤᱫ key ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">ᱠᱟᱰ ᱯᱟᱥᱴᱟ ᱪᱚᱪᱷᱟᱣ ᱢᱮ</string>
     <string name="card_side_question">ᱠᱩᱠᱞᱤ</string>

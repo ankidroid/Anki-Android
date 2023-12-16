@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Növ:</string>
     <string name="CardEditorTags">Etiketlər: %1$s</string>
     <string name="CardEditorCards">Kartlar: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Etiket adı</string>
     <string name="add_new_filter_tags">Etiket əlavə et/filtrlə</string>
     <string name="add_tag">Etiket əlavə et</string>

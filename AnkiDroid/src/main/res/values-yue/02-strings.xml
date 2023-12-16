@@ -52,6 +52,7 @@
     <string name="CardEditorModel">分類:</string>
     <string name="CardEditorTags">標籤: %1$s</string>
     <string name="CardEditorCards">卡牌: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">標名</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
     <string name="add_tag">加入標籤</string>
