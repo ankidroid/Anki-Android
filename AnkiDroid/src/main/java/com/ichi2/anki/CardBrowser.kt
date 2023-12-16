@@ -2114,15 +2114,15 @@ open class CardBrowser :
             val qa = card.renderOutput(reload = true, browser = true)
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
             if (qa.questionText.isEmpty() || qa.answerText.isEmpty()) {
-                val (question_text, answer_text) = card.renderOutput(
+                val (questionText, answerText) = card.renderOutput(
                     reload = true,
                     browser = false
                 )
                 if (qa.questionText.isEmpty()) {
-                    qa.questionText = question_text
+                    qa.questionText = questionText
                 }
                 if (qa.answerText.isEmpty()) {
-                    qa.answerText = answer_text
+                    qa.answerText = answerText
                 }
             }
             // update the original hash map to include rendered question & answer
