@@ -57,7 +57,7 @@ class Previewer : AbstractFlashcardViewer() {
             return
         }
         super.onCreate(savedInstanceState)
-        mCardList = intent.getLongArrayExtra("cardList")!!
+        mCardList = requireNotNull(intent.getLongArrayExtra("cardList")) { "'cardList' required" }
         mIndex = intent.getIntExtra("index", -1)
         if (savedInstanceState != null) {
             mIndex = savedInstanceState.getInt("index", mIndex)
