@@ -2015,7 +2015,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             id = mEditorNote?.id!!
         }
         val intent = ImageOcclusion.getIntent(this@NoteEditor, kind, id, imagePath)
-        launchActivityForResultWithAnimation(intent, requestIOEditorCloser, START)
+        requestIOEditorCloser.launch(intent)
     }
 
     // ----------------------------------------------------------------------------
