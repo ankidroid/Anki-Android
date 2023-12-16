@@ -52,9 +52,10 @@ abstract class TtsPlayer : Closeable {
 
     abstract class TtsError
 
-    data class TtsCompletionStatus(val success: Boolean, val error: TtsError? = null) {
+    data class TtsCompletionStatus(val success: Boolean?, val error: TtsError? = null) {
         companion object {
             fun success() = TtsCompletionStatus(success = true)
+            fun stopped() = TtsCompletionStatus(success = null)
             fun failure(errorCode: TtsError) = TtsCompletionStatus(success = false, errorCode)
         }
     }
