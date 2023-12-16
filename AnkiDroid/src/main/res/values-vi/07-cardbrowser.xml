@@ -53,10 +53,10 @@
     </plurals>
     <string name="card_browser_all_decks">Tất cả bộ thẻ</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="other">Delete cards</item>
+        <item quantity="other">Xóa các thẻ</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="other">Delete notes</item>
+        <item quantity="other">Xoá ghi chú</item>
     </plurals>
     <string name="card_browser_change_deck">Thay đổi bộ thẻ</string>
     <string name="delete_card_title">Xoá ghi chú?</string>

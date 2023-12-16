@@ -92,8 +92,8 @@
         <item>Ερώτηση</item>
         <item>Ετικέτες</item>
         <item>Lapses</item>
-        <item>Reviews</item>
-        <item>Interval</item>
+        <item>Επαναλήψεις</item>
+        <item>Διάστημα</item>
         <item>Ευκολία</item>
         <item>Due</item>
         <item>Card Modified</item>
@@ -113,7 +113,7 @@
     <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
     <string name="discard_unsaved_changes">Close and lose current input?</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_first_field">Το πρώτο πεδίο είναι κενό</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
