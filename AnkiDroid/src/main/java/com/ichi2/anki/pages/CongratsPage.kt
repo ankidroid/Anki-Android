@@ -19,7 +19,7 @@ import android.content.Context
 import android.content.Intent
 
 class CongratsPage : PageFragment() {
-    override val title: Int? = null
+    override val title: String = ""
     override val pageName = "congrats"
     override var webViewClient: PageWebViewClient = PageWebViewClient()
     override var webChromeClient: PageChromeClient = PageChromeClient()

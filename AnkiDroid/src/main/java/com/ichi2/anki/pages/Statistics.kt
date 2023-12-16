@@ -34,7 +34,9 @@ import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.libanki.utils.TimeManager
 
 class Statistics : PageFragment() {
-    override val title = R.string.statistics
+    override val title: String
+        get() = resources.getString(R.string.statistics)
+
     override val pageName = "graphs"
     override var webViewClient = PageWebViewClient()
     override var webChromeClient = PageChromeClient()

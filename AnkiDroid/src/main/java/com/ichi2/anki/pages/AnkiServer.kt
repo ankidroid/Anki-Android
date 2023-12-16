@@ -17,11 +17,15 @@
 
 package com.ichi2.anki.pages
 
+import android.app.Activity
 import androidx.fragment.app.FragmentActivity
+import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.importCsvRaw
 import com.ichi2.anki.importJsonFileRaw
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.searchInBrowser
 import com.ichi2.libanki.*
 import com.ichi2.libanki.sched.computeFsrsWeightsRaw
@@ -30,6 +34,7 @@ import com.ichi2.libanki.sched.evaluateWeightsRaw
 import com.ichi2.libanki.stats.*
 import fi.iki.elonen.NanoHTTPD
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.ByteArrayInputStream
@@ -93,6 +98,35 @@ open class AnkiServer(
             "setWantsAbort" -> CollectionManager.getBackend().setWantsAbortRaw(bytes)
             "evaluateWeights" -> withCol { evaluateWeightsRaw(bytes) }
             "latestProgress" -> CollectionManager.getBackend().latestProgressRaw(bytes)
+            "getImageForOcclusion" -> withCol { getImageForOcclusionRaw(bytes) }
+            "getImageOcclusionNote" -> withCol { getImageOcclusionNoteRaw(bytes) }
+            "getImageForOcclusionFields" -> withCol { getImageOcclusionFieldsRaw(bytes) }
+            "addImageOcclusionNote" -> {
+                val data = withCol {
+                    addImageOcclusionNoteRaw(bytes)
+                }
+                undoableOp { OpChanges.parseFrom(data) }
+                activity.launchCatchingTask {
+                    // Allow time for toast message to appear before closing editor
+                    delay(1000)
+                    activity.setResult(Activity.RESULT_OK)
+                    activity.finish()
+                }
+                data
+            }
+            "updateImageOcclusionNote" -> {
+                val data = withCol {
+                    updateImageOcclusionNoteRaw(bytes)
+                }
+                undoableOp { OpChanges.parseFrom(data) }
+                activity.launchCatchingTask {
+                    // Allow time for toast message to appear before closing editor
+                    delay(1000)
+                    activity.setResult(NoteEditor.RESULT_UPDATED_IO_NOTE)
+                    activity.finish()
+                }
+                data
+            }
             "congratsInfo" -> withCol { congratsInfoRaw(bytes) }
             else -> { throw Exception("unhandled request: $methodName") }
         }

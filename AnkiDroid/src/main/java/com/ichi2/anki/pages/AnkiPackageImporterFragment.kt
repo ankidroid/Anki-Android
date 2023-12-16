@@ -24,8 +24,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.hideShowButtonCss
 
 class AnkiPackageImporterFragment : PageFragment() {
-    override val title: Int
-        get() = R.string.menu_import
+    override val title: String
+        get() = resources.getString(R.string.menu_import)
     override val pageName: String
         get() = "import-page"
     override lateinit var webViewClient: PageWebViewClient

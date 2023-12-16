@@ -20,6 +20,8 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -49,11 +51,13 @@ import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import anki.config.ConfigKey
+import anki.notetypes.StockNotetype
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
@@ -74,6 +78,7 @@ import com.ichi2.anki.noteeditor.FieldState.FieldChangeType
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
+import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
@@ -94,6 +99,7 @@ import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
@@ -133,6 +139,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private var mCardsButton: AppCompatButton? = null
     private var mNoteTypeSpinner: Spinner? = null
     private var mDeckSpinnerSelection: DeckSpinnerSelection? = null
+    private var imageOcclusionButtonsContainer: LinearLayout? = null
+    private var selectImageForOcclusionButton: Button? = null
+    private var editOcclusionsButton: Button? = null
+    private var pasteOcclusionImageButton: Button? = null
 
     // non-null after onCollectionLoaded
     private var mEditorNote: Note? = null
@@ -168,6 +178,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     private var mToggleStickyText: HashMap<Int, String?> = HashMap()
     private val mOnboarding = Onboarding.NoteEditor(this)
+
+    var clipboard: ClipboardManager? = null
 
     private val requestAddLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
@@ -235,6 +247,29 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // reload current card - the template ordinals are possibly different post-edit
                 mCurrentEditedCard = getColUnsafe.getCard(mCurrentEditedCard!!.id)
                 updateCards(mEditorNote!!.notetype)
+            }
+        }
+    )
+
+    private val ioEditorLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) {
+            ImportUtils.getFileCachedCopy(this@NoteEditor, uri)?.let { path ->
+                setupImageOcclusionEditor(path)
+            }
+        }
+    }
+
+    private val requestIOEditorCloser = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        NoteEditorActivityResultCallback { result ->
+            if (result.resultCode != RESULT_CANCELED) {
+                changed = true
+                if (!addNote) {
+                    mReloadRequired = true
+                    closeNoteEditor(RESULT_UPDATED_IO_NOTE, null)
+                }
             }
         }
     )
@@ -402,6 +437,17 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             Timber.i("NoteEditor:: Cards button pressed. Opening template editor")
             showCardTemplateEditor()
         }
+        imageOcclusionButtonsContainer = findViewById(R.id.ImageOcclusionButtonsLayout)
+        editOcclusionsButton = findViewById(R.id.EditOcclusionsButton)
+        selectImageForOcclusionButton = findViewById(R.id.SelectImageForOcclusionButton)
+        pasteOcclusionImageButton = findViewById(R.id.PasteImageForOcclusionButton)
+
+        try {
+            clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        } catch (e: Exception) {
+            Timber.w(e)
+        }
+
         aedictIntent = false
         mCurrentEditedCard = null
         when (caller) {
@@ -444,6 +490,44 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 addNote = true
             }
             else -> {}
+        }
+
+        launchCatchingTask {
+            withCol {
+                addImageOcclusionNotetype()
+            }
+        }
+
+        if (addNote) {
+            editOcclusionsButton?.visibility = View.GONE
+            selectImageForOcclusionButton?.setOnClickListener {
+                ioEditorLauncher.launch("image/*")
+            }
+            pasteOcclusionImageButton?.text = TR.notetypesIoPasteImageFromClipboard()
+            pasteOcclusionImageButton?.setOnClickListener {
+                // TODO: Support all extensions
+                //  See https://github.com/ankitects/anki/blob/6f3550464d37aee1b8b784e431cbfce8382d3ce7/rslib/src/image_occlusion/imagedata.rs#L154
+                if (ClipboardUtil.hasImage(clipboard)) {
+                    val uri = ClipboardUtil.getImageUri(clipboard)
+                    val i = Intent().apply {
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        clipData = ClipData.newUri(contentResolver, uri.toString(), uri)
+                    }
+                    ImportUtils.getFileCachedCopy(this, i)?.let { path ->
+                        setupImageOcclusionEditor(path)
+                    }
+                } else {
+                    showSnackbar(TR.editingNoImageFoundOnClipboard())
+                }
+            }
+        } else {
+            selectImageForOcclusionButton?.visibility = View.GONE
+            pasteOcclusionImageButton?.visibility = View.GONE
+            editOcclusionsButton?.visibility = View.VISIBLE
+            editOcclusionsButton?.text = resources.getString(R.string.edit_occlusions)
+            editOcclusionsButton?.setOnClickListener {
+                setupImageOcclusionEditor()
+            }
         }
 
         // Note type Selector
@@ -845,19 +929,21 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 mCurrentEditedCard!!.did = deckId
                 modified = true
             }
-            // now load any changes to the fields from the form
-            for (f in mEditFields!!) {
-                modified = modified or updateField(f)
-            }
-            // added tag?
-            for (t in mSelectedTags!!) {
-                modified = modified || !mEditorNote!!.hasTag(t)
-            }
-            // removed tag?
-            modified = modified || mEditorNote!!.tags.size > mSelectedTags!!.size
-            if (modified) {
-                mEditorNote!!.setTagsFromStr(tagsAsString(mSelectedTags!!))
-                changed = true
+            if (!currentNotetypeIsImageOcclusion()) {
+                // now load any changes to the fields from the form
+                for (f in mEditFields!!) {
+                    modified = modified or updateField(f)
+                }
+                // added tag?
+                for (t in mSelectedTags!!) {
+                    modified = modified || !mEditorNote!!.hasTag(t)
+                }
+                // removed tag?
+                modified = modified || mEditorNote!!.tags.size > mSelectedTags!!.size
+                if (modified) {
+                    mEditorNote!!.setTagsFromStr(tagsAsString(mSelectedTags!!))
+                    changed = true
+                }
             }
             closeNoteEditor()
         }
@@ -1224,6 +1310,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         val editLines = mFieldState.loadFieldEditLines(type)
         mFieldsLayoutContainer!!.removeAllViews()
         mCustomViewIds.clear()
+        if (currentNotetypeIsImageOcclusion()) {
+            setImageOcclusionButton()
+            return
+        } else {
+            imageOcclusionButtonsContainer?.visibility = View.GONE
+            mFieldsLayoutContainer?.visibility = View.VISIBLE
+        }
+
         mEditFields = LinkedList()
 
         var previous: FieldEditLine? = null
@@ -1897,6 +1991,33 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     val fieldsFromSelectedNote: Array<Array<String>>
         get() = mEditorNote!!.items()
 
+    private fun currentNotetypeIsImageOcclusion(): Boolean {
+        try {
+            return currentlySelectedNotetype?.getInt("originalStockKind") == StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
+        } catch (j: JSONException) {
+            return false
+        }
+    }
+
+    private fun setImageOcclusionButton() {
+        imageOcclusionButtonsContainer?.visibility = View.VISIBLE
+        mFieldsLayoutContainer?.visibility = View.GONE
+    }
+
+    private fun setupImageOcclusionEditor(imagePath: String = "") {
+        val kind: String
+        val id: Long
+        if (addNote) {
+            kind = "add"
+            id = 0
+        } else {
+            kind = "edit"
+            id = mEditorNote?.id!!
+        }
+        val intent = ImageOcclusion.getIntent(this@NoteEditor, kind, id, imagePath)
+        requestIOEditorCloser.launch(intent)
+    }
+
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
@@ -2162,6 +2283,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         const val CALLER_CARDBROWSER_ADD = 7
         const val CALLER_NOTEEDITOR = 8
         const val CALLER_NOTEEDITOR_INTENT_ADD = 10
+
+        const val RESULT_UPDATED_IO_NOTE = 11
 
         // preferences keys
         const val PREF_NOTE_EDITOR_SCROLL_TOOLBAR = "noteEditorScrollToolbar"
