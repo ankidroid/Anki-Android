@@ -2360,6 +2360,7 @@ abstract class AbstractFlashcardViewer :
         private val onPageFinishedCallback: OnPageFinishedCallback? = null
     ) : WebViewClient() {
         private var pageFinishedFired = true
+        private val pageRenderStopwatch = Stopwatch.init("page render")
 
         @TargetApi(Build.VERSION_CODES.N)
         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
@@ -2378,6 +2379,7 @@ abstract class AbstractFlashcardViewer :
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            pageRenderStopwatch.reset()
             pageFinishedFired = false
         }
 
@@ -2659,6 +2661,7 @@ abstract class AbstractFlashcardViewer :
                 return
             }
             pageFinishedFired = true
+            pageRenderStopwatch.logElapsed()
             Timber.d("Java onPageFinished triggered: %s", url)
             // onPageFinished will be called multiple times if the WebView redirects by setting window.location.href
             onPageFinishedCallback?.onPageFinished()
