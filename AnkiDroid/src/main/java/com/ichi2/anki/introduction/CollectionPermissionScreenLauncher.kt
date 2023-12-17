@@ -53,3 +53,8 @@ interface CollectionPermissionScreenLauncher {
         return false
     }
 }
+
+fun AnkiActivity.hasCollectionStoragePermissions(): Boolean {
+    val ankiDroidFolder = selectAnkiDroidFolder(this)
+    return ankiDroidFolder.hasRequiredPermissions(this)
+}

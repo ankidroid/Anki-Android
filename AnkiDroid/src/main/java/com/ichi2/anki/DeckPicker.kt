@@ -89,6 +89,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
+import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
@@ -118,7 +119,6 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
-import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.filterNotNull
@@ -1003,7 +1003,7 @@ open class DeckPicker :
 
     fun refreshState() {
         // Due to the App Introduction, this may be called before permission has been granted.
-        if (mSyncOnResume && hasStorageAccessPermission(this)) {
+        if (mSyncOnResume && hasCollectionStoragePermissions()) {
             Timber.i("Performing Sync on Resume")
             sync()
             mSyncOnResume = false
