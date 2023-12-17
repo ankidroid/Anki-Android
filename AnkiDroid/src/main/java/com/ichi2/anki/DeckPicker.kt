@@ -88,6 +88,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
+import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
@@ -104,7 +105,6 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
-import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
@@ -179,7 +179,8 @@ open class DeckPicker :
     ImportColpkgListener,
     BaseSnackbarBuilderProvider,
     ApkgImportResultLauncherProvider,
-    CsvImportResultLauncherProvider {
+    CsvImportResultLauncherProvider,
+    CollectionPermissionScreenLauncher {
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
@@ -248,9 +249,7 @@ open class DeckPicker :
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
 
-    private val permissionScreenLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        ActivityCompat.recreate(this)
-    }
+    override val permissionScreenLauncher = recreateActivityResultLauncher()
 
     private val reviewLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
@@ -561,10 +560,7 @@ open class DeckPicker :
      *   that may have been dismissed. Make this run only once?
      */
     private fun handleStartup() {
-        val ankiDroidFolder = selectAnkiDroidFolder(this)
-        if (!ankiDroidFolder.hasRequiredPermissions(this)) {
-            Timber.i("postponing startup code - dialog shown")
-            permissionScreenLauncher.launch(PermissionsActivity.getIntent(this, ankiDroidFolder.permissionSet))
+        if (collectionPermissionScreenWasOpened()) {
             return
         }
 
