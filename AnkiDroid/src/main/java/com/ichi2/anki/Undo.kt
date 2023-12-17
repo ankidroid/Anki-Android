@@ -40,9 +40,7 @@ suspend fun FragmentActivity.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH
         } else {
             TR.undoActionUndone(changes.operation)
         }
-        showSnackbar(message, duration) {
-//            snackbar = this
-        }
+        showSnackbar(message, duration)
     }
 //    return snackbar
 }
