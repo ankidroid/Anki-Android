@@ -27,6 +27,8 @@ import timber.log.Timber
 
 /**
  * Base class for displaying Anki HTML pages
+ *
+ * @see [PagesActivity]
  */
 abstract class PageFragment : Fragment() {
     abstract val title: String
