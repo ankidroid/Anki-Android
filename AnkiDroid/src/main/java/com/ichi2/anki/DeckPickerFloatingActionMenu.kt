@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.ui.DoubleTapListener
+import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
 class DeckPickerFloatingActionMenu(
@@ -66,6 +67,7 @@ class DeckPickerFloatingActionMenu(
         mLinearLayout.alpha = 0.5f
         mStudyOptionsFrame?.let { it.alpha = 0.5f }
         isFABOpen = true
+        @NeedsTest("Issue number #14470")
         if (deckPicker.baseSnackBar?.isShown == true) deckPicker.baseSnackBar?.dismiss()
         if (createDeckSnackBar?.isShown == true) createDeckSnackBar?.dismiss()
 
