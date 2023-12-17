@@ -11,6 +11,10 @@
         <item name="colorPrimaryContainer">@color/white</item> <!-- Switch thumb color when disabled and being pressed -->
         <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
 
+        <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
+        <item name="colorSurfaceContainer">@color/faded_primary</item>
+        <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
+
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="android:colorBackground">@android:color/white</item>

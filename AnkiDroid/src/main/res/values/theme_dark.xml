@@ -24,6 +24,10 @@
         <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:windowBackground">@color/material_theme_grey</item>
+
+        <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
+        <item name="colorSurfaceContainer">@color/faded_primary</item>
+        <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
         <!-- Widget colors -->
         <item name="widgetColorActivated">?attr/colorAccent</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
