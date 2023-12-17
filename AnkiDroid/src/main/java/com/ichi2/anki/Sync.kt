@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
@@ -172,6 +173,7 @@ fun MyAccount.handleNewLogin(username: String, password: String) {
             throw exc
         }
         updateLogin(baseContext, username, auth.hkey)
+        setResult(RESULT_OK)
         finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
     }
 }
