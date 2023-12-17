@@ -23,6 +23,8 @@ import android.view.View
 import android.view.View.GONE
 import androidx.lifecycle.Lifecycle
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
+import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
 /**
@@ -42,10 +44,18 @@ import timber.log.Timber
  *
  * TODO: Move this to a fragment
  */
-class LoginActivity : MyAccount() {
+@NeedsTest("14650: collection permissions are required for this screen to be usable")
+class LoginActivity : MyAccount(), CollectionPermissionScreenLauncher {
+
+    override val permissionScreenLauncher = recreateActivityResultLauncher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // LoginActivity can be opened from IntroductionActivity, so we need permissions
+        if (collectionPermissionScreenWasOpened()) {
+            return
+        }
 
         findViewById<View>(R.id.sign_up_button)?.visibility = GONE
         findViewById<View>(R.id.no_account_text)?.visibility = GONE
