@@ -371,11 +371,14 @@ open class DeckPicker :
 
         // handle the first load: display the app introduction
         if (!hasShownAppIntro()) {
+            Timber.i("Displaying app intro")
             val appIntro = Intent(this, IntroductionActivity::class.java)
             appIntro.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivityWithoutAnimation(appIntro)
             finish() // calls onDestroy() immediately
             return
+        } else {
+            Timber.d("Not displaying app intro")
         }
         if (intent.hasExtra(INTENT_SYNC_FROM_LOGIN)) {
             mSyncOnResume = true
@@ -469,20 +472,7 @@ open class DeckPicker :
     }
 
     private fun hasShownAppIntro(): Boolean {
-        val prefs = this.sharedPrefs()
-
-        // if moving from 2.15 to 2.16 then we do not want to show the intro
-        // remove this after ~2.17 and default to 'false' if the pref is not set
-        if (!prefs.contains(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN)) {
-            return if (!InitialActivity.wasFreshInstall(prefs)) {
-                prefs.edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
-                true
-            } else {
-                false
-            }
-        }
-
-        return prefs.getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
+        return this.sharedPrefs().getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
     }
 
     /**
