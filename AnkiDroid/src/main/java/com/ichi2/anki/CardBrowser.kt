@@ -58,6 +58,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
+import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
@@ -83,7 +84,6 @@ import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
-import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Job
@@ -397,7 +397,8 @@ open class CardBrowser :
         mTagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         mExportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
         super.onCreate(savedInstanceState)
-        if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this) && !Permissions.isExternalStorageManagerCompat()) {
+        if (wasLoadedFromExternalTextActionItem() && !hasCollectionStoragePermissions()) {
+            // we need to do this as DeckPicker still contains app init logic/upgrade logic
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
             showThemedToast(
                 this,
@@ -816,11 +817,11 @@ open class CardBrowser :
         // Maybe we were called from ACTION_PROCESS_TEXT.
         // In that case we already fill in the search.
         if (Intent.ACTION_PROCESS_TEXT == intent.action) {
+            intent.action = Intent.ACTION_DEFAULT
             val search = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)
             if (!search.isNullOrEmpty()) {
                 Timber.i("CardBrowser :: Called with search intent: %s", search.toString())
-                mSearchView!!.setQuery(search, true)
-                intent.action = Intent.ACTION_DEFAULT
+                searchWithFilterQuery(search.toString())
             }
         }
         mPreviewItem = menu.findItem(R.id.action_preview)
