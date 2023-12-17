@@ -22,6 +22,7 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.edit
+import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.*
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleCollectionSetupOption
 import com.ichi2.anki.preferences.sharedPrefs
@@ -30,8 +31,12 @@ import timber.log.Timber
 
 /**
  * App introduction for new users.
- * TODO: Background of introduction_layout does not display on API 25 emulator: https://github.com/ankidroid/Anki-Android/pull/12033#issuecomment-1228429130
+ *
+ * Links to [LoginActivity] ("Sync from AnkiWeb") or [DeckPicker] ("Get Started")
+ *
+ * @see SetupCollectionFragment
  */
+// TODO: Background of introduction_layout does not display on API 25 emulator: https://github.com/ankidroid/Anki-Android/pull/12033#issuecomment-1228429130
 @NeedsTest("Ensure that we can get here on first run without an exception dialog shown")
 class IntroductionActivity : AnkiActivity() {
 
