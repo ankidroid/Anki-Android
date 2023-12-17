@@ -1,34 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-Notes about themes:
 
-- We can't use attributes inside a drawable, so it is necessary to have separate drawables
-(where themed colors are defined inside) for each theme.
-See Android bug https://code.google.com/p/android/issues/detail?id=26251
-- Reviewer hard button also serves as the style for the Show Answer button
-- textColorPrimary changes: navdraw text, edittext text
-- textColorSecondary changes: navdraw icon shading, edittext underline, scroll bar
-- windowBackground colors the area under the decklist (and possibly other things) on older
-APIs. It's visible when there aren't enough decks to fill the screen.
--->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
-    <color name="theme_light_primary">@color/material_light_blue_500</color>
-    <color name="theme_light_primary_dark">@color/material_light_blue_700</color>
-    <color name="theme_light_primary_light">@color/material_light_blue_100</color>
-    <color name="theme_light_accent">@color/material_blue_grey_700</color>
-    <color name="theme_light_primary_text">@color/black</color>
-    <color name="theme_light_secondary_text">@color/material_grey_700</color>
-    <color name="theme_light_row_current">#ececec</color>
-    <color name="theme_light_drawer_row_current">#E8E8E8</color>
-    <color name="theme_light_drawer_item">#DE000000</color>
-
     <style name="Theme_Light" parent="@style/Theme.Material3.Light.NoActionBar">
         <!-- Android colors -->
-        <item name="colorPrimary">@color/theme_light_primary</item>
-        <item name="colorPrimaryDark">@color/theme_light_primary_dark</item>
+        <item name="colorPrimary">@color/material_light_blue_500</item>
+        <item name="colorPrimaryDark">@color/material_light_blue_700</item>
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black</item>
-        <item name="colorAccent">@color/theme_light_accent</item>
+        <item name="colorAccent">@color/material_blue_grey_700</item>
         <item name="colorPrimaryContainer">@color/white</item> <!-- Switch thumb color when disabled and being pressed -->
         <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
 
@@ -53,13 +32,13 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionBarTextColor">@color/white</item>
-        <item name="actionBarPopupTextColor">@color/theme_light_primary_text</item>
-        <item name="actionModeBackground">@color/theme_light_primary</item>
+        <item name="actionBarPopupTextColor">?android:attr/textColor</item>
+        <item name="actionModeBackground">?attr/colorPrimary</item>
         <!-- Tab layout -->
-        <item name="tabLayoutBackgroundColor">@color/theme_light_primary</item>
+        <item name="tabLayoutBackgroundColor">?attr/colorPrimary</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
-        <item name="currentDeckBackgroundColor">@color/theme_light_row_current</item>
+        <item name="currentDeckBackgroundColor">#ececec</item>
         <item name="dynDeckColor">#2222bb</item>
         <item name="deckDivider">@drawable/divider</item>
         <item name="expandRef">@drawable/ic_chevron_right_black</item>
@@ -70,7 +49,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="reviewCountColor">@color/material_green_700</item>
         <item name="zeroCountColor">#1f000000</item>
         <!-- Reviewer colors -->
-        <item name="topBarColor">@color/theme_light_primary_light</item>
+        <item name="topBarColor">@color/material_light_blue_100</item>
         <item name="maxTimerColor">@color/material_red_500</item>
         <item name="answerButtonTextColor">@color/white</item>
         <item name="againButtonTextColor">@color/white</item>
