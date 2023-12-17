@@ -101,12 +101,8 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
     }
 
     private fun execute(gesture: Gesture?): Boolean? {
-        val command = mapGestureToCommand(gesture)
-        return if (command != null) {
-            processor?.executeCommand(command, gesture)
-        } else {
-            false
-        }
+        val command = mapGestureToCommand(gesture) ?: return false
+        return processor?.executeCommand(command, gesture)
     }
 
     private fun mapGestureToCommand(gesture: Gesture?): ViewerCommand? {
@@ -136,14 +132,8 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
      * @return `false` if none of the gestures are bound. `true` otherwise
      */
     fun isBound(vararg gestures: Gesture): Boolean {
-        if (!isEnabled) {
-            return false
-        }
-        for (gesture in gestures) {
-            if (mapGestureToCommand(gesture) != null) {
-                return true
-            }
-        }
-        return false
+        if (!isEnabled) return false
+
+        return gestures.any { mapGestureToCommand(it) != null }
     }
 }
