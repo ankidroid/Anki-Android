@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.test.fail
 
 abstract class InstrumentedTest {
-    protected val col: Collection
+    internal val col: Collection
         get() = CollectionHelper.instance.getColUnsafe(testContext)!!
 
     @get:Throws(IOException::class)
@@ -153,7 +153,7 @@ abstract class InstrumentedTest {
     }
 
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
-    protected fun addNoteUsingBasicModel(front: String, back: String): Note {
+    internal fun addNoteUsingBasicModel(front: String = "Front", back: String = "Back"): Note {
         return addNoteUsingModelName("Basic", front, back)
     }
 

@@ -61,12 +61,11 @@ class PagesActivity : AnkiActivity() {
         val pageFragment = getInstanceFromClassName<PageFragment>(pageClassName).apply {
             arguments = intent.getBundleExtra(EXTRA_PAGE_ARGS)
         }
+        supportFragmentManager.addFragmentOnAttachListener { _, _ -> this.title = pageFragment.title }
         supportFragmentManager.commit {
             replace(R.id.page_container, pageFragment)
         }
-        title = pageFragment.title
     }
-
     override fun onDestroy() {
         super.onDestroy()
         /** Stop running the server if the activity is destroyed.
