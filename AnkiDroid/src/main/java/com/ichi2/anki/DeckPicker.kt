@@ -381,6 +381,7 @@ open class DeckPicker :
             Timber.d("Not displaying app intro")
         }
         if (intent.hasExtra(INTENT_SYNC_FROM_LOGIN)) {
+            Timber.d("launched from introduction activity login: syncing")
             mSyncOnResume = true
         }
 
