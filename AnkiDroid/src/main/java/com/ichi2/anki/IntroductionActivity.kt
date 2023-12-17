@@ -35,8 +35,10 @@ import timber.log.Timber
 @NeedsTest("Ensure that we can get here on first run without an exception dialog shown")
 class IntroductionActivity : AnkiActivity() {
 
+    @NeedsTest("ensure this is called when the activity ends")
     private val onLoginResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
+            Timber.i("login successful, opening deck picker to sync")
             startDeckPicker(RESULT_SYNC_PROFILE)
         } else {
             Timber.i("login was not successful")
