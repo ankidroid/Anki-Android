@@ -170,7 +170,6 @@ abstract class AbstractFlashcardViewer :
     // Preferences from the collection
     private var mShowNextReviewTime = false
     private var mIsSelecting = false
-    private var mTouchStarted = false
     private var mInAnswer = false
     private var mAnswerSoundsAdded = false
 
@@ -2143,9 +2142,6 @@ abstract class AbstractFlashcardViewer :
         }
 
         override fun onSingleTapUp(e: MotionEvent): Boolean {
-            if (mTouchStarted) {
-                mTouchStarted = false
-            }
             return false
         }
 
