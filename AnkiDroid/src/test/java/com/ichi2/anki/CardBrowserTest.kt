@@ -30,6 +30,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
+import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.libanki.CardId
@@ -43,8 +44,10 @@ import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.OS
 import com.ichi2.testutils.getSharedPrefs
-import com.ichi2.testutils.withNoWritePermission
 import com.ichi2.ui.FixedTextView
+import io.mockk.every
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -358,8 +361,13 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     fun startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
-        withNoWritePermission {
-            val inputIntent = Intent("android.intent.action.PROCESS_TEXT")
+        val inputIntent = Intent("android.intent.action.PROCESS_TEXT")
+
+        val mockedMethod = AnkiActivity::hasCollectionStoragePermissions
+        try {
+            mockkStatic(mockedMethod)
+
+            every { any<AnkiActivity>().hasCollectionStoragePermissions() } returns false
 
             val browserController =
                 Robolectric.buildActivity(CardBrowser::class.java, inputIntent).create()
@@ -381,6 +389,8 @@ class CardBrowserTest : RobolectricTest() {
                 shadowActivity.resultCode,
                 equalTo(Activity.RESULT_CANCELED)
             )
+        } finally {
+            unmockkStatic(mockedMethod)
         }
     }
 
