@@ -33,6 +33,8 @@ import java.io.Serializable
 
 /**
  * Browse AnkiWeb shared decks with the functionality to download and import them.
+ *
+ * @see SharedDecksDownloadFragment
  */
 class SharedDecksActivity : AnkiActivity() {
 
