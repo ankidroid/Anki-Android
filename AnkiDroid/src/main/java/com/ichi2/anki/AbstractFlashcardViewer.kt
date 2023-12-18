@@ -2089,9 +2089,6 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal open inner class MyGestureDetector : SimpleOnGestureListener() {
-        /** Whether we need to wait for confirmation that a tap is not a double tap */
-        private val waitForDoubleTap get() = mGestureProcessor.isBound(Gesture.DOUBLE_TAP)
-
         override fun onFling(
             e1: MotionEvent?,
             e2: MotionEvent,
@@ -2144,17 +2141,11 @@ abstract class AbstractFlashcardViewer :
             return true
         }
 
-        override fun onDown(e: MotionEvent): Boolean {
-            if (waitForDoubleTap) return super.onDown(e)
-            return handleTap(e)
+        override fun onSingleTapUp(e: MotionEvent): Boolean {
+            return false
         }
 
         override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-            if (!waitForDoubleTap) return super.onSingleTapConfirmed(e)
-            return handleTap(e)
-        }
-
-        private fun handleTap(e: MotionEvent): Boolean {
             // Go back to immersive mode if the user had temporarily exited it (and ignore the tap gesture)
             if (onSingleTap()) {
                 return true
