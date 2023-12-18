@@ -28,6 +28,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
+import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
 import java.io.Serializable
 
@@ -51,6 +53,8 @@ class SharedDecksActivity : AnkiActivity() {
      * an extra entry in the history since the previous page would not get cleared.
      */
     private val mWebViewClient = object : WebViewClient() {
+        private var redirectTimes = 0
+
         override fun onPageFinished(view: WebView?, url: String?) {
             // Clear history if mShouldHistoryBeCleared is true and set it to false
             if (mShouldHistoryBeCleared) {
@@ -58,6 +62,34 @@ class SharedDecksActivity : AnkiActivity() {
                 mShouldHistoryBeCleared = false
             }
             super.onPageFinished(view, url)
+        }
+
+        override fun onReceivedHttpError(
+            view: WebView?,
+            request: WebResourceRequest?,
+            errorResponse: WebResourceResponse?
+        ) {
+            super.onReceivedHttpError(view, request, errorResponse)
+
+            if (errorResponse?.statusCode != 429) return
+            // "Please log in to download more decks." - on clicking "Download"
+            // "Please log in to perform more searches" - on searching
+
+            // TODO: the result of login is typically redirecting the user to their decks
+            // this should be improved
+
+            showSnackbar(R.string.shared_decks_login_required, LENGTH_INDEFINITE) {
+                if (isLoggedIn()) return@showSnackbar
+                setAction(R.string.sign_up) {
+                    mWebView.loadUrl(getString(R.string.shared_decks_sign_up_url))
+                }
+            }
+            if (redirectTimes++ < 3) {
+                Timber.i("HTTP 429, redirecting to login")
+                mWebView.loadUrl(getString(R.string.shared_decks_login_url))
+            } else {
+                Timber.w("HTTP 429 redirect limit exceeded, only displaying message")
+            }
         }
 
         override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
