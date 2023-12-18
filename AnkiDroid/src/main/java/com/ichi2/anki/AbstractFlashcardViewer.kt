@@ -1225,7 +1225,7 @@ abstract class AbstractFlashcardViewer :
      * Focuses the appropriate field for an answer
      * And allows keyboard shortcuts to go to the default handlers.
      */
-    private fun focusAnswerCompletionField() {
+    private fun focusAnswerCompletionField() = runOnUiThread {
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
         if (typeAnswer?.autoFocusEditText() == true) {
