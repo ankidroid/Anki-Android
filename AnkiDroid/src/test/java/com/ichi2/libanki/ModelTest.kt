@@ -471,10 +471,6 @@ class NotetypeTest : JvmTest() {
         map = HashMap()
         map[0] = null
         map[1] = 1
-        // if (isWin) {
-        //     // The low precision timer on Windows reveals a race condition
-        //     time.sleep(0.05);
-        // }
         col.notetypes.change(basic, note.id, basic, noOp, map)
         note.load()
         c0.load()
