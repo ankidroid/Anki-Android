@@ -45,7 +45,7 @@ import kotlin.math.abs
 
 /**
  * Used when a download is captured from AnkiWeb shared decks WebView.
- * Only for downloads started via SharedDecksActivity.
+ * Only for downloads started via [SharedDecksActivity].
  *
  * Only one download is supported at a time, since importing multiple decks
  * simultaneously is not supported.
