@@ -47,8 +47,6 @@ class PeripheralKeymapTest {
     }
 
     private class MockReviewerUi : ReviewerUi {
-        override val isControlBlocked = false
-
         override val isDisplayingAnswer: Boolean
             get() = false
     }

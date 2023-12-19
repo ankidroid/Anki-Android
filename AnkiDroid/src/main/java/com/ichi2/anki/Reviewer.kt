@@ -1155,9 +1155,6 @@ open class Reviewer :
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        if (isControlBlocked && which !== ViewerCommand.EXIT) {
-            return false
-        }
         when (which) {
             ViewerCommand.TOGGLE_FLAG_RED -> {
                 toggleFlag(Flag.RED)
@@ -1418,7 +1415,7 @@ open class Reviewer :
      */
     @KotlinCleanup("mCurrentCard handling")
     private fun suspendNoteAvailable(): Boolean {
-        return if (currentCard == null || isControlBlocked) {
+        return if (currentCard == null) {
             false
         } else {
             getColUnsafe.db.queryScalar(
@@ -1432,7 +1429,7 @@ open class Reviewer :
 
     @KotlinCleanup("mCurrentCard handling")
     private fun buryNoteAvailable(): Boolean {
-        return if (currentCard == null || isControlBlocked) {
+        return if (currentCard == null) {
             false
         } else {
             getColUnsafe.db.queryScalar(

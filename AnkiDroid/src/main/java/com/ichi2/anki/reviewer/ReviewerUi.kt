@@ -17,6 +17,5 @@
 package com.ichi2.anki.reviewer
 
 interface ReviewerUi {
-    val isControlBlocked: Boolean
     val isDisplayingAnswer: Boolean
 }
