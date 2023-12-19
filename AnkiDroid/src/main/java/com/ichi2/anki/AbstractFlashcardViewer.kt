@@ -1683,30 +1683,6 @@ abstract class AbstractFlashcardViewer :
         invalidateOptionsMenu()
     }
 
-    /**
-     * @param quick Whether we expect the control to come back quickly
-     */
-    @VisibleForTesting
-    protected open fun blockControls(quick: Boolean) {
-        controlBlocked = if (quick) {
-            ControlBlock.QUICK
-        } else {
-            ControlBlock.SLOW
-        }
-        mCardFrame!!.isEnabled = false
-        flipCardLayout!!.isEnabled = false
-        mTouchLayer!!.visibility = View.INVISIBLE
-        mInAnswer = true
-        easeButton1!!.blockBasedOnEase(mCurrentEase)
-        easeButton2!!.blockBasedOnEase(mCurrentEase)
-        easeButton3!!.blockBasedOnEase(mCurrentEase)
-        easeButton4!!.blockBasedOnEase(mCurrentEase)
-        if (typeAnswer!!.validForEditText()) {
-            answerField!!.isEnabled = false
-        }
-        invalidateOptionsMenu()
-    }
-
     fun buryCard(): Boolean {
         launchCatchingTask {
             withProgress {

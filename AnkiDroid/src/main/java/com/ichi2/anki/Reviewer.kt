@@ -549,13 +549,6 @@ open class Reviewer :
         super.unblockControls()
     }
 
-    public override fun blockControls(quick: Boolean) {
-        if (prefWhiteboard && whiteboard != null) {
-            whiteboard!!.isEnabled = false
-        }
-        super.blockControls(quick)
-    }
-
     override fun closeReviewer(result: Int) {
         // Stop the mic recording if still pending
         audioView?.notifyStopRecord()
