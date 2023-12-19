@@ -369,4 +369,5 @@
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Asenna
     </string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">       Teksti puheeksi -asetusten avaaminen ei onnistunut    </string>
+    <string name="shared_decks_login_required">Please log in to download more decks</string>
 </resources>

@@ -384,4 +384,5 @@
     </string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Nepodařilo se otevřít nastavení převodu textu na řeč
     </string>
+    <string name="shared_decks_login_required">Please log in to download more decks</string>
 </resources>
