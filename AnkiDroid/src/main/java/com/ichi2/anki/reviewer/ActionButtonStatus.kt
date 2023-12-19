@@ -25,7 +25,7 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.HashUtil.hashMapInit
 
 // loads of unboxing issues, which are safe
-class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
+class ActionButtonStatus {
     /**
      * Custom button allocation
      */

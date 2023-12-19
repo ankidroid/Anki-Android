@@ -151,7 +151,7 @@ open class Reviewer :
     // Preferences from the collection
     private var mShowRemainingCardCount = false
     private var stopTimerOnAnswer = false
-    private val mActionButtons = ActionButtons(this)
+    private val mActionButtons = ActionButtons()
     private lateinit var mToolbar: Toolbar
 
     @VisibleForTesting
