@@ -16,14 +16,10 @@
 package com.ichi2.anki.testutil
 
 import com.ichi2.anki.reviewer.ReviewerUi
-import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 
 class MockReviewerUi : ReviewerUi {
     override var isDisplayingAnswer = false
         private set
-
-    override val controlBlocked: ControlBlock?
-        get() = null
 
     override val isControlBlocked: Boolean = false
 

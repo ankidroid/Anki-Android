@@ -75,7 +75,6 @@ import com.ichi2.anki.reviewer.*
 import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.DEFAULT
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
-import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.services.migrationServiceWhileStartedOrNull
@@ -252,9 +251,6 @@ abstract class AbstractFlashcardViewer :
 
     /** Lock to allow thread-safe regeneration of mCard  */
     private val mCardLock: ReadWriteLock = ReentrantReadWriteLock()
-
-    /** whether controls are currently blocked, and how long we expect them to be  */
-    open var controlBlocked = ControlBlock.SLOW
 
     /** Preference: Whether the user wants press back twice to return to the main screen"  */
     private var mExitViaDoubleTapBack = false
@@ -1668,7 +1664,6 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun unblockControls() {
-        controlBlocked = ControlBlock.UNBLOCKED
         mCardFrame!!.isEnabled = true
         flipCardLayout?.isEnabled = true
         easeButton1?.unblockBasedOnEase(mCurrentEase)
@@ -2675,7 +2670,7 @@ abstract class AbstractFlashcardViewer :
         get() = displayAnswer
 
     open val isControlBlocked: Boolean
-        get() = controlBlocked !== ControlBlock.UNBLOCKED
+        get() = false
 
     internal fun showTagsDialog() {
         val tags = ArrayList(getColUnsafe.tags.all())

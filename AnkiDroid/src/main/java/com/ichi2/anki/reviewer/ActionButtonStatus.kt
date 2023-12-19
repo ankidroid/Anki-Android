@@ -83,11 +83,7 @@ class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
                     expect the next card to take time to arrive.
                     */
                     val mutableIcon = icon.mutate()
-                    if (reviewerUi.controlBlocked == ReviewerUi.ControlBlock.SLOW) {
-                        mutableIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
-                    } else {
-                        mutableIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
-                    }
+                    mutableIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 }
             } else {
                 menu.findItem(itemId).isVisible = false
