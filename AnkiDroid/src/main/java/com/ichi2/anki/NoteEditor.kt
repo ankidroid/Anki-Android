@@ -650,7 +650,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         when (keyCode) {
             KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER -> if (event.isCtrlPressed) {
-                launchCatchingTask { saveNote() }
+                // disable it in case of image occlusion
+                if (!currentNotetypeIsImageOcclusion()) launchCatchingTask { saveNote() }
             }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
@@ -995,6 +996,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
             }
         }
+        menu.findItem(R.id.action_save).isVisible = !currentNotetypeIsImageOcclusion()
         menu.findItem(R.id.action_show_toolbar).isChecked =
             !shouldHideToolbar()
         menu.findItem(R.id.action_capitalize).isChecked =
@@ -2025,6 +2027,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
             // If a new column was selected then change the key used to map from mCards to the column TextView
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
+            invalidateMenu()
             val oldModelId = getColUnsafe.notetypes.current().getLong("id")
             val newId = mAllModelIds!![pos]
             Timber.i("Changing note type to '%d", newId)
