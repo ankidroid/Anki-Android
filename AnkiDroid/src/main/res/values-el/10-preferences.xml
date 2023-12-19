@@ -59,7 +59,7 @@
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Επανάληψη</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Συγχρονισμός</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_scheduling" maxLength="41">Προγραμματισμός</string>
     <string name="pref_cat_whiteboard" maxLength="41">Πίνακας</string>
     <string name="pref_cat_appearance" maxLength="41">Εμφάνιση</string>
     <string name="pref_cat_themes" maxLength="41">Θέματα</string>
@@ -71,7 +71,7 @@
     <string name="pref_cat_plugins" maxLength="41">Αρθρώματα</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
-    <string name="use_input_tag" maxLength="41">Type answer into the card</string>
+    <string name="use_input_tag" maxLength="41">Πληκτρολογήστε την απάντηση στην κάρτα</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="reset_languages" maxLength="41">Επαναφορά γλωσσών</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
@@ -106,7 +106,7 @@
     <string name="gestures_swipe_left" maxLength="41">Σαρώστε προς αριστερά</string>
     <string name="gestures_swipe_right" maxLength="41">Σαρώστε προς τα δεξιά</string>
     <string name="gestures_double_tap" maxLength="41">Διπλό χτύπημα</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
+    <string name="gestures_long_tap" maxLength="41">Παρατεταμένη αφή</string>
     <string name="gestures_tap_top" maxLength="41">Ακουμπήστε κορυφή</string>
     <string name="gestures_tap_left" maxLength="41">Ακουμπήστε αριστερά</string>
     <string name="gestures_tap_right" maxLength="41">Ακουμπήστε δεξιά</string>
@@ -120,7 +120,7 @@
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Διπλή κύλιση</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
-    <string name="swipe_sensitivity" maxLength="41">Swipe sensitivity</string>
+    <string name="swipe_sensitivity" maxLength="41">Ευαισθησία ολίσθησης</string>
     <string name="tts" maxLength="41">Κείμενο σε ομιλία</string>
     <string name="tts_summ">Εκφόνηση των ερωτήσεως και απαντήσεων εάν δεν περιλαμβάνεται αρχείο ήχου</string>
     <!-- Sync -->
@@ -128,12 +128,12 @@
     <string name="sync_account" maxLength="41">Λογαριασμός AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Εκτός σύνδεσης</string>
     <string name="automatic_sync_choice" maxLength="41">Αυτόματος συγχρονισμός</string>
-    <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+    <string name="automatic_sync_choice_summ">Αυτόματος συγχρονισμός κατά την εκκίνηση/έξοδο της εφαρμογής, αν ο τελευταίος συγχρονισμός ήταν πάνω από 10
+        λεπτά πριν.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Πάντα</string>
     <string name="sync_media_only_unmetered">Only on unmetered connections</string>
     <string name="sync_media_never">Ποτέ</string>
-    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
+    <string name="sync_status_badge" maxLength="41">Εμφάνιση κατάστασης συγχρονισμού</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
@@ -154,8 +154,8 @@
     <string name="timeout_answer_text" maxLength="41">Αυτόματη εμφάνιση απαντήσεων</string>
     <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Time to show answer</string>
-    <string name="timeout_question_seconds" maxLength="41">Time to show next question</string>
+    <string name="timeout_answer_seconds" maxLength="41">Χρόνος για την εμφάνιση απάντησης</string>
+    <string name="timeout_question_seconds" maxLength="41">Χρόνος για την εμφάνιση της επόμενης ερώτησης</string>
     <string name="select_locale_title">Επιλογή Γλώσσας</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>

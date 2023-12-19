@@ -52,7 +52,7 @@
     <string name="CardEditorModel">प्रकार:</string>
     <string name="CardEditorTags">टैग: %1$s</string>
     <string name="CardEditorCards">पत्ते: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">निष्कर्ष को एडिट   करें</string>
     <string name="tag_name">टैग नाम</string>
     <string name="add_new_filter_tags">टैग को जोड़ें/छानें</string>
     <string name="add_tag">टैग जोड़ें</string>
@@ -356,20 +356,16 @@
     <string name="media_sync_required_title">मीडिया सिंक आवश्यक</string>
     <string name="media_sync_unavailable_message">सेटिंग्स में मीडिया सिंक अक्षम है। जारी रखने से पहले जो भी मीडिया सिंक नहीं हुआ है उसे सिंक और बैकअप करें</string>
     <string name="audio_saved">रिकॉर्डिंग को सहेजा गया</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    <string name="deleting_selected_notes">चयनित नोट्स हटाये जा रहे हैं</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">सुनने के लिए किसी आवाज़ पर टैप करें
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">उपयोग से पहले वॉइस इंस्टॉल किया जाना चाहिए</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">कैसे भी प्रयोग करें
+
     </string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
-    </string>
-    <string name="tts_voices_playback_error" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">        Audio error (%s)
-    </string>
+    <string name="tts_voices_playback_error" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">ऑडियो त्रुटि (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
-    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
-    </string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
-    </string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
-    </string>
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">इंटरनेट</string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">इनस्टॉल</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">टेक्स्ट टू स्पीच सेटिंग खोलने में विफल</string>
 </resources>

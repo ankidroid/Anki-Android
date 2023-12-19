@@ -52,7 +52,7 @@
     <string name="CardEditorModel">笔记模板：</string>
     <string name="CardEditorTags">标签：%1$s</string>
     <string name="CardEditorCards">卡片：%1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">编辑闭合</string>
     <string name="tag_name">标签</string>
     <string name="add_new_filter_tags">添加/过滤标签</string>
     <string name="add_tag">添加标签</string>

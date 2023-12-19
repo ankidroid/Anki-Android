@@ -269,8 +269,8 @@
     <string name="binding_add_key">Lisää näppäin</string>
     <string name="binding_replace_key">Korvaa näppäin</string>
     <string name="key_picker_default_press_key">Paina näppäintä</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">Lisää peliohjain tai liikeohjain</string>
+    <string name="axis_picker_move_joystick">Liikuta peli- tai liikeohjainta</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Valitse kortin puoli</string>
     <string name="card_side_question">Kysymys</string>

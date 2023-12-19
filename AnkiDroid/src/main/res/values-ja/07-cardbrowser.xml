@@ -69,7 +69,7 @@
     <string name="card_browser_list_my_searches_title">保存済み検索条件を選択</string>
     <string name="card_browser_list_my_searches_new_name">現在の検索条件に付ける名前</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">名前なしで検索条件を保存することはできません</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">同じ名前が既に存在します</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">同じ名前がすでに存在します</string>
     <string name="card_browser_list_my_searches_remove_content">「%1$s」を削除しますか？</string>
     <string name="card_browser_change_display_order">表示順を変更</string>
     <string name="card_browser_change_display_order_title">表示順の選択</string>

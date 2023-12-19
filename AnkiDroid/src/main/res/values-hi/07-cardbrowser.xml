@@ -60,7 +60,7 @@
     </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">नोट को हटाएँ</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="other">नोट्स को हटाएँ</item>
     </plurals>
     <string name="card_browser_change_deck">डेक बदलें</string>
     <string name="delete_card_title">नोट मिटाएँ?</string>

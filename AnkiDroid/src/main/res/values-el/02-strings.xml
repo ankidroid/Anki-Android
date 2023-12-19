@@ -103,17 +103,17 @@
     </string-array>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Review forgotten cards</string>
+    <string name="custom_study_increase_new_limit">Τροποποίηση σημερινού ορίου νέων καρτών</string>
+    <string name="custom_study_increase_review_limit">Τροποποίηση σημερινού ορίου επαναλήψεων</string>
+    <string name="custom_study_review_forgotten">Επανάληψη ξεχασμένων καρτών</string>
     <string name="custom_study_review_ahead">Review ahead</string>
     <string name="custom_study_random_selection">Μελέτη μιας τυχαίας επιλογής καρτών</string>
     <string name="custom_study_preview_new">Προεπισκόπηση νέων καρτών</string>
-    <string name="custom_study_limit_tags">Limit to particular tags</string>
+    <string name="custom_study_limit_tags">Περιορισμός σε συγκεκριμένες ετικέτες</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
-    <string name="discard_unsaved_changes">Close and lose current input?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="discard_unsaved_changes">Κλείσιμο και απώλεια της τρέχουσας καταχώρησης;</string>
+    <string name="note_editor_no_cards_created">Δεν δημιουργήθηκαν κάρτες. Συμπληρώστε περισσότερα πεδία</string>
     <string name="note_editor_no_first_field">Το πρώτο πεδίο είναι κενό</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
@@ -138,45 +138,45 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Κάρτα Ανκί-Ντρόιντ</string>
     <string name="note_editor_copy_note">Αντιγραφή σημείωσης</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="card_editor_reposition_card">Επανατοποθέτηση</string>
     <string name="card_editor_reset_card">Διαγραφή προόδου</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Επαναπρογραμματισμός</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Προεπισκόπιση</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Μετονομασία</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">Έλεγχος</string>
     <string name="check_db">Έλεγχος βάσης δεδομένων</string>
     <string name="check_media">Έλεγχος πολυμέσων </string>
     <string name="empty_cards">Κενές κάρτες</string>
-    <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+    <string name="empty_card_warning">Αυτή η κάρτα είναι κενή. Χρησιμοποιήστε την επιλογή \"Άδειες κάρτες\" από το μενού στην οθόνη λίστας τραπουλών.</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
     <string name="delete_deck">Διαγραφή τράπουλας...\nΠαρακαλούμε περιμένετε.</string>
     <string name="info_rate">Αξιολογείστε το Ανκί-Ντρόιντ</string>
     <string name="import_title">Εισαγωγή</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Προσθήκη</string>
     <string name="import_message_replace_confirm">Αυτό θα διαγράψει την υπάρχουσα συλλογή σας και θα την αντικαταστήσει με τα δεδομένα του αρχείου %s. Είστε σίγουροι?</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+    <string name="import_dialog_message_add">Προσθήκη \"%s\" στη συλλογή; Μπορεί να διαρκέσει πολύ χρόνο</string>
+    <string name="import_log_no_apkg">Αυτό δεν είναι έγκυρο αρχείο πακέτου Anki</string>
+    <string name="import_title_error" comment="Title of error dialog">Σφάλμα</string>
+    <string name="import_error_handle_exception">Αποτυχία εισαγωγής αρχείου\n\n%s</string>
+    <string name="import_error_not_apkg_extension">Το όνομα αρχείου “%s” δεν έχει κατάληξη .apkg ή .colpkg</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
-    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
+    <string name="import_error_content_provider">Το επιλεγμένο αρχείο δεν μπορεί να εισαχθεί αυτόματα από το AnkiDroid. Παρακαλώ δείτε το εγχειρίδιο χρήστη για το πώς να εισάγετε χειροκίνητα αρχεία anki: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
-    <string name="export_include_schedule">Include scheduling</string>
-    <string name="export_include_media">Include media</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
-    <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
+    <string name="export_include_schedule">Συμπερίληψη προγραμματισμού</string>
+    <string name="export_include_media">Συμπερίληψη πολυμέσων</string>
+    <string name="confirm_apkg_export">Εξαγωγή συλλογής ως πακέτο Anki;</string>
+    <string name="confirm_apkg_export_deck">Εξαγωγή “%s” ως αρχείο apkg;</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="one">Export selected card as apkg file?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="other">Εξαγωγή %d επιλεγμένων καρτών ως αρχείο apkg;</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="one">Export selected note as apkg file?</item>
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_preparation_in_progress">Προετοιμασία εξαγωγής...</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
@@ -191,22 +191,22 @@
         [2] %2$s
         ]]></string>
     <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_save_to">Αποθήκευση σε</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Επιλογές</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">Επιλογές τράπουλας</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Επιλογές μελέτης</string>
     <string name="select_tts">Ορισμός γλώσσας TTS</string>
     <string name="custom_study">Προσαρμοσμένη μελέτη</string>
     <string name="more_options">Περισσότερα</string>
     <string name="dyn_deck_desc">Αυτή είναι μια ειδική τράπουλα για μάθηση εκτός του κανονικού προγράμματος. Οι κάρτες θα επιστραφούν αυτόματα στην αρχική τους τράπουλα μετά την επανάληψή τους. Η διαγραφή αυτής της τράπουλας από τη λίστα τραπουλών θα επιστρέψει όλες τις κάρτες στην αρχική τους τράπουλα.</string>
-    <string name="steps_error">Steps must be numbers greater than 0</string>
-    <string name="steps_min_error">At least one step is required</string>
+    <string name="steps_error">Τα βήματα πρέπει να είναι αριθμοί μεγαλύτεροι από 0</string>
+    <string name="steps_min_error">Απαιτείται τουλάχιστον ένα βήμα</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+    <string name="tag_editor_add_feedback_existing">Επιλέχθηκε η υπάρχουσα ετικέτα “%1$s”</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">That deck already exists</string>
+    <string name="decks_rename_exists">Αυτή η τράπουλα υπάρχει ήδη</string>
     <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-    <string name="reminder_title">Do not forget to study today!</string>
+    <string name="reminder_title">Μην ξεχάσετε να μελετήσετε σήμερα!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>
         <item quantity="other">%2$d cards to review in %1$s</item>
@@ -214,10 +214,10 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error sharing apkg file</string>
     <!-- Import and export v2 feedback -->
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
+    <string name="activity_start_failed">Το σύστημα δεν έχει εγκατεστημένη εφαρμογή που μπορεί να εκτελέσει αυτήν την ενέργεια.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="no_browser_notification">Δεν βρέθηκε περιηγητής, παρακαλώ επισκεφθείτε την ιστοσελίδα από τον υπολογιστή ή το κινητό: </string>
+    <string name="web_page_error">Σφάλμα φόρτωσης σελίδας: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
@@ -239,10 +239,10 @@
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
+    <string name="invalid_json_data">Η κάρτα παρείχε μη έγκυρα δεδομένα. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Προβολή</string>
     <string name="anki_js_error_code">(Error Code: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
@@ -251,9 +251,9 @@
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Search decks</string>
+    <string name="search_decks">Αναζήτηση τραπουλών</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="ankidroid_init_failed_webview_title">Κρίσιμο σφάλμα</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Μέγεθος γραμματοσειράς</string>

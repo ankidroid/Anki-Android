@@ -59,16 +59,16 @@
     </plurals>
     <string name="card_browser_all_decks">כל החפיסות</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="two">Delete cards</item>
-        <item quantity="many">Delete cards</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">מחק כרטיס</item>
+        <item quantity="two">מחק כרטיסים</item>
+        <item quantity="many">מחק כרטיסים</item>
+        <item quantity="other">מחק כרטיסים</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="two">Delete notes</item>
-        <item quantity="many">Delete notes</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">מחק הערה</item>
+        <item quantity="two">מחק הערות</item>
+        <item quantity="many">מחק הערות</item>
+        <item quantity="other">מחק הערות</item>
     </plurals>
     <string name="card_browser_change_deck">החלפת חפיסה</string>
     <string name="delete_card_title">למחוק את הרשומה?</string>
