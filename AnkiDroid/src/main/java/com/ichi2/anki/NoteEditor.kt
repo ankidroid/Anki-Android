@@ -653,8 +653,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // disable it in case of image occlusion
                 if (addNote && !canSave()) {
                     launchCatchingTask { saveNote() }
-                } else {
-                    launchCatchingTask { saveNote() }
                 }
             }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
@@ -683,8 +681,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
                     if (addNote && !canSave()) {
-                        performPreview()
-                    } else {
                         performPreview()
                     }
                 }
@@ -1031,16 +1027,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 Timber.i("NoteEditor:: Preview button pressed")
                 if (addNote && !canSave()) {
                     performPreview()
-                } else {
-                    performPreview()
                 }
                 return true
             }
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
                 if (addNote && !canSave()) {
-                    launchCatchingTask { saveNote() }
-                } else {
                     launchCatchingTask { saveNote() }
                 }
                 return true
