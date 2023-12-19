@@ -25,59 +25,15 @@ import com.ichi2.libanki.Sound.SingleSoundSide.ANSWER
 import com.ichi2.libanki.Sound.SingleSoundSide.QUESTION
 import com.ichi2.libanki.template.MathJax
 import net.ankiweb.rsdroid.RustCleanup
-import org.json.JSONObject
 import timber.log.Timber
-import java.util.regex.Pattern
 
 @RustCleanup("transition to an instance of TemplateRenderOutput")
 class CardHtml(
     @RustCleanup("legacy")
     private val beforeSoundTemplateExpansion: String,
     private val ord: Int,
-    private val context: HtmlGenerator,
-    /** The side that [beforeSoundTemplateExpansion] was generated from */
-    private val side: Side,
-    @RustCleanup("Slow function, only used with legacy code")
-    private val getAnswerContentWithoutFrontSideSlow: (() -> String),
-    @RustCleanup("too many variables, combine once we move away from backend")
-    private var questionSound: List<SoundOrVideoTag>? = null,
-    private var answerSound: List<SoundOrVideoTag>? = null
+    private val context: HtmlGenerator
 ) {
-    fun getSoundTags(sideFor: Side): List<SoundOrVideoTag> {
-        if (sideFor == this.side) {
-            return getSoundsForCurrentSide()
-        }
-
-        if (sideFor == Side.BACK && side == Side.FRONT) {
-            if (answerSound == null) {
-                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSideSlow())
-            }
-            return answerSound!!
-        }
-
-        // Back wanting front, only possible if questionAv != null
-        if (questionSound != null) {
-            return questionSound!!
-        }
-
-        throw IllegalStateException("Attempted to get the front of the card when viewing back using legacy system")
-    }
-
-    @RustCleanup("unnecessarily complex")
-    private fun getSoundsForCurrentSide(): List<SoundOrVideoTag> {
-        // beforeSoundTemplateExpansion refers to the current side
-        return if (this.side == Side.FRONT) {
-            if (questionSound == null) {
-                questionSound = Sound.extractTagsFromLegacyContent(beforeSoundTemplateExpansion)
-            }
-            questionSound!!
-        } else {
-            if (answerSound == null) {
-                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSideSlow())
-            }
-            return answerSound!!
-        }
-    }
 
     fun getTemplateHtml(): String {
         val content = getContent()
@@ -125,18 +81,11 @@ class CardHtml(
     companion object {
         fun createInstance(card: Card, side: Side, context: HtmlGenerator): CardHtml {
             val content = displayString(card, side, context)
-
-            val renderOutput = card.renderOutput()
-            val questionAv = renderOutput.questionAvTags
-            val answerAv = renderOutput.answerAvTags
-            val questionSound: List<SoundOrVideoTag> =
-                questionAv.filterIsInstance(SoundOrVideoTag::class.java)
-            val answerSound: List<SoundOrVideoTag> = answerAv.filterIsInstance(SoundOrVideoTag::class.java)
-
-            // legacy (slow) function to return the answer without the front side
-            fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(card, card.answer())
-
-            return CardHtml(content, card.ord, context, side, ::getAnswerWithoutFrontSideLegacy, questionSound, answerSound)
+            return CardHtml(
+                content,
+                card.ord,
+                context
+            )
         }
 
         /**
@@ -165,40 +114,6 @@ class CardHtml(
             sb.append(content)
             sb.append("</div>")
             return sb.toString()
-        }
-
-        /**
-         * @return the answer part of this card's template as entered by user, without any parsing
-         */
-        private fun getAnswerFormat(card: Card): String {
-            val model = card.model()
-            val template: JSONObject = if (model.isStd) {
-                model.getJSONArray("tmpls").getJSONObject(card.ord)
-            } else {
-                model.getJSONArray("tmpls").getJSONObject(0)
-            }
-            return template.getString("afmt")
-        }
-
-        /**
-         * Removes first occurrence in answerContent of any audio that is present due to use of
-         * {{FrontSide}} on the answer.
-         * @param card              The card to strip content from
-         * @param answerContent     The content from which to remove front side audio.
-         * @return The content stripped of audio due to {{FrontSide}} inclusion.
-         */
-        fun removeFrontSideAudio(card: Card, answerContent: String): String {
-            val answerFormat = getAnswerFormat(card)
-            var newAnswerContent = answerContent
-            if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
-                val frontSideFormat = card.renderOutput(false).questionText
-                val audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat)
-                // remove the first instance of audio contained in "{{FrontSide}}"
-                while (audioReferences.find()) {
-                    newAnswerContent = newAnswerContent.replaceFirst(Pattern.quote(audioReferences.group()).toRegex(), "")
-                }
-            }
-            return newAnswerContent
         }
 
         fun legacyGetTtsTags(card: Card, cardSide: SingleSoundSide, context: Context): List<TTSTag> {

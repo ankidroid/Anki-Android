@@ -17,8 +17,6 @@
 
 package com.ichi2.libanki
 
-import android.net.Uri
-import androidx.annotation.CheckResult
 import java.util.regex.Pattern
 
 val VIDEO_EXTENSIONS = setOf("mp4", "mov", "mpg", "mpeg", "mkv", "avi")
@@ -58,26 +56,6 @@ class Sound {
         val SOUND_RE = SOUND_PATTERN.toRegex()
 
         /**
-         * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)
-         */
-        private val sUriPattern =
-            Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$")
-
-        /** Extract SoundOrVideoTag instances from content where sound tags are in the form: [sound:filename.mp3]  */
-        @CheckResult
-        fun extractTagsFromLegacyContent(content: String): List<SoundOrVideoTag> {
-            val matcher = SOUND_PATTERN.matcher(content)
-            // While there is matches of the pattern for sound markers
-            val ret = mutableListOf<SoundOrVideoTag>()
-            while (matcher.find()) {
-                // Get the sound file name
-                val sound = matcher.group(1)!!
-                ret.add(SoundOrVideoTag(sound))
-            }
-            return ret
-        }
-
-        /**
          * expandSounds takes content with embedded sound file placeholders and expands them to reference the actual media
          * file
          *
@@ -86,29 +64,6 @@ class Sound {
          */
         fun expandSounds(content: String): String {
             return avRefsToPlayIcons(content)
-        }
-
-        /**
-         * @param soundDir -- base path to the media files.
-         * @param sound -- path to the sound file from the card content.
-         * @return absolute URI to the sound file.
-         */
-        fun getSoundPath(soundDir: String, sound: String): String {
-            val trimmedSound = sound.trim { it <= ' ' }
-            return if (hasURIScheme(trimmedSound)) {
-                trimmedSound
-            } else {
-                soundDir + Uri.encode(sound.trimEnd())
-            }
-        }
-
-        /**
-         * @param path -- path to the sound file from the card content.
-         * @return true if path is well-formed URI and contains URI scheme.
-         */
-        private fun hasURIScheme(path: String): Boolean {
-            val uriMatcher = sUriPattern.matcher(path.trim { it <= ' ' })
-            return uriMatcher.matches() && uriMatcher.group(2) != null
         }
     }
 }
