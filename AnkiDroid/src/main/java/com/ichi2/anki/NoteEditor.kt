@@ -651,7 +651,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         when (keyCode) {
             KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER -> if (event.isCtrlPressed) {
                 // disable it in case of image occlusion
-                if (!currentNotetypeIsImageOcclusion()) launchCatchingTask { saveNote() }
+                if (addNote && !canSave()) {
+                    launchCatchingTask { saveNote() }
+                } else {
+                    launchCatchingTask { saveNote() }
+                }
             }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
@@ -678,7 +682,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             KeyEvent.KEYCODE_P -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
-                    performPreview()
+                    if (addNote && !canSave()) {
+                        performPreview()
+                    } else {
+                        performPreview()
+                    }
                 }
             }
             else -> {}
@@ -982,6 +990,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         menuInflater.inflate(R.menu.note_editor, menu)
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
+            menu.findItem(R.id.action_save).isVisible = !canSave()
+            menu.findItem(R.id.action_preview).isVisible = !canSave()
         } else {
             menu.findItem(R.id.action_add_note_from_note_editor).isVisible = true
         }
@@ -996,7 +1006,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
             }
         }
-        menu.findItem(R.id.action_save).isVisible = !currentNotetypeIsImageOcclusion()
         menu.findItem(R.id.action_show_toolbar).isChecked =
             !shouldHideToolbar()
         menu.findItem(R.id.action_capitalize).isChecked =
@@ -1004,6 +1013,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         menu.findItem(R.id.action_scroll_toolbar).isChecked =
             this.sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    fun canSave(): Boolean {
+        // we can further extend it if required refer :https://github.com/ankidroid/Anki-Android/pull/15030#discussion_r1431330266
+        return currentNotetypeIsImageOcclusion()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -1015,12 +1029,20 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
-                performPreview()
+                if (addNote && !canSave()) {
+                    performPreview()
+                } else {
+                    performPreview()
+                }
                 return true
             }
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
-                launchCatchingTask { saveNote() }
+                if (addNote && !canSave()) {
+                    launchCatchingTask { saveNote() }
+                } else {
+                    launchCatchingTask { saveNote() }
+                }
                 return true
             }
             R.id.action_add_note_from_note_editor -> {
