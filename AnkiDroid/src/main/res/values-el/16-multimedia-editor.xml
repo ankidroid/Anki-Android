@@ -42,9 +42,9 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Προσθήκη εικόνας</string>
     <string name="multimedia_editor_popup_audio_clip">Προσθήκη κλιπ ήχου</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Προσθήκη βίντεο κλιπ</string>
     <string name="multimedia_editor_popup_audio">Ηχογράφηση</string>
-    <string name="multimedia_editor_popup_text">Advanced editor</string>
+    <string name="multimedia_editor_popup_text">Προηγμένος επεξεργαστής</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
@@ -55,8 +55,8 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Τέλος</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Clear</string>
-    <string name="multimedia_editor_text_field_editing_clone">Clone from</string>
+    <string name="multimedia_editor_text_field_editing_clear">Εκκαθάριση</string>
+    <string name="multimedia_editor_text_field_editing_clone">Κλωνοποίηση από</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
     <!-- Multimedia card editor activity -->
@@ -66,14 +66,14 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Συλλογή</string>
     <string name="multimedia_editor_image_field_editing_photo">Κάμερα</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">Ήχος</string>
+    <string name="multimedia_editor_import_video">Βίντεο</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Something went wrong</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
+    <string name="multimedia_editor_svg_preview">Τα SVG δεν είναι διαθέσιμα για προεπισκόπηση</string>
+    <string name="multimedia_editor_png_paste_error">Σφάλμα κατά τη μετατροπή της εικόνας του προχείρου σε png: %s</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Επισύναψη περιεχομένου πολυμέσων στο πεδίο %1$s</string>
     <string name="multimedia_editor_attach_media">Επισύναψη πολυμέσων</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">Αποτυχία αναπαραγωγής</string>
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editing field</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Επεξεργασία πεδίου</string>
     <!-- Crop function-->
     <string name="crop_image">Θέλετε να περικόψετε αυτή την εικόνα;</string>
     <string name="crop_button">Περικοπή εικόνας</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
+    <string name="save_dialog_content">Το τρέχον μέγεθος εικόνας είναι %sMB. Το προεπιλεγμένο όριο μεγέθους εικόνας είναι 1MB. Θέλετε να την περικόψετε;</string>
+    <string name="select_image_failed">"Η επιλογή εικόνας απέτυχε, Παρακαλώ προσπαθήστε ξανά"</string>
     <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Περιεχόμενα Πεδίου</string>
 </resources>

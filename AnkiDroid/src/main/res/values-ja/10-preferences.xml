@@ -267,8 +267,8 @@
     <string name="binding_add_key">キーを追加</string>
     <string name="binding_replace_key">キーを置換</string>
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">ジョイスティック/モーションコントローラーの動作を追加</string>
+    <string name="axis_picker_move_joystick">ジョイスティック/モーションコントローラーを動かしてください</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">カードの表面 (質問側) と裏面 (解答側) 、どちらでの操作ですか？</string>
     <string name="card_side_question">表面</string>
@@ -279,7 +279,7 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">%s を削除</string>
-    <string name="bindings_already_bound">既に「%s」の操作に割り当て済みです</string>
+    <string name="bindings_already_bound">すでに「%s」の操作に割り当て済みです</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">試験運用機能</string>
     <!-- Developer options -->

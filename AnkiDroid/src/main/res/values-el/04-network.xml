@@ -45,25 +45,25 @@
 
 -->
 <resources>
-    <string name="youre_offline">You are offline</string>
+    <string name="youre_offline">Είστε εκτός σύνδεσης</string>
     <string name="sync_error">Σφάλμα συγχρονισμού</string>
     <string name="vague_error" comment="Network error dialog title">Σφάλμα</string>
     <string name="retry">Ξαναδοκίμασε</string>
     <string name="menu_get_shared_decks">Λήψη κοινόχρηστων τραπουλών</string>
     <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>
     <string name="not_logged_in_title">Σύνδεση στο AnkiWeb</string>
-    <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+    <string name="login_create_account_message">Πρέπει να συνδεθείτε σε λογαριασμό τρίτου για να χρησιμοποιήσετε την υπηρεσία συγχρονισμού στο cloud. Μπορείτε να δημιουργήσετε έναν στο επόμενο βήμα.</string>
     <!-- MyAccount.kt -->
     <string name="username">Διεύθυνση email</string>
     <string name="password">Κωδικός</string>
     <string name="log_in">Σύνδεση</string>
     <string name="sign_up_description">Δεν έχετε λογαριασμό στο AnkiWeb; Είναι δωρεάν!</string>
-    <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
+    <string name="sign_up_not_affiliated">Σημείωση: Το AnkiWeb δεν σχετίζεται με το AnkiDroid</string>
     <string name="sign_up">Εγγραφή</string>
     <string name="logged_as">Είστε συνδεδεμένοι ως</string>
     <string name="log_out">Αποσύνδεση</string>
     <string name="reset_password">Επαναφορά κωδικού πρόσβασης</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">Ξεχάσατε το email σας;</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Επιλογές για XXX</string>
     <string name="sync_title">Συγχρονισμός</string>
@@ -77,7 +77,7 @@
     <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
-    <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
+    <string name="full_sync_confirmation_upgrade">Λόγω ενός σφάλματος στην προηγούμενη εγκατεστημένη έκδοση του AnkiDroid, συνιστάται να κάνετε πλήρη συγχρονισμό.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Συγχρονισμός (πλήρης)</string>
     <string name="sync_menu_title_no_account">Συγχρονισμός (σύνδεση)</string>

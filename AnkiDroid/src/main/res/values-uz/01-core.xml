@@ -148,12 +148,12 @@
     <string name="card_template_editor_select_field">Maydonni tanlash</string>
     <string name="card_template_editor_cant_delete">Kamida bir turdagi karta turi kerak</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">Bu  %1$d ta kartani yaratadi. Davom etasizmi?</item>
+        <item quantity="other">Bu  %1$d ta kartalarni yaratadi. Davom etasizmi?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+        <item quantity="one">“%2$s” turdagi kartani va uning  %1$d ta kartasini ochirasizmi?</item>
+        <item quantity="other">“%2$s” turdagi kartani va uning  %1$d ta kartalarini ochirasizmi?</item>
     </plurals>
     <string name="invalid_template">A card could not be generated</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>

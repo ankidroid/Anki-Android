@@ -137,7 +137,7 @@
     <string name="metered_sync_title" maxLength="41">मीटर वाले कनेक्शनों पर समन्वयन की अनुमति दें</string>
     <string name="metered_sync_summary">यदि अक्षम है, तो मीटर वाले कनेक्शन पर सिंक करने का प्रयास करने पर आपको चेतावनी दी जाएगी</string>
     <string name="backup_limits_frequency">फ्रीक्वेंसी</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_lifetime">समय सीमा</string>
     <string name="app_theme" maxLength="41">थीम </string>
     <string name="day_theme" maxLength="41">दिवस थीम</string>
     <string name="night_theme" maxLength="41">रात विषय</string>
@@ -159,8 +159,8 @@
     <string name="software_render" maxLength="41">कार्ड हार्डवेयर रेंडर अक्षम करें</string>
     <string name="software_render_summ">हार्डवेयर रेंडर तेज़ है लेकिन इसमें समस्याएँ हो सकती हैं, विशेष रूप से Android 8/8.1 पर।  यदि आप कार्ड समीक्षा उपयोगकर्ता इंटरफ़ेस के कुछ हिस्सों को नहीं देख पा रहे हैं, तो इस सेटिंग को आज़माएँ।</string>
     <string name="safe_display" maxLength="41">सुरक्षित प्रदर्शन मोड</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
+    <string name="safe_display_summ">सभी एनिमेशन अक्षम करें और कार्ड बनाने के लिए सुरक्षित विधि का उपयोग करें। ई-इंक उपकरणों को इसकी आवश्यकता हो सकती है।</string>
+    <string name="disable_extended_text_ui" maxLength="41">एकल फ़ील्ड मोड अक्षम करें</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">मध्य संरेखित करें</string>
@@ -168,7 +168,7 @@
     <string name="pref_double_tap_time_interval" maxLength="41">डबल टैप समय अंतराल (मिलीसेकंड)</string>
     <string name="pref_double_tap_time_interval_summary">यदि यह समय बीत नहीं गया है तो उत्तर बटनों पर दूसरी बार टैप करने पर ध्यान नहीं दिया जाएगा। यह आकस्मिक डबल टैप को रोकता है</string>
     <string name="pref_show_answer_long_press" maxLength="41">उत्तर देखने  के लिए देर तक दबाने का समय (एमएस))</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press_summary">उत्तर दिखाएं बटन पर स्पर्श दर्ज करने से पहले न्यूनतम लंबे समय तक प्रेस करने का समय। आकस्मिक रूप से अतिरिक्त बटन दबाने की संभावना कम हो सकती है। डिफ़ॉल्ट 0ms है</string>
     <string name="show_estimates" maxLength="41">बटन समय दिखाएं</string>
     <string name="show_estimates_summ">उत्तर बटंस पर अगली समीक्षा समय दिखाएं</string>
     <string name="show_large_answer_buttons" maxLength="41">बड़े उत्तर बटन दिखाएं</string>
@@ -183,8 +183,8 @@
     <string name="new_timezone" maxLength="41">नया समय क्षेत्र प्रबंधन</string>
     <string name="day_offset_with_description" maxLength="41">अगले दिन की शुरुआत (0 आधी रात है, 23 11PM है)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">आधी रात से %d घंटा पहले</item>
+        <item quantity="other">आधी रात से %d घंटे पहले</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">स्क्रीन चालू रखें</string>
     <string name="pref_keep_screen_on_summ">स्क्रीन टाइमआउट अक्षम करें</string>
@@ -199,17 +199,17 @@
     <string name="reset_settings_to_default">सेटिंग्स को डिफ़ॉल्ट पर रीसेट करें</string>
     <string name="reset">रीसेट</string>
     <string name="thirdparty_apps_title" maxLength="41">तृतीय-पक्ष API ऐप्स</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
+    <string name="thirdparty_apps_summary">शब्दकोशों और उपयोगिताओं सहित AnkiDroid का उपयोग करने वाले ऐप्स की सूची देखने के लिए यहां टैप करें</string>
     <string name="html_javascript_debugging" maxLength="41">हटम्ल/जावास्क्रिप्ट डिबगिंग</string>
     <string name="html_javascript_debugging_summ">दूरस्थ वेब्वयेव कनेक्शन सक्षम करें और कार्ड हटम्ल को अंकिड़रोइड निर्देशिका में सहेजें</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">समीक्षक</string>
+    <string name="accessibility" maxLength="41">सरल उपयोग</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">क्लिपबोर्ड इमेजेज को पीएनजी प्रारूप में चिपकाएँ</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
     <string name="exit_via_double_tap_back" maxLength="41">वापस जाने/बाहर निकलने के लिए दो बार बैक दबाएँ</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back_summ">समीक्षक या ऐप को गलती से छोड़ने से बचने के लिए</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">मीडिया आयात में सभी फ़ाइलो को अनुमति दें</string>
     <string name="media_import_allow_all_files_summ">यदि एंड्रॉइड किसी मीडिया फ़ाइल को नहीं पहचानता है</string>
@@ -251,10 +251,10 @@
     <string name="analytics_summ">आप AnkiDroid में योगदान कर सकते हैं, आप AnkiDroid Team को यह देखने में मदद कर सकते हैं कि लोग किन सुविधाओं का उपयोग करते हैं</string>
     <string name="note_editor_replace_newlines" maxLength="41">न्यूलाइन को हटम्ल से बदलें</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
+    <string name="no_code_formatting" maxLength="41">टेक्स्ट इनपुट उत्तरों के लिए सरल फ़ॉन्ट का उपयोग करें</string>
     <string name="no_code_formatting_summ">टाइप किए गए उत्तर परिणामों में प्रदर्शित होने वाले ‘􏿾’ को ठीक करता है</string>
     <string name="type_in_answer_focus" maxLength="41">\'उत्तर टाइप करें\' पर ध्यान दें</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus_summ">यदि कार्ड में कोई फ़ील्ड है जहां आप कीबोर्ड का उपयोग करके उत्तर दर्ज कर सकते हैं, तो कर्सर स्वचालित रूप से रखा जाएगा ताकि आप तुरंत टेक्स्ट दर्ज कर सकें।</string>
     <!-- About -->
     <string name="open_changelog">परिवर्तन लॉग खोलें</string>
     <string name="pref_cat_about_title" maxLength="41">इसके बारे में</string>
@@ -269,8 +269,8 @@
     <string name="binding_add_key">कुंजी जोड़ें</string>
     <string name="binding_replace_key">कुंजी बदलें</string>
     <string name="key_picker_default_press_key">कोई कुंजी दबाएं</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">जॉयस्टिक/मोशन कंट्रोलर को जोड़ें</string>
+    <string name="axis_picker_move_joystick">जॉयस्टिक/मोशन कंट्रोलर को स्थानांतरित करें</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">कार्ड साइड चुनें</string>
     <string name="card_side_question">प्रश्न</string>
@@ -311,7 +311,7 @@
     <string name="pref__manage_space__screen_title">स्थान प्रबंधित करें</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">एरर</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">गणना \nप्रगति पर है...</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d file\n%2$s</item>
         <item quantity="other">%1$d files\n%2$s</item>

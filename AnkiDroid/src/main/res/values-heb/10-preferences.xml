@@ -46,12 +46,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">מבוטל</string>
-    <string name="pref_summary_seconds">%sשניות</string>
+    <string name="pref_summary_seconds">%s שניות</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
-        <item quantity="two">%d mins</item>
-        <item quantity="many">%d mins</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="one">דקה %d</item>
+        <item quantity="two">%d דקות</item>
+        <item quantity="many">%d דקות</item>
+        <item quantity="other">%d דקות</item>
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">אין תוצאות</string>
@@ -139,8 +139,8 @@
     <string name="sync_status_badge_summ">שנה את סמל הסנכרון כאשר ניתן להעלות שינויים</string>
     <string name="metered_sync_title" maxLength="41">אפשר סנכרון בחיבורים מדורגים</string>
     <string name="metered_sync_summary">אם מושבת, תקבל אזהרה אם תנסה לסנכרן בחיבור בנדידה</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">תדירות</string>
+    <string name="backup_limits_lifetime">אורך חיים</string>
     <string name="app_theme" maxLength="41">ערכת נושא</string>
     <string name="day_theme" maxLength="41">ערכת יום</string>
     <string name="night_theme" maxLength="41">ערכת לילה</string>
@@ -186,10 +186,10 @@
     <string name="new_timezone" maxLength="41">טיפול באזור זמן חדש</string>
     <string name="day_offset_with_description" maxLength="41">התחל את היום הבא</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="two">%d hours past midnight</item>
-        <item quantity="many">%d hours past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d שעה אחרי חצות</item>
+        <item quantity="two">%d שעות אחרי חצות</item>
+        <item quantity="many">%d שעות אחרי חצות</item>
+        <item quantity="other">%d שעות אחרי חצות</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">להשאיר את המסך דולק</string>
     <string name="pref_keep_screen_on_summ">השבת כיבוי מסך</string>
@@ -273,8 +273,8 @@
     <string name="binding_add_key">הוסף כפתור</string>
     <string name="binding_replace_key">החלף כפתור</string>
     <string name="key_picker_default_press_key">לחץ על כפתור</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">הוסף ג\'ויסטיק/בקר תנועה</string>
+    <string name="axis_picker_move_joystick">הזז ג\'ויסטיק/בקר תנועה</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">בחר צד קלף</string>
     <string name="card_side_question">שאלה</string>

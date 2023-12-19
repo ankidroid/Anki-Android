@@ -73,7 +73,7 @@
     <string name="ease_button_easy">קל</string>
     <string name="menu_import">ייבוא</string>
     <string name="undo">ביטול</string>
-    <string name="redo">Redo</string>
+    <string name="redo">בצע שוב</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">בטל שרבוט</string>
     <string name="move_all_to_deck">העברת הכול לחפיסה</string>
     <string name="unbury">ביטול דילוג</string>
@@ -81,16 +81,16 @@
     <string name="create_shortcut">צור קיצור דרך</string>
     <string name="browse_cards">דפדף בכרטיסים</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">הוספה</string>
-    <string name="menu_add_note">הוספת פתק</string>
+    <string name="menu_add_note">הוספת רשומה</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">סנכרון חשבון</string>
     <string name="menu_dismiss_note">הסתרה / מחיקה</string>
     <string name="menu_bury_card">לקבור קלף</string>
-    <string name="menu_bury_note">קבור על פתק</string>
+    <string name="menu_bury_note">קבור הערה</string>
     <string name="menu_suspend_card">הקפאת קלף</string>
     <string name="menu_suspend_note">הקפאת רשומה</string>
     <string name="menu_bury">דילוג</string>
     <string name="menu_suspend">הקפאה</string>
-    <string name="menu_delete_note">מחיקת פתק</string>
+    <string name="menu_delete_note">מחיקת רשומה</string>
     <string name="menu_flag">דגל</string>
     <string name="menu_flag_card">סימון קלף</string>
     <string name="menu_flag_card_zero">ללא סימון</string>
@@ -239,8 +239,8 @@
     <string name="create_new_collection">צור אוסף חדש</string>
     <string name="new_unsafe_collection">האוסף החדש יימחק מהטלפון שלך אם תסיר את ההתקנה של AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid צריך כמה הרשאות כדי לעבוד</string>
+    <string name="storage_access_title">גישה לאחסון</string>
+    <string name="storage_access_summary">שומר את האוסף שלך במקום בטוח כך שלא יימחק אם האפליקציה תוסר</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">גישה לכל הקבצים</string>
 </resources>

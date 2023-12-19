@@ -72,7 +72,7 @@
     <string name="ease_button_easy">आसान</string>
     <string name="menu_import">आयात करें</string>
     <string name="undo">पूर्ववत् करें</string>
-    <string name="redo">Redo</string>
+    <string name="redo">रीडू</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">आघात पूर्ववत करें</string>
     <string name="move_all_to_deck">सभी को डेक में ले जाएं</string>
     <string name="unbury">वापस लौंटे</string>
@@ -239,7 +239,7 @@ Back - बैक</string>
     <string name="new_unsafe_collection">यदि आप AnkiDroid की स्थापना रद्द करते हैं तो नया संग्रह आपके फ़ोन से हटा दिया जाएगा</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">अंकीड्रॉइड को काम करने के लिए कुछ अनुमतियों की आवश्यकता है</string>
-    <string name="storage_access_title">Storage access</string>
+    <string name="storage_access_title">स्टोरेज एक्सेस</string>
     <string name="storage_access_summary">आपके संग्रह को एक सुरक्षित स्थान पर संग्रहीत करता है जिसे ऐप अनइंस्टॉल होने पर हटाया नहीं जाएगा</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">सभी फ़ाइलों का एक्सेस</string>
 </resources>

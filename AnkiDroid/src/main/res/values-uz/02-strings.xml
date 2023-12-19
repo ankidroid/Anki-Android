@@ -128,13 +128,13 @@
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
-        <item quantity="one">%1$d card studied in %2$s</item>
-        <item quantity="other">%1$d cards studied in %2$s</item>
+        <item quantity="one">%2$s dan %1$d ta karta o\'rganildi</item>
+        <item quantity="other">%2$s dan %1$d ta kartalar o\'rganildi</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="one">%1$d daqiqada</item>
+        <item quantity="other">%1$d daqiqada</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid card</string>
     <string name="note_editor_copy_note">Copy note</string>
@@ -169,12 +169,12 @@
     <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
     <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="one">Tanlangan kartani apkg fayliga eksport qilasizmi?</item>
+        <item quantity="other">Tanlangan kartalarni apkg fayliga eksport qilasizmi?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Export selected note as apkg file?</item>
-        <item quantity="other">Export %d selected notes as apkg file?</item>
+        <item quantity="one">Tanlangan eslatmani apkg fayliga eksport qilasizmi?</item>
+        <item quantity="other">Tanlangan eslatmalarni apkg fayliga eksport qilasizmi?</item>
     </plurals>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
@@ -208,8 +208,8 @@
     <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
     <string name="reminder_title">Do not forget to study today!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%1$s dan %2$d ta kartani takrorlashingiz kerak</item>
+        <item quantity="other">%1$s dan %2$d ta kartalarni takrorlashingiz kerak</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error sharing apkg file</string>
@@ -306,8 +306,8 @@
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d karta to\'xtatilgan</item>
+        <item quantity="other">%d kartalar to\'xtatilgan</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
