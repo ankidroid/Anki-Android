@@ -431,11 +431,8 @@ class ReviewerTest : RobolectricTest() {
             return startReviewer(testClass, Reviewer::class.java)
         }
 
-        fun <T : Reviewer?> startReviewer(testClass: RobolectricTest, clazz: Class<T>): T {
-            val reviewer = startActivityNormallyOpenCollectionWithIntent(testClass, clazz, Intent())
-            waitForAsyncTasksToComplete()
-            return reviewer
-        }
+        fun <T : Reviewer?> startReviewer(testClass: RobolectricTest, clazz: Class<T>): T =
+            startActivityNormallyOpenCollectionWithIntent(testClass, clazz, Intent())
     }
 }
 
