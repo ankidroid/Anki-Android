@@ -226,7 +226,6 @@ class TemplateManager {
             return output
         }
 
-        @RustCleanup("Remove when DroidBackend supports named arguments")
         fun partiallyRender(): PartiallyRenderedCard {
             val proto = col().run {
                 if (_template != null) {
