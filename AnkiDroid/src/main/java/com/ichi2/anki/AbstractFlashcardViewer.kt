@@ -2193,6 +2193,7 @@ abstract class AbstractFlashcardViewer :
         }
 
         private fun initShakeDetector() {
+            Timber.d("Initializing shake detector")
             if (mGestureProcessor.isBound(Gesture.SHAKE)) {
                 val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
                 shakeDetector = ShakeDetector(this).apply {
@@ -2219,10 +2220,8 @@ abstract class AbstractFlashcardViewer :
         private val mDispatchedTouchEvents = hashSetInit<MotionEvent>(2)
 
         override fun hearShake() {
-            if (mGestureProcessor.isBound(Gesture.SHAKE)) {
-                Timber.d("Shake detected!")
-                mGestureProcessor.onShake()
-            }
+            Timber.d("Shake detected!")
+            mGestureProcessor.onShake()
         }
 
         override fun onFillFlashcard() {
