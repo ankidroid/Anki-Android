@@ -30,7 +30,7 @@ const val GESTURE_PREFIX = "\u235D"
 /**
  * https://www.fileformat.info/info/unicode/char/1fa87/index.htm (Maracas)
  */
-const val SHAKE_GESTURE_PREFIX = "\uD83E\uDEB8"
+const val SHAKE_GESTURE_PREFIX = "\uD83E\uDE87"
 
 fun interface GestureListener {
     fun onGesture(gesture: Gesture)
