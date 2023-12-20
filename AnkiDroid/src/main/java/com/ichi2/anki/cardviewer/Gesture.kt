@@ -27,14 +27,20 @@ import com.ichi2.anki.cardviewer.TapGestureMode.NINE_POINT
  */
 const val GESTURE_PREFIX = "\u235D"
 
+/**
+ * https://www.fileformat.info/info/unicode/char/1fa87/index.htm (Maracas)
+ */
+const val SHAKE_GESTURE_PREFIX = "\uD83E\uDEB8"
+
 fun interface GestureListener {
     fun onGesture(gesture: Gesture)
 }
 
 enum class Gesture(
-    @get:JvmName("getResourceId") val resourceId: Int
+    @get:JvmName("getResourceId") val resourceId: Int,
+    private val displayPrefix: String = GESTURE_PREFIX // Default prefix
 ) {
-    SHAKE(R.string.gestures_shake),
+    SHAKE(R.string.gestures_shake, SHAKE_GESTURE_PREFIX),
     SWIPE_UP(R.string.gestures_swipe_up),
     SWIPE_DOWN(R.string.gestures_swipe_down),
     SWIPE_LEFT(R.string.gestures_swipe_left),
@@ -52,10 +58,7 @@ enum class Gesture(
     TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right);
 
     fun toDisplayString(context: Context): String =
-        getDisplayPrefix() + ' ' + context.getString(resourceId)
-
-    private fun getDisplayPrefix(): String =
-        GESTURE_PREFIX
+        displayPrefix + ' ' + context.getString(resourceId)
 }
 
 /**

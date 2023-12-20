@@ -554,8 +554,7 @@ abstract class AbstractFlashcardViewer :
         initNavigationDrawer(mainView)
         mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
-        val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        mGestureDetectorImpl = LinkDetectingGestureDetector(sensorManager)
+        mGestureDetectorImpl = LinkDetectingGestureDetector()
         TtsVoicesFieldFilter.ensureApplied()
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
@@ -629,6 +628,7 @@ abstract class AbstractFlashcardViewer :
     override fun onPause() {
         super.onPause()
         automaticAnswer.disable()
+        mGestureDetectorImpl.stopShakeDetector()
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
         if (this::mSoundPlayer.isInitialized) {
             mSoundPlayer.stopSounds()
@@ -640,6 +640,7 @@ abstract class AbstractFlashcardViewer :
     override fun onResume() {
         super.onResume()
         automaticAnswer.enable()
+        mGestureDetectorImpl.startShakeDetector()
         // Reset the activity title
         updateActionBar()
         selectNavigationItem(-1)
@@ -2165,6 +2166,14 @@ abstract class AbstractFlashcardViewer :
         open fun eventCanBeSentToWebView(event: MotionEvent): Boolean {
             return true
         }
+
+        open fun startShakeDetector() {
+            // intentionally blank
+        }
+
+        open fun stopShakeDetector() {
+            // intentionally blank
+        }
     }
 
     protected open fun onSingleTap(): Boolean {
@@ -2175,11 +2184,32 @@ abstract class AbstractFlashcardViewer :
 
     /** #6141 - blocks clicking links from executing "touch" gestures.
      * COULD_BE_BETTER: Make base class static and move this out of the CardViewer  */
-    internal inner class LinkDetectingGestureDetector(private val sensorManager: SensorManager) :
+    internal inner class LinkDetectingGestureDetector() :
         MyGestureDetector(), ShakeDetector.Listener {
+        private var shakeDetector: ShakeDetector? = null
+
         init {
-            val sd = ShakeDetector(this)
-            sd.start(sensorManager, SensorManager.SENSOR_DELAY_UI)
+            initShakeDetector()
+        }
+
+        private fun initShakeDetector() {
+            if (mGestureProcessor.isBound(Gesture.SHAKE)) {
+                val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                shakeDetector = ShakeDetector(this).apply {
+                    start(sensorManager, SensorManager.SENSOR_DELAY_UI)
+                }
+            }
+        }
+
+        override fun stopShakeDetector() {
+            shakeDetector?.stop()
+            shakeDetector = null
+        }
+
+        override fun startShakeDetector() {
+            if (shakeDetector == null) {
+                initShakeDetector()
+            }
         }
 
         /** A list of events to process when listening to WebView touches   */
@@ -2189,9 +2219,12 @@ abstract class AbstractFlashcardViewer :
         private val mDispatchedTouchEvents = hashSetInit<MotionEvent>(2)
 
         override fun hearShake() {
-            Timber.d("Shake detected!")
-            mGestureProcessor.onShake()
+            if (mGestureProcessor.isBound(Gesture.SHAKE)) {
+                Timber.d("Shake detected!")
+                mGestureProcessor.onShake()
+            }
         }
+
         override fun onFillFlashcard() {
             Timber.d("Removing pending touch events for gestures")
             mDesiredTouchEvents.clear()
