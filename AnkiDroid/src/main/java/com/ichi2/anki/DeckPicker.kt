@@ -431,6 +431,7 @@ open class DeckPicker :
             Timber.w(e, "Failed to apply background")
             showThemedToast(this, getString(R.string.failed_to_apply_background_image, e.localizedMessage), false)
         }
+        mExportingDelegate.onRestoreInstanceState(savedInstanceState)
 
         // create and set an adapter for the RecyclerView
         mDeckListAdapter = DeckAdapter(layoutInflater, this).apply {
@@ -1037,6 +1038,7 @@ open class DeckPicker :
                 savedInstanceState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
             }
         }
+        mExportingDelegate.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
     }
 

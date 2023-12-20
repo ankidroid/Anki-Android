@@ -449,6 +449,7 @@ open class CardBrowser :
             }
             searchCards()
         }
+        mExportingDelegate.onRestoreInstanceState(savedInstanceState)
 
         // Selected cards aren't restored on activity recreation,
         // so it is necessary to dismiss the change deck dialog
@@ -1374,6 +1375,7 @@ open class CardBrowser :
         savedInstanceState.putBoolean("mPostAutoScroll", mPostAutoScroll)
         savedInstanceState.putInt("mLastSelectedPosition", mLastSelectedPosition)
         savedInstanceState.putBoolean("mInMultiSelectMode", isInMultiSelectMode)
+        mExportingDelegate.onSaveInstanceState(savedInstanceState)
         super.onSaveInstanceState(savedInstanceState)
     }
 
