@@ -217,7 +217,9 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     }
 
     fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(EXPORT_FILE_NAME_KEY, fileExportPath)
+        if (::fileExportPath.isInitialized) {
+            outState.putString(EXPORT_FILE_NAME_KEY, fileExportPath)
+        }
     }
 
     fun onRestoreInstanceState(savedInstanceState: Bundle?) {
