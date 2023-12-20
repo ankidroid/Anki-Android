@@ -651,7 +651,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         when (keyCode) {
             KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER -> if (event.isCtrlPressed) {
                 // disable it in case of image occlusion
-                if (addNote && !canSave()) {
+                if (canSave()) {
                     launchCatchingTask { saveNote() }
                 }
             }
@@ -680,7 +680,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             KeyEvent.KEYCODE_P -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
-                    if (addNote && !canSave()) {
+                    if (canSave()) {
                         performPreview()
                     }
                 }
@@ -986,15 +986,15 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         menuInflater.inflate(R.menu.note_editor, menu)
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
-            menu.findItem(R.id.action_save).isVisible = !canSave()
-            menu.findItem(R.id.action_preview).isVisible = !canSave()
+            menu.findItem(R.id.action_save).isVisible = canSave()
+            menu.findItem(R.id.action_preview).isVisible = canSave()
         } else {
             menu.findItem(R.id.action_add_note_from_note_editor).isVisible = true
         }
         if (mEditFields != null) {
             for (i in mEditFields!!.indices) {
                 val fieldText = mEditFields!![i]!!.text
-                if (fieldText != null && fieldText.isNotEmpty()) {
+                if (!fieldText.isNullOrEmpty()) {
                     menu.findItem(R.id.action_copy_note).isEnabled = true
                     break
                 } else if (i == mEditFields!!.size - 1) {
@@ -1011,9 +1011,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         return super.onCreateOptionsMenu(menu)
     }
 
-    fun canSave(): Boolean {
-        // we can further extend it if required refer :https://github.com/ankidroid/Anki-Android/pull/15030#discussion_r1431330266
-        return currentNotetypeIsImageOcclusion()
+    private fun canSave(): Boolean = when {
+        addNote && currentNotetypeIsImageOcclusion() -> false
+        else -> true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -1025,14 +1025,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
-                if (addNote && !canSave()) {
+                if (canSave()) {
                     performPreview()
                 }
                 return true
             }
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
-                if (addNote && !canSave()) {
+                if (canSave()) {
                     launchCatchingTask { saveNote() }
                 }
                 return true
