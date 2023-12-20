@@ -29,7 +29,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
-import com.ichi2.utils.DatabaseChangeDecorator
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
@@ -39,14 +38,12 @@ import timber.log.Timber
 /**
  * Database layer for AnkiDroid. Wraps an SupportSQLiteDatabase (provided by either the Rust backend
  * or the Android framework), and provides some helpers on top.
+ *
+ * @param database The collection, which is actually a SQLite database.
  */
 @KotlinCleanup("Improve documentation")
 @WorkerThread
-class DB(db: SupportSQLiteDatabase) {
-    /**
-     * The collection, which is actually an SQLite database.
-     */
-    val database: SupportSQLiteDatabase = DatabaseChangeDecorator(db)
+class DB(val database: SupportSQLiteDatabase) {
     var mod = false
 
     /**
