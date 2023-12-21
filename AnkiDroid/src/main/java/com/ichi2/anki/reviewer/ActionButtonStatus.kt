@@ -21,11 +21,10 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.IdRes
 import com.ichi2.anki.R
-import com.ichi2.themes.Themes
 import com.ichi2.utils.HashUtil.hashMapInit
 
 // loads of unboxing issues, which are safe
-class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
+class ActionButtonStatus {
     /**
      * Custom button allocation
      */
@@ -69,26 +68,6 @@ class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
             if (value != MENU_DISABLED) {
                 val item = menu.findItem(itemId)
                 item.setShowAsAction(value)
-                val icon = item.icon
-                item.isEnabled = !reviewerUi.isControlBlocked
-                if (icon != null) {
-                    /* Ideally, we want to give feedback to users that
-                    buttons are disabled.  However, some actions are
-                    expected to be so quick that the visual feedback
-                    is useless and is only seen as a flickering.
-
-                    We use a heuristic to decide whether the next card
-                    will appear quickly or slowly.  We change the
-                    color only if the buttons are blocked and we
-                    expect the next card to take time to arrive.
-                    */
-                    val mutableIcon = icon.mutate()
-                    if (reviewerUi.controlBlocked == ReviewerUi.ControlBlock.SLOW) {
-                        mutableIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
-                    } else {
-                        mutableIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
-                    }
-                }
             } else {
                 menu.findItem(itemId).isVisible = false
             }

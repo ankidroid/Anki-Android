@@ -151,7 +151,7 @@ open class Reviewer :
     // Preferences from the collection
     private var mShowRemainingCardCount = false
     private var stopTimerOnAnswer = false
-    private val mActionButtons = ActionButtons(this)
+    private val mActionButtons = ActionButtons()
     private lateinit var mToolbar: Toolbar
 
     @VisibleForTesting
@@ -549,13 +549,6 @@ open class Reviewer :
         super.unblockControls()
     }
 
-    public override fun blockControls(quick: Boolean) {
-        if (prefWhiteboard && whiteboard != null) {
-            whiteboard!!.isEnabled = false
-        }
-        super.blockControls(quick)
-    }
-
     override fun closeReviewer(result: Int) {
         // Stop the mic recording if still pending
         audioView?.notifyStopRecord()
@@ -695,7 +688,7 @@ open class Reviewer :
         menuInflater.inflate(R.menu.reviewer, menu)
         displayIcons(menu)
         mActionButtons.setCustomButtonsStatus(menu)
-        var alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
+        var alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
         if (currentCard != null && isMarked(currentCard!!.note())) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
@@ -732,7 +725,7 @@ open class Reviewer :
             undoIconId = R.drawable.ic_undo_white
             undoEnabled = colIsOpenUnsafe() && getColUnsafe.undoAvailable()
         }
-        val alphaUndo = if (undoEnabled && super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
+        val alphaUndo = Themes.ALPHA_ICON_ENABLED_LIGHT
         val undoIcon = menu.findItem(R.id.action_undo)
         undoIcon.setIcon(undoIconId)
         undoIcon.setEnabled(undoEnabled).iconAlpha = alphaUndo
@@ -846,7 +839,7 @@ open class Reviewer :
             buryIcon.setIcon(R.drawable.ic_flip_to_back_white)
             buryIcon.setTitle(R.string.menu_bury_card)
         }
-        alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
+        alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
         buryIcon.iconAlpha = alpha
         suspendIcon.iconAlpha = alpha
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_schedule), ScheduleProvider(this))
@@ -1162,9 +1155,6 @@ open class Reviewer :
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        if (isControlBlocked && which !== ViewerCommand.EXIT) {
-            return false
-        }
         when (which) {
             ViewerCommand.TOGGLE_FLAG_RED -> {
                 toggleFlag(Flag.RED)
@@ -1425,7 +1415,7 @@ open class Reviewer :
      */
     @KotlinCleanup("mCurrentCard handling")
     private fun suspendNoteAvailable(): Boolean {
-        return if (currentCard == null || isControlBlocked) {
+        return if (currentCard == null) {
             false
         } else {
             getColUnsafe.db.queryScalar(
@@ -1439,7 +1429,7 @@ open class Reviewer :
 
     @KotlinCleanup("mCurrentCard handling")
     private fun buryNoteAvailable(): Boolean {
-        return if (currentCard == null || isControlBlocked) {
+        return if (currentCard == null) {
             false
         } else {
             getColUnsafe.db.queryScalar(

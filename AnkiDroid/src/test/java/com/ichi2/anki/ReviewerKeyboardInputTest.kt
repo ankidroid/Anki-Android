@@ -25,7 +25,6 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_2
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_3
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import com.ichi2.libanki.Card
 import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
@@ -184,16 +183,6 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     }
 
     @Test
-    fun pressingUndoDoesNothingIfControlsAreBlocked() {
-        // We pick an arbitrary action to ensure that nothing happens if controls are blocked
-        val underTest = KeyboardInputTestReviewer.displayingQuestion()
-            .withUndoAvailable(true)
-            .withControlsBlocked(ControlBlock.SLOW)
-        underTest.handleUnicodeKeyPress('z')
-        assertThat("Undo should not be called as control are blocked", !underTest.undoCalled)
-    }
-
-    @Test
     fun defaultKeyboardInputsFlipAndAnswersCard() {
         // Issue 14214
         val underTest = KeyboardInputTestReviewer.displayingQuestion()
@@ -230,15 +219,10 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             private set
         var replayAudioCalled = false
             private set
-        override var controlBlocked = ControlBlock.UNBLOCKED
 
         private val cardFlips = mutableListOf<String>()
         override val isDrawerOpen: Boolean
             get() = false
-        fun withControlsBlocked(value: ControlBlock): KeyboardInputTestReviewer {
-            controlBlocked = value
-            return this
-        }
 
         fun displayAnswerForTest() {
             displayAnswer = true

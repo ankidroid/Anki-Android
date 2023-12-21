@@ -21,10 +21,10 @@ import androidx.annotation.IdRes
 import androidx.appcompat.view.menu.MenuItemImpl
 import com.ichi2.anki.R
 
-class ActionButtons(reviewerUi: ReviewerUi) {
+class ActionButtons {
     // DEFECT: This should be private - it breaks the law of demeter, but it'll be a large refactoring to get
     // to this point
-    val status: ActionButtonStatus = ActionButtonStatus(reviewerUi)
+    val status: ActionButtonStatus = ActionButtonStatus()
     private var mMenu: Menu? = null
     fun setup(preferences: SharedPreferences) {
         status.setup(preferences)

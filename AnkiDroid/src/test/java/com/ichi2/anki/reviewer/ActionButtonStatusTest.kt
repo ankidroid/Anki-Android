@@ -50,7 +50,7 @@ class ActionButtonStatusTest : RobolectricTest() {
                 ret.add(key)
                 "0"
             }
-            val status = ActionButtonStatus(mock(ReviewerUi::class.java))
+            val status = ActionButtonStatus()
             status.setup(preferences)
             return ret
         }

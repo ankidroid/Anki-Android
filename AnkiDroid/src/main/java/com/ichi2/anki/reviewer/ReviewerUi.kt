@@ -17,23 +17,5 @@
 package com.ichi2.anki.reviewer
 
 interface ReviewerUi {
-    /** How to block UI buttons.  */
-    enum class ControlBlock {
-        /** Buttons are functional */
-        UNBLOCKED,
-
-        /**Don't record click; as it's ambiguous whether it would apply to next or previous card.
-         * We expect the next card load quickly, so no need to give visual feedback to user,
-         * which would be considered as flickering.  */
-        QUICK,
-
-        /**Don't record click; as it's ambiguous whether it would apply to next or previous card.
-         * We expect the next card may take time to load, as scheduler needs to recompute its queues;
-         * so we show the button get deactivated.  */
-        SLOW
-    }
-
-    val controlBlocked: ControlBlock?
-    val isControlBlocked: Boolean
     val isDisplayingAnswer: Boolean
 }
