@@ -116,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">لمس بالای وسط</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">لمس پایین سمت چپ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">لمس پایین سمت راست</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">منوی \'%s\'</string>
     <string name="card_browser_enable_external_context_menu_summary">\'%s\' را در لیست به صورت عمومی فعال می‌کند</string>
     <string name="double_scrolling_gap" maxLength="41">پیمایش دو برابری</string>

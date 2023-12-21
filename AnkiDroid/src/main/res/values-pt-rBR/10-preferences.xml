@@ -116,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Toque Meio Centro</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toque Baixo Esquerda</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toque Baixo Direita</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu </string>
     <string name="card_browser_enable_external_context_menu_summary">Habilita o menu de contexto globalmente ‘%s\'</string>
     <string name="double_scrolling_gap" maxLength="41">Rolagem dupla</string>
