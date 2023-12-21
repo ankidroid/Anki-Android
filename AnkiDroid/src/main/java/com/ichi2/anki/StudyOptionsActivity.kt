@@ -73,6 +73,7 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (isDrawerOpen) {
             super.onBackPressed()
