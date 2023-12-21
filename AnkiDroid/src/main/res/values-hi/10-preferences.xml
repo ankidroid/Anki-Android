@@ -162,7 +162,7 @@
     <string name="safe_display_summ">सभी एनिमेशन अक्षम करें और कार्ड बनाने के लिए सुरक्षित विधि का उपयोग करें। ई-इंक उपकरणों को इसकी आवश्यकता हो सकती है।</string>
     <string name="disable_extended_text_ui" maxLength="41">एकल फ़ील्ड मोड अक्षम करें</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">लैंडस्केप मोड में होने पर \'क्लोज़ डिलीशन\' संदर्भ मेनू की अनुमति देता है।</string>
     <string name="vertical_centering" maxLength="41">मध्य संरेखित करें</string>
     <string name="vertical_centering_summ">कार्ड की सामग्री को अनुलंब रूप से केंद्रित करना</string>
     <string name="pref_double_tap_time_interval" maxLength="41">डबल टैप समय अंतराल (मिलीसेकंड)</string>
@@ -207,7 +207,7 @@
     <string name="accessibility" maxLength="41">सरल उपयोग</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">क्लिपबोर्ड इमेजेज को पीएनजी प्रारूप में चिपकाएँ</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png_summary">डिफ़ॉल्ट रूप से एंड्रॉइड डिस्क स्थान को बचाने के लिए छवियों को JPG फ़ाइलों के रूप में क्लिपबोर्ड पर चिपकाता है। आप इसके बजाय पीएनजी छवियों के रूप में पेस्ट करने के लिए इस विकल्प का उपयोग कर सकते हैं।</string>
     <string name="exit_via_double_tap_back" maxLength="41">वापस जाने/बाहर निकलने के लिए दो बार बैक दबाएँ</string>
     <string name="exit_via_double_tap_back_summ">समीक्षक या ऐप को गलती से छोड़ने से बचने के लिए</string>
     <!-- Allow all files in media imports -->
@@ -216,11 +216,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">कस्टम सिंक्रनाइज़ेशन सर्वर</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">उपयोग नहीं किया</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
-        ]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[एंकीवेब के साथ सिंक्रोनाइज़ करने के विकल्प के रूप में, आप सिंक्रोनाइज़ेशन के लिए अपने स्वयं के सर्वर का उपयोग कर सकते हैं।
+यदि सेट नहीं किया गया है, तो इसके स्थान पर डिफ़ॉल्ट एंकीवेब सर्वर का उपयोग किया जाएगा।<a href=\'%s\'>और जानें</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">सिंक्रनाइज़ेशन url</string>
     <!-- Key Bindings -->
     <string name="keyboard">कीबोर्ड</string>
@@ -250,7 +247,7 @@
     <string name="analytics_title" maxLength="41">सुविधा उपयोग साझा करें</string>
     <string name="analytics_summ">आप AnkiDroid में योगदान कर सकते हैं, आप AnkiDroid Team को यह देखने में मदद कर सकते हैं कि लोग किन सुविधाओं का उपयोग करते हैं</string>
     <string name="note_editor_replace_newlines" maxLength="41">न्यूलाइन को हटम्ल से बदलें</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines_summ">नोट संपादक में, &lt;br&gt; के किसी भी उदाहरण को रूपांतरित करें। किसी कार्ड को संपादित करते समय नई पंक्तियों में।</string>
     <string name="no_code_formatting" maxLength="41">टेक्स्ट इनपुट उत्तरों के लिए सरल फ़ॉन्ट का उपयोग करें</string>
     <string name="no_code_formatting_summ">टाइप किए गए उत्तर परिणामों में प्रदर्शित होने वाले ‘􏿾’ को ठीक करता है</string>
     <string name="type_in_answer_focus" maxLength="41">\'उत्तर टाइप करें\' पर ध्यान दें</string>
@@ -259,9 +256,9 @@
     <string name="open_changelog">परिवर्तन लॉग खोलें</string>
     <string name="pref_cat_about_title" maxLength="41">इसके बारे में</string>
     <string name="contributors_title">योगदान देने वाला</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description"><![CDATA[ये हमारे अद्भुत <a href=\"%1$s\">योगदानकर्ता</a> हैं। आप प्रोग्रामिंग, अनुवाद, दान और <a href=\"%2$s\">और</a> करके एंड्रॉइड की भी मदद कर सकते हैं!]]></string>
     <string name="license">लाइसेंस</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid को <a href=\"%1$s\">GPL-3.0</a> और <a href=\"%2$s\">AGPL-3.0</a> लाइसेंस के तहत जारी किया गया है। स्रोत कोड <a href=\"%3$s\">GitHub</a> पर उपलब्ध है]]></string>
     <string name="donate_description"><![CDATA[आप <a href=\"%1$s\">दान</a> करके AnkiDroid\ के विकास में सहायता कर सकते हैं। किसी भी राशि की अत्यधिक सराहना की जाती है।]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">इशारा जोड़ें</string>
@@ -292,15 +289,8 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
-        <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
-        <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
-    ]]></string>
+    <string name="pref__backups_help__summary"><![CDATA[एंड्रॉइड समय-समय पर आपके संग्रह का बैकअप लेता है। बैकअप दो दिन से अधिक पुराना होने के बाद, डिस्क स्थान खाली करने के लिए एंड्रॉइड उनमें से कुछ को हटाना शुरू कर देगा। <br><br> ध्यान दें कि मीडिया फ़ाइलों का बैकअप नहीं लिया जाता है.सुरक्षित रहने के लिए, कृपया समय-समय पर अपने संग्रह को सिंक्रनाइज़ करें, या इसके निर्यात का बैकअप लें।
+ <br><br> आप बैकअप से पुनर्स्थापित कर सकते हैं और डेक सूची मेनू में अपना संग्रह निर्यात कर सकते हैं।]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">स्वचालित बैकअप अंतराल (मिनट)</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">प्रतिदिन में कितने बैकअप रखे जायेंगे</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">साप्ताहिक में कितने बैकअप रखे जायेंगे</string>
@@ -313,8 +303,8 @@
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">एरर</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">गणना \nप्रगति पर है...</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d फ़ाइलें\n%2$s</item>
+        <item quantity="other">%1$d फ़ाइलें\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">अनावश्यक मीडिया फ़ाइलें हटाएँ</string>

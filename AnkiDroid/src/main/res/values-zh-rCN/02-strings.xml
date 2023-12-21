@@ -366,5 +366,5 @@
     </string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        打开文本转语音设置失败
     </string>
-    <string name="shared_decks_login_required">Please log in to download more decks</string>
+    <string name="shared_decks_login_required">请登录以下载更多牌组</string>
 </resources>

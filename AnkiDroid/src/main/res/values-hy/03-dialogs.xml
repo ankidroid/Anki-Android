@@ -58,7 +58,7 @@
     <string name="reposition_card_not_new_error">Կարելի է տեղափոխել միայն նոր քարտերը</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">Տեղափոխվել է %d քարտ</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="other">Տեղափոխվել է %d քարտ</item>
     </plurals>
     <string name="reset_card_dialog_title">Վերակայել առաջընթացը</string>
     <string name="reset_card_dialog_message">Քարտը կտեղադրվի նոր քարտերի ցանկի վերջում։</string>
@@ -83,18 +83,18 @@
     <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
-    <string name="answering_error_title">Database error</string>
+    <string name="answering_error_title">Շտեմարանի սխալ</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Report error</string>
     <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
     <string name="intent_aedict_empty">Category “default” is empty</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Նոր քարտեր` %d</string>
+    <string name="custom_study_rev_total_rev">Պետք է անել %d վերանայում</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
-    <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
+    <string name="custom_study_forgotten">Վերանայել վերջին X օրում մոռացված քարտերը`</string>
     <string name="custom_study_ahead">Review ahead by x days:</string>
     <string name="custom_study_random">Select x cards randomly from the deck:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
@@ -106,23 +106,23 @@
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
     <string name="restore_backup_choose_another">Choose another</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_cancel">Չեղարկել</string>
     <string name="dialog_ok">Լավ</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Հաստատել</string>
     <string name="dialog_no">Ոչ</string>
     <string name="dialog_yes">այո</string>
-    <string name="dialog_continue">Continue</string>
+    <string name="dialog_continue">Շարունակել</string>
     <string name="dialog_processing">Processing...</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
-    <string name="dialog_positive_delete">Delete</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Ստեղծել</string>
+    <string name="dialog_positive_delete">Ջնջել</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_repair">Repair</string>
-    <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Անջատել</string>
+    <string name="dialog_positive_overwrite">Վերագրանցել</string>
+    <string name="dialog_positive_repair">Վերականգնել</string>
+    <string name="dialog_positive_replace">Փոխարինել</string>
+    <string name="dialog_collection_path_not_dir">Նշված ուղին վավեր թղթապանակ չէ</string>
     <!-- Media checking -->
-    <string name="check_media_title">Check media?</string>
+    <string name="check_media_title">Ստուգե՞լ մեդիան</string>
     <string name="check_media_warning">This may take a long time with large media collections</string>
     <string name="check_media_message">Checking media&#8230;</string>
     <string name="check_media_acknowledge">Media checked</string>
@@ -135,12 +135,12 @@
     <string name="delete_media_message">Deleting media&#8230;</string>
     <string name="delete_media_result_title">Deletion result</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">Ջնջվել է %d ֆայլ</item>
+        <item quantity="other">Ջնջվել է %d ֆայլ</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Բոլոր քարտերը</string>
-    <string name="tags_dialog_option_new_cards">New</string>
+    <string name="tags_dialog_option_new_cards">Նոր</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
@@ -154,9 +154,9 @@
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_startup_title">AnkiDroid-ը թարմացվել է</string>
+    <string name="integrity_check_startup_content">Այս թարմացումը ունի շտեմարանի հնարավոր խնդիրների շտկումներ, և մենք խորհուրդ ենք տալիս գործարկել բազայի ստուգումը։</string>
+    <string name="integrity_check_continue_anyway">Ամեն դեպքում շարունակել</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
     <!-- Card Browser -->
@@ -171,7 +171,7 @@
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Background image applied</string>
     <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
+    <string name="no_image_selected">Նկար նշված չէ</string>
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">Error deleting image</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
@@ -186,32 +186,32 @@
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title">Ստեղնաշարի լեզու</string>
+    <string name="locale_selection_dialog_summary">Մի շարք բազմալեզու ստեղնաշար, որոնցից է Gboard-ը, կարող են տեքստը խմբագրելուց փոխել լեզուն։\n\nԵթե ձեր ստեղնաշարի լեզուն չի փոխվում, ապա այն մշակողից խնդրեք «setImeHintLocales» գործառույթը։</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
+    <string name="help_title_using_ankidroid">AnkiDroid-ի օգտագործում</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid-ի ձեռնարկ</string>
+    <string name="help_item_anki_manual">Anki-ի ձեռնարկ</string>
+    <string name="help_item_ankidroid_faq">Հաճախ տրվող հարցեր</string>
+    <string name="help_title_get_help">Ստանալ օգնություն</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_report_bug">Հայտնել խնդրի մասին</string>
+    <string name="help_title_support_ankidroid">Աջակցել AnkiDroid-ին</string>
+    <string name="help_item_support_opencollective_donate">Նվիրաբերել</string>
+    <string name="help_item_support_develop_ankidroid">Ծրագրավորել</string>
+    <string name="help_item_support_rate_ankidroid">Գնահատել</string>
+    <string name="help_item_support_other_ankidroid">Այլ</string>
+    <string name="multimedia_editor_trans_translate">Թարգմանել</string>
+    <string name="help_title_community">Համայնք</string>
+    <string name="help_item_anki_forums">Anki ֆորումներ</string>
     <string name="help_item_discord">Discord</string>
-    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_facebook">Ֆեյսբուք</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
+    <string name="help_title_privacy">Գաղտնիություն</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid-ի գաղտնիության քաղաքականություն</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb-ի գաղտնիության քաղաքականություն</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb-ի դրույթներ</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>
     <string name="help_dialog_exception_report_debounce">Report already submitted</string>
     <!--Sync-->
@@ -237,11 +237,9 @@
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
     <string name="button_backup">Backup</string>
     <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
-    </string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Ավելի ուշ</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Այլևս ցույց չտալ</string>
+    <string name="dismiss_backup_warning_title">Տվյալների կորուստի մասին նախազգուշացում</string>
+    <string name="dismiss_backup_warning_new_user">Android-ի գաղտնիության փոփոխությունների պատճառով ձեր տվյալները և նրանց` ավտոմատ կերպով ստեղծված պատճենները կջնջվեն` ծրագրի ապատեղադրման ժամանակ։</string>
+    <string name="dismiss_backup_warning_upgrade">Android-ի գաղտնիության փոփոխությունների պատճառով ձեր տվյալները և նրանց` ավտոմատ կերպով ստեղծված պատճենները անհասանելի կլինեն` ծրագրի ապատեղադրման ժամանակ։</string>
 </resources>
