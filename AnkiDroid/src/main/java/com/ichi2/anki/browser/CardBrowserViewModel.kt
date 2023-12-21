@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ExportDialogParams
 import com.ichi2.anki.export.ExportType
@@ -37,6 +38,7 @@ import com.ichi2.anki.servicelayer.CardService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -57,6 +59,7 @@ import kotlin.math.min
 
 @NeedsTest("reverseDirectionFlow/sortTypeFlow are not updated on .launch { }")
 class CardBrowserViewModel(
+    private val lastDeckIdRepository: LastDeckIdRepository,
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
@@ -66,6 +69,7 @@ class CardBrowserViewModel(
 
     var searchTerms: String = ""
     var restrictOnDeck: String = ""
+        private set
     var currentFlag = 0
 
     /**
@@ -111,11 +115,42 @@ class CardBrowserViewModel(
         get() = selectedRows.map { c -> c.id }
     var lastSelectedPosition = 0
 
+    val lastDeckId: DeckId?
+        get() = lastDeckIdRepository.lastDeckId
+
+    suspend fun setDeckId(deckId: DeckId) {
+        lastDeckIdRepository.lastDeckId = deckId
+        restrictOnDeck = if (deckId == ALL_DECKS_ID) {
+            ""
+        } else {
+            val deckName = withCol { decks.name(deckId) }
+            "deck:\"$deckName\" "
+        }
+        deckIdFlow.update { deckId }
+    }
+
+    val deckIdFlow = MutableStateFlow(lastDeckId)
+
     val cardInfoDestination: CardInfoDestination?
         get() {
             val firstSelectedCard = selectedCardIds.firstOrNull() ?: return null
             return CardInfoDestination(firstSelectedCard)
         }
+
+    suspend fun getInitialDeck(): DeckId {
+        // TODO: Handle the launch intent
+        val lastDeckId = lastDeckId
+        if (lastDeckId == ALL_DECKS_ID) {
+            return ALL_DECKS_ID
+        }
+
+        // If a valid value for last deck exists then use it, otherwise use libanki selected deck
+        return if (lastDeckId != null && withCol { decks.get(lastDeckId) != null }) {
+            lastDeckId
+        } else {
+            withCol { decks.selected() }
+        }
+    }
 
     private val initCompletedFlow = MutableStateFlow(false)
 
@@ -395,9 +430,12 @@ class CardBrowserViewModel(
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
-        fun factory(preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
+        fun factory(lastDeckIdRepository: LastDeckIdRepository, preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
             initializer {
-                CardBrowserViewModel(preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider)
+                CardBrowserViewModel(
+                    lastDeckIdRepository,
+                    preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider
+                )
             }
         }
     }

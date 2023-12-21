@@ -30,7 +30,6 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
@@ -47,6 +46,7 @@ import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.*
 import com.ichi2.anki.browser.SaveSearchResult
+import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
@@ -89,6 +89,7 @@ import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import net.ankiweb.rsdroid.RustCleanup
@@ -111,8 +112,7 @@ open class CardBrowser :
         deck?.let {
             val deckId = deck.deckId
             deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-            deckSpinnerSelection!!.selectDeckById(deckId, true)
-            selectDeckAndSave(deckId)
+            launchCatchingTask { selectDeckAndSave(deckId) }
         }
     }
 
@@ -143,9 +143,6 @@ open class CardBrowser :
     private var mSearchTerms
         get() = viewModel.searchTerms
         set(value) { viewModel.searchTerms = value }
-    private var mRestrictOnDeck
-        get() = viewModel.restrictOnDeck
-        set(value) { viewModel.restrictOnDeck = value }
     private var mCurrentFlag
         get() = viewModel.currentFlag
         set(value) { viewModel.currentFlag = value }
@@ -357,22 +354,6 @@ open class CardBrowser :
         }
     }
 
-    @get:VisibleForTesting
-    val lastDeckId: DeckId?
-        get() = getSharedPreferences(PERSISTENT_STATE_FILE, 0)
-            .getLong(LAST_DECK_ID_KEY, Decks.NOT_FOUND_DECK_ID)
-            .takeUnless { it == Decks.NOT_FOUND_DECK_ID }
-
-    private fun saveLastDeckId(id: Long?) {
-        if (id == null) {
-            clearLastDeckId()
-            return
-        }
-        getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
-            putLong(LAST_DECK_ID_KEY, id)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -474,6 +455,16 @@ open class CardBrowser :
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
             .launchIn(lifecycleScope)
+
+        viewModel.deckIdFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .filterNotNull()
+            .onEach { deckId ->
+                // this handles ALL_DECKS_ID
+                deckSpinnerSelection!!.selectDeckById(deckId, true)
+                searchCards()
+            }
+            .launchIn(lifecycleScope)
     }
 
     fun searchWithFilterQuery(filterQuery: String) {
@@ -551,7 +542,6 @@ open class CardBrowser :
             true
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        val deckId = col.decks.selected()
         deckSpinnerSelection = DeckSpinnerSelection(
             this,
             col,
@@ -561,28 +551,20 @@ open class CardBrowser :
             showFilteredDecks = true
         )
         deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-        selectDeckAndSave(deckId)
 
-        // If a valid value for last deck exists then use it, otherwise use libanki selected deck
-        if (lastDeckId != null && lastDeckId == ALL_DECKS_ID) {
-            selectAllDecks()
-        } else if (lastDeckId != null && col.decks.get(lastDeckId!!) != null) {
-            deckSpinnerSelection!!.selectDeckById(lastDeckId!!, false)
-        } else {
-            deckSpinnerSelection!!.selectDeckById(col.decks.selected(), false)
+        launchCatchingTask {
+            val deckId = withCol { decks.selected() }
+            // WARN: This is required to set `restrictOnDeck`
+            selectDeckAndSave(deckId)
+            when (viewModel.getInitialDeck()) {
+                ALL_DECKS_ID -> selectAllDecks()
+                else -> deckSpinnerSelection!!.selectDeckById(viewModel.lastDeckId!!, false)
+            }
         }
     }
 
-    fun selectDeckAndSave(deckId: DeckId) {
-        deckSpinnerSelection!!.selectDeckById(deckId, true)
-        mRestrictOnDeck = if (deckId == ALL_DECKS_ID) {
-            ""
-        } else {
-            val deckName = getColUnsafe.decks.name(deckId)
-            "deck:\"$deckName\" "
-        }
-        saveLastDeckId(deckId)
-        searchCards()
+    suspend fun selectDeckAndSave(deckId: DeckId) {
+        viewModel.setDeckId(deckId)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -649,11 +631,8 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun selectAllDecks() {
-        deckSpinnerSelection!!.selectAllDecks()
-        mRestrictOnDeck = ""
-        saveLastDeckId(ALL_DECKS_ID)
-        searchCards()
+    suspend fun selectAllDecks() {
+        viewModel.setDeckId(ALL_DECKS_ID)
     }
 
     /** Opens the note editor for a card.
@@ -1292,8 +1271,8 @@ open class CardBrowser :
         get() {
             val intent = Intent(this@CardBrowser, NoteEditor::class.java)
             intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD)
-            if (lastDeckId?.let { id -> id > 0 } == true) {
-                intent.putExtra(NoteEditor.EXTRA_DID, lastDeckId)
+            if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
+                intent.putExtra(NoteEditor.EXTRA_DID, viewModel.lastDeckId)
             }
             intent.putExtra(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, mSearchTerms)
             return intent
@@ -1400,7 +1379,7 @@ open class CardBrowser :
         val searchText: String? = if (mSearchTerms.contains("deck:")) {
             "($mSearchTerms)"
         } else {
-            if ("" != mSearchTerms) "$mRestrictOnDeck($mSearchTerms)" else mRestrictOnDeck
+            if ("" != mSearchTerms) "${viewModel.restrictOnDeck}($mSearchTerms)" else viewModel.restrictOnDeck
         }
         // clear the existing card list
         mCards.reset()
@@ -1645,11 +1624,11 @@ open class CardBrowser :
         return v?.top ?: 0
     }
 
-    fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
+    fun hasSelectedAllDecks(): Boolean = viewModel.lastDeckId == ALL_DECKS_ID
 
-    fun searchAllDecks() {
+    fun searchAllDecks() = launchCatchingTask {
         // all we need to do is select all decks
-        selectAllDecks()
+        viewModel.setDeckId(ALL_DECKS_ID)
     }
 
     /**
@@ -1659,10 +1638,10 @@ open class CardBrowser :
      */
     val selectedDeckNameForUi: String
         get() = try {
-            when (lastDeckId) {
+            when (val deckId = viewModel.lastDeckId) {
                 null -> getString(R.string.card_browser_unknown_deck_name)
                 ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
-                else -> getColUnsafe.decks.name(lastDeckId!!)
+                else -> getColUnsafe.decks.name(deckId)
             }
         } catch (e: Exception) {
             Timber.w(e, "Unable to get selected deck name")
@@ -1914,7 +1893,7 @@ open class CardBrowser :
      */
     private fun createViewModel() = ViewModelProvider(
         viewModelStore,
-        CardBrowserViewModel.factory(),
+        CardBrowserViewModel.factory(SharedPreferencesLastDeckIdRepository()),
         defaultViewModelCreationExtras
     )[CardBrowserViewModel::class.java]
 
@@ -2286,16 +2265,9 @@ open class CardBrowser :
 
         // Values related to persistent state data
         private const val ALL_DECKS_ID = 0L
-        private const val PERSISTENT_STATE_FILE = "DeckPickerState"
-        private const val LAST_DECK_ID_KEY = "lastDeckId"
         const val CARD_NOT_AVAILABLE = -1
 
-        fun clearLastDeckId() {
-            val context: Context = AnkiDroidApp.instance
-            context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
-                remove(LAST_DECK_ID_KEY)
-            }
-        }
+        fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
         @CheckResult
         private fun formatQA(text: String, context: Context): String {

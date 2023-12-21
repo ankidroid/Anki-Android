@@ -28,6 +28,7 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
+import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
@@ -462,14 +463,14 @@ class CardBrowserTest : RobolectricTest() {
 
     /** 7420  */
     @Test
-    fun addCardDeckIsNotSetIfAllDecksSelectedAfterLoad() {
+    fun addCardDeckIsNotSetIfAllDecksSelectedAfterLoad() = runTest {
         addDeck("NotDefault")
 
         val b = browserWithNoNewCards
 
         assertThat("All decks should not be selected", b.hasSelectedAllDecks(), equalTo(false))
 
-        b.selectAllDecks()
+        b.viewModel.setDeckId(ALL_DECKS_ID)
 
         assertThat("All decks should be selected", b.hasSelectedAllDecks(), equalTo(true))
 
@@ -480,7 +481,7 @@ class CardBrowserTest : RobolectricTest() {
 
     /** 7420  */
     @Test
-    fun addCardDeckISetIfDeckIsSelected() {
+    fun addCardDeckISetIfDeckIsSelected() = runTest {
         val targetDid = addDeck("NotDefault")
 
         val b = browserWithNoNewCards
@@ -491,7 +492,7 @@ class CardBrowserTest : RobolectricTest() {
             not(equalTo(targetDid))
         )
 
-        b.selectDeckAndSave(targetDid)
+        b.viewModel.setDeckId(targetDid)
 
         assertThat("The target deck should be selected", b.lastDeckId, equalTo(targetDid))
 
@@ -1064,3 +1065,6 @@ fun ListView.getViewByPosition(pos: Int): View {
         }
     }
 }
+
+val CardBrowser.lastDeckId
+    get() = viewModel.lastDeckId
