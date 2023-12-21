@@ -33,7 +33,7 @@ import kotlin.collections.ArrayList
  * Also defines equality over bindings.
  * https://stackoverflow.com/questions/5453226/java-need-a-hash-map-where-one-supplies-a-function-to-do-the-hashing
  */
-class MappableBinding(val binding: Binding, private val screen: Screen) {
+class MappableBinding(val binding: Binding, val screen: Screen) {
     val isKey: Boolean get() = binding is KeyBinding
 
     override fun equals(other: Any?): Boolean {
@@ -128,8 +128,6 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
             }
 
             companion object {
-                @CheckResult
-                fun fromGesture(b: Binding): MappableBinding = MappableBinding(b, Reviewer(CardSide.BOTH))
                 fun fromString(s: String): MappableBinding {
                     val binding = s.substring(0, s.length - 1)
                     val b = Binding.fromString(binding)
@@ -153,7 +151,7 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
         const val PREF_SEPARATOR = '|'
 
         @CheckResult
-        fun fromGesture(gesture: Gesture): MappableBinding = MappableBinding(GestureInput(gesture), Screen.Reviewer(CardSide.BOTH))
+        fun fromGesture(gesture: Gesture, screen: (CardSide) -> Screen): MappableBinding = MappableBinding(GestureInput(gesture), screen(CardSide.BOTH))
 
         @CheckResult
         fun List<MappableBinding>.toPreferenceString(): String = this.mapNotNull { it.toPreferenceString() }
@@ -208,3 +206,7 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
         }
     }
 }
+
+@Suppress("UnusedReceiverParameter")
+val ViewerCommand.screenBuilder: (CardSide) -> MappableBinding.Screen
+    get() = { it -> MappableBinding.Screen.Reviewer(it) }
