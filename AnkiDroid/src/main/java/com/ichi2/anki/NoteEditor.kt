@@ -651,7 +651,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         when (keyCode) {
             KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER -> if (event.isCtrlPressed) {
                 // disable it in case of image occlusion
-                if (canSave()) {
+                if (allowSaveAndPreview()) {
                     launchCatchingTask { saveNote() }
                 }
             }
@@ -680,7 +680,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             KeyEvent.KEYCODE_P -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
-                    if (canSave()) {
+                    if (allowSaveAndPreview()) {
                         performPreview()
                     }
                 }
@@ -986,8 +986,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         menuInflater.inflate(R.menu.note_editor, menu)
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
-            menu.findItem(R.id.action_save).isVisible = canSave()
-            menu.findItem(R.id.action_preview).isVisible = canSave()
+            menu.findItem(R.id.action_save).isVisible = allowSaveAndPreview()
+            menu.findItem(R.id.action_preview).isVisible = allowSaveAndPreview()
         } else {
             menu.findItem(R.id.action_add_note_from_note_editor).isVisible = true
         }
@@ -1011,7 +1011,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun canSave(): Boolean = when {
+    /**
+     * When using the options such as image occlusion we don't need the menu's save/preview
+     * option to save/preview the card as it has a built in option and the user is notified
+     * when the card is saved successfully
+     * **/
+    private fun allowSaveAndPreview(): Boolean = when {
         addNote && currentNotetypeIsImageOcclusion() -> false
         else -> true
     }
@@ -1025,14 +1030,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
-                if (canSave()) {
+                if (allowSaveAndPreview()) {
                     performPreview()
                 }
                 return true
             }
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
-                if (canSave()) {
+                if (allowSaveAndPreview()) {
                     launchCatchingTask { saveNote() }
                 }
                 return true
@@ -2041,6 +2046,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
             // If a new column was selected then change the key used to map from mCards to the column TextView
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
+            // In case the type is changed while adding the card, the menu options need to be invalidated
             invalidateMenu()
             val oldModelId = getColUnsafe.notetypes.current().getLong("id")
             val newId = mAllModelIds!![pos]
