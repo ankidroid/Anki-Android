@@ -32,6 +32,7 @@ import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
 import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.MappableBinding.Screen
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.testutils.Flaky
@@ -298,7 +299,12 @@ class ReviewerNoParamTest : RobolectricTest() {
     /** Enables a gesture (without changing the overall setting of whether gestures are allowed)  */
     private fun enableGesture(gesture: Gesture) {
         val prefs = targetContext.sharedPrefs()
-        ViewerCommand.FLIP_OR_ANSWER_EASE1.addBinding(prefs, MappableBinding.fromGesture(gesture))
+        ViewerCommand.FLIP_OR_ANSWER_EASE1.addBinding(
+            prefs,
+            MappableBinding.fromGesture(gesture) {
+                Screen.Reviewer(it)
+            }
+        )
     }
 
     private fun startReviewerFullScreen(): ReviewerExt {

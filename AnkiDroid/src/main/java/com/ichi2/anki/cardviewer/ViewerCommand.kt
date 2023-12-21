@@ -26,6 +26,7 @@ import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.MappableBinding.*
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import java.util.*
@@ -78,6 +79,8 @@ enum class ViewerCommand(val resourceId: Int) {
             get() = Arrays.stream(values())
                 .flatMap { x: ViewerCommand -> x.defaultValue.stream() }
                 .collect(Collectors.toList())
+
+        fun fromPreferenceKey(key: String) = ViewerCommand.entries.first { it.preferenceKey == key }
     }
 
     val preferenceKey: String
@@ -122,8 +125,12 @@ enum class ViewerCommand(val resourceId: Int) {
 
     // If we use the serialised format, then this adds additional coupling to the properties.
     val defaultValue: List<MappableBinding>
-        get() = // If we use the serialised format, then this adds additional coupling to the properties.
-            when (this) {
+        get() {
+            // all of the default commands are currently for the Reviewer
+            fun keyCode(keycode: Int, side: CardSide, modifierKeys: ModifierKeys = ModifierKeys.none()) =
+                keyCode(keycode, Screen.Reviewer(side), modifierKeys)
+            fun unicode(c: Char, side: CardSide) = unicode(c, Screen.Reviewer(side))
+            return when (this) {
                 FLIP_OR_ANSWER_EASE1 -> from(
                     keyCode(KeyEvent.KEYCODE_BUTTON_Y, CardSide.BOTH),
                     keyCode(KeyEvent.KEYCODE_1, CardSide.ANSWER),
@@ -171,21 +178,18 @@ enum class ViewerCommand(val resourceId: Int) {
                 ADD_NOTE -> from(keyCode(KeyEvent.KEYCODE_A, CardSide.BOTH))
                 else -> ArrayList()
             }
+        }
 
-    private fun keyCode(keycode: Int, side: CardSide, keys: ModifierKeys): MappableBinding {
-        return MappableBinding(keyCode(keys, keycode), MappableBinding.Screen.Reviewer(side))
+    private fun keyCode(keycode: Int, screen: Screen, keys: ModifierKeys = ModifierKeys.none()): MappableBinding {
+        return MappableBinding(keyCode(keys, keycode), screen)
     }
 
-    private fun unicode(c: Char, side: CardSide): MappableBinding {
-        return MappableBinding(unicode(c), MappableBinding.Screen.Reviewer(side))
+    private fun unicode(c: Char, screen: Screen): MappableBinding {
+        return MappableBinding(unicode(c), screen)
     }
 
     private fun from(vararg bindings: MappableBinding): List<MappableBinding> {
         return ArrayList(listOf(*bindings))
-    }
-
-    private fun keyCode(keyCode: Int, side: CardSide): MappableBinding {
-        return MappableBinding(keyCode(keyCode), MappableBinding.Screen.Reviewer(side))
     }
 
     fun interface CommandProcessor {
