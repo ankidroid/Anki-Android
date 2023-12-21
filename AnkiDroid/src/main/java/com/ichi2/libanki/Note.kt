@@ -18,12 +18,11 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.libanki.exception.WrongId
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
+import com.ichi2.utils.emptyStringMutableList
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
-import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
 
@@ -43,17 +42,14 @@ class Note : Cloneable {
 
     var mid: Long = 0
         private set
-    lateinit var tags: ArrayList<String>
+    lateinit var tags: MutableList<String>
         private set
-    lateinit var fields: Array<String>
+    lateinit var fields: MutableList<String>
         private set
-    private var mFlags = 0
-    private var mData: String? = null
     private var mFMap: Map<String, Pair<Int, JSONObject>>? = null
-    private var mScm: Long = 0
     var usn = 0
         private set
-    var mod: Long = 0
+    var mod: Int = 0
         private set
 
     constructor(col: Collection, id: Long) {
@@ -68,36 +64,27 @@ class Note : Cloneable {
         guId = Utils.guid64()
         this.notetype = notetype
         mid = notetype.getLong("id")
-        tags = ArrayList()
-        fields = Array(notetype.getJSONArray("flds").length()) { "" }
-        mFlags = 0
-        mData = ""
+        tags = mutableListOf()
+        fields = emptyStringMutableList(notetype.getJSONArray("flds").length())
         mFMap = Notetypes.fieldMap(this.notetype)
-        mScm = col.scm
     }
 
     fun load() {
-        Timber.d("load()")
-        col.db
-            .query(
-                "SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = ?",
-                this.id
-            ).use { cursor ->
-                if (!cursor.moveToFirst()) {
-                    throw WrongId(this.id, "note")
-                }
-                guId = cursor.getString(0)
-                mid = cursor.getLong(1)
-                mod = cursor.getLong(2)
-                usn = cursor.getInt(3)
-                tags = ArrayList(col.tags.split(cursor.getString(4)))
-                fields = Utils.splitFields(cursor.getString(5))
-                mFlags = cursor.getInt(6)
-                mData = cursor.getString(7)
-                notetype = col.notetypes.get(mid)!!
-                mFMap = Notetypes.fieldMap(notetype)
-                mScm = col.scm
-            }
+        val note = col.backend.getNote(this.id)
+        loadFromBackendNote(note)
+    }
+
+    private fun loadFromBackendNote(note: anki.notes.Note) {
+        this.id = note.id
+        this.guId = note.guid
+        this.mid = note.notetypeId
+        this.notetype = col.notetypes.get(mid)!! // not in libAnki
+        this.mod = note.mtimeSecs
+        this.usn = note.usn
+        // the lists in the protobuf are NOT mutable, even though they cast to MutableList
+        this.tags = note.tagsList.toMutableList()
+        this.fields = note.fieldsList.toMutableList()
+        this.mFMap = Notetypes.fieldMap(notetype)
     }
 
     fun reloadModel() {
@@ -149,7 +136,8 @@ class Note : Cloneable {
         return mFMap!!.keys.toTypedArray()
     }
 
-    fun values(): Array<String> {
+    @KotlinCleanup("see if we can make this immutable")
+    fun values(): MutableList<String> {
         return fields
     }
 
@@ -203,7 +191,7 @@ class Note : Cloneable {
     }
 
     fun setTagsFromStr(str: String?) {
-        tags = ArrayList(col.tags.split(str!!))
+        tags = col.tags.split(str!!)
     }
 
     fun delTag(tag: String?) {

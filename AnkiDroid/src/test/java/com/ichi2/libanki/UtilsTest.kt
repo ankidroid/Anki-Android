@@ -17,7 +17,6 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,8 +27,8 @@ class UtilsTest {
 
     @Test
     fun testSplit() {
-        Assert.assertArrayEquals(arrayOf("foo", "bar"), Utils.splitFields("foobar"))
-        Assert.assertArrayEquals(arrayOf("", "foo", "", "", ""), Utils.splitFields("foo"))
+        assertEquals(listOf("foo", "bar"), Utils.splitFields("foobar"))
+        assertEquals(listOf("", "foo", "", "", ""), Utils.splitFields("foo"))
     }
 
     @Test

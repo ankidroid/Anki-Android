@@ -2019,7 +2019,7 @@ open class CardBrowser :
                 Column.CARD -> if (inCardMode) card.template().optString("name") else "${card.note().numberOfCards()}"
                 Column.DUE -> card.dueString
                 Column.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
-                Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note().mod)
+                Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note().mod.toLong())
                 Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.note().id)
                 Column.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note().mod)
                 Column.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()

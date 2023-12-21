@@ -32,11 +32,11 @@ import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.libanki.*
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.emptyStringArray
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.json.JSONObject
 import org.junit.*
-import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
@@ -69,7 +69,7 @@ class ContentProviderTest : InstrumentedTest() {
     private val mTestDeckIds: MutableList<Long> = ArrayList(TEST_DECKS.size + 1)
     private lateinit var mCreatedNotes: ArrayList<Uri>
     private var mModelId: Long = 0
-    private var mDummyFields = arrayOfNulls<String>(1)
+    private var mDummyFields = emptyStringArray(1)
 
     /**
      * Initially create one note for each model.
@@ -106,12 +106,12 @@ class ContentProviderTest : InstrumentedTest() {
                  * set-down, */
                 val did = col.decks.byName(partialName!!)?.id ?: col.decks.id(partialName)
                 mTestDeckIds.add(did)
-                mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields.requireNoNulls(), TEST_TAG))
+                mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields, TEST_TAG))
                 partialName += "::"
             }
         }
         // Add a note to the default deck as well so that testQueryNextCard() works
-        mCreatedNotes.add(setupNewNote(col, mModelId, 1, mDummyFields.requireNoNulls(), TEST_TAG))
+        mCreatedNotes.add(setupNewNote(col, mModelId, 1, mDummyFields, TEST_TAG))
     }
 
     /**
@@ -208,10 +208,10 @@ class ContentProviderTest : InstrumentedTest() {
         assertNotNull("check note URI path", newNoteUri!!.lastPathSegment)
         val addedNote = Note(col, newNoteUri.lastPathSegment!!.toLong())
         addedNote.load()
-        assertArrayEquals(
+        assertEquals(
             "Check that fields were set correctly",
             addedNote.fields,
-            TEST_NOTE_FIELDS
+            TEST_NOTE_FIELDS.toMutableList()
         )
         assertEquals("Check that tag was set correctly", TEST_TAG, addedNote.tags[0])
         val model: JSONObject? = col.notetypes.get(mModelId)
@@ -495,8 +495,7 @@ class ContentProviderTest : InstrumentedTest() {
         dummyFields2[0] = TEST_FIELD_VALUE
         for (uri in mCreatedNotes) {
             // Update the flds
-            @Suppress("UNCHECKED_CAST")
-            cv.put(FlashCardsContract.Note.FLDS, Utils.joinFields(dummyFields2 as Array<String>))
+            cv.put(FlashCardsContract.Note.FLDS, Utils.joinFields(dummyFields2))
             cr.update(uri, cv, null, null)
             cr.query(uri, FlashCardsContract.Note.DEFAULT_PROJECTION, null, null, null)
                 .use { noteCursor ->
@@ -513,10 +512,10 @@ class ContentProviderTest : InstrumentedTest() {
                     val newFields = Utils.splitFields(
                         noteCursor.getString(noteCursor.getColumnIndex(FlashCardsContract.Note.FLDS))
                     )
-                    assertArrayEquals(
+                    assertEquals(
                         "Check that the flds have been updated correctly",
                         newFields,
-                        dummyFields2
+                        dummyFields2.toMutableList()
                     )
                 }
         }
