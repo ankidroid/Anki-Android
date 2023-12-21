@@ -22,13 +22,13 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
-import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
+import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration.Companion.milliseconds
@@ -111,7 +111,7 @@ interface TestClass {
     fun addDeck(deckName: String?): Long {
         return try {
             col.decks.id(deckName!!)
-        } catch (filteredAncestor: DeckRenameException) {
+        } catch (filteredAncestor: BackendDeckIsFilteredException) {
             throw RuntimeException(filteredAncestor)
         }
     }
@@ -119,7 +119,7 @@ interface TestClass {
     fun addDynamicDeck(name: String?): Long {
         return try {
             col.decks.newDyn(name!!)
-        } catch (filteredAncestor: DeckRenameException) {
+        } catch (filteredAncestor: BackendDeckIsFilteredException) {
             throw RuntimeException(filteredAncestor)
         }
     }

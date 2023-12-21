@@ -29,7 +29,6 @@ import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.dialogs.utils.positiveButton
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.backend.exception.DeckRenameException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.*
@@ -70,7 +69,6 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     @Test
-    @Throws(DeckRenameException::class)
     fun testCreateSubDeckFunction() {
         val deckParentId = col.decks.id("Deck Name")
         val deckName = "filteredDeck"

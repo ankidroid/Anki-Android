@@ -32,7 +32,6 @@ import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.TemplateManager.*
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.*
-import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.DeckNode
@@ -40,6 +39,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
+import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -921,7 +921,7 @@ class CardContentProvider : ContentProvider() {
                 }
                 try {
                     did = col.decks.id(deckName)
-                } catch (filteredSubdeck: DeckRenameException) {
+                } catch (filteredSubdeck: BackendDeckIsFilteredException) {
                     throw IllegalArgumentException(filteredSubdeck.message)
                 }
                 val deck: Deck = col.decks.get(did)!!

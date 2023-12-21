@@ -51,10 +51,9 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DYN_PRIORITY
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.hashMapInit
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.asLocalizedMessage
+import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -453,8 +452,8 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck)
             dyn = try {
                 decks.get(decks.newDyn(customStudyDeck))!!
-            } catch (ex: DeckRenameException) {
-                showThemedToast(requireActivity(), ex.asLocalizedMessage(requireContext()), true)
+            } catch (ex: BackendDeckIsFilteredException) {
+                showThemedToast(requireActivity(), ex.localizedMessage ?: ex.message ?: "", true)
                 return
             }
         }

@@ -33,10 +33,9 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
-import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.getOrCreateFilteredDeck
-import com.ichi2.utils.asLocalizedMessage
 import com.ichi2.utils.displayKeyboard
+import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import timber.log.Timber
 import java.util.function.Consumer
 
@@ -138,8 +137,8 @@ class CreateDeckDialog(
             Timber.i("CreateDeckDialog::createFilteredDeck...")
             val newDeckId = col.decks.newDyn(deckName)
             mOnNewDeckCreated!!.accept(newDeckId)
-        } catch (ex: DeckRenameException) {
-            displayFeedback(ex.asLocalizedMessage(context), Snackbar.LENGTH_LONG)
+        } catch (ex: BackendDeckIsFilteredException) {
+            displayFeedback(ex.localizedMessage ?: ex.message ?: "", Snackbar.LENGTH_LONG)
             return false
         }
         return true
@@ -151,7 +150,7 @@ class CreateDeckDialog(
             Timber.i("CreateDeckDialog::createNewDeck")
             val newDeckId = col.decks.id(deckName)
             mOnNewDeckCreated!!.accept(newDeckId)
-        } catch (filteredAncestor: DeckRenameException) {
+        } catch (filteredAncestor: BackendDeckIsFilteredException) {
             Timber.w(filteredAncestor)
             return false
         }
@@ -193,10 +192,10 @@ class CreateDeckDialog(
                 mOnNewDeckCreated!!.accept(deckId)
                 // 11668: Display feedback if a deck is renamed
                 displayFeedback(context.getString(R.string.deck_renamed))
-            } catch (e: DeckRenameException) {
+            } catch (e: BackendDeckIsFilteredException) {
                 Timber.w(e)
                 // We get a localized string from libanki to explain the error
-                displayFeedback(e.asLocalizedMessage(context), Snackbar.LENGTH_LONG)
+                displayFeedback(e.localizedMessage ?: e.message ?: "", Snackbar.LENGTH_LONG)
             }
         }
     }

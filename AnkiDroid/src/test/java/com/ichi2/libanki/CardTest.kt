@@ -17,7 +17,6 @@ package com.ichi2.libanki
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
@@ -235,7 +234,6 @@ class CardTest : JvmTest() {
     @SuppressLint("DirectCalendarInstanceUsage")
     @Test
     @Config(qualifiers = "en")
-    @Throws(DeckRenameException::class)
     fun nextDueTest() {
         // Test runs as the 7th of august 2020, 9h00
         val n = addNoteUsingBasicModel("Front", "Back")
