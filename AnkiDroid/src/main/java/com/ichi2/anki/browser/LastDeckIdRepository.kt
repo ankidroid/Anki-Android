@@ -27,6 +27,11 @@ interface LastDeckIdRepository {
     var lastDeckId: DeckId?
 }
 
+/**
+ * Saves the last selected [DeckId] in the Card Browser
+ *
+ * This exists as the old code used [PERSISTENT_STATE_FILE], rather than [AnkiDroidApp.sharedPrefs]
+ */
 class SharedPreferencesLastDeckIdRepository : LastDeckIdRepository {
     override var lastDeckId: DeckId?
         get() = AnkiDroidApp.instance.getSharedPreferences(PERSISTENT_STATE_FILE, 0)
