@@ -30,7 +30,6 @@ import anki.collection.OpChangesWithId
 import anki.decks.FilteredDeckForUpdate
 import com.google.protobuf.kotlin.toByteStringUtf8
 import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.*
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.jsonObjectIterable
@@ -133,16 +132,15 @@ class Decks(private val col: Collection) {
         return null
     }
 
-    /** Add or update an existing deck. Used for syncing and merging. */
+    /**
+     * Add or update an existing deck. Used for syncing and merging.
+     * @throws BackendDeckIsFilteredException
+     */
     fun save(g: Deck) {
-        g.id = try {
-            col.backend.addOrUpdateDeckLegacy(
-                BackendUtils.toByteString(g),
-                preserveUsnAndMtime = false
-            )
-        } catch (ex: BackendDeckIsFilteredException) {
-            throw DeckRenameException.filteredAncestor(g.name, "")
-        }
+        g.id = col.backend.addOrUpdateDeckLegacy(
+            BackendUtils.toByteString(g),
+            preserveUsnAndMtime = false
+        )
     }
 
     /** Rename deck prefix to NAME if not exists. Updates children. */
