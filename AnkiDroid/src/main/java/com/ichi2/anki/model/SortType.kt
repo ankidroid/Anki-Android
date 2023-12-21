@@ -22,6 +22,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 import com.ichi2.libanki.Config
 import com.ichi2.libanki.SortOrder
+import timber.log.Timber
 
 /**
  * How to sort the rows in the [CardBrowser]
@@ -48,6 +49,7 @@ enum class SortType(val ankiSortType: String?, val cardBrowserLabelIndex: Int) {
     LAPSES("cardLapses", 9);
 
     fun save(config: Config, preferences: SharedPreferences) {
+        Timber.v("update config to %s", this)
         // in the case of 'no sorting', we still need a sort type.
         // The inverse is handled in `fromCol`
         config.set("sortType", this.ankiSortType ?: SORT_FIELD.ankiSortType)

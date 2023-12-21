@@ -44,6 +44,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.browser.CardBrowserViewModel.*
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
@@ -159,12 +160,6 @@ open class CardBrowser :
     private var mCurrentCardId
         get() = viewModel.currentCardId
         set(value) { viewModel.currentCardId = value }
-    private var mOrder
-        get() = viewModel.order
-        set(value) { viewModel.order = value }
-    private var mOrderAsc
-        get() = viewModel.orderAsc
-        set(value) { viewModel.orderAsc = value }
 
     // DEFECT: Doesn't need to be a local
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
@@ -253,11 +248,6 @@ open class CardBrowser :
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private var mUnmountReceiver: BroadcastReceiver? = null
-    private val orderSingleChoiceDialogListener: DialogInterface.OnClickListener =
-        DialogInterface.OnClickListener { dialog: DialogInterface, which: Int ->
-            dialog.dismiss()
-            changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
-        }
 
     init {
         ChangeManager.subscribe(this)
@@ -265,20 +255,13 @@ open class CardBrowser :
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     fun changeCardOrder(which: SortType) {
-        if (which != mOrder) {
-            mOrder = which
-            mOrderAsc = false
-            which.save(getColUnsafe.config, baseContext.sharedPrefs())
-            getColUnsafe.config.set("sortBackwards", mOrderAsc)
-            getColUnsafe.config.set("browserNoteSortBackwards", mOrderAsc)
-            searchCards()
-        } else if (which != SortType.NO_SORTING) {
-            // if the same element is selected again, reverse the order
-            mOrderAsc = !mOrderAsc
-            getColUnsafe.config.set("sortBackwards", mOrderAsc)
-            getColUnsafe.config.set("browserNoteSortBackwards", mOrderAsc)
-            mCards.reverse()
-            updateList()
+        when (viewModel.changeCardOrder(which)) {
+            ChangeCardOrderResult.OrderChange -> { searchCards() }
+            ChangeCardOrderResult.DirectionChange -> {
+                mCards.reverse()
+                updateList()
+            }
+            null -> {}
         }
     }
 
@@ -499,10 +482,6 @@ open class CardBrowser :
         super.onCollectionLoaded(col)
         Timber.d("onCollectionLoaded()")
         registerExternalStorageListener()
-        val preferences = baseContext.sharedPrefs()
-
-        mOrder = SortType.fromCol(col.config, preferences)
-        mOrderAsc = col.config.get("sortBackwards") ?: false
         mCards.reset()
         // Create a spinner for column 1
         findViewById<Spinner>(R.id.browser_column1_spinner).apply {
@@ -994,7 +973,13 @@ open class CardBrowser :
                 return true
             }
             R.id.action_sort_by_size -> {
-                showDialogFragment(CardBrowserOrderDialog.newInstance(mOrder, mOrderAsc, orderSingleChoiceDialogListener))
+                showDialogFragment(
+                    // TODO: move this into the ViewModel
+                    CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
+                        dialog.dismiss()
+                        changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
+                    }
+                )
                 return true
             }
 
@@ -1418,7 +1403,7 @@ open class CardBrowser :
         mCards.reset()
         cardsAdapter.notifyDataSetChanged()
         val query = searchText!!
-        val order = mOrder.toSortOrder()
+        val order = viewModel.order.toSortOrder()
         launchCatchingTask {
             Timber.d("performing search")
             val cards = withProgress { searchForCards(query, order, viewModel.cardsOrNotes) }

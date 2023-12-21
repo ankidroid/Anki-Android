@@ -34,6 +34,7 @@ import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.servicelayer.CardService
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.undoableOp
@@ -41,6 +42,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -53,6 +55,7 @@ import java.util.HashMap
 import kotlin.math.max
 import kotlin.math.min
 
+@NeedsTest("reverseDirectionFlow/sortTypeFlow are not updated on .launch { }")
 class CardBrowserViewModel(
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
@@ -74,8 +77,12 @@ class CardBrowserViewModel(
 
     // card that was clicked (not marked)
     var currentCardId: CardId = 0
-    var order = SortType.NO_SORTING
-    var orderAsc = false
+
+    private val sortTypeFlow = MutableStateFlow(SortType.NO_SORTING)
+    val order get() = sortTypeFlow.value
+
+    private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
+    val orderAsc get() = reverseDirectionFlow.value.orderAsc
 
     val column1IndexFlow = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_1_KEY, 0))
     val column2IndexFlow = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_2_KEY, 0))
@@ -110,6 +117,16 @@ class CardBrowserViewModel(
             return CardInfoDestination(firstSelectedCard)
         }
 
+    private val initCompletedFlow = MutableStateFlow(false)
+
+    /**
+     * Whether the task launched from CardBrowserViewModel.init has completed.
+     *
+     * If `false`, we don't have the initial values to perform the first search
+     */
+    @get:VisibleForTesting
+    val initCompleted get() = initCompletedFlow.value
+
     init {
         column1IndexFlow
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
@@ -119,9 +136,26 @@ class CardBrowserViewModel(
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) } }
             .launchIn(viewModelScope)
 
+        reverseDirectionFlow
+            .ignoreValuesFromViewModelLaunch()
+            .onEach { newValue -> withCol { newValue.updateConfig(config) } }
+            .launchIn(viewModelScope)
+
+        sortTypeFlow
+            .ignoreValuesFromViewModelLaunch()
+            .onEach { sortType -> withCol { sortType.save(config, sharedPrefs()) } }
+            .launchIn(viewModelScope)
+
         viewModelScope.launch {
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this) }
             cardsOrNotesFlow.update { cardsOrNotes }
+
+            withCol {
+                sortTypeFlow.update { SortType.fromCol(config, sharedPrefs()) }
+                reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
+            }
+            Timber.i("initCompleted")
+            initCompletedFlow.update { true }
         }
     }
 
@@ -222,6 +256,21 @@ class CardBrowserViewModel(
     }
 
     fun selectedRowCount(): Int = selectedRows.size
+
+    fun changeCardOrder(which: SortType): ChangeCardOrderResult? {
+        if (which != order) {
+            Timber.i("updating order to %s", which)
+            sortTypeFlow.update { which }
+            reverseDirectionFlow.update { ReverseDirection(orderAsc = false) }
+            return ChangeCardOrderResult.OrderChange
+        } else if (which != SortType.NO_SORTING) {
+            Timber.i("reversing search order")
+            // if the same element is selected again, reverse the order
+            reverseDirectionFlow.update { ReverseDirection(orderAsc = !orderAsc) }
+            return ChangeCardOrderResult.DirectionChange
+        }
+        return null
+    }
 
     fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
 
@@ -339,6 +388,10 @@ class CardBrowserViewModel(
         return if (alreadyExists) SaveSearchResult.ALREADY_EXISTS else SaveSearchResult.SUCCESS
     }
 
+    /** Ignores any values before [initCompleted] is set */
+    private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> =
+        this.filter { initCompleted }
+
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
@@ -347,6 +400,12 @@ class CardBrowserViewModel(
                 CardBrowserViewModel(preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider)
             }
         }
+    }
+
+    /** temporary result class for [changeCardOrder] */
+    enum class ChangeCardOrderResult {
+        OrderChange,
+        DirectionChange
     }
 }
 
