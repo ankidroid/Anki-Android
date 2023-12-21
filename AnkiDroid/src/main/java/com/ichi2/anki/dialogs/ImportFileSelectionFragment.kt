@@ -26,7 +26,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -167,17 +166,9 @@ class ImportFileSelectionFragment : DialogFragment() {
             extraMimes?.let { intent.putExtra(Intent.EXTRA_MIME_TYPES, it) }
 
             if ((fileType == ImportFileType.APKG || fileType == ImportFileType.COLPKG) && activity is ApkgImportResultLauncherProvider) {
-                activity.launchActivityForResultWithAnimation(
-                    intent,
-                    activity.getApkgFileImportResultLauncher(),
-                    ActivityTransitionAnimation.Direction.NONE
-                )
+                activity.getApkgFileImportResultLauncher().launch(intent)
             } else if (fileType == ImportFileType.CSV && activity is CsvImportResultLauncherProvider) {
-                activity.launchActivityForResultWithAnimation(
-                    intent,
-                    activity.getCsvFileImportResultLauncher(),
-                    ActivityTransitionAnimation.Direction.NONE
-                )
+                activity.getCsvFileImportResultLauncher().launch(intent)
             } else {
                 Timber.w("Activity($activity) can't handle requested import: $fileType")
             }

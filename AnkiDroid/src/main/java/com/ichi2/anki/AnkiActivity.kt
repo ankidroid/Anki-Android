@@ -219,15 +219,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         }
     }
 
-    fun launchActivityForResultWithAnimation(
-        intent: Intent,
-        launcher: ActivityResultLauncher<Intent?>,
-        animation: Direction?
-    ) {
-        enableIntentAnimation(intent)
-        launchActivityForResult(intent, launcher, animation)
-    }
-
     override fun finish() {
         finishWithAnimation(DEFAULT)
     }
