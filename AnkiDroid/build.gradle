@@ -322,6 +322,7 @@ dependencies {
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2"
+    implementation 'com.squareup:seismic:1.0.3'
 
     // Backend libraries
 
