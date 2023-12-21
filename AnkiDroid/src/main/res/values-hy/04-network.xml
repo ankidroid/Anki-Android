@@ -51,7 +51,7 @@
     <string name="retry">Retry</string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">A network error has occurred</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
+    <string name="not_logged_in_title">Մուտք գործել AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.kt -->
     <string name="username">Email address</string>
