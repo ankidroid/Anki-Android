@@ -120,7 +120,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
     }
 
-    @Suppress("DEPRECATION", "Deprecated in API34+dependencies for predictive back feature")
+    @Deprecated("Deprecated in Java")
+    @Suppress("Deprecated in API34+dependencies for predictive back feature")
     override fun onBackPressed() {
         Timber.i("CardTemplatePreviewer:: onBackPressed()")
         super.onBackPressed()
@@ -392,14 +393,11 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     }
 
     /** Override certain aspects of Card behavior so we may display unsaved data  */
-    inner class PreviewerCard : Card {
-        private val mNote: Note?
+    inner class PreviewerCard(col: Collection, id: Long) : Card(col, id) {
+        private val mNote: Note? = null
 
-        constructor(col: Collection, id: Long) : super(col, id) {
-            mNote = null
-        }
-
-        /* if we have an unsaved note saved, use it instead of a collection lookup */ override fun note(
+        /* if we have an unsaved note saved, use it instead of a collection lookup */
+        override fun note(
             reload: Boolean
         ): Note {
             return mNote ?: super.note(reload)

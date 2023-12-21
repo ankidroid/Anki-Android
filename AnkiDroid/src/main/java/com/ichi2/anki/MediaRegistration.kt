@@ -177,7 +177,7 @@ class MediaRegistration(private val context: Context) {
     companion object {
         private const val MEDIA_MAX_SIZE = 5 * 1000 * 1000
         private const val COLOR_GREY = 0
-        const val COLOR_TRUE = 2
+        private const val COLOR_TRUE = 2
         private const val COLOR_INDEX = 3
         private const val COLOR_GREY_ALPHA = 4
         private const val COLOR_TRUE_ALPHA = 6

@@ -43,7 +43,6 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
-import java.util.*
 import kotlin.reflect.jvm.jvmName
 
 class Preferences :
