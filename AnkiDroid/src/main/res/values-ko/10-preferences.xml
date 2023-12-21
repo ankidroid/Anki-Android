@@ -115,6 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">가운데 중앙 터치</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">왼쪽 하단 터치</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">오른쪽 하단 터치</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">\"%s\" 메뉴</string>
     <string name="card_browser_enable_external_context_menu_summary">시스템 전역에서 글자를 길게 눌렀을 때 \'%s\' 컨텍스트 메뉴를 보입니다.</string>
     <string name="double_scrolling_gap" maxLength="41">이중 스크롤</string>

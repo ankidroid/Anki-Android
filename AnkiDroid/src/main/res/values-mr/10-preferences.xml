@@ -116,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">मध्यभागी मध्यभागी स्पर्श करा</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">डावीकडे तळाशी स्पर्श करा</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">उजवीकडे तळाशी स्पर्श करा</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ मेनू</string>
     <string name="card_browser_enable_external_context_menu_summary">जागतिक स्तरावर ‘%s’ संदर्भ मेनू सक्षम करते</string>
     <string name="double_scrolling_gap" maxLength="41">डबल स्क्रोलिंग</string>

@@ -116,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Toca in su tzentru</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toca in bassu a manca</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toca in bassu a dereta</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">Menù ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Abilitat su menù de cuntestu ‘%s’ globalmente</string>
     <string name="double_scrolling_gap" maxLength="41">Iscurrimentu dòpiu</string>

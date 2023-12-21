@@ -115,6 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Sentuh tengah-tengah</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Sentuh bawah kiri</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Sentuh bawah kanan</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Dayakan menu konteks ‘%s’ secara global</string>
     <string name="double_scrolling_gap" maxLength="41">Tatal dua kali</string>

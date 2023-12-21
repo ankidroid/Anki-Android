@@ -116,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Druk midden rechts</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Druk linksonder</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Druk rechtsonder</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Schakelt het contextmenu \' \'%s\' overal in</string>
     <string name="double_scrolling_gap" maxLength="41">Sneller scrollen</string>
