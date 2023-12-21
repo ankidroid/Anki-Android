@@ -374,7 +374,7 @@ open class DeckPicker :
             Timber.i("Displaying app intro")
             val appIntro = Intent(this, IntroductionActivity::class.java)
             appIntro.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivityWithoutAnimation(appIntro)
+            startActivity(appIntro)
             finish() // calls onDestroy() immediately
             return
         } else {
@@ -585,7 +585,7 @@ open class DeckPicker :
                     showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL)
                 } else {
                     val i = AdvancedSettingsFragment.getSubscreenIntent(this)
-                    launchActivityForResultWithAnimation(i, requestPathUpdateLauncher, NONE)
+                    requestPathUpdateLauncher.launch(i)
                     showThemedToast(this, R.string.directory_inaccessible, false)
                 }
             }
@@ -939,7 +939,7 @@ open class DeckPicker :
                 val manageNoteTypesTarget =
                     ManageNotetypes::class.java
                 val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
-                startActivityWithAnimation(noteTypeBrowser, START)
+                startActivity(noteTypeBrowser)
                 return true
             }
             R.id.action_restore_backup -> {
@@ -1100,7 +1100,7 @@ open class DeckPicker :
                     ) || mBackButtonPressedToExit
                 ) {
                     automaticSync()
-                    finishWithAnimation()
+                    finish()
                 } else {
                     showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
                 }
@@ -1110,10 +1110,6 @@ open class DeckPicker :
                 }
             }
         }
-    }
-
-    private fun finishWithAnimation() {
-        super.finishWithAnimation(DEFAULT)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
@@ -1206,7 +1202,7 @@ open class DeckPicker :
     fun addNote() {
         val intent = Intent(this@DeckPicker, NoteEditor::class.java)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-        startActivityWithAnimation(intent, START)
+        startActivity(intent)
     }
 
     private fun showStartupScreensAndDialogs(preferences: SharedPreferences, skip: Int) {
@@ -1334,8 +1330,7 @@ open class DeckPicker :
                 Timber.i("Displaying new features")
                 val infoIntent = Intent(this, Info::class.java)
                 infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
-                val transition = if (skip != 0) START else NONE
-                launchActivityForResultWithAnimation(infoIntent, showNewVersionInfoLauncher, transition)
+                showNewVersionInfoLauncher.launch(infoIntent)
             } else {
                 Timber.i("Dev Build - not showing 'new features'")
                 // Don't show new features dialog for development builds
@@ -1603,7 +1598,7 @@ open class DeckPicker :
     override fun loginToSyncServer() {
         val myAccount = Intent(this, MyAccount::class.java)
         myAccount.putExtra("notLoggedIn", true)
-        launchActivityForResultWithAnimation(myAccount, loginForSyncLauncher, FADE)
+        loginForSyncLauncher.launch(myAccount)
     }
 
     // Callback to import a file -- adding it to existing collection
@@ -1664,13 +1659,13 @@ open class DeckPicker :
 
     fun openAnkiWebSharedDecks() {
         val intent = Intent(this, SharedDecksActivity::class.java)
-        startActivityWithoutAnimation(intent)
+        startActivity(intent)
     }
 
     private fun openFilteredDeckOptions() {
         val intent = Intent()
         intent.setClass(this, FilteredDeckOptions::class.java)
-        startActivityWithAnimation(intent, START)
+        startActivity(intent)
     }
 
     private fun openStudyOptions(@Suppress("SameParameterValue") withDeckOptions: Boolean) {
@@ -1681,7 +1676,7 @@ open class DeckPicker :
             val intent = Intent()
             intent.putExtra("withDeckOptions", withDeckOptions)
             intent.setClass(this, StudyOptionsActivity::class.java)
-            launchActivityForResultWithAnimation(intent, reviewLauncher, START)
+            reviewLauncher.launch(intent)
         }
     }
 
@@ -1924,11 +1919,11 @@ open class DeckPicker :
             // open cram options if filtered deck
             val i = Intent(this@DeckPicker, FilteredDeckOptions::class.java)
             i.putExtra("did", did)
-            startActivityWithAnimation(i, FADE)
+            startActivity(i)
         } else {
             // otherwise open regular options
             val intent = com.ichi2.anki.pages.DeckOptions.getIntent(this, did)
-            startActivityWithAnimation(intent, FADE)
+            startActivity(intent)
         }
     }
 
@@ -2058,7 +2053,7 @@ open class DeckPicker :
 
     private fun openReviewer() {
         val reviewer = Intent(this, Reviewer::class.java)
-        launchActivityForResultWithAnimation(reviewer, reviewLauncher, START)
+        reviewLauncher.launch(reviewer)
     }
 
     override fun onCreateCustomStudySession() {

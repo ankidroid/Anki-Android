@@ -183,7 +183,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             activity.getString(R.string.export_share_title)
         )
         if (shareFileIntent.resolveActivity(activity.packageManager) != null) {
-            activity.startActivityWithoutAnimation(shareFileIntent)
+            activity.startActivity(shareFileIntent)
             // TODO: find if there is a way to check whether the activity successfully shared the collection.
             saveSuccessfulCollectionExportIfRelevant()
         } else {

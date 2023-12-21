@@ -858,7 +858,7 @@ abstract class AbstractFlashcardViewer :
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
         editCard.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         editorCard = currentCard
-        launchActivityForResultWithAnimation(editCard, editCurrentCardLauncher, animation)
+        editCurrentCardLauncher.launch(editCard)
     }
 
     fun generateQuestionSoundList() {
@@ -1942,7 +1942,7 @@ abstract class AbstractFlashcardViewer :
         mPreviousAnswerIndicator!!.stopAutomaticHide()
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
         this@AbstractFlashcardViewer.setResult(result)
-        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+        finish()
     }
 
     protected fun refreshActionBar() {
@@ -2575,7 +2575,7 @@ abstract class AbstractFlashcardViewer :
                 Timber.d("Opening resolved external link \"%s\" with an Intent: %s", url, intent)
             }
             try {
-                startActivityWithoutAnimation(intent)
+                startActivity(intent)
             } catch (e: ActivityNotFoundException) {
                 Timber.w(e) // Don't crash if the intent is not handled
             }

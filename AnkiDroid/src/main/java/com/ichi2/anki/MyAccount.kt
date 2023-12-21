@@ -26,7 +26,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.textfield.TextInputLayout
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
@@ -208,7 +207,7 @@ open class MyAccount : AnkiActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
             Timber.i("MyAccount - onBackPressed()")
-            finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
+            finish()
             return true
         }
         return super.onKeyDown(keyCode, event)

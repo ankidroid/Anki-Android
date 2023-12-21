@@ -26,7 +26,6 @@ import androidx.core.content.edit
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.DialogHandlerMessage
@@ -174,7 +173,7 @@ fun MyAccount.handleNewLogin(username: String, password: String) {
         }
         updateLogin(baseContext, username, auth.hkey)
         setResult(RESULT_OK)
-        finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
+        finish()
     }
 }
 

@@ -22,7 +22,6 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
@@ -154,7 +153,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             DeckPickerContextMenuOption.BROWSE_CARDS -> {
                 collection.decks.select(deckId)
                 val intent = Intent(activity, CardBrowser::class.java)
-                activity.startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.START)
+                activity.startActivity(intent)
                 activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.ADD_CARD -> {

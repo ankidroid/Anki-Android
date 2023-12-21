@@ -19,7 +19,6 @@ package com.ichi2.anki.workarounds
 import android.app.Activity
 import android.os.Bundle
 import android.os.Process
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
@@ -62,7 +61,7 @@ object AppLoadedFromBackupWorkaround {
         Themes.setTheme(this)
         // Avoids a SuperNotCalledException
         activitySuperOnCreate(savedInstanceState)
-        AnkiActivity.finishActivityWithFade(this)
+        finish()
 
         // If we don't kill the process, the backup is not "done" and reopening the app show the same message.
         Thread {

@@ -39,7 +39,6 @@ import anki.collection.OpChanges
 import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Previewer.Companion.toIntent
@@ -682,7 +681,7 @@ open class CardBrowser :
         val editCard = Intent(this, NoteEditor::class.java)
             .putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT)
             .putExtra(NoteEditor.EXTRA_CARD_ID, cardBrowserCard!!.id)
-        launchActivityForResultWithAnimation(editCard, onEditCardActivityResult, ActivityTransitionAnimation.Direction.START)
+        onEditCardActivityResult.launch(editCard)
         // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
         endMultiSelectMode()
     }
@@ -844,8 +843,8 @@ open class CardBrowser :
         deckPicker.action = Intent.ACTION_MAIN
         deckPicker.addCategory(Intent.CATEGORY_LAUNCHER)
         deckPicker.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.FADE)
-        finishActivityWithFade(this)
+        startActivity(deckPicker)
+        finish()
         this.setResult(RESULT_CANCELED)
     }
 
@@ -1159,7 +1158,7 @@ open class CardBrowser :
             R.id.action_view_card_info -> {
                 viewModel.cardInfoDestination?.let { destination ->
                     val intent: Intent = destination.toIntent(this)
-                    startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.FADE)
+                    startActivity(intent)
                 }
                 return true
             }
@@ -1313,7 +1312,7 @@ open class CardBrowser :
         }
 
     private fun addNoteFromCardBrowser() {
-        launchActivityForResultWithAnimation(addNoteIntent, onAddNoteActivityResult, ActivityTransitionAnimation.Direction.START)
+        onAddNoteActivityResult.launch(addNoteIntent)
     }
 
     private val reviewerCardId: CardId
@@ -1700,7 +1699,7 @@ open class CardBrowser :
     private fun closeCardBrowser(result: Int, data: Intent? = null) {
         // Set result and finish
         setResult(result, data)
-        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+        finish()
     }
 
     /**

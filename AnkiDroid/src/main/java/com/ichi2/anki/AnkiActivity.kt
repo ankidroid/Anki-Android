@@ -3,7 +3,6 @@
 
 package com.ichi2.anki
 
-import android.app.Activity
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
@@ -220,15 +219,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         }
     }
 
-    fun launchActivityForResultWithAnimation(
-        intent: Intent,
-        launcher: ActivityResultLauncher<Intent?>,
-        animation: Direction?
-    ) {
-        enableIntentAnimation(intent)
-        launchActivityForResult(intent, launcher, animation)
-    }
-
     override fun finish() {
         finishWithAnimation(DEFAULT)
     }
@@ -302,7 +292,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.putExtra("collectionLoadError", true) // don't currently do anything with this
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivityWithAnimation(deckPicker, START)
+        startActivity(deckPicker)
     }
 
     fun showProgressBar() {
@@ -503,7 +493,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         if (reload) {
             val deckPicker = Intent(this, DeckPicker::class.java)
             deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivityWithoutAnimation(deckPicker)
+            startActivity(deckPicker)
         }
     }
 
@@ -553,12 +543,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
         /** Extra key to set the finish animation of an activity  */
         const val FINISH_ANIMATION_EXTRA = "finishAnimation"
-
-        /** Finish Activity using FADE animation  */
-        fun finishActivityWithFade(activity: Activity) {
-            activity.finish()
-            ActivityTransitionAnimation.slide(activity, FADE)
-        }
 
         fun showDialogFragment(activity: AnkiActivity, newFragment: DialogFragment) {
             showDialogFragment(activity.supportFragmentManager, newFragment)

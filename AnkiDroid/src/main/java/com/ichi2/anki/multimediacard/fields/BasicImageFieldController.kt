@@ -55,7 +55,6 @@ import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
 import androidx.core.os.BundleCompat
 import com.canhub.cropper.*
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DrawingActivity
@@ -187,14 +186,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             setOnClickListener {
                 val i = Intent(Intent.ACTION_PICK)
                 i.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-                mActivity.launchActivityForResultWithAnimation(i, selectImageLauncher, ActivityTransitionAnimation.Direction.NONE)
+                selectImageLauncher.launch(i)
             }
         }
 
         val btnDraw = Button(mActivity).apply {
             text = gtxt(R.string.drawing)
             setOnClickListener {
-                mActivity.launchActivityForResultWithAnimation(Intent(mActivity, DrawingActivity::class.java), drawingLauncher, ActivityTransitionAnimation.Direction.NONE)
+                drawingLauncher.launch(Intent(mActivity, DrawingActivity::class.java))
             }
         }
 
@@ -332,7 +331,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 cancelImageCapture()
                 return toReturn
             }
-            mActivity.launchActivityForResultWithAnimation(cameraIntent, takePictureLauncher, ActivityTransitionAnimation.Direction.NONE)
+            takePictureLauncher.launch(cameraIntent)
         } catch (e: IOException) {
             Timber.w(e, "mBtnCamera::onClickListener() unable to prepare file and launch camera")
         }
