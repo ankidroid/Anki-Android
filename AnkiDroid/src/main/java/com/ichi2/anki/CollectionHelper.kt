@@ -481,6 +481,10 @@ open class CollectionHelper {
             return getCurrentAnkiDroidDirectoryOptionalContext(context.sharedPrefs()) { context }
         }
 
+        fun getMediaDirectory(context: Context): File {
+            return File(getCurrentAnkiDroidDirectory(context), "collection.media")
+        }
+
         /**
          * An accessor which makes [Context] optional in the case that [PREF_COLLECTION_PATH] is set
          *

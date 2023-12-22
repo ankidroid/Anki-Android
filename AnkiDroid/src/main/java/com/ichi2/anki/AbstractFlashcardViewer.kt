@@ -67,6 +67,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -91,7 +92,6 @@ import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.*
-import com.ichi2.utils.AssetHelper.guessMimeType
 import com.ichi2.utils.ClipboardUtil.getText
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
@@ -124,10 +124,7 @@ abstract class AbstractFlashcardViewer :
     private var mTtsInitialized = false
     private var mReplayOnTtsInit = false
     private var mAnkiDroidJsAPI: AnkiDroidJsAPI? = null
-    var server: ReviewerServer? = null
-
-    /** Can be used to wait until async calls in onCreate() have finished. */
-    var asyncCreateJob: Job? = null
+    lateinit var server: ReviewerServer
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -228,7 +225,6 @@ abstract class AbstractFlashcardViewer :
         private set
     private var mBaseUrl: String? = null
     private var mViewerUrl: String? = null
-    private var mAssetLoader: WebViewAssetLoader? = null
     private val mFadeDuration = 300
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -528,10 +524,7 @@ abstract class AbstractFlashcardViewer :
 
         setContentView(getContentViewAttr(fullscreenMode))
 
-        asyncCreateJob = launchCatchingTask {
-            val mediaDir = withCol { media.dir }
-            server = ReviewerServer(this@AbstractFlashcardViewer, mediaDir).apply { start() }
-        }
+        server = ReviewerServer(this@AbstractFlashcardViewer).apply { start() }
 
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         delegate.isHandleNativeActionModesEnabled = true
@@ -566,23 +559,7 @@ abstract class AbstractFlashcardViewer :
             soundPlayer = SoundPlayer.newInstance(this, baseUrl)
             mViewerUrl = baseUrl + "__viewer__.html"
         }
-        mAssetLoader = WebViewAssetLoader.Builder()
-            .addPathHandler("/") { path: String ->
-                try {
-                    val file = File(mediaDir, path)
-                    val inputStream = FileInputStream(file)
-                    val mimeType = guessMimeType(path)
-                    val headers = HashMap<String, String>()
-                    headers["Access-Control-Allow-Origin"] = "*"
-                    val response = WebResourceResponse(mimeType, null, inputStream)
-                    response.responseHeaders = headers
-                    return@addPathHandler response
-                } catch (e: Exception) {
-                    Timber.w(e, "Error trying to open path in asset loader")
-                }
-                null
-            }
-            .build()
+
         registerExternalStorageListener()
         restoreCollectionPreferences(col)
         initLayout()
@@ -654,7 +631,9 @@ abstract class AbstractFlashcardViewer :
 
     override fun onDestroy() {
         super.onDestroy()
-        server?.closeAllConnections()
+        if (this::server.isInitialized) {
+            server.closeAllConnections()
+        }
         mTTS.releaseTts(this)
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver)
@@ -1053,8 +1032,9 @@ abstract class AbstractFlashcardViewer :
         mTouchLayer!!.layoutParams = touchLayerContainerParams
     }
 
-    @SuppressLint("SetJavaScriptEnabled") // they request we review carefully because of XSS security, we have
     protected open fun createWebView(): WebView {
+        val domain = "$LOCALHOST:${server.listeningPort}"
+        val assetLoader = getViewerAssetLoader(domain)
         val webView: WebView = MyWebView(this).apply {
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
@@ -1072,7 +1052,7 @@ abstract class AbstractFlashcardViewer :
             isScrollbarFadingEnabled = true
             // Set transparent color to prevent flashing white when night mode enabled
             setBackgroundColor(Color.argb(1, 0, 0, 0))
-            webViewClient = CardViewerWebClient(mAssetLoader, this@AbstractFlashcardViewer)
+            webViewClient = CardViewerWebClient(assetLoader, this@AbstractFlashcardViewer)
         }
         Timber.d(
             "Focusable = %s, Focusable in touch mode = %s",
@@ -1541,8 +1521,7 @@ abstract class AbstractFlashcardViewer :
             Timber.w("fillFlashCard() called with no card content")
             return
         }
-        val cardContent = cardContent!!
-        processCardAction { cardWebView: WebView? -> loadContentIntoCard(cardWebView, cardContent) }
+        processCardAction { cardWebView: WebView? -> loadContentIntoCard(cardWebView, cardContent!!) }
         mGestureDetectorImpl.onFillFlashcard()
         if (!displayAnswer) {
             updateForNewCard()
@@ -1551,12 +1530,16 @@ abstract class AbstractFlashcardViewer :
 
     private fun loadContentIntoCard(card: WebView?, content: String) {
         launchCatchingTask {
-            asyncCreateJob?.join()
-            server?.reviewerHtml = content
             if (card != null) {
                 card.settings.mediaPlaybackRequiresUserGesture = !soundPlayer.config.autoplay
                 Timber.v("*** set server %s content to %s", server, content)
-                card.loadUrl(server?.baseUrl() + "reviewer.html")
+                card.loadDataWithBaseURL(
+                    server.baseUrl(),
+                    content,
+                    "text/html",
+                    null,
+                    null
+                )
             }
         }
     }
