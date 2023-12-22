@@ -2250,20 +2250,10 @@ abstract class AbstractFlashcardViewer :
         private var pageFinishedFired = true
         private val pageRenderStopwatch = Stopwatch.init("page render")
 
-        @TargetApi(Build.VERSION_CODES.N)
         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
             val url = request.url.toString()
             Timber.d("Obtained URL from card: '%s'", url)
             return filterUrl(url)
-        }
-
-        // required for lower APIs (I think)
-        override fun shouldInterceptRequest(view: WebView, url: String): WebResourceResponse? {
-            // response is null if nothing required
-            if (isLoadedFromProtocolRelativeUrl(url)) {
-                mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
-            }
-            return null
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -2271,7 +2261,6 @@ abstract class AbstractFlashcardViewer :
             pageFinishedFired = false
         }
 
-        @TargetApi(Build.VERSION_CODES.N)
         override fun shouldInterceptRequest(
             view: WebView,
             request: WebResourceRequest
@@ -2320,10 +2309,6 @@ abstract class AbstractFlashcardViewer :
                     filename
                 )
             }
-        }
-
-        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            return filterUrl(url)
         }
 
         // Filter any links using the custom "playsound" protocol defined in Sound.java.
