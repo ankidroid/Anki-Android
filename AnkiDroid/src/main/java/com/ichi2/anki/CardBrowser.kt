@@ -42,6 +42,9 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.browser.CardBrowserColumn
+import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN1_KEYS
+import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN2_KEYS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.*
@@ -115,10 +118,6 @@ open class CardBrowser :
             deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
             launchCatchingTask { selectDeckAndSave(deckId) }
         }
-    }
-
-    enum class Column {
-        QUESTION, ANSWER, FLAGS, SUSPENDED, MARKED, SFLD, DECK, TAGS, ID, CARD, DUE, EASE, CHANGED, CREATED, EDITED, INTERVAL, LAPSES, NOTE_TYPE, REVIEWS
     }
 
     private enum class TagsDialogListenerAction {
@@ -1755,7 +1754,7 @@ open class CardBrowser :
     inner class MultiColumnListAdapter(
         context: Context?,
         private val resource: Int,
-        private var fromKeys: Array<Column>,
+        private var fromKeys: Array<CardBrowserColumn>,
         private val toIds: IntArray,
         private val fontSizeScalePcent: Int
     ) : BaseAdapter() {
@@ -1834,14 +1833,14 @@ open class CardBrowser :
             }
         }
 
-        private var fromMapping: Array<Column>
+        private var fromMapping: Array<CardBrowserColumn>
             get() = fromKeys
             set(from) {
                 fromKeys = from
                 notifyDataSetChanged()
             }
 
-        fun updateMapping(fn: (Array<Column>) -> Unit) {
+        fun updateMapping(fn: (Array<CardBrowserColumn>) -> Unit) {
             val fromMap = fromMapping
             fn(fromMap)
             // this doesn't need to be run on the UI thread: this calls notifyDataSetChanged()
@@ -1995,29 +1994,29 @@ open class CardBrowser :
                 }
             }
 
-        fun getColumnHeaderText(key: Column?): String? {
+        fun getColumnHeaderText(key: CardBrowserColumn?): String? {
             return when (key) {
-                Column.FLAGS -> Integer.valueOf(card.userFlag()).toString()
-                Column.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
-                Column.MARKED -> if (isMarked(card.note())) "marked" else null
-                Column.SFLD -> card.note().sFld
-                Column.DECK -> col.decks.name(card.did)
-                Column.TAGS -> card.note().stringTags()
-                Column.CARD -> if (inCardMode) card.template().optString("name") else "${card.note().numberOfCards()}"
-                Column.DUE -> card.dueString
-                Column.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
-                Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note().mod.toLong())
-                Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.note().id)
-                Column.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note().mod)
-                Column.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
-                Column.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote()).toString()
-                Column.NOTE_TYPE -> card.model().optString("name")
-                Column.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote().toString()
-                Column.QUESTION -> {
+                CardBrowserColumn.FLAGS -> Integer.valueOf(card.userFlag()).toString()
+                CardBrowserColumn.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
+                CardBrowserColumn.MARKED -> if (isMarked(card.note())) "marked" else null
+                CardBrowserColumn.SFLD -> card.note().sFld
+                CardBrowserColumn.DECK -> col.decks.name(card.did)
+                CardBrowserColumn.TAGS -> card.note().stringTags()
+                CardBrowserColumn.CARD -> if (inCardMode) card.template().optString("name") else "${card.note().numberOfCards()}"
+                CardBrowserColumn.DUE -> card.dueString
+                CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
+                CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note().mod.toLong())
+                CardBrowserColumn.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.note().id)
+                CardBrowserColumn.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note().mod)
+                CardBrowserColumn.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
+                CardBrowserColumn.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote()).toString()
+                CardBrowserColumn.NOTE_TYPE -> card.model().optString("name")
+                CardBrowserColumn.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote().toString()
+                CardBrowserColumn.QUESTION -> {
                     updateSearchItemQA()
                     mQa!!.first
                 }
-                Column.ANSWER -> {
+                CardBrowserColumn.ANSWER -> {
                     updateSearchItemQA()
                     mQa!!.second
                 }
@@ -2069,7 +2068,7 @@ open class CardBrowser :
             }
             card.note()
             // First column can not be the answer. If it were to change, this code should also be changed.
-            if (COLUMN1_KEYS[column1Index] == Column.QUESTION || arrayOf(Column.QUESTION, Column.ANSWER).contains(COLUMN2_KEYS[column2Index])) {
+            if (COLUMN1_KEYS[column1Index] == CardBrowserColumn.QUESTION || arrayOf(CardBrowserColumn.QUESTION, CardBrowserColumn.ANSWER).contains(COLUMN2_KEYS[column2Index])) {
                 updateSearchItemQA()
             }
             isLoaded = true
@@ -2261,12 +2260,6 @@ open class CardBrowser :
 
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val LINES_VISIBLE_WHEN_COLLAPSED = 3
-
-        private val COLUMN1_KEYS = arrayOf(Column.QUESTION, Column.SFLD)
-
-        // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
-        // Note: the last 6 are currently hidden
-        private val COLUMN2_KEYS = arrayOf(Column.ANSWER, Column.CARD, Column.DECK, Column.NOTE_TYPE, Column.QUESTION, Column.TAGS, Column.LAPSES, Column.REVIEWS, Column.INTERVAL, Column.EASE, Column.DUE, Column.CHANGED, Column.CREATED, Column.EDITED)
 
         // Values related to persistent state data
         private const val ALL_DECKS_ID = 0L
