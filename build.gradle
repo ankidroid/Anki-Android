@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 buildscript {
     // The version for the Kotlin plugin and dependencies
     // If changing this, make sure to update org.jetbrains.kotlin.plugin.serialization version too
-    ext.kotlin_version = '1.9.21'
+    ext.kotlin_version = '1.9.22'
     ext.lint_version = '31.1.1'
     ext.acra_version = '5.11.3'
     ext.ankidroid_backend_version = '0.1.34-anki23.12.1'
