@@ -22,7 +22,6 @@ import com.ichi2.anki.ui.preferences.screens.BackupLimitsPresenter
  * Fragment with preferences related to backup.
  */
 class BackupLimitsSettingsFragment : SettingsFragment() {
-
     init {
         BackupLimitsPresenter(this).also { it.observeLifecycle() }
     }

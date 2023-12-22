@@ -35,6 +35,7 @@ import java.util.*
  */
 class FieldState private constructor(private val editor: NoteEditor) {
     private var mSavedFieldData: List<View.BaseSavedState>? = null
+
     fun loadFieldEditLines(type: FieldChangeType): List<FieldEditLine> {
         val fieldEditLines: List<FieldEditLine>
         if (type.type == Type.INIT && mSavedFieldData != null) {
@@ -112,11 +113,12 @@ class FieldState private constructor(private val editor: NoteEditor) {
         if (customViewIds == null || viewHierarchyState == null) {
             return
         }
-        val views = BundleCompat.getSparseParcelableArray(
-            viewHierarchyState,
-            "android:views",
-            View.BaseSavedState::class.java
-        ) ?: return
+        val views =
+            BundleCompat.getSparseParcelableArray(
+                viewHierarchyState,
+                "android:views",
+                View.BaseSavedState::class.java,
+            ) ?: return
         val important: MutableList<View.BaseSavedState> = ArrayList(customViewIds.size)
         for (i in customViewIds) {
             important.add(views[i!!] as View.BaseSavedState)
@@ -130,7 +132,11 @@ class FieldState private constructor(private val editor: NoteEditor) {
         var mNewNotetype: NotetypeJson? = null
 
         companion object {
-            fun refreshWithMap(newNotetype: NotetypeJson?, modelChangeFieldMap: Map<Int, Int>?, replaceNewlines: Boolean): FieldChangeType {
+            fun refreshWithMap(
+                newNotetype: NotetypeJson?,
+                modelChangeFieldMap: Map<Int, Int>?,
+                replaceNewlines: Boolean,
+            ): FieldChangeType {
                 val typeClass = FieldChangeType(Type.REFRESH_WITH_MAP, replaceNewlines)
                 typeClass.mNewNotetype = newNotetype
                 typeClass.modelChangeFieldMap = modelChangeFieldMap
@@ -153,14 +159,21 @@ class FieldState private constructor(private val editor: NoteEditor) {
                 return fromType(Type.INIT, replaceNewlines)
             }
 
-            private fun fromType(type: Type, replaceNewlines: Boolean): FieldChangeType {
+            private fun fromType(
+                type: Type,
+                replaceNewlines: Boolean,
+            ): FieldChangeType {
                 return FieldChangeType(type, replaceNewlines)
             }
         }
     }
 
     enum class Type {
-        INIT, CLEAR_KEEP_STICKY, CHANGE_FIELD_COUNT, REFRESH, REFRESH_WITH_MAP
+        INIT,
+        CLEAR_KEEP_STICKY,
+        CHANGE_FIELD_COUNT,
+        REFRESH,
+        REFRESH_WITH_MAP,
     }
 
     companion object {
@@ -173,7 +186,12 @@ class FieldState private constructor(private val editor: NoteEditor) {
         }
 
         @KotlinCleanup("speed - no need for arrayOfNulls")
-        private fun fromFieldMap(context: Context, oldFields: Array<Array<String>>, fMapNew: Map<String, Pair<Int, JSONObject>>, modelChangeFieldMap: Map<Int, Int>?): Array<Array<String>> {
+        private fun fromFieldMap(
+            context: Context,
+            oldFields: Array<Array<String>>,
+            fMapNew: Map<String, Pair<Int, JSONObject>>,
+            modelChangeFieldMap: Map<Int, Int>?,
+        ): Array<Array<String>> {
             // Build array of label/values to provide to field EditText views
             val fields = Array(fMapNew.size) { arrayOfNulls<String>(2) }
             for (fname in fMapNew.keys) {

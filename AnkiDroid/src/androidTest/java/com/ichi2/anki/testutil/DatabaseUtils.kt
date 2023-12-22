@@ -51,7 +51,7 @@ object DatabaseUtils {
     fun cursorFillWindow(
         cursor: Cursor,
         positionParam: Int,
-        window: CursorWindow
+        window: CursorWindow,
     ) {
         var position = positionParam
         if (position < 0 || position >= cursor.count) {
@@ -68,23 +68,24 @@ object DatabaseUtils {
                     break
                 }
                 for (i in 0 until numColumns) {
-                    val success: Boolean = when (cursor.getType(i)) {
-                        Cursor.FIELD_TYPE_NULL -> window.putNull(position, i)
-                        Cursor.FIELD_TYPE_INTEGER -> window.putLong(cursor.getLong(i), position, i)
-                        Cursor.FIELD_TYPE_FLOAT -> window.putDouble(cursor.getDouble(i), position, i)
-                        Cursor.FIELD_TYPE_BLOB -> {
-                            val value = cursor.getBlob(i)
-                            if (value != null) window.putBlob(value, position, i) else window.putNull(position, i)
+                    val success: Boolean =
+                        when (cursor.getType(i)) {
+                            Cursor.FIELD_TYPE_NULL -> window.putNull(position, i)
+                            Cursor.FIELD_TYPE_INTEGER -> window.putLong(cursor.getLong(i), position, i)
+                            Cursor.FIELD_TYPE_FLOAT -> window.putDouble(cursor.getDouble(i), position, i)
+                            Cursor.FIELD_TYPE_BLOB -> {
+                                val value = cursor.getBlob(i)
+                                if (value != null) window.putBlob(value, position, i) else window.putNull(position, i)
+                            }
+                            Cursor.FIELD_TYPE_STRING -> {
+                                val value = cursor.getString(i)
+                                if (value != null) window.putString(value, position, i) else window.putNull(position, i)
+                            }
+                            else -> {
+                                val value = cursor.getString(i)
+                                if (value != null) window.putString(value, position, i) else window.putNull(position, i)
+                            }
                         }
-                        Cursor.FIELD_TYPE_STRING -> {
-                            val value = cursor.getString(i)
-                            if (value != null) window.putString(value, position, i) else window.putNull(position, i)
-                        }
-                        else -> {
-                            val value = cursor.getString(i)
-                            if (value != null) window.putString(value, position, i) else window.putNull(position, i)
-                        }
-                    }
                     if (!success) {
                         window.freeLastRow()
                         break@rowloop

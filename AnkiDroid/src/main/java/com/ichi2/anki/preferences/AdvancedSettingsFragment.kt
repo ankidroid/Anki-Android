@@ -93,13 +93,14 @@ class AdvancedSettingsFragment : SettingsFragment() {
         // Enable API
         requirePreference<SwitchPreferenceCompat>(R.string.enable_api_key).setOnPreferenceChangeListener { newValue ->
             val providerName = ComponentName(requireContext(), CardContentProvider::class.java.name)
-            val state = if (newValue == true) {
-                Timber.i("AnkiDroid ContentProvider enabled by user")
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-            } else {
-                Timber.i("AnkiDroid ContentProvider disabled by user")
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-            }
+            val state =
+                if (newValue == true) {
+                    Timber.i("AnkiDroid ContentProvider enabled by user")
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                } else {
+                    Timber.i("AnkiDroid ContentProvider disabled by user")
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                }
             requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
         }
     }

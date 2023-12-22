@@ -65,13 +65,15 @@ class DecksTest : JvmTest() {
         assertTrue(names.contains("foo::bar"))
         assertFalse(names.contains("hello::world"))
         // create another col
+
         /* TODO: do we want to follow upstream here ?
          // automatically adjusted if a duplicate name
          decks.rename(decks.get(id), "FOO");
          names =  decks.allSortedNames();
          assertThat(names, containsString("FOO+"));
 
-          */
+         */
+
         // when renaming, the children should be renamed too
         addDeck("one::two::three")
         id = addDeck("one")
@@ -88,13 +90,13 @@ class DecksTest : JvmTest() {
         assertThrows(DeckRenameException::class.java) {
             col.decks.rename(
                 child,
-                "filtered::child"
+                "filtered::child",
             )
         }
         assertThrows(DeckRenameException::class.java) {
             col.decks.rename(
                 child,
-                "FILTERED::child"
+                "FILTERED::child",
             )
         }
     }
@@ -158,7 +160,7 @@ class DecksTest : JvmTest() {
         decks.select(id)
         assertDoesNotThrow("curDeck should be saved as a long. A deck id.") {
             col.config.get<DeckId>(
-                CURRENT_DECK
+                CURRENT_DECK,
             )
         }
     }
@@ -180,12 +182,14 @@ class DecksTest : JvmTest() {
     companion object {
         // Used in other class to populate decks.
         @Suppress("SpellCheckingInspection")
-        val TEST_DECKS = arrayOf(
-            "scxipjiyozczaaczoawo",
-            "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
-            "cmxieunwoogyxsctnjmv::INSBGDS",
-            "::foobar", // Addition test for issue #11026
-            "A::"
-        )
+        val TEST_DECKS =
+            arrayOf(
+                "scxipjiyozczaaczoawo",
+                "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
+                "cmxieunwoogyxsctnjmv::INSBGDS",
+                // Addition test for issue #11026
+                "::foobar",
+                "A::",
+            )
     }
 }

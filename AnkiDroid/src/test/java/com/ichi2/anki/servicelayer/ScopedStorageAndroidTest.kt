@@ -33,7 +33,6 @@ import java.io.File
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class ScopedStorageAndroidTest {
-
     @Test
     fun best_default_root_first() {
         // define two directories
@@ -99,7 +98,10 @@ class ScopedStorageAndroidTest {
         val sharedRootDirectory = createTransientDirectory("root")
         val depthOneRootDirectory = sharedRootDirectory.createTransientDirectory("first")
         val depthTwoRootDirectory = sharedRootDirectory.createTransientDirectory("second").createTransientDirectory("second")
-        val depthThreeRootDirectory = sharedRootDirectory.createTransientDirectory("third").createTransientDirectory("third").createTransientDirectory("third")
+        val depthThreeRootDirectory =
+            sharedRootDirectory.createTransientDirectory(
+                "third",
+            ).createTransientDirectory("third").createTransientDirectory("third")
         val templatePath = sharedRootDirectory.createTransientDirectory("final")
 
         runTestWithTwoExternalDirectories(arrayOf(depthTwoRootDirectory, depthThreeRootDirectory, depthOneRootDirectory)) {
@@ -120,7 +122,10 @@ class ScopedStorageAndroidTest {
     /**
      * run the test [test], with the hypothesis that [externalDirectories] are the external directories of the system.
      */
-    private fun runTestWithTwoExternalDirectories(externalDirectories: Array<File>, test: (Array<File>) -> Unit) {
+    private fun runTestWithTwoExternalDirectories(
+        externalDirectories: Array<File>,
+        test: (Array<File>) -> Unit,
+    ) {
         mockkObject(CollectionHelper) {
             every { CollectionHelper.getAppSpecificExternalDirectories(any()) } returns externalDirectories.toList()
             test(externalDirectories)

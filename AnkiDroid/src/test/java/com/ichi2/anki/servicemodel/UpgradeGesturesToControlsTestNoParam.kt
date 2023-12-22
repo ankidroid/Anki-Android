@@ -44,7 +44,8 @@ class UpgradeGesturesToControlsTestNoParam : RobolectricTest() {
         instance = UpgradeGesturesToControls()
         prefs.registerOnSharedPreferenceChangeListener { _, key ->
             run {
-                Timber.i("added key $key"); if (key != null) {
+                Timber.i("added key $key")
+                if (key != null) {
                     changedKeys.add(key)
                 }
             }

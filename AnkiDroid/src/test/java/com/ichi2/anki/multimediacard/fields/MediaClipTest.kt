@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test
 import java.io.File
 
 class MediaClipTest {
-
     @Test
     fun formattedValue_returns_an_empty_string_if_path_is_null() {
         val mediaClipField = MediaClipField()
@@ -31,10 +30,11 @@ class MediaClipTest {
     @Test
     fun formattedValue_test() {
         val mediaClipField = MediaClipField()
-        val mediaFile = File("foo").also {
-            it.createNewFile()
-            it.deleteOnExit()
-        }
+        val mediaFile =
+            File("foo").also {
+                it.createNewFile()
+                it.deleteOnExit()
+            }
         mediaClipField.audioPath = mediaFile.path
 
         assertThat(mediaClipField.formattedValue, equalTo("[sound:foo]"))

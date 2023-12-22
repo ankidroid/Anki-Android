@@ -46,18 +46,20 @@ class HtmlHelpPreference(context: Context, attrs: AttributeSet?) : Preference(co
         isPersistent = false
     }
 
-    private val substitutions = context.usingStyledAttributes(attrs, R.styleable.HtmlHelpPreference) {
-        arrayOf(
-            getString(R.styleable.HtmlHelpPreference_substitution1),
-            getString(R.styleable.HtmlHelpPreference_substitution2),
-            getString(R.styleable.HtmlHelpPreference_substitution3)
-        )
-    }
+    private val substitutions =
+        context.usingStyledAttributes(attrs, R.styleable.HtmlHelpPreference) {
+            arrayOf(
+                getString(R.styleable.HtmlHelpPreference_substitution1),
+                getString(R.styleable.HtmlHelpPreference_substitution2),
+                getString(R.styleable.HtmlHelpPreference_substitution3),
+            )
+        }
 
-    override fun getSummary() = super.getSummary()
-        .toString()
-        .format(*substitutions)
-        .parseAsHtml()
+    override fun getSummary() =
+        super.getSummary()
+            .toString()
+            .format(*substitutions)
+            .parseAsHtml()
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)

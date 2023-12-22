@@ -38,7 +38,7 @@ class ClosableDrawerLayout : DrawerLayout {
         if (!mAnimationEnabled) {
             closeDrawer(GravityCompat.START, false);
         }
-        */
+         */
         super.closeDrawers(peekingOnly)
     }
 }

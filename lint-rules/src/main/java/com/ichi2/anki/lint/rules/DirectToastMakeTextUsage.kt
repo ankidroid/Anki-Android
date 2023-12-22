@@ -29,30 +29,35 @@ import org.jetbrains.uast.UCallExpression
  * of using the method provided by the UIUtils class {com.ichi2.anki.UIUtils#showThemedToast(...)}.
  */
 class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
-
     companion object {
         @VisibleForTesting
         const val ID = "DirectToastMakeTextUsage"
 
         @VisibleForTesting
         const val DESCRIPTION = "Use UIUtils.showThemedToast instead of Toast.makeText"
-        private const val EXPLANATION = "To improve code consistency within the codebase you should use UIUtils.showThemedToast in place" +
-            " of the library Toast.makeText(...).show(). This ensures also that the toast is actually displayed after being created"
+        private const val EXPLANATION =
+            "To improve code consistency within the codebase you should use UIUtils.showThemedToast in place" +
+                " of the library Toast.makeText(...).show(). This ensures also that the toast is actually displayed after being created"
         private val implementation = Implementation(DirectToastMakeTextUsage::class.java, Scope.JAVA_FILE_SCOPE)
-        val ISSUE: Issue = Issue.create(
-            ID,
-            DESCRIPTION,
-            EXPLANATION,
-            Constants.ANKI_CODE_STYLE_CATEGORY,
-            Constants.ANKI_CODE_STYLE_PRIORITY,
-            Constants.ANKI_CODE_STYLE_SEVERITY,
-            implementation
-        )
+        val ISSUE: Issue =
+            Issue.create(
+                ID,
+                DESCRIPTION,
+                EXPLANATION,
+                Constants.ANKI_CODE_STYLE_CATEGORY,
+                Constants.ANKI_CODE_STYLE_PRIORITY,
+                Constants.ANKI_CODE_STYLE_SEVERITY,
+                implementation,
+            )
     }
 
     override fun getApplicableMethodNames() = mutableListOf("makeText")
 
-    override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
+    override fun visitMethodCall(
+        context: JavaContext,
+        node: UCallExpression,
+        method: PsiMethod,
+    ) {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
@@ -61,7 +66,7 @@ class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
                 ISSUE,
                 node,
                 context.getCallLocation(node, includeReceiver = true, includeArguments = true),
-                DESCRIPTION
+                DESCRIPTION,
             )
         }
     }

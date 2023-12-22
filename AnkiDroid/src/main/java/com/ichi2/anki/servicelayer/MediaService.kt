@@ -28,7 +28,7 @@ suspend fun AnkiActivity.checkMedia(): MediaCheckResult? {
     if (ScopedStorageService.mediaMigrationIsInProgress(this)) {
         showSnackbar(
             R.string.functionality_disabled_during_storage_migration,
-            Snackbar.LENGTH_SHORT
+            Snackbar.LENGTH_SHORT,
         )
         return null
     }

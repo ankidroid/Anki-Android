@@ -33,15 +33,16 @@ import kotlin.test.assertFailsWith
 class CompatDeleteFileTest(
     val compat: Compat,
     /** Used in the "Test Results" Window */
-    @Suppress("unused") private val unitTestDescription: String
+    @Suppress("unused") private val unitTestDescription: String,
 ) {
     companion object {
         @JvmStatic // required for Parameters
         @Parameterized.Parameters(name = "{1}")
-        fun data(): Iterable<Array<Any>> = sequence {
-            yield(arrayOf(CompatV23(), "CompatV23"))
-            yield(arrayOf(CompatV26(), "CompatV26"))
-        }.asIterable()
+        fun data(): Iterable<Array<Any>> =
+            sequence {
+                yield(arrayOf(CompatV23(), "CompatV23"))
+                yield(arrayOf(CompatV26(), "CompatV26"))
+            }.asIterable()
     }
 
     @Test

@@ -25,7 +25,10 @@ import java.lang.Exception
 class DummyScheduler(col: Collection) : Scheduler(col) {
     override val card: Card? = null
 
-    override fun answerCard(card: Card, ease: Int) {
+    override fun answerCard(
+        card: Card,
+        ease: Int,
+    ) {
         throw Exception("v1/v2 scheduler not supported")
     }
 }

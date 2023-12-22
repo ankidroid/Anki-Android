@@ -63,7 +63,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         templateFront.text.append(testModelQfmtEdit)
         advanceRobolectricLooperWithSleep()
         assertTrue("Model did not change after edit?", testEditor.modelHasChanged())
-        assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
+        assertEquals(
+            "Change already in database?",
+            collectionBasicModelOriginal.toString().trim {
+                it <= ' '
+            },
+            getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
+        )
 
         // Kill and restart the Activity, make sure model edit is preserved
         val outBundle = Bundle()
@@ -74,7 +80,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         testEditor = templateEditorController.get()
         var shadowTestEditor = shadowOf(testEditor)
         assertTrue("model change not preserved across activity lifecycle?", testEditor.modelHasChanged())
-        assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
+        assertEquals(
+            "Change already in database?",
+            collectionBasicModelOriginal.toString().trim {
+                it <= ' '
+            },
+            getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
+        )
 
         // Make sure we get a confirmation dialog if we hit the back button
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(android.R.id.home))
@@ -109,8 +121,18 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         assertEquals("Previewer not started?", CardTemplatePreviewer::class.java.name, shadowIntent.intentClass.name)
         assertNotNull("intent did not have model JSON filename?", startedIntent.getStringExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME))
-        assertNotEquals("Model sent to Previewer is unchanged?", testEditor.tempModel?.notetype, CardTemplateNotetype.getTempModel(startedIntent.getStringExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME)!!))
-        assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
+        assertNotEquals(
+            "Model sent to Previewer is unchanged?",
+            testEditor.tempModel?.notetype,
+            CardTemplateNotetype.getTempModel(startedIntent.getStringExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME)!!),
+        )
+        assertEquals(
+            "Change already in database?",
+            collectionBasicModelOriginal.toString().trim {
+                it <= ' '
+            },
+            getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
+        )
         shadowTestEditor.receiveResult(startedIntent, Activity.RESULT_OK, Intent())
 
         // Save the template then fetch it from the collection to see if it was saved correctly
@@ -120,7 +142,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         val collectionBasicModelCopyEdited = getCurrentDatabaseModelCopy(modelName)
         assertNotEquals("model is unchanged?", collectionBasicModelOriginal, collectionBasicModelCopyEdited)
-        assertEquals("model did not save?", testEditorModelEdited.toString().trim { it <= ' ' }, collectionBasicModelCopyEdited.toString().trim { it <= ' ' })
+        assertEquals(
+            "model did not save?",
+            testEditorModelEdited.toString().trim {
+                it <= ' '
+            },
+            collectionBasicModelCopyEdited.toString().trim { it <= ' ' },
+        )
         assertTrue("model does not have our change?", collectionBasicModelCopyEdited.toString().contains(testModelQfmtEdit))
     }
 
@@ -154,9 +182,15 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about deleting only card?",
             getResourceString(R.string.card_template_editor_cant_delete),
-            getAlertDialogText(true)
+            getAlertDialogText(true),
         )
-        assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
+        assertEquals(
+            "Change already in database?",
+            collectionBasicModelOriginal.toString().trim {
+                it <= ' '
+            },
+            getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
+        )
 
         // Save the change to the database and make sure there's only one template after
         val testEditorModelEdited = testEditor.tempModel?.notetype
@@ -164,7 +198,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         val collectionBasicModelCopyEdited = getCurrentDatabaseModelCopy(modelName)
         assertNotEquals("model is unchanged?", collectionBasicModelOriginal, collectionBasicModelCopyEdited)
-        assertEquals("model did not save?", testEditorModelEdited.toString().trim { it <= ' ' }, collectionBasicModelCopyEdited.toString().trim { it <= ' ' })
+        assertEquals(
+            "model did not save?",
+            testEditorModelEdited.toString().trim {
+                it <= ' '
+            },
+            collectionBasicModelCopyEdited.toString().trim { it <= ' ' },
+        )
     }
 
     @Test
@@ -199,8 +239,18 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals("Previewer not started?", CardTemplatePreviewer::class.java.name, shadowIntent.intentClass.name)
         assertNotNull("intent did not have model JSON filename?", startedIntent.getStringExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME))
         assertEquals("intent did not have ordinal?", 1, startedIntent.getIntExtra("ordinal", -1))
-        assertNotEquals("Model sent to Previewer is unchanged?", testEditor.tempModel?.notetype, CardTemplateNotetype.getTempModel(startedIntent.getStringExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME)!!))
-        assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
+        assertNotEquals(
+            "Model sent to Previewer is unchanged?",
+            testEditor.tempModel?.notetype,
+            CardTemplateNotetype.getTempModel(startedIntent.getStringExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME)!!),
+        )
+        assertEquals(
+            "Change already in database?",
+            collectionBasicModelOriginal.toString().trim {
+                it <= ' '
+            },
+            getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
+        )
 
         // Save the change to the database and make sure there are two templates after
         val testEditorModelEdited = testEditor.tempModel?.notetype
@@ -208,7 +258,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         val collectionBasicModelCopyEdited = getCurrentDatabaseModelCopy(modelName)
         assertNotEquals("model is unchanged?", collectionBasicModelOriginal, collectionBasicModelCopyEdited)
-        assertEquals("model did not save?", testEditorModelEdited.toString().trim { it <= ' ' }, collectionBasicModelCopyEdited.toString().trim { it <= ' ' })
+        assertEquals(
+            "model did not save?",
+            testEditorModelEdited.toString().trim {
+                it <= ' '
+            },
+            collectionBasicModelCopyEdited.toString().trim { it <= ' ' },
+        )
     }
 
     /**
@@ -271,17 +327,26 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about deleting only card?",
             getResourceString(R.string.card_template_editor_would_delete_note),
-            getAlertDialogText(true)
+            getAlertDialogText(true),
         )
         clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertNull("Can delete used template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
+        assertEquals(
+            "Change already in database?",
+            collectionBasicModelOriginal.toString().trim {
+                it <= ' '
+            },
+            getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
+        )
         assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
         assertEquals("Change incorrectly added to list?", 0, testEditor.tempModel?.templateChanges?.size)
 
         // Assert can delete 'Card 2'
-        assertNotNull("Cannot delete unused template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
+        assertNotNull(
+            "Cannot delete unused template?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)),
+        )
 
         // Edit note to have Add Reverse set to 'y' so we get a second card
         selectiveGeneratedNote.setField(2, "y")
@@ -291,9 +356,18 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals("should be two cards now", 2, getModelCardCount(collectionBasicModelOriginal))
 
         // - assert can delete either Card template but not both
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNull("Can delete both templates?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
+        assertNotNull(
+            "Cannot delete template?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)),
+        )
+        assertNotNull(
+            "Cannot delete template?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)),
+        )
+        assertNull(
+            "Can delete both templates?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)),
+        )
 
         // A couple more notes to make sure things are okay
         val secondNote = col.newNote(collectionBasicModelOriginal)
@@ -303,135 +377,221 @@ class CardTemplateEditorTest : RobolectricTest() {
         col.addNote(secondNote)
 
         // - assert can delete either Card template but not both
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNull("Can delete both templates?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
+        assertNotNull(
+            "Cannot delete template?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)),
+        )
+        assertNotNull(
+            "Cannot delete template?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)),
+        )
+        assertNull(
+            "Can delete both templates?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)),
+        )
     }
 
     /**
      * Normal template deletion - with no selective generation should of course work
      */
     @Test
-    fun testDeleteTemplateWithGeneratedCards() = runTest {
-        val modelName = "Basic (and reversed card)"
-        var collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
+    fun testDeleteTemplateWithGeneratedCards() =
+        runTest {
+            val modelName = "Basic (and reversed card)"
+            var collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
 
-        // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
-        var intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
-        var templateEditorController = Robolectric.buildActivity(CardTemplateEditor::class.java, intent).create().start().resume().visible()
-        saveControllerForCleanup(templateEditorController)
-        var testEditor = templateEditorController.get()
-        assertFalse("Model should not have changed yet", testEditor.modelHasChanged())
-        assertEquals("Model should have 2 templates now", 2, testEditor.tempModel?.templateCount)
-        assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
-        assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 1))
+            // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
+            var intent = Intent(Intent.ACTION_VIEW)
+            intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
+            var templateEditorController =
+                Robolectric.buildActivity(
+                    CardTemplateEditor::class.java,
+                    intent,
+                ).create().start().resume().visible()
+            saveControllerForCleanup(templateEditorController)
+            var testEditor = templateEditorController.get()
+            assertFalse("Model should not have changed yet", testEditor.modelHasChanged())
+            assertEquals("Model should have 2 templates now", 2, testEditor.tempModel?.templateCount)
+            assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
+            assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 1))
 
-        // Create note with forward and back info
-        val selectiveGeneratedNote = col.newNote(collectionBasicModelOriginal)
-        selectiveGeneratedNote.setField(0, "TestFront")
-        selectiveGeneratedNote.setField(1, "TestBack")
-        col.addNote(selectiveGeneratedNote)
-        assertEquals("card generation should result in two cards", 2, getModelCardCount(collectionBasicModelOriginal))
+            // Create note with forward and back info
+            val selectiveGeneratedNote = col.newNote(collectionBasicModelOriginal)
+            selectiveGeneratedNote.setField(0, "TestFront")
+            selectiveGeneratedNote.setField(1, "TestBack")
+            col.addNote(selectiveGeneratedNote)
+            assertEquals("card generation should result in two cards", 2, getModelCardCount(collectionBasicModelOriginal))
 
-        // Test if we can delete the template - should be possible - but cancel the delete
-        var shadowTestEditor = shadowOf(testEditor)
-        assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
-        advanceRobolectricLooperWithSleep()
-        assertEquals(
-            "Did not show dialog about deleting template and it's card?",
-            getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
-            getMaterialDialogText(true)
-        )
-        clickMaterialDialogButton(WhichButton.NEGATIVE, true)
-        advanceRobolectricLooperWithSleep()
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNull("Can delete both templates?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
-        assertEquals("Change in database despite no change?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
-        assertEquals("Model should have 2 templates still", 2, testEditor.tempModel?.templateCount)
+            // Test if we can delete the template - should be possible - but cancel the delete
+            var shadowTestEditor = shadowOf(testEditor)
+            assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
+            advanceRobolectricLooperWithSleep()
+            assertEquals(
+                "Did not show dialog about deleting template and it's card?",
+                getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
+                getMaterialDialogText(true),
+            )
+            clickMaterialDialogButton(WhichButton.NEGATIVE, true)
+            advanceRobolectricLooperWithSleep()
+            assertNotNull(
+                "Cannot delete template?",
+                col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)),
+            )
+            assertNotNull(
+                "Cannot delete template?",
+                col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)),
+            )
+            assertNull(
+                "Can delete both templates?",
+                col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)),
+            )
+            assertEquals(
+                "Change in database despite no change?",
+                collectionBasicModelOriginal.toString().trim {
+                    it <= ' '
+                },
+                getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
+            )
+            assertEquals("Model should have 2 templates still", 2, testEditor.tempModel?.templateCount)
 
-        // Add a template - click add, click confirm for card add, click confirm again for full sync
-        addCardType(testEditor, shadowTestEditor)
-        assertTrue("Model should have changed", testEditor.modelHasChanged())
-        assertEquals("Change added but not adjusted correctly?", 2, CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 0))
-        assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
-        assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 1))
-        assertTrue("Ordinal not pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 2))
-        assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm))
-        advanceRobolectricLooperWithSleep()
-        assertFalse("Model should now be unchanged", testEditor.modelHasChanged())
-        assertEquals("card generation should result in three cards", 3, getModelCardCount(collectionBasicModelOriginal))
-        collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName) // reload the model for future comparison after saving the edit
+            // Add a template - click add, click confirm for card add, click confirm again for full sync
+            addCardType(testEditor, shadowTestEditor)
+            assertTrue("Model should have changed", testEditor.modelHasChanged())
+            assertEquals(
+                "Change added but not adjusted correctly?",
+                2,
+                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 0),
+            )
+            assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
+            assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 1))
+            assertTrue("Ordinal not pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 2))
+            assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm))
+            advanceRobolectricLooperWithSleep()
+            assertFalse("Model should now be unchanged", testEditor.modelHasChanged())
+            assertEquals("card generation should result in three cards", 3, getModelCardCount(collectionBasicModelOriginal))
+            collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName) // reload model for future comparison after saving
 
-        // Start the CardTemplateEditor back up after saving (which closes the thing...)
-        intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
-        templateEditorController = Robolectric.buildActivity(CardTemplateEditor::class.java, intent).create().start().resume().visible()
-        testEditor = templateEditorController.get()
-        shadowTestEditor = shadowOf(testEditor)
-        assertFalse("Model should not have changed yet", testEditor.modelHasChanged())
-        assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
-        assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 1))
-        assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 2))
-        assertEquals("Model should have 3 templates now", 3, testEditor.tempModel?.templateCount)
+            // Start the CardTemplateEditor back up after saving (which closes the thing...)
+            intent = Intent(Intent.ACTION_VIEW)
+            intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
+            templateEditorController = Robolectric.buildActivity(CardTemplateEditor::class.java, intent).create().start().resume().visible()
+            testEditor = templateEditorController.get()
+            shadowTestEditor = shadowOf(testEditor)
+            assertFalse("Model should not have changed yet", testEditor.modelHasChanged())
+            assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
+            assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 1))
+            assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 2))
+            assertEquals("Model should have 3 templates now", 3, testEditor.tempModel?.templateCount)
 
-        // Add another template - but we work in memory for a while before saving
-        addCardType(testEditor, shadowTestEditor)
-        assertEquals("Change added but not adjusted correctly?", 3, CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 0))
-        assertTrue("Model should have changed", testEditor.modelHasChanged())
-        assertEquals("Model should have 4 templates now", 4, testEditor.tempModel?.templateCount)
-        assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
-        assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 1))
-        assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 2))
-        assertTrue("Ordinal not pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 3))
-        assertEquals("Change added but not adjusted correctly?", 3, CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 0))
+            // Add another template - but we work in memory for a while before saving
+            addCardType(testEditor, shadowTestEditor)
+            assertEquals(
+                "Change added but not adjusted correctly?",
+                3,
+                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 0),
+            )
+            assertTrue("Model should have changed", testEditor.modelHasChanged())
+            assertEquals("Model should have 4 templates now", 4, testEditor.tempModel?.templateCount)
+            assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
+            assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 1))
+            assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 2))
+            assertTrue("Ordinal not pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 3))
+            assertEquals(
+                "Change added but not adjusted correctly?",
+                3,
+                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 0),
+            )
 
-        // Delete two pre-existing templates for real now - but still without saving it out, should work fine
-        advanceRobolectricLooperWithSleep()
-        testEditor.viewPager.currentItem = 0
-        assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
-        advanceRobolectricLooperWithSleep()
-        assertEquals(
-            "Did not show dialog about deleting template and it's card?",
-            getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
-            getMaterialDialogText(true)
-        )
-        clickMaterialDialogButton(WhichButton.POSITIVE, true)
-        advanceRobolectricLooperWithSleep()
-        advanceRobolectricLooperWithSleep()
-        testEditor.viewPager.currentItem = 0
-        assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
-        advanceRobolectricLooperWithSleep()
-        assertEquals(
-            "Did not show dialog about deleting template and it's card?",
-            getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
-            getMaterialDialogText(true)
-        )
-        clickMaterialDialogButton(WhichButton.POSITIVE, true)
-        advanceRobolectricLooperWithSleep()
+            // Delete two pre-existing templates for real now - but still without saving it out, should work fine
+            advanceRobolectricLooperWithSleep()
+            testEditor.viewPager.currentItem = 0
+            assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
+            advanceRobolectricLooperWithSleep()
+            assertEquals(
+                "Did not show dialog about deleting template and it's card?",
+                getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
+                getMaterialDialogText(true),
+            )
+            clickMaterialDialogButton(WhichButton.POSITIVE, true)
+            advanceRobolectricLooperWithSleep()
+            advanceRobolectricLooperWithSleep()
+            testEditor.viewPager.currentItem = 0
+            assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
+            advanceRobolectricLooperWithSleep()
+            assertEquals(
+                "Did not show dialog about deleting template and it's card?",
+                getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
+                getMaterialDialogText(true),
+            )
+            clickMaterialDialogButton(WhichButton.POSITIVE, true)
+            advanceRobolectricLooperWithSleep()
 
-        // - assert can delete any 1 or 2 Card templates but not all
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(2)))
-        assertNotNull("Cannot delete two templates?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
-        assertNotNull("Cannot delete two templates?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 2)))
-        assertNotNull("Cannot delete two templates?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1, 2)))
-        assertNull("Can delete all templates?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1, 2)))
-        assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
-        assertEquals("Change added but not adjusted correctly?", 1, CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 0))
-        assertEquals("Change incorrectly pending add?", -1, CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 1))
-        assertEquals("Change incorrectly pending add?", -1, CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 2))
+            // - assert can delete any 1 or 2 Card templates but not all
+            assertNotNull(
+                "Cannot delete template?",
+                col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)),
+            )
+            assertNotNull(
+                "Cannot delete template?",
+                col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)),
+            )
+            assertNotNull(
+                "Cannot delete template?",
+                col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(2)),
+            )
+            assertNotNull(
+                "Cannot delete two templates?",
+                col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)),
+            )
+            assertNotNull(
+                "Cannot delete two templates?",
+                col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 2)),
+            )
+            assertNotNull(
+                "Cannot delete two templates?",
+                col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1, 2)),
+            )
+            assertNull(
+                "Can delete all templates?",
+                col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1, 2)),
+            )
+            assertEquals(
+                "Change already in database?",
+                collectionBasicModelOriginal.toString().trim {
+                    it <= ' '
+                },
+                getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
+            )
+            assertEquals(
+                "Change added but not adjusted correctly?",
+                1,
+                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 0),
+            )
+            assertEquals(
+                "Change incorrectly pending add?",
+                -1,
+                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 1),
+            )
+            assertEquals(
+                "Change incorrectly pending add?",
+                -1,
+                CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 2),
+            )
 
-        // Now confirm everything to persist it to the database
-        assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm))
-        advanceRobolectricLooperWithSleep()
-        advanceRobolectricLooperWithSleep()
-        assertNotEquals("Change not in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
-        assertEquals("Model should have 2 templates now", 2, getCurrentDatabaseModelCopy(modelName).getJSONArray("tmpls").length())
-        assertEquals("should be two cards", 2, getModelCardCount(collectionBasicModelOriginal))
-    }
+            // Now confirm everything to persist it to the database
+            assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm))
+            advanceRobolectricLooperWithSleep()
+            advanceRobolectricLooperWithSleep()
+            assertNotEquals(
+                "Change not in database?",
+                collectionBasicModelOriginal.toString().trim {
+                    it <= ' '
+                },
+                getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
+            )
+            assertEquals("Model should have 2 templates now", 2, getCurrentDatabaseModelCopy(modelName).getJSONArray("tmpls").length())
+            assertEquals("should be two cards", 2, getModelCardCount(collectionBasicModelOriginal))
+        }
 
     /**
      * Deleting a template you just added - but in the same ordinal as a previous pending delete - should get it's card count correct
@@ -468,21 +628,40 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about deleting template and it's card?",
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
-            getMaterialDialogText(true)
+            getMaterialDialogText(true),
         )
         clickMaterialDialogButton(WhichButton.POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertTrue("Model should have changed", testEditor.modelHasChanged())
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNull("Can delete both templates?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
-        assertEquals("Change in database despite no save?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
+        assertNotNull(
+            "Cannot delete template?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)),
+        )
+        assertNotNull(
+            "Cannot delete template?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)),
+        )
+        assertNull(
+            "Can delete both templates?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)),
+        )
+        assertEquals(
+            "Change in database despite no save?",
+            collectionBasicModelOriginal.toString().trim {
+                it <= ' '
+            },
+            getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
+        )
         assertEquals("Model should have 1 template", 1, testEditor.tempModel?.templateCount)
 
         // Add a template - click add, click confirm for card add, click confirm again for full sync
         addCardType(testEditor, shadowTestEditor)
         assertTrue("Model should have changed", testEditor.modelHasChanged())
-        assertEquals("Change added but not adjusted correctly?", 1, CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 1))
+        assertEquals(
+            "Change added but not adjusted correctly?",
+            1,
+            CardTemplateNotetype.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 1),
+        )
         assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
         assertTrue("Ordinal not pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 1))
         assertEquals("Model should have 2 templates", 2, testEditor.tempModel?.templateCount)
@@ -494,15 +673,30 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about deleting template and it's card?",
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 0, 0, "Card 2"),
-            getMaterialDialogText(true)
+            getMaterialDialogText(true),
         )
         clickMaterialDialogButton(WhichButton.POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertTrue("Model should have changed", testEditor.modelHasChanged())
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNull("Can delete both templates?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
-        assertEquals("Change in database despite no save?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
+        assertNotNull(
+            "Cannot delete template?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)),
+        )
+        assertNotNull(
+            "Cannot delete template?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)),
+        )
+        assertNull(
+            "Can delete both templates?",
+            col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)),
+        )
+        assertEquals(
+            "Change in database despite no save?",
+            collectionBasicModelOriginal.toString().trim {
+                it <= ' '
+            },
+            getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
+        )
         assertEquals("Model should have 1 template", 1, testEditor.tempModel?.templateCount)
 
         // Save it out and make some assertions
@@ -552,7 +746,11 @@ class CardTemplateEditorTest : RobolectricTest() {
         cardTemplateFragment!!.setCurrentEditorView(R.id.styling_edit, tempModel!!.css, R.string.card_template_editor_styling)
 
         // set Bottom Navigation View to Front
-        cardTemplateFragment.setCurrentEditorView(R.id.front_edit, tempModel.getTemplate(0).getString("qfmt"), R.string.card_template_editor_front)
+        cardTemplateFragment.setCurrentEditorView(
+            R.id.front_edit,
+            tempModel.getTemplate(0).getString("qfmt"),
+            R.string.card_template_editor_front,
+        )
 
         // check if current content is updated or not
         assumeThat(templateEditText.text.toString(), Matchers.equalTo(updatedFrontContent))
@@ -588,19 +786,23 @@ class CardTemplateEditorTest : RobolectricTest() {
         assumeThat(cardTemplateFragment.currentEditorViewId, Matchers.equalTo(R.id.styling_edit))
     }
 
-    private fun addCardType(testEditor: CardTemplateEditor, shadowTestEditor: ShadowActivity) {
+    private fun addCardType(
+        testEditor: CardTemplateEditor,
+        shadowTestEditor: ShadowActivity,
+    ) {
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_add))
         advanceRobolectricLooperWithSleep()
         val ordinal = testEditor.viewPager.currentItem
-        val numAffectedCards = if (!CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, ordinal)) {
-            col.notetypes.tmplUseCount(testEditor.tempModel!!.notetype, ordinal)
-        } else {
-            0
-        }
+        val numAffectedCards =
+            if (!CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, ordinal)) {
+                col.notetypes.tmplUseCount(testEditor.tempModel!!.notetype, ordinal)
+            } else {
+                0
+            }
         assertEquals(
             "Did not show dialog about adding template and it's card?",
             getQuantityString(R.plurals.card_template_editor_confirm_add, numAffectedCards, numAffectedCards),
-            getMaterialDialogText(true)
+            getMaterialDialogText(true),
         )
         clickMaterialDialogButton(WhichButton.POSITIVE, true)
     }

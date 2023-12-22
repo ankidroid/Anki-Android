@@ -89,9 +89,11 @@ object AnalyticsConstantsTest {
         @Throws(IllegalAccessException::class)
         fun checkAnalyticsString() {
             Assert.assertEquals(
-                "Re-check if you renamed any string in the analytics string constants of Actions class or AnalyticsConstantsTest.listOfConstantFields. If so, revert them as those string constants must not change as they are compared in analytics.",
+                "Re-check if you renamed any string in the analytics string constants of Actions class " +
+                    "or AnalyticsConstantsTest.listOfConstantFields. " +
+                    "If so, revert them as those string constants must not change as they are compared in analytics.",
                 analyticsString,
-                getStringFromReflection(analyticsString)
+                getStringFromReflection(analyticsString),
             )
         }
 
@@ -120,15 +122,17 @@ object AnalyticsConstantsTest {
         fun fieldSizeEqualsListOfConstantFields() {
             if (fieldSize > listOfConstantFields.size) {
                 Assert.assertEquals(
-                    "Add the newly added analytics constant to AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
+                    "Add the newly added analytics constant to AnalyticsConstantsTest.listOfConstantFields. " +
+                        "NOTE: Constants should not be renamed as we cannot compare these in analytics.",
                     listOfConstantFields.size,
-                    fieldSize
+                    fieldSize,
                 )
             } else if (fieldSize < listOfConstantFields.size) {
                 Assert.assertEquals(
-                    "If a constant is removed, it should be removed from AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
+                    "If a constant is removed, it should be removed from AnalyticsConstantsTest.listOfConstantFields. " +
+                        "NOTE: Constants should not be renamed as we cannot compare these in analytics.",
                     listOfConstantFields.size,
-                    fieldSize
+                    fieldSize,
                 )
             } else {
                 Assert.assertEquals(listOfConstantFields.size, fieldSize)
@@ -143,14 +147,17 @@ object AnalyticsConstantsTest {
         fun fieldAnnotatedOrNot() {
             for (value in getProperties()) {
                 if (value.getAnnotation(AnalyticsConstant::class.java) == null && !value.isSynthetic) {
-                    throw RuntimeException("All the fields in Actions class must be annotated with @AnalyticsConstant. It seems " + value.name + " is not annotated.")
+                    throw RuntimeException(
+                        "Actions class Fields must be annotated with @AnalyticsConstant. " + value.name + " is not annotated.",
+                    )
                 }
             }
         }
 
-        private fun getProperties() = UsageAnalytics.Actions::class.memberProperties
-            .mapNotNull { it.javaField }
-            .also { list -> assertThat("fields should not be empty", list.size, not(equalTo(0))) }
+        private fun getProperties() =
+            UsageAnalytics.Actions::class.memberProperties
+                .mapNotNull { it.javaField }
+                .also { list -> assertThat("fields should not be empty", list.size, not(equalTo(0))) }
 
         companion object {
             /**

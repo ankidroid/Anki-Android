@@ -44,11 +44,17 @@ class RetryRule(i: Int) : TestRule {
         mMaxTries = i
     }
 
-    override fun apply(base: Statement, description: Description): Statement {
+    override fun apply(
+        base: Statement,
+        description: Description,
+    ): Statement {
         return statement(base, description)
     }
 
-    private fun statement(base: Statement, description: Description): Statement {
+    private fun statement(
+        base: Statement,
+        description: Description,
+    ): Statement {
         return object : Statement() {
             @Throws(Throwable::class)
             override fun evaluate() {

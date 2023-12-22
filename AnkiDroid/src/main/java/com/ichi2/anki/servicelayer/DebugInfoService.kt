@@ -29,26 +29,26 @@ object DebugInfoService {
     fun getDebugInfo(info: Context): String {
         val webviewUserAgent = getWebviewUserAgent(info)
         return """
-               AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
-               
-               Backend Version = ${BuildConfig.BACKEND_VERSION} (${BackendBuildConfig.ANKI_DESKTOP_VERSION} ${BackendBuildConfig.ANKI_COMMIT_HASH})
-              
-               Android Version = ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})
-               
-               ProductFlavor = ${BuildConfig.FLAVOR}
-               
-               Manufacturer = ${Build.MANUFACTURER}
-               
-               Model = ${Build.MODEL}
-               
-               Hardware = ${Build.HARDWARE}
-               
-               Webview User Agent = $webviewUserAgent
-               
-               ACRA UUID = ${Installation.id(info)}
-               
-               Crash Reports Enabled = ${isSendingCrashReports(info)}
-        """.trimIndent()
+            AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
+            
+            Backend Version = ${BuildConfig.BACKEND_VERSION} (${BackendBuildConfig.ANKI_DESKTOP_VERSION} ${BackendBuildConfig.ANKI_COMMIT_HASH})
+            
+            Android Version = ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})
+            
+            ProductFlavor = ${BuildConfig.FLAVOR}
+            
+            Manufacturer = ${Build.MANUFACTURER}
+            
+            Model = ${Build.MODEL}
+            
+            Hardware = ${Build.HARDWARE}
+            
+            Webview User Agent = $webviewUserAgent
+            
+            ACRA UUID = ${Installation.id(info)}
+            
+            Crash Reports Enabled = ${isSendingCrashReports(info)}
+            """.trimIndent()
     }
 
     private fun getWebviewUserAgent(context: Context): String? {

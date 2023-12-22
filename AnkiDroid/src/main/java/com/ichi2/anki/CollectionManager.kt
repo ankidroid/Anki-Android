@@ -85,7 +85,9 @@ object CollectionManager {
      *
      *       context(Queue) suspend fun canOnlyBeRunInWithQueue()
      */
-    private suspend fun<T> withQueue(@WorkerThread block: CollectionManager.() -> T): T {
+    private suspend fun <T> withQueue(
+        @WorkerThread block: CollectionManager.() -> T,
+    ): T {
         return withContext(queue) {
             this@CollectionManager.block()
         }
@@ -100,7 +102,9 @@ object CollectionManager {
      * sure the collection won't be closed or modified by another thread. This guarantee
      * does not hold if legacy code calls [getColUnsafe].
      */
-    suspend fun <T> withCol(@WorkerThread block: Collection.() -> T): T {
+    suspend fun <T> withCol(
+        @WorkerThread block: Collection.() -> T,
+    ): T {
         return withQueue {
             ensureOpenInner()
             block(collection!!)
@@ -114,7 +118,9 @@ object CollectionManager {
      * these two cases, it should wrap the return value of the block in a class (eg Optional),
      * instead of returning a nullable object.
      */
-    suspend fun<T> withOpenColOrNull(@WorkerThread block: Collection.() -> T): T? {
+    suspend fun <T> withOpenColOrNull(
+        @WorkerThread block: Collection.() -> T,
+    ): T? {
         return withQueue {
             if (collection != null && !collection!!.dbClosed) {
                 block(collection!!)
@@ -148,7 +154,10 @@ object CollectionManager {
             return getBackend().tr
         }
 
-    fun compareAnswer(expected: String, given: String): String {
+    fun compareAnswer(
+        expected: String,
+        given: String,
+    ): String {
         // bypass the lock, as the type answer code is heavily nested in non-suspend functions
         return getBackend().compareAnswer(expected, given)
     }
@@ -305,22 +314,24 @@ object CollectionManager {
                 val stackTraceElements = Thread.currentThread().stackTrace
                 // locate the probable calling file/line in the stack trace, by filtering
                 // out our own code, and standard dalvik/java.lang stack frames
-                val caller = stackTraceElements.filter {
-                    val klass = it.className
-                    val toCheck = listOf(
-                        "CollectionManager",
-                        "dalvik",
-                        "java.lang",
-                        "CollectionHelper",
-                        "AnkiActivity"
-                    )
-                    for (text in toCheck) {
-                        if (text in klass) {
-                            return@filter false
+                val caller =
+                    stackTraceElements.filter {
+                        val klass = it.className
+                        val toCheck =
+                            listOf(
+                                "CollectionManager",
+                                "dalvik",
+                                "java.lang",
+                                "CollectionHelper",
+                                "AnkiActivity",
+                            )
+                        for (text in toCheck) {
+                            if (text in klass) {
+                                return@filter false
+                            }
                         }
-                    }
-                    true
-                }.first()
+                        true
+                    }.first()
                 Timber.w("blocked main thread for %dms:\n%s", elapsed, caller)
             }
         }
@@ -370,7 +381,10 @@ object CollectionManager {
      * other code can open the collection while the operation runs. Reopens
      * at the end, and rolls back the path change if reopening fails.
      */
-    suspend fun migrateEssentialFiles(context: Context, folders: ValidatedMigrationSourceAndDestination) {
+    suspend fun migrateEssentialFiles(
+        context: Context,
+        folders: ValidatedMigrationSourceAndDestination,
+    ) {
         withQueue {
             ensureClosedInner()
             val migrator = MigrateEssentialFiles(context, folders)

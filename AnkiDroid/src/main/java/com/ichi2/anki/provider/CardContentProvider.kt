@@ -72,9 +72,8 @@ import java.util.*
  *
  */
 class CardContentProvider : ContentProvider() {
-
     companion object {
-        /* URI types */
+        // URI types
         private const val NOTES = 1000
         private const val NOTES_ID = 1001
         private const val NOTES_ID_CARDS = 1003
@@ -122,7 +121,10 @@ class CardContentProvider : ContentProvider() {
         }
 
         init {
-            fun addUri(path: String, code: Int) = sUriMatcher.addURI(FlashCardsContract.AUTHORITY, path, code)
+            fun addUri(
+                path: String,
+                code: Int,
+            ) = sUriMatcher.addURI(FlashCardsContract.AUTHORITY, path, code)
             // Here you can see all the URIs at a glance
             addUri("notes", NOTES)
             addUri("notes_v2", NOTES_V2)
@@ -186,24 +188,31 @@ class CardContentProvider : ContentProvider() {
         return !whitelist.contains(sUriMatcher.match(uri)) || knownRogueClient()
     }
 
-    override fun query(uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?, order: String?): Cursor? {
+    override fun query(
+        uri: Uri,
+        projection: Array<String>?,
+        selection: String?,
+        selectionArgs: Array<String>?,
+        order: String?,
+    ): Cursor? {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("query", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
+        val col =
+            CollectionHelper.instance.getColUnsafe(context!!)
+                ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         Timber.d(getLogMessage("query", uri))
 
         // Find out what data the user is requesting
         return when (sUriMatcher.match(uri)) {
             NOTES_V2 -> {
-                /* Search for notes using direct SQL query */
+                // Search for notes using direct SQL query
                 val proj = sanitizeNoteProjection(projection)
                 val sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, selection, null, null, order, null)
                 col.db.query(sql, *(selectionArgs ?: arrayOf()))
             }
             NOTES -> {
-                /* Search for notes using the libanki browser syntax */
+                // Search for notes using the libanki browser syntax
                 val proj = sanitizeNoteProjection(projection)
                 val query = selection ?: ""
                 val noteIds = col.findNotes(query)
@@ -216,7 +225,7 @@ class CardContentProvider : ContentProvider() {
                 }
             }
             NOTES_ID -> {
-                /* Direct access note with specific ID*/
+                // Direct access note with specific ID
                 val noteId = uri.pathSegments[1]
                 val proj = sanitizeNoteProjection(projection)
                 val sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, "id=?", null, null, order, null)
@@ -255,7 +264,7 @@ class CardContentProvider : ContentProvider() {
                 rv
             }
             MODELS_ID_TEMPLATES -> {
-                /* Direct access model templates */
+                // Direct access model templates
                 val models = col.notetypes
                 val currentModel = models.get(getModelIdFromUri(uri, col))
                 val columns = projection ?: FlashCardsContract.CardTemplate.DEFAULT_PROJECTION
@@ -274,7 +283,7 @@ class CardContentProvider : ContentProvider() {
                 rv
             }
             MODELS_ID_TEMPLATES_ID -> {
-                /* Direct access model template with specific ID */
+                // Direct access model template with specific ID
                 val models = col.notetypes
                 val ord = uri.lastPathSegment!!.toInt()
                 val currentModel = models.get(getModelIdFromUri(uri, col))
@@ -349,13 +358,13 @@ class CardContentProvider : ContentProvider() {
                         getDeckCountsFromDueTreeNode(it),
                         rv,
                         col,
-                        columns
+                        columns,
                     )
                 }
                 rv
             }
             DECKS_ID -> {
-                /* Direct access deck */
+                // Direct access deck
                 val columns = projection ?: FlashCardsContract.Deck.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 val allDecks = col.sched.deckDueTree()
@@ -378,18 +387,25 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun getDeckCountsFromDueTreeNode(deck: DeckNode): JSONArray = JSONArray().apply {
-        put(deck.lrnCount)
-        put(deck.revCount)
-        put(deck.newCount)
-    }
+    private fun getDeckCountsFromDueTreeNode(deck: DeckNode): JSONArray =
+        JSONArray().apply {
+            put(deck.lrnCount)
+            put(deck.revCount)
+            put(deck.newCount)
+        }
 
-    override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<String>?): Int {
+    override fun update(
+        uri: Uri,
+        values: ContentValues?,
+        selection: String?,
+        selectionArgs: Array<String>?,
+    ): Int {
         if (!hasReadWritePermission() && shouldEnforceUpdateSecurity(uri)) {
             throwSecurityException("update", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
+        val col =
+            CollectionHelper.instance.getColUnsafe(context!!)
+                ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         col.log(getLogMessage("update", uri))
 
         // Find out what data the user is requesting
@@ -454,7 +470,8 @@ class CardContentProvider : ContentProvider() {
                 }
                 require(!col.decks.isDyn(did)) { "Cards cannot be moved to a filtered deck" }
                 /* now update the card
-                 */if (isDeckUpdate && did >= 0) {
+                 */
+                if (isDeckUpdate && did >= 0) {
                     Timber.d("CardContentProvider: Moving card to other deck...")
                     currentCard.did = did
                     col.updateCard(currentCard)
@@ -605,7 +622,7 @@ class CardContentProvider : ContentProvider() {
                             "Requested card with noteId %d and cardOrd %d was not found. Either the provided " +
                                 "noteId/cardOrd were wrong or the card has been deleted in the meantime.",
                             noteID,
-                            cardOrd
+                            cardOrd,
                         )
                     }
                 }
@@ -628,12 +645,17 @@ class CardContentProvider : ContentProvider() {
         return updated
     }
 
-    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
+    override fun delete(
+        uri: Uri,
+        selection: String?,
+        selectionArgs: Array<String>?,
+    ): Int {
         if (!hasReadWritePermission()) {
             throwSecurityException("delete", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
+        val col =
+            CollectionHelper.instance.getColUnsafe(context!!)
+                ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         col.log(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
             NOTES_ID -> {
@@ -659,7 +681,10 @@ class CardContentProvider : ContentProvider() {
      * @param values for notes uri, it is acceptable for values to contain null items. Such items will be skipped
      * @return number of notes added (does not include existing notes that were updated)
      */
-    override fun bulkInsert(uri: Uri, values: Array<ContentValues>): Int {
+    override fun bulkInsert(
+        uri: Uri,
+        values: Array<ContentValues>,
+    ): Int {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("bulkInsert", uri)
         }
@@ -685,12 +710,16 @@ class CardContentProvider : ContentProvider() {
     /**
      * This implementation optimizes for when the notes are grouped according to model.
      */
-    private fun bulkInsertNotes(valuesArr: Array<ContentValues>?, deckId: DeckId): Int {
+    private fun bulkInsertNotes(
+        valuesArr: Array<ContentValues>?,
+        deckId: DeckId,
+    ): Int {
         if (valuesArr == null || valuesArr.isEmpty()) {
             return 0
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
+        val col =
+            CollectionHelper.instance.getColUnsafe(context!!)
+                ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         if (col.decks.isDyn(deckId)) {
             throw IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes")
         }
@@ -743,12 +772,16 @@ class CardContentProvider : ContentProvider() {
         return result
     }
 
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
+    override fun insert(
+        uri: Uri,
+        values: ContentValues?,
+    ): Uri? {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("insert", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
+        val col =
+            CollectionHelper.instance.getColUnsafe(context!!)
+                ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         col.log(getLogMessage("insert", uri))
 
         // Find out what data the user is requesting
@@ -784,7 +817,9 @@ class CardContentProvider : ContentProvider() {
                 Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, newNote.id.toString())
             }
             NOTES_ID -> throw IllegalArgumentException("Not possible to insert note with specific ID")
-            NOTES_ID_CARDS, NOTES_ID_CARDS_ORD -> throw IllegalArgumentException("Not possible to insert cards directly (only through NOTES)")
+            NOTES_ID_CARDS, NOTES_ID_CARDS_ORD -> throw IllegalArgumentException(
+                "Not possible to insert cards directly (only through NOTES)",
+            )
             MODELS -> {
                 // Get input arguments
                 val modelName = values!!.getAsString(FlashCardsContract.Model.NAME)
@@ -862,8 +897,9 @@ class CardContentProvider : ContentProvider() {
                 run {
                     val notetypes: Notetypes = col.notetypes
                     val mid: NoteTypeId = getModelIdFromUri(uri, col)
-                    val existingModel: NotetypeJson = notetypes.get(mid)
-                        ?: throw IllegalArgumentException("model missing: $mid")
+                    val existingModel: NotetypeJson =
+                        notetypes.get(mid)
+                            ?: throw IllegalArgumentException("model missing: $mid")
                     val name: String = values!!.getAsString(FlashCardsContract.CardTemplate.NAME)
                     val qfmt: String = values.getAsString(FlashCardsContract.CardTemplate.QUESTION_FORMAT)
                     val afmt: String = values.getAsString(FlashCardsContract.CardTemplate.ANSWER_FORMAT)
@@ -891,10 +927,12 @@ class CardContentProvider : ContentProvider() {
                 run {
                     val notetypes: Notetypes = col.notetypes
                     val mid: NoteTypeId = getModelIdFromUri(uri, col)
-                    val existingModel: NotetypeJson = notetypes.get(mid)
-                        ?: throw IllegalArgumentException("model missing: $mid")
-                    val name: String = values!!.getAsString(FlashCardsContract.Model.FIELD_NAME)
-                        ?: throw IllegalArgumentException("field name missing for model: $mid")
+                    val existingModel: NotetypeJson =
+                        notetypes.get(mid)
+                            ?: throw IllegalArgumentException("model missing: $mid")
+                    val name: String =
+                        values!!.getAsString(FlashCardsContract.Model.FIELD_NAME)
+                            ?: throw IllegalArgumentException("field name missing for model: $mid")
                     val field: JSONObject = notetypes.newField(name)
                     try {
                         notetypes.addField(existingModel, field)
@@ -950,7 +988,10 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun insertMediaFile(values: ContentValues?, col: Collection): Uri? {
+    private fun insertMediaFile(
+        values: ContentValues?,
+        col: Collection,
+    ): Uri? {
         // Insert media file using libanki.Media.addFile and return Uri for the inserted file.
         val fileUri = Uri.parse(values!!.getAsString(FlashCardsContract.AnkiMedia.FILE_URI))
         val preferredName = values.getAsString(FlashCardsContract.AnkiMedia.PREFERRED_NAME)
@@ -973,11 +1014,14 @@ class CardContentProvider : ContentProvider() {
                 return null
             }
             try {
-                tempFile = File.createTempFile(
-                    preferredName + "_", // the beginning of the filename.
-                    ".$fileMimeType", // this is the extension, if null, '.tmp' is used, need to get the extension from MIME type?
-                    tempMediaDir
-                )
+                tempFile =
+                    File.createTempFile(
+                        // the beginning of the filename.
+                        preferredName + "_",
+                        // this is the extension, if null, '.tmp' is used, need to get the extension from MIME type?
+                        ".$fileMimeType",
+                        tempMediaDir,
+                    )
                 tempFile.deleteOnExit()
             } catch (e: Exception) {
                 Timber.w(e, "Could not create temporary media file. ")
@@ -1000,7 +1044,12 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addModelToCursor(modelId: NoteTypeId, notetypes: Notetypes, rv: MatrixCursor, columns: Array<String>) {
+    private fun addModelToCursor(
+        modelId: NoteTypeId,
+        notetypes: Notetypes,
+        rv: MatrixCursor,
+        columns: Array<String>,
+    ) {
         val jsonObject = notetypes.get(modelId)
         val rb = rv.newRow()
         try {
@@ -1037,12 +1086,18 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addCardToCursor(currentCard: Card, rv: MatrixCursor, @Suppress("UNUSED_PARAMETER") col: Collection, columns: Array<String>) {
-        val cardName: String = try {
-            currentCard.template().getString("name")
-        } catch (je: JSONException) {
-            throw IllegalArgumentException("Card is using an invalid template", je)
-        }
+    private fun addCardToCursor(
+        currentCard: Card,
+        rv: MatrixCursor,
+        @Suppress("UNUSED_PARAMETER") col: Collection,
+        columns: Array<String>,
+    ) {
+        val cardName: String =
+            try {
+                currentCard.template().getString("name")
+            } catch (je: JSONException) {
+                throw IllegalArgumentException("Card is using an invalid template", je)
+            }
         val question = currentCard.renderOutput().questionWithFixedSoundTags()
         val answer = currentCard.renderOutput().answerWithFixedSoundTags()
         val rb = rv.newRow()
@@ -1062,7 +1117,14 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addReviewInfoToCursor(currentCard: Card, nextReviewTimesJson: JSONArray, buttonCount: Int, rv: MatrixCursor, col: Collection, columns: Array<String>) {
+    private fun addReviewInfoToCursor(
+        currentCard: Card,
+        nextReviewTimesJson: JSONArray,
+        buttonCount: Int,
+        rv: MatrixCursor,
+        col: Collection,
+        columns: Array<String>,
+    ) {
         val rb = rv.newRow()
         for (column in columns) {
             when (column) {
@@ -1070,13 +1132,21 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.ReviewInfo.CARD_ORD -> rb.add(currentCard.ord)
                 FlashCardsContract.ReviewInfo.BUTTON_COUNT -> rb.add(buttonCount)
                 FlashCardsContract.ReviewInfo.NEXT_REVIEW_TIMES -> rb.add(nextReviewTimesJson.toString())
-                FlashCardsContract.ReviewInfo.MEDIA_FILES -> rb.add(JSONArray(col.media.filesInStr(currentCard.question() + currentCard.answer())))
+                FlashCardsContract.ReviewInfo.MEDIA_FILES ->
+                    rb.add(
+                        JSONArray(col.media.filesInStr(currentCard.question() + currentCard.answer())),
+                    )
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }
     }
 
-    private fun answerCard(col: Collection, cardToAnswer: Card?, @BUTTON_TYPE ease: Int, timeTaken: Long) {
+    private fun answerCard(
+        col: Collection,
+        cardToAnswer: Card?,
+        @BUTTON_TYPE ease: Int,
+        timeTaken: Long,
+    ) {
         try {
             if (cardToAnswer != null) {
                 if (timeTaken != -1L) {
@@ -1090,7 +1160,11 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun buryOrSuspendCard(col: Collection, card: Card?, bury: Boolean) {
+    private fun buryOrSuspendCard(
+        col: Collection,
+        card: Card?,
+        bury: Boolean,
+    ) {
         try {
             if (card != null) {
                 if (bury) {
@@ -1107,7 +1181,14 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addTemplateToCursor(tmpl: JSONObject, notetype: NotetypeJson?, id: Int, notetypes: Notetypes, rv: MatrixCursor, columns: Array<String>) {
+    private fun addTemplateToCursor(
+        tmpl: JSONObject,
+        notetype: NotetypeJson?,
+        id: Int,
+        notetypes: Notetypes,
+        rv: MatrixCursor,
+        columns: Array<String>,
+    ) {
         try {
             val rb = rv.newRow()
             for (column in columns) {
@@ -1122,7 +1203,7 @@ class CardContentProvider : ContentProvider() {
                     FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT -> rb.add(tmpl.getString("bafmt"))
                     FlashCardsContract.CardTemplate.CARD_COUNT -> rb.add(notetypes.tmplUseCount(notetype!!, tmpl.getInt("ord")))
                     else -> throw UnsupportedOperationException(
-                        "Support for column \"$column\" is not implemented"
+                        "Support for column \"$column\" is not implemented",
                     )
                 }
             }
@@ -1132,7 +1213,14 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addDeckToCursor(id: Long, name: String, deckCounts: JSONArray, rv: MatrixCursor, col: Collection, columns: Array<String>) {
+    private fun addDeckToCursor(
+        id: Long,
+        name: String,
+        deckCounts: JSONArray,
+        rv: MatrixCursor,
+        col: Collection,
+        columns: Array<String>,
+    ) {
         val rb = rv.newRow()
         for (column in columns) {
             when (column) {
@@ -1152,7 +1240,10 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun selectDeckWithCheck(col: Collection, did: DeckId): Boolean {
+    private fun selectDeckWithCheck(
+        col: Collection,
+        did: DeckId,
+    ): Boolean {
         return if (col.decks.get(did) != null) {
             col.decks.select(did)
             true
@@ -1160,19 +1251,26 @@ class CardContentProvider : ContentProvider() {
             Timber.e(
                 "Requested deck with id %d was not found in deck list. Either the deckID provided was wrong" +
                     "or the deck has been deleted in the meantime.",
-                did
+                did,
             )
             false
         }
     }
 
-    private fun getCardFromUri(uri: Uri, col: Collection): Card {
+    private fun getCardFromUri(
+        uri: Uri,
+        col: Collection,
+    ): Card {
         val noteId = uri.pathSegments[1].toLong()
         val ord = uri.pathSegments[3].toInt()
         return getCard(noteId, ord, col)
     }
 
-    private fun getCard(noteId: NoteId, ord: Int, col: Collection): Card {
+    private fun getCard(
+        noteId: NoteId,
+        ord: Int,
+        col: Collection,
+    ): Card {
         val currentNote = col.getNote(noteId)
         var currentCard: Card? = null
         for (card in currentNote.cards()) {
@@ -1186,39 +1284,55 @@ class CardContentProvider : ContentProvider() {
         return currentCard
     }
 
-    private fun getNoteFromUri(uri: Uri, col: Collection): Note {
+    private fun getNoteFromUri(
+        uri: Uri,
+        col: Collection,
+    ): Note {
         val noteId = uri.pathSegments[1].toLong()
         return col.getNote(noteId)
     }
 
-    private fun getModelIdFromUri(uri: Uri, col: Collection): Long {
+    private fun getModelIdFromUri(
+        uri: Uri,
+        col: Collection,
+    ): Long {
         val modelIdSegment = uri.pathSegments[1]
-        val id: Long = if (modelIdSegment == FlashCardsContract.Model.CURRENT_MODEL_ID) {
-            col.notetypes.current().optLong("id", -1)
-        } else {
-            try {
-                uri.pathSegments[1].toLong()
-            } catch (e: NumberFormatException) {
-                throw IllegalArgumentException("Model ID must be either numeric or the String CURRENT_MODEL_ID", e)
+        val id: Long =
+            if (modelIdSegment == FlashCardsContract.Model.CURRENT_MODEL_ID) {
+                col.notetypes.current().optLong("id", -1)
+            } else {
+                try {
+                    uri.pathSegments[1].toLong()
+                } catch (e: NumberFormatException) {
+                    throw IllegalArgumentException("Model ID must be either numeric or the String CURRENT_MODEL_ID", e)
+                }
             }
-        }
         return id
     }
 
     @Throws(JSONException::class)
-    private fun getTemplateFromUri(uri: Uri, col: Collection): JSONObject {
+    private fun getTemplateFromUri(
+        uri: Uri,
+        col: Collection,
+    ): JSONObject {
         val model: JSONObject? = col.notetypes.get(getModelIdFromUri(uri, col))
         val ord = uri.lastPathSegment!!.toInt()
         return model!!.getJSONArray("tmpls").getJSONObject(ord)
     }
 
-    private fun throwSecurityException(methodName: String, uri: Uri) {
+    private fun throwSecurityException(
+        methodName: String,
+        uri: Uri,
+    ) {
         val msg = "Permission not granted for: ${getLogMessage(methodName, uri)}"
         Timber.e("%s", msg)
         throw SecurityException(msg)
     }
 
-    private fun getLogMessage(methodName: String, uri: Uri?): String {
+    private fun getLogMessage(
+        methodName: String,
+        uri: Uri?,
+    ): String {
         val format = "%s.%s %s (%s)"
         val path = uri?.path
         return String.format(format, javaClass.simpleName, methodName, path, callingPackage)
@@ -1239,9 +1353,7 @@ class CardContentProvider : ContentProvider() {
 }
 
 /** replaces [anki:play...] with [sound:] */
-private fun TemplateRenderOutput.questionWithFixedSoundTags() =
-    replaceWithSoundTags(questionText, this)
+private fun TemplateRenderOutput.questionWithFixedSoundTags() = replaceWithSoundTags(questionText, this)
 
 /** replaces [anki:play...] with [sound:] */
-private fun TemplateRenderOutput.answerWithFixedSoundTags() =
-    replaceWithSoundTags(answerText, this)
+private fun TemplateRenderOutput.answerWithFixedSoundTags() = replaceWithSoundTags(answerText, this)

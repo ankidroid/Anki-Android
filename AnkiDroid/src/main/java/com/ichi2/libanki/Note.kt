@@ -123,8 +123,8 @@ class Note : Cloneable {
         return col.getCard(
             col.db.queryLongScalar(
                 "SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1",
-                this.id
-            )
+                this.id,
+            ),
         )
     }
 
@@ -144,9 +144,10 @@ class Note : Cloneable {
     fun items(): Array<Array<String>> {
         // TODO: Revisit this method. The field order returned differs from Anki.
         // The items here are only used in the note editor, so it's a low priority.
-        val result = Array(
-            mFMap!!.size
-        ) { emptyStringArray(2) }
+        val result =
+            Array(
+                mFMap!!.size,
+            ) { emptyStringArray(2) }
         for (fname in mFMap!!.keys) {
             val i = mFMap!![fname]!!.first
             result[i][0] = fname
@@ -156,13 +157,14 @@ class Note : Cloneable {
     }
 
     private fun fieldOrd(key: String): Int {
-        val fieldPair = mFMap!![key]
-            ?: throw IllegalArgumentException(
-                String.format(
-                    "No field named '%s' found",
-                    key
+        val fieldPair =
+            mFMap!![key]
+                ?: throw IllegalArgumentException(
+                    String.format(
+                        "No field named '%s' found",
+                        key,
+                    ),
                 )
-            )
         return fieldPair.first
     }
 
@@ -170,7 +172,10 @@ class Note : Cloneable {
         return fields[fieldOrd(key)]
     }
 
-    fun setItem(key: String, value: String) {
+    fun setItem(
+        key: String,
+        value: String,
+    ) {
         fields[fieldOrd(key)] = value
     }
 
@@ -195,9 +200,10 @@ class Note : Cloneable {
     }
 
     fun delTag(tag: String?) {
-        val rem: MutableList<String> = ArrayList(
-            tags.size
-        )
+        val rem: MutableList<String> =
+            ArrayList(
+                tags.size,
+            )
         for (t in tags) {
             if (t.equals(tag, ignoreCase = true)) {
                 rem.add(t)
@@ -224,7 +230,9 @@ class Note : Cloneable {
      * ***********************************************************
      */
     enum class DupeOrEmpty {
-        CORRECT, EMPTY, DUPE
+        CORRECT,
+        EMPTY,
+        DUPE,
     }
 
     /**
@@ -235,22 +243,24 @@ class Note : Cloneable {
         if (fields[0].trim { it <= ' ' }.isEmpty()) {
             return DupeOrEmpty.EMPTY
         }
-        val csumAndStrippedFieldField = Utils.sfieldAndCsum(
-            fields,
-            0
-        )
+        val csumAndStrippedFieldField =
+            Utils.sfieldAndCsum(
+                fields,
+                0,
+            )
         val csum = csumAndStrippedFieldField.second
         // find any matching csums and compare
         val strippedFirstField = csumAndStrippedFieldField.first
-        val fields = col.db.queryStringList(
-            "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
-            csum,
-            this.id,
-            mid
-        )
+        val fields =
+            col.db.queryStringList(
+                "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
+                csum,
+                this.id,
+                mid,
+            )
         for (flds in fields) {
             if (Utils.stripHTMLMedia(
-                    Utils.splitFields(flds)[0]
+                    Utils.splitFields(flds)[0],
                 ) == strippedFirstField
             ) {
                 return DupeOrEmpty.DUPE
@@ -262,7 +272,10 @@ class Note : Cloneable {
     val sFld: String
         get() = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
-    fun setField(index: Int, value: String) {
+    fun setField(
+        index: Int,
+        value: String,
+    ) {
         fields[index] = value
     }
 

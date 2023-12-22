@@ -30,7 +30,6 @@ import java.io.InputStream
 import java.util.*
 
 object FileUtil {
-
     /**
      * Determine available storage space
      *
@@ -42,7 +41,10 @@ object FileUtil {
     }
 
     /** Gets the free disk space given a file  */
-    fun getFreeDiskSpace(file: File, defaultValue: Long): Long {
+    fun getFreeDiskSpace(
+        file: File,
+        defaultValue: Long,
+    ): Long {
         return try {
             StatFs(file.parentFile?.path).availableBytes
         } catch (e: IllegalArgumentException) {
@@ -65,14 +67,19 @@ object FileUtil {
      * @throws IOException
      */
     @Throws(IOException::class)
-    fun internalizeUri(uri: Uri, internalFile: File, contentResolver: ContentResolver): File {
+    fun internalizeUri(
+        uri: Uri,
+        internalFile: File,
+        contentResolver: ContentResolver,
+    ): File {
         // If we got a real file name, do a copy from it
-        val inputStream: InputStream = try {
-            contentResolver.openInputStream(uri)!!
-        } catch (e: Exception) {
-            Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
-            throw e
-        }
+        val inputStream: InputStream =
+            try {
+                contentResolver.openInputStream(uri)!!
+            } catch (e: Exception) {
+                Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
+                throw e
+            }
         try {
             CompatHelper.compat.copyFile(inputStream, internalFile.absolutePath)
         } catch (e: Exception) {
@@ -134,7 +141,7 @@ object FileUtil {
         /**
          * Number of files contained in `d` directly or indirectly.
          */
-        val numberOfFiles: Int
+        val numberOfFiles: Int,
     ) {
         companion object {
             /**
@@ -199,13 +206,14 @@ object FileUtil {
      * Returns a sequence containing the provided file, and its parents
      * up to the root of the filesystem.
      */
-    fun File.getParentsAndSelfRecursive() = sequence {
-        var currentPath: File? = this@getParentsAndSelfRecursive.canonicalFile
-        while (currentPath != null) {
-            yield(currentPath)
-            currentPath = currentPath.parentFile?.canonicalFile
+    fun File.getParentsAndSelfRecursive() =
+        sequence {
+            var currentPath: File? = this@getParentsAndSelfRecursive.canonicalFile
+            while (currentPath != null) {
+                yield(currentPath)
+                currentPath = currentPath.parentFile?.canonicalFile
+            }
         }
-    }
 
     fun File.isDescendantOf(ancestor: File) = this.getParentsAndSelfRecursive().drop(1).contains(ancestor)
 
@@ -213,7 +221,7 @@ object FileUtil {
         EQUAL,
         STRICT_PREFIX,
         STRICT_SUFFIX,
-        NOT_PREFIX
+        NOT_PREFIX,
     }
 
     /**
@@ -221,7 +229,10 @@ object FileUtil {
      * @throws FileNotFoundException if a file is not found
      * @throws IOException If an I/O error occurs
      */
-    fun isPrefix(potentialPrefixFile: File, fullFile: File): FilePrefix {
+    fun isPrefix(
+        potentialPrefixFile: File,
+        fullFile: File,
+    ): FilePrefix {
         var potentialPrefixBuffer: FileInputStream? = null
         var fullFileBuffer: FileInputStream? = null
         try {

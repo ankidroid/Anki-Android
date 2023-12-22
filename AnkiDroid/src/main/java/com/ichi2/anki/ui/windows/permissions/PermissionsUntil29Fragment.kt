@@ -33,14 +33,15 @@ import com.ichi2.utils.hasAnyOfPermissionsBeenDenied
  *   which isn't deleted when the app is uninstalled
  */
 class PermissionsUntil29Fragment : PermissionsFragment() {
-    private val storageLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) {}
+    private val storageLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions(),
+        ) {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val view = inflater.inflate(R.layout.permissions_until_29, container, false)
 

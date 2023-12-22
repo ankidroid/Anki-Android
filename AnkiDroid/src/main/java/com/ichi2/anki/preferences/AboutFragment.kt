@@ -46,13 +46,14 @@ class AboutFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val layoutView = inflater.inflate(R.layout.about_layout, container, false)
 
         // Version date
-        val apkBuildDate = SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "d MMM yyyy"))
-            .format(Date(BuildConfig.BUILD_TIME))
+        val apkBuildDate =
+            SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "d MMM yyyy"))
+                .format(Date(BuildConfig.BUILD_TIME))
         layoutView.findViewById<TextView>(R.id.about_build_date).text = apkBuildDate
 
         // Version text
@@ -98,9 +99,10 @@ class AboutFragment : Fragment() {
 
         // Open changelog button
         layoutView.findViewById<Button>(R.id.about_open_changelog).setOnClickListener {
-            val openChangelogIntent = Intent(requireContext(), Info::class.java).apply {
-                putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
-            }
+            val openChangelogIntent =
+                Intent(requireContext(), Info::class.java).apply {
+                    putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
+                }
             startActivity(openChangelogIntent)
         }
 
@@ -125,12 +127,12 @@ class AboutFragment : Fragment() {
         if (requireContext().copyToClipboard(debugInfo)) {
             showSnackbar(
                 R.string.about_ankidroid_successfully_copied_debug_info,
-                Snackbar.LENGTH_SHORT
+                Snackbar.LENGTH_SHORT,
             )
         } else {
             showSnackbar(
                 R.string.about_ankidroid_error_copy_debug_info,
-                Snackbar.LENGTH_SHORT
+                Snackbar.LENGTH_SHORT,
             )
         }
     }

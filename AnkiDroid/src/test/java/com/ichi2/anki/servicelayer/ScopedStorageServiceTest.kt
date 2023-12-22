@@ -45,8 +45,8 @@ class ScopedStorageServiceTest {
             equalTo(
                 "Expected either all or no migration directories set. " +
                     "'migrationSourcePath': 'sample_source_path'; " +
-                    "'migrationDestinationPath': ''"
-            )
+                    "'migrationDestinationPath': ''",
+            ),
         )
     }
 
@@ -60,8 +60,8 @@ class ScopedStorageServiceTest {
             equalTo(
                 "Expected either all or no migration directories set. " +
                     "'migrationSourcePath': ''; " +
-                    "'migrationDestinationPath': 'sample_dest_path'"
-            )
+                    "'migrationDestinationPath': 'sample_dest_path'",
+            ),
         )
     }
 
@@ -72,7 +72,10 @@ class ScopedStorageServiceTest {
         assertThat("migration is in progress if both preferences set", mediaMigrationIsInProgress(preferences), equalTo(true))
     }
 
-    private fun getScopedStorageMigrationPreferences(setSource: Boolean, setDestination: Boolean): SharedPreferences {
+    private fun getScopedStorageMigrationPreferences(
+        setSource: Boolean,
+        setDestination: Boolean,
+    ): SharedPreferences {
         return mock {
             on { getString(PREF_MIGRATION_SOURCE, "") } doReturn if (setSource) "sample_source_path" else ""
             on { getString(PREF_MIGRATION_DESTINATION, "") } doReturn if (setDestination) "sample_dest_path" else ""

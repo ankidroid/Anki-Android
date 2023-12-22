@@ -22,22 +22,23 @@ import org.junit.Test
 
 class HardcodedPreferenceKeyTest {
     @Language("XML")
-    private val invalidXmlFile = "" +
-        "<PreferenceScreen xmlns:android=\"http://schemas.android.com/apk/res/android\" " +
-        "    android:title=\"@string/pref_cat_advanced\"                                " +
-        "    android:summary=\"@string/pref_cat_advanced_summ\"                         " +
-        "    android:key=\"pref_screen_advanced\">                                      " +
-        "        <EditTextPreference                                                    " +
-        "            android:defaultValue=\"/sdcard/AnkiDroid\"                         " +
-        "            android:key=\"deckPath\"                                           " +
-        "            android:summary=\"@string/preference_summary_literal\"             " +
-        "            android:title=\"@string/preference_literal\" />                    " +
-        "        <com.ichi2.ui.ConfirmationPreference                                   " +
-        "            android:key=\"force_full_sync\"                                    " +
-        "            android:dependency=\"deckPath\"                                    " +
-        "            android:title=\"@string/force_full_sync_title\"                    " +
-        "            android:summary=\"@string/force_full_sync_summary\" />             " +
-        "</PreferenceScreen>"
+    private val invalidXmlFile =
+        "" +
+            "<PreferenceScreen xmlns:android=\"http://schemas.android.com/apk/res/android\" " +
+            "    android:title=\"@string/pref_cat_advanced\"                                " +
+            "    android:summary=\"@string/pref_cat_advanced_summ\"                         " +
+            "    android:key=\"pref_screen_advanced\">                                      " +
+            "        <EditTextPreference                                                    " +
+            "            android:defaultValue=\"/sdcard/AnkiDroid\"                         " +
+            "            android:key=\"deckPath\"                                           " +
+            "            android:summary=\"@string/preference_summary_literal\"             " +
+            "            android:title=\"@string/preference_literal\" />                    " +
+            "        <com.ichi2.ui.ConfirmationPreference                                   " +
+            "            android:key=\"force_full_sync\"                                    " +
+            "            android:dependency=\"deckPath\"                                    " +
+            "            android:title=\"@string/force_full_sync_title\"                    " +
+            "            android:summary=\"@string/force_full_sync_summary\" />             " +
+            "</PreferenceScreen>"
 
     @Language("XML")
     private val validXmlFile = """

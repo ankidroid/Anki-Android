@@ -108,7 +108,10 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             this,
             IMAGE_MIME_TYPES,
             object : OnReceiveContentListener {
-                override fun onReceiveContent(view: View, payload: ContentInfoCompat): ContentInfoCompat? {
+                override fun onReceiveContent(
+                    view: View,
+                    payload: ContentInfoCompat,
+                ): ContentInfoCompat? {
                     val pair = payload.partition { item -> item.uri != null }
                     val uriContent = pair.first
                     val remaining = pair.second
@@ -137,13 +140,16 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
                     return remaining
                 }
-            }
+            },
         )
 
         return InputConnectionCompat.createWrapper(this, inputConnection, editorInfo)
     }
 
-    override fun onSelectionChanged(selStart: Int, selEnd: Int) {
+    override fun onSelectionChanged(
+        selStart: Int,
+        selEnd: Int,
+    ) {
         if (mSelectionChangeListener != null) {
             try {
                 mSelectionChangeListener!!.onSelectionChanged(selStart, selEnd)
@@ -174,14 +180,18 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         background = mOrigBackground
     }
 
-    fun setContent(content: String?, replaceNewLine: Boolean) {
-        val text = if (content == null) {
-            ""
-        } else if (replaceNewLine) {
-            content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
-        } else {
-            content
-        }
+    fun setContent(
+        content: String?,
+        replaceNewLine: Boolean,
+    ) {
+        val text =
+            if (content == null) {
+                ""
+            } else if (replaceNewLine) {
+                content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
+            } else {
+                content
+            }
         setText(text)
     }
 
@@ -207,7 +217,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             val start = min(selectionStart, selectionEnd)
             val end = max(selectionStart, selectionEnd)
             setText(
-                text!!.substring(0, start) + pasted + text!!.substring(end)
+                text!!.substring(0, start) + pasted + text!!.substring(end),
             )
             setSelection(start + pasted.length)
             return true
@@ -234,11 +244,12 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
     fun setCapitalize(value: Boolean) {
         val inputType = this.inputType
-        this.inputType = if (value) {
-            inputType or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-        } else {
-            inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES.inv()
-        }
+        this.inputType =
+            if (value) {
+                inputType or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+            } else {
+                inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES.inv()
+            }
     }
 
     val isCapitalized: Boolean
@@ -248,11 +259,17 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     internal class SavedState(val state: Parcelable?, val ord: Int) : BaseSavedState(state)
 
     interface TextSelectionListener {
-        fun onSelectionChanged(selStart: Int, selEnd: Int)
+        fun onSelectionChanged(
+            selStart: Int,
+            selEnd: Int,
+        )
     }
 
     fun interface ImagePasteListener {
-        fun onImagePaste(editText: EditText, uri: Uri?): Boolean
+        fun onImagePaste(
+            editText: EditText,
+            uri: Uri?,
+        ): Boolean
     }
 
     companion object {

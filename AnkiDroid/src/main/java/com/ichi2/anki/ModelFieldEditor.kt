@@ -108,6 +108,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // ----------------------------------------------------------------------------
     // UI SETUP
     // ----------------------------------------------------------------------------
+
     /**
      * Initialize the data holding properties and the UI from the model. This method expects that it
      * isn't followed by other type of work that access the data properties as it has the capability
@@ -125,22 +126,25 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         mNoteFields = mNotetype.getJSONArray("flds")
         mFieldsLabels = mNoteFields.toStringList("name")
         mFieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, mFieldsLabels)
-        mFieldsListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position: Int, _ ->
-            showDialogFragment(newInstance(mFieldsLabels[position]))
-            currentPos = position
-        }
+        mFieldsListView.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position: Int, _ ->
+                showDialogFragment(newInstance(mFieldsLabels[position]))
+                currentPos = position
+            }
     }
     // ----------------------------------------------------------------------------
     // CONTEXT MENU DIALOGUES
     // ----------------------------------------------------------------------------
+
     /**
      * Clean the input field or explain why it's rejected
      * @param fieldNameInput Editor to get the input
      * @return The value to use, or null in case of failure
      */
     private fun uniqueName(fieldNameInput: EditText): String? {
-        var input = fieldNameInput.text.toString()
-            .replace("[\\n\\r{}:\"]".toRegex(), "")
+        var input =
+            fieldNameInput.text.toString()
+                .replace("[\\n\\r{}:\"]".toRegex(), "")
         // The number of #, ^, /, space, tab, starting the input
         var offset = 0
         while (offset < input.length) {
@@ -162,12 +166,13 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     /*
-    * Creates a dialog to create a field
-    */
+     * Creates a dialog to create a field
+     */
     private fun addFieldDialog() {
-        fieldNameInput = FixedEditText(this).apply {
-            focusWithKeyboard()
-        }
+        fieldNameInput =
+            FixedEditText(this).apply {
+                focusWithKeyboard()
+            }
         fieldNameInput?.let { _fieldNameInput ->
             _fieldNameInput.isSingleLine = true
             AlertDialog.Builder(this).show {
@@ -184,14 +189,15 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         // Create dialogue to for schema change
                         val c = ConfirmationDialog()
                         c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                        val confirm = Runnable {
-                            try {
-                                addField(fieldName, false)
-                            } catch (e1: ConfirmModSchemaException) {
-                                e1.log()
-                                // This should never be thrown
+                        val confirm =
+                            Runnable {
+                                try {
+                                    addField(fieldName, false)
+                                } catch (e1: ConfirmModSchemaException) {
+                                    e1.log()
+                                    // This should never be thrown
+                                }
                             }
-                        }
                         c.setConfirm(confirm)
                         this@ModelFieldEditor.showDialogFragment(c)
                     }
@@ -207,7 +213,10 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * Adds a field with the given name
      */
     @Throws(ConfirmModSchemaException::class)
-    private fun addField(fieldName: String?, modSchemaCheck: Boolean) {
+    private fun addField(
+        fieldName: String?,
+        modSchemaCheck: Boolean,
+    ) {
         fieldName ?: return
         // Name is valid, now field is added
         if (modSchemaCheck) {
@@ -230,13 +239,14 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * Creates a dialog to delete the currently selected field
      */
     private fun deleteFieldDialog() {
-        val confirm = Runnable {
-            collection.modSchemaNoCheck()
-            deleteField()
+        val confirm =
+            Runnable {
+                collection.modSchemaNoCheck()
+                deleteField()
 
-            // This ensures that the context menu closes after the field has been deleted
-            supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        }
+                // This ensures that the context menu closes after the field has been deleted
+                supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            }
 
         if (mFieldsLabels.size < 2) {
             showThemedToast(this, resources.getString(R.string.toast_last_field), true)
@@ -263,16 +273,17 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         launchCatchingTask {
             Timber.d("doInBackGroundDeleteField")
             withProgress(message = getString(R.string.model_field_editor_changing)) {
-                val result = withCol {
-                    try {
-                        notetypes.remField(mNotetype, mNoteFields.getJSONObject(currentPos))
-                        true
-                    } catch (e: ConfirmModSchemaException) {
-                        // Should never be reached
-                        e.log()
-                        false
+                val result =
+                    withCol {
+                        try {
+                            notetypes.remField(mNotetype, mNoteFields.getJSONObject(currentPos))
+                            true
+                        } catch (e: ConfirmModSchemaException) {
+                            // Should never be reached
+                            e.log()
+                            false
+                        }
                     }
-                }
                 if (!result) {
                     closeActivity()
                 }
@@ -307,15 +318,16 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         // Handler mod schema confirmation
                         val c = ConfirmationDialog()
                         c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                        val confirm = Runnable {
-                            collection.modSchemaNoCheck()
-                            try {
-                                renameField()
-                            } catch (e1: ConfirmModSchemaException) {
-                                e1.log()
-                                // This should never be thrown
+                        val confirm =
+                            Runnable {
+                                collection.modSchemaNoCheck()
+                                try {
+                                    renameField()
+                                } catch (e1: ConfirmModSchemaException) {
+                                    e1.log()
+                                    // This should never be thrown
+                                }
                             }
-                        }
                         c.setConfirm(confirm)
                         this@ModelFieldEditor.showDialogFragment(c)
                     }
@@ -339,13 +351,14 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                 title(text = String.format(resources.getString(R.string.model_field_editor_reposition), 1, mFieldsLabels.size))
                 positiveButton(R.string.dialog_ok) {
                     val newPosition = _fieldNameInput.text.toString()
-                    val pos: Int = try {
-                        newPosition.toInt()
-                    } catch (n: NumberFormatException) {
-                        Timber.w(n)
-                        _fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
-                        return@positiveButton
-                    }
+                    val pos: Int =
+                        try {
+                            newPosition.toInt()
+                        } catch (n: NumberFormatException) {
+                            Timber.w(n)
+                            _fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
+                            return@positiveButton
+                        }
                     if (pos < 1 || pos > mFieldsLabels.size) {
                         _fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
                     } else {
@@ -359,14 +372,15 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                             // Handle mod schema confirmation
                             val c = ConfirmationDialog()
                             c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                            val confirm = Runnable {
-                                try {
-                                    collection.modSchemaNoCheck()
-                                    repositionField(pos - 1)
-                                } catch (e1: JSONException) {
-                                    throw RuntimeException(e1)
+                            val confirm =
+                                Runnable {
+                                    try {
+                                        collection.modSchemaNoCheck()
+                                        repositionField(pos - 1)
+                                    } catch (e1: JSONException) {
+                                        throw RuntimeException(e1)
+                                    }
                                 }
-                            }
                             c.setConfirm(confirm)
                             this@ModelFieldEditor.showDialogFragment(c)
                         }
@@ -380,17 +394,18 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private fun repositionField(index: Int) {
         launchCatchingTask {
             withProgress(message = getString(R.string.model_field_editor_changing)) {
-                val result = withCol {
-                    Timber.d("doInBackgroundRepositionField")
-                    try {
-                        notetypes.moveField(mNotetype, mNoteFields.getJSONObject(currentPos), index)
-                        true
-                    } catch (e: ConfirmModSchemaException) {
-                        e.log()
-                        // Should never be reached
-                        false
+                val result =
+                    withCol {
+                        Timber.d("doInBackgroundRepositionField")
+                        try {
+                            notetypes.moveField(mNotetype, mNoteFields.getJSONObject(currentPos), index)
+                            true
+                        } catch (e: ConfirmModSchemaException) {
+                            e.log()
+                            // Should never be reached
+                            false
+                        }
                     }
-                }
                 if (!result) {
                     closeActivity()
                 }
@@ -404,8 +419,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     @Throws(ConfirmModSchemaException::class)
     private fun renameField() {
-        val fieldLabel = fieldNameInput!!.text.toString()
-            .replace("[\\n\\r]".toRegex(), "")
+        val fieldLabel =
+            fieldNameInput!!.text.toString()
+                .replace("[\\n\\r]".toRegex(), "")
         val field = mNoteFields.getJSONObject(currentPos)
         collection.notetypes.renameField(mNotetype, field, fieldLabel)
         initialize()
@@ -423,16 +439,20 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             // Handler mMod schema confirmation
             val c = ConfirmationDialog()
             c.setArgs(resources.getString(R.string.full_sync_confirmation))
-            val confirm = Runnable {
-                collection.modSchemaNoCheck()
-                launchCatchingTask { changeSortField(mNotetype, currentPos) }
-            }
+            val confirm =
+                Runnable {
+                    collection.modSchemaNoCheck()
+                    launchCatchingTask { changeSortField(mNotetype, currentPos) }
+                }
             c.setConfirm(confirm)
             this@ModelFieldEditor.showDialogFragment(c)
         }
     }
 
-    private suspend fun changeSortField(notetype: NotetypeJson, idx: Int) {
+    private suspend fun changeSortField(
+        notetype: NotetypeJson,
+        idx: Int,
+    ) {
         withProgress(resources.getString(R.string.model_field_editor_changing)) {
             CollectionManager.withCol {
                 Timber.d("doInBackgroundChangeSortField")
@@ -452,13 +472,14 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         field.put("sticky", !field.getBoolean("sticky"))
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.action_add_new_model -> {
-            addFieldDialog()
-            true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            R.id.action_add_new_model -> {
+                addFieldDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        else -> super.onOptionsItemSelected(item)
-    }
 
     private fun closeActivity() {
         finish()

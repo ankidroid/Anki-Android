@@ -40,10 +40,11 @@ abstract class Test21And26 {
     companion object {
         @JvmStatic // required for Parameters
         @Parameterized.Parameters(name = "{1}")
-        fun data(): Iterable<Array<Any>> = sequence {
-            yield(arrayOf(CompatV23(), "CompatV23"))
-            yield(arrayOf(CompatV26(), "CompatV26"))
-        }.asIterable()
+        fun data(): Iterable<Array<Any>> =
+            sequence {
+                yield(arrayOf(CompatV23(), "CompatV23"))
+                yield(arrayOf(CompatV26(), "CompatV26"))
+            }.asIterable()
 
         lateinit var staticCompat: Compat
 
@@ -91,7 +92,10 @@ abstract class Test21And26 {
         fun <T> runWithPermissionDenied(test: () -> T): T = runUsingCompat(compat, test)
 
         /** Runs a provided action having [CompatHelper.compat] return the provided compat */
-        private fun <T> runUsingCompat(compatOverride: Compat, test: () -> T): T {
+        private fun <T> runUsingCompat(
+            compatOverride: Compat,
+            test: () -> T,
+        ): T {
             val originalValue = staticCompat
             staticCompat = compatOverride
             try {
@@ -106,8 +110,7 @@ abstract class Test21And26 {
          * We plan to use it to ensure that if we don't have permission to read the directory
          * the exception is not caught.
          */
-        fun assertThrowsWhenPermissionDenied(test: () -> Unit): IOException =
-            runWithPermissionDenied { assertFailsWith { test() } }
+        fun assertThrowsWhenPermissionDenied(test: () -> Unit): IOException = runWithPermissionDenied { assertFailsWith { test() } }
     }
 
     /**

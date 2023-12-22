@@ -53,7 +53,10 @@ abstract class Time {
     }
 
     /** Return a non-conflicting timestamp for table.  */
-    fun timestampID(db: DB, table: String): Long {
+    fun timestampID(
+        db: DB,
+        table: String,
+    ): Long {
         // be careful not to create multiple objects without flushing them, or they
         // may share an ID.
         var t = intTimeMS()
@@ -90,7 +93,6 @@ abstract class Time {
     }
 
     companion object {
-
         fun gregorianCalendar(timeInMS: Long): GregorianCalendar {
             val calendar = GregorianCalendar()
             calendar.timeInMillis = timeInMS

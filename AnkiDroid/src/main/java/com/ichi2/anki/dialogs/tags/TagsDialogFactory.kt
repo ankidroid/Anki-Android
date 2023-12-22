@@ -19,7 +19,10 @@ import androidx.fragment.app.Fragment
 import com.ichi2.utils.ExtendedFragmentFactory
 
 class TagsDialogFactory(val listener: TagsDialogListener) : ExtendedFragmentFactory() {
-    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+    override fun instantiate(
+        classLoader: ClassLoader,
+        className: String,
+    ): Fragment {
         val cls = loadFragmentClass(classLoader, className)
         return if (cls == TagsDialog::class.java) {
             newTagsDialog()

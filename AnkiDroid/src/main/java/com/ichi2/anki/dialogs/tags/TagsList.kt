@@ -36,7 +36,7 @@ import java.util.*
 class TagsList constructor(
     allTags: List<String>,
     checkedTags: List<String>,
-    uncheckedTags: List<String>? = null
+    uncheckedTags: List<String>? = null,
 ) : Iterable<String> {
     /**
      * A Set containing the currently selected tags
@@ -139,7 +139,10 @@ class TagsList constructor(
      * @return true if the tag changed its check status
      * false if the tag was already checked or not in the list
      */
-    fun check(tag: String, processAncestors: Boolean = true): Boolean {
+    fun check(
+        tag: String,
+        processAncestors: Boolean = true,
+    ): Boolean {
         if (!mAllTags.contains(tag)) {
             return false
         }
@@ -282,17 +285,18 @@ class TagsList constructor(
      * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     fun sort() {
-        val sortedList = mAllTags.toList().sortedWith { lhs: String?, rhs: String? ->
-            val lhsRoot = getTagRoot(lhs!!)
-            val rhsRoot = getTagRoot(rhs!!)
-            val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
-            val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
-            if (lhsChecked != rhsChecked) {
-                if (lhsChecked) -1 else 1
-            } else {
-                compareTag(lhs, rhs)
+        val sortedList =
+            mAllTags.toList().sortedWith { lhs: String?, rhs: String? ->
+                val lhsRoot = getTagRoot(lhs!!)
+                val rhsRoot = getTagRoot(rhs!!)
+                val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
+                val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
+                if (lhsChecked != rhsChecked) {
+                    if (lhsChecked) -1 else 1
+                } else {
+                    compareTag(lhs, rhs)
+                }
             }
-        }
         mAllTags.clear()
         mAllTags.addAll(sortedList)
     }

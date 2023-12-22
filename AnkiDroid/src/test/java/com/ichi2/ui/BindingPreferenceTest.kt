@@ -29,7 +29,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class BindingPreferenceTest {
-
     @Test
     fun serialization_deserialization_returns_same_result() {
         val str = getSampleBindings().toPreferenceString()
@@ -48,12 +47,13 @@ class BindingPreferenceTest {
         assertEquals(expected, getSampleBindings().toPreferenceString())
     }
 
-    private fun getSampleBindings(): List<MappableBinding> = listOf(
-        MappableBinding(Binding.unicode('a'), Reviewer(CardSide.BOTH)),
-        MappableBinding(Binding.unicode(' '), Reviewer(CardSide.ANSWER)),
-        // this one is important: ensure that "|" as a unicode char can't be used
-        MappableBinding(Binding.unicode(Binding.FORBIDDEN_UNICODE_CHAR), Reviewer(CardSide.QUESTION)),
-        MappableBinding(Binding.gesture(Gesture.LONG_TAP), Reviewer(CardSide.BOTH)),
-        MappableBinding(Binding.keyCode(12), Reviewer(CardSide.BOTH))
-    )
+    private fun getSampleBindings(): List<MappableBinding> =
+        listOf(
+            MappableBinding(Binding.unicode('a'), Reviewer(CardSide.BOTH)),
+            MappableBinding(Binding.unicode(' '), Reviewer(CardSide.ANSWER)),
+            // this one is important: ensure that "|" as a unicode char can't be used
+            MappableBinding(Binding.unicode(Binding.FORBIDDEN_UNICODE_CHAR), Reviewer(CardSide.QUESTION)),
+            MappableBinding(Binding.gesture(Gesture.LONG_TAP), Reviewer(CardSide.BOTH)),
+            MappableBinding(Binding.keyCode(12), Reviewer(CardSide.BOTH)),
+        )
 }

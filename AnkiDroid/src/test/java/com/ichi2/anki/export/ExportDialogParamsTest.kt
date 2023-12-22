@@ -31,7 +31,10 @@ class ExportDialogParamsTest {
         assertIncludeScheduling(ExportCollection, true)
     }
 
-    private fun assertIncludeScheduling(type: ExportType, expected: Boolean) {
+    private fun assertIncludeScheduling(
+        type: ExportType,
+        expected: Boolean,
+    ) {
         val includeScheduling = ExportDialogParams(message = "", exportType = type).includeScheduling
         assertThat("${type.javaClass.simpleName}: includeScheduling", includeScheduling, equalTo(expected))
     }

@@ -28,7 +28,6 @@ import java.io.File
 
 /** Tests for [MoveFileOrDirectory] */
 class MoveFileOrDirectoryTest : OperationTest {
-
     override val executionContext = MockMigrationContext()
     private val destinationDir = createTransientDirectory()
 

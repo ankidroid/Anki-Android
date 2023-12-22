@@ -58,7 +58,11 @@ class DimmedPromptBackgroundDecorator(val promptBackgroundInterface: PromptBackg
         mDimPaint.color = Color.BLACK
     }
 
-    override fun prepare(options: PromptOptions<*>, clipToBounds: Boolean, clipBounds: Rect) {
+    override fun prepare(
+        options: PromptOptions<*>,
+        clipToBounds: Boolean,
+        clipBounds: Rect,
+    ) {
         promptBackgroundInterface.prepare(options, clipToBounds, clipBounds)
         val metrics = Resources.getSystem().displayMetrics
         // Set the bounds to display as dimmed to the screen bounds.
@@ -66,7 +70,11 @@ class DimmedPromptBackgroundDecorator(val promptBackgroundInterface: PromptBackg
         // Multiplying metrics.heightPixels by 2 to fix issue where bottom area of the screen does not become dimmed.
     }
 
-    override fun update(options: PromptOptions<*>, revealModifier: Float, alphaModifier: Float) {
+    override fun update(
+        options: PromptOptions<*>,
+        revealModifier: Float,
+        alphaModifier: Float,
+    ) {
         promptBackgroundInterface.update(options, revealModifier, alphaModifier)
         // Allow for the dimmed background to fade in and out.
         mDimPaint.alpha = (150 * alphaModifier).toInt()
@@ -79,7 +87,10 @@ class DimmedPromptBackgroundDecorator(val promptBackgroundInterface: PromptBackg
         promptBackgroundInterface.draw(canvas)
     }
 
-    override fun contains(x: Float, y: Float): Boolean {
+    override fun contains(
+        x: Float,
+        y: Float,
+    ): Boolean {
         return promptBackgroundInterface.contains(x, y)
     }
 

@@ -46,34 +46,40 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
         /**
          * Whether there are any duplicate strings, including capitalization adjustments.
          */
-        val ISSUE = Issue.create(
-            "NonPositionalFormatSubstitutions",
-            "Multiple substitutions specified in non-positional format",
-            "An XML string contains ambiguous format parameters " +
-                "for example: %s %s. These should be positional (%1\$s %2\$s) to allow" +
-                "translators to select the ordering.",
-            Constants.ANKI_CROWDIN_CATEGORY,
-            Constants.ANKI_CROWDIN_PRIORITY,
-            Constants.ANKI_CROWDIN_SEVERITY,
-            IMPLEMENTATION_XML
-        )
+        val ISSUE =
+            Issue.create(
+                "NonPositionalFormatSubstitutions",
+                "Multiple substitutions specified in non-positional format",
+                "An XML string contains ambiguous format parameters " +
+                    "for example: %s %s. These should be positional (%1\$s %2\$s) to allow" +
+                    "translators to select the ordering.",
+                Constants.ANKI_CROWDIN_CATEGORY,
+                Constants.ANKI_CROWDIN_PRIORITY,
+                Constants.ANKI_CROWDIN_SEVERITY,
+                IMPLEMENTATION_XML,
+            )
     }
 
     override fun appliesTo(folderType: ResourceFolderType): Boolean = folderType == ResourceFolderType.VALUES
 
     override fun getApplicableElements() = listOf(SdkConstants.TAG_STRING, SdkConstants.TAG_PLURALS)
 
-    override fun visitElement(context: XmlContext, element: Element) {
-        val elementsToCheck = when (element.tagName) {
-            SdkConstants.TAG_PLURALS -> element.childrenSequence()
-                // skip if the item was not a plural (style, etc...)
-                .filter { it.nodeName == SdkConstants.TAG_ITEM }
-                .filter { it.nodeType == Node.ELEMENT_NODE }
-                .map { it as Element }
-                .toList()
-            SdkConstants.TAG_STRING -> listOf(element)
-            else -> throw IllegalStateException("Unsupported tag: ${element.tagName}")
-        }
+    override fun visitElement(
+        context: XmlContext,
+        element: Element,
+    ) {
+        val elementsToCheck =
+            when (element.tagName) {
+                SdkConstants.TAG_PLURALS ->
+                    element.childrenSequence()
+                        // skip if the item was not a plural (style, etc...)
+                        .filter { it.nodeName == SdkConstants.TAG_ITEM }
+                        .filter { it.nodeType == Node.ELEMENT_NODE }
+                        .map { it as Element }
+                        .toList()
+                SdkConstants.TAG_STRING -> listOf(element)
+                else -> throw IllegalStateException("Unsupported tag: ${element.tagName}")
+            }
 
         val validFormatData =
             elementsToCheck.mapNotNull { getStringFromElement(it) }
@@ -121,14 +127,20 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
         return sb.toString()
     }
 
-    private fun reportPositionalArgumentMismatch(context: XmlContext, element: Element) {
+    private fun reportPositionalArgumentMismatch(
+        context: XmlContext,
+        element: Element,
+    ) {
         val location = context.createLocationHandle(element).resolve()
 
         // For clarity, the unescaped string is: "%s to %1$s"
         context.report(ISSUE, location, "Some, but not all plurals have positional arguments. Convert \"%s\" to \"%1\$s\"")
     }
 
-    private fun reportInvalidPositionalArguments(context: XmlContext, element: Element) {
+    private fun reportInvalidPositionalArguments(
+        context: XmlContext,
+        element: Element,
+    ) {
         val location = context.createLocationHandle(element).resolve()
 
         // For clarity, the unescaped string is: "%s to %1$s"

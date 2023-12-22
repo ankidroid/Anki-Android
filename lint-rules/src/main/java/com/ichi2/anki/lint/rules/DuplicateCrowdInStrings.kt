@@ -53,14 +53,19 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
      * Map of all locale,strings in lower case, to their raw elements to ensure that there are no
      * duplicate strings.
      */
-    private val allStrings: HashMap<Pair<String, String>, MutableList<StringDeclaration>> = HashMap<Pair<String, String>, MutableList<StringDeclaration>>()
+    private val allStrings: HashMap<Pair<String, String>, MutableList<StringDeclaration>> =
+        HashMap<Pair<String, String>, MutableList<StringDeclaration>>()
+
     override fun appliesTo(folderType: ResourceFolderType): Boolean {
         return folderType == ResourceFolderType.VALUES
     }
 
     override fun getApplicableElements() = listOf(TAG_STRING)
 
-    override fun visitElement(context: XmlContext, element: Element) {
+    override fun visitElement(
+        context: XmlContext,
+        element: Element,
+    ) {
         // Only check the golden copy - not the translated sources.
         // We currently do not have the ability to do a 'per file'
         if ("values" != context.file.parentFile.name) {
@@ -82,7 +87,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
                     checkTextNode(
                         context,
                         element,
-                        StringFormatDetector.stripQuotes(child.nodeValue)
+                        StringFormatDetector.stripQuotes(child.nodeValue),
                     )
                 }
             } else {
@@ -95,12 +100,24 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
         }
     }
 
-    private fun checkTextNode(context: XmlContext, element: Element, text: String) {
+    private fun checkTextNode(
+        context: XmlContext,
+        element: Element,
+        text: String,
+    ) {
         if (VALUE_FALSE == element.getAttribute(ATTR_TRANSLATABLE)) {
             return
         }
         val locale = getLocale(context)
-        val key = if (locale != null) Pair.of(locale.full, text.lowercase(Locale.forLanguageTag(locale.tag))) else Pair.of("default", text.lowercase(Locale.US))
+        val key =
+            if (locale != null) {
+                Pair.of(
+                    locale.full,
+                    text.lowercase(Locale.forLanguageTag(locale.tag)),
+                )
+            } else {
+                Pair.of("default", text.lowercase(Locale.US))
+            }
         val handle: Location.Handle = context.createLocationHandle(element)
         handle.clientData = element
         val handleList: MutableList<StringDeclaration> = allStrings.getOrDefault(key, ArrayList<StringDeclaration>())
@@ -119,9 +136,9 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
             var caseVaries = false
             val names: MutableList<String> = ArrayList()
             if (duplicates.all { x: StringDeclaration ->
-                val el = x.location.clientData as Element
-                el.hasAttribute("comment")
-            }
+                    val el = x.location.clientData as Element
+                    el.hasAttribute("comment")
+                }
             ) {
                 // skipping as all instances have a comment
                 continue

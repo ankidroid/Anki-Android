@@ -33,63 +33,72 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         PreferenceTestUtils.getKeysFromXml(targetContext, R.xml.preferences_dev_options).toSet()
 
     /** All preference keys besides dev options */
-    private val allKeys = PreferenceTestUtils.getAllPreferenceKeys(targetContext)
-        .subtract(devOptionsKeys)
+    private val allKeys =
+        PreferenceTestUtils.getAllPreferenceKeys(targetContext)
+            .subtract(devOptionsKeys)
 
     /** Keys of preferences that shouldn't be reported */
-    private val excludedPrefs = setOf(
-        "analyticsOptIn", // Share feature usage: analytics are only reported if this is enabled :)
-        // Screens: don't have a value
-        "generalScreen",
-        "reviewingScreen",
-        "syncScreen",
-        "notificationsScreen",
-        "controlsScreen",
-        "accessibilityScreen",
-        "customSyncServerScreen",
-        "appBarButtonsScreen",
-        "pref_screen_advanced",
-        "backups_help",
-        // Categories: don't have a value
-        "appearance_preference_group",
-        "category_plugins",
-        "category_workarounds",
-        // Preferences that only click: don't have a value
-        "tts",
-        "resetLanguages",
-        "custom_buttons_link", // Opens App Bar buttons fragment
-        "custom_sync_server_link", // Opens Custom sync server fragment
-        "thirdpartyapps_link",
-        // will be reworked in the future
-        "minimumCardsDueForNotification", // Notify when
-        "widgetVibrate", // Vibrate
-        "widgetBlink", // Blink light
-        // potential personal data
-        "syncAccount",
-        "syncBaseUrl",
-        "language"
-    )
+    private val excludedPrefs =
+        setOf(
+            // Share feature usage: analytics are only reported if this is enabled :)
+            "analyticsOptIn",
+            // Screens: don't have a value
+            "generalScreen",
+            "reviewingScreen",
+            "syncScreen",
+            "notificationsScreen",
+            "controlsScreen",
+            "accessibilityScreen",
+            "customSyncServerScreen",
+            "appBarButtonsScreen",
+            "pref_screen_advanced",
+            "backups_help",
+            // Categories: don't have a value
+            "appearance_preference_group",
+            "category_plugins",
+            "category_workarounds",
+            // Preferences that only click: don't have a value
+            "tts",
+            "resetLanguages",
+            // Opens App Bar buttons fragment
+            "custom_buttons_link",
+            // Opens Custom sync server fragment
+            "custom_sync_server_link",
+            "thirdpartyapps_link",
+            // will be reworked in the future
+            // Notify when
+            "minimumCardsDueForNotification",
+            // Vibrate
+            "widgetVibrate",
+            // Blink light
+            "widgetBlink",
+            // potential personal data
+            "syncAccount",
+            "syncBaseUrl",
+            "language",
+        )
 
     @Test
     fun `The include and excluded prefs lists don't share elements`() {
         val intersection = preferencesWhoseChangesShouldBeReported.intersect(excludedPrefs)
         assertThat(
             "The include and exclude prefs list shouldn't share elements: $intersection",
-            intersection.isEmpty()
+            intersection.isEmpty(),
         )
     }
 
     @Test
     fun `All preferences are either included or excluded in the report list`() {
-        val keysNotInAList = allKeys
-            .subtract(excludedPrefs)
-            .subtract(preferencesWhoseChangesShouldBeReported)
+        val keysNotInAList =
+            allKeys
+                .subtract(excludedPrefs)
+                .subtract(preferencesWhoseChangesShouldBeReported)
 
         assertThat(
             "All preference keys must be included in either the" +
                 " `preferencesWhoseChangesShouldBeReported` or the `excludedPrefs` list" +
                 ": $keysNotInAList",
-            keysNotInAList.isEmpty()
+            keysNotInAList.isEmpty(),
         )
     }
 
@@ -100,7 +109,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             "preferencesWhoseChangesShouldBeReported should not have" +
                 " elements that aren't in the preference keys" +
                 ": $extraKeys",
-            extraKeys.isEmpty()
+            extraKeys.isEmpty(),
         )
     }
 
@@ -110,7 +119,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         assertThat(
             "excludedPrefs should not have elements that aren't in the preference keys" +
                 ": $extraKeys",
-            extraKeys.isEmpty()
+            extraKeys.isEmpty(),
         )
     }
 
@@ -122,7 +131,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         assertThat(
             "dev options keys must not be in the `preferencesWhoseChangesShouldBeReported` list" +
                 ": $devOptionsAtReportList",
-            devOptionsAtReportList.isEmpty()
+            devOptionsAtReportList.isEmpty(),
         )
     }
 
@@ -130,7 +139,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
     fun `getPreferenceReportableValue - String`() {
         assertThat(
             SettingsFragment.getPreferenceReportableValue("3"),
-            Matchers.equalTo(3)
+            Matchers.equalTo(3),
         )
         assertNull(SettingsFragment.getPreferenceReportableValue("foo"))
     }

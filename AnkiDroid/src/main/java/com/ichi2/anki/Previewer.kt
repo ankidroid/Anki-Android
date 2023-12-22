@@ -52,6 +52,7 @@ class Previewer : AbstractFlashcardViewer() {
     private var mReloadRequired = false
     private var mNoteChanged = false
     private var previewLayout: PreviewLayout? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -93,27 +94,33 @@ class Previewer : AbstractFlashcardViewer() {
     }
 
     private fun setSeekBarListener() {
-        mProgressSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    mIndex = progress
-                    updateProgress()
-                    currentCard = getColUnsafe.getCard(mCardList[mIndex])
-                    displayCardQuestion()
+        mProgressSeekBar.setOnSeekBarChangeListener(
+            object : OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar,
+                    progress: Int,
+                    fromUser: Boolean,
+                ) {
+                    if (fromUser) {
+                        mIndex = progress
+                        updateProgress()
+                        currentCard = getColUnsafe.getCard(mCardList[mIndex])
+                        displayCardQuestion()
+                    }
                 }
-            }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar) {
-                // Mandatory override, but unused
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                if (mIndex >= 0 && mIndex < mCardList.size) {
-                    currentCard = getColUnsafe.getCard(mCardList[mIndex])
-                    displayCardQuestion()
+                override fun onStartTrackingTouch(seekBar: SeekBar) {
+                    // Mandatory override, but unused
                 }
-            }
-        })
+
+                override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    if (mIndex >= 0 && mIndex < mCardList.size) {
+                        currentCard = getColUnsafe.getCard(mCardList[mIndex])
+                        displayCardQuestion()
+                    }
+                }
+            },
+        )
     }
 
     override fun onCollectionLoaded(col: Collection) {
@@ -196,15 +203,18 @@ class Previewer : AbstractFlashcardViewer() {
     }
 
     override fun hideEaseButtons() {
-        /* do nothing */
+        // do nothing
     }
 
     override fun displayAnswerBottomBar() {
-        /* do nothing */
+        // do nothing
     }
 
-    override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        /* do nothing */
+    override fun executeCommand(
+        which: ViewerCommand,
+        fromGesture: Gesture?,
+    ): Boolean {
+        // do nothing
         return false
     }
 
@@ -236,13 +246,14 @@ class Previewer : AbstractFlashcardViewer() {
         updateProgress()
     }
 
-    private val mToggleAnswerHandler = View.OnClickListener {
-        if (mShowingAnswer) {
-            displayCardQuestion()
-        } else {
-            displayCardAnswer()
+    private val mToggleAnswerHandler =
+        View.OnClickListener {
+            if (mShowingAnswer) {
+                displayCardQuestion()
+            } else {
+                displayCardAnswer()
+            }
         }
-    }
 
     private fun updateButtonsState() {
         previewLayout!!.setShowingAnswer(mShowingAnswer)
@@ -271,7 +282,7 @@ class Previewer : AbstractFlashcardViewer() {
             Intent().apply {
                 putExtra("reloadRequired", mReloadRequired)
                 putExtra("noteChanged", mNoteChanged)
-            }
+            },
         )
     }
 

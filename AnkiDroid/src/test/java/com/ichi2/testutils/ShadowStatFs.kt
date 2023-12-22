@@ -24,7 +24,6 @@ import org.robolectric.shadows.ShadowStatFs as RobolectricStats
  * Workaround to fix [org.robolectric.shadows.ShadowStatFs] failing on macOS
  */
 object ShadowStatFs {
-
     /**
      * Register stats for a path, which will be used when a matching [android.os.StatFs] instance is
      * created.
@@ -36,7 +35,12 @@ object ShadowStatFs {
      *
      * @see [markAsNonEmpty]
      */
-    fun registerStats(path: File, blockCount: Int, freeBlocks: Int, availableBlocks: Int) {
+    fun registerStats(
+        path: File,
+        blockCount: Int,
+        freeBlocks: Int,
+        availableBlocks: Int,
+    ) {
         RobolectricStats.registerStats(path, blockCount, freeBlocks, availableBlocks)
         // call canonicalFile so this works on macOS
         RobolectricStats.registerStats(path.canonicalFile, blockCount, freeBlocks, availableBlocks)

@@ -33,21 +33,25 @@ object CollectionLoader {
         fun execute(col: Collection?)
     }
 
-    fun load(lifecycleOwner: LifecycleOwner, callback: Callback) {
+    fun load(
+        lifecycleOwner: LifecycleOwner,
+        callback: Callback,
+    ) {
         lifecycleOwner.lifecycleScope.launch {
-            val col = withContext(Dispatchers.IO) {
-                // load collection
-                try {
-                    Timber.d("CollectionLoader accessing collection")
-                    val col = CollectionHelper.instance.getColUnsafe(AnkiDroidApp.instance.applicationContext)
-                    Timber.i("CollectionLoader obtained collection")
-                    col
-                } catch (e: RuntimeException) {
-                    Timber.e(e, "loadInBackground - RuntimeException on opening collection")
-                    CrashReportService.sendExceptionReport(e, "CollectionLoader.load")
-                    null
+            val col =
+                withContext(Dispatchers.IO) {
+                    // load collection
+                    try {
+                        Timber.d("CollectionLoader accessing collection")
+                        val col = CollectionHelper.instance.getColUnsafe(AnkiDroidApp.instance.applicationContext)
+                        Timber.i("CollectionLoader obtained collection")
+                        col
+                    } catch (e: RuntimeException) {
+                        Timber.e(e, "loadInBackground - RuntimeException on opening collection")
+                        CrashReportService.sendExceptionReport(e, "CollectionLoader.load")
+                        null
+                    }
                 }
-            }
             if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)) {
                 callback.execute(col)
             }

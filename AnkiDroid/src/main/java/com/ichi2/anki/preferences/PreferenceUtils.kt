@@ -41,8 +41,9 @@ fun Preference.setOnPreferenceChangeListener(onPreferenceChangeListener: (newVal
 
 /** Obtains a non-null reference to the preference defined by the key, or throws  */
 inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(key: String): T {
-    val preference = findPreference<Preference>(key)
-        ?: throw IllegalStateException("missing preference: '$key'")
+    val preference =
+        findPreference<Preference>(key)
+            ?: throw IllegalStateException("missing preference: '$key'")
     return preference as T
 }
 
@@ -53,7 +54,9 @@ inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(k
  * the preference whose key is `@string/day_theme_key`
  * The resource IDs with preferences keys can be found on `res/values/preferences.xml`
  */
-inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(@StringRes resId: Int): T {
+inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(
+    @StringRes resId: Int,
+): T {
     val key = getString(resId)
     return requirePreference(key)
 }

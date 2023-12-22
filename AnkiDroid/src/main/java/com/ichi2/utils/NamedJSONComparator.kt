@@ -19,7 +19,10 @@ package com.ichi2.utils
 import org.json.JSONObject
 
 class NamedJSONComparator : Comparator<JSONObject> {
-    override fun compare(lhs: JSONObject, rhs: JSONObject): Int {
+    override fun compare(
+        lhs: JSONObject,
+        rhs: JSONObject,
+    ): Int {
         val o1 = lhs.getString("name")
         val o2 = rhs.getString("name")
         return o1.compareTo(o2, ignoreCase = true)

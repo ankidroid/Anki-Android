@@ -49,8 +49,8 @@ object AssetHelper {
     fun getFileExtensionFromFilePath(path: String): String {
         return MimeTypeMap.getFileExtensionFromUrl(
             Uri.fromFile(File(path)).toString().lowercase(
-                Locale.ROOT
-            )
+                Locale.ROOT,
+            ),
         )
     }
 

@@ -41,7 +41,7 @@ class DeckPickerContextMenuAndroidTest : RobolectricTest() {
             MatcherAssert.assertThat(
                 "'Delete deck' should be last item in the menu",
                 lastItem,
-                CoreMatchers.equalTo(getResourceString(R.string.contextmenu_deckpicker_delete_deck))
+                CoreMatchers.equalTo(getResourceString(R.string.contextmenu_deckpicker_delete_deck)),
             )
         }
     }
@@ -52,10 +52,14 @@ class DeckPickerContextMenuAndroidTest : RobolectricTest() {
      * @param deckId The deck ID to test
      * @param execAssertions the assertions to perform on the [MaterialDialog] under test
      */
-    private fun testDialog(@Suppress("SameParameterValue") deckId: DeckId, execAssertions: (MaterialDialog) -> Unit) {
-        val args = DeckPickerContextMenu(col)
-            .withArguments(deckId)
-            .arguments
+    private fun testDialog(
+        @Suppress("SameParameterValue") deckId: DeckId,
+        execAssertions: (MaterialDialog) -> Unit,
+    ) {
+        val args =
+            DeckPickerContextMenu(col)
+                .withArguments(deckId)
+                .arguments
 
         val factory = DeckPickerContextMenu.Factory { col }
         FragmentScenario.launch(DeckPickerContextMenu::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)

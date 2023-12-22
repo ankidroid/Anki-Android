@@ -52,8 +52,14 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
         notYetHandled(CropImageActivity::class.java.simpleName, "cannot implemented - activity from canhub.cropper")
         notYetHandled(IntentHandler::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(Preferences::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
-        notYetHandled(FilteredDeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
-        notYetHandled(SingleFragmentActivity::class.java.simpleName, "Implemented, but the test fails because the activity throws if a specific intent extra isn't set")
+        notYetHandled(
+            FilteredDeckOptions::class.java.simpleName,
+            "Not working (or implemented) - inherits from AppCompatPreferenceActivity",
+        )
+        notYetHandled(
+            SingleFragmentActivity::class.java.simpleName,
+            "Implemented, but the test fails because the activity throws if a specific intent extra isn't set",
+        )
     }
 
     /**
@@ -71,20 +77,21 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
     @Test
     fun activityHandlesRestoreBackup() {
         AnkiDroidApp.simulateRestoreFromBackup()
-        val controller: ActivityController<out Activity?> = try {
-            mLauncher!!.build(targetContext).create()
-        } catch (npe: Exception) {
-            val stackTrace = getFullStackTrace(npe)
-            Assert.fail(
-                """If you ran this test and it failed, please check to make sure that any new onCreate methods
+        val controller: ActivityController<out Activity?> =
+            try {
+                mLauncher!!.build(targetContext).create()
+            } catch (npe: Exception) {
+                val stackTrace = getFullStackTrace(npe)
+                Assert.fail(
+                    """If you ran this test and it failed, please check to make sure that any new onCreate methods
 have the following code snippet at the start:
 if (showedActivityFailedScreen(savedInstanceState)) {
   return;
 }
-$stackTrace"""
-            )
-            throw npe
-        }
+$stackTrace""",
+                )
+                throw npe
+            }
         shadowOf(getMainLooper()).idle()
 
         // Note: Robolectric differs from actual Android (process is not killed).
@@ -92,10 +99,17 @@ $stackTrace"""
         // and onDestroy() is also called in the real implementation on my phone.
         assertThat("If a backup was taking place, the activity should be finishing", controller.get()!!.isFinishing, equalTo(true))
         controller.destroy()
-        assertThat("If a backup was taking place, the activity should be destroyed successfully", controller.get()!!.isDestroyed, equalTo(true))
+        assertThat(
+            "If a backup was taking place, the activity should be destroyed successfully",
+            controller.get()!!.isDestroyed,
+            equalTo(true),
+        )
     }
 
-    private fun notYetHandled(activityName: String, reason: String) {
+    private fun notYetHandled(
+        activityName: String,
+        reason: String,
+    ) {
         if (mLauncher!!.simpleName == activityName) {
             assumeThat("$activityName $reason", true, equalTo(false))
         }
@@ -105,7 +119,10 @@ $stackTrace"""
         @ParameterizedRobolectricTestRunner.Parameters(name = "{1}")
         @JvmStatic // required for initParameters
         fun initParameters(): Collection<Array<Any>> {
-            return ActivityList.allActivitiesAndIntents().stream().map { x: ActivityLaunchParam -> arrayOf(x, x.simpleName) }.collect(Collectors.toList())
+            return ActivityList.allActivitiesAndIntents().stream().map {
+                    x: ActivityLaunchParam ->
+                arrayOf(x, x.simpleName)
+            }.collect(Collectors.toList())
         }
     }
 }

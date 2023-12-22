@@ -32,14 +32,16 @@ class AudioTimer(listener: OnTimerTickListener) {
 
     private var duration = 0L
     private var delay = 50L
+
     init {
-        runnable = object : Runnable {
-            override fun run() {
-                duration += delay
-                handler.postDelayed(this, delay)
-                listener.onTimerTick(formatTime())
+        runnable =
+            object : Runnable {
+                override fun run() {
+                    duration += delay
+                    handler.postDelayed(this, delay)
+                    listener.onTimerTick(formatTime())
+                }
             }
-        }
     }
 
     fun start() {

@@ -28,7 +28,6 @@ import kotlin.io.path.pathString
 /** Utilities which assist testing changes to files/directories */
 @Suppress("unused")
 object FileSystemUtils {
-
     /**
      * Prints a directory structure using [Timber.d]
      * @param description The prefix to print before the tree is listed
@@ -45,7 +44,10 @@ object FileSystemUtils {
      * |  |  +--test.txt
      * ```
      */
-    fun printDirectoryTree(description: String, file: File) {
+    fun printDirectoryTree(
+        description: String,
+        file: File,
+    ) {
         Timber.d("$description: $file\n${printDirectoryTree(file)}")
     }
 
@@ -63,7 +65,7 @@ object FileSystemUtils {
     private fun printDirectoryTree(
         directory: File,
         indent: Int,
-        sb: StringBuilder
+        sb: StringBuilder,
     ) {
         require(directory.isDirectory) { "directory is not a Directory" }
         sb.append(getIndentString(indent))
@@ -81,7 +83,11 @@ object FileSystemUtils {
     }
 
     /** from https://stackoverflow.com/a/13130974/ */
-    private fun printFile(file: File, indent: Int, sb: StringBuilder) {
+    private fun printFile(
+        file: File,
+        indent: Int,
+        sb: StringBuilder,
+    ) {
         sb.append(getIndentString(indent))
         sb.append("+--")
         sb.append(file.name)
@@ -113,7 +119,10 @@ fun createTransientDirectory(prefix: String? = null): File =
  * Returns a temp file with [content]. The file is deleted on exit.
  * @param extension The file extension. Do not include a "."
  */
-fun createTransientFile(content: String = "", extension: String? = null): File =
+fun createTransientFile(
+    content: String = "",
+    extension: String? = null,
+): File =
     File(kotlin.io.path.createTempFile(suffix = if (extension == null) null else ".$extension").pathString).also {
         it.deleteOnExit()
         IOUtils.writeStringToFile(it, content)

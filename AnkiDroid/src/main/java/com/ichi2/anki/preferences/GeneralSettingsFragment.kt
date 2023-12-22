@@ -93,11 +93,12 @@ class GeneralSettingsFragment : SettingsFragment() {
                 LanguageUtil.setDefaultBackendLanguages(selectedLanguage as String)
                 runBlocking { CollectionManager.discardBackend() }
 
-                val localeCode = if (selectedLanguage != LanguageUtil.SYSTEM_LANGUAGE_TAG) {
-                    selectedLanguage
-                } else {
-                    null
-                }
+                val localeCode =
+                    if (selectedLanguage != LanguageUtil.SYSTEM_LANGUAGE_TAG) {
+                        selectedLanguage
+                    } else {
+                        null
+                    }
                 val localeList = LocaleListCompat.forLanguageTags(localeCode)
                 AppCompatDelegate.setApplicationLocales(localeList)
             }

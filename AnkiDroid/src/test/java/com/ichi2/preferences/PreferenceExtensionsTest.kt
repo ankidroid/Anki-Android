@@ -35,7 +35,11 @@ class PreferenceExtensionsTest {
 
     @Mock
     private val mMockEditor: SharedPreferences.Editor? = null
-    private fun getOrSetString(key: String, supplier: Supplier<String>): String {
+
+    private fun getOrSetString(
+        key: String,
+        supplier: Supplier<String>,
+    ): String {
         return mockPreferences.getOrSetString(key, supplier)
     }
 
@@ -44,13 +48,13 @@ class PreferenceExtensionsTest {
         MockitoAnnotations.openMocks(this)
         Mockito.`when`(mockPreferences.contains(VALID_KEY)).thenReturn(true)
         Mockito.`when`(
-            mockPreferences.getString(eq(VALID_KEY), anyString())
+            mockPreferences.getString(eq(VALID_KEY), anyString()),
         ).thenReturn(
-            VALID_RESULT
+            VALID_RESULT,
         )
         Mockito.`when`(mockPreferences.edit()).thenReturn(mMockEditor)
         Mockito.`when`(
-            mMockEditor!!.putString(anyString(), anyString())
+            mMockEditor!!.putString(anyString(), anyString()),
         ).thenReturn(mMockEditor)
     }
 
@@ -87,7 +91,9 @@ class PreferenceExtensionsTest {
     }
 
     private class ExpectedException : RuntimeException()
+
     private class UnexpectedException : RuntimeException()
+
     companion object {
         private val UNUSED_SUPPLIER = Supplier<String> { throw UnexpectedException() }
         private val EXCEPTION_SUPPLIER = Supplier<String> { throw ExpectedException() }

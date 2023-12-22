@@ -52,9 +52,10 @@ class TagsDialogTest {
     fun testTagsDialogCustomStudyOptionInterface() {
         val type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS
         val allTags = listOf("1", "2", "3", "4")
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, ArrayList(), allTags)
-            .arguments
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, ArrayList(), allTags)
+                .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
@@ -76,9 +77,10 @@ class TagsDialogTest {
     fun testTagsDialogCustomStudyOptionFragmentAPI() {
         val type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS
         val allTags = listOf("1", "2", "3", "4")
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, ArrayList(), allTags)
-            .arguments
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, ArrayList(), allTags)
+                .arguments
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
@@ -92,7 +94,7 @@ class TagsDialogTest {
                 { _: String?, bundle: Bundle ->
                     returnedList.set(bundle.getStringArrayList(TagsDialogListener.ON_SELECTED_TAGS__SELECTED_TAGS))
                     returnedOption.set(bundle.getSerializableCompat<CardStateFilter>(TagsDialogListener.ON_SELECTED_TAGS__OPTION))
-                }
+                },
             )
             val body = dialog!!.getCustomView()
             val optionsGroup = body.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
@@ -112,9 +114,10 @@ class TagsDialogTest {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val allTags = listOf("a", "b", "d", "e")
         val checkedTags = listOf("a", "b")
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
-            .arguments
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, checkedTags, allTags)
+                .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
@@ -147,9 +150,10 @@ class TagsDialogTest {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val allTags = listOf("a", "b", "d", "e")
         val checkedTags = listOf("a", "b")
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
-            .arguments
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, checkedTags, allTags)
+                .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
@@ -185,9 +189,10 @@ class TagsDialogTest {
         val expectedCheckedTags = listOf("a")
         val expectedUncheckedTags = listOf("d", "e")
         val expectedIndeterminate = listOf("b")
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, uncheckedTags, expectedAllTags)
-            .arguments
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, checkedTags, uncheckedTags, expectedAllTags)
+                .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
@@ -228,21 +233,24 @@ class TagsDialogTest {
     @Test
     fun test_TagsDialog_expandPathToCheckedTagsUponOpening() {
         val type = TagsDialog.DialogType.FILTER_BY_TAG
-        val allTags = listOf(
-            "fruit::apple",
-            "fruit::pear",
-            "fruit::pear::big",
-            "sport::football",
-            "sport::tennis",
-            "book"
-        )
-        val checkedTags = listOf(
-            "fruit::pear::big",
-            "sport::tennis"
-        )
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
-            .arguments
+        val allTags =
+            listOf(
+                "fruit::apple",
+                "fruit::pear",
+                "fruit::pear::big",
+                "sport::football",
+                "sport::tennis",
+                "book",
+            )
+        val checkedTags =
+            listOf(
+                "fruit::pear::big",
+                "sport::tennis",
+            )
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, checkedTags, allTags)
+                .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
@@ -256,6 +264,7 @@ class TagsDialogTest {
             fun getItem(index: Int): TagsArrayAdapter.ViewHolder {
                 return RecyclerViewUtils.viewHolderAt(recycler, index)
             }
+
             fun updateLayout() {
                 recycler.measure(0, 0)
                 recycler.layout(0, 0, 100, 2000)
@@ -287,9 +296,10 @@ class TagsDialogTest {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val allTags = listOf("common::speak", "common::speak::daily", "common::sport::tennis", "common::sport::football")
         val checkedTags = listOf("common::speak::daily", "common::sport::tennis")
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
-            .arguments
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, checkedTags, allTags)
+                .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
@@ -341,9 +351,10 @@ class TagsDialogTest {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val allTags = listOf("common")
         val checkedTags = listOf("common")
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
-            .arguments
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, checkedTags, allTags)
+                .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
@@ -377,21 +388,24 @@ class TagsDialogTest {
     @Test
     fun test_SearchTag_showAllRelevantTags() {
         val type = TagsDialog.DialogType.FILTER_BY_TAG
-        val allTags = listOf(
-            "common::speak",
-            "common::speak::tennis",
-            "common::sport::tennis",
-            "common::sport::football",
-            "common::sport::football::small"
-        )
-        val checkedTags = listOf(
-            "common::speak::tennis",
-            "common::sport::tennis",
-            "common::sport::football::small"
-        )
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
-            .arguments
+        val allTags =
+            listOf(
+                "common::speak",
+                "common::speak::tennis",
+                "common::sport::tennis",
+                "common::sport::football",
+                "common::sport::football::small",
+            )
+        val checkedTags =
+            listOf(
+                "common::speak::tennis",
+                "common::sport::tennis",
+                "common::sport::football::small",
+            )
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, checkedTags, allTags)
+                .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
@@ -430,9 +444,10 @@ class TagsDialogTest {
         val type = TagsDialog.DialogType.FILTER_BY_TAG
         val allTags = listOf("common::speak", "common::sport::tennis")
         val checkedTags = emptyList<String>()
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
-            .arguments
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, checkedTags, allTags)
+                .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
@@ -469,17 +484,19 @@ class TagsDialogTest {
     @Test
     fun test_CheckTags_intermediateTagsShouldToggleDynamically() {
         val type = TagsDialog.DialogType.FILTER_BY_TAG
-        val allTags = listOf(
-            "common::speak",
-            "common::speak::tennis",
-            "common::sport::tennis",
-            "common::sport::football",
-            "common::sport::football::small"
-        )
+        val allTags =
+            listOf(
+                "common::speak",
+                "common::speak::tennis",
+                "common::sport::tennis",
+                "common::sport::football",
+                "common::sport::football::small",
+            )
         val checkedTags = emptyList<String>()
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
-            .arguments
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, checkedTags, allTags)
+                .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
@@ -493,6 +510,7 @@ class TagsDialogTest {
             fun getItem(index: Int): TagsArrayAdapter.ViewHolder {
                 return RecyclerViewUtils.viewHolderAt(recycler, index)
             }
+
             fun updateLayout() {
                 recycler.measure(0, 0)
                 recycler.layout(0, 0, 100, 2000)
@@ -596,9 +614,10 @@ class TagsDialogTest {
         val type = TagsDialog.DialogType.FILTER_BY_TAG
         val allTags = listOf("hello::world")
         val checkedTags = emptyList<String>()
-        val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
-            .arguments
+        val args =
+            TagsDialog(ParametersUtils.whatever())
+                .withArguments(type, checkedTags, allTags)
+                .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
@@ -612,7 +631,7 @@ class TagsDialogTest {
             Assert.assertEquals(
                 "The space should be replaced by '::' without mistakenly clear everything.",
                 "hello::",
-                editText.text.toString()
+                editText.text.toString(),
             )
 
             editText.setText("hello")

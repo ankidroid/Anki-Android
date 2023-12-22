@@ -49,7 +49,7 @@ class AxisSelector : LinearLayout {
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(
         context,
         attrs,
-        defStyle
+        defStyle,
     )
 
     private val name: TextView
@@ -118,7 +118,9 @@ class AxisSelector : LinearLayout {
     /** The name of the axis */
     var text: String
         get() = name.text.toString()
-        private set(value) { name.text = value }
+        private set(value) {
+            name.text = value
+        }
 
     var value: Float by axisDisplay::value
 

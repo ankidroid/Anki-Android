@@ -58,9 +58,10 @@ class Decks(private val col: Collection) {
     }
 
     private fun addDeckLegacy(deck: Deck): OpChangesWithId {
-        val changes = col.backend.addDeckLegacy(
-            json = BackendUtils.to_json_bytes(deck)
-        )
+        val changes =
+            col.backend.addDeckLegacy(
+                json = BackendUtils.to_json_bytes(deck),
+            )
         deck.id = changes.id
         return changes
     }
@@ -72,7 +73,7 @@ class Decks(private val col: Collection) {
     /** A sorted sequence of deck names and IDs. */
     fun allNamesAndIds(
         skipEmptyDefault: Boolean = false,
-        includeFiltered: Boolean = true
+        includeFiltered: Boolean = true,
     ): List<DeckNameId> {
         return col.backend.getDeckNames(skipEmptyDefault = skipEmptyDefault, includeFiltered = includeFiltered).map { entry ->
             DeckNameId(entry.name, entry.id)
@@ -110,7 +111,7 @@ class Decks(private val col: Collection) {
                 deck
             } else {
                 deck
-            }
+            },
         )
     }
 
@@ -135,23 +136,27 @@ class Decks(private val col: Collection) {
 
     /** Add or update an existing deck. Used for syncing and merging. */
     fun save(g: Deck) {
-        g.id = try {
-            col.backend.addOrUpdateDeckLegacy(
-                BackendUtils.toByteString(g),
-                preserveUsnAndMtime = false
-            )
-        } catch (ex: BackendDeckIsFilteredException) {
-            throw DeckRenameException.filteredAncestor(g.name, "")
-        }
+        g.id =
+            try {
+                col.backend.addOrUpdateDeckLegacy(
+                    BackendUtils.toByteString(g),
+                    preserveUsnAndMtime = false,
+                )
+            } catch (ex: BackendDeckIsFilteredException) {
+                throw DeckRenameException.filteredAncestor(g.name, "")
+            }
     }
 
     /** Rename deck prefix to NAME if not exists. Updates children. */
-    fun rename(g: Deck, newName: String) {
+    fun rename(
+        g: Deck,
+        newName: String,
+    ) {
         g.name = newName
         this.save(g)
     }
 
-    /* Deck configurations */
+    // Deck configurations
 
     /** A list of all deck config. */
     fun allConfig(): List<DeckConfig> {
@@ -171,9 +176,7 @@ class Decks(private val col: Collection) {
         g.id = col.backend.addOrUpdateDeckConfigLegacy(g.toString().toByteStringUtf8())
     }
 
-    private fun addConfig(
-        name: String
-    ): DeckConfig {
+    private fun addConfig(name: String): DeckConfig {
         val conf = DeckConfig(newDeckConfigLegacy())
         conf.name = name
         this.save(conf)
@@ -184,20 +187,22 @@ class Decks(private val col: Collection) {
         return DeckConfig(BackendUtils.from_json_bytes(col.backend.newDeckConfigLegacy()))
     }
 
-    fun setConf(grp: Deck, id: DeckConfigId) {
+    fun setConf(
+        grp: Deck,
+        id: DeckConfigId,
+    ) {
         grp.conf = id
         this.save(grp)
     }
 
-    /* Reverts to default if provided id missing */
-    fun getConf(confId: DeckConfigId): DeckConfig =
-        DeckConfig(BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(confId)))
+    // Reverts to default if provided id missing
+    fun getConf(confId: DeckConfigId): DeckConfig = DeckConfig(BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(confId)))
 
     fun confId(name: String): Long {
         return addConfig(name).id
     }
 
-    /* Deck selection */
+    // Deck selection
 
     /** The currently active dids. */
     @RustCleanup("Probably better as a queue")
@@ -256,7 +261,10 @@ class Decks(private val col: Collection) {
     fun getActualDescription(): String = current().optString("desc", "")
 
     /** @return the fully qualified name of the subdeck, or null if unavailable */
-    fun getSubdeckName(did: DeckId, subdeckName: String?): String? {
+    fun getSubdeckName(
+        did: DeckId,
+        subdeckName: String?,
+    ): String? {
         if (subdeckName.isNullOrEmpty()) {
             return null
         }
@@ -273,7 +281,7 @@ class Decks(private val col: Collection) {
      */
 
     companion object {
-        /* Parents/children */
+        // Parents/children
 
         fun path(name: String): List<String> {
             return name.split("::")
@@ -296,10 +304,10 @@ class Decks(private val col: Collection) {
         const val DECK_SEPARATOR = "::"
 
     /*
-    * ***********************************************************
-    * The methods below are not in LibAnki.
-    * ***********************************************************
-    */
+     * ***********************************************************
+     * The methods below are not in LibAnki.
+     * ***********************************************************
+     */
         fun isValidDeckName(deckName: String): Boolean = deckName.trim { it <= ' ' }.isNotEmpty()
     }
 }

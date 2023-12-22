@@ -50,7 +50,7 @@ class TagsDialog : AnalyticsDialogFragment {
         /**
          * A custom study session filtered by tags
          */
-        CUSTOM_STUDY_TAGS
+        CUSTOM_STUDY_TAGS,
     }
 
     private var mType: DialogType? = null
@@ -89,7 +89,11 @@ class TagsDialog : AnalyticsDialogFragment {
      * @param allTags all possible tags in the collection
      * @return Initialized instance of [TagsDialog]
      */
-    fun withArguments(type: DialogType, checkedTags: List<String?>, allTags: List<String?>): TagsDialog {
+    fun withArguments(
+        type: DialogType,
+        checkedTags: List<String?>,
+        allTags: List<String?>,
+    ): TagsDialog {
         return withArguments(type, checkedTags, null, allTags)
     }
 
@@ -106,7 +110,7 @@ class TagsDialog : AnalyticsDialogFragment {
         type: DialogType,
         checkedTags: List<String?>,
         uncheckedTags: List<String>?,
-        allTags: List<String?>
+        allTags: List<String?>,
     ): TagsDialog {
         val args = this.arguments ?: Bundle()
         args.putInt(DIALOG_TYPE_KEY, type.ordinal)
@@ -123,21 +127,23 @@ class TagsDialog : AnalyticsDialogFragment {
         super.onCreate(savedInstanceState)
         resizeWhenSoftInputShown(requireActivity().window)
         mType = DialogType.entries[requireArguments().getInt(DIALOG_TYPE_KEY)]
-        mTags = TagsList(
-            requireArguments().getStringArrayList(ALL_TAGS_KEY)!!,
-            requireArguments().getStringArrayList(CHECKED_TAGS_KEY)!!,
-            requireArguments().getStringArrayList(UNCHECKED_TAGS_KEY)
-        )
+        mTags =
+            TagsList(
+                requireArguments().getStringArrayList(ALL_TAGS_KEY)!!,
+                requireArguments().getStringArrayList(CHECKED_TAGS_KEY)!!,
+                requireArguments().getStringArrayList(UNCHECKED_TAGS_KEY),
+            )
         isCancelable = true
     }
 
     private val tagsDialogListener: TagsDialogListener
-        get() = mListener
-            ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)
+        get() =
+            mListener
+                ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)
 
     @NeedsTest(
         "In EDIT_TAGS dialog, long-clicking a tag should open the add tag dialog with the clicked tag" +
-            "filled as prefix properly. In other dialog types, long-clicking a tag behaves like a short click."
+            "filled as prefix properly. In other dialog types, long-clicking a tag behaves like a short click.",
     )
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         @SuppressLint("InflateParams")
@@ -165,26 +171,28 @@ class TagsDialog : AnalyticsDialogFragment {
             mDialogTitle = resources.getString(R.string.card_details_tags)
             optionsGroup.visibility = View.GONE
             mPositiveText = getString(R.string.dialog_ok)
-            mTagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { v ->
-                createAddTagDialog(v.tag as String)
-                true
-            }
+            mTagsArrayAdapter!!.tagLongClickListener =
+                View.OnLongClickListener { v ->
+                    createAddTagDialog(v.tag as String)
+                    true
+                }
         } else {
             mDialogTitle = resources.getString(R.string.studyoptions_limit_select_tags)
             mPositiveText = getString(R.string.select)
             mTagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { false }
         }
         adjustToolbar(tagsDialogView)
-        mDialog = MaterialDialog(requireActivity())
-            .positiveButton(text = mPositiveText!!) {
-                tagsDialogListener.onSelectedTags(
-                    mTags!!.copyOfCheckedTagList(),
-                    mTags!!.copyOfIndeterminateTagList(),
-                    selectedOption
-                )
-            }
-            .negativeButton(R.string.dialog_cancel)
-            .customView(view = tagsDialogView, noVerticalPadding = true)
+        mDialog =
+            MaterialDialog(requireActivity())
+                .positiveButton(text = mPositiveText!!) {
+                    tagsDialogListener.onSelectedTags(
+                        mTags!!.copyOfCheckedTagList(),
+                        mTags!!.copyOfIndeterminateTagList(),
+                        selectedOption,
+                    )
+                }
+                .negativeButton(R.string.dialog_cancel)
+                .customView(view = tagsDialogView, noVerticalPadding = true)
         val dialog: MaterialDialog? = mDialog
         resizeWhenSoftInputShown(dialog?.window!!)
         return dialog
@@ -227,18 +235,20 @@ class TagsDialog : AnalyticsDialogFragment {
         val queryET = mToolbarSearchView!!.findViewById<EditText>(com.google.android.material.R.id.search_src_text)
         queryET.filters = arrayOf(addTagFilter)
         mToolbarSearchView!!.queryHint = getString(R.string.filter_tags)
-        mToolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                mToolbarSearchView!!.clearFocus()
-                return true
-            }
+        mToolbarSearchView!!.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    mToolbarSearchView!!.clearFocus()
+                    return true
+                }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                val adapter = mTagsListRecyclerView!!.adapter as TagsArrayAdapter?
-                adapter!!.filter.filter(newText)
-                return true
-            }
-        })
+                override fun onQueryTextChange(newText: String): Boolean {
+                    val adapter = mTagsListRecyclerView!!.adapter as TagsArrayAdapter?
+                    adapter!!.filter.filter(newText)
+                    return true
+                }
+            },
+        )
         val checkAllItem = toolbar.menu.findItem(R.id.tags_dialog_action_select_all)
         checkAllItem.setOnMenuItemClickListener {
             val didChange = mTags!!.toggleAllCheckedStatuses()
@@ -269,14 +279,15 @@ class TagsDialog : AnalyticsDialogFragment {
      */
     @NeedsTest("The prefixTag should be prefilled properly")
     private fun createAddTagDialog(prefixTag: String?) {
-        val addTagDialog = MaterialDialog(requireActivity())
-            .title(text = getString(R.string.add_tag))
-            .positiveButton(R.string.dialog_ok)
-            .negativeButton(R.string.dialog_cancel)
-            .input(
-                hintRes = R.string.tag_name,
-                inputType = InputType.TYPE_CLASS_TEXT
-            ) { _: MaterialDialog?, input: CharSequence -> addTag(input.toString()) }
+        val addTagDialog =
+            MaterialDialog(requireActivity())
+                .title(text = getString(R.string.add_tag))
+                .positiveButton(R.string.dialog_ok)
+                .negativeButton(R.string.dialog_cancel)
+                .input(
+                    hintRes = R.string.tag_name,
+                    inputType = InputType.TYPE_CLASS_TEXT,
+                ) { _: MaterialDialog?, input: CharSequence -> addTag(input.toString()) }
         val inputET = requireDialogInputEditText(addTagDialog)
         inputET.filters = arrayOf(addTagFilter)
         if (!prefixTag.isNullOrEmpty()) {
@@ -336,37 +347,39 @@ class TagsDialog : AnalyticsDialogFragment {
          *   "tag:"  -- input a space --> "tag::"
          *   "tag::" -- input a space --> "tag::"
          */
-        private val addTagFilter = InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
-            if (!source.subSequence(start, end).contains(' ')) {
-                return@InputFilter null
-            }
-            var previousColonsCnt = 0
-            if (dest != null) {
-                val previousPart = dest.substring(0, destStart)
-                if (previousPart.endsWith("::")) {
-                    previousColonsCnt = 2
-                } else if (previousPart.endsWith(":")) {
-                    previousColonsCnt = 1
+        private val addTagFilter =
+            InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
+                if (!source.subSequence(start, end).contains(' ')) {
+                    return@InputFilter null
                 }
-            }
-            val sb = StringBuilder()
-            for (char in source.subSequence(start, end)) {
-                if (char == ' ') {
-                    if (previousColonsCnt == 0) {
-                        sb.append("::")
-                    } else if (previousColonsCnt == 1) {
-                        sb.append(":")
+                var previousColonsCnt = 0
+                if (dest != null) {
+                    val previousPart = dest.substring(0, destStart)
+                    if (previousPart.endsWith("::")) {
+                        previousColonsCnt = 2
+                    } else if (previousPart.endsWith(":")) {
+                        previousColonsCnt = 1
                     }
-                } else {
-                    sb.append(char)
                 }
-                previousColonsCnt = if (char == ':') {
-                    previousColonsCnt + 1
-                } else {
-                    0
+                val sb = StringBuilder()
+                for (char in source.subSequence(start, end)) {
+                    if (char == ' ') {
+                        if (previousColonsCnt == 0) {
+                            sb.append("::")
+                        } else if (previousColonsCnt == 1) {
+                            sb.append(":")
+                        }
+                    } else {
+                        sb.append(char)
+                    }
+                    previousColonsCnt =
+                        if (char == ':') {
+                            previousColonsCnt + 1
+                        } else {
+                            0
+                        }
                 }
+                sb
             }
-            sb
-        }
     }
 }

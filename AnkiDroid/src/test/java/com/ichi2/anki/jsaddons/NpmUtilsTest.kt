@@ -26,7 +26,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class NpmUtilsTest : RobolectricTest() {
-
     @Test
     fun validateNameTest() {
         // test case taken from

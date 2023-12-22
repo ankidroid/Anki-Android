@@ -30,32 +30,37 @@ import java.util.Calendar
  * of using the [Calendar] provided by the collection's getTime() method.
  */
 class DirectCalendarInstanceUsage : Detector(), SourceCodeScanner {
-
     companion object {
         @VisibleForTesting
         const val ID = "DirectCalendarInstanceUsage"
 
         @VisibleForTesting
         const val DESCRIPTION = "Use the collection's getTime() method instead of directly creating Calendar instances"
-        private const val EXPLANATION = "Manually creating Calendar instances means time cannot be controlled " +
-            "during testing. Calendar instances must be obtained through the collection's getTime() method"
+        private const val EXPLANATION =
+            "Manually creating Calendar instances means time cannot be controlled " +
+                "during testing. Calendar instances must be obtained through the collection's getTime() method"
         private val implementation = Implementation(DirectCalendarInstanceUsage::class.java, Scope.JAVA_FILE_SCOPE)
-        val ISSUE: Issue = Issue.create(
-            ID,
-            DESCRIPTION,
-            EXPLANATION,
-            Constants.ANKI_TIME_CATEGORY,
-            Constants.ANKI_TIME_PRIORITY,
-            Constants.ANKI_TIME_SEVERITY,
-            implementation
-        )
+        val ISSUE: Issue =
+            Issue.create(
+                ID,
+                DESCRIPTION,
+                EXPLANATION,
+                Constants.ANKI_TIME_CATEGORY,
+                Constants.ANKI_TIME_PRIORITY,
+                Constants.ANKI_TIME_SEVERITY,
+                implementation,
+            )
     }
 
     override fun getApplicableMethodNames(): List<String> {
         return mutableListOf("getInstance")
     }
 
-    override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
+    override fun visitMethodCall(
+        context: JavaContext,
+        node: UCallExpression,
+        method: PsiMethod,
+    ) {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
@@ -63,7 +68,7 @@ class DirectCalendarInstanceUsage : Detector(), SourceCodeScanner {
             context.report(
                 ISSUE,
                 context.getCallLocation(node, includeReceiver = true, includeArguments = true),
-                DESCRIPTION
+                DESCRIPTION,
             )
         }
     }

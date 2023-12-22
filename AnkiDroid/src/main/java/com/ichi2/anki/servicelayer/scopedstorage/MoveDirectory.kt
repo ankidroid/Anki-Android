@@ -67,5 +67,8 @@ data class MoveDirectory(val source: Directory, val destination: File) : Operati
     internal fun createDirectory(directory: File) = CompatHelper.compat.createDirectories(directory)
 
     @VisibleForTesting
-    internal fun rename(source: Directory, destination: File) = source.renameTo(destination)
+    internal fun rename(
+        source: Directory,
+        destination: File,
+    ) = source.renameTo(destination)
 }

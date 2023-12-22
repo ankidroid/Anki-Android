@@ -58,7 +58,9 @@ data class ValidatedMigrationSourceAndDestination(val unscopedSourceDirectory: D
  * If subfolder is provided, the exact folder provided is used. */
 sealed class DestFolderOverride {
     data object None : DestFolderOverride()
+
     class Root(val folder: File) : DestFolderOverride()
+
     class Subfolder(val folder: File) : DestFolderOverride()
 }
 
@@ -120,7 +122,7 @@ object ScopedStorageService {
         // used for testing
         sourceOverride: File? = null,
         destOverride: DestFolderOverride = DestFolderOverride.None,
-        checkSourceDir: Boolean = true
+        checkSourceDir: Boolean = true,
     ): ValidatedMigrationSourceAndDestination {
         // this is checked by deckpicker already, but left here for unit tests
         if (mediaMigrationIsInProgress(context)) {
@@ -143,7 +145,7 @@ object ScopedStorageService {
 
         return ValidatedMigrationSourceAndDestination(
             Directory.createInstance(sourceDirectory)!!,
-            Directory.createInstance(destinationDirectory)!!
+            Directory.createInstance(destinationDirectory)!!,
         )
     }
 
@@ -152,13 +154,19 @@ object ScopedStorageService {
         return File(path).parentFile!!
     }
 
-    private fun validateSourceDirectory(context: Context, dir: File) {
+    private fun validateSourceDirectory(
+        context: Context,
+        dir: File,
+    ) {
         if (!isLegacyStorage(dir, context)) {
             throw IllegalStateException("Source directory is already under scoped storage")
         }
     }
 
-    private fun validateDestinationDirectory(context: Context, destFolder: File) {
+    private fun validateDestinationDirectory(
+        context: Context,
+        destFolder: File,
+    ) {
         if (CompatHelper.compat.hasFiles(destFolder)) {
             throw IllegalStateException("Target directory was not empty: '$destFolder'")
         }
@@ -168,12 +176,15 @@ object ScopedStorageService {
         }
     }
 
-    private fun ensureSpaceAvailable(sourceDirectory: File, destDirectory: File) {
+    private fun ensureSpaceAvailable(
+        sourceDirectory: File,
+        destDirectory: File,
+    ) {
         // Ensure we have space.
         // This must be after .mkdirs(): determineBytesAvailable works on non-empty directories,
         MigrateEssentialFiles.UserActionRequiredException.OutOfSpaceException.throwIfInsufficient(
             available = FileUtil.determineBytesAvailable(destDirectory.absolutePath),
-            required = MigrateEssentialFiles.PRIORITY_FILES.sumOf { it.spaceRequired(sourceDirectory.path) } + SAFETY_MARGIN_BYTES
+            required = MigrateEssentialFiles.PRIORITY_FILES.sumOf { it.spaceRequired(sourceDirectory.path) } + SAFETY_MARGIN_BYTES,
         )
     }
 
@@ -199,8 +210,7 @@ object ScopedStorageService {
      * @throws IllegalStateException If either [PREF_MIGRATION_SOURCE] or [PREF_MIGRATION_DESTINATION] is set (but not both)
      * It is a logic bug if only one is set
      */
-    fun mediaMigrationIsInProgress(context: Context): Boolean =
-        mediaMigrationIsInProgress(context.sharedPrefs())
+    fun mediaMigrationIsInProgress(context: Context): Boolean = mediaMigrationIsInProgress(context.sharedPrefs())
 
     /**
      * Whether a user data scoped storage migration is taking place
@@ -222,10 +232,14 @@ object ScopedStorageService {
      * @returns the external directory which best represents the template
      */
     @VisibleForTesting
-    internal fun getBestDefaultRootDirectory(context: Context, templatePath: File): File {
+    internal fun getBestDefaultRootDirectory(
+        context: Context,
+        templatePath: File,
+    ): File {
         // List of external paths.
-        val externalPaths = CollectionHelper.getAppSpecificExternalDirectories(context)
-            .map { it.canonicalFile }
+        val externalPaths =
+            CollectionHelper.getAppSpecificExternalDirectories(context)
+                .map { it.canonicalFile }
 
         // A map that associate to each parents `p` of an external directory path an external
         // directory it is a prefix of.
@@ -258,7 +272,7 @@ object ScopedStorageService {
             .firstNotNullOfOrNull { parent ->
                 parentToSharedDirectoryPath.getOrDefault(
                     parent,
-                    null
+                    null,
                 )
             }!!
     }
@@ -284,9 +298,13 @@ object ScopedStorageService {
      * @param setCollectionPath if `false`, null is returned. This stops an infinite loop
      * if `isLegacyStorage` is called when obtaining the collection path
      */
-    fun isLegacyStorage(context: Context, setCollectionPath: Boolean): Boolean? {
-        if (!setCollectionPath && !context.sharedPrefs()
-            .contains(CollectionHelper.PREF_COLLECTION_PATH)
+    fun isLegacyStorage(
+        context: Context,
+        setCollectionPath: Boolean,
+    ): Boolean? {
+        if (!setCollectionPath &&
+            !context.sharedPrefs()
+                .contains(CollectionHelper.PREF_COLLECTION_PATH)
         ) {
             return null
         }
@@ -300,7 +318,10 @@ object ScopedStorageService {
      *   [com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp].
      *
      */
-    fun isLegacyStorage(currentDirPath: File, context: Context): Boolean {
+    fun isLegacyStorage(
+        currentDirPath: File,
+        context: Context,
+    ): Boolean {
         val internalScopedDirPath =
             CollectionHelper.getAppSpecificInternalAnkiDroidDirectory(context)
         val currentDir = currentDirPath.canonicalFile
@@ -311,7 +332,7 @@ object ScopedStorageService {
             "isLegacyStorage(): current dir: %s\nscoped external dirs: %s\nscoped internal dir: %s",
             currentDirPath,
             externalScopedDirs.joinToString(", "),
-            internalScopedDirPath
+            internalScopedDirPath,
         )
 
         // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories
@@ -407,7 +428,7 @@ object ScopedStorageService {
 
     fun userIsPromptedToDeleteCollectionOnUninstall(context: Context): Boolean {
         return File(CollectionHelper.getCollectionPath(context)).isInsideDirectoriesRemovedWithTheApp(
-            context
+            context,
         )
     }
 }

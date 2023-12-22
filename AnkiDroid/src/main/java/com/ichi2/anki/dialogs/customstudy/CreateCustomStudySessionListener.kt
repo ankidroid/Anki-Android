@@ -22,7 +22,9 @@ import timber.log.Timber
 class CreateCustomStudySessionListener(val callback: Callback) {
     interface Callback {
         fun hideProgressBar()
+
         fun onCreateCustomStudySession()
+
         fun showProgressBar()
     }
 

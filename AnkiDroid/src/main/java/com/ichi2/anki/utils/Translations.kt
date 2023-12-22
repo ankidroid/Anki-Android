@@ -1,4 +1,4 @@
-// ktlint-disable filename
+
 
 /*
  * This program is free software; you can redistribute it and/or modify it under
@@ -13,6 +13,8 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
+@file:Suppress("ktlint:standard:filename")
 
 package com.ichi2.anki.utils
 
@@ -34,7 +36,9 @@ fun interface TranslatableString {
     fun Context.toTranslatedString(): String
 
     companion object {
-        fun by(@StringRes stringId: Int) = TranslatableString { getString(stringId) }
+        fun by(
+            @StringRes stringId: Int,
+        ) = TranslatableString { getString(stringId) }
     }
 }
 

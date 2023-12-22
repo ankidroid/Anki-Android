@@ -39,7 +39,10 @@ object AppLoadedFromBackupWorkaround {
      * @return true if [AnkiDroidApp] was not initialised properly, an 'activity failed' toast was
      * displayed and the app will be killed. `false` if the app started normally
      */
-    fun Activity.showedActivityFailedScreen(savedInstanceState: Bundle?, activitySuperOnCreate: (Bundle?) -> Unit): Boolean {
+    fun Activity.showedActivityFailedScreen(
+        savedInstanceState: Bundle?,
+        activitySuperOnCreate: (Bundle?) -> Unit,
+    ): Boolean {
         if (AnkiDroidApp.isInitialized) {
             return false
         }
@@ -53,7 +56,7 @@ object AppLoadedFromBackupWorkaround {
         UIUtils.showThemedToast(
             this,
             getString(R.string.ankidroid_cannot_open_after_backup_try_again),
-            false
+            false,
         )
 
         // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.

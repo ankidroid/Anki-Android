@@ -26,7 +26,12 @@ class CardTemplate(template: String) {
     private var mPostContent: String? = null
 
     @CheckResult
-    fun render(content: String, style: String, script: String, cardClass: String): String {
+    fun render(
+        content: String,
+        style: String,
+        script: String,
+        cardClass: String,
+    ): String {
         return mPreStyle + style + mPreScript + script + mPreClass + cardClass + mPreContent + content + mPostContent
     }
 

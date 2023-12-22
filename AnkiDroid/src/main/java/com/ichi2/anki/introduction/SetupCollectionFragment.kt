@@ -61,12 +61,18 @@ import kotlinx.parcelize.Parcelize
  * if the app is uninstalled.
  */
 class SetupCollectionFragment : Fragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         return inflater.inflate(R.layout.introduction_layout, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<Button>(R.id.get_started).apply {
@@ -87,7 +93,7 @@ class SetupCollectionFragment : Fragment() {
         DeckPickerWithNewCollection,
 
         /** Syncs an existing profile from AnkiWeb */
-        SyncFromExistingAccount
+        SyncFromExistingAccount,
     }
 
     companion object {

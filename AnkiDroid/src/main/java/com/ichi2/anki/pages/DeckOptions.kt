@@ -36,14 +36,18 @@ class DeckOptions : PageFragment() {
     override var webChromeClient = PageChromeClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val deckId = arguments?.getLong(ARG_DECK_ID)
-            ?: throw Exception("missing deck ID")
+        val deckId =
+            arguments?.getLong(ARG_DECK_ID)
+                ?: throw Exception("missing deck ID")
         webViewClient = DeckOptionsWebClient(deckId)
         super.onCreate(savedInstanceState)
     }
 
     class DeckOptionsWebClient(val deckId: Long) : PageWebViewClient() {
-        override fun onPageFinished(view: WebView?, url: String?) {
+        override fun onPageFinished(
+            view: WebView?,
+            url: String?,
+        ) {
             // from upstream: https://github.com/ankitects/anki/blob/678c354fed4d98c0a8ef84fb7981ee085bd744a7/qt/aqt/deckoptions.py#L55
             view!!.evaluateJavascript("const \$deckOptions = anki.setupDeckOptions($deckId);") {
                 super.onPageFinished(view, url)
@@ -54,10 +58,14 @@ class DeckOptions : PageFragment() {
     companion object {
         const val ARG_DECK_ID = "deckId"
 
-        fun getIntent(context: Context, deckId: Long): Intent {
-            val arguments = Bundle().apply {
-                putLong(ARG_DECK_ID, deckId)
-            }
+        fun getIntent(
+            context: Context,
+            deckId: Long,
+        ): Intent {
+            val arguments =
+                Bundle().apply {
+                    putLong(ARG_DECK_ID, deckId)
+                }
             return PagesActivity.getIntent(context, DeckOptions::class, arguments)
         }
     }

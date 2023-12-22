@@ -70,7 +70,10 @@ object InitialActivity {
 
     /** @return Whether any preferences were upgraded
      */
-    fun upgradePreferences(context: Context, previousVersionCode: Long): Boolean {
+    fun upgradePreferences(
+        context: Context,
+        previousVersionCode: Long,
+    ): Boolean {
         return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode)
     }
 
@@ -103,8 +106,7 @@ object InitialActivity {
      * false if the app was launched for the second time after a successful initialisation
      * false if the app was launched after an update
      */
-    fun wasFreshInstall(preferences: SharedPreferences) =
-        "" == preferences.getString("lastVersion", "")
+    fun wasFreshInstall(preferences: SharedPreferences) = "" == preferences.getString("lastVersion", "")
 
     /** Sets the preference stating that the latest version has been applied  */
     fun setUpgradedToLatestVersion(preferences: SharedPreferences) {
@@ -122,8 +124,13 @@ object InitialActivity {
     }
 
     enum class StartupFailure {
-        SD_CARD_NOT_MOUNTED, DIRECTORY_NOT_ACCESSIBLE, FUTURE_ANKIDROID_VERSION,
-        DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED, DISK_FULL
+        SD_CARD_NOT_MOUNTED,
+        DIRECTORY_NOT_ACCESSIBLE,
+        FUTURE_ANKIDROID_VERSION,
+        DB_ERROR,
+        DATABASE_LOCKED,
+        WEBVIEW_FAILED,
+        DISK_FULL,
     }
 }
 
@@ -160,10 +167,10 @@ enum class PermissionSet(val permissions: List<String>, val permissionsFragment:
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     TIRAMISU_EXTERNAL_MANAGER(
         permissions = listOf(Permissions.MANAGE_EXTERNAL_STORAGE),
-        permissionsFragment = TiramisuPermissionsFragment::class.java
+        permissionsFragment = TiramisuPermissionsFragment::class.java,
     ),
 
-    APP_PRIVATE(emptyList(), null);
+    APP_PRIVATE(emptyList(), null),
 }
 
 /**
@@ -174,7 +181,7 @@ enum class PermissionSet(val permissions: List<String>, val permissionsFragment:
  */
 internal fun selectAnkiDroidFolder(
     canManageExternalStorage: Boolean,
-    currentFolderIsAccessibleAndLegacy: Boolean
+    currentFolderIsAccessibleAndLegacy: Boolean,
 ): AnkiDroidFolder {
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q || currentFolderIsAccessibleAndLegacy) {
         // match AnkiDroid behaviour before scoped storage - force the use of ~/AnkiDroid,
@@ -202,6 +209,6 @@ fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
 
     return selectAnkiDroidFolder(
         canManageExternalStorage = Permissions.canManageExternalStorage(context),
-        currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy
+        currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy,
     )
 }

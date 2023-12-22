@@ -25,9 +25,12 @@ import com.ichi2.utils.ExtendedFragmentFactory
 
 class ExportDialogsFactory(
     private val exportReadyDialogListener: ExportReadyDialogListener,
-    private val exportDialogListener: ExportDialogListener
+    private val exportDialogListener: ExportDialogListener,
 ) : ExtendedFragmentFactory() {
-    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+    override fun instantiate(
+        classLoader: ClassLoader,
+        className: String,
+    ): Fragment {
         val cls = loadFragmentClass(classLoader, className)
         if (cls == ExportDialog::class.java) {
             return newExportDialog()

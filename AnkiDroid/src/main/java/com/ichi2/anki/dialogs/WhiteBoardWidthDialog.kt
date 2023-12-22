@@ -30,20 +30,25 @@ import java.util.function.Consumer
 class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWidth: Int) {
     private var mWbStrokeWidthText: FixedTextView? = null
     var onStrokeWidthChanged: Consumer<Int>? = null
-    private val seekBarChangeListener: OnSeekBarChangeListener = object : OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar, value: Int, b: Boolean) {
-            wbStrokeWidth = value
-            mWbStrokeWidthText!!.text = "" + value
-        }
+    private val seekBarChangeListener: OnSeekBarChangeListener =
+        object : OnSeekBarChangeListener {
+            override fun onProgressChanged(
+                seekBar: SeekBar,
+                value: Int,
+                b: Boolean,
+            ) {
+                wbStrokeWidth = value
+                mWbStrokeWidthText!!.text = "" + value
+            }
 
-        override fun onStartTrackingTouch(seekBar: SeekBar) {
-            // intentionally blank
-        }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // intentionally blank
+            }
 
-        override fun onStopTrackingTouch(seekBar: SeekBar) {
-            // intentionally blank
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // intentionally blank
+            }
         }
-    }
 
     fun showStrokeWidthDialog() {
         val layout = LinearLayout(context)
@@ -62,8 +67,8 @@ class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWi
             seekBar,
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+            ),
         )
         AlertDialog.Builder(context).show {
             title(R.string.whiteboard_stroke_width)

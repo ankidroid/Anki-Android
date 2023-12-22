@@ -45,7 +45,10 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
     }
 
     companion object {
-        fun newInstance(dialogMessage: String?, deckId: DeckId): DeckPickerConfirmDeleteDeckDialog {
+        fun newInstance(
+            dialogMessage: String?,
+            deckId: DeckId,
+        ): DeckPickerConfirmDeleteDeckDialog {
             val f = DeckPickerConfirmDeleteDeckDialog()
             val args = Bundle()
             args.putString("dialogMessage", dialogMessage)

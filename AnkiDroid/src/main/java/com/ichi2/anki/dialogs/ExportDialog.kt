@@ -35,9 +35,26 @@ import com.ichi2.utils.contentNullable
 
 class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialogFragment() {
     interface ExportDialogListener {
-        fun exportColAsApkgOrColpkg(path: String?, includeSched: Boolean, includeMedia: Boolean)
-        fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean)
-        fun exportSelectedAsApkg(path: String?, limit: ExportLimit, includeSched: Boolean, includeMedia: Boolean)
+        fun exportColAsApkgOrColpkg(
+            path: String?,
+            includeSched: Boolean,
+            includeMedia: Boolean,
+        )
+
+        fun exportDeckAsApkg(
+            path: String?,
+            did: DeckId,
+            includeSched: Boolean,
+            includeMedia: Boolean,
+        )
+
+        fun exportSelectedAsApkg(
+            path: String?,
+            limit: ExportLimit,
+            includeSched: Boolean,
+            includeMedia: Boolean,
+        )
+
         fun dismissAllDialogFragments()
     }
 
@@ -83,13 +100,14 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
             }
             cancelable(true)
             listItemsMultiChoice(
-                items = listOf(
-                    resources.getString(R.string.export_include_schedule),
-                    resources.getString(R.string.export_include_media)
-                ),
+                items =
+                    listOf(
+                        resources.getString(R.string.export_include_schedule),
+                        resources.getString(R.string.export_include_media),
+                    ),
                 initialSelection = initialSelection.toIntArray(),
                 allowEmptySelection = true,
-                waitForPositiveButton = false
+                waitForPositiveButton = false,
             ) { _: MaterialDialog, ints: IntArray, _: List<CharSequence> ->
                 includeMedia = ints.contains(INCLUDE_MEDIA)
                 includeSched = ints.contains(INCLUDE_SCHED)
@@ -111,12 +129,13 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
  * @param message A dialog to display to the user when exporting
  */
 class ExportDialogParams(val message: String, val exportType: ExportType, includeMedia: Boolean? = null) {
-    val includeScheduling: Boolean = when (this.exportType) {
-        is ExportNotes -> false
-        is ExportCards -> false
-        is ExportDeck -> false
-        is ExportCollection -> true
-    }
+    val includeScheduling: Boolean =
+        when (this.exportType) {
+            is ExportNotes -> false
+            is ExportCards -> false
+            is ExportDeck -> false
+            is ExportCollection -> true
+        }
     val includeMedia = includeMedia ?: false
 
     fun appendToBundle(bundle: Bundle): Bundle {
@@ -156,10 +175,11 @@ class ExportDialogParams(val message: String, val exportType: ExportType, includ
             return ExportCollection
         }
 
-        fun Bundle.toExportDialogParams(): ExportDialogParams = ExportDialogParams(
-            message = getString(MESSAGE)!!,
-            exportType = this.toExportType(),
-            includeMedia = getBoolean(INCLUDE_MEDIA)
-        )
+        fun Bundle.toExportDialogParams(): ExportDialogParams =
+            ExportDialogParams(
+                message = getString(MESSAGE)!!,
+                exportType = this.toExportType(),
+                includeMedia = getBoolean(INCLUDE_MEDIA),
+            )
     }
 }

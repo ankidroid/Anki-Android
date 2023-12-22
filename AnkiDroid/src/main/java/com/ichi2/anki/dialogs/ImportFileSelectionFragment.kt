@@ -38,25 +38,24 @@ import timber.log.Timber
 @NeedsTest("Selecting COLPKG does not allow multiple files")
 @NeedsTest("Restore backup dialog does not allow multiple files")
 class ImportFileSelectionFragment : DialogFragment() {
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val entries = buildImportEntries()
         return AlertDialog.Builder(requireActivity())
             .title(R.string.menu_import)
             .setItems(
-                entries.map { requireActivity().getString(it.titleRes) }.toTypedArray()
+                entries.map { requireActivity().getString(it.titleRes) }.toTypedArray(),
             ) { _, position ->
                 val entry = entries[position]
                 UsageAnalytics.sendAnalyticsEvent(
                     UsageAnalytics.Category.LINK_CLICKED,
-                    entry.analyticsId
+                    entry.analyticsId,
                 )
                 openImportFilePicker(
                     activity = requireActivity() as AnkiActivity,
                     fileType = entry.type,
                     multiple = entry.multiple,
                     mimeType = entry.mimeType,
-                    extraMimes = entry.extraMimes
+                    extraMimes = entry.extraMimes,
                 )
             }
             .create()
@@ -74,8 +73,8 @@ class ImportFileSelectionFragment : DialogFragment() {
                         ImportEntry(
                             R.string.import_deck_package,
                             UsageAnalytics.Actions.IMPORT_APKG_FILE,
-                            ImportFileType.APKG
-                        )
+                            ImportFileType.APKG,
+                        ),
                     )
                 }
                 if (options.importColpkg) {
@@ -83,8 +82,8 @@ class ImportFileSelectionFragment : DialogFragment() {
                         ImportEntry(
                             R.string.import_collection_package,
                             UsageAnalytics.Actions.IMPORT_COLPKG_FILE,
-                            ImportFileType.COLPKG
-                        )
+                            ImportFileType.COLPKG,
+                        ),
                     )
                 }
                 if (options.importTextFile) {
@@ -95,13 +94,14 @@ class ImportFileSelectionFragment : DialogFragment() {
                             ImportFileType.CSV,
                             multiple = false,
                             mimeType = "*/*",
-                            extraMimes = arrayOf(
-                                "text/plain",
-                                "text/comma-separated-values",
-                                "text/csv",
-                                "text/tab-separated-values"
-                            )
-                        )
+                            extraMimes =
+                                arrayOf(
+                                    "text/plain",
+                                    "text/comma-separated-values",
+                                    "text/csv",
+                                    "text/tab-separated-values",
+                                ),
+                        ),
                     )
                 }
             }
@@ -116,18 +116,20 @@ class ImportFileSelectionFragment : DialogFragment() {
         val type: ImportFileType,
         var multiple: Boolean = false,
         val mimeType: String = "*/*",
-        val extraMimes: Array<String>? = null
+        val extraMimes: Array<String>? = null,
     )
 
     @Parcelize
     data class ImportOptions(
         val importColpkg: Boolean,
         val importApkg: Boolean,
-        val importTextFile: Boolean
+        val importTextFile: Boolean,
     ) : Parcelable
 
     enum class ImportFileType {
-        APKG, COLPKG, CSV
+        APKG,
+        COLPKG,
+        CSV,
     }
 
     interface ApkgImportResultLauncherProvider {
@@ -141,9 +143,10 @@ class ImportFileSelectionFragment : DialogFragment() {
     companion object {
         private const val ARG_IMPORT_OPTIONS = "arg_import_options"
 
-        fun newInstance(options: ImportOptions) = ImportFileSelectionFragment().apply {
-            arguments = bundleOf(ARG_IMPORT_OPTIONS to options)
-        }
+        fun newInstance(options: ImportOptions) =
+            ImportFileSelectionFragment().apply {
+                arguments = bundleOf(ARG_IMPORT_OPTIONS to options)
+            }
 
         /**
          * Calls through the system with an [Intent] to pick a file to be imported.
@@ -153,7 +156,7 @@ class ImportFileSelectionFragment : DialogFragment() {
             fileType: ImportFileType,
             multiple: Boolean = false,
             mimeType: String = "*/*",
-            extraMimes: Array<String>? = null
+            extraMimes: Array<String>? = null,
         ) {
             Timber.d("openImportFilePicker() delegating to file picker intent")
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)

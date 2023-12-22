@@ -36,7 +36,11 @@ import org.junit.Test
 class GestureProcessorTest : ViewerCommand.CommandProcessor {
     private val mSut = GestureProcessor(this)
     private val mExecutedCommands: MutableList<ViewerCommand> = ArrayList()
-    override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
+
+    override fun executeCommand(
+        which: ViewerCommand,
+        fromGesture: Gesture?,
+    ): Boolean {
         mExecutedCommands.add(which)
         return true
     }

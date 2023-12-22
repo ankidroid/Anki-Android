@@ -24,25 +24,25 @@ import java.util.function.Consumer
 
 // a memory leak was caused when this was a singleton object.
 class RescheduleDialog : IntegerDialog() {
-
     companion object {
         @CheckResult
         fun rescheduleSingleCard(
             resources: Resources,
             currentCard: Card,
-            consumer: Consumer<Int>?
+            consumer: Consumer<Int>?,
         ): RescheduleDialog {
             val rescheduleDialog = RescheduleDialog()
             val content = getContentString(resources, currentCard)
             rescheduleDialog.setArgs(
-                title = resources.getQuantityString(
-                    R.plurals.reschedule_cards_dialog_title_new,
-                    1,
-                    1
-                ),
+                title =
+                    resources.getQuantityString(
+                        R.plurals.reschedule_cards_dialog_title_new,
+                        1,
+                        1,
+                    ),
                 prompt = resources.getString(R.string.reschedule_card_dialog_message),
                 digits = 4,
-                content = content
+                content = content,
             )
             if (consumer != null) {
                 rescheduleDialog.setCallbackRunnable(consumer)
@@ -54,17 +54,17 @@ class RescheduleDialog : IntegerDialog() {
         fun rescheduleMultipleCards(
             resources: Resources,
             consumer: Consumer<Int>?,
-            cardCount: Int
+            cardCount: Int,
         ): RescheduleDialog {
             val rescheduleDialog = RescheduleDialog()
             rescheduleDialog.setArgs(
                 resources.getQuantityString(
                     R.plurals.reschedule_cards_dialog_title_new,
                     cardCount,
-                    cardCount
+                    cardCount,
                 ),
                 resources.getString(R.string.reschedule_card_dialog_message),
-                4
+                4,
             )
             if (consumer != null) {
                 rescheduleDialog.setCallbackRunnable(consumer)
@@ -72,7 +72,10 @@ class RescheduleDialog : IntegerDialog() {
             return rescheduleDialog
         }
 
-        private fun getContentString(resources: Resources, currentCard: Card): String? {
+        private fun getContentString(
+            resources: Resources,
+            currentCard: Card,
+        ): String? {
             if (currentCard.isNew) {
                 return resources.getString(R.string.reschedule_card_dialog_new_card_warning)
             }
@@ -82,22 +85,23 @@ class RescheduleDialog : IntegerDialog() {
             if (!currentCard.isReview) {
                 return null
             }
-            val message = resources.getString(
-                R.string.reschedule_card_dialog_warning_ease_reset,
-                Consts.STARTING_FACTOR / 10
-            )
+            val message =
+                resources.getString(
+                    R.string.reschedule_card_dialog_warning_ease_reset,
+                    Consts.STARTING_FACTOR / 10,
+                )
             return if (currentCard.isInDynamicDeck) {
                 message
             } else {
                 """
-     $message
-     
-     ${
-                resources.getQuantityString(
-                    R.plurals.reschedule_card_dialog_interval,
-                    currentCard.ivl,
-                    currentCard.ivl
-                )
+                $message
+                
+                ${
+                    resources.getQuantityString(
+                        R.plurals.reschedule_card_dialog_interval,
+                        currentCard.ivl,
+                        currentCard.ivl,
+                    )
                 }
                 """.trimIndent()
             }

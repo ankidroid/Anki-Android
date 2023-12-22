@@ -87,11 +87,12 @@ class BackupManagerSimpleTest {
     @Test
     fun getLastBackupDateTest() {
         val bm = BackupManager.createInstance()
-        val backups = arrayOf(
-            File("collection-2000-12-31-23-04.colpkg"),
-            File("collection-2010-01-02-03-04.colpkg"),
-            File("collection-1999-12-31-23-59.colpkg")
-        ).sortedBy { it.name }.toTypedArray()
+        val backups =
+            arrayOf(
+                File("collection-2000-12-31-23-04.colpkg"),
+                File("collection-2010-01-02-03-04.colpkg"),
+                File("collection-1999-12-31-23-59.colpkg"),
+            ).sortedBy { it.name }.toTypedArray()
         val expected = BackupManager.parseBackupTimeString("2010-01-02-03-04")
 
         assertNull(bm.getLastBackupDate(arrayOf()))
@@ -124,11 +125,16 @@ class BackupManagerSimpleTest {
 
     private fun File.newBackupFile(name: String): File = File(this, name).also { it.createNewFile() }
 
-    private fun newBackupLimits(daily: Int, weekly: Int, monthly: Int): BackupLimits = BackupLimits.newBuilder()
-        .setDaily(daily)
-        .setWeekly(weekly)
-        .setMonthly(monthly)
-        .build()
+    private fun newBackupLimits(
+        daily: Int,
+        weekly: Int,
+        monthly: Int,
+    ): BackupLimits =
+        BackupLimits.newBuilder()
+            .setDaily(daily)
+            .setWeekly(weekly)
+            .setMonthly(monthly)
+            .build()
 
     @Test
     fun keepsAllBackupsForToday() {

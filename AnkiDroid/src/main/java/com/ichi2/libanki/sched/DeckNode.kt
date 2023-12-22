@@ -24,7 +24,7 @@ import java.util.*
 data class DeckNode(
     val node: DeckTreeNode,
     val fullDeckName: String,
-    val parent: WeakReference<DeckNode>? = null
+    val parent: WeakReference<DeckNode>? = null,
 ) {
     var collapsed = node.collapsed
     val revCount = node.reviewCount
@@ -32,14 +32,16 @@ data class DeckNode(
     val lrnCount = node.learnCount
     val did = node.deckId
     val filtered = node.filtered
-    val children = node.childrenList.map {
-        val fullChildName = if (fullDeckName.isEmpty()) {
-            it.name
-        } else {
-            "$fullDeckName::${it.name}"
+    val children =
+        node.childrenList.map {
+            val fullChildName =
+                if (fullDeckName.isEmpty()) {
+                    it.name
+                } else {
+                    "$fullDeckName::${it.name}"
+                }
+            DeckNode(it, fullChildName, WeakReference(this@DeckNode))
         }
-        DeckNode(it, fullChildName, WeakReference(this@DeckNode))
-    }
 
     /**
      * The part of the name displayed in deck picker, i.e. the
@@ -63,7 +65,7 @@ data class DeckNode(
             did,
             revCount,
             lrnCount,
-            newCount
+            newCount,
         )
     }
 
@@ -93,15 +95,21 @@ data class DeckNode(
     /** Convert the tree into a flat list, where matching decks and the children/parents
      * are included. Decks inside collapsed decks are not considered. */
     fun filterAndFlatten(filter: CharSequence?): List<DeckNode> {
-        val filterPattern = if (filter.isNullOrBlank()) { null } else {
-            filter.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
-        }
+        val filterPattern =
+            if (filter.isNullOrBlank()) {
+                null
+            } else {
+                filter.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
+            }
         val list = mutableListOf<DeckNode>()
         filterAndFlattenInner(filterPattern, list)
         return list
     }
 
-    private fun filterAndFlattenInner(filter: CharSequence?, list: MutableList<DeckNode>) {
+    private fun filterAndFlattenInner(
+        filter: CharSequence?,
+        list: MutableList<DeckNode>,
+    ) {
         if (node.level > 0 && nameMatchesFilter(filter)) {
             // if this deck matched, all children are included
             addVisibleToList(list)

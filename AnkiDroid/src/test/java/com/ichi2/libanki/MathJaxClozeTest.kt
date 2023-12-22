@@ -16,7 +16,6 @@ import org.junit.runner.RunWith
 @KotlinCleanup("removeFormattingFromMathjax was imported to stop bug in Kotlin: java.lang.NoSuchFieldError: INSTANCE")
 @KotlinCleanup("add testing function returning c.models.byName(\"Cloze\")")
 class MathJaxClozeTest : JvmTest() {
-
     @Test
     fun verifyMathJaxClozeCards() {
         val c = col

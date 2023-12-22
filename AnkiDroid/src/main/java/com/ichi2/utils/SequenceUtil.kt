@@ -19,13 +19,14 @@ package com.ichi2.utils
 object SequenceUtil {
     // https://stackoverflow.com/a/56059647/
     /** Returns all values up to *and including* the first failure, even the first element, if it did not match*/
-    fun <T> Sequence<T>.takeWhileIncludingFirstNonMatch(predicate: (T) -> Boolean) = sequence {
-        with(iterator()) {
-            while (hasNext()) {
-                val next = next()
-                yield(next)
-                if (!predicate(next)) break
+    fun <T> Sequence<T>.takeWhileIncludingFirstNonMatch(predicate: (T) -> Boolean) =
+        sequence {
+            with(iterator()) {
+                while (hasNext()) {
+                    val next = next()
+                    yield(next)
+                    if (!predicate(next)) break
+                }
             }
         }
-    }
 }

@@ -23,7 +23,6 @@ import android.os.IBinder
  * Empty service used by the custom tab to bind to, raising the application's importance.
  */
 class KeepAliveService : Service() {
-
     @Suppress("RedundantNullableReturnType")
     // follows the super method which marks its return as nullable
     override fun onBind(intent: Intent): IBinder? {

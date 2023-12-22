@@ -31,7 +31,11 @@ class AudioRecorder {
     private lateinit var mRecorder: MediaRecorder
     private var mOnRecordingInitialized: Runnable? = null
     private var previousNonZeroAmplitude = 0
-    private fun initMediaRecorder(context: Context, audioPath: String): MediaRecorder {
+
+    private fun initMediaRecorder(
+        context: Context,
+        audioPath: String,
+    ): MediaRecorder {
         val mr = CompatHelper.compat.getMediaRecorder(context)
         mr.setAudioSource(MediaRecorder.AudioSource.MIC)
         mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
@@ -45,7 +49,10 @@ class AudioRecorder {
     }
 
     @Throws(IOException::class)
-    fun startRecording(context: Context, audioPath: String) {
+    fun startRecording(
+        context: Context,
+        audioPath: String,
+    ) {
         var highSampling = false
         try {
             // try high quality AAC @ 44.1kHz / 192kbps first
@@ -90,11 +97,12 @@ class AudioRecorder {
     }
 
     fun maxAmplitude(): Int {
-        val currentAmplitude = if (this::mRecorder.isInitialized) {
-            mRecorder.maxAmplitude
-        } else {
-            0
-        }
+        val currentAmplitude =
+            if (this::mRecorder.isInitialized) {
+                mRecorder.maxAmplitude
+            } else {
+                0
+            }
         return if (currentAmplitude == 0) {
             previousNonZeroAmplitude
         } else {

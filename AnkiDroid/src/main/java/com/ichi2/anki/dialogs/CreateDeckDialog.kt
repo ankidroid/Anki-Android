@@ -46,7 +46,7 @@ class CreateDeckDialog(
     private val context: Context,
     private val title: Int,
     private val deckDialogType: DeckDialogType,
-    private val parentId: Long?
+    private val parentId: Long?,
 ) {
     private var mPreviousDeckName: String? = null
     private var mOnNewDeckCreated: Consumer<Long>? = null
@@ -54,7 +54,10 @@ class CreateDeckDialog(
     private var mShownDialog: MaterialDialog? = null
 
     enum class DeckDialogType {
-        FILTERED_DECK, DECK, SUB_DECK, RENAME_DECK
+        FILTERED_DECK,
+        DECK,
+        SUB_DECK,
+        RENAME_DECK,
     }
 
     private val col
@@ -62,9 +65,10 @@ class CreateDeckDialog(
 
     suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
-        mInitialDeckName = withCol {
-            getOrCreateFilteredDeck(did = 0).name
-        }
+        mInitialDeckName =
+            withCol {
+                getOrCreateFilteredDeck(did = 0).name
+            }
         showDialog()
     }
 
@@ -78,24 +82,25 @@ class CreateDeckDialog(
 
     fun showDialog(): MaterialDialog {
         @SuppressLint("CheckResult")
-        val dialog = MaterialDialog(context).show {
-            title(title)
-            positiveButton(R.string.dialog_ok) {
-                onPositiveButtonClicked()
-            }
-            negativeButton(R.string.dialog_cancel)
-            input(prefill = mInitialDeckName, waitForPositiveButton = false) { dialog, text ->
-                // we need the fully-qualified name for subdecks
-                val maybeDeckName = fullyQualifyDeckName(dialogText = text)
-                // if the name is empty, it seems distracting to show an error
-                if (maybeDeckName == null || !Decks.isValidDeckName(maybeDeckName)) {
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
-                    return@input
+        val dialog =
+            MaterialDialog(context).show {
+                title(title)
+                positiveButton(R.string.dialog_ok) {
+                    onPositiveButtonClicked()
                 }
-                dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
+                negativeButton(R.string.dialog_cancel)
+                input(prefill = mInitialDeckName, waitForPositiveButton = false) { dialog, text ->
+                    // we need the fully-qualified name for subdecks
+                    val maybeDeckName = fullyQualifyDeckName(dialogText = text)
+                    // if the name is empty, it seems distracting to show an error
+                    if (maybeDeckName == null || !Decks.isValidDeckName(maybeDeckName)) {
+                        dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
+                        return@input
+                    }
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
+                }
+                displayKeyboard(getInputField())
             }
-            displayKeyboard(getInputField())
-        }
         mShownDialog = dialog
         return dialog
     }
@@ -115,7 +120,10 @@ class CreateDeckDialog(
         mShownDialog?.dismiss()
     }
 
-    fun createSubDeck(did: DeckId, deckName: String?) {
+    fun createSubDeck(
+        did: DeckId,
+        deckName: String?,
+    ) {
         val deckNameWithParentName = col.decks.getSubdeckName(did, deckName)
         createDeck(deckNameWithParentName!!)
     }
@@ -201,7 +209,10 @@ class CreateDeckDialog(
         }
     }
 
-    private fun displayFeedback(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
+    private fun displayFeedback(
+        message: String,
+        duration: Int = Snackbar.LENGTH_SHORT,
+    ) {
         if (context is Activity) {
             context.showSnackbar(message, duration)
         } else {

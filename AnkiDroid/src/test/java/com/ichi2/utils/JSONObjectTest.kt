@@ -31,12 +31,15 @@ import org.robolectric.annotation.Config
  */
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-@SuppressLint("CheckResult") // many usages: checking exceptions
+@SuppressLint("CheckResult", "ktlint:standard:max-line-length") // many usages: checking exceptions
 class JSONObjectTest {
     private val mCorrectJsonBasic = "{\"key1\":\"value1\"}"
     private val mCorrectJsonNested = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":\"value2\"}"
-    private val mCorrectJsonWithArray = "{\"key1\":\"value1\",\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}"
-    private val mCorrectJsonNestedWithArray = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}"
+    private val mCorrectJsonWithArray =
+        "{\"key1\":\"value1\",\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}"
+    private val mCorrectJsonNestedWithArray =
+        "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":[{\"key2a\":\"value2a\"}, " +
+            "{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}"
 
     private lateinit var mCorrectJsonObjectBasic: JSONObject
     private lateinit var mCorrectJsonObjectNested: JSONObject

@@ -51,6 +51,7 @@ class Directory private constructor(val directory: File) {
 
     /** The [canonical path][java.io.File.getCanonicalPath] for the file */
     override fun toString(): String = directory.canonicalPath
+
     companion object {
         /**
          * Returns a [Directory] from [path] if `Directory` precondition holds; i.e. [path] is an existing directory.

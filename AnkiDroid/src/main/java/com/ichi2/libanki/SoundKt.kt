@@ -42,7 +42,7 @@ data class TTSTag(
     val voices: List<String>,
     val speed: Float,
     /** each arg should be in the form 'foo=bar' */
-    val otherArgs: List<String>
+    val otherArgs: List<String>,
 ) : AvTag()
 
 /**
@@ -53,7 +53,7 @@ data class SoundOrVideoTag(val filename: String) : AvTag()
 /** In python, this is a union of [TTSTag] and [SoundOrVideoTag] */
 open class AvTag
 
-/* Methods */
+// Methods
 
 val AV_REF_RE = Regex("\\[anki:(play:(.):(\\d+))]")
 val AV_PLAYLINK_RE = Regex("playsound:(.):(\\d+)")
@@ -88,17 +88,21 @@ fun avRefsToPlayIcons(text: String): String {
 /**
  * Replaces [anki:play:q:0] with [sound:...]
  */
-fun replaceWithSoundTags(content: String, renderOutput: TemplateRenderOutput): String {
+fun replaceWithSoundTags(
+    content: String,
+    renderOutput: TemplateRenderOutput,
+): String {
     return AV_REF_RE.replace(content) { match ->
         val groups = match.groupValues
 
         val index = groups[3].toIntOrNull() ?: return@replace match.value
 
-        val tag = when (groups[2]) {
-            "q" -> renderOutput.questionAvTags.getOrNull(index)
-            "a" -> renderOutput.answerAvTags.getOrNull(index)
-            else -> null
-        }
+        val tag =
+            when (groups[2]) {
+                "q" -> renderOutput.questionAvTags.getOrNull(index)
+                "a" -> renderOutput.answerAvTags.getOrNull(index)
+                else -> null
+            }
         if (tag !is SoundOrVideoTag) {
             return@replace match.value
         } else {
@@ -108,14 +112,22 @@ fun replaceWithSoundTags(content: String, renderOutput: TemplateRenderOutput): S
 }
 
 /** Extract av tag from playsound:q:x link */
-suspend fun getAvTag(card: Card, url: String): AvTag? {
+suspend fun getAvTag(
+    card: Card,
+    url: String,
+): AvTag? {
     return AV_PLAYLINK_RE.matchEntire(url)?.let {
         val values = it.groupValues
         val questionSide = values[1] == "q"
         val index = values[2].toInt()
-        val tags = withCol {
-            if (questionSide) { card.questionAvTags() } else { card.answerAvTags() }
-        }
+        val tags =
+            withCol {
+                if (questionSide) {
+                    card.questionAvTags()
+                } else {
+                    card.answerAvTags()
+                }
+            }
         if (index < tags.size) {
             tags[index]
         } else {

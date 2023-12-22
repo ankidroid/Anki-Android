@@ -31,7 +31,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class OnboardingFlagTest : RobolectricTest() {
-
     companion object {
         const val FIRST_ENUM = "FirstEnum"
         const val SECOND_ENUM = "SecondEnum"
@@ -99,7 +98,8 @@ class OnboardingFlagTest : RobolectricTest() {
 
     private enum class FirstEnum(var valueFirst: Int) : OnboardingFlag {
         FIRST(0),
-        MIDDLE(1);
+        MIDDLE(1),
+        ;
 
         override fun getOnboardingEnumValue(): Int {
             return valueFirst
@@ -112,7 +112,8 @@ class OnboardingFlagTest : RobolectricTest() {
 
     private enum class SecondEnum(var valueSecond: Int) : OnboardingFlag {
         MIDDLE(0),
-        LAST(1);
+        LAST(1),
+        ;
 
         override fun getOnboardingEnumValue(): Int {
             return valueSecond

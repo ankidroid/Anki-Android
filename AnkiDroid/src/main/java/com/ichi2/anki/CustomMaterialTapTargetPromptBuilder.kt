@@ -27,8 +27,9 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectangleProm
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.CirclePromptFocal
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 
-class CustomMaterialTapTargetPromptBuilder<T>(val activity: Activity, private val featureIdentifier: T) : MaterialTapTargetPrompt.Builder(activity) where T : Enum<T>, T : OnboardingFlag {
-
+class CustomMaterialTapTargetPromptBuilder<T>(val activity: Activity, private val featureIdentifier: T) : MaterialTapTargetPrompt.Builder(
+    activity,
+) where T : Enum<T>, T : OnboardingFlag {
     private fun createRectangle(): CustomMaterialTapTargetPromptBuilder<T> {
         promptFocal = RectanglePromptFocal()
         return this

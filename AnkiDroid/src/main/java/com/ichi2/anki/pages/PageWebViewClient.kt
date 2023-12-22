@@ -26,7 +26,10 @@ import com.ichi2.utils.toRGBHex
  * Base WebViewClient to be used on [PageFragment]
  */
 open class PageWebViewClient : WebViewClient() {
-    override fun onPageFinished(view: WebView?, url: String?) {
+    override fun onPageFinished(
+        view: WebView?,
+        url: String?,
+    ) {
         super.onPageFinished(view, url)
         view?.let { webView ->
             val bgColor = MaterialColors.getColor(webView, android.R.attr.colorBackground).toRGBHex()

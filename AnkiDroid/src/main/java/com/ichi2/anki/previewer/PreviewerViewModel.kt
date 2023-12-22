@@ -175,7 +175,11 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
     }
 
     companion object {
-        fun factory(mediaDir: String, selectedCardIds: LongArray, currentIndex: Int): ViewModelProvider.Factory {
+        fun factory(
+            mediaDir: String,
+            selectedCardIds: LongArray,
+            currentIndex: Int,
+        ): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
                     PreviewerViewModel(mediaDir, selectedCardIds, currentIndex)
@@ -190,7 +194,7 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
          */
         fun stdHtml(
             context: Context = AnkiDroidApp.instance,
-            nightMode: Boolean = false
+            nightMode: Boolean = false,
         ): String {
             val languageDirectionality = if (LanguageUtils.appLanguageIsRTL()) "rtl" else "ltr"
 
@@ -204,19 +208,21 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
                 baseTheme = "light"
             }
 
-            val colors = if (!nightMode) {
-                val canvasColor = getColor(context, android.R.attr.colorBackground, android.R.color.white).toRGBHex()
-                val fgColor = getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
-                ":root { --canvas: $canvasColor ; --fg: $fgColor; }"
-            } else {
-                val canvasColor = getColor(context, android.R.attr.colorBackground, android.R.color.black).toRGBHex()
-                val fgColor = getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
-                ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
-            }
+            val colors =
+                if (!nightMode) {
+                    val canvasColor = getColor(context, android.R.attr.colorBackground, android.R.color.white).toRGBHex()
+                    val fgColor = getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
+                    ":root { --canvas: $canvasColor ; --fg: $fgColor; }"
+                } else {
+                    val canvasColor = getColor(context, android.R.attr.colorBackground, android.R.color.black).toRGBHex()
+                    val fgColor = getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
+                    ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
+                }
 
             @Suppress("UnnecessaryVariable") // necessary for the HTML notation
             @Language("HTML")
-            val html = """
+            val html =
+                """
                 <!DOCTYPE html>
                 <html class="$docClass" dir="$languageDirectionality" data-bs-theme="$baseTheme">
                 <head>
@@ -238,12 +244,15 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
                     <script>bridgeCommand = function(){};</script>
                 </body>
                 </html>
-            """.trimIndent()
+                """.trimIndent()
             return html
         }
 
         /** @return body classes used when showing a card */
-        fun bodyClassForCardOrd(cardOrd: Int, nightMode: Boolean = Themes.currentTheme.isNightMode): String {
+        fun bodyClassForCardOrd(
+            cardOrd: Int,
+            nightMode: Boolean = Themes.currentTheme.isNightMode,
+        ): String {
             return "card card${cardOrd + 1} ${bodyClass(nightMode)}"
         }
 

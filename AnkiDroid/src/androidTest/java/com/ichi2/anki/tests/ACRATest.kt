@@ -69,7 +69,7 @@ class ACRATest : InstrumentedTest() {
         assertArrayEquals(
             "Debug logcat arguments not set correctly",
             CrashReportService.acraCoreConfigBuilder.build().logcatArguments.toTypedArray(),
-            mDebugLogcatArguments
+            mDebugLogcatArguments,
         )
         verifyDebugACRAPreferences()
     }
@@ -78,13 +78,13 @@ class ACRATest : InstrumentedTest() {
         assertTrue(
             "ACRA was not disabled correctly",
             sharedPrefs
-                .getBoolean(ACRA.PREF_DISABLE_ACRA, true)
+                .getBoolean(ACRA.PREF_DISABLE_ACRA, true),
         )
         assertEquals(
             "ACRA feedback was not turned off correctly",
             CrashReportService.FEEDBACK_REPORT_NEVER,
             sharedPrefs
-                .getString(CrashReportService.FEEDBACK_REPORT_KEY, "undefined")
+                .getString(CrashReportService.FEEDBACK_REPORT_KEY, "undefined"),
         )
     }
 
@@ -130,27 +130,29 @@ class ACRATest : InstrumentedTest() {
 
         // The same class/method combo is only sent once, so we face a new method each time (should test that system later)
         val crash = Exception("testCrashReportSend at " + System.currentTimeMillis())
-        val trace = arrayOf(
-            StackTraceElement(
-                "Class",
-                "Method" + System.currentTimeMillis().toInt(),
-                "File",
-                System.currentTimeMillis().toInt()
+        val trace =
+            arrayOf(
+                StackTraceElement(
+                    "Class",
+                    "Method" + System.currentTimeMillis().toInt(),
+                    "File",
+                    System.currentTimeMillis().toInt(),
+                ),
             )
-        )
         crash.stackTrace = trace
 
         // one send should work
-        val crashData = CrashReportDataFactory(
-            testContext,
-            CrashReportService.acraCoreConfigBuilder.build()
-        ).createCrashData(ReportBuilder().exception(crash))
+        val crashData =
+            CrashReportDataFactory(
+                testContext,
+                CrashReportService.acraCoreConfigBuilder.build(),
+            ).createCrashData(ReportBuilder().exception(crash))
         assertTrue(
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
                 CrashReportService.acraCoreConfigBuilder.build(),
-                crashData
-            )
+                crashData,
+            ),
         )
 
         // A second send should not work
@@ -158,8 +160,8 @@ class ACRATest : InstrumentedTest() {
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
                 CrashReportService.acraCoreConfigBuilder.build(),
-                crashData
-            )
+                crashData,
+            ),
         )
 
         // Now let's clear data
@@ -170,8 +172,8 @@ class ACRATest : InstrumentedTest() {
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
                 CrashReportService.acraCoreConfigBuilder.build(),
-                crashData
-            )
+                crashData,
+            ),
         )
     }
 
@@ -231,7 +233,10 @@ class ACRATest : InstrumentedTest() {
     }
 
     @Throws(ACRAConfigurationException::class)
-    private fun assertDialogEnabledStatus(message: String, isEnabled: Boolean) {
+    private fun assertDialogEnabledStatus(
+        message: String,
+        isEnabled: Boolean,
+    ) {
         val config = CrashReportService.acraCoreConfigBuilder.build()
         for (configuration in config.pluginConfigurations) {
             // Make sure the dialog is set to pop up
@@ -252,13 +257,15 @@ class ACRATest : InstrumentedTest() {
     }
 
     @Throws(ACRAConfigurationException::class)
-    private fun assertToastMessage(@StringRes res: Int) {
+    private fun assertToastMessage(
+        @StringRes res: Int,
+    ) {
         val config = CrashReportService.acraCoreConfigBuilder.build()
         for (configuration in config.pluginConfigurations) {
             if (configuration.javaClass.toString().contains("Toast")) {
                 assertEquals(
                     mApp!!.resources.getString(res),
-                    (configuration as ToastConfiguration).text
+                    (configuration as ToastConfiguration).text,
                 )
                 assertTrue("Toast should be enabled", configuration.enabled())
             }
@@ -268,7 +275,7 @@ class ACRATest : InstrumentedTest() {
     private fun verifyACRANotDisabled() {
         assertFalse(
             "ACRA was not enabled correctly",
-            sharedPrefs.getBoolean(ACRA.PREF_DISABLE_ACRA, false)
+            sharedPrefs.getBoolean(ACRA.PREF_DISABLE_ACRA, false),
         )
     }
 

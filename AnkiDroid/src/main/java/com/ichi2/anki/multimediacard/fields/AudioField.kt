@@ -43,12 +43,16 @@ abstract class AudioField : FieldBase(), IField {
     override var hasTemporaryMedia: Boolean = false
 
     override val formattedValue: String
-        get() = audioPath?.let { path ->
-            val file = File(path)
-            if (file.exists()) "[sound:${file.name}]" else ""
-        } ?: ""
+        get() =
+            audioPath?.let { path ->
+                val file = File(path)
+                if (file.exists()) "[sound:${file.name}]" else ""
+            } ?: ""
 
-    override fun setFormattedString(col: Collection, value: String) {
+    override fun setFormattedString(
+        col: Collection,
+        value: String,
+    ) {
         val p = Pattern.compile(PATH_REGEX)
         val m = p.matcher(value)
         var res = ""

@@ -55,6 +55,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
         var answered: Int? = null
         private var mLastTime = 0
+
         override fun performReload() {
             // intentionally blank
         }
@@ -68,8 +69,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         override val elapsedRealTime: Long
             get() {
-                mLastTime += baseContext.sharedPrefs()
-                    .getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL)
+                mLastTime +=
+                    baseContext.sharedPrefs()
+                        .getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL)
                 return mLastTime.toLong()
             }
         val hintLocale: String?
@@ -85,7 +87,10 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     @ParameterizedTest
     @MethodSource("getSignalFromUrlTest_args")
-    fun getSignalFromUrlTest(url: String, signal: Int) {
+    fun getSignalFromUrlTest(
+        url: String,
+        signal: Int,
+    ) {
         assertEquals(getSignalFromUrl(url), signal)
     }
 
@@ -110,57 +115,59 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    fun testEditingCardChangesTypedAnswer() = runTest {
-        // 7363
-        addNoteUsingBasicTypedModel("Hello", "World")
+    fun testEditingCardChangesTypedAnswer() =
+        runTest {
+            // 7363
+            addNoteUsingBasicTypedModel("Hello", "World")
 
-        val viewer: NonAbstractFlashcardViewer = getViewer(true)
+            val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
-        assertThat(viewer.correctTypedAnswer, equalTo("World"))
+            assertThat(viewer.correctTypedAnswer, equalTo("World"))
 
-        waitForAsyncTasksToComplete()
+            waitForAsyncTasksToComplete()
 
-        AbstractFlashcardViewer.editorCard = viewer.currentCard
+            AbstractFlashcardViewer.editorCard = viewer.currentCard
 
-        val note = viewer.currentCard!!.note()
-        note.setField(1, "David")
+            val note = viewer.currentCard!!.note()
+            note.setField(1, "David")
 
-        viewer.saveEditedCard()
+            viewer.saveEditedCard()
 
-        waitForAsyncTasksToComplete()
+            waitForAsyncTasksToComplete()
 
-        assertThat(viewer.correctTypedAnswer, equalTo("David"))
-    }
+            assertThat(viewer.correctTypedAnswer, equalTo("David"))
+        }
 
     @Test
-    fun testEditingCardChangesTypedAnswerOnDisplayAnswer() = runTest {
-        // 7363
-        addNoteUsingBasicTypedModel("Hello", "World")
+    fun testEditingCardChangesTypedAnswerOnDisplayAnswer() =
+        runTest {
+            // 7363
+            addNoteUsingBasicTypedModel("Hello", "World")
 
-        val viewer: NonAbstractFlashcardViewer = getViewer(true)
+            val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
-        assertThat(viewer.correctTypedAnswer, equalTo("World"))
+            assertThat(viewer.correctTypedAnswer, equalTo("World"))
 
-        viewer.displayCardAnswer()
+            viewer.displayCardAnswer()
 
-        assertThat(viewer.cardContent, containsString("World"))
+            assertThat(viewer.cardContent, containsString("World"))
 
-        waitForAsyncTasksToComplete()
+            waitForAsyncTasksToComplete()
 
-        AbstractFlashcardViewer.editorCard = viewer.currentCard
+            AbstractFlashcardViewer.editorCard = viewer.currentCard
 
-        val note = viewer.currentCard!!.note()
-        note.setField(1, "David")
+            val note = viewer.currentCard!!.note()
+            note.setField(1, "David")
 
-        viewer.saveEditedCard()
+            viewer.saveEditedCard()
 
-        waitForAsyncTasksToComplete()
+            waitForAsyncTasksToComplete()
 
-        assertThat(viewer.correctTypedAnswer, equalTo("David"))
-        assertThat(viewer.cardContent, not(containsString("World")))
-        // the saving will have caused the screen to switch back to question side
-        assertThat(viewer.cardContent, containsString("Hello"))
-    }
+            assertThat(viewer.correctTypedAnswer, equalTo("David"))
+            assertThat(viewer.cardContent, not(containsString("World")))
+            // the saving will have caused the screen to switch back to question side
+            assertThat(viewer.cardContent, containsString("Hello"))
+        }
 
     @Test
     fun testEditCardProvidesInverseTransition() {
@@ -176,11 +183,12 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             viewer.executeCommand(ViewerCommand.EDIT, gesture)
             val actual = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application).nextStartedActivity
 
-            val actualInverseAnimation = IntentCompat.getParcelableExtra(
-                actual,
-                FINISH_ANIMATION_EXTRA,
-                Direction::class.java
-            )
+            val actualInverseAnimation =
+                IntentCompat.getParcelableExtra(
+                    actual,
+                    FINISH_ANIMATION_EXTRA,
+                    Direction::class.java,
+                )
             assertEquals(expectedInverseAnimation, actualInverseAnimation)
         }
     }
@@ -208,23 +216,24 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    fun typedLanguageIsSet() = runTest {
-        val withLanguage = StdModels.BASIC_TYPING_MODEL.add(col, "a")
-        val normal = StdModels.BASIC_TYPING_MODEL.add(col, "b")
-        val typedField = 1 // BACK
+    fun typedLanguageIsSet() =
+        runTest {
+            val withLanguage = StdModels.BASIC_TYPING_MODEL.add(col, "a")
+            val normal = StdModels.BASIC_TYPING_MODEL.add(col, "b")
+            val typedField = 1 // BACK
 
-        LanguageHintService.setLanguageHintForField(col.notetypes, withLanguage, typedField, Locale("ja"))
+            LanguageHintService.setLanguageHintForField(col.notetypes, withLanguage, typedField, Locale("ja"))
 
-        addNoteUsingModelName(withLanguage.getString("name"), "ichi", "ni")
-        addNoteUsingModelName(normal.getString("name"), "one", "two")
-        val viewer = getViewer(false)
+            addNoteUsingModelName(withLanguage.getString("name"), "ichi", "ni")
+            addNoteUsingModelName(normal.getString("name"), "one", "two")
+            val viewer = getViewer(false)
 
-        assertThat("A model with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
+            assertThat("A model with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
 
-        showNextCard(viewer)
+            showNextCard(viewer)
 
-        assertThat("A default model should have no preference", viewer.hintLocale, nullValue())
-    }
+            assertThat("A default model should have no preference", viewer.hintLocale, nullValue())
+        }
 
     @Test
     fun automaticAnswerDisabledProperty() {
@@ -252,42 +261,44 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    fun `Show audio play buttons preference handling - sound`() = runTest {
-        addNoteUsingBasicTypedModel("SOUND [sound:android_audiorec.3gp]", "back")
-        getViewerContent().let { content ->
-            assertThat("show audio preference default value: enabled", content, containsString("playsound:q:0"))
-            assertThat("show audio preference default value: enabled", content, containsString("SOUND"))
+    fun `Show audio play buttons preference handling - sound`() =
+        runTest {
+            addNoteUsingBasicTypedModel("SOUND [sound:android_audiorec.3gp]", "back")
+            getViewerContent().let { content ->
+                assertThat("show audio preference default value: enabled", content, containsString("playsound:q:0"))
+                assertThat("show audio preference default value: enabled", content, containsString("SOUND"))
+            }
+            setHidePlayAudioButtons(true)
+            getViewerContent().let { content ->
+                assertThat("show audio preference disabled", content, not(containsString("playsound:q:0")))
+                assertThat("show audio preference disabled", content, containsString("SOUND"))
+            }
+            setHidePlayAudioButtons(false)
+            getViewerContent().let { content ->
+                assertThat("show audio preference enabled explicitly", content, containsString("playsound:q:0"))
+                assertThat("show audio preference enabled explicitly", content, containsString("SOUND"))
+            }
         }
-        setHidePlayAudioButtons(true)
-        getViewerContent().let { content ->
-            assertThat("show audio preference disabled", content, not(containsString("playsound:q:0")))
-            assertThat("show audio preference disabled", content, containsString("SOUND"))
-        }
-        setHidePlayAudioButtons(false)
-        getViewerContent().let { content ->
-            assertThat("show audio preference enabled explicitly", content, containsString("playsound:q:0"))
-            assertThat("show audio preference enabled explicitly", content, containsString("SOUND"))
-        }
-    }
 
     @Test
-    fun `Show audio play buttons preference handling - tts`() = runTest {
-        addNoteUsingTextToSpeechNoteType("TTS", "BACK")
-        getViewerContent().let { content ->
-            assertThat("show audio preference default value: enabled", content, containsString("playsound:q:0"))
-            assertThat("show audio preference default value: enabled", content, containsString("TTS"))
+    fun `Show audio play buttons preference handling - tts`() =
+        runTest {
+            addNoteUsingTextToSpeechNoteType("TTS", "BACK")
+            getViewerContent().let { content ->
+                assertThat("show audio preference default value: enabled", content, containsString("playsound:q:0"))
+                assertThat("show audio preference default value: enabled", content, containsString("TTS"))
+            }
+            setHidePlayAudioButtons(true)
+            getViewerContent().let { content ->
+                assertThat("show audio preference disabled", content, not(containsString("playsound:q:0")))
+                assertThat("show audio preference disabled", content, containsString("TTS"))
+            }
+            setHidePlayAudioButtons(false)
+            getViewerContent().let { content ->
+                assertThat("show audio preference enabled explicitly", content, containsString("playsound:q:0"))
+                assertThat("show audio preference enabled explicitly", content, containsString("TTS"))
+            }
         }
-        setHidePlayAudioButtons(true)
-        getViewerContent().let { content ->
-            assertThat("show audio preference disabled", content, not(containsString("playsound:q:0")))
-            assertThat("show audio preference disabled", content, containsString("TTS"))
-        }
-        setHidePlayAudioButtons(false)
-        getViewerContent().let { content ->
-            assertThat("show audio preference enabled explicitly", content, containsString("playsound:q:0"))
-            assertThat("show audio preference enabled explicitly", content, containsString("TTS"))
-        }
-    }
 
     private fun setHidePlayAudioButtons(value: Boolean) = col.config.setBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS, value)
 
@@ -311,12 +322,18 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @CheckResult
-    private fun getViewer(addCard: Boolean, startedWithShortcut: Boolean): NonAbstractFlashcardViewer {
+    private fun getViewer(
+        addCard: Boolean,
+        startedWithShortcut: Boolean,
+    ): NonAbstractFlashcardViewer {
         return getViewerController(addCard, startedWithShortcut).get()
     }
 
     @CheckResult
-    private fun getViewerController(addCard: Boolean, startedWithShortcut: Boolean): ActivityController<NonAbstractFlashcardViewer> {
+    private fun getViewerController(
+        addCard: Boolean,
+        startedWithShortcut: Boolean,
+    ): ActivityController<NonAbstractFlashcardViewer> {
         if (addCard) {
             val n = col.newNote()
             n.setField(0, "a")
@@ -326,8 +343,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         if (startedWithShortcut) {
             intent.putExtra(NavigationDrawerActivity.EXTRA_STARTED_WITH_SHORTCUT, true)
         }
-        val multimediaController = Robolectric.buildActivity(NonAbstractFlashcardViewer::class.java, intent)
-            .create().start().resume().visible()
+        val multimediaController =
+            Robolectric.buildActivity(NonAbstractFlashcardViewer::class.java, intent)
+                .create().start().resume().visible()
         saveControllerForCleanup(multimediaController)
         val viewer = multimediaController.get()
         viewer.onCollectionLoaded(col)
@@ -338,6 +356,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         return multimediaController
     }
+
     companion object {
         @JvmStatic // required for @MethodSource
         fun getSignalFromUrlTest_args(): Stream<Arguments> {
@@ -349,7 +368,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
                 Arguments.of("signal:answer_ease2", ANSWER_ORDINAL_2),
                 Arguments.of("signal:answer_ease3", ANSWER_ORDINAL_3),
                 Arguments.of("signal:answer_ease4", ANSWER_ORDINAL_4),
-                Arguments.of("signal:answer_ease0", SIGNAL_NOOP)
+                Arguments.of("signal:answer_ease0", SIGNAL_NOOP),
             )
         }
     }

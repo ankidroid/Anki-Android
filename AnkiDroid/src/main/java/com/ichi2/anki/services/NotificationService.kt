@@ -31,7 +31,6 @@ import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 
 class NotificationService : BroadcastReceiver() {
-
     companion object {
         /** The id of the notification for due cards.  */
         private const val WIDGET_NOTIFY_ID = 1
@@ -41,30 +40,33 @@ class NotificationService : BroadcastReceiver() {
             val manager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val preferences = context.sharedPrefs()
-            val minCardsDue = preferences.getString(
-                Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION,
-                Preferences.PENDING_NOTIFICATIONS_ONLY.toString()
-            )!!.toInt()
+            val minCardsDue =
+                preferences.getString(
+                    Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION,
+                    Preferences.PENDING_NOTIFICATIONS_ONLY.toString(),
+                )!!.toInt()
             val dueCardsCount = WidgetStatus.fetchDue(context)
             if (dueCardsCount >= minCardsDue) {
                 // Build basic notification
-                val cardsDueText = context.resources
-                    .getQuantityString(
-                        R.plurals.widget_minimum_cards_due_notification_ticker_text,
-                        dueCardsCount,
-                        dueCardsCount
-                    )
+                val cardsDueText =
+                    context.resources
+                        .getQuantityString(
+                            R.plurals.widget_minimum_cards_due_notification_ticker_text,
+                            dueCardsCount,
+                            dueCardsCount,
+                        )
                 // This generates a log warning "Use of stream types is deprecated..."
                 // The NotificationCompat code uses setSound() no matter what we do and triggers it.
-                val builder = NotificationCompat.Builder(
-                    context,
-                    Channel.GENERAL.id
-                )
-                    .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                    .setSmallIcon(R.drawable.ic_star_notify)
-                    .setColor(context.getColor(R.color.material_light_blue_700))
-                    .setContentTitle(cardsDueText)
-                    .setTicker(cardsDueText)
+                val builder =
+                    NotificationCompat.Builder(
+                        context,
+                        Channel.GENERAL.id,
+                    )
+                        .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                        .setSmallIcon(R.drawable.ic_star_notify)
+                        .setColor(context.getColor(R.color.material_light_blue_700))
+                        .setContentTitle(cardsDueText)
+                        .setTicker(cardsDueText)
                 // Enable vibrate and blink if set in preferences
                 if (preferences.getBoolean("widgetVibrate", false)) {
                     builder.setVibrate(longArrayOf(1000, 1000, 1000))
@@ -76,13 +78,14 @@ class NotificationService : BroadcastReceiver() {
                 val resultIntent = Intent(context, DeckPicker::class.java)
                 resultIntent.flags =
                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                val resultPendingIntent = PendingIntentCompat.getActivity(
-                    context,
-                    0,
-                    resultIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT,
-                    false
-                )
+                val resultPendingIntent =
+                    PendingIntentCompat.getActivity(
+                        context,
+                        0,
+                        resultIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT,
+                        false,
+                    )
                 builder.setContentIntent(resultPendingIntent)
                 // mId allows you to update the notification later on.
                 manager.notify(WIDGET_NOTIFY_ID, builder.build())
@@ -93,7 +96,10 @@ class NotificationService : BroadcastReceiver() {
         }
     }
 
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         triggerNotificationFor(context)
     }
 }

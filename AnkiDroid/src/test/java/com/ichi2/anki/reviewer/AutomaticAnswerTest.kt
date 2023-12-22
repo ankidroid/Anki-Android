@@ -30,7 +30,6 @@ import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTask
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class AutomaticAnswerTest {
-
     @Test
     fun disableWorks() {
         val answer = validAnswer(automaticallyAnsweredMock())
@@ -49,14 +48,16 @@ class AutomaticAnswerTest {
 
     @Test
     fun noExecutionIfTimerIsZero_issue8923() {
-        val answer = AutomaticAnswer(
-            target = automaticallyAnsweredMock(),
-            settings = AutomaticAnswerSettings(
-                useTimer = true,
-                questionDelaySeconds = 0,
-                answerDelaySeconds = 0
+        val answer =
+            AutomaticAnswer(
+                target = automaticallyAnsweredMock(),
+                settings =
+                    AutomaticAnswerSettings(
+                        useTimer = true,
+                        questionDelaySeconds = 0,
+                        answerDelaySeconds = 0,
+                    ),
             )
-        )
 
         answer.scheduleAutomaticDisplayQuestion(10)
 
@@ -118,14 +119,16 @@ class AutomaticAnswerTest {
         runUiThreadTasksIncludingDelayedTasks()
     }
 
-    private fun validAnswer(automaticallyAnswered: AutomaticallyAnswered? = null) = AutomaticAnswer(
-        target = automaticallyAnswered ?: automaticallyAnsweredMock(),
-        settings = AutomaticAnswerSettings(
-            useTimer = true,
-            questionDelaySeconds = 10,
-            answerDelaySeconds = 10
+    private fun validAnswer(automaticallyAnswered: AutomaticallyAnswered? = null) =
+        AutomaticAnswer(
+            target = automaticallyAnswered ?: automaticallyAnsweredMock(),
+            settings =
+                AutomaticAnswerSettings(
+                    useTimer = true,
+                    questionDelaySeconds = 10,
+                    answerDelaySeconds = 10,
+                ),
         )
-    )
 
     private class AutoAnswerMock(var answerShown: Boolean = false, var questionShown: Boolean = false) : AutomaticallyAnswered {
         override fun automaticShowAnswer() {

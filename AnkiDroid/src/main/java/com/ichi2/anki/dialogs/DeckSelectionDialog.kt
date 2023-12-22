@@ -66,6 +66,7 @@ import kotlin.collections.ArrayList
 @NeedsTest("simulate 'don't keep activities'")
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private var mDialog: MaterialDialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCancelable = true
@@ -73,8 +74,9 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
     @Suppress("Deprecation") // Material dialog neutral button deprecation
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialogView = LayoutInflater.from(activity)
-            .inflate(R.layout.deck_picker_dialog, null, false)
+        val dialogView =
+            LayoutInflater.from(activity)
+                .inflate(R.layout.deck_picker_dialog, null, false)
         val summary = dialogView.findViewById<TextView>(R.id.deck_picker_dialog_summary)
         val arguments = requireArguments()
         if (getSummaryMessage(arguments) == null) {
@@ -98,9 +100,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val did = args.getLong("currentDeckId")
             recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
         }
-        mDialog = MaterialDialog(requireActivity())
-            .negativeButton(R.string.dialog_cancel)
-            .customView(view = dialogView, noVerticalPadding = true)
+        mDialog =
+            MaterialDialog(requireActivity())
+                .negativeButton(R.string.dialog_cancel)
+                .customView(view = dialogView, noVerticalPadding = true)
         if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
             (mDialog as MaterialDialog).positiveButton(R.string.restore_default) {
                 onDeckSelected(null)
@@ -109,8 +112,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         return mDialog!!
     }
 
-    private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>) =
-        decks.indexOfFirst { it.deckId == did }
+    private fun getPositionOfDeck(
+        did: DeckId,
+        decks: List<SelectableDeck>,
+    ) = decks.indexOfFirst { it.deckId == did }
 
     private fun getSummaryMessage(arguments: Bundle): String? {
         return arguments.getString(SUMMARY_MESSAGE)
@@ -122,24 +127,29 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private val title: String
         get() = requireArguments().getString(TITLE)!!
 
-    private fun adjustToolbar(dialogView: View, adapter: DecksArrayAdapter) {
+    private fun adjustToolbar(
+        dialogView: View,
+        adapter: DecksArrayAdapter,
+    ) {
         val toolbar: Toolbar = dialogView.findViewById(R.id.deck_picker_dialog_toolbar)
         toolbar.title = title
         toolbar.inflateMenu(R.menu.deck_picker_dialog_menu)
         val searchItem = toolbar.menu.findItem(R.id.deck_picker_dialog_action_filter)
         val searchView = searchItem.actionView as SearchView
         searchView.queryHint = getString(R.string.deck_picker_dialog_filter_decks)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                searchView.clearFocus()
-                return true
-            }
+        searchView.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    searchView.clearFocus()
+                    return true
+                }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                adapter.filter.filter(newText)
-                return true
-            }
-        })
+                override fun onQueryTextChange(newText: String): Boolean {
+                    adapter.filter.filter(newText)
+                    return true
+                }
+            },
+        )
         val addDecks = toolbar.menu.findItem(R.id.deck_picker_dialog_action_add_deck)
         addDecks.setOnMenuItemClickListener {
             // creating new deck without any parent deck
@@ -151,13 +161,15 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private fun showSubDeckDialog(parentDeckPath: String) {
         launchCatchingTask {
             val parentId = withCol { decks.id(parentDeckPath) }
-            val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId)
+            val createDeckDialog =
+                CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId)
             createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a sub deck was created
                 launchCatchingTask {
-                    val name = withCol {
-                        decks.name(id!!)
-                    }
+                    val name =
+                        withCol {
+                            decks.name(id!!)
+                        }
                     selectDeckWithDeckName(name)
                 }
             }
@@ -255,6 +267,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         private val mAllDecksList = ArrayList<SelectableDeck>()
         private val mCurrentlyDisplayedDecks = ArrayList<SelectableDeck>()
+
         protected fun selectDeckByNameAndClose(deckName: String) {
             for (d in mAllDecksList) {
                 if (d.name == deckName) {
@@ -265,13 +278,20 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             displayErrorAndCancel()
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val v = LayoutInflater.from(parent.context)
-                .inflate(R.layout.deck_picker_dialog_list_item, parent, false)
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int,
+        ): ViewHolder {
+            val v =
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.deck_picker_dialog_list_item, parent, false)
             return ViewHolder(v.findViewById(R.id.deck_picker_dialog_list_item_value))
         }
 
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        override fun onBindViewHolder(
+            holder: ViewHolder,
+            position: Int,
+        ) {
             val deck = mCurrentlyDisplayedDecks[position]
             holder.setDeck(deck)
         }
@@ -289,14 +309,20 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
 
         private inner class DecksFilter : TypedFilter<SelectableDeck>(mAllDecksList) {
-            override fun filterResults(constraint: CharSequence, items: List<SelectableDeck>): List<SelectableDeck> {
+            override fun filterResults(
+                constraint: CharSequence,
+                items: List<SelectableDeck>,
+            ): List<SelectableDeck> {
                 val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
                 return items.filter {
                     it.name.lowercase(Locale.getDefault()).contains(filterPattern)
                 }
             }
 
-            override fun publishResults(constraint: CharSequence?, results: List<SelectableDeck>) {
+            override fun publishResults(
+                constraint: CharSequence?,
+                results: List<SelectableDeck>,
+            ) {
                 mCurrentlyDisplayedDecks.apply {
                     clear()
                     addAll(results)
@@ -354,7 +380,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
              * @param filter A method deciding which deck to add
              * @return the list of all SelectableDecks from the collection satisfying filter
              */
-            fun fromCollection(c: Collection, includeFiltered: Boolean): List<SelectableDeck> {
+            fun fromCollection(
+                c: Collection,
+                includeFiltered: Boolean,
+            ): List<SelectableDeck> {
                 val all = c.decks.allNamesAndIds(includeFiltered = includeFiltered)
                 val ret: MutableList<SelectableDeck> = ArrayList(all.size)
                 for (d in all) {
@@ -379,7 +408,12 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         /**
          * A dialog which handles selecting a deck
          */
-        fun newInstance(title: String, summaryMessage: String?, keepRestoreDefaultButton: Boolean, decks: List<SelectableDeck>): DeckSelectionDialog {
+        fun newInstance(
+            title: String,
+            summaryMessage: String?,
+            keepRestoreDefaultButton: Boolean,
+            decks: List<SelectableDeck>,
+        ): DeckSelectionDialog {
             val f = DeckSelectionDialog()
             val args = Bundle()
             args.putString(SUMMARY_MESSAGE, summaryMessage)

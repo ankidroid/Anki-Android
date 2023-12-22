@@ -21,7 +21,6 @@ import android.os.Handler
 import android.os.Looper
 
 object HandlerUtils {
-
     fun getDefaultLooper(): Looper = Looper.getMainLooper()
 
     fun newHandler(): Handler = Handler(getDefaultLooper())
@@ -50,7 +49,10 @@ object HandlerUtils {
      * @param delayMillis The delay (in milliseconds) until the Runnable
      *        will be executed.
      */
-    fun postDelayedOnNewHandler(r: Runnable, delayMillis: Long): Handler {
+    fun postDelayedOnNewHandler(
+        r: Runnable,
+        delayMillis: Long,
+    ): Handler {
         val newHandler = newHandler()
         newHandler.postDelayed(r, delayMillis)
         return newHandler
@@ -75,12 +77,15 @@ object HandlerUtils {
      * @param time The time by which the function execution needs to be delayed.
      * @param function The function which needs to be executed.
      */
-    fun executeFunctionWithDelay(time: Long, function: () -> Unit) {
+    fun executeFunctionWithDelay(
+        time: Long,
+        function: () -> Unit,
+    ) {
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 function()
             },
-            time
+            time,
         )
     }
 }

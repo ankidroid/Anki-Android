@@ -30,14 +30,21 @@ import java.io.File
 
 /** Adds a media file to collection.media which [Media] is not aware of */
 @CheckResult
-internal fun addUntrackedMediaFile(media: Media, content: String, path: List<String>): DiskFile {
+internal fun addUntrackedMediaFile(
+    media: Media,
+    content: String,
+    path: List<String>,
+): DiskFile {
     val file = convertPathToMediaFile(media, path)
     File(file.parent!!).mkdirs()
     IOUtils.writeStringToFile(file, content)
     return DiskFile.createInstance(file)!!
 }
 
-private fun convertPathToMediaFile(media: Media, path: List<String>): File {
+private fun convertPathToMediaFile(
+    media: Media,
+    path: List<String>,
+): File {
     val mutablePath = ArrayDeque(path)
     var file = File(media.dir)
     while (mutablePath.any()) {
@@ -55,13 +62,19 @@ internal fun RobolectricTest.setLegacyStorage() {
 
 /** Adds a file to collection.media which [Media] is not aware of */
 @CheckResult
-internal fun RobolectricTest.addUntrackedMediaFile(content: String, path: List<String>): DiskFile =
-    addUntrackedMediaFile(col.media, content, path)
+internal fun RobolectricTest.addUntrackedMediaFile(
+    content: String,
+    path: List<String>,
+): DiskFile = addUntrackedMediaFile(col.media, content, path)
 
 fun RobolectricTest.assertMigrationInProgress() {
     assertThat("the migration should be in progress", ScopedStorageService.mediaMigrationIsInProgress(this.targetContext), equalTo(true))
 }
 
 fun RobolectricTest.assertMigrationNotInProgress() {
-    assertThat("the migration should not be in progress", ScopedStorageService.mediaMigrationIsInProgress(this.targetContext), equalTo(false))
+    assertThat(
+        "the migration should not be in progress",
+        ScopedStorageService.mediaMigrationIsInProgress(this.targetContext),
+        equalTo(false),
+    )
 }

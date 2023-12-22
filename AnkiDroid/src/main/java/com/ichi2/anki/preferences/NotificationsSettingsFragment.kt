@@ -52,13 +52,14 @@ class NotificationsSettingsFragment : SettingsFragment() {
                 if ((newValue as String).toInt() < Preferences.PENDING_NOTIFICATIONS_ONLY) {
                     scheduleNotification(TimeManager.time, requireContext())
                 } else {
-                    val intent = PendingIntentCompat.getBroadcast(
-                        requireContext(),
-                        0,
-                        Intent(requireContext(), NotificationService::class.java),
-                        0,
-                        false
-                    )
+                    val intent =
+                        PendingIntentCompat.getBroadcast(
+                            requireContext(),
+                            0,
+                            Intent(requireContext(), NotificationService::class.java),
+                            0,
+                            false,
+                        )
                     val alarmManager = requireActivity().getSystemService(ALARM_SERVICE) as AlarmManager
                     if (intent != null) {
                         alarmManager.cancel(intent)

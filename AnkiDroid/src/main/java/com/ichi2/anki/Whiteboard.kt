@@ -215,7 +215,10 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         return mUndo.empty()
     }
 
-    private fun createBitmap(w: Int, h: Int) {
+    private fun createBitmap(
+        w: Int,
+        h: Int,
+    ) {
         val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         mBitmap = bitmap
         mCanvas = Canvas(bitmap)
@@ -233,7 +236,12 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
      * On rotating the device onSizeChanged() helps to stretch the previously created Bitmap rather
      * than creating a new Bitmap which makes sure bitmap doesn't go out of screen.
      */
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+    override fun onSizeChanged(
+        w: Int,
+        h: Int,
+        oldw: Int,
+        oldh: Int,
+    ) {
         super.onSizeChanged(w, h, oldw, oldh)
         // createScaledBitmap requires a width and height > 0; #13972
         if (w <= 0 || h <= 0) {
@@ -245,7 +253,10 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         mCanvas = Canvas(mBitmap)
     }
 
-    private fun drawStart(x: Float, y: Float) {
+    private fun drawStart(
+        x: Float,
+        y: Float,
+    ) {
         isCurrentlyDrawing = true
         mPath.reset()
         mPath.moveTo(x, y)
@@ -253,7 +264,10 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         mY = y
     }
 
-    private fun drawAlong(x: Float, y: Float) {
+    private fun drawAlong(
+        x: Float,
+        y: Float,
+    ) {
         val dx = abs(x - mX)
         val dy = abs(y - mY)
         if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
@@ -363,16 +377,17 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                 ColorPickerPopUp(context).run {
                     setShowAlpha(true)
                     setDefaultColor(penColor)
-                    setOnPickColorListener(object : ColorPickerPopUp.OnPickColorListener {
+                    setOnPickColorListener(
+                        object : ColorPickerPopUp.OnPickColorListener {
+                            override fun onColorPicked(color: Int) {
+                                penColor = color
+                            }
 
-                        override fun onColorPicked(color: Int) {
-                            penColor = color
-                        }
-
-                        override fun onCancel() {
-                            // unused
-                        }
-                    })
+                            override fun onCancel() {
+                                // unused
+                            }
+                        },
+                    )
                     show()
                 }
             }
@@ -417,6 +432,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
      */
     private inner class UndoList {
         private val mList: MutableList<WhiteboardAction> = ArrayList()
+
         fun add(action: WhiteboardAction) {
             mList.add(action)
         }
@@ -441,7 +457,10 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             invalidate()
         }
 
-        fun erase(x: Int, y: Int): Boolean {
+        fun erase(
+            x: Int,
+            y: Int,
+        ): Boolean {
             var didErase = false
             val clip = Region(0, 0, displayDimensions.x, displayDimensions.y)
             val eraserPath = Path()
@@ -486,6 +505,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
 
     private interface WhiteboardAction {
         fun apply(canvas: Canvas)
+
         val path: Path?
         val point: Point?
     }
@@ -533,13 +553,19 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     companion object {
         private const val TOUCH_TOLERANCE = 4f
         private var mWhiteboardMultiTouchMethods: WhiteboardMultiTouchMethods? = null
-        fun createInstance(context: AnkiActivity, handleMultiTouch: Boolean, whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?): Whiteboard {
+
+        fun createInstance(
+            context: AnkiActivity,
+            handleMultiTouch: Boolean,
+            whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?,
+        ): Whiteboard {
             val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme.isNightMode)
             mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods
-            val lp2 = FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
+            val lp2 =
+                FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                )
             whiteboard.layoutParams = lp2
             val fl = context.findViewById<FrameLayout>(R.id.whiteboard)
             fl.addView(whiteboard)
@@ -563,15 +589,16 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             whitePenColorButton.setOnClickListener { view: View -> onClick(view) }
             foregroundColor = Color.WHITE
         }
-        mPaint = Paint().apply {
-            isAntiAlias = true
-            isDither = true
-            color = foregroundColor
-            style = Paint.Style.STROKE
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
-            strokeWidth = currentStrokeWidth.toFloat()
-        }
+        mPaint =
+            Paint().apply {
+                isAntiAlias = true
+                isDither = true
+                color = foregroundColor
+                style = Paint.Style.STROKE
+                strokeJoin = Paint.Join.ROUND
+                strokeCap = Paint.Cap.ROUND
+                strokeWidth = currentStrokeWidth.toFloat()
+            }
         createBitmap()
         mPath = Path()
         mBitmapPaint = Paint(Paint.DITHER_FLAG)

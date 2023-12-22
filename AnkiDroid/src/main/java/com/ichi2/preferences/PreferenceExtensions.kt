@@ -28,7 +28,10 @@ import java.util.function.Supplier
  * Defect #5828 - This is potentially not thread safe and could cause another preference commit to fail.
  */
 @CheckResult // A "set" API should be used if the result is not required.
-fun SharedPreferences.getOrSetString(key: String, supplier: Supplier<String>): String {
+fun SharedPreferences.getOrSetString(
+    key: String,
+    supplier: Supplier<String>,
+): String {
     if (contains(key)) {
         // the default Is never returned. The value might be able be optimised, but the Android API should be better.
         return getString(key, "")!!
@@ -39,7 +42,10 @@ fun SharedPreferences.getOrSetString(key: String, supplier: Supplier<String>): S
 }
 
 @CheckResult // A "set" API should be used if the result is not required.
-fun SharedPreferences.getOrSetLong(key: String, supplier: Supplier<Long>): Long {
+fun SharedPreferences.getOrSetLong(
+    key: String,
+    supplier: Supplier<Long>,
+): Long {
     if (contains(key)) {
         // the default is never returned
         return getLong(key, -1337L)

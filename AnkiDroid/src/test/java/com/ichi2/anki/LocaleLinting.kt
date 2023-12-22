@@ -40,7 +40,6 @@ import java.util.*
 @Category(LintTests::class) // not yet supported by gradle: https://issues.gradle.org/browse/GRADLE-2111
 @Config(application = EmptyApplication::class) // no point in Application init if we don't use it
 class LocaleLinting(private val locale: Locale) : RobolectricTest() {
-
     @Before
     override fun setUp() {
         super.setUp()
@@ -82,7 +81,7 @@ class LocaleLinting(private val locale: Locale) : RobolectricTest() {
                 "These strings are used in the type the answer diffs, and the user should see all examples of problems. " +
                 "see: basic_answer_sample_text and basic_answer_sample_text_user",
             sample,
-            not(equalTo(sampleUser))
+            not(equalTo(sampleUser)),
         )
 
         val lastWord = sample.split(" ").last()
@@ -91,7 +90,7 @@ class LocaleLinting(private val locale: Locale) : RobolectricTest() {
                 "These are used in the type the answer diffs, and the user should see all examples of problems " +
                 "see: basic_answer_sample_text and basic_answer_sample_text_user",
             lastWord,
-            not(equalTo(sampleUser))
+            not(equalTo(sampleUser)),
         )
     }
 }

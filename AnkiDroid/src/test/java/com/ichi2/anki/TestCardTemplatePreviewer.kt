@@ -23,9 +23,10 @@ class TestCardTemplatePreviewer : CardTemplatePreviewer() {
         private set
 
     fun disableDoubleClickPrevention() {
-        lastClickTime = (
-            baseContext.sharedPrefs()
-                .getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL) * -2
+        lastClickTime =
+            (
+                baseContext.sharedPrefs()
+                    .getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL) * -2
             ).toLong()
     }
 

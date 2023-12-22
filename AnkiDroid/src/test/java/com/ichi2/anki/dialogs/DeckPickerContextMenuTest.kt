@@ -56,173 +56,185 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
-    fun addCards() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val models = getColUnsafe.notetypes
-            val didA = addDeck("Deck 1")
-            updateDeckList()
-            getColUnsafe.decks.select(didA)
-            val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
-            basic!!.put("did", didA)
-            addNoteUsingBasicModel("Front", "Back")
-            assertEquals(1, visibleDeckCount)
-            openContextMenuAndSelectItem(recyclerView, 0)
-            assertEquals(1, getColUnsafe.cardCount(didA))
+    fun addCards() =
+        runTest {
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                val models = getColUnsafe.notetypes
+                val didA = addDeck("Deck 1")
+                updateDeckList()
+                getColUnsafe.decks.select(didA)
+                val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+                basic!!.put("did", didA)
+                addNoteUsingBasicModel("Front", "Back")
+                assertEquals(1, visibleDeckCount)
+                openContextMenuAndSelectItem(recyclerView, 0)
+                assertEquals(1, getColUnsafe.cardCount(didA))
+            }
         }
-    }
 
     @Test
-    fun testBrowseCards() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val deckId = addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
+    fun testBrowseCards() =
+        runTest {
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                val deckId = addDeck("Deck 1")
+                updateDeckList()
+                assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 1)
+                openContextMenuAndSelectItem(recyclerView, 1)
 
-            val browser = shadowOf(this).nextStartedActivity!!
-            assertEquals("com.ichi2.anki.CardBrowser", browser.component!!.className)
+                val browser = shadowOf(this).nextStartedActivity!!
+                assertEquals("com.ichi2.anki.CardBrowser", browser.component!!.className)
 
-            assertEquals(deckId, getColUnsafe.decks.selected())
+                assertEquals(deckId, getColUnsafe.decks.selected())
+            }
         }
-    }
 
     @Test
-    fun testRenameDeck() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
+    fun testRenameDeck() =
+        runTest {
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                addDeck("Deck 1")
+                updateDeckList()
+                assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 2)
+                openContextMenuAndSelectItem(recyclerView, 2)
 
-            assertDialogTitleEquals("Rename deck")
+                assertDialogTitleEquals("Rename deck")
+            }
         }
-    }
 
     @Test
-    fun testCreateSubdeck() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
+    fun testCreateSubdeck() =
+        runTest {
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                addDeck("Deck 1")
+                updateDeckList()
+                assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 3)
+                openContextMenuAndSelectItem(recyclerView, 3)
 
-            assertDialogTitleEquals("Create subdeck")
+                assertDialogTitleEquals("Create subdeck")
+            }
         }
-    }
 
     @Test
-    fun testShowDeckOptions() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
+    fun testShowDeckOptions() =
+        runTest {
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                addDeck("Deck 1")
+                updateDeckList()
+                assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 4)
+                openContextMenuAndSelectItem(recyclerView, 4)
+            }
         }
-    }
 
     @Test
-    fun testDeleteDeck() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val deckId = addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
+    fun testDeleteDeck() =
+        runTest {
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                val deckId = addDeck("Deck 1")
+                updateDeckList()
+                assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 8)
+                openContextMenuAndSelectItem(recyclerView, 8)
 
-            assertThat(getColUnsafe.decks.allNamesAndIds().map { it.id }, not(containsInAnyOrder(deckId)))
+                assertThat(getColUnsafe.decks.allNamesAndIds().map { it.id }, not(containsInAnyOrder(deckId)))
+            }
         }
-    }
 
     @Test
-    fun testCreateShortcut() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
+    fun testCreateShortcut() =
+        runTest {
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                addDeck("Deck 1")
+                updateDeckList()
+                assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 7)
+                openContextMenuAndSelectItem(recyclerView, 7)
 
-            assertEquals(
-                "Deck 1",
-                ShortcutManagerCompat.getShortcuts(this, FLAG_MATCH_PINNED).first().shortLabel
-            )
+                assertEquals(
+                    "Deck 1",
+                    ShortcutManagerCompat.getShortcuts(this, FLAG_MATCH_PINNED).first().shortLabel,
+                )
+            }
         }
-    }
 
     @Test
-    fun testUnbury() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            TimeManager.reset()
-            // stop 'next day' code running, which calls 'unbury'
-            updateDeckList()
+    fun testUnbury() =
+        runTest {
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                TimeManager.reset()
+                // stop 'next day' code running, which calls 'unbury'
+                updateDeckList()
 
-            val deckId = addDeck("Deck 1")
-            getColUnsafe.decks.select(deckId)
-            getColUnsafe.notetypes.byName("Basic")!!.put("did", deckId)
-            val card = addNoteUsingBasicModel("front", "back").firstCard()
-            getColUnsafe.sched.buryCards(listOf(card.id))
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
+                val deckId = addDeck("Deck 1")
+                getColUnsafe.decks.select(deckId)
+                getColUnsafe.notetypes.byName("Basic")!!.put("did", deckId)
+                val card = addNoteUsingBasicModel("front", "back").firstCard()
+                getColUnsafe.sched.buryCards(listOf(card.id))
+                updateDeckList()
+                assertEquals(1, visibleDeckCount)
 
-            assertTrue(getColUnsafe.sched.haveBuriedInCurrentDeck(), "Deck should have buried cards")
+                assertTrue(getColUnsafe.sched.haveBuriedInCurrentDeck(), "Deck should have buried cards")
 
-            openContextMenuAndSelectItem(recyclerView, 7)
+                openContextMenuAndSelectItem(recyclerView, 7)
 
-            assertFalse(getColUnsafe.sched.haveBuriedInCurrentDeck())
+                assertFalse(getColUnsafe.sched.haveBuriedInCurrentDeck())
+            }
         }
-    }
 
     @Test
-    fun testCustomStudy() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
+    fun testCustomStudy() =
+        runTest {
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                addDeck("Deck 1")
+                updateDeckList()
+                assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 5)
+                openContextMenuAndSelectItem(recyclerView, 5)
 
-            assertDialogTitleEquals("Custom study")
+                assertDialogTitleEquals("Custom study")
+            }
         }
-    }
 
     @Test
-    fun testExportDeck() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
+    fun testExportDeck() =
+        runTest {
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                addDeck("Deck 1")
+                updateDeckList()
+                assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 6)
+                openContextMenuAndSelectItem(recyclerView, 6)
 
-            assertDialogTitleEquals("Export")
+                assertDialogTitleEquals("Export")
+            }
         }
-    }
 
     @Test
-    fun testDynRebuildAndEmpty() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val cardIds = (0..3)
-                .map { addNoteUsingBasicModel("$it", "").firstCard().id }
-            assertTrue(allCardsInSameDeck(cardIds, 1))
-            val deckId = addDynamicDeck("Deck 1")
-            getColUnsafe.sched.rebuildDyn(deckId)
-            assertTrue(allCardsInSameDeck(cardIds, deckId))
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
+    fun testDynRebuildAndEmpty() =
+        runTest {
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                val cardIds =
+                    (0..3)
+                        .map { addNoteUsingBasicModel("$it", "").firstCard().id }
+                assertTrue(allCardsInSameDeck(cardIds, 1))
+                val deckId = addDynamicDeck("Deck 1")
+                getColUnsafe.sched.rebuildDyn(deckId)
+                assertTrue(allCardsInSameDeck(cardIds, deckId))
+                updateDeckList()
+                assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(recyclerView, 3) // Empty
+                openContextMenuAndSelectItem(recyclerView, 3) // Empty
 
-            assertTrue(allCardsInSameDeck(cardIds, 1))
+                assertTrue(allCardsInSameDeck(cardIds, 1))
 
-            openContextMenuAndSelectItem(recyclerView, 2) // Rebuild
+                openContextMenuAndSelectItem(recyclerView, 2) // Rebuild
 
-            assertTrue(allCardsInSameDeck(cardIds, deckId))
+                assertTrue(allCardsInSameDeck(cardIds, deckId))
+            }
         }
-    }
 
     private fun assertDialogTitleEquals(expectedTitle: String) {
         val actualTitle =
@@ -234,17 +246,23 @@ class DeckPickerContextMenuTest : RobolectricTest() {
         assertEquals(expectedTitle, "$actualTitle")
     }
 
-    private fun allCardsInSameDeck(cardIds: List<Long>, deckId: Long): Boolean =
-        cardIds.all { col.getCard(it).did == deckId }
+    private fun allCardsInSameDeck(
+        cardIds: List<Long>,
+        deckId: Long,
+    ): Boolean = cardIds.all { col.getCard(it).did == deckId }
 
-    private fun openContextMenuAndSelectItem(contextMenu: RecyclerView, index: Int) {
+    private fun openContextMenuAndSelectItem(
+        contextMenu: RecyclerView,
+        index: Int,
+    ) {
         ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
         contextMenu.postDelayed({
             contextMenu.findViewHolderForAdapterPosition(0)!!
                 .itemView.performLongClick()
 
-            val dialogRecyclerView = (ShadowDialog.getLatestDialog() as MaterialDialog?)!!
-                .view.findViewById<RecyclerView>(com.afollestad.materialdialogs.R.id.md_recyclerview_content)
+            val dialogRecyclerView =
+                (ShadowDialog.getLatestDialog() as MaterialDialog?)!!
+                    .view.findViewById<RecyclerView>(com.afollestad.materialdialogs.R.id.md_recyclerview_content)
 
             dialogRecyclerView.apply {
                 scrollToPosition(index)

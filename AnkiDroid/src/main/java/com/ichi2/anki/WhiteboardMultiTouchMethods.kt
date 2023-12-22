@@ -24,7 +24,10 @@ interface WhiteboardMultiTouchMethods {
      * @param x horizontal position of the event
      * @param y vertical position of the event
      */
-    fun tapOnCurrentCard(x: Int, y: Int)
+    fun tapOnCurrentCard(
+        x: Int,
+        y: Int,
+    )
 
     /** Scroll the currently shown flashcard vertically
      *

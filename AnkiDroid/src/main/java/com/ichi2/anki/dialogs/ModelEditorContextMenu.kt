@@ -20,16 +20,16 @@ import timber.log.Timber
  * Note: the class is declared as open only to support testing.
  */
 open class ModelEditorContextMenu : AnalyticsDialogFragment() {
-
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         // add only the actions which can be done at the current API level
-        var availableItems = if (isAtLeastAtN()) {
-            ModelEditorContextMenuAction.entries.toList()
-        } else {
-            ModelEditorContextMenuAction.entries.filterNot { it == AddLanguageHint }
-        }
+        var availableItems =
+            if (isAtLeastAtN()) {
+                ModelEditorContextMenuAction.entries.toList()
+            } else {
+                ModelEditorContextMenuAction.entries.filterNot { it == AddLanguageHint }
+            }
         availableItems = availableItems.sortedBy { it.order }
 
         return AlertDialog.Builder(requireActivity()).apply {
@@ -44,7 +44,10 @@ open class ModelEditorContextMenu : AnalyticsDialogFragment() {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     protected open fun isAtLeastAtN() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
 
-    enum class ModelEditorContextMenuAction(val order: Int, @StringRes val actionTextId: Int) {
+    enum class ModelEditorContextMenuAction(
+        val order: Int,
+        @StringRes val actionTextId: Int,
+    ) {
         Reposition(0, R.string.model_field_editor_reposition_menu),
         Sort(1, R.string.model_field_editor_sort_field),
         Rename(2, R.string.model_field_editor_rename),
@@ -54,15 +57,16 @@ open class ModelEditorContextMenu : AnalyticsDialogFragment() {
         /**
          * This action will be possible only when the api level of the platform is at least at [Build.VERSION_CODES.N].
          */
-        AddLanguageHint(5, R.string.model_field_editor_language_hint)
+        AddLanguageHint(5, R.string.model_field_editor_language_hint),
     }
 
     companion object {
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val KEY_LABEL = "key_label"
 
-        fun newInstance(label: String): ModelEditorContextMenu = ModelEditorContextMenu().apply {
-            arguments = bundleOf(KEY_LABEL to label)
-        }
+        fun newInstance(label: String): ModelEditorContextMenu =
+            ModelEditorContextMenu().apply {
+                arguments = bundleOf(KEY_LABEL to label)
+            }
     }
 }

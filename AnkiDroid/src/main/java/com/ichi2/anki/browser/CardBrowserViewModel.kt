@@ -60,7 +60,7 @@ import kotlin.math.min
 @NeedsTest("reverseDirectionFlow/sortTypeFlow are not updated on .launch { }")
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
-    preferences: SharedPreferencesProvider
+    preferences: SharedPreferencesProvider,
 ) : ViewModel(), SharedPreferencesProvider by preferences {
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
 
@@ -120,12 +120,13 @@ class CardBrowserViewModel(
 
     suspend fun setDeckId(deckId: DeckId) {
         lastDeckIdRepository.lastDeckId = deckId
-        restrictOnDeck = if (deckId == ALL_DECKS_ID) {
-            ""
-        } else {
-            val deckName = withCol { decks.name(deckId) }
-            "deck:\"$deckName\" "
-        }
+        restrictOnDeck =
+            if (deckId == ALL_DECKS_ID) {
+                ""
+            } else {
+                val deckName = withCol { decks.name(deckId) }
+                "deck:\"$deckName\" "
+            }
         deckIdFlow.update { deckId }
     }
 
@@ -226,16 +227,16 @@ class CardBrowserViewModel(
      * Deletes the selected notes,
      * @return the number of deleted notes
      */
-    suspend fun deleteSelectedNotes(): Int =
-        undoableOp { removeNotes(cids = selectedCardIds) }.count
+    suspend fun deleteSelectedNotes(): Int = undoableOp { removeNotes(cids = selectedCardIds) }.count
 
-    fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch {
-        withCol {
-            // Change this to only change the preference on a state change
-            newValue.saveToCollection(this)
+    fun setCardsOrNotes(newValue: CardsOrNotes) =
+        viewModelScope.launch {
+            withCol {
+                // Change this to only change the preference on a state change
+                newValue.saveToCollection(this)
+            }
+            cardsOrNotesFlow.update { newValue }
         }
-        cardsOrNotesFlow.update { newValue }
-    }
 
     fun setTruncated(value: Boolean) {
         viewModelScope.launch {
@@ -278,7 +279,10 @@ class CardBrowserViewModel(
     /**
      * Selects the cards between [startPos] and [endPos]
      */
-    fun selectRowsBetweenPositions(startPos: Int, endPos: Int) {
+    fun selectRowsBetweenPositions(
+        startPos: Int,
+        endPos: Int,
+    ) {
         val cards = (min(startPos, endPos)..max(startPos, endPos)).map { cards[it] }
         if (_selectedRows.addAll(cards)) {
             refreshSelectedRowsFlow()
@@ -286,9 +290,10 @@ class CardBrowserViewModel(
     }
 
     /** emits a new value in [selectedRowsFlow] */
-    private fun refreshSelectedRowsFlow() = viewModelScope.launch {
-        refreshSelectedRowsFlow.emit(Unit)
-    }
+    private fun refreshSelectedRowsFlow() =
+        viewModelScope.launch {
+            refreshSelectedRowsFlow.emit(Unit)
+        }
 
     fun selectedRowCount(): Int = selectedRows.size
 
@@ -310,6 +315,7 @@ class CardBrowserViewModel(
     fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
 
     fun setColumn2Index(value: Int) = column2IndexFlow.update { value }
+
     suspend fun suspendCards() {
         val cardIds = selectedCardIds
         if (cardIds.isEmpty()) {
@@ -336,23 +342,25 @@ class CardBrowserViewModel(
             CARDS -> {
                 val selectedCardIds = selectedCardIds
                 ExportDialogParams(
-                    message = resources.getQuantityString(
-                        R.plurals.confirm_apkg_export_selected_cards,
-                        selectedCardIds.size,
-                        selectedCardIds.size
-                    ),
-                    exportType = ExportType.ExportCards(selectedCardIds)
+                    message =
+                        resources.getQuantityString(
+                            R.plurals.confirm_apkg_export_selected_cards,
+                            selectedCardIds.size,
+                            selectedCardIds.size,
+                        ),
+                    exportType = ExportType.ExportCards(selectedCardIds),
                 )
             }
             NOTES -> {
                 val selectedNoteIds = withCol { CardService.selectedNoteIds(selectedCardIds, this) }
                 ExportDialogParams(
-                    message = resources.getQuantityString(
-                        R.plurals.confirm_apkg_export_selected_notes,
-                        selectedNoteIds.size,
-                        selectedNoteIds.size
-                    ),
-                    exportType = ExportType.ExportNotes(selectedNoteIds)
+                    message =
+                        resources.getQuantityString(
+                            R.plurals.confirm_apkg_export_selected_notes,
+                            selectedNoteIds.size,
+                            selectedNoteIds.size,
+                        ),
+                    exportType = ExportType.ExportNotes(selectedNoteIds),
                 )
             }
         }
@@ -362,9 +370,10 @@ class CardBrowserViewModel(
      * @see [com.ichi2.libanki.sched.Scheduler.sortCards]
      * @return the number of cards which were repositioned
      */
-    suspend fun repositionSelectedRows(position: Int) = undoableOp {
-        sched.sortCards(selectedCardIds, position, 1, shuffle = false, shift = true)
-    }.count
+    suspend fun repositionSelectedRows(position: Int) =
+        undoableOp {
+            sched.sortCards(selectedCardIds, position, 1, shuffle = false, shift = true)
+        }.count
 
     /** Returns the number of rows of the current result set  */
     val rowCount: Int
@@ -397,11 +406,10 @@ class CardBrowserViewModel(
         withCol { config.set("savedFilters", filters) }
         return filters
     }
-    suspend fun savedSearches(): HashMap<String, String> =
-        withCol { config.get("savedFilters") } ?: hashMapOf()
 
-    fun savedSearchesUnsafe(col: com.ichi2.libanki.Collection): HashMap<String, String> =
-        col.config.get("savedFilters") ?: hashMapOf()
+    suspend fun savedSearches(): HashMap<String, String> = withCol { config.get("savedFilters") } ?: hashMapOf()
+
+    fun savedSearchesUnsafe(col: com.ichi2.libanki.Collection): HashMap<String, String> = col.config.get("savedFilters") ?: hashMapOf()
 
     suspend fun removeSavedSearch(searchName: String): HashMap<String, String> {
         Timber.d("removing user search")
@@ -410,7 +418,10 @@ class CardBrowserViewModel(
         }
     }
 
-    suspend fun saveSearch(searchName: String, searchTerms: String): SaveSearchResult {
+    suspend fun saveSearch(
+        searchName: String,
+        searchTerms: String,
+    ): SaveSearchResult {
         Timber.d("saving user search")
         var alreadyExists = false
         updateSavedSearches {
@@ -424,17 +435,20 @@ class CardBrowserViewModel(
     }
 
     /** Ignores any values before [initCompleted] is set */
-    private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> =
-        this.filter { initCompleted }
+    private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> = this.filter { initCompleted }
 
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
-        fun factory(lastDeckIdRepository: LastDeckIdRepository, preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
+
+        fun factory(
+            lastDeckIdRepository: LastDeckIdRepository,
+            preferencesProvider: SharedPreferencesProvider? = null,
+        ) = viewModelFactory {
             initializer {
                 CardBrowserViewModel(
                     lastDeckIdRepository,
-                    preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider
+                    preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider,
                 )
             }
         }
@@ -443,11 +457,11 @@ class CardBrowserViewModel(
     /** temporary result class for [changeCardOrder] */
     enum class ChangeCardOrderResult {
         OrderChange,
-        DirectionChange
+        DirectionChange,
     }
 }
 
 enum class SaveSearchResult {
     ALREADY_EXISTS,
-    SUCCESS
+    SUCCESS,
 }

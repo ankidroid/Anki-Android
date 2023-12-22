@@ -93,7 +93,10 @@ open class BackupManagerTest {
         assertThat("should fail if collection too small", result, equalTo(false))
     }
 
-    private fun performBackup(bm: BackupManager, time: Time = MockTime(100000000)): Boolean {
+    private fun performBackup(
+        bm: BackupManager,
+        time: Time = MockTime(100000000),
+    ): Boolean {
         return bm.performBackupInBackground("/AnkiDroid/", time)
     }
 

@@ -52,7 +52,7 @@ abstract class FieldControllerBase : IFieldController {
         return mActivity
     }
 
-    override fun loadInstanceState(savedInstanceState: Bundle?) { /* Default implementation does nothing */
+    override fun loadInstanceState(savedInstanceState: Bundle?) { // Default implementation does nothing
     }
 
     override fun saveInstanceState(): Bundle? {

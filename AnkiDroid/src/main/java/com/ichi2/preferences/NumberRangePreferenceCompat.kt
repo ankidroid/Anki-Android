@@ -33,41 +33,40 @@ import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
 open class NumberRangePreferenceCompat
-@JvmOverloads // fixes: Error inflating class com.ichi2.preferences.NumberRangePreferenceCompat
-constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = androidx.preference.R.attr.editTextPreferenceStyle,
-    defStyleRes: Int = androidx.preference.R.style.Preference_DialogPreference_EditTextPreference
-) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes), DialogFragmentProvider {
+    @JvmOverloads // fixes: Error inflating class com.ichi2.preferences.NumberRangePreferenceCompat
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = androidx.preference.R.attr.editTextPreferenceStyle,
+        defStyleRes: Int = androidx.preference.R.style.Preference_DialogPreference_EditTextPreference,
+    ) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes), DialogFragmentProvider {
+        var defaultValue: String? = null
 
-    var defaultValue: String? = null
+        var min = 0
+            protected set
+        var max = 0
+            private set
 
-    var min = 0
-        protected set
-    var max = 0
-        private set
+        init {
+            min = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
+            max = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max", Int.MAX_VALUE) ?: Int.MAX_VALUE
+            defaultValue = attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "defaultValue")
 
-    init {
-        min = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
-        max = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max", Int.MAX_VALUE) ?: Int.MAX_VALUE
-        defaultValue = attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "defaultValue")
-
-        context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
-            getResourceId(R.styleable.CustomPreference_summaryFormat, 0)
-                .takeIf { it != 0 }?.let { redId ->
-                    setSummaryProvider {
-                        if (text == null) {
-                            return@setSummaryProvider ""
+            context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
+                getResourceId(R.styleable.CustomPreference_summaryFormat, 0)
+                    .takeIf { it != 0 }?.let { redId ->
+                        setSummaryProvider {
+                            if (text == null) {
+                                return@setSummaryProvider ""
+                            }
+                            context.getFormattedStringOrPlurals(redId, text!!.toInt())
                         }
-                        context.getFormattedStringOrPlurals(redId, text!!.toInt())
                     }
-                }
+            }
         }
-    }
 
-    /** The maximum available number of digits */
-    val maxDigits: Int get() = max.toString().length
+        /** The maximum available number of digits */
+        val maxDigits: Int get() = max.toString().length
 
     /*
      * Since this preference deals with integers only, it makes sense to only store and retrieve integers. However,
@@ -75,130 +74,131 @@ constructor(
      * type. The two methods below intercept the persistence and retrieval methods for Strings and replaces them with
      * their Integer equivalents.
      */
-    override fun getPersistedString(defaultReturnValue: String?): String? {
-        return getPersistedInt(getDefaultValue()).toString()
-    }
-
-    override fun persistString(value: String): Boolean {
-        return persistInt(value.toInt())
-    }
-
-    /**
-     * Return the integer rounded to the nearest bound if it is outside of the acceptable range.
-     *
-     * @param input Integer to validate.
-     * @return The input value within acceptable range.
-     */
-    fun getValidatedRangeFromInt(input: Int): Int {
-        if (input < min) {
-            return min
-        } else if (input > max) {
-            return max
+        override fun getPersistedString(defaultReturnValue: String?): String? {
+            return getPersistedInt(getDefaultValue()).toString()
         }
-        return input
-    }
 
-    /**
-     * Return the string as an int with the number rounded to the nearest bound if it is outside of the acceptable
-     * range.
-     *
-     * @param input User input in text editor.
-     * @return The input value within acceptable range.
-     */
-    private fun getValidatedRangeFromString(input: String): Int {
-        return if (input.isEmpty()) {
-            min
-        } else {
-            try {
-                getValidatedRangeFromInt(input.toInt())
-            } catch (e: NumberFormatException) {
-                Timber.w(e)
+        override fun persistString(value: String): Boolean {
+            return persistInt(value.toInt())
+        }
+
+        /**
+         * Return the integer rounded to the nearest bound if it is outside of the acceptable range.
+         *
+         * @param input Integer to validate.
+         * @return The input value within acceptable range.
+         */
+        fun getValidatedRangeFromInt(input: Int): Int {
+            if (input < min) {
+                return min
+            } else if (input > max) {
+                return max
+            }
+            return input
+        }
+
+        /**
+         * Return the string as an int with the number rounded to the nearest bound if it is outside of the acceptable
+         * range.
+         *
+         * @param input User input in text editor.
+         * @return The input value within acceptable range.
+         */
+        private fun getValidatedRangeFromString(input: String): Int {
+            return if (input.isEmpty()) {
+                min
+            } else {
+                try {
+                    getValidatedRangeFromInt(input.toInt())
+                } catch (e: NumberFormatException) {
+                    Timber.w(e)
+                    min
+                }
+            }
+        }
+
+        /**
+         * Get the persisted value held by this preference.
+         *
+         * @return the persisted value.
+         */
+        fun getValue(): Int {
+            return getPersistedInt(getDefaultValue())
+        }
+
+        private fun getDefaultValue(): Int {
+            return try {
+                return defaultValue?.toInt() ?: min
+            } catch (e: Exception) {
                 min
             }
         }
-    }
-
-    /**
-     * Get the persisted value held by this preference.
-     *
-     * @return the persisted value.
-     */
-    fun getValue(): Int {
-        return getPersistedInt(getDefaultValue())
-    }
-
-    private fun getDefaultValue(): Int {
-        return try {
-            return defaultValue?.toInt() ?: min
-        } catch (e: Exception) {
-            min
-        }
-    }
-
-    /**
-     * Set this preference's value. The value is validated and persisted as an Integer.
-     *
-     * @param value to set.
-     */
-    fun setValue(value: Int) {
-        val validated = getValidatedRangeFromInt(value)
-        text = validated.toString()
-        persistInt(validated)
-    }
-
-    /**
-     * Set this preference's value. The value is validated and persisted as an Integer.
-     *
-     * @param value to set.
-     */
-    fun setValue(value: String) {
-        val fromString = getValidatedRangeFromString(value)
-        text = fromString.toString()
-        persistInt(fromString)
-    }
-
-    open class NumberRangeDialogFragmentCompat : EditTextPreferenceDialogFragmentCompat() {
-
-        val numberRangePreference: NumberRangePreferenceCompat get() = preference as NumberRangePreferenceCompat
-
-        lateinit var editText: EditText
 
         /**
-         * Update settings to only allow integer input and set the maximum number of digits allowed in the text field based
-         * on the current value of the [.mMax] field.
+         * Set this preference's value. The value is validated and persisted as an Integer.
+         *
+         * @param value to set.
          */
-        override fun onBindDialogView(view: View) {
-            editText = view.findViewById(android.R.id.edit)!!
-
-            // Only allow integer input
-            editText.inputType = InputType.TYPE_CLASS_NUMBER
-
-            // Clone the existing filters so we don't override them, then append our one at the end.
-            editText.filters = arrayOf(*editText.filters, InputFilter.LengthFilter(numberRangePreference.maxDigits))
-
-            super.onBindDialogView(view)
+        fun setValue(value: Int) {
+            val validated = getValidatedRangeFromInt(value)
+            text = validated.toString()
+            persistInt(validated)
         }
 
-        @NeedsTest("value is set to preference previous value if text is blank")
-        override fun onDialogClosed(positiveResult: Boolean) {
-            // don't change the value if the dialog was cancelled or closed without any text
-            if (!positiveResult || editText.text.isEmpty()) {
-                return
+        /**
+         * Set this preference's value. The value is validated and persisted as an Integer.
+         *
+         * @param value to set.
+         */
+        fun setValue(value: String) {
+            val fromString = getValidatedRangeFromString(value)
+            text = fromString.toString()
+            persistInt(fromString)
+        }
+
+        open class NumberRangeDialogFragmentCompat : EditTextPreferenceDialogFragmentCompat() {
+            val numberRangePreference: NumberRangePreferenceCompat get() = preference as NumberRangePreferenceCompat
+
+            lateinit var editText: EditText
+
+            /**
+             * Update settings to only allow integer input and set the maximum number of digits allowed in the text field based
+             * on the current value of the [.mMax] field.
+             */
+            override fun onBindDialogView(view: View) {
+                editText = view.findViewById(android.R.id.edit)!!
+
+                // Only allow integer input
+                editText.inputType = InputType.TYPE_CLASS_NUMBER
+
+                // Clone the existing filters so we don't override them, then append our one at the end.
+                editText.filters = arrayOf(*editText.filters, InputFilter.LengthFilter(numberRangePreference.maxDigits))
+
+                super.onBindDialogView(view)
             }
-            val newValue = editText.text.toString().toInt()
-            if (numberRangePreference.callChangeListener(newValue)) {
-                numberRangePreference.setValue(newValue)
+
+            @NeedsTest("value is set to preference previous value if text is blank")
+            override fun onDialogClosed(positiveResult: Boolean) {
+                // don't change the value if the dialog was cancelled or closed without any text
+                if (!positiveResult || editText.text.isEmpty()) {
+                    return
+                }
+                val newValue = editText.text.toString().toInt()
+                if (numberRangePreference.callChangeListener(newValue)) {
+                    numberRangePreference.setValue(newValue)
+                }
             }
         }
+
+        enum class ShouldShowDialog { Yes, No }
+
+        var onClickListener: () -> ShouldShowDialog = { ShouldShowDialog.Yes }
+
+        override fun onClick() {
+            if (onClickListener() == ShouldShowDialog.Yes) {
+                super.onClick()
+            }
+        }
+
+        override fun makeDialogFragment() = NumberRangeDialogFragmentCompat()
     }
-
-    enum class ShouldShowDialog { Yes, No }
-
-    var onClickListener: () -> ShouldShowDialog = { ShouldShowDialog.Yes }
-
-    override fun onClick() {
-        if (onClickListener() == ShouldShowDialog.Yes) { super.onClick() }
-    }
-
-    override fun makeDialogFragment() = NumberRangeDialogFragmentCompat()
-}

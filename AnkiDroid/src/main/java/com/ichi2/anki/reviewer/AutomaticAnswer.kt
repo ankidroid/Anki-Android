@@ -61,29 +61,30 @@ import timber.log.Timber
  */
 class AutomaticAnswer(
     target: AutomaticallyAnswered,
-    @VisibleForTesting val settings: AutomaticAnswerSettings
+    @VisibleForTesting val settings: AutomaticAnswerSettings,
 ) {
-
     /** Whether any tasks should be executed/scheduled.
      *
      * Ensures that auto answer does not occur if the reviewer is minimised
      */
     var isDisabled: Boolean = false
         private set
-    private val showAnswerTask = Runnable {
-        if (isDisabled) {
-            Timber.d("showAnswer: disabled")
-            return@Runnable
+    private val showAnswerTask =
+        Runnable {
+            if (isDisabled) {
+                Timber.d("showAnswer: disabled")
+                return@Runnable
+            }
+            target.automaticShowAnswer()
         }
-        target.automaticShowAnswer()
-    }
-    private val showQuestionTask = Runnable {
-        if (isDisabled) {
-            Timber.d("showQuestion: disabled")
-            return@Runnable
+    private val showQuestionTask =
+        Runnable {
+            if (isDisabled) {
+                Timber.d("showQuestion: disabled")
+                return@Runnable
+            }
+            target.automaticShowQuestion(settings.answerAction)
         }
-        target.automaticShowQuestion(settings.answerAction)
-    }
 
     /**
      * Handler for the delay in auto showing question and/or answer
@@ -189,6 +190,7 @@ class AutomaticAnswer(
 
     interface AutomaticallyAnswered {
         fun automaticShowAnswer()
+
         fun automaticShowQuestion(action: AutomaticAnswerAction)
     }
 
@@ -199,7 +201,11 @@ class AutomaticAnswer(
         }
 
         @CheckResult
-        fun createInstance(target: AutomaticallyAnswered, preferences: SharedPreferences, col: Collection): AutomaticAnswer {
+        fun createInstance(
+            target: AutomaticallyAnswered,
+            preferences: SharedPreferences,
+            col: Collection,
+        ): AutomaticAnswer {
             val settings = AutomaticAnswerSettings.createInstance(preferences, col)
             return AutomaticAnswer(target, settings)
         }
@@ -226,15 +232,16 @@ class AutomaticAnswerSettings(
     val answerAction: AutomaticAnswerAction = AutomaticAnswerAction.BURY_CARD,
     @get:JvmName("useTimer") val useTimer: Boolean = false,
     private val questionDelaySeconds: Int = 60,
-    private val answerDelaySeconds: Int = 20
+    private val answerDelaySeconds: Int = 20,
 ) {
-
     val questionDelayMilliseconds = questionDelaySeconds * 1000L
     val answerDelayMilliseconds = answerDelaySeconds * 1000L
 
     // a wait of zero means auto-advance is disabled
-    val autoAdvanceAnswer; get() = answerDelaySeconds > 0
-    val autoAdvanceQuestion; get() = questionDelaySeconds > 0
+    val autoAdvanceAnswer
+        get() = answerDelaySeconds > 0
+    val autoAdvanceQuestion
+        get() = questionDelaySeconds > 0
 
     companion object {
         /**
@@ -245,7 +252,7 @@ class AutomaticAnswerSettings(
         fun queryDeckSpecificOptions(
             action: AutomaticAnswerAction,
             col: Collection,
-            selectedDid: DeckId
+            selectedDid: DeckId,
         ): AutomaticAnswerSettings? {
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck
@@ -266,14 +273,20 @@ class AutomaticAnswerSettings(
             return AutomaticAnswerSettings(action, useTimer, waitQuestionSecond, waitAnswerSecond)
         }
 
-        fun queryFromPreferences(preferences: SharedPreferences, action: AutomaticAnswerAction): AutomaticAnswerSettings {
+        fun queryFromPreferences(
+            preferences: SharedPreferences,
+            action: AutomaticAnswerAction,
+        ): AutomaticAnswerSettings {
             val prefUseTimer: Boolean = preferences.getBoolean("timeoutAnswer", false)
             val prefWaitQuestionSecond: Int = preferences.getInt("timeoutQuestionSeconds", 60)
             val prefWaitAnswerSecond: Int = preferences.getInt("timeoutAnswerSeconds", 20)
             return AutomaticAnswerSettings(action, prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
         }
 
-        fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
+        fun createInstance(
+            preferences: SharedPreferences,
+            col: Collection,
+        ): AutomaticAnswerSettings {
             // deck specific options take precedence over general (preference-based) options.
             // the action can only be set via preferences (but is stored in the collection).
             val action = getAction(col)
@@ -301,7 +314,8 @@ enum class AutomaticAnswerAction(private val preferenceValue: Int) {
     ANSWER_AGAIN(1),
     ANSWER_HARD(2),
     ANSWER_GOOD(3),
-    ANSWER_EASY(4);
+    ANSWER_EASY(4),
+    ;
 
     fun execute(reviewer: Reviewer) {
         val numberOfButtons = 4

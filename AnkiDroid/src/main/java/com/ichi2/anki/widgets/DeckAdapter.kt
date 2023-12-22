@@ -41,7 +41,10 @@ import java.util.*
 @KotlinCleanup("lots to do")
 @RustCleanup("Lots of bad code: should not be using suspend functions inside an adapter")
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
-class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
+class DeckAdapter(
+    private val layoutInflater: LayoutInflater,
+    context: Context,
+) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
     private var deckTree: DeckNode? = null
 
     /** The non-collapsed subset of the deck tree that matches the current search. */
@@ -125,7 +128,10 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
      * Consume a list of [DeckNode]s to render a new deck list.
      * @param filter The string to filter the deck by
      */
-    suspend fun buildDeckList(node: DeckNode, filter: CharSequence?) {
+    suspend fun buildDeckList(
+        node: DeckNode,
+        filter: CharSequence?,
+    ) {
         Timber.d("buildDeckList")
         // TODO: This is a lazy hack to fix a bug. We hold the lock for far too long
         // and do I/O inside it. Better to calculate the new lists outside the lock, then swap
@@ -148,12 +154,18 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         return deckList[pos]
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
         val v = layoutInflater.inflate(R.layout.deck_item, parent, false)
         return ViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         // Update views for this node
         val node = filteredDeckList[position]
         // Set the expander icon and padding according to whether or not there are any subdecks
@@ -219,7 +231,10 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         holder.countsLayout.setOnClickListener(mCountsClickListener)
     }
 
-    private fun setBackgroundAlpha(view: View, alphaPercentage: Double) {
+    private fun setBackgroundAlpha(
+        view: View,
+        alphaPercentage: Double,
+    ) {
         val background = view.background.mutate()
         background.alpha = (255 * alphaPercentage).toInt()
         view.background = background
@@ -234,7 +249,11 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     @RustCleanup("non suspend")
-    private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: DeckNode) {
+    private fun setDeckExpander(
+        expander: ImageButton,
+        indent: ImageButton,
+        node: DeckNode,
+    ) {
         // Apply the correct expand/collapse drawable
         if (node.children.isNotEmpty()) {
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
@@ -275,11 +294,12 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     val due: Int?
-        get() = if (mNumbersComputed) {
-            mNew + mLrn + mRev
-        } else {
-            null
-        }
+        get() =
+            if (mNumbersComputed) {
+                mNew + mLrn + mRev
+            } else {
+                null
+            }
     private val deckList: List<DeckNode>
         get() = filteredDeckList
 
@@ -298,7 +318,10 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             }
         }
 
-        override fun publishResults(constraint: CharSequence?, results: FilterResults) {
+        override fun publishResults(
+            constraint: CharSequence?,
+            results: FilterResults,
+        ) {
             @Suppress("unchecked_cast")
             filteredDeckList = results.values as List<DeckNode>
             notifyDataSetChanged()
@@ -306,23 +329,24 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     companion object {
-        /* Make the selected deck roughly half transparent if there is a background */
+        // Make the selected deck roughly half transparent if there is a background
         const val SELECTED_DECK_ALPHA_AGAINST_BACKGROUND = 0.45
     }
 
     init {
         // Get the colors from the theme attributes
-        val attrs = intArrayOf(
-            R.attr.zeroCountColor,
-            R.attr.newCountColor,
-            R.attr.learnCountColor,
-            R.attr.reviewCountColor,
-            R.attr.currentDeckBackground,
-            android.R.attr.textColor,
-            R.attr.dynDeckColor,
-            R.attr.expandRef,
-            R.attr.collapseRef
-        )
+        val attrs =
+            intArrayOf(
+                R.attr.zeroCountColor,
+                R.attr.newCountColor,
+                R.attr.learnCountColor,
+                R.attr.reviewCountColor,
+                R.attr.currentDeckBackground,
+                android.R.attr.textColor,
+                R.attr.dynDeckColor,
+                R.attr.expandRef,
+                R.attr.collapseRef,
+            )
         val ta = context.obtainStyledAttributes(attrs)
         mZeroCountColor = ta.getColor(0, context.getColor(R.color.black))
         mNewCountColor = ta.getColor(1, context.getColor(R.color.black))

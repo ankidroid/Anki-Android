@@ -26,7 +26,10 @@ import com.ichi2.compat.customtabs.CustomTabActivityHelper.CustomTabFallback
  * A Fallback that opens a Webview when Custom Tabs is not available
  */
 class CustomTabsFallback : CustomTabFallback {
-    override fun openUri(activity: Activity, uri: Uri) {
+    override fun openUri(
+        activity: Activity,
+        uri: Uri,
+    ) {
         try {
             val intent = Intent(Intent.ACTION_VIEW, uri)
             activity.startActivity(intent)

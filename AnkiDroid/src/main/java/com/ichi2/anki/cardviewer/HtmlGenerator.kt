@@ -37,15 +37,20 @@ class HtmlGenerator(
     val cardAppearance: CardAppearance,
     val cardTemplate: CardTemplate,
     private val showAudioPlayButtons: Boolean,
-    val resources: Resources
+    val resources: Resources,
 ) {
-
     @CheckResult
-    fun generateHtml(card: Card, side: Side): CardHtml {
+    fun generateHtml(
+        card: Card,
+        side: Side,
+    ): CardHtml {
         return CardHtml.createInstance(card, side, this)
     }
 
-    fun filterTypeAnswer(content: String, side: Side): String {
+    fun filterTypeAnswer(
+        content: String,
+        side: Side,
+    ): String {
         return when (side) {
             Side.FRONT -> typeAnswer.filterQuestion(content)
             Side.BACK -> typeAnswer.filterAnswer(content)
@@ -64,7 +69,7 @@ class HtmlGenerator(
         fun createInstance(
             context: Context,
             col: Collection,
-            typeAnswer: TypeAnswer
+            typeAnswer: TypeAnswer,
         ): HtmlGenerator {
             val preferences = context.sharedPrefs()
             val cardAppearance = CardAppearance.create(ReviewerCustomFonts(), preferences)
@@ -75,7 +80,7 @@ class HtmlGenerator(
                 cardAppearance,
                 cardHtmlTemplate,
                 showAudioPlayButtons,
-                context.resources
+                context.resources,
             )
         }
 

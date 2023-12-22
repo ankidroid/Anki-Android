@@ -109,7 +109,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 
             ContextCompat.startForegroundService(
                 context,
-                Intent(context, MigrationService::class.java)
+                Intent(context, MigrationService::class.java),
             )
         }
 
@@ -118,6 +118,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 
     sealed interface Progress {
         sealed interface Running : Progress
+
         sealed interface Done : Progress
 
         data object CopyingEssentialFiles : Running
@@ -139,13 +140,17 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 
     private lateinit var migrateUserDataTask: MigrateUserData
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int,
+    ): Int {
         Timber.w("onStartCommand(%s, ...)", intent)
 
         lifecycleScope.launch(Dispatchers.IO) {
             withWakeLock(
                 levelAndFlags = PowerManager.PARTIAL_WAKE_LOCK or PowerManager.ON_AFTER_RELEASE,
-                tag = "MigrationService"
+                tag = "MigrationService",
             ) {
                 if (getMediaMigrationState() is MediaMigrationState.NotOngoing.Needed) {
                     flowOfProgress.emit(Progress.CopyingEssentialFiles)
@@ -167,8 +172,9 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                         migrateUserDataTask = MigrateUserData.createInstance(preferences)
 
                         val remainingBytesToMove = getRemainingMediaBytesToMove(migrateUserDataTask)
-                        val totalBytesToMove = preferences
-                            .getOrSetLong(PREF_INITIAL_TOTAL_MEDIA_BYTES_TO_MOVE) { remainingBytesToMove }
+                        val totalBytesToMove =
+                            preferences
+                                .getOrSetLong(PREF_INITIAL_TOTAL_MEDIA_BYTES_TO_MOVE) { remainingBytesToMove }
                         var movedBytes = max(totalBytesToMove - remainingBytesToMove, 0)
 
                         migrateUserDataTask.migrateFiles(progressListener = { deltaMovedBytes ->
@@ -176,8 +182,8 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                             flowOfProgress.tryEmit(
                                 Progress.MovingMediaFiles.MovingFiles(
                                     movedBytes = movedBytes.coerceIn(0, totalBytesToMove),
-                                    totalBytes = totalBytesToMove
-                                )
+                                    totalBytes = totalBytesToMove,
+                                ),
                             )
                         })
 
@@ -217,7 +223,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                     if (progress is Progress.Done) {
                         ServiceCompat.stopForeground(
                             this@MigrationService,
-                            ServiceCompat.STOP_FOREGROUND_DETACH
+                            ServiceCompat.STOP_FOREGROUND_DETACH,
                         )
 
                         stopSelf()
@@ -231,7 +237,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                                 AnkiDroidApp.instance.activityAgnosticDialogs
                                     .showOrScheduleStorageMigrationFailedDialog(
                                         exception = progress.exception,
-                                        changesRolledBack = progress.changesRolledBack
+                                        changesRolledBack = progress.changesRolledBack,
                                     )
                         }
                     }
@@ -242,8 +248,9 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
     }
 
     private fun getRemainingMediaBytesToMove(task: MigrateUserData): Long {
-        val ignoredFiles = MigrateEssentialFiles.iterateEssentialFiles(task.source) +
-            File(task.source.directory, MoveConflictedFile.CONFLICT_DIRECTORY)
+        val ignoredFiles =
+            MigrateEssentialFiles.iterateEssentialFiles(task.source) +
+                File(task.source.directory, MoveConflictedFile.CONFLICT_DIRECTORY)
         val ignoredSpace = ignoredFiles.sumOf { FileUtil.getSize(it) }
         val folderSize =
             FileUtil.DirectoryContentInformation.fromDirectory(task.source.directory).totalBytes
@@ -252,7 +259,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
             "folder size: %d, safe: %d, remaining: %d",
             folderSize,
             ignoredSpace,
-            remainingSpaceToMigrate
+            remainingSpaceToMigrate,
         )
         return remainingSpaceToMigrate
     }
@@ -282,10 +289,11 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 }
 
 private fun Context.makeMigrationProgressNotification(progress: MigrationService.Progress): Notification {
-    val builder = NotificationCompat.Builder(this, Channel.SCOPED_STORAGE_MIGRATION.id)
-        .setSmallIcon(R.drawable.ic_star_notify)
-        .setPriority(NotificationCompat.PRIORITY_LOW)
-        .setSilent(true)
+    val builder =
+        NotificationCompat.Builder(this, Channel.SCOPED_STORAGE_MIGRATION.id)
+            .setSmallIcon(R.drawable.ic_star_notify)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setSilent(true)
 
     when (progress) {
         is MigrationService.Progress.CopyingEssentialFiles -> {
@@ -337,25 +345,28 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
         is MigrationService.Progress.Failed -> {
             val errorText = getUserFriendlyErrorText(progress.exception)
 
-            val copyDebugInfoIntent = IntentHandler
-                .copyStringToClipboardIntent(this, progress.exception.stackTraceToString())
-            val copyDebugInfoPendingIntent = PendingIntentCompat.getActivity(
-                this,
-                1,
-                copyDebugInfoIntent,
-                0,
-                false
-            )
+            val copyDebugInfoIntent =
+                IntentHandler
+                    .copyStringToClipboardIntent(this, progress.exception.stackTraceToString())
+            val copyDebugInfoPendingIntent =
+                PendingIntentCompat.getActivity(
+                    this,
+                    1,
+                    copyDebugInfoIntent,
+                    0,
+                    false,
+                )
 
             val helpUrl = getString(R.string.migration_failed_help_url)
             val viewHelpUrlIntent = Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl))
-            val viewHelpUrlPendingIntent = PendingIntentCompat.getActivity(
-                this,
-                0,
-                viewHelpUrlIntent,
-                0,
-                false
-            )
+            val viewHelpUrlPendingIntent =
+                PendingIntentCompat.getActivity(
+                    this,
+                    0,
+                    viewHelpUrlIntent,
+                    0,
+                    false,
+                )
 
             builder.setContentTitle(getString(R.string.migration__failed__title))
             builder.setContentText(errorText)
@@ -413,13 +424,16 @@ sealed interface MediaMigrationState {
     sealed interface NotOngoing : MediaMigrationState {
         sealed interface NotNeeded : NotOngoing {
             data object CollectionIsInAppPrivateFolder : NotNeeded
+
             data object CollectionIsInPublicFolderButWillRemainAccessible : NotNeeded
         }
+
         data object Needed : NotOngoing
     }
 
     sealed interface Ongoing : MediaMigrationState {
         data object NotPaused : Ongoing
+
         class PausedDueToError(val errorText: String) : Ongoing
     }
 }
@@ -430,9 +444,10 @@ fun Context.getMediaMigrationState(): MediaMigrationState {
     val preferences = this.sharedPrefs()
 
     fun migrationIsOngoing() = ScopedStorageService.mediaMigrationIsInProgress(preferences)
+
     fun collectionIsInAppPrivateDirectory() = !ScopedStorageService.isLegacyStorage(this)
-    fun collectionWillRemainAccessibleAfterReinstall() =
-        !ScopedStorageService.collectionWillBeMadeInaccessibleAfterUninstall(this)
+
+    fun collectionWillRemainAccessibleAfterReinstall() = !ScopedStorageService.collectionWillBeMadeInaccessibleAfterUninstall(this)
 
     return if (migrationIsOngoing()) {
         val errorText = preferences.getString(PREF_MIGRATION_ERROR_TEXT, null)

@@ -30,7 +30,12 @@ import com.ichi2.anki.R
 /** Marker class to be used in preferences */
 class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, DialogFragmentProvider {
     @Suppress("unused")
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+    constructor(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int,
+    ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     @Suppress("unused")
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
@@ -51,18 +56,20 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
             super.onBindDialogView(view)
 
             // Layout parameters for mEditText
-            val editTextParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                3.0f
-            )
+            val editTextParams =
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    3.0f,
+                )
 
-            mLastValidEntry = try {
-                editText.text.toString().toInt()
-            } catch (nfe: NumberFormatException) {
-                // This should not be possible but just in case, recover with a valid minimum from superclass
-                numberRangePreference.min
-            }
+            mLastValidEntry =
+                try {
+                    editText.text.toString().toInt()
+                } catch (nfe: NumberFormatException) {
+                    // This should not be possible but just in case, recover with a valid minimum from superclass
+                    numberRangePreference.min
+                }
             editText.layoutParams = editTextParams
             // Centre text inside mEditText
             editText.gravity = Gravity.CENTER_HORIZONTAL
@@ -83,11 +90,12 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
             (editText.parent as ViewGroup).removeView(editText)
 
             // Layout parameters for incrementButton and decrementButton
-            val buttonParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.0f
-            )
+            val buttonParams =
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1.0f,
+                )
 
             incrementButton.setText(R.string.plus_sign)
             decrementButton.setText(R.string.minus_sign)
@@ -109,12 +117,13 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
          * @param isIncrement Indicator for whether to increase or decrease the value.
          */
         private fun updateEditText(isIncrement: Boolean) {
-            var value: Int = try {
-                editText.text.toString().toInt()
-            } catch (e: NumberFormatException) {
-                // If the user entered a non-number then incremented, restore to a good value
-                mLastValidEntry
-            }
+            var value: Int =
+                try {
+                    editText.text.toString().toInt()
+                } catch (e: NumberFormatException) {
+                    // If the user entered a non-number then incremented, restore to a good value
+                    mLastValidEntry
+                }
             value = if (isIncrement) value + 1 else value - 1
 
             // Make sure value is within range

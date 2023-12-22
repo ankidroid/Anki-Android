@@ -35,18 +35,20 @@ object Permissions {
     const val MANAGE_EXTERNAL_STORAGE = "android.permission.MANAGE_EXTERNAL_STORAGE"
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    val tiramisuPhotosAndVideosPermissions = listOf(
-        Manifest.permission.READ_MEDIA_IMAGES,
-        Manifest.permission.READ_MEDIA_VIDEO
-    )
+    val tiramisuPhotosAndVideosPermissions =
+        listOf(
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_VIDEO,
+        )
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     val tiramisuAudioPermission = Manifest.permission.READ_MEDIA_AUDIO
 
-    val legacyStorageAccessPermissions = listOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    )
+    val legacyStorageAccessPermissions =
+        listOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        )
 
     fun canUseCamera(context: Context): Boolean {
         return hasPermission(context, Manifest.permission.CAMERA)
@@ -56,7 +58,10 @@ object Permissions {
         return hasPermission(context, Manifest.permission.RECORD_AUDIO)
     }
 
-    fun hasPermission(context: Context, permission: String): Boolean {
+    fun hasPermission(
+        context: Context,
+        permission: String,
+    ): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && permission == MANAGE_EXTERNAL_STORAGE) {
             // checkSelfPermission doesn't return PERMISSION_GRANTED, even if it's granted.
             return isExternalStorageManager()
@@ -65,7 +70,10 @@ object Permissions {
         return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun hasAllPermissions(context: Context, permissions: Collection<String>): Boolean {
+    fun hasAllPermissions(
+        context: Context,
+        permissions: Collection<String>,
+    ): Boolean {
         return permissions.all { hasPermission(context, it) }
     }
 
@@ -134,7 +142,10 @@ object Permissions {
      * @param permissions One or more permission strings, typically defined in [Manifest.permission]
      * @return `true` if all permissions were granted. `false` otherwise, or if an error occurs.
      */
-    fun Context.arePermissionsDefinedInManifest(packageName: String, vararg permissions: String): Boolean {
+    fun Context.arePermissionsDefinedInManifest(
+        packageName: String,
+        vararg permissions: String,
+    ): Boolean {
         try {
             val permissionsInManifest = getPermissionsDefinedInManifest(packageName) ?: return false
             return permissions.all { permissionsInManifest.contains(it) }

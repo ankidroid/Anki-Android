@@ -39,7 +39,6 @@ import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerTest : InstrumentedTest() {
-
     // Launch IntroductionActivity instead of DeckPicker activity because in CI
     // builds, it seems to create IntroductionActivity after the DeckPicker,
     // causing the DeckPicker activity to be destroyed. As a consequence, this
@@ -61,7 +60,7 @@ class ReviewerTest : InstrumentedTest() {
             states.good.normal.review.easeFactor = 3.0;
             states.good.normal.review.scheduledDays = 123;
             customData.good.c += 1;
-            """
+            """,
         )
         val note = addNoteUsingBasicModel("foo", "bar")
         val card = note.firstCard()
@@ -69,9 +68,9 @@ class ReviewerTest : InstrumentedTest() {
         card.moveToReviewQueue()
         col.backend.updateCards(
             listOf(
-                card.toBackendCard().toBuilder().setCustomData("""{"c":1}""").build()
+                card.toBackendCard().toBuilder().setCustomData("""{"c":1}""").build(),
             ),
-            true
+            true,
         )
 
         closeGetStartedScreenIfExists()
@@ -106,8 +105,8 @@ class ReviewerTest : InstrumentedTest() {
         onView(withId(R.id.files)).perform(
             RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                 hasDescendant(withText(deckName)),
-                click()
-            )
+                click(),
+            ),
         )
     }
 
@@ -139,7 +138,7 @@ class ReviewerTest : InstrumentedTest() {
             100,
             // Increase to a max of 30 seconds because CI builds can be very
             // slow
-            TimeUnit.SECONDS.toMillis(30)
+            TimeUnit.SECONDS.toMillis(30),
         )
         onView(withId(R.id.flashcard_layout_ease3)).perform(click())
     }

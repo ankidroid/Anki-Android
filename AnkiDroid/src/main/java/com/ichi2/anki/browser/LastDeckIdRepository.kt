@@ -34,9 +34,10 @@ interface LastDeckIdRepository {
  */
 class SharedPreferencesLastDeckIdRepository : LastDeckIdRepository {
     override var lastDeckId: DeckId?
-        get() = AnkiDroidApp.instance.getSharedPreferences(PERSISTENT_STATE_FILE, 0)
-            .getLong(LAST_DECK_ID_KEY, Decks.NOT_FOUND_DECK_ID)
-            .takeUnless { it == Decks.NOT_FOUND_DECK_ID }
+        get() =
+            AnkiDroidApp.instance.getSharedPreferences(PERSISTENT_STATE_FILE, 0)
+                .getLong(LAST_DECK_ID_KEY, Decks.NOT_FOUND_DECK_ID)
+                .takeUnless { it == Decks.NOT_FOUND_DECK_ID }
         set(value) =
             if (value == null) {
                 CardBrowser.clearLastDeckId()

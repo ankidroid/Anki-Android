@@ -149,23 +149,24 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    fun undoingCardHidesFullScreen() = runTest {
-        addNoteUsingBasicModel("Hello", "World")
-        val reviewer = startReviewerFullScreen()
+    fun undoingCardHidesFullScreen() =
+        runTest {
+            addNoteUsingBasicModel("Hello", "World")
+            val reviewer = startReviewerFullScreen()
 
-        reviewer.displayCardAnswer()
-        advanceRobolectricLooperWithSleep()
-        reviewer.answerCard(Consts.BUTTON_ONE)
-        advanceRobolectricLooperWithSleep()
+            reviewer.displayCardAnswer()
+            advanceRobolectricLooperWithSleep()
+            reviewer.answerCard(Consts.BUTTON_ONE)
+            advanceRobolectricLooperWithSleep()
 
-        val hideCount = reviewer.delayedHideCount
+            val hideCount = reviewer.delayedHideCount
 
-        reviewer.undo()
+            reviewer.undo()
 
-        advanceRobolectricLooperWithSleep()
+            advanceRobolectricLooperWithSleep()
 
-        assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
-    }
+            assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
+        }
 
     @Test
     @Flaky(OS.ALL, "hasDrawerSwipeConflicts was false")
@@ -303,7 +304,7 @@ class ReviewerNoParamTest : RobolectricTest() {
             prefs,
             MappableBinding.fromGesture(gesture) {
                 Screen.Reviewer(it)
-            }
+            },
         )
     }
 
@@ -319,7 +320,10 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Suppress("SameParameterValue")
-    private fun storeLightModeColor(value: Int, did: DeckId?) {
+    private fun storeLightModeColor(
+        value: Int,
+        did: DeckId?,
+    ) {
         MetaDB.storeWhiteboardPenColor(targetContext, did!!, false, value)
     }
 
@@ -362,6 +366,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     private class ReviewerExt : Reviewer() {
         var delayedHideCount = 0
+
         override fun delayedHide(delayMillis: Int) {
             delayedHideCount++
             super.delayedHide(delayMillis)

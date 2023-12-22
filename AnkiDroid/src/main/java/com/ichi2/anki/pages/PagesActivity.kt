@@ -55,17 +55,20 @@ class PagesActivity : AnkiActivity() {
         ankiServer.start()
 
         // Launch page
-        val pageClassName = intent.extras?.getString(EXTRA_PAGE_CLASS)
-            ?: throw Exception("PageActivity's intent should have a '$EXTRA_PAGE_CLASS' extra")
+        val pageClassName =
+            intent.extras?.getString(EXTRA_PAGE_CLASS)
+                ?: throw Exception("PageActivity's intent should have a '$EXTRA_PAGE_CLASS' extra")
 
-        val pageFragment = getInstanceFromClassName<PageFragment>(pageClassName).apply {
-            arguments = intent.getBundleExtra(EXTRA_PAGE_ARGS)
-        }
+        val pageFragment =
+            getInstanceFromClassName<PageFragment>(pageClassName).apply {
+                arguments = intent.getBundleExtra(EXTRA_PAGE_ARGS)
+            }
         supportFragmentManager.addFragmentOnAttachListener { _, _ -> this.title = pageFragment.title }
         supportFragmentManager.commit {
             replace(R.id.page_container, pageFragment)
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         /** Stop running the server if the activity is destroyed.
@@ -92,7 +95,11 @@ class PagesActivity : AnkiActivity() {
          * @param fragmentClass class of the [PageFragment] to be created
          * @param arguments to be passed to the created [PageFragment]
          */
-        fun getIntent(context: Context, fragmentClass: KClass<out PageFragment>, arguments: Bundle? = null): Intent {
+        fun getIntent(
+            context: Context,
+            fragmentClass: KClass<out PageFragment>,
+            arguments: Bundle? = null,
+        ): Intent {
             return Intent(context, PagesActivity::class.java).apply {
                 putExtra(EXTRA_PAGE_CLASS, fragmentClass.jvmName)
                 putExtra(EXTRA_PAGE_ARGS, arguments)

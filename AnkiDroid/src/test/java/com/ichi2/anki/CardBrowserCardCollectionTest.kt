@@ -22,7 +22,6 @@ import org.hamcrest.Matchers.*
 import org.junit.Test
 
 class CardBrowserCardCollectionTest {
-
     @Test
     fun reverseFixesPosition() {
         val cardCollection = createCollection(Positioned(0), Positioned(1))

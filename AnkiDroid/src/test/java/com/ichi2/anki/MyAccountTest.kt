@@ -28,13 +28,13 @@ import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class MyAccountTest : RobolectricTest() {
-
     @Test
     fun testLoginFailsNoEmailProvided() {
-        val myAccount = super.startActivityNormallyOpenCollectionWithIntent(
-            MyAccount::class.java,
-            Intent()
-        )
+        val myAccount =
+            super.startActivityNormallyOpenCollectionWithIntent(
+                MyAccount::class.java,
+                Intent(),
+            )
 
         val testPassword = "randomStrongPassword"
 
@@ -46,10 +46,11 @@ class MyAccountTest : RobolectricTest() {
 
     @Test
     fun testLoginFailsNoPasswordProvided() {
-        val myAccount = super.startActivityNormallyOpenCollectionWithIntent(
-            MyAccount::class.java,
-            Intent()
-        )
+        val myAccount =
+            super.startActivityNormallyOpenCollectionWithIntent(
+                MyAccount::class.java,
+                Intent(),
+            )
 
         val testEmail = "random.email@example.com"
 

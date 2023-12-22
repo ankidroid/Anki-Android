@@ -41,15 +41,16 @@ abstract class PageFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.page_fragment, container, false)
 
-        webView = view.findViewById<WebView>(R.id.pagesWebview).apply {
-            settings.javaScriptEnabled = true
-            webViewClient = this@PageFragment.webViewClient
-            webChromeClient = this@PageFragment.webChromeClient
-        }
+        webView =
+            view.findViewById<WebView>(R.id.pagesWebview).apply {
+                settings.javaScriptEnabled = true
+                webViewClient = this@PageFragment.webViewClient
+                webChromeClient = this@PageFragment.webChromeClient
+            }
         val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
         val url = (requireActivity() as PagesActivity).baseUrl() + "$pageName.html$nightMode"
 

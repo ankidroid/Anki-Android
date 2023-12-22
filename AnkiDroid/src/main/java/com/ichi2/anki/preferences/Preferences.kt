@@ -49,12 +49,14 @@ class Preferences :
     AnkiActivity(),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
-
     private fun hasLateralNavigation(): Boolean {
         return findViewById<FragmentContainerView>(R.id.lateral_nav_container) != null
     }
 
-    override fun onTitleChanged(title: CharSequence?, color: Int) {
+    override fun onTitleChanged(
+        title: CharSequence?,
+        color: Int,
+    ) {
         super.onTitleChanged(title, color)
         findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout)?.title = title
         supportActionBar?.title = title
@@ -73,8 +75,9 @@ class Preferences :
         }
         supportFragmentManager.addOnBackStackChangedListener {
             // Expand bar in new fragments if scrolled to top
-            val fragment = supportFragmentManager.findFragmentById(R.id.settings_container)
-                as? PreferenceFragmentCompat ?: return@addOnBackStackChangedListener
+            val fragment =
+                supportFragmentManager.findFragmentById(R.id.settings_container)
+                    as? PreferenceFragmentCompat ?: return@addOnBackStackChangedListener
             fragment.listView.post {
                 val viewHolder = fragment.listView?.findViewHolderForAdapterPosition(0)
                 val isAtTop = viewHolder != null && viewHolder.itemView.top >= 0
@@ -91,15 +94,16 @@ class Preferences :
      */
     private fun loadInitialFragment() {
         val fragmentClassName = intent?.getStringExtra(INITIAL_FRAGMENT_EXTRA)
-        val initialFragment = if (fragmentClassName == null) {
-            if (hasLateralNavigation()) GeneralSettingsFragment() else HeaderFragment()
-        } else {
-            try {
-                getInstanceFromClassName<Fragment>(fragmentClassName)
-            } catch (e: Exception) {
-                throw RuntimeException("Failed to load $fragmentClassName", e)
+        val initialFragment =
+            if (fragmentClassName == null) {
+                if (hasLateralNavigation()) GeneralSettingsFragment() else HeaderFragment()
+            } else {
+                try {
+                    getInstanceFromClassName<Fragment>(fragmentClassName)
+                } catch (e: Exception) {
+                    throw RuntimeException("Failed to load $fragmentClassName", e)
+                }
             }
-        }
         supportFragmentManager.commit {
             // In tablets, show the headers fragment at the lateral navigation container
             if (hasLateralNavigation()) {
@@ -113,17 +117,19 @@ class Preferences :
 
     override fun onPreferenceStartFragment(
         caller: PreferenceFragmentCompat,
-        pref: Preference
+        pref: Preference,
     ): Boolean {
         // avoid reopening the same fragment if already active
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.settings_container)
-            ?: return true
+        val currentFragment =
+            supportFragmentManager.findFragmentById(R.id.settings_container)
+                ?: return true
         if (pref.fragment == currentFragment::class.jvmName) return true
 
-        val fragment = supportFragmentManager.fragmentFactory.instantiate(
-            classLoader,
-            pref.fragment ?: return true
-        )
+        val fragment =
+            supportFragmentManager.fragmentFactory.instantiate(
+                classLoader,
+                pref.fragment ?: return true,
+            )
         fragment.arguments = pref.extras
         supportFragmentManager.commit {
             replace(R.id.settings_container, fragment, fragment::class.jvmName)
@@ -186,8 +192,7 @@ class Preferences :
     }
 
     companion object {
-
-        /* Only enable AnkiDroid notifications unrelated to due reminders */
+        // Only enable AnkiDroid notifications unrelated to due reminders
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
         /**
@@ -201,7 +206,9 @@ class Preferences :
          * @return the [SettingsFragment] which uses the given [screen] resource.
          * i.e. [SettingsFragment.preferenceResource] value is the same of [screen]
          */
-        fun getFragmentFromXmlRes(@XmlRes screen: Int): SettingsFragment? {
+        fun getFragmentFromXmlRes(
+            @XmlRes screen: Int,
+        ): SettingsFragment? {
             return when (screen) {
                 R.xml.preferences_general -> GeneralSettingsFragment()
                 R.xml.preferences_reviewing -> ReviewingSettingsFragment()
@@ -220,17 +227,20 @@ class Preferences :
         }
 
         /** Whether the user is logged on to AnkiWeb  */
-        fun hasAnkiWebAccount(preferences: SharedPreferences): Boolean =
-            preferences.getString("username", "")!!.isNotEmpty()
+        fun hasAnkiWebAccount(preferences: SharedPreferences): Boolean = preferences.getString("username", "")!!.isNotEmpty()
 
         /** Sets the hour that the collection rolls over to the next day  */
         @VisibleForTesting
-        suspend fun setDayOffset(context: Context, hours: Int) {
+        suspend fun setDayOffset(
+            context: Context,
+            hours: Int,
+        ) {
             withCol {
                 config.set("rollover", hours)
                 scheduleNotification(TimeManager.time, context)
             }
         }
+
         suspend fun getDayOffset(): Int {
             return withCol { config.get("rollover") ?: 4 }
         }

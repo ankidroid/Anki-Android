@@ -45,30 +45,31 @@ class AppearanceSettingsFragment : SettingsFragment() {
     override fun initSubscreen() {
         // Configure background
         mBackgroundImage = requirePreference<SwitchPreferenceCompat>("deckPickerBackground")
-        mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            if (mBackgroundImage!!.isChecked) {
-                try {
-                    mBackgroundImageResultLauncher.launch("image/*")
-                    mBackgroundImage!!.isChecked = true
-                } catch (ex: Exception) {
-                    Timber.e("%s", ex.localizedMessage)
-                }
-            } else {
-                mBackgroundImage!!.isChecked = false
-                val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
-                val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
-                if (imgFile.exists()) {
-                    if (imgFile.delete()) {
-                        showSnackbar(R.string.background_image_removed)
-                    } else {
-                        showSnackbar(R.string.error_deleting_image)
+        mBackgroundImage!!.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                if (mBackgroundImage!!.isChecked) {
+                    try {
+                        mBackgroundImageResultLauncher.launch("image/*")
+                        mBackgroundImage!!.isChecked = true
+                    } catch (ex: Exception) {
+                        Timber.e("%s", ex.localizedMessage)
                     }
                 } else {
-                    showSnackbar(R.string.background_image_removed)
+                    mBackgroundImage!!.isChecked = false
+                    val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
+                    val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
+                    if (imgFile.exists()) {
+                        if (imgFile.delete()) {
+                            showSnackbar(R.string.background_image_removed)
+                        } else {
+                            showSnackbar(R.string.error_deleting_image)
+                        }
+                    } else {
+                        showSnackbar(R.string.background_image_removed)
+                    }
                 }
+                true
             }
-            true
-        }
 
         val appThemePref = requirePreference<ListPreference>(R.string.app_theme_key)
         val dayThemePref = requirePreference<ListPreference>(R.string.day_theme_key)
@@ -154,41 +155,43 @@ class AppearanceSettingsFragment : SettingsFragment() {
         }
     }
 
-    private val mBackgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
-        if (selectedImage != null) {
-            // handling file may result in exception
-            try {
-                val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE)
-                requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
-                    cursor!!.moveToFirst()
-                    // file size in MB
-                    val fileLength = cursor.getLong(0) / (1024 * 1024)
-                    val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
-                    val imageName = "DeckPickerBackground.png"
-                    val destFile = File(currentAnkiDroidDirectory, imageName)
-                    // Image size less than 10 MB copied to AnkiDroid directory
-                    if (fileLength < 10) {
-                        (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream).channel.use { sourceChannel ->
-                            FileOutputStream(destFile).channel.use { destChannel ->
-                                destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
-                                showSnackbar(R.string.background_image_applied)
+    private val mBackgroundImageResultLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
+            if (selectedImage != null) {
+                // handling file may result in exception
+                try {
+                    val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE)
+                    requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
+                        cursor!!.moveToFirst()
+                        // file size in MB
+                        val fileLength = cursor.getLong(0) / (1024 * 1024)
+                        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
+                        val imageName = "DeckPickerBackground.png"
+                        val destFile = File(currentAnkiDroidDirectory, imageName)
+                        // Image size less than 10 MB copied to AnkiDroid directory
+                        if (fileLength < 10) {
+                            (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream).channel.use {
+                                    sourceChannel ->
+                                FileOutputStream(destFile).channel.use { destChannel ->
+                                    destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
+                                    showSnackbar(R.string.background_image_applied)
+                                }
                             }
+                        } else {
+                            mBackgroundImage!!.isChecked = false
+                            UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, 10), false)
                         }
-                    } else {
-                        mBackgroundImage!!.isChecked = false
-                        UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, 10), false)
                     }
+                } catch (e: OutOfMemoryError) {
+                    Timber.w(e)
+                    showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
+                } catch (e: Exception) {
+                    Timber.w(e)
+                    showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
                 }
-            } catch (e: OutOfMemoryError) {
-                Timber.w(e)
-                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
-            } catch (e: Exception) {
-                Timber.w(e)
-                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
+            } else {
+                mBackgroundImage!!.isChecked = false
+                showSnackbar(R.string.no_image_selected)
             }
-        } else {
-            mBackgroundImage!!.isChecked = false
-            showSnackbar(R.string.no_image_selected)
         }
-    }
 }

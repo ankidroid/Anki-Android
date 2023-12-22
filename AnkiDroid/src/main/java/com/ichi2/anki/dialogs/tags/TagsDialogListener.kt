@@ -35,11 +35,16 @@ interface TagsDialogListener {
      * otherwise it should be removed @see [com.ichi2.utils.TagsUtil.getUpdatedTags]
      * @param stateFilter selection radio option, should be ignored if not expected
      */
-    fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter)
+    fun onSelectedTags(
+        selectedTags: List<String>,
+        indeterminateTags: List<String>,
+        stateFilter: CardStateFilter,
+    )
+
     fun <F> F.registerFragmentResultReceiver() where F : Fragment, F : TagsDialogListener {
         parentFragmentManager.setFragmentResultListener(
             ON_SELECTED_TAGS_KEY,
-            this
+            this,
         ) { _: String?, bundle: Bundle ->
             val selectedTags: List<String> =
                 bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS)!!
@@ -51,16 +56,22 @@ interface TagsDialogListener {
     }
 
     companion object {
-        fun createFragmentResultSender(fragmentManager: FragmentManager) = object : TagsDialogListener {
-            override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
-                val bundle = Bundle().apply {
-                    putStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS, ArrayList(selectedTags))
-                    putStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS, ArrayList(indeterminateTags))
-                    putSerializable(ON_SELECTED_TAGS__OPTION, stateFilter)
+        fun createFragmentResultSender(fragmentManager: FragmentManager) =
+            object : TagsDialogListener {
+                override fun onSelectedTags(
+                    selectedTags: List<String>,
+                    indeterminateTags: List<String>,
+                    stateFilter: CardStateFilter,
+                ) {
+                    val bundle =
+                        Bundle().apply {
+                            putStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS, ArrayList(selectedTags))
+                            putStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS, ArrayList(indeterminateTags))
+                            putSerializable(ON_SELECTED_TAGS__OPTION, stateFilter)
+                        }
+                    fragmentManager.setFragmentResult(ON_SELECTED_TAGS_KEY, bundle)
                 }
-                fragmentManager.setFragmentResult(ON_SELECTED_TAGS_KEY, bundle)
             }
-        }
 
         const val ON_SELECTED_TAGS_KEY = "ON_SELECTED_TAGS_KEY"
         const val ON_SELECTED_TAGS__SELECTED_TAGS = "SELECTED_TAGS"

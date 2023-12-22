@@ -29,17 +29,20 @@ import com.ichi2.utils.KotlinCleanup
  */
 class CheckBoxTriStates : AppCompatCheckBox {
     enum class State {
-        INDETERMINATE, UNCHECKED, CHECKED
+        INDETERMINATE,
+        UNCHECKED,
+        CHECKED,
     }
 
     private var mState: State = State.UNCHECKED
 
     override fun setChecked(checked: Boolean) {
-        mState = if (checked) {
-            State.CHECKED
-        } else {
-            State.UNCHECKED
-        }
+        mState =
+            if (checked) {
+                State.CHECKED
+            } else {
+                State.UNCHECKED
+            }
     }
 
     override fun setOnCheckedChangeListener(listener: OnCheckedChangeListener?) {
@@ -60,10 +63,11 @@ class CheckBoxTriStates : AppCompatCheckBox {
      * This is the listener set to the super class which is going to be invoked each
      * time the check state has changed.
      */
-    private val mPrivateListener = OnCheckedChangeListener { _, _ ->
-        // checkbox status is changed from unchecked to checked.
-        toggle()
-    }
+    private val mPrivateListener =
+        OnCheckedChangeListener { _, _ ->
+            // checkbox status is changed from unchecked to checked.
+            toggle()
+        }
 
     /**
      * Holds a reference to the listener set by a client, if any.
@@ -100,19 +104,22 @@ class CheckBoxTriStates : AppCompatCheckBox {
         }
 
     override fun toggle() {
-        state = when (mState) {
-            State.INDETERMINATE -> if (cycleIndeterminateToChecked) {
-                State.CHECKED
-            } else {
-                State.UNCHECKED
+        state =
+            when (mState) {
+                State.INDETERMINATE ->
+                    if (cycleIndeterminateToChecked) {
+                        State.CHECKED
+                    } else {
+                        State.UNCHECKED
+                    }
+                State.UNCHECKED -> State.CHECKED
+                State.CHECKED ->
+                    if (cycleCheckedToIndeterminate) {
+                        State.INDETERMINATE
+                    } else {
+                        State.UNCHECKED
+                    }
             }
-            State.UNCHECKED -> State.CHECKED
-            State.CHECKED -> if (cycleCheckedToIndeterminate) {
-                State.INDETERMINATE
-            } else {
-                State.UNCHECKED
-            }
-        }
     }
 
     override fun isChecked(): Boolean {
@@ -139,35 +146,42 @@ class CheckBoxTriStates : AppCompatCheckBox {
         mRestoring = false
     }
 
-    private fun init(context: Context, attrs: AttributeSet?) {
+    private fun init(
+        context: Context,
+        attrs: AttributeSet?,
+    ) {
         cycleCheckedToIndeterminate = true
         cycleIndeterminateToChecked = false
         if (attrs != null) {
-            val a = context.theme.obtainStyledAttributes(
-                attrs,
-                R.styleable.CheckBoxTriStates,
-                0,
-                0
-            )
-            cycleCheckedToIndeterminate = a.getBoolean(
-                R.styleable.CheckBoxTriStates_cycle_checked_to_indeterminate,
-                cycleCheckedToIndeterminate
-            )
-            cycleIndeterminateToChecked = a.getBoolean(
-                R.styleable.CheckBoxTriStates_cycle_indeterminate_to_checked,
-                cycleIndeterminateToChecked
-            )
+            val a =
+                context.theme.obtainStyledAttributes(
+                    attrs,
+                    R.styleable.CheckBoxTriStates,
+                    0,
+                    0,
+                )
+            cycleCheckedToIndeterminate =
+                a.getBoolean(
+                    R.styleable.CheckBoxTriStates_cycle_checked_to_indeterminate,
+                    cycleCheckedToIndeterminate,
+                )
+            cycleIndeterminateToChecked =
+                a.getBoolean(
+                    R.styleable.CheckBoxTriStates_cycle_indeterminate_to_checked,
+                    cycleIndeterminateToChecked,
+                )
         }
         updateBtn()
         setOnCheckedChangeListener(mPrivateListener)
     }
 
     private fun updateBtn() {
-        val btnDrawable: Int = when (mState) {
-            State.UNCHECKED -> R.drawable.ic_baseline_check_box_outline_blank_24_inset
-            State.CHECKED -> R.drawable.ic_baseline_check_box_24_inset
-            else -> R.drawable.ic_baseline_indeterminate_check_box_24_inset
-        }
+        val btnDrawable: Int =
+            when (mState) {
+                State.UNCHECKED -> R.drawable.ic_baseline_check_box_outline_blank_24_inset
+                State.CHECKED -> R.drawable.ic_baseline_check_box_24_inset
+                else -> R.drawable.ic_baseline_indeterminate_check_box_24_inset
+            }
         setButtonDrawable(btnDrawable)
     }
 
@@ -184,7 +198,10 @@ class CheckBoxTriStates : AppCompatCheckBox {
             cycleIndeterminateToChecked = source.readInt() != 0
         }
 
-        override fun writeToParcel(out: Parcel, flags: Int) {
+        override fun writeToParcel(
+            out: Parcel,
+            flags: Int,
+        ) {
             super.writeToParcel(out, flags)
             out.writeValue(state)
             out.writeInt(if (cycleCheckedToIndeterminate) 1 else 0)
@@ -198,21 +215,22 @@ class CheckBoxTriStates : AppCompatCheckBox {
                     " state=" + state +
                     " cycleCheckedToIndeterminate=" + cycleCheckedToIndeterminate +
                     " cycleIndeterminateToChecked=" + cycleIndeterminateToChecked + "}"
-                )
+            )
         }
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             @Suppress("unused")
-            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
-                override fun createFromParcel(source: Parcel): SavedState {
-                    return SavedState(source)
-                }
+            val CREATOR: Parcelable.Creator<SavedState> =
+                object : Parcelable.Creator<SavedState> {
+                    override fun createFromParcel(source: Parcel): SavedState {
+                        return SavedState(source)
+                    }
 
-                override fun newArray(size: Int): Array<SavedState?> {
-                    return arrayOfNulls(size)
+                    override fun newArray(size: Int): Array<SavedState?> {
+                        return arrayOfNulls(size)
+                    }
                 }
-            }
         }
     }
 }

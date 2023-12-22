@@ -33,7 +33,6 @@ import java.util.concurrent.TimeUnit
 
 /** Test for [Executor] */
 class ExecutorTest {
-
     /** the system under test: no initial operations */
     private val underTest = Executor(ArrayDeque())
 
@@ -132,7 +131,7 @@ class ExecutorTest {
         assertThat(
             "a preempted operation is not run if terminate() is called",
             executionContext.executed,
-            hasSize(1)
+            hasSize(1),
         )
     }
 
@@ -154,7 +153,7 @@ class ExecutorTest {
         assertThat(
             "a regular operation is not run if terminate() is called",
             executionContext.executed,
-            hasSize(1)
+            hasSize(1),
         )
     }
 
@@ -180,6 +179,7 @@ class ExecutorTest {
 
         // Semaphore that can be acquired after operation start executing
         var isExecuting = Semaphore(1).apply { acquire() }
+
         override fun execute(context: MigrationContext): List<Operation> {
             isExecuting.release()
             isBlocked.acquireInTwoSeconds()
@@ -192,4 +192,6 @@ class ExecutorTest {
     }
 }
 
-private fun Semaphore.acquireInTwoSeconds() { this.tryAcquire(2, TimeUnit.SECONDS) }
+private fun Semaphore.acquireInTwoSeconds() {
+    this.tryAcquire(2, TimeUnit.SECONDS)
+}

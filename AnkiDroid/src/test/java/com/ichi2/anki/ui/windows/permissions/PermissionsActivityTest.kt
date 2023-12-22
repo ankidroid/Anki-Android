@@ -28,7 +28,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PermissionsActivityTest : RobolectricTest() {
-
     @Test
     fun `Each screen starts normally and has the same permissions of a PermissionSet`() {
         ActivityScenario.launch(PermissionsActivity::class.java).onActivity { activity ->

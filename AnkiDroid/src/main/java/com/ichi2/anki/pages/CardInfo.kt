@@ -32,14 +32,18 @@ class CardInfo : PageFragment() {
     override var webChromeClient = PageChromeClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val cardId = arguments?.getLong(ARG_CARD_ID)
-            ?: throw Exception("missing card ID argument")
+        val cardId =
+            arguments?.getLong(ARG_CARD_ID)
+                ?: throw Exception("missing card ID argument")
         webViewClient = CardInfoWebClient(cardId)
         super.onCreate(savedInstanceState)
     }
 
     class CardInfoWebClient(val cardId: Long) : PageWebViewClient() {
-        override fun onPageFinished(view: WebView?, url: String?) {
+        override fun onPageFinished(
+            view: WebView?,
+            url: String?,
+        ) {
             // from upstream: https://github.com/ankitects/anki/blob/678c354fed4d98c0a8ef84fb7981ee085bd744a7/qt/aqt/browser/card_info.py#L66-L72
             view!!.evaluateJavascript("anki.cardInfoPromise = anki.setupCardInfo(document.body);", null)
             view.evaluateJavascript("anki.cardInfoPromise.then((c) => c.updateStats($cardId));") {

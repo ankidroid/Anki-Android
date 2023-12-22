@@ -25,14 +25,16 @@ import java.io.PrintWriter
 import java.io.StringWriter
 
 object ExceptionUtil {
-
     @CheckResult
     fun getExceptionMessage(e: Throwable?): String {
         return getExceptionMessage(e, "\n")
     }
 
     @CheckResult
-    fun getExceptionMessage(e: Throwable?, separator: String?): String {
+    fun getExceptionMessage(
+        e: Throwable?,
+        separator: String?,
+    ): String {
         val ret = StringBuilder()
         var cause: Throwable? = e
         while (cause != null) {
@@ -49,7 +51,10 @@ object ExceptionUtil {
 
     /** Whether the exception is, or contains a cause of a given type  */
     @KotlinCleanup("convert to containsCause<T>(ex)")
-    fun <T> containsCause(ex: Throwable, clazz: Class<T>): Boolean {
+    fun <T> containsCause(
+        ex: Throwable,
+        clazz: Class<T>,
+    ): Boolean {
         if (clazz.isInstance(ex)) {
             return true
         }
@@ -64,7 +69,11 @@ object ExceptionUtil {
     }
 
     /** Executes a function, and logs the exception to ACRA and shows a toast if an issue occurs */
-    fun executeSafe(context: Context, origin: String, runnable: (() -> Unit)) {
+    fun executeSafe(
+        context: Context,
+        origin: String,
+        runnable: (() -> Unit),
+    ) {
         try {
             runnable.invoke()
         } catch (e: Exception) {
@@ -72,14 +81,15 @@ object ExceptionUtil {
             UIUtils.showThemedToast(
                 context,
                 context.getString(R.string.multimedia_editor_something_wrong),
-                true
+                true,
             )
         }
     }
 }
 
-fun DeckRenameException.asLocalizedMessage(context: Context): String = when (errorCode) {
-    DeckRenameException.ALREADY_EXISTS -> context.resources.getString(R.string.decks_rename_exists)
-    DeckRenameException.FILTERED_NOSUBDECKS -> context.resources.getString(R.string.decks_rename_filtered_nosubdecks)
-    else -> ""
-}
+fun DeckRenameException.asLocalizedMessage(context: Context): String =
+    when (errorCode) {
+        DeckRenameException.ALREADY_EXISTS -> context.resources.getString(R.string.decks_rename_exists)
+        DeckRenameException.FILTERED_NOSUBDECKS -> context.resources.getString(R.string.decks_rename_filtered_nosubdecks)
+        else -> ""
+    }

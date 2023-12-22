@@ -40,28 +40,39 @@ object LaTeX {
     /**
      * Patterns used to identify LaTeX tags
      */
-    private val STANDARD_PATTERN = Pattern.compile(
-        "\\[latex](.+?)\\[/latex]",
-        Pattern.DOTALL or Pattern.CASE_INSENSITIVE
-    )
-    private val EXPRESSION_PATTERN = Pattern.compile(
-        "\\[\\$](.+?)\\[/\\$]",
-        Pattern.DOTALL or Pattern.CASE_INSENSITIVE
-    )
-    private val MATH_PATTERN = Pattern.compile(
-        "\\[\\$\\$](.+?)\\[/\\$\\$]",
-        Pattern.DOTALL or Pattern.CASE_INSENSITIVE
-    )
+    private val STANDARD_PATTERN =
+        Pattern.compile(
+            "\\[latex](.+?)\\[/latex]",
+            Pattern.DOTALL or Pattern.CASE_INSENSITIVE,
+        )
+    private val EXPRESSION_PATTERN =
+        Pattern.compile(
+            "\\[\\$](.+?)\\[/\\$]",
+            Pattern.DOTALL or Pattern.CASE_INSENSITIVE,
+        )
+    private val MATH_PATTERN =
+        Pattern.compile(
+            "\\[\\$\\$](.+?)\\[/\\$\\$]",
+            Pattern.DOTALL or Pattern.CASE_INSENSITIVE,
+        )
 
     /**
      * Convert HTML with embedded latex tags to image links.
      * NOTE: _imgLink produces an alphanumeric filename so there is no need to escape the replacement string.
      */
-    fun mungeQA(html: String, col: Collection, svg: Boolean): String {
+    fun mungeQA(
+        html: String,
+        col: Collection,
+        svg: Boolean,
+    ): String {
         return mungeQA(html, col.media, svg)
     }
 
-    fun convertHTML(html: String, media: Media, svg: Boolean): String {
+    fun convertHTML(
+        html: String,
+        media: Media,
+        svg: Boolean,
+    ): String {
         val stringBuffer = StringBuffer()
         STANDARD_PATTERN.matcher(html).run {
             while (find()) {
@@ -72,7 +83,11 @@ object LaTeX {
         return stringBuffer.toString()
     }
 
-    fun convertExpression(input: String, media: Media, svg: Boolean): String {
+    fun convertExpression(
+        input: String,
+        media: Media,
+        svg: Boolean,
+    ): String {
         val stringBuffer = StringBuffer()
         EXPRESSION_PATTERN.matcher(input).run {
             while (find()) {
@@ -83,13 +98,17 @@ object LaTeX {
         return stringBuffer.toString()
     }
 
-    fun convertMath(input: String, media: Media, svg: Boolean): String {
+    fun convertMath(
+        input: String,
+        media: Media,
+        svg: Boolean,
+    ): String {
         val stringBuffer = StringBuffer()
         MATH_PATTERN.matcher(input).run {
             while (find()) {
                 appendReplacement(
                     stringBuffer,
-                    imgLink("\\begin{displaymath}" + group(1) + "\\end{displaymath}", svg, media)
+                    imgLink("\\begin{displaymath}" + group(1) + "\\end{displaymath}", svg, media),
                 )
             }
             appendTail(stringBuffer)
@@ -99,7 +118,11 @@ object LaTeX {
 
     // It's only goal is to allow testing with a different media manager.
     @VisibleForTesting
-    fun mungeQA(html: String, m: Media, svg: Boolean): String =
+    fun mungeQA(
+        html: String,
+        m: Media,
+        svg: Boolean,
+    ): String =
         arrayOf(::convertHTML, ::convertExpression, ::convertMath).fold(html) { input, transformer ->
             transformer(input, m, svg)
         }
@@ -108,7 +131,11 @@ object LaTeX {
      * Return an img link for LATEX.
      */
     @VisibleForTesting
-    internal fun imgLink(latex: String, svg: Boolean, m: Media): String {
+    internal fun imgLink(
+        latex: String,
+        svg: Boolean,
+        m: Media,
+    ): String {
         val txt = latexFromHtml(latex)
         val ext = if (svg) "svg" else "png"
         val fname = "latex-" + Utils.checksum(txt) + "." + ext

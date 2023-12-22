@@ -24,7 +24,6 @@ import com.ichi2.anki.CollectionManager.TR
 import org.json.JSONObject
 
 class ImageOcclusion : PageFragment() {
-
     override val title: String
         get() = TR.notetypesImageOcclusionName()
     override val pageName = "image-occlusion"
@@ -40,7 +39,10 @@ class ImageOcclusion : PageFragment() {
     }
 
     class ImageOcclusionWebViewClient(val kind: String, private val noteOrNotetypeId: Long, private val path: String?) : PageWebViewClient() {
-        override fun onPageFinished(view: WebView?, url: String?) {
+        override fun onPageFinished(
+            view: WebView?,
+            url: String?,
+        ) {
             val options = JSONObject()
             options.put("kind", kind)
             options.put("imagePath", path)
@@ -60,7 +62,12 @@ class ImageOcclusion : PageFragment() {
         private const val ARG_KEY_ID = "id"
         private const val ARG_KEY_PATH = "path"
 
-        fun getIntent(context: Context, kind: String, noteOrNotetypeId: Long, imagePath: String?): Intent {
+        fun getIntent(
+            context: Context,
+            kind: String,
+            noteOrNotetypeId: Long,
+            imagePath: String?,
+        ): Intent {
             val arguments = bundleOf(ARG_KEY_KIND to kind, ARG_KEY_ID to noteOrNotetypeId, ARG_KEY_PATH to imagePath)
             return PagesActivity.getIntent(context, ImageOcclusion::class, arguments)
         }

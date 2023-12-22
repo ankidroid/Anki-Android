@@ -177,28 +177,32 @@ open class Card : Cloneable {
     }
 
     fun toBackendCard(): anki.cards.Card {
-        val builder = anki.cards.Card.newBuilder()
-            .setId(id)
-            .setNoteId(nid)
-            .setDeckId(did)
-            .setTemplateIdx(ord)
-            .setCtype(type)
-            .setQueue(queue)
-            .setDue(due.toInt())
-            .setInterval(ivl)
-            .setEaseFactor(factor)
-            .setReps(reps)
-            .setLapses(lapses)
-            .setRemainingSteps(left)
-            .setOriginalDue(oDue.toInt())
-            .setOriginalDeckId(oDid)
-            .setFlags(flags)
-            .setCustomData(customData)
+        val builder =
+            anki.cards.Card.newBuilder()
+                .setId(id)
+                .setNoteId(nid)
+                .setDeckId(did)
+                .setTemplateIdx(ord)
+                .setCtype(type)
+                .setQueue(queue)
+                .setDue(due.toInt())
+                .setInterval(ivl)
+                .setEaseFactor(factor)
+                .setReps(reps)
+                .setLapses(lapses)
+                .setRemainingSteps(left)
+                .setOriginalDue(oDue.toInt())
+                .setOriginalDeckId(oDid)
+                .setFlags(flags)
+                .setCustomData(customData)
         originalPosition?.let { builder.setOriginalPosition(it) }
         return builder.build()
     }
 
-    fun question(reload: Boolean = false, browser: Boolean = false): String {
+    fun question(
+        reload: Boolean = false,
+        browser: Boolean = false,
+    ): String {
         return renderOutput(reload, browser).questionAndStyle()
     }
 
@@ -222,7 +226,10 @@ open class Card : Cloneable {
     /**
      * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
      */
-    open fun renderOutput(reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
+    open fun renderOutput(
+        reload: Boolean = false,
+        browser: Boolean = false,
+    ): TemplateRenderOutput {
         if (renderOutput == null || reload) {
             renderOutput = TemplateManager.TemplateRenderContext.fromExistingCard(this, browser).render()
         }
@@ -403,19 +410,20 @@ open class Card : Cloneable {
     fun nextDue(): String {
         val date: Long
         val due = due
-        date = if (isInDynamicDeck) {
-            return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
-        } else if (queue == Consts.QUEUE_TYPE_LRN) {
-            due
-        } else if (queue == Consts.QUEUE_TYPE_NEW || type == Consts.CARD_TYPE_NEW) {
-            return java.lang.Long.valueOf(due).toString()
-        } else if (queue == Consts.QUEUE_TYPE_REV || queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || type == Consts.CARD_TYPE_REV && queue < 0) {
-            val time = TimeManager.time.intTime()
-            val nbDaySinceCreation = due - col.sched.today
-            time + nbDaySinceCreation * SECONDS_PER_DAY
-        } else {
-            return ""
-        }
+        date =
+            if (isInDynamicDeck) {
+                return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
+            } else if (queue == Consts.QUEUE_TYPE_LRN) {
+                due
+            } else if (queue == Consts.QUEUE_TYPE_NEW || type == Consts.CARD_TYPE_NEW) {
+                return java.lang.Long.valueOf(due).toString()
+            } else if (queue == Consts.QUEUE_TYPE_REV || queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || type == Consts.CARD_TYPE_REV && queue < 0) {
+                val time = TimeManager.time.intTime()
+                val nbDaySinceCreation = due - col.sched.today
+                time + nbDaySinceCreation * SECONDS_PER_DAY
+            } else {
+                return ""
+            }
         return LanguageUtil.getShortDateFormatFromS(date)
     } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
 
@@ -515,12 +523,13 @@ open class Card : Cloneable {
         const val TYPE_REV = 2
 
         // A list of class members to skip in the toString() representation
-        val SKIP_PRINT: Set<String> = HashSet(
-            listOf(
-                "SKIP_PRINT", "\$assertionsDisabled", "TYPE_LRN",
-                "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"
+        val SKIP_PRINT: Set<String> =
+            HashSet(
+                listOf(
+                    "SKIP_PRINT", "\$assertionsDisabled", "TYPE_LRN",
+                    "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped",
+                ),
             )
-        )
 
         fun intToFlag(flags: Int): Int {
             // setting all bits to 0, except the three first one.
@@ -528,7 +537,10 @@ open class Card : Cloneable {
             return flags and 7
         }
 
-        fun setFlagInInt(flags: Int, flag: Int): Int {
+        fun setFlagInInt(
+            flags: Int,
+            flag: Int,
+        ): Int {
             Assert.that(0 <= flag, "flag to set is negative")
             Assert.that(flag <= 7, "flag to set is greater than 7.")
             // Setting the 3 firsts bits to 0, keeping the remaining.

@@ -41,13 +41,19 @@ class Statistics : PageFragment() {
     override var webViewClient = PageWebViewClient()
     override var webChromeClient = PageChromeClient()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().invalidateOptionsMenu()
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(
             object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                override fun onCreateMenu(
+                    menu: Menu,
+                    menuInflater: MenuInflater,
+                ) {
                     menuInflater.inflate(R.menu.statistics, menu)
                     val exportStats = menu.findItem(R.id.action_export_stats)
                     exportStats?.title = CollectionManager.TR.statisticsSavePdf()
@@ -64,7 +70,7 @@ class Statistics : PageFragment() {
                 }
             },
             viewLifecycleOwner,
-            Lifecycle.State.RESUMED
+            Lifecycle.State.RESUMED,
         )
     }
 
@@ -79,7 +85,7 @@ class Statistics : PageFragment() {
         printManager?.print(
             jobName,
             printAdapter,
-            PrintAttributes.Builder().build()
+            PrintAttributes.Builder().build(),
         )
     }
 

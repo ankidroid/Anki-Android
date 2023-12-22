@@ -28,7 +28,11 @@ object Assert {
     }
 
     @Contract("false, _, _ -> fail")
-    fun that(condition: Boolean, message: String?, vararg args: Any?) {
+    fun that(
+        condition: Boolean,
+        message: String?,
+        vararg args: Any?,
+    ) {
         if (!condition) {
             val msg = String.format(message!!, *args)
             throw AssertionError(msg)

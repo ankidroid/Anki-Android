@@ -37,7 +37,7 @@ class ActionButtonStatusTest : RobolectricTest() {
         assertThat(
             "Each button in the Action Bar must be modifiable in Preferences - Reviewer - App Bar Buttons",
             reviewerExpectedKeys,
-            containsInAnyOrder(*actualPreferenceKeys.toTypedArray())
+            containsInAnyOrder(*actualPreferenceKeys.toTypedArray()),
         )
     }
 

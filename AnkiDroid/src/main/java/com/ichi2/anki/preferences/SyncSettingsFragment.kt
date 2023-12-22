@@ -67,8 +67,9 @@ class SyncSettingsFragment : SettingsFragment() {
 
     private fun updateSyncAccountSummary() {
         requirePreference<Preference>(R.string.sync_account_key)
-            .summary = preferenceManager.sharedPreferences!!.getString("username", "")!!
-            .ifEmpty { getString(R.string.sync_account_summ_logged_out) }
+            .summary =
+            preferenceManager.sharedPreferences!!.getString("username", "")!!
+                .ifEmpty { getString(R.string.sync_account_summ_logged_out) }
     }
 
     private fun updateForceFullSyncEnabledState() {

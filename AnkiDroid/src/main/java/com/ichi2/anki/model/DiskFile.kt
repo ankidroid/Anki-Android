@@ -33,6 +33,7 @@ class DiskFile private constructor(val file: File) {
 
     /** @see [FileUtils.contentEquals] */
     fun contentEquals(f2: File): Boolean = FileUtils.contentEquals(file, f2)
+
     override fun toString(): String = file.canonicalPath
 
     companion object {

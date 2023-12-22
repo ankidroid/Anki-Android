@@ -33,7 +33,6 @@ import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class CardTest : JvmTest() {
-
     @Test
     fun `pureAnswer handled quoted html element`() {
         // <hr id="answer"> is also used
@@ -223,7 +222,10 @@ class CardTest : JvmTest() {
         assertNoteOrdinalAre(note, arrayOf(0, 1))
     }
 
-    private fun assertNoteOrdinalAre(note: Note, ords: Array<Int>) {
+    private fun assertNoteOrdinalAre(
+        note: Note,
+        ords: Array<Int>,
+    ) {
         val cards = note.cards()
         assumeThat(cards.size, equalTo(ords.size))
         for (card in cards) {

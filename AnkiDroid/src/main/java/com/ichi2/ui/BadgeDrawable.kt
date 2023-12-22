@@ -28,6 +28,7 @@ class BadgeDrawable(dr: Drawable?) : DrawableWrapper(dr) {
     private var mText: String? = null
     private var mTextX = 0f
     private var mTextY = 0f
+
     fun setBadgeDrawable(view: Drawable) {
         mBadge = view
         invalidateSize()
@@ -68,11 +69,12 @@ class BadgeDrawable(dr: Drawable?) : DrawableWrapper(dr) {
             }
         }
     private val iconScale: Double
-        get() = if (isShowingText) {
-            ICON_SCALE_TEXT
-        } else {
-            ICON_SCALE_BARE
-        }
+        get() =
+            if (isShowingText) {
+                ICON_SCALE_TEXT
+            } else {
+                ICON_SCALE_BARE
+            }
     private val isShowingText: Boolean
         get() = mText != null && mText!!.isNotEmpty()
 

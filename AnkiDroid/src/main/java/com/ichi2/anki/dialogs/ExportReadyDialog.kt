@@ -29,9 +29,12 @@ import com.ichi2.utils.*
 class ExportReadyDialog(private val listener: ExportReadyDialogListener) : AsyncDialogFragment() {
     interface ExportReadyDialogListener {
         fun dismissAllDialogFragments()
+
         fun shareFile(path: String) // path of the file to be shared
+
         fun saveExportFile(exportPath: String)
     }
+
     private val exportPath
         get() = requireArguments().getString("exportPath")!!
 
@@ -62,18 +65,19 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
     /** Export ready dialog message*/
     class ExportReadyDialogMessage(private val exportPath: String) : DialogHandlerMessage(
         which = WhichDialogHandler.MSG_EXPORT_READY,
-        analyticName = "ExportReadyDialog"
+        analyticName = "ExportReadyDialog",
     ) {
         override fun handleAsyncMessage(deckPicker: DeckPicker) {
             deckPicker.showDialogFragment(
-                deckPicker.mExportingDelegate.mDialogsFactory.newExportReadyDialog().withArguments(exportPath)
+                deckPicker.mExportingDelegate.mDialogsFactory.newExportReadyDialog().withArguments(exportPath),
             )
         }
 
-        override fun toMessage(): Message = Message.obtain().apply {
-            what = this@ExportReadyDialogMessage.what
-            data = bundleOf("exportPath" to exportPath)
-        }
+        override fun toMessage(): Message =
+            Message.obtain().apply {
+                what = this@ExportReadyDialogMessage.what
+                data = bundleOf("exportPath" to exportPath)
+            }
 
         companion object {
             fun fromMessage(message: Message): ExportReadyDialogMessage {

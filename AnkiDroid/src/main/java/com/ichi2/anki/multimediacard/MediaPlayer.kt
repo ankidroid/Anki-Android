@@ -51,7 +51,10 @@ class MediaPlayer :
         setOnCompletionListener(this)
     }
 
-    override fun setDataSource(context: Context, uri: Uri) {
+    override fun setDataSource(
+        context: Context,
+        uri: Uri,
+    ) {
         super.setDataSource(context, uri)
         if (state == IDLE) {
             state = INITIALIZED
@@ -62,7 +65,7 @@ class MediaPlayer :
         context: Context,
         uri: Uri,
         headers: MutableMap<String, String>?,
-        cookies: MutableList<HttpCookie>?
+        cookies: MutableList<HttpCookie>?,
     ) {
         super.setDataSource(context, uri, headers, cookies)
         if (state == IDLE) {
@@ -70,7 +73,11 @@ class MediaPlayer :
         }
     }
 
-    override fun setDataSource(context: Context, uri: Uri, headers: MutableMap<String, String>?) {
+    override fun setDataSource(
+        context: Context,
+        uri: Uri,
+        headers: MutableMap<String, String>?,
+    ) {
         super.setDataSource(context, uri, headers)
         if (state == IDLE) {
             state = INITIALIZED
@@ -98,7 +105,11 @@ class MediaPlayer :
         }
     }
 
-    override fun setDataSource(fd: FileDescriptor?, offset: Long, length: Long) {
+    override fun setDataSource(
+        fd: FileDescriptor?,
+        offset: Long,
+        length: Long,
+    ) {
         super.setDataSource(fd, offset, length)
         if (state == IDLE) {
             state = INITIALIZED
@@ -150,7 +161,10 @@ class MediaPlayer :
         }
     }
 
-    override fun seekTo(msec: Long, mode: Int) {
+    override fun seekTo(
+        msec: Long,
+        mode: Int,
+    ) {
         super.seekTo(msec, mode)
         when (state) {
             PREPARED, STARTED, PAUSED, PLAYBACK_COMPLETE -> {}
@@ -186,7 +200,11 @@ class MediaPlayer :
         setStateOnPrepared()
     }
 
-    override fun onError(p0: MediaPlayer?, p1: Int, p2: Int): Boolean {
+    override fun onError(
+        p0: MediaPlayer?,
+        p1: Int,
+        p2: Int,
+    ): Boolean {
         setStateOnError()
         return false
     }
@@ -239,7 +257,7 @@ class MediaPlayer :
         PAUSED,
         STOPPED,
         PLAYBACK_COMPLETE,
-        END
+        END,
     }
 
     interface MediaPlayerStateListener {

@@ -43,14 +43,15 @@ class ReviewerServer(activity: AbstractFlashcardViewer, private val mediaDir: St
             }
             if (uri.startsWith("/assets/")) {
                 val mime = getMimeFromUri(uri)
-                val stream = when (uri) {
-                    "/assets/reviewer_extras_bundle.js" ->
-                        this.javaClass.classLoader!!.getResourceAsStream("web/reviewer_extras_bundle.js")
-                    "/assets/reviewer_extras.css" ->
-                        this.javaClass.classLoader!!.getResourceAsStream("web/reviewer_extras.css")
-                    else ->
-                        this.javaClass.classLoader!!.getResourceAsStream(uri.substring(1))
-                }
+                val stream =
+                    when (uri) {
+                        "/assets/reviewer_extras_bundle.js" ->
+                            this.javaClass.classLoader!!.getResourceAsStream("web/reviewer_extras_bundle.js")
+                        "/assets/reviewer_extras.css" ->
+                            this.javaClass.classLoader!!.getResourceAsStream("web/reviewer_extras.css")
+                        else ->
+                            this.javaClass.classLoader!!.getResourceAsStream(uri.substring(1))
+                    }
                 if (stream != null) {
                     Timber.v("OK: $uri")
                     return newChunkedResponse(Response.Status.OK, mime, stream)
@@ -68,7 +69,7 @@ class ReviewerServer(activity: AbstractFlashcardViewer, private val mediaDir: St
                         Response.Status.PARTIAL_CONTENT,
                         mimeType,
                         file.toInputStream(rangeHeader),
-                        rangeHeader.contentLength
+                        rangeHeader.contentLength,
                     ).apply {
                         addHeader("Content-Range", "bytes $start-$end/${file.length()}")
                         addHeader("Accept-Ranges", "bytes")
@@ -99,7 +100,10 @@ class ReviewerServer(activity: AbstractFlashcardViewer, private val mediaDir: St
         return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "")
     }
 
-    private fun handlePostRequest(methodName: String, bytes: ByteArray): ByteArray {
+    private fun handlePostRequest(
+        methodName: String,
+        bytes: ByteArray,
+    ): ByteArray {
         return when (methodName) {
             "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
             "setSchedulingStates" -> setSchedulingStates(bytes)
@@ -119,8 +123,8 @@ class ReviewerServer(activity: AbstractFlashcardViewer, private val mediaDir: St
             .mergeStates(
                 state.states.toBuilder().mergeCurrent(
                     state.states.current.toBuilder()
-                        .setCustomData(state.topCard.toBackendCard().customData).build()
-                ).build()
+                        .setCustomData(state.topCard.toBackendCard().customData).build(),
+                ).build(),
             )
             .build()
             .toByteArray()

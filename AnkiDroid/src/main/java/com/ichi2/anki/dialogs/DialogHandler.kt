@@ -34,6 +34,7 @@ import java.lang.ref.WeakReference
 class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
     // Use weak reference to main activity to prevent leaking the activity when it's closed
     private val mActivity: WeakReference<AnkiActivity> = WeakReference(activity)
+
     override fun handleMessage(message: Message) {
         val msg = DialogHandlerMessage.fromMessage(message)
         UsageAnalytics.sendAnalyticsScreenView(msg.analyticName)
@@ -67,7 +68,6 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
     }
 
     companion object {
-
         private var sStoredMessage: Message? = null
 
         /**
@@ -96,6 +96,7 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
  */
 abstract class DialogHandlerMessage protected constructor(val which: WhichDialogHandler, val analyticName: String) {
     val what = which.what
+
     abstract fun handleAsyncMessage(deckPicker: DeckPicker)
 
     protected fun emptyMessage(what: Int): Message = Message.obtain().apply { this.what = what }
@@ -132,8 +133,9 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
         MSG_SHOW_FORCE_FULL_SYNC_DIALOG(7),
         MSG_DO_SYNC(8),
         MSG_MIGRATE_ON_SYNC_SUCCESS(9),
-        MSG_EXPORT_READY(10)
+        MSG_EXPORT_READY(10),
         ;
+
         companion object {
             fun fromInt(value: Int) = entries.first { it.what == value }
         }

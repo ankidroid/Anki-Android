@@ -71,7 +71,10 @@ class PermissionsActivity : AnkiActivity() {
     companion object {
         const val PERMISSIONS_SET_EXTRA = "permissionsSet"
 
-        fun getIntent(context: Context, permissionsSet: PermissionSet): Intent {
+        fun getIntent(
+            context: Context,
+            permissionsSet: PermissionSet,
+        ): Intent {
             return Intent(context, PermissionsActivity::class.java).apply {
                 putExtra(PERMISSIONS_SET_EXTRA, permissionsSet as Parcelable)
             }

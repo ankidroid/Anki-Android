@@ -20,5 +20,4 @@ package com.ichi2.utils
  * [this] is `@ColorInt`
  * Return RRGGBB in hexadecimal
  */
-fun Int.toRGBHex() =
-    String.format("#%06X", 0xFFFFFF and this)
+fun Int.toRGBHex() = String.format("#%06X", 0xFFFFFF and this)

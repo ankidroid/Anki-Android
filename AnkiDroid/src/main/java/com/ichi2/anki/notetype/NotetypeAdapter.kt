@@ -30,15 +30,13 @@ private val notetypeNamesAndCountDiff =
     object : DiffUtil.ItemCallback<NoteTypeUiModel>() {
         override fun areItemsTheSame(
             oldItem: NoteTypeUiModel,
-            newItem: NoteTypeUiModel
-        ): Boolean =
-            oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
+            newItem: NoteTypeUiModel,
+        ): Boolean = oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
 
         override fun areContentsTheSame(
             oldItem: NoteTypeUiModel,
-            newItem: NoteTypeUiModel
-        ): Boolean =
-            oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
+            newItem: NoteTypeUiModel,
+        ): Boolean = oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
     }
 
 internal class NotetypesAdapter(
@@ -46,21 +44,27 @@ internal class NotetypesAdapter(
     private val onShowFields: (NoteTypeUiModel) -> Unit,
     private val onEditCards: (NoteTypeUiModel) -> Unit,
     private val onRename: (NoteTypeUiModel) -> Unit,
-    private val onDelete: (NoteTypeUiModel) -> Unit
+    private val onDelete: (NoteTypeUiModel) -> Unit,
 ) : ListAdapter<NoteTypeUiModel, NotetypeViewHolder>(notetypeNamesAndCountDiff) {
     private val layoutInflater = LayoutInflater.from(context)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotetypeViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): NotetypeViewHolder {
         return NotetypeViewHolder(
             rowView = layoutInflater.inflate(R.layout.item_manage_note_type, parent, false),
             onDelete = onDelete,
             onRename = onRename,
             onEditCards = onEditCards,
-            onShowFields = onShowFields
+            onShowFields = onShowFields,
         )
     }
 
-    override fun onBindViewHolder(holder: NotetypeViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: NotetypeViewHolder,
+        position: Int,
+    ) {
         holder.bind(getItem(position))
     }
 }
@@ -70,7 +74,7 @@ internal class NotetypeViewHolder(
     onShowFields: (NoteTypeUiModel) -> Unit,
     onEditCards: (NoteTypeUiModel) -> Unit,
     onRename: (NoteTypeUiModel) -> Unit,
-    onDelete: (NoteTypeUiModel) -> Unit
+    onDelete: (NoteTypeUiModel) -> Unit,
 ) : RecyclerView.ViewHolder(rowView) {
     val name: TextView = rowView.findViewById(R.id.note_name)
     val useCount: TextView = rowView.findViewById(R.id.note_use_count)
@@ -90,10 +94,11 @@ internal class NotetypeViewHolder(
     fun bind(noteTypeUiModel: NoteTypeUiModel) {
         this.noteTypeUiModel = noteTypeUiModel
         name.text = noteTypeUiModel.name
-        useCount.text = resources.getQuantityString(
-            R.plurals.model_browser_of_type,
-            noteTypeUiModel.useCount,
-            noteTypeUiModel.useCount
-        )
+        useCount.text =
+            resources.getQuantityString(
+                R.plurals.model_browser_of_type,
+                noteTypeUiModel.useCount,
+                noteTypeUiModel.useCount,
+            )
     }
 }

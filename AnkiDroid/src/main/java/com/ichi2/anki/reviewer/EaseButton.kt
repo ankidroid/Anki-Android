@@ -31,8 +31,12 @@ import com.ichi2.anki.AbstractFlashcardViewer
  * * [nextTime] is used by the API
  * * [canPerformClick] is used to determine if the answer is being shown and the button isn't blocked
  */
-class EaseButton(private val ease: Int, private val layout: LinearLayout, private val easeTextView: TextView, private val easeTimeView: TextView) {
-
+class EaseButton(
+    private val ease: Int,
+    private val layout: LinearLayout,
+    private val easeTextView: TextView,
+    private val easeTimeView: TextView,
+) {
     var height: Int
         get() = layout.layoutParams.height
         set(value) {
@@ -126,7 +130,11 @@ class EaseButton(private val ease: Int, private val layout: LinearLayout, privat
     fun requestFocus() {
     }
 
-    fun setup(backgroundColor: Int, textColor: Int, @StringRes easeStringRes: Int) {
+    fun setup(
+        backgroundColor: Int,
+        textColor: Int,
+        @StringRes easeStringRes: Int,
+    ) {
         layout.visibility = View.VISIBLE
         layout.setBackgroundResource(backgroundColor)
         easeTextView.setText(easeStringRes)

@@ -42,6 +42,7 @@ import com.ichi2.utils.UiUtil
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
+
 // TODO : stop audio time view flickering
 class AudioRecordingController :
     FieldControllerBase(),
@@ -70,7 +71,10 @@ class AudioRecordingController :
     // wave layout takes up a lot of screen in HORIZONTAL layout so we need to hide it
     private var orientationEventListener: OrientationEventListener? = null
 
-    override fun createUI(context: Context, layout: LinearLayout) {
+    override fun createUI(
+        context: Context,
+        layout: LinearLayout,
+    ) {
         val origAudioPath = this.mField.audioPath
         var bExist = false
         if (origAudioPath != null) {
@@ -166,20 +170,21 @@ class AudioRecordingController :
             clearRecording()
         }
 
-        orientationEventListener = object : OrientationEventListener(context) {
-            override fun onOrientationChanged(orientation: Int) {
-                when (context.resources.configuration.orientation) {
-                    Configuration.ORIENTATION_LANDSCAPE -> {
-                        audioFileView.visibility = View.GONE
-                        audioWaveform.visibility = View.GONE
-                    }
-                    Configuration.ORIENTATION_PORTRAIT -> {
-                        audioFileView.visibility = View.VISIBLE
-                        audioWaveform.visibility = View.VISIBLE
+        orientationEventListener =
+            object : OrientationEventListener(context) {
+                override fun onOrientationChanged(orientation: Int) {
+                    when (context.resources.configuration.orientation) {
+                        Configuration.ORIENTATION_LANDSCAPE -> {
+                            audioFileView.visibility = View.GONE
+                            audioWaveform.visibility = View.GONE
+                        }
+                        Configuration.ORIENTATION_PORTRAIT -> {
+                            audioFileView.visibility = View.VISIBLE
+                            audioWaveform.visibility = View.VISIBLE
+                        }
                     }
                 }
             }
-        }
         orientationEventListener?.enable()
     }
 
@@ -239,7 +244,10 @@ class AudioRecordingController :
         }
     }
 
-    private fun startRecording(context: Context, audioPath: String) {
+    private fun startRecording(
+        context: Context,
+        audioPath: String,
+    ) {
         audioRecorder.startRecording(context, audioPath)
         recordButton.apply {
             iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
@@ -333,14 +341,16 @@ class AudioRecordingController :
     companion object {
         const val DEFAULT_TIME = "00:00.0"
         const val JUMP_VALUE = 500
+
         fun generateTempAudioFile(context: Context): String? {
-            val tempAudioPath: String? = try {
-                val storingDirectory = context.cacheDir
-                File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).absolutePath
-            } catch (e: IOException) {
-                Timber.e(e, "Could not create temporary audio file.")
-                null
-            }
+            val tempAudioPath: String? =
+                try {
+                    val storingDirectory = context.cacheDir
+                    File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).absolutePath
+                } catch (e: IOException) {
+                    Timber.e(e, "Could not create temporary audio file.")
+                    null
+                }
             return tempAudioPath
         }
     }

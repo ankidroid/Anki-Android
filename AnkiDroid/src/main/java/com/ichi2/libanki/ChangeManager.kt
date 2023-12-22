@@ -46,7 +46,10 @@ object ChangeManager {
          * has modified the collection. Subscriber should inspect the changes, and update
          * the UI if necessary.
          */
-        fun opExecuted(changes: OpChanges, handler: Any?)
+        fun opExecuted(
+            changes: OpChanges,
+            handler: Any?,
+        )
     }
 
     private val subscribers = mutableListOf<WeakReference<Subscriber>>()
@@ -55,7 +58,10 @@ object ChangeManager {
         subscribers.add(WeakReference(subscriber))
     }
 
-    private fun notifySubscribers(changes: OpChanges, handler: Any?) {
+    private fun notifySubscribers(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
         val expired = mutableListOf<WeakReference<Subscriber>>()
         for (subscriber in subscribers) {
             val ref = subscriber.get()
@@ -75,23 +81,30 @@ object ChangeManager {
         subscribers.clear()
     }
 
-    internal fun <T> notifySubscribers(changes: T, initiator: Any?) {
-        val opChanges = when (changes) {
-            is OpChanges -> changes
-            is OpChangesWithCount -> changes.changes
-            is OpChangesWithId -> changes.changes
-            is OpChangesAfterUndo -> changes.changes
-            is OpChangesOnly -> changes.changes
-            is ImportResponse -> changes.changes
-            else -> TODO("unhandled change type")
-        }
+    internal fun <T> notifySubscribers(
+        changes: T,
+        initiator: Any?,
+    ) {
+        val opChanges =
+            when (changes) {
+                is OpChanges -> changes
+                is OpChangesWithCount -> changes.changes
+                is OpChangesWithId -> changes.changes
+                is OpChangesAfterUndo -> changes.changes
+                is OpChangesOnly -> changes.changes
+                is ImportResponse -> changes.changes
+                else -> TODO("unhandled change type")
+            }
         notifySubscribers(opChanges, initiator)
     }
 }
 
 /** Wrap a routine that returns OpChanges* or similar undo info with this
  * to notify change subscribers of the changes. */
-suspend fun <T> undoableOp(handler: Any? = null, block: Collection.() -> T): T {
+suspend fun <T> undoableOp(
+    handler: Any? = null,
+    block: Collection.() -> T,
+): T {
     return withCol {
         block()
     }.also {

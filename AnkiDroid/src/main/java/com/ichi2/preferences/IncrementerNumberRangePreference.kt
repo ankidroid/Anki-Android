@@ -79,23 +79,26 @@ class IncrementerNumberRangePreference : NumberRangePreference {
      */
     private fun initialize() {
         // Layout parameters for mEditText
-        val editTextParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            3.0f
-        )
+        val editTextParams =
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                3.0f,
+            )
         // Layout parameters for mIncrementButton and mDecrementButton
-        val buttonParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            1.0f
-        )
-        mLastValidEntry = try {
-            mEditText.text.toString().toInt()
-        } catch (nfe: NumberFormatException) {
-            // This should not be possible but just in case, recover with a valid minimum from superclass
-            mMin
-        }
+        val buttonParams =
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f,
+            )
+        mLastValidEntry =
+            try {
+                mEditText.text.toString().toInt()
+            } catch (nfe: NumberFormatException) {
+                // This should not be possible but just in case, recover with a valid minimum from superclass
+                mMin
+            }
         mEditText.layoutParams = editTextParams
         // Centre text inside mEditText
         mEditText.gravity = Gravity.CENTER_HORIZONTAL
@@ -114,12 +117,13 @@ class IncrementerNumberRangePreference : NumberRangePreference {
      * @param isIncrement Indicator for whether to increase or decrease the value.
      */
     private fun updateEditText(isIncrement: Boolean) {
-        var value: Int = try {
-            mEditText.text.toString().toInt()
-        } catch (e: NumberFormatException) {
-            // If the user entered a non-number then incremented, restore to a good value
-            mLastValidEntry
-        }
+        var value: Int =
+            try {
+                mEditText.text.toString().toInt()
+            } catch (e: NumberFormatException) {
+                // If the user entered a non-number then incremented, restore to a good value
+                mLastValidEntry
+            }
         value = if (isIncrement) value + 1 else value - 1
         // Make sure value is within range
         mLastValidEntry = super.getValidatedRangeFromInt(value)

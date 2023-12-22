@@ -70,56 +70,68 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
     }
 
     @Test
-    fun migrate_essential_files_success() = runTest {
-        assertMigrationNotInProgress()
+    fun migrate_essential_files_success() =
+        runTest {
+            assertMigrationNotInProgress()
 
-        val oldDeckPath = getPreferences().getString("deckPath", "")
+            val oldDeckPath = getPreferences().getString("deckPath", "")
 
-        migrateEssentialFilesForTest(targetContext, File(col.path).parent!!, DestFolderOverride.Subfolder(destinationPath))
+            migrateEssentialFilesForTest(targetContext, File(col.path).parent!!, DestFolderOverride.Subfolder(destinationPath))
 
-        // assert the collection is open, working, and has been moved to the outPath
-        assertThat(col.basicCheck(), equalTo(true))
-        assertThat(col.path, equalTo(File(destinationPath, "collection.anki2").canonicalPath))
+            // assert the collection is open, working, and has been moved to the outPath
+            assertThat(col.basicCheck(), equalTo(true))
+            assertThat(col.path, equalTo(File(destinationPath, "collection.anki2").canonicalPath))
 
-        assertMigrationInProgress()
+            assertMigrationInProgress()
 
-        // assert that the preferences are updated
-        val prefs = getPreferences()
-        assertThat("The deck path is updated", prefs.getString("deckPath", ""), equalTo(destinationPath.canonicalPath))
-        assertThat("The migration source is the original deck path", prefs.getString(ScopedStorageService.PREF_MIGRATION_SOURCE, ""), equalTo(oldDeckPath))
-        assertThat("The migration destination is the deck path", prefs.getString(ScopedStorageService.PREF_MIGRATION_DESTINATION, ""), equalTo(destinationPath.canonicalPath))
-    }
+            // assert that the preferences are updated
+            val prefs = getPreferences()
+            assertThat("The deck path is updated", prefs.getString("deckPath", ""), equalTo(destinationPath.canonicalPath))
+            assertThat(
+                "The migration source is the original deck path",
+                prefs.getString(ScopedStorageService.PREF_MIGRATION_SOURCE, ""),
+                equalTo(oldDeckPath),
+            )
+            assertThat(
+                "The migration destination is the deck path",
+                prefs.getString(ScopedStorageService.PREF_MIGRATION_DESTINATION, ""),
+                equalTo(destinationPath.canonicalPath),
+            )
+        }
 
     @Test
     fun exception_if_not_enough_free_space_migrate_essential_files() {
         ShadowStatFs.reset()
 
-        val ex = assertFailsWith<MigrateEssentialFiles.UserActionRequiredException.OutOfSpaceException> {
-            ScopedStorageService.prepareAndValidateSourceAndDestinationFolders(targetContext)
-        }
+        val ex =
+            assertFailsWith<MigrateEssentialFiles.UserActionRequiredException.OutOfSpaceException> {
+                ScopedStorageService.prepareAndValidateSourceAndDestinationFolders(targetContext)
+            }
 
         assertThat(ex.message, containsString("More free space is required"))
     }
 
     @Test
     fun exception_if_source_already_scoped() {
-        val ex = assertFailsWith<IllegalStateException> {
-            ScopedStorageService.prepareAndValidateSourceAndDestinationFolders(targetContext, sourceOverride = destinationPath)
-        }
+        val ex =
+            assertFailsWith<IllegalStateException> {
+                ScopedStorageService.prepareAndValidateSourceAndDestinationFolders(targetContext, sourceOverride = destinationPath)
+            }
 
         assertThat(ex.message, containsString("Source directory is already under scoped storage"))
     }
 
     @Test
-    fun no_exception_if_directory_is_empty_directory_migrate_essential_files() = runTest {
-        assertThat("destination should not exist ($destinationPath)", destinationPath.exists(), equalTo(false))
+    fun no_exception_if_directory_is_empty_directory_migrate_essential_files() =
+        runTest {
+            assertThat("destination should not exist ($destinationPath)", destinationPath.exists(), equalTo(false))
 
-        migrateEssentialFilesForTest(
-            targetContext,
-            File(col.path).parent!!,
-            DestFolderOverride.Subfolder(destinationPath)
-        )
-    }
+            migrateEssentialFilesForTest(
+                targetContext,
+                File(col.path).parent!!,
+                DestFolderOverride.Subfolder(destinationPath),
+            )
+        }
 
     @Test
     fun fails_if_destination_is_not_empty() {
@@ -130,9 +142,13 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
             it.write(1)
         }
 
-        val ex = assertFailsWith<IllegalStateException> {
-            ScopedStorageService.prepareAndValidateSourceAndDestinationFolders(targetContext, destOverride = DestFolderOverride.Subfolder(destinationPath))
-        }
+        val ex =
+            assertFailsWith<IllegalStateException> {
+                ScopedStorageService.prepareAndValidateSourceAndDestinationFolders(
+                    targetContext,
+                    destOverride = DestFolderOverride.Subfolder(destinationPath),
+                )
+            }
 
         assertThat(ex.message, containsString("Target directory was not empty"))
     }

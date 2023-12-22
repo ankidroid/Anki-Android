@@ -48,7 +48,7 @@ import java.util.Locale
 @Suppress("Deprecation")
 open class CompatV23 : Compat {
     // Until API26, ignore notification channels
-    override fun setupNotificationChannel(context: Context) { /* pre-API26, do nothing */
+    override fun setupNotificationChannel(context: Context) { // pre-API26, do nothing
     }
 
     // Until API26, tooltips cannot be defined declaratively in layouts
@@ -57,14 +57,20 @@ open class CompatV23 : Compat {
     }
 
     // Until API 26 just specify time, after that specify effect also
-    override fun vibrate(context: Context, durationMillis: Long) {
+    override fun vibrate(
+        context: Context,
+        durationMillis: Long,
+    ) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
         vibratorManager?.vibrate(durationMillis)
     }
 
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
-    override fun copyFile(source: String, target: String) {
+    override fun copyFile(
+        source: String,
+        target: String,
+    ) {
         try {
             FileInputStream(source).use { fileInputStream -> copyFile(fileInputStream, target) }
         } catch (e: IOException) {
@@ -75,7 +81,10 @@ open class CompatV23 : Compat {
 
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
-    override fun copyFile(source: String, target: OutputStream): Long {
+    override fun copyFile(
+        source: String,
+        target: OutputStream,
+    ): Long {
         var count: Long
         try {
             FileInputStream(source).use { fileInputStream -> count = copyFile(fileInputStream, target) }
@@ -88,7 +97,10 @@ open class CompatV23 : Compat {
 
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
-    override fun copyFile(source: InputStream, target: String): Long {
+    override fun copyFile(
+        source: InputStream,
+        target: String,
+    ): Long {
         var bytesCopied: Long
         try {
             FileOutputStream(target).use { targetStream -> bytesCopied = copyFile(source, targetStream) }
@@ -101,7 +113,10 @@ open class CompatV23 : Compat {
 
     // Internal implementation under the API26 copyFile APIs
     @Throws(IOException::class)
-    private fun copyFile(source: InputStream, target: OutputStream): Long {
+    private fun copyFile(
+        source: InputStream,
+        target: OutputStream,
+    ): Long {
         // balance memory and performance, it appears 32k is the best trade-off
         // https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
         val buffer = ByteArray(1024 * 32)
@@ -118,8 +133,8 @@ open class CompatV23 : Compat {
 
     // Until API 26
     /* This method actually read the full content of the directory.
-    * It is linear in time and space in the number of file and directory in the directory.
-    * However, hasNext and next should be constant in time and space. */
+     * It is linear in time and space in the number of file and directory in the directory.
+     * However, hasNext and next should be constant in time and space. */
     @Throws(IOException::class)
     override fun contentOfDirectory(directory: File): FileStream {
         val paths = directory.listFiles()
@@ -127,7 +142,9 @@ open class CompatV23 : Compat {
             if (!directory.exists()) {
                 throw FileNotFoundException(directory.path)
             }
-            throw IOException("Directory " + directory.path + "'s file can not be listed. Probable cause are that it's not a directory (which violate the method's assumption) or a permission issue.")
+            throw IOException(
+                "Directory " + directory.path + "'s file can not be listed. Probable cause are that it's not a directory (which violate the method's assumption) or a permission issue.",
+            )
         }
         val length = paths.size
         return object : FileStream {
@@ -136,6 +153,7 @@ open class CompatV23 : Compat {
             }
 
             private var mOrd = 0
+
             override operator fun hasNext(): Boolean {
                 return mOrd < length
             }
@@ -173,7 +191,14 @@ open class CompatV23 : Compat {
 
     // Until API 29
     @Throws(FileNotFoundException::class)
-    override fun saveImage(context: Context, bitmap: Bitmap, baseFileName: String, extension: String, format: Bitmap.CompressFormat, quality: Int): Uri {
+    override fun saveImage(
+        context: Context,
+        bitmap: Bitmap,
+        baseFileName: String,
+        extension: String,
+        format: Bitmap.CompressFormat,
+        quality: Int,
+    ): Uri {
         val pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         val ankiDroidDirectory = File(pictures, "AnkiDroid")
         if (!ankiDroidDirectory.exists()) {
@@ -198,7 +223,7 @@ open class CompatV23 : Compat {
     override fun resolveActivity(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo? {
         return packageManager.resolveActivity(intent, flags.value.toInt())
     }
@@ -207,7 +232,7 @@ open class CompatV23 : Compat {
     override fun resolveService(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo? {
         return packageManager.resolveService(intent, flags.value.toInt())
     }
@@ -216,7 +241,7 @@ open class CompatV23 : Compat {
     override fun queryIntentActivities(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): List<ResolveInfo> {
         return packageManager.queryIntentActivities(intent, flags.value.toInt())
     }
@@ -225,7 +250,7 @@ open class CompatV23 : Compat {
     override fun <T : Serializable?> getSerializableExtra(
         intent: Intent,
         name: String,
-        className: Class<T>
+        className: Class<T>,
     ): T? {
         return try {
             @Suppress("UNCHECKED_CAST")
@@ -236,15 +261,18 @@ open class CompatV23 : Compat {
     }
 
     // Until API 33
-    override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
-        packageManager.getPackageInfo(packageName, flags.value.toInt())
+    override fun getPackageInfo(
+        packageManager: PackageManager,
+        packageName: String,
+        flags: PackageInfoFlagsCompat,
+    ): PackageInfo? = packageManager.getPackageInfo(packageName, flags.value.toInt())
 
     // Until API 33
     @Suppress("UNCHECKED_CAST")
     override fun <T : Serializable?> getSerializable(
         bundle: Bundle,
         key: String,
-        clazz: Class<T>
+        clazz: Class<T>,
     ): T? = bundle.getSerializable(key) as? T?
 
     override fun normalize(locale: Locale): Locale {
@@ -279,6 +307,7 @@ open class CompatV23 : Compat {
                 return null
             }
         }
+
         init {
             val locales = Locale.getAvailableLocales()
             val validLocales = mutableMapOf<String, Locale>()

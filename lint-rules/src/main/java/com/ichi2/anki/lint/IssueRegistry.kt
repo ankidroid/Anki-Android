@@ -60,16 +60,17 @@ class IssueRegistry : IssueRegistry() {
                 FixedPreferencesTitleLength.ISSUE_MAX_LENGTH,
                 FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH,
                 VariableNamingDetector.ISSUE,
-                InvalidStringFormatDetector.ISSUE
+                InvalidStringFormatDetector.ISSUE,
             )
         }
     override val api: Int
         get() = CURRENT_API
     override val vendor: Vendor
-        get() = Vendor(
-            "AnkiDroid",
-            "com.ichi2.anki:lint-rules",
-            "https://github.com/ankidroid/Anki-Android/issues",
-            "https://github.com/ankidroid/Anki-Android"
-        )
+        get() =
+            Vendor(
+                "AnkiDroid",
+                "com.ichi2.anki:lint-rules",
+                "https://github.com/ankidroid/Anki-Android/issues",
+                "https://github.com/ankidroid/Anki-Android",
+            )
 }

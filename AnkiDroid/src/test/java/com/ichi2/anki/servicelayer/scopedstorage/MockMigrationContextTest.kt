@@ -41,8 +41,7 @@ class MockMigrationContextTest {
     }
 
     class OperationWhichThrowsIfUsed : Operation() {
-        override fun execute(context: MigrationContext): List<Operation> =
-            throw TestException("should not be called")
+        override fun execute(context: MigrationContext): List<Operation> = throw TestException("should not be called")
 
         override val retryOperations: List<Operation>
             get() = listOf(OperationWhichThrowsIfUsed())

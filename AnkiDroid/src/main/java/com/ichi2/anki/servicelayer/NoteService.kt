@@ -71,18 +71,24 @@ object NoteService {
         return null
     }
 
-    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
+    fun updateMultimediaNoteFromFields(
+        col: com.ichi2.libanki.Collection,
+        fields: Array<String>,
+        modelId: NoteTypeId,
+        mmNote: MultimediaEditableNote,
+    ) {
         for (i in fields.indices) {
             val value = fields[i]
-            val field: IField = if (value.startsWith("<img")) {
-                ImageField()
-            } else if (value.startsWith("[sound:") && value.contains("rec")) {
-                AudioRecordingField()
-            } else if (value.startsWith("[sound:")) {
-                MediaClipField()
-            } else {
-                TextField()
-            }
+            val field: IField =
+                if (value.startsWith("<img")) {
+                    ImageField()
+                } else if (value.startsWith("[sound:") && value.contains("rec")) {
+                    AudioRecordingField()
+                } else if (value.startsWith("[sound:")) {
+                    MediaClipField()
+                } else {
+                    TextField()
+                }
             field.setFormattedString(col, value)
             mmNote.setField(i, field)
         }
@@ -98,7 +104,10 @@ object NoteService {
      * @param noteSrc
      * @param editorNoteDst
      */
-    fun updateJsonNoteFromMultimediaNote(noteSrc: IMultimediaEditableNote?, editorNoteDst: Note) {
+    fun updateJsonNoteFromMultimediaNote(
+        noteSrc: IMultimediaEditableNote?,
+        editorNoteDst: Note,
+    ) {
         if (noteSrc is MultimediaEditableNote) {
             if (noteSrc.modelId != editorNoteDst.mid) {
                 throw RuntimeException("Source and Destination Note ID do not match.")
@@ -115,7 +124,10 @@ object NoteService {
      *
      * @param field
      */
-    fun importMediaToDirectory(col: com.ichi2.libanki.Collection, field: IField?) {
+    fun importMediaToDirectory(
+        col: com.ichi2.libanki.Collection,
+        field: IField?,
+    ) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
             EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> tmpMediaPath = field.audioPath
@@ -156,7 +168,10 @@ object NoteService {
      */
     @VisibleForTesting
     @CheckResult
-    fun getFieldsAsBundleForPreview(editFields: Collection<NoteField?>?, replaceNewlines: Boolean): Bundle {
+    fun getFieldsAsBundleForPreview(
+        editFields: Collection<NoteField?>?,
+        replaceNewlines: Boolean,
+    ): Bundle {
         val fields = Bundle()
         // Save the content of all the note fields. We use the field's ord as the key to
         // easily map the fields correctly later.
@@ -173,7 +188,10 @@ object NoteService {
         return fields
     }
 
-    fun convertToHtmlNewline(fieldData: String, replaceNewlines: Boolean): String {
+    fun convertToHtmlNewline(
+        fieldData: String,
+        replaceNewlines: Boolean,
+    ): String {
         return if (!replaceNewlines) {
             fieldData
         } else {
@@ -181,7 +199,10 @@ object NoteService {
         }
     }
 
-    suspend fun toggleMark(note: Note, handler: Any? = null) {
+    suspend fun toggleMark(
+        note: Note,
+        handler: Any? = null,
+    ) {
         if (isMarked(note)) {
             note.delTag("marked")
         } else {
@@ -198,6 +219,7 @@ object NoteService {
     }
 
     //  TODO: should make a direct SQL query to do this
+
     /**
      * returns the average ease of all the non-new cards in the note,
      * or if all the cards in the note are new, returns null

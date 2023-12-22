@@ -66,10 +66,11 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
 
     @Test
     fun a_move_failure_is_not_fatal() {
-        val source = createTransientDirectory()
-            .withTempFile("foo.txt")
-            .withTempFile("bar.txt")
-            .withTempFile("baz.txt")
+        val source =
+            createTransientDirectory()
+                .withTempFile("foo.txt")
+                .withTempFile("bar.txt")
+                .withTempFile("baz.txt")
 
         val destinationDirectory = generateDestinationDirectoryRef()
 
@@ -99,9 +100,10 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
 
     @Test
     fun adding_file_during_move_is_not_fatal() {
-        val operation = adding_during_move_helper {
-            return@adding_during_move_helper it.addTempFile("new_file.txt", "new file")
-        }
+        val operation =
+            adding_during_move_helper {
+                return@adding_during_move_helper it.addTempFile("new_file.txt", "new file")
+            }
 
         assertThat("source should not be deleted on retry", operation.source.exists(), equalTo(true))
         assertThat("additional file was not moved", File(operation.destination, "new_file.txt").exists(), equalTo(false))
@@ -109,12 +111,13 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
 
     @Test
     fun adding_directory_during_move_is_not_fatal() {
-        val operation = adding_during_move_helper {
-            val new_directory = File(it, "subdirectory")
-            assertThat("Subdirectory is created", new_directory.mkdir())
-            new_directory.deleteOnExit()
-            return@adding_during_move_helper new_directory
-        }
+        val operation =
+            adding_during_move_helper {
+                val newDirectory = File(it, "subdirectory")
+                assertThat("Subdirectory is created", newDirectory.mkdir())
+                newDirectory.deleteOnExit()
+                return@adding_during_move_helper newDirectory
+            }
 
         assertThat("source should not be deleted on retry", operation.source.exists(), equalTo(true))
         assertThat("additional directory was not moved", File(operation.destination, "subdirectory").exists(), equalTo(false))
@@ -124,9 +127,10 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
     fun succeeds_on_retry_after_adding_file_during_process() {
         executionContext = RetryMigrationContext { l -> executor.operations.addAll(0, l) }
 
-        val operation = adding_during_move_helper {
-            return@adding_during_move_helper it.addTempFile("new_file.txt", "new file")
-        }
+        val operation =
+            adding_during_move_helper {
+                return@adding_during_move_helper it.addTempFile("new_file.txt", "new file")
+            }
 
         assertThat("source should be deleted on retry", operation.source.exists(), equalTo(false))
         assertThat("additional file was moved", File(operation.destination, "new_file.txt").exists(), equalTo(true))
@@ -136,12 +140,13 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
     fun succeeds_on_retry_after_adding_directory_during_process() {
         executionContext = RetryMigrationContext { l -> executor.operations.addAll(0, l) }
 
-        val operation = adding_during_move_helper {
-            val newDirectory = File(it, "subdirectory")
-            assertThat("Subdirectory is created", newDirectory.mkdir())
-            newDirectory.deleteOnExit()
-            return@adding_during_move_helper newDirectory
-        }
+        val operation =
+            adding_during_move_helper {
+                val newDirectory = File(it, "subdirectory")
+                assertThat("Subdirectory is created", newDirectory.mkdir())
+                newDirectory.deleteOnExit()
+                return@adding_during_move_helper newDirectory
+            }
 
         assertThat("source should be deleted on retry", operation.source.exists(), equalTo(false))
         assertThat("additional directory was moved", File(operation.destination, "subdirectory").exists(), equalTo(true))
@@ -154,12 +159,13 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
      * @return The [MoveDirectory] which was executed
      */
     fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: File) -> File): MoveDirectory {
-        val source = createTransientDirectory()
-            .withTempFile("foo.txt")
-            .withTempFile("bar.txt")
+        val source =
+            createTransientDirectory()
+                .withTempFile("foo.txt")
+                .withTempFile("bar.txt")
 
         val destinationDirectory = generateDestinationDirectoryRef()
-        var new_file_name: String? = null
+        var newFileName: String? = null
 
         executionContext.attemptRename = false
         executionContext.logExceptions = true
@@ -168,28 +174,29 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
         val subOperations = moveDirectory.execute()
         val moveDirectoryContent = subOperations[0] as MoveDirectoryContent
         val deleteDirectory = subOperations[1]
-        val moveDirectoryContentSpied = spy(moveDirectoryContent) {
-            doAnswer { op ->
-                val operation = op.callRealMethod() as Operation
-                if (movesProcessed++ == 1) {
-                    return@doAnswer object : Operation() {
-                        // Create a file in `source` and then execute the original operation.
-                        // It ensures a file is added after some files where already copied.
-                        override fun execute(context: MigrationContext): List<Operation> {
-                            new_file_name = toDoBetweenTwoFilesMove(source).name
-                            return operation.execute()
+        val moveDirectoryContentSpied =
+            spy(moveDirectoryContent) {
+                doAnswer { op ->
+                    val operation = op.callRealMethod() as Operation
+                    if (movesProcessed++ == 1) {
+                        return@doAnswer object : Operation() {
+                            // Create a file in `source` and then execute the original operation.
+                            // It ensures a file is added after some files where already copied.
+                            override fun execute(context: MigrationContext): List<Operation> {
+                                newFileName = toDoBetweenTwoFilesMove(source).name
+                                return operation.execute()
+                            }
                         }
                     }
-                }
-                return@doAnswer operation
-            }.whenever(it).toMoveOperation(any())
-        }
+                    return@doAnswer operation
+                }.whenever(it).toMoveOperation(any())
+            }
 
         executor.execute(moveDirectoryContentSpied, deleteDirectory)
 
         assertThat(
             "new_file should be present in source or directory",
-            File(source, new_file_name!!).exists() || File(destinationDirectory, new_file_name!!).exists()
+            File(source, newFileName!!).exists() || File(destinationDirectory, newFileName!!).exists(),
         )
         return moveDirectory
     }
@@ -227,10 +234,15 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
     fun reproduce_10358() {
         val sourceWithPermissionDenied = createPermissionDenied()
         val destination = createTransientDirectory()
-        sourceWithPermissionDenied.assertThrowsWhenPermissionDenied { executeAll(moveDirectory(sourceWithPermissionDenied.directory.directory, destination)) }
+        sourceWithPermissionDenied.assertThrowsWhenPermissionDenied {
+            executeAll(moveDirectory(sourceWithPermissionDenied.directory.directory, destination))
+        }
     }
 
-    fun moveDirectory(source: File, destination: File): MoveDirectory {
+    fun moveDirectory(
+        source: File,
+        destination: File,
+    ): MoveDirectory {
         return MoveDirectory(Directory.createInstance(source)!!, destination)
     }
 }

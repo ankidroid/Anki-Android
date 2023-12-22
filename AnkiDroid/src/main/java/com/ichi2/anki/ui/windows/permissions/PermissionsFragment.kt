@@ -41,7 +41,7 @@ abstract class PermissionsFragment : Fragment() {
         super.onResume()
         permissionItems.forEach { it.updateSwitchCheckedStatus() }
         (activity as? PermissionsActivity)?.setContinueButtonEnabled(
-            permissionItems.all { it.isGranted }
+            permissionItems.all { it.isGranted },
         )
     }
 
@@ -53,12 +53,14 @@ abstract class PermissionsFragment : Fragment() {
         startActivity(
             Intent(
                 Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.fromParts("package", requireActivity().packageName, null)
-            )
+                Uri.fromParts("package", requireActivity().packageName, null),
+            ),
         )
     }
 
-    protected fun showToastAndOpenAppSettingsScreen(@StringRes message: Int) {
+    protected fun showToastAndOpenAppSettingsScreen(
+        @StringRes message: Int,
+    ) {
         UIUtils.showThemedToast(requireContext(), message, false)
         openAppSettingsScreen()
     }
@@ -66,10 +68,11 @@ abstract class PermissionsFragment : Fragment() {
     /** Opens the Android 'MANAGE_ALL_FILES' page if the device provides this feature */
     @RequiresApi(Build.VERSION_CODES.R)
     protected fun ActivityResultLauncher<Intent>.showManageAllFilesScreen() {
-        val intent = Intent(
-            Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
-            Uri.fromParts("package", requireActivity().packageName, null)
-        )
+        val intent =
+            Intent(
+                Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                Uri.fromParts("package", requireActivity().packageName, null),
+            )
 
         // From the docs: [ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION]
         // In some cases, a matching Activity may not exist, so ensure you safeguard against this.

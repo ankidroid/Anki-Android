@@ -28,7 +28,6 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 
 class AutomaticAnswerActionTest {
-
     @Test
     fun fromPreferenceValue() {
         assertThat(fromPreferenceValue(0), equalTo(BURY_CARD))
@@ -48,11 +47,15 @@ class AutomaticAnswerActionTest {
         assertExecuteReturns(ANSWER_EASY, ViewerCommand.FLIP_OR_ANSWER_EASE4)
     }
 
-    private fun assertExecuteReturns(action: AutomaticAnswerAction, expectedCommand: ViewerCommand) {
+    private fun assertExecuteReturns(
+        action: AutomaticAnswerAction,
+        expectedCommand: ViewerCommand,
+    ) {
         val captor = argumentCaptor<ViewerCommand>()
-        val mock: Reviewer = mock {
-            on { executeCommand(captor.capture()) } doReturn true
-        }
+        val mock: Reviewer =
+            mock {
+                on { executeCommand(captor.capture()) } doReturn true
+            }
 
         action.execute(mock)
 

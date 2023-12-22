@@ -36,6 +36,7 @@ import java.util.*
 object AdaptionUtil {
     private var sHasRunWebBrowserCheck = false
     private var sHasWebBrowser = true
+
     fun hasWebBrowser(context: Context): Boolean {
         if (sHasRunWebBrowserCheck) {
             return sHasWebBrowser
@@ -46,20 +47,22 @@ object AdaptionUtil {
     }
 
     val isUserATestClient: Boolean
-        get() = try {
-            ActivityManager.isUserAMonkey() ||
-                isRunningUnderFirebaseTestLab
-        } catch (e: Exception) {
-            Timber.w(e)
-            false
-        }
+        get() =
+            try {
+                ActivityManager.isUserAMonkey() ||
+                    isRunningUnderFirebaseTestLab
+            } catch (e: Exception) {
+                Timber.w(e)
+                false
+            }
     private val isRunningUnderFirebaseTestLab: Boolean
-        get() = try {
-            isRunningUnderFirebaseTestLab(AnkiDroidApp.instance.contentResolver)
-        } catch (e: Exception) {
-            Timber.w(e)
-            false
-        }
+        get() =
+            try {
+                isRunningUnderFirebaseTestLab(AnkiDroidApp.instance.contentResolver)
+            } catch (e: Exception) {
+                Timber.w(e)
+                false
+            }
 
     private fun isRunningUnderFirebaseTestLab(contentResolver: ContentResolver): Boolean {
         // https://firebase.google.com/docs/test-lab/android/android-studio#modify_instrumented_test_behavior_for
@@ -98,7 +101,10 @@ object AdaptionUtil {
         return ri?.activityInfo != null && ri.activityInfo.exported
     }
 
-    private fun isSystemApp(packageName: String?, pm: PackageManager): Boolean {
+    private fun isSystemApp(
+        packageName: String?,
+        pm: PackageManager,
+    ): Boolean {
         return if (packageName != null) {
             try {
                 val info = pm.getPackageInfoCompat(packageName, PackageInfoFlagsCompat.EMPTY) ?: return false

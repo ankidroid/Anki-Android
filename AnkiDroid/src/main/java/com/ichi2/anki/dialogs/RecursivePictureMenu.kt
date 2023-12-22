@@ -42,25 +42,32 @@ class RecursivePictureMenu : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val items: List<Item> = BundleCompat.getParcelableArrayList(requireArguments(), "bundle", Item::class.java)!!
         val title = requireContext().getString(requireArguments().getInt("titleRes"))
-        val adapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
-                return object : RecyclerView.ViewHolder(root) {}
-            }
+        val adapter: RecyclerView.Adapter<*> =
+            object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                override fun onCreateViewHolder(
+                    parent: ViewGroup,
+                    viewType: Int,
+                ): RecyclerView.ViewHolder {
+                    val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
+                    return object : RecyclerView.ViewHolder(root) {}
+                }
 
-            override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-                val textView = holder.itemView as TextView
-                val item = items[position]
-                textView.setText(item.title)
-                textView.setOnClickListener { item.execute(requireActivity() as AnkiActivity) }
-                val icon = item.mIcon
-                textView.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, 0, 0, 0)
-            }
+                override fun onBindViewHolder(
+                    holder: RecyclerView.ViewHolder,
+                    position: Int,
+                ) {
+                    val textView = holder.itemView as TextView
+                    val item = items[position]
+                    textView.setText(item.title)
+                    textView.setOnClickListener { item.execute(requireActivity() as AnkiActivity) }
+                    val icon = item.mIcon
+                    textView.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, 0, 0, 0)
+                }
 
-            override fun getItemCount(): Int {
-                return items.size
+                override fun getItemCount(): Int {
+                    return items.size
+                }
             }
-        }
         return MaterialDialog(requireContext()).show {
             customListAdapter(adapter, null)
             title(text = title)
@@ -76,7 +83,11 @@ class RecursivePictureMenu : DialogFragment() {
         val mIcon: Int
         private val mAnalyticsId: String?
 
-        constructor(@StringRes titleString: Int, @DrawableRes iconDrawable: Int, analyticsId: String?) {
+        constructor(
+            @StringRes titleString: Int,
+            @DrawableRes iconDrawable: Int,
+            analyticsId: String?,
+        ) {
             title = titleString
             mIcon = iconDrawable
             mAnalyticsId = analyticsId
@@ -95,13 +106,17 @@ class RecursivePictureMenu : DialogFragment() {
             return 0
         }
 
-        override fun writeToParcel(dest: Parcel, flags: Int) {
+        override fun writeToParcel(
+            dest: Parcel,
+            flags: Int,
+        ) {
             dest.writeInt(title)
             dest.writeInt(mIcon)
             dest.writeString(mAnalyticsId)
         }
 
         protected abstract fun onClicked(activity: AnkiActivity)
+
         fun sendAnalytics() {
             UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, mAnalyticsId!!)
         }
@@ -120,7 +135,12 @@ class RecursivePictureMenu : DialogFragment() {
     class ItemHeader : Item, Parcelable {
         private val mChildren: MutableList<Item?>?
 
-        constructor(@StringRes titleString: Int, i: Int, analyticsStringId: String?, vararg children: Item?) : super(titleString, i, analyticsStringId) {
+        constructor(
+            @StringRes titleString: Int,
+            i: Int,
+            analyticsStringId: String?,
+            vararg children: Item?,
+        ) : super(titleString, i, analyticsStringId) {
             mChildren = ArrayList(listOf(*children))
         }
 
@@ -149,7 +169,10 @@ class RecursivePictureMenu : DialogFragment() {
             }
         }
 
-        override fun writeToParcel(dest: Parcel, flags: Int) {
+        override fun writeToParcel(
+            dest: Parcel,
+            flags: Int,
+        ) {
             super.writeToParcel(dest, flags)
             if (mChildren == null) {
                 dest.writeByte(0x00.toByte())
@@ -162,21 +185,25 @@ class RecursivePictureMenu : DialogFragment() {
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             @Suppress("unused")
-            val CREATOR: Parcelable.Creator<ItemHeader?> = object : Parcelable.Creator<ItemHeader?> {
-                override fun createFromParcel(parcel: Parcel): ItemHeader {
-                    return ItemHeader(parcel)
-                }
+            val CREATOR: Parcelable.Creator<ItemHeader?> =
+                object : Parcelable.Creator<ItemHeader?> {
+                    override fun createFromParcel(parcel: Parcel): ItemHeader {
+                        return ItemHeader(parcel)
+                    }
 
-                override fun newArray(size: Int): Array<ItemHeader?> {
-                    return arrayOfNulls(size)
+                    override fun newArray(size: Int): Array<ItemHeader?> {
+                        return arrayOfNulls(size)
+                    }
                 }
-            }
         }
     }
 
     companion object {
         @CheckResult
-        fun createInstance(itemList: ArrayList<Item?>?, @StringRes title: Int): RecursivePictureMenu {
+        fun createInstance(
+            itemList: ArrayList<Item?>?,
+            @StringRes title: Int,
+        ): RecursivePictureMenu {
             val helpDialog = RecursivePictureMenu()
             val args = Bundle()
             args.putParcelableArrayList("bundle", itemList)
@@ -185,7 +212,10 @@ class RecursivePictureMenu : DialogFragment() {
             return helpDialog
         }
 
-        fun removeFrom(allItems: List<Item>, toRemove: Item?) {
+        fun removeFrom(
+            allItems: List<Item>,
+            toRemove: Item?,
+        ) {
             // Note: currently doesn't remove the top-level elements.
             for (i in allItems) {
                 i.remove(toRemove)

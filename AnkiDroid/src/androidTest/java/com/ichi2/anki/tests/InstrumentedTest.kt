@@ -89,7 +89,7 @@ abstract class InstrumentedTest {
                     Build.PRODUCT.contains("vbox86p") ||
                     Build.PRODUCT.contains("emulator") ||
                     Build.PRODUCT.contains("simulator")
-                )
+            )
         }
     }
 
@@ -153,14 +153,21 @@ abstract class InstrumentedTest {
     }
 
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
-    internal fun addNoteUsingBasicModel(front: String = "Front", back: String = "Back"): Note {
+    internal fun addNoteUsingBasicModel(
+        front: String = "Front",
+        back: String = "Back",
+    ): Note {
         return addNoteUsingModelName("Basic", front, back)
     }
 
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
-    private fun addNoteUsingModelName(name: String, vararg fields: String): Note {
-        val model = col.notetypes.byName(name)
-            ?: throw IllegalArgumentException("Could not find model '$name'")
+    private fun addNoteUsingModelName(
+        name: String,
+        vararg fields: String,
+    ): Note {
+        val model =
+            col.notetypes.byName(name)
+                ?: throw IllegalArgumentException("Could not find model '$name'")
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
         val n = col.newNote(model)
@@ -174,7 +181,7 @@ abstract class InstrumentedTest {
     protected fun ViewInteraction.checkWithTimeout(
         viewAssertion: ViewAssertion,
         retryWaitTimeInMilliseconds: Long = 100,
-        maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10)
+        maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10),
     ) {
         val startTime = TimeManager.time.intTimeMS()
 

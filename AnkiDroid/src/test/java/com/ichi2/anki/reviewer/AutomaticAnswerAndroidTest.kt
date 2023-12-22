@@ -27,7 +27,6 @@ import org.mockito.kotlin.mock
 
 @RunWith(AndroidJUnit4::class)
 class AutomaticAnswerAndroidTest : RobolectricTest() {
-
     @Test
     fun default_is_bury() {
         assertThat("no value", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
@@ -58,6 +57,5 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
         col.config.set("automaticAnswerAction", value)
     }
 
-    private fun createInstance() =
-        AutomaticAnswer.createInstance(mock(), super.getPreferences(), super.col)
+    private fun createInstance() = AutomaticAnswer.createInstance(mock(), super.getPreferences(), super.col)
 }

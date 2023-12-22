@@ -27,7 +27,10 @@ abstract class AsyncOperation {
     abstract val handlerMessage: DialogHandlerMessage
 }
 
-fun DeckPicker.sendNotificationForAsyncOperation(operation: AsyncOperation, channel: Channel) {
+fun DeckPicker.sendNotificationForAsyncOperation(
+    operation: AsyncOperation,
+    channel: Channel,
+) {
     // Store a persistent message instructing AnkiDroid to perform the operation
     DialogHandler.storeMessage(operation.handlerMessage.toMessage())
     // Show a basic notification to the user in the notification bar in the meantime
@@ -39,7 +42,7 @@ fun DeckPicker.sendNotificationForAsyncOperation(operation: AsyncOperation, chan
 @Suppress("unused")
 fun DeckPicker.performAsyncOperation(
     operation: AsyncOperation,
-    channel: Channel
+    channel: Channel,
 ) {
     if (mActivityPaused) {
         sendNotificationForAsyncOperation(operation, channel)

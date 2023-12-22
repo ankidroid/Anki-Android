@@ -43,11 +43,12 @@ class PreferencesTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
         preferences = Preferences()
-        val attachBaseContext = getJavaMethodAsAccessible(
-            AppCompatActivity::class.java,
-            "attachBaseContext",
-            Context::class.java
-        )
+        val attachBaseContext =
+            getJavaMethodAsAccessible(
+                AppCompatActivity::class.java,
+                "attachBaseContext",
+                Context::class.java,
+            )
         attachBaseContext.invoke(preferences, targetContext)
     }
 

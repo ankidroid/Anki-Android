@@ -46,7 +46,10 @@ private const val TIME_YEAR = 12.0 * TIME_MONTH
  * @param time_s The time to format, in seconds
  * @return The formatted, localized time string. The time is always a float. E.g. "27.0 days"
  */
-fun roundedTimeSpanUnformatted(context: Context, time_s: Long): String {
+fun roundedTimeSpanUnformatted(
+    context: Context,
+    time_s: Long,
+): String {
     // As roundedTimeSpan, but without tags; for place where you don't use HTML
     return roundedTimeSpan(context, time_s).replace("<b>", "").replace("</b>", "")
 }
@@ -60,26 +63,29 @@ fun roundedTimeSpanUnformatted(context: Context, time_s: Long): String {
  * @param time_s The time to format, in seconds
  * @return The formatted, localized time string. The time is always a float. E.g. "**27.0** days"
  */
-fun roundedTimeSpan(context: Context, time_s: Long): String {
+fun roundedTimeSpan(
+    context: Context,
+    time_s: Long,
+): String {
     return if (abs(time_s) < TIME_DAY) {
         context.resources.getString(
             R.string.stats_overview_hours,
-            time_s / TIME_HOUR
+            time_s / TIME_HOUR,
         )
     } else if (abs(time_s) < TIME_MONTH) {
         context.resources.getString(
             R.string.stats_overview_days,
-            time_s / TIME_DAY
+            time_s / TIME_DAY,
         )
     } else if (abs(time_s) < TIME_YEAR) {
         context.resources.getString(
             R.string.stats_overview_months,
-            time_s / TIME_MONTH
+            time_s / TIME_MONTH,
         )
     } else {
         context.resources.getString(
             R.string.stats_overview_years,
-            time_s / TIME_YEAR
+            time_s / TIME_YEAR,
         )
     }
 }

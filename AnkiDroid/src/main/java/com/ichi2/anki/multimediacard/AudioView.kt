@@ -34,7 +34,13 @@ import timber.log.Timber
 
 // Not designed for visual editing
 @SuppressLint("ViewConstructor")
-class AudioView private constructor(context: Context, resPlay: Int, resPause: Int, resStop: Int, audioPath: String) : LinearLayout(context) {
+class AudioView private constructor(
+    context: Context,
+    resPlay: Int,
+    resPause: Int,
+    resStop: Int,
+    audioPath: String,
+) : LinearLayout(context) {
     val audioPath: String?
     protected var playPause: PlayPauseButton?
     protected var stop: StopButton?
@@ -56,10 +62,12 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
     enum class Status {
         IDLE, // Default initial state
         INITIALIZED, // When datasource has been set
-        PLAYING, PAUSED, STOPPED, // The different possible states once playing
+        PLAYING,
+        PAUSED,
+        STOPPED, // The different possible states once playing
 
         // has started
-        RECORDING // The recorder being played status
+        RECORDING, // The recorder being played status
     }
 
     private fun gtxt(id: Int): String {
@@ -73,7 +81,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
         resStop: Int,
         resRecord: Int,
         resRecordStop: Int,
-        audioPath: String
+        audioPath: String,
     ) : this(context, resPlay, resPause, resStop, audioPath) {
         mResRecordImage = resRecord
         mResRecordStopImage = resRecordStop
@@ -166,60 +174,63 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
     }
 
     protected inner class PlayPauseButton(context: Context?) : AppCompatImageButton(context!!) {
-        private val mOnClickListener: OnClickListener = object : OnClickListener {
-            override fun onClick(v: View) {
-                if (audioPath == null) {
-                    return
-                }
-                when (status) {
-                    Status.IDLE -> try {
-                        mPlayer.play(audioPath)
-                        setImageResource(mResPauseImage)
-                        status = Status.PLAYING
-                        notifyPlay()
-                    } catch (e: Exception) {
-                        Timber.e(e)
-                        showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_playing_failed), true)
-                        status = Status.IDLE
+        private val mOnClickListener: OnClickListener =
+            object : OnClickListener {
+                override fun onClick(v: View) {
+                    if (audioPath == null) {
+                        return
                     }
-                    Status.PAUSED -> {
-                        // -> Play, continue playing
-                        status = Status.PLAYING
-                        setImageResource(mResPauseImage)
-                        mPlayer.start()
-                        notifyPlay()
-                    }
-                    Status.STOPPED -> {
-                        // -> Play, start from beginning
-                        status = Status.PLAYING
-                        setImageResource(mResPauseImage)
-                        mPlayer.stop()
-                        mPlayer.start()
-                        notifyPlay()
-                    }
-                    Status.PLAYING -> {
-                        setImageResource(mResPlayImage)
-                        mPlayer.pause()
-                        status = Status.PAUSED
-                        notifyPause()
-                    }
-                    Status.RECORDING -> {
-                    }
-                    else -> {
+                    when (status) {
+                        Status.IDLE ->
+                            try {
+                                mPlayer.play(audioPath)
+                                setImageResource(mResPauseImage)
+                                status = Status.PLAYING
+                                notifyPlay()
+                            } catch (e: Exception) {
+                                Timber.e(e)
+                                showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_playing_failed), true)
+                                status = Status.IDLE
+                            }
+                        Status.PAUSED -> {
+                            // -> Play, continue playing
+                            status = Status.PLAYING
+                            setImageResource(mResPauseImage)
+                            mPlayer.start()
+                            notifyPlay()
+                        }
+                        Status.STOPPED -> {
+                            // -> Play, start from beginning
+                            status = Status.PLAYING
+                            setImageResource(mResPauseImage)
+                            mPlayer.stop()
+                            mPlayer.start()
+                            notifyPlay()
+                        }
+                        Status.PLAYING -> {
+                            setImageResource(mResPlayImage)
+                            mPlayer.pause()
+                            status = Status.PAUSED
+                            notifyPause()
+                        }
+                        Status.RECORDING -> {
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
-        }
 
         fun update() {
-            isEnabled = when (status) {
-                Status.IDLE, Status.STOPPED -> {
-                    setImageResource(mResPlayImage)
-                    true
+            isEnabled =
+                when (status) {
+                    Status.IDLE, Status.STOPPED -> {
+                        setImageResource(mResPlayImage)
+                        true
+                    }
+                    Status.RECORDING -> false
+                    else -> true
                 }
-                Status.RECORDING -> false
-                else -> true
-            }
         }
 
         init {
@@ -229,17 +240,18 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
     }
 
     protected inner class StopButton(context: Context?) : AppCompatImageButton(context!!) {
-        private val mOnClickListener = OnClickListener {
-            when (status) {
-                Status.PAUSED, Status.PLAYING -> {
-                    mPlayer.stop()
-                    status = Status.STOPPED
-                    notifyStop()
-                }
-                Status.IDLE, Status.STOPPED, Status.RECORDING, Status.INITIALIZED -> {
+        private val mOnClickListener =
+            OnClickListener {
+                when (status) {
+                    Status.PAUSED, Status.PLAYING -> {
+                        mPlayer.stop()
+                        status = Status.STOPPED
+                        notifyStop()
+                    }
+                    Status.IDLE, Status.STOPPED, Status.RECORDING, Status.INITIALIZED -> {
+                    }
                 }
             }
-        }
 
         fun update() {
             isEnabled = status != Status.RECORDING
@@ -253,52 +265,54 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
     }
 
     protected inner class RecordButton(context: Context?) : AppCompatImageButton(context!!) {
-        private val mOnClickListener: OnClickListener = object : OnClickListener {
-            override fun onClick(v: View) {
-                // Since mAudioPath is not compulsory, we check if it exists
-                if (audioPath == null) {
-                    return
-                }
+        private val mOnClickListener: OnClickListener =
+            object : OnClickListener {
+                override fun onClick(v: View) {
+                    // Since mAudioPath is not compulsory, we check if it exists
+                    if (audioPath == null) {
+                        return
+                    }
 
-                // We can get to this screen without permissions through the "Pronunciation" feature.
-                if (!canRecordAudio(mContext)) {
-                    Timber.w("Audio recording permission denied.")
-                    showThemedToast(
-                        mContext,
-                        resources.getString(R.string.multimedia_editor_audio_permission_denied),
-                        true
-                    )
-                    return
-                }
-                when (status) {
-                    Status.IDLE, Status.STOPPED -> {
-                        try {
-                            mAudioRecorder.startRecording(mContext, audioPath)
-                        } catch (e: Exception) {
-                            // either output file failed or codec didn't work, in any case fail out
-                            Timber.e("RecordButton.onClick() :: error recording to %s\n%s", audioPath, e.message)
-                            showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true)
-                            status = Status.STOPPED
+                    // We can get to this screen without permissions through the "Pronunciation" feature.
+                    if (!canRecordAudio(mContext)) {
+                        Timber.w("Audio recording permission denied.")
+                        showThemedToast(
+                            mContext,
+                            resources.getString(R.string.multimedia_editor_audio_permission_denied),
+                            true,
+                        )
+                        return
+                    }
+                    when (status) {
+                        Status.IDLE, Status.STOPPED -> {
+                            try {
+                                mAudioRecorder.startRecording(mContext, audioPath)
+                            } catch (e: Exception) {
+                                // either output file failed or codec didn't work, in any case fail out
+                                Timber.e("RecordButton.onClick() :: error recording to %s\n%s", audioPath, e.message)
+                                showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true)
+                                status = Status.STOPPED
+                            }
+                            status = Status.RECORDING
+                            setImageResource(mResRecordImage)
+                            notifyRecord()
                         }
-                        status = Status.RECORDING
-                        setImageResource(mResRecordImage)
-                        notifyRecord()
-                    }
-                    Status.RECORDING -> {
-                        setImageResource(mResRecordStopImage)
-                        notifyStopRecord()
-                    }
-                    else -> {
+                        Status.RECORDING -> {
+                            setImageResource(mResRecordStopImage)
+                            notifyStopRecord()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
-        }
 
         fun update() {
-            isEnabled = when (status) {
-                Status.PLAYING, Status.PAUSED -> false
-                else -> true
-            }
+            isEnabled =
+                when (status) {
+                    Status.PLAYING, Status.PAUSED -> false
+                    else -> true
+                }
         }
 
         init {
@@ -325,7 +339,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
             resStop: Int,
             resRecord: Int,
             resRecordStop: Int,
-            audioPath: String
+            audioPath: String,
         ): AudioView? {
             return try {
                 AudioView(context, resPlay, resPause, resStop, resRecord, resRecordStop, audioPath)
@@ -335,7 +349,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                 showThemedToast(
                     context,
                     context.getText(R.string.multimedia_editor_audio_view_create_failed).toString(),
-                    true
+                    true,
                 )
                 null
             }

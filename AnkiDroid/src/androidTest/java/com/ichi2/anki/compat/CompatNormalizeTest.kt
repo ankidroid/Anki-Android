@@ -29,7 +29,10 @@ import java.util.Locale
 class CompatNormalizeTest : InstrumentedTest() {
     @Test
     fun normalize() {
-        fun assertEqual(l: Locale, str: String) {
+        fun assertEqual(
+            l: Locale,
+            str: String,
+        ) {
             val normalized = CompatHelper.compat.normalize(l)
             assertThat(normalized.toLanguageTag(), equalTo(str))
         }

@@ -22,7 +22,10 @@ class AnkiCardContextMenu(context: Context) : SystemContextMenu(context) {
         get() = "com.ichi2.anki.AnkiCardContextMenuAction"
 
     companion object {
-        fun ensureConsistentStateWithPreferenceStatus(context: Context, preferenceStatus: Boolean) {
+        fun ensureConsistentStateWithPreferenceStatus(
+            context: Context,
+            preferenceStatus: Boolean,
+        ) {
             AnkiCardContextMenu(context).ensureConsistentStateWithPreferenceStatus(preferenceStatus)
         }
     }

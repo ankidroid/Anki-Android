@@ -30,8 +30,13 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
 
     interface MySearchesDialogListener {
         fun onSelection(searchName: String)
+
         fun onRemoveSearch(searchName: String)
-        fun onSaveSearch(searchName: String, searchTerms: String?)
+
+        fun onSaveSearch(
+            searchName: String,
+            searchTerms: String?,
+        )
     }
 
     @SuppressLint("CheckResult")
@@ -46,22 +51,23 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                 savedFilterKeys = ArrayList(it.keys)
             }
 
-            buttonItemAdapter = ButtonItemAdapter(
-                savedFilterKeys!!,
-                itemCallback = { searchName ->
-                    Timber.d("item clicked: %s", searchName)
-                    mySearchesDialogListener!!.onSelection(searchName)
-                    dialog.dismiss()
-                },
-                buttonCallback = { searchName ->
-                    Timber.d("button clicked: %s", searchName)
-                    removeSearch(searchName)
+            buttonItemAdapter =
+                ButtonItemAdapter(
+                    savedFilterKeys!!,
+                    itemCallback = { searchName ->
+                        Timber.d("item clicked: %s", searchName)
+                        mySearchesDialogListener!!.onSelection(searchName)
+                        dialog.dismiss()
+                    },
+                    buttonCallback = { searchName ->
+                        Timber.d("button clicked: %s", searchName)
+                        removeSearch(searchName)
+                    },
+                ).apply {
+                    notifyAdapterDataSetChanged() // so the values are sorted.
+                    dialog.title(text = resources.getString(R.string.card_browser_list_my_searches_title))
+                        .customListAdapter(this, null)
                 }
-            ).apply {
-                notifyAdapterDataSetChanged() // so the values are sorted.
-                dialog.title(text = resources.getString(R.string.card_browser_list_my_searches_title))
-                    .customListAdapter(this, null)
-            }
         } else if (type == CARD_BROWSER_MY_SEARCHES_TYPE_SAVE) {
             val currentSearchTerms = requireArguments().getString("currentSearchTerms")
             dialog.title(text = getString(R.string.card_browser_list_my_searches_save))
@@ -109,7 +115,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
             savedFilters: HashMap<String, String>?,
             mySearchesDialogListener: MySearchesDialogListener?,
             currentSearchTerms: String?,
-            type: Int
+            type: Int,
         ): CardBrowserMySearchesDialog {
             this.mySearchesDialogListener = mySearchesDialogListener
             val cardBrowserMySearchesDialog = CardBrowserMySearchesDialog()

@@ -8,11 +8,12 @@ class DeckRenameException(val errorCode: Int) : Exception() {
     // endregion
 
     override val message: String?
-        get() = if (errorCode == FILTERED_NOSUBDECKS) {
-            "Deck $deckName has filtered ancestor $filteredAncestorName"
-        } else {
-            super.message
-        }
+        get() =
+            if (errorCode == FILTERED_NOSUBDECKS) {
+                "Deck $deckName has filtered ancestor $filteredAncestorName"
+            } else {
+                super.message
+            }
 
     companion object {
         const val ALREADY_EXISTS = 0
@@ -21,10 +22,11 @@ class DeckRenameException(val errorCode: Int) : Exception() {
         /** Generates a [DeckRenameException] with additional information in the message */
         fun filteredAncestor(
             deckName: String?,
-            filteredAncestorName: String?
-        ): DeckRenameException = DeckRenameException(FILTERED_NOSUBDECKS).apply {
-            this.filteredAncestorName = filteredAncestorName
-            this.deckName = deckName
-        }
+            filteredAncestorName: String?,
+        ): DeckRenameException =
+            DeckRenameException(FILTERED_NOSUBDECKS).apply {
+                this.filteredAncestorName = filteredAncestorName
+                this.deckName = deckName
+            }
     }
 }

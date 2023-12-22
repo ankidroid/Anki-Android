@@ -35,7 +35,6 @@ import java.util.regex.Pattern
  */
 @Beta
 class CopyrightHeaderExists : Detector(), SourceCodeScanner {
-
     companion object {
         /** This string matches GPLv3 under all current circumstances. It does not currently work if split over two lines  */
         private val COPYRIGHT_PATTERN = Pattern.compile("version 3 of the License, or \\(at")
@@ -51,27 +50,29 @@ class CopyrightHeaderExists : Detector(), SourceCodeScanner {
 
         @VisibleForTesting
         const val DESCRIPTION = "All files in AnkiDroid must contain a GPLv3-compatible copyright header"
-        private const val EXPLANATION = "All files in AnkiDroid must contain a " +
-            "GPLv3-compatible copyright header" +
-            "The copyright header can be set in " +
-            "Settings - Editor - Copyright - Copyright Profiles - Add Profile - AnkiDroid. " +
-            "Or search in Settings for 'Copyright'" +
-            "A GPLv3 template is available:\n" +
-            "https://github.com/ankidroid/Anki-Android/issues/8211#issuecomment-825269673 \n\n" +
-            "If the file is under a GPL-Compatible License (https://www.gnu.org/licenses/license-list.en.html#GPLCompatibleLicenses) " +
-            "then this warning may be suppressed either via adding a GPL header added alongside the license: " +
-            "https://softwarefreedom.org/resources/2007/gpl-non-gpl-collaboration.html#x1-40002.2 + or " +
-            "\"//noinspection MissingCopyrightHeader <reason>\" may be added as the first line of the file."
+        private const val EXPLANATION =
+            "All files in AnkiDroid must contain a " +
+                "GPLv3-compatible copyright header" +
+                "The copyright header can be set in " +
+                "Settings - Editor - Copyright - Copyright Profiles - Add Profile - AnkiDroid. " +
+                "Or search in Settings for 'Copyright'" +
+                "A GPLv3 template is available:\n" +
+                "https://github.com/ankidroid/Anki-Android/issues/8211#issuecomment-825269673 \n\n" +
+                "If the file is under a GPL-Compatible License (https://www.gnu.org/licenses/license-list.en.html#GPLCompatibleLicenses) " +
+                "then this warning may be suppressed either via adding a GPL header added alongside the license: " +
+                "https://softwarefreedom.org/resources/2007/gpl-non-gpl-collaboration.html#x1-40002.2 + or " +
+                "\"//noinspection MissingCopyrightHeader <reason>\" may be added as the first line of the file."
         private val implementation = Implementation(CopyrightHeaderExists::class.java, EnumSet.of(Scope.JAVA_FILE, Scope.TEST_SOURCES))
-        val ISSUE: Issue = Issue.create(
-            ID,
-            DESCRIPTION,
-            EXPLANATION,
-            Constants.ANKI_CODE_STYLE_CATEGORY,
-            Constants.ANKI_CODE_STYLE_PRIORITY,
-            Constants.ANKI_CODE_STYLE_SEVERITY,
-            implementation
-        )
+        val ISSUE: Issue =
+            Issue.create(
+                ID,
+                DESCRIPTION,
+                EXPLANATION,
+                Constants.ANKI_CODE_STYLE_CATEGORY,
+                Constants.ANKI_CODE_STYLE_PRIORITY,
+                Constants.ANKI_CODE_STYLE_SEVERITY,
+                implementation,
+            )
     }
 
     override fun getApplicableUastTypes(): List<Class<out UElement?>> {

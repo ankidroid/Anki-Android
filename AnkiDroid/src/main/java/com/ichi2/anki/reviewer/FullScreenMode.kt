@@ -21,7 +21,6 @@ import timber.log.Timber
 
 /** Whether Reviewer content should take the full screen */
 enum class FullScreenMode(private val prefValue: String) {
-
     /** Display both navigation and buttons (default) */
     BUTTONS_AND_MENU("0"),
 
@@ -29,9 +28,11 @@ enum class FullScreenMode(private val prefValue: String) {
     BUTTONS_ONLY("1"),
 
     /** Remove both menu bar and buttons. Can only be set if gesture is on. */
-    FULLSCREEN_ALL_GONE("2");
+    FULLSCREEN_ALL_GONE("2"),
+    ;
 
     fun getPreferenceValue() = prefValue
+
     fun isFullScreenReview() = this != BUTTONS_AND_MENU
 
     companion object {
@@ -43,8 +44,7 @@ enum class FullScreenMode(private val prefValue: String) {
             return enumValues<FullScreenMode>().firstOrNull { it.prefValue == value } ?: DEFAULT
         }
 
-        fun isFullScreenReview(prefs: SharedPreferences): Boolean =
-            fromPreference(prefs).isFullScreenReview()
+        fun isFullScreenReview(prefs: SharedPreferences): Boolean = fromPreference(prefs).isFullScreenReview()
 
         fun upgradeFromLegacyPreference(preferences: SharedPreferences) {
             if (!preferences.contains("fullscreenReview")) return
@@ -60,7 +60,10 @@ enum class FullScreenMode(private val prefValue: String) {
             }
         }
 
-        fun setPreference(prefs: SharedPreferences, mode: FullScreenMode) {
+        fun setPreference(
+            prefs: SharedPreferences,
+            mode: FullScreenMode,
+        ) {
             prefs.edit { putString(PREF_KEY, mode.getPreferenceValue()) }
         }
     }

@@ -46,9 +46,13 @@ enum class SortType(val ankiSortType: String?, val cardBrowserLabelIndex: Int) {
     INTERVAL("cardIvl", 6),
     EASE("cardEase", 7),
     REVIEWS("cardReps", 8),
-    LAPSES("cardLapses", 9);
+    LAPSES("cardLapses", 9),
+    ;
 
-    fun save(config: Config, preferences: SharedPreferences) {
+    fun save(
+        config: Config,
+        preferences: SharedPreferences,
+    ) {
         Timber.v("update config to %s", this)
         // in the case of 'no sorting', we still need a sort type.
         // The inverse is handled in `fromCol`
@@ -60,11 +64,13 @@ enum class SortType(val ankiSortType: String?, val cardBrowserLabelIndex: Int) {
     }
 
     /** Converts the [SortType] to a [SortOrder] */
-    fun toSortOrder(): SortOrder =
-        if (this == NO_SORTING) SortOrder.NoOrdering() else SortOrder.UseCollectionOrdering()
+    fun toSortOrder(): SortOrder = if (this == NO_SORTING) SortOrder.NoOrdering() else SortOrder.UseCollectionOrdering()
 
     companion object {
-        fun fromCol(config: Config, preferences: SharedPreferences): SortType {
+        fun fromCol(
+            config: Config,
+            preferences: SharedPreferences,
+        ): SortType {
             val colOrder = config.get<String>("sortType")
             val type = entries.firstOrNull { it.ankiSortType == colOrder } ?: NO_SORTING
             if (type == SORT_FIELD && preferences.getBoolean("cardBrowserNoSorting", false)) {

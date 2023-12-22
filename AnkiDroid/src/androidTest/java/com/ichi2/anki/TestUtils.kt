@@ -28,7 +28,6 @@ import org.hamcrest.Matcher
 import kotlin.math.min
 
 object TestUtils {
-
     /**
      * Get instance of current activity
      */
@@ -38,7 +37,7 @@ object TestUtils {
             InstrumentationRegistry.getInstrumentation().runOnMainSync {
                 val resumedActivities: Collection<*> =
                     ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(
-                        Stage.RESUMED
+                        Stage.RESUMED,
                     )
                 if (resumedActivities.iterator().hasNext()) {
                     val currentActivity = resumedActivities.iterator().next() as Activity
@@ -75,7 +74,10 @@ object TestUtils {
                 return "Click on a child view with specified id."
             }
 
-            override fun perform(uiController: UiController, view: View) {
+            override fun perform(
+                uiController: UiController,
+                view: View,
+            ) {
                 val v = view.findViewById<View>(id)
                 v.performClick()
             }

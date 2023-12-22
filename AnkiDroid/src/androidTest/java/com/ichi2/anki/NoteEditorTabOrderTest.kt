@@ -44,7 +44,7 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
 
 	java.lang.AssertionError:
 
-	Expected: is "a""""
+	Expected: is "a"""",
     )
     @Throws(Throwable::class)
     fun testTabOrder() {
@@ -66,7 +66,10 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
         }
     }
 
-    private fun sendKeyDownUp(activity: Activity, keyCode: Int) {
+    private fun sendKeyDownUp(
+        activity: Activity,
+        keyCode: Int,
+    ) {
         val focusedView = activity.currentFocus
         if (focusedView != null) {
             val inputConnection = BaseInputConnection(focusedView, true)
@@ -78,7 +81,7 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
     @Throws(Throwable::class)
     private fun onActivity(
         scenario: ActivityScenario<NoteEditor>,
-        noteEditorActivityAction: ActivityAction<NoteEditor>
+        noteEditorActivityAction: ActivityAction<NoteEditor>,
     ) {
         val wrapped = AtomicReference<Throwable?>(null)
         scenario.onActivity { a: NoteEditor ->

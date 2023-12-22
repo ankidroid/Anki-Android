@@ -34,10 +34,15 @@ object ResourceLoader {
      * Files located inside the application's assets collection are not stored on the file
      * system and can not return a usable path, so copying them to disk is a requirement.
      */
-    private fun getTempFilePath(context: Context, name: String, newName: String?): String {
+    private fun getTempFilePath(
+        context: Context,
+        name: String,
+        newName: String?,
+    ): String {
         try {
-            val inputStream: InputStream = context.classLoader.getResourceAsStream(name)
-                ?: throw FileNotFoundException("Could not find test file: $name")
+            val inputStream: InputStream =
+                context.classLoader.getResourceAsStream(name)
+                    ?: throw FileNotFoundException("Could not find test file: $name")
             val file = File(getTestDir(context, name), newName!!)
             val dst = file.absolutePath
             writeToFile(inputStream, dst)
@@ -54,7 +59,10 @@ object ResourceLoader {
      * @throws IOException Rethrows exception after a set number of retries
      */
     @Throws(IOException::class)
-    private fun writeToFile(source: InputStream, destination: String) {
+    private fun writeToFile(
+        source: InputStream,
+        destination: String,
+    ) {
         // sometimes this fails and works on retries (hardware issue?)
         val retries = 5
         var retryCnt = 0
@@ -84,7 +92,10 @@ object ResourceLoader {
      * Throws the exception, so we can report it in syncing log
      */
     @Throws(IOException::class)
-    private fun writeToFileImpl(source: InputStream, destination: String) {
+    private fun writeToFileImpl(
+        source: InputStream,
+        destination: String,
+    ) {
         val f = File(destination)
         try {
             Timber.d("Creating new file... = %s", destination)
@@ -108,14 +119,17 @@ object ResourceLoader {
                 "Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s",
                 sizeKb,
                 durationSeconds,
-                speedKbSec
+                speedKbSec,
             )
         } catch (e: IOException) {
             throw IOException(f.name + ": " + e.localizedMessage, e)
         }
     }
 
-    fun getTempCollection(context: Context, name: String): String {
+    fun getTempCollection(
+        context: Context,
+        name: String,
+    ): String {
         return getTempFilePath(context, name, "collection.anki2")
     }
 
@@ -125,22 +139,27 @@ object ResourceLoader {
      * emptied on every invocation of this method so it is suitable to use at the start of each test.
      * Only add files (and not subdirectories) to this directory.
      */
-    private fun getTestDir(context: Context, name: String): File {
-        val suffix = if (name.isNotEmpty()) {
-            "-$name"
-        } else {
-            ""
-        }
+    private fun getTestDir(
+        context: Context,
+        name: String,
+    ): File {
+        val suffix =
+            if (name.isNotEmpty()) {
+                "-$name"
+            } else {
+                ""
+            }
         val dir = File(context.cacheDir, "testfiles$suffix")
         if (!dir.exists()) {
             assertTrue(dir.mkdir())
         }
-        val files = dir.listFiles()
-            ?: // Had this problem on an API 16 emulator after a stress test - directory existed
-            // but listFiles() returned null due to EMFILE (Too many open files)
-            // Don't throw here - later file accesses will provide a better exception.
-            // and the directory exists, even if it's unusable.
-            return dir
+        val files =
+            dir.listFiles()
+                ?: // Had this problem on an API 16 emulator after a stress test - directory existed
+                // but listFiles() returned null due to EMFILE (Too many open files)
+                // Don't throw here - later file accesses will provide a better exception.
+                // and the directory exists, even if it's unusable.
+                return dir
         for (f in files) {
             assertTrue(f.delete())
         }

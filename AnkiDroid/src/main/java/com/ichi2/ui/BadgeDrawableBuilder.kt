@@ -26,6 +26,7 @@ import timber.log.Timber
 class BadgeDrawableBuilder(private val context: Context) {
     private var mChar = '\u0000'
     private var mColor: Int? = null
+
     fun withText(c: Char): BadgeDrawableBuilder {
         mChar = c
         return this

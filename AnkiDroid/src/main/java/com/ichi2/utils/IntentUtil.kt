@@ -26,7 +26,10 @@ import java.lang.Exception
 
 object IntentUtil {
     @JvmStatic // (fixable) required due to structure of unit tests
-    fun canOpenIntent(context: Context, intent: Intent): Boolean {
+    fun canOpenIntent(
+        context: Context,
+        intent: Intent,
+    ): Boolean {
         return try {
             val packageManager = context.packageManager
             intent.resolveActivity(packageManager) != null
@@ -36,7 +39,10 @@ object IntentUtil {
         }
     }
 
-    fun tryOpenIntent(activity: AnkiActivity, intent: Intent) {
+    fun tryOpenIntent(
+        activity: AnkiActivity,
+        intent: Intent,
+    ) {
         try {
             if (canOpenIntent(activity, intent)) {
                 activity.startActivity(intent)

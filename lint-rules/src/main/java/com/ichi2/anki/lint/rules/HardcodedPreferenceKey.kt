@@ -27,7 +27,6 @@ import org.w3c.dom.Element
  * A Lint check to prevent using hardcoded strings on preferences keys
  */
 class HardcodedPreferenceKey : ResourceXmlDetector() {
-
     companion object {
         @VisibleForTesting
         val ID = "HardcodedPreferenceKey"
@@ -36,27 +35,35 @@ class HardcodedPreferenceKey : ResourceXmlDetector() {
         val DESCRIPTION = "Preference key should not be hardcoded"
         private const val EXPLANATION = "Extract the key to a resources XML so it can be reused"
         private val implementation = Implementation(HardcodedPreferenceKey::class.java, Scope.RESOURCE_FILE_SCOPE)
-        val ISSUE: Issue = Issue.create(
-            ID,
-            DESCRIPTION,
-            EXPLANATION,
-            Constants.ANKI_XML_CATEGORY,
-            Constants.ANKI_XML_PRIORITY,
-            Constants.ANKI_XML_SEVERITY,
-            implementation
-        )
+        val ISSUE: Issue =
+            Issue.create(
+                ID,
+                DESCRIPTION,
+                EXPLANATION,
+                Constants.ANKI_XML_CATEGORY,
+                Constants.ANKI_XML_PRIORITY,
+                Constants.ANKI_XML_SEVERITY,
+                implementation,
+            )
     }
 
     override fun getApplicableElements(): Collection<String>? {
         return ALL
     }
 
-    override fun visitElement(context: XmlContext, element: Element) {
+    override fun visitElement(
+        context: XmlContext,
+        element: Element,
+    ) {
         reportAttributeIfHardcoded(context, element, "android:key")
         reportAttributeIfHardcoded(context, element, "android:dependency")
     }
 
-    private fun reportAttributeIfHardcoded(context: XmlContext, element: Element, attributeName: String) {
+    private fun reportAttributeIfHardcoded(
+        context: XmlContext,
+        element: Element,
+        attributeName: String,
+    ) {
         val attrNode = element.getAttributeNode(attributeName) ?: return
 
         if (isHardcodedString(attrNode.value)) {

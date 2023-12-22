@@ -23,7 +23,6 @@ import org.junit.Test
 
 /** Test for [NonPositionalFormatSubstitutions] */
 class NonPositionalFormatSubstitutionsTest {
-
     /** One substitution is unambiguous  */
     @Language("XML")
     private val valid = """<resources>
@@ -44,52 +43,57 @@ class NonPositionalFormatSubstitutionsTest {
     private val encoded = "<resources><string name=\"hello\">%%</string></resources>"
 
     @Language("XML")
-    private val pluralPass = """
+    private val pluralPass =
+        """
         <resources>
             <plurals name="import_complete_message">
                 <item quantity="one">Cards imported: %1${'$'}d</item>
                 <item quantity="other">Files imported :%1${'$'}d" Total cards imported: %2${'$'}d</item>
             </plurals>
         </resources>
-    """.trimIndent()
+        """.trimIndent()
 
     @Language("XML")
-    private val pluralPartial = """
+    private val pluralPartial =
+        """
         <resources>
             <plurals name="import_complete_message">
                 <item quantity="one">Cards imported: %d</item>
                 <item quantity="other">Files imported :%1${'$'}d" Total cards imported: %2${'$'}d</item>
             </plurals>
         </resources>
-    """.trimIndent()
+        """.trimIndent()
 
     @Language("XML")
-    private val pluralFail = """
+    private val pluralFail =
+        """
         <resources>
             <plurals name="import_complete_message">
                 <item quantity="one">Cards imported: %d</item>
                 <item quantity="other">Files imported: %d\nTotal cards imported: %d</item>
             </plurals>
         </resources>
-    """.trimIndent()
+        """.trimIndent()
 
     @Language("XML")
-    private val pluralMultiple = """
-            <plurals name="reschedule_card_dialog_interval">
-                <item quantity="one">Current interval: %d day</item>
-                <item quantity="few">Keisti Kortelių mokymosi dieną</item>
-                <item quantity="many">Current interval: %d days</item>
-                <item quantity="other">Current interval: %d days</item>
-            </plurals>
-    """.trimIndent()
+    private val pluralMultiple =
+        """
+        <plurals name="reschedule_card_dialog_interval">
+            <item quantity="one">Current interval: %d day</item>
+            <item quantity="few">Keisti Kortelių mokymosi dieną</item>
+            <item quantity="many">Current interval: %d days</item>
+            <item quantity="other">Current interval: %d days</item>
+        </plurals>
+        """.trimIndent()
 
     @Language("XML")
-    private val pluralMultipleTwo = """
-            <plurals name="in_minutes">
-                <item quantity="one">%1${'$'}d मिनट</item>
-                <item quantity="other">मिनट</item>
-            </plurals>
-    """.trimIndent()
+    private val pluralMultipleTwo =
+        """
+        <plurals name="in_minutes">
+            <item quantity="one">%1${'$'}d मिनट</item>
+            <item quantity="other">मिनट</item>
+        </plurals>
+        """.trimIndent()
 
     @Test
     fun errors_if_ambiguous() {

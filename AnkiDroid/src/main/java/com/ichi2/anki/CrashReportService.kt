@@ -39,7 +39,6 @@ import timber.log.Timber
 import java.util.*
 
 object CrashReportService {
-
     // ACRA constants used for stored preferences
     const val FEEDBACK_REPORT_KEY = "reportErrorMode"
     const val FEEDBACK_REPORT_ASK = "2"
@@ -48,16 +47,17 @@ object CrashReportService {
 
     /** Our ACRA configurations, initialized during Application.onCreate()  */
     @JvmStatic
-    private var logcatArgs = arrayOf(
-        "-t",
-        "500",
-        "-v",
-        "time",
-        "ActivityManager:I",
-        "SQLiteLog:W",
-        AnkiDroidApp.TAG + ":D",
-        "*:S"
-    )
+    private var logcatArgs =
+        arrayOf(
+            "-t",
+            "500",
+            "-v",
+            "time",
+            "ActivityManager:I",
+            "SQLiteLog:W",
+            AnkiDroidApp.TAG + ":D",
+            "*:S",
+        )
 
     @JvmStatic
     private var dialogEnabled = true
@@ -73,74 +73,78 @@ object CrashReportService {
     private const val MIN_INTERVAL_MS = 60000
     private const val EXCEPTION_MESSAGE = "Exception report sent by user manually. See: 'Comment/USER_COMMENT'"
 
-    private enum class ToastType(@StringRes private val toastMessageRes: Int) {
+    private enum class ToastType(
+        @StringRes private val toastMessageRes: Int,
+    ) {
         AUTO_TOAST(R.string.feedback_auto_toast_text),
-        MANUAL_TOAST(R.string.feedback_for_manual_toast_text);
+        MANUAL_TOAST(R.string.feedback_for_manual_toast_text),
+        ;
 
         fun getToastMessage(context: Context) = context.getString(toastMessageRes)
     }
 
     private fun createAcraCoreConfigBuilder(): CoreConfigurationBuilder {
-        val builder = CoreConfigurationBuilder()
-            .withBuildConfigClass(com.ichi2.anki.BuildConfig::class.java) // AnkiDroid BuildConfig - Acrarium#319
-            .withExcludeMatchingSharedPreferencesKeys("username", "hkey")
-            .withSharedPreferencesName("acra")
-            .withReportContent(
-                ReportField.REPORT_ID,
-                ReportField.APP_VERSION_CODE,
-                ReportField.APP_VERSION_NAME,
-                ReportField.PACKAGE_NAME,
-                ReportField.FILE_PATH,
-                ReportField.PHONE_MODEL,
-                ReportField.ANDROID_VERSION,
-                ReportField.BUILD,
-                ReportField.BRAND,
-                ReportField.PRODUCT,
-                ReportField.TOTAL_MEM_SIZE,
-                ReportField.AVAILABLE_MEM_SIZE,
-                ReportField.BUILD_CONFIG,
-                ReportField.CUSTOM_DATA,
-                ReportField.STACK_TRACE,
-                ReportField.STACK_TRACE_HASH,
-                ReportField.CRASH_CONFIGURATION,
-                ReportField.USER_COMMENT,
-                ReportField.USER_APP_START_DATE,
-                ReportField.USER_CRASH_DATE,
-                ReportField.LOGCAT,
-                ReportField.INSTALLATION_ID,
-                ReportField.ENVIRONMENT,
-                ReportField.SHARED_PREFERENCES,
-                // ReportField.MEDIA_CODEC_LIST,
-                ReportField.THREAD_DETAILS
-            )
-            .withLogcatArguments(*logcatArgs)
-            .withPluginConfigurations(
-                DialogConfigurationBuilder()
-                    .withReportDialogClass(AnkiDroidCrashReportDialog::class.java)
-                    .withCommentPrompt(mApplication.getString(R.string.empty_string))
-                    .withTitle(mApplication.getString(R.string.feedback_title))
-                    .withText(mApplication.getString(R.string.feedback_default_text))
-                    .withPositiveButtonText(mApplication.getString(R.string.feedback_report))
-                    .withResIcon(R.drawable.logo_star_144dp)
-                    .withEnabled(dialogEnabled)
-                    .build(),
-                HttpSenderConfigurationBuilder()
-                    .withHttpMethod(HttpSender.Method.PUT)
-                    .withUri(BuildConfig.ACRA_URL)
-                    .withEnabled(true)
-                    .build(),
-                ToastConfigurationBuilder()
-                    .withText(toastText)
-                    .withEnabled(true)
-                    .build(),
-                LimiterConfigurationBuilder()
-                    .withExceptionClassLimit(1000)
-                    .withStacktraceLimit(1)
-                    .withDeleteReportsOnAppUpdate(true)
-                    .withResetLimitsOnAppUpdate(true)
-                    .withEnabled(true)
-                    .build()
-            )
+        val builder =
+            CoreConfigurationBuilder()
+                .withBuildConfigClass(com.ichi2.anki.BuildConfig::class.java) // AnkiDroid BuildConfig - Acrarium#319
+                .withExcludeMatchingSharedPreferencesKeys("username", "hkey")
+                .withSharedPreferencesName("acra")
+                .withReportContent(
+                    ReportField.REPORT_ID,
+                    ReportField.APP_VERSION_CODE,
+                    ReportField.APP_VERSION_NAME,
+                    ReportField.PACKAGE_NAME,
+                    ReportField.FILE_PATH,
+                    ReportField.PHONE_MODEL,
+                    ReportField.ANDROID_VERSION,
+                    ReportField.BUILD,
+                    ReportField.BRAND,
+                    ReportField.PRODUCT,
+                    ReportField.TOTAL_MEM_SIZE,
+                    ReportField.AVAILABLE_MEM_SIZE,
+                    ReportField.BUILD_CONFIG,
+                    ReportField.CUSTOM_DATA,
+                    ReportField.STACK_TRACE,
+                    ReportField.STACK_TRACE_HASH,
+                    ReportField.CRASH_CONFIGURATION,
+                    ReportField.USER_COMMENT,
+                    ReportField.USER_APP_START_DATE,
+                    ReportField.USER_CRASH_DATE,
+                    ReportField.LOGCAT,
+                    ReportField.INSTALLATION_ID,
+                    ReportField.ENVIRONMENT,
+                    ReportField.SHARED_PREFERENCES,
+                    // ReportField.MEDIA_CODEC_LIST,
+                    ReportField.THREAD_DETAILS,
+                )
+                .withLogcatArguments(*logcatArgs)
+                .withPluginConfigurations(
+                    DialogConfigurationBuilder()
+                        .withReportDialogClass(AnkiDroidCrashReportDialog::class.java)
+                        .withCommentPrompt(mApplication.getString(R.string.empty_string))
+                        .withTitle(mApplication.getString(R.string.feedback_title))
+                        .withText(mApplication.getString(R.string.feedback_default_text))
+                        .withPositiveButtonText(mApplication.getString(R.string.feedback_report))
+                        .withResIcon(R.drawable.logo_star_144dp)
+                        .withEnabled(dialogEnabled)
+                        .build(),
+                    HttpSenderConfigurationBuilder()
+                        .withHttpMethod(HttpSender.Method.PUT)
+                        .withUri(BuildConfig.ACRA_URL)
+                        .withEnabled(true)
+                        .build(),
+                    ToastConfigurationBuilder()
+                        .withText(toastText)
+                        .withEnabled(true)
+                        .build(),
+                    LimiterConfigurationBuilder()
+                        .withExceptionClassLimit(1000)
+                        .withStacktraceLimit(1)
+                        .withDeleteReportsOnAppUpdate(true)
+                        .withResetLimitsOnAppUpdate(true)
+                        .withEnabled(true)
+                        .build(),
+                )
         ACRA.init(mApplication, builder)
         acraCoreConfigBuilder = builder
         fetchWebViewInformation().let {
@@ -253,23 +257,39 @@ object CrashReportService {
     }
 
     /** Used when we don't have an exception to throw, but we know something is wrong and want to diagnose it  */
-    fun sendExceptionReport(message: String?, origin: String?) {
+    fun sendExceptionReport(
+        message: String?,
+        origin: String?,
+    ) {
         sendExceptionReport(ManuallyReportedException(message), origin, null)
     }
 
-    fun sendExceptionReport(e: Throwable, origin: String?) {
+    fun sendExceptionReport(
+        e: Throwable,
+        origin: String?,
+    ) {
         sendExceptionReport(e, origin, null)
     }
 
-    fun sendExceptionReport(e: Throwable, origin: String?, additionalInfo: String?) {
+    fun sendExceptionReport(
+        e: Throwable,
+        origin: String?,
+        additionalInfo: String?,
+    ) {
         sendExceptionReport(e, origin, additionalInfo, false)
     }
 
-    fun sendExceptionReport(e: Throwable, origin: String?, additionalInfo: String?, onlyIfSilent: Boolean) {
+    fun sendExceptionReport(
+        e: Throwable,
+        origin: String?,
+        additionalInfo: String?,
+        onlyIfSilent: Boolean,
+    ) {
         sendAnalyticsException(e, false)
         AnkiDroidApp.sentExceptionReportHack = true
-        val reportMode = mApplication.applicationContext.sharedPrefs()
-            .getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)
+        val reportMode =
+            mApplication.applicationContext.sharedPrefs()
+                .getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)
         if (onlyIfSilent) {
             if (FEEDBACK_REPORT_ALWAYS != reportMode) {
                 Timber.i("sendExceptionReport - onlyIfSilent true, but ACRA is not 'always accept'. Skipping report send.")
@@ -287,7 +307,10 @@ object CrashReportService {
         return ACRA.isACRASenderServiceProcess()
     }
 
-    fun isAcraEnabled(context: Context, defaultValue: Boolean): Boolean {
+    fun isAcraEnabled(
+        context: Context,
+        defaultValue: Boolean,
+    ): Boolean {
         if (!context.sharedPrefs().contains(ACRA.PREF_DISABLE_ACRA)) {
             // we shouldn't use defaultValue below, as it would be inverted which complicated understanding.
             Timber.w("No default value for '%s'", ACRA.PREF_DISABLE_ACRA)
@@ -309,7 +332,10 @@ object CrashReportService {
         }
     }
 
-    fun onPreferenceChanged(ctx: Context, newValue: String) {
+    fun onPreferenceChanged(
+        ctx: Context,
+        newValue: String,
+    ) {
         setAcraReportingMode(newValue)
         // If the user changed error reporting, make sure future reports have a chance to post
         deleteACRALimiterData(ctx)
@@ -345,7 +371,7 @@ object CrashReportService {
             deleteACRALimiterData(activity)
             sendExceptionReport(
                 UserSubmittedException(EXCEPTION_MESSAGE),
-                "AnkiDroidApp.HelpDialog"
+                "AnkiDroidApp.HelpDialog",
             )
             true
         } else {

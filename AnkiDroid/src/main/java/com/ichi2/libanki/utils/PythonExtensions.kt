@@ -93,7 +93,10 @@ fun JSONArray.index(jsonObject: JSONObject): Optional<Int> {
     return Optional.empty()
 }
 
-operator fun JSONObject.set(s: String, value: String) {
+operator fun JSONObject.set(
+    s: String,
+    value: String,
+) {
     this.put(s, value)
 }
 
@@ -108,7 +111,10 @@ fun JSONArray.append(jsonObject: JSONObject) {
  * so `a.insert(0, x)` inserts at the front of the list,
  * and `a.insert(len(a), x)` is equivalent to `a.append(x)`.
  */
-fun JSONArray.insert(idx: Int, jsonObject: JSONObject) {
+fun JSONArray.insert(
+    idx: Int,
+    jsonObject: JSONObject,
+) {
     if (idx >= this.length()) {
         this.put(jsonObject)
         return

@@ -48,69 +48,142 @@ object HelpDialog {
     }
 
     fun createInstance(): DialogFragment {
-        val exceptionReportItem = ExceptionReportItem(R.string.help_title_send_exception, R.drawable.ic_round_assignment_24, UsageAnalytics.Actions.EXCEPTION_REPORT)
-        UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_HELPDIALOG)
-        val allItems = arrayOf<RecursivePictureMenu.Item>(
-            ItemHeader(
-                R.string.help_title_using_ankidroid,
-                R.drawable.ic_manual_black_24dp,
-                UsageAnalytics.Actions.OPENED_USING_ANKIDROID,
-                FunctionItem(
-                    R.string.help_item_ankidroid_manual,
-                    R.drawable.ic_manual_black_24dp,
-                    UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL
-                ) { activity -> openManual(activity) },
-                LinkItem(R.string.help_item_anki_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKI_MANUAL, R.string.link_anki_manual),
-                LinkItem(R.string.help_item_ankidroid_faq, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_FAQ, R.string.link_ankidroid_faq)
-            ),
-            ItemHeader(
-                R.string.help_title_get_help,
-                R.drawable.ic_help_black_24dp,
-                UsageAnalytics.Actions.OPENED_GET_HELP,
-                LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_MAILING_LIST, R.string.link_forum),
-                FunctionItem(
-                    R.string.help_item_report_bug,
-                    R.drawable.ic_bug_report_black_24dp,
-                    UsageAnalytics.Actions.OPENED_REPORT_BUG
-                ) { activity -> openFeedback(activity) },
-                exceptionReportItem
-            ),
-            ItemHeader(
-                R.string.help_title_community, R.drawable.ic_people_black_24dp, UsageAnalytics.Actions.OPENED_COMMUNITY,
-                LinkItem(R.string.help_item_anki_forums, R.drawable.ic_forum_black_24dp, UsageAnalytics.Actions.OPENED_ANKI_FORUMS, R.string.link_anki_forum),
-                LinkItem(R.string.help_item_reddit, R.drawable.reddit, UsageAnalytics.Actions.OPENED_REDDIT, R.string.link_reddit),
-                LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_MAILING_LIST, R.string.link_forum),
-                LinkItem(R.string.help_item_discord, R.drawable.discord, UsageAnalytics.Actions.OPENED_DISCORD, R.string.link_discord),
-                LinkItem(R.string.help_item_facebook, R.drawable.facebook, UsageAnalytics.Actions.OPENED_FACEBOOK, R.string.link_facebook),
-                LinkItem(R.string.help_item_twitter, R.drawable.twitter, UsageAnalytics.Actions.OPENED_TWITTER, R.string.link_twitter)
-            ),
-            ItemHeader(
-                R.string.help_title_privacy,
-                R.drawable.ic_baseline_privacy_tip_24,
-                UsageAnalytics.Actions.OPENED_PRIVACY,
-                LinkItem(R.string.help_item_ankidroid_privacy_policy, R.drawable.ic_baseline_policy_24, UsageAnalytics.Actions.OPENED_ANKIDROID_PRIVACY_POLICY, R.string.link_ankidroid_privacy_policy),
-                LinkItem(R.string.help_item_ankiweb_privacy_policy, R.drawable.ic_baseline_policy_24, UsageAnalytics.Actions.OPENED_ANKIWEB_PRIVACY_POLICY, R.string.link_ankiweb_privacy_policy),
-                LinkItem(R.string.help_item_ankiweb_terms_and_conditions, R.drawable.ic_baseline_description_24, UsageAnalytics.Actions.OPENED_ANKIWEB_TERMS_AND_CONDITIONS, R.string.link_ankiweb_terms_and_conditions)
+        val exceptionReportItem =
+            ExceptionReportItem(
+                R.string.help_title_send_exception,
+                R.drawable.ic_round_assignment_24,
+                UsageAnalytics.Actions.EXCEPTION_REPORT,
             )
-        )
+        UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_HELPDIALOG)
+        val allItems =
+            arrayOf<RecursivePictureMenu.Item>(
+                ItemHeader(
+                    R.string.help_title_using_ankidroid,
+                    R.drawable.ic_manual_black_24dp,
+                    UsageAnalytics.Actions.OPENED_USING_ANKIDROID,
+                    FunctionItem(
+                        R.string.help_item_ankidroid_manual,
+                        R.drawable.ic_manual_black_24dp,
+                        UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL,
+                    ) { activity -> openManual(activity) },
+                    LinkItem(
+                        R.string.help_item_anki_manual,
+                        R.drawable.ic_manual_black_24dp,
+                        UsageAnalytics.Actions.OPENED_ANKI_MANUAL,
+                        R.string.link_anki_manual,
+                    ),
+                    LinkItem(
+                        R.string.help_item_ankidroid_faq,
+                        R.drawable.ic_help_black_24dp,
+                        UsageAnalytics.Actions.OPENED_ANKIDROID_FAQ,
+                        R.string.link_ankidroid_faq,
+                    ),
+                ),
+                ItemHeader(
+                    R.string.help_title_get_help,
+                    R.drawable.ic_help_black_24dp,
+                    UsageAnalytics.Actions.OPENED_GET_HELP,
+                    LinkItem(
+                        R.string.help_item_mailing_list,
+                        R.drawable.ic_email_black_24dp,
+                        UsageAnalytics.Actions.OPENED_MAILING_LIST,
+                        R.string.link_forum,
+                    ),
+                    FunctionItem(
+                        R.string.help_item_report_bug,
+                        R.drawable.ic_bug_report_black_24dp,
+                        UsageAnalytics.Actions.OPENED_REPORT_BUG,
+                    ) { activity -> openFeedback(activity) },
+                    exceptionReportItem,
+                ),
+                ItemHeader(
+                    R.string.help_title_community, R.drawable.ic_people_black_24dp, UsageAnalytics.Actions.OPENED_COMMUNITY,
+                    LinkItem(
+                        R.string.help_item_anki_forums,
+                        R.drawable.ic_forum_black_24dp,
+                        UsageAnalytics.Actions.OPENED_ANKI_FORUMS,
+                        R.string.link_anki_forum,
+                    ),
+                    LinkItem(R.string.help_item_reddit, R.drawable.reddit, UsageAnalytics.Actions.OPENED_REDDIT, R.string.link_reddit),
+                    LinkItem(
+                        R.string.help_item_mailing_list,
+                        R.drawable.ic_email_black_24dp,
+                        UsageAnalytics.Actions.OPENED_MAILING_LIST,
+                        R.string.link_forum,
+                    ),
+                    LinkItem(R.string.help_item_discord, R.drawable.discord, UsageAnalytics.Actions.OPENED_DISCORD, R.string.link_discord),
+                    LinkItem(
+                        R.string.help_item_facebook,
+                        R.drawable.facebook,
+                        UsageAnalytics.Actions.OPENED_FACEBOOK,
+                        R.string.link_facebook,
+                    ),
+                    LinkItem(R.string.help_item_twitter, R.drawable.twitter, UsageAnalytics.Actions.OPENED_TWITTER, R.string.link_twitter),
+                ),
+                ItemHeader(
+                    R.string.help_title_privacy,
+                    R.drawable.ic_baseline_privacy_tip_24,
+                    UsageAnalytics.Actions.OPENED_PRIVACY,
+                    LinkItem(
+                        R.string.help_item_ankidroid_privacy_policy,
+                        R.drawable.ic_baseline_policy_24,
+                        UsageAnalytics.Actions.OPENED_ANKIDROID_PRIVACY_POLICY,
+                        R.string.link_ankidroid_privacy_policy,
+                    ),
+                    LinkItem(
+                        R.string.help_item_ankiweb_privacy_policy,
+                        R.drawable.ic_baseline_policy_24,
+                        UsageAnalytics.Actions.OPENED_ANKIWEB_PRIVACY_POLICY,
+                        R.string.link_ankiweb_privacy_policy,
+                    ),
+                    LinkItem(
+                        R.string.help_item_ankiweb_terms_and_conditions,
+                        R.drawable.ic_baseline_description_24,
+                        UsageAnalytics.Actions.OPENED_ANKIWEB_TERMS_AND_CONDITIONS,
+                        R.string.link_ankiweb_terms_and_conditions,
+                    ),
+                ),
+            )
         return createInstance(ArrayList(listOf(*allItems)), R.string.help)
     }
 
     fun createInstanceForSupportAnkiDroid(context: Context?): DialogFragment {
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_SUPPORT_ANKIDROID)
-        val rateAppItem = RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE)
-        val allItems = arrayOf(
-            LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, UsageAnalytics.Actions.OPENED_DONATE, R.string.link_opencollective_donate),
-            LinkItem(R.string.multimedia_editor_trans_translate, R.drawable.ic_language_black_24dp, UsageAnalytics.Actions.OPENED_TRANSLATE, R.string.link_translation),
-            LinkItem(R.string.help_item_support_develop_ankidroid, R.drawable.ic_build_black_24, UsageAnalytics.Actions.OPENED_DEVELOP, R.string.link_ankidroid_development_guide),
-            rateAppItem,
-            LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_OTHER, R.string.link_contribution),
-            FunctionItem(
-                R.string.send_feedback,
-                R.drawable.ic_email_black_24dp,
-                UsageAnalytics.Actions.OPENED_SEND_FEEDBACK
-            ) { activity -> openFeedback(activity) }
-        )
+        val rateAppItem =
+            RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE)
+        val allItems =
+            arrayOf(
+                LinkItem(
+                    R.string.help_item_support_opencollective_donate,
+                    R.drawable.ic_donate_black_24dp,
+                    UsageAnalytics.Actions.OPENED_DONATE,
+                    R.string.link_opencollective_donate,
+                ),
+                LinkItem(
+                    R.string.multimedia_editor_trans_translate,
+                    R.drawable.ic_language_black_24dp,
+                    UsageAnalytics.Actions.OPENED_TRANSLATE,
+                    R.string.link_translation,
+                ),
+                LinkItem(
+                    R.string.help_item_support_develop_ankidroid,
+                    R.drawable.ic_build_black_24,
+                    UsageAnalytics.Actions.OPENED_DEVELOP,
+                    R.string.link_ankidroid_development_guide,
+                ),
+                rateAppItem,
+                LinkItem(
+                    R.string.help_item_support_other_ankidroid,
+                    R.drawable.ic_help_black_24dp,
+                    UsageAnalytics.Actions.OPENED_OTHER,
+                    R.string.link_contribution,
+                ),
+                FunctionItem(
+                    R.string.send_feedback,
+                    R.drawable.ic_email_black_24dp,
+                    UsageAnalytics.Actions.OPENED_SEND_FEEDBACK,
+                ) { activity -> openFeedback(activity) },
+            )
         val itemList = ArrayList(listOf(*allItems))
         if (!canOpenIntent(context!!, AnkiDroidApp.getMarketIntent(context))) {
             itemList.remove(rateAppItem)
@@ -120,7 +193,11 @@ object HelpDialog {
 
     @KotlinCleanup("Convert to @Parcelize")
     class RateAppItem : RecursivePictureMenu.Item, Parcelable {
-        constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String?) : super(titleRes, iconRes, analyticsRes)
+        constructor(
+            @StringRes titleRes: Int,
+            @DrawableRes iconRes: Int,
+            analyticsRes: String?,
+        ) : super(titleRes, iconRes, analyticsRes)
 
         override fun onClicked(activity: AnkiActivity) {
             tryOpenIntent(activity, AnkiDroidApp.getMarketIntent(activity))
@@ -135,15 +212,16 @@ object HelpDialog {
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             @Suppress("unused")
-            val CREATOR: Parcelable.Creator<RateAppItem?> = object : Parcelable.Creator<RateAppItem?> {
-                override fun createFromParcel(source: Parcel): RateAppItem {
-                    return RateAppItem(source)
-                }
+            val CREATOR: Parcelable.Creator<RateAppItem?> =
+                object : Parcelable.Creator<RateAppItem?> {
+                    override fun createFromParcel(source: Parcel): RateAppItem {
+                        return RateAppItem(source)
+                    }
 
-                override fun newArray(size: Int): Array<RateAppItem?> {
-                    return arrayOfNulls(size)
+                    override fun newArray(size: Int): Array<RateAppItem?> {
+                        return arrayOfNulls(size)
+                    }
                 }
-            }
         }
     }
 
@@ -152,7 +230,12 @@ object HelpDialog {
         @StringRes
         private val mUrlLocationRes: Int
 
-        constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String?, @StringRes urlLocation: Int) : super(titleRes, iconRes, analyticsRes) {
+        constructor(
+            @StringRes titleRes: Int,
+            @DrawableRes iconRes: Int,
+            analyticsRes: String?,
+            @StringRes urlLocation: Int,
+        ) : super(titleRes, iconRes, analyticsRes) {
             mUrlLocationRes = urlLocation
         }
 
@@ -172,7 +255,10 @@ object HelpDialog {
             // intentionally blank - no children
         }
 
-        override fun writeToParcel(dest: Parcel, flags: Int) {
+        override fun writeToParcel(
+            dest: Parcel,
+            flags: Int,
+        ) {
             super.writeToParcel(dest, flags)
             dest.writeInt(mUrlLocationRes)
         }
@@ -180,24 +266,29 @@ object HelpDialog {
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             @Suppress("unused")
-            val CREATOR: Parcelable.Creator<LinkItem?> = object : Parcelable.Creator<LinkItem?> {
-                override fun createFromParcel(source: Parcel): LinkItem {
-                    return LinkItem(source)
-                }
+            val CREATOR: Parcelable.Creator<LinkItem?> =
+                object : Parcelable.Creator<LinkItem?> {
+                    override fun createFromParcel(source: Parcel): LinkItem {
+                        return LinkItem(source)
+                    }
 
-                override fun newArray(size: Int): Array<LinkItem?> {
-                    return arrayOfNulls(size)
+                    override fun newArray(size: Int): Array<LinkItem?> {
+                        return arrayOfNulls(size)
+                    }
                 }
-            }
         }
     }
 
     @KotlinCleanup("Convert to @Parcelize")
     class FunctionItem : RecursivePictureMenu.Item, Parcelable {
-
         private val mFunc: ActivityConsumer
 
-        constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String?, func: ActivityConsumer) : super(titleRes, iconRes, analyticsRes) {
+        constructor(
+            @StringRes titleRes: Int,
+            @DrawableRes iconRes: Int,
+            analyticsRes: String?,
+            func: ActivityConsumer,
+        ) : super(titleRes, iconRes, analyticsRes) {
             mFunc = func
         }
 
@@ -206,18 +297,22 @@ object HelpDialog {
         }
 
         private constructor(source: Parcel) : super(source) {
-            mFunc = ParcelCompat.readSerializable(
-                source,
-                ActivityConsumer::class.java.classLoader,
-                ActivityConsumer::class.java
-            )!!
+            mFunc =
+                ParcelCompat.readSerializable(
+                    source,
+                    ActivityConsumer::class.java.classLoader,
+                    ActivityConsumer::class.java,
+                )!!
         }
 
         override fun remove(toRemove: RecursivePictureMenu.Item?) {
             // intentionally blank - no children
         }
 
-        override fun writeToParcel(dest: Parcel, flags: Int) {
+        override fun writeToParcel(
+            dest: Parcel,
+            flags: Int,
+        ) {
             super.writeToParcel(dest, flags)
             dest.writeSerializable(mFunc)
         }
@@ -229,20 +324,25 @@ object HelpDialog {
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             @Suppress("unused")
-            val CREATOR: Parcelable.Creator<FunctionItem?> = object : Parcelable.Creator<FunctionItem?> {
-                override fun createFromParcel(source: Parcel): FunctionItem {
-                    return FunctionItem(source)
-                }
+            val CREATOR: Parcelable.Creator<FunctionItem?> =
+                object : Parcelable.Creator<FunctionItem?> {
+                    override fun createFromParcel(source: Parcel): FunctionItem {
+                        return FunctionItem(source)
+                    }
 
-                override fun newArray(size: Int): Array<FunctionItem?> {
-                    return arrayOfNulls(size)
+                    override fun newArray(size: Int): Array<FunctionItem?> {
+                        return arrayOfNulls(size)
+                    }
                 }
-            }
         }
     }
 
     private class ExceptionReportItem : RecursivePictureMenu.Item, Parcelable {
-        constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String) : super(titleRes, iconRes, analyticsRes)
+        constructor(
+            @StringRes titleRes: Int,
+            @DrawableRes iconRes: Int,
+            analyticsRes: String,
+        ) : super(titleRes, iconRes, analyticsRes)
 
         override fun onClicked(activity: AnkiActivity) {
             if (isUserATestClient) {
@@ -254,7 +354,7 @@ object HelpDialog {
                 showThemedToast(
                     activity,
                     activity.getString(R.string.help_dialog_exception_report_debounce),
-                    true
+                    true,
                 )
             }
         }
@@ -266,15 +366,16 @@ object HelpDialog {
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             @Suppress("unused")
-            val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
-                override fun createFromParcel(source: Parcel): ExceptionReportItem {
-                    return ExceptionReportItem(source)
-                }
+            val CREATOR: Parcelable.Creator<ExceptionReportItem?> =
+                object : Parcelable.Creator<ExceptionReportItem?> {
+                    override fun createFromParcel(source: Parcel): ExceptionReportItem {
+                        return ExceptionReportItem(source)
+                    }
 
-                override fun newArray(size: Int): Array<ExceptionReportItem?> {
-                    return arrayOfNulls(size)
+                    override fun newArray(size: Int): Array<ExceptionReportItem?> {
+                        return arrayOfNulls(size)
+                    }
                 }
-            }
         }
     }
 }

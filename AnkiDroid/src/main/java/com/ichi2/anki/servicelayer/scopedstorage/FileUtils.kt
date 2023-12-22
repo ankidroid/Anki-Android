@@ -64,7 +64,10 @@ import java.nio.file.Files
  */
 @RequiresApi(Build.VERSION_CODES.O)
 @Throws(IOException::class)
-internal fun throwIfContentUnequal(file1: File, file2: File) {
+internal fun throwIfContentUnequal(
+    file1: File,
+    file2: File,
+) {
     val file1Exists = file1.exists()
     val file2Exists = file2.exists()
     if (file1Exists != file2Exists) {

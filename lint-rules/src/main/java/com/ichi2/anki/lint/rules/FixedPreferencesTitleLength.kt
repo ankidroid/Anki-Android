@@ -47,27 +47,30 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
             "A title with more than $PREFERENCE_TITLE_MAX_LENGTH characters may fail to display on smaller screens"
 
         // Read More: https://support.crowdin.com/file-formats/android-xml/
-        private const val EXPLANATION_MAX_LENGTH = "Preference Title should contain maxLength attribute " +
-            "because it fixes translated string length"
+        private const val EXPLANATION_MAX_LENGTH =
+            "Preference Title should contain maxLength attribute " +
+                "because it fixes translated string length"
         private val implementation = Implementation(FixedPreferencesTitleLength::class.java, Scope.RESOURCE_FILE_SCOPE)
-        val ISSUE_TITLE_LENGTH: Issue = Issue.create(
-            ID_TITLE_LENGTH,
-            DESCRIPTION_TITLE_LENGTH,
-            EXPLANATION_TITLE_LENGTH,
-            Constants.ANKI_XML_CATEGORY,
-            Constants.ANKI_XML_PRIORITY,
-            Constants.ANKI_XML_SEVERITY,
-            implementation
-        )
-        val ISSUE_MAX_LENGTH: Issue = Issue.create(
-            ID_MAX_LENGTH,
-            DESCRIPTION_MAX_LENGTH,
-            EXPLANATION_MAX_LENGTH,
-            Constants.ANKI_XML_CATEGORY,
-            Constants.ANKI_XML_PRIORITY,
-            Constants.ANKI_XML_SEVERITY,
-            implementation
-        )
+        val ISSUE_TITLE_LENGTH: Issue =
+            Issue.create(
+                ID_TITLE_LENGTH,
+                DESCRIPTION_TITLE_LENGTH,
+                EXPLANATION_TITLE_LENGTH,
+                Constants.ANKI_XML_CATEGORY,
+                Constants.ANKI_XML_PRIORITY,
+                Constants.ANKI_XML_SEVERITY,
+                implementation,
+            )
+        val ISSUE_MAX_LENGTH: Issue =
+            Issue.create(
+                ID_MAX_LENGTH,
+                DESCRIPTION_MAX_LENGTH,
+                EXPLANATION_MAX_LENGTH,
+                Constants.ANKI_XML_CATEGORY,
+                Constants.ANKI_XML_PRIORITY,
+                Constants.ANKI_XML_SEVERITY,
+                implementation,
+            )
         private const val ATTR_TITLE = "android:title"
         private const val ATTR_NAME = "name"
         private const val ATTR_MAX_LENGTH = "maxLength"
@@ -75,11 +78,15 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
 
     private val xmlData: MutableSet<String> = HashSet()
     private val valuesData: MutableMap<String, Pair<Element, Handle>> = HashMap<String, Pair<Element, Handle>>()
+
     override fun getApplicableElements(): Collection<String>? {
         return ALL
     }
 
-    override fun visitElement(context: XmlContext, element: Element) {
+    override fun visitElement(
+        context: XmlContext,
+        element: Element,
+    ) {
         /* 1. This condition checks that current file has xml as a parent file.
            2. Checks that element contains title attribute or not.
            If both of conditions are true then set the value in xmlSet.
@@ -115,14 +122,34 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
             val stringData: Pair<Element, Handle> = valuesData[title]!!
             val element = stringData.first
             if (!element.hasAttribute(ATTR_MAX_LENGTH)) {
-                val message = String.format(Locale.ENGLISH, "Preference title '%s' is missing \"maxLength=%d\" attribute", title, PREFERENCE_TITLE_MAX_LENGTH)
+                val message =
+                    String.format(
+                        Locale.ENGLISH,
+                        "Preference title '%s' is missing \"maxLength=%d\" attribute",
+                        title,
+                        PREFERENCE_TITLE_MAX_LENGTH,
+                    )
                 context.report(ISSUE_MAX_LENGTH, stringData.second.resolve(), message)
             } else if (element.getAttribute(ATTR_MAX_LENGTH) != PREFERENCE_TITLE_MAX_LENGTH.toString()) {
-                val message = String.format(Locale.ENGLISH, "Preference title '%s' is having maxLength=%s it should contain maxLength=%d", title, element.getAttribute(ATTR_MAX_LENGTH), PREFERENCE_TITLE_MAX_LENGTH)
+                val message =
+                    String.format(
+                        Locale.ENGLISH,
+                        "Preference title '%s' is having maxLength=%s it should contain maxLength=%d",
+                        title,
+                        element.getAttribute(ATTR_MAX_LENGTH),
+                        PREFERENCE_TITLE_MAX_LENGTH,
+                    )
                 context.report(ISSUE_MAX_LENGTH, stringData.second.resolve(), message)
             }
             if (element.textContent.length > PREFERENCE_TITLE_MAX_LENGTH) {
-                val message = String.format(Locale.ENGLISH, "Preference title '%s' must be less than %d characters (currently %d)", title, PREFERENCE_TITLE_MAX_LENGTH, element.textContent.length)
+                val message =
+                    String.format(
+                        Locale.ENGLISH,
+                        "Preference title '%s' must be less than %d characters (currently %d)",
+                        title,
+                        PREFERENCE_TITLE_MAX_LENGTH,
+                        element.textContent.length,
+                    )
                 context.report(ISSUE_TITLE_LENGTH, stringData.second.resolve(), message)
             }
         }

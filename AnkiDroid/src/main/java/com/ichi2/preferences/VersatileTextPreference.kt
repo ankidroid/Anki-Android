@@ -39,7 +39,6 @@ import kotlin.jvm.Throws
  */
 open class VersatileTextPreference(context: Context, attrs: AttributeSet?) :
     EditTextPreference(context, attrs), DialogFragmentProvider {
-
     fun interface Validator {
         @Throws(Exception::class)
         fun validate(value: String)
@@ -53,7 +52,6 @@ open class VersatileTextPreference(context: Context, attrs: AttributeSet?) :
 }
 
 open class VersatileTextPreferenceDialogFragment : EditTextPreferenceDialogFragmentCompat() {
-
     private val versatileTextPreference get() = preference as VersatileTextPreference
 
     protected lateinit var editText: EditText
@@ -74,12 +72,13 @@ open class VersatileTextPreferenceDialogFragment : EditTextPreferenceDialogFragm
                 val alertDialog = dialog as AlertDialog
                 val positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
 
-                positiveButton?.isEnabled = try {
-                    validator.validate(editText.text.toString())
-                    true
-                } catch (e: Exception) {
-                    false
-                }
+                positiveButton?.isEnabled =
+                    try {
+                        validator.validate(editText.text.toString())
+                        true
+                    } catch (e: Exception) {
+                        false
+                    }
             })
         }
     }

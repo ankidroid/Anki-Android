@@ -37,15 +37,15 @@ import com.ichi2.utils.Permissions.canManageExternalStorage
  */
 @RequiresApi(Build.VERSION_CODES.R)
 class Full30and31PermissionsFragment : PermissionsFragment() {
-
-    private val accessAllFilesLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {}
+    private val accessAllFilesLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+        ) {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val view = inflater.inflate(R.layout.permissions_full_30_and_31, container, false)
 

@@ -58,8 +58,7 @@ private fun Context.getUserDataAndCacheSizeUsingStorageStatsManager(): Long {
     fun String.isFatVolumeIdentifier() = length == 9 && this[4] == '-'
 
     // See StorageManager#convert(java.lang.String)
-    fun String.fromFatVolumeIdentifierToUuid() =
-        UUID.fromString("fafafafa-fafa-5afa-8afa-fafa" + replace("-", ""))
+    fun String.fromFatVolumeIdentifierToUuid() = UUID.fromString("fafafafa-fafa-5afa-8afa-fafa" + replace("-", ""))
 
     // For input we mostly get a valid UUID string, 36 characters (32 hex digits + 4 dashes),
     // but sometimes we can get invalid values:
@@ -75,18 +74,19 @@ private fun Context.getUserDataAndCacheSizeUsingStorageStatsManager(): Long {
     //   * https://issuetracker.google.com/issues/62982912
     //   * https://stackoverflow.com/questions/48589109/invalid-uuid-of-storage-gained-from-android-storagemanager
     //   * https://github.com/ankidroid/Anki-Android/issues/14027
-    fun StorageVolume.getValidUuidOrNull() = uuid.let { uuidish ->
-        try {
-            when {
-                uuidish == null -> StorageManager.UUID_DEFAULT
-                uuidish.isFatVolumeIdentifier() -> uuidish.fromFatVolumeIdentifierToUuid()
-                else -> UUID.fromString(uuidish)
+    fun StorageVolume.getValidUuidOrNull() =
+        uuid.let { uuidish ->
+            try {
+                when {
+                    uuidish == null -> StorageManager.UUID_DEFAULT
+                    uuidish.isFatVolumeIdentifier() -> uuidish.fromFatVolumeIdentifierToUuid()
+                    else -> UUID.fromString(uuidish)
+                }
+            } catch (e: IllegalArgumentException) {
+                Timber.w(e, "Error while retrieving storage volume UUID")
+                null
             }
-        } catch (e: IllegalArgumentException) {
-            Timber.w(e, "Error while retrieving storage volume UUID")
-            null
         }
-    }
 
     val storageManager = ContextCompat.getSystemService(this, StorageManager::class.java) ?: return 0
     val storageStatsManager = ContextCompat.getSystemService(this, StorageStatsManager::class.java) ?: return 0
@@ -119,7 +119,7 @@ private suspend fun Context.getUserDataAndCacheSizeUsingGetPackageSizeInfo(): Lo
                     val totalDataSize = packageStats.dataSize + packageStats.externalDataSize
                     continuation.resume(totalCacheSize + totalDataSize)
                 }
-            }
+            },
         )
 
     return suspendCancellableCoroutine { continuation = it }
@@ -193,12 +193,14 @@ fun File.canWriteToOrCreate(): Boolean =
 
 /********************************** Collection directory utils ************************************/
 
-interface CollectionDirectoryProvider { val collectionDirectory: File }
+interface CollectionDirectoryProvider {
+    val collectionDirectory: File
+}
 
 class CanNotWriteToOrCreateFileException(val file: File) : Exception(), TranslatableException {
     override val message get() = "Can not write to or create file: $file"
-    override fun getTranslatedMessage(context: Context) =
-        context.getString(R.string.error__etc__cannot_write_to_or_create_file, file)
+
+    override fun getTranslatedMessage(context: Context) = context.getString(R.string.error__etc__cannot_write_to_or_create_file, file)
 }
 
 suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirectory() {
@@ -207,5 +209,4 @@ suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirect
     }
 }
 
-suspend fun CollectionDirectoryProvider.collectionDirectoryExists() =
-    withContext(Dispatchers.IO) { collectionDirectory.exists() }
+suspend fun CollectionDirectoryProvider.collectionDirectoryExists() = withContext(Dispatchers.IO) { collectionDirectory.exists() }

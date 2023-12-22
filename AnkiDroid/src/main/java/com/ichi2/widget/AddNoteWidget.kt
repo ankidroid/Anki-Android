@@ -36,7 +36,11 @@ class AddNoteWidget : AppWidgetProvider() {
         UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
     }
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+    ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         Timber.d("onUpdate")
         val remoteViews = RemoteViews(context.packageName, R.layout.widget_add_note)

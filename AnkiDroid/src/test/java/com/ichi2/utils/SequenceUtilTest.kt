@@ -23,7 +23,6 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 
 class SequenceUtilTest {
-
     @Test
     fun test_take_while_including_first_non_match() {
         // empty works and returns empty

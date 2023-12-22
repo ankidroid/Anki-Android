@@ -104,7 +104,11 @@ class IntentHandler : Activity() {
      *
      */
     @NeedsTest("clicking a file in 'Files' to import")
-    private fun performActionIfStorageAccessible(runnable: Runnable, reloadIntent: Intent, action: String?) {
+    private fun performActionIfStorageAccessible(
+        runnable: Runnable,
+        reloadIntent: Intent,
+        action: String?,
+    ) {
         if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this) || Permissions.isExternalStorageManagerCompat()) {
             Timber.i("User has storage permissions. Running intent: %s", action)
             runnable.run()
@@ -124,7 +128,10 @@ class IntentHandler : Activity() {
         finish()
     }
 
-    private fun handleSyncIntent(reloadIntent: Intent, action: String?) {
+    private fun handleSyncIntent(
+        reloadIntent: Intent,
+        action: String?,
+    ) {
         Timber.i("Handling Sync Intent")
         sendDoSyncMsg()
         reloadIntent.action = action
@@ -133,7 +140,11 @@ class IntentHandler : Activity() {
         finish()
     }
 
-    private fun handleFileImport(intent: Intent, reloadIntent: Intent, action: String?) {
+    private fun handleFileImport(
+        intent: Intent,
+        reloadIntent: Intent,
+        action: String?,
+    ) {
         Timber.i("Handling file import")
         val importResult = handleFileImport(this, intent)
         // attempt to delete the downloaded deck if it is a shared deck download import
@@ -156,13 +167,14 @@ class IntentHandler : Activity() {
         if (importResult.isSuccess) {
             try {
                 val file = File(intent.data!!.path!!)
-                val fileUri = applicationContext?.let {
-                    FileProvider.getUriForFile(
-                        it,
-                        it.applicationContext?.packageName + ".apkgfileprovider",
-                        File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name)
-                    )
-                }
+                val fileUri =
+                    applicationContext?.let {
+                        FileProvider.getUriForFile(
+                            it,
+                            it.applicationContext?.packageName + ".apkgfileprovider",
+                            File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name),
+                        )
+                    }
                 // TODO move the file deletion on a background thread
                 contentResolver.delete(fileUri!!, null, null)
                 Timber.i("onCreate() import successful and downloaded file deleted")
@@ -195,7 +207,11 @@ class IntentHandler : Activity() {
     // COULD_BE_BETTER: Also extract the parameters into here to reduce coupling
     @VisibleForTesting
     enum class LaunchType {
-        DEFAULT_START_APP_IF_NEW, FILE_IMPORT, SYNC, REVIEW, COPY_DEBUG_INFO
+        DEFAULT_START_APP_IF_NEW,
+        FILE_IMPORT,
+        SYNC,
+        REVIEW,
+        COPY_DEBUG_INFO,
     }
 
     companion object {
@@ -233,17 +249,19 @@ class IntentHandler : Activity() {
             storeMessage(DoSync().toMessage())
         }
 
-        fun copyStringToClipboardIntent(context: Context, textToCopy: String) =
-            Intent(context, IntentHandler::class.java).also {
-                it.action = CLIPBOARD_INTENT
-                // max length for an intent is 500KB.
-                // 25000 * 2 (bytes per char) = 50,000 bytes <<< 500KB
-                it.putExtra(CLIPBOARD_INTENT_EXTRA_DATA, textToCopy.trimToLength(25000))
-            }
+        fun copyStringToClipboardIntent(
+            context: Context,
+            textToCopy: String,
+        ) = Intent(context, IntentHandler::class.java).also {
+            it.action = CLIPBOARD_INTENT
+            // max length for an intent is 500KB.
+            // 25000 * 2 (bytes per char) = 50,000 bytes <<< 500KB
+            it.putExtra(CLIPBOARD_INTENT_EXTRA_DATA, textToCopy.trimToLength(25000))
+        }
 
         class DoSync : DialogHandlerMessage(
             which = WhichDialogHandler.MSG_DO_SYNC,
-            analyticName = "DoSyncDialog"
+            analyticName = "DoSyncDialog",
         ) {
             override fun handleAsyncMessage(deckPicker: DeckPicker) {
                 val preferences = deckPicker.sharedPrefs()
@@ -260,17 +278,18 @@ class IntentHandler : Activity() {
                             max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
                         // getQuantityString needs an int
                         val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
-                        val message = res.getQuantityString(
-                            R.plurals.sync_automatic_sync_needs_more_time,
-                            remaining,
-                            remaining
-                        )
+                        val message =
+                            res.getQuantityString(
+                                R.plurals.sync_automatic_sync_needs_more_time,
+                                remaining,
+                                remaining,
+                            )
                         deckPicker.showSimpleNotification(err, message, Channel.SYNC)
                     } else {
                         deckPicker.showSimpleNotification(
                             err,
                             res.getString(R.string.youre_offline),
-                            Channel.SYNC
+                            Channel.SYNC,
                         )
                     }
                 }
@@ -280,8 +299,9 @@ class IntentHandler : Activity() {
             override fun toMessage(): Message = emptyMessage(this.what)
 
             companion object {
-                const val INTENT_SYNC_MIN_INTERVAL = (
-                    2 * 60000 // 2min minimum sync interval
+                const val INTENT_SYNC_MIN_INTERVAL =
+                    (
+                        2 * 60000 // 2min minimum sync interval
                     ).toLong()
             }
         }

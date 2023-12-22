@@ -93,16 +93,17 @@ object WidgetStatus {
 
     private suspend fun updateCounts() {
         val total = Counts()
-        status = CollectionManager.withCol {
-            // Only count the top-level decks in the total
-            val nodes = sched.deckDueTree().children
-            for (node in nodes) {
-                total.addNew(node.newCount)
-                total.addLrn(node.lrnCount)
-                total.addRev(node.revCount)
+        status =
+            CollectionManager.withCol {
+                // Only count the top-level decks in the total
+                val nodes = sched.deckDueTree().children
+                for (node in nodes) {
+                    total.addNew(node.newCount)
+                    total.addLrn(node.lrnCount)
+                    total.addRev(node.revCount)
+                }
+                val eta = sched.eta(total, false)
+                SmallWidgetStatus(total.count(), eta)
             }
-            val eta = sched.eta(total, false)
-            SmallWidgetStatus(total.count(), eta)
-        }
     }
 }

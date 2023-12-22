@@ -52,6 +52,7 @@ private typealias TemplateReplacementList = MutableList<Union<String?, TemplateM
  */
 class TemplateManager {
     data class TemplateReplacement(val fieldName: String, var currentText: String, val filters: List<String>)
+
     data class PartiallyRenderedCard(val qnodes: TemplateReplacementList, val anodes: TemplateReplacementList) {
         companion object {
             fun fromProto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
@@ -73,9 +74,9 @@ class TemplateManager {
                                 TemplateReplacement(
                                     fieldName = node.replacement.fieldName,
                                     currentText = node.replacement.currentText,
-                                    filters = node.replacement.filtersList
-                                )
-                            )
+                                    filters = node.replacement.filtersList,
+                                ),
+                            ),
                         )
                     }
                 }
@@ -93,7 +94,7 @@ class TemplateManager {
                         lang = tag.tts.lang,
                         voices = tag.tts.voicesList,
                         otherArgs = tag.tts.otherArgsList,
-                        speed = tag.tts.speed
+                        speed = tag.tts.speed,
                     )
                 }
             }
@@ -116,7 +117,7 @@ class TemplateManager {
         browser: Boolean = false,
         notetype: NotetypeJson? = null,
         template: JSONObject? = null,
-        fill_empty: Boolean = false
+        fill_empty: Boolean = false,
     ) {
         @RustCleanup("this was a WeakRef")
         private val _col: Collection = col
@@ -130,7 +131,10 @@ class TemplateManager {
         private var noteType: NotetypeJson = notetype ?: note.notetype
 
         companion object {
-            fun fromExistingCard(card: Card, browser: Boolean): TemplateRenderContext {
+            fun fromExistingCard(
+                card: Card,
+                browser: Boolean,
+            ): TemplateRenderContext {
                 return TemplateRenderContext(card.col, card, card.note(), browser)
             }
 
@@ -139,7 +143,7 @@ class TemplateManager {
                 card: Card,
                 notetype: NotetypeJson,
                 template: JSONObject,
-                fillEmpty: Boolean
+                fillEmpty: Boolean,
             ): TemplateRenderContext {
                 return TemplateRenderContext(
                     note.col,
@@ -147,7 +151,7 @@ class TemplateManager {
                     note,
                     notetype = notetype,
                     template = template,
-                    fill_empty = fillEmpty
+                    fill_empty = fillEmpty,
                 )
             }
         }
@@ -162,6 +166,7 @@ class TemplateManager {
         fun card() = _card
 
         fun note() = _note
+
         fun noteType() = noteType
 
         fun render(): TemplateRenderOutput {
@@ -173,7 +178,7 @@ class TemplateManager {
                     questionText = e.localizedMessage ?: e.toString(),
                     answerText = e.localizedMessage ?: e.toString(),
                     questionAvTags = emptyList(),
-                    answerAvTags = emptyList()
+                    answerAvTags = emptyList(),
                 )
             }
 
@@ -215,33 +220,35 @@ class TemplateManager {
                 aoutText = LaTeX.mungeQA(aoutText, _col, svg)
             }
 
-            val output = TemplateRenderOutput(
-                questionText = qoutText,
-                answerText = aoutText,
-                questionAvTags = avTagsToNative(qout.avTagsList),
-                answerAvTags = avTagsToNative(aout.avTagsList),
-                css = noteType().getString("css")
-            )
+            val output =
+                TemplateRenderOutput(
+                    questionText = qoutText,
+                    answerText = aoutText,
+                    questionAvTags = avTagsToNative(qout.avTagsList),
+                    answerAvTags = avTagsToNative(aout.avTagsList),
+                    css = noteType().getString("css"),
+                )
 
             return output
         }
 
         fun partiallyRender(): PartiallyRenderedCard {
-            val proto = col().run {
-                if (_template != null) {
-                    // card layout screen
-                    backend.renderUncommittedCardLegacy(
-                        _note.toBackendNote(),
-                        _card.ord,
-                        BackendUtils.to_json_bytes(_template!!.deepClone()),
-                        fillEmpty,
-                        true
-                    )
-                } else {
-                    // existing card (eg study mode)
-                    backend.renderExistingCard(_card.id, _browser, true)
+            val proto =
+                col().run {
+                    if (_template != null) {
+                        // card layout screen
+                        backend.renderUncommittedCardLegacy(
+                            _note.toBackendNote(),
+                            _card.ord,
+                            BackendUtils.to_json_bytes(_template!!.deepClone()),
+                            fillEmpty,
+                            true,
+                        )
+                    } else {
+                        // existing card (eg study mode)
+                        backend.renderExistingCard(_card.id, _browser, true)
+                    }
                 }
-            }
             return PartiallyRenderedCard.fromProto(proto)
         }
 
@@ -251,10 +258,10 @@ class TemplateManager {
             var answerText: String,
             val questionAvTags: List<AvTag>,
             val answerAvTags: List<AvTag>,
-            val css: String = ""
+            val css: String = "",
         ) {
-
             fun questionAndStyle() = "<style>$css</style>$questionText"
+
             fun answerAndStyle() = "<style>$css</style>$answerText"
         }
 
@@ -262,7 +269,7 @@ class TemplateManager {
         fun applyCustomFilters(
             rendered: TemplateReplacementList,
             ctx: TemplateRenderContext,
-            front_side: String?
+            front_side: String?,
         ): String {
             // template already fully rendered?
             if (len(rendered) == 1 && rendered[0].first != null) {
@@ -280,14 +287,14 @@ class TemplateManager {
                         node.currentText = front_side
                     }
 
-                    var field_text = node.currentText
+                    var fieldText = node.currentText
                     for (filter_name in node.filters) {
                         fieldFilters[filter_name]?.let {
-                            field_text = it.apply(field_text, node.fieldName, filter_name, ctx)
+                            fieldText = it.apply(fieldText, node.fieldName, filter_name, ctx)
                         }
                     }
 
-                    res += field_text
+                    res += fieldText
                 }
             }
             return res
@@ -305,9 +312,10 @@ class TemplateManager {
             fieldText: String,
             fieldName: String,
             filterName: String,
-            ctx: TemplateRenderContext
+            ctx: TemplateRenderContext,
         ): String
     }
+
     companion object {
         val fieldFilters: MutableMap<String, FieldFilter> = mutableMapOf()
     }

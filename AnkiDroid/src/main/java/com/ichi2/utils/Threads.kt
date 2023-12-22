@@ -23,7 +23,6 @@ import java.lang.RuntimeException
  * Helper class for checking for programming errors while using threads.
  */
 object Threads {
-
     /**
      * @return true if called from the application main thread
      */

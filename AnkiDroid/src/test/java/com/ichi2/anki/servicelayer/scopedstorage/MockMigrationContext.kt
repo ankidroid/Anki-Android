@@ -31,7 +31,10 @@ open class MockMigrationContext : MigrationContext() {
     /** A list of tasks which were passed into [execSafe] */
     val executed = mutableListOf<Operation>()
 
-    override fun reportError(throwingOperation: Operation, ex: Exception) {
+    override fun reportError(
+        throwingOperation: Operation,
+        ex: Exception,
+    ) {
         if (!logExceptions) {
             throw ex
         }
@@ -46,7 +49,7 @@ open class MockMigrationContext : MigrationContext() {
 
     override fun execSafe(
         operation: Operation,
-        op: (Operation) -> Unit
+        op: (Operation) -> Unit,
     ) {
         this.executed.add(operation)
         super.execSafe(operation, op)
@@ -62,7 +65,10 @@ open class MockMigrationContext : MigrationContext() {
 class RetryMigrationContext(val retry: (List<Operation>) -> Unit) : MockMigrationContext() {
     var retryCount = 0
 
-    override fun reportError(throwingOperation: Operation, ex: Exception) {
+    override fun reportError(
+        throwingOperation: Operation,
+        ex: Exception,
+    ) {
         val opsForRetry = throwingOperation.retryOperations
         if (!opsForRetry.any()) {
             throw ex

@@ -15,7 +15,7 @@
  */
 @file:KotlinCleanup(
     "Remove all TextUtils references then see if we can remove " +
-        "@RunWith(AndroidJUnit4::class) to speed up tests (if no other Android references)"
+        "@RunWith(AndroidJUnit4::class) to speed up tests (if no other Android references)",
 )
 
 package com.ichi2.utils
@@ -25,7 +25,7 @@ package com.ichi2.utils
     AnnotationTarget.CLASS, AnnotationTarget.FUNCTION,
     AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION,
     AnnotationTarget.FIELD, AnnotationTarget.PROPERTY, AnnotationTarget.LOCAL_VARIABLE,
-    AnnotationTarget.CONSTRUCTOR, AnnotationTarget.FILE
+    AnnotationTarget.CONSTRUCTOR, AnnotationTarget.FILE,
 )
 @Retention(AnnotationRetention.SOURCE)
 @Repeatable
@@ -42,7 +42,7 @@ annotation class KotlinCleanup(val value: String)
     AnnotationTarget.EXPRESSION,
     AnnotationTarget.FIELD,
     AnnotationTarget.PROPERTY,
-    AnnotationTarget.LOCAL_VARIABLE
+    AnnotationTarget.LOCAL_VARIABLE,
 )
 @Retention(AnnotationRetention.SOURCE)
 @Repeatable

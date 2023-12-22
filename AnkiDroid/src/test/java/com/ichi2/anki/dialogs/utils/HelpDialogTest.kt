@@ -52,11 +52,12 @@ class HelpDialogTest : RobolectricTest() {
         val v = getRecyclerViewFor(dialog)
         // to make the test more flexible, calculate the expected menu items count by actually
         // checking what intents are available on the test environment
-        val expectedCount = if (IntentUtil.canOpenIntent(targetContext, AnkiDroidApp.getMarketIntent(targetContext))) {
-            6 // +1 because the "Rate" menu item should be shown as Play Store app is available on the system
-        } else {
-            5 // the default value for support dialog menu items count
-        }
+        val expectedCount =
+            if (IntentUtil.canOpenIntent(targetContext, AnkiDroidApp.getMarketIntent(targetContext))) {
+                6 // +1 because the "Rate" menu item should be shown as Play Store app is available on the system
+            } else {
+                5 // the default value for support dialog menu items count
+            }
         MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(expectedCount))
     }
 

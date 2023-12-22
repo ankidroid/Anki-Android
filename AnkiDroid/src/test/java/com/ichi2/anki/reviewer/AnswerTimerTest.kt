@@ -47,9 +47,10 @@ class AnswerTimerTest {
     fun disabledTimer() {
         val timer = getTimer()
 
-        val card: Card = mock {
-            on { showTimer() } doReturn false
-        }
+        val card: Card =
+            mock {
+                on { showTimer() } doReturn false
+            }
 
         timer.setupForCard(card)
 
@@ -66,10 +67,11 @@ class AnswerTimerTest {
     fun enabledTimer() {
         val timer = getTimer()
 
-        val card: Card = mock {
-            on { showTimer() } doReturn true
-            on { timeLimit() } doReturn 12
-        }
+        val card: Card =
+            mock {
+                on { showTimer() } doReturn true
+                on { timeLimit() } doReturn 12
+            }
 
         Mockito.mockStatic(SystemClock::class.java).use { mocked ->
             mocked.`when`<Long> { SystemClock.elapsedRealtime() }.doReturn(13)
@@ -92,13 +94,15 @@ class AnswerTimerTest {
     fun toggle() {
         val timer = getTimer()
 
-        val timerCard: Card = mock {
-            on { showTimer() } doReturn true
-        }
+        val timerCard: Card =
+            mock {
+                on { showTimer() } doReturn true
+            }
 
-        val nonTimerCard: Card = mock {
-            on { showTimer() } doReturn false
-        }
+        val nonTimerCard: Card =
+            mock {
+                on { showTimer() } doReturn false
+            }
 
         timer.setupForCard(timerCard)
         assertThat("timer should be enabled", timer.showTimer, equalTo(true))
@@ -126,10 +130,11 @@ class AnswerTimerTest {
     fun pauseResumeIfEnabled() {
         val timer = getTimer()
 
-        val timerCard: Card = mock {
-            on { showTimer() } doReturn true
-            on { timeLimit() } doReturn 1000
-        }
+        val timerCard: Card =
+            mock {
+                on { showTimer() } doReturn true
+                on { timeLimit() } doReturn 1000
+            }
 
         timer.setupForCard(timerCard)
 
@@ -144,11 +149,12 @@ class AnswerTimerTest {
     fun pauseResumeDoesNotCallStartIfTimeElapsed() {
         val timer = getTimer()
 
-        val timerCard: Card = mock {
-            on { showTimer() } doReturn true
-            on { timeLimit() } doReturn 1000
-            on { timeTaken() } doReturn 1001
-        }
+        val timerCard: Card =
+            mock {
+                on { showTimer() } doReturn true
+                on { timeLimit() } doReturn 1000
+                on { timeTaken() } doReturn 1001
+            }
 
         timer.setupForCard(timerCard)
 
@@ -166,9 +172,10 @@ class AnswerTimerTest {
 
         val timer = getTimer()
 
-        val nonTimerCard: Card = mock {
-            on { showTimer() } doReturn false
-        }
+        val nonTimerCard: Card =
+            mock {
+                on { showTimer() } doReturn false
+            }
 
         timer.setupForCard(nonTimerCard)
 

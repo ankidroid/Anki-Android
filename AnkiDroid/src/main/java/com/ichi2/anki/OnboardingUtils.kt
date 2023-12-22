@@ -26,7 +26,6 @@ import timber.log.Timber
 import java.util.*
 
 class OnboardingUtils {
-
     companion object {
         /**
          * SHOW_ONBOARDING represents the preference key for checking if onboarding is enabled.
@@ -52,7 +51,10 @@ class OnboardingUtils {
         /**
          * Check if the tutorial for a feature should be displayed or not.
          */
-        fun isVisited(featureIdentifier: OnboardingFlag, context: Context): Boolean {
+        fun isVisited(
+            featureIdentifier: OnboardingFlag,
+            context: Context,
+        ): Boolean {
             // Return if onboarding is not enabled.
             if (!context.sharedPrefs().getBoolean(SHOW_ONBOARDING, false)) {
                 return true
@@ -68,7 +70,10 @@ class OnboardingUtils {
         /**
          * Set the tutorial for a feature as visited.
          */
-        fun setVisited(featureIdentifier: OnboardingFlag, context: Context) {
+        fun setVisited(
+            featureIdentifier: OnboardingFlag,
+            context: Context,
+        ) {
             val visitedFeatures = getAllVisited(context, featureIdentifier.getFeatureConstant())
 
             // Set the bit at the index defined for a feature once the tutorial for that feature is seen by the user.
@@ -77,7 +82,7 @@ class OnboardingUtils {
             context.sharedPrefs().edit {
                 putLong(
                     featureIdentifier.getFeatureConstant(),
-                    visitedFeatures.toLongArray()[0]
+                    visitedFeatures.toLongArray()[0],
                 )
             }
         }
@@ -85,7 +90,10 @@ class OnboardingUtils {
         /**
          * Returns a BitSet where the set bits indicate the visited screens.
          */
-        private fun getAllVisited(context: Context, featureConstant: String): BitSet {
+        private fun getAllVisited(
+            context: Context,
+            featureConstant: String,
+        ): BitSet {
             val currentValue = context.sharedPrefs().getLong(featureConstant, 0)
             return BitSet.valueOf(longArrayOf(currentValue))
         }
@@ -95,7 +103,10 @@ class OnboardingUtils {
             reset(context, featureConstants)
         }
 
-        private fun reset(context: Context, featureConstants: Collection<String>) {
+        private fun reset(
+            context: Context,
+            featureConstants: Collection<String>,
+        ) {
             context.sharedPrefs().edit {
                 featureConstants.forEach {
                     this@edit.putLong(it, 0)

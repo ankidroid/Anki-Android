@@ -29,54 +29,55 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 class PreviewerTest : RobolectricTest() {
+    @Test
+    fun editingNoteDoesNotChangePreviewedCardId() =
+        runTest {
+            // #7801
+            addNoteUsingBasicModel("Hello", "World")
+
+            val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard()
+            setDeck("Deck", cardToPreview)
+
+            val previewer = getPreviewerPreviewing(cardToPreview)
+
+            assertThat(
+                "Initially should be previewing selected card",
+                previewer.currentCardId,
+                equalTo(cardToPreview.id),
+            )
+
+            previewer.saveEditedCard()
+
+            assertThat(
+                "Should be previewing selected card after edit",
+                previewer.currentCardId,
+                equalTo(cardToPreview.id),
+            )
+        }
 
     @Test
-    fun editingNoteDoesNotChangePreviewedCardId() = runTest {
-        // #7801
-        addNoteUsingBasicModel("Hello", "World")
+    fun editingNoteChangesContent() =
+        runTest {
+            // #7801
+            addNoteUsingBasicModel("Hello", "World")
 
-        val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard()
-        setDeck("Deck", cardToPreview)
+            val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard()
+            setDeck("Deck", cardToPreview)
 
-        val previewer = getPreviewerPreviewing(cardToPreview)
+            val previewer = getPreviewerPreviewing(cardToPreview)
 
-        assertThat(
-            "Initially should be previewing selected card",
-            previewer.currentCardId,
-            equalTo(cardToPreview.id)
-        )
+            assertThat("Initial content assumption", previewer.cardContent, not(containsString("Hi")))
 
-        previewer.saveEditedCard()
+            cardToPreview.note().setField(0, "Hi")
 
-        assertThat(
-            "Should be previewing selected card after edit",
-            previewer.currentCardId,
-            equalTo(cardToPreview.id)
-        )
-    }
+            previewer.saveEditedCard()
 
-    @Test
-    fun editingNoteChangesContent() = runTest {
-        // #7801
-        addNoteUsingBasicModel("Hello", "World")
-
-        val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard()
-        setDeck("Deck", cardToPreview)
-
-        val previewer = getPreviewerPreviewing(cardToPreview)
-
-        assertThat("Initial content assumption", previewer.cardContent, not(containsString("Hi")))
-
-        cardToPreview.note().setField(0, "Hi")
-
-        previewer.saveEditedCard()
-
-        assertThat(
-            "Card content should be updated after editing",
-            previewer.cardContent,
-            containsString("Hi")
-        )
-    }
+            assertThat(
+                "Card content should be updated after editing",
+                previewer.cardContent,
+                containsString("Hi"),
+            )
+        }
 
     @Test
     fun previewerShouldNotAccessScheduler() {
@@ -96,7 +97,7 @@ class PreviewerTest : RobolectricTest() {
         assertThat(
             "Progress text at the beginning.",
             t.text,
-            equalTo(previewer.getString(R.string.preview_progress_bar_text, 1, 6))
+            equalTo(previewer.getString(R.string.preview_progress_bar_text, 1, 6)),
         )
     }
 
@@ -110,7 +111,7 @@ class PreviewerTest : RobolectricTest() {
         assertThat(
             "Progress text at the beginning.",
             t.text,
-            equalTo(previewer.getString(R.string.preview_progress_bar_text, 1, 6))
+            equalTo(previewer.getString(R.string.preview_progress_bar_text, 1, 6)),
         )
     }
 
@@ -127,7 +128,7 @@ class PreviewerTest : RobolectricTest() {
         assertThat(
             "Progress text at the beginning.",
             t.text,
-            equalTo(previewer.getString(R.string.preview_progress_bar_text, 3, 6))
+            equalTo(previewer.getString(R.string.preview_progress_bar_text, 3, 6)),
         )
     }
 
@@ -144,14 +145,14 @@ class PreviewerTest : RobolectricTest() {
         assertThat(
             "Progress text at the beginning.",
             t.text,
-            equalTo(previewer.getString(R.string.preview_progress_bar_text, 2, 6))
+            equalTo(previewer.getString(R.string.preview_progress_bar_text, 2, 6)),
         )
         previewer.changePreviewedCard(false)
         assertThat("Seekbar value when you go back two cards", s.progress, equalTo(y - 2))
         assertThat(
             "Progress text at the beginning.",
             t.text,
-            equalTo(previewer.getString(R.string.preview_progress_bar_text, 1, 6))
+            equalTo(previewer.getString(R.string.preview_progress_bar_text, 1, 6)),
         )
     }
 
@@ -170,18 +171,25 @@ class PreviewerTest : RobolectricTest() {
         return getPreviewerPreviewingList(arrayList, c)
     }
 
-    private fun setDeck(@Suppress("SameParameterValue") name: String, card: Card) {
+    private fun setDeck(
+        @Suppress("SameParameterValue") name: String,
+        card: Card,
+    ) {
         val did = addDeck(name)
         card.did = did
         card.col.updateCard(card, skipUndoEntry = true)
     }
 
-    private fun getPreviewerPreviewingList(cardIds: LongArray, c: Array<Card?>): Previewer {
+    private fun getPreviewerPreviewingList(
+        cardIds: LongArray,
+        c: Array<Card?>,
+    ): Previewer {
         val previewIntent = PreviewDestination(index = 0, cardIds).toIntent(targetContext)
-        val previewer = super.startActivityNormallyOpenCollectionWithIntent(
-            Previewer::class.java,
-            previewIntent
-        )
+        val previewer =
+            super.startActivityNormallyOpenCollectionWithIntent(
+                Previewer::class.java,
+                previewIntent,
+            )
         for (i in cardIds.indices) {
             AbstractFlashcardViewer.editorCard = c[i]
         }
@@ -190,10 +198,11 @@ class PreviewerTest : RobolectricTest() {
 
     private fun getPreviewerPreviewing(usableCard: Card): Previewer {
         val previewIntent = PreviewDestination(index = 0, longArrayOf(usableCard.id)).toIntent(targetContext)
-        val previewer = super.startActivityNormallyOpenCollectionWithIntent(
-            Previewer::class.java,
-            previewIntent
-        )
+        val previewer =
+            super.startActivityNormallyOpenCollectionWithIntent(
+                Previewer::class.java,
+                previewIntent,
+            )
         AbstractFlashcardViewer.editorCard = usableCard
         return previewer
     }

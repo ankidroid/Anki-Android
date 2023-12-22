@@ -38,9 +38,8 @@ class TypeAnswer(
     @get:JvmName("useInputTag") val useInputTag: Boolean,
     @get:JvmName("doNotUseCodeFormatting") val doNotUseCodeFormatting: Boolean,
     /** Preference: Whether the user wants to focus "type in answer" */
-    val autoFocus: Boolean
+    val autoFocus: Boolean,
 ) {
-
     /** The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected. */
     var correct: String? = null
         private set
@@ -84,7 +83,10 @@ class TypeAnswer(
      * Extract type answer/cloze text and font/size
      * @param card The next card to display
      */
-    fun updateInfo(card: Card, res: Resources) {
+    fun updateInfo(
+        card: Card,
+        res: Resources,
+    ) {
         correct = null
         val q = card.question(false)
         val m = PATTERN.matcher(q)
@@ -117,11 +119,12 @@ class TypeAnswer(
         }
         when (correct) {
             null -> {
-                warning = if (clozeIdx != 0) {
-                    res.getString(R.string.empty_card_warning)
-                } else {
-                    res.getString(R.string.unknown_type_field_warning, fldTag)
-                }
+                warning =
+                    if (clozeIdx != 0) {
+                        res.getString(R.string.empty_card_warning)
+                    } else {
+                        res.getString(R.string.unknown_type_field_warning, fldTag)
+                    }
             }
             "" -> {
                 correct = null
@@ -145,13 +148,16 @@ class TypeAnswer(
             return m.replaceFirst(warning!!)
         }
         val sb = java.lang.StringBuilder()
-        fun append(@Language("HTML") html: String) = sb.append(html)
+
+        fun append(
+            @Language("HTML") html: String,
+        ) = sb.append(html)
         if (useInputTag) {
             // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
             // shouldOverrideUrlLoading() in createWebView() in this file.
             append(
                 """<center>
-<input type="text" name="typed" id="typeans" onfocus="taFocus();" onblur="taBlur(this);" onKeyPress="return taKey(this, event)" autocomplete="off" """
+<input type="text" name="typed" id="typeans" onfocus="taFocus();" onblur="taBlur(this);" onKeyPress="return taKey(this, event)" autocomplete="off" """,
             )
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
@@ -192,10 +198,17 @@ class TypeAnswer(
      * @param correctAnswer The correct answer, taken from the note.
      * @return The formatted answer text
      */
-    fun filterAnswer(answer: String, userAnswer: String, correctAnswer: String): String {
+    fun filterAnswer(
+        answer: String,
+        userAnswer: String,
+        correctAnswer: String,
+    ): String {
         val m: Matcher = PATTERN.matcher(answer)
         val sb = StringBuilder()
-        fun append(@Language("HTML") html: String) = sb.append(html)
+
+        fun append(
+            @Language("HTML") html: String,
+        ) = sb.append(html)
 
         var comparisonText = CollectionManager.compareAnswer(correctAnswer, userAnswer)
         if (doNotUseCodeFormatting) {
@@ -213,7 +226,7 @@ class TypeAnswer(
             return TypeAnswer(
                 useInputTag = preferences.getBoolean("useInputTag", false),
                 doNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false),
-                autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", false)
+                autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", false),
             )
         }
 
@@ -226,7 +239,10 @@ class TypeAnswer(
          * a string with a comma-separeted list of strings with the correct index.
          */
         @VisibleForTesting
-        fun contentForCloze(txt: String, idx: Int): String? {
+        fun contentForCloze(
+            txt: String,
+            idx: Int,
+        ): String? {
             // In Android, } should be escaped
             val re = Pattern.compile("\\{\\{c$idx::(.+?)\\}\\}")
             val m = re.matcher(txt)

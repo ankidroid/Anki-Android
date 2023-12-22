@@ -30,7 +30,10 @@ object FileUtil {
      * @throws IllegalArgumentException if file does not exist
      * @throws NoSuchElementException file has no lines
      * */
-    fun readSingleLine(base: File, vararg path: String): String {
+    fun readSingleLine(
+        base: File,
+        vararg path: String,
+    ): String {
         var file = base
         for (pathSegment in path) {
             file = File(file, pathSegment)
@@ -45,26 +48,34 @@ object FileUtil {
     /**
      * Sequence of the lines of file
      */
-    private fun readAllLines(file: File) = sequence {
-        Scanner(file).use { scanner ->
-            while (scanner.hasNextLine()) {
-                yield(scanner.nextLine().toString())
+    private fun readAllLines(file: File) =
+        sequence {
+            Scanner(file).use { scanner ->
+                while (scanner.hasNextLine()) {
+                    yield(scanner.nextLine().toString())
+                }
             }
         }
-    }
 }
 
 fun DiskFile.length(): Long = this.file.length()
+
 fun Directory.exists(): Boolean = this.directory.exists()
 
 /** Adds a file to the directory with the provided name and content */
-fun File.withTempFile(fileName: String, content: String = "default content"): File {
+fun File.withTempFile(
+    fileName: String,
+    content: String = "default content",
+): File {
     this.addTempFile(fileName, content)
     return this
 }
 
 /** Adds a file to the directory with the provided name and content. Return the new file. */
-fun File.addTempFile(fileName: String, content: String = "default content"): File {
+fun File.addTempFile(
+    fileName: String,
+    content: String = "default content",
+): File {
     return File(this, fileName).also {
         IOUtils.writeStringToFile(it, content)
         it.deleteOnExit()
@@ -73,15 +84,19 @@ fun File.addTempFile(fileName: String, content: String = "default content"): Fil
 
 /** Adds a directory to the directory with the provided name and content. Return the new directory. */
 fun File.addTempDirectory(directoryName: String): Directory {
-    val dir = File(this, directoryName).also {
-        it.mkdir()
-        it.deleteOnExit()
-    }
+    val dir =
+        File(this, directoryName).also {
+            it.mkdir()
+            it.deleteOnExit()
+        }
     return Directory.createInstance(dir)!!
 }
 
 /** Adds a file to the directory with the provided name and content */
-fun Directory.withTempFile(fileName: String, content: String = "default content"): Directory {
+fun Directory.withTempFile(
+    fileName: String,
+    content: String = "default content",
+): Directory {
     this.directory.withTempFile(fileName, content)
     return this
 }

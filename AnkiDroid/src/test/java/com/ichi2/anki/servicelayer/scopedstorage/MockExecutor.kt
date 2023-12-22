@@ -31,7 +31,7 @@ import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
  */
 class MockExecutor(
     val operations: ArrayDeque<Operation> = ArrayDeque(),
-    val contextSupplier: (() -> MigrationContext)
+    val contextSupplier: (() -> MigrationContext),
 ) {
     /**
      * Executes one, or a number of [operations][Operation].

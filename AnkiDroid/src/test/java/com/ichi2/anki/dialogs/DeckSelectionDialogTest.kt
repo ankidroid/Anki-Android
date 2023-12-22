@@ -22,7 +22,6 @@ import org.hamcrest.Matchers
 import org.junit.Test
 
 class DeckSelectionDialogTest {
-
     @Test
     fun verifyDeckDisplayName() {
         val input = "deck::sub-deck::sub-deck2::sub-deck3"

@@ -26,7 +26,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DatabaseErrorDialogTest {
-
     @Test
     fun `ShowDatabaseErrorDialog serialization`() {
         // concerns with 'bundleOf' + '@Parcelize'

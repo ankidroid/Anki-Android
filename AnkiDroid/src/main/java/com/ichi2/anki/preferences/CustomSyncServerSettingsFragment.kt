@@ -29,7 +29,7 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         listOf(
-            R.string.custom_sync_server_collection_url_key
+            R.string.custom_sync_server_collection_url_key,
         ).forEach {
             requirePreference<VersatileTextPreference>(it).continuousValidator =
                 VersatileTextPreference.Validator { value ->
@@ -51,14 +51,15 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
             ?.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
     }
 
-    private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
-        if (
-            key == SyncPreferences.CUSTOM_SYNC_URI ||
-            key == SyncPreferences.CUSTOM_SYNC_ENABLED
-        ) {
-            prefs.edit {
-                remove(SyncPreferences.CURRENT_SYNC_URI)
+    private val preferenceChangeListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+            if (
+                key == SyncPreferences.CUSTOM_SYNC_URI ||
+                key == SyncPreferences.CUSTOM_SYNC_ENABLED
+            ) {
+                prefs.edit {
+                    remove(SyncPreferences.CURRENT_SYNC_URI)
+                }
             }
         }
-    }
 }

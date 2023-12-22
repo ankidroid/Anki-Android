@@ -48,12 +48,20 @@ import kotlin.math.sign
 open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
     private var viewDragHelper: ViewDragHelper? = null
 
-    override fun onInterceptTouchEvent(parent: CoordinatorLayout, child: View, event: MotionEvent): Boolean {
+    override fun onInterceptTouchEvent(
+        parent: CoordinatorLayout,
+        child: View,
+        event: MotionEvent,
+    ): Boolean {
         ensureViewDragHelper(parent)
         return viewDragHelper!!.shouldInterceptTouchEvent(event)
     }
 
-    override fun onTouchEvent(parent: CoordinatorLayout, child: View, event: MotionEvent): Boolean {
+    override fun onTouchEvent(
+        parent: CoordinatorLayout,
+        child: View,
+        event: MotionEvent,
+    ): Boolean {
         viewDragHelper?.processTouchEvent(event)
         return viewDragHelper != null
     }
@@ -70,17 +78,31 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
 
         override fun getViewHorizontalDragRange(child: View) = child.width
 
-        override fun clampViewPositionHorizontal(child: View, left: Int, dx: Int) = left
+        override fun clampViewPositionHorizontal(
+            child: View,
+            left: Int,
+            dx: Int,
+        ) = left
 
-        override fun clampViewPositionVertical(child: View, top: Int, dy: Int) = child.top
+        override fun clampViewPositionVertical(
+            child: View,
+            top: Int,
+            dy: Int,
+        ) = child.top
 
         override fun onViewDragStateChanged(state: Int) {
             listener?.onDragStateChanged(state)
         }
 
-        override fun tryCaptureView(child: View, pointerId: Int) = child is Snackbar.SnackbarLayout
+        override fun tryCaptureView(
+            child: View,
+            pointerId: Int,
+        ) = child is Snackbar.SnackbarLayout
 
-        override fun onViewCaptured(child: View, pointerId: Int) {
+        override fun onViewCaptured(
+            child: View,
+            pointerId: Int,
+        ) {
             if (initialChildLeft == Int.MIN_VALUE) {
                 initialChildLeft = child.left
             }
@@ -88,14 +110,19 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
             child.startIgnoringExternalChangesOfHorizontalPosition()
         }
 
-        override fun onViewReleased(child: View, xvel: Float, yvel: Float) {
+        override fun onViewReleased(
+            child: View,
+            xvel: Float,
+            yvel: Float,
+        ) {
             val dismiss = shouldDismiss(child, xvel)
 
-            val targetChildLeft = when (dismiss) {
-                Dismiss.DoNotDismiss -> initialChildLeft
-                Dismiss.ToTheRight -> initialChildLeft + child.width + child.marginRight
-                Dismiss.ToTheLeft -> initialChildLeft - child.width - child.marginLeft
-            }
+            val targetChildLeft =
+                when (dismiss) {
+                    Dismiss.DoNotDismiss -> initialChildLeft
+                    Dismiss.ToTheRight -> initialChildLeft + child.width + child.marginRight
+                    Dismiss.ToTheLeft -> initialChildLeft - child.width - child.marginLeft
+                }
 
             fun onViewSettled() {
                 if (dismiss != Dismiss.DoNotDismiss) {
@@ -105,15 +132,17 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
             }
 
             if (viewDragHelper?.settleCapturedViewAt(targetChildLeft, child.top) == true) {
-                child.postOnAnimation(object : Runnable {
-                    override fun run() {
-                        if (viewDragHelper?.continueSettling(true) == true) {
-                            child.postOnAnimation(this)
-                        } else {
-                            onViewSettled()
+                child.postOnAnimation(
+                    object : Runnable {
+                        override fun run() {
+                            if (viewDragHelper?.continueSettling(true) == true) {
+                                child.postOnAnimation(this)
+                            } else {
+                                onViewSettled()
+                            }
                         }
-                    }
-                })
+                    },
+                )
             } else {
                 onViewSettled()
             }
@@ -131,14 +160,18 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
          *
          *   * Else do not dismiss, and return to original position.
          */
-        @VisibleForTesting fun shouldDismiss(child: View, xvel: Float): Dismiss {
+        @VisibleForTesting fun shouldDismiss(
+            child: View,
+            xvel: Float,
+        ): Dismiss {
             return if (xvel.absoluteValue > FLING_TO_DISMISS_SPEED_THRESHOLD) {
                 if (xvel > 0f) Dismiss.ToTheRight else Dismiss.ToTheLeft
             } else {
                 val distanceTraveled = child.left - initialChildLeft
                 val distanceTraveledRatio = distanceTraveled.absoluteValue.toFloat() / child.width
-                val shouldDismiss = distanceTraveledRatio > DRAG_TO_DISMISS_DISTANCE_RATIO &&
-                    (xvel == 0f || xvel.sign.toInt() == distanceTraveled.sign)
+                val shouldDismiss =
+                    distanceTraveledRatio > DRAG_TO_DISMISS_DISTANCE_RATIO &&
+                        (xvel == 0f || xvel.sign.toInt() == distanceTraveled.sign)
                 when {
                     !shouldDismiss -> Dismiss.DoNotDismiss
                     distanceTraveled > 0 -> Dismiss.ToTheRight
@@ -159,12 +192,13 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
          * a more decent way of resolving this, but--again--this is an extremely rare glitch.
          */
         @Suppress("UNUSED_ANONYMOUS_PARAMETER") // just to make parameter list readable
-        private val horizontalLayoutChangeUndoingLayoutChangeListener = View.OnLayoutChangeListener {
-                view, newLeft, newTop, newRight, newBottom, oldLeft, oldTop, oldRight, oldBottom ->
-            if (newLeft != oldLeft && newLeft == initialChildLeft) {
-                view.layout(oldLeft, newTop, oldRight, newBottom)
+        private val horizontalLayoutChangeUndoingLayoutChangeListener =
+            View.OnLayoutChangeListener {
+                    view, newLeft, newTop, newRight, newBottom, oldLeft, oldTop, oldRight, oldBottom ->
+                if (newLeft != oldLeft && newLeft == initialChildLeft) {
+                    view.layout(oldLeft, newTop, oldRight, newBottom)
+                }
             }
-        }
 
         private fun View.startIgnoringExternalChangesOfHorizontalPosition() {
             addOnLayoutChangeListener(horizontalLayoutChangeUndoingLayoutChangeListener)

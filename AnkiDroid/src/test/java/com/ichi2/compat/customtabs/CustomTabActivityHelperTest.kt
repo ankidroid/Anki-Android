@@ -59,17 +59,19 @@ class CustomTabActivityHelperTest {
         getValidTabHandler().onServiceConnected(getClientThrowingSecurityException())
 
         val fallback = mock<CustomTabActivityHelper.CustomTabFallback>()
-        val packageManager = mock<PackageManager> {
-            on {
-                it.queryIntentActivitiesCompat(
-                    Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com")),
-                    ResolveInfoFlagsCompat.EMPTY
-                )
-            } doReturn emptyList()
-        }
-        val activity = mock<Activity> {
-            on { it.packageManager } doReturn packageManager
-        }
+        val packageManager =
+            mock<PackageManager> {
+                on {
+                    it.queryIntentActivitiesCompat(
+                        Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com")),
+                        ResolveInfoFlagsCompat.EMPTY,
+                    )
+                } doReturn emptyList()
+            }
+        val activity =
+            mock<Activity> {
+                on { it.packageManager } doReturn packageManager
+            }
 
         CustomTabActivityHelper.openCustomTab(activity, mock(), mock(), fallback)
 
@@ -77,9 +79,10 @@ class CustomTabActivityHelperTest {
     }
 
     @CheckResult
-    private fun getValidTabHandler(): CustomTabActivityHelper = CustomTabActivityHelper().also {
-        assertThat("Should not be failed before call", not(it.isFailed))
-    }
+    private fun getValidTabHandler(): CustomTabActivityHelper =
+        CustomTabActivityHelper().also {
+            assertThat("Should not be failed before call", not(it.isFailed))
+        }
 
     @CheckResult
     private fun getClientThrowingSecurityException(): CustomTabsClient {

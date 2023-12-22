@@ -27,13 +27,19 @@ import org.xmlpull.v1.XmlPullParser
 import java.util.concurrent.atomic.AtomicReference
 
 object PreferenceTestUtils {
-    private fun getAttrFromXml(context: Context, @XmlRes xml: Int, attrName: String, namespace: String = AnkiDroidApp.ANDROID_NAMESPACE): List<String> {
+    private fun getAttrFromXml(
+        context: Context,
+        @XmlRes xml: Int,
+        attrName: String,
+        namespace: String = AnkiDroidApp.ANDROID_NAMESPACE,
+    ): List<String> {
         val occurrences = mutableListOf<String>()
 
-        val xrp = context.resources.getXml(xml).apply {
-            setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, true)
-            setFeature(XmlPullParser.FEATURE_REPORT_NAMESPACE_ATTRIBUTES, true)
-        }
+        val xrp =
+            context.resources.getXml(xml).apply {
+                setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, true)
+                setFeature(XmlPullParser.FEATURE_REPORT_NAMESPACE_ATTRIBUTES, true)
+            }
 
         while (xrp.eventType != XmlPullParser.END_DOCUMENT) {
             if (xrp.eventType == XmlPullParser.START_TAG) {
@@ -48,12 +54,18 @@ object PreferenceTestUtils {
     }
 
     /** @return fragments found on [xml] */
-    private fun getFragmentsFromXml(context: Context, @XmlRes xml: Int): List<Fragment> {
+    private fun getFragmentsFromXml(
+        context: Context,
+        @XmlRes xml: Int,
+    ): List<Fragment> {
         return getAttrFromXml(context, xml, "fragment").map { getInstanceFromClassName(it) }
     }
 
     /** @return recursively fragments found on [xml] and on their children **/
-    private fun getFragmentsFromXmlRecursively(context: Context, @XmlRes xml: Int): List<Fragment> {
+    private fun getFragmentsFromXmlRecursively(
+        context: Context,
+        @XmlRes xml: Int,
+    ): List<Fragment> {
         val fragments = getFragmentsFromXml(context, xml).toMutableList()
         for (fragment in fragments.filterIsInstance<SettingsFragment>()) {
             fragments.addAll(getFragmentsFromXmlRecursively(context, fragment.preferenceResource))
@@ -67,7 +79,10 @@ object PreferenceTestUtils {
         return fragments.distinctBy { it::class } // and remove any repeated fragments
     }
 
-    private fun attrValueToString(value: String, context: Context): String {
+    private fun attrValueToString(
+        value: String,
+        context: Context,
+    ): String {
         return if (value.startsWith("@")) {
             context.getString(value.substring(1).toInt())
         } else {
@@ -75,7 +90,10 @@ object PreferenceTestUtils {
         }
     }
 
-    fun getKeysFromXml(context: Context, @XmlRes xml: Int): List<String> {
+    fun getKeysFromXml(
+        context: Context,
+        @XmlRes xml: Int,
+    ): List<String> {
         return getAttrFromXml(context, xml, "key").map { attrValueToString(it, context) }
     }
 
@@ -92,8 +110,9 @@ object PreferenceTestUtils {
         ActivityScenario.launch<Preferences>(i).use { scenario ->
             scenario.moveToState(Lifecycle.State.STARTED)
             scenario.onActivity { a: Preferences ->
-                val customButtonsFragment = a.supportFragmentManager
-                    .findFragmentByTag(CustomButtonsSettingsFragment::class.java.name) as CustomButtonsSettingsFragment
+                val customButtonsFragment =
+                    a.supportFragmentManager
+                        .findFragmentByTag(CustomButtonsSettingsFragment::class.java.name) as CustomButtonsSettingsFragment
                 ret.set(customButtonsFragment.allKeys())
             }
         }

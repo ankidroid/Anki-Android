@@ -25,7 +25,10 @@ import com.ichi2.libanki.NoteId
  */
 sealed interface ExportType {
     class ExportNotes(val nodeIds: List<NoteId>) : ExportType
+
     class ExportCards(val cardIds: List<CardId>) : ExportType
+
     class ExportDeck(val deckId: DeckId) : ExportType
+
     data object ExportCollection : ExportType
 }

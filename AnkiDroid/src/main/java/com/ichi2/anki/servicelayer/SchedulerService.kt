@@ -23,7 +23,10 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
 import com.ichi2.libanki.*
 
-suspend fun FragmentActivity.rescheduleCards(cardIds: List<CardId>, newDays: Int) {
+suspend fun FragmentActivity.rescheduleCards(
+    cardIds: List<CardId>,
+    newDays: Int,
+) {
     withProgress {
         undoableOp {
             sched.reschedCards(cardIds, newDays, newDays)
@@ -34,9 +37,9 @@ suspend fun FragmentActivity.rescheduleCards(cardIds: List<CardId>, newDays: Int
         resources.getQuantityString(
             R.plurals.reschedule_cards_dialog_acknowledge,
             count,
-            count
+            count,
         ),
-        Snackbar.LENGTH_SHORT
+        Snackbar.LENGTH_SHORT,
     )
 }
 
@@ -51,8 +54,8 @@ suspend fun FragmentActivity.resetCards(cardIds: List<CardId>) {
         resources.getQuantityString(
             R.plurals.reset_cards_dialog_acknowledge,
             count,
-            count
+            count,
         ),
-        Snackbar.LENGTH_SHORT
+        Snackbar.LENGTH_SHORT,
     )
 }

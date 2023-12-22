@@ -49,11 +49,12 @@ class MediaRegistration(private val context: Context) {
         val filename = getFileName(context.contentResolver, uri)
         val fd = openInputStreamWithURI(uri)
         val fileNameAndExtension = getFileNameAndExtension(filename)
-        fileName = if (checkFilename(fileNameAndExtension!!)) {
-            "${fileNameAndExtension.key}-name"
-        } else {
-            fileNameAndExtension.key
-        }
+        fileName =
+            if (checkFilename(fileNameAndExtension!!)) {
+                "${fileNameAndExtension.key}-name"
+            } else {
+                fileNameAndExtension.key
+            }
         var clipCopy: File
         var bytesWritten: Long
         openInputStreamWithURI(uri).use { copyFd ->
@@ -109,7 +110,10 @@ class MediaRegistration(private val context: Context) {
         return true // successful conversion to jpg.
     }
 
-    private fun shouldConvertToJPG(fileNameExtension: String, fileStream: InputStream): Boolean {
+    private fun shouldConvertToJPG(
+        fileNameExtension: String,
+        fileStream: InputStream,
+    ): Boolean {
         if (".jpg" == fileNameExtension) {
             return false // we are already a jpg, no conversion
         }

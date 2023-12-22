@@ -37,7 +37,7 @@ fun <Activity> Activity.importColpkg(colpkgPath: String) where Activity : AnkiAc
                 if (progress.hasImporting()) {
                     text = progress.importing
                 }
-            }
+            },
         ) {
             CollectionManager.importColpkg(colpkgPath)
         }
@@ -52,7 +52,7 @@ private suspend fun createBackup(force: Boolean) {
         createBackup(
             BackupManager.getBackupDirectoryFromCollection(this.path),
             force,
-            waitForCompletion = false
+            waitForCompletion = false,
         )
     }
     // move this outside 'withCol' to avoid blocking

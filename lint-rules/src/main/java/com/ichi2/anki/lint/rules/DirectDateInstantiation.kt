@@ -35,18 +35,20 @@ class DirectDateInstantiation : Detector(), SourceCodeScanner {
 
         @VisibleForTesting
         const val DESCRIPTION = "Use the collection's getTime() method instead of directly instantiating Date"
-        private const val EXPLANATION = "Creating Date instances directly means dates cannot be controlled during" +
-            " testing, so it is not allowed. Use the collection's getTime() method instead"
+        private const val EXPLANATION =
+            "Creating Date instances directly means dates cannot be controlled during" +
+                " testing, so it is not allowed. Use the collection's getTime() method instead"
         private val implementation = Implementation(DirectDateInstantiation::class.java, Scope.JAVA_FILE_SCOPE)
-        val ISSUE: Issue = Issue.create(
-            ID,
-            DESCRIPTION,
-            EXPLANATION,
-            Constants.ANKI_TIME_CATEGORY,
-            Constants.ANKI_TIME_PRIORITY,
-            Constants.ANKI_TIME_SEVERITY,
-            implementation
-        )
+        val ISSUE: Issue =
+            Issue.create(
+                ID,
+                DESCRIPTION,
+                EXPLANATION,
+                Constants.ANKI_TIME_CATEGORY,
+                Constants.ANKI_TIME_PRIORITY,
+                Constants.ANKI_TIME_SEVERITY,
+                implementation,
+            )
     }
 
     override fun getApplicableConstructorTypes(): List<String> {
@@ -55,7 +57,11 @@ class DirectDateInstantiation : Detector(), SourceCodeScanner {
         return forbiddenConstructors
     }
 
-    override fun visitConstructor(context: JavaContext, node: UCallExpression, constructor: PsiMethod) {
+    override fun visitConstructor(
+        context: JavaContext,
+        node: UCallExpression,
+        constructor: PsiMethod,
+    ) {
         super.visitConstructor(context, node, constructor)
         val foundClasses = context.uastFile!!.classes
         // this checks for usage of new Date(ms) which we allow
@@ -71,7 +77,7 @@ class DirectDateInstantiation : Detector(), SourceCodeScanner {
                 ISSUE,
                 node,
                 context.getLocation(node),
-                DESCRIPTION
+                DESCRIPTION,
             )
         }
     }

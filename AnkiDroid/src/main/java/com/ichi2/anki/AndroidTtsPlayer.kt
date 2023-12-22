@@ -42,7 +42,6 @@ import kotlin.coroutines.resume
 class AndroidTtsPlayer(private val context: Context, private val voices: List<TtsVoice>) :
     TtsPlayer(),
     DefaultLifecycleObserver {
-
     private lateinit var scope: CoroutineScope
 
     // this can be null in the case that TTS failed to load
@@ -52,21 +51,28 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
     private val bundleFlyweight = Bundle()
 
     private val ttsCompletedChannel: Channel<TtsCompletionStatus> = Channel()
+
     suspend fun init(scope: CoroutineScope) {
         this.scope = scope
-        this.tts = TtsVoices.createTts(context)?.apply {
-            setOnUtteranceProgressListener(object : UtteranceProgressListenerCompat() {
-                override fun onStart(utteranceId: String?) { }
+        this.tts =
+            TtsVoices.createTts(context)?.apply {
+                setOnUtteranceProgressListener(
+                    object : UtteranceProgressListenerCompat() {
+                        override fun onStart(utteranceId: String?) { }
 
-                override fun onDone(utteranceId: String?) {
-                    scope.launch(Dispatchers.IO) { ttsCompletedChannel.send(TtsCompletionStatus.success()) }
-                }
+                        override fun onDone(utteranceId: String?) {
+                            scope.launch(Dispatchers.IO) { ttsCompletedChannel.send(TtsCompletionStatus.success()) }
+                        }
 
-                override fun onError(utteranceId: String?, errorCode: Int) {
-                    scope.launch(Dispatchers.IO) { ttsCompletedChannel.send(AndroidTtsError.failure(errorCode)) }
-                }
-            })
-        }
+                        override fun onError(
+                            utteranceId: String?,
+                            errorCode: Int,
+                        ) {
+                            scope.launch(Dispatchers.IO) { ttsCompletedChannel.send(AndroidTtsError.failure(errorCode)) }
+                        }
+                    },
+                )
+            }
     }
 
     override fun onCreate(owner: LifecycleOwner) {
@@ -88,7 +94,7 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
             Timber.w("Expected TTS Tag, got %s", tag)
             return AndroidTtsError.failure(TtsErrorCode.APP_UNEXPECTED_TAG)
         }
-        val match = voice_for_tag(tag)
+        val match = voiceForTag(tag)
         if (match == null) {
             Timber.w("could not find voice for %s", tag)
             return AndroidTtsError.failure(TtsErrorCode.APP_MISSING_VOICE)
@@ -103,16 +109,20 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
         return play(tag, voice)
     }
 
-    private suspend fun play(tag: TTSTag, voice: AndroidTtsVoice): TtsCompletionStatus =
+    private suspend fun play(
+        tag: TTSTag,
+        voice: AndroidTtsVoice,
+    ): TtsCompletionStatus =
         suspendCancellableCoroutine { continuation ->
-            val tts = tts?.also {
-                it.voice = voice.voice
-                if (it.setSpeechRate(tag.speed) == ERROR) {
-                    return@suspendCancellableCoroutine continuation.resume(AndroidTtsError.failure(TtsErrorCode.APP_SPEECH_RATE_FAILED))
-                }
-                // if it's already playing: stop it
-                it.stopPlaying()
-            } ?: return@suspendCancellableCoroutine continuation.resume(AndroidTtsError.failure(TtsErrorCode.APP_TTS_INIT_FAILED))
+            val tts =
+                tts?.also {
+                    it.voice = voice.voice
+                    if (it.setSpeechRate(tag.speed) == ERROR) {
+                        return@suspendCancellableCoroutine continuation.resume(AndroidTtsError.failure(TtsErrorCode.APP_SPEECH_RATE_FAILED))
+                    }
+                    // if it's already playing: stop it
+                    it.stopPlaying()
+                } ?: return@suspendCancellableCoroutine continuation.resume(AndroidTtsError.failure(TtsErrorCode.APP_TTS_INIT_FAILED))
 
             Timber.d("tts text '%s' to be played for locale (%s)", tag.fieldText, tag.lang)
             tts.speak(tag.fieldText, TextToSpeech.QUEUE_FLUSH, bundleFlyweight, "stringId")
@@ -127,7 +137,7 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
                 continuation.resume(
                     ttsCompletedChannel.receive().also {
                         Timber.v("tts completed")
-                    }
+                    },
                 )
             }
         }
@@ -141,7 +151,10 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
         }
 
         @CheckResult
-        suspend fun createInstance(context: Context, scope: CoroutineScope): AndroidTtsPlayer {
+        suspend fun createInstance(
+            context: Context,
+            scope: CoroutineScope,
+        ): AndroidTtsPlayer {
             val voices = TtsVoices.allTtsVoices().toList()
             return AndroidTtsPlayer(context, voices).apply {
                 init(scope)
@@ -157,7 +170,9 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
     }
 }
 
-class AndroidTtsError(@Suppress("unused") val errorCode: TtsErrorCode) : TtsPlayer.TtsError() {
+class AndroidTtsError(
+    @Suppress("unused") val errorCode: TtsErrorCode,
+) : TtsPlayer.TtsError() {
     enum class TtsErrorCode(var code: Int) {
         ERROR(TextToSpeech.ERROR),
         ERROR_SYNTHESIS(TextToSpeech.ERROR_SYNTHESIS),
@@ -172,7 +187,7 @@ class AndroidTtsError(@Suppress("unused") val errorCode: TtsErrorCode) : TtsPlay
         APP_MISSING_VOICE(2),
         APP_INVALID_VOICE(3),
         APP_SPEECH_RATE_FAILED(4),
-        APP_TTS_INIT_FAILED(5)
+        APP_TTS_INIT_FAILED(5),
         ;
 
         /** A string which google will relate to the TTS Engine in most cases */
@@ -196,16 +211,13 @@ class AndroidTtsError(@Suppress("unused") val errorCode: TtsErrorCode) : TtsPlay
                 }
 
         companion object {
-            fun fromErrorCode(errorCode: Int): TtsErrorCode =
-                entries.firstOrNull { it.code == errorCode } ?: APP_UNKNOWN
+            fun fromErrorCode(errorCode: Int): TtsErrorCode = entries.firstOrNull { it.code == errorCode } ?: APP_UNKNOWN
         }
     }
 
     companion object {
-        fun failure(errorCode: TtsErrorCode): TtsCompletionStatus =
-            TtsCompletionStatus.failure(AndroidTtsError(errorCode))
+        fun failure(errorCode: TtsErrorCode): TtsCompletionStatus = TtsCompletionStatus.failure(AndroidTtsError(errorCode))
 
-        fun failure(errorCode: Int): TtsCompletionStatus =
-            failure(TtsErrorCode.fromErrorCode(errorCode))
+        fun failure(errorCode: Int): TtsCompletionStatus = failure(TtsErrorCode.fromErrorCode(errorCode))
     }
 }

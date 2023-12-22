@@ -131,7 +131,9 @@ class MediaTest : InstrumentedTest() {
 
     @Suppress("SpellCheckingInspection")
     @Throws(IOException::class)
-    private fun createNonEmptyFile(@Suppress("SameParameterValue") fileName: String): File {
+    private fun createNonEmptyFile(
+        @Suppress("SameParameterValue") fileName: String,
+    ): File {
         val file = File(testDir, fileName)
         FileOutputStream(file, false).use { os -> os.write("a".toByteArray()) }
         return file

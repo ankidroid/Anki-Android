@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.sched
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
@@ -49,7 +50,7 @@ data class CurrentQueueState(
     val counts: Counts,
     val timeboxReached: Collection.TimeboxReached?,
     val learnAheadSecs: Int,
-    val customSchedulingJs: String
+    val customSchedulingJs: String,
 ) {
     fun schedulingStatesWithContext(): SchedulingStatesWithContext {
         return anki.frontend.schedulingStatesWithContext {
@@ -63,27 +64,29 @@ data class CurrentQueueState(
 open class Scheduler(val col: Collection) {
     /** Legacy API */
     open val card: Card?
-        get() = queuedCards.cardsList.firstOrNull()?.card?.let {
-            Card(col, it).apply { startTimer() }
-        }
+        get() =
+            queuedCards.cardsList.firstOrNull()?.card?.let {
+                Card(col, it).apply { startTimer() }
+            }
 
     fun currentQueueState(): CurrentQueueState? {
         val queue = queuedCards
         return queue.cardsList.firstOrNull()?.let {
             CurrentQueueState(
                 topCard = Card(col, it.card).apply { startTimer() },
-                countsIndex = when (it.queue) {
-                    QueuedCards.Queue.NEW -> Counts.Queue.NEW
-                    QueuedCards.Queue.LEARNING -> Counts.Queue.LRN
-                    QueuedCards.Queue.REVIEW -> Counts.Queue.REV
-                    QueuedCards.Queue.UNRECOGNIZED, null -> TODO("unrecognized queue")
-                },
+                countsIndex =
+                    when (it.queue) {
+                        QueuedCards.Queue.NEW -> Counts.Queue.NEW
+                        QueuedCards.Queue.LEARNING -> Counts.Queue.LRN
+                        QueuedCards.Queue.REVIEW -> Counts.Queue.REV
+                        QueuedCards.Queue.UNRECOGNIZED, null -> TODO("unrecognized queue")
+                    },
                 states = it.states,
                 context = it.context,
                 counts = Counts(queue.newCount, queue.learningCount, queue.reviewCount),
                 timeboxReached = col.timeboxReached(),
                 learnAheadSecs = learnAheadSeconds(),
-                customSchedulingJs = col.config.get("cardStateCustomizer") ?: ""
+                customSchedulingJs = col.config.get("cardStateCustomizer") ?: "",
             )
         }
     }
@@ -96,14 +99,20 @@ open class Scheduler(val col: Collection) {
     private val queuedCards: QueuedCards
         get() = col.backend.getQueuedCards(fetchLimit = 1, intradayLearningOnly = false)
 
-    open fun answerCard(info: CurrentQueueState, ease: Int): OpChanges {
+    open fun answerCard(
+        info: CurrentQueueState,
+        ease: Int,
+    ): OpChanges {
         return col.backend.answerCard(buildAnswer(info.topCard, info.states, ease)).also {
             reps += 1
         }
     }
 
     /** Legacy path, used by tests. */
-    open fun answerCard(card: Card, ease: Int) {
+    open fun answerCard(
+        card: Card,
+        ease: Int,
+    ) {
         val top = queuedCards.cardsList.first()
         val answer = buildAnswer(card, top.states, ease)
         col.backend.answerCard(answer)
@@ -116,7 +125,11 @@ open class Scheduler(val col: Collection) {
         return col.backend.stateIsLeech(info.states.again)
     }
 
-    fun buildAnswer(card: Card, states: SchedulingStates, ease: Int): CardAnswer {
+    fun buildAnswer(
+        card: Card,
+        states: SchedulingStates,
+        ease: Int,
+    ): CardAnswer {
         return cardAnswer {
             cardId = card.id
             currentState = states.current
@@ -176,7 +189,10 @@ open class Scheduler(val col: Collection) {
     var reps: Int = 0
 
     /** Only provided for legacy unit tests. */
-    fun nextIvl(card: Card, ease: Int): Long {
+    fun nextIvl(
+        card: Card,
+        ease: Int,
+    ): Long {
         val states = col.backend.getSchedulingStates(card.id)
         val state = stateFromEase(states, ease)
         return intervalForState(state)
@@ -203,7 +219,7 @@ open class Scheduler(val col: Collection) {
         return col.backend.buryOrSuspendCards(
             cardIds = ids.toList(),
             noteIds = listOf(),
-            mode = BuryOrSuspendCardsRequest.Mode.SUSPEND
+            mode = BuryOrSuspendCardsRequest.Mode.SUSPEND,
         )
     }
 
@@ -211,7 +227,7 @@ open class Scheduler(val col: Collection) {
         return col.backend.buryOrSuspendCards(
             cardIds = listOf(),
             noteIds = ids,
-            mode = BuryOrSuspendCardsRequest.Mode.SUSPEND
+            mode = BuryOrSuspendCardsRequest.Mode.SUSPEND,
         )
     }
 
@@ -220,7 +236,7 @@ open class Scheduler(val col: Collection) {
      */
     open fun unsuspendCards(ids: Iterable<CardId>): OpChanges {
         return col.backend.restoreBuriedAndSuspendedCards(
-            cids = ids.toList()
+            cids = ids.toList(),
         )
     }
 
@@ -229,16 +245,20 @@ open class Scheduler(val col: Collection) {
      * @param manual Whether bury is made manually or not. Only useful for sched v2.
      */
     @VisibleForTesting
-    open fun buryCards(cids: Iterable<CardId>, manual: Boolean): OpChangesWithCount {
-        val mode = if (manual) {
-            BuryOrSuspendCardsRequest.Mode.BURY_USER
-        } else {
-            BuryOrSuspendCardsRequest.Mode.BURY_SCHED
-        }
+    open fun buryCards(
+        cids: Iterable<CardId>,
+        manual: Boolean,
+    ): OpChangesWithCount {
+        val mode =
+            if (manual) {
+                BuryOrSuspendCardsRequest.Mode.BURY_USER
+            } else {
+                BuryOrSuspendCardsRequest.Mode.BURY_SCHED
+            }
         return col.backend.buryOrSuspendCards(
             cardIds = cids,
             noteIds = listOf(),
-            mode = mode
+            mode = mode,
         )
     }
 
@@ -250,7 +270,7 @@ open class Scheduler(val col: Collection) {
         return col.backend.buryOrSuspendCards(
             cardIds = listOf(),
             noteIds = nids,
-            mode = BuryOrSuspendCardsRequest.Mode.BURY_USER
+            mode = BuryOrSuspendCardsRequest.Mode.BURY_USER,
         )
     }
 
@@ -259,12 +279,16 @@ open class Scheduler(val col: Collection) {
      * @param type Which kind of cards should be unburied. See [UnburyType]
      * @param did: the deck whose cards must be unburied
      */
-    open fun unburyCardsForDeck(did: DeckId, type: UnburyType = UnburyType.ALL) {
-        val mode = when (type) {
-            UnburyType.ALL -> UnburyDeckRequest.Mode.ALL
-            UnburyType.MANUAL -> UnburyDeckRequest.Mode.USER_ONLY
-            UnburyType.SIBLINGS -> UnburyDeckRequest.Mode.SCHED_ONLY
-        }
+    open fun unburyCardsForDeck(
+        did: DeckId,
+        type: UnburyType = UnburyType.ALL,
+    ) {
+        val mode =
+            when (type) {
+                UnburyType.ALL -> UnburyDeckRequest.Mode.ALL
+                UnburyType.MANUAL -> UnburyDeckRequest.Mode.USER_ONLY
+                UnburyType.SIBLINGS -> UnburyDeckRequest.Mode.SCHED_ONLY
+            }
         col.backend.unburyDeck(deckId = did, mode = mode)
     }
 
@@ -285,7 +309,7 @@ open class Scheduler(val col: Collection) {
         /**
          * Represents cards that were buried because they are the siblings of a reviewed cards.
          */
-        SIBLINGS
+        SIBLINGS,
     }
 
     /**
@@ -324,12 +348,13 @@ open class Scheduler(val col: Collection) {
      * @param ids Ids of cards to put at the end of the new queue.
      */
     open fun forgetCards(ids: List<CardId>): OpChanges {
-        val request = scheduleCardsAsNewRequest {
-            cardIds.addAll(ids)
-            log = true
-            restorePosition = false
-            resetCounts = false
-        }
+        val request =
+            scheduleCardsAsNewRequest {
+                cardIds.addAll(ids)
+                log = true
+                restorePosition = false
+                resetCounts = false
+            }
         return col.backend.scheduleCardsAsNew(request)
     }
 
@@ -340,7 +365,11 @@ open class Scheduler(val col: Collection) {
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
      */
-    open fun reschedCards(ids: List<CardId>, imin: Int, imax: Int): OpChanges {
+    open fun reschedCards(
+        ids: List<CardId>,
+        imin: Int,
+        imax: Int,
+    ): OpChanges {
         return col.backend.setDueDate(ids, "$imin-$imax!", OptionalStringConfigKey.getDefaultInstance())
     }
 
@@ -356,14 +385,14 @@ open class Scheduler(val col: Collection) {
         start: Int,
         step: Int = 1,
         shuffle: Boolean = false,
-        shift: Boolean = false
+        shift: Boolean = false,
     ): OpChangesWithCount {
         return col.backend.sortCards(
             cardIds = cids,
             startingFrom = start,
             stepSize = step,
             randomize = shuffle,
-            shiftExisting = shift
+            shiftExisting = shift,
         )
     }
 
@@ -387,11 +416,14 @@ open class Scheduler(val col: Collection) {
      * @param newc Extra number of NEW cards to see today in selected deck
      * @param rev Extra number of REV cards to see today in selected deck
      */
-    open fun extendLimits(newc: Int, rev: Int) {
+    open fun extendLimits(
+        newc: Int,
+        rev: Int,
+    ) {
         col.backend.extendLimits(
             deckId = col.decks.selected(),
             newDelta = newc,
-            reviewDelta = rev
+            reviewDelta = rev,
         )
     }
 
@@ -430,8 +462,9 @@ open class Scheduler(val col: Collection) {
      */
     fun totalNewForCurrentDeck(): Int {
         return col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
-            REPORT_LIMIT
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() +
+                " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
+            REPORT_LIMIT,
         )
     }
 
@@ -439,9 +472,10 @@ open class Scheduler(val col: Collection) {
      */
     fun totalRevForCurrentDeck(): Int {
         return col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() +
+                "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
             today,
-            REPORT_LIMIT
+            REPORT_LIMIT,
         )
     }
 
@@ -461,18 +495,19 @@ open class Scheduler(val col: Collection) {
     open val dayCutoff: Long
         get() = timingToday().nextDayAt
 
-    /* internal */
+    // internal
     fun timingToday(): SchedTimingTodayResponse {
         return if (true) { // (BackendFactory.defaultLegacySchema) {
-            val request = schedTimingTodayLegacyRequest {
-                createdSecs = col.crt
-                col.config.get<Int?>("creationOffset")?.let {
-                    createdMinsWest = it
+            val request =
+                schedTimingTodayLegacyRequest {
+                    createdSecs = col.crt
+                    col.config.get<Int?>("creationOffset")?.let {
+                        createdMinsWest = it
+                    }
+                    nowSecs = time.intTime()
+                    nowMinsWest = currentTimezoneOffset()
+                    rolloverHour = rolloverHour()
                 }
-                nowSecs = time.intTime()
-                nowMinsWest = currentTimezoneOffset()
-                rolloverHour = rolloverHour()
-            }
             return col.backend.schedTimingTodayLegacy(request)
         } else {
             // this currently breaks a bunch of unit tests that assume a mocked time,
@@ -532,13 +567,16 @@ open class Scheduler(val col: Collection) {
             .queryScalar(
                 "SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?" +
                     " LIMIT 1",
-                today
+                today,
             ) != 0
     }
 
     /** true if there are any new cards due.  */
     open fun newDue(): Boolean {
-        return col.db.queryScalar("SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0
+        return col.db.queryScalar(
+            "SELECT 1 FROM cards WHERE did IN " + deckLimit() +
+                " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1",
+        ) != 0
     }
 
     /** @return Number of cards in the current deck and its descendants.
@@ -567,7 +605,11 @@ open class Scheduler(val col: Collection) {
      * @param counts An array of [new, lrn, rev] counts from the scheduler's counts() method.
      * @param reload Force rebuild of estimator rates using the revlog.
      */
-    fun eta(counts: Counts, reload: Boolean = true): Int {
+    @SuppressLint("ktlint:standard:max-line-length")
+    fun eta(
+        counts: Counts,
+        reload: Boolean = true,
+    ): Int {
         var newRate: Double
         var newTime: Double
         var revRate: Double
@@ -584,7 +626,7 @@ open class Scheduler(val col: Collection) {
                         "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime " +
                         "from revlog where id > " +
                         "?",
-                    (col.sched.dayCutoff - (10 * SECONDS_PER_DAY)) * 1000
+                    (col.sched.dayCutoff - (10 * SECONDS_PER_DAY)) * 1000,
                 ).use { cur ->
                     if (!cur.moveToFirst()) {
                         return -1
@@ -661,7 +703,7 @@ open class Scheduler(val col: Collection) {
 
     /*
       Next time reports ********************************************************
-      ***************************************
+     ***************************************
      */
 
     /**
@@ -676,7 +718,10 @@ open class Scheduler(val col: Collection) {
      * @param ease The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
-    open fun nextIvlStr(card: Card, @Consts.BUTTON_TYPE ease: Int): String {
+    open fun nextIvlStr(
+        card: Card,
+        @Consts.BUTTON_TYPE ease: Int,
+    ): String {
         val secs = nextIvl(card, ease)
         return col.backend.formatTimespan(secs.toFloat(), FormatTimespanRequest.Context.ANSWER_BUTTONS)
     }
@@ -695,14 +740,18 @@ open class Scheduler(val col: Collection) {
  * @param card A card that just became a leech
  * @param activity An activity on which a message can be shown
  */
-fun leech(card: Card, activity: Activity?) {
+fun leech(
+    card: Card,
+    activity: Activity?,
+) {
     if (activity != null) {
         val res = activity.resources
-        val leechMessage: String = if (card.queue < 0) {
-            res.getString(R.string.leech_suspend_notification)
-        } else {
-            res.getString(R.string.leech_notification)
-        }
+        val leechMessage: String =
+            if (card.queue < 0) {
+                res.getString(R.string.leech_suspend_notification)
+            } else {
+                res.getString(R.string.leech_notification)
+            }
         activity.showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
     } else {
         Timber.w("LeechHook :: could not show leech snackbar as activity was null")
@@ -711,7 +760,10 @@ fun leech(card: Card, activity: Activity?) {
 
 const val REPORT_LIMIT = 99999
 
-private fun stateFromEase(states: SchedulingStates, ease: Int): SchedulingState {
+private fun stateFromEase(
+    states: SchedulingStates,
+    ease: Int,
+): SchedulingState {
     return when (ease) {
         1 -> states.again
         2 -> states.hard
@@ -750,9 +802,11 @@ private fun intervalForFilteredState(filtered: SchedulingState.Filtered): Long {
 fun Collection.computeFsrsWeightsRaw(input: ByteArray): ByteArray {
     return backend.computeFsrsWeightsRaw(input = input)
 }
+
 fun Collection.computeOptimalRetentionRaw(input: ByteArray): ByteArray {
     return backend.computeOptimalRetentionRaw(input = input)
 }
+
 fun Collection.evaluateWeightsRaw(input: ByteArray): ByteArray {
     return backend.evaluateWeightsRaw(input = input)
 }

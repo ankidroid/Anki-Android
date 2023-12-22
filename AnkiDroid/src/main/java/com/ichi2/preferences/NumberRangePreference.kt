@@ -150,6 +150,7 @@ open class NumberRangePreference : android.preference.EditTextPreference, AutoFo
         newFilters[newFilters.size - 1] = LengthFilter(maxLength)
         editText.filters = newFilters
     }
+
     var value: Int
         /**
          * Get the persisted value held by this preference.

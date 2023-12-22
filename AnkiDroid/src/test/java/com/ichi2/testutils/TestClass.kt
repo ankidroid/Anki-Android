@@ -40,11 +40,17 @@ import kotlin.time.Duration.Companion.milliseconds
 interface TestClass {
     val col: Collection
 
-    fun addNoteUsingBasicModel(front: String = "Front", back: String = "Back"): Note {
+    fun addNoteUsingBasicModel(
+        front: String = "Front",
+        back: String = "Back",
+    ): Note {
         return addNoteUsingModelName("Basic", front, back)
     }
 
-    fun addRevNoteUsingBasicModelDueToday(@Suppress("SameParameterValue") front: String, @Suppress("SameParameterValue") back: String): Note {
+    fun addRevNoteUsingBasicModelDueToday(
+        @Suppress("SameParameterValue") front: String,
+        @Suppress("SameParameterValue") back: String,
+    ): Note {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
         card.queue = Consts.QUEUE_TYPE_REV
@@ -53,17 +59,27 @@ interface TestClass {
         return note
     }
 
-    fun addNoteUsingBasicAndReversedModel(front: String = "Front", back: String = "Back"): Note {
+    fun addNoteUsingBasicAndReversedModel(
+        front: String = "Front",
+        back: String = "Back",
+    ): Note {
         return addNoteUsingModelName("Basic (and reversed card)", front, back)
     }
 
-    fun addNoteUsingBasicTypedModel(@Suppress("SameParameterValue") front: String, @Suppress("SameParameterValue") back: String): Note {
+    fun addNoteUsingBasicTypedModel(
+        @Suppress("SameParameterValue") front: String,
+        @Suppress("SameParameterValue") back: String,
+    ): Note {
         return addNoteUsingModelName("Basic (type in the answer)", front, back)
     }
 
-    fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
-        val model = col.notetypes.byName((name)!!)
-            ?: throw IllegalArgumentException("Could not find model '$name'")
+    fun addNoteUsingModelName(
+        name: String?,
+        vararg fields: String,
+    ): Note {
+        val model =
+            col.notetypes.byName((name)!!)
+                ?: throw IllegalArgumentException("Could not find model '$name'")
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
         val n = col.newNote(model)
@@ -74,7 +90,12 @@ interface TestClass {
         return n
     }
 
-    fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
+    fun addNonClozeModel(
+        name: String,
+        fields: Array<String>,
+        qfmt: String?,
+        afmt: String?,
+    ): String {
         val model = col.notetypes.newModel(name)
         for (field in fields) {
             col.notetypes.addFieldInNewModel(model, col.notetypes.newField(field))
@@ -88,12 +109,18 @@ interface TestClass {
     }
 
     /** Adds a note with Text to Speech functionality */
-    fun addNoteUsingTextToSpeechNoteType(front: String, back: String) {
+    fun addNoteUsingTextToSpeechNoteType(
+        front: String,
+        back: String,
+    ) {
         addNonClozeModel("TTS", arrayOf("Front", "Back"), "{{Front}}{{tts en_GB:Front}}", "{{tts en_GB:Front}}<br>{{Back}}")
         addNoteUsingModelName("TTS", front, back)
     }
 
-    fun addField(notetype: NotetypeJson, name: String) {
+    fun addField(
+        notetype: NotetypeJson,
+        name: String,
+    ) {
         val models = col.notetypes
         try {
             models.addField(notetype, models.newField(name))
@@ -146,7 +173,7 @@ interface TestClass {
     fun runTest(
         context: CoroutineContext = EmptyCoroutineContext,
         dispatchTimeoutMs: Long = 60_000L,
-        testBody: suspend TestScope.() -> Unit
+        testBody: suspend TestScope.() -> Unit,
     ) {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs.milliseconds) {

@@ -21,30 +21,33 @@ import com.ichi2.anki.CollectionManager.withCol
 
 fun DeckPicker.handleDatabaseCheck() {
     launchCatchingTask {
-        val problems = withProgress(
-            extractProgress = {
-                if (progress.hasDatabaseCheck()) {
-                    progress.databaseCheck.let {
-                        text = it.stage
-                        amount = if (it.stageTotal > 0) {
-                            Pair(it.stageCurrent, it.stageTotal)
-                        } else {
-                            null
+        val problems =
+            withProgress(
+                extractProgress = {
+                    if (progress.hasDatabaseCheck()) {
+                        progress.databaseCheck.let {
+                            text = it.stage
+                            amount =
+                                if (it.stageTotal > 0) {
+                                    Pair(it.stageCurrent, it.stageTotal)
+                                } else {
+                                    null
+                                }
                         }
                     }
+                },
+                onCancel = null,
+            ) {
+                withCol {
+                    fixIntegrity()
                 }
-            },
-            onCancel = null
-        ) {
-            withCol {
-                fixIntegrity()
             }
-        }
-        val message = if (problems.isNotEmpty()) {
-            problems.joinToString("\n")
-        } else {
-            TR.databaseCheckRebuilt()
-        }
+        val message =
+            if (problems.isNotEmpty()) {
+                problems.joinToString("\n")
+            } else {
+                TR.databaseCheckRebuilt()
+            }
         showSimpleMessageDialog(message)
     }
 }

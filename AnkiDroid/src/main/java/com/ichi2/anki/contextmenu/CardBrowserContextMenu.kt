@@ -22,7 +22,10 @@ class CardBrowserContextMenu(context: Context) : SystemContextMenu(context) {
         get() = "com.ichi2.anki.CardBrowserContextMenuAction"
 
     companion object {
-        fun ensureConsistentStateWithPreferenceStatus(context: Context, preferenceStatus: Boolean) {
+        fun ensureConsistentStateWithPreferenceStatus(
+            context: Context,
+            preferenceStatus: Boolean,
+        ) {
             CardBrowserContextMenu(context).ensureConsistentStateWithPreferenceStatus(preferenceStatus)
         }
     }

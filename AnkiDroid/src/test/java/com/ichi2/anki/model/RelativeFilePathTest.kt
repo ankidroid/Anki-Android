@@ -72,7 +72,11 @@ class RelativeFilePathTest {
     }
 
     companion object {
-        fun checkBasePlusRelativeEqualsExpected(baseDir: File, relative: RelativeFilePath, expected: File) {
+        fun checkBasePlusRelativeEqualsExpected(
+            baseDir: File,
+            relative: RelativeFilePath,
+            expected: File,
+        ) {
             assertThat(relative.toFile(Directory.createInstance(baseDir)!!), equalTo(expected))
         }
     }

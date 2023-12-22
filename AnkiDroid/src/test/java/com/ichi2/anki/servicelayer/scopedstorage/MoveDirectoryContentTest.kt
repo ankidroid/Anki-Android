@@ -39,13 +39,13 @@ import kotlin.test.assertFailsWith
  * Test for [MoveDirectoryContent]
  */
 class MoveDirectoryContentTest : Test21And26(), OperationTest {
-
     override val executionContext = MockMigrationContext()
 
     @Test
     fun test_one_operation() {
-        val source = createTransientDirectory()
-            .withTempFile("foo.txt")
+        val source =
+            createTransientDirectory()
+                .withTempFile("foo.txt")
         val destinationDirectory = createTransientDirectory()
 
         val moveOperation = moveDirectoryContent(source, destinationDirectory)
@@ -82,10 +82,11 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
 
     @Test
     fun a_move_failure_is_not_fatal() {
-        val source = createTransientDirectory()
-            .withTempFile("foo.txt")
-            .withTempFile("bar.txt")
-            .withTempFile("baz.txt")
+        val source =
+            createTransientDirectory()
+                .withTempFile("foo.txt")
+                .withTempFile("bar.txt")
+                .withTempFile("baz.txt")
 
         assertThat("foo should exists", File(source, "foo.txt").exists(), equalTo(true))
         val destinationDirectory = createTransientDirectory()
@@ -103,7 +104,11 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
         }
 
         assertThat("source directory should not be deleted", source.exists(), equalTo(true))
-        assertThat("fail (${spyMoveDirectoryContent.failedFile!!.absolutePath}) was not copied", spyMoveDirectoryContent.failedFile!!.exists(), equalTo(true))
+        assertThat(
+            "fail (${spyMoveDirectoryContent.failedFile!!.absolutePath}) was not copied",
+            spyMoveDirectoryContent.failedFile!!.exists(),
+            equalTo(true),
+        )
         assertThat("file before failure was copied", spyMoveDirectoryContent.beforeFile!!.exists(), equalTo(false))
         assertThat("file after failure was copied", spyMoveDirectoryContent.afterFile!!.exists(), equalTo(false))
     }
@@ -118,10 +123,10 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
     @Test
     fun adding_directory_during_move_is_not_fatal() {
         adding_during_move_helper {
-            val new_directory = File(it, "subdirectory")
-            assertThat("Subdirectory is created", new_directory.mkdir())
-            new_directory.deleteOnExit()
-            return@adding_during_move_helper new_directory
+            val newDirectory = File(it, "subdirectory")
+            assertThat("Subdirectory is created", newDirectory.mkdir())
+            newDirectory.deleteOnExit()
+            return@adding_during_move_helper newDirectory
         }
     }
 
@@ -131,37 +136,39 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
      *
      */
     fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: File) -> File) {
-        val source = createTransientDirectory()
-            .withTempFile("foo.txt")
-            .withTempFile("bar.txt")
+        val source =
+            createTransientDirectory()
+                .withTempFile("foo.txt")
+                .withTempFile("bar.txt")
 
         val destinationDirectory = generateDestinationDirectoryRef()
-        var new_file_name: String? = null
+        var newFileName: String? = null
 
         executionContext.attemptRename = false
         executionContext.logExceptions = true
         var movesProcessed = 0
-        val operation = spy(MoveDirectoryContent.createInstance(Directory.createInstance(source)!!, destinationDirectory)) {
-            doAnswer { op ->
-                val operation = op.callRealMethod() as Operation
-                if (movesProcessed++ == 1) {
-                    return@doAnswer object : Operation() {
-                        // Create a file in `source` and then execute the original operation.
-                        // It ensures a file is added after some files where already copied.
-                        override fun execute(context: MigrationContext): List<Operation> {
-                            new_file_name = toDoBetweenTwoFilesMove(source).name
-                            return operation.execute()
+        val operation =
+            spy(MoveDirectoryContent.createInstance(Directory.createInstance(source)!!, destinationDirectory)) {
+                doAnswer { op ->
+                    val operation = op.callRealMethod() as Operation
+                    if (movesProcessed++ == 1) {
+                        return@doAnswer object : Operation() {
+                            // Create a file in `source` and then execute the original operation.
+                            // It ensures a file is added after some files where already copied.
+                            override fun execute(context: MigrationContext): List<Operation> {
+                                newFileName = toDoBetweenTwoFilesMove(source).name
+                                return operation.execute()
+                            }
                         }
                     }
-                }
-                return@doAnswer operation
-            }.whenever(it).toMoveOperation(any())
-        }
+                    return@doAnswer operation
+                }.whenever(it).toMoveOperation(any())
+            }
         executeAll(operation)
 
         assertThat(
             "new_file should be present in source or directory",
-            File(source, new_file_name!!).exists() || File(destinationDirectory, new_file_name!!).exists()
+            File(source, newFileName!!).exists() || File(destinationDirectory, newFileName!!).exists(),
         )
     }
 
@@ -191,8 +198,8 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
     @SuppressLint("NewApi") // NotDirectoryException
     @Test
     fun factory_on_file_throw() {
-        val source_file = createTransientFile()
-        val dir = Directory.createInstanceUnsafe(source_file)
+        val sourceFile = createTransientFile()
+        val dir = Directory.createInstanceUnsafe(sourceFile)
         val destinationDirectory = generateDestinationDirectoryRef()
         val ex = assertFailsWith<IOException> { moveDirectoryContent(dir, destinationDirectory) }
         if (isV26) {
@@ -208,14 +215,25 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
     @Test
     fun reproduce_10358() {
         val permissionDenied = createPermissionDenied()
-        permissionDenied.assertThrowsWhenPermissionDenied { MoveDirectoryContent.createInstance(permissionDenied.directory, createTransientFile()) }
+        permissionDenied.assertThrowsWhenPermissionDenied {
+            MoveDirectoryContent.createInstance(
+                permissionDenied.directory,
+                createTransientFile(),
+            )
+        }
     }
 
-    private fun moveDirectoryContent(source: Directory, destinationDirectory: File): MoveDirectoryContent {
+    private fun moveDirectoryContent(
+        source: Directory,
+        destinationDirectory: File,
+    ): MoveDirectoryContent {
         return MoveDirectoryContent.createInstance(source, destinationDirectory)
     }
 
-    private fun moveDirectoryContent(source: File, destinationDirectory: File): MoveDirectoryContent {
+    private fun moveDirectoryContent(
+        source: File,
+        destinationDirectory: File,
+    ): MoveDirectoryContent {
         return moveDirectoryContent(Directory.createInstance(source)!!, destinationDirectory)
     }
 }

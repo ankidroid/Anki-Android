@@ -85,8 +85,9 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
         }
 
         context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
-            summaryFormatResource = getResourceId(R.styleable.CustomPreference_summaryFormat, 0)
-                .takeIf { it != 0 }
+            summaryFormatResource =
+                getResourceId(R.styleable.CustomPreference_summaryFormat, 0)
+                    .takeIf { it != 0 }
         }
 
         context.withStyledAttributes(attrs, R.styleable.SliderPreference) {
@@ -96,9 +97,13 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
         }
     }
 
-    override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
+    override fun onGetDefaultValue(
+        a: TypedArray,
+        index: Int,
+    ): Any {
         return a.getInt(index, valueFrom)
     }
+
     override fun onSetInitialValue(defaultValue: Any?) {
         value = getPersistedInt(defaultValue as Int? ?: valueFrom)
     }
@@ -122,7 +127,7 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
                         value = sliderValue
                     }
                 }
-            }
+            },
         )
 
         val summaryView = holder.findViewById(android.R.id.summary) as TextView

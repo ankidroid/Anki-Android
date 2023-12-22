@@ -29,7 +29,7 @@ class BackendEmulatingOpenConflict() : Backend() {
     override fun openCollection(
         collectionPath: String,
         mediaFolderPath: String,
-        mediaDbPath: String
+        mediaDbPath: String,
     ) {
         val error = Mockito.mock(BackendError::class.java)
         throw BackendDbLockedException(error)
@@ -37,7 +37,7 @@ class BackendEmulatingOpenConflict() : Backend() {
 
     companion object {
         fun enable() {
-            BackendFactory.setOverride() { BackendEmulatingOpenConflict() }
+            BackendFactory.setOverride { BackendEmulatingOpenConflict() }
         }
 
         fun disable() {

@@ -71,6 +71,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     private var mAllFieldsNull = true
     private var mCardType: String? = null
     protected var previewLayout: PreviewLayout? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -165,20 +166,21 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     }
 
     override fun hideEaseButtons() {
-        /* do nothing */
+        // do nothing
     }
 
     override fun displayAnswerBottomBar() {
-        /* do nothing */
+        // do nothing
     }
 
-    private val mToggleAnswerHandler = View.OnClickListener {
-        if (mShowingAnswer) {
-            displayCardQuestion()
-        } else {
-            displayCardAnswer()
+    private val mToggleAnswerHandler =
+        View.OnClickListener {
+            if (mShowingAnswer) {
+                displayCardQuestion()
+            } else {
+                displayCardAnswer()
+            }
         }
-    }
 
     /** When the next template is requested  */
     fun onNextCard() {
@@ -251,7 +253,9 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList!!.size) {
                 currentCard = PreviewerCard(col, mCardList!![mCardListIndex])
             } else if (mEditedNotetype != null) { // bare note type (not coming from note editor), or new card template
-                Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting")
+                Timber.d(
+                    "onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting",
+                )
                 currentCard = getDummyCard(mEditedNotetype!!, mOrdinal)
                 if (currentCard == null) {
                     showThemedToast(applicationContext, getString(R.string.invalid_template), false)
@@ -271,7 +275,10 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         showBackIcon()
     }
 
-    protected fun getCard(col: Collection, cardListIndex: Long): Card {
+    protected fun getCard(
+        col: Collection,
+        cardListIndex: Long,
+    ): Card {
         return PreviewerCard(col, cardListIndex)
     }
 
@@ -298,7 +305,10 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
      * assumption on the content of tagsList, except that its strings
      * are valid tags (i.e. no spaces in it).
      */
-    private fun setTags(currentNote: Note, tagsList: List<String>?) {
+    private fun setTags(
+        currentNote: Note,
+        tagsList: List<String>?,
+    ) {
         val currentTags = currentNote.tags.toTypedArray()
         for (tag in currentTags) {
             currentNote.delTag(tag)
@@ -319,11 +329,16 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     }
 
     private fun getBundleEditFields(noteEditorBundle: Bundle?): MutableList<String> {
-        val noteFields = noteEditorBundle!!.getBundle("editFields")
-            ?: return mutableListOf()
+        val noteFields =
+            noteEditorBundle!!.getBundle("editFields")
+                ?: return mutableListOf()
         // we map from "int" -> field, but the order isn't guaranteed, and there may be skips.
         // so convert this to a list of strings, with null in place of the invalid fields
-        val elementCount = noteFields.keySet().stream().map { s: String -> s.toInt() }.max { obj: Int, anotherInteger: Int? -> obj.compareTo(anotherInteger!!) }.orElse(-1) + 1
+        val elementCount =
+            noteFields.keySet().stream().map {
+                    s: String ->
+                s.toInt()
+            }.max { obj: Int, anotherInteger: Int? -> obj.compareTo(anotherInteger!!) }.orElse(-1) + 1
         val ret = Array(elementCount) { "" } // init array, nulls cause a crash
         for (fieldOrd in noteFields.keySet()) {
             ret[fieldOrd.toInt()] = noteFields.getString(fieldOrd)!!
@@ -331,14 +346,19 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         return mutableListOf(*ret)
     }
 
-    private fun indexFromOrdinal(col: Collection, fieldsBundle: Bundle, ordinal: Int): Int {
+    private fun indexFromOrdinal(
+        col: Collection,
+        fieldsBundle: Bundle,
+        ordinal: Int,
+    ): Int {
         return when (mEditedNotetype?.isCloze) {
             true -> {
-                val note = col.newNote(mEditedNotetype!!).apply {
-                    for ((index, field) in getBundleEditFields(fieldsBundle).withIndex()) {
-                        this.setField(index, field)
+                val note =
+                    col.newNote(mEditedNotetype!!).apply {
+                        for ((index, field) in getBundleEditFields(fieldsBundle).withIndex()) {
+                            this.setField(index, field)
+                        }
                     }
-                }
                 val clozeNumber = mOrdinal + 1
                 col.clozeNumbersInNote(note).indexOf(clozeNumber)
             }
@@ -350,7 +370,10 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
      * This method generates a note from a sample model, or fails if invalid
      * @param index The index in the templates for the model. NOT `ord`
      */
-    fun getDummyCard(notetype: NotetypeJson, index: Int): Card? {
+    fun getDummyCard(
+        notetype: NotetypeJson,
+        index: Int,
+    ): Card? {
         return getDummyCard(notetype, index, notetype.fieldsNames.toMutableList())
     }
 
@@ -358,7 +381,11 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
      * This method generates a note from a sample model, or fails if invalid
      * @param cardIndex The index in the templates for the model. NOT `ord`
      */
-    private fun getDummyCard(notetype: NotetypeJson?, cardIndex: Int, fieldValues: MutableList<String>): Card? {
+    private fun getDummyCard(
+        notetype: NotetypeJson?,
+        cardIndex: Int,
+        fieldValues: MutableList<String>,
+    ): Card? {
         Timber.d("getDummyCard() Creating dummy note for index %s", cardIndex)
         if (notetype == null) {
             return null
@@ -395,10 +422,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     inner class PreviewerCard(col: Collection, id: Long) : Card(col, id) {
         private val mNote: Note? = null
 
-        /* if we have an unsaved note saved, use it instead of a collection lookup */
-        override fun note(
-            reload: Boolean
-        ): Note {
+        // if we have an unsaved note saved, use it instead of a collection lookup
+        override fun note(reload: Boolean): Note {
             return mNote ?: super.note(reload)
         }
 
@@ -416,20 +441,25 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             return mEditedNotetype ?: super.model()
         }
 
-        override fun renderOutput(reload: Boolean, browser: Boolean): TemplateRenderOutput {
+        override fun renderOutput(
+            reload: Boolean,
+            browser: Boolean,
+        ): TemplateRenderOutput {
             if (renderOutput == null || reload) {
-                val index = if (model().isCloze) {
-                    0
-                } else {
-                    ord
-                }
-                val context = TemplateManager.TemplateRenderContext.fromCardLayout(
-                    note(),
-                    this,
-                    model(),
-                    model().getJSONArray("tmpls")[index] as JSONObject,
-                    fillEmpty = false
-                )
+                val index =
+                    if (model().isCloze) {
+                        0
+                    } else {
+                        ord
+                    }
+                val context =
+                    TemplateManager.TemplateRenderContext.fromCardLayout(
+                        note(),
+                        this,
+                        model(),
+                        model().getJSONArray("tmpls")[index] as JSONObject,
+                        fillEmpty = false,
+                    )
                 renderOutput =
                     context.render()
             }
@@ -439,32 +469,42 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 }
 
 private class EphemeralCard(col: Collection, id: Long?) : Card(col, id) {
-    override fun renderOutput(reload: Boolean, browser: Boolean): TemplateRenderOutput {
+    override fun renderOutput(
+        reload: Boolean,
+        browser: Boolean,
+    ): TemplateRenderOutput {
         return this.renderOutput!!
     }
+
     companion object {
-        fun fromNote(n: Note, col: Collection, cardIndex: Int = 0): EphemeralCard {
+        fun fromNote(
+            n: Note,
+            col: Collection,
+            cardIndex: Int = 0,
+        ): EphemeralCard {
             val card = EphemeralCard(col, null)
             card.did = 1
             card.ord = n.cardIndexToOrd(cardIndex)
             Timber.v("Generating ephemeral note, idx %d ord %d", cardIndex, card.ord)
 
             val nt = n.notetype
-            val templateIdx = if (nt.type == Consts.MODEL_CLOZE) {
-                0
-            } else {
-                cardIndex
-            }
+            val templateIdx =
+                if (nt.type == Consts.MODEL_CLOZE) {
+                    0
+                } else {
+                    cardIndex
+                }
             val template = nt.tmpls[templateIdx] as JSONObject
             template.put("ord", card.ord)
 
-            val output = TemplateManager.TemplateRenderContext.fromCardLayout(
-                n,
-                card,
-                notetype = nt,
-                template = template,
-                fillEmpty = false
-            ).render()
+            val output =
+                TemplateManager.TemplateRenderContext.fromCardLayout(
+                    n,
+                    card,
+                    notetype = nt,
+                    template = template,
+                    fillEmpty = false,
+                ).render()
             card.renderOutput = output
             card.setNote(n)
             return card

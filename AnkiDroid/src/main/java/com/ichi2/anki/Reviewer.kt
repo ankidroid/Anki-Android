@@ -157,10 +157,11 @@ open class Reviewer :
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)
 
-    private val addNoteLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        FlashCardViewerResultCallback()
-    )
+    private val addNoteLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+            FlashCardViewerResultCallback(),
+        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -203,7 +204,7 @@ open class Reviewer :
             return FlagToDisplay(
                 currentCard!!.userFlag(),
                 mActionButtons.findMenuItem(ActionButtons.RES_FLAG)?.isActionButton ?: true,
-                mPrefFullscreenReview
+                mPrefFullscreenReview,
             ).get()
         }
 
@@ -244,7 +245,10 @@ open class Reviewer :
         mCardMarker!!.displayMark(shouldDisplayMark())
     }
 
-    protected open fun onFlag(card: Card?, flag: Flag) {
+    protected open fun onFlag(
+        card: Card?,
+        flag: Flag,
+    ) {
         if (card == null) {
             return
         }
@@ -579,7 +583,7 @@ open class Reviewer :
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.RECORD_AUDIO),
-                REQUEST_AUDIO_PERMISSION
+                REQUEST_AUDIO_PERMISSION,
             )
         } else {
             toggleMicToolBar()
@@ -596,29 +600,35 @@ open class Reviewer :
         if (tempAudioPath == null) {
             return
         }
-        audioView = createRecorderInstance(
-            this,
-            R.drawable.ic_play_arrow_white_24dp,
-            R.drawable.ic_pause_white_24dp,
-            R.drawable.ic_stop_white_24dp,
-            R.drawable.ic_rec,
-            R.drawable.ic_rec_stop,
-            tempAudioPath!!
-        )
+        audioView =
+            createRecorderInstance(
+                this,
+                R.drawable.ic_play_arrow_white_24dp,
+                R.drawable.ic_pause_white_24dp,
+                R.drawable.ic_stop_white_24dp,
+                R.drawable.ic_rec,
+                R.drawable.ic_rec_stop,
+                tempAudioPath!!,
+            )
         if (audioView == null) {
             tempAudioPath = null
             return
         }
-        val lp2 = FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
+        val lp2 =
+            FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+            )
         audioView!!.layoutParams = lp2
         val micToolBarLayer = findViewById<LinearLayout>(R.id.mic_tool_bar_layer)
         micToolBarLayer.addView(audioView)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray,
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_AUDIO_PERMISSION &&
             permissions.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
@@ -629,12 +639,13 @@ open class Reviewer :
     }
 
     private fun showRescheduleCardDialog() {
-        val runnable = Consumer { days: Int ->
-            val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                rescheduleCards(cardIds, days)
+        val runnable =
+            Consumer { days: Int ->
+                val cardIds = listOf(currentCard!!.id)
+                launchCatchingTask {
+                    rescheduleCards(cardIds, days)
+                }
             }
-        }
         val dialog = rescheduleSingleCard(resources, currentCard!!, runnable)
         showDialogFragment(dialog)
     }
@@ -647,13 +658,14 @@ open class Reviewer :
         val title = resources.getString(R.string.reset_card_dialog_title)
         val message = resources.getString(R.string.reset_card_dialog_message)
         dialog.setArgs(title, message)
-        val confirm = Runnable {
-            Timber.i("NoteEditor:: ResetProgress button pressed")
-            val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                resetCards(cardIds)
+        val confirm =
+            Runnable {
+                Timber.i("NoteEditor:: ResetProgress button pressed")
+                val cardIds = listOf(currentCard!!.id)
+                launchCatchingTask {
+                    resetCards(cardIds)
+                }
             }
-        }
         dialog.setConfirm(confirm)
         showDialogFragment(dialog)
     }
@@ -783,7 +795,12 @@ open class Reviewer :
             }
             val whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
             val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
-            val whiteboardColorPaletteIcon = VectorDrawableCompat.create(resources, R.drawable.ic_color_lens_white_24dp, this.theme)!!.mutate()
+            val whiteboardColorPaletteIcon =
+                VectorDrawableCompat.create(
+                    resources,
+                    R.drawable.ic_color_lens_white_24dp,
+                    this.theme,
+                )!!.mutate()
             if (mShowWhiteboard) {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
@@ -867,7 +884,10 @@ open class Reviewer :
         return itemId == R.id.action_flag_seven || itemId == R.id.action_flag_six || itemId == R.id.action_flag_five || itemId == R.id.action_flag_four || itemId == R.id.action_flag_three || itemId == R.id.action_flag_two || itemId == R.id.action_flag_one
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
         if (answerFieldIsFocused()) {
             return super.onKeyDown(keyCode, event)
         }
@@ -877,7 +897,10 @@ open class Reviewer :
         return false
     }
 
-    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyUp(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
         return if (mProcessor.onKeyUp(keyCode, event)) {
             true
         } else {
@@ -954,8 +977,9 @@ open class Reviewer :
     }
 
     private fun updateWhiteboardEditorPosition() {
-        mAnswerButtonsPosition = this.sharedPrefs()
-            .getString("answerButtonPosition", "bottom")
+        mAnswerButtonsPosition =
+            this.sharedPrefs()
+                .getString("answerButtonPosition", "bottom")
         val layoutParams: RelativeLayout.LayoutParams
         when (mAnswerButtonsPosition) {
             "none", "top" -> {
@@ -1015,11 +1039,12 @@ open class Reviewer :
     }
 
     override suspend fun updateCurrentCard() {
-        val state = withCol {
-            sched.currentQueueState()?.apply {
-                topCard.renderOutput(true)
+        val state =
+            withCol {
+                sched.currentQueueState()?.apply {
+                    topCard.renderOutput(true)
+                }
             }
-        }
         state?.timeboxReached?.let { dealWithTimeBox(it) }
         currentCard = state?.topCard
         queueState = state
@@ -1036,11 +1061,12 @@ open class Reviewer :
         }.also {
             if (ease == Consts.BUTTON_ONE && wasLeech) {
                 state.topCard.load()
-                val leechMessage: String = if (state.topCard.queue < 0) {
-                    resources.getString(R.string.leech_suspend_notification)
-                } else {
-                    resources.getString(R.string.leech_notification)
-                }
+                val leechMessage: String =
+                    if (state.topCard.queue < 0) {
+                        resources.getString(R.string.leech_suspend_notification)
+                    } else {
+                        resources.getString(R.string.leech_notification)
+                    }
                 showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
             }
         }
@@ -1100,7 +1126,7 @@ open class Reviewer :
             """
         anki.mutateNextCardStates('$key', async (states, customData, ctx) => {{ $js }})
             .catch(err => console.log(err));
-"""
+""",
         ) { result ->
             if ("null" == result) {
                 // eval failed, usually a syntax error
@@ -1153,7 +1179,10 @@ open class Reviewer :
         }
     }
 
-    override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
+    override fun executeCommand(
+        which: ViewerCommand,
+        fromGesture: Gesture?,
+    ): Boolean {
         when (which) {
             ViewerCommand.TOGGLE_FLAG_RED -> {
                 toggleFlag(Flag.RED)
@@ -1253,13 +1282,14 @@ open class Reviewer :
         }
     }
 
-    private val mFullScreenHandler: Handler = object : Handler(getDefaultLooper()) {
-        override fun handleMessage(msg: Message) {
-            if (mPrefFullscreenReview) {
-                setFullScreen(this@Reviewer)
+    private val mFullScreenHandler: Handler =
+        object : Handler(getDefaultLooper()) {
+            override fun handleMessage(msg: Message) {
+                if (mPrefFullscreenReview) {
+                    setFullScreen(this@Reviewer)
+                }
             }
         }
-    }
 
     /** Hide the navigation if in full-screen mode after a given period of time  */
     protected open fun delayedHide(delayMillis: Int) {
@@ -1286,7 +1316,7 @@ open class Reviewer :
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_LOW_PROFILE
                 or View.SYSTEM_UI_FLAG_IMMERSIVE
-            )
+        )
         // Show / hide the Action bar together with the status bar
         val prefs = a.sharedPrefs()
         val fullscreenMode = fromPreference(prefs)
@@ -1329,11 +1359,13 @@ open class Reviewer :
         view.animate()
             .alpha(0f)
             .setDuration(ANIMATION_DURATION.toLong())
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    view.visibility = View.GONE
-                }
-            })
+            .setListener(
+                object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        view.visibility = View.GONE
+                    }
+                },
+            )
     }
 
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
@@ -1350,18 +1382,20 @@ open class Reviewer :
         if (whiteboardPenColor != null) {
             whiteboard!!.penColor = whiteboardPenColor
         }
-        whiteboard!!.setOnPaintColorChangeListener(object : OnPaintColorChangeListener {
-            override fun onPaintColorChange(color: Int?) {
-                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isNightMode, color)
-            }
-        })
+        whiteboard!!.setOnPaintColorChangeListener(
+            object : OnPaintColorChangeListener {
+                override fun onPaintColorChange(color: Int?) {
+                    MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isNightMode, color)
+                }
+            },
+        )
         whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->
             if (event == null) return@setOnTouchListener false
             // If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
             if (!whiteboard!!.isCurrentlyDrawing && (
-                !mShowWhiteboard || (
-                    mPrefFullscreenReview &&
-                        isImmersiveSystemUiVisible(this@Reviewer)
+                    !mShowWhiteboard || (
+                        mPrefFullscreenReview &&
+                            isImmersiveSystemUiVisible(this@Reviewer)
                     )
                 )
             ) {
@@ -1420,7 +1454,7 @@ open class Reviewer :
             getColUnsafe.db.queryScalar(
                 "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
                 currentCard!!.nid,
-                currentCard!!.id
+                currentCard!!.id,
             ) == 1
         }
         // whether there exists a sibling not buried.
@@ -1434,7 +1468,7 @@ open class Reviewer :
             getColUnsafe.db.queryScalar(
                 "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
                 currentCard!!.nid,
-                currentCard!!.id
+                currentCard!!.id,
             ) == 1
         }
         // Whether there exists a sibling which is neither suspended nor buried
@@ -1449,7 +1483,6 @@ open class Reviewer :
      * Inner class which implements the submenu for the Suspend button
      */
     internal inner class SuspendProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
-
         override fun onCreateActionView(forItem: MenuItem): View {
             return createActionViewWith(context, forItem, R.menu.reviewer_suspend, ::onMenuItemClick) {
                 hasSubMenu()
@@ -1483,7 +1516,6 @@ open class Reviewer :
      * Inner class which implements the submenu for the Bury button
      */
     internal inner class BuryProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
-
         override fun onCreateActionView(forItem: MenuItem): View {
             return createActionViewWith(context, forItem, R.menu.reviewer_bury, ::onMenuItemClick) {
                 hasSubMenu()
@@ -1518,33 +1550,33 @@ open class Reviewer :
         menuItem: MenuItem,
         @MenuRes subMenuRes: Int,
         onMenuItemSelection: (MenuItem) -> Boolean,
-        showsSubMenu: () -> Boolean
-    ): View = ImageButton(context, null, android.R.attr.actionButtonStyle).apply {
-        TooltipCompat.setTooltipText(this, menuItem.title)
-        menuItem.icon?.isAutoMirrored = true
-        setImageDrawable(menuItem.icon)
-        id = menuItem.itemId
-        setOnClickListener {
-            if (!menuItem.isEnabled) {
-                return@setOnClickListener
-            }
-            if (showsSubMenu()) {
-                PopupMenu(context, this).apply {
-                    inflate(subMenuRes)
-                    setOnMenuItemClickListener(onMenuItemSelection)
-                    show()
+        showsSubMenu: () -> Boolean,
+    ): View =
+        ImageButton(context, null, android.R.attr.actionButtonStyle).apply {
+            TooltipCompat.setTooltipText(this, menuItem.title)
+            menuItem.icon?.isAutoMirrored = true
+            setImageDrawable(menuItem.icon)
+            id = menuItem.itemId
+            setOnClickListener {
+                if (!menuItem.isEnabled) {
+                    return@setOnClickListener
                 }
-            } else {
-                onOptionsItemSelected(menuItem)
+                if (showsSubMenu()) {
+                    PopupMenu(context, this).apply {
+                        inflate(subMenuRes)
+                        setOnMenuItemClickListener(onMenuItemSelection)
+                        show()
+                    }
+                } else {
+                    onOptionsItemSelected(menuItem)
+                }
             }
         }
-    }
 
     /**
      * Inner class which implements the submenu for the Schedule button
      */
     internal inner class ScheduleProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
-
         override fun onCreateActionView(forItem: MenuItem): View {
             return createActionViewWith(context, forItem, R.menu.reviewer_schedule, ::onMenuItemClick) { true }
         }
@@ -1575,16 +1607,17 @@ open class Reviewer :
     }
 
     override fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
-        val cardDataForJsAPI = AnkiDroidJsAPI.CardDataForJsApi().apply {
-            newCardCount = mNewCount.toString()
-            lrnCardCount = mLrnCount.toString()
-            revCardCount = mRevCount.toString()
-            nextTime1 = easeButton1!!.nextTime
-            nextTime2 = easeButton2!!.nextTime
-            nextTime3 = easeButton3!!.nextTime
-            nextTime4 = easeButton4!!.nextTime
-            eta = mEta
-        }
+        val cardDataForJsAPI =
+            AnkiDroidJsAPI.CardDataForJsApi().apply {
+                newCardCount = mNewCount.toString()
+                lrnCardCount = mLrnCount.toString()
+                revCardCount = mRevCount.toString()
+                nextTime1 = easeButton1!!.nextTime
+                nextTime2 = easeButton2!!.nextTime
+                nextTime3 = easeButton3!!.nextTime
+                nextTime4 = easeButton4!!.nextTime
+                eta = mEta
+            }
         return cardDataForJsAPI
     }
 

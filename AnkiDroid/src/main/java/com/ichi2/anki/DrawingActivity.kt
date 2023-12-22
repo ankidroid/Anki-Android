@@ -60,8 +60,8 @@ class DrawingActivity : AnkiActivity() {
             whiteboardEditItem,
             ContextCompat.getColorStateList(
                 this,
-                R.color.white
-            )
+                R.color.white,
+            ),
         )
         return super.onCreateOptionsMenu(menu)
     }

@@ -1,3 +1,5 @@
+
+
 /*
  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
  Copyright (c) 2020 Arthur Milchior <Arthur@Milchior.fr>
@@ -14,6 +16,8 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+@file:Suppress("ktlint")
+
 package com.ichi2.libanki
 
 import com.ichi2.utils.deepClonedInto
@@ -26,7 +30,8 @@ class DeckConfig
  *
  * This function will perform deepCopy on the passed object
  *
- */(json: JSONObject) : JSONObject() {
+ */
+(json: JSONObject) : JSONObject() {
 
     var conf: Long
         get() = getLong("conf")

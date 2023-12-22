@@ -20,7 +20,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ViewerCommandTest {
-
     @Test
     fun preference_keys_are_not_changed() {
         val names = ViewerCommand.entries.joinToString(", ") { x -> x.preferenceKey }
@@ -40,7 +39,7 @@ class ViewerCommandTest {
                 "binding_RECORD_VOICE, binding_REPLAY_VOICE, binding_TOGGLE_WHITEBOARD, binding_CLEAR_WHITEBOARD, " +
                 "binding_CHANGE_WHITEBOARD_PEN_COLOR, binding_SHOW_HINT, binding_SHOW_ALL_HINTS, binding_ADD_NOTE, " +
                 "binding_RESCHEDULE_NOTE",
-            names
+            names,
         )
     }
 }

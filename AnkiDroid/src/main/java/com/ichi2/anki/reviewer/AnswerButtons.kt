@@ -67,7 +67,9 @@ enum class AnswerButtons {
      *
      * In Review mode, easy adds additional bonuses to the interval and increases the ease by 15%
      */
-    EASY;
+    EASY,
+
+    ;
 
     fun toViewerCommand(numberOfButtons: Int): ViewerCommand {
         return when (numberOfButtons) {
@@ -100,6 +102,7 @@ enum class AnswerButtons {
 
     companion object {
         fun canAnswerHard(numberOfButtons: Int): Boolean = numberOfButtons == 4
+
         fun canAnswerEasy(numberOfButtons: Int): Boolean = numberOfButtons >= 3
 
         fun getBackgroundColors(ctx: AnkiActivity): IntArray {
@@ -109,14 +112,14 @@ enum class AnswerButtons {
                         R.attr.againButtonRippleRef,
                         R.attr.hardButtonRippleRef,
                         R.attr.goodButtonRippleRef,
-                        R.attr.easyButtonRippleRef
+                        R.attr.easyButtonRippleRef,
                     )
                 } else {
                     intArrayOf(
                         R.attr.againButtonRef,
                         R.attr.hardButtonRef,
                         R.attr.goodButtonRef,
-                        R.attr.easyButtonRef
+                        R.attr.easyButtonRef,
                     )
                 }
             return Themes.getResFromAttr(ctx, backgroundIds)
@@ -129,8 +132,8 @@ enum class AnswerButtons {
                     R.attr.againButtonTextColor,
                     R.attr.hardButtonTextColor,
                     R.attr.goodButtonTextColor,
-                    R.attr.easyButtonTextColor
-                )
+                    R.attr.easyButtonTextColor,
+                ),
             )
         }
     }

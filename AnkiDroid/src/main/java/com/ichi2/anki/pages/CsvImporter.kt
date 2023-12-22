@@ -39,7 +39,10 @@ class CsvImporter : PageFragment() {
     }
 
     class CsvImporterWebViewClient(val path: String) : PageWebViewClient() {
-        override fun onPageFinished(view: WebView?, url: String?) {
+        override fun onPageFinished(
+            view: WebView?,
+            url: String?,
+        ) {
             // from upstream: https://github.com/ankitects/anki/blob/678c354fed4d98c0a8ef84fb7981ee085bd744a7/qt/aqt/import_export/import_csv_dialog.py#L49
             view!!.evaluateJavascript("anki.setupImportCsvPage('$path');") {
                 super.onPageFinished(view, url)
@@ -55,10 +58,14 @@ class CsvImporter : PageFragment() {
          * @param filePath path of the csv file that will be imported, which should be accessible by AnkiDroid
          * @return an intent to open the [CsvImporter] page on [PagesActivity]
          */
-        fun getIntent(context: Context, filePath: String): Intent {
-            val arguments = Bundle().apply {
-                putString(ARG_KEY_PATH, filePath)
-            }
+        fun getIntent(
+            context: Context,
+            filePath: String,
+        ): Intent {
+            val arguments =
+                Bundle().apply {
+                    putString(ARG_KEY_PATH, filePath)
+                }
             return PagesActivity.getIntent(context, CsvImporter::class, arguments)
         }
     }

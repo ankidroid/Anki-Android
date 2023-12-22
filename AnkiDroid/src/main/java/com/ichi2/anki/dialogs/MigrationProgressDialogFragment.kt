@@ -41,7 +41,6 @@ import kotlinx.coroutines.launch
  * Dismissible.
  */
 class MigrationProgressDialogFragment : DialogFragment() {
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val layout = requireActivity().layoutInflater.inflate(R.layout.dialog_with_progress_indicator, null)
         val progressBar = layout.findViewById<CircularProgressIndicator>(R.id.progress_indicator)

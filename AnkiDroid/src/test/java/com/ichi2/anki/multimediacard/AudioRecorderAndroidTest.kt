@@ -30,7 +30,6 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class AudioRecorderAndroidTest : RobolectricTest() {
-
     private lateinit var mAudioRecorder: AudioRecorder
 
     @Mock(name = "mRecorder")
@@ -63,6 +62,7 @@ class AudioRecorderAndroidTest : RobolectricTest() {
             var timesRun = 0
                 private set
             private var mHasThrown = false
+
             override fun run() {
                 timesRun++
                 if (!mHasThrown) {

@@ -43,22 +43,30 @@ open class CompatV29 : CompatV26(), Compat {
         }
     }
 
-    override fun saveImage(context: Context, bitmap: Bitmap, baseFileName: String, extension: String, format: Bitmap.CompressFormat, quality: Int): Uri {
+    override fun saveImage(
+        context: Context,
+        bitmap: Bitmap,
+        baseFileName: String,
+        extension: String,
+        format: Bitmap.CompressFormat,
+        quality: Int,
+    ): Uri {
         val imagesCollection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
         val destDir = File(Environment.DIRECTORY_PICTURES, "AnkiDroid")
         val date = TimeManager.time.intTimeMS()
 
-        val newImage = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME, "$date.$extension")
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/$extension")
-            put(MediaStore.MediaColumns.DATE_ADDED, date)
-            put(MediaStore.MediaColumns.DATE_MODIFIED, date)
-            put(MediaStore.MediaColumns.SIZE, bitmap.byteCount)
-            put(MediaStore.MediaColumns.WIDTH, bitmap.width)
-            put(MediaStore.MediaColumns.HEIGHT, bitmap.height)
-            put(MediaStore.MediaColumns.RELATIVE_PATH, "$destDir${File.separator}")
-            put(MediaStore.Images.Media.IS_PENDING, 1)
-        }
+        val newImage =
+            ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, "$date.$extension")
+                put(MediaStore.MediaColumns.MIME_TYPE, "image/$extension")
+                put(MediaStore.MediaColumns.DATE_ADDED, date)
+                put(MediaStore.MediaColumns.DATE_MODIFIED, date)
+                put(MediaStore.MediaColumns.SIZE, bitmap.byteCount)
+                put(MediaStore.MediaColumns.WIDTH, bitmap.width)
+                put(MediaStore.MediaColumns.HEIGHT, bitmap.height)
+                put(MediaStore.MediaColumns.RELATIVE_PATH, "$destDir${File.separator}")
+                put(MediaStore.Images.Media.IS_PENDING, 1)
+            }
         val newImageUri = context.contentResolver.insert(imagesCollection, newImage)
         context.contentResolver.openOutputStream(newImageUri!!).use {
             if (it != null) {

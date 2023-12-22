@@ -31,19 +31,29 @@ import com.ichi2.anki.joinSyncMessages
 class SyncErrorDialog : AsyncDialogFragment() {
     interface SyncErrorDialogListener {
         fun showSyncErrorDialog(dialogType: Int)
-        fun showSyncErrorDialog(dialogType: Int, message: String?)
+
+        fun showSyncErrorDialog(
+            dialogType: Int,
+            message: String?,
+        )
+
         fun loginToSyncServer()
+
         fun sync(conflict: ConflictResolution? = null)
+
         fun mediaCheck()
+
         fun dismissAllDialogFragments()
+
         fun integrityCheck()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val dialog = AlertDialog.Builder(requireContext())
-            .setTitle(title)
-            .setMessage(message)
+        val dialog =
+            AlertDialog.Builder(requireContext())
+                .setTitle(title)
+                .setMessage(message)
         return when (requireArguments().getInt("dialogType")) {
             DIALOG_USER_NOT_LOGGED_IN_SYNC -> {
                 // User not logged in; take them to login screen
@@ -164,12 +174,16 @@ class SyncErrorDialog : AsyncDialogFragment() {
     }
 
     private val title: String
-        get() = when (requireArguments().getInt("dialogType")) {
-            DIALOG_USER_NOT_LOGGED_IN_SYNC -> resources.getString(R.string.not_logged_in_title)
-            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL, DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE -> resources.getString(R.string.sync_conflict_replace_title)
-            DIALOG_SYNC_CONFLICT_RESOLUTION -> resources.getString(R.string.sync_conflict_title_new)
-            else -> resources.getString(R.string.sync_error)
-        }
+        get() =
+            when (requireArguments().getInt("dialogType")) {
+                DIALOG_USER_NOT_LOGGED_IN_SYNC -> resources.getString(R.string.not_logged_in_title)
+                DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL, DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE ->
+                    resources.getString(
+                        R.string.sync_conflict_replace_title,
+                    )
+                DIALOG_SYNC_CONFLICT_RESOLUTION -> resources.getString(R.string.sync_conflict_title_new)
+                else -> resources.getString(R.string.sync_error)
+            }
 
     /**
      * Get the title which is shown in notification bar when dialog fragment can't be shown
@@ -186,20 +200,27 @@ class SyncErrorDialog : AsyncDialogFragment() {
         }
 
     private val message: String?
-        get() = when (requireArguments().getInt("dialogType")) {
-            DIALOG_USER_NOT_LOGGED_IN_SYNC -> resources.getString(R.string.login_create_account_message)
-            DIALOG_CONNECTION_ERROR -> resources.getString(R.string.connection_error_message)
-            DIALOG_SYNC_CONFLICT_RESOLUTION -> resources.getString(R.string.sync_conflict_message_new)
-            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL, DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL -> resources.getString(R.string.sync_conflict_local_confirm_new)
-            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE, DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE -> resources.getString(R.string.sync_conflict_remote_confirm_new)
-            DIALOG_SYNC_CORRUPT_COLLECTION -> {
-                val syncMessage = requireArguments().getString("dialogMessage")
-                val repairUrl = getString(R.string.repair_deck)
-                val dialogMessage = getString(R.string.sync_corrupt_database, repairUrl)
-                joinSyncMessages(dialogMessage, syncMessage)
+        get() =
+            when (requireArguments().getInt("dialogType")) {
+                DIALOG_USER_NOT_LOGGED_IN_SYNC -> resources.getString(R.string.login_create_account_message)
+                DIALOG_CONNECTION_ERROR -> resources.getString(R.string.connection_error_message)
+                DIALOG_SYNC_CONFLICT_RESOLUTION -> resources.getString(R.string.sync_conflict_message_new)
+                DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL, DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL ->
+                    resources.getString(
+                        R.string.sync_conflict_local_confirm_new,
+                    )
+                DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE, DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE ->
+                    resources.getString(
+                        R.string.sync_conflict_remote_confirm_new,
+                    )
+                DIALOG_SYNC_CORRUPT_COLLECTION -> {
+                    val syncMessage = requireArguments().getString("dialogMessage")
+                    val repairUrl = getString(R.string.repair_deck)
+                    val dialogMessage = getString(R.string.sync_corrupt_database, repairUrl)
+                    joinSyncMessages(dialogMessage, syncMessage)
+                }
+                else -> requireArguments().getString("dialogMessage")
             }
-            else -> requireArguments().getString("dialogMessage")
-        }
 
     /**
      * Get the message which is shown in notification bar when dialog fragment can't be shown
@@ -245,7 +266,10 @@ class SyncErrorDialog : AsyncDialogFragment() {
          * @param dialogType An integer which specifies which of the sub-dialogs to show
          * @param dialogMessage A string which can be optionally used to set the dialog message
          */
-        fun newInstance(dialogType: Int, dialogMessage: String?): SyncErrorDialog {
+        fun newInstance(
+            dialogType: Int,
+            dialogMessage: String?,
+        ): SyncErrorDialog {
             val f = SyncErrorDialog()
             val args = Bundle()
             args.putInt("dialogType", dialogType)
@@ -257,19 +281,21 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
     class SyncErrorDialogMessageHandler(
         private val dialogType: Int,
-        private val dialogMessage: String?
+        private val dialogMessage: String?,
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG, "SyncErrorDialog") {
         override fun handleAsyncMessage(deckPicker: DeckPicker) {
             deckPicker.showSyncErrorDialog(dialogType, dialogMessage)
         }
 
-        override fun toMessage(): Message = Message.obtain().apply {
-            what = this@SyncErrorDialogMessageHandler.what
-            data = bundleOf(
-                "dialogType" to dialogType,
-                "dialogMessage" to dialogMessage
-            )
-        }
+        override fun toMessage(): Message =
+            Message.obtain().apply {
+                what = this@SyncErrorDialogMessageHandler.what
+                data =
+                    bundleOf(
+                        "dialogType" to dialogType,
+                        "dialogMessage" to dialogMessage,
+                    )
+            }
 
         companion object {
             fun fromMessage(message: Message): SyncErrorDialogMessageHandler {

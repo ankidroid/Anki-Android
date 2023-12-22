@@ -55,7 +55,10 @@ class TextField : FieldBase(), IField {
     override val formattedValue: String?
         get() = text
 
-    override fun setFormattedString(col: Collection, value: String) {
+    override fun setFormattedString(
+        col: Collection,
+        value: String,
+    ) {
         mText = value
     }
 

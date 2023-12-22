@@ -71,12 +71,33 @@ import java.util.*
  */
 interface Compat {
     fun setupNotificationChannel(context: Context)
+
     fun setTooltipTextByContentDescription(view: View)
-    fun vibrate(context: Context, durationMillis: Long)
+
+    fun vibrate(
+        context: Context,
+        durationMillis: Long,
+    )
+
     fun getMediaRecorder(context: Context): MediaRecorder
-    fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
-    fun resolveService(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
-    fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo>
+
+    fun resolveActivity(
+        packageManager: PackageManager,
+        intent: Intent,
+        flags: ResolveInfoFlagsCompat,
+    ): ResolveInfo?
+
+    fun resolveService(
+        packageManager: PackageManager,
+        intent: Intent,
+        flags: ResolveInfoFlagsCompat,
+    ): ResolveInfo?
+
+    fun queryIntentActivities(
+        packageManager: PackageManager,
+        intent: Intent,
+        flags: ResolveInfoFlagsCompat,
+    ): List<ResolveInfo>
 
     /**
      * Retrieve extended data from the intent.
@@ -84,7 +105,11 @@ interface Compat {
      * @param className – The type of the object expected.
      * @return the value of an item previously added with putExtra(), or null if no [Serializable] value was found.
      */
-    fun <T : Serializable?> getSerializableExtra(intent: Intent, name: String, className: Class<T>): T?
+    fun <T : Serializable?> getSerializableExtra(
+        intent: Intent,
+        name: String,
+        className: Class<T>,
+    ): T?
 
     /**
      * Returns the value associated with the given key, or `null` if:
@@ -96,7 +121,11 @@ interface Compat {
      * @param clazz The expected class of the returned type
      * @return a Serializable value, or `null`
      */
-    fun <T : Serializable?> getSerializable(bundle: Bundle, key: String, clazz: Class<T>): T?
+    fun <T : Serializable?> getSerializable(
+        bundle: Bundle,
+        key: String,
+        clazz: Class<T>,
+    ): T?
 
     /**
      * Retrieve overall information about an application package that is
@@ -107,27 +136,40 @@ interface Compat {
      * * Can be null: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/pm/ComputerEngine.java;drc=c4ad8bc669e66262a00798b57132347a0d0aa2ac;bpv=1;bpt=1;l=1705?q=getPackageInfoInternal&ss=android&gsn=getPackageInfoInternalBody&gs=kythe%3A%2F%2Fandroid.googlesource.com%2Fplatform%2Fsuperproject%3Flang%3Djava%3Fpath%3Dcom.android.server.pm.ComputerEngine%23977e4a94695fef516f4b2d9fa73dea77cfaf06eff40c6fb3ec9bd80c6e18a08f
      */
     @Throws(NameNotFoundException::class)
-    fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo?
+    fun getPackageInfo(
+        packageManager: PackageManager,
+        packageName: String,
+        flags: PackageInfoFlagsCompat,
+    ): PackageInfo?
 
     /**
      * Copy file at path [source] to path [target]
      */
     @Throws(IOException::class)
-    fun copyFile(source: String, target: String)
+    fun copyFile(
+        source: String,
+        target: String,
+    )
 
     /**
      * Copy file at path [source] to [target]
      * @return the number of bytes read or written
      */
     @Throws(IOException::class)
-    fun copyFile(source: String, target: OutputStream): Long
+    fun copyFile(
+        source: String,
+        target: OutputStream,
+    ): Long
 
     /**
      * Copy file at path [source] to path [target]
      * @return the number of bytes read or written
      */
     @Throws(IOException::class)
-    fun copyFile(source: InputStream, target: String): Long
+    fun copyFile(
+        source: InputStream,
+        target: String,
+    ): Long
 
     /**
      * Deletes a provided file/directory. If the file is a directory then the directory must be empty
@@ -161,6 +203,7 @@ interface Compat {
      */
     @Throws(IOException::class)
     fun createDirectories(directory: File)
+
     fun hasVideoThumbnail(path: String): Boolean
 
     /**
@@ -179,7 +222,14 @@ interface Compat {
      * WRITE_EXTERNAL_STORAGE permission
      */
     @Throws(FileNotFoundException::class)
-    fun saveImage(context: Context, bitmap: Bitmap, baseFileName: String, extension: String, format: CompressFormat, quality: Int): Uri
+    fun saveImage(
+        context: Context,
+        bitmap: Bitmap,
+        baseFileName: String,
+        extension: String,
+        format: CompressFormat,
+        quality: Int,
+    ): Uri
 
     /**
      *

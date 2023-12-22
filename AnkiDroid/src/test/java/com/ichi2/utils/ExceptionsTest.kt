@@ -57,7 +57,7 @@ class TranslatableExceptionsTest {
 
         assertThat(
             context.getUserFriendlyErrorText(exception),
-            equalTo("Cannot write to or create file my-file")
+            equalTo("Cannot write to or create file my-file"),
         )
     }
 
@@ -66,28 +66,30 @@ class TranslatableExceptionsTest {
         val firstException = testExceptionWithStackTrace("[aa]")
         val secondException = CanNotWriteToOrCreateFileException(File("my-file"))
 
-        val translatableAggregateException = TranslatableAggregateException(
-            causes = listOf(firstException, secondException)
-        )
+        val translatableAggregateException =
+            TranslatableAggregateException(
+                causes = listOf(firstException, secondException),
+            )
 
         assertThat(
             context.getUserFriendlyErrorText(translatableAggregateException),
-            equalTo("Multiple errors, most recent: Cannot write to or create file my-file")
+            equalTo("Multiple errors, most recent: Cannot write to or create file my-file"),
         )
 
-        val translatableAggregateExceptionWithACustomMessage = TranslatableAggregateException(
-            translatableMessage = {
-                getString(
-                    R.string.error__etc__multiple_consecutive_errors_without_progress_most_recent,
-                    getUserFriendlyErrorText(secondException)
-                )
-            },
-            causes = listOf(firstException, secondException)
-        )
+        val translatableAggregateExceptionWithACustomMessage =
+            TranslatableAggregateException(
+                translatableMessage = {
+                    getString(
+                        R.string.error__etc__multiple_consecutive_errors_without_progress_most_recent,
+                        getUserFriendlyErrorText(secondException),
+                    )
+                },
+                causes = listOf(firstException, secondException),
+            )
 
         assertThat(
             context.getUserFriendlyErrorText(translatableAggregateExceptionWithACustomMessage),
-            equalTo("Multiple consecutive errors without progress, most recent: Cannot write to or create file my-file")
+            equalTo("Multiple consecutive errors without progress, most recent: Cannot write to or create file my-file"),
         )
     }
 }

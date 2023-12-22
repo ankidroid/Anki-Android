@@ -33,7 +33,11 @@ class PromptBackgroundAdapter(private val promptBackgroundInterface: PromptBackg
         }
     }
 
-    override fun update(options: PromptOptions<out PromptOptions<*>>, revealModifier: Float, alphaModifier: Float) {
+    override fun update(
+        options: PromptOptions<out PromptOptions<*>>,
+        revealModifier: Float,
+        alphaModifier: Float,
+    ) {
         promptBackgroundInterface.update(options, revealModifier, alphaModifier)
     }
 
@@ -41,7 +45,10 @@ class PromptBackgroundAdapter(private val promptBackgroundInterface: PromptBackg
         promptBackgroundInterface.draw(canvas)
     }
 
-    override fun contains(x: Float, y: Float): Boolean {
+    override fun contains(
+        x: Float,
+        y: Float,
+    ): Boolean {
         return promptBackgroundInterface.contains(x, y)
     }
 
@@ -49,7 +56,11 @@ class PromptBackgroundAdapter(private val promptBackgroundInterface: PromptBackg
         promptBackgroundInterface.setColour(colour)
     }
 
-    override fun prepare(options: PromptOptions<out PromptOptions<*>>, clipToBounds: Boolean, clipBounds: Rect) {
+    override fun prepare(
+        options: PromptOptions<out PromptOptions<*>>,
+        clipToBounds: Boolean,
+        clipBounds: Rect,
+    ) {
         promptBackgroundInterface.prepare(options, clipToBounds, clipBounds)
     }
 }

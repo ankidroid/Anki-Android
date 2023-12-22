@@ -31,7 +31,6 @@ data class ReverseDirection(val orderAsc: Boolean) {
     }
 
     companion object {
-        fun fromConfig(config: Config): ReverseDirection =
-            ReverseDirection(orderAsc = config.get("sortBackwards") ?: false)
+        fun fromConfig(config: Config): ReverseDirection = ReverseDirection(orderAsc = config.get("sortBackwards") ?: false)
     }
 }

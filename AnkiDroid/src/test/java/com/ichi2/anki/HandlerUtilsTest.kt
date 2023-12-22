@@ -31,7 +31,6 @@ import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTask
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class HandlerUtilsTest {
-
     @Test
     fun checkHandlerFunctionExecution() {
         var value = false

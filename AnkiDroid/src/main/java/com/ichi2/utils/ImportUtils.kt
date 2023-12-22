@@ -42,7 +42,7 @@ import java.net.URLEncoder
 import java.util.*
 
 object ImportUtils {
-    /* A filename should be shortened if over this threshold */
+    // A filename should be shortened if over this threshold
     private const val fileNameShorteningThreshold = 100
 
     /**
@@ -52,22 +52,35 @@ object ImportUtils {
      * @param intent contains the file to import
      * @return null if successful, otherwise error message
      */
-    fun handleFileImport(context: Context, intent: Intent): ImportResult {
+    fun handleFileImport(
+        context: Context,
+        intent: Intent,
+    ): ImportResult {
         return FileImporter().handleFileImport(context, intent)
     }
 
     /**
      * Makes a cached copy of the file selected on [intent] and returns its path
      */
-    fun getFileCachedCopy(context: Context, intent: Intent): String? {
+    fun getFileCachedCopy(
+        context: Context,
+        intent: Intent,
+    ): String? {
         return FileImporter().getFileCachedCopy(context, intent)
     }
 
-    fun getFileCachedCopy(context: Context, uri: Uri): String? {
+    fun getFileCachedCopy(
+        context: Context,
+        uri: Uri,
+    ): String? {
         return FileImporter().getFileCachedCopy(context, uri)
     }
 
-    fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
+    fun showImportUnsuccessfulDialog(
+        activity: Activity,
+        errorMessage: String?,
+        exitActivity: Boolean,
+    ) {
         FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity)
     }
 
@@ -102,7 +115,10 @@ object ImportUtils {
          * @param intent contains the file to import
          * @return null if successful, otherwise error message
          */
-        fun handleFileImport(context: Context, intent: Intent): ImportResult {
+        fun handleFileImport(
+            context: Context,
+            intent: Intent,
+        ): ImportResult {
             // This intent is used for opening apkg package files
             // We want to go immediately to DeckPicker, clearing any history in the process
             Timber.i("IntentHandler/ User requested to view a file")
@@ -117,7 +133,10 @@ object ImportUtils {
             }
         }
 
-        private fun handleFileImportInternal(context: Context, intent: Intent): ImportResult {
+        private fun handleFileImportInternal(
+            context: Context,
+            intent: Intent,
+        ): ImportResult {
             val importPathUri = getDataUri(intent)
             return if (importPathUri != null) {
                 handleContentProviderFile(context, intent, importPathUri)
@@ -126,7 +145,10 @@ object ImportUtils {
             }
         }
 
-        fun getFileCachedCopy(context: Context, uri: Uri): String? {
+        fun getFileCachedCopy(
+            context: Context,
+            uri: Uri,
+        ): String? {
             val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
             val tempPath = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
             return if (copyFileToCache(context, uri, tempPath)) {
@@ -139,7 +161,10 @@ object ImportUtils {
         /**
          * Makes a cached copy of the file selected on [intent] and returns its path
          */
-        fun getFileCachedCopy(context: Context, intent: Intent): String? {
+        fun getFileCachedCopy(
+            context: Context,
+            intent: Intent,
+        ): String? {
             val uri = getDataUri(intent) ?: return null
             return getFileCachedCopy(context, uri)
         }
@@ -147,7 +172,7 @@ object ImportUtils {
         private fun handleContentProviderFile(
             context: Context,
             intent: Intent,
-            importPathUri: Uri
+            importPathUri: Uri,
         ): ImportResult {
             // Note: intent.getData() can be null. Use data instead.
             if (!isValidImportType(context, importPathUri)) {
@@ -166,9 +191,11 @@ object ImportUtils {
                     CrashReportService.sendExceptionReport(
                         RuntimeException("Could not import apkg from ContentProvider"),
                         "IntentHandler.java",
-                        "apkg import failed; mime type ${intent.type}"
+                        "apkg import failed; mime type ${intent.type}",
                     )
-                    return ImportResult.fromErrorString(AnkiDroidApp.appResources.getString(R.string.import_error_content_provider, AnkiDroidApp.manualUrl + "#importing"))
+                    return ImportResult.fromErrorString(
+                        AnkiDroidApp.appResources.getString(R.string.import_error_content_provider, AnkiDroidApp.manualUrl + "#importing"),
+                    )
                 }
             }
             val tempOutDir: String
@@ -185,17 +212,18 @@ object ImportUtils {
                 // Copy to temporary file
                 filename = ensureValidLength(filename)
                 tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
-                val errorMessage = if (copyFileToCache(context, importPathUri, tempOutDir)) {
-                    null
-                } else {
-                    context.getString(R.string.import_error_copy_to_cache)
-                }
+                val errorMessage =
+                    if (copyFileToCache(context, importPathUri, tempOutDir)) {
+                        null
+                    } else {
+                        context.getString(R.string.import_error_copy_to_cache)
+                    }
                 // Show import dialog
                 if (errorMessage != null) {
                     CrashReportService.sendExceptionReport(
                         RuntimeException("Error importing apkg file"),
                         "IntentHandler.java",
-                        "apkg import failed"
+                        "apkg import failed",
                     )
                     return ImportResult.fromErrorString(errorMessage)
                 }
@@ -204,7 +232,10 @@ object ImportUtils {
             return ImportResult.fromSuccess()
         }
 
-        private fun isValidImportType(context: Context, importPathUri: Uri): Boolean {
+        private fun isValidImportType(
+            context: Context,
+            importPathUri: Uri,
+        ): Boolean {
             val fileName = getFileNameFromContentProvider(context, importPathUri)
             return when {
                 isDeckPackage(fileName) -> true
@@ -245,7 +276,10 @@ object ImportUtils {
             return AssetHelper.getFileExtensionFromFilePath(file.toString())
         }
 
-        protected open fun getFileNameFromContentProvider(context: Context, data: Uri): String? {
+        protected open fun getFileNameFromContentProvider(
+            context: Context,
+            data: Uri,
+        ): String? {
             var filename: String? = null
             context.contentResolver.query(data, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null).use { cursor ->
                 if (cursor != null && cursor.moveToFirst()) {
@@ -256,7 +290,11 @@ object ImportUtils {
             return filename
         }
 
-        fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
+        fun showImportUnsuccessfulDialog(
+            activity: Activity,
+            errorMessage: String?,
+            exitActivity: Boolean,
+        ) {
             Timber.e("showImportUnsuccessfulDialog() message %s", errorMessage)
             val title = activity.resources.getString(R.string.import_title_error)
             AlertDialog.Builder(activity).show {
@@ -277,14 +315,19 @@ object ImportUtils {
          * @param tempPath temporary path to store the cached file
          * @return whether or not copy was successful
          */
-        protected open fun copyFileToCache(context: Context, data: Uri?, tempPath: String): Boolean {
+        protected open fun copyFileToCache(
+            context: Context,
+            data: Uri?,
+            tempPath: String,
+        ): Boolean {
             // Get an input stream to the data in ContentProvider
-            val inputStream: InputStream = try {
-                context.contentResolver.openInputStream(data!!)
-            } catch (e: FileNotFoundException) {
-                Timber.e(e, "Could not open input stream to intent data")
-                return false
-            } ?: return false
+            val inputStream: InputStream =
+                try {
+                    context.contentResolver.openInputStream(data!!)
+                } catch (e: FileNotFoundException) {
+                    Timber.e(e, "Could not open input stream to intent data")
+                    return false
+                } ?: return false
             // Check non-null
             try {
                 CompatHelper.compat.copyFile(inputStream, tempPath)
@@ -312,7 +355,10 @@ object ImportUtils {
                 }
                 // If Uri is of scheme which is supported by ContentResolver, read the contents
                 val intentUriScheme = intent.data!!.scheme
-                return if (intentUriScheme == ContentResolver.SCHEME_CONTENT || intentUriScheme == ContentResolver.SCHEME_FILE || intentUriScheme == ContentResolver.SCHEME_ANDROID_RESOURCE) {
+                return if (intentUriScheme == ContentResolver.SCHEME_CONTENT ||
+                    intentUriScheme == ContentResolver.SCHEME_FILE ||
+                    intentUriScheme == ContentResolver.SCHEME_ANDROID_RESOURCE
+                ) {
                     Timber.i("Attempting to read data from intent.")
                     intent.data
                 } else {
@@ -328,11 +374,12 @@ object ImportUtils {
                 // Get the filename from the path
                 val filename = File(importPath).name
 
-                val dialogMessage = if (isCollectionPackage(filename)) {
-                    CollectionImportReplace(importPath)
-                } else {
-                    CollectionImportAdd(importPath)
-                }
+                val dialogMessage =
+                    if (isCollectionPackage(filename)) {
+                        CollectionImportReplace(importPath)
+                    } else {
+                        CollectionImportAdd(importPath)
+                    }
                 // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
                 DialogHandler.storeMessage(dialogMessage.toMessage())
             }
@@ -341,7 +388,10 @@ object ImportUtils {
                 return filename != null && filename.lowercase(Locale.ROOT).endsWith(".apkg") && "collection.apkg" != filename
             }
 
-            fun hasExtension(filename: String, extension: String?): Boolean {
+            fun hasExtension(
+                filename: String,
+                extension: String?,
+            ): Boolean {
                 val fileParts = filename.split("\\.".toRegex()).toTypedArray()
                 if (fileParts.size < 2) {
                     return false
@@ -372,42 +422,42 @@ object ImportUtils {
     /** Show confirmation dialog asking to confirm import with replace when file called "collection.apkg" */
     class CollectionImportReplace(private val importPath: String) : DialogHandlerMessage(
         which = WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG,
-        analyticName = "ImportReplaceDialog"
+        analyticName = "ImportReplaceDialog",
     ) {
         override fun handleAsyncMessage(deckPicker: DeckPicker) {
             // Handle import of collection package APKG
             deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, importPath)
         }
 
-        override fun toMessage(): Message = Message.obtain().apply {
-            data = bundleOf("importPath" to importPath)
-            what = this@CollectionImportReplace.what
-        }
+        override fun toMessage(): Message =
+            Message.obtain().apply {
+                data = bundleOf("importPath" to importPath)
+                what = this@CollectionImportReplace.what
+            }
 
         companion object {
-            fun fromMessage(message: Message): CollectionImportReplace =
-                CollectionImportReplace(message.data.getString("importPath")!!)
+            fun fromMessage(message: Message): CollectionImportReplace = CollectionImportReplace(message.data.getString("importPath")!!)
         }
     }
 
     /** Show confirmation dialog asking to confirm import with add */
     class CollectionImportAdd(private val importPath: String) : DialogHandlerMessage(
         WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG,
-        "ImportAddDialog"
+        "ImportAddDialog",
     ) {
         override fun handleAsyncMessage(deckPicker: DeckPicker) {
             // Handle import of deck package APKG
             deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, importPath)
         }
 
-        override fun toMessage(): Message = Message.obtain().apply {
-            data = bundleOf("importPath" to importPath)
-            what = this@CollectionImportAdd.what
-        }
+        override fun toMessage(): Message =
+            Message.obtain().apply {
+                data = bundleOf("importPath" to importPath)
+                what = this@CollectionImportAdd.what
+            }
 
         companion object {
-            fun fromMessage(message: Message): CollectionImportAdd =
-                CollectionImportAdd(message.data.getString("importPath")!!)
+            fun fromMessage(message: Message): CollectionImportAdd = CollectionImportAdd(message.data.getString("importPath")!!)
         }
     }
 }

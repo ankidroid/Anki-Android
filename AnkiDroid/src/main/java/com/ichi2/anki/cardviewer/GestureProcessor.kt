@@ -24,6 +24,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
     companion object {
         const val PREF_KEY = "gestures"
     }
+
     private var gestureDoubleTap: ViewerCommand? = null
     private var gestureLongclick: ViewerCommand? = null
     private var gestureSwipeUp: ViewerCommand? = null
@@ -84,7 +85,12 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         }
     }
 
-    fun onTap(height: Int, width: Int, posX: Float, posY: Float): Boolean? {
+    fun onTap(
+        height: Int,
+        width: Int,
+        posX: Float,
+        posY: Float,
+    ): Boolean? {
         val gesture = gestureMapper.gesture(height, width, posX, posY) ?: return false
         return execute(gesture)
     }
@@ -97,7 +103,15 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         return execute(Gesture.LONG_TAP)
     }
 
-    fun onFling(dx: Float, dy: Float, velocityX: Float, velocityY: Float, isSelecting: Boolean, isXScrolling: Boolean, isYScrolling: Boolean): Boolean? {
+    fun onFling(
+        dx: Float,
+        dy: Float,
+        velocityX: Float,
+        velocityY: Float,
+        isSelecting: Boolean,
+        isXScrolling: Boolean,
+        isYScrolling: Boolean,
+    ): Boolean? {
         val gesture = gestureMapper.gesture(dx, dy, velocityX, velocityY, isSelecting, isXScrolling, isYScrolling)
         return execute(gesture)
     }

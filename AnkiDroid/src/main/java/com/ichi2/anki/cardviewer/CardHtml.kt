@@ -41,7 +41,7 @@ class CardHtml(
     private val getAnswerContentWithoutFrontSideSlow: (() -> String),
     @RustCleanup("too many variables, combine once we move away from backend")
     private var questionSound: List<SoundOrVideoTag>? = null,
-    private var answerSound: List<SoundOrVideoTag>? = null
+    private var answerSound: List<SoundOrVideoTag>? = null,
 ) {
     fun getSoundTags(sideFor: Side): List<SoundOrVideoTag> {
         if (sideFor == this.side) {
@@ -123,7 +123,11 @@ class CardHtml(
     }
 
     companion object {
-        fun createInstance(card: Card, side: Side, context: HtmlGenerator): CardHtml {
+        fun createInstance(
+            card: Card,
+            side: Side,
+            context: HtmlGenerator,
+        ): CardHtml {
             val content = displayString(card, side, context)
 
             val renderOutput = card.renderOutput()
@@ -145,7 +149,11 @@ class CardHtml(
          * Or warning if required
          * TODO: This is no longer entirely true as more post-processing occurs
          */
-        private fun displayString(card: Card, side: Side, context: HtmlGenerator): String {
+        private fun displayString(
+            card: Card,
+            side: Side,
+            context: HtmlGenerator,
+        ): String {
             var content: String = if (side == Side.FRONT) card.question() else card.answer()
             content = card.col.media.escapeMediaFilenames(content)
             content = context.filterTypeAnswer(content, side)
@@ -172,11 +180,12 @@ class CardHtml(
          */
         private fun getAnswerFormat(card: Card): String {
             val model = card.model()
-            val template: JSONObject = if (model.isStd) {
-                model.getJSONArray("tmpls").getJSONObject(card.ord)
-            } else {
-                model.getJSONArray("tmpls").getJSONObject(0)
-            }
+            val template: JSONObject =
+                if (model.isStd) {
+                    model.getJSONArray("tmpls").getJSONObject(card.ord)
+                } else {
+                    model.getJSONArray("tmpls").getJSONObject(0)
+                }
             return template.getString("afmt")
         }
 
@@ -187,7 +196,10 @@ class CardHtml(
          * @param answerContent     The content from which to remove front side audio.
          * @return The content stripped of audio due to {{FrontSide}} inclusion.
          */
-        fun removeFrontSideAudio(card: Card, answerContent: String): String {
+        fun removeFrontSideAudio(
+            card: Card,
+            answerContent: String,
+        ): String {
             val answerFormat = getAnswerFormat(card)
             var newAnswerContent = answerContent
             if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
@@ -201,11 +213,16 @@ class CardHtml(
             return newAnswerContent
         }
 
-        fun legacyGetTtsTags(card: Card, cardSide: SingleSoundSide, context: Context): List<TTSTag> {
-            val cardSideContent: String = when (cardSide) {
-                QUESTION -> card.question(true)
-                ANSWER -> card.pureAnswer
-            }
+        fun legacyGetTtsTags(
+            card: Card,
+            cardSide: SingleSoundSide,
+            context: Context,
+        ): List<TTSTag> {
+            val cardSideContent: String =
+                when (cardSide) {
+                    QUESTION -> card.question(true)
+                    ANSWER -> card.pureAnswer
+                }
             return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
         }
     }

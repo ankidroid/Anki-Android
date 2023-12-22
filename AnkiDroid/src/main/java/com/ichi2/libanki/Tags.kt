@@ -40,8 +40,12 @@ class Tags(private val col: Collection) {
         return col.backend.customStudyDefaults(did).tagsList.map { it.name }
     }
 
-    /* Legacy signature, used by unit tests. */
-    fun bulkAdd(ids: List<Long>, tags: String, add: Boolean) {
+    // Legacy signature, used by unit tests.
+    fun bulkAdd(
+        ids: List<Long>,
+        tags: String,
+        add: Boolean,
+    ) {
         if (add) {
             bulkAdd(ids, tags)
         } else {
@@ -50,18 +54,21 @@ class Tags(private val col: Collection) {
     }
 
     /** Add space-separate tags to provided notes. */
-    fun bulkAdd(noteIds: List<NoteId>, tags: String): OpChangesWithCount {
+    fun bulkAdd(
+        noteIds: List<NoteId>,
+        tags: String,
+    ): OpChangesWithCount {
         return col.backend.addNoteTags(noteIds = noteIds, tags = tags)
     }
 
-    /* Remove space-separated tags from provided notes. */
+    // Remove space-separated tags from provided notes.
     fun bulkRemove(
         noteIds: List<Long>,
-        tags: String
+        tags: String,
     ): OpChangesWithCount {
         return col.backend.removeNoteTags(
             noteIds = noteIds,
-            tags = tags
+            tags = tags,
         )
     }
 
@@ -90,6 +97,7 @@ class Tags(private val col: Collection) {
      * List-based utilities
      * ***********************************************************
      */
+
     /** {@inheritDoc}  */
 
     // this is now a no-op - the tags are canonified when the note is saved
@@ -99,7 +107,10 @@ class Tags(private val col: Collection) {
     }
 
     /** True if TAG is in TAGS. Ignore case.*/
-    fun inList(tag: String, tags: Iterable<String>): Boolean {
+    fun inList(
+        tag: String,
+        tags: Iterable<String>,
+    ): Boolean {
         return tags.map { it.lowercase() }.contains(tag.lowercase())
     }
 }

@@ -43,7 +43,11 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
     fun constructionWithoutDataGivesNoError() {
         @SuppressLint("CheckResult")
         val controller: IFieldController = validControllerNoImage
-        assertThat("construction of image field without data should not give an error", controller, instanceOf(BasicImageFieldController::class.java))
+        assertThat(
+            "construction of image field without data should not give an error",
+            controller,
+            instanceOf(BasicImageFieldController::class.java),
+        )
     }
 
     @Test
@@ -63,7 +67,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
         assertThat(
             "A non existing file should not display a preview",
             controller.isShowingPreview,
-            equalTo(false)
+            equalTo(false),
         )
     }
 
@@ -78,7 +82,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
         assertThat(
             "A broken existing file should not display a preview",
             controller.isShowingPreview,
-            equalTo(false)
+            equalTo(false),
         )
     }
 
@@ -91,7 +95,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
         assertThat(
             "A SVG image file can't be previewed",
             ShadowToast.getTextOfLatestToast(),
-            equalTo(getResourceString(R.string.multimedia_editor_svg_preview))
+            equalTo(getResourceString(R.string.multimedia_editor_svg_preview)),
         )
         assertThat("A SVG image file can't be previewed", controller.isShowingPreview, equalTo(false))
     }
@@ -103,16 +107,17 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
 
         @SuppressLint("CheckResult")
         val controller = validControllerNoImage
-        controller.registryToUse = object : ActivityResultRegistry() {
-            override fun <I, O> onLaunch(
-                requestCode: Int,
-                contract: ActivityResultContract<I, O>,
-                input: I,
-                options: ActivityOptionsCompat?
-            ) {
-                dispatchResult(requestCode, ActivityResult(Activity.RESULT_OK, Intent()))
+        controller.registryToUse =
+            object : ActivityResultRegistry() {
+                override fun <I, O> onLaunch(
+                    requestCode: Int,
+                    contract: ActivityResultContract<I, O>,
+                    input: I,
+                    options: ActivityOptionsCompat?,
+                ) {
+                    dispatchResult(requestCode, ActivityResult(Activity.RESULT_OK, Intent()))
+                }
             }
-        }
         val activity = setupActivityMock(controller, controller.getActivity())
         val mock = MockContentResolver.returningEmptyCursor()
         whenever(activity.contentResolver).thenReturn(mock)
@@ -121,7 +126,10 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
         AnkiAssert.assertDoesNotThrow { performImageResult(controller, Intent()) }
     }
 
-    private fun performImageResult(controller: BasicImageFieldController, intent: Intent) {
+    private fun performImageResult(
+        controller: BasicImageFieldController,
+        intent: Intent,
+    ) {
         controller.selectImageLauncher.launch(intent)
     }
 

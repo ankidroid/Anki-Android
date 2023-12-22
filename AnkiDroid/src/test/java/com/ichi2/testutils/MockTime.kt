@@ -35,10 +35,10 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
         minute: Int,
         second: Int,
         milliseconds: Int,
-        step: Int
+        step: Int,
     ) : this(
         timeStamp(year, month, date, hourOfDay, minute, second, milliseconds),
-        step
+        step,
     )
 
     /** Time in millisecond since epoch.  */
@@ -85,7 +85,14 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
          * @return the time stamp of this instant in GMT calendar
          */
         @KotlinCleanup("After Kotlin Conversion, use default argument and remove this")
-        fun timeStamp(year: Int, month: Int, date: Int, hourOfDay: Int, minute: Int, second: Int): Long {
+        fun timeStamp(
+            year: Int,
+            month: Int,
+            date: Int,
+            hourOfDay: Int,
+            minute: Int,
+            second: Int,
+        ): Long {
             return timeStamp(year, month, date, hourOfDay, minute, second, 0)
         }
 
@@ -101,7 +108,15 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
          * @return the time stamp of this instant in GMT calendar
          */
         @SuppressLint("DirectGregorianInstantiation")
-        fun timeStamp(year: Int, month: Int, date: Int, hourOfDay: Int, minute: Int, second: Int, milliseconds: Int): Long {
+        fun timeStamp(
+            year: Int,
+            month: Int,
+            date: Int,
+            hourOfDay: Int,
+            minute: Int,
+            second: Int,
+            milliseconds: Int,
+        ): Long {
             val timeZone = TimeZone.getTimeZone("GMT")
             val gregorianCalendar: Calendar = GregorianCalendar(year, month, date, hourOfDay, minute, second)
             gregorianCalendar.timeZone = timeZone

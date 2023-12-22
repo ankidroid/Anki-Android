@@ -28,7 +28,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class NotetypeTest : InstrumentedTest() {
-
     private val mTestCol = emptyCol
 
     @After
@@ -40,7 +39,7 @@ class NotetypeTest : InstrumentedTest() {
     fun bigQuery() {
         assumeTrue(
             "This test is flaky on API29, ignoring",
-            Build.VERSION.SDK_INT != Build.VERSION_CODES.Q
+            Build.VERSION.SDK_INT != Build.VERSION_CODES.Q,
         )
         val models = mTestCol.notetypes
         val model = models.all()[0]

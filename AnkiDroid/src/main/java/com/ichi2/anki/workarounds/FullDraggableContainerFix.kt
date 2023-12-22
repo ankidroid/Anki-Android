@@ -58,27 +58,26 @@ import com.drakeet.drawer.FullDraggableContainer
 
 class FullDraggableContainerFix constructor(context: Context, attrs: AttributeSet? = null) :
     FullDraggableContainer(context, attrs) {
+        private var childRequestedNoTouchInterception = false
+        private var lastWeWantToIntercept = false
 
-    private var childRequestedNoTouchInterception = false
-    private var lastWeWantToIntercept = false
-
-    override fun requestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-        super.requestDisallowInterceptTouchEvent(disallowIntercept)
-        childRequestedNoTouchInterception = disallowIntercept
-    }
-
-    override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
-        if (childRequestedNoTouchInterception) {
-            if (event.actionMasked == ACTION_DOWN) {
-                childRequestedNoTouchInterception = false
-            } else {
-                return false
-            }
+        override fun requestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+            super.requestDisallowInterceptTouchEvent(disallowIntercept)
+            childRequestedNoTouchInterception = disallowIntercept
         }
 
-        val weWantToIntercept = super.onInterceptTouchEvent(event)
-        val shouldSkipThisInterception = weWantToIntercept && !lastWeWantToIntercept
-        lastWeWantToIntercept = weWantToIntercept
-        return if (shouldSkipThisInterception) false else weWantToIntercept
+        override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
+            if (childRequestedNoTouchInterception) {
+                if (event.actionMasked == ACTION_DOWN) {
+                    childRequestedNoTouchInterception = false
+                } else {
+                    return false
+                }
+            }
+
+            val weWantToIntercept = super.onInterceptTouchEvent(event)
+            val shouldSkipThisInterception = weWantToIntercept && !lastWeWantToIntercept
+            lastWeWantToIntercept = weWantToIntercept
+            return if (shouldSkipThisInterception) false else weWantToIntercept
+        }
     }
-}

@@ -45,6 +45,7 @@ open class MyAccount : AnkiActivity() {
     var toolbar: Toolbar? = null
     private lateinit var mPasswordLayout: TextInputLayout
     private lateinit var mAnkidroidLogo: ImageView
+
     open fun switchToState(newState: Int) {
         when (newState) {
             STATE_LOGGED_IN -> {
@@ -154,7 +155,7 @@ open class MyAccount : AnkiActivity() {
                     }
                 }
                 false
-            }
+            },
         )
 
         val loginButton = mLoginToMyAccountView.findViewById<Button>(R.id.login_button)
@@ -191,9 +192,9 @@ open class MyAccount : AnkiActivity() {
             (
                 this.applicationContext.resources.configuration.screenLayout
                     and Configuration.SCREENLAYOUT_SIZE_MASK
-                )
-                < Configuration.SCREENLAYOUT_SIZE_LARGE
             )
+                < Configuration.SCREENLAYOUT_SIZE_LARGE
+        )
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -204,7 +205,10 @@ open class MyAccount : AnkiActivity() {
         }
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
             Timber.i("MyAccount - onBackPressed()")
             finish()

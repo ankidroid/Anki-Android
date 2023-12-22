@@ -107,7 +107,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     private inner class BasicImageFieldControllerResultCallback(
         private val onSuccess: (result: ActivityResult) -> Unit,
-        private val onFailure: (result: ActivityResult) -> Unit = {}
+        private val onFailure: (result: ActivityResult) -> Unit = {},
     ) : ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
             if (result.resultCode != Activity.RESULT_OK) {
@@ -149,7 +149,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         return savedInstanceState
     }
 
-    override fun createUI(context: Context, layout: LinearLayout) {
+    override fun createUI(
+        context: Context,
+        layout: LinearLayout,
+    ) {
         Timber.d("createUI()")
         mViewModel = mViewModel.replaceNullValues(mField, mActivity)
 
@@ -168,42 +171,47 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
         mAnkiCacheDirectory = externalCacheDir.absolutePath
 
-        val p = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+        val p =
+            LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+            )
 
         drawUIComponents(context)
 
-        mCropButton = Button(mActivity).apply {
-            text = gtxt(R.string.crop_button)
-            setOnClickListener { mViewModel = requestCrop(mViewModel) }
-            visibility = View.INVISIBLE
-        }
-
-        val btnGallery = Button(mActivity).apply {
-            text = gtxt(R.string.multimedia_editor_image_field_editing_galery)
-            setOnClickListener {
-                val i = Intent(Intent.ACTION_PICK)
-                i.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-                selectImageLauncher.launch(i)
-            }
-        }
-
-        val btnDraw = Button(mActivity).apply {
-            text = gtxt(R.string.drawing)
-            setOnClickListener {
-                drawingLauncher.launch(Intent(mActivity, DrawingActivity::class.java))
-            }
-        }
-
-        val btnCamera = Button(mActivity).apply {
-            text = gtxt(R.string.multimedia_editor_image_field_editing_photo)
-            setOnClickListener { mViewModel = captureImage(context) }
-            if (!canUseCamera(context)) {
+        mCropButton =
+            Button(mActivity).apply {
+                text = gtxt(R.string.crop_button)
+                setOnClickListener { mViewModel = requestCrop(mViewModel) }
                 visibility = View.INVISIBLE
             }
-        }
+
+        val btnGallery =
+            Button(mActivity).apply {
+                text = gtxt(R.string.multimedia_editor_image_field_editing_galery)
+                setOnClickListener {
+                    val i = Intent(Intent.ACTION_PICK)
+                    i.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+                    selectImageLauncher.launch(i)
+                }
+            }
+
+        val btnDraw =
+            Button(mActivity).apply {
+                text = gtxt(R.string.drawing)
+                setOnClickListener {
+                    drawingLauncher.launch(Intent(mActivity, DrawingActivity::class.java))
+                }
+            }
+
+        val btnCamera =
+            Button(mActivity).apply {
+                text = gtxt(R.string.multimedia_editor_image_field_editing_photo)
+                setOnClickListener { mViewModel = captureImage(context) }
+                if (!canUseCamera(context)) {
+                    visibility = View.INVISIBLE
+                }
+            }
 
         setPreviewImage(mViewModel.imagePath, maxImageSize)
 
@@ -225,74 +233,79 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         super.setEditingActivity(activity)
         val registryToUse = if (this::registryToUse.isInitialized) registryToUse else mActivity.activityResultRegistry
         @NeedsTest("check the happy/failure path for the crop action")
-        cropImageRequest = registryToUse.register(CROP_IMAGE_LAUNCHER_KEY, CropImageContract()) { cropResult ->
-            if (cropResult.isSuccessful) {
-                mImageFileSizeWarning.visibility = View.GONE
-                if (cropResult != null) {
-                    handleCropResult(cropResult)
-                }
-                setPreviewImage(mViewModel.imagePath, maxImageSize)
-            } else {
-                if (!mPreviousImagePath.isNullOrEmpty()) {
-                    revertToPreviousImage()
-                }
-                // cropImage can give us more information. Not sure it is actionable so for now just log it.
-                val error: String = cropResult.error?.toString() ?: "Error info not available"
-                Timber.w(error, "cropImage threw an error")
-                // condition can be removed if #12768 get fixed by Canhub
-                if (cropResult.error is CropException.Cancellation) {
-                    Timber.i("CropException caught, seemingly nothing to do ", error)
+        cropImageRequest =
+            registryToUse.register(CROP_IMAGE_LAUNCHER_KEY, CropImageContract()) { cropResult ->
+                if (cropResult.isSuccessful) {
+                    mImageFileSizeWarning.visibility = View.GONE
+                    if (cropResult != null) {
+                        handleCropResult(cropResult)
+                    }
+                    setPreviewImage(mViewModel.imagePath, maxImageSize)
                 } else {
-                    CrashReportService.sendExceptionReport(error, "cropImage threw an error")
-                }
-            }
-        }
-
-        takePictureLauncher = registryToUse.register(
-            TAKE_PICTURE_LAUNCHER_KEY,
-            ActivityResultContracts.StartActivityForResult(),
-            BasicImageFieldControllerResultCallback(
-                onSuccess = {
-                    handleTakePictureResult()
-                },
-                onFailure = {
-                    cancelImageCapture()
-                }
-            )
-        )
-
-        selectImageLauncher = registryToUse.register(
-            SELECT_IMAGE_LAUNCHER_KEY,
-            ActivityResultContracts.StartActivityForResult(),
-            BasicImageFieldControllerResultCallback(
-                onSuccess = {
-                    try {
-                        handleSelectImageIntent(it.data)
-                        mImageFileSizeWarning.visibility = View.GONE
-                    } catch (e: Exception) {
-                        CrashReportService.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent")
-                        Timber.e(e, "Failed to select image")
-                        showSomethingWentWrong()
+                    if (!mPreviousImagePath.isNullOrEmpty()) {
+                        revertToPreviousImage()
+                    }
+                    // cropImage can give us more information. Not sure it is actionable so for now just log it.
+                    val error: String = cropResult.error?.toString() ?: "Error info not available"
+                    Timber.w(error, "cropImage threw an error")
+                    // condition can be removed if #12768 get fixed by Canhub
+                    if (cropResult.error is CropException.Cancellation) {
+                        Timber.i("CropException caught, seemingly nothing to do ", error)
+                    } else {
+                        CrashReportService.sendExceptionReport(error, "cropImage threw an error")
                     }
                 }
-            )
-        )
+            }
 
-        drawingLauncher = registryToUse.register(
-            DRAWING_LAUNCHER_KEY,
-            ActivityResultContracts.StartActivityForResult(),
-            BasicImageFieldControllerResultCallback(
-                onSuccess = { result ->
-                    // receive image from drawing activity
-                    val savedImagePath = BundleCompat.getParcelable(
-                        result.data!!.extras!!,
-                        DrawingActivity.EXTRA_RESULT_WHITEBOARD,
-                        Uri::class.java
-                    )
-                    handleDrawingResult(savedImagePath)
-                }
+        takePictureLauncher =
+            registryToUse.register(
+                TAKE_PICTURE_LAUNCHER_KEY,
+                ActivityResultContracts.StartActivityForResult(),
+                BasicImageFieldControllerResultCallback(
+                    onSuccess = {
+                        handleTakePictureResult()
+                    },
+                    onFailure = {
+                        cancelImageCapture()
+                    },
+                ),
             )
-        )
+
+        selectImageLauncher =
+            registryToUse.register(
+                SELECT_IMAGE_LAUNCHER_KEY,
+                ActivityResultContracts.StartActivityForResult(),
+                BasicImageFieldControllerResultCallback(
+                    onSuccess = {
+                        try {
+                            handleSelectImageIntent(it.data)
+                            mImageFileSizeWarning.visibility = View.GONE
+                        } catch (e: Exception) {
+                            CrashReportService.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent")
+                            Timber.e(e, "Failed to select image")
+                            showSomethingWentWrong()
+                        }
+                    },
+                ),
+            )
+
+        drawingLauncher =
+            registryToUse.register(
+                DRAWING_LAUNCHER_KEY,
+                ActivityResultContracts.StartActivityForResult(),
+                BasicImageFieldControllerResultCallback(
+                    onSuccess = { result ->
+                        // receive image from drawing activity
+                        val savedImagePath =
+                            BundleCompat.getParcelable(
+                                result.data!!.extras!!,
+                                DrawingActivity.EXTRA_RESULT_WHITEBOARD,
+                                Uri::class.java,
+                            )
+                        handleDrawingResult(savedImagePath)
+                    },
+                ),
+            )
     }
 
     @SuppressLint("UnsupportedChromeOsCameraSystemFeature")
@@ -360,9 +373,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     @Throws(IOException::class)
-    private fun createCachedFile(filename: String) = File(mAnkiCacheDirectory, filename).apply {
-        deleteOnExit()
-    }
+    private fun createCachedFile(filename: String) =
+        File(mAnkiCacheDirectory, filename).apply {
+            deleteOnExit()
+        }
 
     private fun drawUIComponents(context: Context) {
         val metrics = displayMetrics
@@ -370,32 +384,35 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         val height = metrics.heightPixels
         val width = metrics.widthPixels
 
-        mImagePreview = ImageView(mActivity).apply {
-            scaleType = ImageView.ScaleType.CENTER_INSIDE
-            adjustViewBounds = true
+        mImagePreview =
+            ImageView(mActivity).apply {
+                scaleType = ImageView.ScaleType.CENTER_INSIDE
+                adjustViewBounds = true
 
-            maxHeight = (height * 0.4).roundToLong().toInt()
-            maxWidth = (width * 0.6).roundToLong().toInt()
-        }
+                maxHeight = (height * 0.4).roundToLong().toInt()
+                maxWidth = (width * 0.6).roundToLong().toInt()
+            }
 
-        mImageFileSize = FixedEditText(context).apply {
-            maxWidth = (width * 0.6).roundToLong().toInt()
-            isEnabled = false
-            gravity = Gravity.CENTER_HORIZONTAL
-            background = null
-            visibility = View.GONE
-        }
+        mImageFileSize =
+            FixedEditText(context).apply {
+                maxWidth = (width * 0.6).roundToLong().toInt()
+                isEnabled = false
+                gravity = Gravity.CENTER_HORIZONTAL
+                background = null
+                visibility = View.GONE
+            }
 
         // #5513 - Image compression failed, but we'll confuse most users if we tell them that. Instead, just imply that
         // there's an action that they can take.
-        mImageFileSizeWarning = FixedEditText(context).apply {
-            maxWidth = (width * 0.6).roundToLong().toInt()
-            isEnabled = false
-            setTextColor(Color.parseColor("#FF4500")) // Orange-Red
-            gravity = Gravity.CENTER_HORIZONTAL
-            visibility = View.GONE
-            setText(R.string.multimedia_editor_image_compression_failed)
-        }
+        mImageFileSizeWarning =
+            FixedEditText(context).apply {
+                maxWidth = (width * 0.6).roundToLong().toInt()
+                isEnabled = false
+                setTextColor(Color.parseColor("#FF4500")) // Orange-Red
+                gravity = Gravity.CENTER_HORIZONTAL
+                visibility = View.GONE
+                setText(R.string.multimedia_editor_image_compression_failed)
+            }
     }
 
     private fun gtxt(id: Int): String {
@@ -447,7 +464,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         Timber.i(
             "handleSelectImageIntent() Intent: %s. extras: %s",
             data,
-            if (data.extras == null) "null" else data.extras!!.keySet().joinToString(", ")
+            if (data.extras == null) "null" else data.extras!!.keySet().joinToString(", "),
         )
 
         val selectedImage = getImageUri(mActivity, data)
@@ -502,13 +519,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             showSomethingWentWrong()
             return null
         }
-        internalFile = try {
-            createCachedFile(uriFileName)
-        } catch (e: IOException) {
-            Timber.w(e, "internalizeUri() failed to create new file with name %s", uriFileName)
-            showSomethingWentWrong()
-            return null
-        }
+        internalFile =
+            try {
+                createCachedFile(uriFileName)
+            } catch (e: IOException) {
+                Timber.w(e, "internalizeUri() failed to create new file with name %s", uriFileName)
+                showSomethingWentWrong()
+                return null
+            }
         return try {
             val returnFile = FileUtil.internalizeUri(uri, internalFile, mActivity.contentResolver)
             Timber.d("internalizeUri successful. Returning internalFile.")
@@ -545,7 +563,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
      *
      * @return true if successful, false indicates the current image is likely not usable, revert if possible
      */
-    private fun rotateAndCompress(imagePath: String, imageViewModel: ImageViewModel): Boolean {
+    private fun rotateAndCompress(
+        imagePath: String,
+        imageViewModel: ImageViewModel,
+    ): Boolean {
         Timber.d("rotateAndCompress() on %s", imagePath)
         // Set the rotation of the camera image and save as png
         val f = File(imagePath)
@@ -586,7 +607,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         return true
     }
 
-    private fun setPreviewImage(imagePath: String?, maxsize: Int) {
+    private fun setPreviewImage(
+        imagePath: String?,
+        maxsize: Int,
+    ) {
         if (imagePath.isNullOrEmpty()) return
 
         val f = File(imagePath)
@@ -594,7 +618,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     @VisibleForTesting
-    fun setImagePreview(f: File, maxsize: Int) {
+    fun setImagePreview(
+        f: File,
+        maxsize: Int,
+    ) {
         val imgPath = f.toString()
         if (imgPath.endsWith(".svg")) {
             showSVGPreviewToast()
@@ -611,7 +638,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
     }
 
-    private fun onValidImage(b: Bitmap, fileSize: String) {
+    private fun onValidImage(
+        b: Bitmap,
+        fileSize: String,
+    ) {
         mImagePreview.setImageBitmap(b)
         mImageFileSize.visibility = View.VISIBLE
         mImageFileSize.text = fileSize
@@ -650,13 +680,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         Timber.d("photoCrop() with path/uri %s/%s", ret.imagePath, ret.imageUri)
 
         // Pre-create a file in our cache for the cropping application to put results in
-        val image: File = try {
-            createNewCacheImageFile()
-        } catch (e: IOException) {
-            Timber.w(e, "requestCrop() unable to create new file to drop crop results into")
-            showSomethingWentWrong()
-            return ret
-        }
+        val image: File =
+            try {
+                createNewCacheImageFile()
+            } catch (e: IOException) {
+                Timber.w(e, "requestCrop() unable to create new file to drop crop results into")
+                showSomethingWentWrong()
+                return ret
+            }
 
         saveImageForRevert()
         // This must be the file URL it will not work with a content URI
@@ -669,8 +700,8 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             cropImageRequest.launch(
                 CropImageContractOptions(
                     viewModel.imageUri,
-                    CropImageOptions()
-                )
+                    CropImageOptions(),
+                ),
             )
         }
         return ret
@@ -683,7 +714,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
     }
 
-    fun showCropDialog(content: String, negativeCallback: (() -> Unit)?) {
+    fun showCropDialog(
+        content: String,
+        negativeCallback: (() -> Unit)?,
+    ) {
         if (!mViewModel.isValid) {
             Timber.w("showCropDialog called with null URI or Path")
             return
@@ -731,7 +765,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
      *
      * @return image uri
      */
-    private fun getImageUri(context: Context, data: Intent): Uri? {
+    private fun getImageUri(
+        context: Context,
+        data: Intent,
+    ): Uri? {
         Timber.d("getImageUri for data %s", data)
         val uri = data.data
         if (uri == null) {
@@ -745,7 +782,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
      *
      * @return Display name of file identified by uri (null if does not exist)
      */
-    private fun getImageNameFromUri(context: Context, uri: Uri): String? {
+    private fun getImageNameFromUri(
+        context: Context,
+        uri: Uri,
+    ): String? {
         Timber.d("getImageNameFromUri() URI: %s", uri)
         var imageName: String? = null
         if (DocumentsContract.isDocumentUri(context, uri)) {
@@ -775,7 +815,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
      *
      * @return Display name of file identified by uri (null if does not exist)
      */
-    private fun getImageNameFromContentResolver(context: Context, uri: Uri, selection: String?): String? {
+    private fun getImageNameFromContentResolver(
+        context: Context,
+        uri: Uri,
+        selection: String?,
+    ): String? {
         Timber.d("getImageNameFromContentResolver() %s", uri)
         val filePathColumns = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
         ContentResolverCompat.query(context.contentResolver, uri, filePathColumns, selection, null, null, null).use { cursor ->
@@ -804,6 +848,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     private class ImageViewModel(val imagePath: String?, val imageUri: Uri?) {
         var isPreExistingImage = false
+
         fun enrich(savedInstanceState: Bundle) {
             savedInstanceState.putString("imagePath", imagePath)
             savedInstanceState.putParcelable("imageUri", imageUri)
@@ -812,7 +857,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         val isValid: Boolean
             get() = imagePath != null && imageUri != null
 
-        fun replaceNullValues(field: IField, context: Context): ImageViewModel {
+        fun replaceNullValues(
+            field: IField,
+            context: Context,
+        ): ImageViewModel {
             var newImagePath = imagePath
             var newImageUri = imageUri
             if (newImagePath == null) {
@@ -836,11 +884,17 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             }
         }
 
-        fun beforeCrop(imagePath: String?, imageUri: Uri?): ImageViewModel {
+        fun beforeCrop(
+            imagePath: String?,
+            imageUri: Uri?,
+        ): ImageViewModel {
             return ImageViewModel(imagePath, imageUri)
         }
 
-        fun rotateAndCompressTo(imagePath: String?, uri: Uri?): ImageViewModel {
+        fun rotateAndCompressTo(
+            imagePath: String?,
+            uri: Uri?,
+        ): ImageViewModel {
             return ImageViewModel(imagePath, uri)
         }
 
@@ -866,14 +920,17 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
          * @param file the file to get URI for
          * @return current image path's uri
          */
-        private fun getUriForFile(file: File, activity: Context): Uri {
+        private fun getUriForFile(
+            file: File,
+            activity: Context,
+        ): Uri {
             Timber.d("getUriForFile() %s", file)
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     return FileProvider.getUriForFile(
                         activity,
                         activity.applicationContext.packageName + ".apkgfileprovider",
-                        file
+                        file,
                     )
                 }
             } catch (e: Exception) {

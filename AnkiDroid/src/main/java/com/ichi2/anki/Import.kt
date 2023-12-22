@@ -56,18 +56,22 @@ fun DeckPicker.onSelectedCsvForImport(data: Intent) {
     startActivity(CsvImporter.getIntent(this, path))
 }
 
-fun DeckPicker.showImportDialog(id: Int, importPath: String) {
+fun DeckPicker.showImportDialog(
+    id: Int,
+    importPath: String,
+) {
     Timber.d("showImportDialog() delegating to ImportDialog")
     val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, importPath)
     showAsyncDialogFragment(newFragment)
 }
+
 fun DeckPicker.showImportDialog() {
     showImportDialog(
         ImportOptions(
             importApkg = true,
             importColpkg = true,
-            importTextFile = true
-        )
+            importTextFile = true,
+        ),
     )
 }
 
@@ -75,7 +79,7 @@ fun DeckPicker.showImportDialog(options: ImportOptions) {
     if (ScopedStorageService.mediaMigrationIsInProgress(this)) {
         showSnackbar(
             R.string.functionality_disabled_during_storage_migration,
-            Snackbar.LENGTH_SHORT
+            Snackbar.LENGTH_SHORT,
         )
         return
     }

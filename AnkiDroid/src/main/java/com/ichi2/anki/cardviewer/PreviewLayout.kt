@@ -32,7 +32,7 @@ class PreviewLayout(
     private val buttonsLayout: FrameLayout,
     @VisibleForTesting val prevCard: ImageView,
     @VisibleForTesting val nextCard: ImageView,
-    private val toggleAnswerText: TextView
+    private val toggleAnswerText: TextView,
 ) {
     fun displayAndInit(toggleAnswerHandler: View.OnClickListener) {
         buttonsLayout.visibility = View.VISIBLE
@@ -40,18 +40,24 @@ class PreviewLayout(
     }
 
     /** Sets the answer text to "show answer" or "hide answer" */
-    fun setShowingAnswer(showingAnswer: Boolean) =
-        setToggleAnswerText(if (showingAnswer) R.string.hide_answer else R.string.show_answer)
+    fun setShowingAnswer(showingAnswer: Boolean) = setToggleAnswerText(if (showingAnswer) R.string.hide_answer else R.string.show_answer)
 
-    fun setToggleAnswerText(@StringRes res: Int) = toggleAnswerText.setText(res)
+    fun setToggleAnswerText(
+        @StringRes res: Int,
+    ) = toggleAnswerText.setText(res)
 
     fun setOnPreviousCard(listener: View.OnClickListener) = prevCard.setOnClickListener(listener)
+
     fun setOnNextCard(listener: View.OnClickListener) = nextCard.setOnClickListener(listener)
 
     fun setNextButtonEnabled(enabled: Boolean) = setEnabled(nextCard, enabled)
+
     fun setPrevButtonEnabled(enabled: Boolean) = setEnabled(prevCard, enabled)
 
-    private fun setEnabled(button: ImageView, enabled: Boolean) {
+    private fun setEnabled(
+        button: ImageView,
+        enabled: Boolean,
+    ) {
         button.isEnabled = enabled
         button.alpha = if (enabled) 1f else 0.38f
     }
@@ -74,7 +80,10 @@ class PreviewLayout(
     }
 
     companion object {
-        fun createAndDisplay(activity: AnkiActivity, toggleAnswerHandler: View.OnClickListener): PreviewLayout {
+        fun createAndDisplay(
+            activity: AnkiActivity,
+            toggleAnswerHandler: View.OnClickListener,
+        ): PreviewLayout {
             val buttonsLayout = activity.findViewById<FrameLayout>(R.id.preview_buttons_layout)
             val prevCard = activity.findViewById<ImageView>(R.id.preview_previous_flashcard)
             val nextCard = activity.findViewById<ImageView>(R.id.preview_next_flashcard)

@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 
 class FlagToDisplayTest {
-
     @ParameterizedTest
     @EnumSource(value = Flag::class)
     fun `is hidden if flag is on app bar and fullscreen is disabled`(actualFlag: Flag) {

@@ -28,39 +28,41 @@ import org.junit.runner.RunWith
 // PERF: remove AndroidApplication
 @RunWith(AndroidJUnit4::class)
 class CardSoundConfigTest : JvmTest() {
+    @Test
+    fun `default values`() =
+        runTest {
+            // defaults as-of Anki Desktop 23.10 (51a10f09)
+            val note = addNoteUsingBasicModel()
+            val card = note.firstCard()
+            CardSoundConfig.create(card).run {
+                assertThat("deckId", deckId, equalTo(card.did))
+                // Anki Desktop: "Skip question when replaying answer" -> false
+                // our variable is reversed, so true
+                assertThat("replayQuestion", replayQuestion)
+                // Anki Desktop: "Don't play audio automatically" -> false
+                // our variable is reversed, so true
+                assertThat("autoPlay", autoplay)
+            }
+        }
 
     @Test
-    fun `default values`() = runTest {
-        // defaults as-of Anki Desktop 23.10 (51a10f09)
-        val note = addNoteUsingBasicModel()
-        val card = note.firstCard()
-        CardSoundConfig.create(card).run {
-            assertThat("deckId", deckId, equalTo(card.did))
-            // Anki Desktop: "Skip question when replaying answer" -> false
-            // our variable is reversed, so true
-            assertThat("replayQuestion", replayQuestion)
-            // Anki Desktop: "Don't play audio automatically" -> false
-            // our variable is reversed, so true
-            assertThat("autoPlay", autoplay)
+    fun `cards from the same note are equal`() =
+        runTest {
+            val note = addNoteUsingBasicAndReversedModel()
+            val (card1, card2) = note.cards()
+            CardSoundConfig.create(card1).run {
+                assertThat("same note", this.appliesTo(card2))
+            }
         }
-    }
 
     @Test
-    fun `cards from the same note are equal`() = runTest {
-        val note = addNoteUsingBasicAndReversedModel()
-        val (card1, card2) = note.cards()
-        CardSoundConfig.create(card1).run {
-            assertThat("same note", this.appliesTo(card2))
+    fun `cards from the same deck are equal`() =
+        runTest {
+            val (note1, note2) = addNotes(count = 2)
+            CardSoundConfig.create(note1.firstCard()).run {
+                assertThat("same note", this.appliesTo(note2.firstCard()))
+            }
         }
-    }
-
-    @Test
-    fun `cards from the same deck are equal`() = runTest {
-        val (note1, note2) = addNotes(count = 2)
-        CardSoundConfig.create(note1.firstCard()).run {
-            assertThat("same note", this.appliesTo(note2.firstCard()))
-        }
-    }
 
     @Ignore("not implemented")
     @Test

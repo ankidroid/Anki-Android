@@ -40,6 +40,7 @@ import timber.log.Timber
 class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     private lateinit var mQuestionEditText: EditText
     private lateinit var mAnswerEditText: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -162,10 +163,11 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
     private fun saveAndExit() {
         Timber.i("Save and Exit")
-        val data = Intent().apply {
-            putExtra(INTENT_QUESTION_FORMAT, questionFormat)
-            putExtra(INTENT_ANSWER_FORMAT, answerFormat)
-        }
+        val data =
+            Intent().apply {
+                putExtra(INTENT_QUESTION_FORMAT, questionFormat)
+                putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+            }
         setResult(RESULT_OK, data)
         finish()
     }
@@ -215,14 +217,21 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         const val VALUE_USE_DEFAULT = ""
 
         @CheckResult
-        fun getIntentFromTemplate(context: Context, template: JSONObject): Intent {
+        fun getIntentFromTemplate(
+            context: Context,
+            template: JSONObject,
+        ): Intent {
             val browserQuestionTemplate = template.getString("bqfmt")
             val browserAnswerTemplate = template.getString("bafmt")
             return getIntent(context, browserQuestionTemplate, browserAnswerTemplate)
         }
 
         @CheckResult
-        fun getIntent(context: Context, questionFormat: String, answerFormat: String): Intent {
+        fun getIntent(
+            context: Context,
+            questionFormat: String,
+            answerFormat: String,
+        ): Intent {
             return Intent(context, CardTemplateBrowserAppearanceEditor::class.java).apply {
                 putExtra(INTENT_QUESTION_FORMAT, questionFormat)
                 putExtra(INTENT_ANSWER_FORMAT, answerFormat)

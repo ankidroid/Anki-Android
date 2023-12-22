@@ -51,22 +51,27 @@ object Shared {
      * @param name An additional suffix to ensure the test directory is only used by a particular resource.
      * @return See getTestDir.
      */
-    private fun getTestDir(context: Context, name: String): File {
-        val suffix = if (name.isNotEmpty()) {
-            "-$name"
-        } else {
-            ""
-        }
+    private fun getTestDir(
+        context: Context,
+        name: String,
+    ): File {
+        val suffix =
+            if (name.isNotEmpty()) {
+                "-$name"
+            } else {
+                ""
+            }
         val dir = File(context.cacheDir, "testfiles$suffix")
         if (!dir.exists()) {
             assertTrue(dir.mkdir())
         }
-        val files = dir.listFiles()
-            ?: // Had this problem on an API 16 emulator after a stress test - directory existed
-            // but listFiles() returned null due to EMFILE (Too many open files)
-            // Don't throw here - later file accesses will provide a better exception.
-            // and the directory exists, even if it's unusable.
-            return dir
+        val files =
+            dir.listFiles()
+                ?: // Had this problem on an API 16 emulator after a stress test - directory existed
+                // but listFiles() returned null due to EMFILE (Too many open files)
+                // Don't throw here - later file accesses will provide a better exception.
+                // and the directory exists, even if it's unusable.
+                return dir
         for (f in files) {
             assertTrue(f.delete())
         }

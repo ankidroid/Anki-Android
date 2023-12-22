@@ -39,16 +39,16 @@ import timber.log.Timber
 // TODO: Background of introduction_layout does not display on API 25 emulator: https://github.com/ankidroid/Anki-Android/pull/12033#issuecomment-1228429130
 @NeedsTest("Ensure that we can get here on first run without an exception dialog shown")
 class IntroductionActivity : AnkiActivity() {
-
     @NeedsTest("ensure this is called when the activity ends")
-    private val onLoginResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-        if (result.resultCode == RESULT_OK) {
-            Timber.i("login successful, opening deck picker to sync")
-            startDeckPicker(RESULT_SYNC_PROFILE)
-        } else {
-            Timber.i("login was not successful")
+    private val onLoginResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                Timber.i("login successful, opening deck picker to sync")
+                startDeckPicker(RESULT_SYNC_PROFILE)
+            } else {
+                Timber.i("login was not successful")
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {

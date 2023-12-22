@@ -22,6 +22,7 @@ import androidx.annotation.CheckResult
 /** How the [com.ichi2.anki.CardBrowser] can be launched */
 sealed interface CardBrowserLaunchOptions {
     data class DeepLink(val search: String) : CardBrowserLaunchOptions
+
     data class SearchQueryJs(val search: String, val allDecks: Boolean) : CardBrowserLaunchOptions
 
     /** Opened from the 'Card Browser' system context menu ([Intent.ACTION_PROCESS_TEXT]) */

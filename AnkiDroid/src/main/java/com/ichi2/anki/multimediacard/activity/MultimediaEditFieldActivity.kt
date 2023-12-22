@@ -58,6 +58,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
      * Used to access past state from OnRequestPermissionsResultCallback
      */
     private var mCurrentChangeRequest: ChangeUIRequest? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -113,14 +114,17 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.RECORD_AUDIO),
-                REQUEST_AUDIO_PERMISSION
+                REQUEST_AUDIO_PERMISSION,
             )
             return true
         }
         return false
     }
 
-    private fun setupUIController(fieldController: IFieldController, savedInstanceState: Bundle?) {
+    private fun setupUIController(
+        fieldController: IFieldController,
+        savedInstanceState: Bundle?,
+    ) {
         fieldController.apply {
             setField(mField)
             setFieldIndex(mFieldIndex)
@@ -130,7 +134,10 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         }
     }
 
-    private fun recreateEditingUi(newUI: ChangeUIRequest, savedInstanceState: Bundle? = null) {
+    private fun recreateEditingUi(
+        newUI: ChangeUIRequest,
+        savedInstanceState: Bundle? = null,
+    ) {
         Timber.d("recreateEditingUi()")
 
         // Permissions are checked async, save our current state to allow continuation
@@ -266,7 +273,11 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         recreateEditingUi(mCurrentChangeRequest!!)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray,
+    ) {
         if (mCurrentChangeRequest == null) {
             cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before requesting permissions")
             return
@@ -281,7 +292,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
             UIUtils.showThemedToast(
                 this,
                 resources.getString(R.string.multimedia_editor_audio_permission_refused),
-                true
+                true,
             )
             UIRecreationHandler.onRequiredPermissionDenied(mCurrentChangeRequest!!, this)
         }
@@ -290,7 +301,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                 UIUtils.showThemedToast(
                     this,
                     resources.getString(R.string.multimedia_editor_camera_permission_refused),
-                    true
+                    true,
                 )
             }
 
@@ -318,10 +329,11 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     }
 
     private fun saveAndExit(ignoreField: Boolean = false) {
-        val resultData = Intent().apply {
-            putExtra(EXTRA_RESULT_FIELD, if (ignoreField) null else mField)
-            putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex)
-        }
+        val resultData =
+            Intent().apply {
+                putExtra(EXTRA_RESULT_FIELD, if (ignoreField) null else mField)
+                putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex)
+            }
         setResult(RESULT_OK, resultData)
         finish()
     }
@@ -368,6 +380,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
             /** A change in UI via access to the activity. Not (yet) cancellable  */
             const val EXTERNAL_FIELD_CHANGE = 2
+
             fun init(field: IField): ChangeUIRequest {
                 return ChangeUIRequest(field, ACTIVITY_LOAD)
             }
@@ -399,7 +412,10 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
             previousFieldController.onFocusLost()
         }
 
-        fun onPostUICreation(request: ChangeUIRequest, activity: MultimediaEditFieldActivity) {
+        fun onPostUICreation(
+            request: ChangeUIRequest,
+            activity: MultimediaEditFieldActivity,
+        ) {
             Timber.d("onPostUICreation. State: %d", request.state)
             when (request.state) {
                 ChangeUIRequest.UI_CHANGE, ChangeUIRequest.EXTERNAL_FIELD_CHANGE -> activity.invalidateOptionsMenu()
@@ -408,7 +424,10 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
             }
         }
 
-        fun onRequiredPermissionDenied(request: ChangeUIRequest, activity: MultimediaEditFieldActivity) {
+        fun onRequiredPermissionDenied(
+            request: ChangeUIRequest,
+            activity: MultimediaEditFieldActivity,
+        ) {
             Timber.d("onRequiredPermissionDenied. State: %d", request.state)
             when (request.state) {
                 ChangeUIRequest.ACTIVITY_LOAD -> activity.finishCancel()
@@ -441,9 +460,11 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val REQUEST_CAMERA_PERMISSION = 1
         const val IMAGE_LIMIT = 1024 * 1024 // 1MB in bytes
+
         @KotlinCleanup("see if we can make this non-null")
         @VisibleForTesting
-        fun getFieldFromIntent(intent: Intent) = intent.extras!!.getSerializableCompat<MultimediaEditFieldActivityExtra>(EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY)
+        fun getFieldFromIntent(intent: Intent) =
+            intent.extras!!.getSerializableCompat<MultimediaEditFieldActivityExtra>(EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY)
     }
 }
 

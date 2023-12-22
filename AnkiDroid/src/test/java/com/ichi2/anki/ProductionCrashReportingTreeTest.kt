@@ -57,7 +57,7 @@ class ProductionCrashReportingTreeTest {
             whenever(Log.d(anyString(), anyString(), any()))
                 .thenThrow(RuntimeException("Debug logging should be ignored"))
             whenever(
-                Log.i(anyString(), anyString(), any())
+                Log.i(anyString(), anyString(), any()),
             )
                 .thenThrow(RuntimeException("Info logging should throw!"))
 
@@ -100,14 +100,14 @@ class ProductionCrashReportingTreeTest {
                 Log.w(
                     AnkiDroidApp.TAG,
                     this.javaClass.simpleName + "/ " + "warn level message",
-                    null
+                    null,
                 )
             }
             autoClosed.verify {
                 Log.e(
                     AnkiDroidApp.TAG,
                     this.javaClass.simpleName + "/ " + "error level message",
-                    null
+                    null,
                 )
             }
             testWithProperClassNameCalled = true

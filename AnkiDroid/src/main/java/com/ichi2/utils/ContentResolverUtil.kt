@@ -26,7 +26,10 @@ import timber.log.Timber
 object ContentResolverUtil {
     /** Obtains the filename from the url. Throws if all methods return exception  */
     @CheckResult
-    fun getFileName(contentResolver: ContentResolver, uri: Uri): String {
+    fun getFileName(
+        contentResolver: ContentResolver,
+        uri: Uri,
+    ): String {
         try {
             val filename = getFilenameViaDisplayName(contentResolver, uri)
             if (filename != null) {
@@ -45,7 +48,10 @@ object ContentResolverUtil {
     }
 
     @CheckResult
-    private fun getFilenameViaMimeType(contentResolver: ContentResolver, uri: Uri): String? {
+    private fun getFilenameViaMimeType(
+        contentResolver: ContentResolver,
+        uri: Uri,
+    ): String? {
         // value: "png" when testing
         var extension: String? = null
 
@@ -69,7 +75,10 @@ object ContentResolverUtil {
     }
 
     @CheckResult
-    private fun getFilenameViaDisplayName(contentResolver: ContentResolver, uri: Uri): String? {
+    private fun getFilenameViaDisplayName(
+        contentResolver: ContentResolver,
+        uri: Uri,
+    ): String? {
         // 7748: android.database.sqlite.SQLiteException: no such column: _display_name (code 1 SQLITE_ERROR[1]): ...
         try {
             contentResolver.query(uri, null, null, null, null).use { c ->

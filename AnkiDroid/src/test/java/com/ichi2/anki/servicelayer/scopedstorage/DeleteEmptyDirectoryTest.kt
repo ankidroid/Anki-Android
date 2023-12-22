@@ -31,7 +31,6 @@ import kotlin.io.path.pathString
  * Tests for [DeleteEmptyDirectory]
  */
 class DeleteEmptyDirectoryTest : Test21And26(), OperationTest {
-
     override val executionContext = MockMigrationContext()
 
     @Test
@@ -81,6 +80,5 @@ class DeleteEmptyDirectoryTest : Test21And26(), OperationTest {
         permissionDenied.assertThrowsWhenPermissionDenied { DeleteEmptyDirectory(permissionDenied.directory).execute(executionContext) }
     }
 
-    private fun createEmptyDirectory() =
-        Directory.createInstance(createTempDirectory().pathString)!!
+    private fun createEmptyDirectory() = Directory.createInstance(createTempDirectory().pathString)!!
 }

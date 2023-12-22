@@ -39,9 +39,16 @@ abstract class MultimediaEditFieldActivityTestBase : RobolectricTest() {
         app.grantPermissions(Manifest.permission.RECORD_AUDIO)
     }
 
-    protected fun getControllerForField(field: IField, note: IMultimediaEditableNote, fieldIndex: Int): IFieldController {
+    protected fun getControllerForField(
+        field: IField,
+        note: IMultimediaEditableNote,
+        fieldIndex: Int,
+    ): IFieldController {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra(MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY, MultimediaEditFieldActivityExtra(fieldIndex, field, note))
+        intent.putExtra(
+            MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY,
+            MultimediaEditFieldActivityExtra(fieldIndex, field, note),
+        )
         return getControllerForIntent(intent)
     }
 
@@ -55,15 +62,19 @@ abstract class MultimediaEditFieldActivityTestBase : RobolectricTest() {
         }
 
     private fun getControllerForIntent(intent: Intent?): IFieldController {
-        val multimediaController: ActivityController<*> = Robolectric.buildActivity(MultimediaEditFieldActivity::class.java, intent)
-            .create().start().resume().visible()
+        val multimediaController: ActivityController<*> =
+            Robolectric.buildActivity(MultimediaEditFieldActivity::class.java, intent)
+                .create().start().resume().visible()
         saveControllerForCleanup(multimediaController)
         val testCardTemplatePreviewer = multimediaController.get() as MultimediaEditFieldActivity
         return testCardTemplatePreviewer.fieldController!!
     }
 
     @KotlinCleanup("need a disabled lint check for this as it's a common issue/operation")
-    protected fun setupActivityMock(controller: IFieldController, editFieldActivity: MultimediaEditFieldActivity): MultimediaEditFieldActivity {
+    protected fun setupActivityMock(
+        controller: IFieldController,
+        editFieldActivity: MultimediaEditFieldActivity,
+    ): MultimediaEditFieldActivity {
         val activity = mock(MultimediaEditFieldActivity::class.java)
 
         whenever(activity.resources).thenReturn(editFieldActivity.resources)

@@ -42,11 +42,12 @@ class PickStringDialogFragment : DialogFragment() {
         // Use the Builder class for convenient dialog construction
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(mTitle)
-        val adapter = ArrayAdapter(
-            requireActivity(),
-            R.layout.simple_list_item_1,
-            mPossibleChoices!!
-        )
+        val adapter =
+            ArrayAdapter(
+                requireActivity(),
+                R.layout.simple_list_item_1,
+                mPossibleChoices!!,
+            )
         builder.setAdapter(adapter, mListener)
         return builder.create()
     }

@@ -25,7 +25,6 @@ import kotlin.reflect.KCallable
 import kotlin.reflect.full.companionObject
 
 class OnboardingUtilsTest {
-
     @Before
     fun setUp() {
         Onboarding.resetOnboardingForTesting() // #9597 - global needs resetting
@@ -33,10 +32,17 @@ class OnboardingUtilsTest {
 
     @Test
     fun resetResetAllElementsFromOnboarding() {
-        val onboardingIdentifiers = Onboarding::class.companionObject!!.members.filter { it.isFinal && it.isType<String>() }.map { getConstantValue(it) }
+        val onboardingIdentifiers =
+            Onboarding::class.companionObject!!.members.filter {
+                it.isFinal && it.isType<String>()
+            }.map { getConstantValue(it) }
         // featureConstants is internally used in reset()
         val featuresAvailableForReset = OnboardingUtils.featureConstants
-        assertThat("All onboarding identifiers are available for reset", onboardingIdentifiers, containsInAnyOrder(featuresAvailableForReset))
+        assertThat(
+            "All onboarding identifiers are available for reset",
+            onboardingIdentifiers,
+            containsInAnyOrder(featuresAvailableForReset),
+        )
     }
 
     enum class Feature : OnboardingFlag

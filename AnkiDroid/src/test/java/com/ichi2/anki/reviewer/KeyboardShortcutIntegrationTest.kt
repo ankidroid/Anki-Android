@@ -47,7 +47,9 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
         addNoteUsingBasicModel("Hello", "World")
-        Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application).grantPermissions(Manifest.permission.RECORD_AUDIO)
+        Shadows.shadowOf(
+            ApplicationProvider.getApplicationContext<Context>() as Application,
+        ).grantPermissions(Manifest.permission.RECORD_AUDIO)
         mReviewer = super.startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, Intent())
         waitForAsyncTasksToComplete()
     }
@@ -125,7 +127,9 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
     @Test
     @Throws(IOException::class)
     fun recordingWhilePlayingStopsPlayingAndStartsRecording() {
-        Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application).grantPermissions(Manifest.permission.RECORD_AUDIO)
+        Shadows.shadowOf(
+            ApplicationProvider.getApplicationContext<Context>() as Application,
+        ).grantPermissions(Manifest.permission.RECORD_AUDIO)
 
         val player = setupPlayerMock()
         val recorder = setupRecorderMock()

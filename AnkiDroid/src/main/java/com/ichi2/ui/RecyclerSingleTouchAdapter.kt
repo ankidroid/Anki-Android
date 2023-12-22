@@ -26,22 +26,28 @@ import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 /** Adapts a RecyclerView.OnItemTouchListener to provide a click listener  */
 
 class RecyclerSingleTouchAdapter(val context: Context, val listener: OnItemClickListener) : OnItemTouchListener {
-
-    private val mGestureDetector = GestureDetector(
-        context,
-        object : SimpleOnGestureListener() {
-            override fun onSingleTapUp(e: MotionEvent): Boolean {
-                // onDown was too fast
-                return true
-            }
-        }
-    )
+    private val mGestureDetector =
+        GestureDetector(
+            context,
+            object : SimpleOnGestureListener() {
+                override fun onSingleTapUp(e: MotionEvent): Boolean {
+                    // onDown was too fast
+                    return true
+                }
+            },
+        )
 
     fun interface OnItemClickListener {
-        fun onItemClick(view: View, position: Int)
+        fun onItemClick(
+            view: View,
+            position: Int,
+        )
     }
 
-    override fun onInterceptTouchEvent(view: RecyclerView, e: MotionEvent): Boolean {
+    override fun onInterceptTouchEvent(
+        view: RecyclerView,
+        e: MotionEvent,
+    ): Boolean {
         val childView = view.findChildViewUnder(e.x, e.y)
         if (childView != null && mGestureDetector.onTouchEvent(e)) {
             listener.onItemClick(childView, view.getChildAdapterPosition(childView))
@@ -50,7 +56,10 @@ class RecyclerSingleTouchAdapter(val context: Context, val listener: OnItemClick
         return false
     }
 
-    override fun onTouchEvent(view: RecyclerView, motionEvent: MotionEvent) {
+    override fun onTouchEvent(
+        view: RecyclerView,
+        motionEvent: MotionEvent,
+    ) {
         // intentionally empty
     }
 

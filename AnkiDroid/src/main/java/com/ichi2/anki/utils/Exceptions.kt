@@ -41,7 +41,6 @@ import java.lang.RuntimeException
  *             at ...
  */
 open class AggregateException(message: String?, val causes: List<Exception>) : RuntimeException(message) {
-
     override fun printStackTrace(s: PrintStream) {
         super.printStackTrace(s)
 
@@ -86,9 +85,8 @@ fun interface TranslatableException {
 class TranslatableAggregateException(
     message: String? = null,
     private val translatableMessage: TranslatableString? = null,
-    causes: List<Exception>
+    causes: List<Exception>,
 ) : AggregateException(message, causes), TranslatableException {
-
     @Suppress("IfThenToElvis")
     override fun getTranslatedMessage(context: Context): String {
         return if (translatableMessage != null) {
@@ -96,7 +94,7 @@ class TranslatableAggregateException(
         } else {
             context.getString(
                 R.string.error__etc__multiple_errors_most_recent,
-                context.getUserFriendlyErrorText(causes.last())
+                context.getUserFriendlyErrorText(causes.last()),
             )
         }
     }

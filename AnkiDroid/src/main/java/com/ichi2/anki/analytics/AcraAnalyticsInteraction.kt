@@ -31,7 +31,11 @@ import java.io.File
  */
 @AutoService(ReportInteraction::class)
 class AcraAnalyticsInteraction : ReportInteraction {
-    override fun performInteraction(context: Context, config: CoreConfiguration, reportFile: File): Boolean {
+    override fun performInteraction(
+        context: Context,
+        config: CoreConfiguration,
+        reportFile: File,
+    ): Boolean {
         // Send an analytics exception hit with a UUID to match
         Timber.e("ACRA handling crash, sending analytics exception report")
         UsageAnalytics.sendAnalyticsEvent("ACRA Crash Handler", "UUID " + Installation.id(context))

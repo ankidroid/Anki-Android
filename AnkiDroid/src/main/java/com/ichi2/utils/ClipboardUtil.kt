@@ -46,11 +46,12 @@ object ClipboardUtil {
             ?: false
     }
 
-    private fun getFirstItem(clipboard: ClipboardManager?) = clipboard
-        ?.takeIf { it.hasPrimaryClip() }
-        ?.primaryClip
-        ?.takeIf { it.itemCount > 0 }
-        ?.getItemAt(0)
+    private fun getFirstItem(clipboard: ClipboardManager?) =
+        clipboard
+            ?.takeIf { it.hasPrimaryClip() }
+            ?.primaryClip
+            ?.takeIf { it.itemCount > 0 }
+            ?.getItemAt(0)
 
     fun getImageUri(clipboard: ClipboardManager?): Uri? {
         return getFirstItem(clipboard)?.uri
@@ -62,7 +63,10 @@ object ClipboardUtil {
     }
 
     @CheckResult
-    fun getPlainText(clipboard: ClipboardManager?, context: Context): CharSequence? {
+    fun getPlainText(
+        clipboard: ClipboardManager?,
+        context: Context,
+    ): CharSequence? {
         return getFirstItem(clipboard)?.coerceToText(context)
     }
 }
@@ -81,8 +85,8 @@ fun Context.copyToClipboard(text: String): Boolean {
     clipboardManager.setPrimaryClip(
         ClipData.newPlainText(
             "${VersionUtils.appName} v${VersionUtils.pkgVersionName}",
-            text
-        )
+            text,
+        ),
     )
     return true
 }
@@ -96,7 +100,7 @@ fun Context.copyToClipboard(text: String): Boolean {
 fun Context.copyToClipboardAndShowConfirmation(
     text: String,
     @StringRes successMessageId: Int,
-    @StringRes failureMessageId: Int
+    @StringRes failureMessageId: Int,
 ) {
     val successfullyCopied = copyToClipboard(text)
 

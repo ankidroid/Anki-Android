@@ -42,12 +42,11 @@ import java.io.File
  *
  * @see MoveFile for the definition of move
  */
-/* In AnkiDroid planned use, proposedDestinationFile is assumed to be topLevel/conflict/relativePathOfSourceFile */
+// In AnkiDroid planned use, proposedDestinationFile is assumed to be topLevel/conflict/relativePathOfSourceFile
 class MoveConflictedFile private constructor(
     val sourceFile: DiskFile,
-    val proposedDestinationFile: File
+    val proposedDestinationFile: File,
 ) : Operation() {
-
     override fun execute(context: MigrationContext): List<Operation> {
         // create the "conflict" folder if it didn't exist, and the relative path to the file
         // example: "AnkiDroid/conflict/collection.media/subfolder"
@@ -79,7 +78,10 @@ class MoveConflictedFile private constructor(
     }
 
     @VisibleForTesting
-    internal fun moveFile(potentialDestinationFile: File, wrappedContext: ContextHandlingFileConflictException) {
+    internal fun moveFile(
+        potentialDestinationFile: File,
+        wrappedContext: ContextHandlingFileConflictException,
+    ) {
         MoveFile(sourceFile, potentialDestinationFile).execute(wrappedContext)
     }
 
@@ -97,7 +99,7 @@ class MoveConflictedFile private constructor(
         fun createInstance(
             sourceFile: DiskFile,
             destinationTopLevel: Directory,
-            sourceRelativePath: RelativeFilePath
+            sourceRelativePath: RelativeFilePath,
         ): MoveConflictedFile {
             // we add /conflict/ to the path inside this method. If this already occurred, something was wrong
             if (sourceRelativePath.path.firstOrNull() == CONFLICT_DIRECTORY) {
@@ -113,17 +115,18 @@ class MoveConflictedFile private constructor(
 
         @VisibleForTesting
         @CheckResult
-        internal fun queryCandidateFilenames(templateFile: File) = sequence {
-            yield(templateFile)
+        internal fun queryCandidateFilenames(templateFile: File) =
+            sequence {
+                yield(templateFile)
 
-            // examples from a file named: "helloWorld.tmp". the dot between name and extension isn't included
-            val filename = templateFile.nameWithoutExtension // 'helloWorld'
-            val extension = templateFile.extension // 'tmp'
-            for (i in 1 until MAX_DESTINATION_NAMES) { // 1..4
-                val newFileName = "$filename ($i).$extension" // 'helloWorld (1).tmp'
-                yield(File(templateFile.parent, newFileName))
+                // examples from a file named: "helloWorld.tmp". the dot between name and extension isn't included
+                val filename = templateFile.nameWithoutExtension // 'helloWorld'
+                val extension = templateFile.extension // 'tmp'
+                for (i in 1 until MAX_DESTINATION_NAMES) { // 1..4
+                    val newFileName = "$filename ($i).$extension" // 'helloWorld (1).tmp'
+                    yield(File(templateFile.parent, newFileName))
+                }
             }
-        }
 
         /**
          * The max number of attempts to rename a file
@@ -141,9 +144,8 @@ class MoveConflictedFile private constructor(
      */
     class ContextHandlingFileConflictException(
         private val wrappedContext: MigrationContext,
-        private val operation: Operation
+        private val operation: Operation,
     ) : MigrationContext() {
-
         /** Whether at least one [FileConflictException] was handled and ignored */
         var handledFileConflictSinceLastReset = false
 
@@ -152,7 +154,10 @@ class MoveConflictedFile private constructor(
             handledFileConflictSinceLastReset = false
         }
 
-        override fun reportError(throwingOperation: Operation, ex: Exception) {
+        override fun reportError(
+            throwingOperation: Operation,
+            ex: Exception,
+        ) {
             if (ex is FileConflictException || ex is FileDirectoryConflictException) {
                 handledFileConflictSinceLastReset = true
                 return

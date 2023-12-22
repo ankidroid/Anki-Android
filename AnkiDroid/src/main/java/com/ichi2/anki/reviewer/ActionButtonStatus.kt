@@ -56,11 +56,17 @@ class ActionButtonStatus {
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM)
     }
 
-    private fun setupButton(preferences: SharedPreferences, @IdRes resourceId: Int, preferenceName: String, showAsActionType: Int) {
-        mCustomButtons[resourceId] = preferences.getString(
-            preferenceName,
-            showAsActionType.toString()
-        )!!.toInt()
+    private fun setupButton(
+        preferences: SharedPreferences,
+        @IdRes resourceId: Int,
+        preferenceName: String,
+        showAsActionType: Int,
+    ) {
+        mCustomButtons[resourceId] =
+            preferences.getString(
+                preferenceName,
+                showAsActionType.toString(),
+            )!!.toInt()
     }
 
     fun setCustomButtons(menu: Menu) {

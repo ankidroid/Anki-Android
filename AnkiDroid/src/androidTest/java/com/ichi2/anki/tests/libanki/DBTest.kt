@@ -48,13 +48,14 @@ class DBTest : InstrumentedTest() {
         SQLiteDatabase.deleteDatabase(illFatedDBFile)
         Assert.assertFalse("database exists already", illFatedDBFile.exists())
         val callback = TestCallback(1)
-        val illFatedDB = DB(
-            AnkiSupportSQLiteDatabase.withFramework(
-                testContext,
-                illFatedDBFile.canonicalPath,
-                callback
+        val illFatedDB =
+            DB(
+                AnkiSupportSQLiteDatabase.withFramework(
+                    testContext,
+                    illFatedDBFile.canonicalPath,
+                    callback,
+                ),
             )
-        )
         Assert.assertFalse("database should not be corrupt yet", callback.databaseIsCorrupt)
 
         // Scribble in it
@@ -83,6 +84,7 @@ class DBTest : InstrumentedTest() {
     // Test fixture that lets us inspect corruption handler status
     inner class TestCallback(version: Int) : AnkiSupportSQLiteDatabase.DefaultDbCallback(version) {
         internal var databaseIsCorrupt = false
+
         override fun onCorruption(db: SupportSQLiteDatabase) {
             databaseIsCorrupt = true
             super.onCorruption(db)

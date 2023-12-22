@@ -47,8 +47,10 @@ class MoveDirectoryContent private constructor(val source: FileStream, val desti
          * that we could not reproduce. See https://github.com/ankidroid/Anki-Android/issues/10358
          * @throws [SecurityException] – If a security manager exists and its SecurityManager.checkRead(String) method denies read access to the directory
          */
-        fun createInstance(source: Directory, destination: File): MoveDirectoryContent =
-            MoveDirectoryContent(CompatHelper.compat.contentOfDirectory(source.directory), destination)
+        fun createInstance(
+            source: Directory,
+            destination: File,
+        ): MoveDirectoryContent = MoveDirectoryContent(CompatHelper.compat.contentOfDirectory(source.directory), destination)
     }
 
     override fun execute(context: MigrationContext): List<Operation> {

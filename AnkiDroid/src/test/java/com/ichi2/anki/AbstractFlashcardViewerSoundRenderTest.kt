@@ -32,7 +32,6 @@ import java.util.*
 @RustCleanup("doesn't work with V16")
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
-
     /** Call this after a valid card has been added */
     private val sounds by lazy {
         val ret = super.startRegularActivity<Reviewer>()
@@ -144,12 +143,17 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
         assertThat(sounds.qa(), hasSize(1))
     }
 
-    private fun addNoteWithNoFrontSide(front: String, back: String) {
+    private fun addNoteWithNoFrontSide(
+        front: String,
+        back: String,
+    ) {
         addNonClozeModel("NoFrontSide", arrayOf("Front", "Back"), "{{Front}}", "{{Back}}")
         addNoteUsingModelName("NoFrontSide", front, back)
     }
 
     fun Reviewer.a() = mSoundPlayer.getSounds(Sound.SoundSide.ANSWER)
+
     fun Reviewer.q() = mSoundPlayer.getSounds(Sound.SoundSide.QUESTION)
+
     fun Reviewer.qa() = mSoundPlayer.getSounds(Sound.SoundSide.QUESTION_AND_ANSWER)
 }

@@ -38,7 +38,7 @@ package com.ichi2.annotations
     AnnotationTarget.VALUE_PARAMETER,
     AnnotationTarget.EXPRESSION,
     AnnotationTarget.FIELD,
-    AnnotationTarget.PROPERTY
+    AnnotationTarget.PROPERTY,
 )
 @Repeatable
 @Retention(AnnotationRetention.SOURCE)

@@ -41,10 +41,10 @@ import kotlin.test.assertFailsWith
 import kotlin.test.fail
 
 // PERF: Some of these do not need a collection
+
 /** Test for [MigrateUserData.migrateFiles] */
 @RunWith(AndroidJUnit4::class)
 class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
-
     private lateinit var underTest: MigrateUserDataTester
     private val validDestination = File(Path(targetContext.getExternalFilesDir(null)!!.canonicalPath, "AnkiDroid-1").pathString)
 
@@ -63,74 +63,80 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
     }
 
     @Test
-    fun `Valid migration`() = runTest {
-        setLegacyStorage()
+    fun `Valid migration`() =
+        runTest {
+            setLegacyStorage()
 
-        underTest = MigrateUserDataTester.create()
+            underTest = MigrateUserDataTester.create()
 
-        // use all the real components on a real collection.
-        val inputDirectory = File(col.path).parentFile!!
-        File(inputDirectory, "collection.media").addTempFile("image.jpg", "foo")
+            // use all the real components on a real collection.
+            val inputDirectory = File(col.path).parentFile!!
+            File(inputDirectory, "collection.media").addTempFile("image.jpg", "foo")
 
-        ShadowStatFs.markAsNonEmpty(validDestination)
-        ShadowStatFs.markAsNonEmpty(inputDirectory)
+            ShadowStatFs.markAsNonEmpty(validDestination)
+            ShadowStatFs.markAsNonEmpty(inputDirectory)
 
-        // migrate the essential files
-        migrateEssentialFilesForTest(targetContext, inputDirectory.path, DestFolderOverride.Subfolder(validDestination))
+            // migrate the essential files
+            migrateEssentialFilesForTest(targetContext, inputDirectory.path, DestFolderOverride.Subfolder(validDestination))
 
-        underTest = MigrateUserDataTester.create(inputDirectory, validDestination)
-        val result = underTest.execTask()
+            underTest = MigrateUserDataTester.create(inputDirectory, validDestination)
+            val result = underTest.execTask()
 
-        assertThat("execution of user data should succeed", result, equalTo(true))
+            assertThat("execution of user data should succeed", result, equalTo(true))
 
-        // close collection again so -wal doesn't end up in the list
-        CollectionManager.ensureClosed()
+            // close collection again so -wal doesn't end up in the list
+            CollectionManager.ensureClosed()
 
-        // 5 files remain: [collection.log, collection.media.ad.db2, collection.anki2-journal, collection.anki2, .nomedia]
-        underTest.integrationAssertOnlyIntendedFilesRemain()
-        assertThat(underTest.migratedFilesCount, equalTo(underTest.filesToMigrateCount))
+            // 5 files remain: [collection.log, collection.media.ad.db2, collection.anki2-journal, collection.anki2, .nomedia]
+            underTest.integrationAssertOnlyIntendedFilesRemain()
+            assertThat(underTest.migratedFilesCount, equalTo(underTest.filesToMigrateCount))
 
-        assertThat(
-            "a number of files should remain to allow the user to restore their collection",
-            fileCount(inputDirectory),
-            equalTo(MigrateUserDataTester.INTEGRATION_INTENDED_REMAINING_FILE_COUNT)
-        )
-    }
-
-    @Test
-    fun `Migration without space fails`() = runTest {
-        setLegacyStorage()
-        // use all the real components on a real collection.
-        val inputDirectory = File(col.path).parentFile!!
-        File(inputDirectory, "collection.media").addTempFile("image.jpg", "foo")
-        File(inputDirectory, "collection.media").addTempFile("image2.jpg", "bar")
-
-        ShadowStatFs.markAsNonEmpty(validDestination)
-        ShadowStatFs.markAsNonEmpty(inputDirectory)
-
-        // migrate the essential files
-        migrateEssentialFilesForTest(targetContext, inputDirectory.path, DestFolderOverride.Root(validDestination))
-
-        underTest = MigrateUserDataTester.create(inputDirectory, validDestination)
-        underTest.executor = object : Executor(ArrayDeque()) {
-            override fun executeOperationInternal(it: Operation, context: MigrationContext): List<Operation> {
-                if (it is MoveFile) {
-                    context.reportError(it, TestException("no space left on disk"))
-                    return emptyList()
-                }
-                return super.executeOperationInternal(it, context)
-            }
+            assertThat(
+                "a number of files should remain to allow the user to restore their collection",
+                fileCount(inputDirectory),
+                equalTo(MigrateUserDataTester.INTEGRATION_INTENDED_REMAINING_FILE_COUNT),
+            )
         }
 
-        val aggregatedException = assertFailsWith<AggregateException> { underTest.execTask() }
+    @Test
+    fun `Migration without space fails`() =
+        runTest {
+            setLegacyStorage()
+            // use all the real components on a real collection.
+            val inputDirectory = File(col.path).parentFile!!
+            File(inputDirectory, "collection.media").addTempFile("image.jpg", "foo")
+            File(inputDirectory, "collection.media").addTempFile("image2.jpg", "bar")
 
-        val testExceptions = aggregatedException.causes.filter { it !is DirectoryNotEmptyException }
+            ShadowStatFs.markAsNonEmpty(validDestination)
+            ShadowStatFs.markAsNonEmpty(inputDirectory)
 
-        assertThat("two failed files means two exceptions", testExceptions.size, equalTo(2))
+            // migrate the essential files
+            migrateEssentialFilesForTest(targetContext, inputDirectory.path, DestFolderOverride.Root(validDestination))
 
-        assertThat(testExceptions[0], instanceOf(TestException::class.java))
-        assertThat(testExceptions[1], instanceOf(TestException::class.java))
-    }
+            underTest = MigrateUserDataTester.create(inputDirectory, validDestination)
+            underTest.executor =
+                object : Executor(ArrayDeque()) {
+                    override fun executeOperationInternal(
+                        it: Operation,
+                        context: MigrationContext,
+                    ): List<Operation> {
+                        if (it is MoveFile) {
+                            context.reportError(it, TestException("no space left on disk"))
+                            return emptyList()
+                        }
+                        return super.executeOperationInternal(it, context)
+                    }
+                }
+
+            val aggregatedException = assertFailsWith<AggregateException> { underTest.execTask() }
+
+            val testExceptions = aggregatedException.causes.filter { it !is DirectoryNotEmptyException }
+
+            assertThat("two failed files means two exceptions", testExceptions.size, equalTo(2))
+
+            assertThat(testExceptions[0], instanceOf(TestException::class.java))
+            assertThat(testExceptions[1], instanceOf(TestException::class.java))
+        }
 
     @Test
     fun `Empty migration passes`() {
@@ -156,7 +162,10 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         assertThat("all files should be in the destination", underTest.migratedFilesCount, equalTo(underTest.filesToMigrateCount))
         assertThat("one file is conflicted", underTest.conflictedFilesCount, equalTo(1))
         assertThat("expect to have conflict/maybeConflicted.log in source (file & folder)", underTest.sourceFilesCount, equalTo(2))
-        assertThat(underTest.conflictedFilePaths.single(), anyOf(endsWith("/conflict/maybeConflicted.log"), endsWith("\\conflict\\maybeConflicted.log")))
+        assertThat(
+            underTest.conflictedFilePaths.single(),
+            anyOf(endsWith("/conflict/maybeConflicted.log"), endsWith("\\conflict\\maybeConflicted.log")),
+        )
 
         assertThat("even with a conflict, the operation should succeed", result, equalTo(true))
     }
@@ -164,24 +173,29 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
     @Test
     fun `Migration with file added is internally retried`() {
         underTest = MigrateUserDataTester.create()
-        val executorWithNonEmpty = object : Executor(ArrayDeque()) {
-            var called = false
-            override fun executeOperationInternal(it: Operation, context: MigrationContext): List<Operation> {
-                Timber.i("%s", it::class.java.name)
-                val inner = innerOperation(it)
-                if (!called && inner is DeleteEmptyDirectory && inner.directory.directory.name == "collection.media") {
-                    called = true
-                    context.reportError(
-                        it,
-                        DirectoryNotEmptyException(inner.directory)
-                    )
-                    return emptyList()
-                }
-                return super.executeOperationInternal(it, context)
-            }
+        val executorWithNonEmpty =
+            object : Executor(ArrayDeque()) {
+                var called = false
 
-            fun innerOperation(op: Operation): Operation = (op as? SingleRetryDecorator)?.standardOperation ?: op
-        }
+                override fun executeOperationInternal(
+                    it: Operation,
+                    context: MigrationContext,
+                ): List<Operation> {
+                    Timber.i("%s", it::class.java.name)
+                    val inner = innerOperation(it)
+                    if (!called && inner is DeleteEmptyDirectory && inner.directory.directory.name == "collection.media") {
+                        called = true
+                        context.reportError(
+                            it,
+                            DirectoryNotEmptyException(inner.directory),
+                        )
+                        return emptyList()
+                    }
+                    return super.executeOperationInternal(it, context)
+                }
+
+                fun innerOperation(op: Operation): Operation = (op as? SingleRetryDecorator)?.standardOperation ?: op
+            }
         underTest.executor = executorWithNonEmpty
 
         underTest.execTask()
@@ -191,7 +205,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         assertThat(
             "collection media should be deleted on retry if empty",
             File(underTest.source.directory, "collection.media"),
-            not(anExistingDirectory())
+            not(anExistingDirectory()),
         )
 
         assertThat("no external retries should be made", underTest.externalRetries, equalTo(0))
@@ -201,16 +215,21 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
     fun `Migration with temporary problem is externally retried`() {
         underTest = MigrateUserDataTester.create()
         // Define an 'out of space' error, and the 'retry' will solve this
-        val executorWithNonEmpty = object : Executor(ArrayDeque()) {
-            val shouldFail get() = underTest.externalRetries == 0
-            override fun executeOperationInternal(it: Operation, context: MigrationContext): List<Operation> {
-                if (shouldFail) {
-                    context.reportError(it, TestException("testing"))
-                    return emptyList()
+        val executorWithNonEmpty =
+            object : Executor(ArrayDeque()) {
+                val shouldFail get() = underTest.externalRetries == 0
+
+                override fun executeOperationInternal(
+                    it: Operation,
+                    context: MigrationContext,
+                ): List<Operation> {
+                    if (shouldFail) {
+                        context.reportError(it, TestException("testing"))
+                        return emptyList()
+                    }
+                    return super.executeOperationInternal(it, context)
                 }
-                return super.executeOperationInternal(it, context)
             }
-        }
         underTest.executor = executorWithNonEmpty
 
         val result = underTest.execTask()
@@ -233,83 +252,86 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
  * @param filesToMigrateCount The number of files which should be migrated
  */
 private class MigrateUserDataTester
-private constructor(source: Directory, destination: Directory, val filesToMigrateCount: Int) :
+    private constructor(source: Directory, destination: Directory, val filesToMigrateCount: Int) :
     MigrateUserData(source, destination) {
-
-    override fun initializeContext(progress: MigrationProgressListener): UserDataMigrationContext {
-        return super.initializeContext(progress).apply {
-            attemptRename = false
+        override fun initializeContext(progress: MigrationProgressListener): UserDataMigrationContext {
+            return super.initializeContext(progress).apply {
+                attemptRename = false
+            }
         }
-    }
 
-    fun integrationAssertOnlyIntendedFilesRemain() {
-        if (sourceFilesCount == INTEGRATION_INTENDED_REMAINING_FILE_COUNT) {
-            return
+        fun integrationAssertOnlyIntendedFilesRemain() {
+            if (sourceFilesCount == INTEGRATION_INTENDED_REMAINING_FILE_COUNT) {
+                return
+            }
+            fail("expected directory with 5 files, got: " + source.directory.listFiles()!!.map { it.name })
         }
-        fail("expected directory with 5 files, got: " + source.directory.listFiles()!!.map { it.name })
-    }
 
-    private val conflictDirectory = File(source.directory, "conflict")
+        private val conflictDirectory = File(source.directory, "conflict")
 
-    /** The number of files in [destination] */
-    val migratedFilesCount: Int get() = fileCount(destination.directory)
+        /** The number of files in [destination] */
+        val migratedFilesCount: Int get() = fileCount(destination.directory)
 
-    /** The number of files in [source] */
-    val sourceFilesCount: Int get() = fileCount(source.directory)
+        /** The number of files in [source] */
+        val sourceFilesCount: Int get() = fileCount(source.directory)
 
-    /** The number of files in the "conflict" directory */
-    val conflictedFilesCount: Int get() {
-        if (!conflictDirectory.exists()) {
-            return 0
+        /** The number of files in the "conflict" directory */
+        val conflictedFilesCount: Int get() {
+            if (!conflictDirectory.exists()) {
+                return 0
+            }
+            return fileCount(conflictDirectory)
         }
-        return fileCount(conflictDirectory)
-    }
-
-    /**
-     * Lists the files in the TOP LEVEL directory of /conflict/
-     * Throws if [conflictDirectory] does not exist
-     */
-    val conflictedFilePaths: List<String> get() {
-        check(conflictDirectory.exists()) { "$conflictDirectory should exist" }
-        return conflictDirectory.listFiles()!!.map { it.path }
-    }
-
-    companion object {
-        // media DB created on demand, and no -journal file in new backend
-        val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = 3
 
         /**
-         * A MigrateUserDataTest from inputSource to inputDestination (or transient directories if not provided)
-         *
-         * If [inputSource] is null, it is created and with the following contents:
-         * * ./foo.txt`, `./bar.txt`
-         * * `maybeConflicted.log`
-         * *`./collection.media/`
-         * * `.collection.media/image.jpg`
-         *
-         * i.e. 5 files files or directories that are not part of AnkiDroid's essential files.
+         * Lists the files in the TOP LEVEL directory of /conflict/
+         * Throws if [conflictDirectory] does not exist
          */
-        fun create(inputSource: File? = null, inputDestination: File? = null): MigrateUserDataTester {
-            val destination = inputDestination ?: createTransientDirectory("destination")
+        val conflictedFilePaths: List<String> get() {
+            check(conflictDirectory.exists()) { "$conflictDirectory should exist" }
+            return conflictDirectory.listFiles()!!.map { it.path }
+        }
 
-            val source = inputSource ?: createTransientDirectory("source").apply {
-                addTempFile("foo.txt", "foo")
-                addTempFile("bar.txt", "bar")
-                addTempFile("maybeConflicted.log", "maybeConflicted")
-                val media = addTempDirectory("collection.media")
-                media.directory.addTempFile("image.jpg", "image")
-            }
+        companion object {
+            // media DB created on demand, and no -journal file in new backend
+            val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = 3
 
-            return MigrateUserDataTester(
-                source = Directory.createInstance(source)!!,
-                destination = Directory.createInstance(destination)!!,
-                filesToMigrateCount = fileCount(source)
-            ).also {
-                assertThat("Conflict directory should not exist before the migration starts", it.conflictedFilesCount, equalTo(0))
+            /**
+             * A MigrateUserDataTest from inputSource to inputDestination (or transient directories if not provided)
+             *
+             * If [inputSource] is null, it is created and with the following contents:
+             * * ./foo.txt`, `./bar.txt`
+             * * `maybeConflicted.log`
+             * *`./collection.media/`
+             * * `.collection.media/image.jpg`
+             *
+             * i.e. 5 files files or directories that are not part of AnkiDroid's essential files.
+             */
+            fun create(
+                inputSource: File? = null,
+                inputDestination: File? = null,
+            ): MigrateUserDataTester {
+                val destination = inputDestination ?: createTransientDirectory("destination")
+
+                val source =
+                    inputSource ?: createTransientDirectory("source").apply {
+                        addTempFile("foo.txt", "foo")
+                        addTempFile("bar.txt", "bar")
+                        addTempFile("maybeConflicted.log", "maybeConflicted")
+                        val media = addTempDirectory("collection.media")
+                        media.directory.addTempFile("image.jpg", "image")
+                    }
+
+                return MigrateUserDataTester(
+                    source = Directory.createInstance(source)!!,
+                    destination = Directory.createInstance(destination)!!,
+                    filesToMigrateCount = fileCount(source),
+                ).also {
+                    assertThat("Conflict directory should not exist before the migration starts", it.conflictedFilesCount, equalTo(0))
+                }
             }
         }
     }
-}
 
 /**
  * Return the number of files and directories in [directory] or in one of its subdirectories; not counting [directory] itself.

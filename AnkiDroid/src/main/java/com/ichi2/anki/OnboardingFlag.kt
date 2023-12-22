@@ -26,7 +26,6 @@ package com.ichi2.anki
  * are not used again.
  */
 interface OnboardingFlag {
-
     /**
      * Distinct values should be used in a particular onboarding enum class.
      * The returned value should be between 0 and 63, the position range of bits in Long.

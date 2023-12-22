@@ -29,7 +29,6 @@ import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class SettingsSearchBarTest : RobolectricTest() {
-
     @Test
     @Suppress("UNCHECKED_CAST")
     fun `All indexed XML resIDs lead to the correct fragments on getFragmentFromXmlRes`() {
@@ -46,19 +45,22 @@ class SettingsSearchBarTest : RobolectricTest() {
 
         // Get the resIds of the files indexed with `SearchConfiguration.index`
         val filesToIndex = filesToIndexField.get(searchConfig) as ArrayList<SearchConfiguration.SearchIndexItem>
-        val filesResIds = filesToIndex.map {
-            searchItemResIdField.get(it)
-        }
+        val filesResIds =
+            filesToIndex.map {
+                searchItemResIdField.get(it)
+            }
 
         // Get the resIds of preferences indexed with `SearchConfiguration.indexItem`
         val preferencesToIndex = preferencesToIndexField.get(searchConfig) as ArrayList<PreferenceItem>
-        val prefItemsResIds = preferencesToIndex.map {
-            prefItemResIdField.get(it)
-        }
+        val prefItemsResIds =
+            preferencesToIndex.map {
+                prefItemResIdField.get(it)
+            }
 
         // Join both lists
-        val allResIds = filesResIds.plus(prefItemsResIds)
-            .distinct() as List<Int>
+        val allResIds =
+            filesResIds.plus(prefItemsResIds)
+                .distinct() as List<Int>
 
         // Check if all indexed XML resIDs lead to the correct fragments on getFragmentFromXmlRes
         for (resId in allResIds) {
@@ -68,7 +70,7 @@ class SettingsSearchBarTest : RobolectricTest() {
             assertThat(
                 "${targetContext.resources.getResourceName(resId)} should match the preferenceResource of ${fragment::class.simpleName}",
                 fragment.preferenceResource,
-                equalTo(resId)
+                equalTo(resId),
             )
         }
     }

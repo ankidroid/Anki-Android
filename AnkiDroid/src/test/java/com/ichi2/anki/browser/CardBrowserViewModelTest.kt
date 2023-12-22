@@ -27,21 +27,24 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class CardBrowserViewModelTest : JvmTest() {
     @Test
-    fun `delete search history - Issue 14989`() = runViewModelTest {
-        saveSearch("hello", "aa")
-        savedSearches().also { searches ->
-            assertThat("filters after saving", searches.size, equalTo(1))
-            assertThat("filters after saving", searches["hello"], equalTo("aa"))
+    fun `delete search history - Issue 14989`() =
+        runViewModelTest {
+            saveSearch("hello", "aa")
+            savedSearches().also { searches ->
+                assertThat("filters after saving", searches.size, equalTo(1))
+                assertThat("filters after saving", searches["hello"], equalTo("aa"))
+            }
+            removeSavedSearch("hello")
+            assertThat("filters should be empty after removing", savedSearches().size, equalTo(0))
         }
-        removeSavedSearch("hello")
-        assertThat("filters should be empty after removing", savedSearches().size, equalTo(0))
-    }
 
-    private fun runViewModelTest(testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
-        val viewModel = CardBrowserViewModel(
-            lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
-            preferences = AnkiDroidApp.sharedPreferencesProvider
-        )
-        testBody(viewModel)
-    }
+    private fun runViewModelTest(testBody: suspend CardBrowserViewModel.() -> Unit) =
+        runTest {
+            val viewModel =
+                CardBrowserViewModel(
+                    lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+                    preferences = AnkiDroidApp.sharedPreferencesProvider,
+                )
+            testBody(viewModel)
+        }
 }

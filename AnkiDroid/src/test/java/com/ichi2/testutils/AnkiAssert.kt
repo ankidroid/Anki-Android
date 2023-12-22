@@ -22,7 +22,10 @@ import kotlin.test.junit5.JUnit5Asserter
 /** Assertion methods that aren't currently supported by our dependencies  */
 object AnkiAssert {
     /** Helper to sort out "JUnit tests should include assert() or fail()" quality check  */
-    fun assertDoesNotThrow(message: String, runnable: Runnable) {
+    fun assertDoesNotThrow(
+        message: String,
+        runnable: Runnable,
+    ) {
         try {
             runnable.run()
         } catch (e: Exception) {
@@ -39,8 +42,10 @@ object AnkiAssert {
         }
     }
 
-    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check  */
-    // suspend variant of [assertDoesNotThrow]
+    /**
+     * Helper to sort out "JUnit tests should include assert() or fail()" quality check
+     * suspend variant of [assertDoesNotThrow]
+     */
     suspend fun assertDoesNotThrowSuspend(block: suspend () -> Unit) {
         try {
             block()
@@ -49,7 +54,10 @@ object AnkiAssert {
         }
     }
 
-    fun <T> assertEqualsArrayList(expected: Array<T>, actual: List<T>?) {
+    fun <T> assertEqualsArrayList(
+        expected: Array<T>,
+        actual: List<T>?,
+    ) {
         assertListEquals(expected.toList(), actual)
     }
 
@@ -57,13 +65,19 @@ object AnkiAssert {
         return s.replace("\u2068", "").replace("\u2069", "")
     }
 
-    fun checkRevIvl(c: Card, targetIvl: Int): Boolean {
+    fun checkRevIvl(
+        c: Card,
+        targetIvl: Int,
+    ): Boolean {
         return c.ivl == targetIvl
     }
 }
 
 /** Asserts that the expression is `false` with an optional [message]. */
-fun assertFalse(message: String? = null, actual: Boolean) {
+fun assertFalse(
+    message: String? = null,
+    actual: Boolean,
+) {
     // This exists in JUnit, but we want to avoid JUnit as their `assertNotNull` does not use contracts
     // So, we want a method in a different namespace for `assertFalse`
     // JUnitAsserter doesn't contain it, so we add it in

@@ -21,7 +21,6 @@ import org.intellij.lang.annotations.Language
 import org.junit.Test
 
 class FixedPreferencesTitleLengthTest {
-
     companion object {
         @Language("XML")
         val stringsXmlValid = """<resources>
@@ -99,11 +98,11 @@ class FixedPreferencesTitleLengthTest {
             .allowCompilationErrors()
             .files(
                 TestFiles.xml("res/xml/preference_general_invalid.xml", invalidString),
-                TestFiles.xml("res/values/10-preferences.xml", stringsXmlInvalid)
+                TestFiles.xml("res/values/10-preferences.xml", stringsXmlInvalid),
             )
             .issues(
                 FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH,
-                FixedPreferencesTitleLength.ISSUE_MAX_LENGTH
+                FixedPreferencesTitleLength.ISSUE_MAX_LENGTH,
             )
             .run()
             .expectErrorCount(3)
@@ -117,7 +116,7 @@ res/values/10-preferences.xml:3: Error: Preference title 'app_name' is missing "
 res/values/10-preferences.xml:6: Error: Preference title 'button_sync' is having maxLength=55 it should contain maxLength=41 [PreferencesTitleMaxLengthAttr]
     <string name="button_sync" maxLength="55">button_sync</string>
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-3 errors, 0 warnings"""
+3 errors, 0 warnings""",
             )
     }
 
@@ -127,11 +126,11 @@ res/values/10-preferences.xml:6: Error: Preference title 'button_sync' is having
             .allowCompilationErrors()
             .files(
                 TestFiles.xml("res/xml/preference_general_valid.xml", validString),
-                TestFiles.xml("res/values/10-preferences.xml", stringsXmlValid)
+                TestFiles.xml("res/values/10-preferences.xml", stringsXmlValid),
             )
             .issues(
                 FixedPreferencesTitleLength.ISSUE_MAX_LENGTH,
-                FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH
+                FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH,
             )
             .run()
             .expectClean()

@@ -96,11 +96,17 @@ class MissingImageHandlerTest {
         assertThat(mTimesCalled, equalTo(0))
     }
 
-    private fun processFailure(invalidRequest: WebResourceRequest, consumer: Consumer<String?> = defaultHandler()) {
+    private fun processFailure(
+        invalidRequest: WebResourceRequest,
+        consumer: Consumer<String?> = defaultHandler(),
+    ) {
         mSut.processFailure(invalidRequest, consumer)
     }
 
-    private fun processMissingSound(file: File?, onFailure: Consumer<String?>) {
+    private fun processMissingSound(
+        file: File?,
+        onFailure: Consumer<String?>,
+    ) {
         mSut.processMissingSound(file, onFailure)
     }
 

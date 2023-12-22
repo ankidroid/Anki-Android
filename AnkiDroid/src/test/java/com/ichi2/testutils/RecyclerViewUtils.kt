@@ -18,7 +18,10 @@ package com.ichi2.testutils
 import androidx.recyclerview.widget.RecyclerView
 
 object RecyclerViewUtils {
-    inline fun <reified VH : RecyclerView.ViewHolder?> viewHolderAt(recyclerView: RecyclerView, position: Int): VH {
+    inline fun <reified VH : RecyclerView.ViewHolder?> viewHolderAt(
+        recyclerView: RecyclerView,
+        position: Int,
+    ): VH {
         return recyclerView.findViewHolderForAdapterPosition(position) as VH
     }
 }

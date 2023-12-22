@@ -26,35 +26,34 @@ import com.ichi2.anki.R
  * Preference used on the headers of [com.ichi2.anki.preferences.HeaderFragment]
  */
 class HeaderPreference
-@JvmOverloads // fixes: Error inflating class com.ichi2.preferences.HeaderPreference
-constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = androidx.preference.R.attr.preferenceStyle,
-    defStyleRes: Int = androidx.preference.R.style.Preference
-) : Preference(context, attrs, defStyleAttr, defStyleRes) {
+    @JvmOverloads // fixes: Error inflating class com.ichi2.preferences.HeaderPreference
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = androidx.preference.R.attr.preferenceStyle,
+        defStyleRes: Int = androidx.preference.R.style.Preference,
+    ) : Preference(context, attrs, defStyleAttr, defStyleRes) {
+        init {
+            context.withStyledAttributes(attrs, R.styleable.HeaderPreference) {
+                val entries = getTextArray(R.styleable.HeaderPreference_summaryEntries)
+                if (entries != null) {
+                    summary = buildHeaderSummary(*entries)
+                }
+            }
+        }
 
-    init {
-        context.withStyledAttributes(attrs, R.styleable.HeaderPreference) {
-            val entries = getTextArray(R.styleable.HeaderPreference_summaryEntries)
-            if (entries != null) {
-                summary = buildHeaderSummary(*entries)
+        companion object {
+            /**
+             * Join [entries] with ` • ` as separator
+             * to build a summary string for some preferences categories
+             * e.g. `foo`, `bar`, `hi` ->  `foo • bar • hi`
+             */
+            fun buildHeaderSummary(vararg entries: CharSequence): String {
+                return if (!LanguageUtils.appLanguageIsRTL()) {
+                    entries.joinToString(separator = " • ")
+                } else {
+                    entries.reversed().joinToString(separator = " • ")
+                }
             }
         }
     }
-
-    companion object {
-        /**
-         * Join [entries] with ` • ` as separator
-         * to build a summary string for some preferences categories
-         * e.g. `foo`, `bar`, `hi` ->  `foo • bar • hi`
-         */
-        fun buildHeaderSummary(vararg entries: CharSequence): String {
-            return if (!LanguageUtils.appLanguageIsRTL()) {
-                entries.joinToString(separator = " • ")
-            } else {
-                entries.reversed().joinToString(separator = " • ")
-            }
-        }
-    }
-}

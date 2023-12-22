@@ -62,13 +62,14 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
 
         assertThat(
             "When text field is focused, space should not display answer",
-            !underTest.didDisplayAnswer()
+            !underTest.didDisplayAnswer(),
         )
     }
 
     private class KeyboardInputTestCardViewer : AbstractFlashcardViewer() {
         private var mDisplayAnswer = false
         private var mFocusTextField = false
+
         override fun answerFieldIsFocused(): Boolean {
             return mFocusTextField
         }

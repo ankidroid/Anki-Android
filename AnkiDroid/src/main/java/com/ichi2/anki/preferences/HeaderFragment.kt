@@ -29,7 +29,10 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.AdaptionUtil
 
 class HeaderFragment : PreferenceFragmentCompat() {
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferences(
+        savedInstanceState: Bundle?,
+        rootKey: String?,
+    ) {
         setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
         requirePreference<Preference>(R.string.pref_advanced_screen_key).apply {
@@ -44,7 +47,7 @@ class HeaderFragment : PreferenceFragmentCompat() {
 
         configureSearchBar(
             requireActivity() as AppCompatActivity,
-            requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration
+            requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration,
         )
     }
 
@@ -53,7 +56,10 @@ class HeaderFragment : PreferenceFragmentCompat() {
         requireActivity().setTitle(R.string.settings)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         // use the same fragment container to search in case there is a navigation container
         requirePreference<SearchPreference>(R.string.search_preference_key)
@@ -66,7 +72,10 @@ class HeaderFragment : PreferenceFragmentCompat() {
     }
 
     companion object {
-        fun configureSearchBar(activity: AppCompatActivity, searchConfiguration: SearchConfiguration) {
+        fun configureSearchBar(
+            activity: AppCompatActivity,
+            searchConfiguration: SearchConfiguration,
+        ) {
             with(searchConfiguration) {
                 setActivity(activity)
                 setBreadcrumbsEnabled(true)

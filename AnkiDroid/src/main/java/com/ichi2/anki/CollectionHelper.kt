@@ -67,7 +67,10 @@ open class CollectionHelper {
      * @return the [Collection] if it could be obtained, `null` otherwise.
      */
     @Synchronized
-    fun tryGetColUnsafe(context: Context?, reportException: Boolean = true): Collection? {
+    fun tryGetColUnsafe(
+        context: Context?,
+        reportException: Boolean = true,
+    ): Collection? {
         lastOpenFailure = null
         return try {
             getColUnsafe(context)
@@ -159,26 +162,27 @@ open class CollectionHelper {
                 val defaultRequiredFreeSpace = defaultRequiredFreeSpace(context)
                 return context.resources.getString(
                     R.string.integrity_check_insufficient_space,
-                    defaultRequiredFreeSpace
+                    defaultRequiredFreeSpace,
                 )
             }
             val required = Formatter.formatShortFileSize(context, mRequiredSpace)
-            val insufficientSpace = context.resources.getString(
-                R.string.integrity_check_insufficient_space,
-                required
-            )
+            val insufficientSpace =
+                context.resources.getString(
+                    R.string.integrity_check_insufficient_space,
+                    required,
+                )
 
             // Also concat in the extra content showing the current free space.
             val currentFree = Formatter.formatShortFileSize(context, mFreeSpace)
-            val insufficientSpaceCurrentFree = context.resources.getString(
-                R.string.integrity_check_insufficient_space_extra_content,
-                currentFree
-            )
+            val insufficientSpaceCurrentFree =
+                context.resources.getString(
+                    R.string.integrity_check_insufficient_space_extra_content,
+                    currentFree,
+                )
             return insufficientSpace + insufficientSpaceCurrentFree
         }
 
         companion object {
-
             private fun fromError(errorMessage: String): CollectionIntegrityStorageCheck {
                 return CollectionIntegrityStorageCheck(errorMessage)
             }
@@ -197,8 +201,8 @@ open class CollectionHelper {
                     return fromError(
                         context.resources.getString(
                             R.string.integrity_check_insufficient_space,
-                            requiredFreeSpace
-                        )
+                            requiredFreeSpace,
+                        ),
                     )
                 }
 
@@ -215,8 +219,8 @@ open class CollectionHelper {
                     return fromError(
                         context.resources.getString(
                             R.string.integrity_check_insufficient_space,
-                            readableFileSize
-                        )
+                            readableFileSize,
+                        ),
                     )
                 }
                 return CollectionIntegrityStorageCheck(requiredSpaceInBytes, freeSpace)
@@ -225,7 +229,10 @@ open class CollectionHelper {
     }
 
     enum class CollectionOpenFailure {
-        FILE_TOO_NEW, CORRUPT, LOCKED, DISK_FULL
+        FILE_TOO_NEW,
+        CORRUPT,
+        LOCKED,
+        DISK_FULL,
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -489,23 +496,27 @@ open class CollectionHelper {
         // This uses a lambda as we typically depends on the `lateinit` AnkiDroidApp.instance
         // If we remove all Android references, we get a significant unit test speedup
         @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-        internal fun getCurrentAnkiDroidDirectoryOptionalContext(preferences: SharedPreferences, context: () -> Context): String {
+        internal fun getCurrentAnkiDroidDirectoryOptionalContext(
+            preferences: SharedPreferences,
+            context: () -> Context,
+        ): String {
             return if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
                 // create an "androidTest" directory inside the current collection directory which contains the test data
                 // "/AnkiDroid/androidTest" would be a new collection path
-                val currentCollectionDirectory = preferences.getOrSetString(PREF_COLLECTION_PATH) {
-                    getDefaultAnkiDroidDirectory(context())
-                }
+                val currentCollectionDirectory =
+                    preferences.getOrSetString(PREF_COLLECTION_PATH) {
+                        getDefaultAnkiDroidDirectory(context())
+                    }
                 File(
                     currentCollectionDirectory,
-                    "androidTest"
+                    "androidTest",
                 ).absolutePath
             } else if (ankiDroidDirectoryOverride != null) {
                 ankiDroidDirectoryOverride!!
             } else {
                 preferences.getOrSetString(PREF_COLLECTION_PATH) {
                     getDefaultAnkiDroidDirectory(
-                        context()
+                        context(),
                     )
                 }
             }

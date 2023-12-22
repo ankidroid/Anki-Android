@@ -39,7 +39,6 @@ import java.io.Serializable
  * @see SharedDecksDownloadFragment
  */
 class SharedDecksActivity : AnkiActivity() {
-
     private lateinit var mWebView: WebView
     lateinit var downloadManager: DownloadManager
 
@@ -52,52 +51,60 @@ class SharedDecksActivity : AnkiActivity() {
      * History should not be cleared before the page finishes loading otherwise there would be
      * an extra entry in the history since the previous page would not get cleared.
      */
-    private val mWebViewClient = object : WebViewClient() {
-        private var redirectTimes = 0
+    private val mWebViewClient =
+        object : WebViewClient() {
+            private var redirectTimes = 0
 
-        override fun onPageFinished(view: WebView?, url: String?) {
-            // Clear history if mShouldHistoryBeCleared is true and set it to false
-            if (mShouldHistoryBeCleared) {
-                mWebView.clearHistory()
-                mShouldHistoryBeCleared = false
+            override fun onPageFinished(
+                view: WebView?,
+                url: String?,
+            ) {
+                // Clear history if mShouldHistoryBeCleared is true and set it to false
+                if (mShouldHistoryBeCleared) {
+                    mWebView.clearHistory()
+                    mShouldHistoryBeCleared = false
+                }
+                super.onPageFinished(view, url)
             }
-            super.onPageFinished(view, url)
-        }
 
-        override fun onReceivedHttpError(
-            view: WebView?,
-            request: WebResourceRequest?,
-            errorResponse: WebResourceResponse?
-        ) {
-            super.onReceivedHttpError(view, request, errorResponse)
+            override fun onReceivedHttpError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                errorResponse: WebResourceResponse?,
+            ) {
+                super.onReceivedHttpError(view, request, errorResponse)
 
-            if (errorResponse?.statusCode != 429) return
-            // "Please log in to download more decks." - on clicking "Download"
-            // "Please log in to perform more searches" - on searching
+                if (errorResponse?.statusCode != 429) return
+                // "Please log in to download more decks." - on clicking "Download"
+                // "Please log in to perform more searches" - on searching
 
-            // TODO: the result of login is typically redirecting the user to their decks
-            // this should be improved
+                // TODO: the result of login is typically redirecting the user to their decks
+                // this should be improved
 
-            showSnackbar(R.string.shared_decks_login_required, LENGTH_INDEFINITE) {
-                if (isLoggedIn()) return@showSnackbar
-                setAction(R.string.sign_up) {
-                    mWebView.loadUrl(getString(R.string.shared_decks_sign_up_url))
+                showSnackbar(R.string.shared_decks_login_required, LENGTH_INDEFINITE) {
+                    if (isLoggedIn()) return@showSnackbar
+                    setAction(R.string.sign_up) {
+                        mWebView.loadUrl(getString(R.string.shared_decks_sign_up_url))
+                    }
+                }
+                if (redirectTimes++ < 3) {
+                    Timber.i("HTTP 429, redirecting to login")
+                    mWebView.loadUrl(getString(R.string.shared_decks_login_url))
+                } else {
+                    Timber.w("HTTP 429 redirect limit exceeded, only displaying message")
                 }
             }
-            if (redirectTimes++ < 3) {
-                Timber.i("HTTP 429, redirecting to login")
-                mWebView.loadUrl(getString(R.string.shared_decks_login_url))
-            } else {
-                Timber.w("HTTP 429 redirect limit exceeded, only displaying message")
+
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                error: WebResourceError?,
+            ) {
+                // Set mShouldHistoryBeCleared to false if error occurs since it might have been true
+                mShouldHistoryBeCleared = false
+                super.onReceivedError(view, request, error)
             }
         }
-
-        override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-            // Set mShouldHistoryBeCleared to false if error occurs since it might have been true
-            mShouldHistoryBeCleared = false
-            super.onReceivedError(view, request, error)
-        }
-    }
 
     companion object {
         const val SHARED_DECKS_DOWNLOAD_FRAGMENT = "SharedDecksDownloadFragment"
@@ -191,17 +198,19 @@ class SharedDecksActivity : AnkiActivity() {
 
         val searchView = menu.findItem(R.id.search)?.actionView as SearchView
         searchView.queryHint = getString(R.string.search_using_deck_name)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                mWebView.loadUrl(resources.getString(R.string.shared_decks_url) + query)
-                return true
-            }
+        searchView.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    mWebView.loadUrl(resources.getString(R.string.shared_decks_url) + query)
+                    return true
+                }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                // Nothing to do here
-                return false
-            }
-        })
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    // Nothing to do here
+                    return false
+                }
+            },
+        )
         return true
     }
 
@@ -221,5 +230,5 @@ data class DownloadFile(
     val url: String,
     val userAgent: String,
     val contentDisposition: String,
-    val mimeType: String
+    val mimeType: String,
 ) : Serializable

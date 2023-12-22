@@ -29,13 +29,16 @@ data class RangeHeader(val start: Long, val end: Long) {
     val contentLength: Long get() = end - start + 1
 
     companion object {
-        fun from(session: IHTTPSession, defaultEnd: Long): RangeHeader? {
+        fun from(
+            session: IHTTPSession,
+            defaultEnd: Long,
+        ): RangeHeader? {
             val range = session.headers["range"]?.trim() ?: return null
             val numbers = range.substring("bytes=".length).split('-')
             val unspecifiedEnd = numbers.getOrNull(1).isNullOrEmpty()
             return RangeHeader(
                 start = numbers[0].toLong(),
-                end = if (unspecifiedEnd) defaultEnd else numbers[1].toLong()
+                end = if (unspecifiedEnd) defaultEnd else numbers[1].toLong(),
             )
         }
     }

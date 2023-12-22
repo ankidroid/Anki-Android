@@ -23,7 +23,9 @@ import androidx.annotation.CheckResult
  */
 class Counts constructor(var new: Int = 0, var lrn: Int = 0, var rev: Int = 0) {
     enum class Queue {
-        NEW, LRN, REV
+        NEW,
+        LRN,
+        REV,
     }
 
     fun addNew(new_: Int) {

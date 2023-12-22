@@ -96,7 +96,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
 
             return MigrateUserData(
                 source = sourceDirectory,
-                destination = destinationDirectory
+                destination = destinationDirectory,
             )
         }
     }
@@ -111,12 +111,18 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      *
      * If a file named `filename` exists in [destination] and in [source] with different content, move `source/filename` to `source/conflict/filename`.
      */
-    class FileConflictException(val source: DiskFile, val destination: DiskFile) : MigrationException("File $source can not be copied to $destination, destination exists and differs.")
+    class FileConflictException(
+        val source: DiskFile,
+        val destination: DiskFile,
+    ) : MigrationException("File $source can not be copied to $destination, destination exists and differs.")
 
     /**
      * If [destination] is a directory. In this case, move `source/filename` to `source/conflict/filename`.
      */
-    class FileDirectoryConflictException(val source: DiskFile, val destination: Directory) : MigrationException("File $source can not be copied to $destination, as destination is a directory.")
+    class FileDirectoryConflictException(
+        val source: DiskFile,
+        val destination: Directory,
+    ) : MigrationException("File $source can not be copied to $destination, as destination is a directory.")
 
     /**
      * If one or more required directories were missing
@@ -151,7 +157,10 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * If the number of retries was exceeded when resolving a file conflict via moving it to the
      * /conflict/ folder.
      */
-    class FileConflictResolutionFailedException(val sourceFile: DiskFile, private val attemptedDestination: File) : MigrationException("Failed to move $sourceFile to $attemptedDestination")
+    class FileConflictResolutionFailedException(
+        val sourceFile: DiskFile,
+        private val attemptedDestination: File,
+    ) : MigrationException("Failed to move $sourceFile to $attemptedDestination")
 
     /**
      * Context for an [Operation], allowing a change of execution behavior and
@@ -159,7 +168,10 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * a large mutable queue of tasks
      */
     abstract class MigrationContext {
-        abstract fun reportError(throwingOperation: Operation, ex: Exception)
+        abstract fun reportError(
+            throwingOperation: Operation,
+            ex: Exception,
+        )
 
         /**
          * Called on each successful file migrated
@@ -180,7 +192,10 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         /**
          * Performs an operation, reports errors and continues on failure
          */
-        open fun execSafe(operation: Operation, op: (Operation) -> Unit) {
+        open fun execSafe(
+            operation: Operation,
+            op: (Operation) -> Unit,
+        ) {
             try {
                 op(operation)
             } catch (e: Exception) {
@@ -239,7 +254,10 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
          * @param [file] A file which may not point to a valid directory
          * @return A [Directory], or null if [file] did not point to an existing directory
          */
-        fun tryCreate(context: String, file: File): Directory? {
+        fun tryCreate(
+            context: String,
+            file: File,
+        ): Directory? {
             val ret = Directory.createInstance(file)
             if (ret == null) {
                 failedFiles.add(MissingDirectoryException.MissingFile(context, file))
@@ -292,6 +310,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
                 this.completion.countDown()
             }
         }
+
         fun await() = completion.await()
     }
 
@@ -302,9 +321,10 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      */
     class SingleRetryDecorator(
         internal val standardOperation: Operation,
-        private val retryOperation: Operation
+        private val retryOperation: Operation,
     ) : Operation() {
         override fun execute(context: MigrationContext) = standardOperation.execute(context)
+
         override val retryOperations get() = listOf(retryOperation)
     }
 
@@ -351,7 +371,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         @VisibleForTesting
         internal open fun executeOperationInternal(
             it: Operation,
-            context: MigrationContext
+            context: MigrationContext,
         ) = it.execute(context)
 
         /**
@@ -374,7 +394,9 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         }
 
         fun prepend(operation: Operation) = operations.addFirst(operation)
+
         fun append(operation: Operation) = operations.add(operation)
+
         fun appendAll(operations: List<Operation>) = this.operations.addAll(operations)
 
         // region preemption (synchronized)
@@ -383,9 +405,12 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
             // insert all at the start of the queue
             synchronized(preempted) { preempted.addAll(0, replacements) }
         }
-        private fun getNextPreemptedItem() = synchronized(preempted) {
-            return@synchronized preempted.removeFirstOrNull()
-        }
+
+        private fun getNextPreemptedItem() =
+            synchronized(preempted) {
+                return@synchronized preempted.removeFirstOrNull()
+            }
+
         fun preempt(operation: Operation) = synchronized(preempted) { preempted.add(operation) }
 
         // endregion
@@ -402,7 +427,11 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * @param executor The executor that will do the migration.
      * @param progressReportParam A function, called for each file that is migrated, with the number of bytes of the file.
      */
-    open class UserDataMigrationContext(private val executor: Executor, val source: Directory, val progressReportParam: MigrationProgressListener) : MigrationContext() {
+    open class UserDataMigrationContext(
+        private val executor: Executor,
+        val source: Directory,
+        val progressReportParam: MigrationProgressListener,
+    ) : MigrationContext() {
         val successfullyCompleted: Boolean get() = loggedExceptions.isEmpty() && !executor.terminated
 
         /**
@@ -417,10 +446,18 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
 
         val loggedExceptions = mutableListOf<Exception>()
         private var consecutiveExceptionsWithoutProgress = 0
-        override fun reportError(throwingOperation: Operation, ex: Exception) {
+
+        override fun reportError(
+            throwingOperation: Operation,
+            ex: Exception,
+        ) {
             when (ex) {
-                is FileConflictException -> { moveToConflictedFolder(ex.source) }
-                is FileDirectoryConflictException -> { moveToConflictedFolder(ex.source) }
+                is FileConflictException -> {
+                    moveToConflictedFolder(ex.source)
+                }
+                is FileDirectoryConflictException -> {
+                    moveToConflictedFolder(ex.source)
+                }
                 is DirectoryNotEmptyException -> {
                     // If a directory isn't empty, some more files may have been added. Retry (after all others are completed)
                     if (throwingOperation.retryOperations.any() && retriedDirectories.add(ex.directory.directory)) {
@@ -450,17 +487,18 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
             loggedExceptions.add(ex)
             consecutiveExceptionsWithoutProgress++
             if (consecutiveExceptionsWithoutProgress >= 10) {
-                val exception = loggedExceptions.singleOrNull()
-                    ?: TranslatableAggregateException(
-                        message = "Multiple consecutive errors without progress",
-                        translatableMessage = {
-                            getString(
-                                R.string.error__etc__multiple_consecutive_errors_without_progress_most_recent,
-                                getUserFriendlyErrorText(loggedExceptions.last())
-                            )
-                        },
-                        causes = loggedExceptions
-                    )
+                val exception =
+                    loggedExceptions.singleOrNull()
+                        ?: TranslatableAggregateException(
+                            message = "Multiple consecutive errors without progress",
+                            translatableMessage = {
+                                getString(
+                                    R.string.error__etc__multiple_consecutive_errors_without_progress_most_recent,
+                                    getUserFriendlyErrorText(loggedExceptions.last()),
+                                )
+                            },
+                            causes = loggedExceptions,
+                        )
 
                 failOperationWith(exception)
             }
@@ -547,8 +585,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * @return A User data migration context, executing the migration of [source] on [executor].
      * Calling [collectionTask::doProgress] on each migrated file, with the number of bytes migrated.
      */
-    internal open fun initializeContext(progress: (MigrationProgressListener)) =
-        UserDataMigrationContext(executor, source, progress)
+    internal open fun initializeContext(progress: (MigrationProgressListener)) = UserDataMigrationContext(executor, source, progress)
 
     /**
      * Returns migration operations for the top level items in /AnkiDroid/
@@ -559,7 +596,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
             .map { fileOrDir ->
                 MoveFileOrDirectory(
                     sourceFile = File(source.directory, fileOrDir.name),
-                    destination = File(destination.directory, fileOrDir.name)
+                    destination = File(destination.directory, fileOrDir.name),
                 )
             }.sortedWith(
                 compareBy {
@@ -573,18 +610,19 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
                         "backups" -> -1
                         else -> 0
                     }
-                }
+                },
             )
             .toList()
 
     /** Gets a sequence of content in [source] */
-    private fun getDirectoryContent() = sequence {
-        CompatHelper.compat.contentOfDirectory(source.directory).use {
-            while (it.hasNext()) {
-                yield(it.next())
+    private fun getDirectoryContent() =
+        sequence {
+            CompatHelper.compat.contentOfDirectory(source.directory).use {
+                while (it.hasNext()) {
+                    yield(it.next())
+                }
             }
         }
-    }
 
     /** Returns a sequence of the Files or Directories in [source] which are to be migrated */
     private fun getUserDataFiles() = getDirectoryContent().filter { isUserData(it) }
@@ -619,8 +657,9 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         }
 
         // convert to a relative path WRT the destination (our current collection)
-        val relativeDataPath = RelativeFilePath.fromPaths(destination.directory, expectedFileLocation)
-            ?: throw IllegalStateException("Could not create relative path between ${destination.directory} and $expectedFileLocation")
+        val relativeDataPath =
+            RelativeFilePath.fromPaths(destination.directory, expectedFileLocation)
+                ?: throw IllegalStateException("Could not create relative path between ${destination.directory} and $expectedFileLocation")
 
         // get a reference to the source file
         val sourceFile = DiskFile.createInstance(relativeDataPath.toFile(source))
@@ -653,7 +692,7 @@ internal fun Operation.onRetryExecute(operationOnRetry: Operation): Operation {
     val operationToBeDecorated = this
     return SingleRetryDecorator(
         standardOperation = operationToBeDecorated,
-        retryOperation = operationOnRetry
+        retryOperation = operationOnRetry,
     )
 }
 

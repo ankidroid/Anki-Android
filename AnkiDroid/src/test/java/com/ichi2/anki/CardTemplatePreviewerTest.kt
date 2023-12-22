@@ -38,7 +38,6 @@ import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 class CardTemplatePreviewerTest : RobolectricTest() {
-
     @Test
     fun testPreviewUnsavedTemplate() {
         val modelName = "Basic"
@@ -50,13 +49,17 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
         intent.putExtra("index", 0)
 
-        var previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
+        var previewerController =
+            Robolectric.buildActivity(
+                TestCardTemplatePreviewer::class.java,
+                intent,
+            ).create().start().resume().visible()
         saveControllerForCleanup(previewerController)
         var testCardTemplatePreviewer = previewerController.get()
         Assert.assertTrue(
             "model change did not show up?",
             testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.question().contains("PREVIEWER_TEST") &&
-                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.answer().contains("PREVIEWER_TEST")
+                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.answer().contains("PREVIEWER_TEST"),
         )
 
         // Take it through a destroy/re-create lifecycle in order to test instance state persistence
@@ -69,7 +72,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         Assert.assertTrue(
             "model change not preserved in lifecycle??",
             testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.question().contains("PREVIEWER_TEST") &&
-                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.answer().contains("PREVIEWER_TEST")
+                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.answer().contains("PREVIEWER_TEST"),
         )
 
         // Make sure we can click
@@ -92,7 +95,11 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
         intent.putExtra("index", 0)
 
-        val previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
+        val previewerController =
+            Robolectric.buildActivity(
+                TestCardTemplatePreviewer::class.java,
+                intent,
+            ).create().start().resume().visible()
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
         val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
@@ -113,7 +120,11 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
         intent.putExtra("index", 0)
 
-        val previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
+        val previewerController =
+            Robolectric.buildActivity(
+                TestCardTemplatePreviewer::class.java,
+                intent,
+            ).create().start().resume().visible()
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
         val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
@@ -134,7 +145,11 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
         intent.putExtra("index", 0)
 
-        val previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
+        val previewerController =
+            Robolectric.buildActivity(
+                TestCardTemplatePreviewer::class.java,
+                intent,
+            ).create().start().resume().visible()
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
         val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
@@ -154,7 +169,11 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         intent.putExtra("cardList", longArrayOf(testCard1.id, testCard2.id))
         intent.putExtra("index", 0)
 
-        var previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
+        var previewerController =
+            Robolectric.buildActivity(
+                TestCardTemplatePreviewer::class.java,
+                intent,
+            ).create().start().resume().visible()
         saveControllerForCleanup(previewerController)
 
         // Take it through a destroy/re-create lifecycle in order to test instance state persistence
@@ -305,29 +324,35 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
-        assertThat("A blank card can be previewed", testCardTemplatePreviewer.cardContent, containsString("The front of this card is blank"))
+        assertThat(
+            "A blank card can be previewed",
+            testCardTemplatePreviewer.cardContent,
+            containsString("The front of this card is blank"),
+        )
     }
 
     @Test
     fun `Issue 14692 - 'Read Text' enabled, and previewing a card from the note editor`() {
         // Hack: TTS Doesn't work in Robolectric, instead we directly test the `readCardTts` method
-        val fields: MutableList<NoteService.NoteField?> = arrayListOf(
-            Field(0, "Hello"),
-            Field(1, "World")
-        )
-
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            val basicModel = getCurrentDatabaseModelCopy("Basic (and reversed card)")
-            val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, basicModel)
-            putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
-            putExtra(
-                "noteEditorBundle",
-                bundleOf(
-                    "editFields" to getFieldsAsBundleForPreview(fields),
-                    "did" to 1L
-                )
+        val fields: MutableList<NoteService.NoteField?> =
+            arrayListOf(
+                Field(0, "Hello"),
+                Field(1, "World"),
             )
-        }
+
+        val intent =
+            Intent(Intent.ACTION_VIEW).apply {
+                val basicModel = getCurrentDatabaseModelCopy("Basic (and reversed card)")
+                val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, basicModel)
+                putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+                putExtra(
+                    "noteEditorBundle",
+                    bundleOf(
+                        "editFields" to getFieldsAsBundleForPreview(fields),
+                        "did" to 1L,
+                    ),
+                )
+            }
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
@@ -340,24 +365,26 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @Test
     fun `The ordinal provided is used (standard) - Issue 14694`() {
-        val fields: MutableList<NoteService.NoteField?> = arrayListOf(
-            Field(0, "Hello"),
-            Field(1, "World")
-        )
-
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            val basicModel = getCurrentDatabaseModelCopy("Basic (and reversed card)")
-            val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, basicModel)
-            putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
-            putExtra(
-                "noteEditorBundle",
-                bundleOf(
-                    "editFields" to getFieldsAsBundleForPreview(fields),
-                    "did" to 1L
-                )
+        val fields: MutableList<NoteService.NoteField?> =
+            arrayListOf(
+                Field(0, "Hello"),
+                Field(1, "World"),
             )
-            putExtra("ordinal", 1)
-        }
+
+        val intent =
+            Intent(Intent.ACTION_VIEW).apply {
+                val basicModel = getCurrentDatabaseModelCopy("Basic (and reversed card)")
+                val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, basicModel)
+                putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+                putExtra(
+                    "noteEditorBundle",
+                    bundleOf(
+                        "editFields" to getFieldsAsBundleForPreview(fields),
+                        "did" to 1L,
+                    ),
+                )
+                putExtra("ordinal", 1)
+            }
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
@@ -367,25 +394,27 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @Test
     fun `The ordinal provided is used (cloze)- Issue 14694`() {
-        val fields: MutableList<NoteService.NoteField?> = arrayListOf(
-            Field(0, "{{c1::Hello}} {{c3::World}}"),
-            Field(1, "Extra")
-        )
+        val fields: MutableList<NoteService.NoteField?> =
+            arrayListOf(
+                Field(0, "{{c1::Hello}} {{c3::World}}"),
+                Field(1, "Extra"),
+            )
         val ordinalOfSecondCard = 2
 
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            val clozeModel = getCurrentDatabaseModelCopy("Cloze")
-            val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, clozeModel)
-            putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
-            putExtra(
-                "noteEditorBundle",
-                bundleOf(
-                    "editFields" to getFieldsAsBundleForPreview(fields),
-                    "did" to 1L
+        val intent =
+            Intent(Intent.ACTION_VIEW).apply {
+                val clozeModel = getCurrentDatabaseModelCopy("Cloze")
+                val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, clozeModel)
+                putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+                putExtra(
+                    "noteEditorBundle",
+                    bundleOf(
+                        "editFields" to getFieldsAsBundleForPreview(fields),
+                        "did" to 1L,
+                    ),
                 )
-            )
-            putExtra("ordinal", ordinalOfSecondCard)
-        }
+                putExtra("ordinal", ordinalOfSecondCard)
+            }
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
@@ -423,7 +452,10 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
     }
 
-    private fun getSavedCard(notetype: NotetypeJson, ordinal: Int): Card {
+    private fun getSavedCard(
+        notetype: NotetypeJson,
+        ordinal: Int,
+    ): Card {
         val n = col.newNote(notetype)
         val fieldNames = notetype.fieldsNames
         for (i in fieldNames.indices) {

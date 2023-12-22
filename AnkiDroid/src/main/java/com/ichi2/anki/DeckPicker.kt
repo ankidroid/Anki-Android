@@ -1,4 +1,4 @@
-/****************************************************************************************
+/*
  * Copyright (c) 2009 Andrew Dubya <andrewdubya@gmail.com>                              *
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
@@ -188,7 +188,9 @@ open class DeckPicker :
 
     @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
     var mProgressDialog: android.app.ProgressDialog? = null
-    private var mStudyoptionsFrame: View? = null // not lateInit - can be null
+    private var mStudyoptionsFrame: View? = null
+
+    // not lateInit - can be null
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var recyclerView: RecyclerView
     private lateinit var mRecyclerViewLayoutManager: LinearLayoutManager
@@ -251,56 +253,64 @@ open class DeckPicker :
 
     override val permissionScreenLauncher = recreateActivityResultLauncher()
 
-    private val reviewLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        DeckPickerActivityResultCallback {
-            processReviewResults(it.resultCode)
-        }
-    )
+    private val reviewLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+            DeckPickerActivityResultCallback {
+                processReviewResults(it.resultCode)
+            },
+        )
 
-    private val showNewVersionInfoLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        DeckPickerActivityResultCallback {
-            showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
-        }
-    )
+    private val showNewVersionInfoLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+            DeckPickerActivityResultCallback {
+                showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
+            },
+        )
 
-    private val loginForSyncLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        DeckPickerActivityResultCallback {
-            if (it.resultCode == RESULT_OK) {
-                mSyncOnResume = true
-            }
-        }
-    )
+    private val loginForSyncLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+            DeckPickerActivityResultCallback {
+                if (it.resultCode == RESULT_OK) {
+                    mSyncOnResume = true
+                }
+            },
+        )
 
-    private val requestPathUpdateLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        DeckPickerActivityResultCallback {
-            // The collection path was inaccessible on startup so just close the activity and let user restart
-            finish()
-        }
-    )
+    private val requestPathUpdateLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+            DeckPickerActivityResultCallback {
+                // The collection path was inaccessible on startup so just close the activity and let user restart
+                finish()
+            },
+        )
 
-    private val apkgFileImportResultLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        DeckPickerActivityResultCallback {
-            if (it.resultCode == RESULT_OK) {
-                onSelectedPackageToImport(it.data!!)
-            }
-        }
-    )
+    private val apkgFileImportResultLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+            DeckPickerActivityResultCallback {
+                if (it.resultCode == RESULT_OK) {
+                    onSelectedPackageToImport(it.data!!)
+                }
+            },
+        )
 
-    private val csvImportResultLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        DeckPickerActivityResultCallback {
-            if (it.resultCode == RESULT_OK) {
-                onSelectedCsvForImport(it.data!!)
-            }
-        }
-    )
+    private val csvImportResultLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+            DeckPickerActivityResultCallback {
+                if (it.resultCode == RESULT_OK) {
+                    onSelectedCsvForImport(it.data!!)
+                }
+            },
+        )
 
-    private inner class DeckPickerActivityResultCallback(private val callback: (result: ActivityResult) -> Unit) : ActivityResultCallback<ActivityResult> {
+    private inner class DeckPickerActivityResultCallback(
+        private val callback: (result: ActivityResult) -> Unit,
+    ) : ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
             if (result.resultCode == RESULT_MEDIA_EJECTED) {
                 onSdCardNotMounted()
@@ -327,12 +337,17 @@ open class DeckPicker :
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
-    private val mDeckExpanderClickListener = View.OnClickListener { view: View ->
-        launchCatchingTask { toggleDeckExpand(view.tag as Long) }
-    }
+    private val mDeckExpanderClickListener =
+        View.OnClickListener { view: View ->
+            launchCatchingTask { toggleDeckExpand(view.tag as Long) }
+        }
     private val mDeckClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.DEFAULT) }
     private val mCountsClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS) }
-    private fun onDeckClick(v: View, selectionType: DeckSelectionType) {
+
+    private fun onDeckClick(
+        v: View,
+        selectionType: DeckSelectionType,
+    ) {
         val deckId = v.tag as Long
         Timber.i("DeckPicker:: Selected deck with id %d", deckId)
         launchCatchingTask {
@@ -346,16 +361,18 @@ open class DeckPicker :
         }
     }
 
-    private val mDeckLongClickListener = OnLongClickListener { v ->
-        val deckId = v.tag as Long
-        Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId)
-        showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId))
-        true
-    }
+    private val mDeckLongClickListener =
+        OnLongClickListener { v ->
+            val deckId = v.tag as Long
+            Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId)
+            showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId))
+            true
+        }
 
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
+
     /** Called when the activity is first created.  */
     @Throws(SQLException::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -427,7 +444,8 @@ open class DeckPicker :
         var hasDeckPickerBackground = false
         try {
             hasDeckPickerBackground = applyDeckPickerBackground()
-        } catch (e: OutOfMemoryError) { // 6608 - OOM should be catchable here.
+        } catch (e: OutOfMemoryError) {
+            // 6608 - OOM should be catchable here.
             Timber.w(e, "Failed to apply background - OOM")
             showThemedToast(this, getString(R.string.background_image_too_large), false)
         } catch (e: Exception) {
@@ -437,26 +455,28 @@ open class DeckPicker :
         mExportingDelegate.onRestoreInstanceState(savedInstanceState)
 
         // create and set an adapter for the RecyclerView
-        mDeckListAdapter = DeckAdapter(layoutInflater, this).apply {
-            setDeckClickListener(mDeckClickListener)
-            setCountsClickListener(mCountsClickListener)
-            setDeckExpanderClickListener(mDeckExpanderClickListener)
-            setDeckLongClickListener(mDeckLongClickListener)
-            enablePartialTransparencyForBackground(hasDeckPickerBackground)
-        }
+        mDeckListAdapter =
+            DeckAdapter(layoutInflater, this).apply {
+                setDeckClickListener(mDeckClickListener)
+                setCountsClickListener(mCountsClickListener)
+                setDeckExpanderClickListener(mDeckExpanderClickListener)
+                setDeckLongClickListener(mDeckLongClickListener)
+                enablePartialTransparencyForBackground(hasDeckPickerBackground)
+            }
         recyclerView.adapter = mDeckListAdapter
 
-        mPullToSyncWrapper = findViewById<SwipeRefreshLayout?>(R.id.pull_to_sync_wrapper).apply {
-            setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
-            setOnRefreshListener {
-                Timber.i("Pull to Sync: Syncing")
-                mPullToSyncWrapper.isRefreshing = false
-                sync()
+        mPullToSyncWrapper =
+            findViewById<SwipeRefreshLayout?>(R.id.pull_to_sync_wrapper).apply {
+                setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
+                setOnRefreshListener {
+                    Timber.i("Pull to Sync: Syncing")
+                    mPullToSyncWrapper.isRefreshing = false
+                    sync()
+                }
+                viewTreeObserver.addOnScrollChangedListener {
+                    mPullToSyncWrapper.isEnabled = mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
+                }
             }
-            viewTreeObserver.addOnScrollChangedListener {
-                mPullToSyncWrapper.isEnabled = mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
-            }
-        }
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
         mFloatingActionMenu = DeckPickerFloatingActionMenu(this, view, this)
 
@@ -560,16 +580,17 @@ open class DeckPicker :
 
         Timber.d("handleStartup: Continuing. unaffected by storage migration")
         val failure = InitialActivity.getStartupFailureType(this)
-        mStartupError = if (failure == null) {
-            // Show any necessary dialogs (e.g. changelog, special messages, etc)
-            val sharedPrefs = this.sharedPrefs()
-            showStartupScreensAndDialogs(sharedPrefs, 0)
-            false
-        } else {
-            // Show error dialogs
-            handleStartupFailure(failure)
-            true
-        }
+        mStartupError =
+            if (failure == null) {
+                // Show any necessary dialogs (e.g. changelog, special messages, etc)
+                val sharedPrefs = this.sharedPrefs()
+                showStartupScreensAndDialogs(sharedPrefs, 0)
+                false
+            } else {
+                // Show error dialogs
+                handleStartupFailure(failure)
+                true
+            }
     }
 
     @VisibleForTesting
@@ -597,19 +618,21 @@ open class DeckPicker :
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             }
-            WEBVIEW_FAILED -> AlertDialog.Builder(this).show {
-                title(R.string.ankidroid_init_failed_webview_title)
-                message(
-                    text = getString(
-                        R.string.ankidroid_init_failed_webview,
-                        AnkiDroidApp.webViewErrorMessage
+            WEBVIEW_FAILED ->
+                AlertDialog.Builder(this).show {
+                    title(R.string.ankidroid_init_failed_webview_title)
+                    message(
+                        text =
+                            getString(
+                                R.string.ankidroid_init_failed_webview,
+                                AnkiDroidApp.webViewErrorMessage,
+                            ),
                     )
-                )
-                positiveButton(R.string.close) {
-                    exit()
+                    positiveButton(R.string.close) {
+                        exit()
+                    }
+                    cancelable(false)
                 }
-                cancelable(false)
-            }
             DISK_FULL -> displayNoStorageError()
             DB_ERROR -> displayDatabaseFailure()
             else -> displayDatabaseFailure()
@@ -620,6 +643,7 @@ open class DeckPicker :
         Timber.i("Displaying database failure")
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
     }
+
     private fun displayNoStorageError() {
         Timber.i("Displaying no storage error")
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DISK_FULL)
@@ -661,10 +685,11 @@ open class DeckPicker :
         // Store the job so that tests can easily await it. In the future
         // this may be better done by injecting a custom test scheduler
         // into CollectionManager, and awaiting that.
-        createMenuJob = launchCatchingTask {
-            updateMenuState()
-            updateMenuFromState(menu)
-        }
+        createMenuJob =
+            launchCatchingTask {
+                updateMenuState()
+                updateMenuFromState(menu)
+            }
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -692,9 +717,13 @@ open class DeckPicker :
      *   relying instead on modifying it directly and/or using [onPrepareOptionsMenu].
      *   Note an issue with the latter: https://github.com/ankidroid/Anki-Android/issues/7755
      */
-    private fun setupMigrationProgressMenuItem(menu: Menu, mediaMigrationState: MediaMigrationState) {
-        val migrationProgressMenuItem = menu.findItem(R.id.action_migration_progress)
-            .apply { isVisible = mediaMigrationState is MediaMigrationState.Ongoing.NotPaused }
+    private fun setupMigrationProgressMenuItem(
+        menu: Menu,
+        mediaMigrationState: MediaMigrationState,
+    ) {
+        val migrationProgressMenuItem =
+            menu.findItem(R.id.action_migration_progress)
+                .apply { isVisible = mediaMigrationState is MediaMigrationState.Ongoing.NotPaused }
 
         fun CircularProgressIndicator.publishProgress(progress: MigrationService.Progress.MovingMediaFiles) {
             when (progress) {
@@ -711,39 +740,42 @@ open class DeckPicker :
 
         if (mediaMigrationState is MediaMigrationState.Ongoing.NotPaused) {
             if (cachedMigrationProgressMenuItemActionView == null) {
-                val actionView = migrationProgressMenuItem.actionView!!
-                    .also { cachedMigrationProgressMenuItemActionView = it }
+                val actionView =
+                    migrationProgressMenuItem.actionView!!
+                        .also { cachedMigrationProgressMenuItemActionView = it }
 
-                val progressIndicator = actionView
-                    .findViewById<CircularProgressIndicator>(R.id.progress_indicator)
-                    .apply { max = Int.MAX_VALUE }
+                val progressIndicator =
+                    actionView
+                        .findViewById<CircularProgressIndicator>(R.id.progress_indicator)
+                        .apply { max = Int.MAX_VALUE }
 
                 actionView.findViewById<ImageButton>(R.id.button).also { button ->
                     button.setOnClickListener { warnNoSyncDuringMigration() }
                     TooltipCompat.setTooltipText(button, getText(R.string.show_migration_progress))
                 }
 
-                migrationProgressPublishingJob = lifecycleScope.launch {
-                    MigrationService.flowOfProgress
-                        .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                        .filterNotNull()
-                        .collect { progress ->
-                            when (progress) {
-                                is MigrationService.Progress.CopyingEssentialFiles -> {
-                                    // Button is not shown when transferring essential files
-                                }
+                migrationProgressPublishingJob =
+                    lifecycleScope.launch {
+                        MigrationService.flowOfProgress
+                            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                            .filterNotNull()
+                            .collect { progress ->
+                                when (progress) {
+                                    is MigrationService.Progress.CopyingEssentialFiles -> {
+                                        // Button is not shown when transferring essential files
+                                    }
 
-                                is MigrationService.Progress.MovingMediaFiles -> {
-                                    progressIndicator.publishProgress(progress)
-                                }
+                                    is MigrationService.Progress.MovingMediaFiles -> {
+                                        progressIndicator.publishProgress(progress)
+                                    }
 
-                                is MigrationService.Progress.Done -> {
-                                    updateMenuState()
-                                    updateMenuFromState(menu)
+                                    is MigrationService.Progress.Done -> {
+                                        updateMenuState()
+                                        updateMenuFromState(menu)
+                                    }
                                 }
                             }
-                        }
-                }
+                    }
             } else {
                 migrationProgressMenuItem.actionView = cachedMigrationProgressMenuItemActionView
             }
@@ -756,38 +788,42 @@ open class DeckPicker :
     }
 
     private fun setupSearchIcon(menuItem: MenuItem) {
-        menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            // When SearchItem is expanded
-            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                Timber.i("DeckPicker:: SearchItem opened")
-                // Hide the floating action button if it is visible
-                mFloatingActionMenu.hideFloatingActionButton()
-                return true
-            }
+        menuItem.setOnActionExpandListener(
+            object : MenuItem.OnActionExpandListener {
+                // When SearchItem is expanded
+                override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                    Timber.i("DeckPicker:: SearchItem opened")
+                    // Hide the floating action button if it is visible
+                    mFloatingActionMenu.hideFloatingActionButton()
+                    return true
+                }
 
-            // When SearchItem is collapsed
-            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                Timber.i("DeckPicker:: SearchItem closed")
-                // Show the floating action button if it is hidden
-                mFloatingActionMenu.showFloatingActionButton()
-                return true
-            }
-        })
+                // When SearchItem is collapsed
+                override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                    Timber.i("DeckPicker:: SearchItem closed")
+                    // Show the floating action button if it is hidden
+                    mFloatingActionMenu.showFloatingActionButton()
+                    return true
+                }
+            },
+        )
 
         (menuItem.actionView as SearchView).run {
             queryHint = getString(R.string.search_decks)
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String): Boolean {
-                    clearFocus()
-                    return true
-                }
+            setOnQueryTextListener(
+                object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        clearFocus()
+                        return true
+                    }
 
-                override fun onQueryTextChange(newText: String): Boolean {
-                    val adapter = recyclerView.adapter as Filterable?
-                    adapter!!.filter.filter(newText)
-                    return true
-                }
-            })
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        val adapter = recyclerView.adapter as Filterable?
+                        adapter!!.filter.filter(newText)
+                        return true
+                    }
+                },
+            )
         }
         searchDecksIcon = menuItem
     }
@@ -803,7 +839,10 @@ open class DeckPicker :
         }
     }
 
-    private fun updateUndoLabelFromState(menuItem: MenuItem, undoLabel: String?) {
+    private fun updateUndoLabelFromState(
+        menuItem: MenuItem,
+        undoLabel: String?,
+    ) {
         menuItem.run {
             if (undoLabel != null) {
                 isVisible = true
@@ -814,7 +853,10 @@ open class DeckPicker :
         }
     }
 
-    private fun updateSyncIconFromState(menuItem: MenuItem, state: OptionsMenuState) {
+    private fun updateSyncIconFromState(
+        menuItem: MenuItem,
+        state: OptionsMenuState,
+    ) {
         if (state.mediaMigrationState is MediaMigrationState.Ongoing) {
             menuItem.isVisible = false
         } else {
@@ -825,7 +867,7 @@ open class DeckPicker :
                     SyncIconState.Normal, SyncIconState.PendingChanges -> R.string.button_sync
                     SyncIconState.FullSync -> R.string.sync_menu_title_full_sync
                     SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
-                }
+                },
             )
 
             when (state.syncIcon) {
@@ -849,17 +891,19 @@ open class DeckPicker :
 
     @VisibleForTesting
     suspend fun updateMenuState() {
-        optionsMenuState = withOpenColOrNull {
-            val searchIcon = decks.count() >= 10
-            val undoLabel = undoLabel()
-            Pair(searchIcon, undoLabel)
-        }?.let { (searchIcon, undoLabel) ->
-            val syncIcon = fetchSyncStatus()
-            val mediaMigrationState = getMediaMigrationState()
-            val shouldShowStartMigrationButton = shouldOfferToMigrate() ||
-                mediaMigrationState is MediaMigrationState.Ongoing.PausedDueToError
-            OptionsMenuState(searchIcon, undoLabel, syncIcon, shouldShowStartMigrationButton, mediaMigrationState)
-        }
+        optionsMenuState =
+            withOpenColOrNull {
+                val searchIcon = decks.count() >= 10
+                val undoLabel = undoLabel()
+                Pair(searchIcon, undoLabel)
+            }?.let { (searchIcon, undoLabel) ->
+                val syncIcon = fetchSyncStatus()
+                val mediaMigrationState = getMediaMigrationState()
+                val shouldShowStartMigrationButton =
+                    shouldOfferToMigrate() ||
+                        mediaMigrationState is MediaMigrationState.Ongoing.PausedDueToError
+                OptionsMenuState(searchIcon, undoLabel, syncIcon, shouldShowStartMigrationButton, mediaMigrationState)
+            }
     }
 
     // TODO BEFORE-RELEASE This doesn't offer to migrate data if not logged in.
@@ -957,7 +1001,8 @@ open class DeckPicker :
     }
 
     fun createFilteredDialog() {
-        val createFilteredDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
+        val createFilteredDeckDialog =
+            CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
         createFilteredDeckDialog.setOnNewDeckCreated {
             // a filtered deck was created
             openFilteredDeckOptions()
@@ -974,8 +1019,8 @@ open class DeckPicker :
             ExportDialogParams(
                 message = resources.getString(R.string.confirm_apkg_export),
                 exportType = ExportType.ExportCollection,
-                includeMedia = includeMedia
-            )
+                includeMedia = includeMedia,
+            ),
         )
     }
 
@@ -1072,12 +1117,15 @@ open class DeckPicker :
         val automaticSyncIntervalInMS = AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES * 60 * 1000
         val syncIntervalPassed =
             TimeManager.time.intTimeMS() - lastSyncTime > automaticSyncIntervalInMS
-        val isNotBlockedByMeteredConnection = preferences.getBoolean(
-            getString(R.string.metered_sync_key),
-            false
-        ) || !isActiveNetworkMetered()
+        val isNotBlockedByMeteredConnection =
+            preferences.getBoolean(
+                getString(R.string.metered_sync_key),
+                false,
+            ) || !isActiveNetworkMetered()
         val isMigratingStorage = mediaMigrationIsInProgress(this)
-        if (isLoggedIn() && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection && !isMigratingStorage) {
+        if (isLoggedIn() && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed &&
+            isNotBlockedByMeteredConnection && !isMigratingStorage
+        ) {
             Timber.i("Triggering Automatic Sync")
             sync()
         }
@@ -1096,7 +1144,7 @@ open class DeckPicker :
             } else {
                 if (!preferences.getBoolean(
                         "exitViaDoubleTapBack",
-                        false
+                        false,
                     ) || mBackButtonPressedToExit
                 ) {
                     automaticSync()
@@ -1112,7 +1160,10 @@ open class DeckPicker :
         }
     }
 
-    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyUp(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
         if (mToolbarSearchView != null && mToolbarSearchView!!.hasFocus()) {
             Timber.d("Skipping keypress: search action bar is focused")
             return true
@@ -1171,11 +1222,12 @@ open class DeckPicker :
                 // If libanki determines it's necessary to confirm the full sync then show a confirmation dialog
                 // We have to show the dialog via the DialogHandler since this method is called via an async task
                 val res = resources
-                val message = """
-     ${res.getString(R.string.full_sync_confirmation_upgrade)}
-     
-     ${res.getString(R.string.full_sync_confirmation)}
-                """.trimIndent()
+                val message =
+                    """
+                    ${res.getString(R.string.full_sync_confirmation_upgrade)}
+                    
+                    ${res.getString(R.string.full_sync_confirmation)}
+                    """.trimIndent()
 
                 dialogHandler.sendMessage(ForceFullSyncDialog(message).toMessage())
             }
@@ -1205,7 +1257,10 @@ open class DeckPicker :
         startActivity(intent)
     }
 
-    private fun showStartupScreensAndDialogs(preferences: SharedPreferences, skip: Int) {
+    private fun showStartupScreensAndDialogs(
+        preferences: SharedPreferences,
+        skip: Int,
+    ) {
         // For Android 8/8.1 we want to use software rendering by default or the Reviewer UI is broken #7369
         if (sdkVersion == Build.VERSION_CODES.O ||
             sdkVersion == Build.VERSION_CODES.O_MR1
@@ -1239,13 +1294,14 @@ open class DeckPicker :
             // installation of AnkiDroid and we don't run the check.
             val current = VersionUtils.pkgVersionCode
             Timber.i("Current AnkiDroid version: %s", current)
-            val previous: Long = if (preferences.contains(UPGRADE_VERSION_KEY)) {
-                // Upgrading currently installed app
-                getPreviousVersion(preferences, current)
-            } else {
-                // Fresh install
-                current
-            }
+            val previous: Long =
+                if (preferences.contains(UPGRADE_VERSION_KEY)) {
+                    // Upgrading currently installed app
+                    getPreviousVersion(preferences, current)
+                } else {
+                    // Fresh install
+                    current
+                }
             preferences.edit { putLong(UPGRADE_VERSION_KEY, current) }
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
@@ -1351,27 +1407,31 @@ open class DeckPicker :
         showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance())
     }
 
-    fun getPreviousVersion(preferences: SharedPreferences, current: Long): Long {
+    fun getPreviousVersion(
+        preferences: SharedPreferences,
+        current: Long,
+    ): Long {
         var previous: Long
         try {
             previous = preferences.getLong(UPGRADE_VERSION_KEY, current)
         } catch (e: ClassCastException) {
             Timber.w(e)
-            previous = try {
-                // set 20900203 to default value, as it's the latest version that stores integer in shared prefs
-                preferences.getInt(UPGRADE_VERSION_KEY, 20900203).toLong()
-            } catch (cce: ClassCastException) {
-                Timber.w(cce)
-                // Previous versions stored this as a string.
-                val s = preferences.getString(UPGRADE_VERSION_KEY, "")
-                // The last version of AnkiDroid that stored this as a string was 2.0.2.
-                // We manually set the version here, but anything older will force a DB check.
-                if ("2.0.2" == s) {
-                    40
-                } else {
-                    0
+            previous =
+                try {
+                    // set 20900203 to default value, as it's the latest version that stores integer in shared prefs
+                    preferences.getInt(UPGRADE_VERSION_KEY, 20900203).toLong()
+                } catch (cce: ClassCastException) {
+                    Timber.w(cce)
+                    // Previous versions stored this as a string.
+                    val s = preferences.getString(UPGRADE_VERSION_KEY, "")
+                    // The last version of AnkiDroid that stored this as a string was 2.0.2.
+                    // We manually set the version here, but anything older will force a DB check.
+                    if ("2.0.2" == s) {
+                        40
+                    } else {
+                        0
+                    }
                 }
-            }
             Timber.d("Updating shared preferences stored key %s type to long", UPGRADE_VERSION_KEY)
             // Expected Editor.putLong to be called later to update the value in shared prefs
             preferences.edit().remove(UPGRADE_VERSION_KEY).apply()
@@ -1404,7 +1464,10 @@ open class DeckPicker :
         showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType))
     }
 
-    override fun showMediaCheckDialog(dialogType: Int, checkList: MediaCheckResult) {
+    override fun showMediaCheckDialog(
+        dialogType: Int,
+        checkList: MediaCheckResult,
+    ) {
         showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType, checkList))
     }
 
@@ -1421,7 +1484,10 @@ open class DeckPicker :
      * @param dialogType id of dialog to show
      * @param message text to show
      */
-    override fun showSyncErrorDialog(dialogType: Int, message: String?) {
+    override fun showSyncErrorDialog(
+        dialogType: Int,
+        message: String?,
+    ) {
         val newFragment: AsyncDialogFragment = newInstance(dialogType, message)
         showAsyncDialogFragment(newFragment, Channel.SYNC)
     }
@@ -1442,13 +1508,14 @@ open class DeckPicker :
         // TODO: doesn't work on null collection-only on non-openable(is this still relevant with withCol?)
         launchCatchingTask(resources.getString(R.string.deck_repair_error)) {
             Timber.d("doInBackgroundRepairCollection")
-            val result = withProgress(resources.getString(R.string.backup_repair_deck_progress)) {
-                withCol {
-                    Timber.i("RepairCollection: Closing collection")
-                    close()
-                    BackupManager.repairCollection(this)
+            val result =
+                withProgress(resources.getString(R.string.backup_repair_deck_progress)) {
+                    withCol {
+                        Timber.i("RepairCollection: Closing collection")
+                        close()
+                        BackupManager.repairCollection(this)
+                    }
                 }
-            }
             if (!result) {
                 showThemedToast(this@DeckPicker, resources.getString(R.string.deck_repair_error), true)
                 showCollectionErrorDialog()
@@ -1504,12 +1571,13 @@ open class DeckPicker :
     override fun deleteUnused(unused: List<String>) {
         launchCatchingTask {
             // Number of deleted files
-            val noOfDeletedFiles = withProgress(resources.getString(R.string.delete_media_message)) {
-                withCol { deleteMedia(this, unused) }
-            }
+            val noOfDeletedFiles =
+                withProgress(resources.getString(R.string.delete_media_message)) {
+                    withCol { deleteMedia(this, unused) }
+                }
             showSimpleMessageDialog(
                 title = resources.getString(R.string.delete_media_result_title),
-                message = resources.getQuantityString(R.plurals.delete_media_result_message, noOfDeletedFiles, noOfDeletedFiles)
+                message = resources.getQuantityString(R.plurals.delete_media_result_message, noOfDeletedFiles, noOfDeletedFiles),
             )
         }
     }
@@ -1585,7 +1653,7 @@ open class DeckPicker :
                     preferences.edit {
                         putBoolean(
                             getString(R.string.metered_sync_key),
-                            isCheckboxChecked
+                            isCheckboxChecked,
                         )
                     }
                 }
@@ -1641,15 +1709,19 @@ open class DeckPicker :
      */
     private fun registerExternalStorageListener() {
         if (mUnmountReceiver == null) {
-            mUnmountReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                        onSdCardNotMounted()
-                    } else if (intent.action == SdCardReceiver.MEDIA_MOUNT) {
-                        ActivityCompat.recreate(this@DeckPicker)
+            mUnmountReceiver =
+                object : BroadcastReceiver() {
+                    override fun onReceive(
+                        context: Context,
+                        intent: Intent,
+                    ) {
+                        if (intent.action == SdCardReceiver.MEDIA_EJECT) {
+                            onSdCardNotMounted()
+                        } else if (intent.action == SdCardReceiver.MEDIA_MOUNT) {
+                            ActivityCompat.recreate(this@DeckPicker)
+                        }
                     }
                 }
-            }
             val iFilter = IntentFilter()
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
             iFilter.addAction(SdCardReceiver.MEDIA_MOUNT)
@@ -1668,7 +1740,9 @@ open class DeckPicker :
         startActivity(intent)
     }
 
-    private fun openStudyOptions(@Suppress("SameParameterValue") withDeckOptions: Boolean) {
+    private fun openStudyOptions(
+        @Suppress("SameParameterValue") withDeckOptions: Boolean,
+    ) {
         if (fragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions)
@@ -1725,11 +1799,15 @@ open class DeckPicker :
     }
 
     @NeedsTest("14608: Ensure that the deck options refer to the selected deck")
-    private suspend fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
-        fun showEmptyDeckSnackbar() = showSnackbar(R.string.empty_deck) {
-            addCallback(mSnackbarShowHideCallback)
-            setAction(R.string.menu_add) { addNote() }
-        }
+    private suspend fun handleDeckSelection(
+        did: DeckId,
+        selectionType: DeckSelectionType,
+    ) {
+        fun showEmptyDeckSnackbar() =
+            showSnackbar(R.string.empty_deck) {
+                addCallback(mSnackbarShowHideCallback)
+                setAction(R.string.menu_add) { addNote() }
+            }
 
         /** Check if we need to update the fragment or update the deck list */
         fun updateUi() {
@@ -1763,7 +1841,8 @@ open class DeckPicker :
             CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED,
             CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY,
             CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED,
-            CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED -> {
+            CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED,
+            -> {
                 startActivity(CongratsPage.getIntent(this))
             }
             CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
@@ -1804,18 +1883,23 @@ open class DeckPicker :
         }
         Timber.d("updateDeckList")
         loadDeckCounts?.cancel()
-        loadDeckCounts = launchCatchingTask {
-            withProgress {
-                Timber.d("Refreshing deck list")
-                val deckData = withCol {
-                    Pair(sched.deckDueTree(), this.isEmpty)
+        loadDeckCounts =
+            launchCatchingTask {
+                withProgress {
+                    Timber.d("Refreshing deck list")
+                    val deckData =
+                        withCol {
+                            Pair(sched.deckDueTree(), this.isEmpty)
+                        }
+                    onDecksLoaded(deckData.first, deckData.second)
                 }
-                onDecksLoaded(deckData.first, deckData.second)
             }
-        }
     }
 
-    private fun onDecksLoaded(result: DeckNode, collectionIsEmpty: Boolean) {
+    private fun onDecksLoaded(
+        result: DeckNode,
+        collectionIsEmpty: Boolean,
+    ) {
         Timber.i("Updating deck list UI")
         hideProgressBar()
         // Make sure the fragment is visible
@@ -1827,9 +1911,10 @@ open class DeckPicker :
         // Update the mini statistics bar as well
         mReviewSummaryTextView.setSingleLine()
         launchCatchingTask {
-            mReviewSummaryTextView.text = withCol {
-                sched.studiedToday()
-            }
+            mReviewSummaryTextView.text =
+                withCol {
+                    sched.studiedToday()
+                }
         }
         Timber.d("Startup - Deck List UI Completed")
     }
@@ -1850,11 +1935,12 @@ open class DeckPicker :
             mDeckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
             mNoDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
         } else {
-            val translation = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                8f,
-                resources.displayMetrics
-            )
+            val translation =
+                TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    8f,
+                    resources.displayMetrics,
+                )
             val decksListShown = mDeckPickerContent.visibility == View.VISIBLE
             val placeholderShown = mNoDecksPlaceholder.visibility == View.VISIBLE
             if (isEmpty) {
@@ -1862,11 +1948,13 @@ open class DeckPicker :
                     fadeOut(mDeckPickerContent, mShortAnimDuration, translation)
                 }
                 if (!placeholderShown) {
-                    fadeIn(mNoDecksPlaceholder, mShortAnimDuration, translation).startDelay = if (decksListShown) mShortAnimDuration * 2.toLong() else 0.toLong()
+                    fadeIn(mNoDecksPlaceholder, mShortAnimDuration, translation).startDelay =
+                        if (decksListShown) mShortAnimDuration * 2.toLong() else 0.toLong()
                 }
             } else {
                 if (!decksListShown) {
-                    fadeIn(mDeckPickerContent, mShortAnimDuration, translation).startDelay = if (placeholderShown) mShortAnimDuration * 2.toLong() else 0.toLong()
+                    fadeIn(mDeckPickerContent, mShortAnimDuration, translation).startDelay =
+                        if (placeholderShown) mShortAnimDuration * 2.toLong() else 0.toLong()
                 }
                 if (placeholderShown) {
                     fadeOut(mNoDecksPlaceholder, mShortAnimDuration, translation)
@@ -1895,11 +1983,12 @@ open class DeckPicker :
 
             if (due != null && supportActionBar != null) {
                 val cardCount = withCol { cardCount() }
-                val subTitle: String = if (due == 0) {
-                    res.getQuantityString(R.plurals.deckpicker_title_zero_due, cardCount, cardCount)
-                } else {
-                    res.getQuantityString(R.plurals.widget_cards_due, due, due)
-                }
+                val subTitle: String =
+                    if (due == 0) {
+                        res.getQuantityString(R.plurals.deckpicker_title_zero_due, cardCount, cardCount)
+                    } else {
+                        res.getQuantityString(R.plurals.widget_cards_due, due, due)
+                    }
                 supportActionBar!!.subtitle = subTitle
             }
         } catch (e: RuntimeException) {
@@ -1931,23 +2020,27 @@ open class DeckPicker :
         mExportingDelegate.showExportDialog(
             ExportDialogParams(
                 message = resources.getString(R.string.confirm_apkg_export_deck, getColUnsafe.decks.name(did)),
-                exportType = ExportType.ExportDeck(did)
-            )
+                exportType = ExportType.ExportDeck(did),
+            ),
         )
     }
 
-    fun createIcon(context: Context, did: DeckId) {
+    fun createIcon(
+        context: Context,
+        did: DeckId,
+    ) {
         // This code should not be reachable with lower versions
-        val shortcut = ShortcutInfoCompat.Builder(this, did.toString())
-            .setIntent(
-                Intent(context, Reviewer::class.java)
-                    .setAction(Intent.ACTION_VIEW)
-                    .putExtra("deckId", did)
-            )
-            .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
-            .setShortLabel(Decks.basename(getColUnsafe.decks.name(did)))
-            .setLongLabel(getColUnsafe.decks.name(did))
-            .build()
+        val shortcut =
+            ShortcutInfoCompat.Builder(this, did.toString())
+                .setIntent(
+                    Intent(context, Reviewer::class.java)
+                        .setAction(Intent.ACTION_VIEW)
+                        .putExtra("deckId", did),
+                )
+                .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
+                .setShortLabel(Decks.basename(getColUnsafe.decks.name(did)))
+                .setLongLabel(getColUnsafe.decks.name(did))
+                .build()
         try {
             val success = ShortcutManagerCompat.requestPinShortcut(this, shortcut, null)
 
@@ -2000,11 +2093,12 @@ open class DeckPicker :
      */
     fun deleteDeck(did: DeckId): Job {
         return launchCatchingTask {
-            val changes = withProgress(resources.getString(R.string.delete_deck)) {
-                undoableOp {
-                    decks.removeDecks(listOf(did))
+            val changes =
+                withProgress(resources.getString(R.string.delete_deck)) {
+                    undoableOp {
+                        decks.removeDecks(listOf(did))
+                    }
                 }
-            }
             showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT)
         }
     }
@@ -2070,11 +2164,12 @@ open class DeckPicker :
 
     private fun handleEmptyCards() {
         launchCatchingTask {
-            val emptyCids = withProgress(R.string.emtpy_cards_finding) {
-                withCol {
-                    emptyCids()
+            val emptyCids =
+                withProgress(R.string.emtpy_cards_finding) {
+                    withCol {
+                        emptyCids()
+                    }
                 }
-            }
             AlertDialog.Builder(this@DeckPicker).show {
                 setTitle(TR.emptyCardsWindowTitle())
                 if (emptyCids.isEmpty()) {
@@ -2133,7 +2228,7 @@ open class DeckPicker :
         SHOW_STUDY_OPTIONS,
 
         /** Always open reviewer (keyboard shortcut)  */
-        SKIP_STUDY_OPTIONS
+        SKIP_STUDY_OPTIONS,
     }
 
     companion object {
@@ -2164,7 +2259,12 @@ open class DeckPicker :
         private const val SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400
 
         // Animation utility methods used by renderPage() method
-        fun fadeIn(view: View?, duration: Int, translation: Float = 0f, startAction: Runnable? = Runnable { view!!.visibility = View.VISIBLE }): ViewPropertyAnimator {
+        fun fadeIn(
+            view: View?,
+            duration: Int,
+            translation: Float = 0f,
+            startAction: Runnable? = Runnable { view!!.visibility = View.VISIBLE },
+        ): ViewPropertyAnimator {
             view!!.alpha = 0f
             view.translationY = translation
             return view.animate()
@@ -2174,7 +2274,15 @@ open class DeckPicker :
                 .withStartAction(startAction)
         }
 
-        fun fadeOut(view: View?, duration: Int, translation: Float = 0f, endAction: Runnable? = Runnable { view!!.visibility = View.GONE }): ViewPropertyAnimator {
+        fun fadeOut(
+            view: View?,
+            duration: Int,
+            translation: Float = 0f,
+            endAction: Runnable? =
+                Runnable {
+                    view!!.visibility = View.GONE
+                },
+        ): ViewPropertyAnimator {
             view!!.alpha = 1f
             view.translationY = 0f
             return view.animate()
@@ -2185,7 +2293,10 @@ open class DeckPicker :
         }
     }
 
-    override fun opExecuted(changes: OpChanges, handler: Any?) {
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
         if (changes.studyQueues && handler !== this) {
             invalidateOptionsMenu()
             updateDeckList()
@@ -2217,26 +2328,28 @@ open class DeckPicker :
     }
 
     @OptIn(ExperimentalTime::class)
-    private fun launchShowingHidingEssentialFileMigrationProgressDialog() = lifecycleScope.launch {
-        while (true) {
-            MigrationService.flowOfProgress
-                .first { it is MigrationService.Progress.CopyingEssentialFiles }
+    private fun launchShowingHidingEssentialFileMigrationProgressDialog() =
+        lifecycleScope.launch {
+            while (true) {
+                MigrationService.flowOfProgress
+                    .first { it is MigrationService.Progress.CopyingEssentialFiles }
 
-            val (progress, duration) = measureTimedValue {
-                withImmediatelyShownProgress(R.string.start_migration_progress_message) {
-                    MigrationService.flowOfProgress
-                        .first { it !is MigrationService.Progress.CopyingEssentialFiles }
+                val (progress, duration) =
+                    measureTimedValue {
+                        withImmediatelyShownProgress(R.string.start_migration_progress_message) {
+                            MigrationService.flowOfProgress
+                                .first { it !is MigrationService.Progress.CopyingEssentialFiles }
+                        }
+                    }
+
+                if (progress is MigrationService.Progress.MovingMediaFiles && duration > 800.milliseconds) {
+                    showSnackbar(R.string.migration_part_1_done_resume)
                 }
-            }
 
-            if (progress is MigrationService.Progress.MovingMediaFiles && duration > 800.milliseconds) {
-                showSnackbar(R.string.migration_part_1_done_resume)
+                refreshState()
+                updateDeckList()
             }
-
-            refreshState()
-            updateDeckList()
         }
-    }
 
     /**
      * Show a dialog that explains no sync can occur during migration.
@@ -2250,16 +2363,18 @@ open class DeckPicker :
      */
     private var migrationWasLastPostponedAt: Long
         get() = baseContext.sharedPrefs().getLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, 0L)
-        set(timeInSecond) = baseContext.sharedPrefs()
-            .edit { putLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, timeInSecond) }
+        set(timeInSecond) =
+            baseContext.sharedPrefs()
+                .edit { putLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, timeInSecond) }
 
     /**
      * The number of times the storage migration was postponed. -1 for 'disabled'
      */
     private var timesStorageMigrationPostponed: Int
         get() = baseContext.sharedPrefs().getInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, 0)
-        set(value) = baseContext.sharedPrefs()
-            .edit { putInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, value) }
+        set(value) =
+            baseContext.sharedPrefs()
+                .edit { putInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, value) }
 
     /** Whether the user has disabled the dialog from [showDialogThatOffersToMigrateStorage] */
     private val disabledScopedStorageReminder: Boolean
@@ -2295,28 +2410,29 @@ open class DeckPicker :
                         putInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, -1)
                         remove(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS)
                     }
-                }
+                },
             )
         }
 
         var userCheckedDoNotShowAgain = false
-        var dialog = AlertDialog.Builder(this)
-            .setTitle(R.string.scoped_storage_title)
-            .setMessage(message)
-            .setPositiveButton(
-                getString(R.string.scoped_storage_migrate)
-            ) { _, _ ->
-                performMediaSyncBeforeStorageMigration()
-            }
-            .setNegativeButton(
-                getString(R.string.scoped_storage_postpone)
-            ) { _, _ ->
-                if (userCheckedDoNotShowAgain) {
-                    onPostponePermanently()
-                } else {
-                    onPostponeOnce()
+        var dialog =
+            AlertDialog.Builder(this)
+                .setTitle(R.string.scoped_storage_title)
+                .setMessage(message)
+                .setPositiveButton(
+                    getString(R.string.scoped_storage_migrate),
+                ) { _, _ ->
+                    performMediaSyncBeforeStorageMigration()
                 }
-            }
+                .setNegativeButton(
+                    getString(R.string.scoped_storage_postpone),
+                ) { _, _ ->
+                    if (userCheckedDoNotShowAgain) {
+                        onPostponePermanently()
+                    } else {
+                        onPostponeOnce()
+                    }
+                }
         // allow the user to dismiss the automatic dialog after it's been seen twice
         if (shownAutomatically && timesStorageMigrationPostponed > 1) {
             dialog.checkBoxPrompt(R.string.button_do_not_show_again) { checked ->
@@ -2329,8 +2445,9 @@ open class DeckPicker :
 
     private fun showDialogThatOffersToResumeMigrationAfterError(errorText: String) {
         val helpUrl = getString(R.string.link_migration_failed_dialog_learn_more_en)
-        val message = getString(R.string.migration__resume_after_failed_dialog__message, errorText, helpUrl)
-            .parseAsHtml()
+        val message =
+            getString(R.string.migration__resume_after_failed_dialog__message, errorText, helpUrl)
+                .parseAsHtml()
 
         AlertDialog.Builder(this)
             .setTitle(R.string.scoped_storage_title)
@@ -2412,17 +2529,16 @@ open class DeckPicker :
      *
      * @param did The id of a deck with no pending cards to review
      */
-    private suspend fun queryCompletedDeckCustomStudyAction(
-        did: DeckId
-    ): CompletedDeckStatus = withCol {
-        when {
-            sched.hasCardsTodayAfterStudyAheadLimit() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
-            sched.newDue() || sched.revDue() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
-            decks.isDyn(did) -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
-            mDeckListAdapter.getNodeByDid(did).children.isEmpty() && isEmptyDeck(did) -> CompletedDeckStatus.EMPTY_REGULAR_DECK
-            else -> CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY
+    private suspend fun queryCompletedDeckCustomStudyAction(did: DeckId): CompletedDeckStatus =
+        withCol {
+            when {
+                sched.hasCardsTodayAfterStudyAheadLimit() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
+                sched.newDue() || sched.revDue() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
+                decks.isDyn(did) -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
+                mDeckListAdapter.getNodeByDid(did).children.isEmpty() && isEmptyDeck(did) -> CompletedDeckStatus.EMPTY_REGULAR_DECK
+                else -> CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY
+            }
         }
-    }
 
     /** Status for a deck with no current cards to review */
     enum class CompletedDeckStatus {
@@ -2439,7 +2555,7 @@ open class DeckPicker :
         EMPTY_REGULAR_DECK,
 
         /** The user has completed their studying for today, and there are future reviews */
-        REGULAR_DECK_NO_MORE_CARDS_TODAY
+        REGULAR_DECK_NO_MORE_CARDS_TODAY,
     }
 
     override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent?> {
@@ -2463,19 +2579,19 @@ data class OptionsMenuState(
     val undoLabel: String?,
     val syncIcon: SyncIconState,
     val shouldShowStartMigrationButton: Boolean,
-    val mediaMigrationState: MediaMigrationState
+    val mediaMigrationState: MediaMigrationState,
 )
 
 enum class SyncIconState {
     Normal,
     PendingChanges,
     FullSync,
-    NotLoggedIn
+    NotLoggedIn,
 }
 
 class CollectionLoadingErrorDialog : DialogHandlerMessage(
     WhichDialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG,
-    "CollectionLoadErrorDialog"
+    "CollectionLoadErrorDialog",
 ) {
     override fun handleAsyncMessage(deckPicker: DeckPicker) {
         // Collection could not be opened
@@ -2487,35 +2603,38 @@ class CollectionLoadingErrorDialog : DialogHandlerMessage(
 
 class ForceFullSyncDialog(val message: String?) : DialogHandlerMessage(
     which = WhichDialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG,
-    analyticName = "ForceFullSyncDialog"
+    analyticName = "ForceFullSyncDialog",
 ) {
     override fun handleAsyncMessage(deckPicker: DeckPicker) {
         // Confirmation dialog for forcing full sync
         val dialog = ConfirmationDialog()
-        val confirm = Runnable {
-            // Bypass the check once the user confirms
-            CollectionHelper.instance.getColUnsafe(AnkiDroidApp.instance)!!.modSchemaNoCheck()
-        }
+        val confirm =
+            Runnable {
+                // Bypass the check once the user confirms
+                CollectionHelper.instance.getColUnsafe(AnkiDroidApp.instance)!!.modSchemaNoCheck()
+            }
         dialog.setConfirm(confirm)
         dialog.setArgs(message)
         deckPicker.showDialogFragment(dialog)
     }
 
-    override fun toMessage(): Message = Message.obtain().apply {
-        what = this@ForceFullSyncDialog.what
-        data = bundleOf("message" to message)
-    }
+    override fun toMessage(): Message =
+        Message.obtain().apply {
+            what = this@ForceFullSyncDialog.what
+            data = bundleOf("message" to message)
+        }
 
     companion object {
-        fun fromMessage(message: Message): DialogHandlerMessage =
-            ForceFullSyncDialog(message.data.getString("message"))
+        fun fromMessage(message: Message): DialogHandlerMessage = ForceFullSyncDialog(message.data.getString("message"))
     }
 }
 
 // This is used to re-show the dialog immediately on activity recreation
-private suspend fun <T> Activity.withImmediatelyShownProgress(@StringRes messageId: Int, block: suspend () -> T) =
-    withProgressDialog(context = this, onCancel = null, delayMillis = 0L) { dialog ->
-        @Suppress("DEPRECATION") // ProgressDialog
-        dialog.setMessage(getString(messageId))
-        block()
-    }
+private suspend fun <T> Activity.withImmediatelyShownProgress(
+    @StringRes messageId: Int,
+    block: suspend () -> T,
+) = withProgressDialog(context = this, onCancel = null, delayMillis = 0L) { dialog ->
+    @Suppress("DEPRECATION") // ProgressDialog
+    dialog.setMessage(getString(messageId))
+    block()
+}

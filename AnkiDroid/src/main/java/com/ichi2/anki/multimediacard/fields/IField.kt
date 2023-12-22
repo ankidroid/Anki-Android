@@ -25,7 +25,6 @@ import java.io.Serializable
  * General interface for a field of any type.
  */
 interface IField : Serializable {
-
     val type: EFieldType
 
     val isModified: Boolean
@@ -60,5 +59,8 @@ interface IField : Serializable {
      * @param col Collection - bad abstraction, used to obtain media directory only.
      * @param value The HTML to send to the field.
      */
-    fun setFormattedString(col: Collection, value: String)
+    fun setFormattedString(
+        col: Collection,
+        value: String,
+    )
 }

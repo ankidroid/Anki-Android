@@ -37,7 +37,7 @@ open class CompatV26 : CompatV24(), Compat {
         NotificationChannels.setup(context)
     }
 
-    override fun setTooltipTextByContentDescription(view: View) { /* Nothing to do API26+ */
+    override fun setTooltipTextByContentDescription(view: View) { // Nothing to do API26+
     }
 
     @Suppress("DEPRECATION") // VIBRATOR_SERVICE => VIBRATOR_MANAGER_SERVICE handled in CompatV31
@@ -50,17 +50,26 @@ open class CompatV26 : CompatV24(), Compat {
     }
 
     @Throws(IOException::class)
-    override fun copyFile(source: String, target: String) {
+    override fun copyFile(
+        source: String,
+        target: String,
+    ) {
         Files.copy(Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING)
     }
 
     @Throws(IOException::class)
-    override fun copyFile(source: String, target: OutputStream): Long {
+    override fun copyFile(
+        source: String,
+        target: OutputStream,
+    ): Long {
         return Files.copy(Paths.get(source), target)
     }
 
     @Throws(IOException::class)
-    override fun copyFile(source: InputStream, target: String): Long {
+    override fun copyFile(
+        source: InputStream,
+        target: String,
+    ): Long {
         return Files.copy(source, Paths.get(target), StandardCopyOption.REPLACE_EXISTING)
     }
 
@@ -90,17 +99,18 @@ open class CompatV26 : CompatV24(), Compat {
      */
     @Throws(IOException::class)
     override fun contentOfDirectory(directory: File): FileStream {
-        val pathsStream: DirectoryStream<Path> = try {
-            newDirectoryStream(directory.toPath())
-        } catch (noSuchFileException: NoSuchFileException) {
-            throw FileNotFoundException(
-                """
+        val pathsStream: DirectoryStream<Path> =
+            try {
+                newDirectoryStream(directory.toPath())
+            } catch (noSuchFileException: NoSuchFileException) {
+                throw FileNotFoundException(
+                    """
                     ${noSuchFileException.file}
                     ${noSuchFileException.cause}
                     ${noSuchFileException.stackTrace}
-                """.trimIndent()
-            )
-        }
+                    """.trimIndent(),
+                )
+            }
         val paths: Iterator<Path> = pathsStream.iterator()
         return object : FileStream {
             @Throws(IOException::class)

@@ -48,6 +48,7 @@ open class JvmTest : TestClass {
             return col_!!
         }
 
+    @Suppress("ktlint:standard:property-naming")
     private var col_: Collection? = null
 
     @Before
@@ -59,20 +60,27 @@ open class JvmTest : TestClass {
 
         maybeSetupBackend()
 
-        plant(object : Timber.DebugTree() {
-            @SuppressLint("PrintStackTraceUsage")
-            override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-                // This is noisy in test environments
-                if (tag == "Backend\$checkMainThreadOp") {
-                    return
+        plant(
+            object : Timber.DebugTree() {
+                @SuppressLint("PrintStackTraceUsage")
+                override fun log(
+                    priority: Int,
+                    tag: String?,
+                    message: String,
+                    t: Throwable?,
+                ) {
+                    // This is noisy in test environments
+                    if (tag == "Backend\$checkMainThreadOp") {
+                        return
+                    }
+                    // use println(): Timber may not work under the Jvm
+                    System.out.println(tag + ": " + message)
+                    if (t != null) {
+                        t.printStackTrace()
+                    }
                 }
-                // use println(): Timber may not work under the Jvm
-                System.out.println(tag + ": " + message)
-                if (t != null) {
-                    t.printStackTrace()
-                }
-            }
-        })
+            },
+        )
 
         Storage.setUseInMemory(true)
     }
@@ -98,7 +106,10 @@ open class JvmTest : TestClass {
         Timber.uprootAll()
     }
 
-    fun <T> assumeThat(actual: T, matcher: Matcher<T>?) {
+    fun <T> assumeThat(
+        actual: T,
+        matcher: Matcher<T>?,
+    ) {
         Assume.assumeThat(actual, matcher)
     }
 }

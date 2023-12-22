@@ -19,10 +19,10 @@ package com.ichi2.anki.reviewer
 enum class CardSide {
     QUESTION,
     ANSWER,
-    BOTH;
+    BOTH,
+    ;
 
     companion object {
-        fun fromAnswer(displayingAnswer: Boolean): CardSide =
-            if (displayingAnswer) ANSWER else QUESTION
+        fun fromAnswer(displayingAnswer: Boolean): CardSide = if (displayingAnswer) ANSWER else QUESTION
     }
 }

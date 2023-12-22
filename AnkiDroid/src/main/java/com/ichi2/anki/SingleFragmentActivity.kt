@@ -44,21 +44,28 @@ class SingleFragmentActivity : AnkiActivity() {
         setContentView(R.layout.single_fragment_activity)
         setTransparentStatusBar()
 
-        val fragmentClassName = requireNotNull(intent.getStringExtra(FRAGMENT_NAME_EXTRA)) {
-            "'$FRAGMENT_NAME_EXTRA' extra should be provided"
-        }
-        val fragment = getInstanceFromClassName<Fragment>(fragmentClassName).apply {
-            arguments = intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)
-        }
+        val fragmentClassName =
+            requireNotNull(intent.getStringExtra(FRAGMENT_NAME_EXTRA)) {
+                "'$FRAGMENT_NAME_EXTRA' extra should be provided"
+            }
+        val fragment =
+            getInstanceFromClassName<Fragment>(fragmentClassName).apply {
+                arguments = intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)
+            }
         supportFragmentManager.commit {
             replace(R.id.fragment_container, fragment)
         }
     }
+
     companion object {
         private const val FRAGMENT_NAME_EXTRA = "fragmentName"
         private const val FRAGMENT_ARGS_EXTRA = "fragmentArgs"
 
-        fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null): Intent {
+        fun getIntent(
+            context: Context,
+            fragmentClass: KClass<out Fragment>,
+            arguments: Bundle? = null,
+        ): Intent {
             return Intent(context, SingleFragmentActivity::class.java).apply {
                 putExtra(FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
                 putExtra(FRAGMENT_ARGS_EXTRA, arguments)

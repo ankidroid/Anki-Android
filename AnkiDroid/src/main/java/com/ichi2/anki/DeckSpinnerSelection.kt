@@ -53,7 +53,7 @@ class DeckSpinnerSelection(
     private val spinner: Spinner,
     private val showAllDecks: Boolean,
     private val alwaysShowDefault: Boolean,
-    private val showFilteredDecks: Boolean
+    private val showFilteredDecks: Boolean,
 ) {
     /**
      * All of the decks shown to the user.
@@ -89,21 +89,26 @@ class DeckSpinnerSelection(
             deckNames.add(currentName)
             mAllDeckIds.add(d.id)
         }
-        val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
-            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-                // Cast the drop down items (popup items) as text view
-                val tv = super.getDropDownView(position, convertView, parent) as TextView
+        val noteDeckAdapter: ArrayAdapter<String?> =
+            object : ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
+                override fun getDropDownView(
+                    position: Int,
+                    convertView: View?,
+                    parent: ViewGroup,
+                ): View {
+                    // Cast the drop down items (popup items) as text view
+                    val tv = super.getDropDownView(position, convertView, parent) as TextView
 
-                // If this item is selected
-                if (position == spinner.selectedItemPosition) {
-                    tv.setBackgroundColor(context.getColor(R.color.note_editor_selected_item_background))
-                    tv.setTextColor(context.getColor(R.color.note_editor_selected_item_text))
+                    // If this item is selected
+                    if (position == spinner.selectedItemPosition) {
+                        tv.setBackgroundColor(context.getColor(R.color.note_editor_selected_item_background))
+                        tv.setTextColor(context.getColor(R.color.note_editor_selected_item_text))
+                    }
+
+                    // Return the modified view
+                    return tv
                 }
-
-                // Return the modified view
-                return tv
             }
-        }
         spinner.adapter = noteDeckAdapter
         setSpinnerListener()
     }
@@ -160,7 +165,10 @@ class DeckSpinnerSelection(
      * the current deck id of Collection.
      * @return True if selection succeeded.
      */
-    fun selectDeckById(deckId: DeckId, setAsCurrentDeck: Boolean): Boolean {
+    fun selectDeckById(
+        deckId: DeckId,
+        setAsCurrentDeck: Boolean,
+    ): Boolean {
         return if (deckId == ALL_DECKS_ID) {
             selectAllDecks()
         } else {
@@ -174,7 +182,10 @@ class DeckSpinnerSelection(
      * @param setAsCurrentDeck whether this deck should be selected in the collection (if it exists)
      * @return whether it was found
      */
-    private fun selectDeck(deckId: DeckId, setAsCurrentDeck: Boolean): Boolean {
+    private fun selectDeck(
+        deckId: DeckId,
+        setAsCurrentDeck: Boolean,
+    ): Boolean {
         for (dropDownDeckIdx in mAllDeckIds.indices) {
             if (mAllDeckIds[dropDownDeckIdx] == deckId) {
                 val position = if (showAllDecks) dropDownDeckIdx + 1 else dropDownDeckIdx
@@ -194,7 +205,10 @@ class DeckSpinnerSelection(
      */
     fun selectAllDecks(): Boolean {
         if (!showAllDecks) {
-            CrashReportService.sendExceptionReport("selectAllDecks was called while `showAllDecks is false`", "DeckSpinnerSelection:selectAllDecks")
+            CrashReportService.sendExceptionReport(
+                "selectAllDecks was called while `showAllDecks is false`",
+                "DeckSpinnerSelection:selectAllDecks",
+            )
             return false
         }
         spinner.setSelection(0)

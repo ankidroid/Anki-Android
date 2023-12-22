@@ -23,11 +23,11 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 // TODO : Middle blue line should move left->mid https://github.com/ankidroid/Anki-Android/pull/14591#issuecomment-1791037102
+
 /**This class represents a custom View used for creating audio waveforms when recording audio.
  * It loops over each spike and add it on the screen and the height of the spike is determined by the
  * amplitude that is returned by the audio recorder while recording audio. **/
 class AudioWaveform(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
-
     private var spikePaint = Paint()
     private var linePaint = Paint()
     private var bgPaint = Paint()
@@ -81,9 +81,10 @@ class AudioWaveform(context: Context, attrs: AttributeSet? = null) : View(contex
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val backgroundPaint = bgPaint.apply {
-            color = Color.argb(20, 229, 228, 226)
-        }
+        val backgroundPaint =
+            bgPaint.apply {
+                color = Color.argb(20, 229, 228, 226)
+            }
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backgroundPaint)
 
         audioSpikes.forEach {
@@ -93,11 +94,12 @@ class AudioWaveform(context: Context, attrs: AttributeSet? = null) : View(contex
         val centerX = width / 2f
         val startY = 0f
         val endY = height.toFloat()
-        val verticalLine = linePaint.apply {
-            color = Color.rgb(33, 150, 243)
-            style = Paint.Style.STROKE
-            strokeWidth = 5f
-        }
+        val verticalLine =
+            linePaint.apply {
+                color = Color.rgb(33, 150, 243)
+                style = Paint.Style.STROKE
+                strokeWidth = 5f
+            }
         canvas.drawLine(centerX, startY, centerX, endY, verticalLine)
     }
 }

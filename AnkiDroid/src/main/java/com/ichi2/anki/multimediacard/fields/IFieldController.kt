@@ -34,7 +34,6 @@ import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
  * MultimediaEditFieldActivity calls controller's set methods by protocol before it works on UI creation.
  */
 interface IFieldController {
-
     // This is guaranteed to be called before create UI, so that the controller
     // is aware of the field, including type an content.
     fun setField(field: IField)
@@ -57,7 +56,10 @@ interface IFieldController {
     fun saveInstanceState(): Bundle?
 
     // Layout is vertical inside a scroll view already
-    fun createUI(context: Context, layout: LinearLayout)
+    fun createUI(
+        context: Context,
+        layout: LinearLayout,
+    )
 
     // Called when the controller has stopped showing the field in favor of another one
     fun onFocusLost()

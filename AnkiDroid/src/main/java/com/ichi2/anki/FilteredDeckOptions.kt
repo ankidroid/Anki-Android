@@ -40,19 +40,21 @@ class FilteredDeckOptions :
     private var mAllowCommit = true
 
     // TODO: not anymore used in libanki?
-    private val mDynExamples = arrayOf(
-        null,
-        "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
-        "{'search'=\"added:1\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
-        "{'search'=\"rated:1:1\", 'order'=4}",
-        "{'search'=\"prop:due<=2\", 'order'=6}",
-        "{'search'=\"is:due tag:TAG\", 'order'=6}",
-        "{'search'=\"is:due\", 'order'=3}",
-        "{'search'=\"\", 'steps'=\"1 10 20\", 'order'=0}"
-    )
+    private val mDynExamples =
+        arrayOf(
+            null,
+            "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
+            "{'search'=\"added:1\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
+            "{'search'=\"rated:1:1\", 'order'=4}",
+            "{'search'=\"prop:due<=2\", 'order'=6}",
+            "{'search'=\"is:due tag:TAG\", 'order'=6}",
+            "{'search'=\"is:due\", 'order'=3}",
+            "{'search'=\"\", 'steps'=\"1 10 20\", 'order'=0}",
+        )
 
     inner class DeckPreferenceHack : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
         var secondFilter = false
+
         override fun cacheValues() {
             Timber.d("cacheValues()")
             val ar = deck.getJSONArray("terms").getJSONArray(0)
@@ -212,12 +214,13 @@ class FilteredDeckOptions :
         // Set the activity title to include the name of the deck
         var title = resources.getString(R.string.deckpreferences_title)
         if (title.contains("XXX")) {
-            title = try {
-                title.replace("XXX", deck.getString("name"))
-            } catch (e: JSONException) {
-                Timber.w(e)
-                title.replace("XXX", "???")
-            }
+            title =
+                try {
+                    title.replace("XXX", deck.getString("name"))
+                } catch (e: JSONException) {
+                    Timber.w(e)
+                    title.replace("XXX", "???")
+                }
         }
         this.title = title
 
@@ -271,16 +274,17 @@ class FilteredDeckOptions :
         val keys: Set<String> = pref.mValues.keys
         for (key in keys) {
             val pref = findPreference(key)
-            val value: String? = if (pref == null) {
-                continue
-            } else if (pref is CheckBoxPreference) {
-                continue
-            } else if (pref is ListPreference) {
-                val entry = pref.entry
-                entry?.toString() ?: ""
-            } else {
-                this.pref.getString(key, "")
-            }
+            val value: String? =
+                if (pref == null) {
+                    continue
+                } else if (pref is CheckBoxPreference) {
+                    continue
+                } else if (pref is ListPreference) {
+                    val entry = pref.entry
+                    entry?.toString() ?: ""
+                } else {
+                    this.pref.getString(key, "")
+                }
             // update value for EditTexts
             if (pref is EditTextPreference) {
                 pref.text = value
@@ -322,24 +326,25 @@ class FilteredDeckOptions :
             secondFilter.isEnabled = true
             secondFilterSign.isChecked = true
         }
-        secondFilterSign.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any? ->
-            if (newValue !is Boolean) {
-                return@OnPreferenceChangeListener true
+        secondFilterSign.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any? ->
+                if (newValue !is Boolean) {
+                    return@OnPreferenceChangeListener true
+                }
+                if (!newValue) {
+                    deck.getJSONArray("terms").remove(1)
+                    secondFilter.isEnabled = false
+                } else {
+                    secondFilter.isEnabled = true
+                    /**Link to the defaults used in AnkiDesktop
+                     * <https://github.com/ankitects/anki/blob/1b15069b248a8f86f9bd4b3c66a9bfeab8dfb2b8/qt/aqt/filtered_deck.py#L148-L149>
+                     */
+                    val narr = JSONArray(listOf("", 20, 5))
+                    deck.getJSONArray("terms").put(1, narr)
+                    val newOrderPrefSecond = findPreference("order_2") as ListPreference
+                    newOrderPrefSecond.value = "5"
+                }
+                true
             }
-            if (!newValue) {
-                deck.getJSONArray("terms").remove(1)
-                secondFilter.isEnabled = false
-            } else {
-                secondFilter.isEnabled = true
-                /**Link to the defaults used in AnkiDesktop
-                 * <https://github.com/ankitects/anki/blob/1b15069b248a8f86f9bd4b3c66a9bfeab8dfb2b8/qt/aqt/filtered_deck.py#L148-L149>
-                 */
-                val narr = JSONArray(listOf("", 20, 5))
-                deck.getJSONArray("terms").put(1, narr)
-                val newOrderPrefSecond = findPreference("order_2") as ListPreference
-                newOrderPrefSecond.value = "5"
-            }
-            true
-        }
     }
 }

@@ -215,12 +215,15 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             }
                         }
                         .negativeButton(R.string.dialog_cancel)
-                        .listItemsSingleChoice(items = dates.toTypedArray().toList(), waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
+                        .listItemsSingleChoice(
+                            items = dates.toTypedArray().toList(),
+                            waitForPositiveButton = false,
+                        ) { _: MaterialDialog, index: Int, _: CharSequence ->
                             if (mBackups[index].length() > 0) {
                                 // restore the backup if it's valid
                                 (activity as DeckPicker?)
                                     ?.restoreFromBackup(
-                                        mBackups[index].path
+                                        mBackups[index].path,
                                     )
                                 dismissAllDialogFragments()
                             } else {
@@ -326,12 +329,14 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                     listItems(items = options, waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
                         when (values[index]) {
-                            0 -> (activity as DeckPicker).showDatabaseErrorDialog(
-                                DIALOG_RESTORE_BACKUP
-                            )
-                            1 -> (activity as DeckPicker).showDatabaseErrorDialog(
-                                DIALOG_FULL_SYNC_FROM_SERVER
-                            )
+                            0 ->
+                                (activity as DeckPicker).showDatabaseErrorDialog(
+                                    DIALOG_RESTORE_BACKUP,
+                                )
+                            1 ->
+                                (activity as DeckPicker).showDatabaseErrorDialog(
+                                    DIALOG_FULL_SYNC_FROM_SERVER,
+                                )
                         }
                     }
                 }
@@ -348,7 +353,13 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 val listItems = UninstallListItem.createList()
                 dialog.show {
                     contentNullable(message)
-                    listItems(items = listItems.map { getString(it.stringRes) }, waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
+                    listItems(
+                        items =
+                            listItems.map {
+                                getString(it.stringRes)
+                            },
+                        waitForPositiveButton = false,
+                    ) { _: MaterialDialog, index: Int, _: CharSequence ->
                         val listItem = listItems[index]
                         listItem.onClick(activity as DeckPicker)
                         if (listItem.dismissesDialog) {
@@ -363,14 +374,17 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     }
 
     /** List items for [DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL] */
-    private enum class UninstallListItem(@StringRes val stringRes: Int, val dismissesDialog: Boolean, val onClick: (DeckPicker) -> Unit) {
-
+    private enum class UninstallListItem(
+        @StringRes val stringRes: Int,
+        val dismissesDialog: Boolean,
+        val onClick: (DeckPicker) -> Unit,
+    ) {
         RESTORE_FROM_ANKIWEB(
             R.string.restore_data_from_ankiweb,
             dismissesDialog = true,
             {
                 this.displayResetToNewDirectoryDialog(it)
-            }
+            },
         ),
         INSTALL_NON_PLAY_APP_RECOMMENDED(
             R.string.install_non_play_store_ankidroid_recommended,
@@ -378,7 +392,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             {
                 val restoreUi = Uri.parse(it.getString(R.string.link_install_non_play_store_install))
                 it.openUrl(restoreUi)
-            }
+            },
         ),
         INSTALL_NON_PLAY_APP_NORMAL(
             R.string.install_non_play_store_ankidroid,
@@ -386,7 +400,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             {
                 val restoreUi = Uri.parse(it.getString(R.string.link_install_non_play_store_install))
                 it.openUrl(restoreUi)
-            }
+            },
         ),
         RESTORE_FROM_BACKUP(
             R.string.restore_data_from_backup,
@@ -404,27 +418,28 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             ImportOptions(
                                 importTextFile = false,
                                 importColpkg = true,
-                                importApkg = false
-                            )
+                                importApkg = false,
+                            ),
                         )
                     }
                 }
-            }
+            },
         ),
         GET_HELP(
             R.string.help_title_get_help,
             dismissesDialog = false,
             {
                 it.openUrl(Uri.parse(it.getString(R.string.link_forum)))
-            }
+            },
         ),
         RECREATE_COLLECTION(
             R.string.create_new_collection,
             dismissesDialog = false,
             {
                 this.displayResetToNewDirectoryDialog(it)
-            }
-        );
+            },
+        ),
+        ;
 
         companion object {
             /** A dialog which creates a new collection in an unsafe location */
@@ -444,6 +459,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     cancelable(false)
                 }
             }
+
             fun createList(): List<UninstallListItem> {
                 return if (isLoggedIn()) {
                     listOf(RESTORE_FROM_ANKIWEB, INSTALL_NON_PLAY_APP_NORMAL, RESTORE_FROM_BACKUP, GET_HELP, RECREATE_COLLECTION)
@@ -461,57 +477,64 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
     // Show a specific message appropriate for the situation
     private val message: String?
-        get() = when (requireDialogType()) {
-            DIALOG_LOAD_FAILED -> if (databaseCorruptFlag) {
-                // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
-                // Show a specific message appropriate for the situation
-                res().getString(R.string.corrupt_db_message, res().getString(R.string.repair_deck))
-            } else {
-                // Generic message shown when a libanki task failed
-                res().getString(R.string.access_collection_failed_message, res().getString(R.string.link_help))
-            }
-            DIALOG_DB_ERROR -> res().getString(R.string.answering_error_message)
-            DIALOG_DISK_FULL -> res().getString(R.string.storage_full_message)
-            DIALOG_REPAIR_COLLECTION -> res().getString(R.string.repair_deck_dialog, BackupManager.BROKEN_COLLECTIONS_SUFFIX)
-            DIALOG_RESTORE_BACKUP -> res().getString(R.string.backup_restore_no_backups)
-            DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_del_collection_question)
-            DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_warning)
-            DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup)
-            DIALOG_FULL_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server_question)
-            DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_summary)
-            INCOMPATIBLE_DB_VERSION -> {
-                var databaseVersion = -1
-                try {
-                    databaseVersion = CollectionHelper.getDatabaseVersion(requireContext())
-                } catch (e: Exception) {
-                    Timber.w(e, "Failed to get database version, using -1")
+        get() =
+            when (requireDialogType()) {
+                DIALOG_LOAD_FAILED ->
+                    if (databaseCorruptFlag) {
+                        // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
+                        // Show a specific message appropriate for the situation
+                        res().getString(R.string.corrupt_db_message, res().getString(R.string.repair_deck))
+                    } else {
+                        // Generic message shown when a libanki task failed
+                        res().getString(R.string.access_collection_failed_message, res().getString(R.string.link_help))
+                    }
+                DIALOG_DB_ERROR -> res().getString(R.string.answering_error_message)
+                DIALOG_DISK_FULL -> res().getString(R.string.storage_full_message)
+                DIALOG_REPAIR_COLLECTION -> res().getString(R.string.repair_deck_dialog, BackupManager.BROKEN_COLLECTIONS_SUFFIX)
+                DIALOG_RESTORE_BACKUP -> res().getString(R.string.backup_restore_no_backups)
+                DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_del_collection_question)
+                DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_warning)
+                DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup)
+                DIALOG_FULL_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server_question)
+                DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_summary)
+                INCOMPATIBLE_DB_VERSION -> {
+                    var databaseVersion = -1
+                    try {
+                        databaseVersion = CollectionHelper.getDatabaseVersion(requireContext())
+                    } catch (e: Exception) {
+                        Timber.w(e, "Failed to get database version, using -1")
+                    }
+                    val schemaVersion = Consts.BACKEND_SCHEMA_VERSION
+                    res().getString(
+                        R.string.incompatible_database_version_summary,
+                        schemaVersion,
+                        databaseVersion,
+                    )
                 }
-                val schemaVersion = Consts.BACKEND_SCHEMA_VERSION
-                res().getString(
-                    R.string.incompatible_database_version_summary,
-                    schemaVersion,
-                    databaseVersion
-                )
+                DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL ->
+                    res().getString(
+                        R.string.directory_inaccessible_after_uninstall_summary,
+                        CollectionHelper.getCurrentAnkiDroidDirectory(requireContext()),
+                    )
+                else -> requireArguments().getString("dialogMessage")
             }
-            DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> res().getString(R.string.directory_inaccessible_after_uninstall_summary, CollectionHelper.getCurrentAnkiDroidDirectory(requireContext()))
-            else -> requireArguments().getString("dialogMessage")
-        }
     private val title: String
-        get() = when (requireDialogType()) {
-            DIALOG_LOAD_FAILED -> res().getString(R.string.open_collection_failed_title)
-            DIALOG_ERROR_HANDLING -> res().getString(R.string.error_handling_title)
-            DIALOG_REPAIR_COLLECTION -> res().getString(R.string.dialog_positive_repair)
-            DIALOG_RESTORE_BACKUP -> res().getString(R.string.backup_restore)
-            DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_new_collection)
-            DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_title)
-            DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup_title)
-            DIALOG_FULL_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server)
-            DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_title)
-            INCOMPATIBLE_DB_VERSION -> res().getString(R.string.incompatible_database_version_title)
-            DIALOG_DB_ERROR -> res().getString(R.string.answering_error_title)
-            DIALOG_DISK_FULL -> res().getString(R.string.storage_full_title)
-            DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> res().getString(R.string.directory_inaccessible_after_uninstall)
-        }
+        get() =
+            when (requireDialogType()) {
+                DIALOG_LOAD_FAILED -> res().getString(R.string.open_collection_failed_title)
+                DIALOG_ERROR_HANDLING -> res().getString(R.string.error_handling_title)
+                DIALOG_REPAIR_COLLECTION -> res().getString(R.string.dialog_positive_repair)
+                DIALOG_RESTORE_BACKUP -> res().getString(R.string.backup_restore)
+                DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_new_collection)
+                DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_title)
+                DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup_title)
+                DIALOG_FULL_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server)
+                DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_title)
+                INCOMPATIBLE_DB_VERSION -> res().getString(R.string.incompatible_database_version_title)
+                DIALOG_DB_ERROR -> res().getString(R.string.answering_error_title)
+                DIALOG_DISK_FULL -> res().getString(R.string.storage_full_title)
+                DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> res().getString(R.string.directory_inaccessible_after_uninstall)
+            }
 
     override val notificationMessage: String? get() = message
     override val notificationTitle: String get() = res().getString(R.string.answering_error_title)
@@ -547,11 +570,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         DIALOG_DISK_FULL,
 
         /** If [android.R.attr.preserveLegacyExternalStorage] is no longer active */
-        DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL;
+        DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL,
     }
 
     companion object {
-
         // public flag which lets us distinguish between inaccessible and corrupt database
         var databaseCorruptFlag = false
 
@@ -572,18 +594,20 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     /** Database error dialog */
     class ShowDatabaseErrorDialog(val dialogType: DatabaseErrorDialogType) : DialogHandlerMessage(
         which = WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG,
-        analyticName = "DatabaseErrorDialog"
+        analyticName = "DatabaseErrorDialog",
     ) {
         override fun handleAsyncMessage(deckPicker: DeckPicker) {
             deckPicker.showDatabaseErrorDialog(dialogType)
         }
 
-        override fun toMessage(): Message = Message.obtain().apply {
-            what = this@ShowDatabaseErrorDialog.what
-            data = bundleOf(
-                "dialog" to dialogType
-            )
-        }
+        override fun toMessage(): Message =
+            Message.obtain().apply {
+                what = this@ShowDatabaseErrorDialog.what
+                data =
+                    bundleOf(
+                        "dialog" to dialogType,
+                    )
+            }
 
         companion object {
             fun fromMessage(message: Message): ShowDatabaseErrorDialog {

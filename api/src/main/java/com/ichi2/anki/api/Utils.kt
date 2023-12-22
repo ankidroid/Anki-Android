@@ -77,7 +77,7 @@ internal object Utils {
             // This is guaranteed to never happen
             throw IllegalStateException(
                 "Error making field checksum with SHA1 algorithm and UTF-8 encoding",
-                e
+                e,
             )
         }
     }

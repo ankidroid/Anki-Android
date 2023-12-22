@@ -69,17 +69,29 @@ class BindingTest {
         assertThat(Binding.unknown().toString(), equalTo(""))
     }
 
-    private fun testModifierKeys(name: String, event: KFunction1<KeyEvent, Boolean>, getValue: KFunction2<Binding.ModifierKeys, Boolean, Boolean>) {
-        fun testModifierResult(event: KFunction1<KeyEvent, Boolean>, returnedFromMock: Boolean) {
-            val mock = mock {
-                on(event) doReturn returnedFromMock
-            }
+    private fun testModifierKeys(
+        name: String,
+        event: KFunction1<KeyEvent, Boolean>,
+        getValue: KFunction2<Binding.ModifierKeys, Boolean, Boolean>,
+    ) {
+        fun testModifierResult(
+            event: KFunction1<KeyEvent, Boolean>,
+            returnedFromMock: Boolean,
+        ) {
+            val mock =
+                mock {
+                    on(event) doReturn returnedFromMock
+                }
 
             val bindings = Binding.possibleKeyBindings(mock)
 
             for (binding in bindings) {
                 assertThat("Should match when '$name:$returnedFromMock': ", getValue(binding.modifierKeys, true), equalTo(returnedFromMock))
-                assertThat("Should match when '$name:${!returnedFromMock}': ", getValue(binding.modifierKeys, false), equalTo(!returnedFromMock))
+                assertThat(
+                    "Should match when '$name:${!returnedFromMock}': ",
+                    getValue(binding.modifierKeys, false),
+                    equalTo(!returnedFromMock),
+                )
             }
         }
 
@@ -87,6 +99,7 @@ class BindingTest {
         testModifierResult(event, false)
     }
 
+    @Suppress("ktlint:standard:property-naming")
     companion object {
         const val gesturePrefix = '\u235D'
         const val keyPrefix = '\u2328'
@@ -96,18 +109,20 @@ class BindingTest {
         fun allModifierKeys() = Binding.ModifierKeys(true, true, true)
 
         fun unicodeCharacter(c: Char): Binding.UnicodeCharacter {
-            val mock = mock<KeyEvent> {
-                on { getUnicodeChar(anyInt()) } doReturn c.code
-                on { unicodeChar } doReturn c.code
-            }
+            val mock =
+                mock<KeyEvent> {
+                    on { getUnicodeChar(anyInt()) } doReturn c.code
+                    on { unicodeChar } doReturn c.code
+                }
 
             return Binding.possibleKeyBindings(mock).filterIsInstance<Binding.UnicodeCharacter>().first()
         }
 
         fun keyCode(keyCode: Int): Binding.KeyCode {
-            val mock = mock<KeyEvent> {
-                on { getKeyCode() } doReturn keyCode
-            }
+            val mock =
+                mock<KeyEvent> {
+                    on { getKeyCode() } doReturn keyCode
+                }
 
             return Binding.possibleKeyBindings(mock).filterIsInstance<Binding.KeyCode>().first()
         }

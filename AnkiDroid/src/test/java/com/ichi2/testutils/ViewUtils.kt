@@ -29,7 +29,10 @@ private val uptime = SystemClock.uptimeMillis()
 
 /** Simulates a double tap for a [DoubleTapListener] */
 fun View.simulateDoubleTap() {
-    fun simulateEvent(action: Int, delta: Int = 0) = simulateEvent(this, action, delta)
+    fun simulateEvent(
+        action: Int,
+        delta: Int = 0,
+    ) = simulateEvent(this, action, delta)
     simulateEvent(MotionEvent.ACTION_DOWN)
     simulateEvent(MotionEvent.ACTION_UP)
     // delta needs to be > 30 in Robolectric. GestureDetector: DOUBLE_TAP_MIN_TIME
@@ -50,15 +53,20 @@ fun View.simulateUnconfirmedSingleTap() {
 /**
  * https://stackoverflow.com/a/10124199
  */
-private fun simulateEvent(target: View, action: Int, delta: Int = 0) {
-    val event = obtainMotionEvent(
-        downTime = uptime + delta,
-        eventTime = uptime + 100 + delta,
-        action = action,
-        x = 0.0f,
-        y = 0.0f,
-        metaState = 0
-    )
+private fun simulateEvent(
+    target: View,
+    action: Int,
+    delta: Int = 0,
+) {
+    val event =
+        obtainMotionEvent(
+            downTime = uptime + delta,
+            eventTime = uptime + 100 + delta,
+            action = action,
+            x = 0.0f,
+            y = 0.0f,
+            metaState = 0,
+        )
 
     Shadows.shadowOf(target).onTouchListener.onTouch(target, event)
 }
@@ -74,7 +82,7 @@ private fun obtainMotionEvent(
     action: Int,
     x: Float,
     y: Float,
-    metaState: Int
+    metaState: Int,
 ): MotionEvent {
     return MotionEvent.obtain(
         downTime,
@@ -82,6 +90,6 @@ private fun obtainMotionEvent(
         action,
         x,
         y,
-        metaState
+        metaState,
     )!!
 }

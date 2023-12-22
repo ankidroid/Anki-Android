@@ -46,6 +46,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
 
     interface LocaleSelectionDialogHandler {
         fun onSelectedLocale(selectedLocale: Locale)
+
         fun onLocaleSelectionCancelled()
     }
 
@@ -67,20 +68,22 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity: Activity = requireActivity()
-        val tagsDialogView = LayoutInflater.from(activity)
-            .inflate(R.layout.locale_selection_dialog, activity.findViewById(R.id.root_layout), false)
+        val tagsDialogView =
+            LayoutInflater.from(activity)
+                .inflate(R.layout.locale_selection_dialog, activity.findViewById(R.id.root_layout), false)
         val adapter = LocaleListAdapter(Locale.getAvailableLocales() + IPALanguage)
         setupRecyclerView(activity, tagsDialogView, adapter)
         inflateMenu(tagsDialogView, adapter)
 
         // Only show a negative button, use the RecyclerView for positive actions
         // when changing to AlertDialog make sure the keyboard is being shown when clicking search in the dialog toolbar
-        val dialog = MaterialDialog(activity).show {
-            customView(view = tagsDialogView, noVerticalPadding = true)
-            negativeButton(text = getString(R.string.dialog_cancel)) {
-                mDialogHandler!!.onLocaleSelectionCancelled()
+        val dialog =
+            MaterialDialog(activity).show {
+                customView(view = tagsDialogView, noVerticalPadding = true)
+                negativeButton(text = getString(R.string.dialog_cancel)) {
+                    mDialogHandler!!.onLocaleSelectionCancelled()
+                }
             }
-        }
 
         val window = dialog.window
         if (window != null) {
@@ -89,7 +92,11 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         return dialog
     }
 
-    private fun setupRecyclerView(activity: Activity, tagsDialogView: View, adapter: LocaleListAdapter) {
+    private fun setupRecyclerView(
+        activity: Activity,
+        tagsDialogView: View,
+        adapter: LocaleListAdapter,
+    ) {
         val recyclerView: RecyclerView = tagsDialogView.findViewById(R.id.locale_dialog_selection_list)
         recyclerView.requestFocus()
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
@@ -97,31 +104,36 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         recyclerView.adapter = adapter
         recyclerView.addOnItemTouchListener(
             RecyclerSingleTouchAdapter(
-                activity
+                activity,
             ) { _, position ->
                 val l = adapter.getLocaleAtPosition(position)
                 mDialogHandler!!.onSelectedLocale(l)
-            }
+            },
         )
     }
 
-    private fun inflateMenu(tagsDialogView: View, adapter: LocaleListAdapter) {
+    private fun inflateMenu(
+        tagsDialogView: View,
+        adapter: LocaleListAdapter,
+    ) {
         val toolbar: Toolbar = tagsDialogView.findViewById(R.id.locale_dialog_selection_toolbar)
         toolbar.setTitle(R.string.locale_selection_dialog_title)
         toolbar.inflateMenu(R.menu.locale_dialog_search_bar)
         val searchItem = toolbar.menu.findItem(R.id.locale_dialog_action_search)
         val searchView = searchItem.actionView as SearchView
         searchView.imeOptions = EditorInfo.IME_ACTION_DONE
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
+        searchView.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    return false
+                }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                adapter.filter.filter(newText)
-                return false
-            }
-        })
+                override fun onQueryTextChange(newText: String): Boolean {
+                    adapter.filter.filter(newText)
+                    return false
+                }
+            },
+        )
     }
 
     class LocaleListAdapter(locales: Array<Locale>) : RecyclerView.Adapter<TextViewHolder>(), Filterable {
@@ -141,15 +153,18 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
 
         override fun onCreateViewHolder(
             parent: ViewGroup,
-            viewType: Int
+            viewType: Int,
         ): TextViewHolder {
-            val v = LayoutInflater.from(parent.context)
-                .inflate(R.layout.locale_dialog_fragment_textview, parent, false) as TextView
+            val v =
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.locale_dialog_fragment_textview, parent, false) as TextView
             return TextViewHolder(v)
         }
 
-        override fun onBindViewHolder(holder: TextViewHolder, position: Int) =
-            holder.setLocale(mCurrentlyVisibleLocales[position])
+        override fun onBindViewHolder(
+            holder: TextViewHolder,
+            position: Int,
+        ) = holder.setLocale(mCurrentlyVisibleLocales[position])
 
         override fun getItemCount(): Int = mCurrentlyVisibleLocales.size
 
@@ -157,14 +172,20 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
 
         override fun getFilter(): Filter {
             return object : TypedFilter<Locale>(mSelectableLocales) {
-                override fun filterResults(constraint: CharSequence, items: List<Locale>): List<Locale> {
+                override fun filterResults(
+                    constraint: CharSequence,
+                    items: List<Locale>,
+                ): List<Locale> {
                     val normalisedConstraint = constraint.toString().lowercase(Locale.getDefault())
                     return items.filter {
                         it.displayName.lowercase(Locale.getDefault()).contains(normalisedConstraint)
                     }
                 }
 
-                override fun publishResults(constraint: CharSequence?, results: List<Locale>) {
+                override fun publishResults(
+                    constraint: CharSequence?,
+                    results: List<Locale>,
+                ) {
                     mCurrentlyVisibleLocales.clear()
                     mCurrentlyVisibleLocales.addAll(results)
                     notifyDataSetChanged()

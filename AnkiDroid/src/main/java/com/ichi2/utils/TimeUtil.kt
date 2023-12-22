@@ -28,14 +28,17 @@ import timber.log.Timber
  * ```
  * -> `D/TimeUtilKt executed mHtmlGenerator in 23ms`
  */
-fun <T> measureTime(functionName: String? = "", function: () -> T): T {
+fun <T> measureTime(
+    functionName: String? = "",
+    function: () -> T,
+): T {
     val startTime = TimeManager.time.intTimeMS()
     val result = function()
     val endTime = TimeManager.time.intTimeMS()
     Timber.d(
         "executed %sin %dms",
         if (functionName.isNullOrEmpty()) "" else "$functionName ",
-        endTime - startTime
+        endTime - startTime,
     )
     return result
 }
@@ -65,15 +68,15 @@ class Stopwatch(private val executionName: String?) {
         Timber.d(
             "executed %sin %dms",
             if (executionName.isNullOrEmpty()) "" else "$executionName ",
-            endTime - startTime
+            endTime - startTime,
         )
     }
 
     fun reset() {
         startTime = TimeManager.time.intTimeMS()
     }
-    companion object {
 
+    companion object {
         /** initializes the stopwatch to ensure `stop()` before `start()` won't crash */
         @CheckResult
         fun init(executionName: String? = null) = Stopwatch(executionName)

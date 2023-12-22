@@ -36,7 +36,6 @@ import timber.log.Timber
 import java.util.function.Supplier
 
 class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialogFragment() {
-
     fun withArguments(did: DeckId): DeckPickerContextMenu {
         val args = this.arguments ?: Bundle()
         args.putLong("did", did)
@@ -165,7 +164,9 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         }
     }
 
-    private enum class DeckPickerContextMenuOption(@StringRes val optionName: Int) {
+    private enum class DeckPickerContextMenuOption(
+        @StringRes val optionName: Int,
+    ) {
         RENAME_DECK(R.string.rename_deck),
         DECK_OPTIONS(R.string.menu__deck_options),
         CUSTOM_STUDY(R.string.custom_study),
@@ -177,11 +178,14 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         CREATE_SUBDECK(R.string.create_subdeck),
         CREATE_SHORTCUT(R.string.create_shortcut),
         BROWSE_CARDS(R.string.browse_cards),
-        ADD_CARD(R.string.menu_add);
+        ADD_CARD(R.string.menu_add),
     }
 
     class Factory(val collectionSupplier: Supplier<Collection>) : ExtendedFragmentFactory() {
-        override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+        override fun instantiate(
+            classLoader: ClassLoader,
+            className: String,
+        ): Fragment {
             val cls = loadFragmentClass(classLoader, className)
             return if (cls == DeckPickerContextMenu::class.java) {
                 newDeckPickerContextMenu()
@@ -190,8 +194,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             }
         }
 
-        private fun newDeckPickerContextMenu(): DeckPickerContextMenu =
-            DeckPickerContextMenu(collectionSupplier.get())
+        private fun newDeckPickerContextMenu(): DeckPickerContextMenu = DeckPickerContextMenu(collectionSupplier.get())
 
         fun newDeckPickerContextMenu(deckId: DeckId): DeckPickerContextMenu =
             DeckPickerContextMenu(collectionSupplier.get()).withArguments(deckId)

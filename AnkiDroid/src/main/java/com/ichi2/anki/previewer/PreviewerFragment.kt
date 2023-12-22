@@ -69,30 +69,38 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.previewer, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         val selectedCardIds = requireArguments().getLongArray(CARD_IDS_EXTRA)!!
         val currentIndex = requireArguments().getInt(CURRENT_INDEX_EXTRA, 0)
         val mediaDir = File(CollectionHelper.getCurrentAnkiDroidDirectory(requireContext()), "collection.media").path
 
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            PreviewerViewModel.factory(mediaDir, selectedCardIds, currentIndex)
-        )[PreviewerViewModel::class.java]
+        viewModel =
+            ViewModelProvider(
+                requireActivity(),
+                PreviewerViewModel.factory(mediaDir, selectedCardIds, currentIndex),
+            )[PreviewerViewModel::class.java]
 
         val webView = view.findViewById<WebView>(R.id.webview)
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         with(webView) {
-            webViewClient = object : WebViewClient() {
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    super.onPageFinished(view, url)
-                    viewModel.loadCurrentCard()
+            webViewClient =
+                object : WebViewClient() {
+                    override fun onPageFinished(
+                        view: WebView?,
+                        url: String?,
+                    ) {
+                        super.onPageFinished(view, url)
+                        viewModel.loadCurrentCard()
+                    }
                 }
-            }
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
                 javaScriptEnabled = true
@@ -107,7 +115,7 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 stdHtml(requireContext(), Themes.currentTheme.isNightMode),
                 "text/html",
                 null,
-                null
+                null,
             )
         }
 
@@ -189,7 +197,7 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                             displayCard(value.toInt() - 1)
                         }
                     }
-                }
+                },
             )
         }
 
@@ -238,19 +246,21 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    private val editCardLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
-            result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
-        ) {
-            viewModel.loadCurrentCard(reload = true)
+    private val editCardLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
+                result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
+            ) {
+                viewModel.loadCurrentCard(reload = true)
+            }
         }
-    }
 
     private fun editCard() {
-        val intent = Intent(requireContext(), NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
-            putExtra(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, viewModel.cardId())
-        }
+        val intent =
+            Intent(requireContext(), NoteEditor::class.java).apply {
+                putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
+                putExtra(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, viewModel.cardId())
+            }
         editCardLauncher.launch(intent)
     }
 
@@ -258,7 +268,11 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         const val CURRENT_INDEX_EXTRA = "currentIndex"
         const val CARD_IDS_EXTRA = "cardIds"
 
-        fun getIntent(context: Context, selectedCardIds: LongArray, currentIndex: Int): Intent {
+        fun getIntent(
+            context: Context,
+            selectedCardIds: LongArray,
+            currentIndex: Int,
+        ): Intent {
             val args = bundleOf(CURRENT_INDEX_EXTRA to currentIndex, CARD_IDS_EXTRA to selectedCardIds)
             return SingleFragmentActivity.getIntent(context, PreviewerFragment::class, args)
         }

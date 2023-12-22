@@ -36,7 +36,11 @@ import timber.log.Timber
 import kotlin.math.sqrt
 
 class AnkiDroidWidgetSmall : AppWidgetProvider() {
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+    ) {
         Timber.d("SmallWidget: onUpdate")
         WidgetStatus.updateInBackground(context)
     }
@@ -57,7 +61,10 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
         UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
     }
 
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         if (intent.action.contentEquals("com.sec.android.widgetapp.APPWIDGET_RESIZE")) {
             updateWidgetDimensions(context, RemoteViews(context.packageName, R.layout.widget_small), AnkiDroidWidgetSmall::class.java)
         }
@@ -67,12 +74,16 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
     class UpdateService : Service() {
         /** The cached number of total due cards.  */
         private var mDueCardsCount = 0
+
         fun doUpdate(context: Context) {
             AppWidgetManager.getInstance(context)
                 .updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context, true))
         }
 
-        override fun onStart(intent: Intent, startId: Int) {
+        override fun onStart(
+            intent: Intent,
+            startId: Int,
+        ) {
             Timber.i("SmallWidget: OnStart")
             val updateViews = buildUpdate(this, true)
             val thisWidget = ComponentName(this, AnkiDroidWidgetSmall::class.java)
@@ -82,7 +93,10 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
 
         @KotlinCleanup("Fix param updateDueDecksNow always true")
         @Suppress("SameParameterValue")
-        private fun buildUpdate(context: Context, updateDueDecksNow: Boolean): RemoteViews {
+        private fun buildUpdate(
+            context: Context,
+            updateDueDecksNow: Boolean,
+        ): RemoteViews {
             Timber.d("buildUpdate")
             val updateViews = RemoteViews(context.packageName, R.layout.widget_small)
             val mounted = AnkiDroidApp.isSdCardMounted
@@ -91,26 +105,30 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                 updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
                 updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.GONE)
                 if (mMountReceiver == null) {
-                    mMountReceiver = object : BroadcastReceiver() {
-                        @KotlinCleanup("Change parameter context name below, should not be used")
-                        override fun onReceive(context: Context, intent: Intent) {
-                            // baseContext() is null, applicationContext() throws a NPE,
-                            // context may not have the locale override from AnkiDroidApp
-                            val action = intent.action
-                            if (action != null && action == Intent.ACTION_MEDIA_MOUNTED) {
-                                Timber.d("mMountReceiver - Action = Media Mounted")
-                                if (remounted) {
-                                    WidgetStatus.updateInBackground(AnkiDroidApp.instance)
-                                    remounted = false
-                                    if (mMountReceiver != null) {
-                                        AnkiDroidApp.instance.unregisterReceiver(mMountReceiver)
+                    mMountReceiver =
+                        object : BroadcastReceiver() {
+                            @KotlinCleanup("Change parameter context name below, should not be used")
+                            override fun onReceive(
+                                context: Context,
+                                intent: Intent,
+                            ) {
+                                // baseContext() is null, applicationContext() throws a NPE,
+                                // context may not have the locale override from AnkiDroidApp
+                                val action = intent.action
+                                if (action != null && action == Intent.ACTION_MEDIA_MOUNTED) {
+                                    Timber.d("mMountReceiver - Action = Media Mounted")
+                                    if (remounted) {
+                                        WidgetStatus.updateInBackground(AnkiDroidApp.instance)
+                                        remounted = false
+                                        if (mMountReceiver != null) {
+                                            AnkiDroidApp.instance.unregisterReceiver(mMountReceiver)
+                                        }
+                                    } else {
+                                        remounted = true
                                     }
-                                } else {
-                                    remounted = true
                                 }
                             }
                         }
-                    }
                     val iFilter = IntentFilter()
                     iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED)
                     iFilter.addDataScheme("file")
@@ -122,7 +140,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                     // Compute the total number of cards due.
                     val counts = WidgetStatus.fetchSmall(context)
                     mDueCardsCount = counts[0]
-                    /* The cached estimated reviewing time. */
+                    // The cached estimated reviewing time.
                     val eta = counts[1]
                     if (mDueCardsCount <= 0) {
                         if (mDueCardsCount == 0) {
@@ -135,14 +153,20 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                         updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE)
                         updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE)
                         updateViews.setTextViewText(R.id.widget_due, mDueCardsCount.toString())
-                        updateViews.setContentDescription(R.id.widget_due, context.resources.getQuantityString(R.plurals.widget_cards_due, mDueCardsCount, mDueCardsCount))
+                        updateViews.setContentDescription(
+                            R.id.widget_due,
+                            context.resources.getQuantityString(R.plurals.widget_cards_due, mDueCardsCount, mDueCardsCount),
+                        )
                     }
                     if (eta <= 0 || mDueCardsCount <= 0) {
                         updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
                     } else {
                         updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
                         updateViews.setTextViewText(R.id.widget_eta, eta.toString())
-                        updateViews.setContentDescription(R.id.widget_eta, context.resources.getQuantityString(R.plurals.widget_eta, eta, eta))
+                        updateViews.setContentDescription(
+                            R.id.widget_eta,
+                            context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
+                        )
                     }
                 }
             }
@@ -152,13 +176,14 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
             val ankiDroidIntent = Intent(context, IntentHandler::class.java)
             ankiDroidIntent.action = Intent.ACTION_MAIN
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER)
-            val pendingAnkiDroidIntent = PendingIntentCompat.getActivity(
-                context,
-                0,
-                ankiDroidIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT,
-                false
-            )
+            val pendingAnkiDroidIntent =
+                PendingIntentCompat.getActivity(
+                    context,
+                    0,
+                    ankiDroidIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT,
+                    false,
+                )
             updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_button, pendingAnkiDroidIntent)
             updateWidgetDimensions(context, updateViews, AnkiDroidWidgetSmall::class.java)
             return updateViews
@@ -173,7 +198,12 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
     companion object {
         private var mMountReceiver: BroadcastReceiver? = null
         private var remounted = false
-        private fun updateWidgetDimensions(context: Context, updateViews: RemoteViews, cls: Class<*>) {
+
+        private fun updateWidgetDimensions(
+            context: Context,
+            updateViews: RemoteViews,
+            cls: Class<*>,
+        ) {
             val manager = AppWidgetManager.getInstance(context)
             val ids = manager.getAppWidgetIds(ComponentName(context, cls))
             for (id in ids) {

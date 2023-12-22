@@ -55,18 +55,20 @@ class PermissionItem(context: Context, attrs: AttributeSet) : FrameLayout(contex
     init {
         LayoutInflater.from(context).inflate(R.layout.permission_item, this, true)
 
-        switch = findViewById<SwitchCompat>(R.id.switch_widget).apply {
-            isEnabled = true
-            setOnCheckedChangeListener { button, _ ->
-                button.isChecked = isGranted
+        switch =
+            findViewById<SwitchCompat>(R.id.switch_widget).apply {
+                isEnabled = true
+                setOnCheckedChangeListener { button, _ ->
+                    button.isChecked = isGranted
+                }
             }
-        }
 
-        permissions = context.usingStyledAttributes(attrs, R.styleable.PermissionItem) {
-            getTextArray(R.styleable.PermissionItem_permissions)?.map { it.toString() }
-                ?: getString(R.styleable.PermissionItem_permission)?.let { listOf(it) }
-                ?: throw IllegalArgumentException("Either app:permission or app:permissions should be set")
-        }
+        permissions =
+            context.usingStyledAttributes(attrs, R.styleable.PermissionItem) {
+                getTextArray(R.styleable.PermissionItem_permissions)?.map { it.toString() }
+                    ?: getString(R.styleable.PermissionItem_permission)?.let { listOf(it) }
+                    ?: throw IllegalArgumentException("Either app:permission or app:permissions should be set")
+            }
 
         context.withStyledAttributes(attrs, R.styleable.PermissionItem) {
             findViewById<FixedTextView>(R.id.title).text = getText(R.styleable.PermissionItem_permissionTitle)

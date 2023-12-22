@@ -24,7 +24,10 @@ import android.os.VibratorManager
 /** Implementation of [Compat] for SDK level 31  */
 @TargetApi(31)
 open class CompatV31 : CompatV29(), Compat {
-    override fun vibrate(context: Context, durationMillis: Long) {
+    override fun vibrate(
+        context: Context,
+        durationMillis: Long,
+    ) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
         val effect = VibrationEffect.createOneShot(durationMillis, VibrationEffect.DEFAULT_AMPLITUDE)
         val vibrator = vibratorManager.defaultVibrator

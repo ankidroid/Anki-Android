@@ -33,7 +33,10 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 object BitmapUtil {
-    fun decodeFile(theFile: File, imageMaxSize: Int): Bitmap? {
+    fun decodeFile(
+        theFile: File,
+        imageMaxSize: Int,
+    ): Bitmap? {
         var bmp: Bitmap? = null
         try {
             if (!theFile.exists()) {
@@ -48,12 +51,13 @@ object BitmapUtil {
             }
             var scale = 1
             if (o.outHeight > imageMaxSize || o.outWidth > imageMaxSize) {
-                scale = 2.0.pow(
-                    (
-                        ln(imageMaxSize / o.outHeight.coerceAtLeast(o.outWidth).toDouble()) /
-                            ln(0.5)
-                        ).roundToInt().toDouble()
-                ).toInt()
+                scale =
+                    2.0.pow(
+                        (
+                            ln(imageMaxSize / o.outHeight.coerceAtLeast(o.outWidth).toDouble()) /
+                                ln(0.5)
+                        ).roundToInt().toDouble(),
+                    ).toInt()
             }
 
             // Decode with inSampleSize

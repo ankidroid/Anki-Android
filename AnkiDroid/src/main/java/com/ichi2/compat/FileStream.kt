@@ -30,7 +30,6 @@ import java.io.IOException
  * @see [Iterable]
  */
 interface FileStream : AutoCloseable {
-
     /**
      * @see [Iterator.hasNext], but can throw a IOException
      */

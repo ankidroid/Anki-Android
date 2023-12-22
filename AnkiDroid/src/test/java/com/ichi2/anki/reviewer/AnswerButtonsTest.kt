@@ -25,7 +25,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
 class AnswerButtonsTest {
-
     @Test
     fun checkTwoButtons() {
         val numberOfButtons = 2

@@ -124,7 +124,10 @@ class TgzPackageExtract(private val context: Context) {
      * @throws IOException
      */
     @Throws(Exception::class)
-    fun extractTarGzipToAddonFolder(tarballFile: File, addonsPackageDir: AddonsPackageDir) {
+    fun extractTarGzipToAddonFolder(
+        tarballFile: File,
+        addonsPackageDir: AddonsPackageDir,
+    ) {
         require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon, tarballFile.absolutePath) }
 
         try {
@@ -169,7 +172,10 @@ class TgzPackageExtract(private val context: Context) {
      * @throws IOException
      */
     @Throws(FileNotFoundException::class, IOException::class)
-    fun unGzip(inputFile: File, outputDir: File): File {
+    fun unGzip(
+        inputFile: File,
+        outputDir: File,
+    ): File {
         Timber.i("Ungzipping %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
 
         // remove the '.tgz' extension and add .tar extension
@@ -219,7 +225,10 @@ class TgzPackageExtract(private val context: Context) {
      * @throws IOException
      */
     @Throws(Exception::class)
-    fun unTar(inputFile: File, outputDir: File) {
+    fun unTar(
+        inputFile: File,
+        outputDir: File,
+    ) {
         Timber.i("Untaring %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
 
         count = 0
@@ -249,7 +258,13 @@ class TgzPackageExtract(private val context: Context) {
             }
         } catch (e: IOException) {
             outputDir.deleteRecursively()
-            throw ArchiveException(context.getString(R.string.malicious_archive_exceeds_limit, Formatter.formatFileSize(context, TOO_BIG_SIZE), TOO_MANY_FILES))
+            throw ArchiveException(
+                context.getString(
+                    R.string.malicious_archive_exceeds_limit,
+                    Formatter.formatFileSize(context, TOO_BIG_SIZE),
+                    TOO_MANY_FILES,
+                ),
+            )
         }
     }
 
@@ -262,7 +277,12 @@ class TgzPackageExtract(private val context: Context) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    private fun unTarFile(tarInputStream: TarArchiveInputStream, entry: TarArchiveEntry, outputDir: File, outputFile: File) {
+    private fun unTarFile(
+        tarInputStream: TarArchiveInputStream,
+        entry: TarArchiveEntry,
+        outputDir: File,
+        outputFile: File,
+    ) {
         Timber.i("Creating output file %s.", outputFile.absolutePath)
         val currentFile = File(outputDir, entry.name)
 
@@ -308,7 +328,11 @@ class TgzPackageExtract(private val context: Context) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    private fun unTarDir(inputFile: File, outputDir: File, outputFile: File) {
+    private fun unTarDir(
+        inputFile: File,
+        outputDir: File,
+        outputFile: File,
+    ) {
         Timber.i("Untaring %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
         try {
             Timber.i("Attempting to create output directory %s.", outputFile.absolutePath)
@@ -327,7 +351,10 @@ class TgzPackageExtract(private val context: Context) {
      * @param destDirectory destination directory
      */
     @Throws(ArchiveException::class, IOException::class)
-    private fun zipPathSafety(outputFile: File, destDirectory: File) {
+    private fun zipPathSafety(
+        outputFile: File,
+        destDirectory: File,
+    ) {
         val destDirCanonicalPath = destDirectory.canonicalPath
         val outputFileCanonicalPath = outputFile.canonicalPath
 
@@ -368,6 +395,7 @@ class TgzPackageExtract(private val context: Context) {
     }
 
     //
+
     /**
      * If space consumed is more than half of original availableSpace, delete file recursively and throw
      *
@@ -381,11 +409,18 @@ class TgzPackageExtract(private val context: Context) {
     }
 
     class InsufficientSpaceException(val required: Long, val available: Long, val context: Context) : IOException() {
-
         companion object {
-            fun throwIfInsufficientSpace(context: Context, requiredMinSpace: Long, availableSpace: Long) {
+            fun throwIfInsufficientSpace(
+                context: Context,
+                requiredMinSpace: Long,
+                availableSpace: Long,
+            ) {
                 if (requiredMinSpace > availableSpace) {
-                    Timber.w("Not enough space, need %d, available %d", Formatter.formatFileSize(context, requiredMinSpace), Formatter.formatFileSize(context, availableSpace))
+                    Timber.w(
+                        "Not enough space, need %d, available %d",
+                        Formatter.formatFileSize(context, requiredMinSpace),
+                        Formatter.formatFileSize(context, availableSpace),
+                    )
                     throw InsufficientSpaceException(requiredMinSpace, availableSpace, context)
                 }
             }

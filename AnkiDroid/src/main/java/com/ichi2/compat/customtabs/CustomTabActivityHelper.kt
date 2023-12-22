@@ -88,7 +88,11 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
      * @see CustomTabsSession.mayLaunchUrl
      * @return true if call to mayLaunchUrl was accepted.
      */
-    fun mayLaunchUrl(uri: Uri?, extras: Bundle?, otherLikelyBundles: List<Bundle?>?): Boolean {
+    fun mayLaunchUrl(
+        uri: Uri?,
+        extras: Bundle?,
+        otherLikelyBundles: List<Bundle?>?,
+    ): Boolean {
         if (mClient == null) return false
         val session = session ?: return false
         return session.mayLaunchUrl(uri, extras, otherLikelyBundles)
@@ -127,7 +131,10 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
          * @param activity The Activity that wants to open the Uri.
          * @param uri The uri to be opened by the fallback.
          */
-        fun openUri(activity: Activity, uri: Uri)
+        fun openUri(
+            activity: Activity,
+            uri: Uri,
+        )
     }
 
     @get:CheckResult
@@ -150,7 +157,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
             activity: Activity,
             customTabsIntent: CustomTabsIntent,
             uri: Uri,
-            fallback: CustomTabFallback?
+            fallback: CustomTabFallback?,
         ) {
             val packageName = CustomTabsHelper.getPackageNameToUse(activity)
 

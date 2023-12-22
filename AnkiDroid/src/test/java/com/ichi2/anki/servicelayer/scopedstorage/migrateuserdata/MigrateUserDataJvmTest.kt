@@ -34,7 +34,6 @@ import kotlin.test.assertFailsWith
  * A test for [MigrateUserData] which does not require Robolectric
  */
 class MigrateUserDataJvmTest {
-
     companion object {
         private lateinit var sourceDir: String
         private lateinit var destDir: String
@@ -71,7 +70,12 @@ class MigrateUserDataJvmTest {
         val preferences = getScopedStorageMigrationPreferences(source = NOT_SET, destination = VALID_DIR)
         val exception = assertFailsWith<IllegalStateException> { createInstance(preferences) }
 
-        assertThat(exception.message, equalTo("Expected either all or no migration directories set. 'migrationSourcePath': ''; 'migrationDestinationPath': '$destDir'"))
+        assertThat(
+            exception.message,
+            equalTo(
+                "Expected either all or no migration directories set. 'migrationSourcePath': ''; 'migrationDestinationPath': '$destDir'",
+            ),
+        )
     }
 
     @Test
@@ -88,7 +92,10 @@ class MigrateUserDataJvmTest {
         assertThat(exception.directories.single().file.canonicalPath, equalTo(missingDir))
     }
 
-    private fun getScopedStorageMigrationPreferences(source: SourceType, destination: SourceType): SharedPreferences {
+    private fun getScopedStorageMigrationPreferences(
+        source: SourceType,
+        destination: SourceType,
+    ): SharedPreferences {
         return mock {
             on { getString(ScopedStorageService.PREF_MIGRATION_SOURCE, "") } doReturn
                 when (source) {
@@ -108,6 +115,6 @@ class MigrateUserDataJvmTest {
     enum class SourceType {
         NOT_SET,
         MISSING_DIR,
-        VALID_DIR
+        VALID_DIR,
     }
 }

@@ -1,3 +1,5 @@
+
+
 /*
  *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
  *
@@ -20,15 +22,16 @@
  *    License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
  */
 
+@file:Suppress("ktlint")
+
 package com.ichi2.libanki
 
 import java.io.Closeable
 
 open class TtsVoice(
     val name: String,
-    val lang: String
+    val lang: String,
 ) {
-
     override fun toString(): String {
         var out = "{{tts $lang voices=$name}}"
         if (unavailable()) {
@@ -55,6 +58,7 @@ abstract class TtsPlayer : Closeable {
     data class TtsCompletionStatus(val success: Boolean, val error: TtsError? = null) {
         companion object {
             fun success() = TtsCompletionStatus(success = true)
+
             fun failure(errorCode: TtsError) = TtsCompletionStatus(success = false, errorCode)
         }
     }
@@ -68,14 +72,14 @@ abstract class TtsPlayer : Closeable {
         return _available_voices!!
     }
 
-    fun voice_for_tag(tag: TTSTag): TtsVoiceMatch? {
-        val avail_voices = voices()
+    fun voiceForTag(tag: TTSTag): TtsVoiceMatch? {
+        val availVoices = voices()
 
         var rank = default_rank
 
         // any requested voices match?
         for (requested_voice in tag.voices) {
-            for (avail in avail_voices) {
+            for (avail in availVoices) {
                 if (avail.name == requested_voice && avail.lang == tag.lang) {
                     return TtsVoiceMatch(voice = avail, rank = rank)
                 }
@@ -86,7 +90,7 @@ abstract class TtsPlayer : Closeable {
 
         // if no preferred voices match, we fall back on language
         // with a rank of -100
-        for (avail in avail_voices) {
+        for (avail in availVoices) {
             if (avail.lang == tag.lang) {
                 return TtsVoiceMatch(voice = avail, rank = -100)
             }

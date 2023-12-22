@@ -23,7 +23,10 @@ object MapUtil {
      * @param value value to get key for
      * @return key corresponding to the given value
      */
-    fun <T, E> getKeyByValue(map: Map<T, E>, value: E): T? {
+    fun <T, E> getKeyByValue(
+        map: Map<T, E>,
+        value: E,
+    ): T? {
         for ((key, value1) in map) {
             if (value == value1) {
                 return key

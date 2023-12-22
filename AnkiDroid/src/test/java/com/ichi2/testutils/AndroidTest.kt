@@ -47,8 +47,11 @@ fun AndroidTest.getSharedPrefs(): SharedPreferences = targetContext.sharedPrefs(
 fun AndroidTest.getString(res: Int): String = targetContext.getString(res)
 
 @Suppress("unused")
-fun AndroidTest.getQuantityString(res: Int, quantity: Int, vararg formatArgs: Any): String =
-    targetContext.resources.getQuantityString(res, quantity, *formatArgs)
+fun AndroidTest.getQuantityString(
+    res: Int,
+    quantity: Int,
+    vararg formatArgs: Any,
+): String = targetContext.resources.getQuantityString(res, quantity, *formatArgs)
 
 /**
  * Allows editing of preferences, followed by a call to [apply][SharedPreferences.Editor.apply]:
@@ -57,5 +60,4 @@ fun AndroidTest.getQuantityString(res: Int, quantity: Int, vararg formatArgs: An
  * editPreferences { putString("key", value) }
  * ```
  */
-fun AndroidTest.editPreferences(action: SharedPreferences.Editor.() -> Unit) =
-    getSharedPrefs().edit(action = action)
+fun AndroidTest.editPreferences(action: SharedPreferences.Editor.() -> Unit) = getSharedPrefs().edit(action = action)

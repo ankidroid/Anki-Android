@@ -40,7 +40,10 @@ fun DialogInterfaceListener.toClickListener(): OnClickListener {
  * Allows easier transformations from [MaterialDialog] to [AlertDialog].
  * Inline this file when material dialog is removed
  */
-fun AlertDialog.Builder.title(@StringRes stringRes: Int? = null, text: String? = null): AlertDialog.Builder {
+fun AlertDialog.Builder.title(
+    @StringRes stringRes: Int? = null,
+    text: String? = null,
+): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
@@ -51,7 +54,10 @@ fun AlertDialog.Builder.title(@StringRes stringRes: Int? = null, text: String? =
     }
 }
 
-fun AlertDialog.Builder.message(@StringRes stringRes: Int? = null, text: CharSequence? = null): AlertDialog.Builder {
+fun AlertDialog.Builder.message(
+    @StringRes stringRes: Int? = null,
+    text: CharSequence? = null,
+): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
@@ -66,7 +72,7 @@ fun AlertDialog.Builder.message(@StringRes stringRes: Int? = null, text: CharSeq
  * Shows an icon to the left of the dialog title.
  */
 fun AlertDialog.Builder.iconAttr(
-    @DrawableRes res: Int
+    @DrawableRes res: Int,
 ) = apply {
     return this.setIcon(Themes.getResFromAttr(this.context, res))
 }
@@ -74,7 +80,7 @@ fun AlertDialog.Builder.iconAttr(
 fun AlertDialog.Builder.positiveButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
-    click: DialogInterfaceListener? = null
+    click: DialogInterfaceListener? = null,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -89,7 +95,7 @@ fun AlertDialog.Builder.positiveButton(
 fun AlertDialog.Builder.neutralButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
-    click: DialogInterfaceListener? = null
+    click: DialogInterfaceListener? = null,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -104,7 +110,7 @@ fun AlertDialog.Builder.neutralButton(
 fun AlertDialog.Builder.negativeButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
-    click: DialogInterfaceListener? = null
+    click: DialogInterfaceListener? = null,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -124,10 +130,11 @@ fun AlertDialog.Builder.cancelable(cancelable: Boolean): AlertDialog.Builder {
  * Executes the provided block, then creates an [AlertDialog] with the arguments supplied
  * and immediately displays the dialog
  */
-inline fun AlertDialog.Builder.show(block: AlertDialog.Builder.() -> Unit): AlertDialog.Builder = apply {
-    this.block()
-    this.show()
-}
+inline fun AlertDialog.Builder.show(block: AlertDialog.Builder.() -> Unit): AlertDialog.Builder =
+    apply {
+        this.block()
+        this.show()
+    }
 
 /**
  * Adds a checkbox to the dialog, whilst continuing to display the value of [message]
@@ -140,7 +147,7 @@ fun AlertDialog.Builder.checkBoxPrompt(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
     isCheckedDefault: Boolean = false,
-    onToggle: (checked: Boolean) -> Unit
+    onToggle: (checked: Boolean) -> Unit,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -164,14 +171,15 @@ fun AlertDialog.Builder.customView(
     paddingTop: Int = 0,
     paddingBottom: Int = 0,
     paddingLeft: Int = 0,
-    paddingRight: Int = 0
+    paddingRight: Int = 0,
 ): AlertDialog.Builder {
     val container = FrameLayout(context)
 
-    val containerParams = FrameLayout.LayoutParams(
-        FrameLayout.LayoutParams.MATCH_PARENT,
-        FrameLayout.LayoutParams.WRAP_CONTENT
-    )
+    val containerParams =
+        FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+        )
 
     container.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
     container.addView(view, containerParams)

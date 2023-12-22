@@ -25,7 +25,10 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 class EnsureAllFilesAccessRule : TestRule {
-    override fun apply(base: Statement, description: Description): Statement {
+    override fun apply(
+        base: Statement,
+        description: Description,
+    ): Statement {
         ensureAllFilesAccess()
         return base
     }
@@ -42,7 +45,7 @@ fun ensureAllFilesAccess() {
         throw IllegalStateException(
             "'All Files' access is required on your emulator/device. " +
                 "Please grant it manually or change Build Variant to 'playDebug' in Android Studio " +
-                "(Build -> Select Build Variant)"
+                "(Build -> Select Build Variant)",
         )
     }
 }

@@ -52,8 +52,8 @@ const val DECK_PATH = "deckPath"
  */
 @RunWith(AndroidJUnit4::class)
 class MigrateEssentialFilesTest : RobolectricTest() {
-
     override fun useInMemoryDatabase(): Boolean = false
+
     private lateinit var defaultCollectionSourcePath: String
 
     /** Whether to check the collection to ensure it's still openable */
@@ -79,33 +79,42 @@ class MigrateEssentialFilesTest : RobolectricTest() {
     }
 
     @Test
-    fun successful_migration() = runTest {
-        assertMigrationNotInProgress()
+    fun successful_migration() =
+        runTest {
+            assertMigrationNotInProgress()
 
-        addNoteUsingBasicModel("Hello", "World")
+            addNoteUsingBasicModel("Hello", "World")
 
-        val collectionSourcePath = getMigrationSourcePath()
+            val collectionSourcePath = getMigrationSourcePath()
 
-        val oldDeckPath = getPreferences().getString(DECK_PATH, "")
+            val oldDeckPath = getPreferences().getString(DECK_PATH, "")
 
-        val outPath = migrateEssentialFilesForTest(targetContext, collectionSourcePath)
+            val outPath = migrateEssentialFilesForTest(targetContext, collectionSourcePath)
 
-        // assert the collection is open, working, and has been moved to the outPath
-        assertThat(col.basicCheck(), equalTo(true))
-        assertThat(col.path, equalTo(File(outPath, "collection.anki2").canonicalPath))
+            // assert the collection is open, working, and has been moved to the outPath
+            assertThat(col.basicCheck(), equalTo(true))
+            assertThat(col.path, equalTo(File(outPath, "collection.anki2").canonicalPath))
 
-        assertMigrationInProgress()
+            assertMigrationInProgress()
 
-        // assert that the preferences are updated
-        val prefs = getPreferences()
-        assertThat("The deck path should be updated", prefs.getString(DECK_PATH, ""), equalTo(outPath.canonicalPath))
-        assertThat("The migration source should be the original deck path", prefs.getString(ScopedStorageService.PREF_MIGRATION_SOURCE, ""), equalTo(oldDeckPath))
-        assertThat("The migration destination should be the deck path", prefs.getString(ScopedStorageService.PREF_MIGRATION_DESTINATION, ""), equalTo(outPath.canonicalPath))
+            // assert that the preferences are updated
+            val prefs = getPreferences()
+            assertThat("The deck path should be updated", prefs.getString(DECK_PATH, ""), equalTo(outPath.canonicalPath))
+            assertThat(
+                "The migration source should be the original deck path",
+                prefs.getString(ScopedStorageService.PREF_MIGRATION_SOURCE, ""),
+                equalTo(oldDeckPath),
+            )
+            assertThat(
+                "The migration destination should be the deck path",
+                prefs.getString(ScopedStorageService.PREF_MIGRATION_DESTINATION, ""),
+                equalTo(outPath.canonicalPath),
+            )
 
-        assertThat(".nomedia should be copied", File(outPath.canonicalPath, ".nomedia"), FileMatchers.anExistingFile())
+            assertThat(".nomedia should be copied", File(outPath.canonicalPath, ".nomedia"), FileMatchers.anExistingFile())
 
-        assertThat("The added card should still exists", col.cardCount(), equalTo(1))
-    }
+            assertThat("The added card should still exists", col.cardCount(), equalTo(1))
+        }
 
     @Test
     fun exception_thrown_if_migration_is_started_while_in_process() {
@@ -115,9 +124,10 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         }
         assertMigrationInProgress()
 
-        val ex = assertFailsWith<IllegalStateException> {
-            prepareAndValidateSourceAndDestinationFolders(targetContext)
-        }
+        val ex =
+            assertFailsWith<IllegalStateException> {
+                prepareAndValidateSourceAndDestinationFolders(targetContext)
+            }
 
         assertThat(ex.message, containsString("Migration is already in progress"))
     }
@@ -126,63 +136,75 @@ class MigrateEssentialFilesTest : RobolectricTest() {
     fun exception_thrown_if_destination_is_not_empty() {
         val source = getMigrationSourcePath()
         // This is not handled upstream as it's a logic error - the directory passed in should be created
-        val nonEmptyDestination = getMigrationDestinationPath(targetContext).also {
-            File(it, "tmp.txt").createNewFile()
-        }
+        val nonEmptyDestination =
+            getMigrationDestinationPath(targetContext).also {
+                File(it, "tmp.txt").createNewFile()
+            }
 
-        val exception = assertFailsWith<IllegalStateException> {
-            prepareAndValidateSourceAndDestinationFolders(targetContext, sourceOverride = File(source), destOverride = DestFolderOverride.Subfolder(nonEmptyDestination), checkSourceDir = false)
-        }
+        val exception =
+            assertFailsWith<IllegalStateException> {
+                prepareAndValidateSourceAndDestinationFolders(
+                    targetContext,
+                    sourceOverride = File(source),
+                    destOverride = DestFolderOverride.Subfolder(nonEmptyDestination),
+                    checkSourceDir = false,
+                )
+            }
         assertThat(exception.message, containsString("not empty"))
     }
 
     @Test
-    fun exception_thrown_if_database_corrupt() = runTest {
-        checkCollectionAfter = false
-        val collectionAnki2Path = CollectionDBCorruption.closeAndCorrupt(targetContext)
+    fun exception_thrown_if_database_corrupt() =
+        runTest {
+            checkCollectionAfter = false
+            val collectionAnki2Path = CollectionDBCorruption.closeAndCorrupt(targetContext)
 
-        val collectionSourcePath = File(collectionAnki2Path).parent!!
+            val collectionSourcePath = File(collectionAnki2Path).parent!!
 
-        assertFailsWith<SQLiteDatabaseCorruptException> { migrateEssentialFilesForTest(targetContext, collectionSourcePath) }
+            assertFailsWith<SQLiteDatabaseCorruptException> { migrateEssentialFilesForTest(targetContext, collectionSourcePath) }
 
-        assertMigrationNotInProgress()
-    }
+            assertMigrationNotInProgress()
+        }
 
     @Test
-    fun prefs_are_restored_if_reopening_fails() = runTest {
-        // after preferences are set, we make one final check with these new preferences
-        // if this check fails, we want to revert the changes to preferences that we made
-        val collectionSourcePath = getMigrationSourcePath()
+    fun prefs_are_restored_if_reopening_fails() =
+        runTest {
+            // after preferences are set, we make one final check with these new preferences
+            // if this check fails, we want to revert the changes to preferences that we made
+            val collectionSourcePath = getMigrationSourcePath()
 
-        val prefKeys = listOf(ScopedStorageService.PREF_MIGRATION_SOURCE, ScopedStorageService.PREF_MIGRATION_DESTINATION, DECK_PATH)
-        val oldPrefValues = prefKeys
-            .associateWith { getPreferences().getString(it, null) }
+            val prefKeys = listOf(ScopedStorageService.PREF_MIGRATION_SOURCE, ScopedStorageService.PREF_MIGRATION_DESTINATION, DECK_PATH)
+            val oldPrefValues =
+                prefKeys
+                    .associateWith { getPreferences().getString(it, null) }
 
-        CollectionManager.emulateOpenFailure = true
-        assertFailsWith<BackendException.BackendDbException.BackendDbLockedException> {
-            migrateEssentialFilesForTest(targetContext, collectionSourcePath)
+            CollectionManager.emulateOpenFailure = true
+            assertFailsWith<BackendException.BackendDbException.BackendDbLockedException> {
+                migrateEssentialFilesForTest(targetContext, collectionSourcePath)
+            }
+            CollectionManager.emulateOpenFailure = false
+
+            oldPrefValues.forEach {
+                assertThat("Pref ${it.key} should be unchanged", getPreferences().getString(it.key, null), equalTo(it.value))
+            }
+
+            assertMigrationNotInProgress()
         }
-        CollectionManager.emulateOpenFailure = false
-
-        oldPrefValues.forEach {
-            assertThat("Pref ${it.key} should be unchanged", getPreferences().getString(it.key, null), equalTo(it.value))
-        }
-
-        assertMigrationNotInProgress()
-    }
 
     @Test
-    fun fails_if_missing_essential_file() = runTest {
-        col.close() // required for Windows, can't delete if locked.
+    fun fails_if_missing_essential_file() =
+        runTest {
+            col.close() // required for Windows, can't delete if locked.
 
-        CompatHelper.compat.deleteFile(File(defaultCollectionSourcePath, "collection.anki2"))
+            CompatHelper.compat.deleteFile(File(defaultCollectionSourcePath, "collection.anki2"))
 
-        val ex = assertFailsWith<MissingEssentialFileException> {
-            migrateEssentialFilesForTest(targetContext, defaultCollectionSourcePath)
+            val ex =
+                assertFailsWith<MissingEssentialFileException> {
+                    migrateEssentialFilesForTest(targetContext, defaultCollectionSourcePath)
+                }
+
+            assertThat(ex.file.name, equalTo("collection.anki2"))
         }
-
-        assertThat(ex.file.name, equalTo("collection.anki2"))
-    }
 
     private fun getMigrationSourcePath() = File(col.path).parent!!
 }
@@ -195,19 +217,21 @@ suspend fun migrateEssentialFilesForTest(
     context: Context,
     ankiDroidFolder: String,
     destOverride: DestFolderOverride = DestFolderOverride.None,
-    checkSourceDir: Boolean = false
+    checkSourceDir: Boolean = false,
 ): File {
-    val destOverrideUpdated = when (destOverride) {
-        is DestFolderOverride.None -> DestFolderOverride.Root(getMigrationDestinationPath(context))
-        else -> destOverride
-    }
+    val destOverrideUpdated =
+        when (destOverride) {
+            is DestFolderOverride.None -> DestFolderOverride.Root(getMigrationDestinationPath(context))
+            else -> destOverride
+        }
     val sourceFolder = File(ankiDroidFolder)
-    val folders = prepareAndValidateSourceAndDestinationFolders(
-        context,
-        sourceOverride = sourceFolder,
-        destOverride = destOverrideUpdated,
-        checkSourceDir = checkSourceDir
-    )
+    val folders =
+        prepareAndValidateSourceAndDestinationFolders(
+            context,
+            sourceOverride = sourceFolder,
+            destOverride = destOverrideUpdated,
+            checkSourceDir = checkSourceDir,
+        )
     CollectionManager.migrateEssentialFiles(context, folders)
     return folders.scopedDestinationDirectory.directory
 }

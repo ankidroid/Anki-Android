@@ -34,7 +34,6 @@ import java.io.IOException
 import kotlin.test.assertFailsWith
 
 class MoveConflictedFileTest : Test21And26(), OperationTest {
-
     override val executionContext: MockMigrationContext by lazy {
         MockMigrationContext()
     }
@@ -164,13 +163,14 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
         val params = InputParameters("collection.media", sourceFileName = "tmp.txt")
 
         var op = params.createOperation()
-        op = spy(op) {
-            doAnswer<List<Operation>> { answer ->
-                val context = answer.arguments[1] as MigrationContext
-                context.reportError(this.mock, TestException("testing"))
-                emptyList()
-            }.whenever(it).moveFile(any(), any())
-        }
+        op =
+            spy(op) {
+                doAnswer<List<Operation>> { answer ->
+                    val context = answer.arguments[1] as MigrationContext
+                    context.reportError(this.mock, TestException("testing"))
+                    emptyList()
+                }.whenever(it).moveFile(any(), any())
+            }
 
         executionContext.logExceptions = true
 
@@ -194,9 +194,10 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
         val params = InputParameters("collection.media", sourceFileName = "tmp.txt")
 
         var op = params.createOperation()
-        op = spy(op) {
-            doThrow(TestException("operation_failed_via_exception")).whenever(it).moveFile(any(), any())
-        }
+        op =
+            spy(op) {
+                doThrow(TestException("operation_failed_via_exception")).whenever(it).moveFile(any(), any())
+            }
 
         executionContext.logExceptions = true
 
@@ -229,7 +230,7 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
     private class InputParameters constructor(
         private vararg val directoryComponents: String,
         val sourceFileName: String,
-        val content: String = "source content"
+        val content: String = "source content",
     ) {
         val sourceTopLevel: File by lazy { createTransientDirectory() }
         val sourceFile: File by lazy {
@@ -263,7 +264,7 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
             return MoveConflictedFile.createInstance(
                 sourceFile = DiskFile.createInstance(this.sourceFile)!!,
                 destinationTopLevel = destinationTopLevelDirectory,
-                sourceRelativePath = relativePath
+                sourceRelativePath = relativePath,
             )
         }
     }

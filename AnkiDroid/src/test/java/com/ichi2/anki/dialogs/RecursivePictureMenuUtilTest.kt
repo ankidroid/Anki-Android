@@ -34,14 +34,22 @@ open class RecursivePictureMenuUtilTest : RobolectricTest() {
         return RecursivePictureMenuUtil.getRecyclerViewFor(menu)
     }
 
-    fun clickChildAtIndex(v: RecyclerView, index: Int) {
+    fun clickChildAtIndex(
+        v: RecyclerView,
+        index: Int,
+    ) {
         RobolectricTest.advanceRobolectricLooperWithSleep()
         val childAt = v.getChildAt(index) // This is null without appropriate looper calls
         childAt.performClick()
     }
 
     fun getItemLinkingTo(linkLocation: Int): RecursivePictureMenu.Item {
-        return HelpDialog.LinkItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, linkLocation)
+        return HelpDialog.LinkItem(
+            R.string.help_item_ankidroid_manual,
+            R.drawable.ic_manual_black_24dp,
+            UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL,
+            linkLocation,
+        )
     }
 
     fun getHeaderWithSubItems(count: Int): RecursivePictureMenu.ItemHeader {
@@ -49,6 +57,11 @@ open class RecursivePictureMenuUtilTest : RobolectricTest() {
         for (i in 0 until count) {
             items[i] = getItemLinkingTo(R.string.link_manual)
         }
-        return RecursivePictureMenu.ItemHeader(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, *items)
+        return RecursivePictureMenu.ItemHeader(
+            R.string.help_item_ankidroid_manual,
+            R.drawable.ic_manual_black_24dp,
+            UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL,
+            *items,
+        )
     }
 }

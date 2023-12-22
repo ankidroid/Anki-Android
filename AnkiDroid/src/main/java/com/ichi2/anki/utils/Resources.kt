@@ -23,7 +23,10 @@ import androidx.annotation.StringRes
 /**
  * @param resId must be a [StringRes] or a [PluralsRes]
  */
-fun Resources.getFormattedStringOrPlurals(resId: Int, quantity: Int): String {
+fun Resources.getFormattedStringOrPlurals(
+    resId: Int,
+    quantity: Int,
+): String {
     return when (getResourceTypeName(resId)) {
         "string" -> getString(resId, quantity)
         "plurals" -> getQuantityString(resId, quantity, quantity)
@@ -34,6 +37,9 @@ fun Resources.getFormattedStringOrPlurals(resId: Int, quantity: Int): String {
 /**
  * @see [Resources.getFormattedStringOrPlurals]
  */
-fun Context.getFormattedStringOrPlurals(resId: Int, quantity: Int): String {
+fun Context.getFormattedStringOrPlurals(
+    resId: Int,
+    quantity: Int,
+): String {
     return resources.getFormattedStringOrPlurals(resId, quantity)
 }

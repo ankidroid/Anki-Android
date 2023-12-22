@@ -31,12 +31,18 @@ import java.util.function.Consumer
 
 open class IntegerDialog : AnalyticsDialogFragment() {
     private var mConsumer: Consumer<Int>? = null
+
     fun setCallbackRunnable(consumer: Consumer<Int>?) {
         mConsumer = consumer
     }
 
     /** use named arguments with this method for clarity */
-    fun setArgs(title: String?, prompt: String?, digits: Int, content: String? = null) {
+    fun setArgs(
+        title: String?,
+        prompt: String?,
+        digits: Int,
+        content: String? = null,
+    ) {
         val args = Bundle()
         args.putString("title", title)
         args.putString("prompt", prompt)
@@ -48,20 +54,21 @@ open class IntegerDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         @SuppressLint("CheckResult")
-        val show = MaterialDialog(requireActivity()).show {
-            title(text = requireArguments().getString("title")!!)
-            positiveButton(R.string.dialog_ok)
-            negativeButton(R.string.dialog_cancel)
-            input(
-                hint = requireArguments().getString("prompt"),
-                inputType = InputType.TYPE_CLASS_NUMBER,
-                maxLength = requireArguments().getInt("digits")
-            ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.accept(text.toString().toInt()) }
-            contentNullable(requireArguments().getString("content"))
-            onShow {
-                displayKeyboard(getInputField())
+        val show =
+            MaterialDialog(requireActivity()).show {
+                title(text = requireArguments().getString("title")!!)
+                positiveButton(R.string.dialog_ok)
+                negativeButton(R.string.dialog_cancel)
+                input(
+                    hint = requireArguments().getString("prompt"),
+                    inputType = InputType.TYPE_CLASS_NUMBER,
+                    maxLength = requireArguments().getInt("digits"),
+                ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.accept(text.toString().toInt()) }
+                contentNullable(requireArguments().getString("content"))
+                onShow {
+                    displayKeyboard(getInputField())
+                }
             }
-        }
 
         return show
     }

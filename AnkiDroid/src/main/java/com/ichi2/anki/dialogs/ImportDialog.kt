@@ -27,7 +27,9 @@ import java.net.URLDecoder
 class ImportDialog : AsyncDialogFragment() {
     interface ImportDialogListener {
         fun importAdd(importPath: String)
+
         fun importReplace(importPath: String)
+
         fun dismissAllDialogFragments()
     }
 
@@ -99,7 +101,10 @@ class ImportDialog : AsyncDialogFragment() {
          * @param dialogType An integer which specifies which of the sub-dialogs to show
          * @param packagePath the path of the package to import
          */
-        fun newInstance(dialogType: Int, packagePath: String): ImportDialog {
+        fun newInstance(
+            dialogType: Int,
+            packagePath: String,
+        ): ImportDialog {
             val f = ImportDialog()
             val args = Bundle()
             args.putInt("dialogType", dialogType)

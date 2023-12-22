@@ -33,7 +33,7 @@ class DiskFileTest {
         assertThat(
             "DiskFile should work with valid file",
             DiskFile.createInstance(filePath),
-            not(nullValue())
+            not(nullValue()),
         )
     }
 
@@ -74,7 +74,9 @@ class DiskFileTest {
         assertThat("files should not be equal: right doesn't exist", left.contentEquals(right), equalTo(false))
     }
 
-    private fun createTransientDiskFile(@Suppress("SameParameterValue") content: String): DiskFile {
+    private fun createTransientDiskFile(
+        @Suppress("SameParameterValue") content: String,
+    ): DiskFile {
         val left = createTransientFile(content)
         return DiskFile.createInstance(left)!!
     }

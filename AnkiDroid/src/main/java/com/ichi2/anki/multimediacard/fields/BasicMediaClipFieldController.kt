@@ -46,7 +46,10 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
 
     private lateinit var selectMediaLauncher: ActivityResultLauncher<Intent?>
 
-    override fun createUI(context: Context, layout: LinearLayout) {
+    override fun createUI(
+        context: Context,
+        layout: LinearLayout,
+    ) {
         ankiCacheDirectory = context.externalCacheDir?.absolutePath
         // #9639: .opus is application/octet-stream in API 26,
         // requires a workaround as we don't want to enable application/octet-stream by default
@@ -56,20 +59,21 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             openChooserPrompt(
                 "audio/*",
                 arrayOf("audio/*", "application/ogg"), // #9226: allows ogg on Android 8
-                R.string.multimedia_editor_popup_audio_clip
+                R.string.multimedia_editor_popup_audio_clip,
             )
         }
         layout.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT)
-        val btnVideo = Button(mActivity).apply {
-            text = mActivity.getText(R.string.multimedia_editor_import_video)
-            setOnClickListener {
-                openChooserPrompt(
-                    "video/*",
-                    emptyArray(),
-                    R.string.multimedia_editor_popup_video_clip
-                )
+        val btnVideo =
+            Button(mActivity).apply {
+                text = mActivity.getText(R.string.multimedia_editor_import_video)
+                setOnClickListener {
+                    openChooserPrompt(
+                        "video/*",
+                        emptyArray(),
+                        R.string.multimedia_editor_popup_video_clip,
+                    )
+                }
             }
-        }
         layout.addView(btnVideo, ViewGroup.LayoutParams.MATCH_PARENT)
         tvAudioClip = FixedTextView(mActivity)
         if (mField.audioPath == null) {
@@ -81,7 +85,11 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         layout.addView(tvAudioClip, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
-    private fun openChooserPrompt(initialMimeType: String, extraMimeTypes: Array<String>, @StringRes prompt: Int) {
+    private fun openChooserPrompt(
+        initialMimeType: String,
+        extraMimeTypes: Array<String>,
+        @StringRes prompt: Int,
+    ) {
         val allowAllFiles =
             this.mActivity.sharedPrefs().getBoolean("mediaImportAllowAllFiles", false)
         val i = Intent()
@@ -102,13 +110,14 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         super.setEditingActivity(activity)
         val registry = mActivity.activityResultRegistry
 
-        selectMediaLauncher = registry.register(SELECT_MEDIA_LAUNCHER_KEY, ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode != Activity.RESULT_CANCELED) {
-                executeSafe(mActivity, "handleMediaSelection:unhandled") {
-                    handleMediaSelection(result.data!!)
+        selectMediaLauncher =
+            registry.register(SELECT_MEDIA_LAUNCHER_KEY, ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode != Activity.RESULT_CANCELED) {
+                    executeSafe(mActivity, "handleMediaSelection:unhandled") {
+                        handleMediaSelection(result.data!!)
+                    }
                 }
             }
-        }
     }
 
     private fun handleMediaSelection(data: Intent) {
@@ -122,7 +131,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                 showThemedToast(
                     AnkiDroidApp.instance.applicationContext,
                     AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong),
-                    true
+                    true,
                 )
                 return
             }
@@ -130,22 +139,23 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             val mediaClipFullName = cursor.getString(0)
             mediaClipFullNameParts = mediaClipFullName.split(".").toTypedArray()
             if (mediaClipFullNameParts.size < 2) {
-                mediaClipFullNameParts = try {
-                    Timber.i("Media clip name does not have extension, using second half of mime type")
-                    arrayOf(mediaClipFullName, cursor.getString(2).split("/").toTypedArray()[1])
-                } catch (e: Exception) {
-                    Timber.w(e)
-                    // This code is difficult to stabilize - it is not clear how to handle files with no extension
-                    // and apparently we may fail to get MIME_TYPE information - in that case we will gather information
-                    // about what people are experiencing in the real world and decide later, but without crashing at least
-                    CrashReportService.sendExceptionReport(e, "Media Clip addition failed. Name " + mediaClipFullName + " / cursor mime type column type " + cursor.getType(2))
-                    showThemedToast(
-                        AnkiDroidApp.instance.applicationContext,
-                        AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong),
-                        true
-                    )
-                    return
-                }
+                mediaClipFullNameParts =
+                    try {
+                        Timber.i("Media clip name does not have extension, using second half of mime type")
+                        arrayOf(mediaClipFullName, cursor.getString(2).split("/").toTypedArray()[1])
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        // This code is difficult to stabilize - it is not clear how to handle files with no extension
+                        // and apparently we may fail to get MIME_TYPE information - in that case we will gather information
+                        // about what people are experiencing in the real world and decide later, but without crashing at least
+                        CrashReportService.sendExceptionReport(e, "Media Clip addition failed. Name " + mediaClipFullName + " / cursor mime type column type " + cursor.getType(2))
+                        showThemedToast(
+                            AnkiDroidApp.instance.applicationContext,
+                            AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong),
+                            true,
+                        )
+                        return
+                    }
             }
         }
 
@@ -160,7 +170,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             showThemedToast(
                 AnkiDroidApp.instance.applicationContext,
                 AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong),
-                true
+                true,
             )
             return
         }
@@ -182,7 +192,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             showThemedToast(
                 AnkiDroidApp.instance.applicationContext,
                 AnkiDroidApp.instance.getString(R.string.multimedia_editor_something_wrong),
-                true
+                true,
             )
         }
     }
@@ -200,11 +210,11 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
     }
 
     override fun onFocusLost() {
-        /* nothing */
+        // nothing
     }
 
     override fun onDestroy() {
-        /* nothing */
+        // nothing
     }
 
     companion object {

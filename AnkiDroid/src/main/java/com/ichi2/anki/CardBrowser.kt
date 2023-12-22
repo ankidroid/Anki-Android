@@ -1,3 +1,5 @@
+
+
 /****************************************************************************************
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
@@ -15,6 +17,8 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+
+@file:Suppress("ktlint")
 
 package com.ichi2.anki
 
@@ -1613,6 +1617,7 @@ open class CardBrowser :
         updatePreviewMenuItem()
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
+
     private fun saveScrollingState(position: Int) {
         mOldCardId = viewModel.getCardIdAtPosition(position)
         mOldCardTopOffset = calculateTopOffset(position)

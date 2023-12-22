@@ -46,9 +46,8 @@ const val PORT = 0
 // ~/Local/Android/Sdk/platform-tools/adb forward tcp:40001 tcp:40001
 
 open class AnkiServer(
-    val activity: FragmentActivity
+    val activity: FragmentActivity,
 ) : NanoHTTPD(LOCALHOST, PORT) {
-
     fun baseUrl(): String {
         return "http://$LOCALHOST:$listeningPort/"
     }
@@ -78,7 +77,10 @@ open class AnkiServer(
         return newFixedLengthResponse(null)
     }
 
-    private suspend fun handlePostRequest(methodName: String, bytes: ByteArray): ByteArray {
+    private suspend fun handlePostRequest(
+        methodName: String,
+        bytes: ByteArray,
+    ): ByteArray {
         return when (methodName) {
             "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
             "getGraphPreferences" -> withCol { getGraphPreferencesRaw() }
@@ -106,9 +108,10 @@ open class AnkiServer(
             "getImageOcclusionNote" -> withCol { getImageOcclusionNoteRaw(bytes) }
             "getImageForOcclusionFields" -> withCol { getImageOcclusionFieldsRaw(bytes) }
             "addImageOcclusionNote" -> {
-                val data = withCol {
-                    addImageOcclusionNoteRaw(bytes)
-                }
+                val data =
+                    withCol {
+                        addImageOcclusionNoteRaw(bytes)
+                    }
                 undoableOp { OpChanges.parseFrom(data) }
                 activity.launchCatchingTask {
                     // Allow time for toast message to appear before closing editor
@@ -119,9 +122,10 @@ open class AnkiServer(
                 data
             }
             "updateImageOcclusionNote" -> {
-                val data = withCol {
-                    updateImageOcclusionNoteRaw(bytes)
-                }
+                val data =
+                    withCol {
+                        updateImageOcclusionNoteRaw(bytes)
+                    }
                 undoableOp { OpChanges.parseFrom(data) }
                 activity.launchCatchingTask {
                     // Allow time for toast message to appear before closing editor
@@ -132,17 +136,18 @@ open class AnkiServer(
                 data
             }
             "congratsInfo" -> withCol { congratsInfoRaw(bytes) }
-            else -> { throw Exception("unhandled request: $methodName") }
+            else -> {
+                throw Exception("unhandled request: $methodName")
+            }
         }
     }
 
-    fun buildResponse(
-        block: suspend CoroutineScope.() -> ByteArray
-    ): Response {
+    fun buildResponse(block: suspend CoroutineScope.() -> ByteArray): Response {
         return try {
-            val data = runBlocking {
-                block()
-            }
+            val data =
+                runBlocking {
+                    block()
+                }
             newChunkedResponse(data)
         } catch (exc: Exception) {
             newChunkedResponse(exc.localizedMessage?.encodeToByteArray(), status = Response.Status.INTERNAL_ERROR)
@@ -176,7 +181,7 @@ open class AnkiServer(
         fun newChunkedResponse(
             data: ByteArray?,
             mimeType: String = "application/binary",
-            status: Response.IStatus = Response.Status.OK
+            status: Response.IStatus = Response.Status.OK,
         ): Response {
             return if (data == null) {
                 newFixedLengthResponse(null)

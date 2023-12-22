@@ -35,83 +35,88 @@ import timber.log.Timber
  * as they're not explained in [GestureDisplay].
  *
  * Current use is via [com.ichi2.anki.dialogs.GestureSelectionDialogBuilder]
+ *
+ *  This class exists as elements resized when adding in the spinner to GestureDisplay.kt
  */
-// This class exists as elements resized when adding in the spinner to GestureDisplay.kt
 class GesturePicker
-constructor(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
+    constructor(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(ctx, attributeSet, defStyleAttr) {
+        private val mGestureSpinner: Spinner
+        private val mGestureDisplay: GestureDisplay
 
-    private val mGestureSpinner: Spinner
-    private val mGestureDisplay: GestureDisplay
+        private var mOnGestureListener: GestureListener? = null
 
-    private var mOnGestureListener: GestureListener? = null
-
-    init {
-        val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        inflater.inflate(R.layout.gesture_picker, this)
-        mGestureDisplay = findViewById(R.id.gestureDisplay)
-        mGestureSpinner = findViewById(R.id.spinner_gesture)
-        mGestureDisplay.setGestureChangedListener(this::onGesture)
-        mGestureSpinner.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, allGestures())
-        mGestureSpinner.onItemSelectedListener = InnerSpinner()
-    }
-
-    fun getGesture() = mGestureDisplay.getGesture()
-
-    private fun onGesture(gesture: Gesture?) {
-        Timber.d("gesture: %s", gesture?.toDisplayString(context))
-
-        setGesture(gesture)
-
-        if (gesture == null) {
-            return
+        init {
+            val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            inflater.inflate(R.layout.gesture_picker, this)
+            mGestureDisplay = findViewById(R.id.gestureDisplay)
+            mGestureSpinner = findViewById(R.id.spinner_gesture)
+            mGestureDisplay.setGestureChangedListener(this::onGesture)
+            mGestureSpinner.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, allGestures())
+            mGestureSpinner.onItemSelectedListener = InnerSpinner()
         }
 
-        mOnGestureListener?.onGesture(gesture)
-    }
+        fun getGesture() = mGestureDisplay.getGesture()
 
-    private fun setGesture(gesture: Gesture?) {
-        mGestureSpinner.setSelectedValue(GestureWrapper(gesture))
-        mGestureDisplay.setGesture(gesture)
-    }
+        private fun onGesture(gesture: Gesture?) {
+            Timber.d("gesture: %s", gesture?.toDisplayString(context))
 
-    /** Not fired if deselected */
-    fun setGestureChangedListener(listener: GestureListener?) {
-        mOnGestureListener = listener
-    }
+            setGesture(gesture)
 
-    fun allGestures(): List<GestureWrapper> {
-        return (listOf(null) + availableGestures()).map(this::GestureWrapper).toList()
-    }
+            if (gesture == null) {
+                return
+            }
 
-    private fun availableGestures() = mGestureDisplay.availableValues()
-
-    inner class GestureWrapper(val gesture: Gesture?) {
-        override fun toString(): String {
-            return gesture?.toDisplayString(context) ?: resources.getString(R.string.gestures_none)
+            mOnGestureListener?.onGesture(gesture)
         }
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (javaClass != other?.javaClass) return false
-
-            other as GestureWrapper
-
-            if (gesture != other.gesture) return false
-
-            return true
+        private fun setGesture(gesture: Gesture?) {
+            mGestureSpinner.setSelectedValue(GestureWrapper(gesture))
+            mGestureDisplay.setGesture(gesture)
         }
 
-        override fun hashCode() = gesture?.hashCode() ?: 0
+        /** Not fired if deselected */
+        fun setGestureChangedListener(listener: GestureListener?) {
+            mOnGestureListener = listener
+        }
+
+        fun allGestures(): List<GestureWrapper> {
+            return (listOf(null) + availableGestures()).map(this::GestureWrapper).toList()
+        }
+
+        private fun availableGestures() = mGestureDisplay.availableValues()
+
+        inner class GestureWrapper(val gesture: Gesture?) {
+            override fun toString(): String {
+                return gesture?.toDisplayString(context) ?: resources.getString(R.string.gestures_none)
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+
+                other as GestureWrapper
+
+                if (gesture != other.gesture) return false
+
+                return true
+            }
+
+            override fun hashCode() = gesture?.hashCode() ?: 0
+        }
+
+        private inner class InnerSpinner : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                val wrapper = parent?.getItemAtPosition(position) as? GestureWrapper
+                onGesture(wrapper?.gesture)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
     }
-
-    private inner class InnerSpinner : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            val wrapper = parent?.getItemAtPosition(position) as? GestureWrapper
-            onGesture(wrapper?.gesture)
-        }
-
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-        }
-    }
-}

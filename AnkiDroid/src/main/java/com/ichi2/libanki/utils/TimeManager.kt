@@ -28,7 +28,6 @@ import java.util.*
  */
 @SuppressLint("DirectSystemTimeInstantiation")
 object TimeManager {
-
     @VisibleForTesting
     fun reset() {
         mockInstances.clear()
@@ -39,6 +38,7 @@ object TimeManager {
         reset()
         mockInstances.push(mockTime)
     }
+
     private var mockInstances: Stack<Time> = Stack()
 
     var time: Time = SystemTime()

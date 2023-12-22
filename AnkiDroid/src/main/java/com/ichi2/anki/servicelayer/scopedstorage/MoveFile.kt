@@ -81,8 +81,8 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
                 this,
                 FileDirectoryConflictException(
                     sourceFile,
-                    Directory.createInstanceUnsafe(destinationFile)
-                )
+                    Directory.createInstanceUnsafe(destinationFile),
+                ),
             )
             return
         }
@@ -106,7 +106,8 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
                 }
             }
             FileUtil.FilePrefix.STRICT_SUFFIX,
-            FileUtil.FilePrefix.NOT_PREFIX -> {
+            FileUtil.FilePrefix.NOT_PREFIX,
+            -> {
                 conflictingFileInDestination(context)
             }
         }
@@ -124,8 +125,8 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
                 this,
                 FileConflictException(
                     sourceFile,
-                    DiskFile.createInstance(destinationFile)!!
-                )
+                    DiskFile.createInstance(destinationFile)!!,
+                ),
             )
         }
     }
@@ -150,13 +151,13 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
         // run, the duplicate source file will be deleted
         copyFile(
             source = sourceFile.file,
-            destination = destinationFile
+            destination = destinationFile,
         )
 
         if (!destinationFile.exists()) {
             context.reportError(
                 this,
-                IllegalStateException("Failed to copy file to $destinationFile")
+                IllegalStateException("Failed to copy file to $destinationFile"),
             )
             return
         }
@@ -178,7 +179,10 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
     }
 
     @VisibleForTesting
-    internal fun copyFile(source: File, destination: File) {
+    internal fun copyFile(
+        source: File,
+        destination: File,
+    ) {
         Timber.d("copying: $source to $destination")
         CompatHelper.compat.copyFile(source.canonicalPath, destination.canonicalPath)
     }

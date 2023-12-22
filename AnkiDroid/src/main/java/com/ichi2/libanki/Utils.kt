@@ -50,11 +50,11 @@ object Utils {
     /*
      * Locale
      * ***********************************************************************************************
-     */
-    /*
-    * HTML
+     *
+     * HTML
      * ***********************************************************************************************
      */
+
     /**
      * Strips a text from <style>...</style>, <script>...</script> and <_any_tag_> HTML tags.
      * @param inputParam The HTML text to be cleaned.
@@ -82,7 +82,10 @@ object Utils {
     /**
      * Strip HTML but keep media filenames
      */
-    fun stripHTMLMedia(s: String, replacement: String = " $1 "): String {
+    fun stripHTMLMedia(
+        s: String,
+        replacement: String = " $1 ",
+    ): String {
         val imgMatcher = imgPattern.matcher(s)
         return stripHTML(imgMatcher.replaceAll(replacement))
     }
@@ -90,7 +93,10 @@ object Utils {
     /**
      * Strip sound but keep media filenames
      */
-    fun stripSoundMedia(s: String, replacement: String = " $1 "): String {
+    fun stripSoundMedia(
+        s: String,
+        replacement: String = " $1 ",
+    ): String {
         val soundMatcher = soundPattern.matcher(s)
         return soundMatcher.replaceAll(replacement)
     }
@@ -103,6 +109,7 @@ object Utils {
      * @param htmlInput The HTML escaped text
      * @return The text with its HTML entities unescaped.
      */
+
     // TODO see if method can be refactored to remove the reference to HtmlCompat
     private fun entsToTxt(htmlInput: String): String {
         // entitydefs defines nbsp as \xa0 instead of a standard space, so we
@@ -124,40 +131,47 @@ object Utils {
      * IDs
      * ***********************************************************************************************
      */
-    /** Given a list of integers, return a string '(int1,int2,...)'.  */
-    fun ids2str(ids: IntArray?): String = StringBuilder().apply {
-        append("(")
-        if (ids != null) {
-            val s = Arrays.toString(ids)
-            append(s.substring(1, s.length - 1))
-        }
-        append(")")
-    }.toString()
 
     /** Given a list of integers, return a string '(int1,int2,...)'.  */
-    fun ids2str(ids: LongArray?): String = StringBuilder().apply {
-        append("(")
-        if (ids != null) {
-            val s = Arrays.toString(ids)
-            append(s.substring(1, s.length - 1))
-        }
-        append(")")
-    }.toString()
+    fun ids2str(ids: IntArray?): String =
+        StringBuilder().apply {
+            append("(")
+            if (ids != null) {
+                val s = Arrays.toString(ids)
+                append(s.substring(1, s.length - 1))
+            }
+            append(")")
+        }.toString()
+
+    /** Given a list of integers, return a string '(int1,int2,...)'.  */
+    fun ids2str(ids: LongArray?): String =
+        StringBuilder().apply {
+            append("(")
+            if (ids != null) {
+                val s = Arrays.toString(ids)
+                append(s.substring(1, s.length - 1))
+            }
+            append(")")
+        }.toString()
 
     /** Given a list of integers, return a string '(int1,int2,...)', in order given by the iterator.  */
-    fun <T> ids2str(ids: Iterable<T>): String = StringBuilder(512).apply {
-        append("(")
-        for ((index, id) in ids.withIndex()) {
-            if (index != 0) {
-                append(", ")
+    fun <T> ids2str(ids: Iterable<T>): String =
+        StringBuilder(512).apply {
+            append("(")
+            for ((index, id) in ids.withIndex()) {
+                if (index != 0) {
+                    append(", ")
+                }
+                append(id)
             }
-            append(id)
-        }
-        append(")")
-    }.toString()
+            append(")")
+        }.toString()
 
     // used in ankiweb
-    private fun base62(numParam: Int, @Suppress("SameParameterValue") extra: String): String {
+    private fun base62(
+        numParam: Int,
+        @Suppress("SameParameterValue") extra: String,
+    ): String {
         var num = numParam
         val table = ALL_CHARACTERS + extra
         val len = table.length
@@ -179,7 +193,7 @@ object Utils {
     /** return a base91-encoded 64bit random number  */
     fun guid64(): String {
         return base91(
-            Random().nextInt((2.0.pow(61.0) - 1).toInt())
+            Random().nextInt((2.0.pow(61.0) - 1).toInt()),
         )
     }
 
@@ -208,6 +222,7 @@ object Utils {
      * Checksums
      * ***********************************************************************************************
      */
+
     /**
      * SHA1 checksum.
      * Equivalent to python sha1.hexdigest()
@@ -250,7 +265,10 @@ object Utils {
      * @param sortIdx An index of the field
      * @return The field at sortIdx, without html media, and the csum of the first field.
      */
-    fun sfieldAndCsum(fields: List<String>, sortIdx: Int): Pair<String, Long> {
+    fun sfieldAndCsum(
+        fields: List<String>,
+        sortIdx: Int,
+    ): Pair<String, Long> {
         val firstStripped = stripHTMLMedia(fields[0])
         val sortStripped = if (sortIdx == 0) firstStripped else stripHTMLMedia(fields[sortIdx])
         return Pair(sortStripped, fieldChecksumWithoutHtmlMedia(firstStripped))

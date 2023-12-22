@@ -55,7 +55,12 @@ import java.util.*
  */
 class ControlPreference : ListPreference {
     @Suppress("unused")
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+    constructor(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int,
+    ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     @Suppress("unused")
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
@@ -98,8 +103,9 @@ class ControlPreference : ListPreference {
     }
 
     /** The summary that appears on the preference */
-    override fun getSummary(): CharSequence = MappableBinding.fromPreferenceString(value)
-        .joinToString(", ") { it.toDisplayString(context) }
+    override fun getSummary(): CharSequence =
+        MappableBinding.fromPreferenceString(value)
+            .joinToString(", ") { it.toDisplayString(context) }
 
     /** Called when an element is selected in the ListView */
     @SuppressLint("CheckResult")
@@ -114,10 +120,11 @@ class ControlPreference : ListPreference {
 
                     positiveButton(R.string.dialog_ok) { materialDialog ->
                         val gesture = gesturePicker.getGesture() ?: return@positiveButton
-                        val mappableBinding = fromGesture(
-                            gesture,
-                            screenBuilder
-                        )
+                        val mappableBinding =
+                            fromGesture(
+                                gesture,
+                                screenBuilder,
+                            )
                         if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
                             showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_gesture), materialDialog)
                         } else {
@@ -132,8 +139,8 @@ class ControlPreference : ListPreference {
                         showToastIfBindingIsUsed(
                             fromGesture(
                                 gesture,
-                                screenBuilder
-                            )
+                                screenBuilder,
+                            ),
                         )
                     }
 
@@ -152,8 +159,8 @@ class ControlPreference : ListPreference {
                         showToastIfBindingIsUsed(
                             MappableBinding(
                                 binding,
-                                screenBuilder(CardSide.BOTH)
-                            )
+                                screenBuilder(CardSide.BOTH),
+                            ),
                         )
                     }
 
@@ -224,8 +231,9 @@ class ControlPreference : ListPreference {
 
     /** Displays a warning to the user if the provided binding couldn't be used */
     private fun showToastIfBindingIsUsed(binding: MappableBinding) {
-        val bindingCommand = getCommandWithBindingExceptThis(binding)
-            ?: return
+        val bindingCommand =
+            getCommandWithBindingExceptThis(binding)
+                ?: return
 
         val commandName = context.getString(bindingCommand.resourceId)
         val text = context.getString(R.string.bindings_already_bound, commandName)
@@ -252,8 +260,9 @@ class ControlPreference : ListPreference {
      */
     private fun clearBinding(binding: MappableBinding) {
         for (command in ViewerCommand.entries) {
-            val commandPreference = preferenceManager.findPreference<ControlPreference>(command.preferenceKey)
-                ?: continue
+            val commandPreference =
+                preferenceManager.findPreference<ControlPreference>(command.preferenceKey)
+                    ?: continue
             val bindings = MappableBinding.fromPreferenceString(commandPreference.value)
             if (binding in bindings) {
                 bindings.remove(binding)
@@ -262,7 +271,11 @@ class ControlPreference : ListPreference {
         }
     }
 
-    private fun showDialogToReplaceBinding(binding: MappableBinding, title: String, parentDialog: MaterialDialog) {
+    private fun showDialogToReplaceBinding(
+        binding: MappableBinding,
+        title: String,
+        parentDialog: MaterialDialog,
+    ) {
         val commandName = context.getString(getCommandWithBindingExceptThis(binding)!!.resourceId)
 
         AlertDialog.Builder(context).show {

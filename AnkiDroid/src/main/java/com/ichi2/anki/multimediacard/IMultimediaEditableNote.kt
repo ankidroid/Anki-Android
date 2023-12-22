@@ -27,9 +27,16 @@ import java.io.Serializable
  */
 interface IMultimediaEditableNote : Serializable {
     val numberOfFields: Int
+
     fun getField(index: Int): IField?
-    fun setField(index: Int, field: IField?): Boolean
+
+    fun setField(
+        index: Int,
+        field: IField?,
+    ): Boolean
+
     val isModified: Boolean
     val initialFieldCount: Int
+
     fun getInitialField(index: Int): IField?
 }

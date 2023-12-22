@@ -27,7 +27,6 @@ import org.mockito.Mockito.verify
 import org.mockito.kotlin.whenever
 
 class ExtendedFragmentFactoryTest {
-
     internal class TestFragmentFactoryTest : ExtendedFragmentFactory {
         constructor()
 

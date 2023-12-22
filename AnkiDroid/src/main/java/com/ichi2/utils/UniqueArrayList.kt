@@ -41,120 +41,124 @@ import java.util.*
  */
 class UniqueArrayList<E>
 /**
- * Constructor that wraps (not copies) the List and specifies the set to use.
- *
- *
- * The set and list must both be correctly initialised to the same elements.
- *
- * @param set  the set to decorate, must not be null
- * @param list  the list to decorate, must not be null
- * @throws NullPointerException if set or list is null
- */
-private constructor(
-    /**
-     * Internal list used in [SetUniqueList] implementation.
+     * Constructor that wraps (not copies) the List and specifies the set to use.
      *
      *
-     * This is the same list as the one used internally in [SetUniqueList]. We keep a reference to it here in
-     * order to be able to sort it. [SetUniqueList] implementation needs to make sure the internal [Set]
-     * and [List] don't get out of sync, and [<] cannot be sorted via [Collections.sort]
-     * or [SetUniqueList.sort] both will throw an exception, due to a limitation on this class [java.util.ListIterator]
+     * The set and list must both be correctly initialised to the same elements.
      *
-     * Sorting can be only done via [UniqueArrayList.sort] or [UniqueArrayList.sort].
-     *
-     * Modification to this list reference should be done with cautious to avoid having the internal [Set] out of sync
+     * @param set  the set to decorate, must not be null
+     * @param list  the list to decorate, must not be null
+     * @throws NullPointerException if set or list is null
      */
-    private val list: MutableList<E>,
-    set: Set<E>?
-) : SetUniqueList<E>(list, set), MutableList<E>, MutableSet<E> {
-    /**
-     * Constructs a new empty [UniqueArrayList]
-     */
-    constructor() : this(ArrayList<E>(), HashSet<E>())
-
-    /**
-     * Sorts the list into ascending order, according to the
-     * [natural ordering][Comparable] of its elements.
-     * All elements in the list must implement the [Comparable]
-     * interface.  Furthermore, all elements in the list must be
-     * *mutually comparable* (that is, `e1.compareTo(e2)`
-     * must not throw a `ClassCastException` for any elements
-     * `e1` and `e2` in the list).
-     *
-     * @see .sort
-     */
-    @KotlinCleanup("sortWith")
-    fun sort() {
-        sortOverride(null)
-    }
-
-    /**
-     * Sorts the list according to the order induced by the specified comparator.
-     * All elements in the list must be *mutually comparable* using the
-     * specified comparator (that is, `c.compare(e1, e2)` must not throw
-     * a [ClassCastException] for any elements `e1` and `e2`
-     * in the list).
-     *
-     * This sort is guaranteed to be *stable*:  equal elements will
-     * not be reordered as a result of the sort.
-     *
-     * The specified list must be modifiable, but need not be resizable.
-     *
-     * @implNote
-     * DO NOT call [Collections.sort] using this list directly
-     * this can throw due to a limitation on setting items on the [ListIterator]
-     * returned by [listIterator]
-     *
-     * @param c the comparator to determine the order of the list.  A
-     * `null` value indicates that the elements' *natural
-     * ordering* should be used.
-     *
-     * @see Collections.sort
-     */
-    @KotlinCleanup("sortWith")
-    override fun sort(c: Comparator<in E>?) {
-        sortOverride(c)
-    }
-
-    /** Exists temporarily: [sort] has been defined as invalid in kotlin so it can't be called internally */
-    @Suppress("UNCHECKED_CAST")
-    @KotlinCleanup("use sortWith")
-    fun sortOverride(c: Comparator<in E>?) {
-        val elements = ArrayList(list).toArray() as Array<E>
-        Arrays.sort(elements, c)
-        val i = list.listIterator()
-        for (element in elements) {
-            i.next()
-            i.set(element)
-        }
-    }
-
-    @RequiresApi(24)
-    override fun spliterator(): Spliterator<E> {
-        return super<SetUniqueList>.spliterator()
-    }
-
-    companion object {
+    private constructor(
         /**
-         * Constructs a new [UniqueArrayList] containing the elements of the specified collection, with an optional
-         * comparator to be used to judge uniqueness.
+         * Internal list used in [SetUniqueList] implementation.
          *
-         * @implNote Modified implantation of [SetUniqueList.setUniqueList] to :
-         * - support using comparators to check for uniqueness.
-         * - make a copy of the list passed.
          *
-         * @param source the source collection that will be used to construct UniqueArrayList
-         * @param comparator used to judge uniqueness
+         * This is the same list as the one used internally in [SetUniqueList]. We keep a reference to it here in
+         * order to be able to sort it. [SetUniqueList] implementation needs to make sure the internal [Set]
+         * and [List] don't get out of sync, and [<] cannot be sorted via [Collections.sort]
+         * or [SetUniqueList.sort] both will throw an exception, due to a limitation on this class [java.util.ListIterator]
+         *
+         * Sorting can be only done via [UniqueArrayList.sort] or [UniqueArrayList.sort].
+         *
+         * Modification to this list reference should be done with cautious to avoid having the internal [Set] out of sync
          */
-        fun <E> from(source: List<E>, comparator: Comparator<in E>? = null): UniqueArrayList<E> {
-            val set: Set<E> = if (comparator == null) {
-                HashSet()
-            } else {
-                TreeSet(comparator)
+        private val list: MutableList<E>,
+        set: Set<E>?,
+    ) : SetUniqueList<E>(list, set), MutableList<E>, MutableSet<E> {
+        /**
+         * Constructs a new empty [UniqueArrayList]
+         */
+        constructor() : this(ArrayList<E>(), HashSet<E>())
+
+        /**
+         * Sorts the list into ascending order, according to the
+         * [natural ordering][Comparable] of its elements.
+         * All elements in the list must implement the [Comparable]
+         * interface.  Furthermore, all elements in the list must be
+         * *mutually comparable* (that is, `e1.compareTo(e2)`
+         * must not throw a `ClassCastException` for any elements
+         * `e1` and `e2` in the list).
+         *
+         * @see .sort
+         */
+        @KotlinCleanup("sortWith")
+        fun sort() {
+            sortOverride(null)
+        }
+
+        /**
+         * Sorts the list according to the order induced by the specified comparator.
+         * All elements in the list must be *mutually comparable* using the
+         * specified comparator (that is, `c.compare(e1, e2)` must not throw
+         * a [ClassCastException] for any elements `e1` and `e2`
+         * in the list).
+         *
+         * This sort is guaranteed to be *stable*:  equal elements will
+         * not be reordered as a result of the sort.
+         *
+         * The specified list must be modifiable, but need not be resizable.
+         *
+         * @implNote
+         * DO NOT call [Collections.sort] using this list directly
+         * this can throw due to a limitation on setting items on the [ListIterator]
+         * returned by [listIterator]
+         *
+         * @param c the comparator to determine the order of the list.  A
+         * `null` value indicates that the elements' *natural
+         * ordering* should be used.
+         *
+         * @see Collections.sort
+         */
+        @KotlinCleanup("sortWith")
+        override fun sort(c: Comparator<in E>?) {
+            sortOverride(c)
+        }
+
+        /** Exists temporarily: [sort] has been defined as invalid in kotlin so it can't be called internally */
+        @Suppress("UNCHECKED_CAST")
+        @KotlinCleanup("use sortWith")
+        fun sortOverride(c: Comparator<in E>?) {
+            val elements = ArrayList(list).toArray() as Array<E>
+            Arrays.sort(elements, c)
+            val i = list.listIterator()
+            for (element in elements) {
+                i.next()
+                i.set(element)
             }
-            val sl = UniqueArrayList(ArrayList(), set)
-            sl.addAll(source)
-            return sl
+        }
+
+        @RequiresApi(24)
+        override fun spliterator(): Spliterator<E> {
+            return super<SetUniqueList>.spliterator()
+        }
+
+        companion object {
+            /**
+             * Constructs a new [UniqueArrayList] containing the elements of the specified collection, with an optional
+             * comparator to be used to judge uniqueness.
+             *
+             * @implNote Modified implantation of [SetUniqueList.setUniqueList] to :
+             * - support using comparators to check for uniqueness.
+             * - make a copy of the list passed.
+             *
+             * @param source the source collection that will be used to construct UniqueArrayList
+             * @param comparator used to judge uniqueness
+             */
+            fun <E> from(
+                source: List<E>,
+                comparator: Comparator<in E>? = null,
+            ): UniqueArrayList<E> {
+                val set: Set<E> =
+                    if (comparator == null) {
+                        HashSet()
+                    } else {
+                        TreeSet(comparator)
+                    }
+                val sl = UniqueArrayList(ArrayList(), set)
+                sl.addAll(source)
+                return sl
+            }
         }
     }
-}

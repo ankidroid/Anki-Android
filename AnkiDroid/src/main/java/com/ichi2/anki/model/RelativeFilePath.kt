@@ -30,7 +30,7 @@ import java.nio.file.Path
 class RelativeFilePath private constructor(
     /** Relative path, as a sequence of directory, excluding the file name. */
     val path: List<String>,
-    val fileName: String
+    val fileName: String,
 ) {
     /**
      * Combination of [baseDir] and this relative Path.
@@ -59,16 +59,20 @@ class RelativeFilePath private constructor(
     }
 
     companion object {
-
         /**
          * Return the relative path from Folder [baseDir] to file [file]. If [file]
          * is contained in [baseDir], return `null`.
          * Similar to [Path.relativize], but available in all APIs.
          */
-        fun fromPaths(baseDir: Directory, file: DiskFile): RelativeFilePath? =
-            fromPaths(baseDir.directory, file.file)
-        fun fromPaths(baseDir: File, file: File): RelativeFilePath? =
-            fromCanonicalFiles(baseDir.canonicalFile, file.canonicalFile)
+        fun fromPaths(
+            baseDir: Directory,
+            file: DiskFile,
+        ): RelativeFilePath? = fromPaths(baseDir.directory, file.file)
+
+        fun fromPaths(
+            baseDir: File,
+            file: File,
+        ): RelativeFilePath? = fromCanonicalFiles(baseDir.canonicalFile, file.canonicalFile)
 
         /**
          * Return the relative path from Folder [baseDir] to file [file]. If [file]
@@ -78,7 +82,10 @@ class RelativeFilePath private constructor(
          * @param baseDir A directory.
          * @param file some file, assumed to be contained in baseDir.
          */
-        private fun fromCanonicalFiles(baseDir: File, file: File): RelativeFilePath? {
+        private fun fromCanonicalFiles(
+            baseDir: File,
+            file: File,
+        ): RelativeFilePath? {
             val name = file.name
             val directoryPath = mutableListOf<String>()
             var mutablePath = file.parentFile

@@ -40,7 +40,7 @@ import java.util.*
  */
 fun deleteMedia(
     col: Collection,
-    unused: List<String>
+    unused: List<String>,
 ): Int {
     // FIXME: this provides progress info that is not currently used
     col.media.removeFiles(unused)
@@ -49,9 +49,7 @@ fun deleteMedia(
 
 // TODO: Once [com.ichi2.async.CollectionTask.RebuildCram] and [com.ichi2.async.CollectionTask.EmptyCram]
 // are migrated to Coroutines, move this function to [com.ichi2.anki.StudyOptionsFragment]
-fun updateValuesFromDeck(
-    col: Collection
-): StudyOptionsFragment.DeckStudyData? {
+fun updateValuesFromDeck(col: Collection): StudyOptionsFragment.DeckStudyData? {
     Timber.d("doInBackgroundUpdateValuesFromDeck")
     return try {
         val sched = col.sched
@@ -63,7 +61,7 @@ fun updateValuesFromDeck(
             counts.lrn,
             counts.rev,
             totalNewCount,
-            totalCount
+            totalCount,
         )
     } catch (e: RuntimeException) {
         Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
@@ -77,67 +75,70 @@ suspend fun renderBrowserQA(
     n: Int,
     column1Index: Int,
     column2Index: Int,
-    onProgressUpdate: (Int) -> Unit
-): Pair<List<CardBrowser.CardCache>, MutableList<Long>> = withContext(Dispatchers.IO) {
-    Timber.d("doInBackgroundRenderBrowserQA")
-    val invalidCardIds: MutableList<Long> = ArrayList()
-    // for each specified card in the browser list
-    for (i in startPos until startPos + n) {
-        // Stop if cancelled, throw cancellationException
-        ensureActive()
+    onProgressUpdate: (Int) -> Unit,
+): Pair<List<CardBrowser.CardCache>, MutableList<Long>> =
+    withContext(Dispatchers.IO) {
+        Timber.d("doInBackgroundRenderBrowserQA")
+        val invalidCardIds: MutableList<Long> = ArrayList()
+        // for each specified card in the browser list
+        for (i in startPos until startPos + n) {
+            // Stop if cancelled, throw cancellationException
+            ensureActive()
 
-        if (i < 0 || i >= cards.size) {
-            continue
+            if (i < 0 || i >= cards.size) {
+                continue
+            }
+            val card: CardBrowser.CardCache =
+                try {
+                    cards[i]
+                } catch (e: IndexOutOfBoundsException) {
+                    // even though we test against card.size() above, there's still a race condition
+                    // We might be able to optimise this to return here. Logically if we're past the end of the collection,
+                    // we won't reach any more cards.
+                    continue
+                }
+            if (card.isLoaded) {
+                // We've already rendered the answer, we don't need to do it again.
+                continue
+            }
+            // Extract card item
+            try {
+                // Ensure that card still exists.
+                card.card
+            } catch (e: BackendNotFoundException) {
+                // #5891 - card can be inconsistent between the deck browser screen and the collection.
+                // Realistically, we can skip any exception as it's a rendering task which should not kill the
+                // process
+                val cardId = card.id
+                Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId)
+                invalidCardIds.add(cardId)
+                continue
+            }
+            // Update item
+            card.load(false, column1Index, column2Index)
+            val progress = i.toFloat() / n * 100
+            withContext(Dispatchers.Main) { onProgressUpdate(progress.toInt()) }
         }
-        val card: CardBrowser.CardCache = try {
-            cards[i]
-        } catch (e: IndexOutOfBoundsException) {
-            // even though we test against card.size() above, there's still a race condition
-            // We might be able to optimise this to return here. Logically if we're past the end of the collection,
-            // we won't reach any more cards.
-            continue
-        }
-        if (card.isLoaded) {
-            // We've already rendered the answer, we don't need to do it again.
-            continue
-        }
-        // Extract card item
-        try {
-            // Ensure that card still exists.
-            card.card
-        } catch (e: BackendNotFoundException) {
-            // #5891 - card can be inconsistent between the deck browser screen and the collection.
-            // Realistically, we can skip any exception as it's a rendering task which should not kill the
-            // process
-            val cardId = card.id
-            Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId)
-            invalidCardIds.add(cardId)
-            continue
-        }
-        // Update item
-        card.load(false, column1Index, column2Index)
-        val progress = i.toFloat() / n * 100
-        withContext(Dispatchers.Main) { onProgressUpdate(progress.toInt()) }
+        Pair(cards, invalidCardIds)
     }
-    Pair(cards, invalidCardIds)
-}
 
 /**
  * Goes through selected cards and checks selected and marked attribute
  * @return If there are unselected cards, if there are unmarked cards
  */
-suspend fun checkCardSelection(checkedCards: Set<CardBrowser.CardCache>): Pair<Boolean, Boolean> = withContext(Dispatchers.IO) {
-    var hasUnsuspended = false
-    var hasUnmarked = false
-    for (c in checkedCards) {
-        ensureActive() // check if job is not cancelled
-        val card = c.card
-        hasUnsuspended = hasUnsuspended || card.queue != Consts.QUEUE_TYPE_SUSPENDED
-        hasUnmarked = hasUnmarked || !NoteService.isMarked(card.note())
-        if (hasUnsuspended && hasUnmarked) break
+suspend fun checkCardSelection(checkedCards: Set<CardBrowser.CardCache>): Pair<Boolean, Boolean> =
+    withContext(Dispatchers.IO) {
+        var hasUnsuspended = false
+        var hasUnmarked = false
+        for (c in checkedCards) {
+            ensureActive() // check if job is not cancelled
+            val card = c.card
+            hasUnsuspended = hasUnsuspended || card.queue != Consts.QUEUE_TYPE_SUSPENDED
+            hasUnmarked = hasUnmarked || !NoteService.isMarked(card.note())
+            if (hasUnsuspended && hasUnmarked) break
+        }
+        Pair(hasUnsuspended, hasUnmarked)
     }
-    Pair(hasUnsuspended, hasUnmarked)
-}
 
 /**
  * Handles everything for a model change at once - template add / deletes as well as content updates
@@ -146,7 +147,7 @@ suspend fun checkCardSelection(checkedCards: Set<CardBrowser.CardCache>): Pair<B
 fun saveModel(
     col: Collection,
     notetype: NotetypeJson,
-    templateChanges: ArrayList<Array<Any>>
+    templateChanges: ArrayList<Array<Any>>,
 ) {
     Timber.d("doInBackgroundSaveModel")
     val oldModel = col.notetypes.get(notetype.getLong("id"))

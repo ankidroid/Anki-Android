@@ -251,19 +251,20 @@ public object FlashCardsContract {
         public const val DATA: String = "data"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            _ID,
-            GUID,
-            MID,
-            MOD,
-            USN,
-            TAGS,
-            FLDS,
-            SFLD,
-            CSUM,
-            FLAGS,
-            DATA
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                _ID,
+                GUID,
+                MID,
+                MOD,
+                USN,
+                TAGS,
+                FLDS,
+                SFLD,
+                CSUM,
+                FLAGS,
+                DATA,
+            )
 
         /**
          * MIME type used for a note.
@@ -380,18 +381,19 @@ public object FlashCardsContract {
         public const val DECK_ID: String = "deck_id"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            _ID,
-            NAME,
-            FIELD_NAMES,
-            NUM_CARDS,
-            CSS,
-            DECK_ID,
-            SORT_FIELD_INDEX,
-            TYPE,
-            LATEX_POST,
-            LATEX_PRE
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                _ID,
+                NAME,
+                FIELD_NAMES,
+                NUM_CARDS,
+                CSS,
+                DECK_ID,
+                SORT_FIELD_INDEX,
+                TYPE,
+                LATEX_POST,
+                LATEX_PRE,
+            )
 
         /**
          * MIME type used for a model.
@@ -468,14 +470,15 @@ public object FlashCardsContract {
          * Default columns that are returned when querying the ...models/#/templates URI.
          */
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            _ID,
-            MODEL_ID,
-            ORD,
-            NAME,
-            QUESTION_FORMAT,
-            ANSWER_FORMAT
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                _ID,
+                MODEL_ID,
+                ORD,
+                NAME,
+                QUESTION_FORMAT,
+                ANSWER_FORMAT,
+            )
     }
 
     /**
@@ -615,14 +618,15 @@ public object FlashCardsContract {
         public const val ANSWER_PURE: String = "answer_pure"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            NOTE_ID,
-            CARD_ORD,
-            CARD_NAME,
-            DECK_ID,
-            QUESTION,
-            ANSWER
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                NOTE_ID,
+                CARD_ORD,
+                CARD_NAME,
+                DECK_ID,
+                QUESTION,
+                ANSWER,
+            )
 
         /**
          * MIME type used for a card.
@@ -794,13 +798,14 @@ public object FlashCardsContract {
         public const val SUSPEND: String = "suspended"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            NOTE_ID,
-            CARD_ORD,
-            BUTTON_COUNT,
-            NEXT_REVIEW_TIMES,
-            MEDIA_FILES
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                NOTE_ID,
+                CARD_ORD,
+                BUTTON_COUNT,
+                NEXT_REVIEW_TIMES,
+                MEDIA_FILES,
+            )
 
         /**
          * MIME type used for ReviewInfo.
@@ -938,14 +943,15 @@ public object FlashCardsContract {
         public const val DECK_DESC: String = "deck_desc"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            DECK_NAME,
-            DECK_ID,
-            DECK_COUNTS,
-            OPTIONS,
-            DECK_DYN,
-            DECK_DESC
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                DECK_NAME,
+                DECK_ID,
+                DECK_COUNTS,
+                OPTIONS,
+                DECK_DYN,
+                DECK_DESC,
+            )
 
         /**
          * MIME type used for Deck.

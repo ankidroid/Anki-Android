@@ -59,7 +59,7 @@ class OnRenderProcessGoneDelegateTest {
         verify(
             mock,
             times(1)
-                .description("displayCardQuestion should not be called again as the screen should close")
+                .description("displayCardQuestion should not be called again as the screen should close"),
         )
             .displayCardQuestion()
         assertThat(delegate.displayedDialog, equalTo(true))
@@ -80,7 +80,7 @@ class OnRenderProcessGoneDelegateTest {
         verify(
             mock,
             times(2)
-                .description("displayCardQuestion should be called again as the app was minimised")
+                .description("displayCardQuestion should be called again as the app was minimised"),
         )
             .displayCardQuestion()
         assertThat(delegate.displayedDialog, equalTo(false))
@@ -130,7 +130,10 @@ class OnRenderProcessGoneDelegateTest {
         callOnRenderProcessGone(delegate, delegate.target.webView)
     }
 
-    private fun callOnRenderProcessGone(delegate: OnRenderProcessGoneDelegateImpl, webView: WebView?) {
+    private fun callOnRenderProcessGone(
+        delegate: OnRenderProcessGoneDelegateImpl,
+        webView: WebView?,
+    ) {
         val result = delegate.onRenderProcessGone(webView!!, crashDetail)
         assertThat("onRenderProcessGone should only return false if we want the app killed", result, equalTo(true))
     }
@@ -176,6 +179,7 @@ class OnRenderProcessGoneDelegateTest {
     class OnRenderProcessGoneDelegateImpl(target: AbstractFlashcardViewer?) : OnRenderProcessGoneDelegate(target!!) {
         var displayedToast = false
         var displayedDialog = false
+
         override fun displayFatalError(detail: RenderProcessGoneDetail) {
             displayedToast = true
         }
@@ -184,7 +188,10 @@ class OnRenderProcessGoneDelegateTest {
             displayedToast = true
         }
 
-        override fun displayRenderLoopDialog(currentCardId: CardId, detail: RenderProcessGoneDetail) {
+        override fun displayRenderLoopDialog(
+            currentCardId: CardId,
+            detail: RenderProcessGoneDetail,
+        ) {
             displayedDialog = true
             onCloseRenderLoopDialog()
         }

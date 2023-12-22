@@ -42,11 +42,12 @@ class PreviewerServer(private val mediaDir: String) : NanoHTTPD(LOCALHOST, PORT)
             } else if (uri.startsWith(ASSETS_PREFIX)) {
                 val mime = getMimeFromUri(uri)
                 val uriSub = uri.substring(ASSETS_PREFIX.length)
-                val stream = if (uriSub.startsWith("web/")) {
-                    this.javaClass.classLoader!!.getResourceAsStream(uriSub)
-                } else {
-                    this.javaClass.classLoader!!.getResourceAsStream(uri.substring(1))
-                }
+                val stream =
+                    if (uriSub.startsWith("web/")) {
+                        this.javaClass.classLoader!!.getResourceAsStream(uriSub)
+                    } else {
+                        this.javaClass.classLoader!!.getResourceAsStream(uri.substring(1))
+                    }
                 if (stream != null) {
                     return newChunkedResponse(Response.Status.OK, mime, stream)
                 }
@@ -58,7 +59,7 @@ class PreviewerServer(private val mediaDir: String) : NanoHTTPD(LOCALHOST, PORT)
                 return newChunkedResponse(
                     Response.Status.OK,
                     AssetHelper.guessMimeType(uri),
-                    FileInputStream(file)
+                    FileInputStream(file),
                 )
             }
         } else if (session.method == Method.POST) {

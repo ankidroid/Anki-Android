@@ -24,31 +24,40 @@ import android.view.animation.ScaleAnimation
 object AnimationUtil {
     // please test this on Huawei devices (if possible) and not just on the emulator -
     // having view.setVisibility(View.VISIBLE); on the expand worked fine on the emulator, but looked bad on my phone
+
     /** This is a fast animation - We don't want the user incorrectly selecting the current position
      * for the next collapse operation  */
     private const val DURATION_MILLIS = 200
-    fun collapseView(view: View, animationEnabled: Boolean) {
+
+    fun collapseView(
+        view: View,
+        animationEnabled: Boolean,
+    ) {
         view.animate().cancel()
         if (!animationEnabled) {
             view.visibility = View.GONE
             return
         }
         val set = AnimationSet(true)
-        val expandAnimation = ScaleAnimation(
-            1f,
-            1f,
-            1f,
-            0.5f
-        )
+        val expandAnimation =
+            ScaleAnimation(
+                1f,
+                1f,
+                1f,
+                0.5f,
+            )
         expandAnimation.duration = DURATION_MILLIS.toLong()
-        expandAnimation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {}
-            override fun onAnimationEnd(animation: Animation) {
-                view.visibility = View.GONE
-            }
+        expandAnimation.setAnimationListener(
+            object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation) {}
 
-            override fun onAnimationRepeat(animation: Animation) {}
-        })
+                override fun onAnimationEnd(animation: Animation) {
+                    view.visibility = View.GONE
+                }
+
+                override fun onAnimationRepeat(animation: Animation) {}
+            },
+        )
         val alphaAnimation = AlphaAnimation(1.0f, 0f)
         alphaAnimation.duration = DURATION_MILLIS.toLong()
         alphaAnimation.fillAfter = true
@@ -57,7 +66,10 @@ object AnimationUtil {
         view.startAnimation(set)
     }
 
-    fun expandView(view: View, enableAnimation: Boolean) {
+    fun expandView(
+        view: View,
+        enableAnimation: Boolean,
+    ) {
         view.animate().cancel()
         if (!enableAnimation) {
             view.visibility = View.VISIBLE
@@ -68,12 +80,13 @@ object AnimationUtil {
 
         // Sadly this seems necessary - yScale didn't work.
         val set = AnimationSet(true)
-        val resetEditTextScale = ScaleAnimation(
-            1f,
-            1f,
-            1f,
-            1f
-        )
+        val resetEditTextScale =
+            ScaleAnimation(
+                1f,
+                1f,
+                1f,
+                1f,
+            )
         resetEditTextScale.duration = DURATION_MILLIS.toLong()
         val alphaAnimation = AlphaAnimation(0.0f, 1.0f)
         alphaAnimation.fillAfter = true

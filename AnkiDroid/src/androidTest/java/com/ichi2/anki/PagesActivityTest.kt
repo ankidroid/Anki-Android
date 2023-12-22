@@ -68,16 +68,17 @@ class PagesActivityTest : InstrumentedTest() {
         @JvmStatic // required for initParameters
         fun initParameters(): Collection<Array<out Any>> {
             /** See [PageFragment] */
-            val intents = listOf<Pair<PagesActivityTest.(Context) -> Intent, String>>(
-                Pair(PagesActivityTest::getStatistics, "Statistics"),
-                Pair(PagesActivityTest::getCardInfo, "CardInfo"),
-                Pair(PagesActivityTest::getCongratsPage, "CongratsPage"),
-                Pair(PagesActivityTest::getDeckOptions, "DeckOptions"),
-                // the following need a file path
-                Pair(PagesActivityTest::needsPath, "AnkiPackageImporterFragment"),
-                Pair(PagesActivityTest::needsPath, "CsvImporter"),
-                Pair(PagesActivityTest::needsPath, "ImageOcclusion")
-            )
+            val intents =
+                listOf<Pair<PagesActivityTest.(Context) -> Intent, String>>(
+                    Pair(PagesActivityTest::getStatistics, "Statistics"),
+                    Pair(PagesActivityTest::getCardInfo, "CardInfo"),
+                    Pair(PagesActivityTest::getCongratsPage, "CongratsPage"),
+                    Pair(PagesActivityTest::getDeckOptions, "DeckOptions"),
+                    // the following need a file path
+                    Pair(PagesActivityTest::needsPath, "AnkiPackageImporterFragment"),
+                    Pair(PagesActivityTest::needsPath, "CsvImporter"),
+                    Pair(PagesActivityTest::needsPath, "ImageOcclusion"),
+                )
 
             return intents.map { arrayOf(it.first, it.second) }
         }
@@ -101,11 +102,14 @@ fun PagesActivityTest.getCongratsPage(context: Context): Intent {
         CardInfoDestination(card.id).toIntent(context)
     }
 }
+
 fun PagesActivityTest.getDeckOptions(context: Context): Intent {
     return DeckOptions.getIntent(context, col.decks.allNamesAndIds().first().id)
 }
 
-fun PagesActivityTest.needsPath(@Suppress("UNUSED_PARAMETER") context: Context): Intent {
+fun PagesActivityTest.needsPath(
+    @Suppress("UNUSED_PARAMETER") context: Context,
+): Intent {
     assumeThat("not implemented: path needed", false, equalTo(true))
     TODO()
 }

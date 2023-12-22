@@ -38,6 +38,7 @@ val VIDEO_EXTENSIONS = setOf("mp4", "mov", "mpg", "mpeg", "mkv", "avi")
 
 private typealias SoundPath = String
 // NICE_TO_HAVE: Abstract, then add tests for #6111
+
 /**
  * Parses, loads and plays sound & video files
  * Called `Sound` Anki uses `[sound:]` for both audio and video
@@ -53,18 +54,23 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
      * @param int Used for serialisation
      */
     enum class SoundSide(val int: Int) {
-        QUESTION(0), ANSWER(1), QUESTION_AND_ANSWER(2);
+        QUESTION(0),
+        ANSWER(1),
+        QUESTION_AND_ANSWER(2),
     }
 
     /** Sounds for the question/answer of a card */
     // Stops code paths where QUESTION_AND_ANSWER is invalid
     enum class SingleSoundSide {
-        QUESTION, ANSWER;
+        QUESTION,
+        ANSWER,
+        ;
 
-        fun toSoundSide(): SoundSide = when (this) {
-            QUESTION -> SoundSide.QUESTION
-            ANSWER -> SoundSide.ANSWER
-        }
+        fun toSoundSide(): SoundSide =
+            when (this) {
+                QUESTION -> SoundSide.QUESTION
+                ANSWER -> SoundSide.ANSWER
+            }
     }
 
     /**
@@ -75,9 +81,10 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
 
     /** Returns a non-empty list of sounds, or null if there are no values */
     @VisibleForTesting
-    fun getSounds(side: SoundSide) = getSoundList(side).let {
-        if (!it.any()) null else it
-    }
+    fun getSounds(side: SoundSide) =
+        getSoundList(side).let {
+            if (!it.any()) null else it
+        }
 
     private fun getSoundList(side: SoundSide): List<SoundPath> {
         if (side == QUESTION_AND_ANSWER) {
@@ -101,7 +108,10 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
      * @param tags the entries expected in display order
      * @param side the base categorization of the sounds in the content
      */
-    fun addSounds(tags: List<SoundOrVideoTag>, side: SingleSoundSide) {
+    fun addSounds(
+        tags: List<SoundOrVideoTag>,
+        side: SingleSoundSide,
+    ) {
         val soundPathCollection = soundPaths.getOrPut(side.toSoundSide()) { mutableListOf() }
 
         Timber.d("Adding %d sounds to side: %s", tags.size, side)
@@ -112,20 +122,23 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
     fun playSound(
         replacedUrl: String,
         onCompletionListener: OnCompletionListener?,
-        soundErrorListener: OnErrorListener
+        soundErrorListener: OnErrorListener,
     ) {
         soundPlayer.playSound(replacedUrl, onCompletionListener, soundErrorListener)
     }
 
     /** Plays all the sounds for the indicated side(s)  */
-    fun playSounds(side: SoundSide, errorListener: OnErrorListener?) {
+    fun playSounds(
+        side: SoundSide,
+        errorListener: OnErrorListener?,
+    ) {
         // If there are sounds to play for the current card, start with the first one
         val soundPaths = getSounds(side) ?: return
         Timber.d("playSounds: playing $side")
         this.soundPlayer.playSound(
             soundPaths[0],
             PlayAllCompletionListener(side, errorListener),
-            errorListener
+            errorListener,
         )
     }
 
@@ -142,7 +155,7 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
                 } catch (e: Exception) {
                     Timber.w(
                         e,
-                        "metaRetriever - Error setting Data Source for mediaRetriever (media doesn't exist or forbidden?)."
+                        "metaRetriever - Error setting Data Source for mediaRetriever (media doesn't exist or forbidden?).",
                     )
                     0
                 }
@@ -154,11 +167,12 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
      */
     private inner class PlayAllCompletionListener(
         private val side: SoundSide,
-        private val errorListener: OnErrorListener?
+        private val errorListener: OnErrorListener?,
     ) : OnCompletionListener {
         /** Index of next sound to play inside `getSounds(side)` */
         // this is a completion listener: [onCompletion] is first called after the first sound
         private var nextIndexToPlay = 1
+
         override fun onCompletion(mp: MediaPlayer) {
             val paths = getSounds(side) ?: emptyList() // emptyList -> stopSounds()
             // If there are still more sounds to play for the current card, play the next one
@@ -183,7 +197,12 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
     fun hasAnswer(): Boolean = getSounds(ANSWER) != null
 
     fun interface OnErrorListener {
-        fun onError(mp: MediaPlayer?, which: Int, extra: Int, path: String?): ErrorHandling
+        fun onError(
+            mp: MediaPlayer?,
+            which: Int,
+            extra: Int,
+            path: String?,
+        ): ErrorHandling
 
         enum class ErrorHandling {
             /** Stop playing audio */
@@ -193,7 +212,7 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
             CONTINUE_AUDIO,
 
             /** Retry the current audio */
-            RETRY_AUDIO
+            RETRY_AUDIO,
         }
     }
 
@@ -242,7 +261,10 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
          * @param sound -- path to the sound file from the card content.
          * @return absolute URI to the sound file.
          */
-        fun getSoundPath(soundDir: String, sound: String): String {
+        fun getSoundPath(
+            soundDir: String,
+            sound: String,
+        ): String {
             val trimmedSound = sound.trim { it <= ' ' }
             return if (hasURIScheme(trimmedSound)) {
                 trimmedSound
@@ -287,15 +309,16 @@ open class SoundPlayer {
     fun playSound(
         soundPath: String,
         onCompletionListener: OnCompletionListener?,
-        errorListener: Sound.OnErrorListener?
+        errorListener: Sound.OnErrorListener?,
     ) {
         Timber.d("Playing single sound")
         val completionListener = onCompletionListener ?: SingleSoundCompletionListener()
-        val errorHandler = errorListener
-            ?: Sound.OnErrorListener { _: MediaPlayer?, what: Int, extra: Int, _: String? ->
-                Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra)
-                CONTINUE_AUDIO
-            }
+        val errorHandler =
+            errorListener
+                ?: Sound.OnErrorListener { _: MediaPlayer?, what: Int, extra: Int, _: String? ->
+                    Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra)
+                    CONTINUE_AUDIO
+                }
         playSoundInternal(soundPath, completionListener, errorHandler)
     }
 
@@ -305,7 +328,7 @@ open class SoundPlayer {
     private fun playSoundInternal(
         soundPath: String,
         completionListener: OnCompletionListener,
-        errorHandler: Sound.OnErrorListener
+        errorHandler: Sound.OnErrorListener,
     ) {
         Timber.d("Playing %s", soundPath)
         val soundUri = Uri.parse(soundPath)
@@ -325,12 +348,13 @@ open class SoundPlayer {
                 val mediaPlayer = mMediaPlayer!!
 
                 mediaPlayer.setOnErrorListener { mp: MediaPlayer?, which: Int, extra: Int ->
-                    val errorHandling = errorHandler.onError(
-                        mp,
-                        which,
-                        extra,
-                        soundPath
-                    )
+                    val errorHandling =
+                        errorHandler.onError(
+                            mp,
+                            which,
+                            extra,
+                            soundPath,
+                        )
                     // returning false calls onComplete()
                     return@setOnErrorListener when (errorHandling) {
                         CONTINUE_AUDIO -> false
@@ -349,7 +373,7 @@ open class SoundPlayer {
                 mediaPlayer.setAudioAttributes(
                     AudioAttributes.Builder()
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build()
+                        .build(),
                 )
                 mediaPlayer.setOnPreparedListener {
                     Timber.d("Starting media player")
@@ -367,7 +391,7 @@ open class SoundPlayer {
                         mMediaPlayer,
                         MediaPlayer.MEDIA_ERROR_UNSUPPORTED,
                         0,
-                        soundPath
+                        soundPath,
                     )
                 ) {
                     CONTINUE_AUDIO -> {
@@ -424,7 +448,10 @@ open class SoundPlayer {
 }
 
 @Throws(Exception::class)
-private fun MediaMetadataRetriever.getDuration(context: Context, uri: Uri): Long {
+private fun MediaMetadataRetriever.getDuration(
+    context: Context,
+    uri: Uri,
+): Long {
     this.setDataSource(context, uri)
     val duration = this.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
     return duration!!.toLong()

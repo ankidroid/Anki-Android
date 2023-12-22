@@ -52,7 +52,7 @@ fun JSONArray.deepClone(): JSONArray {
                 is JSONObject -> getJSONObject(i).deepClone()
                 is JSONArray -> getJSONArray(i).deepClone()
                 else -> get(i)
-            }
+            },
         )
     }
     return clone
@@ -66,6 +66,7 @@ fun JSONArray.jsonObjectIterable(): Iterable<JSONObject> {
 fun JSONArray.jsonObjectIterator(): Iterator<JSONObject> {
     return object : Iterator<JSONObject> {
         private var mIndex = 0
+
         override fun hasNext(): Boolean {
             return mIndex < length()
         }
@@ -85,6 +86,7 @@ fun JSONArray.stringIterable(): Iterable<String> {
 fun JSONArray.stringIterator(): Iterator<String> {
     return object : Iterator<String> {
         private var mIndex = 0
+
         override fun hasNext(): Boolean {
             return mIndex < length()
         }

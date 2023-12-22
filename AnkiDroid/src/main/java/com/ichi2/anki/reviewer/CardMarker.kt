@@ -48,7 +48,9 @@ class CardMarker(private val markView: ImageView, private val flagView: ImageVie
         }
     }
 
-    private fun setFlagView(@DrawableRes drawableId: Int) {
+    private fun setFlagView(
+        @DrawableRes drawableId: Int,
+    ) {
         // set the resource before to ensure we display the correct icon.
         flagView.setImageResource(drawableId)
         flagView.visibility = View.VISIBLE

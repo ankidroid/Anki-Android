@@ -72,6 +72,7 @@ internal class ApiUtilsTest {
 
     companion object {
         // We need to keep a copy because a change to Utils.FIELD_SEPARATOR should break the tests
+        @Suppress("ObjectPropertyName", "ktlint:standard:property-naming")
         private const val delimiter = "\u001F"
     }
 }

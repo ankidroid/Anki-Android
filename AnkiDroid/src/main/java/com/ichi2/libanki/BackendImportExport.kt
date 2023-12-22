@@ -37,12 +37,12 @@ import net.ankiweb.rsdroid.Backend
 fun Collection.createBackup(
     backupFolder: String,
     force: Boolean,
-    waitForCompletion: Boolean
+    waitForCompletion: Boolean,
 ): Boolean {
     return backend.createBackup(
         backupFolder = backupFolder,
         force = force,
-        waitForCompletion = waitForCompletion
+        waitForCompletion = waitForCompletion,
     )
 }
 
@@ -62,13 +62,13 @@ fun Collection.awaitBackupCompletion() {
 fun importCollectionPackage(
     backend: Backend,
     colPath: String,
-    colpkgPath: String
+    colpkgPath: String,
 ) {
     backend.importCollectionPackage(
         colPath = colPath,
         backupPath = colpkgPath,
         mediaFolder = colPath.replace(".anki2", ".media"),
-        mediaDb = colPath.replace(".anki2", ".media.db")
+        mediaDb = colPath.replace(".anki2", ".media.db"),
     )
 }
 
@@ -80,13 +80,13 @@ fun importCollectionPackage(
 fun Collection.exportCollectionPackage(
     outPath: String,
     includeMedia: Boolean,
-    legacy: Boolean = true
+    legacy: Boolean = true,
 ) {
     close(downgrade = false, forFullSync = true)
     backend.exportCollectionPackage(
         outPath = outPath,
         includeMedia = includeMedia,
-        legacy = legacy
+        legacy = legacy,
     )
     reopen(afterFullSync = false)
 }
@@ -105,7 +105,7 @@ fun Collection.exportAnkiPackage(
     withScheduling: Boolean,
     withMedia: Boolean,
     limit: ExportLimit,
-    legacy: Boolean = true
+    legacy: Boolean = true,
 ) {
     backend.exportAnkiPackage(outPath, withScheduling, withMedia, legacy, limit)
 }

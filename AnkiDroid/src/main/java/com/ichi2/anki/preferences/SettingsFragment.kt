@@ -58,12 +58,15 @@ abstract class SettingsFragment :
         UsageAnalytics.sendAnalyticsEvent(
             category = UsageAnalytics.Category.SETTING,
             action = UsageAnalytics.Actions.TAPPED_SETTING,
-            label = preference.key
+            label = preference.key,
         )
         return super.onPreferenceTreeClick(preference)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
+    override fun onSharedPreferenceChanged(
+        sharedPreferences: SharedPreferences,
+        key: String?,
+    ) {
         if (key !in UsageAnalytics.preferencesWhoseChangesShouldBeReported) {
             return
         }
@@ -73,12 +76,15 @@ abstract class SettingsFragment :
                 category = UsageAnalytics.Category.SETTING,
                 action = UsageAnalytics.Actions.CHANGED_SETTING,
                 value = valueToReport,
-                label = key
+                label = key,
             )
         }
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferences(
+        savedInstanceState: Bundle?,
+        rootKey: String?,
+    ) {
         UsageAnalytics.sendAnalyticsScreenView(analyticsScreenNameConstant)
         addPreferencesFromResource(preferenceResource)
         initSubscreen()
@@ -152,7 +158,12 @@ abstract class SettingsFragment :
         fun getPreferenceReportableValue(value: Any?): Int? {
             return when (value) {
                 is Int -> value
-                is String -> try { value.toInt() } catch (e: NumberFormatException) { null }
+                is String ->
+                    try {
+                        value.toInt()
+                    } catch (e: NumberFormatException) {
+                        null
+                    }
                 is Boolean -> if (value) 1 else 0
                 is Float -> value.toInt()
                 is Long -> value.toInt()

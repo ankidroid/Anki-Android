@@ -35,8 +35,8 @@ class SimpleMessageDialog : AsyncDialogFragment() {
                 (activity as SimpleMessageDialogListener?)
                     ?.dismissSimpleMessageDialog(
                         requireArguments().getBoolean(
-                            ARGS_RELOAD
-                        )
+                            ARGS_RELOAD,
+                        ),
                     )
             }
         }.create()
@@ -70,7 +70,11 @@ class SimpleMessageDialog : AsyncDialogFragment() {
          */
         private const val ARGS_RELOAD = "reload"
 
-        fun newInstance(title: String, message: String?, reload: Boolean): SimpleMessageDialog {
+        fun newInstance(
+            title: String,
+            message: String?,
+            reload: Boolean,
+        ): SimpleMessageDialog {
             val f = SimpleMessageDialog()
             val args = Bundle()
             args.putString(ARGS_TITLE, title)

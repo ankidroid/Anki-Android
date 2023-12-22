@@ -26,7 +26,11 @@ import androidx.test.runner.AndroidJUnitRunner
  */
 @Suppress("unused") // referenced by build.gradle
 class NewCollectionPathTestRunner : AndroidJUnitRunner() {
-    override fun newApplication(cl: ClassLoader?, className: String?, context: Context?): Application {
+    override fun newApplication(
+        cl: ClassLoader?,
+        className: String?,
+        context: Context?,
+    ): Application {
         return super.newApplication(cl, TestingApplication::class.java.name, context)
     }
 }

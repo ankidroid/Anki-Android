@@ -112,12 +112,13 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
         // this is correct - exception is not in a logged context
         executionContext.logExceptions = true
-        val exception = assertFailsWith<TestException> {
-            spy(MoveFile(source, destinationFile)) {
-                Mockito.doThrow(TestException("test-copyFile()")).whenever(it).copyFile(any(), any())
+        val exception =
+            assertFailsWith<TestException> {
+                spy(MoveFile(source, destinationFile)) {
+                    Mockito.doThrow(TestException("test-copyFile()")).whenever(it).copyFile(any(), any())
+                }
+                    .execute()
             }
-                .execute()
-        }
         assertThat("copy should have failed, destination should not exist", destinationFile.exists(), equalTo(false))
         assertThat("source file should still exist", source.file.exists(), equalTo(true))
         assertThat("source content is unchanged", getContent(source.file), equalTo("hello-world"))
@@ -137,7 +138,11 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         MoveFile(source, destinationFile)
             .execute()
 
-        assertThat("no exceptions should have been reported", executionContext.exceptions, Matchers.emptyCollectionOf(Exception::class.java))
+        assertThat(
+            "no exceptions should have been reported",
+            executionContext.exceptions,
+            Matchers.emptyCollectionOf(Exception::class.java),
+        )
         assertThat("empty progress should have been reported", executionContext.progress.single(), equalTo(0L))
     }
 
@@ -224,10 +229,11 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         val source = addUntrackedMediaFile("hello-oo", listOf("hello.txt"))
         val destinationFile = source.file
 
-        val ex = assertFailsWith<EquivalentFileException> {
-            MoveFile(source, destinationFile)
-                .execute()
-        }
+        val ex =
+            assertFailsWith<EquivalentFileException> {
+                MoveFile(source, destinationFile)
+                    .execute()
+            }
 
         assertThat("source still exists", source.file.exists())
         assertThat(ex.message, containsString("Source and destination path are the same"))
@@ -242,17 +248,22 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         assertThat(
             "deletion should work",
             sourceDirectoryToDelete.delete() && destinationDirectoryToDelete.delete(),
-            equalTo(true)
+            equalTo(true),
         )
 
-        val exception = assertFailsWith<MissingDirectoryException> {
-            MoveFile(sourceNotExist, destinationFileNotExist)
-                .execute()
-        }
+        val exception =
+            assertFailsWith<MissingDirectoryException> {
+                MoveFile(sourceNotExist, destinationFileNotExist)
+                    .execute()
+            }
 
         assertThat("2 missing directories expected", exception.directories, hasSize(2))
         assertThat("source was logged", exception.directories[0], equalTo(MissingFile("source - parent dir", sourceDirectoryToDelete)))
-        assertThat("destination was logged", exception.directories[1], equalTo(MissingFile("destination - parent dir", destinationDirectoryToDelete)))
+        assertThat(
+            "destination was logged",
+            exception.directories[1],
+            equalTo(MissingFile("destination - parent dir", destinationDirectoryToDelete)),
+        )
     }
 
     @Test

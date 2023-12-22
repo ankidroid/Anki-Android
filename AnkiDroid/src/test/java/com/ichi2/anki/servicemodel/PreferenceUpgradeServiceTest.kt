@@ -40,7 +40,6 @@ import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class PreferenceUpgradeServiceTest : RobolectricTest() {
-
     private lateinit var mPrefs: SharedPreferences
 
     @Before
@@ -89,7 +88,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
             assertThat(
                 "versions should be increasing, but found (${it.first}) before (${it.second})",
                 it.first,
-                lessThan(it.second)
+                lessThan(it.second),
             )
         }
     }
@@ -104,7 +103,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
             "Different count of nested classes ($nestedClassCount) and upgrades ($upgradeCount). \n" +
                 "nested classes:\n ${nestedClasses.map { it.simpleName }.joinToString("\n")}",
             nestedClassCount,
-            equalTo(upgradeCount)
+            equalTo(upgradeCount),
         )
     }
 

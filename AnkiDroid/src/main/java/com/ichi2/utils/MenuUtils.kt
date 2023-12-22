@@ -49,7 +49,12 @@ fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
 
         override fun getIntrinsicWidth() = super.getIntrinsicWidth() + extraPadding * 2
 
-        override fun setBounds(left: Int, top: Int, right: Int, bottom: Int) {
+        override fun setBounds(
+            left: Int,
+            top: Int,
+            right: Int,
+            bottom: Int,
+        ) {
             super.setBounds(left + extraPadding, top, right - extraPadding, bottom)
         }
     }
@@ -66,7 +71,10 @@ fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
  * with the color [R.attr.overflowAndPopupMenuIconColor] that is specified in the theme.
  * Has no effect for items that have no icon.
  */
-fun Context.tintOverflowMenuIcons(menu: Menu, skipIf: ((MenuItem) -> Boolean)? = null) {
+fun Context.tintOverflowMenuIcons(
+    menu: Menu,
+    skipIf: ((MenuItem) -> Boolean)? = null,
+) {
     val iconColor = MaterialColors.getColor(this, R.attr.overflowAndPopupMenuIconColor, 0)
 
     menu.forEachOverflowItemRecursive { item ->

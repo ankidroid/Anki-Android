@@ -69,10 +69,11 @@ class MigrationFailedDialogFragment : DialogFragment() {
         val stacktrace = arguments?.getString(STACKTRACE_KEY) ?: ""
         val changesRolledBack = arguments?.getBoolean(CHANGES_ROLLED_BACK_KEY) ?: false
 
-        val messageTemplateId = when (changesRolledBack) {
-            true -> R.string.migration__failed__changes_rolled_back__message
-            false -> R.string.migration__failed__changes_not_rolled_back__message
-        }
+        val messageTemplateId =
+            when (changesRolledBack) {
+                true -> R.string.migration__failed__changes_rolled_back__message
+                false -> R.string.migration__failed__changes_not_rolled_back__message
+            }
         val helpUrl = getString(R.string.link_migration_failed_dialog_learn_more_en)
         val message = getString(messageTemplateId, errorText, helpUrl).parseAsHtml()
 
@@ -84,7 +85,7 @@ class MigrationFailedDialogFragment : DialogFragment() {
                 requireContext().copyToClipboardAndShowConfirmation(
                     text = stacktrace,
                     successMessageId = R.string.about_ankidroid_successfully_copied_debug_info,
-                    failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+                    failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
                 )
             }
             .create()
@@ -101,21 +102,27 @@ class MigrationFailedDialogFragment : DialogFragment() {
 
         const val TAG = "MigrationFailedDialogFragment"
 
-        fun show(activity: FragmentActivity, errorText: CharSequence, stacktrace: String, changesRolledBack: Boolean) {
+        fun show(
+            activity: FragmentActivity,
+            errorText: CharSequence,
+            stacktrace: String,
+            changesRolledBack: Boolean,
+        ) {
             MigrationFailedDialogFragment()
                 .apply {
-                    arguments = bundleOf(
-                        ERROR_TEXT_KEY to errorText,
-                        STACKTRACE_KEY to stacktrace,
-                        CHANGES_ROLLED_BACK_KEY to changesRolledBack
-                    )
+                    arguments =
+                        bundleOf(
+                            ERROR_TEXT_KEY to errorText,
+                            STACKTRACE_KEY to stacktrace,
+                            CHANGES_ROLLED_BACK_KEY to changesRolledBack,
+                        )
                 }
                 .show(activity.supportFragmentManager, TAG)
         }
     }
 }
 
-/* ********************************************************************************************** */
+// **********************************************************************************************
 
 /**
  * This allows showing a dialog in the currently started activity if one exists,
@@ -130,7 +137,10 @@ class ActivityAgnosticDialogs private constructor(private val application: Appli
         }
     }
 
-    fun showOrScheduleStorageMigrationFailedDialog(exception: Exception, changesRolledBack: Boolean) {
+    fun showOrScheduleStorageMigrationFailedDialog(
+        exception: Exception,
+        changesRolledBack: Boolean,
+    ) {
         val currentlyStartedFragmentActivity = this.currentlyStartedFragmentActivity
         val context = currentlyStartedFragmentActivity ?: application
         val errorText = context.getUserFriendlyErrorText(exception)
@@ -152,38 +162,48 @@ class ActivityAgnosticDialogs private constructor(private val application: Appli
 
     private val startedActivityStack = mutableListOf<Activity>()
 
-    private val currentlyStartedFragmentActivity get() = startedActivityStack
-        .filterIsInstance<FragmentActivity>()
-        .lastOrNull()
+    private val currentlyStartedFragmentActivity get() =
+        startedActivityStack
+            .filterIsInstance<FragmentActivity>()
+            .lastOrNull()
 
     private fun registerCallbacks() {
-        application.registerActivityLifecycleCallbacks(object : DefaultActivityLifecycleCallbacks {
-            override fun onActivityStarted(activity: Activity) { startedActivityStack.add(activity) }
-            override fun onActivityStopped(activity: Activity) { startedActivityStack.remove(activity) }
-        })
-
-        application.registerActivityLifecycleCallbacks(object : DefaultActivityLifecycleCallbacks {
-            override fun onActivityStarted(activity: Activity) {
-                if (activity !is FragmentActivity) return
-
-                if (preferences.getBoolean(MIGRATION_SUCCEEDED_DIALOG_PENDING_KEY, false)) {
-                    MigrationSucceededDialogFragment.show(activity)
-                    preferences.edit { remove(MIGRATION_SUCCEEDED_DIALOG_PENDING_KEY) }
+        application.registerActivityLifecycleCallbacks(
+            object : DefaultActivityLifecycleCallbacks {
+                override fun onActivityStarted(activity: Activity) {
+                    startedActivityStack.add(activity)
                 }
 
-                val errorText = preferences.getString(MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY, null)
-                val stacktrace = preferences.getString(MIGRATION_FAILED_DIALOG_STACKTRACE_KEY, null)
-                val changesRolledBack = preferences.getBoolean(MIGRATION_FAILED_DIALOG_CHANGES_ROLLED_BACK_KEY, false)
-                if (errorText != null && stacktrace != null) {
-                    MigrationFailedDialogFragment.show(activity, errorText, stacktrace, changesRolledBack)
-                    preferences.edit {
-                        remove(MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY)
-                        remove(MIGRATION_FAILED_DIALOG_STACKTRACE_KEY)
-                        remove(MIGRATION_FAILED_DIALOG_CHANGES_ROLLED_BACK_KEY)
+                override fun onActivityStopped(activity: Activity) {
+                    startedActivityStack.remove(activity)
+                }
+            },
+        )
+
+        application.registerActivityLifecycleCallbacks(
+            object : DefaultActivityLifecycleCallbacks {
+                override fun onActivityStarted(activity: Activity) {
+                    if (activity !is FragmentActivity) return
+
+                    if (preferences.getBoolean(MIGRATION_SUCCEEDED_DIALOG_PENDING_KEY, false)) {
+                        MigrationSucceededDialogFragment.show(activity)
+                        preferences.edit { remove(MIGRATION_SUCCEEDED_DIALOG_PENDING_KEY) }
+                    }
+
+                    val errorText = preferences.getString(MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY, null)
+                    val stacktrace = preferences.getString(MIGRATION_FAILED_DIALOG_STACKTRACE_KEY, null)
+                    val changesRolledBack = preferences.getBoolean(MIGRATION_FAILED_DIALOG_CHANGES_ROLLED_BACK_KEY, false)
+                    if (errorText != null && stacktrace != null) {
+                        MigrationFailedDialogFragment.show(activity, errorText, stacktrace, changesRolledBack)
+                        preferences.edit {
+                            remove(MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY)
+                            remove(MIGRATION_FAILED_DIALOG_STACKTRACE_KEY)
+                            remove(MIGRATION_FAILED_DIALOG_CHANGES_ROLLED_BACK_KEY)
+                        }
                     }
                 }
-            }
-        })
+            },
+        )
     }
 
     companion object {
@@ -193,22 +213,35 @@ class ActivityAgnosticDialogs private constructor(private val application: Appli
         private const val MIGRATION_FAILED_DIALOG_STACKTRACE_KEY = "migration failed dialog stacktrace"
         private const val MIGRATION_FAILED_DIALOG_CHANGES_ROLLED_BACK_KEY = "migration failed dialog changes rolled back"
 
-        fun register(application: Application) = ActivityAgnosticDialogs(application)
-            .apply { registerCallbacks() }
+        fun register(application: Application) =
+            ActivityAgnosticDialogs(application)
+                .apply { registerCallbacks() }
     }
 }
 
 fun storageMigrationFailedDialogIsShownOrPending(activity: AppCompatActivity) =
     activity.supportFragmentManager.findFragmentByTag(MigrationFailedDialogFragment.TAG) != null ||
         activity.sharedPrefs()
-        .getString(MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY, null) != null
+            .getString(MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY, null) != null
 
 interface DefaultActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+    override fun onActivityCreated(
+        activity: Activity,
+        savedInstanceState: Bundle?,
+    ) {}
+
     override fun onActivityStarted(activity: Activity) {}
+
     override fun onActivityResumed(activity: Activity) {}
+
     override fun onActivityPaused(activity: Activity) {}
+
     override fun onActivityStopped(activity: Activity) {}
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+
+    override fun onActivitySaveInstanceState(
+        activity: Activity,
+        outState: Bundle,
+    ) {}
+
     override fun onActivityDestroyed(activity: Activity) {}
 }

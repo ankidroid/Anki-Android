@@ -41,7 +41,7 @@ open class Media(private val col: Collection) {
 
     /*
       Adding media
-      ***********************************************************
+     ***********************************************************
      */
 
     fun addFile(oFile: File?): String {
@@ -75,7 +75,10 @@ open class Media(private val col: Collection) {
         return check().unusedFileNames.map { File(dir, it) }
     }
 
-    fun escapeMediaFilenames(string: String, unescape: Boolean = false): String {
+    fun escapeMediaFilenames(
+        string: String,
+        unescape: Boolean = false,
+    ): String {
         return if (unescape) {
             col.backend.decodeIriPaths(string)
         } else {
@@ -85,7 +88,7 @@ open class Media(private val col: Collection) {
 
     /*
       Rebuilding DB
-      ***********************************************************
+     ***********************************************************
      */
 
     // FIXME: this also provides trash count, but UI can not handle it yet
@@ -136,5 +139,5 @@ fun getCollectionMediaPath(collectionPath: String): String {
 data class MediaCheckResult(
     val missingFileNames: List<String>,
     val unusedFileNames: List<String>,
-    val invalidFileNames: List<String>
+    val invalidFileNames: List<String>,
 )

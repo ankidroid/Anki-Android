@@ -24,13 +24,14 @@ package com.ichi2.anki.model
 enum class CardStateFilter {
     ALL_CARDS,
     NEW,
-    DUE
+    DUE,
     ;
 
     val toSearch: String
-        get() = when (this) {
-            ALL_CARDS -> ""
-            NEW -> "is:new "
-            DUE -> "is:due "
-        }
+        get() =
+            when (this) {
+                ALL_CARDS -> ""
+                NEW -> "is:new "
+                DUE -> "is:due "
+            }
 }

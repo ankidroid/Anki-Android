@@ -17,7 +17,10 @@ package com.ichi2.anki
 
 import androidx.annotation.DrawableRes
 
-enum class Flag(val code: Int, @DrawableRes val drawableRes: Int) {
+enum class Flag(
+    val code: Int,
+    @DrawableRes val drawableRes: Int,
+) {
     NONE(0, R.drawable.ic_flag_transparent),
     RED(1, R.drawable.ic_flag_red),
     ORANGE(2, R.drawable.ic_flag_orange),
@@ -25,7 +28,8 @@ enum class Flag(val code: Int, @DrawableRes val drawableRes: Int) {
     BLUE(4, R.drawable.ic_flag_blue),
     PINK(5, R.drawable.ic_flag_pink),
     TURQUOISE(6, R.drawable.ic_flag_turquoise),
-    PURPLE(7, R.drawable.ic_flag_purple);
+    PURPLE(7, R.drawable.ic_flag_purple),
+    ;
 
     companion object {
         fun fromCode(code: Int): Flag {

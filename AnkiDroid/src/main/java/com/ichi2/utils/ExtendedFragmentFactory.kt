@@ -46,7 +46,10 @@ abstract class ExtendedFragmentFactory : FragmentFactory {
      * instantiated by the extending factory, the base factory should instantiate it.
      */
     @CallSuper
-    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+    override fun instantiate(
+        classLoader: ClassLoader,
+        className: String,
+    ): Fragment {
         return mBaseFactory?.instantiate(classLoader, className)
             ?: super.instantiate(classLoader, className)
     }

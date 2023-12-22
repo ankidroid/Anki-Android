@@ -54,9 +54,8 @@ import com.ichi2.utils.HandlerUtils.executeFunctionUsingHandler
 // TODO: Move OnboardingUtils.featureConstants to a DI container rather than a mutable singleton
 abstract class Onboarding<Feature>(
     private val context: Context,
-    val tutorials: MutableList<TutorialArguments<Feature>>
+    val tutorials: MutableList<TutorialArguments<Feature>>,
 ) where Feature : Enum<Feature>, Feature : OnboardingFlag {
-
     companion object {
         // Constants being used for onboarding preferences should not be modified.
         const val DECK_PICKER_ONBOARDING = "DeckPickerOnboarding"
@@ -80,8 +79,8 @@ abstract class Onboarding<Feature>(
                     DECK_PICKER_ONBOARDING,
                     REVIEWER_ONBOARDING,
                     NOTE_EDITOR_ONBOARDING,
-                    CARD_BROWSER_ONBOARDING
-                )
+                    CARD_BROWSER_ONBOARDING,
+                ),
             )
         }
     }
@@ -118,19 +117,30 @@ abstract class Onboarding<Feature>(
     data class TutorialArguments<Feature>(
         val featureIdentifier: Feature,
         val onboardingFunction: () -> Unit,
-        val onboardingCondition: (() -> Boolean)? = null
+        val onboardingCondition: (() -> Boolean)? = null,
     )
-            where Feature : Enum<Feature>, Feature : OnboardingFlag
+        where Feature : Enum<Feature>, Feature : OnboardingFlag
 
     class DeckPicker(
         private val activityContext: com.ichi2.anki.DeckPicker,
-        private val recyclerViewLayoutManager: LinearLayoutManager
+        private val recyclerViewLayoutManager: LinearLayoutManager,
     ) : Onboarding<DeckPicker.DeckPickerOnboardingEnum>(activityContext, mutableListOf()) {
-
         init {
             tutorials.add(TutorialArguments(DeckPickerOnboardingEnum.FAB, this::showTutorialForFABIfNew))
-            tutorials.add(TutorialArguments(DeckPickerOnboardingEnum.DECK_NAME, this::showTutorialForDeckIfNew, activityContext::hasAtLeastOneDeckBeingDisplayed))
-            tutorials.add(TutorialArguments(DeckPickerOnboardingEnum.COUNTS_LAYOUT, this::showTutorialForCountsLayoutIfNew, activityContext::hasAtLeastOneDeckBeingDisplayed))
+            tutorials.add(
+                TutorialArguments(
+                    DeckPickerOnboardingEnum.DECK_NAME,
+                    this::showTutorialForDeckIfNew,
+                    activityContext::hasAtLeastOneDeckBeingDisplayed,
+                ),
+            )
+            tutorials.add(
+                TutorialArguments(
+                    DeckPickerOnboardingEnum.COUNTS_LAYOUT,
+                    this::showTutorialForCountsLayoutIfNew,
+                    activityContext::hasAtLeastOneDeckBeingDisplayed,
+                ),
+            )
         }
 
         private fun showTutorialForFABIfNew() {
@@ -164,7 +174,10 @@ abstract class Onboarding<Feature>(
         }
 
         enum class DeckPickerOnboardingEnum(var value: Int) : OnboardingFlag {
-            FAB(0), DECK_NAME(1), COUNTS_LAYOUT(2);
+            FAB(0),
+            DECK_NAME(1),
+            COUNTS_LAYOUT(2),
+            ;
 
             override fun getOnboardingEnumValue(): Int {
                 return value
@@ -178,7 +191,6 @@ abstract class Onboarding<Feature>(
 
     class Reviewer(private val activityContext: com.ichi2.anki.Reviewer) :
         Onboarding<Reviewer.ReviewerOnboardingEnum>(activityContext, mutableListOf()) {
-
         init {
             tutorials.add(TutorialArguments(ReviewerOnboardingEnum.SHOW_ANSWER, this::onQuestionShown))
             tutorials.add(TutorialArguments(ReviewerOnboardingEnum.FLAG, this::showTutorialForFlagIfNew))
@@ -241,7 +253,11 @@ abstract class Onboarding<Feature>(
         }
 
         enum class ReviewerOnboardingEnum(var value: Int) : OnboardingFlag {
-            SHOW_ANSWER(0), DIFFICULTY_RATING(1), FLAG(2), UNDO(3);
+            SHOW_ANSWER(0),
+            DIFFICULTY_RATING(1),
+            FLAG(2),
+            UNDO(3),
+            ;
 
             override fun getOnboardingEnumValue(): Int {
                 return value
@@ -255,7 +271,6 @@ abstract class Onboarding<Feature>(
 
     class NoteEditor(private val activityContext: com.ichi2.anki.NoteEditor) :
         Onboarding<NoteEditor.NoteEditorOnboardingEnum>(activityContext, mutableListOf()) {
-
         init {
             tutorials.add(TutorialArguments(NoteEditorOnboardingEnum.FRONT_BACK, this::showTutorialForFrontAndBackIfNew))
             tutorials.add(TutorialArguments(NoteEditorOnboardingEnum.FORMATTING_TOOLS, this::showTutorialForFormattingTools))
@@ -281,7 +296,9 @@ abstract class Onboarding<Feature>(
         }
 
         enum class NoteEditorOnboardingEnum(var value: Int) : OnboardingFlag {
-            FRONT_BACK(0), FORMATTING_TOOLS(1);
+            FRONT_BACK(0),
+            FORMATTING_TOOLS(1),
+            ;
 
             override fun getOnboardingEnumValue(): Int {
                 return value
@@ -295,7 +312,6 @@ abstract class Onboarding<Feature>(
 
     class CardBrowser(private val activityContext: com.ichi2.anki.CardBrowser) :
         Onboarding<CardBrowser.CardBrowserOnboardingEnum>(activityContext, mutableListOf()) {
-
         init {
             tutorials.add(TutorialArguments(CardBrowserOnboardingEnum.DECK_CHANGER, this::showTutorialForDeckChangerIfNew))
             tutorials.add(TutorialArguments(CardBrowserOnboardingEnum.CARD_PRESS_AND_HOLD, this::showTutorialForCardClickIfNew))
@@ -324,7 +340,9 @@ abstract class Onboarding<Feature>(
         }
 
         enum class CardBrowserOnboardingEnum(var value: Int) : OnboardingFlag {
-            DECK_CHANGER(0), CARD_PRESS_AND_HOLD(1);
+            DECK_CHANGER(0),
+            CARD_PRESS_AND_HOLD(1),
+            ;
 
             override fun getOnboardingEnumValue(): Int {
                 return value

@@ -57,10 +57,13 @@ class UserDataMigrationPreferences private constructor(val source: String, val d
 
             return createInstance(
                 source = getValue(PREF_MIGRATION_SOURCE),
-                destination = getValue(PREF_MIGRATION_DESTINATION)
+                destination = getValue(PREF_MIGRATION_DESTINATION),
             )
         }
 
-        fun createInstance(source: String, destination: String) = UserDataMigrationPreferences(source, destination).also { it.check() }
+        fun createInstance(
+            source: String,
+            destination: String,
+        ) = UserDataMigrationPreferences(source, destination).also { it.check() }
     }
 }

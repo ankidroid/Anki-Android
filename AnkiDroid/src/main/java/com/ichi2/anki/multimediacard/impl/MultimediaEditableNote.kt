@@ -41,6 +41,7 @@ class MultimediaEditableNote : IMultimediaEditableNote {
      * These values should not be modified
      */
     private var mInitialFields: ArrayList<IField?>? = null
+
     private fun setThisModified() {
         isModified = true
     }
@@ -71,7 +72,10 @@ class MultimediaEditableNote : IMultimediaEditableNote {
         }
     }
 
-    override fun setField(index: Int, field: IField?): Boolean {
+    override fun setField(
+        index: Int,
+        field: IField?,
+    ): Boolean {
         if (index in 0 until numberOfFields) {
             // If the same unchanged field is set.
             if (getField(index) === field) {

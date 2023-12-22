@@ -119,8 +119,10 @@ class CardTemplateNotetypeTest : RobolectricTest() {
         tempNotetype.addTemplateChange(ADD, 3)
         // 2 template and 4 changes now (the delete just cancelled out one of the adds)
         Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
-        val expected7 = arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD), arrayOf<Any>(2, ADD), arrayOf<Any>(3, ADD))
-        val adjExpected7 = arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD), arrayOf<Any>(2, ADD), arrayOf<Any>(3, ADD))
+        val expected7 =
+            arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD), arrayOf<Any>(2, ADD), arrayOf<Any>(3, ADD))
+        val adjExpected7 =
+            arrayOf(arrayOf<Any>(2, DELETE), arrayOf<Any>(1, DELETE), arrayOf<Any>(1, ADD), arrayOf<Any>(2, ADD), arrayOf<Any>(3, ADD))
         assertTemplateChangesEqual(expected7, tempNotetype.templateChanges)
         assertTemplateChangesEqual(adjExpected7, tempNotetype.adjustedTemplateChanges)
 
@@ -134,11 +136,18 @@ class CardTemplateNotetypeTest : RobolectricTest() {
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun assertTemplateChangesEqual(expected: Array<Array<Any>>, actual: Serializable?) {
+    private fun assertTemplateChangesEqual(
+        expected: Array<Array<Any>>,
+        actual: Serializable?,
+    ) {
         if (actual !is ArrayList<*>) {
             Assert.fail("actual array null or not the correct type")
         }
-        Assert.assertEquals("arrays didn't have the same length?", expected.size.toLong(), (actual as ArrayList<Array<Any?>?>).size.toLong())
+        Assert.assertEquals(
+            "arrays didn't have the same length?",
+            expected.size.toLong(),
+            (actual as ArrayList<Array<Any?>?>).size.toLong(),
+        )
         for (i in expected.indices) {
             if (actual[i] !is Array<Any?>) {
                 Assert.fail("actual array does not contain Object[] entries")

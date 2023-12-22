@@ -39,7 +39,11 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
 
     // This is used to copy from another field value to this field
     private lateinit var mPossibleClones: ArrayList<String>
-    override fun createUI(context: Context, layout: LinearLayout) {
+
+    override fun createUI(
+        context: Context,
+        layout: LinearLayout,
+    ) {
         mEditText = FixedEditText(mActivity)
         mEditText.minLines = 3
         mEditText.setText(mField.text)
@@ -56,7 +60,10 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
         return mActivity.getText(id).toString()
     }
 
-    private fun createClearButton(layoutTools: LinearLayout, p: LinearLayout.LayoutParams) {
+    private fun createClearButton(
+        layoutTools: LinearLayout,
+        p: LinearLayout.LayoutParams,
+    ) {
         val clearButton = Button(mActivity)
         clearButton.text = gtxt(R.string.multimedia_editor_text_field_editing_clear)
         layoutTools.addView(clearButton, p)
@@ -68,7 +75,10 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
      *            one, and use it's value in the current one.
      * @param p layout params
      */
-    private fun createCloneButton(layoutTools: LinearLayout, p: LinearLayout.LayoutParams) {
+    private fun createCloneButton(
+        layoutTools: LinearLayout,
+        p: LinearLayout.LayoutParams,
+    ) {
         // Makes sense only for two and more fields
         if (mNote.numberOfFields > 1) {
             // Should be more than one text not empty fields for clone to make
@@ -118,7 +128,10 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
     }
 
     // This is when the dialog for clone ends
-    override fun onClick(dialog: DialogInterface, which: Int) {
+    override fun onClick(
+        dialog: DialogInterface,
+        which: Int,
+    ) {
         mEditText.setText(mPossibleClones[which])
     }
 
