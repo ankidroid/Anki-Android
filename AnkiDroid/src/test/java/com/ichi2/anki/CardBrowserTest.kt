@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
+import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
@@ -527,7 +528,7 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat(
             "Initial position of checked card",
-            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            card.getColumnHeaderText(CardBrowserColumn.DUE),
             equalTo("1")
         )
 
@@ -537,7 +538,7 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat(
             "Position of checked card after reposition",
-            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            card.getColumnHeaderText(CardBrowserColumn.DUE),
             equalTo("2")
         )
     }
@@ -560,7 +561,7 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat(
             "Initial due of checked card",
-            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            card.getColumnHeaderText(CardBrowserColumn.DUE),
             equalTo("8/12/20")
         )
 
@@ -570,7 +571,7 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat(
             "Position of checked card after reset",
-            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            card.getColumnHeaderText(CardBrowserColumn.DUE),
             equalTo("2")
         )
     }
@@ -587,7 +588,7 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat(
             "Initial position of checked card",
-            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            card.getColumnHeaderText(CardBrowserColumn.DUE),
             equalTo("1")
         )
 
@@ -609,7 +610,7 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat(
             "Initial position of checked card",
-            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            card.getColumnHeaderText(CardBrowserColumn.DUE),
             equalTo("1")
         )
 
@@ -617,7 +618,7 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat(
             "Position of checked card after reposition",
-            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            card.getColumnHeaderText(CardBrowserColumn.DUE),
             equalTo("2")
         )
 
@@ -625,7 +626,7 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat(
             "Position of checked card after undo should be reset",
-            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            card.getColumnHeaderText(CardBrowserColumn.DUE),
             equalTo("1")
         )
     }
