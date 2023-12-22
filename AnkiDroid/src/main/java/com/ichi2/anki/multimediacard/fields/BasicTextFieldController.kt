@@ -47,6 +47,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
         val layoutTools = LinearLayout(mActivity)
         layoutTools.orientation = LinearLayout.HORIZONTAL
         layout.addView(layoutTools)
+        mEditText.requestFocus()
         val p = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1F)
         createCloneButton(layoutTools, p)
         createClearButton(layoutTools, p)
