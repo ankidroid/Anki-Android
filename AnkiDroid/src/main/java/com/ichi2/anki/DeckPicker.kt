@@ -241,7 +241,8 @@ open class DeckPicker :
      * has changed between deck list refreshes, we need to recenter the deck list to the new current
      * deck.
      */
-    private var mFocusedDeck: Long = 0
+    @VisibleForTesting
+    internal var mFocusedDeck: DeckId = 0
 
     var importColpkgListener: ImportColpkgListener? = null
 
@@ -347,9 +348,13 @@ open class DeckPicker :
     }
 
     private val mDeckLongClickListener = OnLongClickListener { v ->
-        val deckId = v.tag as Long
+        val deckId = v.tag as DeckId
         Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId)
-        showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId))
+        launchCatchingTask {
+            withCol { decks.select(deckId) }
+            updateDeckList() // focus has changed
+            showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId))
+        }
         true
     }
 

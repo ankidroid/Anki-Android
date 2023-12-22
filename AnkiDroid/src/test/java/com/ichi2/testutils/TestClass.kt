@@ -19,6 +19,8 @@ package com.ichi2.testutils
 import com.ichi2.anki.CollectionManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckConfig
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
@@ -108,7 +110,7 @@ interface TestClass {
         col
     }
 
-    fun addDeck(deckName: String?): Long {
+    fun addDeck(deckName: String?): DeckId {
         return try {
             col.decks.id(deckName!!)
         } catch (filteredAncestor: DeckRenameException) {
@@ -116,7 +118,7 @@ interface TestClass {
         }
     }
 
-    fun addDynamicDeck(name: String?): Long {
+    fun addDynamicDeck(name: String?): DeckId {
         return try {
             col.decks.newDyn(name!!)
         } catch (filteredAncestor: DeckRenameException) {
@@ -126,6 +128,13 @@ interface TestClass {
 
     /** Adds [count] notes in the same deck with the same front & back */
     fun addNotes(count: Int): List<Note> = (0..count).map { addNoteUsingBasicModel() }
+
+    /** helper method to update deck config */
+    fun updateDeckConfig(deckId: DeckId, function: DeckConfig.() -> Unit) {
+        val deckConfig = col.decks.confForDid(deckId)
+        function(deckConfig)
+        col.decks.save(deckConfig)
+    }
 
     /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
      * takes care of updating the dispatcher used by CollectionManager as well.
