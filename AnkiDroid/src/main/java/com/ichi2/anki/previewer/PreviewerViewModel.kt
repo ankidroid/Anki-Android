@@ -41,7 +41,7 @@ import kotlinx.serialization.json.Json
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
-class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArray, firstIndex: Int) : ViewModel() {
+class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int) : ViewModel() {
     val eval = MutableSharedFlow<String>()
     val onError = MutableSharedFlow<String>()
     val currentIndex = MutableStateFlow(firstIndex)
@@ -51,8 +51,6 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
 
     private var showingAnswer = false
 
-    // TODO maybe move the server to a Service and move it out of here?
-    private val server = PreviewerServer(mediaDir).also { it.start() }
     private lateinit var currentCard: Card
 
     fun toggleBacksideOnly() {
@@ -81,8 +79,6 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
             flagCode.emit(flag.code)
         }
     }
-
-    fun serverBaseUrl() = server.baseUrl()
 
     fun cardId() = currentCard.id
 
@@ -175,10 +171,10 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
     }
 
     companion object {
-        fun factory(mediaDir: String, selectedCardIds: LongArray, currentIndex: Int): ViewModelProvider.Factory {
+        fun factory(selectedCardIds: LongArray, currentIndex: Int): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
-                    PreviewerViewModel(mediaDir, selectedCardIds, currentIndex)
+                    PreviewerViewModel(selectedCardIds, currentIndex)
                 }
             }
         }
@@ -221,8 +217,8 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
                 <html class="$docClass" dir="$languageDirectionality" data-bs-theme="$baseTheme">
                 <head>
                     <title>AnkiDroid</title>
-                        <link rel="stylesheet" type="text/css" href="/assets/web/root-vars.css">
-                        <link rel="stylesheet" type="text/css" href="/assets/web/reviewer.css">
+                        <link rel="stylesheet" type="text/css" href="/web/root-vars.css">
+                        <link rel="stylesheet" type="text/css" href="/web/reviewer.css">
                     <style type="text/css">
                         .night-mode button { --canvas: #606060; --fg: #eee; }
                         $colors
@@ -232,9 +228,9 @@ class PreviewerViewModel(mediaDir: String, private val selectedCardIds: LongArra
                     <div id="_mark" hidden>&#x2605;</div>
                     <div id="_flag" hidden>&#x2691;</div>
                     <div id="qa"></div>
-                    <script src="/assets/jquery.min.js"></script>
-                    <script src="/assets/mathjax/tex-chtml.js"></script>
-                    <script src="/assets/web/reviewer.js"></script>
+                    <script src="file:///android_asset/jquery.min.js"></script>
+                    <script src="file:///android_asset/mathjax/tex-chtml.js"></script>
+                    <script src="/web/reviewer.js"></script>
                     <script>bridgeCommand = function(){};</script>
                 </body>
                 </html>
