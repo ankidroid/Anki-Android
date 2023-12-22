@@ -31,6 +31,7 @@ import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.libanki.*
 import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
 import org.hamcrest.MatcherAssert.*
@@ -1334,5 +1335,14 @@ class ContentProviderTest : InstrumentedTest() {
                 newNote.id.toString()
             )
         }
+    }
+}
+
+/**
+ * Unbury all buried cards in all decks. Only used for tests.
+ */
+fun Scheduler.unburyCards() {
+    for (did in col.decks.allNamesAndIds().map { it.id }) {
+        unburyCardsForDeck(did)
     }
 }

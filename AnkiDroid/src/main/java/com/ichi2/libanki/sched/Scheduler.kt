@@ -296,15 +296,6 @@ open class Scheduler(val col: Collection) {
     }
 
     /**
-     * Unbury all buried cards in all decks. Only used for tests.
-     */
-    open fun unburyCards() {
-        for (did in col.decks.allNamesAndIds().map { it.id }) {
-            unburyCardsForDeck(did)
-        }
-    }
-
-    /**
      * @return Whether there are buried card is selected deck
      */
     open fun haveBuriedInCurrentDeck(): Boolean {
