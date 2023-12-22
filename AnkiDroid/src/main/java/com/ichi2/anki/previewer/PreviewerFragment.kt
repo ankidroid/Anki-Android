@@ -24,6 +24,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.CookieManager
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.result.contract.ActivityResultContracts
@@ -38,18 +40,18 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.getViewerAssetLoader
+import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.previewer.PreviewerViewModel.Companion.stdHtml
 import com.ichi2.themes.Themes
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.io.File
 
 class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var viewModel: PreviewerViewModel
@@ -77,17 +79,24 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val selectedCardIds = requireArguments().getLongArray(CARD_IDS_EXTRA)!!
         val currentIndex = requireArguments().getInt(CURRENT_INDEX_EXTRA, 0)
-        val mediaDir = File(CollectionHelper.getCurrentAnkiDroidDirectory(requireContext()), "collection.media").path
 
         viewModel = ViewModelProvider(
             requireActivity(),
-            PreviewerViewModel.factory(mediaDir, selectedCardIds, currentIndex)
+            PreviewerViewModel.factory(selectedCardIds, currentIndex)
         )[PreviewerViewModel::class.java]
 
+        val assetLoader = requireContext().getViewerAssetLoader(LOCALHOST)
         val webView = view.findViewById<WebView>(R.id.webview)
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         with(webView) {
             webViewClient = object : WebViewClient() {
+                override fun shouldInterceptRequest(
+                    view: WebView?,
+                    request: WebResourceRequest
+                ): WebResourceResponse? {
+                    return assetLoader.shouldInterceptRequest(request.url)
+                }
+
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
                     viewModel.loadCurrentCard()
@@ -103,7 +112,7 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 domStorageEnabled = true
             }
             loadDataWithBaseURL(
-                viewModel.serverBaseUrl(),
+                "http://$LOCALHOST/",
                 stdHtml(requireContext(), Themes.currentTheme.isNightMode),
                 "text/html",
                 null,
