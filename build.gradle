@@ -53,6 +53,9 @@ Boolean fatalWarnings = !(localProperties['fatal_warnings'] == "false")
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
     apply plugin: "org.jlleitschuh.gradle.ktlint"
+    ktlint {
+        version.set("1.1.0")
+    }
 
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
