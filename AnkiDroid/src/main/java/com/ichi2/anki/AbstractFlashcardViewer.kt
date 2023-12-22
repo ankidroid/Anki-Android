@@ -1055,38 +1055,33 @@ abstract class AbstractFlashcardViewer :
 
     @SuppressLint("SetJavaScriptEnabled") // they request we review carefully because of XSS security, we have
     protected open fun createWebView(): WebView {
-        val webView: WebView = MyWebView(this)
-        webView.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
-        webView.settings.displayZoomControls = false
-        webView.settings.builtInZoomControls = true
-        webView.settings.setSupportZoom(true)
-        // Start at the most zoomed-out level
-        webView.settings.loadWithOverviewMode = true
-        webView.settings.javaScriptEnabled = true
-        webView.webChromeClient = AnkiDroidWebChromeClient()
-
-        // This setting toggles file system access within WebView
-        // The default configuration is already true in apps targeting API <= 29
-        // Hence, this setting is only useful for apps targeting API >= 30
-        webView.settings.allowFileAccess = true
-
-        // Problems with focus and input tags is the reason we keep the old type answer mechanism for old Androids.
-        webView.isFocusableInTouchMode = typeAnswer!!.autoFocus
-        webView.isScrollbarFadingEnabled = true
+        val webView: WebView = MyWebView(this).apply {
+            scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
+            with(settings) {
+                displayZoomControls = false
+                builtInZoomControls = true
+                setSupportZoom(true)
+                loadWithOverviewMode = true
+                javaScriptEnabled = true
+                allowFileAccess = true
+                // enable dom storage so that sessionStorage & localStorage can be used in webview
+                domStorageEnabled = true
+            }
+            webChromeClient = AnkiDroidWebChromeClient()
+            isFocusableInTouchMode = typeAnswer!!.autoFocus
+            isScrollbarFadingEnabled = true
+            // Set transparent color to prevent flashing white when night mode enabled
+            setBackgroundColor(Color.argb(1, 0, 0, 0))
+            webViewClient = CardViewerWebClient(mAssetLoader, this@AbstractFlashcardViewer)
+        }
         Timber.d(
             "Focusable = %s, Focusable in touch mode = %s",
             webView.isFocusable,
             webView.isFocusableInTouchMode
         )
-        webView.webViewClient = CardViewerWebClient(mAssetLoader, this)
-        // Set transparent color to prevent flashing white when night mode enabled
-        webView.setBackgroundColor(Color.argb(1, 0, 0, 0))
 
         // Javascript interface for calling AnkiDroid functions in webview, see card.js
         mAnkiDroidJsAPI = javaScriptFunction()
-
-        // enable dom storage so that sessionStorage & localStorage can be used in webview
-        webView.settings.domStorageEnabled = true
 
         // enable third party cookies so that cookies can be used in webview
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
