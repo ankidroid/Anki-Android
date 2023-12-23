@@ -13,7 +13,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("removeFormattingFromMathjax was imported to stop bug in Kotlin: java.lang.NoSuchFieldError: INSTANCE")
 @KotlinCleanup("add testing function returning c.models.byName(\"Cloze\")")
 class MathJaxClozeTest : JvmTest() {
 
