@@ -72,7 +72,7 @@ class CardBrowserViewModel(
     var searchTerms: String = ""
     var restrictOnDeck: String = ""
         private set
-    var currentFlag = 0
+    var currentFlag = Flag.NONE
 
     val filterQueryFlow = MutableSharedFlow<String>()
 
@@ -439,7 +439,7 @@ class CardBrowserViewModel(
 
     suspend fun searchForSuspendedCards() = setFilterQuery("is:suspended")
     suspend fun setFlagFilter(flag: Flag) {
-        currentFlag = flag.code
+        currentFlag = flag
         val flagSearchTerm = "flag:${flag.code}"
         val searchTerms = when {
             searchTerms.contains("flag:") -> searchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
