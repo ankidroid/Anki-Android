@@ -476,8 +476,6 @@ open class CardBrowser :
                     Timber.d("load multiselect mode")
                     // show title and hide spinner
                     mActionBarTitle.visibility = View.VISIBLE
-                    // TODO: this should be in the selectedRowCount() flow
-                    mActionBarTitle.text = viewModel.selectedRowCount().toString()
                     deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
                 } else {
                     Timber.d("end multiselect mode")
@@ -1848,6 +1846,8 @@ open class CardBrowser :
     fun onSelectionChanged() {
         Timber.d("onSelectionChanged()")
         try {
+            mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
+
             // If we're not in mutliselect, we can select cards if there are cards to select
             if (!viewModel.isInMultiSelectMode) {
                 mActionBarMenu?.findItem(R.id.action_select_all)?.apply {
@@ -1856,7 +1856,6 @@ open class CardBrowser :
                 return
             }
             updateMultiselectMenu()
-            mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
         } finally {
             if (colIsOpenUnsafe()) {
                 cardsAdapter.notifyDataSetChanged()
