@@ -19,10 +19,9 @@ package com.ichi2.anki.cardviewer
 import android.content.Context
 import com.ichi2.anki.R
 import com.ichi2.anki.TtsParser
+import com.ichi2.anki.cardviewer.SingleSoundSide.ANSWER
+import com.ichi2.anki.cardviewer.SingleSoundSide.QUESTION
 import com.ichi2.libanki.*
-import com.ichi2.libanki.Sound.SingleSoundSide
-import com.ichi2.libanki.Sound.SingleSoundSide.ANSWER
-import com.ichi2.libanki.Sound.SingleSoundSide.QUESTION
 import com.ichi2.libanki.template.MathJax
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
