@@ -30,11 +30,15 @@ import anki.generic.Empty
 import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.dialogs.ExportDialogParams
 import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
+import com.ichi2.anki.exportApkg
+import com.ichi2.anki.exportColpkg
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
@@ -289,8 +293,9 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
      * the mod of the collection and the time at which it occurred.
      * This will allow to check whether a recent export was made, hence scoped storage migration is safe.
      */
+    @NeedsTest("fix crash when sharing")
     private fun saveSuccessfulCollectionExportIfRelevant() {
-        if (!fileExportPath.endsWith(".colpkg")) return
+        if (::fileExportPath.isInitialized && !fileExportPath.endsWith(".colpkg")) return
         activity.sharedPrefs().edit {
             putLong(
                 LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY,
