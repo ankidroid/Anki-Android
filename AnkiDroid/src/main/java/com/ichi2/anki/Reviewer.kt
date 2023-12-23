@@ -1098,7 +1098,7 @@ open class Reviewer :
         val js = state.customSchedulingJs
         webView?.evaluateJavascript(
             """
-        anki.mutateNextCardStates('$key', async (states, customData, ctx) => {{ $js }})
+        anki.mutateNextCardStates('$key', async (states, customData, ctx) => { $js })
             .catch(err => { console.log(err); window.location.href = "state-mutation-error:"; });
 """
         ) { result ->
