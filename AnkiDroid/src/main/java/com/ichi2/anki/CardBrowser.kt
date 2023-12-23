@@ -227,10 +227,6 @@ open class CardBrowser :
     private lateinit var mActionBarTitle: TextView
     private var mReloadRequired = false
 
-    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    val isInMultiSelectMode
-        get() = viewModel.isInMultiSelectMode
-
     private var mLastSelectedPosition
         get() = viewModel.lastSelectedPosition
         set(value) { viewModel.lastSelectedPosition = value }
@@ -543,7 +539,7 @@ open class CardBrowser :
         }
 
         cardsListView.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
-            if (isInMultiSelectMode) {
+            if (viewModel.isInMultiSelectMode) {
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
                 cb.toggle()
@@ -557,7 +553,7 @@ open class CardBrowser :
         }
         @KotlinCleanup("helper function for min/max range")
         cardsListView.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
-            if (isInMultiSelectMode) {
+            if (viewModel.isInMultiSelectMode) {
                 viewModel.selectRowsBetweenPositions(mLastSelectedPosition, position)
             } else {
                 mLastSelectedPosition = position
@@ -709,7 +705,7 @@ open class CardBrowser :
     override fun onBackPressed() {
         when {
             isDrawerOpen -> super.onBackPressed()
-            isInMultiSelectMode -> endMultiSelectMode()
+            viewModel.isInMultiSelectMode -> endMultiSelectMode()
             else -> {
                 Timber.i("Back key pressed")
                 val data = Intent()
@@ -739,7 +735,7 @@ open class CardBrowser :
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
         mActionBarMenu = menu
-        if (!isInMultiSelectMode) {
+        if (!viewModel.isInMultiSelectMode) {
             // restore drawer click listener and icon
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
@@ -819,7 +815,7 @@ open class CardBrowser :
     }
 
     override fun onNavigationPressed() {
-        if (isInMultiSelectMode) {
+        if (viewModel.isInMultiSelectMode) {
             endMultiSelectMode()
         } else {
             super.onNavigationPressed()
@@ -1783,7 +1779,7 @@ open class CardBrowser :
             // setup checkbox to change color in multi-select mode
             val checkBox = v.findViewById<CheckBox>(R.id.card_checkbox)
             // if in multi-select mode, be sure to show the checkboxes
-            if (isInMultiSelectMode) {
+            if (viewModel.isInMultiSelectMode) {
                 checkBox.visibility = View.VISIBLE
                 checkBox.isChecked = viewModel.selectedRows.contains(card)
                 // this prevents checkboxes from showing an animation from selected -> unselected when
@@ -1855,7 +1851,7 @@ open class CardBrowser :
         Timber.d("onSelectionChanged()")
         try {
             // If we're not in mutliselect, we can select cards if there are cards to select
-            if (!isInMultiSelectMode) {
+            if (!viewModel.isInMultiSelectMode) {
                 mActionBarMenu?.findItem(R.id.action_select_all)?.apply {
                     isVisible = viewModel.rowCount != 0
                 }

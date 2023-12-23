@@ -73,13 +73,13 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun browserIsNotInitiallyInMultiSelectModeWithNoCards() {
         val browser = browserWithNoNewCards
-        assertThat(browser.isInMultiSelectMode, equalTo(false))
+        assertThat(browser.viewModel.isInMultiSelectMode, equalTo(false))
     }
 
     @Test
     fun browserIsNotInitiallyInMultiSelectModeWithCards() {
         val browser = browserWithMultipleNotes
-        assertThat(browser.isInMultiSelectMode, equalTo(false))
+        assertThat(browser.viewModel.isInMultiSelectMode, equalTo(false))
     }
 
     @Test
@@ -128,7 +128,7 @@ class CardBrowserTest : RobolectricTest() {
     fun browserIsInMultiSelectModeWhenSelectingOne() {
         val browser = browserWithMultipleNotes
         selectOneOfManyCards(browser)
-        assertThat(browser.isInMultiSelectMode, equalTo(true))
+        assertThat(browser.viewModel.isInMultiSelectMode, equalTo(true))
     }
 
     @Test
@@ -136,7 +136,7 @@ class CardBrowserTest : RobolectricTest() {
     fun browserIsInMultiSelectModeWhenSelectingAll() {
         val browser = browserWithMultipleNotes
         selectMenuItem(browser, R.id.action_select_all)
-        assertThat(browser.isInMultiSelectMode, equalTo(true))
+        assertThat(browser.viewModel.isInMultiSelectMode, equalTo(true))
     }
 
     @Test
@@ -144,7 +144,7 @@ class CardBrowserTest : RobolectricTest() {
         val browser = browserWithMultipleNotes
         selectMenuItem(browser, R.id.action_select_all)
         selectMenuItem(browser, R.id.action_select_none)
-        assertThat(browser.isInMultiSelectMode, equalTo(false))
+        assertThat(browser.viewModel.isInMultiSelectMode, equalTo(false))
     }
 
     @Test
