@@ -17,6 +17,7 @@
 
 package com.ichi2.anki
 
+import android.app.AlertDialog
 import android.app.DownloadManager
 import android.content.*
 import android.net.Uri
@@ -33,7 +34,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -77,7 +77,7 @@ class SharedDecksDownloadFragment : Fragment() {
 
     var isDownloadInProgress = false
 
-    private var mDownloadCancelConfirmationDialog: MaterialDialog? = null
+    private var mDownloadCancelConfirmationDialog: AlertDialog? = null
 
     companion object {
         const val DOWNLOAD_PROGRESS_CHECK_DELAY = 1000L
@@ -468,20 +468,22 @@ class SharedDecksDownloadFragment : Fragment() {
 
     @Suppress("deprecation") // onBackPressed
     fun showCancelConfirmationDialog() {
-        mDownloadCancelConfirmationDialog = context?.let {
-            MaterialDialog(it).show {
-                title(R.string.cancel_download_question_title)
-                positiveButton(R.string.dialog_yes) {
-                    mDownloadManager.remove(mDownloadId)
-                    unregisterReceiver()
-                    isDownloadInProgress = false
-                    activity?.onBackPressed()
-                }
-                negativeButton(R.string.dialog_no) {
-                    dismiss()
-                }
+        val builder = AlertDialog.Builder(context)
+        builder.apply {
+            setTitle(R.string.cancel_download_question_title)
+            setPositiveButton("Yes") { _, _: Int ->
+                mDownloadManager.remove(mDownloadId)
+                unregisterReceiver()
+                isDownloadInProgress = false
+                activity?.onBackPressed()
+            }
+            setNegativeButton(R.string.dialog_no) { _, _: Int ->
+                // Perform action on negative button click
+                mDownloadCancelConfirmationDialog?.dismiss()
             }
         }
+        mDownloadCancelConfirmationDialog = builder.create()
+        mDownloadCancelConfirmationDialog?.show()
     }
 
     private fun removeCancelConfirmationDialog() {
