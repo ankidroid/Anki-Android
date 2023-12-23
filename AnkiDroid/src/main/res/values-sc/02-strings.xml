@@ -207,8 +207,6 @@
     <string name="tag_editor_add_feedback">Toca “%2$s” pro cunfirmare s\'annanta de “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Eticheta chi esistit “%1$s” seletzionada</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Custu matzu esistit giai</string>
-    <string name="decks_rename_filtered_nosubdecks">Unu matzu filtradu non podet cuntènnere suta-matzos</string>
     <string name="reminder_title">Non t\'ismèntighes de istudiare oe!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d carta de revisionare in %1$s</item>

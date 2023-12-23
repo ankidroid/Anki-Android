@@ -200,8 +200,6 @@
     <string name="tag_editor_add_feedback">Bấm \"%2$s\" để xác nhận thêm \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Đã chọn đuôi hiện hữu \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Đã có bộ thẻ này rồi</string>
-    <string name="decks_rename_filtered_nosubdecks">Một bộ thẻ đã lọc không thể có bộ thẻ phụ</string>
     <string name="reminder_title">Đừng quên học ngày hôm nay!</string>
     <plurals name="reminder_text">
         <item quantity="other">%2$d thẻ ôn tập trong %1$s</item>

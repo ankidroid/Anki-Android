@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">Tippen Sie auf »%2$s«, um das Hinzufügen von »%1$s« zu bestätigen</string>
     <string name="tag_editor_add_feedback_existing">Existierendes Schlagwort »%1$s« ausgewählt</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Dieser Stapel ist bereits vorhanden</string>
-    <string name="decks_rename_filtered_nosubdecks">Ein gefilterter Stapel kann keine Unterstapel enthalten.</string>
     <string name="reminder_title">Vergessen Sie heute nicht zu lernen!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d zu wiederholende Karte in %1$s</item>

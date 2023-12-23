@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">Докоснете \"%2$s\", за да потвърдите добавянето на \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Избран е съществуващ етикет \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Това тесте вече съществува</string>
-    <string name="decks_rename_filtered_nosubdecks">Филтрирано тесте не може да има подтестета</string>
     <string name="reminder_title">Не забравяйте да учите днес!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>

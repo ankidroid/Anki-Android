@@ -212,8 +212,6 @@
     <string name="tag_editor_add_feedback">Натисніть \"%2$s\", аби підтвердити додавання \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Обрано існуючу позначку \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Така колода вже існує</string>
-    <string name="decks_rename_filtered_nosubdecks">Фільтрована колода не може мати підколод</string>
     <string name="reminder_title">Не забудьте про сьогоднішнє навчання!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d картка для повторення в %1$s</item>

@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">“%1$s” ചേർക്കുന്നത് സ്ഥിരീകരിക്കുന്നതിന് “%2$s” സ്‌പർശിക്കുക.</string>
     <string name="tag_editor_add_feedback_existing">നിലവിലുള്ള ടാഗ് “%1$s” തിരഞ്ഞെടുത്തു</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">ആ ഡെക്ക് ഇതിനകം നിലവിലുണ്ട്</string>
-    <string name="decks_rename_filtered_nosubdecks">ഫിൽ‌റ്റർ‌ ചെയ്‌ത ഡെക്കിന് സബ്‌ഡെക്കുകൾ‌ ഉണ്ടാകരുത്</string>
     <string name="reminder_title">ഇന്ന് പഠിക്കാൻ മറക്കരുത്!</string>
     <plurals name="reminder_text">
         <item quantity="one">%1$s ൽ അവലോകനം ചെയ്യുന്നതിന് %2$d കാർഡ്</item>

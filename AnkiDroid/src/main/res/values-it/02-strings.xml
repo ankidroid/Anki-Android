@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">Tocca \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etichetta esistente \"%1$s\" selezionata</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Quel mazzo esiste già.</string>
-    <string name="decks_rename_filtered_nosubdecks">Un mazzo filtrato non può avere sottomazzi.</string>
     <string name="reminder_title">Non dimenticare di studiare oggi!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d carta da studiare in %1$s</item>

@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">Druk op  “%2$s” om het toevoegen van “%1$s” te bevestigen</string>
     <string name="tag_editor_add_feedback_existing">Bestaand label “%1$s” geselecteerd</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Deze set bestaat al</string>
-    <string name="decks_rename_filtered_nosubdecks">Een gefilterde set kan geen subsets hebben</string>
     <string name="reminder_title">Vergeet niet om vandaag te studeren!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d kaart in %1$s te overhoren</item>

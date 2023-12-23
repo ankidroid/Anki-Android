@@ -45,17 +45,17 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Έλεγχος βάσης δεδομένων</string>
-    <string name="check_db_warning">This may take a long time</string>
+    <string name="check_db_warning">Αυτό μπορεί να διαρκέσει πολύ</string>
     <string name="contextmenu_deckpicker_delete_deck">Διαγραφή τράπουλας</string>
     <string name="delete_deck_title">Διαγραφή τράπουλας;</string>
     <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
     <string name="initializing_tts">Προετοιμασία TTS&#8230;</string>
     <string name="tts_no_tts">Σίγαση</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nΑχρησιμοποίητα αρχεία:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Προεπισκόπηση</string>
     <string name="reposition_card_dialog_title">Επανατοποθέτηση νέας κάρτας</string>
     <string name="reposition_card_dialog_message">Θέση έναρξης:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_not_new_error">Μόνο νέες κάρτες μπορούν να επανατοποθετηθούν</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">Επανατοποθετήθηκε %d κάρτα</item>
         <item quantity="other">Επανατοποθετήθηκαν %d κάρτες</item>
@@ -72,12 +72,12 @@
         <item quantity="other">Reschedule %d cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
+        <item quantity="one">Τρέχον διάστημα: %d ημέρες</item>
         <item quantity="other">Current interval: %d days</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Reschedule for review in x days</string>
+    <string name="reschedule_card_dialog_message">Επαναπρογραμματισμός για επανάληψη σε x ημέρες</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
+        <item quantity="one">%d κάρτες επαναπρογραμματίστηκαν</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
@@ -90,16 +90,16 @@
     <string name="repair_deck_dialog">Είστε βέβαιοι ότι θέλετε να επιδιορθώσετε τη βάση δεδομένων;\n\nΠριν να ξεκινήσει η απόπειρα, θα δημιουργηθεί ένα αντίγραφο στον υποφάκελο \'%s\'.</string>
     <string name="intent_aedict_empty">Η κατηγορία «προεπιλεγμένο» είναι κενή</string>
     <string name="intent_aedict_category">Για να προσθέσετε κάρτες στο Ανκί-Ντρόιντ αφαιρέστε όλες τις κατηγορίες Notepad ή προσθέστε μία με όνομα «προεπιλεγμένο»</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_new_total_new">Νέες κάρτες στην τράπουλα: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">Αύξηση / μείωση (“-3”) σημερινού ορίου νέων καρτών κατά</string>
+    <string name="custom_study_rev_extend">Αύξηση / μείωση (“-3”) σημερινού ορίου επαναλήψεων κατά</string>
     <string name="custom_study_forgotten">Επανάληψη ξεχασμένων καρτών στις τελευταίες x μέρες:</string>
     <string name="custom_study_ahead">Επανάληψη μπροστά κατά x μέρες:</string>
     <string name="custom_study_random">Τυχαία επιλογή x καρτών από την τράπουλα:</string>
     <string name="custom_study_preview">Προεπισκόπηση νέων καρτών του προστέθηκαν στις τελευταίες x μέρες:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="storage_full_title">Storage full</string>
+    <string name="storage_full_title">Γεμάτος χώρος αποθήκευσης</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>

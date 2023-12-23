@@ -205,8 +205,6 @@
     <string name="tag_editor_add_feedback">\"%1$s\" کو شامل کرنے کی تصدیق کرنے کے لیے \"%2$s\" کو ٹچ کریں</string>
     <string name="tag_editor_add_feedback_existing">موجودہ ٹیگ \"%1$s\" کو منتخب کیا گیا۔</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">وہ ڈیک پہلے سے موجود ہے۔</string>
-    <string name="decks_rename_filtered_nosubdecks">فلٹر شدہ ڈیک میں سب ڈیک نہیں ہو سکتے</string>
     <string name="reminder_title">آج مطالعہ کرنا نہ بھولیں!</string>
     <plurals name="reminder_text">
         <item quantity="one">%1$s میں جائزہ لینے کے لیے %2$d کارڈ</item>

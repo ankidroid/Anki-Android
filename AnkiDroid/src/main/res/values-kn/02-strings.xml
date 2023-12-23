@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">“%1$s” ಸೇರಿಸುವುದನ್ನು ಖಚಿತಪಡಿಸಲು “%2$s” ಸ್ಪರ್ಶಿಸಿ</string>
     <string name="tag_editor_add_feedback_existing">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಟ್ಯಾಗ್ “%1$s” ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">ಆ ಡೆಕ್ ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ</string>
-    <string name="decks_rename_filtered_nosubdecks">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಡೆಕ್‌ನಲ್ಲಿ ಸಬ್‌ಡೆಕ್‌ಗಳು ಇರಬಾರದು</string>
     <string name="reminder_title">ಇಂದು ಅಧ್ಯಯನ ಮಾಡಲು ಮರೆಯಬೇಡಿ!</string>
     <plurals name="reminder_text">
         <item quantity="one">%1$s ನಲ್ಲಿ ಪರಿಶೀಲಿಸಲು%2$d ಕಾರ್ಡ್</item>

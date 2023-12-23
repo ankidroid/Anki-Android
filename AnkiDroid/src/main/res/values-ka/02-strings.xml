@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">„%1$s-ის“ დამატების დასადასტურებლად შეეხეთ „%2$s-ს“</string>
     <string name="tag_editor_add_feedback_existing">მოინიშნა არსებული იარლიყი „%1$s“</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">ეგ დასტა უკვე არსებობს</string>
-    <string name="decks_rename_filtered_nosubdecks">გაფილტრულ დასტას ვერ ექნება ქვედასტა</string>
     <string name="reminder_title">დღესაც ვიმეცადინოთ!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d ბარათია გადასახედი %1$s-ში</item>

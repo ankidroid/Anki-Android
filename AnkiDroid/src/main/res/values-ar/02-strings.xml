@@ -220,8 +220,6 @@
     <string name="tag_editor_add_feedback">انقر “%2$s” لتأكيد إضافة “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود “%1$s”</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">هذه الرزمة موجودة بالفعل</string>
-    <string name="decks_rename_filtered_nosubdecks">لا يمكن أن يكون لرزمة مفلترة رزم فرعية</string>
     <string name="reminder_title">لا تنسَ أن تدرس اليوم!</string>
     <plurals name="reminder_text">
         <item quantity="zero">%2$d بطاقة بانتظار المراجعة في %1$s</item>

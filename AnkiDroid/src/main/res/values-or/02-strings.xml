@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback"> “%1$s” କୁ ଯୋଡ଼ିବା ପାଇଁ “%2$s” ଦବାନ୍ତୁ</string>
     <string name="tag_editor_add_feedback_existing">ଵିଦ୍ୟମାନ ଟ୍ୟାଗ୍ “%1$s” ଚୟନ କରାଯାଇଛି</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">ସେ ତାସଖଣ୍ଡଟି ଆଗରୁ ଵିଦ୍ୟମାନ ଅଛି</string>
-    <string name="decks_rename_filtered_nosubdecks">ଏକ ଶୋଧିତ ତାସଖଣ୍ଡ ରେ ଉପତାସଖଣ୍ଡ ରହିପାରିବନାହିଁ</string>
     <string name="reminder_title">ଆଜି ଅଧ୍ୟୟନ କରିବାକୁ ଭୁଲନ୍ତୁ ନାହିଁ!</string>
     <plurals name="reminder_text">
         <item quantity="one">%1$sରେ ସମୀକ୍ଷା ପାଇଁ %2$dଟିଏ ପତ୍ର</item>

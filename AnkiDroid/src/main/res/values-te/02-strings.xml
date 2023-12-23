@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">\"%1$s\" ని జోడించడాన్ని నిర్ధారించడానికి \"%2$s\" తాకండి</string>
     <string name="tag_editor_add_feedback_existing">ఇప్పటికే ఉన్న ట్యాగ్ \"%1$s\" ఎంచుకోబడింది</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">ఆ డెక్ ఇప్పటికే ఉంది</string>
-    <string name="decks_rename_filtered_nosubdecks">ఫిల్టర్ డెక్ subdecks కాదు</string>
     <string name="reminder_title">నేడు అధ్యయనం చేయడం మర్చిపోవద్దు!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>
