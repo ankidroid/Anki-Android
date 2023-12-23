@@ -190,29 +190,28 @@ class ControlPreference : ListPreference {
     @SuppressLint("CheckResult") // noAutoDismiss
     private fun displayAddAxisDialog() {
         val actionName = title
-        MaterialDialog(context).show {
-            val axisPicker: AxisPicker = AxisPicker.inflate(context)
-            customView(view = axisPicker.rootLayout)
-            title(text = actionName.toString())
+        val axisPicker: AxisPicker = AxisPicker.inflate(context)
+        val dialog = AlertDialog.Builder(context)
+            .customView(view = axisPicker.rootLayout)
+            .title(text = actionName.toString())
+            .negativeButton(R.string.dialog_cancel) { it.dismiss() }
+            .create()
 
-            axisPicker.setBindingChangedListener { binding ->
-                showToastIfBindingIsUsed(MappableBinding(binding, screenBuilder(CardSide.BOTH)))
-                // Use CardSide.BOTH as placeholder just to check if binding exists
-                CardSideSelectionDialog.displayInstance(context) { side ->
-                    val mappableBinding = MappableBinding(binding, screenBuilder(side))
-                    if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
-                        showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_key), this)
-                    } else {
-                        addBinding(mappableBinding)
-                        dismiss()
-                    }
+        axisPicker.setBindingChangedListener { binding ->
+            showToastIfBindingIsUsed(MappableBinding(binding, screenBuilder(CardSide.BOTH)))
+            // Use CardSide.BOTH as placeholder just to check if binding exists
+            CardSideSelectionDialog.displayInstance(context) { side ->
+                val mappableBinding = MappableBinding(binding, screenBuilder(side))
+                if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
+                    showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_key), dialog)
+                } else {
+                    addBinding(mappableBinding)
+                    dialog.dismiss()
                 }
             }
-
-            negativeButton(R.string.dialog_cancel) { dismiss() }
-
-            noAutoDismiss()
         }
+
+        dialog.show()
     }
 
     /**
