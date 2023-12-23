@@ -878,8 +878,8 @@ open class CardBrowser :
         return viewModel.selectedRowCount() >= viewModel.rowCount // must handle 0.
     }
 
-    private fun updateFlagForSelectedRows(flag: Int) {
-        launchCatchingTask { updateSelectedCardsFlag(flag) }
+    private fun updateFlagForSelectedRows(flag: Flag) = launchCatchingTask {
+        updateSelectedCardsFlag(flag)
     }
 
     /**
@@ -890,7 +890,7 @@ open class CardBrowser :
      *
      */
     @VisibleForTesting
-    suspend fun updateSelectedCardsFlag(flag: Int) {
+    suspend fun updateSelectedCardsFlag(flag: Flag) {
         // list of cards with updated flags
         val updatedCards = withProgress {
             withCol {
@@ -981,35 +981,35 @@ open class CardBrowser :
                 return true
             }
             R.id.action_flag_zero -> {
-                updateFlagForSelectedRows(0)
+                updateFlagForSelectedRows(Flag.NONE)
                 return true
             }
             R.id.action_flag_one -> {
-                updateFlagForSelectedRows(1)
+                updateFlagForSelectedRows(Flag.RED)
                 return true
             }
             R.id.action_flag_two -> {
-                updateFlagForSelectedRows(2)
+                updateFlagForSelectedRows(Flag.ORANGE)
                 return true
             }
             R.id.action_flag_three -> {
-                updateFlagForSelectedRows(3)
+                updateFlagForSelectedRows(Flag.GREEN)
                 return true
             }
             R.id.action_flag_four -> {
-                updateFlagForSelectedRows(4)
+                updateFlagForSelectedRows(Flag.BLUE)
                 return true
             }
             R.id.action_flag_five -> {
-                updateFlagForSelectedRows(5)
+                updateFlagForSelectedRows(Flag.PINK)
                 return true
             }
             R.id.action_flag_six -> {
-                updateFlagForSelectedRows(6)
+                updateFlagForSelectedRows(Flag.TURQUOISE)
                 return true
             }
             R.id.action_flag_seven -> {
-                updateFlagForSelectedRows(7)
+                updateFlagForSelectedRows(Flag.PURPLE)
                 return true
             }
             R.id.action_select_flag_zero -> {
