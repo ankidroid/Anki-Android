@@ -143,9 +143,6 @@ open class CardBrowser :
     private var mSearchTerms
         get() = viewModel.searchTerms
         set(value) { viewModel.searchTerms = value }
-    private var mCurrentFlag
-        get() = viewModel.currentFlag
-        set(value) { viewModel.currentFlag = value }
     private lateinit var mTagsDialogFactory: TagsDialogFactory
     private var mSearchItem: MenuItem? = null
     private var mSaveSearchItem: MenuItem? = null
@@ -326,7 +323,7 @@ open class CardBrowser :
         searchCards()
     }
 
-    private val selectedCardIds: List<Long>
+    private val selectedCardIds: List<CardId>
         get() = viewModel.selectedCardIds
 
     private fun canPerformCardInfo(): Boolean {
@@ -456,6 +453,16 @@ open class CardBrowser :
             .onEach { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
             .launchIn(lifecycleScope)
 
+        viewModel.filterQueryFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { filterQuery ->
+                mSearchView!!.setQuery("", false)
+                mSearchTerms = filterQuery
+                mSearchView!!.setQuery(mSearchTerms, true)
+                searchCards()
+            }
+            .launchIn(lifecycleScope)
+
         viewModel.deckIdFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .filterNotNull()
@@ -467,10 +474,8 @@ open class CardBrowser :
             .launchIn(lifecycleScope)
     }
 
-    fun searchWithFilterQuery(filterQuery: String) {
-        mSearchTerms = filterQuery
-        mSearchView!!.setQuery(mSearchTerms, true)
-        searchCards()
+    fun searchWithFilterQuery(filterQuery: String) = launchCatchingTask {
+        viewModel.setFilterQuery(filterQuery)
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
@@ -872,8 +877,8 @@ open class CardBrowser :
         return viewModel.selectedRowCount() >= viewModel.rowCount // must handle 0.
     }
 
-    private fun updateFlagForSelectedRows(flag: Int) {
-        launchCatchingTask { updateSelectedCardsFlag(flag) }
+    private fun updateFlagForSelectedRows(flag: Flag) = launchCatchingTask {
+        updateSelectedCardsFlag(flag)
     }
 
     /**
@@ -884,7 +889,7 @@ open class CardBrowser :
      *
      */
     @VisibleForTesting
-    suspend fun updateSelectedCardsFlag(flag: Int) {
+    suspend fun updateSelectedCardsFlag(flag: Flag) {
         // list of cards with updated flags
         val updatedCards = withProgress {
             withCol {
@@ -901,12 +906,6 @@ open class CardBrowser :
         if (updatedCards.map { card -> card.id }.contains(reviewerCardId)) {
             mReloadRequired = true
         }
-    }
-
-    /** Updates flag icon color and cards shown with given color  */
-    private fun selectionWithFlagTask(flag: Int) {
-        mCurrentFlag = flag
-        filterByFlag()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -967,17 +966,13 @@ open class CardBrowser :
 
             @NeedsTest("filter-marked query needs testing")
             R.id.action_show_marked -> {
-                mSearchTerms = "tag:marked"
-                mSearchView!!.setQuery("", false)
-                searchWithFilterQuery(mSearchTerms)
+                launchCatchingTask { viewModel.searchForMarkedNotes() }
                 return true
             }
 
             @NeedsTest("filter-suspended query needs testing")
             R.id.action_show_suspended -> {
-                mSearchTerms = "is:suspended"
-                mSearchView!!.setQuery("", false)
-                searchWithFilterQuery(mSearchTerms)
+                launchCatchingTask { viewModel.searchForSuspendedCards() }
                 return true
             }
             R.id.action_search_by_tag -> {
@@ -985,67 +980,67 @@ open class CardBrowser :
                 return true
             }
             R.id.action_flag_zero -> {
-                updateFlagForSelectedRows(0)
+                updateFlagForSelectedRows(Flag.NONE)
                 return true
             }
             R.id.action_flag_one -> {
-                updateFlagForSelectedRows(1)
+                updateFlagForSelectedRows(Flag.RED)
                 return true
             }
             R.id.action_flag_two -> {
-                updateFlagForSelectedRows(2)
+                updateFlagForSelectedRows(Flag.ORANGE)
                 return true
             }
             R.id.action_flag_three -> {
-                updateFlagForSelectedRows(3)
+                updateFlagForSelectedRows(Flag.GREEN)
                 return true
             }
             R.id.action_flag_four -> {
-                updateFlagForSelectedRows(4)
+                updateFlagForSelectedRows(Flag.BLUE)
                 return true
             }
             R.id.action_flag_five -> {
-                updateFlagForSelectedRows(5)
+                updateFlagForSelectedRows(Flag.PINK)
                 return true
             }
             R.id.action_flag_six -> {
-                updateFlagForSelectedRows(6)
+                updateFlagForSelectedRows(Flag.TURQUOISE)
                 return true
             }
             R.id.action_flag_seven -> {
-                updateFlagForSelectedRows(7)
+                updateFlagForSelectedRows(Flag.PURPLE)
                 return true
             }
             R.id.action_select_flag_zero -> {
-                selectionWithFlagTask(0)
+                filterByFlag(Flag.NONE)
                 return true
             }
             R.id.action_select_flag_one -> {
-                selectionWithFlagTask(1)
+                filterByFlag(Flag.RED)
                 return true
             }
             R.id.action_select_flag_two -> {
-                selectionWithFlagTask(2)
+                filterByFlag(Flag.ORANGE)
                 return true
             }
             R.id.action_select_flag_three -> {
-                selectionWithFlagTask(3)
+                filterByFlag(Flag.GREEN)
                 return true
             }
             R.id.action_select_flag_four -> {
-                selectionWithFlagTask(4)
+                filterByFlag(Flag.BLUE)
                 return true
             }
             R.id.action_select_flag_five -> {
-                selectionWithFlagTask(5)
+                filterByFlag(Flag.PINK)
                 return true
             }
             R.id.action_select_flag_six -> {
-                selectionWithFlagTask(6)
+                filterByFlag(Flag.TURQUOISE)
                 return true
             }
             R.id.action_select_flag_seven -> {
-                selectionWithFlagTask(7)
+                filterByFlag(Flag.PURPLE)
                 return true
             }
             R.id.action_delete_card -> {
@@ -1520,30 +1515,14 @@ open class CardBrowser :
         }
     }
 
-    private fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) {
-        mSearchView!!.setQuery("", false)
-
-        val sb = StringBuilder(cardState.toSearch)
-        // join selectedTags as "tag:$tag" with " or " between them
-        val tagsConcat = selectedTags.joinToString(" or ") { tag -> "\"tag:$tag\"" }
-        if (selectedTags.isNotEmpty()) {
-            sb.append("($tagsConcat)") // Only if we added anything to the tag list
+    private fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) =
+        launchCatchingTask {
+            viewModel.filterByTags(selectedTags, cardState)
         }
-        mSearchTerms = sb.toString()
-        searchWithFilterQuery(mSearchTerms)
-    }
 
     /** Updates search terms to only show cards with selected flag.  */
-    private fun filterByFlag() {
-        mSearchView!!.setQuery("", false)
-        val flagSearchTerm = "flag:$mCurrentFlag"
-        mSearchTerms = when {
-            mSearchTerms.contains("flag:") -> mSearchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
-            mSearchTerms.isNotEmpty() -> "$flagSearchTerm $mSearchTerms"
-            else -> flagSearchTerm
-        }
-        searchWithFilterQuery(mSearchTerms)
-    }
+    @VisibleForTesting
+    fun filterByFlag(flag: Flag) = launchCatchingTask { viewModel.setFlagFilter(flag) }
 
     /**
      * Loads/Reloads (Updates the Q, A & etc) of cards in the [cards] list
@@ -2221,12 +2200,6 @@ open class CardBrowser :
         mTagsDialogListenerAction = TagsDialogListenerAction.FILTER
         onSelectedTags(tags.toList(), emptyList(), CardStateFilter.ALL_CARDS)
         filterByTags(tags.toList(), CardStateFilter.ALL_CARDS)
-    }
-
-    @VisibleForTesting
-    fun filterByFlag(flag: Int) {
-        mCurrentFlag = flag
-        filterByFlag()
     }
 
     @VisibleForTesting

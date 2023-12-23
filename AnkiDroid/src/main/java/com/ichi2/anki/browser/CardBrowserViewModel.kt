@@ -26,9 +26,11 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
+import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ExportDialogParams
 import com.ichi2.anki.export.ExportType
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
@@ -70,7 +72,9 @@ class CardBrowserViewModel(
     var searchTerms: String = ""
     var restrictOnDeck: String = ""
         private set
-    var currentFlag = 0
+    var currentFlag = Flag.NONE
+
+    val filterQueryFlow = MutableSharedFlow<String>()
 
     /**
      * Whether the browser is working in Cards mode or Notes mode.
@@ -426,6 +430,34 @@ class CardBrowserViewModel(
     /** Ignores any values before [initCompleted] is set */
     private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> =
         this.filter { initCompleted }
+
+    suspend fun setFilterQuery(filterQuery: String) {
+        this.filterQueryFlow.emit(filterQuery)
+    }
+
+    suspend fun searchForMarkedNotes() = setFilterQuery("tag:marked")
+
+    suspend fun searchForSuspendedCards() = setFilterQuery("is:suspended")
+    suspend fun setFlagFilter(flag: Flag) {
+        currentFlag = flag
+        val flagSearchTerm = "flag:${flag.code}"
+        val searchTerms = when {
+            searchTerms.contains("flag:") -> searchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
+            searchTerms.isNotEmpty() -> "$flagSearchTerm $searchTerms"
+            else -> flagSearchTerm
+        }
+        setFilterQuery(searchTerms)
+    }
+
+    suspend fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) {
+        val sb = StringBuilder(cardState.toSearch)
+        // join selectedTags as "tag:$tag" with " or " between them
+        val tagsConcat = selectedTags.joinToString(" or ") { tag -> "\"tag:$tag\"" }
+        if (selectedTags.isNotEmpty()) {
+            sb.append("($tagsConcat)") // Only if we added anything to the tag list
+        }
+        setFilterQuery(sb.toString())
+    }
 
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"

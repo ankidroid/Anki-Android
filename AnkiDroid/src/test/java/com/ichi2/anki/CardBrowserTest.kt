@@ -308,45 +308,42 @@ class CardBrowserTest : RobolectricTest() {
             cardBrowser.hasSelectedCardAtPosition(cardPosition)
         )
 
-        // flag the selected card with flag = 1
-        val flag = 1
-        cardBrowser.updateSelectedCardsFlag(flag)
-        // check if card flag turned to flag = 1
+        // flag the selected card
+        cardBrowser.updateSelectedCardsFlag(Flag.RED)
+        // check if card is red
         assertThat(
             "Card should be flagged",
             getCheckedCard(cardBrowser).card.userFlag(),
-            equalTo(flag)
+            equalTo(Flag.RED.code)
         )
 
-        // unflag the selected card with flag = 0
-        val unflagFlag = 0
-        cardBrowser.updateSelectedCardsFlag(unflagFlag)
-        // check if card flag actually changed from flag = 1
+        // unflag the selected card
+        cardBrowser.updateSelectedCardsFlag(Flag.NONE)
+        // check if card flag is removed
         assertThat(
             "Card flag should be removed",
             getCheckedCard(cardBrowser).card.userFlag(),
-            not(flag)
+            equalTo(Flag.NONE.code)
         )
 
         // deselect and select all cards
         cardBrowser.viewModel.selectNone()
         cardBrowser.viewModel.selectAll()
-        // flag all the cards with flag = 3
-        val flagForAll = 3
-        cardBrowser.updateSelectedCardsFlag(flagForAll)
-        // check if all card flags turned to flag = 3
+        // flag all the cards as Green
+        cardBrowser.updateSelectedCardsFlag(Flag.GREEN)
+        // check if all card flags turned green
         assertThat(
             "All cards should be flagged",
             cardBrowser.viewModel.allCardIds
                 .map { cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId) }
-                .all { flag1 -> flag1 == flagForAll }
+                .all { flag1 -> flag1 == Flag.GREEN.code }
         )
     }
 
     @Test
     fun flagValueIsShownOnCard() {
         val n = addNoteUsingBasicModel("1", "back")
-        flagCardForNote(n, 1)
+        flagCardForNote(n, Flag.RED)
 
         val cardId = n.cids()[0]
 
@@ -411,16 +408,16 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun filterByFlagDisplaysProperly() = runTest {
         val cardWithRedFlag = addNoteUsingBasicModel("Card with red flag", "Reverse")
-        flagCardForNote(cardWithRedFlag, 1)
+        flagCardForNote(cardWithRedFlag, Flag.RED)
 
         val cardWithGreenFlag = addNoteUsingBasicModel("Card with green flag", "Reverse")
-        flagCardForNote(cardWithGreenFlag, 3)
+        flagCardForNote(cardWithGreenFlag, Flag.GREEN)
 
         val anotherCardWithRedFlag = addNoteUsingBasicModel("Second card with red flag", "Reverse")
-        flagCardForNote(anotherCardWithRedFlag, 1)
+        flagCardForNote(anotherCardWithRedFlag, Flag.RED)
 
         val b = browserWithNoNewCards
-        b.filterByFlag(1)
+        b.viewModel.setFlagFilter(Flag.RED)
 
         assertThat("Flagged cards should be returned", b.viewModel.rowCount, equalTo(2))
     }
@@ -818,7 +815,7 @@ class CardBrowserTest : RobolectricTest() {
         return b.getPropertiesForCardId(ids[0])
     }
 
-    private fun flagCardForNote(n: Note, flag: Int) {
+    private fun flagCardForNote(n: Note, flag: Flag) {
         val c = n.firstCard()
         c.setUserFlag(flag)
         c.col.updateCard(c, skipUndoEntry = true)
