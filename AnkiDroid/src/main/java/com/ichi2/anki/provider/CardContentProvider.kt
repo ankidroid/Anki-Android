@@ -30,6 +30,7 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Notetypes
+import com.ichi2.libanki.Sound.replaceWithSoundTags
 import com.ichi2.libanki.TemplateManager.*
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.*
 import com.ichi2.libanki.exception.ConfirmModSchemaException

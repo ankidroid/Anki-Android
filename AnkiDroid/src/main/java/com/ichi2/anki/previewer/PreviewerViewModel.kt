@@ -29,7 +29,7 @@ import com.ichi2.anki.launchCatching
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.addPlayButtons
+import com.ichi2.libanki.Sound.addPlayButtons
 import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
 import kotlinx.coroutines.Dispatchers
