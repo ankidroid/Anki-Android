@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">Érintsd meg a(z) “%2$s” elemet a “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">“%1$s” címke kiválasztva</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Ez a pakli már létezik</string>
-    <string name="decks_rename_filtered_nosubdecks">A szűrt pakli nem tartalmazhat alapcsomagokat</string>
     <string name="reminder_title">Ne feledkezz meg a tanulásról ma sem!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d kártya ismétlése %1$s-ban</item>

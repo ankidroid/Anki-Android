@@ -202,8 +202,6 @@
     <string name="tag_editor_add_feedback">برای تایید اضافه شدن %1$s لطفا %2$s رالمس کنید</string>
     <string name="tag_editor_add_feedback_existing">برچسب موجود \"%1$s\" انتخاب شده است</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">این دسته از قبل وجود دارد</string>
-    <string name="decks_rename_filtered_nosubdecks">دسته فیلتر شده نمی تواند زیر دسته داشته باشد</string>
     <string name="reminder_title">فراموش نکنید که امروز مطالعه کنید!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d کارت برای مرور در %1$s</item>

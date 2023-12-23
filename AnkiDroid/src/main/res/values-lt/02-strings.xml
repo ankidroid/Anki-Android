@@ -212,8 +212,6 @@
     <string name="tag_editor_add_feedback">Norėdami pridėti „%1$s“, spauskite „%2$s“</string>
     <string name="tag_editor_add_feedback_existing">Pasirinkta esama žymė „%1$s“</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Toks rinkinys jau yra</string>
-    <string name="decks_rename_filtered_nosubdecks">Rinktinis rinkinys negali turėti poaplankių</string>
     <string name="reminder_title">Nepamirškite šiandien pasimokyti!</string>
     <plurals name="reminder_text">
         <item quantity="one">Peržiūrėti %2$d kortelę per %1$s</item>

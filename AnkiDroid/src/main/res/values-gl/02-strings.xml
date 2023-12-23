@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">Toca sobre \"%2$s\" para confirmar a adición de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Esa baralla xa existe</string>
-    <string name="decks_rename_filtered_nosubdecks">Unha baralla filtrada non pode ter subbarallas</string>
     <string name="reminder_title">Non esquezas estudar hoxe!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>

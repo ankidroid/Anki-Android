@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">Appuyez sur « %2$s » pour confirmer l\'addition de « %1$s »</string>
     <string name="tag_editor_add_feedback_existing">Étiquette existante «%1$s» sélectionnée</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Ce paquet existe déjà.</string>
-    <string name="decks_rename_filtered_nosubdecks">Un paquet filtré ne peut pas avoir de sous-paquets.</string>
     <string name="reminder_title">N’oubliez pas d’étudier aujourd\'hui !</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d carte à réviser en %1$s</item>

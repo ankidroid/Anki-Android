@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">Paina ”%2$s” vahvistaaksesi ”%1$s”:n lisääminen</string>
     <string name="tag_editor_add_feedback_existing">Olemassa oleva tunniste ”%1$s” valittu</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Pakka on jo olemassa</string>
-    <string name="decks_rename_filtered_nosubdecks">Suodatetulla pakalla ei voi olla alapakkoja</string>
     <string name="reminder_title">Älä unohda opiskella tänään!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d kortti kerrattavana %1$s :ssa</item>

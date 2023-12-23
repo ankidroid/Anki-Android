@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">Tryck på “%2$s” för att bekräfta att lägga till “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Befintlig etikett “%1$s” vald</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Den kortleken existerar redan</string>
-    <string name="decks_rename_filtered_nosubdecks">En filtrerad kortlek kan inte ha underkortlekar</string>
     <string name="reminder_title">Glöm inte att studera idag!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d kort att granska i %1$s</item>

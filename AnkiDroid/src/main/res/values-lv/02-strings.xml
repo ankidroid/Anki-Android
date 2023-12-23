@@ -208,8 +208,6 @@
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">That deck already exists</string>
-    <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
     <string name="reminder_title">Do not forget to study today!</string>
     <plurals name="reminder_text">
         <item quantity="zero">%2$d cards to review in %1$s</item>

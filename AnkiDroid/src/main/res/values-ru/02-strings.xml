@@ -212,8 +212,6 @@
     <string name="tag_editor_add_feedback">Выберите “%2$s” чтобы подтвердить добавление “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана существующая метка «%1$s»</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Такая колода уже существует</string>
-    <string name="decks_rename_filtered_nosubdecks">В фильтрованной колоде не может быть подколод</string>
     <string name="reminder_title">Не забудьте повторить сегодня!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d карточка для повторения в %1$s</item>

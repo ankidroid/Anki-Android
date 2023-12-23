@@ -205,8 +205,6 @@
     <string name="tag_editor_add_feedback">Допрете \"%2$s\" за да потврдите додавање \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Избрана е постоечка ознака \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Палуба веќе постои</string>
-    <string name="decks_rename_filtered_nosubdecks">Филтриранот палуба не може да има подпабули</string>
     <string name="reminder_title">Не заборави да студираш денес!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>

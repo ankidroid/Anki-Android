@@ -200,13 +200,6 @@
     <string name="tag_editor_add_feedback">Sentuh \"%2$s\" untuk mengonfirmasi menambahkan \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Tag yang ada \"%1$s\" dipilih</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Deck
-
-beberapa koleksi kartu
-Edit
-Teks untuk Terjemahan
-Dek itu sudah ada</string>
-    <string name="decks_rename_filtered_nosubdecks">Dek yang disaring tidak dapat memiliki tabir</string>
     <string name="reminder_title">Jangan lupa belajar hari ini!</string>
     <plurals name="reminder_text">
         <item quantity="other">%2$d cards to review in %1$s</item>

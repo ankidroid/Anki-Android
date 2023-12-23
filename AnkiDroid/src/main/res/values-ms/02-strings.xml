@@ -200,8 +200,6 @@
     <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk sahkan tambah “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Tag “%1$s” sedia ada dipilih</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Dek itu sudah wujud</string>
-    <string name="decks_rename_filtered_nosubdecks">Dek ditapis tidak boleh ada subdek</string>
     <string name="reminder_title">Janngan lupa ulang kaji hari ini!</string>
     <plurals name="reminder_text">
         <item quantity="other">%2$d kad untuk disemak dalam %1$s</item>

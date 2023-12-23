@@ -212,8 +212,6 @@
     <string name="tag_editor_add_feedback">Ťuknite “%2$s” pre potvrdenie pridania “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existujúci štítok “%1$s” zvolený</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Tento balíček už existuje</string>
-    <string name="decks_rename_filtered_nosubdecks">Filtrovaný balíček nemôže mať podbalíčky</string>
     <string name="reminder_title">Nezabudnite dnes študovať!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d kartička na zopakovanie v %1$s</item>

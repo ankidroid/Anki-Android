@@ -212,8 +212,6 @@
     <string name="tag_editor_add_feedback">Pritisnite \"%2$s\", da potrdite dodajanje \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Izbrana obstoječa oznaka \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Ta komplet že obstaja</string>
-    <string name="decks_rename_filtered_nosubdecks">Filtriran komplet ne more imeti podkompletov</string>
     <string name="reminder_title">Ne pozabite se učiti danes!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>

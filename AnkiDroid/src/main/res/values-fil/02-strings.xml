@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">Pindutin ang \"%2$s\" para kumpirmahin ang pagdaragdag ng \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Napili ang umiiral na tag na \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Ang deck na iyan ay umiiral</string>
-    <string name="decks_rename_filtered_nosubdecks">Ang isang naka-filter na deck ay hindi maaaring magkaroon ng mga subdecks</string>
     <string name="reminder_title">Huwag kaligtaang mag-aral ngayon!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card ang dapat repasuhin sa %1$s</item>

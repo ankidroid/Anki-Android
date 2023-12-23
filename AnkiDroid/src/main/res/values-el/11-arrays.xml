@@ -63,7 +63,7 @@
     <string name="add_to_deck_use_current_deck">Χρήση προσωρινής τράπουλας</string>
     <string name="add_to_deck_decide_by_note_type">Απόφαση κατά τύπο σημείωσης</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Βάσει συστήματος</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Φωτεινό</string>
     <string name="day_theme_plain">Απλό</string>

@@ -204,8 +204,6 @@
     <string name="tag_editor_add_feedback">\"%1$s\" जोड़ने की पुष्टि करने के लिए \"%2$s\" स्पर्श करें</string>
     <string name="tag_editor_add_feedback_existing">मौजूदा टैग \"%1$s\" चयनित</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">यह टैग पहले से ही मौजूद है|</string>
-    <string name="decks_rename_filtered_nosubdecks">एक फ़िल्टर्ड डेक उपडेक नहीं हो सकता</string>
     <string name="reminder_title">आज पढ़ाई करना न भूलें!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d कार्ड %1$s मे पुनरावलोकन कीजिये</item>

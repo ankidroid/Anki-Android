@@ -212,8 +212,6 @@
     <string name="tag_editor_add_feedback">Націсніце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана існуючая метка \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Гэта калода ўжо існуе</string>
-    <string name="decks_rename_filtered_nosubdecks">Фільтраваная калода не можа мець падкалод</string>
     <string name="reminder_title">Не забудзьцеся пра сённяшняе навучанне!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d картка для паўтарэння ў %1$s</item>

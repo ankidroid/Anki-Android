@@ -212,8 +212,6 @@
     <string name="tag_editor_add_feedback">Dotknij “%2$s” aby potwierdzić dodanie “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Wybrano istniejący tag “%1$s”</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Ta talia już istnieje</string>
-    <string name="decks_rename_filtered_nosubdecks">Filtrowana talia nie może mieć podtalii</string>
     <string name="reminder_title">Nie zapomnij się dziś pouczyć!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d karta do powtórki w %1$s</item>

@@ -203,8 +203,6 @@ Context | Request Context    [1]</string>
     <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
     <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">카드 묶음이 이미 존재합니다</string>
-    <string name="decks_rename_filtered_nosubdecks">필터링된 카드 묶음은 하위 카드 묶음을 가질 수 없습니다</string>
     <string name="reminder_title">오늘의 학습 잊지 마세요!</string>
     <plurals name="reminder_text">
         <item quantity="other">%1$s에서 복습할 카드 %2$d장</item>
