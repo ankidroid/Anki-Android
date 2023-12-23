@@ -324,7 +324,7 @@ open class CardBrowser :
         searchCards()
     }
 
-    private val selectedCardIds: List<Long>
+    private val selectedCardIds: List<CardId>
         get() = viewModel.selectedCardIds
 
     private fun canPerformCardInfo(): Boolean {
