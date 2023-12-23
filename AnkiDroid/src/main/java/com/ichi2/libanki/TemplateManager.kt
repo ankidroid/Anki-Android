@@ -184,16 +184,17 @@ class TemplateManager {
              * because of old webview codecs in python, and to allow extending the video player.
              * To simplify things and deliver a better result,
              * we use the webview player, like AnkiMobile does
+             *
+             * `file:///` is used to enable seeking the video
              */
-            fun parseVideos(text: String): String {
+            fun parseVideos(text: String, mediaDir: String): String {
                 return SOUND_RE.replace(text) { match ->
                     val fileName = match.groupValues[1]
                     val extension = fileName.substringAfterLast(".", "")
                     if (extension in VIDEO_EXTENSIONS) {
-                        @Suppress("HtmlUnknownAttribute") // controlsList is valid, but marked as invalid in the IDE
                         @Language("HTML")
                         val result =
-                            """<video src="$fileName" controls controlsList="nodownload"></video>"""
+                            """<video src="file:///$mediaDir/$fileName" controls controlsList="nodownload"></video>"""
                         result
                     } else {
                         match.value
@@ -201,11 +202,18 @@ class TemplateManager {
                 }
             }
 
-            val qtext = parseVideos(applyCustomFilters(partial.qnodes, this, front_side = null))
+            val mediaDir = col().media.dir
+            val qtext = parseVideos(
+                text = applyCustomFilters(partial.qnodes, this, front_side = null),
+                mediaDir = mediaDir
+            )
             val qout = col().backend.extractAvTags(text = qtext, questionSide = true)
             var qoutText = qout.text
 
-            val atext = parseVideos(applyCustomFilters(partial.anodes, this, front_side = qout.text))
+            val atext = parseVideos(
+                text = applyCustomFilters(partial.anodes, this, front_side = qout.text),
+                mediaDir = mediaDir
+            )
             val aout = col().backend.extractAvTags(text = atext, questionSide = false)
             var aoutText = aout.text
 
