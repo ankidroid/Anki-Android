@@ -46,6 +46,7 @@ import com.ichi2.ui.RtlCompliantActionProvider
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import kotlinx.coroutines.Job
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
 class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
@@ -671,7 +672,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
 
         @VisibleForTesting
-        fun formatDescription(desc: String): Spanned {
+        fun formatDescription(@Language("HTML") desc: String): Spanned {
             // #5715: In deck description, ignore what is in style and script tag
             // Since we don't currently execute the JS/CSS, it's not worth displaying.
             val withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc)
