@@ -22,12 +22,30 @@ import android.widget.Button
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.ui.TextInputEditField
+import junit.framework.TestCase.assertFalse
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class MyAccountTest : RobolectricTest() {
+
+    @Test
+    fun testLoginEmailPasswordProvided() {
+        val myAccount = super.startActivityNormallyOpenCollectionWithIntent(
+            MyAccount::class.java,
+            Intent()
+        )
+
+        val testPassword = "randomStrongPassword"
+        val testEmail = "random.email@example.com"
+
+        myAccount.findViewById<TextInputEditText>(R.id.username).setText(testEmail)
+        myAccount.findViewById<TextInputEditField>(R.id.password).setText(testPassword)
+        val loginButton = myAccount.findViewById<Button>(R.id.login_button)
+        assertTrue(loginButton.isEnabled)
+        assertTrue(loginButton.performClick())
+    }
 
     @Test
     fun testLoginFailsNoEmailProvided() {
@@ -39,9 +57,8 @@ class MyAccountTest : RobolectricTest() {
         val testPassword = "randomStrongPassword"
 
         myAccount.findViewById<TextInputEditField>(R.id.password).setText(testPassword)
-        myAccount.findViewById<Button>(R.id.login_button).performClick()
-        val error = myAccount.findViewById<TextInputEditText>(R.id.username).error
-        assertEquals(error, targetContext.getString(R.string.email_id_empty))
+        val loginButton = myAccount.findViewById<Button>(R.id.login_button)
+        assertFalse(loginButton.isEnabled)
     }
 
     @Test
@@ -54,8 +71,7 @@ class MyAccountTest : RobolectricTest() {
         val testEmail = "random.email@example.com"
 
         myAccount.findViewById<TextInputEditText>(R.id.username).setText(testEmail)
-        myAccount.findViewById<Button>(R.id.login_button).performClick()
-        val error = myAccount.findViewById<TextInputEditField>(R.id.password).error
-        assertEquals(error, targetContext.getString(R.string.password_empty))
+        val loginButton = myAccount.findViewById<Button>(R.id.login_button)
+        assertFalse(loginButton.isEnabled)
     }
 }

@@ -17,14 +17,17 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Patterns
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.ui.TextInputEditField
@@ -38,7 +41,8 @@ import timber.log.Timber
 open class MyAccount : AnkiActivity() {
     private lateinit var mLoginToMyAccountView: View
     private lateinit var mLoggedIntoMyAccountView: View
-    private lateinit var mUsername: EditText
+    private lateinit var username: TextInputEditText
+    private lateinit var userNameLayout: TextInputLayout
     private lateinit var mPassword: TextInputEditField
     private lateinit var mUsernameLoggedIn: TextView
 
@@ -93,7 +97,7 @@ open class MyAccount : AnkiActivity() {
     }
 
     private fun attemptLogin() {
-        val username = mUsername.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
+        val username = username.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
         val password = mPassword.text.toString()
         if (username.isEmpty() || password.isEmpty()) {
             Timber.i("Auto-login cancelled - username/password missing")
@@ -106,19 +110,9 @@ open class MyAccount : AnkiActivity() {
     private fun login() {
         // Hide soft keyboard
         val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(mUsername.windowToken, 0)
-        val username = mUsername.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
+        inputMethodManager.hideSoftInputFromWindow(username.windowToken, 0)
+        val username = username.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
         val password = mPassword.text.toString()
-        if (username.isEmpty()) {
-            mUsername.error = getString(R.string.email_id_empty)
-            mUsername.requestFocus()
-            return
-        }
-        if (password.isEmpty()) {
-            mPassword.error = getString(R.string.password_empty)
-            mPassword.requestFocus()
-            return
-        }
         handleNewLogin(username, password)
     }
 
@@ -136,10 +130,45 @@ open class MyAccount : AnkiActivity() {
     private fun initAllContentViews() {
         mLoginToMyAccountView = layoutInflater.inflate(R.layout.my_account, null)
         mLoginToMyAccountView.let {
-            mUsername = it.findViewById(R.id.username)
+            username = it.findViewById(R.id.username)
+            userNameLayout = it.findViewById(R.id.username_layout)
             mPassword = it.findViewById(R.id.password)
             mPasswordLayout = it.findViewById(R.id.password_layout)
             mAnkidroidLogo = it.findViewById(R.id.ankidroid_logo)
+        }
+        val loginButton = mLoginToMyAccountView.findViewById<Button>(R.id.login_button)
+
+        username.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val email = username.text.toString().trim()
+                val isValidEmail = isEmailValid(email)
+                userNameLayout.apply {
+                    isErrorEnabled = !isValidEmail
+                    error = if (!isValidEmail) getString(R.string.invalid_email) else null
+                }
+            } else {
+                userNameLayout.isErrorEnabled = false
+            }
+        }
+
+        mPassword.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val password = mPassword.text.toString()
+                if (password.isEmpty()) {
+                    mPasswordLayout.isErrorEnabled = true
+                    mPasswordLayout.error = getString(R.string.password_empty)
+                }
+            } else {
+                mPasswordLayout.isErrorEnabled = false
+            }
+        }
+
+        username.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_TAB) {
+                mPassword.requestFocus()
+                return@setOnKeyListener true
+            }
+            false
         }
 
         mPassword.setOnKeyListener(
@@ -147,7 +176,7 @@ open class MyAccount : AnkiActivity() {
                 if (event.action == KeyEvent.ACTION_DOWN) {
                     when (keyCode) {
                         KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER -> {
-                            login()
+                            if (loginButton.isEnabled) login()
                             return@OnKeyListener true
                         }
                         else -> {}
@@ -157,7 +186,25 @@ open class MyAccount : AnkiActivity() {
             }
         )
 
-        val loginButton = mLoginToMyAccountView.findViewById<Button>(R.id.login_button)
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not needed here
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val email = username.text.toString().trim()
+                val password = mPassword.text.toString()
+                val isValidEmail = isEmailValid(email)
+                val isFilled = email.isNotEmpty() && password.isNotEmpty() && isValidEmail
+                loginButton.isEnabled = isFilled
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Not needed here
+            }
+        }
+        username.addTextChangedListener(textWatcher)
+        mPassword.addTextChangedListener(textWatcher)
         loginButton.setOnClickListener { login() }
         val resetPWButton = mLoginToMyAccountView.findViewById<Button>(R.id.reset_password_button)
         resetPWButton.setOnClickListener { resetPassword() }
@@ -211,6 +258,11 @@ open class MyAccount : AnkiActivity() {
             return true
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    /** Checks if the input email is valid or not **/
+    fun isEmailValid(email: CharSequence): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     companion object {
