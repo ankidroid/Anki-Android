@@ -1099,7 +1099,7 @@ open class Reviewer :
         webView?.evaluateJavascript(
             """
         anki.mutateNextCardStates('$key', async (states, customData, ctx) => {{ $js }})
-            .catch(err => console.log(err));
+            .catch(err => { console.log(err); window.location.href = "state-mutation-error:"; });
 """
         ) { result ->
             if ("null" == result) {
@@ -1108,6 +1108,11 @@ open class Reviewer :
                 statesMutated = true
             }
         }
+    }
+
+    override fun onStateMutationError() {
+        super.onStateMutationError()
+        statesMutated = true
     }
 
     override fun initLayout() {
