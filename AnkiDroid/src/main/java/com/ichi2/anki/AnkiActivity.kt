@@ -424,9 +424,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
      * @param message
      * @param reload flag which forces app to be restarted when true
      */
-    @KotlinCleanup("make message non-null")
     open fun showSimpleMessageDialog(
-        message: String?,
+        message: String,
         title: String = "",
         reload: Boolean = false
     ) {
