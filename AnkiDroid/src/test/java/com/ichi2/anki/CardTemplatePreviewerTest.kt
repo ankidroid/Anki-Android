@@ -24,7 +24,6 @@ import com.ichi2.anki.servicelayer.NoteService.getFieldsAsBundleForPreview
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Sound
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.stringIterable
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -434,9 +433,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         return n.cards()[0]
     }
 
-    @KotlinCleanup("Override fieldText in constructor and remove text")
-    private inner class Field(override val ord: Int, private val text: String) : NoteService.NoteField {
+    private inner class Field(
+        override val ord: Int,
         override val fieldText: String
-            get() = text
-    }
+    ) : NoteService.NoteField
 }
