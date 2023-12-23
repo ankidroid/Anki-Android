@@ -18,6 +18,7 @@ package com.ichi2.preferences
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.util.AttributeSet
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.ListPreference
@@ -142,7 +143,7 @@ class ControlPreference : ListPreference {
             }
             ADD_KEY_INDEX -> {
                 val actionName = title
-                MaterialDialog(context).show {
+                AlertDialog.Builder(context).show {
                     val keyPicker: KeyPicker = KeyPicker.inflate(context)
                     customView(view = keyPicker.rootLayout)
                     title(text = actionName.toString())
@@ -166,14 +167,13 @@ class ControlPreference : ListPreference {
                                 showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_key), it)
                             } else {
                                 addBinding(mappableBinding)
-                                dismiss()
+                                it.dismiss()
                             }
                         }
                     }
-                    negativeButton(R.string.dialog_cancel) { dismiss() }
+                    negativeButton(R.string.dialog_cancel) { it.dismiss() }
 
                     keyPicker.setKeycodeValidation(KeySelectionDialogUtils.disallowModifierKeyCodes())
-                    noAutoDismiss()
                 }
             }
             ADD_AXIS_INDEX -> displayAddAxisDialog()
@@ -262,7 +262,7 @@ class ControlPreference : ListPreference {
         }
     }
 
-    private fun showDialogToReplaceBinding(binding: MappableBinding, title: String, parentDialog: MaterialDialog) {
+    private fun showDialogToReplaceBinding(binding: MappableBinding, title: String, parentDialog: DialogInterface) {
         val commandName = context.getString(getCommandWithBindingExceptThis(binding)!!.resourceId)
 
         AlertDialog.Builder(context).show {
