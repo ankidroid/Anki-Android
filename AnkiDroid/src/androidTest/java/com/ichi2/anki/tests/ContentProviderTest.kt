@@ -75,10 +75,6 @@ class ContentProviderTest : InstrumentedTest() {
      * Initially create one note for each model.
      */
     @Before
-    @Throws(
-        Exception::class
-    )
-    @KotlinCleanup("remove 'requireNoNulls' and fix mDummyFields")
     fun setUp() {
         Timber.i("setUp()")
         mCreatedNotes = ArrayList()
