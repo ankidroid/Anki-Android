@@ -21,17 +21,14 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.servicelayer.NoteService
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.createTransientFile
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers.*
 import org.junit.Assert.*
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -45,14 +42,6 @@ import java.io.IOException
 class NoteServiceTest : RobolectricTest() {
     override fun useInMemoryDatabase(): Boolean = false
 
-    @KotlinCleanup("lateinit")
-    var testCol: Collection? = null
-
-    @Before
-    fun before() {
-        testCol = col
-    }
-
     // temporary directory to test importMediaToDirectory function
     @get:Rule
     var directory = TemporaryFolder()
@@ -63,12 +52,12 @@ class NoteServiceTest : RobolectricTest() {
     // tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
     @Test
     fun updateJsonNoteTest() {
-        val testModel = testCol!!.notetypes.byName("Basic")
+        val testModel = col.notetypes.byName("Basic")
         val multiMediaNote: IMultimediaEditableNote? = NoteService.createEmptyNote(testModel!!)
         multiMediaNote!!.getField(0)!!.text = "foo"
         multiMediaNote.getField(1)!!.text = "bar"
 
-        val basicNote = Note(testCol!!, testModel).apply {
+        val basicNote = Note(col, testModel).apply {
             setField(0, "this should be changed to foo")
             setField(1, "this should be changed to bar")
         }
@@ -87,7 +76,7 @@ class NoteServiceTest : RobolectricTest() {
 
         // model with ID 45
         testNotetype = NotetypeJson("""{"flds": [{"name": "foo bar", "ord": "1"}], "id": "45"}""")
-        val noteWithID45 = Note(testCol!!, testNotetype)
+        val noteWithID45 = Note(col, testNotetype)
         val expectedException: Throwable = assertThrows(RuntimeException::class.java) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
         assertEquals(expectedException.message, "Source and Destination Note ID do not match.")
     }
@@ -103,9 +92,9 @@ class NoteServiceTest : RobolectricTest() {
         val audioField = MediaClipField()
         audioField.audioPath = fileAudio.absolutePath
 
-        NoteService.importMediaToDirectory(testCol!!, audioField)
+        NoteService.importMediaToDirectory(col, audioField)
 
-        val outFile = File(testCol!!.media.dir, fileAudio.name)
+        val outFile = File(col.media.dir, fileAudio.name)
 
         assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(audioField.audioPath)))
     }
@@ -122,9 +111,9 @@ class NoteServiceTest : RobolectricTest() {
         val imgField = ImageField()
         imgField.extraImagePathRef = fileImage.absolutePath
 
-        NoteService.importMediaToDirectory(testCol!!, imgField)
+        NoteService.importMediaToDirectory(col, imgField)
 
-        val outFile = File(testCol!!.media.dir, fileImage.name)
+        val outFile = File(col.media.dir, fileImage.name)
 
         assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(imgField.extraImagePathRef)))
     }
@@ -159,14 +148,14 @@ class NoteServiceTest : RobolectricTest() {
         val fld3 = MediaClipField()
         fld3.audioPath = f1.absolutePath
 
-        Timber.e("media folder is %s %b", testCol!!.media.dir, File(testCol!!.media.dir).exists())
-        NoteService.importMediaToDirectory(testCol!!, fld1)
-        val o1 = File(testCol!!.media.dir, f1.name)
+        Timber.e("media folder is %s %b", col.media.dir, File(col.media.dir).exists())
+        NoteService.importMediaToDirectory(col, fld1)
+        val o1 = File(col.media.dir, f1.name)
 
-        NoteService.importMediaToDirectory(testCol!!, fld2)
-        val o2 = File(testCol!!.media.dir, f2.name)
+        NoteService.importMediaToDirectory(col, fld2)
+        val o2 = File(col.media.dir, f2.name)
 
-        NoteService.importMediaToDirectory(testCol!!, fld3)
+        NoteService.importMediaToDirectory(col, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one
 
         assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.audioPath)))
@@ -196,13 +185,13 @@ class NoteServiceTest : RobolectricTest() {
         val fld3 = ImageField()
         fld3.extraImagePathRef = f1.absolutePath
 
-        NoteService.importMediaToDirectory(testCol!!, fld1)
-        val o1 = File(testCol!!.media.dir, f1.name)
+        NoteService.importMediaToDirectory(col, fld1)
+        val o1 = File(col.media.dir, f1.name)
 
-        NoteService.importMediaToDirectory(testCol!!, fld2)
-        val o2 = File(testCol!!.media.dir, f2.name)
+        NoteService.importMediaToDirectory(col, fld2)
+        val o2 = File(col.media.dir, f2.name)
 
-        NoteService.importMediaToDirectory(testCol!!, fld3)
+        NoteService.importMediaToDirectory(col, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one
 
         assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.extraImagePathRef)))
@@ -224,7 +213,7 @@ class NoteServiceTest : RobolectricTest() {
             hasTemporaryMedia = true
         }
 
-        NoteService.importMediaToDirectory(testCol!!, field)
+        NoteService.importMediaToDirectory(col, field)
 
         assertThat("Audio temporary file should have been deleted after importing", file, not(anExistingFile()))
     }
@@ -239,7 +228,7 @@ class NoteServiceTest : RobolectricTest() {
             hasTemporaryMedia = true
         }
 
-        NoteService.importMediaToDirectory(testCol!!, field)
+        NoteService.importMediaToDirectory(col, field)
 
         assertThat("Image temporary file should have been deleted after importing", file, not(anExistingFile()))
     }
