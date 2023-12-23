@@ -41,7 +41,6 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-@KotlinCleanup("have Model constructor accent @Language('JSON')")
 @RunWith(AndroidJUnit4::class)
 class NoteServiceTest : RobolectricTest() {
     override fun useInMemoryDatabase(): Boolean = false
@@ -83,11 +82,11 @@ class NoteServiceTest : RobolectricTest() {
     @Test
     fun updateJsonNoteRuntimeErrorTest() {
         // model with ID 42
-        var testNotetype = NotetypeJson("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"42\"}")
+        var testNotetype = NotetypeJson("""{"flds": [{"name": "foo bar", "ord": "1"}], "id": "42"}""")
         val multiMediaNoteWithID42: IMultimediaEditableNote? = NoteService.createEmptyNote(testNotetype)
 
         // model with ID 45
-        testNotetype = NotetypeJson("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"45\"}")
+        testNotetype = NotetypeJson("""{"flds": [{"name": "foo bar", "ord": "1"}], "id": "45"}""")
         val noteWithID45 = Note(testCol!!, testNotetype)
         val expectedException: Throwable = assertThrows(RuntimeException::class.java) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
         assertEquals(expectedException.message, "Source and Destination Note ID do not match.")

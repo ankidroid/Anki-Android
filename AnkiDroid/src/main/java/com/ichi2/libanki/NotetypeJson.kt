@@ -18,6 +18,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
 import com.ichi2.utils.*
+import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.HashSet
@@ -52,7 +53,7 @@ class NotetypeJson : JSONObject {
     /**
      * Creates a model object form json string
      */
-    constructor(json: String) : super(json)
+    constructor(@Language("json") json: String) : super(json)
 
     @CheckResult
     fun deepClone(): NotetypeJson {
