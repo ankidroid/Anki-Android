@@ -228,9 +228,8 @@ open class CardBrowser :
     private var mReloadRequired = false
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    var isInMultiSelectMode
+    val isInMultiSelectMode
         get() = viewModel.isInMultiSelectMode
-        private set(value) { viewModel.isInMultiSelectMode = value }
 
     private var mLastSelectedPosition
         get() = viewModel.lastSelectedPosition
@@ -2133,8 +2132,6 @@ open class CardBrowser :
             return
         }
         Timber.d("loadMultiSelectMode()")
-        // set in multi-select mode
-        isInMultiSelectMode = true
         // show title and hide spinner
         mActionBarTitle.visibility = View.VISIBLE
         mActionBarTitle.text = viewModel.selectedRowCount().toString()
@@ -2149,7 +2146,6 @@ open class CardBrowser :
     private fun endMultiSelectMode() {
         Timber.d("endMultiSelectMode()")
         viewModel.selectNone()
-        isInMultiSelectMode = false
         // If view which was originally selected when entering multi-select is visible then maintain its position
         val view = cardsListView.getChildAt(mLastSelectedPosition - cardsListView.firstVisiblePosition)
         view?.let { recenterListView(it) }

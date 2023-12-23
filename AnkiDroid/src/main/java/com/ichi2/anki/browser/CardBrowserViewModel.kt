@@ -101,7 +101,8 @@ class CardBrowserViewModel(
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
     var tempSearchQuery: String? = null
 
-    var isInMultiSelectMode = false
+    val isInMultiSelectMode
+        get() = selectedRows.isNotEmpty()
 
     val isTruncatedFlow: MutableStateFlow<Boolean> =
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
