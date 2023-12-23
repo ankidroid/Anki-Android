@@ -471,6 +471,24 @@ open class CardBrowser :
                 searchCards()
             }
             .launchIn(lifecycleScope)
+
+        viewModel.isInMultiSelectModeFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { inMultiSelect ->
+                if (inMultiSelect) return@onEach
+
+                Timber.d("end multiselect mode")
+                // If view which was originally selected when entering multi-select is visible then maintain its position
+                val view = cardsListView.getChildAt(mLastSelectedPosition - cardsListView.firstVisiblePosition)
+                view?.let { recenterListView(it) }
+                // update adapter to remove check boxes
+                cardsAdapter.notifyDataSetChanged()
+                // update action bar
+                invalidateOptionsMenu()
+                deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
+                mActionBarTitle.visibility = View.GONE
+            }
+            .launchIn(lifecycleScope)
     }
 
     fun searchWithFilterQuery(filterQuery: String) = launchCatchingTask {
@@ -2143,19 +2161,7 @@ open class CardBrowser :
     /**
      * Turn off Multi-Select Mode and return to normal state
      */
-    private fun endMultiSelectMode() {
-        Timber.d("endMultiSelectMode()")
-        viewModel.selectNone()
-        // If view which was originally selected when entering multi-select is visible then maintain its position
-        val view = cardsListView.getChildAt(mLastSelectedPosition - cardsListView.firstVisiblePosition)
-        view?.let { recenterListView(it) }
-        // update adapter to remove check boxes
-        cardsAdapter.notifyDataSetChanged()
-        // update action bar
-        invalidateOptionsMenu()
-        deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
-        mActionBarTitle.visibility = View.GONE
-    }
+    private fun endMultiSelectMode() = viewModel.selectNone()
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val isShowingSelectAll: Boolean

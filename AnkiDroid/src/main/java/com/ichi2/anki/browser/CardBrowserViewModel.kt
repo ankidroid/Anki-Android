@@ -46,11 +46,14 @@ import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
@@ -101,9 +104,6 @@ class CardBrowserViewModel(
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
     var tempSearchQuery: String? = null
 
-    val isInMultiSelectMode
-        get() = selectedRows.isNotEmpty()
-
     val isTruncatedFlow: MutableStateFlow<Boolean> =
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
     val isTruncated get() = isTruncatedFlow.value
@@ -120,6 +120,13 @@ class CardBrowserViewModel(
     val selectedCardIds: List<Long>
         get() = selectedRows.map { c -> c.id }
     var lastSelectedPosition = 0
+
+    val isInMultiSelectModeFlow = selectedRowsFlow
+        .map { it.isNotEmpty() }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = false)
+
+    val isInMultiSelectMode
+        get() = isInMultiSelectModeFlow.value
 
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
