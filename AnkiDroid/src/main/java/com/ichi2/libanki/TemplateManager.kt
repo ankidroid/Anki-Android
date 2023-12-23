@@ -22,7 +22,7 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.libanki.Sound.Companion.SOUND_RE
+import com.ichi2.libanki.Sound.SOUND_RE
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote

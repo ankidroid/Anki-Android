@@ -26,44 +26,20 @@ val VIDEO_EXTENSIONS = setOf("mp4", "mov", "mpg", "mpeg", "mkv", "avi")
  * Parses, loads and plays sound & video files
  * Called `Sound` Anki uses `[sound:]` for both audio and video
  */
-class Sound {
+object Sound {
     /**
-     * The subset of sounds to involve
-     * @param int Used for serialisation
+     * [Regex] used to identify the markers for sound files
      */
-    enum class SoundSide(val int: Int) {
-        QUESTION(0), ANSWER(1), QUESTION_AND_ANSWER(2);
-    }
+    val SOUND_RE = Pattern.compile("\\[sound:([^\\[\\]]*)]").toRegex()
 
-    /** Sounds for the question/answer of a card */
-    // Stops code paths where QUESTION_AND_ANSWER is invalid
-    enum class SingleSoundSide {
-        QUESTION, ANSWER;
-
-        fun toSoundSide(): SoundSide = when (this) {
-            QUESTION -> SoundSide.QUESTION
-            ANSWER -> SoundSide.ANSWER
-        }
-    }
-
-    companion object {
-        /**
-         * Pattern used to identify the markers for sound files
-         */
-        val SOUND_PATTERN: Pattern = Pattern.compile("\\[sound:([^\\[\\]]*)]")
-
-        // TODO join with SOUND_PATTERN
-        val SOUND_RE = SOUND_PATTERN.toRegex()
-
-        /**
-         * expandSounds takes content with embedded sound file placeholders and expands them to reference the actual media
-         * file
-         *
-         * @param content -- card content to be rendered that may contain embedded audio
-         * @return -- the same content but in a format that will render working play buttons when audio was embedded
-         */
-        fun expandSounds(content: String): String {
-            return avRefsToPlayIcons(content)
-        }
+    /**
+     * expandSounds takes content with embedded sound file placeholders and expands them to reference the actual media
+     * file
+     *
+     * @param content -- card content to be rendered that may contain embedded audio
+     * @return -- the same content but in a format that will render working play buttons when audio was embedded
+     */
+    fun expandSounds(content: String): String {
+        return avRefsToPlayIcons(content)
     }
 }

@@ -33,13 +33,12 @@ import com.ichi2.anki.AndroidTtsPlayer
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
+import com.ichi2.anki.cardviewer.SoundSide.ANSWER
+import com.ichi2.anki.cardviewer.SoundSide.QUESTION
+import com.ichi2.anki.cardviewer.SoundSide.QUESTION_AND_ANSWER
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.Sound.SoundSide
-import com.ichi2.libanki.Sound.SoundSide.ANSWER
-import com.ichi2.libanki.Sound.SoundSide.QUESTION
-import com.ichi2.libanki.Sound.SoundSide.QUESTION_AND_ANSWER
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.TtsPlayer

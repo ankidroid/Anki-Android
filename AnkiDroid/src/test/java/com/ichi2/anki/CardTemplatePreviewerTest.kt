@@ -19,11 +19,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import com.ichi2.anki.cardviewer.SingleSoundSide
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.getFieldsAsBundleForPreview
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.NotetypeJson
-import com.ichi2.libanki.Sound
 import com.ichi2.utils.stringIterable
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -333,7 +333,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         // TTS doesn't get initialized in Robolectric, but we've passed through rendering the card
         // so treat the UninitializedPropertyAccessException as a success
         assertThrows<UninitializedPropertyAccessException> {
-            testCardTemplatePreviewer.readCardTts(Sound.SingleSoundSide.QUESTION)
+            testCardTemplatePreviewer.readCardTts(SingleSoundSide.QUESTION)
         }
     }
 
