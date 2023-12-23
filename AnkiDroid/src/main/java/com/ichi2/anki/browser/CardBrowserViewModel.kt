@@ -26,6 +26,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
+import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ExportDialogParams
 import com.ichi2.anki.export.ExportType
@@ -437,9 +438,9 @@ class CardBrowserViewModel(
     suspend fun searchForMarkedNotes() = setFilterQuery("tag:marked")
 
     suspend fun searchForSuspendedCards() = setFilterQuery("is:suspended")
-    suspend fun setFlagFilter(flag: Int) {
-        currentFlag = flag
-        val flagSearchTerm = "flag:$flag"
+    suspend fun setFlagFilter(flag: Flag) {
+        currentFlag = flag.code
+        val flagSearchTerm = "flag:${flag.code}"
         val searchTerms = when {
             searchTerms.contains("flag:") -> searchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
             searchTerms.isNotEmpty() -> "$flagSearchTerm $searchTerms"

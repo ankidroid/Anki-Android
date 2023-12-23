@@ -1013,35 +1013,35 @@ open class CardBrowser :
                 return true
             }
             R.id.action_select_flag_zero -> {
-                filterByFlag(0)
+                filterByFlag(Flag.NONE)
                 return true
             }
             R.id.action_select_flag_one -> {
-                filterByFlag(1)
+                filterByFlag(Flag.RED)
                 return true
             }
             R.id.action_select_flag_two -> {
-                filterByFlag(2)
+                filterByFlag(Flag.ORANGE)
                 return true
             }
             R.id.action_select_flag_three -> {
-                filterByFlag(3)
+                filterByFlag(Flag.GREEN)
                 return true
             }
             R.id.action_select_flag_four -> {
-                filterByFlag(4)
+                filterByFlag(Flag.BLUE)
                 return true
             }
             R.id.action_select_flag_five -> {
-                filterByFlag(5)
+                filterByFlag(Flag.PINK)
                 return true
             }
             R.id.action_select_flag_six -> {
-                filterByFlag(6)
+                filterByFlag(Flag.TURQUOISE)
                 return true
             }
             R.id.action_select_flag_seven -> {
-                filterByFlag(7)
+                filterByFlag(Flag.PURPLE)
                 return true
             }
             R.id.action_delete_card -> {
@@ -1523,7 +1523,7 @@ open class CardBrowser :
 
     /** Updates search terms to only show cards with selected flag.  */
     @VisibleForTesting
-    fun filterByFlag(flag: Int) = launchCatchingTask { viewModel.setFlagFilter(flag) }
+    fun filterByFlag(flag: Flag) = launchCatchingTask { viewModel.setFlagFilter(flag) }
 
     /**
      * Loads/Reloads (Updates the Q, A & etc) of cards in the [cards] list

@@ -419,7 +419,7 @@ class CardBrowserTest : RobolectricTest() {
         flagCardForNote(anotherCardWithRedFlag, 1)
 
         val b = browserWithNoNewCards
-        b.viewModel.setFlagFilter(1)
+        b.viewModel.setFlagFilter(Flag.RED)
 
         assertThat("Flagged cards should be returned", b.viewModel.rowCount, equalTo(2))
     }
