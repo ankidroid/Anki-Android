@@ -471,7 +471,7 @@ class SharedDecksDownloadFragment : Fragment() {
         val builder = AlertDialog.Builder(context)
         builder.apply {
             setTitle(R.string.cancel_download_question_title)
-            setPositiveButton("Yes") { _, _: Int ->
+            setPositiveButton(R.string.dialog_yes) { _, _: Int ->
                 mDownloadManager.remove(mDownloadId)
                 unregisterReceiver()
                 isDownloadInProgress = false
