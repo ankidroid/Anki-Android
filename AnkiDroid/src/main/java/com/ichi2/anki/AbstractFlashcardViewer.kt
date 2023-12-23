@@ -2456,6 +2456,9 @@ abstract class AbstractFlashcardViewer :
                 }
                 return true
             }
+            if (url.startsWith("state-mutation-error:")) {
+                onStateMutationError()
+            }
             if (url.startsWith("tts-voices:")) {
                 showDialogFragment(TtsVoicesDialogFragment())
                 return true
@@ -2681,6 +2684,10 @@ abstract class AbstractFlashcardViewer :
         override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
             return mOnRenderProcessGoneDelegate.onRenderProcessGone(view, detail)
         }
+    }
+
+    protected open fun onStateMutationError() {
+        Timber.w("state mutation error, see console log")
     }
 
     private fun displayCouldNotFindMediaSnackbar(filename: String?) {

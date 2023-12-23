@@ -33,7 +33,6 @@ import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.libanki.Collection
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -92,7 +91,6 @@ class ReviewerTest : InstrumentedTest() {
     }
 
     @Test
-    @Ignore("15035")
     fun testCustomSchedulerWithRuntimeError() {
         // Issue 15035 - runtime errors weren't handled
         col.cardStateCustomizer = "states.this_is_not_defined.normal.review = 12;"
