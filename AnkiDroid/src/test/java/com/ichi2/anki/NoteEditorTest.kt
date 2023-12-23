@@ -13,6 +13,8 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+@file:Suppress("SameParameterValue")
+
 package com.ichi2.anki
 
 import android.app.Activity
@@ -32,8 +34,6 @@ import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
-import com.ichi2.utils.KotlinCleanup
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
@@ -45,9 +45,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("IDE lint")
 class NoteEditorTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
@@ -193,8 +191,6 @@ class NoteEditorTest : RobolectricTest() {
 
     @Test
     fun copyNoteCopiesDeckId() {
-        // value returned if deck not found
-        val DECK_ID_NOT_FOUND = -404
         val currentDid = addDeck("Basic::Test")
         col.config.set(CURRENT_DECK, currentDid)
         val n = super.addNoteUsingBasicModel("Test", "Note")
@@ -204,7 +200,7 @@ class NoteEditorTest : RobolectricTest() {
         val copyNoteIntent = getCopyNoteIntent(editor)
         val newNoteEditor = super.startActivityNormallyOpenCollectionWithIntent(NoteEditor::class.java, copyNoteIntent)
         assertThat("Selected deck ID should be the current deck id", editor.deckId, equalTo(currentDid))
-        assertThat("Deck ID in the intent should be the selected deck id", copyNoteIntent.getLongExtra(NoteEditor.EXTRA_DID, DECK_ID_NOT_FOUND.toLong()), equalTo(currentDid))
+        assertThat("Deck ID in the intent should be the selected deck id", copyNoteIntent.getLongExtra(NoteEditor.EXTRA_DID, -404L), equalTo(currentDid))
         assertThat("Deck ID in the new note should be the ID provided in the intent", newNoteEditor.deckId, equalTo(currentDid))
     }
 
@@ -438,7 +434,6 @@ class NoteEditorTest : RobolectricTest() {
         private val mNotetype: NotetypeJson
         private var mFirstField: String? = null
         private var mSecondField: String? = null
-        private var mThirdField: String? = null
         fun build(): NoteEditor {
             val editor = build(NoteEditor::class.java)
             advanceRobolectricLooper()
@@ -459,9 +454,6 @@ class NoteEditorTest : RobolectricTest() {
             if (mSecondField != null) {
                 noteEditor.setFieldValueFromUi(1, mSecondField)
             }
-            if (mThirdField != null) {
-                noteEditor.setFieldValueFromUi(2, mThirdField)
-            }
             return noteEditor
         }
 
@@ -476,11 +468,6 @@ class NoteEditorTest : RobolectricTest() {
 
         fun withSecondField(text: String?): NoteEditorTestBuilder {
             mSecondField = text
-            return this
-        }
-
-        fun withThirdField(text: String?): NoteEditorTestBuilder {
-            mThirdField = text
             return this
         }
 
