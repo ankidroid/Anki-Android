@@ -22,8 +22,6 @@ import android.content.DialogInterface
 import android.util.AttributeSet
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.ListPreference
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.cardviewer.GestureProcessor
@@ -42,7 +40,6 @@ import com.ichi2.anki.reviewer.screenBuilder
 import com.ichi2.ui.AxisPicker
 import com.ichi2.ui.KeyPicker
 import com.ichi2.utils.*
-import java.util.*
 
 /**
  * A preference which allows mapping of inputs to actions (example: keys -> commands)
@@ -108,25 +105,25 @@ class ControlPreference : ListPreference {
         when (val index: Int = (newValue as String).toInt()) {
             ADD_GESTURE_INDEX -> {
                 val actionName = title
-                MaterialDialog(context).show {
+                AlertDialog.Builder(context).show {
                     title(text = actionName.toString())
 
                     val gesturePicker = GestureSelectionDialogUtils.getGesturePicker(context)
 
-                    positiveButton(R.string.dialog_ok) { materialDialog ->
+                    positiveButton(R.string.dialog_ok) {
                         val gesture = gesturePicker.getGesture() ?: return@positiveButton
                         val mappableBinding = fromGesture(
                             gesture,
                             screenBuilder
                         )
                         if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
-                            showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_gesture), materialDialog)
+                            showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_gesture), it)
                         } else {
                             addBinding(mappableBinding)
-                            dismiss()
+                            it.dismiss()
                         }
                     }
-                    negativeButton(R.string.dialog_cancel) { dismiss() }
+                    negativeButton(R.string.dialog_cancel) { it.dismiss() }
                     customView(view = gesturePicker)
 
                     gesturePicker.onGestureChanged { gesture ->
@@ -137,8 +134,6 @@ class ControlPreference : ListPreference {
                             )
                         )
                     }
-
-                    noAutoDismiss()
                 }
             }
             ADD_KEY_INDEX -> {
