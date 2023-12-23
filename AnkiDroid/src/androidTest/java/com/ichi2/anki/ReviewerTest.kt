@@ -30,8 +30,10 @@ import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
+import com.ichi2.libanki.Collection
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -55,14 +57,12 @@ class ReviewerTest : InstrumentedTest() {
 
     @Test
     fun testCustomSchedulerWithCustomData() {
-        col.config.set(
-            "cardStateCustomizer",
+        col.cardStateCustomizer =
             """
             states.good.normal.review.easeFactor = 3.0;
             states.good.normal.review.scheduledDays = 123;
             customData.good.c += 1;
             """
-        )
         val note = addNoteUsingBasicModel("foo", "bar")
         val card = note.firstCard()
         val deck = col.decks.get(note.notetype.did)!!
@@ -89,6 +89,22 @@ class ReviewerTest : InstrumentedTest() {
         assertThat(cardFromDb.easeFactor, equalTo(3000))
         assertThat(cardFromDb.interval, equalTo(123))
         assertThat(cardFromDb.customData, equalTo("""{"c":2}"""))
+    }
+
+    @Test
+    @Ignore("15035")
+    fun testCustomSchedulerWithRuntimeError() {
+        // Issue 15035 - runtime errors weren't handled
+        col.cardStateCustomizer = "states.this_is_not_defined.normal.review = 12;"
+        addNoteUsingBasicModel()
+
+        closeGetStartedScreenIfExists()
+        closeBackupCollectionDialogIfExists()
+        reviewDeckWithName("Default")
+
+        clickShowAnswer()
+
+        ensureAnswerButtonsAreDisplayed()
     }
 
     private fun closeGetStartedScreenIfExists() {
@@ -129,7 +145,16 @@ class ReviewerTest : InstrumentedTest() {
     }
 
     private fun clickShowAnswerAndAnswerGood() {
+        clickShowAnswer()
+        ensureAnswerButtonsAreDisplayed()
+        onView(withId(R.id.flashcard_layout_ease3)).perform(click())
+    }
+
+    private fun clickShowAnswer() {
         onView(withId(R.id.flashcard_layout_flip)).perform(click())
+    }
+
+    private fun ensureAnswerButtonsAreDisplayed() {
         // We need to wait for the card to fully load to allow enough time for
         // the messages to be passed in and out of the WebView when evaluating
         // the custom JS scheduler code. The ease buttons are hidden until the
@@ -141,6 +166,9 @@ class ReviewerTest : InstrumentedTest() {
             // slow
             TimeUnit.SECONDS.toMillis(30)
         )
-        onView(withId(R.id.flashcard_layout_ease3)).perform(click())
     }
 }
+
+private var Collection.cardStateCustomizer: String?
+    get() = config.get("cardStateCustomizer")
+    set(value) { config.set("cardStateCustomizer", value) }
