@@ -63,6 +63,12 @@ interface TestClass {
         return addNoteUsingModelName("Basic (type in the answer)", front, back)
     }
 
+    fun addCloseNote(text: String, extra: String = "Extra"): Note =
+        col.newNote(col.notetypes.byName("Cloze")!!).apply {
+            setItem("Text", text)
+            col.addNote(this)
+        }
+
     fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
         val model = col.notetypes.byName((name)!!)
             ?: throw IllegalArgumentException("Could not find model '$name'")
