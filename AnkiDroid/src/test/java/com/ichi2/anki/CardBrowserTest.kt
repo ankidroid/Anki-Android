@@ -345,7 +345,7 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun flagValueIsShownOnCard() {
         val n = addNoteUsingBasicModel("1", "back")
-        flagCardForNote(n, 1)
+        flagCardForNote(n, Flag.RED)
 
         val cardId = n.cids()[0]
 
@@ -410,13 +410,13 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun filterByFlagDisplaysProperly() = runTest {
         val cardWithRedFlag = addNoteUsingBasicModel("Card with red flag", "Reverse")
-        flagCardForNote(cardWithRedFlag, 1)
+        flagCardForNote(cardWithRedFlag, Flag.RED)
 
         val cardWithGreenFlag = addNoteUsingBasicModel("Card with green flag", "Reverse")
-        flagCardForNote(cardWithGreenFlag, 3)
+        flagCardForNote(cardWithGreenFlag, Flag.GREEN)
 
         val anotherCardWithRedFlag = addNoteUsingBasicModel("Second card with red flag", "Reverse")
-        flagCardForNote(anotherCardWithRedFlag, 1)
+        flagCardForNote(anotherCardWithRedFlag, Flag.RED)
 
         val b = browserWithNoNewCards
         b.viewModel.setFlagFilter(Flag.RED)
@@ -817,9 +817,9 @@ class CardBrowserTest : RobolectricTest() {
         return b.getPropertiesForCardId(ids[0])
     }
 
-    private fun flagCardForNote(n: Note, flag: Int) {
+    private fun flagCardForNote(n: Note, flag: Flag) {
         val c = n.firstCard()
-        c.setUserFlag(flag)
+        c.setUserFlag(flag.code)
         c.col.updateCard(c, skipUndoEntry = true)
     }
 
