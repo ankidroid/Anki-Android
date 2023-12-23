@@ -816,7 +816,7 @@ class CardBrowserTest : RobolectricTest() {
 
     private fun flagCardForNote(n: Note, flag: Flag) {
         val c = n.firstCard()
-        c.setUserFlag(flag.code)
+        c.setUserFlag(flag)
         c.col.updateCard(c, skipUndoEntry = true)
     }
 

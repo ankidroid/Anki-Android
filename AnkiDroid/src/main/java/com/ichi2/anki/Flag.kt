@@ -16,6 +16,7 @@
 package com.ichi2.anki
 
 import androidx.annotation.DrawableRes
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
 
@@ -36,3 +37,4 @@ enum class Flag(val code: Int, @DrawableRes val drawableRes: Int) {
     }
 }
 fun Collection.setUserFlag(flag: Flag, cids: List<CardId>) = this.setUserFlag(flag.code, cids)
+fun Card.setUserFlag(flag: Flag) = this.setUserFlag(flag.code)
