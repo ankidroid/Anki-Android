@@ -475,18 +475,28 @@ open class CardBrowser :
         viewModel.isInMultiSelectModeFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { inMultiSelect ->
-                if (inMultiSelect) return@onEach
-
-                Timber.d("end multiselect mode")
-                // If view which was originally selected when entering multi-select is visible then maintain its position
-                val view = cardsListView.getChildAt(mLastSelectedPosition - cardsListView.firstVisiblePosition)
-                view?.let { recenterListView(it) }
-                // update adapter to remove check boxes
-                cardsAdapter.notifyDataSetChanged()
-                // update action bar
-                invalidateOptionsMenu()
-                deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
-                mActionBarTitle.visibility = View.GONE
+                if (inMultiSelect) {
+                    // Turn on Multi-Select Mode so that the user can select multiple cards at once.
+                    Timber.d("load multiselect mode")
+                    // show title and hide spinner
+                    mActionBarTitle.visibility = View.VISIBLE
+                    // TODO: this should be in the selectedRowCount() flow
+                    mActionBarTitle.text = viewModel.selectedRowCount().toString()
+                    deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
+                    // reload the actionbar using the multi-select mode actionbar
+                    invalidateOptionsMenu()
+                } else {
+                    Timber.d("end multiselect mode")
+                    // If view which was originally selected when entering multi-select is visible then maintain its position
+                    val view = cardsListView.getChildAt(mLastSelectedPosition - cardsListView.firstVisiblePosition)
+                    view?.let { recenterListView(it) }
+                    // update adapter to remove check boxes
+                    cardsAdapter.notifyDataSetChanged()
+                    // update action bar
+                    invalidateOptionsMenu()
+                    deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
+                    mActionBarTitle.visibility = View.GONE
+                }
             }
             .launchIn(lifecycleScope)
     }
@@ -552,7 +562,6 @@ open class CardBrowser :
             } else {
                 mLastSelectedPosition = position
                 saveScrollingState(position)
-                loadMultiSelectMode()
 
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
@@ -1845,10 +1854,7 @@ open class CardBrowser :
     fun onSelectionChanged() {
         Timber.d("onSelectionChanged()")
         try {
-            if (!isInMultiSelectMode && viewModel.hasSelectedAnyRows()) {
-                // If we have selected cards, load multiselect
-                loadMultiSelectMode()
-            } else if (isInMultiSelectMode && !viewModel.hasSelectedAnyRows()) {
+            if (isInMultiSelectMode && !viewModel.hasSelectedAnyRows()) {
                 // If we don't have cards, unload multiselect
                 endMultiSelectMode()
             }
@@ -2140,22 +2146,6 @@ open class CardBrowser :
             // Scroll to the same vertical position before the layout was changed
             cardsListView.setSelectionFromTop(position, top)
         }, 10)
-    }
-
-    /**
-     * Turn on Multi-Select Mode so that the user can select multiple cards at once.
-     */
-    private fun loadMultiSelectMode() {
-        if (isInMultiSelectMode) {
-            return
-        }
-        Timber.d("loadMultiSelectMode()")
-        // show title and hide spinner
-        mActionBarTitle.visibility = View.VISIBLE
-        mActionBarTitle.text = viewModel.selectedRowCount().toString()
-        deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
-        // reload the actionbar using the multi-select mode actionbar
-        invalidateOptionsMenu()
     }
 
     /**
