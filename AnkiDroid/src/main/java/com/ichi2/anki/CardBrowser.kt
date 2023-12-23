@@ -1854,11 +1854,6 @@ open class CardBrowser :
     fun onSelectionChanged() {
         Timber.d("onSelectionChanged()")
         try {
-            if (isInMultiSelectMode && !viewModel.hasSelectedAnyRows()) {
-                // If we don't have cards, unload multiselect
-                endMultiSelectMode()
-            }
-
             // If we're not in mutliselect, we can select cards if there are cards to select
             if (!isInMultiSelectMode) {
                 mActionBarMenu?.findItem(R.id.action_select_all)?.apply {
