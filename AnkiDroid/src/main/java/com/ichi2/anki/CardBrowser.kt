@@ -1326,7 +1326,6 @@ open class CardBrowser :
         savedInstanceState.putBoolean("mShouldRestoreScroll", mShouldRestoreScroll)
         savedInstanceState.putBoolean("mPostAutoScroll", mPostAutoScroll)
         savedInstanceState.putInt("mLastSelectedPosition", mLastSelectedPosition)
-        savedInstanceState.putBoolean("mInMultiSelectMode", isInMultiSelectMode)
         mExportingDelegate.onSaveInstanceState(savedInstanceState)
         super.onSaveInstanceState(savedInstanceState)
     }
@@ -1339,7 +1338,6 @@ open class CardBrowser :
         mShouldRestoreScroll = savedInstanceState.getBoolean("mShouldRestoreScroll")
         mPostAutoScroll = savedInstanceState.getBoolean("mPostAutoScroll")
         mLastSelectedPosition = savedInstanceState.getInt("mLastSelectedPosition")
-        isInMultiSelectMode = savedInstanceState.getBoolean("mInMultiSelectMode")
         searchCards()
     }
 
