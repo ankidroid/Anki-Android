@@ -479,8 +479,6 @@ open class CardBrowser :
                     // TODO: this should be in the selectedRowCount() flow
                     mActionBarTitle.text = viewModel.selectedRowCount().toString()
                     deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
-                    // reload the actionbar using the multi-select mode actionbar
-                    invalidateOptionsMenu()
                 } else {
                     Timber.d("end multiselect mode")
                     // If view which was originally selected when entering multi-select is visible then maintain its position
@@ -488,11 +486,11 @@ open class CardBrowser :
                     view?.let { recenterListView(it) }
                     // update adapter to remove check boxes
                     cardsAdapter.notifyDataSetChanged()
-                    // update action bar
-                    invalidateOptionsMenu()
                     deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
                     mActionBarTitle.visibility = View.GONE
                 }
+                // reload the actionbar using the multi-select mode actionbar
+                invalidateOptionsMenu()
             }
             .launchIn(lifecycleScope)
     }
