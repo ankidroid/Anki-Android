@@ -906,19 +906,12 @@ open class CardBrowser :
     @VisibleForTesting
     suspend fun updateSelectedCardsFlag(flag: Flag) {
         // list of cards with updated flags
-        val updatedCards = withProgress {
-            withCol {
-                setUserFlag(flag, selectedCardIds)
-                selectedCardIds
-                    .map { getCard(it) }
-                    .onEach { load() }
-            }
-        }
+        val updatedCards = withProgress { viewModel.updateSelectedCardsFlag(flag) }
         // TODO: try to offload the cards processing in updateCardsInList() on a background thread,
         // otherwise it could hang the main thread
         updateCardsInList(updatedCards)
         invalidateOptionsMenu() // maybe the availability of undo changed
-        if (updatedCards.map { card -> card.id }.contains(reviewerCardId)) {
+        if (updatedCards.any { card -> card.id == reviewerCardId }) {
             mReloadRequired = true
         }
     }

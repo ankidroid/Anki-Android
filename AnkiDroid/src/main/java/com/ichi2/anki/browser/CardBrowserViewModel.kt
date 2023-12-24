@@ -38,7 +38,9 @@ import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.servicelayer.CardService
+import com.ichi2.anki.setUserFlag
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
@@ -488,6 +490,15 @@ class CardBrowserViewModel(
     private fun indexOfFirstCheckedCard(): Int? {
         val idToFind = selectedRows.firstOrNull()?.id ?: return null
         return allCardIds.indexOf(idToFind)
+    }
+
+    suspend fun updateSelectedCardsFlag(flag: Flag): List<Card> {
+        return withCol {
+            setUserFlag(flag, selectedCardIds)
+            selectedCardIds
+                .map { getCard(it) }
+                .onEach { load() }
+        }
     }
 
     companion object {
