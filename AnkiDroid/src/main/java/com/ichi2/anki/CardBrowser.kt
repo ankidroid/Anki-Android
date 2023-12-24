@@ -764,8 +764,8 @@ open class CardBrowser :
                     if (mSearchView!!.shouldIgnoreValueChange()) {
                         return true
                     }
+                    viewModel.updateQueryText(newText)
                     mSaveSearchItem?.isVisible = newText.isNotEmpty()
-                    mTempSearchQuery = newText
                     return true
                 }
 

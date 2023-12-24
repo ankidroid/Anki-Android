@@ -511,6 +511,10 @@ class CardBrowserViewModel(
         searchQueryExpandedFlow.update { true }
     }
 
+    fun updateQueryText(newText: String) {
+        tempSearchQuery = newText
+    }
+
     suspend fun updateSelectedCardsFlag(flag: Flag): List<Card> {
         return withCol {
             setUserFlag(flag, selectedCardIds)
