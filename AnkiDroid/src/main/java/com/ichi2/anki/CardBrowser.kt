@@ -467,6 +467,10 @@ open class CardBrowser :
             }
             .launchIn(lifecycleScope)
 
+        viewModel.canSaveSearchFlow
+            .onEach { canSave -> runOnUiThread { mSaveSearchItem?.isVisible = canSave } }
+            .launchIn(lifecycleScope)
+
         viewModel.isInMultiSelectModeFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { inMultiSelect ->
@@ -764,7 +768,6 @@ open class CardBrowser :
                         return true
                     }
                     viewModel.updateQueryText(newText)
-                    mSaveSearchItem?.isVisible = newText.isNotEmpty()
                     return true
                 }
 
