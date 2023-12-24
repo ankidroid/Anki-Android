@@ -2249,9 +2249,8 @@ abstract class AbstractFlashcardViewer :
             request: WebResourceRequest
         ): WebResourceResponse? {
             val url = request.url
-            val result = loader!!.shouldInterceptRequest(url)
-            if (result != null) {
-                return result
+            if (request.method == "GET") {
+                loader!!.shouldInterceptRequest(url)?.let { return it }
             }
             if (url.toString().startsWith("file://")) {
                 if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
