@@ -105,13 +105,13 @@ class CardBrowserViewModel(
 
     private val searchQueryExpandedFlow = MutableStateFlow(false)
 
-    private val tempSearchQueryFlow = MutableStateFlow<String?>(null)
+    private val searchQueryInputFlow = MutableStateFlow<String?>(null)
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
-    val tempSearchQuery get() = tempSearchQueryFlow.value
+    val tempSearchQuery get() = searchQueryInputFlow.value
 
     /** Whether the current element in the search bar can be saved */
-    val canSaveSearchFlow = tempSearchQueryFlow
+    val canSaveSearchFlow = searchQueryInputFlow
         .map { it?.isNotEmpty() == true }
         .stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = false)
 
@@ -510,7 +510,7 @@ class CardBrowserViewModel(
     }
 
     private fun collapseSearchQuery() {
-        tempSearchQueryFlow.update { null }
+        searchQueryInputFlow.update { null }
         searchQueryExpandedFlow.update { false }
     }
 
@@ -519,11 +519,11 @@ class CardBrowserViewModel(
     }
 
     fun updateQueryText(newText: String) {
-        tempSearchQueryFlow.update { newText }
+        searchQueryInputFlow.update { newText }
     }
 
     fun removeUnsubmittedInput() {
-        tempSearchQueryFlow.update { null }
+        searchQueryInputFlow.update { null }
     }
 
     suspend fun updateSelectedCardsFlag(flag: Flag): List<Card> {
