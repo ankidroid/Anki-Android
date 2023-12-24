@@ -468,8 +468,7 @@ class SharedDecksDownloadFragment : Fragment() {
 
     @Suppress("deprecation") // onBackPressed
     fun showCancelConfirmationDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.apply {
+        AlertDialog.Builder(requireContext()).apply {
             setTitle(R.string.cancel_download_question_title)
             setPositiveButton(R.string.dialog_yes) { _, _: Int ->
                 mDownloadManager.remove(mDownloadId)
@@ -480,9 +479,7 @@ class SharedDecksDownloadFragment : Fragment() {
             setNegativeButton(R.string.dialog_no) { _, _: Int ->
                 downloadCancelConfirmationDialog?.dismiss()
             }
-        }
-        downloadCancelConfirmationDialog = builder.create()
-        downloadCancelConfirmationDialog?.show()
+        }.create().show()
     }
 
     private fun removeCancelConfirmationDialog() {
