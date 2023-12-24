@@ -150,7 +150,7 @@ class ManageNotetypes : AnkiActivity() {
             AlertDialog.Builder(this@ManageNotetypes).show {
                 title(R.string.model_browser_delete)
                 message(messageResourceId)
-                positiveButton(R.string.dialog_ok) {
+                positiveButton(R.string.dialog_positive_delete) {
                     launchCatchingTask {
                         runAndRefreshAfter { removeNotetype(noteTypeUiModel.id) }
                     }
