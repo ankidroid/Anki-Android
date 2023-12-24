@@ -743,17 +743,18 @@ open class CardBrowser :
             mSearchItem = menu.findItem(R.id.action_search)
             mSearchItem!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
                 override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                    viewModel.setSearchQueryExpanded(true)
                     return true
                 }
 
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                    viewModel.setSearchQueryExpanded(false)
                     // SearchView doesn't support empty queries so we always reset the search when collapsing
                     mSearchTerms = ""
                     mSearchView!!.setQuery(mSearchTerms, false)
                     searchCards()
                     // invalidate options menu so that disappeared icons would appear again
                     invalidateOptionsMenu()
-                    mTempSearchQuery = null
                     return true
                 }
             })

@@ -103,6 +103,8 @@ class CardBrowserViewModel(
     val column1Index get() = column1IndexFlow.value
     val column2Index get() = column2IndexFlow.value
 
+    private val searchQueryExpandedFlow = MutableStateFlow(false)
+
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
     var tempSearchQuery: String? = null
 
@@ -490,6 +492,23 @@ class CardBrowserViewModel(
     private fun indexOfFirstCheckedCard(): Int? {
         val idToFind = selectedRows.firstOrNull()?.id ?: return null
         return allCardIds.indexOf(idToFind)
+    }
+
+    fun setSearchQueryExpanded(expand: Boolean) {
+        if (expand) {
+            expandSearchQuery()
+        } else {
+            collapseSearchQuery()
+        }
+    }
+
+    private fun collapseSearchQuery() {
+        tempSearchQuery = null
+        searchQueryExpandedFlow.update { false }
+    }
+
+    private fun expandSearchQuery() {
+        searchQueryExpandedFlow.update { true }
     }
 
     suspend fun updateSelectedCardsFlag(flag: Flag): List<Card> {
