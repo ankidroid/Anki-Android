@@ -1192,21 +1192,10 @@ open class CardBrowser :
         )
     }
 
-    protected fun onPreview() {
-        onPreviewCardsActivityResult.launch(previewIntent)
-    } // Preview all cards, starting from the one that is currently selected
-
-    // Multiple cards have been explicitly selected, so preview only those cards
-    @get:VisibleForTesting
-    val previewIntent: Intent
-        get() = if (isInMultiSelectMode && viewModel.selectedRowCount() > 1) {
-            // Multiple cards have been explicitly selected, so preview only those cards
-            getPreviewIntent(0, selectedCardIds.toLongArray())
-        } else {
-            // Preview all cards, starting from the one that is currently selected
-            val startIndex = viewModel.selectedRows.firstOrNull()?.position ?: 0
-            getPreviewIntent(startIndex, viewModel.allCardIds)
-        }
+    private fun onPreview() {
+        val intentData = viewModel.previewIntentData
+        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.index, intentData.cardList))
+    }
 
     private fun getPreviewIntent(index: Int, selectedCardIds: LongArray): Intent {
         return if (sharedPrefs().getBoolean("new_previewer", false)) {

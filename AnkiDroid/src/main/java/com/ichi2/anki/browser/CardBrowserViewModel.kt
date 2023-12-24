@@ -27,6 +27,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
+import com.ichi2.anki.PreviewDestination
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ExportDialogParams
 import com.ichi2.anki.export.ExportType
@@ -457,6 +458,24 @@ class CardBrowserViewModel(
             sb.append("($tagsConcat)") // Only if we added anything to the tag list
         }
         setFilterQuery(sb.toString())
+    }
+
+    /** Previewing */
+
+    val previewIntentData: PreviewDestination
+        get() = if (selectedRowCount() > 1) {
+            // Multiple cards have been explicitly selected, so preview only those cards
+            PreviewDestination(index = 0, cardList = selectedCardIds.toLongArray())
+        } else {
+            // Preview all cards, starting from the one that is currently selected
+            val startIndex = indexOfFirstCheckedCard() ?: 0
+            PreviewDestination(startIndex, allCardIds)
+        }
+
+    /** @return the index of the first checked card in [cards], or `null` if no cards are checked */
+    private fun indexOfFirstCheckedCard(): Int? {
+        val idToFind = selectedRows.firstOrNull()?.id ?: return null
+        return allCardIds.indexOf(idToFind)
     }
 
     companion object {

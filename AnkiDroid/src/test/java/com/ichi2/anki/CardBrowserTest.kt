@@ -435,11 +435,11 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(b.getPropertiesForCardId(cid2).position, equalTo(1))
 
         b.selectRowsWithPositions(0)
-        val previewIntent = b.previewIntent
-        assertThat("before: index", previewIntent.getIntExtra("index", -100), equalTo(0))
+        val previewIntent = b.viewModel.previewIntentData
+        assertThat("before: index", previewIntent.index, equalTo(0))
         assertThat(
             "before: cards",
-            previewIntent.getLongArrayExtra("cardList"),
+            previewIntent.cardList,
             equalTo(longArrayOf(cid1, cid2))
         )
 
@@ -450,11 +450,11 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(b.getPropertiesForCardId(cid2).position, equalTo(0))
 
         b.replaceSelectionWith(intArrayOf(0))
-        val intentAfterReverse = b.previewIntent
-        assertThat("after: index", intentAfterReverse.getIntExtra("index", -100), equalTo(0))
+        val intentAfterReverse = b.viewModel.previewIntentData
+        assertThat("after: index", intentAfterReverse.index, equalTo(0))
         assertThat(
             "after: cards",
-            intentAfterReverse.getLongArrayExtra("cardList"),
+            intentAfterReverse.cardList,
             equalTo(longArrayOf(cid2, cid1))
         )
     }
