@@ -162,10 +162,6 @@ open class CardBrowser :
     // DEFECT: Doesn't need to be a local
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
 
-    /** The query which is currently in the search box, potentially null. Only set when search box was open  */
-    private val mTempSearchQuery: String?
-        get() = viewModel.tempSearchQuery
-
     private var onEditCardActivityResult = registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
         Timber.d("onEditCardActivityResult: resultCode=%d", result.resultCode)
         if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -778,10 +774,11 @@ open class CardBrowser :
                 }
             })
             // Fixes #6500 - keep the search consistent if coming back from note editor
-            // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu (mTempSearchQuery)
-            if (!mTempSearchQuery.isNullOrEmpty() || mSearchTerms.isNotEmpty()) {
+            // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
+            if (!viewModel.tempSearchQuery.isNullOrEmpty() || mSearchTerms.isNotEmpty()) {
                 mSearchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
-                val toUse = if (!mTempSearchQuery.isNullOrEmpty()) mTempSearchQuery else mSearchTerms
+                val toUse =
+                    if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else mSearchTerms
                 mSearchView!!.setQuery(toUse!!, false)
             }
             mSearchView!!.setOnSearchClickListener {
