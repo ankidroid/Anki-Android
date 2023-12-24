@@ -123,6 +123,7 @@ class CardBrowserViewModel(
         get() = lastDeckIdRepository.lastDeckId
 
     suspend fun setDeckId(deckId: DeckId) {
+        Timber.i("setting deck: %d", deckId)
         lastDeckIdRepository.lastDeckId = deckId
         restrictOnDeck = if (deckId == ALL_DECKS_ID) {
             ""
@@ -134,6 +135,7 @@ class CardBrowserViewModel(
     }
 
     val deckIdFlow = MutableStateFlow(lastDeckId)
+    val deckId get() = deckIdFlow.value
 
     val cardInfoDestination: CardInfoDestination?
         get() {
@@ -186,6 +188,8 @@ class CardBrowserViewModel(
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
+            // PERF: slightly inefficient if the source was lastDeckId
+            setDeckId(getInitialDeck())
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this) }
             cardsOrNotesFlow.update { cardsOrNotes }
 

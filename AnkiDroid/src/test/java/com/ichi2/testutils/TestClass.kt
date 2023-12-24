@@ -135,6 +135,20 @@ interface TestClass {
     /** Adds [count] notes in the same deck with the same front & back */
     fun addNotes(count: Int): List<Note> = (0..count).map { addNoteUsingBasicModel() }
 
+    fun Note.moveToDeck(deckName: String, createDeckIfMissing: Boolean = true) {
+        val deckId: DeckId? = if (createDeckIfMissing) {
+            col.decks.id(deckName)
+        } else {
+            col.decks.idForName(deckName)
+        }
+        check(deckId != null) { "$deckName not found" }
+
+        this.cards().forEach { card ->
+            card.did = deckId
+            col.updateCard(card, skipUndoEntry = true)
+        }
+    }
+
     /** helper method to update deck config */
     fun updateDeckConfig(deckId: DeckId, function: DeckConfig.() -> Unit) {
         val deckConfig = col.decks.confForDid(deckId)

@@ -558,12 +558,9 @@ open class CardBrowser :
         deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
 
         launchCatchingTask {
-            val deckId = withCol { decks.selected() }
-            // WARN: This is required to set `restrictOnDeck`
-            selectDeckAndSave(deckId)
-            when (viewModel.getInitialDeck()) {
+            when (val deckId = viewModel.getInitialDeck()) {
                 ALL_DECKS_ID -> selectAllDecks()
-                else -> deckSpinnerSelection!!.selectDeckById(viewModel.lastDeckId!!, false)
+                else -> deckSpinnerSelection!!.selectDeckById(deckId, false)
             }
         }
     }
