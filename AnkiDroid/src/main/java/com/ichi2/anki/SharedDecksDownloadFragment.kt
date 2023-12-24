@@ -77,7 +77,7 @@ class SharedDecksDownloadFragment : Fragment() {
 
     var isDownloadInProgress = false
 
-    private var mDownloadCancelConfirmationDialog: AlertDialog? = null
+    private var DownloadCancelConfirmationDialog: AlertDialog? = null
 
     companion object {
         const val DOWNLOAD_PROGRESS_CHECK_DELAY = 1000L
@@ -478,15 +478,14 @@ class SharedDecksDownloadFragment : Fragment() {
                 activity?.onBackPressed()
             }
             setNegativeButton(R.string.dialog_no) { _, _: Int ->
-                // Perform action on negative button click
-                mDownloadCancelConfirmationDialog?.dismiss()
+                DownloadCancelConfirmationDialog?.dismiss()
             }
         }
-        mDownloadCancelConfirmationDialog = builder.create()
-        mDownloadCancelConfirmationDialog?.show()
+        DownloadCancelConfirmationDialog = builder.create()
+        DownloadCancelConfirmationDialog?.show()
     }
 
     private fun removeCancelConfirmationDialog() {
-        mDownloadCancelConfirmationDialog?.dismiss()
+        DownloadCancelConfirmationDialog?.dismiss()
     }
 }
