@@ -428,6 +428,20 @@ open class CardBrowser :
             .onEach { runOnUiThread { searchCards() } }
             .launchIn(lifecycleScope)
 
+        viewModel.searchQueryExpandedFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { searchQueryExpanded ->
+                Timber.d("query expansion changed: %b", searchQueryExpanded)
+                if (searchQueryExpanded) {
+                    runOnUiThread { mSearchItem?.expandActionView() }
+                } else {
+                    runOnUiThread { mSearchItem?.collapseActionView() }
+                    // invalidate options menu so that disappeared icons would appear again
+                    invalidateOptionsMenu()
+                }
+            }
+            .launchIn(lifecycleScope)
+
         viewModel.selectedRowsFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { runOnUiThread { onSelectionChanged() } }
@@ -752,8 +766,6 @@ open class CardBrowser :
                     mSearchTerms = ""
                     mSearchView!!.setQuery(mSearchTerms, false)
                     searchCards()
-                    // invalidate options menu so that disappeared icons would appear again
-                    invalidateOptionsMenu()
                     return true
                 }
             })

@@ -103,7 +103,7 @@ class CardBrowserViewModel(
     val column1Index get() = column1IndexFlow.value
     val column2Index get() = column2IndexFlow.value
 
-    private val searchQueryExpandedFlow = MutableStateFlow(false)
+    val searchQueryExpandedFlow = MutableStateFlow(false)
 
     private val searchQueryInputFlow = MutableStateFlow<String?>(null)
 
