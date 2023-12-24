@@ -1021,6 +1021,31 @@ class CardBrowserTest : RobolectricTest() {
             assertThat("deselect row: tap", viewModel.selectedRowCount(), equalTo(1))
         }
     }
+
+    @Test
+    fun `deck id is remembered - issue 15072`() = runTest {
+        // WARN: This doesn't mirror reality due to the use of coroutines
+        // in the issue, selectDeckAndSave() was called AFTER the search had been performed
+        // due to this being called immediately in a test-based context
+
+        // We're going to move this functionality entirely to the ViewModel over the next few weeks
+        // so this test should be updated and working after the refactorings are completed
+        addNoteUsingBasicModel().moveToDeck("First")
+        addNoteUsingBasicModel().moveToDeck("Second")
+
+        val secondDeckId = requireNotNull(col.decks.idForName("Second"))
+
+        browserWithNoNewCards.apply {
+            selectDeckAndSave(secondDeckId)
+            assertThat(viewModel.deckId, equalTo(secondDeckId))
+            finish()
+        }
+
+        browserWithNoNewCards.apply {
+            assertThat("deckId is remembered", viewModel.deckId, equalTo(secondDeckId))
+            assertThat("deckId is searched", viewModel.rowCount, equalTo(1))
+        }
+    }
 }
 
 fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean =
