@@ -209,6 +209,7 @@
         <com.ichi2.preferences.ControlPreference
             android:key="@string/replay_voice_command_key"
             android:title="@string/replay_voice"
+            android:icon="@drawable/ic_replay"
             />
     </PreferenceCategory>
 
