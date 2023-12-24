@@ -163,9 +163,8 @@ open class CardBrowser :
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
-    private var mTempSearchQuery: String?
+    private val mTempSearchQuery: String?
         get() = viewModel.tempSearchQuery
-        set(value) { viewModel.tempSearchQuery = value }
 
     private var onEditCardActivityResult = registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
         Timber.d("onEditCardActivityResult: resultCode=%d", result.resultCode)
@@ -716,7 +715,7 @@ open class CardBrowser :
         super.onPause()
         // If the user entered something into the search, but didn't press "search", clear this.
         // It's confusing if the bar is shown with a query that does not relate to the data on the screen
-        mTempSearchQuery = null
+        viewModel.removeUnsubmittedInput()
         if (mPostAutoScroll) {
             mPostAutoScroll = false
         }

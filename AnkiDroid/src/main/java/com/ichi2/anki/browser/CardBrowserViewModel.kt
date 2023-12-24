@@ -515,6 +515,10 @@ class CardBrowserViewModel(
         tempSearchQuery = newText
     }
 
+    fun removeUnsubmittedInput() {
+        tempSearchQuery = null
+    }
+
     suspend fun updateSelectedCardsFlag(flag: Flag): List<Card> {
         return withCol {
             setUserFlag(flag, selectedCardIds)
