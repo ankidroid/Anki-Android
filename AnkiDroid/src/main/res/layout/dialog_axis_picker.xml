@@ -26,7 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textAlignment="center"
         android:text="@string/axis_picker_move_joystick"
         android:focusable="true"
