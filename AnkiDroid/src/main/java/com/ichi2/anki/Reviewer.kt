@@ -43,6 +43,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
@@ -55,8 +56,13 @@ import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
 import com.ichi2.anki.multimediacard.AudioView
 import com.ichi2.anki.multimediacard.AudioView.Companion.createRecorderInstance
+import com.ichi2.anki.pages.AnkiServer
+import com.ichi2.anki.pages.AnkiServer.Companion.ANKIDROID_JS_PREFIX
+import com.ichi2.anki.pages.AnkiServer.Companion.ANKI_PREFIX
+import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.pages.CardInfoDestination
+import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.*
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
@@ -93,18 +99,22 @@ import java.util.function.Consumer
 @NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
 open class Reviewer :
     AbstractFlashcardViewer(),
-    ReviewerUi {
-    var queueState: CurrentQueueState? = null
-    val customSchedulingKey = TimeManager.time.intTimeMS().toString()
+    ReviewerUi,
+    PostRequestHandler {
+    private var queueState: CurrentQueueState? = null
+    private val customSchedulingKey = TimeManager.time.intTimeMS().toString()
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
     private var mPrefFullscreenReview = false
     private lateinit var mColorPalette: LinearLayout
     private var toggleStylus = false
 
-    private val server = ReviewerServer(this).also { it.start() }
+    private val server = AnkiServer(this).also { it.start() }
     override val baseUrl get() = server.baseUrl()
+    override val webviewDomain
+        get() = "$LOCALHOST:${server.listeningPort}"
 
+    @VisibleForTesting
     val jsApi by lazy { AnkiDroidJsAPI(this) }
 
     // A flag that determines if the SchedulingStates in CurrentQueueState are
@@ -118,7 +128,7 @@ open class Reviewer :
     // and only set to true once we know the custom scheduler has finished its
     // execution, or set to true immediately if the custom scheduler has not
     // been configured
-    var statesMutated = false
+    private var statesMutated = false
 
     // TODO: Consider extracting to ViewModel
     // Card counts
@@ -1355,6 +1365,47 @@ open class Reviewer :
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
     private fun isImmersiveSystemUiVisible(activity: AnkiActivity): Boolean {
         return activity.window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
+    }
+
+    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
+        return if (uri.startsWith(ANKI_PREFIX)) {
+            when (val methodName = uri.substring(ANKI_PREFIX.length)) {
+                "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
+                "setSchedulingStates" -> setSchedulingStates(bytes)
+                else -> throw IllegalArgumentException("unhandled request: $methodName")
+            }
+        } else if (uri.startsWith(ANKIDROID_JS_PREFIX)) {
+            jsApi.handleJsApiRequest(uri.substring(ANKIDROID_JS_PREFIX.length), bytes, true)
+        } else {
+            throw IllegalArgumentException("unhandled request: $uri")
+        }
+    }
+
+    private fun getSchedulingStatesWithContext(): ByteArray {
+        val state = queueState ?: return ByteArray(0)
+        return state.schedulingStatesWithContext().toBuilder()
+            .mergeStates(
+                state.states.toBuilder().mergeCurrent(
+                    state.states.current.toBuilder()
+                        .setCustomData(state.topCard.toBackendCard().customData).build()
+                ).build()
+            )
+            .build()
+            .toByteArray()
+    }
+
+    private fun setSchedulingStates(bytes: ByteArray): ByteArray {
+        val state = queueState
+        if (state == null) {
+            statesMutated = true
+            return ByteArray(0)
+        }
+        val req = SetSchedulingStatesRequest.parseFrom(bytes)
+        if (req.key == customSchedulingKey) {
+            state.states = req.states
+        }
+        statesMutated = true
+        return ByteArray(0)
     }
 
     private fun createWhiteboard() {

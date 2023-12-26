@@ -17,24 +17,8 @@
 
 package com.ichi2.anki.pages
 
-import android.app.Activity
-import androidx.fragment.app.FragmentActivity
-import anki.collection.OpChanges
-import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.NoteEditor
-import com.ichi2.anki.importCsvRaw
-import com.ichi2.anki.importJsonFileRaw
-import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.searchInBrowser
-import com.ichi2.libanki.*
-import com.ichi2.libanki.sched.computeFsrsWeightsRaw
-import com.ichi2.libanki.sched.computeOptimalRetentionRaw
-import com.ichi2.libanki.sched.evaluateWeightsRaw
-import com.ichi2.libanki.stats.*
 import fi.iki.elonen.NanoHTTPD
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.ByteArrayInputStream
@@ -46,7 +30,7 @@ const val PORT = 0
 // ~/Local/Android/Sdk/platform-tools/adb forward tcp:40001 tcp:40001
 
 open class AnkiServer(
-    val activity: FragmentActivity
+    private val postHandler: PostRequestHandler
 ) : NanoHTTPD(LOCALHOST, PORT) {
 
     fun baseUrl(): String {
@@ -71,72 +55,14 @@ open class AnkiServer(
         if (session.method == Method.POST) {
             Timber.d("POST: Requested %s", uri)
             val inputBytes = getSessionBytes(session)
-            if (uri.startsWith(ANKI_PREFIX)) {
-                return buildResponse { handlePostRequest(uri.substring(ANKI_PREFIX.length), inputBytes) }
+            return buildResponse {
+                postHandler.handlePostRequest(uri, inputBytes)
             }
         }
         return newFixedLengthResponse(null)
     }
 
-    private suspend fun handlePostRequest(methodName: String, bytes: ByteArray): ByteArray {
-        return when (methodName) {
-            "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
-            "getGraphPreferences" -> withCol { getGraphPreferencesRaw() }
-            "setGraphPreferences" -> withCol { setGraphPreferencesRaw(bytes) }
-            "graphs" -> withCol { graphsRaw(bytes) }
-            "getNotetypeNames" -> withCol { getNotetypeNamesRaw(bytes) }
-            "getDeckNames" -> withCol { getDeckNamesRaw(bytes) }
-            "getCsvMetadata" -> withCol { getCsvMetadataRaw(bytes) }
-            "importCsv" -> importCsvRaw(bytes)
-            "importJsonFile" -> importJsonFileRaw(bytes)
-            "importDone" -> bytes
-            "searchInBrowser" -> activity.searchInBrowser(bytes)
-            "completeTag" -> withCol { completeTagRaw(bytes) }
-            "getFieldNames" -> withCol { getFieldNamesRaw(bytes) }
-            "cardStats" -> withCol { cardStatsRaw(bytes) }
-            "getDeckConfig" -> withCol { getDeckConfigRaw(bytes) }
-            "getDeckConfigsForUpdate" -> withCol { getDeckConfigsForUpdateRaw(bytes) }
-            "updateDeckConfigs" -> activity.updateDeckConfigsRaw(bytes)
-            "computeFsrsWeights" -> withCol { computeFsrsWeightsRaw(bytes) }
-            "computeOptimalRetention" -> withCol { computeOptimalRetentionRaw(bytes) }
-            "setWantsAbort" -> CollectionManager.getBackend().setWantsAbortRaw(bytes)
-            "evaluateWeights" -> withCol { evaluateWeightsRaw(bytes) }
-            "latestProgress" -> CollectionManager.getBackend().latestProgressRaw(bytes)
-            "getImageForOcclusion" -> withCol { getImageForOcclusionRaw(bytes) }
-            "getImageOcclusionNote" -> withCol { getImageOcclusionNoteRaw(bytes) }
-            "getImageForOcclusionFields" -> withCol { getImageOcclusionFieldsRaw(bytes) }
-            "addImageOcclusionNote" -> {
-                val data = withCol {
-                    addImageOcclusionNoteRaw(bytes)
-                }
-                undoableOp { OpChanges.parseFrom(data) }
-                activity.launchCatchingTask {
-                    // Allow time for toast message to appear before closing editor
-                    delay(1000)
-                    activity.setResult(Activity.RESULT_OK)
-                    activity.finish()
-                }
-                data
-            }
-            "updateImageOcclusionNote" -> {
-                val data = withCol {
-                    updateImageOcclusionNoteRaw(bytes)
-                }
-                undoableOp { OpChanges.parseFrom(data) }
-                activity.launchCatchingTask {
-                    // Allow time for toast message to appear before closing editor
-                    delay(1000)
-                    activity.setResult(NoteEditor.RESULT_UPDATED_IO_NOTE)
-                    activity.finish()
-                }
-                data
-            }
-            "congratsInfo" -> withCol { congratsInfoRaw(bytes) }
-            else -> { throw Exception("unhandled request: $methodName") }
-        }
-    }
-
-    fun buildResponse(
+    private fun buildResponse(
         block: suspend CoroutineScope.() -> ByteArray
     ): Response {
         return try {
