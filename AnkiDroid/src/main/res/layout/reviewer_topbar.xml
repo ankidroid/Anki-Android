@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/top_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/side_margin"
-        android:paddingRight="@dimen/side_margin"
-        android:paddingTop="2dp"
-        android:paddingBottom="3dp"
-        android:gravity="center_vertical"
-        android:background="?attr/topBarColor">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/side_margin"
+    android:paddingRight="@dimen/side_margin"
+    android:paddingTop="2dp"
+    android:paddingBottom="3dp"
+    android:gravity="center_vertical"
+    android:background="?attr/topBarColor">
         <com.ichi2.ui.FixedTextView
             android:id="@+id/new_number"
             android:layout_width="wrap_content"

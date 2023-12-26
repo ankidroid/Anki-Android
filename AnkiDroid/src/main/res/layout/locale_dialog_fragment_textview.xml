@@ -14,12 +14,9 @@
   You should have received a copy of the GNU General Public License along with
   this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<androidx.appcompat.widget.AppCompatTextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/locale_dialog_fragment_text_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textSize="@dimen/content_textsize"
-    android:padding="@dimen/content_vertical_padding"
-    />
+    android:padding="@dimen/content_vertical_padding" />
