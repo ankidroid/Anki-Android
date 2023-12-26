@@ -201,7 +201,7 @@ class ReviewerTest : RobolectricTest() {
         decks.select(didA)
 
         val reviewer = startReviewer()
-        val javaScriptFunction = reviewer.javaScriptFunction()
+        val javaScriptFunction = reviewer.jsApi
 
         waitForAsyncTasksToComplete()
         assertThat(
@@ -295,7 +295,7 @@ class ReviewerTest : RobolectricTest() {
 
     @Suppress("SameParameterValue")
     private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) = runTest {
-        val jsApi = r.javaScriptFunction()
+        val jsApi = r.jsApi
         val countList = listOf(
             getDataFromRequest("newCardCount", jsApi),
             getDataFromRequest("lrnCardCount", jsApi),

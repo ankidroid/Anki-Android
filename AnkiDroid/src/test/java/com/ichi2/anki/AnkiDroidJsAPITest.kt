@@ -44,7 +44,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
-        val jsapi = reviewer.javaScriptFunction()
+        val jsapi = reviewer.jsApi
 
         reviewer.displayCardAnswer()
 
@@ -79,7 +79,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
-        val jsapi = reviewer.javaScriptFunction()
+        val jsapi = reviewer.jsApi
         reviewer.displayCardAnswer()
 
         waitForAsyncTasksToComplete()
@@ -191,7 +191,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
-        val jsapi = reviewer.javaScriptFunction()
+        val jsapi = reviewer.jsApi
 
         waitForAsyncTasksToComplete()
 
@@ -235,7 +235,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
-        val jsapi = reviewer.javaScriptFunction()
+        val jsapi = reviewer.jsApi
 
         waitForAsyncTasksToComplete()
 
@@ -301,7 +301,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
-        val jsapi = reviewer.javaScriptFunction()
+        val jsapi = reviewer.jsApi
 
         // ----------
         // Bury Card
@@ -372,7 +372,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val reviewer: Reviewer = startReviewer()
         waitForAsyncTasksToComplete()
 
-        val jsapi = reviewer.javaScriptFunction()
+        val jsapi = reviewer.jsApi
         // get card id for testing due
         val cardIdRes = getDataFromRequest("cardId", jsapi)
         val jsonObject = JSONObject(cardIdRes)
@@ -408,7 +408,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val reviewer: Reviewer = startReviewer()
         waitForAsyncTasksToComplete()
 
-        val jsapi = reviewer.javaScriptFunction()
+        val jsapi = reviewer.jsApi
 
         // test that card reset
         assertThat(getDataFromRequest("resetProgress", jsapi), equalTo(formatApiResult(true)))
