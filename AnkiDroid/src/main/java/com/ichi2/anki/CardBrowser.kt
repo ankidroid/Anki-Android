@@ -227,11 +227,6 @@ open class CardBrowser :
     private lateinit var mActionBarTitle: TextView
     private var mReloadRequired = false
 
-    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    var isInMultiSelectMode
-        get() = viewModel.isInMultiSelectMode
-        private set(value) { viewModel.isInMultiSelectMode = value }
-
     private var mLastSelectedPosition
         get() = viewModel.lastSelectedPosition
         set(value) { viewModel.lastSelectedPosition = value }
@@ -472,6 +467,30 @@ open class CardBrowser :
                 searchCards()
             }
             .launchIn(lifecycleScope)
+
+        viewModel.isInMultiSelectModeFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { inMultiSelect ->
+                if (inMultiSelect) {
+                    // Turn on Multi-Select Mode so that the user can select multiple cards at once.
+                    Timber.d("load multiselect mode")
+                    // show title and hide spinner
+                    mActionBarTitle.visibility = View.VISIBLE
+                    deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
+                } else {
+                    Timber.d("end multiselect mode")
+                    // If view which was originally selected when entering multi-select is visible then maintain its position
+                    val view = cardsListView.getChildAt(mLastSelectedPosition - cardsListView.firstVisiblePosition)
+                    view?.let { recenterListView(it) }
+                    // update adapter to remove check boxes
+                    cardsAdapter.notifyDataSetChanged()
+                    deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
+                    mActionBarTitle.visibility = View.GONE
+                }
+                // reload the actionbar using the multi-select mode actionbar
+                invalidateOptionsMenu()
+            }
+            .launchIn(lifecycleScope)
     }
 
     fun searchWithFilterQuery(filterQuery: String) = launchCatchingTask {
@@ -516,7 +535,7 @@ open class CardBrowser :
         }
 
         cardsListView.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
-            if (isInMultiSelectMode) {
+            if (viewModel.isInMultiSelectMode) {
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
                 cb.toggle()
@@ -530,12 +549,11 @@ open class CardBrowser :
         }
         @KotlinCleanup("helper function for min/max range")
         cardsListView.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
-            if (isInMultiSelectMode) {
+            if (viewModel.isInMultiSelectMode) {
                 viewModel.selectRowsBetweenPositions(mLastSelectedPosition, position)
             } else {
                 mLastSelectedPosition = position
                 saveScrollingState(position)
-                loadMultiSelectMode()
 
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
@@ -683,7 +701,7 @@ open class CardBrowser :
     override fun onBackPressed() {
         when {
             isDrawerOpen -> super.onBackPressed()
-            isInMultiSelectMode -> endMultiSelectMode()
+            viewModel.isInMultiSelectMode -> endMultiSelectMode()
             else -> {
                 Timber.i("Back key pressed")
                 val data = Intent()
@@ -713,7 +731,7 @@ open class CardBrowser :
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
         mActionBarMenu = menu
-        if (!isInMultiSelectMode) {
+        if (!viewModel.isInMultiSelectMode) {
             // restore drawer click listener and icon
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
@@ -793,7 +811,7 @@ open class CardBrowser :
     }
 
     override fun onNavigationPressed() {
-        if (isInMultiSelectMode) {
+        if (viewModel.isInMultiSelectMode) {
             endMultiSelectMode()
         } else {
             super.onNavigationPressed()
@@ -1326,7 +1344,6 @@ open class CardBrowser :
         savedInstanceState.putBoolean("mShouldRestoreScroll", mShouldRestoreScroll)
         savedInstanceState.putBoolean("mPostAutoScroll", mPostAutoScroll)
         savedInstanceState.putInt("mLastSelectedPosition", mLastSelectedPosition)
-        savedInstanceState.putBoolean("mInMultiSelectMode", isInMultiSelectMode)
         mExportingDelegate.onSaveInstanceState(savedInstanceState)
         super.onSaveInstanceState(savedInstanceState)
     }
@@ -1339,7 +1356,6 @@ open class CardBrowser :
         mShouldRestoreScroll = savedInstanceState.getBoolean("mShouldRestoreScroll")
         mPostAutoScroll = savedInstanceState.getBoolean("mPostAutoScroll")
         mLastSelectedPosition = savedInstanceState.getInt("mLastSelectedPosition")
-        isInMultiSelectMode = savedInstanceState.getBoolean("mInMultiSelectMode")
         searchCards()
     }
 
@@ -1759,7 +1775,7 @@ open class CardBrowser :
             // setup checkbox to change color in multi-select mode
             val checkBox = v.findViewById<CheckBox>(R.id.card_checkbox)
             // if in multi-select mode, be sure to show the checkboxes
-            if (isInMultiSelectMode) {
+            if (viewModel.isInMultiSelectMode) {
                 checkBox.visibility = View.VISIBLE
                 checkBox.isChecked = viewModel.selectedRows.contains(card)
                 // this prevents checkboxes from showing an animation from selected -> unselected when
@@ -1830,23 +1846,16 @@ open class CardBrowser :
     fun onSelectionChanged() {
         Timber.d("onSelectionChanged()")
         try {
-            if (!isInMultiSelectMode && viewModel.hasSelectedAnyRows()) {
-                // If we have selected cards, load multiselect
-                loadMultiSelectMode()
-            } else if (isInMultiSelectMode && !viewModel.hasSelectedAnyRows()) {
-                // If we don't have cards, unload multiselect
-                endMultiSelectMode()
-            }
+            mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
 
             // If we're not in mutliselect, we can select cards if there are cards to select
-            if (!isInMultiSelectMode) {
+            if (!viewModel.isInMultiSelectMode) {
                 mActionBarMenu?.findItem(R.id.action_select_all)?.apply {
                     isVisible = viewModel.rowCount != 0
                 }
                 return
             }
             updateMultiselectMenu()
-            mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
         } finally {
             if (colIsOpenUnsafe()) {
                 cardsAdapter.notifyDataSetChanged()
@@ -2128,40 +2137,9 @@ open class CardBrowser :
     }
 
     /**
-     * Turn on Multi-Select Mode so that the user can select multiple cards at once.
-     */
-    private fun loadMultiSelectMode() {
-        if (isInMultiSelectMode) {
-            return
-        }
-        Timber.d("loadMultiSelectMode()")
-        // set in multi-select mode
-        isInMultiSelectMode = true
-        // show title and hide spinner
-        mActionBarTitle.visibility = View.VISIBLE
-        mActionBarTitle.text = viewModel.selectedRowCount().toString()
-        deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
-        // reload the actionbar using the multi-select mode actionbar
-        invalidateOptionsMenu()
-    }
-
-    /**
      * Turn off Multi-Select Mode and return to normal state
      */
-    private fun endMultiSelectMode() {
-        Timber.d("endMultiSelectMode()")
-        viewModel.selectNone()
-        isInMultiSelectMode = false
-        // If view which was originally selected when entering multi-select is visible then maintain its position
-        val view = cardsListView.getChildAt(mLastSelectedPosition - cardsListView.firstVisiblePosition)
-        view?.let { recenterListView(it) }
-        // update adapter to remove check boxes
-        cardsAdapter.notifyDataSetChanged()
-        // update action bar
-        invalidateOptionsMenu()
-        deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
-        mActionBarTitle.visibility = View.GONE
-    }
+    private fun endMultiSelectMode() = viewModel.selectNone()
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val isShowingSelectAll: Boolean
