@@ -32,7 +32,7 @@ import kotlin.reflect.jvm.jvmName
  * * Host an [AnkiServer] to intercept any requests made by an Anki page and resolve them
  * * Operate UI requests by the [AnkiServer]
  */
-class PagesActivity : AnkiActivity() {
+class PagesActivity : AnkiActivity(), PostRequestHandler {
     private lateinit var ankiServer: AnkiServer
 
     fun baseUrl(): String {
@@ -73,6 +73,17 @@ class PagesActivity : AnkiActivity() {
         if (this::ankiServer.isInitialized && ankiServer.isAlive) {
             ankiServer.stop()
         }
+    }
+
+    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
+        val methodName = if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
+            uri.substring(AnkiServer.ANKI_PREFIX.length)
+        } else {
+            throw IllegalArgumentException("unhandled request: $uri")
+        }
+        return handleUiPostRequest(methodName, bytes)
+            ?: handleCollectionPostRequest(methodName, bytes)
+            ?: throw IllegalArgumentException("unhandled method: $methodName")
     }
 
     companion object {
