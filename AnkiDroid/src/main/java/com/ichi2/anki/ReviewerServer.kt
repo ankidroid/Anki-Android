@@ -20,9 +20,7 @@ import anki.frontend.SetSchedulingStatesRequest
 import com.ichi2.anki.pages.AnkiServer
 import timber.log.Timber
 
-class ReviewerServer(activity: AbstractFlashcardViewer) : AnkiServer(activity) {
-    private val jsApi = activity.javaScriptFunction()
-
+class ReviewerServer(val reviewer: Reviewer) : AnkiServer(reviewer) {
     override fun start() {
         super.start()
         Timber.i("Starting server on http://$LOCALHOST:$listeningPort")
@@ -40,7 +38,7 @@ class ReviewerServer(activity: AbstractFlashcardViewer) : AnkiServer(activity) {
             }
             if (uri.startsWith(ANKIDROID_JS_PREFIX)) {
                 return buildResponse {
-                    jsApi.handleJsApiRequest(uri.substring(ANKIDROID_JS_PREFIX.length), inputBytes, activity is Reviewer)
+                    reviewer.jsApi.handleJsApiRequest(uri.substring(ANKIDROID_JS_PREFIX.length), inputBytes, true)
                 }
             }
         }
@@ -59,12 +57,8 @@ class ReviewerServer(activity: AbstractFlashcardViewer) : AnkiServer(activity) {
         }
     }
 
-    private fun reviewer(): Reviewer {
-        return (activity as Reviewer)
-    }
-
     private fun getSchedulingStatesWithContext(): ByteArray {
-        val state = reviewer().queueState ?: return ByteArray(0)
+        val state = reviewer.queueState ?: return ByteArray(0)
         return state.schedulingStatesWithContext().toBuilder()
             .mergeStates(
                 state.states.toBuilder().mergeCurrent(
@@ -77,7 +71,6 @@ class ReviewerServer(activity: AbstractFlashcardViewer) : AnkiServer(activity) {
     }
 
     private fun setSchedulingStates(bytes: ByteArray): ByteArray {
-        val reviewer = reviewer()
         val state = reviewer.queueState
         if (state == null) {
             reviewer.statesMutated = true

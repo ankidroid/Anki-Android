@@ -88,6 +88,7 @@ import timber.log.Timber
 import java.io.File
 import java.util.function.Consumer
 
+@Suppress("LeakingThis")
 @KotlinCleanup("too many to count")
 @NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
 open class Reviewer :
@@ -100,6 +101,11 @@ open class Reviewer :
     private var mPrefFullscreenReview = false
     private lateinit var mColorPalette: LinearLayout
     private var toggleStylus = false
+
+    private val server = ReviewerServer(this).also { it.start() }
+    override val baseUrl get() = server.baseUrl()
+
+    val jsApi by lazy { AnkiDroidJsAPI(this) }
 
     // A flag that determines if the SchedulingStates in CurrentQueueState are
     // safe to persist in the database when answering a card. This is used to
@@ -196,6 +202,11 @@ open class Reviewer :
         if (answerField != null) {
             answerField!!.focusWithKeyboard()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        server.stop()
     }
 
     protected val flagToDisplay: Int

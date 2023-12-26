@@ -124,7 +124,6 @@ abstract class AbstractFlashcardViewer :
     private var mTtsInitialized = false
     private var mReplayOnTtsInit = false
     private var mAnkiDroidJsAPI: AnkiDroidJsAPI? = null
-    lateinit var server: ReviewerServer
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -223,7 +222,8 @@ abstract class AbstractFlashcardViewer :
     @get:VisibleForTesting
     var cardContent: String? = null
         private set
-    private var mBaseUrl: String? = null
+    open val baseUrl = "http://$LOCALHOST"
+    open val webviewDomain = LOCALHOST
     private var mViewerUrl: String? = null
     private val mFadeDuration = 300
 
@@ -524,8 +524,6 @@ abstract class AbstractFlashcardViewer :
 
         setContentView(getContentViewAttr(fullscreenMode))
 
-        server = ReviewerServer(this@AbstractFlashcardViewer).apply { start() }
-
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         delegate.isHandleNativeActionModesEnabled = true
         val mainView = findViewById<View>(android.R.id.content)
@@ -555,11 +553,7 @@ abstract class AbstractFlashcardViewer :
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         val mediaDir = col.media.dir
-        mBaseUrl = getBaseUrl(mediaDir).also { baseUrl ->
-            soundPlayer = SoundPlayer.newInstance(this, baseUrl)
-            mViewerUrl = baseUrl + "__viewer__.html"
-        }
-
+        soundPlayer = SoundPlayer.newInstance(this, getMediaBaseUrl(mediaDir))
         registerExternalStorageListener()
         restoreCollectionPreferences(col)
         initLayout()
@@ -575,7 +569,7 @@ abstract class AbstractFlashcardViewer :
      * @param mediaDir media directory path on SD card
      * @return path converted to file URL, properly UTF-8 URL encoded
      */
-    private fun getBaseUrl(mediaDir: String): String {
+    private fun getMediaBaseUrl(mediaDir: String): String {
         // Use android.net.Uri class to ensure whole path is properly encoded
         // File.toURL() does not work here, and URLEncoder class is not directly usable
         // with existing slashes
@@ -631,9 +625,6 @@ abstract class AbstractFlashcardViewer :
 
     override fun onDestroy() {
         super.onDestroy()
-        if (this::server.isInitialized) {
-            server.closeAllConnections()
-        }
         mTTS.releaseTts(this)
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver)
@@ -1033,8 +1024,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun createWebView(): WebView {
-        val domain = "$LOCALHOST:${server.listeningPort}"
-        val assetLoader = getViewerAssetLoader(domain)
+        val assetLoader = getViewerAssetLoader(webviewDomain)
         val webView: WebView = MyWebView(this).apply {
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
@@ -1059,9 +1049,6 @@ abstract class AbstractFlashcardViewer :
             webView.isFocusable,
             webView.isFocusableInTouchMode
         )
-
-        // Javascript interface for calling AnkiDroid functions in webview, see card.js
-        mAnkiDroidJsAPI = javaScriptFunction()
 
         // enable third party cookies so that cookies can be used in webview
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
@@ -1424,7 +1411,6 @@ abstract class AbstractFlashcardViewer :
             soundPlayer.loadCardSounds(currentCard!!, if (displayAnswer) Side.BACK else Side.FRONT)
         }
         cardContent = content.getTemplateHtml()
-        Timber.d("base url = %s", mBaseUrl)
         if (this.sharedPrefs().getBoolean("html_javascript_debugging", false)) {
             try {
                 FileOutputStream(
@@ -1516,7 +1502,6 @@ abstract class AbstractFlashcardViewer :
 
     open fun fillFlashcard() {
         Timber.d("fillFlashcard()")
-        Timber.d("base url = %s", mBaseUrl)
         if (cardContent == null) {
             Timber.w("fillFlashCard() called with no card content")
             return
@@ -1529,18 +1514,15 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun loadContentIntoCard(card: WebView?, content: String) {
-        launchCatchingTask {
-            if (card != null) {
-                card.settings.mediaPlaybackRequiresUserGesture = !soundPlayer.config.autoplay
-                Timber.v("*** set server %s content to %s", server, content)
-                card.loadDataWithBaseURL(
-                    server.baseUrl(),
-                    content,
-                    "text/html",
-                    null,
-                    null
-                )
-            }
+        if (card != null) {
+            card.settings.mediaPlaybackRequiresUserGesture = !soundPlayer.config.autoplay
+            card.loadDataWithBaseURL(
+                baseUrl,
+                content,
+                "text/html",
+                null,
+                null
+            )
         }
     }
 
@@ -2549,10 +2531,6 @@ abstract class AbstractFlashcardViewer :
             // Reload current card to reflect tag changes
             reloadWebViewContent()
         }
-    }
-
-    open fun javaScriptFunction(): AnkiDroidJsAPI {
-        return AnkiDroidJsAPI(this)
     }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
