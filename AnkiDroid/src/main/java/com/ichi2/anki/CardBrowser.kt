@@ -261,8 +261,7 @@ open class CardBrowser :
             launchCatchingTask {
                 viewModel.savedSearches()[searchName]?.also { savedSearch ->
                     Timber.d("OnSelection using search terms: %s", savedSearch)
-                    searchView!!.setQuery(savedSearch, true)
-                    searchItem!!.expandActionView()
+                    searchForQuery(savedSearch)
                 }
             }
         }
@@ -312,6 +311,11 @@ open class CardBrowser :
 
     private val selectedRowIds: List<CardId>
         get() = viewModel.selectedRowIds
+
+    private fun searchForQuery(query: String) {
+        searchView!!.setQuery(query, true)
+        searchItem!!.expandActionView()
+    }
 
     private fun canPerformCardInfo(): Boolean {
         return viewModel.selectedRowCount() == 1
@@ -436,11 +440,7 @@ open class CardBrowser :
             .launchCollectionInLifecycleScope { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
 
         viewModel.flowOfFilterQuery
-            .launchCollectionInLifecycleScope { filterQuery ->
-                searchView!!.setQuery("", false)
-                searchView!!.setQuery(filterQuery, true)
-                searchCards(filterQuery)
-            }
+            .launchCollectionInLifecycleScope { filterQuery -> searchForQuery(filterQuery) }
 
         viewModel.flowOfDeckId
             .launchCollectionInLifecycleScope { deckId ->
