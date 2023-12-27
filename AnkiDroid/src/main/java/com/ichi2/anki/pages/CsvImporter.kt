@@ -22,6 +22,7 @@ import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
+import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.hideShowButtonCss
 
 /**
@@ -88,13 +89,13 @@ class CsvImporter : PageFragment() {
 
         /**
          * @param filePath path of the csv file that will be imported, which should be accessible by AnkiDroid
-         * @return an intent to open the [CsvImporter] page on [PagesActivity]
+         * @return an intent to open the [CsvImporter] page on [SingleFragmentActivity]
          */
         fun getIntent(context: Context, filePath: String): Intent {
             val arguments = Bundle().apply {
                 putString(ARG_KEY_PATH, filePath)
             }
-            return PagesActivity.getIntent(context, CsvImporter::class, arguments)
+            return SingleFragmentActivity.getIntent(context, CsvImporter::class, arguments)
         }
     }
 }

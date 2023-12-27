@@ -34,7 +34,7 @@ open class PageWebViewClient : WebViewClient() {
 
             /** [PageFragment.webView] is invisible by default to avoid flashes while
              * the page is loaded, and can be made visible again after it finishes loading */
-            view.isVisible = true
+            webView.isVisible = true
         }
     }
 }
