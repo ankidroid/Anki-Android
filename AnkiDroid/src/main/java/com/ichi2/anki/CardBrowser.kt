@@ -733,24 +733,25 @@ open class CardBrowser :
                     return true
                 }
             })
-            searchView = searchItem!!.actionView as CardBrowserSearchView
-            searchView!!.setMaxWidth(Integer.MAX_VALUE)
-            searchView!!.queryHint = resources.getString(R.string.deck_conf_cram_search)
-            searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextChange(newText: String): Boolean {
-                    if (searchView!!.shouldIgnoreValueChange()) {
+            searchView = (searchItem!!.actionView as CardBrowserSearchView).apply {
+                queryHint = resources.getString(R.string.deck_conf_cram_search)
+                setMaxWidth(Integer.MAX_VALUE)
+                setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        if (this@apply.shouldIgnoreValueChange()) {
+                            return true
+                        }
+                        viewModel.updateQueryText(newText)
                         return true
                     }
-                    viewModel.updateQueryText(newText)
-                    return true
-                }
 
-                override fun onQueryTextSubmit(query: String): Boolean {
-                    searchCards(searchView!!.query.toString())
-                    searchView!!.clearFocus()
-                    return true
-                }
-            })
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        searchCards(query)
+                        searchView!!.clearFocus()
+                        return true
+                    }
+                })
+            }
             // Fixes #6500 - keep the search consistent if coming back from note editor
             // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu (mTempSearchQuery)
             if (!viewModel.tempSearchQuery.isNullOrEmpty() || viewModel.searchTerms.isNotEmpty()) {
