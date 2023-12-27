@@ -661,7 +661,7 @@ open class CardBrowser :
             .putExtra(NoteEditor.EXTRA_CARD_ID, cardBrowserCard!!.id)
         onEditCardActivityResult.launch(editCard)
         // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
-        endMultiSelectMode()
+        viewModel.endMultiSelectMode()
     }
 
     private fun openNoteEditorForCurrentlySelectedNote() {
@@ -696,7 +696,7 @@ open class CardBrowser :
     override fun onBackPressed() {
         when {
             isDrawerOpen -> super.onBackPressed()
-            viewModel.isInMultiSelectMode -> endMultiSelectMode()
+            viewModel.isInMultiSelectMode -> viewModel.endMultiSelectMode()
             else -> {
                 Timber.i("Back key pressed")
                 val data = Intent()
@@ -807,7 +807,7 @@ open class CardBrowser :
 
     override fun onNavigationPressed() {
         if (viewModel.isInMultiSelectMode) {
-            endMultiSelectMode()
+            viewModel.endMultiSelectMode()
         } else {
             super.onNavigationPressed()
         }
@@ -922,7 +922,7 @@ open class CardBrowser :
 
         when (item.itemId) {
             android.R.id.home -> {
-                endMultiSelectMode()
+                viewModel.endMultiSelectMode()
                 return true
             }
             R.id.action_add_note_from_card_browser -> {
@@ -1578,7 +1578,7 @@ open class CardBrowser :
         hideProgressBar()
         // reload whole view
         forceRefreshSearch()
-        endMultiSelectMode()
+        viewModel.endMultiSelectMode()
         cardsAdapter.notifyDataSetChanged()
         updatePreviewMenuItem()
         invalidateOptionsMenu() // maybe the availability of undo changed
@@ -2125,11 +2125,6 @@ open class CardBrowser :
             cardsListView.setSelectionFromTop(position, top)
         }, 10)
     }
-
-    /**
-     * Turn off Multi-Select Mode and return to normal state
-     */
-    private fun endMultiSelectMode() = viewModel.selectNone()
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val isShowingSelectAll: Boolean

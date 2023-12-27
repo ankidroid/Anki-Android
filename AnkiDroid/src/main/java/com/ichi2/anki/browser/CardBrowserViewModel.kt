@@ -501,6 +501,11 @@ class CardBrowserViewModel(
         }
     }
 
+    /**
+     * Turn off [Multi-Select Mode][isInMultiSelectMode] and return to normal state
+     */
+    fun endMultiSelectMode() = selectNone()
+
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
