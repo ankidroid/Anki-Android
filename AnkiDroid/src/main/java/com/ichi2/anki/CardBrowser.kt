@@ -1354,23 +1354,11 @@ open class CardBrowser :
             searchView!!.setQuery(viewModel.searchTerms, false)
             searchItem!!.expandActionView()
         }
-        val searchText: String = if (viewModel.searchTerms.contains("deck:")) {
-            "($viewModel.searchTerms)"
-        } else {
-            if ("" != viewModel.searchTerms) "${viewModel.restrictOnDeck}(${viewModel.searchTerms})" else viewModel.restrictOnDeck
-        }
         // clear the existing card list
         cards.reset()
         cardsAdapter.notifyDataSetChanged()
-        val order = viewModel.order.toSortOrder()
         launchCatchingTask {
-            Timber.d("performing search")
-            val cards = withProgress { searchForCards(searchText, order, viewModel.cardsOrNotes) }
-            Timber.d("Search returned %d cards", cards.size)
-            // Render the first few items
-            for (i in 0 until min(numCardsToRender(), cards.size)) {
-                cards[i].load(false, viewModel.column1Index, viewModel.column2Index)
-            }
+            val cards = withProgress { viewModel.searchForCards(numCardsToRender()) }
             redrawAfterSearch(cards)
         }
     }

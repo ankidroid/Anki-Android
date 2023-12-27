@@ -83,8 +83,7 @@ class CardBrowserViewModel(
 
     val flowOfSearchTerms = MutableStateFlow("")
     val searchTerms get() = flowOfSearchTerms.value
-    var restrictOnDeck: String = ""
-        private set
+    private var restrictOnDeck: String = ""
     var currentFlag = Flag.NONE
 
     val flowOfFilterQuery = MutableSharedFlow<String>()
@@ -548,9 +547,24 @@ class CardBrowserViewModel(
 
     fun setSearchTerms(searchQuery: String) = flowOfSearchTerms.update { searchQuery }
 
-    /** @see com.ichi2.anki.searchForCards */
-    suspend fun searchForCards(query: String): MutableList<CardBrowser.CardCache> {
-        return com.ichi2.anki.searchForCards(query, order.toSortOrder(), cardsOrNotes)
+    /**
+     * @see com.ichi2.anki.searchForCards
+     */
+    suspend fun searchForCards(numCardsToRender: Int): MutableList<CardBrowser.CardCache> {
+        val query: String = if (searchTerms.contains("deck:")) {
+            "($searchTerms)"
+        } else {
+            if ("" != searchTerms) "$restrictOnDeck($searchTerms)" else restrictOnDeck
+        }
+
+        Timber.d("performing search")
+        val cards = com.ichi2.anki.searchForCards(query, order.toSortOrder(), cardsOrNotes)
+        Timber.d("Search returned %d cards", cards.size)
+        // Render the first few items
+        for (i in 0 until min(numCardsToRender, cards.size)) {
+            cards[i].load(false, column1Index, column2Index)
+        }
+        return cards
     }
 
     companion object {
