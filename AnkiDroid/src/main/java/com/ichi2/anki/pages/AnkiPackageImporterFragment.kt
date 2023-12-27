@@ -21,6 +21,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
+import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.hideShowButtonCss
 
 class AnkiPackageImporterFragment : PageFragment() {
@@ -86,7 +87,7 @@ class AnkiPackageImporterFragment : PageFragment() {
 
         fun getIntent(context: Context, filePath: String): Intent {
             val args = bundleOf(ARG_FILE_PATH to filePath)
-            return PagesActivity.getIntent(context, AnkiPackageImporterFragment::class, args)
+            return SingleFragmentActivity.getIntent(context, AnkiPackageImporterFragment::class, args)
         }
     }
 }

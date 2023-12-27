@@ -17,6 +17,7 @@ package com.ichi2.anki.pages
 
 import android.content.Context
 import android.content.Intent
+import com.ichi2.anki.SingleFragmentActivity
 
 class CongratsPage : PageFragment() {
     override val title: String = ""
@@ -26,7 +27,7 @@ class CongratsPage : PageFragment() {
 
     companion object {
         fun getIntent(context: Context): Intent {
-            return PagesActivity.getIntent(context, CongratsPage::class)
+            return SingleFragmentActivity.getIntent(context, CongratsPage::class)
         }
     }
 }

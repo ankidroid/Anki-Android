@@ -106,10 +106,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
         <activity
-            android:name="com.ichi2.anki.pages.PagesActivity"
-            android:exported="true"
-            />
-        <activity
             android:name="com.ichi2.anki.IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

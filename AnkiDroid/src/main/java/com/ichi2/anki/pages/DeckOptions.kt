@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
+import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.updateDeckConfigsRaw
 import kotlinx.coroutines.Dispatchers
@@ -58,7 +59,7 @@ class DeckOptions : PageFragment() {
             val arguments = Bundle().apply {
                 putLong(ARG_DECK_ID, deckId)
             }
-            return PagesActivity.getIntent(context, DeckOptions::class, arguments)
+            return SingleFragmentActivity.getIntent(context, DeckOptions::class, arguments)
         }
     }
 }

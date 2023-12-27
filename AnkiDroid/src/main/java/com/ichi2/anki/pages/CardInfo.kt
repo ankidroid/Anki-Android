@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.webkit.WebView
 import androidx.core.os.bundleOf
 import com.ichi2.anki.R
+import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.libanki.CardId
 
 class CardInfo : PageFragment() {
@@ -52,7 +53,7 @@ class CardInfo : PageFragment() {
         private const val ARG_CARD_ID = "cardId"
 
         fun CardInfoDestination.toIntent(context: Context): Intent =
-            PagesActivity.getIntent(context, CardInfo::class, bundleOf(ARG_CARD_ID to cardId))
+            SingleFragmentActivity.getIntent(context, CardInfo::class, bundleOf(ARG_CARD_ID to cardId))
     }
 }
 
