@@ -1352,13 +1352,12 @@ open class CardBrowser :
         cards.reset()
         cardsAdapter.notifyDataSetChanged()
         launchCatchingTask {
-            val cards = withProgress { viewModel.searchForCards(numCardsToRender()) }
-            redrawAfterSearch(cards)
+            withProgress { viewModel.searchForCards(numCardsToRender()) }
+            redrawAfterSearch()
         }
     }
 
-    fun redrawAfterSearch(cards: MutableList<CardCache>) {
-        this.cards.replaceWith(cards)
+    fun redrawAfterSearch() {
         Timber.i("CardBrowser:: Completed searchCards() Successfully")
         updateList()
         /*check whether mSearchView is initialized as it is lateinit property.*/

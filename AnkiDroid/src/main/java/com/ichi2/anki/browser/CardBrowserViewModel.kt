@@ -564,6 +564,7 @@ class CardBrowserViewModel(
         for (i in 0 until min(numCardsToRender, cards.size)) {
             cards[i].load(false, column1Index, column2Index)
         }
+        this.cards.replaceWith(cards)
         return cards
     }
 
