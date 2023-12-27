@@ -183,7 +183,7 @@ open class CardBrowser :
             Timber.d("Reloading Card Browser due to activity result")
             // if reloadRequired or noteChanged flag was sent from note editor then reload card list
             mShouldRestoreScroll = true
-            searchCards()
+            forceRefreshSearch()
             // in use by reviewer?
             if (reviewerCardId == mCurrentCardId) {
                 mReloadRequired = true
@@ -197,12 +197,7 @@ open class CardBrowser :
             closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
         }
         if (result.resultCode == RESULT_OK) {
-            if (mSearchView != null) {
-                mSearchTerms = mSearchView!!.query.toString()
-                searchCards()
-            } else {
-                Timber.w("Note was added from browser and on return mSearchView == null")
-            }
+            forceRefreshSearch(useSearchTextValue = true)
         }
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
@@ -216,7 +211,7 @@ open class CardBrowser :
         if (data != null &&
             (data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) || data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false))
         ) {
-            searchCards()
+            forceRefreshSearch()
             if (reviewerCardId == mCurrentCardId) {
                 mReloadRequired = true
             }
@@ -1356,8 +1351,10 @@ open class CardBrowser :
         renderBrowserQAJob?.cancel()
     }
 
-    /** Currently unused - to be used in #7676  */
-    private fun forceRefreshSearch() {
+    private fun forceRefreshSearch(useSearchTextValue: Boolean = false) {
+        if (useSearchTextValue && mSearchView != null) {
+            mSearchTerms = mSearchView!!.query.toString()
+        }
         searchCards()
     }
 
