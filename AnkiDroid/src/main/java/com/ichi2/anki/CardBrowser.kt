@@ -148,9 +148,6 @@ open class CardBrowser :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var cardsAdapter: MultiColumnListAdapter
 
-    private val searchTerms
-        get() = viewModel.searchTerms
-
     private lateinit var tagsDialogFactory: TagsDialogFactory
     private var searchItem: MenuItem? = null
     private var saveSearchItem: MenuItem? = null
@@ -308,7 +305,7 @@ open class CardBrowser :
     }
 
     private fun onSearch() {
-        if (searchTerms.isEmpty()) {
+        if (viewModel.searchTerms.isEmpty()) {
             searchView!!.queryHint = resources.getString(R.string.deck_conf_cram_search)
         }
         searchCards(searchView!!.query.toString())
@@ -762,16 +759,15 @@ open class CardBrowser :
                 }
             })
             // Fixes #6500 - keep the search consistent if coming back from note editor
-            // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
-            if (!viewModel.tempSearchQuery.isNullOrEmpty() || searchTerms.isNotEmpty()) {
+            // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu (mTempSearchQuery)
+            if (!viewModel.tempSearchQuery.isNullOrEmpty() || viewModel.searchTerms.isNotEmpty()) {
                 searchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
-                val toUse =
-                    if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else searchTerms
+                val toUse = if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else viewModel.searchTerms
                 searchView!!.setQuery(toUse!!, false)
             }
             searchView!!.setOnSearchClickListener {
                 // Provide SearchView with the previous search terms
-                searchView!!.setQuery(searchTerms, false)
+                searchView!!.setQuery(viewModel.searchTerms, false)
             }
         } else {
             // multi-select mode
@@ -1252,7 +1248,7 @@ open class CardBrowser :
             if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
                 intent.putExtra(NoteEditor.EXTRA_DID, viewModel.lastDeckId)
             }
-            intent.putExtra(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, searchTerms)
+            intent.putExtra(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, viewModel.searchTerms)
             return intent
         }
 
@@ -1313,7 +1309,7 @@ open class CardBrowser :
 
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
         // Save current search terms
-        savedInstanceState.putString("mSearchTerms", searchTerms)
+        savedInstanceState.putString("mSearchTerms", viewModel.searchTerms)
         savedInstanceState.putLong("mOldCardId", oldCardId)
         savedInstanceState.putInt("mOldCardTopOffset", oldCardTopOffset)
         savedInstanceState.putBoolean("mShouldRestoreScroll", shouldRestoreScroll)
@@ -1354,14 +1350,14 @@ open class CardBrowser :
         }
         // cancel the previous search & render tasks if still running
         invalidate()
-        if ("" != searchTerms && searchView != null) {
-            searchView!!.setQuery(searchTerms, false)
+        if ("" != viewModel.searchTerms && searchView != null) {
+            searchView!!.setQuery(viewModel.searchTerms, false)
             searchItem!!.expandActionView()
         }
-        val searchText: String = if (searchTerms.contains("deck:")) {
-            "($searchTerms)"
+        val searchText: String = if (viewModel.searchTerms.contains("deck:")) {
+            "($viewModel.searchTerms)"
         } else {
-            if ("" != searchTerms) "${viewModel.restrictOnDeck}($searchTerms)" else viewModel.restrictOnDeck
+            if ("" != viewModel.searchTerms) "${viewModel.restrictOnDeck}(${viewModel.searchTerms})" else viewModel.restrictOnDeck
         }
         // clear the existing card list
         cards.reset()
