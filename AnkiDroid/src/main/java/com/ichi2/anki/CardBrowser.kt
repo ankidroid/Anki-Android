@@ -1685,7 +1685,7 @@ open class CardBrowser :
                 if (currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount) {
                     mLastRenderStart = currentTime
                     renderBrowserQAJob?.cancel()
-                    launchCatchingTask { renderBrowserQAParams(firstVisibleItem, visibleItemCount, mCards.toList()) }
+                    launchCatchingTask { renderBrowserQAParams(firstVisibleItem, visibleItemCount, viewModel.cards.toList()) }
                 }
             }
         }
@@ -1699,7 +1699,7 @@ open class CardBrowser :
             if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 val startIdx = listView.firstVisiblePosition
                 val numVisible = listView.lastVisiblePosition - startIdx
-                launchCatchingTask { renderBrowserQAParams(startIdx - 5, 2 * numVisible + 5, mCards.toList()) }
+                launchCatchingTask { renderBrowserQAParams(startIdx - 5, 2 * numVisible + 5, viewModel.cards.toList()) }
             }
         }
     }
@@ -2141,7 +2141,7 @@ open class CardBrowser :
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     suspend fun rerenderAllCards() {
-        renderBrowserQAParams(0, viewModel.rowCount - 1, mCards.toList())
+        renderBrowserQAParams(0, viewModel.rowCount - 1, viewModel.cards.toList())
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
