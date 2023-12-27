@@ -93,13 +93,10 @@ class PermissionItem(context: Context, attrs: AttributeSet) : FrameLayout(contex
 
     /**
      * It should be use to request the permission.
-     * The listener isn't invoked if the permission is already granted
-     * */
+     */
     fun setOnSwitchClickListener(listener: () -> Unit) {
         switch.setOnClickListener {
-            if (!isGranted) {
-                listener.invoke()
-            }
+            listener.invoke()
         }
     }
 }
