@@ -262,11 +262,11 @@ open class CardBrowser :
         override fun onSelection(searchName: String) {
             Timber.d("OnSelection using search named: %s", searchName)
             launchCatchingTask {
-                viewModel.savedSearches()[searchName]?.apply {
-                    Timber.d("OnSelection using search terms: %s", this)
-                    searchView!!.setQuery(this, false)
+                viewModel.savedSearches()[searchName]?.also { savedSearch ->
+                    Timber.d("OnSelection using search terms: %s", savedSearch)
+                    searchView!!.setQuery(savedSearch, false)
                     searchItem!!.expandActionView()
-                    searchCards(this)
+                    searchCards(savedSearch)
                 }
             }
         }
