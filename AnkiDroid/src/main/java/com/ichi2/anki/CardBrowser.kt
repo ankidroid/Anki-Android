@@ -261,9 +261,8 @@ open class CardBrowser :
             launchCatchingTask {
                 viewModel.savedSearches()[searchName]?.also { savedSearch ->
                     Timber.d("OnSelection using search terms: %s", savedSearch)
-                    searchView!!.setQuery(savedSearch, false)
+                    searchView!!.setQuery(savedSearch, true)
                     searchItem!!.expandActionView()
-                    searchCards(savedSearch)
                 }
             }
         }
