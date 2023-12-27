@@ -148,9 +148,9 @@ open class CardBrowser :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var cardsAdapter: MultiColumnListAdapter
 
-    private var searchTerms
+    private val searchTerms
         get() = viewModel.searchTerms
-        set(value) { viewModel.searchTerms = value }
+
     private lateinit var tagsDialogFactory: TagsDialogFactory
     private var searchItem: MenuItem? = null
     private var saveSearchItem: MenuItem? = null
@@ -409,6 +409,9 @@ open class CardBrowser :
             }
         }
         onboarding.onCreate()
+
+        viewModel.flowOfSearchTerms
+            .launchCollectionInLifecycleScope { searchCards() }
 
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope { cardsAdapter.notifyDataSetChanged() }
 
@@ -2135,8 +2138,7 @@ open class CardBrowser :
 
     @VisibleForTesting
     fun searchCards(searchQuery: String) {
-        searchTerms = searchQuery
-        searchCards()
+        viewModel.setSearchTerms(searchQuery)
     }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {

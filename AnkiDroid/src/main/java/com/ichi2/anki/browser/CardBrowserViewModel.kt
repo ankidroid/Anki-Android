@@ -81,7 +81,8 @@ class CardBrowserViewModel(
     /** The CardIds of all the cards in the results */
     val allCardIds get() = cards.map { c -> c.id }
 
-    var searchTerms: String = ""
+    val flowOfSearchTerms = MutableStateFlow("")
+    val searchTerms get() = flowOfSearchTerms.value
     var restrictOnDeck: String = ""
         private set
     var currentFlag = Flag.NONE
@@ -544,6 +545,8 @@ class CardBrowserViewModel(
      * Turn off [Multi-Select Mode][isInMultiSelectMode] and return to normal state
      */
     fun endMultiSelectMode() = selectNone()
+
+    fun setSearchTerms(searchQuery: String) = flowOfSearchTerms.update { searchQuery }
 
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
