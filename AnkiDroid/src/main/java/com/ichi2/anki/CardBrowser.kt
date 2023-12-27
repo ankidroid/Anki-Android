@@ -470,6 +470,9 @@ open class CardBrowser :
                 invalidateOptionsMenu()
             }
 
+        viewModel.flowOfCardsUpdated
+            .launchCollectionInLifecycleScope { cardsAdapter.notifyDataSetChanged() }
+
         viewModel.flowOfInitCompleted
             .launchCollectionInLifecycleScope { completed -> if (completed) searchCards() }
     }
@@ -1348,9 +1351,6 @@ open class CardBrowser :
             searchView!!.setQuery(viewModel.searchTerms, false)
             searchItem!!.expandActionView()
         }
-        // clear the existing card list
-        cards.reset()
-        cardsAdapter.notifyDataSetChanged()
         launchCatchingTask {
             withProgress { viewModel.searchForCards(numCardsToRender()) }
             redrawAfterSearch()

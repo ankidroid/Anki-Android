@@ -76,6 +76,10 @@ class CardBrowserViewModel(
     private val cacheDir: File,
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
+
+    // temporary flow for refactoring - called when cards are cleared
+    val flowOfCardsUpdated = MutableSharedFlow<Unit>()
+
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
 
     /** The CardIds of all the cards in the results */
@@ -551,6 +555,9 @@ class CardBrowserViewModel(
      * @see com.ichi2.anki.searchForCards
      */
     suspend fun searchForCards(numCardsToRender: Int): MutableList<CardBrowser.CardCache> {
+        // update the UI while we're searching
+        clearCardsList()
+
         val query: String = if (searchTerms.contains("deck:")) {
             "($searchTerms)"
         } else {
@@ -566,6 +573,11 @@ class CardBrowserViewModel(
         }
         this.cards.replaceWith(cards)
         return cards
+    }
+
+    private suspend fun clearCardsList() {
+        cards.reset()
+        flowOfCardsUpdated.emit(Unit)
     }
 
     companion object {
