@@ -2,7 +2,7 @@ name: Conflict Scan
 
 on:
   schedule:
-  - cron: "59 * * * *"
+  - cron: "0 * * * *"
 
 jobs:
   scan_conflicts:
@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
       - name: Check for conflicts and label conflict
         uses: actions/github-script@v7
         with:
