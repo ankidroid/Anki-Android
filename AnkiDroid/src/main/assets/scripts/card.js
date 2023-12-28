@@ -93,25 +93,10 @@ function buttonAnswerEase3() {
 function buttonAnswerEase4() {
     window.location.href = "signal:answer_ease4";
 }
-// Show options menu
-function ankiShowOptionsMenu() {
-    window.location.href = "signal:anki_show_options_menu";
-}
-
-// Show Navigation Drawer
-function ankiShowNavDrawer() {
-    window.location.href = "signal:anki_show_navigation_drawer";
-}
 
 /* Reload card.html */
 function reloadPage() {
     window.location.href = "signal:reload_card_html";
-}
-
-// Show toast using js
-function ankiShowToast(message) {
-    var msg = encodeURI(message);
-    window.location.href = "signal:anki_show_toast:" + msg;
 }
 
 /* Tell the app the text in the input box when it loses focus */

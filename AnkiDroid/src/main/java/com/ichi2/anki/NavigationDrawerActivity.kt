@@ -274,7 +274,7 @@ abstract class NavigationDrawerActivity :
      * Called, when navigation button of the action bar is pressed.
      * Design pattern: template method. Subclasses can override this to define their own behaviour.
      */
-    protected open fun onNavigationPressed() {
+    public open fun onNavigationPressed() {
         if (mNavButtonGoesBack) {
             finish()
         } else {

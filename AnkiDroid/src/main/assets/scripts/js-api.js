@@ -60,6 +60,14 @@ const jsApiList = {
     ankiEnableHorizontalScrollbar: "enableHorizontalScrollbar",
     ankiEnableVerticalScrollbar: "enableVerticalScrollbar",
     ankiSetCardDue: "setCardDue",
+    ankiShowNavigationDrawer: "showNavigationDrawer",
+    ankiShowOptionsMenu: "showOptionsMenu",
+    ankiShowToast: "showToast",
+    ankiShowAnswer: "showAnswer",
+    ankiAnswerEase1: "answerEase1",
+    ankiAnswerEase2: "answerEase2",
+    ankiAnswerEase3: "answerEase3",
+    ankiAnswerEase4: "answerEase4",
 };
 
 class AnkiDroidJS {
