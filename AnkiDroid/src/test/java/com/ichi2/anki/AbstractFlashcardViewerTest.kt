@@ -327,7 +327,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     private fun showNextCard(viewer: NonAbstractFlashcardViewer) {
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
+        waitForAsyncTasksToComplete()
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
+        waitForAsyncTasksToComplete()
     }
 
     @get:CheckResult
