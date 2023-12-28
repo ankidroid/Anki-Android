@@ -50,6 +50,7 @@ import java.util.*
 import java.util.stream.Stream
 import com.ichi2.anim.ActivityTransitionAnimation.Direction as Direction
 
+@Suppress("SameParameterValue")
 @RequiresApi(api = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerTest : RobolectricTest() {
@@ -257,7 +258,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     @Test
     fun automaticAnswerDisabledProperty() {
-        val controller = getViewerController(true, false)
+        val controller = getViewerController(addCard = true, startedWithShortcut = false)
         val viewer = controller.get()
         assertThat("not disabled initially", viewer.automaticAnswer.isDisabled, equalTo(false))
         controller.pause()
@@ -268,7 +269,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     @Test
     fun noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() = runTest {
-        val controller = getViewerController(true, false)
+        val controller = getViewerController(addCard = true, startedWithShortcut = false)
         val viewer = controller.get()
         viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5))
         viewer.executeCommand(ViewerCommand.SHOW_ANSWER)
