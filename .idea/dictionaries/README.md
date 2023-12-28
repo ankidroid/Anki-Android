@@ -3,7 +3,7 @@
 ## Introduction
 
 This guide addresses the issue of managing custom dictionaries within JetBrains IDE -Android Studio. Often, when adding a word to the dictionary within the IDE, it remains user-specific and doesn't propagate across a team. 
-This README explores a workaround for better collaboration regarding custom dictionaries in the IDE.
+This README explores a workaround for better collaboration [regarding custom dictionaries](https://www.jetbrains.com/help/idea/spellchecking.html) in the IDE.
 
 ## Implementation Steps
 
