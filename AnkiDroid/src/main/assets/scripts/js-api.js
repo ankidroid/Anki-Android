@@ -121,6 +121,14 @@ Object.keys(jsApiList).forEach(method => {
         };
         return;
     }
+    if (method === "ankiShowToast") {
+        AnkiDroidJS.prototype[method] = async function (text, shortLength = true) {
+            const endpoint = jsApiList[method];
+            const data = JSON.stringify({ text, shortLength });
+            return await this.handleRequest(endpoint, data);
+        };
+        return;
+    }
     AnkiDroidJS.prototype[method] = async function (data) {
         const endpoint = jsApiList[method];
         return await this.handleRequest(endpoint, data);
