@@ -111,10 +111,11 @@
         <item name="tabTextAppearance">@style/TextAppearance.Material3.LabelLarge</item>
         <item name="tabIndicator">@drawable/tab_layout_indicator_floating_pill</item>
         <item name="tabIndicatorHeight">14dp</item>
+        <item name="tabTextColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/white</item>
     </style>
     <style name="ThemeOverlay.App.TabLayout" parent="">
         <item name="colorSurface">?attr/tabLayoutBackgroundColor</item> <!-- Background -->
-        <item name="colorPrimary">@color/white</item> <!-- Selected text color -->
         <item name="colorOnSurfaceVariant">#cfff</item> <!-- Not selected text color -->
     </style>
 
