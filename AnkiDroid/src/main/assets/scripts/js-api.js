@@ -60,6 +60,14 @@ const jsApiList = {
     ankiEnableHorizontalScrollbar: "enableHorizontalScrollbar",
     ankiEnableVerticalScrollbar: "enableVerticalScrollbar",
     ankiSetCardDue: "setCardDue",
+    ankiShowNavigationDrawer: "showNavigationDrawer",
+    ankiShowOptionsMenu: "showOptionsMenu",
+    ankiShowToast: "showToast",
+    ankiShowAnswer: "showAnswer",
+    ankiAnswerEase1: "answerEase1",
+    ankiAnswerEase2: "answerEase2",
+    ankiAnswerEase3: "answerEase3",
+    ankiAnswerEase4: "answerEase4",
 };
 
 class AnkiDroidJS {
@@ -109,6 +117,14 @@ Object.keys(jsApiList).forEach(method => {
         AnkiDroidJS.prototype[method] = async function (text, queueMode = 0) {
             const endpoint = jsApiList[method];
             const data = JSON.stringify({ text, queueMode });
+            return await this.handleRequest(endpoint, data);
+        };
+        return;
+    }
+    if (method === "ankiShowToast") {
+        AnkiDroidJS.prototype[method] = async function (text, shortLength = true) {
+            const endpoint = jsApiList[method];
+            const data = JSON.stringify({ text, shortLength });
             return await this.handleRequest(endpoint, data);
         };
         return;

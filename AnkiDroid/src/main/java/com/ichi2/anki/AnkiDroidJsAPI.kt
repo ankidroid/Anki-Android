@@ -285,6 +285,42 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 activity.webView!!.isVerticalScrollBarEnabled = apiParams.toBoolean()
                 convertToByteArray(apiContract, true)
             }
+            "showNavigationDrawer" -> {
+                activity.onNavigationPressed()
+                convertToByteArray(apiContract, true)
+            }
+            "showOptionsMenu" -> {
+                activity.openOptionsMenu()
+                convertToByteArray(apiContract, true)
+            }
+            "showToast" -> {
+                val jsonObject = JSONObject(apiParams)
+                val text = jsonObject.getString("text")
+                val shortLength = jsonObject.optBoolean("shortLength", true)
+                val msgDecode = activity.decodeUrl(text)
+                UIUtils.showThemedToast(context, msgDecode, shortLength)
+                convertToByteArray(apiContract, true)
+            }
+            "showAnswer" -> {
+                activity.displayCardAnswer()
+                convertToByteArray(apiContract, true)
+            }
+            "answerEase1" -> {
+                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_1)
+                convertToByteArray(apiContract, true)
+            }
+            "answerEase2" -> {
+                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_2)
+                convertToByteArray(apiContract, true)
+            }
+            "answerEase3" -> {
+                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_3)
+                convertToByteArray(apiContract, true)
+            }
+            "answerEase4" -> {
+                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_4)
+                convertToByteArray(apiContract, true)
+            }
             else -> {
                 showDeveloperContact(ankiJsErrorCodeError, apiContract.cardSuppliedDeveloperContact)
                 throw Exception("unhandled request: $methodName")

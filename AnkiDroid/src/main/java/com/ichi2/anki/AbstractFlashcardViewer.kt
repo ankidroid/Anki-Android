@@ -2326,33 +2326,6 @@ abstract class AbstractFlashcardViewer :
                 flipCardLayout!!.performClick()
                 return true
             }
-            // Show options menu from WebView
-            if (url.startsWith("signal:anki_show_options_menu")) {
-                if (isFullscreen) {
-                    openOptionsMenu()
-                } else {
-                    showThemedToast(
-                        this@AbstractFlashcardViewer,
-                        getString(R.string.ankidroid_turn_on_fullscreen_options_menu),
-                        true
-                    )
-                }
-                return true
-            }
-
-            // Show Navigation Drawer from WebView
-            if (url.startsWith("signal:anki_show_navigation_drawer")) {
-                if (isFullscreen) {
-                    onNavigationPressed()
-                } else {
-                    showThemedToast(
-                        this@AbstractFlashcardViewer,
-                        getString(R.string.ankidroid_turn_on_fullscreen_nav_drawer),
-                        true
-                    )
-                }
-                return true
-            }
 
             // card.html reload
             if (url.startsWith("signal:reload_card_html")) {
@@ -2360,13 +2333,6 @@ abstract class AbstractFlashcardViewer :
                 return true
             }
 
-            // Show toast using JS
-            if (url.startsWith("signal:anki_show_toast:")) {
-                val msg = url.replaceFirst("signal:anki_show_toast:".toRegex(), "")
-                val msgDecode = decodeUrl(msg)
-                showThemedToast(this@AbstractFlashcardViewer, msgDecode, true)
-                return true
-            }
             when (val signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url)) {
                 WebViewSignalParserUtils.SIGNAL_UNHANDLED -> {}
                 WebViewSignalParserUtils.SIGNAL_NOOP -> return true
@@ -2494,22 +2460,6 @@ abstract class AbstractFlashcardViewer :
             soundPlayer.playOneSound(avTag)
         }
 
-        private fun decodeUrl(url: String): String {
-            try {
-                return URLDecoder.decode(url, "UTF-8")
-            } catch (e: UnsupportedEncodingException) {
-                Timber.e(e, "UTF-8 isn't supported as an encoding?")
-            } catch (e: Exception) {
-                Timber.e(e, "Exception decoding: '%s'", url)
-                showThemedToast(
-                    this@AbstractFlashcardViewer,
-                    getString(R.string.card_viewer_url_decode_error),
-                    true
-                )
-            }
-            return ""
-        }
-
         // Run any post-load events in javascript that rely on the window being completely loaded.
         override fun onPageFinished(view: WebView, url: String) {
             if (pageFinishedFired) {
@@ -2527,6 +2477,22 @@ abstract class AbstractFlashcardViewer :
         override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
             return mOnRenderProcessGoneDelegate.onRenderProcessGone(view, detail)
         }
+    }
+
+    fun decodeUrl(url: String): String {
+        try {
+            return URLDecoder.decode(url, "UTF-8")
+        } catch (e: UnsupportedEncodingException) {
+            Timber.e(e, "UTF-8 isn't supported as an encoding?")
+        } catch (e: Exception) {
+            Timber.e(e, "Exception decoding: '%s'", url)
+            showThemedToast(
+                this@AbstractFlashcardViewer,
+                getString(R.string.card_viewer_url_decode_error),
+                true
+            )
+        }
+        return ""
     }
 
     protected open fun onStateMutationError() {
