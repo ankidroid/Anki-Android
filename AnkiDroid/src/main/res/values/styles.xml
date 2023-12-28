@@ -186,4 +186,11 @@
     <style name="PreferenceThemeOverlay.AnkiDroid">
         <item name="singleLineTitle">false</item>
     </style>
+
+    <style name="AppCompatProgressDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/material_light_blue_500</item>
+        <item name="android:textColorPrimary">?android:attr/textColor</item>
+        <item name="android:background">?attr/dialogBackground</item>
+    </style>
+
 </resources>

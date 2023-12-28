@@ -32,8 +32,21 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.*
-import kotlinx.coroutines.*
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
@@ -289,7 +302,7 @@ suspend fun <T> withProgressDialog(
     delayMillis: Long = 600,
     op: suspend (android.app.ProgressDialog) -> T
 ): T = coroutineScope {
-    val dialog = android.app.ProgressDialog(context).apply {
+    val dialog = android.app.ProgressDialog(context, R.style.AppCompatProgressDialogStyle).apply {
         setCancelable(onCancel != null)
         onCancel?.let {
             setOnCancelListener { it() }
