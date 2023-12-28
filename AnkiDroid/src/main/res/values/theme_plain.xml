@@ -65,5 +65,8 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/white</item>
+
+        <!-- ProgressDialog-->
+        <item name="dialogBackground">@color/white</item>
     </style>
 </resources>

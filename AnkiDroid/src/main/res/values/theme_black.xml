@@ -106,6 +106,9 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/theme_black_primary</item>
+
+        <!-- ProgressDialog-->
+        <item name="dialogBackground">#ff303030</item>
     </style>
 
     <style name="SnackbarTextStyleBlack" parent="@style/Widget.MaterialComponents.Snackbar.TextView">

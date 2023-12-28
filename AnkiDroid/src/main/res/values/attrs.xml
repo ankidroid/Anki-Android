@@ -149,6 +149,7 @@
     <attr name="editTextDisabled" format="color"/>
 
     <attr name="snackbarBackgroundTintColor" format="color"/>
+    <attr name="dialogBackground" format="color"/>
     <attr name="snackbarButtonTextColor" format="color"/>
 
     <declare-styleable name="CheckBoxTriStates">

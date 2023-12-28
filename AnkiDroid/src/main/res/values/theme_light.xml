@@ -132,5 +132,8 @@
         <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.Material3</item>
         <item name="sliderStyle">@style/SliderStyle</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.AnkiDroid</item>
+
+        <!-- ProgressDialog-->
+        <item name="dialogBackground">@color/white</item>
     </style>
 </resources>
