@@ -194,6 +194,9 @@ function addHook(fn1, fn2) {
     if (fn1 === "ankiSearchCard") {
         searchCardHook.push(fn2);
     }
+    if (fn1 === "ankiSttResult") {
+        speechToTextHook.push(fn2);
+    }
 }
 
 let searchCardHook = [];
@@ -205,6 +208,18 @@ function ankiSearchCard(result) {
     result = JSON.parse(result);
     for (var i = 0; i < searchCardHook.length; i++) {
         searchCardHook[i](result);
+    }
+}
+
+// hook for getting speech to text result in callback method
+let speechToTextHook = [];
+function ankiSttResult(result) {
+    if (!speechToTextHook) {
+        return;
+    }
+    result = JSON.parse(result);
+    for (var i = 0; i < speechToTextHook.length; i++) {
+        speechToTextHook[i](result);
     }
 }
 
