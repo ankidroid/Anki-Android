@@ -68,6 +68,9 @@ const jsApiList = {
     ankiAnswerEase2: "answerEase2",
     ankiAnswerEase3: "answerEase3",
     ankiAnswerEase4: "answerEase4",
+    ankiSttSetLanguage: "sttSetLanguage",
+    ankiSttStart: "sttStart",
+    ankiSttStop: "sttStop",
 };
 
 class AnkiDroidJS {

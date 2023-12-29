@@ -67,6 +67,9 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     // Text to speech
     private val talker = JavaScriptTTS()
 
+    // Speech to Text
+    private val mSpeechRecognizer = JavaScriptSTT(context)
+
     open fun convertToByteArray(apiContract: ApiContract, boolean: Boolean): ByteArray {
         return ApiResult(apiContract.isValid, boolean.toString()).toString().toByteArray()
     }
@@ -325,6 +328,28 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_4)
                 convertToByteArray(apiContract, true)
             }
+            "sttSetLanguage" -> convertToByteArray(apiContract, mSpeechRecognizer.setLanguage(apiParams))
+            "sttStart" -> {
+                val callback = object : JavaScriptSTT.SpeechRecognitionCallback {
+                    override fun onResult(result: String) {
+                        activity.runOnUiThread {
+                            val apiResult = ApiResult(true, result)
+                            val jsonEncodedString = JSONObject.quote(apiResult.toString())
+                            activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
+                        }
+                    }
+                    override fun onError(errorMessage: String) {
+                        activity.runOnUiThread {
+                            val apiResult = ApiResult(false, errorMessage)
+                            val jsonEncodedString = JSONObject.quote(apiResult.toString())
+                            activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
+                        }
+                    }
+                }
+                mSpeechRecognizer.setRecognitionCallback(callback)
+                convertToByteArray(apiContract, mSpeechRecognizer.start())
+            }
+            "sttStop" -> convertToByteArray(apiContract, mSpeechRecognizer.stop())
             else -> {
                 showDeveloperContact(ankiJsErrorCodeError, apiContract.cardSuppliedDeveloperContact)
                 throw Exception("unhandled request: $methodName")
