@@ -51,6 +51,7 @@ const jsApiList = {
     ankiResetProgress: "resetProgress",
     ankiMarkCard: "markCard",
     ankiToggleFlag: "toggleFlag",
+    ankiOpenCardBrowser: "openCardBrowser",
     ankiSearchCard: "searchCard",
     ankiSearchCardWithCallback: "searchCardWithCallback",
     ankiTtsSpeak: "ttsSpeak",

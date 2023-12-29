@@ -260,7 +260,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 convertToByteArray(apiContract, false)
             }
             "ttsStop" -> convertToByteArray(apiContract, mTalker.stop())
-            "searchCard" -> {
+            "openCardBrowser" -> {
                 val intent = Intent(context, CardBrowser::class.java).apply {
                     putExtra("currentCard", currentCard.id)
                     putExtra("search_query", apiParams)
@@ -268,7 +268,22 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 activity.startActivity(intent)
                 convertToByteArray(apiContract, true)
             }
-            "searchCardWithCallback" -> ankiSearchCardWithCallback(apiContract)
+            "searchCard" -> {
+                val searchResult = ankiSearchCard(apiContract)
+                if (searchResult != null) {
+                    return@withContext convertToByteArray(apiContract, searchResult.toString())
+                }
+                convertToByteArray(apiContract, false)
+            }
+            "searchCardWithCallback" -> {
+                val searchResult = ankiSearchCard(apiContract)
+                // quote result to prevent JSON injection attack
+                val quoteResult = JSONObject.quote(searchResult.toString())
+                activity.runOnUiThread {
+                    activity.webView!!.evaluateJavascript("ankiSearchCard($quoteResult)", null)
+                }
+                convertToByteArray(apiContract, true)
+            }
             "isDisplayingAnswer" -> convertToByteArray(apiContract, activity.isDisplayingAnswer)
             "addTagToCard" -> {
                 activity.runOnUiThread { activity.showTagsDialog() }
@@ -341,7 +356,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         return conversion(apiContract, status)
     }
 
-    private suspend fun ankiSearchCardWithCallback(apiContract: ApiContract): ByteArray = withContext(Dispatchers.Main) {
+    private suspend fun ankiSearchCard(apiContract: ApiContract): List<String>? = withContext(Dispatchers.Main) {
         val cards = try {
             searchForCards(apiContract.cardSuppliedData, SortOrder.UseCollectionOrdering(), CardsOrNotes.CARDS)
         } catch (exc: Exception) {
@@ -350,7 +365,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 null
             )
             showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeSearchCard, apiContract.cardSuppliedDeveloperContact)
-            return@withContext convertToByteArray(apiContract, false)
+            return@withContext null
         }
         val searchResult: MutableList<String> = ArrayList()
         for (s in cards) {
@@ -371,13 +386,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
             searchResult.add(jsonObject.toString())
         }
-
-        // quote result to prevent JSON injection attack
-        val jsonEncodedString = JSONObject.quote(searchResult.toString())
-        activity.runOnUiThread {
-            activity.webView!!.evaluateJavascript("ankiSearchCard($jsonEncodedString)", null)
-        }
-        convertToByteArray(apiContract, true)
+        return@withContext searchResult
     }
 
     open class CardDataForJsApi {
