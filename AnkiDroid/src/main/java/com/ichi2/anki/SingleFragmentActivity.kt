@@ -44,6 +44,11 @@ class SingleFragmentActivity : AnkiActivity() {
         setContentView(R.layout.single_fragment_activity)
         setTransparentStatusBar()
 
+        // avoid recreating the fragment on configuration changes
+        if (savedInstanceState != null) {
+            return
+        }
+
         val fragmentClassName = requireNotNull(intent.getStringExtra(FRAGMENT_NAME_EXTRA)) {
             "'$FRAGMENT_NAME_EXTRA' extra should be provided"
         }
