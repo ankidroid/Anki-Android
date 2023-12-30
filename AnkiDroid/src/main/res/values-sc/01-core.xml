@@ -136,8 +136,6 @@
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronizatzione annullada</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Annullende&#8230;\n
     Bi diat pòdere chèrrere unu pagu de tempus.</string>
-    <string name="export">Esporta</string>
-    <string name="export_collection">Esporta sa colletzione</string>
     <string name="export_deck">Esporta su matzu</string>
     <string name="nothing">Nudda</string>
     <!-- Card template editor -->

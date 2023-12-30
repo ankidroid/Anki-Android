@@ -168,22 +168,6 @@
     <string name="import_error_content_provider">Zvolený súbor nemohol byť importovaný automaticky AnkiDroidom. Pozrite si, prosím, používateľský manuál ako manuálne importovať anki súbory: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Import prerušený</string>
-    <string name="export_include_schedule">Zahrnúť plánovanie</string>
-    <string name="export_include_media">Zahrnúť multimédia</string>
-    <string name="confirm_apkg_export">Exportovať kolekciu ako Anki balík?</string>
-    <string name="confirm_apkg_export_deck">Exportovať “%s” ako apkg súbor?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
-        <item quantity="few">Export %d selected cards as apkg file?</item>
-        <item quantity="many">Export %d selected cards as apkg file?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Export selected note as apkg file?</item>
-        <item quantity="few">Export %d selected notes as apkg file?</item>
-        <item quantity="many">Export %d selected notes as apkg file?</item>
-        <item quantity="other">Export %d selected notes as apkg file?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Žiadna aplikácia na spracovanie apkg. Ukladanie...</string>

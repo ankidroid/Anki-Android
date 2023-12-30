@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">Ang napiling file ay hindi awtomatikong ma-import ng AnkiDroid. Pakitingnan ang user manwal kung paano ang manwal na pag-import ng mga anki file: \n%s</string>
     <string name="import_error_copy_to_cache">Bigo sa pag-cache sa file (posibleng naubusan na ng storage)</string>
     <string name="import_interrupted">Naudlot ang pag-angkat: Nasara ang AnkiDroid</string>
-    <string name="export_include_schedule">Isama ang pag-iiskedyul</string>
-    <string name="export_include_media">Isama ang media</string>
-    <string name="confirm_apkg_export">Iluwas ang koleksyon bilang isang Anki package?</string>
-    <string name="confirm_apkg_export_deck">I-export ang \"%s\" bilang apkg file?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Iluwas ang napiling card bilang apkg na file?</item>
-        <item quantity="other">Iluwas ang %d na mga napiling card bilang apkg na file?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Iluwas ang napiling tala bilang apkg na file?</item>
-        <item quantity="other">Iluwas ang %d na mga napiling tala bilang apkg na file?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Walang magagamit na mga aplikasyon upang pangasiwaan ang apkg. Sini-save</string>

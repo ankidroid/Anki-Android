@@ -134,8 +134,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">המשך סנכרון</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">סנכרון בוטל</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">מבטל&#8230;\n אנא המתן.</string>
-    <string name="export">ייצוא</string>
-    <string name="export_collection">ייצוא אוסף</string>
     <string name="export_deck">ייצוא חפיסה</string>
     <string name="nothing">ריק</string>
     <!-- Card template editor -->

@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">منتخب فائل کو AnkiDroid کے ذریعے خود بخود درآمد نہیں کیا جا سکتا۔ براہ کرم انکی فائلوں کو دستی طور پر درآمد کرنے کے طریقہ کار کے لیے یوزر مینوئل دیکھیں: \n%s</string>
     <string name="import_error_copy_to_cache">فائل کو کیش کرنے میں ناکام (ممکنہ طور پر اسٹوریج کی جگہ سے باہر)</string>
     <string name="import_interrupted">درآمد میں رکاوٹ: AnkiDroid بند تھا۔</string>
-    <string name="export_include_schedule">شیڈولنگ شامل کریں</string>
-    <string name="export_include_media">میڈیا کو شامل کریں۔</string>
-    <string name="confirm_apkg_export">Anki پیکج کے طور پر مجموعہ برآمد کریں؟</string>
-    <string name="confirm_apkg_export_deck">\"%s\" کو apkg فائل کے طور پر برآمد کریں؟</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">منتخب کارڈ کو apkg فائل کے طور پر برآمد کریں؟</item>
-        <item quantity="other">%d منتخب کارڈز کو apkg فائل کے طور پر برآمد کریں؟</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">منتخب کردہ نوٹ کو apkg فائل کے طور پر برآمد کریں؟</item>
-        <item quantity="other">%d منتخب نوٹ apkg فائل کے طور پر برآمد کریں؟</item>
-    </plurals>
     <string name="export_preparation_in_progress">برآمد کی تیاری کر رہا ہے&#8230;</string>
     <string name="export_ready_title">ایکسپورٹ تیار ہے۔</string>
     <string name="export_send_no_handlers">apkg کو ہینڈل کرنے کے لیے کوئی ایپلیکیشن دستیاب نہیں ہے۔ محفوظ کر رہا ہے...</string>

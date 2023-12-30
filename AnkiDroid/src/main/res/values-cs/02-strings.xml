@@ -168,22 +168,6 @@
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
     <string name="import_error_copy_to_cache">Nepodařilo se uložit soubor do mezipaměti (možná nedostatek místa v úložišti)</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
-    <string name="export_include_schedule">Zahrnout plánování</string>
-    <string name="export_include_media">Zahrnout multimédia</string>
-    <string name="confirm_apkg_export">Exportovat kolekci jako Anki balíček?</string>
-    <string name="confirm_apkg_export_deck">Exportovat „%s“ jako apkg soubor?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Exportovat vybranou kartu jako soubor apkg?</item>
-        <item quantity="few">Exportovat %d vybrané karty jako soubor apkg?</item>
-        <item quantity="many">Exportovat %d vybrané karty jako soubor apkg?</item>
-        <item quantity="other">Exportovat %d vybraných karet jako soubor apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Exportovat vybranou poznámku jako soubor apkg?</item>
-        <item quantity="few">Exportovat %d vybrané poznámky jako soubor apkg?</item>
-        <item quantity="many">Exportovat %d vybrané poznámky jako soubor apkg?</item>
-        <item quantity="other">Exportovat %d vybraných poznámek jako soubor apkg?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Připravuje se export&#8230;</string>
     <string name="export_ready_title">Export připraven</string>
     <string name="export_send_no_handlers">Nenalezena žádná aplikace pro zpracování apkg. Ukládá se...</string>

@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ସୀଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ସୀଙ୍କ୍ ବାତିଲ୍ ହେଲା</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ବାତିଲ ହେଉଛି&#8230;\nଏହା କିଛି ସମୟ ନେଇପାରେ।</string>
-    <string name="export">ରପ୍ତାନି</string>
-    <string name="export_collection">ସଂଗ୍ରହ ରପ୍ତାନି କରନ୍ତୁ</string>
     <string name="export_deck">ତାସଖଣ୍ଡ ରପ୍ତାନି କରନ୍ତୁ</string>
     <string name="nothing">କିଛି ନାହିଁ</string>
     <!-- Card template editor -->

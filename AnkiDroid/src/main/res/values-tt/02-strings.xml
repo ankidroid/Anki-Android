@@ -162,16 +162,6 @@
     <string name="import_error_content_provider">Сайланган файл автомат рәвештә импортлана алмады. Аны кулдан ничек итеп импортларга, җитәкчелектән карагыз: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Импорт бүленгән иде</string>
-    <string name="export_include_schedule">Include scheduling</string>
-    <string name="export_include_media">Медиафайллар белән</string>
-    <string name="confirm_apkg_export">Anki пакетына коллекцияне экспортларгамы? </string>
-    <string name="confirm_apkg_export_deck">\"%s\" apkg файлына экспортларгамы? </string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">Export %d selected cards as apkg file?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">Export %d selected notes as apkg file?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">apkg файлын укый ала торган кушымталар юк. Саклана... </string>

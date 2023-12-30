@@ -163,16 +163,6 @@
     <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
     <string name="import_error_copy_to_cache">파일 캐시 실패 (저장 공간이 부족하기 때문일 수 있습니다)</string>
     <string name="import_interrupted">불러오기 중단됨: AnkiDroid가 닫힘</string>
-    <string name="export_include_schedule">일정 포함</string>
-    <string name="export_include_media">미디어 포함</string>
-    <string name="confirm_apkg_export">Anki 패키지로 컬렉션을 내보내시겠습니까?</string>
-    <string name="confirm_apkg_export_deck">\"%s\"를 apkg 파일로 내보낼까요?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">Export %d selected cards as apkg file?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">Export %d selected notes as apkg file?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">apkg. 파일을 처리할 수 있는 응용 프로그램이 없습니다. 저장 중...</string>

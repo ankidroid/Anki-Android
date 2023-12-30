@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Fortsett synkronisering</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronisering Avbrutt</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Avbryter...\nDet kan ta en stund.</string>
-    <string name="export">Før ut</string>
-    <string name="export_collection">Før ut samlinga</string>
     <string name="export_deck">Før ut kortleiken</string>
     <string name="nothing">Ingenting</string>
     <!-- Card template editor -->

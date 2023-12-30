@@ -162,16 +162,6 @@
     <string name="import_error_content_provider">AnkiDroid tidak boleh mengimport fail pilihan secara automatik. Sila lihat manual pengguna bagi cara import fail anki secara manual: \n%s</string>
     <string name="import_error_copy_to_cache">Gagal memcachekan fail (kemungkinan kehabisan ruang storan)</string>
     <string name="import_interrupted">Import tergendala: AnkiDroid telah ditutup</string>
-    <string name="export_include_schedule">Termasuk penjadualan</string>
-    <string name="export_include_media">Termasuk media</string>
-    <string name="confirm_apkg_export">Eksport koleksi sebagai pakej Anki?</string>
-    <string name="confirm_apkg_export_deck">Eksport “%s” sebagai fail apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">Eksport %d kad terpilih sebagai fail apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">Eksport %d nota terpilih sebagai fail apkg?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Menyediakan eksport&#8230;</string>
     <string name="export_ready_title">Eksport sedia</string>
     <string name="export_send_no_handlers">Tiada aplikasi tersedia mengendalikan apkg. Menyimpan...</string>

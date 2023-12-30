@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">Het selecteerde bestand kon niet automatisch geïmporteerd worden door AnkiDroid. Bekijk de gebruikershandleiding om te zien hoe je anki bestanden handmatig importeert: \n%s</string>
     <string name="import_error_copy_to_cache">Het cachen van het bestand is mislukt (mogelijk gebrek aan opslagruimte)</string>
     <string name="import_interrupted">Importeren onderbroken</string>
-    <string name="export_include_schedule">Inclusief de planning</string>
-    <string name="export_include_media">Inclusief media</string>
-    <string name="confirm_apkg_export">Collectie exporteren als Anki-pakket?</string>
-    <string name="confirm_apkg_export_deck">\"%s\" als apkg-bestand exporteren?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Geselecteerde kaart als apkg-bestand exporteren?</item>
-        <item quantity="other">Exporteer %d geselecteerde kaarten als apkg bestand?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Geselecteerde notitie als apkg-bestand exporteren?</item>
-        <item quantity="other">Exporteer %d geselecteerde notities als apkg-bestand?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Export voorbereiden&#8230;</string>
     <string name="export_ready_title">Export klaar</string>
     <string name="export_send_no_handlers">Geen applicaties beschikbaar om apkg te verwerken. Opslaan...</string>

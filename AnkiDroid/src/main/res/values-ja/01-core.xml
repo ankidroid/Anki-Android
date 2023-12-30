@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">同期を続行</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">同期がキャンセルされました</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
-    <string name="export">エクスポート</string>
-    <string name="export_collection">エクスポート（コレクション）</string>
     <string name="export_deck">デッキをエクスポート</string>
     <string name="nothing">なし</string>
     <!-- Card template editor -->

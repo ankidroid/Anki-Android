@@ -162,16 +162,6 @@
     <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp anki: \n%s</string>
     <string name="import_error_copy_to_cache">Không thể lưu tệp vào bộ nhớ đệm (có thể hết dùng lượng lưu trữ)</string>
     <string name="import_interrupted">Nhập dữ liệu bị gián đoạn: AnkiDroid đã bị đóng</string>
-    <string name="export_include_schedule">Gồm cả việc lên lịch</string>
-    <string name="export_include_media">Gồm cả các tệp đa phương tiện</string>
-    <string name="confirm_apkg_export">Kết xuất bộ sưu tập thành gói Anki?</string>
-    <string name="confirm_apkg_export_deck">Xuất \"%s\" dưới dạng tệp apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">Xuất %d thẻ đã chọn dưới dạng tệp apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">Xuất %d ghi chú đã chọn dưới dạng tệp apkg?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Đang chuẩn bị xuất &#8230;</string>
     <string name="export_ready_title">Trích xuất sẵn sàng</string>
     <string name="export_send_no_handlers">Không có ứng dụng nào khả dụng để xử lý apkg. Đang lưu...</string>

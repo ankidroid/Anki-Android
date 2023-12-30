@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continua la sincronització</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">S\'ha cancel·lat la sincronització</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">S\'està cancel·lant...\nAixò pot trigar una estona.</string>
-    <string name="export">Exporta</string>
-    <string name="export_collection">Exporta la col·lecció</string>
     <string name="export_deck">Exporta el paquet</string>
     <string name="nothing">Res</string>
     <!-- Card template editor -->

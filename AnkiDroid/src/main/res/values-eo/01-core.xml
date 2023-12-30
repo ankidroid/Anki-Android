@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Pluigi samtempigadon</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Samtempigado nuligita</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Nuligado&#8230;\nTio ĉi povas okupi iom da tempo.</string>
-    <string name="export">Elporti</string>
-    <string name="export_collection">Elporti kolekton</string>
     <string name="export_deck">Elporti kartaron</string>
     <string name="nothing">Nenio</string>
     <!-- Card template editor -->

@@ -168,22 +168,6 @@
     <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
     <string name="import_error_copy_to_cache">לא הצליח לשמור את הקובץ במטמון (ייתכן ששטח האחסון נגמר)</string>
     <string name="import_interrupted">הייבוא נפסק: AnkiDroid נסגר</string>
-    <string name="export_include_schedule">כולל תזמון</string>
-    <string name="export_include_media">כולל מדיה</string>
-    <string name="confirm_apkg_export">לייצא את האוסף כחבילת Anki?</string>
-    <string name="confirm_apkg_export_deck">יצא \"%s\" כקובץ apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">לייצא את הכרטיס הנבחר כקובץ apkg?</item>
-        <item quantity="two">לייצא את %d הכרטיסים הנבחרים כקובץ apkg?</item>
-        <item quantity="many">לייצא את %d הכרטיסים הנבחרים כקובץ apkg?</item>
-        <item quantity="other">לייצא את %d הכרטיסים הנבחרים כקובץ apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">לייצא את הכרטיס הנבחר כקובץ apkg?</item>
-        <item quantity="two">לייצא את %d הכרטיסים הנבחרים כקובץ apkg?</item>
-        <item quantity="many">לייצא את %d הכרטיסים הנבחרים כקובץ apkg?</item>
-        <item quantity="other">לייצא את %d הכרטיסים הנבחרים כקובץ apkg?</item>
-    </plurals>
     <string name="export_preparation_in_progress">הכנה ליצוא...‏</string>
     <string name="export_ready_title">הייצוא מוכן </string>
     <string name="export_send_no_handlers">לא נמצא יישום התומך ב- apkg. שומר...</string>

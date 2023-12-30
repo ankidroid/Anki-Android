@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Pokračovat v synchronizaci</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronizace přrušena</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Přerušuje se&#8230;\nMůže to chvíli trvat.</string>
-    <string name="export">Export</string>
-    <string name="export_collection">Export kolekce</string>
     <string name="export_deck">Export balíčku</string>
     <string name="nothing">Nic</string>
     <!-- Card template editor -->

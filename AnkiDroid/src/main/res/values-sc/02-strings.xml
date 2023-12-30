@@ -167,18 +167,6 @@
                               %s</string>
     <string name="import_error_copy_to_cache">Sarvamentu de s\'archìviu in sa memòria temporànea fallidu (probabilmente ca non b\'at logu in sa memòria)</string>
     <string name="import_interrupted">Importatzione firmada: AnkiDroid est istadu serradu</string>
-    <string name="export_include_schedule">Include sa pranificatzione</string>
-    <string name="export_include_media">Include sos mèdios</string>
-    <string name="confirm_apkg_export">Esportare sa colletzione comente pachete Anki?</string>
-    <string name="confirm_apkg_export_deck">Esportare “%s” comente documentu apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Esportare sa carta seletzionada comente archìviu apkg?</item>
-        <item quantity="other">Esportare sas %d cartas seletzionadas comente archìviu apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Esportare sa nota seletzionada comente archìviu apkg?</item>
-        <item quantity="other">Esportare sas %d notas seletzionadas comente archìviu apkg?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Ammaniende s\'esportatzione&#8230;</string>
     <string name="export_ready_title">Esportatzione pronta</string>
     <string name="export_send_no_handlers">Peruna aplicatzione a disponimentu pro gestire apkg. Sarvende&#8230;</string>

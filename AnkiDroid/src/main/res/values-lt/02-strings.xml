@@ -168,22 +168,6 @@
     <string name="import_error_content_provider">Pažymėto failo „AnkiDroid“ automatiškai įkelti negali. Norėdami sužinoti, kaip „anki“ failus galėtumėte įkelti rankiniu būdu, prašome perskaityti vartotojo vadovą: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
-    <string name="export_include_schedule">Įtraukti mokymosi laiko planavimą</string>
-    <string name="export_include_media">Įtraukti laikmenas</string>
-    <string name="confirm_apkg_export">Eksportuoti rinkinį kaip „Anki“ paketą?</string>
-    <string name="confirm_apkg_export_deck">Eksportuoti „%s“ kaip apkg failą?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
-        <item quantity="few">Export %d selected cards as apkg file?</item>
-        <item quantity="many">Export %d selected cards as apkg file?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Export selected note as apkg file?</item>
-        <item quantity="few">Export %d selected notes as apkg file?</item>
-        <item quantity="many">Export %d selected notes as apkg file?</item>
-        <item quantity="other">Export %d selected notes as apkg file?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Nėra jokių programėlių, galinčių nuskaityti apkg. Išsaugoma...</string>

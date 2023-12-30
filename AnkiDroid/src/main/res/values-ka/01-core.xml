@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">სინქრონიზაციის გაგრძელება</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">სინქრონიზაცია გაუქმებულია</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">გაუქმება\&#8230;\nამან შეიძლება ცოტა დრო წაიღოს.</string>
-    <string name="export">ექსპორტი</string>
-    <string name="export_collection">კოლექციის ექსპორტი</string>
     <string name="export_deck">დასტის ექსპორტი</string>
     <string name="nothing">არაფერი</string>
     <!-- Card template editor -->

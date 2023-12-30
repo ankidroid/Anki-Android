@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Synchronisatie hervatten</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronisatie geannuleerd</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Annuleren&#8230;\nDit kan enige tijd duren.</string>
-    <string name="export">Exporteren</string>
-    <string name="export_collection">Verzameling exporteren</string>
     <string name="export_deck">Leerset exporteren</string>
     <string name="nothing">Niets</string>
     <!-- Card template editor -->

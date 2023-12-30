@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Συνέχεια συγχρονισμού</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Ο συγχρονισμός ακυρώθηκε</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Ακύρωση&#8230;\nΑυτό μπορεί να διαρκέσει κάποιο χρόνο.</string>
-    <string name="export">Εξαγωγή</string>
-    <string name="export_collection">Εξαγωγή συλλογής</string>
     <string name="export_deck">Εξαγωγή τράπουλας</string>
     <string name="nothing">Τίποτε</string>
     <!-- Card template editor -->

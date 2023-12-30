@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Ipagpatuloy ang pagsisingkronisa</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Ang pagsisingkronisa ay kinansela</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Kinakansela&#8230;\n Maaari itong matagalan.</string>
-    <string name="export">I-Eksport</string>
-    <string name="export_collection">I-eksport ang koleksyon</string>
     <string name="export_deck">I-eksport ang deck</string>
     <string name="nothing">Wala</string>
     <!-- Card template editor -->

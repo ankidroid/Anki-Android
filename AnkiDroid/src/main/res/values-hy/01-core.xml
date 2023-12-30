@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Շարունակել համաժամեցումը</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Համաժամեցումը չեղարկվեց</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Չեղարկվում է&#8230;\n Սա կարող է որոշ ժամանակ տևել:</string>
-    <string name="export">Արտահանել</string>
-    <string name="export_collection">Արտահանել հավաքածուն</string>
     <string name="export_deck">Արտահանել կապուկը</string>
     <string name="nothing">Ոչինչ</string>
     <!-- Card template editor -->

@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">সিংক বজায় রাখুন</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">সিংক বাতিল করা হয়েছে</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling...\nThis কিছু সময় লাগতে পারে।</string>
-    <string name="export">ডাটা এক্সপোর্ট</string>
-    <string name="export_collection">কালেকশন রপ্তানি করুন</string>
     <string name="export_deck">ডেক রপ্তানি করুন</string>
     <string name="nothing">কিছুই না</string>
     <!-- Card template editor -->

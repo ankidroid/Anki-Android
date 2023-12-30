@@ -168,22 +168,6 @@
     <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да даведніка карыстальніка для імпартавання файла ўручную: \n %s</string>
     <string name="import_error_copy_to_cache">Не атрымалася кэшыраваць файл (магчыма, што скончылася месца ў сховішчы)</string>
     <string name="import_interrupted">Імпарт перарваны</string>
-    <string name="export_include_schedule">Разам з раскладам</string>
-    <string name="export_include_media">Разам з медыяфайламі</string>
-    <string name="confirm_apkg_export">Экспартаваць калекцыю ў пакет Anki?</string>
-    <string name="confirm_apkg_export_deck">Экспартаваць \"%s\" у файл apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Экспартаваць выбраную картку як файл apkg?</item>
-        <item quantity="few">Экспартаваць выбраныя карткі як файл apkg?</item>
-        <item quantity="many">Экспартаваць выбраныя карткі як файл apkg?</item>
-        <item quantity="other">Экспартаваць выбраныя карткі як файл apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Экспартаваць выбраную нататку як файл apkg?</item>
-        <item quantity="few">Экспартаваць выбраныя нататкі як файл apkg?</item>
-        <item quantity="many">Экспартаваць выбраныя нататкі як файл apkg?</item>
-        <item quantity="other">Экспартаваць выбраныя нататкі як файл apkg?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Падрыхтоўка да экспартавання...</string>
     <string name="export_ready_title">Экспартаванне выканана</string>
     <string name="export_send_no_handlers">Няма адпаведнай праграмы для апрацоўкі пакета apkg. Захаванне...</string>

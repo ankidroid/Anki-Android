@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Fortsæt synkronisering</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronisering annulleret</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Annullerer&#8230;\nDette kan tage et stykke tid. </string>
-    <string name="export">Eksporter</string>
-    <string name="export_collection">Eksporter samling</string>
     <string name="export_deck">Eksporter kortsæt</string>
     <string name="nothing">Intet</string>
     <!-- Card template editor -->

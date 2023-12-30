@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Працягнуць сiнхранiзацыю</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Сiнхранiзацыя скасаваная</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Адбываецца скасаванне сінхранізацыі...\nГэта можа заняць некаторы час.</string>
-    <string name="export">Экспартаваць</string>
-    <string name="export_collection">Экспартаваць калекцыю</string>
     <string name="export_deck">Экспартаваць калоду</string>
     <string name="nothing">Нічога</string>
     <!-- Card template editor -->

@@ -162,16 +162,6 @@
     <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas anki secara manual: \n%s</string>
     <string name="import_error_copy_to_cache">Gagal cache file (mungkin kehabisan ruang penyimpanan)</string>
     <string name="import_interrupted">Impor terganggu</string>
-    <string name="export_include_schedule">Sertakan penjadwalan</string>
-    <string name="export_include_media">Sertakan media</string>
-    <string name="confirm_apkg_export">Ekspor koleksi sebagai paket Anki?</string>
-    <string name="confirm_apkg_export_deck">Ekspor \"%s\" sebagai berkas apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">Ekspor %d kartu terpilih sebagai file apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">Ekspor %d kartu terpilih sebagai file apkg ?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Mempersiapkan ekspor&#8230;</string>
     <string name="export_ready_title">Ekspor siap</string>
     <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan...</string>

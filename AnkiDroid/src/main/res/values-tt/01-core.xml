@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Синхронизацияне дәвам итү</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизация кире кагылган</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Кире кагу...\nБу бераз вакыт алырга мөмкин </string>
-    <string name="export">Экспортлау</string>
-    <string name="export_collection">Коллекцияне экспортлау</string>
     <string name="export_deck">Колоданы экспортлау</string>
     <string name="nothing">Берни </string>
     <!-- Card template editor -->

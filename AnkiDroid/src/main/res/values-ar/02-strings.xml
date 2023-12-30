@@ -172,26 +172,6 @@
     <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة أنكيدرويد. الرجاء الاطلاع على دليل المستخدم لكيفية استيراد ملفات أنكي يدويًا: \n%s</string>
     <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاذ مساحة التخزين)</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
-    <string name="export_include_schedule">تضمين معلومات الجدولة</string>
-    <string name="export_include_media">تضمين الوسائط</string>
-    <string name="confirm_apkg_export">هل تريد تصدير المجموعة كحزمة أنكي؟</string>
-    <string name="confirm_apkg_export_deck">هل تريد تصدير “%s” كملف apkg؟</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="zero">هل تريد تصدير البطاقة المحددة كملف apkg؟</item>
-        <item quantity="one">هل تريد تصدير البطاقة المحددة كملف apkg؟</item>
-        <item quantity="two">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
-        <item quantity="few">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
-        <item quantity="many">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
-        <item quantity="other">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="zero">هل تريد تصدير الملحوظة المحددة كملف apkg؟</item>
-        <item quantity="one">هل تريد تصدير الملحوظة المحددة كملف apkg؟</item>
-        <item quantity="two">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
-        <item quantity="few">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
-        <item quantity="many">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
-        <item quantity="other">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
-    </plurals>
     <string name="export_preparation_in_progress">يجري تجهيز التصدير&#8230;</string>
     <string name="export_ready_title">جهز التصدير</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ...</string>

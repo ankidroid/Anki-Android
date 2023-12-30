@@ -168,22 +168,6 @@
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
     <string name="import_error_copy_to_cache">Не удалось кэшировать файл (возможно, не хватает места)</string>
     <string name="import_interrupted">Импорт прерван</string>
-    <string name="export_include_schedule">Вместе с расписанием</string>
-    <string name="export_include_media">Вместе с медиафайлами</string>
-    <string name="confirm_apkg_export">Экспортировать коллекцию в пакет Anki?</string>
-    <string name="confirm_apkg_export_deck">Экспортировать «%s» в файл apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Экспортировать выбранную карточку в apkg файл?</item>
-        <item quantity="few">Экспортировать %d выбранные карточки в apkg файл?</item>
-        <item quantity="many">Экспортировать %d выбранных карточек в apkg файл?</item>
-        <item quantity="other">Экспортировать %d выбранных карточек в apkg файл?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Экспортировать выбранную запись как apkg-файл?</item>
-        <item quantity="few">Экспортировать %d выбранных записей как apkg-файл?</item>
-        <item quantity="many">Экспортировать %d выбранных записей как apkg-файл?</item>
-        <item quantity="other">Экспортировать %d выбранных записей как apkg-файл?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Подготовка экспорта&#8230;</string>
     <string name="export_ready_title">Экспорт готов</string>
     <string name="export_send_no_handlers">Нет приложений для чтения файлов apkg. Сохраняется...</string>
