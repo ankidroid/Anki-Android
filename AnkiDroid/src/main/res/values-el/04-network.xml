@@ -71,12 +71,12 @@
     <string name="sync_database_acknowledge">Η συλλογή συγχρονίστηκε</string>
     <string name="sync_corrupt_database">Η βάση δεδομένων είναι κατεστραμμένη. Παρακαλούμε να τη διορθώσετε πριν ξαναδοκιμάσετε να την συγχρονίσετε.\n\nΔείτε  %s για πληροφορίες σχετικές με τη διόρθωση της βάσης δεδομένων σας.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_sanity_local">Local</string>
-    <string name="sync_sanity_remote">Remote</string>
-    <string name="force_full_sync_title">Force full sync</string>
-    <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
-    <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
+    <string name="sync_sanity_local">Τοπικά</string>
+    <string name="sync_sanity_remote">Απομακρυσμένα</string>
+    <string name="force_full_sync_title">Εξαναγκασμός πλήρους συγχρονισμού</string>
+    <string name="force_full_sync_summary">Στον επόμενο συγχρονισμό, εξαναγκασμός αλλαγών σε μία κατεύθυνση</string>
+    <string name="force_full_sync_confirmation">Αναγκαστικός πλήρης συγχρονισμός</string>
+    <string name="full_sync_confirmation">Η ζητούμενη αλλαγή θα απαιτήσει μια πλήρη μεταφόρτωση της βάσης δεδομένων την επόμενη φορά που θα συγχρονίσετε την συλλογή σας. Αν έχετε επαναλήψεις ή άλλες αλλαγές που περιμένουν σε μια άλλη συσκευή που δεν έχουν συγχρονιστεί ακόμα, θα χαθούν. Συνέχεια;</string>
     <string name="full_sync_confirmation_upgrade">Λόγω ενός σφάλματος στην προηγούμενη εγκατεστημένη έκδοση του AnkiDroid, συνιστάται να κάνετε πλήρη συγχρονισμό.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Συγχρονισμός (πλήρης)</string>

@@ -70,7 +70,7 @@
     <string name="multimedia_editor_import_video">Βίντεο</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">Something went wrong</string>
+    <string name="multimedia_editor_something_wrong">Κάτι πήγε στραβά</string>
     <string name="multimedia_editor_svg_preview">Τα SVG δεν είναι διαθέσιμα για προεπισκόπηση</string>
     <string name="multimedia_editor_png_paste_error">Σφάλμα κατά τη μετατροπή της εικόνας του προχείρου σε png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Επισύναψη περιεχομένου πολυμέσων στο πεδίο %1$s</string>
@@ -87,6 +87,6 @@
     <string name="crop_button">Περικοπή εικόνας</string>
     <string name="save_dialog_content">Το τρέχον μέγεθος εικόνας είναι %sMB. Το προεπιλεγμένο όριο μεγέθους εικόνας είναι 1MB. Θέλετε να την περικόψετε;</string>
     <string name="select_image_failed">"Η επιλογή εικόνας απέτυχε, Παρακαλώ προσπαθήστε ξανά"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="activity_result_unexpected">Η εφαρμογή επέστρεψε μια μη αναμενόμενη τιμή. Μπορεί να χρειαστεί να χρησιμοποιήσετε μια διαφορετική εφαρμογή</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Περιεχόμενα Πεδίου</string>
 </resources>

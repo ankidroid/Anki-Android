@@ -221,9 +221,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
     <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Chỗ trống</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Vui lòng bật toàn màn hình để sử dụng Hiển thị Ngăn Điều hướng bằng JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Vui lòng bật toàn màn hình để sử dụng Trình đơn Tùy chọn Hiển thị bằng JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Không thể lưu hình ảnh bảng trắng. %s</string>
     <string name="white_board_image_saved">Hình ảnh bảng trắng được lưu vào %s</string>
@@ -349,19 +346,19 @@
     <string name="media_sync_unavailable_message">Chức năng đồng bộ dữ liệu đã bị tắt trong cài đặt. Vui lòng đồng bộ và sao lưu bất kỳ dữ liệu nào chưa được đồng bộ trước khi tiếp tục</string>
     <string name="audio_saved">Đã lưu bản ghi âm</string>
     <string name="deleting_selected_notes">Xoá ghi chú đã chọn</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Nhấn vào một giọng nói để nghe
     </string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
     </string>
     <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Vẫn sử dụng
     </string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Lỗi chuyển văn bản thành giọng nói (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
     </string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Cài đặt
     </string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
     </string>
-    <string name="shared_decks_login_required">Please log in to download more decks</string>
+    <string name="shared_decks_login_required">Vui lòng đăng nhập để tải thêm các bộ thẻ</string>
 </resources>

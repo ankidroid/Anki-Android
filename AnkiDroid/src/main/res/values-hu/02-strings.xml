@@ -226,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">centíroz</string>
     <string name="basic_answer_sample_text">egy példa</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Üres</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Kérjük kapcsolja be a teljes képernyős módot, hogy a Navigáció Rajzolót be tudja kapcsolni JavaScript használatával.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Kérjük kapcsolja be a teljes képernyős módot, hogy a Beállítások Menü menüpontot használhassa JavaScriptel.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">A rajztábla kép mentése sikertelen. %s</string>
     <string name="white_board_image_saved">A rajztábla kép elmentve %s-ba</string>

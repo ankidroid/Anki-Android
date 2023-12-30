@@ -226,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">एक दाहरण</string>
     <string name="basic_answer_sample_text">एक उदाहरण</string>
     <string name="reviewer_tts_cloze_spoken_replacement">रिक्त</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">कृपया जावास्क्रिप्ट का उपयोग करके शो नेविगेशन दराज का उपयोग करने के लिए फुलस्क्रीन चालू करें।</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">कृपया जावास्क्रिप्ट का उपयोग करके शो विकल्प मेनू का उपयोग करने के लिए फुलस्क्रीन चालू करें।</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">श्वेतपट्ट छवि को सहेजने में विफल। %s</string>
     <string name="white_board_image_saved">श्वेतपट्ट छवि %s में सहेजी गई</string>

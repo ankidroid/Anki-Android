@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Type :</string>
     <string name="CardEditorTags">Étiquettes : %1$s</string>
     <string name="CardEditorCards">Cartes : %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">Modifier les Occlusions</string>
     <string name="tag_name">Nom d\'étiquette</string>
     <string name="add_new_filter_tags">Ajouter/filtrer étiquettes</string>
     <string name="add_tag">Ajouter une étiquette</string>
@@ -226,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
     <string name="basic_answer_sample_text">un exemple</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vide</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Veuillez activer le plein écran pour utiliser Afficher le tiroir de navigation en utilisant JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Veuillez activer le plein écran pour utiliser Afficher le menu d\'options en utilisant JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Impossible d\'enregistrer l\'image du tableau blanc. %s</string>
     <string name="white_board_image_saved">Image du tableau blanc enregistrée dans %s</string>

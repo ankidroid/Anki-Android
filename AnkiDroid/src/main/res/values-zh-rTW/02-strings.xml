@@ -221,9 +221,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
     <string name="basic_answer_sample_text">一個演示</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">請啟用全螢幕以進行用 JavaScript 展示導覽列的功能。</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">請啟用全螢幕以進行用 JavaScript 顯示設定選單的功能。</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">儲存白板圖像失敗。%s</string>
     <string name="white_board_image_saved">白板圖像儲存至%s</string>

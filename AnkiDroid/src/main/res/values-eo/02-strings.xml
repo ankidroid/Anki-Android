@@ -226,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">egzemplo</string>
     <string name="basic_answer_sample_text">ekzemplo</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Malplena</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Aktivigu plenekranan reĝimon por uzi “montri navigan tirmenuon” per JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Aktivigu plenekranan reĝimon por uzi “montri menuon de agordoj” per JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Fiaskis konservi bildon de skribtabulo. %s</string>
     <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>

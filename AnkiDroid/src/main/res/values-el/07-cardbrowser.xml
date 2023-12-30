@@ -98,7 +98,7 @@
     <string name="card_browser_no_cards_in_deck">Δεν βρέθηκαν κάρτες στην τράπουλα ‘%s’</string>
     <string name="card_browser_search_all_decks">Αναζήτηση όλων των τραπουλών</string>
     <string name="card_browser_unknown_deck_name">Άγνωστο</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Περιορισμός περιεχομένου</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Εξαγωγή κάρτας</item>
         <item quantity="other">Εξαγωγή καρτών</item>

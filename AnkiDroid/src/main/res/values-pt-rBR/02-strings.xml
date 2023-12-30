@@ -226,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">ezemplo</string>
     <string name="basic_answer_sample_text">um exemplo</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vazio</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Por favor ative a tela cheia para usar \"Mostrar Opções de Navegação\" usando JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Por favor, ative a tela cheia para usar \"Mostrar Menu de Opções\" usando JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Falha ao salvar imagem do quadro. %s</string>
     <string name="white_board_image_saved">Imagem do quadro branco salva em %s</string>

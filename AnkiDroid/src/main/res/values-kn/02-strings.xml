@@ -226,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
     <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ಖಾಲಿ</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಬಳಸಿ ಶೋ ನ್ಯಾವಿಗೇಷನ್ ಡ್ರಾಯರ್ ಅನ್ನು ಬಳಸಲು ದಯವಿಟ್ಟು ಪೂರ್ಣಪರದೆ ಆನ್ ಮಾಡಿ</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಬಳಸಿ ಶೋ ನ್ಯಾವಿಗೇಷನ್ ಡ್ರಾಯರ್ ಅನ್ನು ಬಳಸಲು ದಯವಿಟ್ಟು ಪೂರ್ಣಪರದೆ ಆನ್ ಮಾಡಿ</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ವೈಟ್‌ಬೋರ್ಡ್ ಚಿತ್ರವನ್ನು ಉಳಿಸುವಲ್ಲಿ ವಿಫಲವಾಗಿದೆ. %s</string>
     <string name="white_board_image_saved">ವೈಟ್‌ಬೋರ್ಡ್ ಚಿತ್ರವನ್ನು%s ಗೆ ಉಳಿಸಲಾಗಿದೆ</string>
@@ -287,9 +284,9 @@
     <string name="back_pressed_once_reviewer">Press back again to return</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
+    <string name="download_deck">ಡೆಕ್ ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</string>
     <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
+    <string name="cancel_download">ಡೌನ್‌ಲೋಡ್ ರದ್ದುಮಾಡಿ</string>
     <string name="cancel_download_question_title">Cancel download?</string>
     <string name="downloading_file">Downloading %s</string>
     <string name="import_deck">Import Deck</string>
@@ -299,7 +296,7 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home">Home</string>
+    <string name="home">ಮನೆ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
