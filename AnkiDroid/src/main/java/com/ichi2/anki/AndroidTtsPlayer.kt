@@ -121,6 +121,7 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
             } ?: return@suspendCancellableCoroutine continuation.resume(AndroidTtsError.failure(TtsErrorCode.APP_TTS_INIT_FAILED))
 
             Timber.d("tts text '%s' to be played for locale (%s)", tag.fieldText, tag.lang)
+            continuation.ensureActive()
             tts.speak(tag.fieldText, TextToSpeech.QUEUE_FLUSH, bundleFlyweight, "stringId")
 
             continuation.invokeOnCancellation {

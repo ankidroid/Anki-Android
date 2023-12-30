@@ -37,6 +37,7 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -416,4 +417,14 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
         withCol { modSchemaNoCheck() }
     }
     return hasAcceptedSchemaChange
+}
+
+/**
+ * Ensures that current continuation is not [cancelled][CancellableContinuation.isCancelled].
+ *
+ * @throws [CancellationException] if canceled. This does not contain the original cancellation cause
+*/
+fun <T> CancellableContinuation<T>.ensureActive() {
+    // we can't use .isActive here, or the exception would take precedence over a resumed exception
+    if (isCancelled) throw CancellationException()
 }
