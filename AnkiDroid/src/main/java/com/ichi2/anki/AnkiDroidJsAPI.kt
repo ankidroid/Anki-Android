@@ -43,7 +43,9 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SortOrder
 import com.ichi2.utils.NetworkUtils
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONException
 import org.json.JSONObject
@@ -328,16 +330,16 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             "sttStart" -> {
                 val callback = object : JavaScriptSTT.SpeechRecognitionCallback {
                     override fun onResult(result: String) {
-                        activity.runOnUiThread {
+                        CoroutineScope(Dispatchers.Main).launch {
                             val apiResult = ApiResult(true, result)
-                            val jsonEncodedString = JSONObject.quote(apiResult.toString())
+                            val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
                             activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
                         }
                     }
                     override fun onError(errorMessage: String) {
-                        activity.runOnUiThread {
+                        CoroutineScope(Dispatchers.Main).launch {
                             val apiResult = ApiResult(false, errorMessage)
-                            val jsonEncodedString = JSONObject.quote(apiResult.toString())
+                            val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
                             activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
                         }
                     }
