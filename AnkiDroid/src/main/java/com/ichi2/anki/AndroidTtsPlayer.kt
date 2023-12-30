@@ -52,11 +52,21 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
     private val bundleFlyweight = Bundle()
 
     private val ttsCompletedChannel: Channel<TtsCompletionStatus> = Channel()
+
+    private val cancelledUtterances = HashSet<String>()
+    private var currentUtterance: String? = null
+
     suspend fun init(scope: CoroutineScope) {
         this.scope = scope
         this.tts = TtsVoices.createTts(context)?.apply {
             setOnUtteranceProgressListener(object : UtteranceProgressListenerCompat() {
-                override fun onStart(utteranceId: String?) { }
+                override fun onStart(utteranceId: String?) {
+                    // handle calling .stopPlaying() BEFORE onStart() is called
+                    if (cancelledUtterances.remove(utteranceId) && currentUtterance == utteranceId) {
+                        Timber.d("immediately stopped playing %s", utteranceId)
+                        stopPlaying()
+                    }
+                }
 
                 override fun onDone(utteranceId: String?) {
                     scope.launch(Dispatchers.IO) { ttsCompletedChannel.send(TtsCompletionStatus.success()) }
@@ -122,10 +132,16 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
 
             Timber.d("tts text '%s' to be played for locale (%s)", tag.fieldText, tag.lang)
             continuation.ensureActive()
-            tts.speak(tag.fieldText, TextToSpeech.QUEUE_FLUSH, bundleFlyweight, "stringId")
+            val utteranceId = tag.fieldText.hashCode().toString().apply {
+                currentUtterance = this
+                cancelledUtterances.remove(this)
+            }
+            tts.speak(tag.fieldText, TextToSpeech.QUEUE_FLUSH, bundleFlyweight, utteranceId)
 
             continuation.invokeOnCancellation {
                 Timber.d("stopping tts due to cancellation")
+                // sadly: .stopPlaying does NOT work if the TTS Engine has queued the text
+                cancelledUtterances.add(utteranceId)
                 tts.stopPlaying()
             }
 
