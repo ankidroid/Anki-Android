@@ -226,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">ᱮᱠᱥᱚᱢᱯᱚᱞ</string>
     <string name="basic_answer_sample_text">ᱢᱤᱫᱴᱟᱹᱝ ᱫᱟᱹᱭᱠᱟᱹ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ᱮᱠᱷᱮᱵᱟᱜ</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">ᱡᱟᱵᱷᱟᱥᱨᱤᱯᱴ ᱛᱮ ᱱᱮᱵᱷᱤᱠᱮᱥᱚᱱ ᱰᱨᱣᱟᱹᱨ ᱫᱮᱠᱷᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱯᱷᱩᱞᱼᱥᱠᱨᱤᱱ ᱚᱱ ᱛᱟᱢ ᱾</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">ᱡᱟᱵᱷᱟᱥᱨᱤᱯᱴ ᱛᱮ ᱚᱯᱥᱚᱱ ᱢᱮᱱᱩ ᱫᱮᱠᱷᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱯᱷᱩᱞᱼᱥᱠᱨᱤᱱ ᱚᱱ ᱛᱟᱢ ᱾</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱥᱟᱱᱪᱟᱣ ᱵᱷᱩᱞ ᱾. %s </string>
     <string name="white_board_image_saved">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ %s ᱛᱮ ᱥᱟᱱᱪᱟᱣ</string>

@@ -236,9 +236,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">прымер</string>
     <string name="basic_answer_sample_text">пример</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пусто</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Включите полноэкранный режим для показа панели навигации с помощью JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Включите полноэкранный режим для показа меню параметров с помощью JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Не удалось сохранить изображение доски. %s</string>
     <string name="white_board_image_saved">Изображение доски сохранено в %s</string>

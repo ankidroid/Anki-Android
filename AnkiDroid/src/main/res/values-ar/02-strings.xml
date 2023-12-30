@@ -246,9 +246,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">متال</string>
     <string name="basic_answer_sample_text">مثال</string>
     <string name="reviewer_tts_cloze_spoken_replacement">فارغ</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">الرجاء تفعيل وضع ملء الشاشة لاستخدام ميزة إظهار قائمة التنقل باستخدام جافا سكريبت.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">الرجاء تفعيل وضع ملء الشاشة لاستخدام ميزة إظهار الخيارات باستخدام جافا سكريبت.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">فشل حفظ صورة السبورة. %s</string>
     <string name="white_board_image_saved">تم حفظ صورة السبورة إلى %s</string>

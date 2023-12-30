@@ -226,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">halembawa</string>
     <string name="basic_answer_sample_text">halimbawa</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blanko</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Mangyaring buksan ang fullscreen upang gamitin ang \"Ipakita ang Kahon ng Nabegasyon\" gamit ang JavaScript</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Mangyaring buksan ang fullscreen upang gamitin ang \"Ipakita ang Menu ng mga Opsiyon\" gamit ang JavaScript</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Bigo sa pag-save ng litrato ng puting pisara. %s</string>
     <string name="white_board_image_saved">Isinave ang litrato ng puting pisara sa %s</string>

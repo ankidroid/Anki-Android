@@ -226,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">Exompel</string>
     <string name="basic_answer_sample_text">ett exempel</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tom</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Aktivera helskärm för att använda Visa navigeringslåda med JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Aktivera helskärm för att använda menyn Visa alternativ med JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Det gick inte att spara whiteboardbilden. %s</string>
     <string name="white_board_image_saved">Whiteboard-bild sparad till %s</string>

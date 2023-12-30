@@ -236,9 +236,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">prúklad</string>
     <string name="basic_answer_sample_text">príklad</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Prázdny</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Zapnite, prosím, režim celej obrazovky pre použitie zobrazenia navigačnej lišty využívajúcej JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Zapnite, prosím, režim celej obrazovky na zobrazenie menu možností využívajúceho JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Nepodarilo sa uložiť obrázok tabule. %s</string>
     <string name="white_board_image_saved">Obrázok tabule sa uložil do %s</string>

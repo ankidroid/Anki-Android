@@ -95,10 +95,10 @@
     <string name="gesture_flag_remove">Αφαίρεση σημαίας</string>
     <string name="gesture_page_up">Page Up</string>
     <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_abort_sync">Διακοπή διαβάσματος και συγχρονισμού</string>
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_hint">Εμφάνιση Υπόδειξης</string>
+    <string name="gesture_show_all_hints">Εμφάνιση Όλων Των Υποδείξεων</string>
     <string name="record_voice">Εγγραφή φωνής</string>
     <string name="replay_voice">Επανάληψη φωνής</string>
     <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>

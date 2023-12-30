@@ -229,9 +229,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">esòmpiu</string>
     <string name="basic_answer_sample_text">un\'esèmpiu</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Bòidu</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Allughe s\'ischermu intreu pro impreare Ammustra sa barra de navigatzione impreende JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Allughe s\'ischermu intreu pro impreare Ammustra su menù de sas optziones impreende JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Sarvamentu de s\'immàgine de sa lavagna fallidu. %s</string>
     <string name="white_board_image_saved">Immàgine de sa lavagna sarvada in %s</string>

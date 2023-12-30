@@ -72,7 +72,7 @@
     <string name="ease_button_easy">Makkelijk</string>
     <string name="menu_import">Kaarten importeren</string>
     <string name="undo">Ongedaan maken</string>
-    <string name="redo">Redo</string>
+    <string name="redo">Opnieuw</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Maak streek ongedaan</string>
     <string name="move_all_to_deck">Alles verplaatsen naar leerset</string>
     <string name="unbury">Opgraven</string>
@@ -234,8 +234,8 @@
     <string name="create_new_collection">Nieuwe collectie aanmaken</string>
     <string name="new_unsafe_collection">De nieuwe collectie wordt verwijderd van uw telefoon als u AnkiDroid verwijdert</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid heeft wat machtigingen nodig om te werken</string>
+    <string name="storage_access_title">Toegang tot opslag</string>
+    <string name="storage_access_summary">Slaat uw collectie op een veilige plaats die niet zal worden verwijderd als de app is verwijderd</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Toegang tot alle bestanden</string>
 </resources>

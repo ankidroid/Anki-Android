@@ -48,14 +48,14 @@
     <string name="disabled">غیر فعال شده</string>
     <string name="pref_summary_seconds">%s ثانیه</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="one">%d دقیقه</item>
+        <item quantity="other">%d دقیقه</item>
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">بدون نتیجه</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">عمومی</string>
-    <string name="pref_cat_studying" maxLength="41">Play</string>
+    <string name="pref_cat_studying" maxLength="41">مطالعه کردن</string>
     <string name="pref_cat_system_wide" maxLength="41">در کل سیستم</string>
     <string name="pref_cat_reviewing" maxLength="41">مرور</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">همگام سازی</string>
@@ -116,7 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">لمس بالای وسط</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">لمس پایین سمت چپ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">لمس پایین سمت راست</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">لرزش دستگاه</string>
     <string name="card_browser_enable_external_context_menu">منوی \'%s\'</string>
     <string name="card_browser_enable_external_context_menu_summary">\'%s\' را در لیست به صورت عمومی فعال می‌کند</string>
     <string name="double_scrolling_gap" maxLength="41">پیمایش دو برابری</string>
@@ -137,8 +137,8 @@
     <string name="sync_status_badge_summ">علامت همگام سازی را تغییر بده وقتی تغییرات در حال آپلود شدن هستند</string>
     <string name="metered_sync_title" maxLength="41">مجاز بر روی ارتباطات دارای محدودیت</string>
     <string name="metered_sync_summary">اگر غیرفعال شود، چنانچه شبکه شما دارای محدودیت ارتباطی باشد، هنگام سینک کردن پیغام هشدار دریافت می‌کنید</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">فرکانس</string>
+    <string name="backup_limits_lifetime">برای همیشه</string>
     <string name="app_theme" maxLength="41">تِم</string>
     <string name="day_theme" maxLength="41">پس زمینه روز</string>
     <string name="night_theme" maxLength="41">پس زمینه شب</string>
@@ -168,14 +168,14 @@
     <string name="vertical_centering_summ">تراز کردن محتوای کارت‌ها بصورت عمودی در وسط</string>
     <string name="pref_double_tap_time_interval" maxLength="41">فاصله زمانی دو بار زدن (میلی ثانیه)</string>
     <string name="pref_double_tap_time_interval_summary">ضربه دوم به دکمه های پاسخ صرف نظر می شود اگر این مدت زمان سپری نشده باشد. این عمل از دوبار ضربه های تصادفی جلوگیری میکند</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press" maxLength="41">«نمایش پاسخ» زمان لمس طولانی (ms)</string>
     <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">نمایش  دکمه زمان</string>
     <string name="show_estimates_summ">نمایش زمان مرور بعدی در بالای دکمه پاسخ</string>
     <string name="show_large_answer_buttons" maxLength="41">دکمه های بزرگ جواب نشان بده</string>
     <string name="show_large_answer_buttons_summ">دکمه ی جواب را در 2 ردیف نشان بده</string>
     <string name="show_top_bar" maxLength="41">نمایش نوار بالا</string>
-    <string name="show_top_bar_summ">نمایش تعداد کارت‌ها، پرچم‌ها و نشان‌ها در نوار بالا</string>
+    <string name="show_top_bar_summ">نمایش تعداد کارت‌ها، پرچم‌ها و علامت‌ها در نوار بالا</string>
     <string name="show_progress" maxLength="41">نمایش باقیمانده</string>
     <string name="show_progress_summ">نمایش تعداد کارت‌های باقیمانده</string>
     <string name="use_current" maxLength="41">دسته برای کارتهای جدید</string>
@@ -184,8 +184,8 @@
     <string name="new_timezone" maxLength="41">مدیریت منطقه زمانی جدید</string>
     <string name="day_offset_with_description" maxLength="41">شروع روز بعد</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d ساعت پس از نیمه شب</item>
+        <item quantity="other">%d ساعت پس از نیمه شب</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">روشن نگه‌داشتن صفحه</string>
     <string name="pref_keep_screen_on_summ">غیرفعال کردن زمان خاموش شدن صفحه نمایش</string>
@@ -226,12 +226,12 @@
     <!-- Key Bindings -->
     <string name="keyboard">کیبورد</string>
     <string name="bluetooth">بلوتوث</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="answer_buttons" maxLength="41">دکمه های پاسخ</string>
+    <string name="card" maxLength="41">کارت</string>
+    <string name="note" maxLength="41">یادداشت</string>
+    <string name="navigation" maxLength="41">هدایت</string>
+    <string name="media" maxLength="41">رسانه</string>
+    <string name="misc" maxLength="41">سایر</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">انتخاب برچسبها</string>
     <!-- Deck configurations -->
@@ -270,8 +270,8 @@
     <string name="binding_add_key">کلید اضافه کن</string>
     <string name="binding_replace_key">کلید را جایگذین کن</string>
     <string name="key_picker_default_press_key">یک کلید را انتخاب کنید</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">اضافه کردن اهرمک/تنظیم کننده حرکات</string>
+    <string name="axis_picker_move_joystick">یک اهرمک/تنظیم کننده حرکات را حرکت دهید</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">طرف کارت را انتخاب کنید</string>
     <string name="card_side_question">سوال</string>

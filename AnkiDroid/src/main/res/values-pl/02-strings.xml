@@ -236,9 +236,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">ekstremalny</string>
     <string name="basic_answer_sample_text">przykład</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Pusto</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Włącz tryb pełnoekranowy by pokazywać menu boczne przy użyciu JavaScript</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Włącz tryb pełnoekranowy by pokazywać menu opcji przy użyciu JavaScript</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Nie udało się zapisać obrazu tablicy. %s</string>
     <string name="white_board_image_saved">Obraz tablicy zapisany w %s</string>

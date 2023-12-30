@@ -226,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">Baispiel</string>
     <string name="basic_answer_sample_text">zum Beispiel</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Auslassung</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Bitte schalten Sie den Vollbildmodus ein, um »Seitenleiste anzeigen« mit JavaScript zu verwenden.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Bitte schalten Sie den Vollbildmodus ein, um »Optionsmenü anzeigen« mit JavaScript zu verwenden.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Whiteboardbild konnte nicht gespeichert werden. %s</string>
     <string name="white_board_image_saved">Whiteboardbild in %s gespeichert</string>

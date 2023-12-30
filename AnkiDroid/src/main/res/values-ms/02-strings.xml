@@ -221,9 +221,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">conteh</string>
     <string name="basic_answer_sample_text">sebagai contoh</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Kosong</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Sila hidupkan skrin penuh untuk menggunakan Lihat Laci Navigasi melalui JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Sila hidupkan skrin penuh untuk menggunakan Lihat Menu Pilihan melalui JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Gagal menyimpan gambar papan putih. %s</string>
     <string name="white_board_image_saved">Gambar papan putih simpan di %s</string>

@@ -55,12 +55,12 @@
     </plurals>
     <string name="card_browser_all_decks">Alle leersets</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">Kaart verwijderen</item>
+        <item quantity="other">Kaarten verwijderen</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Notitie verwijderen</item>
+        <item quantity="other">Notities verwijderen</item>
     </plurals>
     <string name="card_browser_change_deck">Wijzig leerset</string>
     <string name="delete_card_title">Memo verwijderen</string>
@@ -98,7 +98,7 @@
     <string name="card_browser_no_cards_in_deck">Geen kaarten gevonden in leerset ‘%s</string>
     <string name="card_browser_search_all_decks">Alle leersets doorzoeken</string>
     <string name="card_browser_unknown_deck_name">Onbekend</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Inhoud afkappen</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Exporteer kaart</item>
         <item quantity="other">Exporteer kaarten</item>

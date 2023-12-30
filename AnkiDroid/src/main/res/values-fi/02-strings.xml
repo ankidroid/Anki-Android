@@ -226,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">ecimerkki</string>
     <string name="basic_answer_sample_text">esimerkki</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tyhjä</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Ota koko näyttö käyttöön, jos haluat käyttää Näytä navigointivalikko -toimintoa JavaScriptin avulla.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Ota koko näyttö käyttöön, jos haluat käyttää Näytä asetusvalikko -toimintoa JavaScriptin avulla.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Kirjoitustaulun kuvan tallentaminen epäonnistui. %s</string>
     <string name="white_board_image_saved">Kirjoitustaulun kuva tallennettu sijaintiin %s</string>

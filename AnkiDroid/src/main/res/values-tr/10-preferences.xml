@@ -116,7 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Orta merkeze dokun</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Sol alta dokun</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Sağ alta dokun</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Cihazı salla</string>
     <string name="card_browser_enable_external_context_menu">\"%s\" Menüsü</string>
     <string name="card_browser_enable_external_context_menu_summary">\"%s\" durum menüsünü uygulama çapında etkinleştirir</string>
     <string name="double_scrolling_gap" maxLength="41">Hızlı kaydırma</string>
@@ -184,8 +184,8 @@
     <string name="new_timezone" maxLength="41">Yeni zaman dilimi idaresi</string>
     <string name="day_offset_with_description" maxLength="41">Sonraki günün başlangıcı (0 geceyarısı, 23 akşam 11)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">Geceyarısından %d saat sonra</item>
+        <item quantity="other">Geceyarısından %d saat sonra</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Ekranı açık tut</string>
     <string name="pref_keep_screen_on_summ">Ekran zaman aşımını devredışı bırak</string>
@@ -270,8 +270,8 @@
     <string name="binding_add_key">Anahtar ekle</string>
     <string name="binding_replace_key">Tuşu değiştir</string>
     <string name="key_picker_default_press_key">Bir tuşa basın</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">Joystick/hareket kumandası ekle</string>
+    <string name="axis_picker_move_joystick">Bir joystick/hareket kumandasını hareket ettir</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartın tarafını seç</string>
     <string name="card_side_question">Soru</string>
