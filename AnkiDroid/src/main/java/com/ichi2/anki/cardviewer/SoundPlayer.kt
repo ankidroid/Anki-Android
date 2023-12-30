@@ -255,6 +255,8 @@ class SoundPlayer(
                 RETRY_AUDIO -> {
                     try {
                         play()
+                    } catch (e: CancellationException) {
+                        throw e
                     } catch (e: Exception) {
                         Timber.w("failed to replay audio", e)
                     }
