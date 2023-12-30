@@ -24,7 +24,9 @@ import android.net.Uri
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.ensureActive
 import com.ichi2.libanki.SoundOrVideoTag
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import kotlin.coroutines.resume
@@ -97,6 +99,7 @@ class SoundTagPlayer(private val soundUriBase: String) {
             }
 
             requestAudioFocus()
+            continuation.ensureActive()
             start()
         }
     }

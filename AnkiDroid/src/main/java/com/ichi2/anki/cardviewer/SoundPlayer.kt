@@ -43,6 +43,7 @@ import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.TtsPlayer
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -128,11 +129,9 @@ class SoundPlayer(
         if (!canPlaySounds()) {
             return null
         }
-        cancelPlaySoundsJob()
-        Timber.i("playing sounds for %s", soundSide)
-        this.playSoundsJob = scope.launch(Dispatchers.IO) {
+        playSoundsJob {
+            Timber.i("playing sounds for %s", soundSide)
             playAllSoundsInternal(soundSide, isAutomaticPlayback = true)
-            playSoundsJob = null
         }
         return this.playSoundsJob
     }
@@ -189,12 +188,15 @@ class SoundPlayer(
         }
     }
 
-    private suspend fun cancelPlaySoundsJob() {
-        playSoundsJob?.let {
-            Timber.i("cancelling job")
-            withContext(Dispatchers.IO) {
-                playSoundsJob?.cancelAndJoin()
-            }
+    private suspend fun cancelPlaySoundsJob(job: Job? = playSoundsJob) {
+        if (job == null) return
+        Timber.i("cancelling job")
+        withContext(Dispatchers.IO) {
+            job.cancelAndJoin()
+        }
+        // This stops multiple calls logging, while allowing an 'old' value in as the parameter
+        if (job == playSoundsJob) {
+            playSoundsJob = null
         }
     }
 
@@ -295,6 +297,16 @@ class SoundPlayer(
             soundErrorListener.onTtsError(error, isAutomaticPlayback)
         }
         return player
+    }
+
+    /** Ensures that only one [playSoundsJob] is running at once */
+    private suspend fun playSoundsJob(block: suspend CoroutineScope.() -> Unit) {
+        val oldJob = playSoundsJob
+        this.playSoundsJob = scope.launch(Dispatchers.IO) {
+            cancelPlaySoundsJob(oldJob)
+            block()
+            playSoundsJob = null
+        }
     }
 
     @VisibleForTesting
