@@ -402,7 +402,9 @@ fun AbstractFlashcardViewer.createSoundErrorListener(baseUri: String): SoundErro
         override fun onError(uri: Uri): SoundErrorBehavior {
             try {
                 val file = uri.toFile()
-                if (file.exists()) return CONTINUE_AUDIO
+                // There is a multitude of transient issues with the MediaPlayer. (1, -1001) for example
+                // Retrying fixes most of these
+                if (file.exists()) return RETRY_AUDIO
                 // file doesn't exist - may be due to scoped storage
                 if (handleStorageMigrationError(file)) {
                     return RETRY_AUDIO
