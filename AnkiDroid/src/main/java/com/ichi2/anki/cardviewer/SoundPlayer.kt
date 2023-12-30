@@ -175,8 +175,8 @@ class SoundPlayer(
     }
 
     suspend fun stopSounds() {
-        Timber.i("stopping sounds")
-        cancelPlaySoundsJob()
+        if (playSoundsJob != null) Timber.i("stopping sounds")
+        cancelPlaySoundsJob(playSoundsJob)
     }
 
     override fun close() {
@@ -254,11 +254,13 @@ class SoundPlayer(
                 CONTINUE_AUDIO -> return@withContext true
                 RETRY_AUDIO -> {
                     try {
+                        Timber.i("retrying audio")
                         play()
+                        Timber.i("retry succeeded")
                     } catch (e: CancellationException) {
                         throw e
                     } catch (e: Exception) {
-                        Timber.w("failed to replay audio", e)
+                        Timber.w("retry audio failed", e)
                     }
                 }
             }
