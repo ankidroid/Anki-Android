@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">فایل انتخاب شده به صورت خودکار توسط ankidroid نمی تواند وارد شود. لطفا راهنمای کاربر را ببینید که چگونه به صورت دستی بتوان فایل anki را وارد کرد:\n%s</string>
     <string name="import_error_copy_to_cache">کش کردن فایل ناموفق بود (احتمالا به دلیل کمبود حافظه)</string>
     <string name="import_interrupted">در فرایند ورود اختلال ایجاد شد: AnkiDroid بسته بود</string>
-    <string name="export_include_schedule">به همراه زمانبندی</string>
-    <string name="export_include_media">به همراه رسانه</string>
-    <string name="confirm_apkg_export">صدور مجموعه به‌صورت مجموعۀ آنکی؟</string>
-    <string name="confirm_apkg_export_deck">دسته «%s» به عنوان یک فایل با پسوند apkg صادر شود؟</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">کارت انتخاب شده را به عنوان فایل apkg صادر میکنید؟</item>
-        <item quantity="other">%d تا از کارت‌های انتخاب شده را به عنوان فایل apkg صادر میکنید؟</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">یادداشت انتخاب شده را به عنوان فایل apkg صادر میکنید؟</item>
-        <item quantity="other">%d تا از یادداشت‌های انتخاب شده را به عنوان فایل apkg صادر میکنید؟</item>
-    </plurals>
     <string name="export_preparation_in_progress">در حال آماده‌سازی خروجی&#8230;</string>
     <string name="export_ready_title">خروجی آماده است</string>
     <string name="export_send_no_handlers">هیچ برنامه ای برای بررسی apkg در دسترس نیست. در حال ذخیره...</string>

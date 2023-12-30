@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">സമന്വയം തുടരുക</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">സമന്വയം റദ്ദാക്കി</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">റദ്ദാക്കുന്നു&#8230; \ n ഇതിന് കുറച്ച് സമയമെടുത്തേക്കാം.</string>
-    <string name="export">കയറ്റുമതി</string>
-    <string name="export_collection">കയറ്റുമതി ശേഖരം</string>
     <string name="export_deck">കയറ്റുമതി ഡെക്ക്</string>
     <string name="nothing">ഒന്നുമില്ല</string>
     <!-- Card template editor -->

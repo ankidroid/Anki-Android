@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">Το επιλεγμένο αρχείο δεν μπορεί να εισαχθεί αυτόματα από το AnkiDroid. Παρακαλώ δείτε το εγχειρίδιο χρήστη για το πώς να εισάγετε χειροκίνητα αρχεία anki: \n%s</string>
     <string name="import_error_copy_to_cache">Αποτυχία προσωρινής μνήμης αρχείου (πιθανόν εκτός χώρου αποθήκευσης)</string>
     <string name="import_interrupted">Η εισαγωγή διακόπηκε: Το AnkiDroid έκλεισε</string>
-    <string name="export_include_schedule">Συμπερίληψη προγραμματισμού</string>
-    <string name="export_include_media">Συμπερίληψη πολυμέσων</string>
-    <string name="confirm_apkg_export">Εξαγωγή συλλογής ως πακέτο Anki;</string>
-    <string name="confirm_apkg_export_deck">Εξαγωγή “%s” ως αρχείο apkg;</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
-        <item quantity="other">Εξαγωγή %d επιλεγμένων καρτών ως αρχείο apkg;</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Εξαγωγή επιλεγμένης σημείωσης ως αρχείο apkg;</item>
-        <item quantity="other">Εξαγωγή %d επιλεγμένων καρτών ως αρχείο apkg;</item>
-    </plurals>
     <string name="export_preparation_in_progress">Προετοιμασία εξαγωγής...</string>
     <string name="export_ready_title">Εξαγωγή έτοιμη</string>
     <string name="export_send_no_handlers">Δεν υπάρχουν διαθέσιμες εφαρμογές για χειρισμό apkg. Αποθήκευση...</string>

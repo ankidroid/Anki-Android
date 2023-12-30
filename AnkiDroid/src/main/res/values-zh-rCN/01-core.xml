@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">继续同步</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">同步已取消</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">正在取消&#8230;\n这可能需要一点时间。</string>
-    <string name="export">导出</string>
-    <string name="export_collection">导出集合</string>
     <string name="export_deck">导出牌组</string>
     <string name="nothing">无</string>
     <!-- Card template editor -->

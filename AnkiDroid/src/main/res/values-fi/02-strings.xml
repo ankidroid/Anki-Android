@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">Valittua tiedostoa ei voitu tuoda automaattisesti AnkiDroidiin. Katso käyttöohjeesta, kuinka tuoda manuaalisesti anki-tiedostoja: \n%s</string>
     <string name="import_error_copy_to_cache">Tiedoston tallentaminen välimuistiin epäonnistui (tallennustila on mahdollisesti loppunut).</string>
     <string name="import_interrupted">Tuonti keskeytyi: AnkiDroid suljettiin</string>
-    <string name="export_include_schedule">Myös ajoitukset</string>
-    <string name="export_include_media">Myös media</string>
-    <string name="confirm_apkg_export">Tuo kokoelma Anki-tiedostona?</string>
-    <string name="confirm_apkg_export_deck">Tallenna ”%s” apkg-tiedostona?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Vie valittu kortti apkg-tiedostoon?</item>
-        <item quantity="other">Vie %d valittua korttia apkg-tiedostoon?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Vie valittu muistiinpano apkg-tiedostoon?</item>
-        <item quantity="other">Vie %d valittua muistiinpanoa apkg-tiedostoon?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Valmistellaan vientiä...</string>
     <string name="export_ready_title">Vienti valmis</string>
     <string name="export_send_no_handlers">Sovellusta apkg:n käsittelyyn ei ole olemassa. Tallennetaan...</string>

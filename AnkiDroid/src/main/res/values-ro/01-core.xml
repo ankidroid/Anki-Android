@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continuați sincronizarea</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronizare anulată</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Anulare&#8230;\nAceasta poate dura ceva timp.</string>
-    <string name="export">Exportați</string>
-    <string name="export_collection">Exportați colecția</string>
     <string name="export_deck">Exportați pachetul</string>
     <string name="nothing">Nimic</string>
     <!-- Card template editor -->

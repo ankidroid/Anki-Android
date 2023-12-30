@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Senkronizasyona devam et</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Senkronizasyon iptal edildi</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">İptal ediliyor&#8230;\nBu biraz zaman alabilir.</string>
-    <string name="export">Dışa aktar</string>
-    <string name="export_collection">Koleksiyonu dışa aktar</string>
     <string name="export_deck">Desteyi dışa aktar</string>
     <string name="nothing">Hiçbir şey</string>
     <!-- Card template editor -->

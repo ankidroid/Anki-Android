@@ -162,16 +162,6 @@
     <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
     <string name="import_error_copy_to_cache">無法快取檔案 (可能是儲存空間不夠)</string>
     <string name="import_interrupted">匯入中斷</string>
-    <string name="export_include_schedule">包含進度</string>
-    <string name="export_include_media">包含媒體</string>
-    <string name="confirm_apkg_export">是否匯出集合為 Anki 包？</string>
-    <string name="confirm_apkg_export_deck">將 \"%s\" 匯出成 apkg 檔案嗎？</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">匯出 %d 張選定卡片為 apkg 文件？</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">匯出 %d 個選定筆記為 apkg 文件？</item>
-    </plurals>
     <string name="export_preparation_in_progress">準備匯出&#8230;</string>
     <string name="export_ready_title">已準備好要匯出</string>
     <string name="export_send_no_handlers">無應用程式可用於處理 apkg。儲存中&#8230;</string>

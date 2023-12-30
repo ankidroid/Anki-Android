@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ஒத்திசைவைத் தொடரவும்</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ஒத்திசைவு ரத்துசெய்யப்பட்டது</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ரத்து இது சிறிது நேரம் ஆகலாம்</string>
-    <string name="export">ஏற்றுமதி</string>
-    <string name="export_collection">ஏற்றுமதி சேகரிப்பு</string>
     <string name="export_deck">ஏற்றுமதி டெக்</string>
     <string name="nothing">எதுவும் இல்லை</string>
     <!-- Card template editor -->

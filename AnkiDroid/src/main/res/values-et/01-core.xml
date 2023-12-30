@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Jätka sünkroonimist</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sünkroonimine tühistatud</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Tühistan&#8230;\nSee võib võtta mõnda aega.</string>
-    <string name="export">Ekspordi</string>
-    <string name="export_collection">Ekspordi kogu</string>
     <string name="export_deck">Ekspordi kaardipakk</string>
     <string name="nothing">Mitte midagi</string>
     <!-- Card template editor -->

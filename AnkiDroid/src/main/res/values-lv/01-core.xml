@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Turpināt</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Saskaņošana atcelta</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Pārtrauc&#8230;\nTas var aizņemt labu laiku.</string>
-    <string name="export">Izrakstīt</string>
-    <string name="export_collection">Izrakstīt krājumu</string>
     <string name="export_deck">izrakstīt kavu</string>
     <string name="nothing">Nekā</string>
     <!-- Card template editor -->

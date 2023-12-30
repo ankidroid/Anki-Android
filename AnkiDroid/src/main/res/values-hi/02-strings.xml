@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
     <string name="import_error_copy_to_cache">फ़ाइल कैश करने में विफल (संभवतः भंडारण स्थान से बाहर)</string>
     <string name="import_interrupted">आयात बाधित हुआ</string>
-    <string name="export_include_schedule">शेड्यूलिंग शामिल करें</string>
-    <string name="export_include_media">मीडिया शामिल करें</string>
-    <string name="confirm_apkg_export">Apkg फ़ाइल के रूप में निर्यात संग्रह?</string>
-    <string name="confirm_apkg_export_deck">निर्यात \"%s\" apkg फ़ाइल के रूप में?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">चयनित कार्ड को एपीकेजी फ़ाइल के रूप में निर्यात करें?</item>
-        <item quantity="other">चयनित कार्ड्स को एपीकेजी फ़ाइल के रूप में निर्यात करें?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">चयनित नोट को apkg फ़ाइल के रूप में निर्यात करें?</item>
-        <item quantity="other">%d चयनित नोट्स को apkg फ़ाइल के रूप में निर्यात करें?</item>
-    </plurals>
     <string name="export_preparation_in_progress">निर्यात करने की तैयारी है...</string>
     <string name="export_ready_title">एक्सपोर्ट तैयार  है</string>
     <string name="export_send_no_handlers">apkg को संभालने के लिए कोई एप्लिकेशन उपलब्ध नहीं है। सहेजा जा रहा है ...</string>

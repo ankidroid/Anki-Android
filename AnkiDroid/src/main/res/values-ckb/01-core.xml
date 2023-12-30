@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continue sync</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sync cancelled</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis may take some time.</string>
-    <string name="export">دەرنێری</string>
-    <string name="export_collection">دەرنێری کۆمەڵە</string>
     <string name="export_deck">Export deck</string>
     <string name="nothing">ھیچ شتێک</string>
     <!-- Card template editor -->

@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">مطابقت پذیری جاری رکھیں</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">مطابقت پذیری منسوخ کر دی گئی</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">منسوخ ہو رہا ہے&#8230;\nاس میں کچھ وقت لگ سکتا ہے۔</string>
-    <string name="export">برآمد</string>
-    <string name="export_collection">مجموعہ برآمد کریں</string>
     <string name="export_deck">ڈیک برآمد کریں</string>
     <string name="nothing">کچھ بھی نہیں</string>
     <!-- Card template editor -->

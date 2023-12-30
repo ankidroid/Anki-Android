@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Szinkronizálás folytatása</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Szinkronizálás megszakítva</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Visszavonás&#8230;\nEz eltarthat egy darabig.</string>
-    <string name="export">Exportálás</string>
-    <string name="export_collection">Gyűjtemény exportálása</string>
     <string name="export_deck">Pakli exportálása</string>
     <string name="nothing">Semmi</string>
     <!-- Card template editor -->

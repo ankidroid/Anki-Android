@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">واصِل المزامنة</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">أُلغِيت المزامنة</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">جار الإلغاء&#8230;\nقد يستغرق الأمر بعض الوقت.</string>
-    <string name="export">تصدير</string>
-    <string name="export_collection">تصدير المجموعة</string>
     <string name="export_deck">تصدير الرزمة</string>
     <string name="nothing">فارغ</string>
     <!-- Card template editor -->

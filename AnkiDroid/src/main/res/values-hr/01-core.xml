@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Nastavi sinkronizaciju</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinkronizacija je otkazana</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Otkazivanje&#8230;\nOvo može potrajati neko vrijeme.</string>
-    <string name="export">Izvezi</string>
-    <string name="export_collection">Izvezi zbirku</string>
     <string name="export_deck">Izvezi skupinu</string>
     <string name="nothing">Ništa</string>
     <!-- Card template editor -->

@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Продължи синхронизацията</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизирането отменено</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Отменяне&#8230;\nТова може да отнеме известно време.</string>
-    <string name="export">Изнасяне</string>
-    <string name="export_collection">Изнасяне на колекцията</string>
     <string name="export_deck">Експортиране на тесте</string>
     <string name="nothing">Нищо</string>
     <!-- Card template editor -->

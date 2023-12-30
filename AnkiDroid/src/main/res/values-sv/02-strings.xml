@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">Den valda filen kunde inte importeras automatiskt av AnkiDroid. Vänligen se användarmanualen för information om manuell import av Anki-filer: \n %s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Importering avbruten: AnkiDroid stängdes ned</string>
-    <string name="export_include_schedule">Inkludera schemaläggning</string>
-    <string name="export_include_media">Inkludera media</string>
-    <string name="confirm_apkg_export">Exportera samling som Anki-paket?</string>
-    <string name="confirm_apkg_export_deck">Exportera \"%s\" som APKG-fil?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Export selected note as apkg file?</item>
-        <item quantity="other">Export %d selected notes as apkg file?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Inga program tillgängliga för att hantera apkg. Sparar...</string>

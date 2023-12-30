@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">El fitxer seleccionat no s\'ha importat automàticament per AnkiDroid. Consulteu el manual d\'usuari per com importar arxius anki manualment: \n%s</string>
     <string name="import_error_copy_to_cache">No ha estat possible copiar el fitxer a la memòria cau (segurament falta espai)</string>
     <string name="import_interrupted">Importació interrompuda: AnkiDroid s\'ha tancat</string>
-    <string name="export_include_schedule">Incloueu la planificació</string>
-    <string name="export_include_media">Incloure multimèdia</string>
-    <string name="confirm_apkg_export">Exporta col·lecció com un paquet Anki?</string>
-    <string name="confirm_apkg_export_deck">Exportar \"%s\" com a arxiu apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Voleu exportar com a fitxer apkg la targeta que heu triat?</item>
-        <item quantity="other">Voleu exportar com a fitxer apkg les %d targetes que heu triat?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Voleu exportar com a fitxer apkg la bota que heu triat?</item>
-        <item quantity="other">Voleu exportar com a fitxer apkg les %d notes que heu triat?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No hi ha aplicacions disponibles per a gestionar apkg. Desant...</string>

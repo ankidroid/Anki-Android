@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">동기화 계속하기</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">동기화 취소됨</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">취소하는 중...\n시간이 걸릴 수 있습니다.</string>
-    <string name="export">내보내기</string>
-    <string name="export_collection">컬렉션 내보내기</string>
     <string name="export_deck">카드 묶음 내보내기</string>
     <string name="nothing">없음</string>
     <!-- Card template editor -->

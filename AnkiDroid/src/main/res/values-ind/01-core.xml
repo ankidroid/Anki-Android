@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Lanjutkan sinkronisasi</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinkronisasi dibatalkan</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Membatalkan&#8230;\nIni dapat memakan waktu lama.</string>
-    <string name="export">Ekspor</string>
-    <string name="export_collection">Ekspor koleksi</string>
     <string name="export_deck">Ekspor dek</string>
     <string name="nothing">Tidak ada</string>
     <!-- Card template editor -->

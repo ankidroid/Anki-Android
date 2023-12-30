@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Sinxronlashni davom ettirish</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinxronlash bekor qilindi</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Bekor qilinyapti...\n Bu biroz vaqt olishi mumkin</string>
-    <string name="export">Eksport qilish</string>
-    <string name="export_collection">Jamlanmani eksport qilish</string>
     <string name="export_deck">To\'plamni eksport qilish</string>
     <string name="nothing">Hechnima</string>
     <!-- Card template editor -->

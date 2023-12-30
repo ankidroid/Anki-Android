@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">संकालन सुरू ठेवा</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">संकालन रद्द केले</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द करीत आहे... \n यास काही वेळ लागू शकेल.</string>
-    <string name="export">निर्यात करा</string>
-    <string name="export_collection">निर्यात संग्रह</string>
     <string name="export_deck">निर्यात डेक</string>
     <string name="nothing">काही नाही</string>
     <!-- Card template editor -->

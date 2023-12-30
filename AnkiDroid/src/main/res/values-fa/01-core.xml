@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ادامه همگام‌سازی</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">همگام‌سازی لغو شد</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">در حال لغو کردن...\nممکن است کمی زمان بر باشد.</string>
-    <string name="export">صادر کردن</string>
-    <string name="export_collection">صدور مجموعه</string>
     <string name="export_deck">صدور دسته</string>
     <string name="nothing">هیچ</string>
     <!-- Card template editor -->

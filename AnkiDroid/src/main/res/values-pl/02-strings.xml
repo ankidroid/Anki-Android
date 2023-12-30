@@ -168,22 +168,6 @@
     <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
     <string name="import_error_copy_to_cache">Błąd copyFileToCache() (prawdopodobnie brak miejsca)</string>
     <string name="import_interrupted">Import przerwany</string>
-    <string name="export_include_schedule">Włącznie z zaplanowanymi powtórkami</string>
-    <string name="export_include_media">Włącznie z plikami mediów</string>
-    <string name="confirm_apkg_export">Wyeksportować kolekcję jako pakiet Anki?</string>
-    <string name="confirm_apkg_export_deck">Wyeksportować \"%s\" jako plik .apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Wyeksportować wybraną kartę jako plik apkg?</item>
-        <item quantity="few">Wyeksportować wybrane karty jako plik apkg?</item>
-        <item quantity="many">Wyeksportować wybrane karty jako plik apkg?</item>
-        <item quantity="other">Eksportować wybrane karty jako plik apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Wyeksportować zaznaczoną notatkę jako plik apkg?</item>
-        <item quantity="few">Wyeksportować zaznaczone notatki jako plik apkg?</item>
-        <item quantity="many">Wyeksportować zaznaczone notatki jako plik apkg?</item>
-        <item quantity="other">Wyeksportować %d zaznaczonych notatek jako plik apkg?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Trwa przygotowywanie do eksportu...</string>
     <string name="export_ready_title">Eksportowanie zakończone</string>
     <string name="export_send_no_handlers">Nie znaleziono aplikacji, która obsługuje apkg. Zapisywanie...</string>

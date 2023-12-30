@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
     <string name="import_error_copy_to_cache">Fehler beim Zwischenspeichern (evtl. mangelnder Speicherplatz)</string>
     <string name="import_interrupted">Import unterbrochen</string>
-    <string name="export_include_schedule">Zeitabstände einbeziehen</string>
-    <string name="export_include_media">Medien einbeziehen</string>
-    <string name="confirm_apkg_export">Sammlung als Anki-Paket exportieren?</string>
-    <string name="confirm_apkg_export_deck">»%s« als apkg-Datei exportieren?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Ausgewählte Karte als APKG-Datei exportieren?</item>
-        <item quantity="other">%d ausgewählte Karten als APKG-Datei exportieren?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Ausgewählte Notiz als APKG-Datei exportieren?</item>
-        <item quantity="other">%d ausgewählte Notizen als APKG-Datei exportieren?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Export wird vorbereitet&#8230;</string>
     <string name="export_ready_title">Export bereit</string>
     <string name="export_send_no_handlers">Keine Anwendungen zum Öffnen von APKG-Dateien verfügbar. Wird gespeichert &#8230;</string>

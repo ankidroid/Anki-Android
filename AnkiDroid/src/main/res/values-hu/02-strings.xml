@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">A kiválasztott fájl nem importálható automatikusan. Olvasd el a felhasználói kézikönyvet, hogy megtudd, hogyan importálhatsz manuálisan anki fájlokat:\n%s</string>
     <string name="import_error_copy_to_cache">Nem sikerült gyorsítótárba helyezni a fájlt (valószínűleg elfogyott a tárhely)</string>
     <string name="import_interrupted">Importálás megszakítva</string>
-    <string name="export_include_schedule">Ütemezéssel együtt</string>
-    <string name="export_include_media">Médiával együtt</string>
-    <string name="confirm_apkg_export">Exportálja a gyűjteményt Anki csomagként?</string>
-    <string name="confirm_apkg_export_deck">Exportáljon \"%s\"-t apkg-ként?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Kijelölt kártya exportálása apkg-ként?</item>
-        <item quantity="other">Kijelölt %d kártya exportálása apkg-ként?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Kijelölt jegyzet exportálása apkg-ként?</item>
-        <item quantity="other">Kijelölt %d jegyzet exportálása apkg-ként?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Exportálás előkészítése...</string>
     <string name="export_ready_title">Exportálás kész</string>
     <string name="export_send_no_handlers">Nincs elérhető alkalmazás, ami kezelni tudja az apkg-t. Mentés...</string>

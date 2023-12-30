@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">Nivaḍalēlī phā\'ila AnkiDroid dvārē svayan̄calitapaṇē āyāta karaṇē śakya navhatē. Kr̥payā ēnkī phā\'ilsa svahastē kaśī āyāta karāvī yābaddala vāparakartā mĕn\'yu\'ala pahā: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">आयात व्यत्यय: अंकीड्रोइड बंद होता</string>
-    <string name="export_include_schedule">Śēḍyūliṅga samāviṣṭa karā</string>
-    <string name="export_include_media">Mādhyama samāviṣṭa karā</string>
-    <string name="confirm_apkg_export">अनकी पॅकेज म्हणून संग्रह निर्यात करायचा?</string>
-    <string name="confirm_apkg_export_deck">Apkg phā\'ila mhaṇūna \"%s\" niryāta karāy?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Export selected note as apkg file?</item>
-        <item quantity="other">Export %d selected notes as apkg file?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">एपीकेजी हाताळण्यासाठी कोणतेही अनुप्रयोग उपलब्ध नाहीत. बचत...</string>

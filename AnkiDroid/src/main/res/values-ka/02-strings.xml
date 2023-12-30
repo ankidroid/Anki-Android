@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">მონიშნული ფაილის ავტომატური იმპორტირება ვერ მოხერხდა. იხილეთ ინსტრუქცია Anki-ფაილების არაავტომატური იმპორტირების მეთოდისთვის: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
-    <string name="export_include_schedule">სწავლის განრიგის თან გათვალისწინება</string>
-    <string name="export_include_media">მედიაფაილების მოცვა</string>
-    <string name="confirm_apkg_export">გსურთ კოლექციის Anki-პაკეტად ექსპორტირება?</string>
-    <string name="confirm_apkg_export_deck">დაექსპორტდეს \"%s\" როგორც apkg ფაილი?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">მონიშნული ბარათის APKG ფაილად შენახვა?</item>
-        <item quantity="other">მონიშნული %d ბარათის APKG ფაილად შენახვა?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">მონიშნული შენიშვნის APKG ფაილად შენახვა?</item>
-        <item quantity="other">მონიშნული %d შენიშვნის APKG ფაილად შენახვა?</item>
-    </plurals>
     <string name="export_preparation_in_progress">ექსპორტის გამზადება&#8230;</string>
     <string name="export_ready_title">ექსპორტი მზადაა</string>
     <string name="export_send_no_handlers">არაა სხვა აპლიკაციები APKG-ფაილების გასახსნელად. ინახება&#8230;</string>

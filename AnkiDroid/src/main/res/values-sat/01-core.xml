@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ᱟᱭᱩᱨ ᱢᱤᱫ ᱪᱟᱹᱞᱩ ᱫᱚᱦᱚᱭ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤ</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ᱵᱟᱫ ᱜᱤᱰᱤᱼᱜ ᱠᱟᱱᱟ &#8230;\n ᱠᱤᱪᱷᱤ ᱥᱚᱢᱟᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱭ ᱾ </string>
-    <string name="export">ᱵᱷᱮᱡᱟ</string>
-    <string name="export_collection">ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="export_deck">ᱰᱮᱠ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="nothing">ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <!-- Card template editor -->

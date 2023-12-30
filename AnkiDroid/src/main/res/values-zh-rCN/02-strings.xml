@@ -162,16 +162,6 @@
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
     <string name="import_error_copy_to_cache">缓存文件失败（可能超出存储空间）</string>
     <string name="import_interrupted">导入中断</string>
-    <string name="export_include_schedule">包括学习进度</string>
-    <string name="export_include_media">包括媒体文件</string>
-    <string name="confirm_apkg_export">要将集合导出为 apkg 文件吗？</string>
-    <string name="confirm_apkg_export_deck">将「%s」导出为 akpg 文件？</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">导出 %d 张选定卡片为 apkg 文件？</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">导出 %d 个选定笔记为 apkg 文件？</item>
-    </plurals>
     <string name="export_preparation_in_progress">正在准备导出&#8230;</string>
     <string name="export_ready_title">已准备好导出</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>

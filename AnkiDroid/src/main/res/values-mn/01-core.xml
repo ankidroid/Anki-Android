@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Зэрэгцүүлэлтийг үргэлжлүүлэх</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Зэрэгцүүлэлтийг зогсоолоо</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Цуцалж байна&#8230;\n Бага зэрэг удаж магадгүй</string>
-    <string name="export">Экспортлох</string>
-    <string name="export_collection">Цуглуулгийг экспортлох</string>
     <string name="export_deck">Багцыг экспортлох</string>
     <string name="nothing">Юу ч үгүй</string>
     <!-- Card template editor -->

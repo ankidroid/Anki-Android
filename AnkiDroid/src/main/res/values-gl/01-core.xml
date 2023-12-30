@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continuar a sincronización</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronización cancelada</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelando&#8230;\nPode levar algo de tempo.</string>
-    <string name="export">Exportar</string>
-    <string name="export_collection">Exportar a colección</string>
     <string name="export_deck">Exportar a baralla</string>
     <string name="nothing">Nada</string>
     <!-- Card template editor -->

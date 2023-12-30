@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ಸಿಂಕ್ ಮುಂದುವರಿಸಿ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ಸಿಂಕ್ ರದ್ದುಗೊಂಡಿದೆ</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ರದ್ದುಮಾಡಲಾಗುತ್ತಿದೆ &#8230;\n ಇದಕ್ಕೆ ಸ್ವಲ್ಪ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳಬಹುದು.</string>
-    <string name="export">ರಫ್ತು</string>
-    <string name="export_collection">ರಫ್ತು ಸಂಗ್ರಹ</string>
     <string name="export_deck">ರಫ್ತು ಡೆಕ್</string>
     <string name="nothing">ಏನೂ ಇಲ್ಲ</string>
     <!-- Card template editor -->

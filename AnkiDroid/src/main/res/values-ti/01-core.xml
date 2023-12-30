@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ምውህሃድ ቀጽል</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ምውህሃድ ተቋሪጹ ኣሎ</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ይቋረጽ......\n ውሑድ ግዜ ክወስድ ይኽእል ኢዩ</string>
-    <string name="export">ስደድ</string>
-    <string name="export_collection">እኩባት ስደድ</string>
     <string name="export_deck">ባይታ ስደድ</string>
     <string name="nothing">የለን</string>
     <!-- Card template editor -->

@@ -164,18 +164,6 @@
     <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos anki: \n%s</string>
     <string name="import_error_copy_to_cache">Falha ao armazenar em cache o arquivo (possivelmente sem espaço de armazenamento)</string>
     <string name="import_interrupted">Importação interrompida: AnkiDroid foi fechado</string>
-    <string name="export_include_schedule">Incluir agendamento</string>
-    <string name="export_include_media">Incluir mídia</string>
-    <string name="confirm_apkg_export">Exportar a coleção como arquivo Anki (.apkg)?</string>
-    <string name="confirm_apkg_export_deck">Exportar \"%s\" como arquivo apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Exportar cartão selecionado como arquivo apkg?</item>
-        <item quantity="other">Exportar %d cartões selecionados como arquivo apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Exportar nota selecionada como arquivo apkg?</item>
-        <item quantity="other">Exportar %d notas selecionadas como arquivo apkg?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Preparando exportação&#8230;</string>
     <string name="export_ready_title">Exportação pronta</string>
     <string name="export_send_no_handlers">Nenhum aplicativo disponível para lidar com apkg. Salvando...</string>

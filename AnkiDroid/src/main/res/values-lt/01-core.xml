@@ -133,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Tęsti sinchronizavimą</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinchronizavimas atšauktas</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Atšaukiama&#8230;\nTai gali šiek tiek užtrukti.</string>
-    <string name="export">Eksportuoti</string>
-    <string name="export_collection">Eksportuoti kolekciją</string>
     <string name="export_deck">Eksportuoti rinkinį</string>
     <string name="nothing">Nieko</string>
     <!-- Card template editor -->
