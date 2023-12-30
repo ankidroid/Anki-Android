@@ -40,7 +40,7 @@ import com.ichi2.libanki.syncCollection
 import com.ichi2.libanki.syncLogin
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
-import com.ichi2.utils.*
+import com.ichi2.utils.NetworkUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -161,7 +161,12 @@ fun MyAccount.handleNewLogin(username: String, password: String) {
     val endpoint = getEndpoint(this)
     launchCatchingTask {
         val auth = try {
-            withProgress({}, onCancel = ::cancelSync) {
+            withProgress(
+                extractProgress = {
+                    text = getString(R.string.sign_in)
+                },
+                onCancel = ::cancelSync
+            ) {
                 withCol {
                     syncLogin(username, password, endpoint)
                 }
