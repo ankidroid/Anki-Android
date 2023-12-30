@@ -68,15 +68,22 @@ class SoundTagPlayer(private val soundUriBase: String) {
             setOnCompletionListener {
                 Timber.v("finished playing SoundOrVideoTag successfully")
                 abandonAudioFocus()
-                continuation.resume(Unit)
+                // guard against a potential issue: task cancellation
+                if (!continuation.isCompleted) {
+                    continuation.resume(Unit)
+                }
             }
 
             setAudioAttributes(music)
             setOnErrorListener { mp, what, extra ->
+                Timber.w("Media error %d", what)
                 abandonAudioFocus()
                 val continuationBehavior =
                     soundErrorListener.onMediaPlayerError(mp, what, extra, tag)
-                continuation.resumeWithException(SoundException(continuationBehavior))
+                // 15103: setOnErrorListener can be invoked after task cancellation
+                if (!continuation.isCompleted) {
+                    continuation.resumeWithException(SoundException(continuationBehavior))
+                }
                 true // do not call onCompletionListen
             }
 
