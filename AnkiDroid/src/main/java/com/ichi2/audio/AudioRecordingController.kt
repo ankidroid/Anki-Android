@@ -414,10 +414,13 @@ class AudioRecordingController :
     }
 
     override fun onTimerTick(duration: Duration) {
-        audioTimeView.text = duration.formatAsString()
         if (isPlaying && !isRecording) {
-            audioProgressBar.progress = audioPlayer!!.currentPosition
+            // This may remain at 0 for a few hundred ms while the audio player starts
+            val elapsed = audioPlayer!!.elapsed
+            audioProgressBar.progress = elapsed.inWholeMilliseconds.toInt()
+            audioTimeView.text = elapsed.formatAsString()
         } else {
+            audioTimeView.text = duration.formatAsString()
             audioProgressBar.progress = 0
         }
     }
