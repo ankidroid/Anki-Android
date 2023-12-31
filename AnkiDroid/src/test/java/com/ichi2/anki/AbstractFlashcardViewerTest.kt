@@ -238,6 +238,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
+    @RunInBackground // viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4) does not guarantee completion
     fun typedLanguageIsSet() = runTest {
         val withLanguage = StdModels.BASIC_TYPING_MODEL.add(col, "a")
         val normal = StdModels.BASIC_TYPING_MODEL.add(col, "b")
@@ -251,7 +252,10 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         assertThat("A model with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
 
-        showNextCard(viewer)
+        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
+        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
+        // requires @RunInBackground ! - the above calls do not guarantee execution completion
+        waitForAsyncTasksToComplete()
 
         assertThat("A default model should have no preference", viewer.hintLocale, nullValue())
     }
@@ -324,13 +328,6 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     private fun getViewerContent(): String? {
         // PERF: Optimise this to not create a new viewer each time
         return getViewer(addCard = false).cardContent
-    }
-
-    private fun showNextCard(viewer: NonAbstractFlashcardViewer) {
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
-        waitForAsyncTasksToComplete()
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
-        waitForAsyncTasksToComplete()
     }
 
     @get:CheckResult
