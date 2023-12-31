@@ -63,6 +63,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 @NeedsTest("reverseDirectionFlow/sortTypeFlow are not updated on .launch { }")
+@NeedsTest("13442: selected deck is not changed, as this affects the reviewer")
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
     preferences: SharedPreferencesProvider

@@ -462,7 +462,7 @@ open class CardBrowser :
             .filterNotNull()
             .onEach { deckId ->
                 // this handles ALL_DECKS_ID
-                deckSpinnerSelection!!.selectDeckById(deckId, true)
+                deckSpinnerSelection!!.selectDeckById(deckId, false)
                 searchCards()
             }
             .launchIn(lifecycleScope)
