@@ -19,7 +19,6 @@ package com.ichi2.anki.browser
 import android.content.Context
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CardBrowser
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 
@@ -42,7 +41,7 @@ class SharedPreferencesLastDeckIdRepository : LastDeckIdRepository {
             .takeUnless { it == Decks.NOT_FOUND_DECK_ID }
         set(value) =
             if (value == null) {
-                CardBrowser.clearLastDeckId()
+                clearLastDeckId()
             } else {
                 AnkiDroidApp.instance.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
                     putLong(LAST_DECK_ID_KEY, value)
