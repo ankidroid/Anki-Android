@@ -185,7 +185,11 @@ class AudioRecordingController :
                 strokeColor = ContextCompat.getColorStateList(context, R.color.flag_red)
                 setIconResource(R.drawable.ic_record)
             }
-            audioPlayer?.reset()
+            playAudioButton.apply {
+                setIconResource(R.drawable.round_play_arrow_24)
+                iconTint = ContextCompat.getColorStateList(context, R.color.flag_red)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_red)
+            }
             cancelAudioRecordingButton.isEnabled = false
             tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
             audioTimeView.text = DEFAULT_TIME
@@ -194,6 +198,8 @@ class AudioRecordingController :
             isCleared = true
             isRecording = false
             audioTimer.stop()
+            audioPlayer?.stop()
+            audioPlayer?.release()
             audioTimer = AudioTimer(this, this)
             saveButton.isEnabled = false
             playAudioButtonLayout.visibility = View.GONE
@@ -217,6 +223,7 @@ class AudioRecordingController :
     }
 
     private fun prepareAudioPlayer() {
+        audioPlayer = MediaPlayer()
         audioPlayer?.apply {
             if (tempAudioPath != null) setDataSource(tempAudioPath)
             setOnPreparedListener {
@@ -320,18 +327,22 @@ class AudioRecordingController :
     }
 
     private fun startRecording(context: Context, audioPath: String) {
-        recordButton.apply {
-            iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
-            strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
-            setIconResource(R.drawable.round_pause_24)
+        try {
+            audioRecorder.startRecording(context, audioPath)
+            isRecording = true
+            isPaused = false
+            isCleared = false
+            audioTimer.start()
+            cancelAudioRecordingButton.isEnabled = true
+            saveButton.isEnabled = true
+            recordButton.apply {
+                iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
+                setIconResource(R.drawable.round_pause_24)
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to start recording")
         }
-        isRecording = true
-        saveButton.isEnabled = true
-        isPaused = false
-        isCleared = false
-        audioTimer.start()
-        audioRecorder.startRecording(context, audioPath)
-        cancelAudioRecordingButton.isEnabled = true
     }
 
     private fun saveRecording() {
@@ -404,7 +415,7 @@ class AudioRecordingController :
 
     override fun onTimerTick(duration: Duration) {
         audioTimeView.text = duration.formatAsString()
-        if (isPlaying) {
+        if (isPlaying && !isRecording) {
             audioProgressBar.progress = audioPlayer!!.currentPosition
         } else {
             audioProgressBar.progress = 0
