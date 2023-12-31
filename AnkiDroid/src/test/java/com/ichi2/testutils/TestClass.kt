@@ -31,6 +31,7 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
+import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration.Companion.milliseconds
@@ -175,12 +176,16 @@ interface TestClass {
     fun runTest(
         context: CoroutineContext = EmptyCoroutineContext,
         dispatchTimeoutMs: Long = 60_000L,
+        times: Int = 1,
         testBody: suspend TestScope.() -> Unit
     ) {
         Dispatchers.setMain(UnconfinedTestDispatcher())
-        kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs.milliseconds) {
-            CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
-            testBody()
+        repeat(times) {
+            if (times != 1) Timber.d("------ Executing test $it/$times ------")
+            kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs.milliseconds) {
+                CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
+                testBody()
+            }
         }
     }
 }
