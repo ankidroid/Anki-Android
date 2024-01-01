@@ -42,7 +42,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">ಚಿತ್ರವನ್ನು ಸೇರಿಸಿ</string>
     <string name="multimedia_editor_popup_audio_clip">ಆಡಿಯೊ ಕ್ಲಿಪ್ ಸೇರಿಸಿ</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">ವೀಡಿಯೊ ಕ್ಲಿಪ್ ಸೇರಿಸಿ</string>
     <string name="multimedia_editor_popup_audio">ಆಡಿಯೊವನ್ನು ರೆಕಾರ್ಡ್ ಮಾಡಿ</string>
     <string name="multimedia_editor_popup_text">ಸುಧಾರಿತ ಸಂಪಾದಕ</string>
     <string name="multimedia_editor_popup_cloze">ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆ</string>
@@ -55,19 +55,19 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">ಮುಗಿದಿದೆ</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Clear</string>
-    <string name="multimedia_editor_text_field_editing_clone">Clone from</string>
+    <string name="multimedia_editor_text_field_editing_clear">ಸ್ಪಷ್ಟ</string>
+    <string name="multimedia_editor_text_field_editing_clone">ನಿಂದ ಕ್ಲೋನ್</string>
     <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
+    <string name="multimedia_editor_text_field_editing_clone_source">ನಿಂದ ತೆಗೆದುಕೊಳ್ಳಿ</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
-    <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
-    <string name="multimedia_editor_image_field_editing_photo">Camera</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_image_field_editing_galery">ಗ್ಯಾಲರಿ</string>
+    <string name="multimedia_editor_image_field_editing_photo">ಕ್ಯಾಮೆರಾ</string>
+    <string name="multimedia_editor_import_audio">ಆಡಿಯೋ</string>
+    <string name="multimedia_editor_import_video">ವೀಡಿಯೊ</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Something went wrong</string>
@@ -77,14 +77,14 @@
     <string name="multimedia_editor_attach_media">Attach media</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
-    <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
+    <string name="multimedia_editor_audio_view_recording_failed">ರೆಕಾರ್ಡಿಂಗ್ ವಿಫಲವಾಗಿದೆ</string>
+    <string name="multimedia_editor_audio_view_playing_failed">ಆಟವಾಡುವುದು ವಿಫಲವಾಗಿದೆ</string>
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editing field</string>
     <!-- Crop function-->
     <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
+    <string name="crop_button">ಚಿತ್ರವನ್ನು ಕ್ರಾಪ್ ಮಾಡಿ</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
     <string name="select_image_failed">"Select image failed, Please retry"</string>
     <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
