@@ -64,6 +64,7 @@
     <string name="log_out">Kijelentkezés</string>
     <string name="reset_password">Jelszó visszaállítása</string>
     <string name="lost_mail_instructions">Elfelejtette az emailt?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX lehetőségei</string>
     <string name="sync_title">Szinkronizálás</string>

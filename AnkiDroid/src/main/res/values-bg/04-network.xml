@@ -64,6 +64,7 @@
     <string name="log_out">Изход</string>
     <string name="reset_password">Нулиране на паролата</string>
     <string name="lost_mail_instructions">Забравен имейл?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Опции за ХХХ</string>
     <string name="sync_title">Синхронизиране</string>

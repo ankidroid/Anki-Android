@@ -64,6 +64,7 @@
     <string name="log_out">로그아웃</string>
     <string name="reset_password">암호 재설정</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX 옵션</string>
     <string name="sync_title">동기화</string>

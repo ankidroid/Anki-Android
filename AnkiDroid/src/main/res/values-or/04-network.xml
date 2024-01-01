@@ -64,6 +64,7 @@
     <string name="log_out">ଲଗ୍ ଆଉଟ୍</string>
     <string name="reset_password">ପାସ୍‌ୱର୍ଡ଼ ପୁନଃସେଟ୍ କର</string>
     <string name="lost_mail_instructions">ଇମେଲ୍ ଭୁଲିଗଲେ କି?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="sync_title">ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>

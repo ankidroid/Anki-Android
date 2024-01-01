@@ -64,6 +64,7 @@
     <string name="log_out">Αποσύνδεση</string>
     <string name="reset_password">Επαναφορά κωδικού πρόσβασης</string>
     <string name="lost_mail_instructions">Ξεχάσατε το email σας;</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Επιλογές για XXX</string>
     <string name="sync_title">Συγχρονισμός</string>

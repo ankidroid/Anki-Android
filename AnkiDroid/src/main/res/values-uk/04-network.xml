@@ -64,6 +64,7 @@
     <string name="log_out">Вийти</string>
     <string name="reset_password">Відновити пароль</string>
     <string name="lost_mail_instructions">Забули електронну пошту?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Параметри для XXX</string>
     <string name="sync_title">Синхронізація</string>

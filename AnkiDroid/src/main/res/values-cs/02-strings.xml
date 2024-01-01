@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Typ poznámky:</string>
     <string name="CardEditorTags">Štítky: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">Upravit okluze</string>
     <string name="tag_name">Název štítku</string>
     <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
     <string name="add_tag">Přidat štítek</string>
