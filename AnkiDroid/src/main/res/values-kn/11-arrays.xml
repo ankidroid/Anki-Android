@@ -43,64 +43,64 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">Always report</string>
-    <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_always_report">ಯಾವಾಗಲೂ ವರದಿ ಮಾಡಿ</string>
+    <string name="error_reporting_choice_never_report">ಎಂದಿಗೂ ವರದಿ ಮಾಡಬೇಡಿ</string>
+    <string name="error_reporting_choice_ask_user">ನನ್ನನ್ನು ಕೇಳಿ</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_random">Random</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
+    <string name="cram_deck_conf_order_random">ಯಾದೃಚ್ಛಿಕ</string>
+    <string name="cram_deck_conf_order_increasing_intervals">ಹೆಚ್ಚುತ್ತಿರುವ ಮಧ್ಯಂತರಗಳು</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
     <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
+    <string name="cram_deck_conf_order_order_added">ಆರ್ಡರ್ ಸೇರಿಸಲಾಗಿದೆ</string>
+    <string name="cram_deck_conf_order_order_due">ಆದೇಶ ಬಾಕಿ ಇದೆ</string>
     <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
     <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
+    <string name="add_to_deck_use_current_deck">ಪ್ರಸ್ತುತ ಡೆಕ್ ಬಳಸಿ</string>
     <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">ವ್ಯವಸ್ಥೆಯನ್ನು ಅನುಸರಿಸಿ</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Light</string>
+    <string name="day_theme_light">ಬೆಳಕು</string>
     <string name="day_theme_plain">Plain</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Black</string>
-    <string name="night_theme_dark">Dark</string>
+    <string name="night_theme_black">ಕಪ್ಪು</string>
+    <string name="night_theme_dark">ಕತ್ತಲೆ</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_xx_small">xx-ಚಿಕ್ಕ</string>
+    <string name="html_size_code_x_small">x-ಸಣ್ಣ</string>
+    <string name="html_size_code_small">ಸಣ್ಣ</string>
+    <string name="html_size_code_medium">ಮಾಧ್ಯಮ</string>
+    <string name="html_size_code_large">ದೊಡ್ಡದು</string>
+    <string name="html_size_code_x_large">x-ದೊಡ್ಡದು</string>
+    <string name="html_size_code_xx_large">xx-ದೊಡ್ಡದು</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
+    <string name="answer_again">ಮತ್ತೊಮ್ಮೆ ಉತ್ತರಿಸಿ</string>
     <string name="answer_hard">Answer hard</string>
     <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
-    <string name="gesture_play">Play media</string>
+    <string name="answer_easy">ಸುಲಭವಾಗಿ ಉತ್ತರಿಸಿ</string>
+    <string name="gesture_play">ಪ್ಲೇ ಮೀಡಿಯಾ</string>
     <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_red">ಕೆಂಪು ಧ್ವಜವನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
+    <string name="gesture_flag_orange">ಕಿತ್ತಳೆ ಧ್ವಜವನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
+    <string name="gesture_flag_green">ಹಸಿರು ಧ್ವಜವನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
+    <string name="gesture_flag_blue">ನೀಲಿ ಧ್ವಜವನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
+    <string name="gesture_flag_pink">ಗುಲಾಬಿ ಧ್ವಜವನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
     <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
+    <string name="gesture_flag_purple">ನೇರಳೆ ಧ್ವಜವನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
+    <string name="gesture_flag_remove">ಧ್ವಜವನ್ನು ತೆಗೆದುಹಾಕಿ</string>
+    <string name="gesture_page_up">ಪುಟ ಮೇಲಕ್ಕೆ</string>
+    <string name="gesture_page_down">ಪುಟ ಕೆಳಗೆ</string>
     <string name="gesture_abort_sync">Abort Learning and Sync</string>
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="gesture_show_hint">ಸುಳಿವು ತೋರಿಸಿ</string>
+    <string name="gesture_show_all_hints">ಎಲ್ಲಾ ಸುಳಿವುಗಳನ್ನು ತೋರಿಸಿ</string>
+    <string name="record_voice">ಧ್ವನಿಯನ್ನು ರೆಕಾರ್ಡ್ ಮಾಡಿ</string>
+    <string name="replay_voice">ರಿಪ್ಲೇ ವಾಯ್ಸ್</string>
+    <string name="automatic_answer_option_2">ಕಠಿಣ (ಲಭ್ಯವಿಲ್ಲದಿದ್ದರೆ ಒಳ್ಳೆಯದು)</string>
+    <string name="automatic_answer_option_4">ಸುಲಭ (ಲಭ್ಯವಿಲ್ಲದಿದ್ದರೆ ಒಳ್ಳೆಯದು)</string>
 </resources>

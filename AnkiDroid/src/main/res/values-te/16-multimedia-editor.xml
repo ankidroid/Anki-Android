@@ -41,8 +41,8 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">చిత్రాన్ని జోడించండి</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_audio_clip">ఆడియో క్లిప్‌ని జోడించండి</string>
+    <string name="multimedia_editor_popup_video_clip">వీడియో క్లిప్‌ని జోడించండి</string>
     <string name="multimedia_editor_popup_audio">రికార్డ్ ఆడియో</string>
     <string name="multimedia_editor_popup_text">అధునాతన ఎడిటర్</string>
     <string name="multimedia_editor_popup_cloze">క్లోజ్ తొలగింపు</string>
@@ -50,8 +50,8 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">టెక్స్ట్</string>
     <string name="multimedia_editor_field_editing_image">చిత్రం</string>
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio">ఆడియో రికార్డింగ్</string>
+    <string name="multimedia_editor_field_editing_audio_clip">ఆడియో క్లిప్</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">అయింది</string>
     <!-- Text field editing -->
     <!-- buttons -->
@@ -66,8 +66,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">గ్యాలరీ</string>
     <string name="multimedia_editor_image_field_editing_photo">కెమెరా</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">ఆడియో</string>
+    <string name="multimedia_editor_import_video">వీడియో</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">ఎక్కడో పొరపాటయింది</string>

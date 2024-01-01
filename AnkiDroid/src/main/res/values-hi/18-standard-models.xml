@@ -30,7 +30,7 @@
     <string name="back_field_name">पिछला</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">शब्द</string>
     <string name="extra_field_name_new">बैक एक्सट्रा |</string>
-    <string name="field_to_ask_front_name">रिवर्स जोड़ें</string>
+    <string name="field_to_ask_front_name">किसी भी इनपुट के साथ उलटा कार्ड जोड़ें</string>
     <!--Card type-->
     <string name="card_n_name">कार्ड %d</string>
     <!--Note type-->
