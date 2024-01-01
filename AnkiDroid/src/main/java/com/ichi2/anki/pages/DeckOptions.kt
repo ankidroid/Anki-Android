@@ -44,6 +44,9 @@ class DeckOptions : PageFragment() {
     }
 
     class DeckOptionsWebClient(val deckId: Long) : PageWebViewClient() {
+        override val promiseToWaitFor: String
+            get() = "\$deckOptions"
+
         override fun onPageFinished(view: WebView?, url: String?) {
             // from upstream: https://github.com/ankitects/anki/blob/678c354fed4d98c0a8ef84fb7981ee085bd744a7/qt/aqt/deckoptions.py#L55
             view!!.evaluateJavascript("const \$deckOptions = anki.setupDeckOptions($deckId);") {
