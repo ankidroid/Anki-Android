@@ -335,7 +335,7 @@ class AudioRecordingController :
     }
 
     companion object {
-        const val DEFAULT_TIME = "00:00.0"
+        const val DEFAULT_TIME = "00:00.00"
         const val JUMP_VALUE = 500
         fun generateTempAudioFile(context: Context): String? {
             val tempAudioPath: String? = try {
