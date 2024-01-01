@@ -18,6 +18,7 @@ package com.ichi2.audio
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.media.MediaPlayer
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.OrientationEventListener
@@ -32,8 +33,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.multimediacard.AudioRecorder
-import com.ichi2.anki.multimediacard.MediaPlayer
 import com.ichi2.anki.multimediacard.fields.FieldControllerBase
 import com.ichi2.anki.multimediacard.fields.IFieldController
 import com.ichi2.anki.snackbar.showSnackbar
@@ -41,6 +42,7 @@ import com.ichi2.anki.utils.elapsed
 import com.ichi2.anki.utils.formatAsString
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.UiUtil
 import timber.log.Timber
 import java.io.File
@@ -51,10 +53,14 @@ import kotlin.time.Duration
 class AudioRecordingController :
     FieldControllerBase(),
     IFieldController,
-    AudioTimer.OnTimerTickListener {
-    private val audioRecorder = AudioRecorder()
-    private lateinit var mediaPlayer: MediaPlayer
-    private var tempAudioPath: String? = null
+    AudioTimer.OnTimerTickListener,
+    AudioTimer.OnAudioTickListener {
+    private lateinit var audioRecorder: AudioRecorder
+
+    /**
+     * It's Nullable and that it is set only if a sound is playing or paused, otherwise it is null.
+     */
+    private var audioPlayer: MediaPlayer? = null
 
     private lateinit var recordButton: MaterialButton
     private lateinit var saveButton: MaterialButton
@@ -65,28 +71,33 @@ class AudioRecordingController :
     private lateinit var rewindAudioButton: MaterialButton
     private lateinit var audioWaveform: AudioWaveform
     private lateinit var audioProgressBar: LinearProgressIndicator
-    private lateinit var context: Context
-    private var isRecording = false
+    lateinit var context: Context
     private var isPaused = false
     private var isCleared = false
     private var isPlaying = false
     private lateinit var cancelAudioRecordingButton: MaterialButton
+    private lateinit var playAudioButtonLayout: LinearLayout
+    private lateinit var recordAudioButtonLayout: LinearLayout
+    private lateinit var discardRecordingButton: MaterialButton
 
     // wave layout takes up a lot of screen in HORIZONTAL layout so we need to hide it
     private var orientationEventListener: OrientationEventListener? = null
 
     override fun createUI(context: Context, layout: LinearLayout) {
-        val origAudioPath = this.mField.audioPath
-        var bExist = false
-        if (origAudioPath != null) {
-            val f = File(origAudioPath)
-            if (f.exists()) {
-                tempAudioPath = f.absolutePath
-                bExist = true
+        audioRecorder = AudioRecorder()
+        if (inEditField) {
+            val origAudioPath = this.mField.audioPath
+            var bExist = false
+            if (origAudioPath != null) {
+                val f = File(origAudioPath)
+                if (f.exists()) {
+                    tempAudioPath = f.absolutePath
+                    bExist = true
+                }
             }
-        }
-        if (!bExist) {
-            tempAudioPath = generateTempAudioFile(mActivity)
+            if (!bExist) {
+                tempAudioPath = generateTempAudioFile(mActivity)
+            }
         }
 
         val layoutInflater = LayoutInflater.from(context)
@@ -94,37 +105,36 @@ class AudioRecordingController :
             layoutInflater.inflate(R.layout.activity_audio_recording, null) as LinearLayout
         layout.addView(inflatedLayout, LinearLayout.LayoutParams.MATCH_PARENT)
         (context as Activity).window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        val recordAudioButtonLayout: LinearLayout = layout.findViewById(R.id.record_buttons_layout)
-
-        context.apply {
-            // add preview of the field data to provide context to the user
-            // use a separate scrollview to ensure that the content does not push the buttons off-screen when scrolled
-            val sv = ScrollView(this)
-            layout.addView(sv)
-            val previewLayout = LinearLayout(this) // scrollView can only have one child
-            previewLayout.orientation = LinearLayout.VERTICAL
-            sv.addView(previewLayout)
-            val label = FixedTextView(this)
-            label.textSize = 20f
-            label.text = UiUtil.makeBold(this.getString(R.string.audio_recording_field_list))
-            label.gravity = Gravity.CENTER_HORIZONTAL
-            previewLayout.addView(label)
-            var hasTextContents = false
-            for (i in 0 until mNote.initialFieldCount) {
-                val field = mNote.getInitialField(i)
-                FixedTextView(this).apply {
-                    text = field?.text
-                    textSize = 16f
-                    setPadding(16, 0, 16, 24)
-                    previewLayout.addView(this)
+        recordAudioButtonLayout = layout.findViewById(R.id.record_buttons_layout)
+        if (inEditField) {
+            context.apply {
+                // add preview of the field data to provide context to the user
+                // use a separate scrollview to ensure that the content does not push the buttons off-screen when scrolled
+                val sv = ScrollView(this)
+                layout.addView(sv)
+                val previewLayout = LinearLayout(this) // scrollView can only have one child
+                previewLayout.orientation = LinearLayout.VERTICAL
+                sv.addView(previewLayout)
+                val label = FixedTextView(this)
+                label.textSize = 20f
+                label.text = UiUtil.makeBold(this.getString(R.string.audio_recording_field_list))
+                label.gravity = Gravity.CENTER_HORIZONTAL
+                previewLayout.addView(label)
+                var hasTextContents = false
+                for (i in 0 until mNote.initialFieldCount) {
+                    val field = mNote.getInitialField(i)
+                    FixedTextView(this).apply {
+                        text = field?.text
+                        textSize = 16f
+                        setPadding(16, 0, 16, 24)
+                        previewLayout.addView(this)
+                    }
+                    hasTextContents = hasTextContents or !field?.text.isNullOrBlank()
                 }
-                hasTextContents = hasTextContents or !field?.text.isNullOrBlank()
+                label.isVisible = hasTextContents
             }
-            label.isVisible = hasTextContents
         }
-
         this.context = context
-
         recordButton = layout.findViewById(R.id.action_start_recording)
         audioTimeView = layout.findViewById(R.id.audio_time_track)
         audioWaveform = layout.findViewById(R.id.audio_waveform_view)
@@ -133,33 +143,29 @@ class AudioRecordingController :
         playAudioButton = layout.findViewById(R.id.action_play_recording)
         forwardAudioButton = layout.findViewById(R.id.action_forward)
         rewindAudioButton = layout.findViewById(R.id.action_rewind)
-        val playAudioButtonLayout = layout.findViewById<LinearLayout>(R.id.play_buttons_layout)
+        playAudioButtonLayout = layout.findViewById(R.id.play_buttons_layout)
         audioProgressBar = layout.findViewById(R.id.audio_progress_indicator)
         val audioFileView = layout.findViewById<ShapeableImageView>(R.id.audio_file_imageview)
+        discardRecordingButton = layout.findViewById(R.id.action_discard_recording)
         cancelAudioRecordingButton.isEnabled = false
         saveButton.isEnabled = false
-        mediaPlayer = MediaPlayer()
 
-        audioTimer = AudioTimer(this)
+        if (audioPlayer == null) {
+            Timber.d("Creating media player for playback")
+            audioPlayer = MediaPlayer()
+        } else {
+            Timber.d("Resetting media for playback")
+            audioPlayer!!.reset()
+        }
+
+        audioTimer = AudioTimer(this, this)
         recordButton.setOnClickListener {
-            when {
-                isPaused -> resumeRecording()
-                isRecording -> pauseRecorder()
-                isCleared -> startRecording(context, tempAudioPath!!)
-                else -> startRecording(context, tempAudioPath!!)
-            }
-            CompatHelper.compat.vibrate(context, 20)
+            controlAudioRecorder()
         }
 
         saveButton.setOnClickListener {
-            CompatHelper.compat.vibrate(context, 20)
-            stopAndSaveRecording()
-            recordButton.visibility = View.GONE
-            playAudioButton.visibility = View.VISIBLE
-            playAudioButtonLayout.visibility = View.VISIBLE
-            recordAudioButtonLayout.visibility = View.GONE
-            context.showSnackbar(context.resources.getString(R.string.audio_saved))
-            prepareAudioPlayer()
+            isSaved = false
+            toggleSave()
         }
 
         playAudioButton.setOnClickListener {
@@ -172,6 +178,27 @@ class AudioRecordingController :
             clearRecording()
         }
 
+        discardRecordingButton.setOnClickListener {
+            CompatHelper.compat.vibrate(context, 20)
+            recordButton.apply {
+                iconTint = ContextCompat.getColorStateList(context, R.color.flag_red)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_red)
+                setIconResource(R.drawable.ic_record)
+            }
+            audioPlayer?.reset()
+            cancelAudioRecordingButton.isEnabled = false
+            tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
+            audioTimeView.text = DEFAULT_TIME
+            audioWaveform.clear()
+            isPaused = false
+            isCleared = true
+            isRecording = false
+            audioTimer.stop()
+            audioTimer = AudioTimer(this, this)
+            saveButton.isEnabled = false
+            playAudioButtonLayout.visibility = View.GONE
+            recordAudioButtonLayout.visibility = View.VISIBLE
+        }
         orientationEventListener = object : OrientationEventListener(context) {
             override fun onOrientationChanged(orientation: Int) {
                 when (context.resources.configuration.orientation) {
@@ -190,8 +217,8 @@ class AudioRecordingController :
     }
 
     private fun prepareAudioPlayer() {
-        mediaPlayer.apply {
-            setDataSource(tempAudioPath)
+        audioPlayer?.apply {
+            if (tempAudioPath != null) setDataSource(tempAudioPath)
             setOnPreparedListener {
                 audioTimeView.text = DEFAULT_TIME
             }
@@ -199,22 +226,68 @@ class AudioRecordingController :
         }
     }
 
-    private fun playPausePlayer() {
-        val totalDuration = mediaPlayer.duration
-        audioProgressBar.max = totalDuration
-        if (!mediaPlayer.isPlaying) {
+    fun toggleSave() {
+        CompatHelper.compat.vibrate(context, 20)
+        stopAndSaveRecording()
+        playAudioButtonLayout.visibility = View.VISIBLE
+        recordAudioButtonLayout.visibility = View.GONE
+        // show this snackbar only in the edit field/multimedia activity
+        if (inEditField) (context as Activity).showSnackbar(context.resources.getString(R.string.audio_saved))
+        prepareAudioPlayer()
+    }
+
+    fun toggleToRecorder() {
+        if (audioPlayer!!.isPlaying) {
+            audioPlayer?.stop()
+        }
+        playAudioButtonLayout.visibility = View.GONE
+        recordAudioButtonLayout.visibility = View.VISIBLE
+        controlAudioRecorder()
+    }
+
+    private fun controlAudioRecorder() {
+        if (!canRecordAudio(context)) {
+            Timber.w("Audio recording permission denied.")
+            showThemedToast(
+                context,
+                context.resources.getString(R.string.multimedia_editor_audio_permission_denied),
+                true
+            )
+            return
+        }
+        when {
+            isPaused -> resumeRecording()
+            isRecording -> pauseRecorder()
+            isCleared -> startRecording(context, tempAudioPath!!)
+            else -> startRecording(context, tempAudioPath!!)
+        }
+        CompatHelper.compat.vibrate(context, 20)
+    }
+
+    fun playPausePlayer() {
+        audioProgressBar.max = audioPlayer?.duration ?: 0
+        if (!audioPlayer!!.isPlaying) {
             isPlaying = true
-            mediaPlayer.start()
+            try {
+                audioPlayer!!.start()
+            } catch (e: Exception) {
+                Timber.w(e, "error starting audioPlayer")
+                showThemedToast(context, context.resources.getString(R.string.multimedia_editor_audio_view_playing_failed), true)
+            }
             audioTimer.start()
+            rewindAudioButton.isEnabled = true
+            forwardAudioButton.isEnabled = true
             playAudioButton.apply {
                 setIconResource(R.drawable.round_pause_24)
                 iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
                 strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
             }
         } else {
-            audioTimer.stop()
+            rewindAudioButton.isEnabled = false
+            forwardAudioButton.isEnabled = false
             isPlaying = false
-            mediaPlayer.pause()
+            audioTimer.pause()
+            audioPlayer?.pause()
             playAudioButton.apply {
                 setIconResource(R.drawable.round_play_arrow_24)
                 iconTint = ContextCompat.getColorStateList(context, R.color.flag_red)
@@ -222,23 +295,24 @@ class AudioRecordingController :
             }
         }
         rewindAudioButton.setOnClickListener {
-            mediaPlayer.seekTo(mediaPlayer.currentPosition - JUMP_VALUE)
+            audioPlayer?.seekTo(audioPlayer!!.currentPosition - JUMP_VALUE)
             audioProgressBar.progress -= JUMP_VALUE
-            mediaPlayer.currentPosition
-            audioTimer.start(mediaPlayer.elapsed)
+            audioTimer.start(audioPlayer!!.elapsed)
         }
         forwardAudioButton.setOnClickListener {
-            audioTimer.start(mediaPlayer.elapsed)
-            mediaPlayer.seekTo(mediaPlayer.currentPosition + JUMP_VALUE)
+            audioTimer.start(audioPlayer!!.elapsed)
+            audioPlayer!!.seekTo(audioPlayer!!.currentPosition + JUMP_VALUE)
             audioProgressBar.progress += JUMP_VALUE
         }
 
-        mediaPlayer.setOnCompletionListener {
+        audioPlayer!!.setOnCompletionListener {
             audioTimer.stop()
+            rewindAudioButton.isEnabled = false
+            forwardAudioButton.isEnabled = false
             audioProgressBar.progress = 0
             playAudioButton.apply {
-                iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
+                iconTint = ContextCompat.getColorStateList(context, R.color.flag_red)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_red)
                 setIconResource(R.drawable.round_play_arrow_24)
             }
             audioTimeView.text = DEFAULT_TIME
@@ -246,7 +320,6 @@ class AudioRecordingController :
     }
 
     private fun startRecording(context: Context, audioPath: String) {
-        audioRecorder.startRecording(context, audioPath)
         recordButton.apply {
             iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
             strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
@@ -257,6 +330,7 @@ class AudioRecordingController :
         isPaused = false
         isCleared = false
         audioTimer.start()
+        audioRecorder.startRecording(context, audioPath)
         cancelAudioRecordingButton.isEnabled = true
     }
 
@@ -265,22 +339,28 @@ class AudioRecordingController :
         mField.hasTemporaryMedia = true
     }
 
-    private fun stopAndSaveRecording() {
+    fun stopAndSaveRecording() {
         audioTimer.stop()
-        audioRecorder.stopRecording()
+        try {
+            audioRecorder.stopRecording()
+        } catch (e: RuntimeException) {
+            Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start")
+            showThemedToast(context, context.resources.getString(R.string.multimedia_editor_audio_view_recording_failed), true)
+        }
         isPaused = false
         isRecording = false
         saveButton.isEnabled = false
         cancelAudioRecordingButton.isEnabled = false
         audioTimeView.text = DEFAULT_TIME
         audioWaveform.clear()
-        saveRecording()
+        isSaved = true
+        // save recording only in the edit field not in the reviewer but save it temporarily
+        if (inEditField) saveRecording()
     }
 
     private fun pauseRecorder() {
         audioRecorder.pause()
         isPaused = true
-        saveRecording()
         recordButton.setIconResource(R.drawable.ic_record)
         audioTimer.pause()
     }
@@ -315,6 +395,7 @@ class AudioRecordingController :
 
     override fun onFocusLost() {
         audioRecorder.release()
+        audioPlayer!!.release()
     }
 
     override fun onDestroy() {
@@ -324,19 +405,27 @@ class AudioRecordingController :
     override fun onTimerTick(duration: Duration) {
         audioTimeView.text = duration.formatAsString()
         if (isPlaying) {
-            audioProgressBar.progress = mediaPlayer.currentPosition
+            audioProgressBar.progress = audioPlayer!!.currentPosition
         } else {
             audioProgressBar.progress = 0
         }
+    }
+
+    override fun onAudioTick() {
         try {
-            val maxAmplitude = audioRecorder.maxAmplitude() / 10
-            audioWaveform.addAmplitude(maxAmplitude.toFloat())
+            if (isRecording) {
+                val maxAmplitude = audioRecorder.maxAmplitude() / 10
+                audioWaveform.addAmplitude(maxAmplitude.toFloat())
+            }
         } catch (e: IllegalStateException) {
             Timber.d("Audio recorder interrupted")
         }
     }
 
     companion object {
+        var isRecording = false
+        var isSaved = false
+        private var inEditField: Boolean = true
         const val DEFAULT_TIME = "00:00.00"
         const val JUMP_VALUE = 500
         fun generateTempAudioFile(context: Context): String? {
@@ -344,10 +433,17 @@ class AudioRecordingController :
                 val storingDirectory = context.cacheDir
                 File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).absolutePath
             } catch (e: IOException) {
-                Timber.e(e, "Could not create temporary audio file.")
+                Timber.w(e, "Could not create temporary audio file.")
                 null
             }
             return tempAudioPath
         }
+
+        fun setReviewerStatus(isReviewer: Boolean) {
+            this.inEditField = isReviewer
+        }
+
+        /** File of the temporary mic record  */
+        var tempAudioPath: String? = null
     }
 }

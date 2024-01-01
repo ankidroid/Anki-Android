@@ -271,6 +271,7 @@ object PreferenceUpgradeService {
                 Pair(34, ViewerCommand.ABORT_AND_SYNC),
                 Pair(35, ViewerCommand.RECORD_VOICE),
                 Pair(36, ViewerCommand.REPLAY_VOICE),
+                Pair(46, ViewerCommand.SAVE_VOICE),
                 Pair(37, ViewerCommand.TOGGLE_WHITEBOARD),
                 Pair(44, ViewerCommand.CLEAR_WHITEBOARD),
                 Pair(45, ViewerCommand.CHANGE_WHITEBOARD_PEN_COLOR),

@@ -27,42 +27,64 @@ import kotlin.time.Duration.Companion.milliseconds
  * triggering a callback to a listener at regular intervals.
  * [OnTimerTickListener.onTimerTick] notifies components about the timer's progress.
  **/
-class AudioTimer(listener: OnTimerTickListener) {
-    private var handler = Handler(Looper.getMainLooper())
-    private var runnable: Runnable
+class AudioTimer(listener: OnTimerTickListener, audioWaveListener: OnAudioTickListener) {
+    private var audioTimeHandler = Handler(Looper.getMainLooper())
+    private var audioTimeRunnable: Runnable
 
-    private var duration = 0.milliseconds
-    private var delay = 50.milliseconds
+    // we use a different handler to audio waveform as 16L is too fast
+    private var audioWaveHandler = Handler(Looper.getMainLooper())
+    private var audioWaveRunnable: Runnable
+
+    private var audioTimeDuration = 0.milliseconds
+    private var audioTimeDelay = 16.milliseconds
+    private var audioWaveDuration = 0L
+    private var audioWaveDelay = 50L
     init {
-        runnable = object : Runnable {
+        audioTimeRunnable = object : Runnable {
             override fun run() {
-                duration += delay
-                handler.postDelayed(this, delay)
-                listener.onTimerTick(duration)
+                audioTimeDuration += audioTimeDelay
+                audioTimeHandler.postDelayed(this, audioTimeDelay)
+                listener.onTimerTick(audioTimeDuration)
+            }
+        }
+
+        audioWaveRunnable = object : Runnable {
+            override fun run() {
+                audioWaveDuration += audioWaveDelay
+                audioWaveHandler.postDelayed(this, audioWaveDelay)
+                audioWaveListener.onAudioTick()
             }
         }
     }
 
     fun start() {
-        handler.postDelayed(runnable, delay)
+        audioWaveHandler.postDelayed(audioWaveRunnable, audioWaveDelay)
+        audioTimeHandler.postDelayed(audioTimeRunnable, audioTimeDelay)
     }
 
     fun pause() {
-        handler.removeCallbacks(runnable)
+        audioWaveHandler.removeCallbacks(audioWaveRunnable)
+        audioTimeHandler.removeCallbacks(audioTimeRunnable)
     }
 
     fun stop() {
-        handler.removeCallbacks(runnable)
-        duration = 0.milliseconds
+        audioWaveHandler.removeCallbacks(audioWaveRunnable)
+        audioTimeHandler.removeCallbacks(audioTimeRunnable)
+        audioTimeDuration = 0.milliseconds
+        audioWaveDuration = 0L
     }
 
     fun start(customDuration: Duration) {
-        handler.removeCallbacks(runnable)
-        duration = customDuration
-        handler.postDelayed(runnable, delay)
+        audioTimeHandler.removeCallbacks(audioTimeRunnable)
+        audioTimeDuration = customDuration
+        audioTimeHandler.postDelayed(audioTimeRunnable, audioTimeDelay)
     }
 
     interface OnTimerTickListener {
         fun onTimerTick(duration: Duration)
+    }
+
+    interface OnAudioTickListener {
+        fun onAudioTick()
     }
 }

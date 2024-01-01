@@ -524,6 +524,7 @@ object UsageAnalytics {
         "binding_ABORT_AND_SYNC",
         "binding_RECORD_VOICE",
         "binding_REPLAY_VOICE",
+        "binding_SAVE_VOICE",
         "binding_TOGGLE_WHITEBOARD",
         "binding_CLEAR_WHITEBOARD",
         "binding_CHANGE_WHITEBOARD_PEN_COLOR",
