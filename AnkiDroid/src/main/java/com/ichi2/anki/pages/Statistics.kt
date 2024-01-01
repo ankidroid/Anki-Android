@@ -21,6 +21,8 @@ import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
 import android.view.View
+import android.webkit.WebView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
