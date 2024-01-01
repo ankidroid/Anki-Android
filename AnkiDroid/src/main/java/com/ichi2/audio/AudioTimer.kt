@@ -17,27 +17,28 @@ package com.ichi2.audio
 
 import android.os.Handler
 import android.os.Looper
+import com.ichi2.anki.utils.postDelayed
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * AudioTimer class is a utility for managing timing operations when playing audio.
  * It includes a Handler for scheduling tasks, and a Runnable for incrementing the duration and
- * triggering a callback to a listener at regular intervals. The [formatTime] function formats the
- * current duration into a readable time format and returns it in the form of a string.
- * The [OnTimerTickListener] interface defines a callback method [onTimerTick] for notifying external
- * components about the timer's progress.
+ * triggering a callback to a listener at regular intervals.
+ * [OnTimerTickListener.onTimerTick] notifies components about the timer's progress.
  **/
 class AudioTimer(listener: OnTimerTickListener) {
     private var handler = Handler(Looper.getMainLooper())
     private var runnable: Runnable
 
-    private var duration = 0L
-    private var delay = 50L
+    private var duration = 0.milliseconds
+    private var delay = 50.milliseconds
     init {
         runnable = object : Runnable {
             override fun run() {
                 duration += delay
                 handler.postDelayed(this, delay)
-                listener.onTimerTick(formatTime())
+                listener.onTimerTick(duration)
             }
         }
     }
@@ -52,28 +53,16 @@ class AudioTimer(listener: OnTimerTickListener) {
 
     fun stop() {
         handler.removeCallbacks(runnable)
-        duration = 0L
+        duration = 0.milliseconds
     }
 
-    fun start(customDuration: Long) {
+    fun start(customDuration: Duration) {
         handler.removeCallbacks(runnable)
         duration = customDuration
         handler.postDelayed(runnable, delay)
     }
 
-    fun formatTime(): String {
-        val ms = duration % 1000
-        val s = (duration / 1000) % 60
-        val m = (duration / (1000 * 60)) % 60
-        val h = (duration / (1000 * 60 * 60)) % 60
-        return if (h > 0) {
-            "%02d:%02d:%02d.%02d".format(h, m, s, ms / 10)
-        } else {
-            "%02d:%02d.%02d".format(m, s, ms / 10)
-        }
-    }
-
     interface OnTimerTickListener {
-        fun onTimerTick(duration: String)
+        fun onTimerTick(duration: Duration)
     }
 }

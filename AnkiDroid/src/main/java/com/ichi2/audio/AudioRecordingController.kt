@@ -36,12 +36,16 @@ import com.ichi2.anki.multimediacard.MediaPlayer
 import com.ichi2.anki.multimediacard.fields.FieldControllerBase
 import com.ichi2.anki.multimediacard.fields.IFieldController
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.elapsed
+import com.ichi2.anki.utils.formatAsString
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.UiUtil
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
+import kotlin.time.Duration
+
 // TODO : stop audio time view flickering
 class AudioRecordingController :
     FieldControllerBase(),
@@ -219,10 +223,10 @@ class AudioRecordingController :
             mediaPlayer.seekTo(mediaPlayer.currentPosition - JUMP_VALUE)
             audioProgressBar.progress -= JUMP_VALUE
             mediaPlayer.currentPosition
-            audioTimer.start(mediaPlayer.currentPosition.toLong())
+            audioTimer.start(mediaPlayer.elapsed)
         }
         forwardAudioButton.setOnClickListener {
-            audioTimer.start(mediaPlayer.currentPosition.toLong())
+            audioTimer.start(mediaPlayer.elapsed)
             mediaPlayer.seekTo(mediaPlayer.currentPosition + JUMP_VALUE)
             audioProgressBar.progress += JUMP_VALUE
         }
@@ -315,8 +319,8 @@ class AudioRecordingController :
         audioRecorder.release()
     }
 
-    override fun onTimerTick(duration: String) {
-        audioTimeView.text = duration
+    override fun onTimerTick(duration: Duration) {
+        audioTimeView.text = duration.formatAsString()
         if (isPlaying) {
             audioProgressBar.progress = mediaPlayer.currentPosition
         } else {
