@@ -64,6 +64,7 @@
     <string name="log_out">Odjavi se</string>
     <string name="reset_password">Ресетујте лозинку</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Опције за XXX</string>
     <string name="sync_title">Синхронизација</string>

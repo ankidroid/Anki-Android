@@ -64,6 +64,7 @@
     <string name="log_out">Đăng xuất</string>
     <string name="reset_password">Đặt lại mật khẩu</string>
     <string name="lost_mail_instructions">Quên Email?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Tùy chọn cho XXX</string>
     <string name="sync_title">Đồng bộ</string>

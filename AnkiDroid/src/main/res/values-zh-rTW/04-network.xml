@@ -64,6 +64,7 @@
     <string name="log_out">登出</string>
     <string name="reset_password">忘記密碼</string>
     <string name="lost_mail_instructions">忘記了電郵地址？</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX 的選項</string>
     <string name="sync_title">同步</string>

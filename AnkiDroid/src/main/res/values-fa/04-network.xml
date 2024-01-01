@@ -64,6 +64,7 @@
     <string name="log_out">خروج</string>
     <string name="reset_password">تنظیم مجدد گذرواژه</string>
     <string name="lost_mail_instructions">ایمیل خود را فراموش کردید؟</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">گزینه هایي برای XXX</string>
     <string name="sync_title">همگام سازى</string>
