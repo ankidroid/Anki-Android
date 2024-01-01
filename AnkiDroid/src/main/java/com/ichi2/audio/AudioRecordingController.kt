@@ -27,6 +27,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -111,14 +112,15 @@ class AudioRecordingController :
             var hasTextContents = false
             for (i in 0 until mNote.initialFieldCount) {
                 val field = mNote.getInitialField(i)
-                val textView = FixedTextView(this)
-                textView.text = field?.text
-                textView.textSize = 16f
-                textView.setPadding(16, 0, 16, 24)
-                previewLayout.addView(textView)
+                FixedTextView(this).apply {
+                    text = field?.text
+                    textSize = 16f
+                    setPadding(16, 0, 16, 24)
+                    previewLayout.addView(this)
+                }
                 hasTextContents = hasTextContents or !field?.text.isNullOrBlank()
             }
-            label.visibility = if (hasTextContents) View.VISIBLE else View.GONE
+            label.isVisible = hasTextContents
         }
 
         this.context = context
