@@ -181,14 +181,14 @@ class AudioRecordingController :
         discardRecordingButton.setOnClickListener {
             CompatHelper.compat.vibrate(context, 20)
             recordButton.apply {
-                iconTint = ContextCompat.getColorStateList(context, R.color.flag_red)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_red)
+                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                 setIconResource(R.drawable.ic_record)
             }
             playAudioButton.apply {
                 setIconResource(R.drawable.round_play_arrow_24)
-                iconTint = ContextCompat.getColorStateList(context, R.color.flag_red)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_red)
+                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
             }
             cancelAudioRecordingButton.isEnabled = false
             tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
@@ -286,8 +286,8 @@ class AudioRecordingController :
             forwardAudioButton.isEnabled = true
             playAudioButton.apply {
                 setIconResource(R.drawable.round_pause_24)
-                iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
+                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
             }
         } else {
             rewindAudioButton.isEnabled = false
@@ -297,8 +297,8 @@ class AudioRecordingController :
             audioPlayer?.pause()
             playAudioButton.apply {
                 setIconResource(R.drawable.round_play_arrow_24)
-                iconTint = ContextCompat.getColorStateList(context, R.color.flag_red)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_red)
+                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
             }
         }
         rewindAudioButton.setOnClickListener {
@@ -318,8 +318,8 @@ class AudioRecordingController :
             forwardAudioButton.isEnabled = false
             audioProgressBar.progress = 0
             playAudioButton.apply {
-                iconTint = ContextCompat.getColorStateList(context, R.color.flag_red)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_red)
+                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                 setIconResource(R.drawable.round_play_arrow_24)
             }
             audioTimeView.text = DEFAULT_TIME
@@ -336,8 +336,8 @@ class AudioRecordingController :
             cancelAudioRecordingButton.isEnabled = true
             saveButton.isEnabled = true
             recordButton.apply {
-                iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
+                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
                 setIconResource(R.drawable.round_pause_24)
             }
         } catch (e: Exception) {
@@ -386,8 +386,8 @@ class AudioRecordingController :
     private fun clearRecording() {
         audioTimer.stop()
         recordButton.apply {
-            iconTint = ContextCompat.getColorStateList(context, R.color.flag_red)
-            strokeColor = ContextCompat.getColorStateList(context, R.color.flag_red)
+            iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+            strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
             setIconResource(R.drawable.ic_record)
         }
         cancelAudioRecordingButton.isEnabled = false
