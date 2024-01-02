@@ -28,7 +28,7 @@ class ActionButtonStatus {
     /**
      * Custom button allocation
      */
-    private val mCustomButtons: MutableMap<Int, Int> = hashMapInit(25) // setup's size
+    private val customButtons: MutableMap<Int, Int> = hashMapInit(25) // setup's size
 
     fun setup(preferences: SharedPreferences) {
         // NOTE: the default values below should be in sync with preferences_custom_buttons.xml and reviewer.xml
@@ -57,14 +57,14 @@ class ActionButtonStatus {
     }
 
     private fun setupButton(preferences: SharedPreferences, @IdRes resourceId: Int, preferenceName: String, showAsActionType: Int) {
-        mCustomButtons[resourceId] = preferences.getString(
+        customButtons[resourceId] = preferences.getString(
             preferenceName,
             showAsActionType.toString()
         )!!.toInt()
     }
 
     fun setCustomButtons(menu: Menu) {
-        for ((itemId, value) in mCustomButtons) {
+        for ((itemId, value) in customButtons) {
             if (value != MENU_DISABLED) {
                 val item = menu.findItem(itemId)
                 item.setShowAsAction(value)
@@ -75,27 +75,27 @@ class ActionButtonStatus {
     }
 
     fun hideWhiteboardIsDisabled(): Boolean {
-        return mCustomButtons[R.id.action_hide_whiteboard] == MENU_DISABLED
+        return customButtons[R.id.action_hide_whiteboard] == MENU_DISABLED
     }
 
     fun toggleStylusIsDisabled(): Boolean {
-        return mCustomButtons[R.id.action_toggle_stylus] == MENU_DISABLED
+        return customButtons[R.id.action_toggle_stylus] == MENU_DISABLED
     }
 
     fun clearWhiteboardIsDisabled(): Boolean {
-        return mCustomButtons[R.id.action_clear_whiteboard] == MENU_DISABLED
+        return customButtons[R.id.action_clear_whiteboard] == MENU_DISABLED
     }
 
     fun selectTtsIsDisabled(): Boolean {
-        return mCustomButtons[R.id.action_select_tts] == MENU_DISABLED
+        return customButtons[R.id.action_select_tts] == MENU_DISABLED
     }
 
     fun saveWhiteboardIsDisabled(): Boolean {
-        return mCustomButtons[R.id.action_save_whiteboard] == MENU_DISABLED
+        return customButtons[R.id.action_save_whiteboard] == MENU_DISABLED
     }
 
     fun whiteboardPenColorIsDisabled(): Boolean {
-        return mCustomButtons[R.id.action_change_whiteboard_pen_color] == MENU_DISABLED
+        return customButtons[R.id.action_change_whiteboard_pen_color] == MENU_DISABLED
     }
 
     companion object {
