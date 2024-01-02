@@ -1411,18 +1411,6 @@ abstract class AbstractFlashcardViewer :
             soundPlayer.loadCardSounds(currentCard!!, if (displayAnswer) Side.BACK else Side.FRONT)
         }
         cardContent = content.getTemplateHtml()
-        if (this.sharedPrefs().getBoolean("html_javascript_debugging", false)) {
-            try {
-                FileOutputStream(
-                    File(
-                        CollectionHelper.getCurrentAnkiDroidDirectory(this),
-                        "card.html"
-                    )
-                ).use { f -> f.write(cardContent!!.toByteArray()) }
-            } catch (e: IOException) {
-                Timber.d(e, "failed to save card")
-            }
-        }
         fillFlashcard()
         playSounds(false) // Play sounds if appropriate
     }
