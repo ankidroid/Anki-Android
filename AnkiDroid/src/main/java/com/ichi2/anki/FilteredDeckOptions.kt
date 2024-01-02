@@ -37,10 +37,10 @@ import timber.log.Timber
 class FilteredDeckOptions :
     AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>(),
     SharedPreferences.OnSharedPreferenceChangeListener {
-    private var mAllowCommit = true
+    private var allowCommit = true
 
     // TODO: not anymore used in libanki?
-    private val mDynExamples = arrayOf(
+    private val dynExamples = arrayOf(
         null,
         "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
         "{'search'=\"added:1\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
@@ -128,7 +128,7 @@ class FilteredDeckOptions :
                         "preset" -> {
                             val i: Int = (value as String).toInt()
                             if (i > 0) {
-                                val presetValues = JSONObject(mDynExamples[i]!!)
+                                val presetValues = JSONObject(dynExamples[i]!!)
                                 val arr = presetValues.names() ?: continue
                                 for (name in arr.stringIterable()) {
                                     if ("steps" == name) {
@@ -266,7 +266,7 @@ class FilteredDeckOptions :
 
     @Suppress("deprecation") // conversion to fragments tracked in github as #5019
     override fun updateSummaries() {
-        mAllowCommit = false
+        allowCommit = false
         // for all text preferences, set summary as current database value
         val keys: Set<String> = pref.mValues.keys
         for (key in keys) {
@@ -297,7 +297,7 @@ class FilteredDeckOptions :
                 pref.summary = value
             }
         }
-        mAllowCommit = true
+        allowCommit = true
     }
 
     @Suppress("deprecation") // Tracked as #5019 on github
