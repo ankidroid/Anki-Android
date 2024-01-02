@@ -19,7 +19,6 @@ import android.content.SharedPreferences
 import android.view.ViewConfiguration
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.reviewer.MappableBinding
-import com.ichi2.anki.reviewer.MappableBinding.*
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.screenBuilder
 import io.mockk.every
@@ -34,16 +33,16 @@ import org.junit.BeforeClass
 import org.junit.Test
 
 class GestureProcessorTest : ViewerCommand.CommandProcessor {
-    private val mSut = GestureProcessor(this)
-    private val mExecutedCommands: MutableList<ViewerCommand> = ArrayList()
+    private val sut = GestureProcessor(this)
+    private val executedCommands: MutableList<ViewerCommand> = ArrayList()
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        mExecutedCommands.add(which)
+        executedCommands.add(which)
         return true
     }
 
     private fun singleResult(): ViewerCommand {
-        assertThat<List<ViewerCommand>>(mExecutedCommands, hasSize(1))
-        return mExecutedCommands[0]
+        assertThat<List<ViewerCommand>>(executedCommands, hasSize(1))
+        return executedCommands[0]
     }
 
     @Test
@@ -53,8 +52,8 @@ class GestureProcessorTest : ViewerCommand.CommandProcessor {
             listOf(MappableBinding.fromGesture(Gesture.TAP_CENTER, ViewerCommand.SHOW_ANSWER.screenBuilder))
                 .toPreferenceString()
         every { prefs.getBoolean("gestureCornerTouch", any()) } returns true
-        mSut.init(prefs)
-        mSut.onTap(100, 100, 50f, 50f)
+        sut.init(prefs)
+        sut.onTap(100, 100, 50f, 50f)
         assertThat(singleResult(), equalTo(ViewerCommand.SHOW_ANSWER))
     }
 
