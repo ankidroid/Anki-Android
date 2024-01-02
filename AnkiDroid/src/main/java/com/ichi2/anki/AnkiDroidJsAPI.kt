@@ -22,6 +22,7 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.lifecycle.lifecycleScope
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeBuryCard
@@ -44,10 +45,12 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SortOrder
 import com.ichi2.utils.NetworkUtils
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.Json
 import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
@@ -333,15 +336,15 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             "sttSetLanguage" -> convertToByteArray(apiContract, mSpeechRecognizer.setLanguage(apiParams))
             "sttStart" -> {
                 val callback = object : JavaScriptSTT.SpeechRecognitionCallback {
-                    override fun onResult(result: String) {
-                        CoroutineScope(Dispatchers.Main).launch {
-                            val apiResult = ApiResult(true, result)
+                    override fun onResult(results: List<String>) {
+                        activity.lifecycleScope.launch {
+                            val apiResult = ApiResult(true, Json.encodeToString(ListSerializer(String.serializer()), results))
                             val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
                             activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
                         }
                     }
                     override fun onError(errorMessage: String) {
-                        CoroutineScope(Dispatchers.Main).launch {
+                        activity.lifecycleScope.launch {
                             val apiResult = ApiResult(false, errorMessage)
                             val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
                             activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)

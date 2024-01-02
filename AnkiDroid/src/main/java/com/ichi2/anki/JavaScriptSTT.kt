@@ -30,7 +30,7 @@ class JavaScriptSTT(private val context: Context) {
     private var language: String? = null
 
     interface SpeechRecognitionCallback {
-        fun onResult(result: String)
+        fun onResult(results: List<String>)
         fun onError(errorMessage: String)
     }
 
@@ -106,8 +106,7 @@ class JavaScriptSTT(private val context: Context) {
             override fun onResults(results: Bundle?) {
                 val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 if (!matches.isNullOrEmpty()) {
-                    val result = matches[0]
-                    recognitionCallback?.onResult(result)
+                    recognitionCallback?.onResult(matches)
                 } else {
                     recognitionCallback?.onError("No speech recognition results found.")
                 }
