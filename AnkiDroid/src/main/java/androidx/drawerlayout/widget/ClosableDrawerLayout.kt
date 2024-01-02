@@ -20,14 +20,14 @@ import android.content.Context
 import android.util.AttributeSet
 
 class ClosableDrawerLayout : DrawerLayout {
-    private var mAnimationEnabled = true
+    private var animationEnabled = true
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     fun setAnimationEnabled(useAnimation: Boolean) {
-        mAnimationEnabled = useAnimation
+        animationEnabled = useAnimation
     }
 
     // This is called internally (onTouchEvent outside the control will close it), so we need it here
