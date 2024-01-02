@@ -28,36 +28,36 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class KeyPickerTest : RobolectricTest() {
 
-    private var mKeyPicker: KeyPicker = KeyPicker.inflate(targetContext)
+    private var keyPicker: KeyPicker = KeyPicker.inflate(targetContext)
 
     @Test
     fun test_normal_binding() {
-        assertThat(mKeyPicker.getBinding(), nullValue())
+        assertThat(keyPicker.getBinding(), nullValue())
 
-        mKeyPicker.dispatchKeyEvent(getVKey())
+        keyPicker.dispatchKeyEvent(getVKey())
 
-        assertThat(mKeyPicker.getBinding(), not(nullValue()))
+        assertThat(keyPicker.getBinding(), not(nullValue()))
     }
 
     @Test
     fun invalid_binding_keeps_null_value() {
-        assertThat(mKeyPicker.getBinding(), nullValue())
+        assertThat(keyPicker.getBinding(), nullValue())
 
-        mKeyPicker.dispatchKeyEvent(getInvalidEvent())
+        keyPicker.dispatchKeyEvent(getInvalidEvent())
 
-        assertThat(mKeyPicker.getBinding(), nullValue())
+        assertThat(keyPicker.getBinding(), nullValue())
     }
 
     @Test
     fun invalid_binding_keeps_same_value() {
-        mKeyPicker.dispatchKeyEvent(getVKey())
+        keyPicker.dispatchKeyEvent(getVKey())
 
-        val binding = mKeyPicker.getBinding()
+        val binding = keyPicker.getBinding()
         assertThat(binding, not(nullValue()))
 
-        mKeyPicker.dispatchKeyEvent(getInvalidEvent())
+        keyPicker.dispatchKeyEvent(getInvalidEvent())
 
-        assertThat(mKeyPicker.getBinding(), sameInstance(binding))
+        assertThat(keyPicker.getBinding(), sameInstance(binding))
     }
 
     @Test
@@ -65,14 +65,14 @@ class KeyPickerTest : RobolectricTest() {
         // We don't want shift/alt as a single keypress - this stops them being used as modifier keys
         val leftShiftPress = KeyEventUtils.leftShift()
 
-        mKeyPicker.setKeycodeValidation(KeySelectionDialogUtils.disallowModifierKeyCodes())
-        mKeyPicker.dispatchKeyEvent(leftShiftPress)
-        assertThat(mKeyPicker.getBinding(), nullValue())
+        keyPicker.setKeycodeValidation(KeySelectionDialogUtils.disallowModifierKeyCodes())
+        keyPicker.dispatchKeyEvent(leftShiftPress)
+        assertThat(keyPicker.getBinding(), nullValue())
 
         // now turn it off and ensure it wasn't a fluke
-        mKeyPicker.setKeycodeValidation { true }
-        mKeyPicker.dispatchKeyEvent(leftShiftPress)
-        assertThat(mKeyPicker.getBinding(), notNullValue())
+        keyPicker.setKeycodeValidation { true }
+        keyPicker.dispatchKeyEvent(leftShiftPress)
+        assertThat(keyPicker.getBinding(), notNullValue())
     }
 
     private fun getVKey() = KeyEventUtils.getVKey()
