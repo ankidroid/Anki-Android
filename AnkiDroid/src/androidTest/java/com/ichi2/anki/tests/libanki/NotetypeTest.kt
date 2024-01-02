@@ -29,11 +29,11 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class NotetypeTest : InstrumentedTest() {
 
-    private val mTestCol = emptyCol
+    private val testCol = emptyCol
 
     @After
     fun tearDown() {
-        mTestCol.close()
+        testCol.close()
     }
 
     @Test
@@ -42,7 +42,7 @@ class NotetypeTest : InstrumentedTest() {
             "This test is flaky on API29, ignoring",
             Build.VERSION.SDK_INT != Build.VERSION_CODES.Q
         )
-        val models = mTestCol.notetypes
+        val models = testCol.notetypes
         val model = models.all()[0]
         val testString = "test"
         val size = testString.length * 1024 * 1024
@@ -55,7 +55,7 @@ class NotetypeTest : InstrumentedTest() {
         // Buf should be more than 4MB, so at least two chunks from database.
 
         // Reload models
-        mTestCol.load()
+        testCol.load()
         val newModel = models.all()[0]
         assertEquals(newModel, model)
     }
