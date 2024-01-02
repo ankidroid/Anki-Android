@@ -42,7 +42,7 @@ import java.util.Locale
 
 /** Locale selection dialog. Note: this must be dismissed onDestroy if not called from an activity implementing LocaleSelectionDialogHandler  */
 class LocaleSelectionDialog : AnalyticsDialogFragment() {
-    private var mDialogHandler: LocaleSelectionDialogHandler? = null
+    private var dialogHandler: LocaleSelectionDialogHandler? = null
 
     interface LocaleSelectionDialogHandler {
         fun onSelectedLocale(selectedLocale: Locale)
@@ -57,9 +57,9 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is Activity) {
-            if (mDialogHandler == null) {
+            if (dialogHandler == null) {
                 require(context is LocaleSelectionDialogHandler) { "Calling activity must implement LocaleSelectionDialogHandler" }
-                mDialogHandler = context
+                dialogHandler = context
             }
             resizeWhenSoftInputShown(context.window)
         }
@@ -78,7 +78,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         val dialog = MaterialDialog(activity).show {
             customView(view = tagsDialogView, noVerticalPadding = true)
             negativeButton(text = getString(R.string.dialog_cancel)) {
-                mDialogHandler!!.onLocaleSelectionCancelled()
+                dialogHandler!!.onLocaleSelectionCancelled()
             }
         }
 
@@ -100,7 +100,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
                 activity
             ) { _, position ->
                 val l = adapter.getLocaleAtPosition(position)
-                mDialogHandler!!.onSelectedLocale(l)
+                dialogHandler!!.onSelectedLocale(l)
             }
         )
     }
@@ -125,8 +125,8 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
     }
 
     class LocaleListAdapter(locales: Array<Locale>) : RecyclerView.Adapter<TextViewHolder>(), Filterable {
-        private val mCurrentlyVisibleLocales: MutableList<Locale> = locales.toMutableList()
-        private val mSelectableLocales: List<Locale> = locales.toList()
+        private val currentlyVisibleLocales: MutableList<Locale> = locales.toMutableList()
+        private val selectableLocales: List<Locale> = locales.toList()
 
         class TextViewHolder(private val textView: TextView) : RecyclerView.ViewHolder(textView) {
             fun setText(text: String) {
@@ -149,14 +149,14 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         }
 
         override fun onBindViewHolder(holder: TextViewHolder, position: Int) =
-            holder.setLocale(mCurrentlyVisibleLocales[position])
+            holder.setLocale(currentlyVisibleLocales[position])
 
-        override fun getItemCount(): Int = mCurrentlyVisibleLocales.size
+        override fun getItemCount(): Int = currentlyVisibleLocales.size
 
-        fun getLocaleAtPosition(position: Int): Locale = mCurrentlyVisibleLocales[position]
+        fun getLocaleAtPosition(position: Int): Locale = currentlyVisibleLocales[position]
 
         override fun getFilter(): Filter {
-            return object : TypedFilter<Locale>(mSelectableLocales) {
+            return object : TypedFilter<Locale>(selectableLocales) {
                 override fun filterResults(constraint: CharSequence, items: List<Locale>): List<Locale> {
                     val normalisedConstraint = constraint.toString().lowercase(Locale.getDefault())
                     return items.filter {
@@ -165,8 +165,8 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
                 }
 
                 override fun publishResults(constraint: CharSequence?, results: List<Locale>) {
-                    mCurrentlyVisibleLocales.clear()
-                    mCurrentlyVisibleLocales.addAll(results)
+                    currentlyVisibleLocales.clear()
+                    currentlyVisibleLocales.addAll(results)
                     notifyDataSetChanged()
                 }
             }
@@ -188,7 +188,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
          */
         fun newInstance(handler: LocaleSelectionDialogHandler): LocaleSelectionDialog {
             return LocaleSelectionDialog().apply {
-                mDialogHandler = handler
+                dialogHandler = handler
                 arguments = Bundle()
             }
         }
