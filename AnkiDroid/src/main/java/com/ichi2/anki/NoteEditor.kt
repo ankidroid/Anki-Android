@@ -986,8 +986,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         menuInflater.inflate(R.menu.note_editor, menu)
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
-            menu.findItem(R.id.action_save).isVisible = allowSaveAndPreview()
-            menu.findItem(R.id.action_preview).isVisible = allowSaveAndPreview()
+            val iconVisible = allowSaveAndPreview()
+            menu.findItem(R.id.action_save).isVisible = iconVisible
+            menu.findItem(R.id.action_preview).isVisible = iconVisible
         } else {
             menu.findItem(R.id.action_add_note_from_note_editor).isVisible = true
         }
@@ -1015,7 +1016,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      * When using the options such as image occlusion we don't need the menu's save/preview
      * option to save/preview the card as it has a built in option and the user is notified
      * when the card is saved successfully
-     * **/
+     */
     private fun allowSaveAndPreview(): Boolean = when {
         addNote && currentNotetypeIsImageOcclusion() -> false
         else -> true
