@@ -47,10 +47,10 @@ class CreateDeckDialog(
     private val deckDialogType: DeckDialogType,
     private val parentId: Long?
 ) {
-    private var mPreviousDeckName: String? = null
-    private var mOnNewDeckCreated: Consumer<Long>? = null
-    private var mInitialDeckName = ""
-    private var mShownDialog: MaterialDialog? = null
+    private var previousDeckName: String? = null
+    private var onNewDeckCreated: Consumer<Long>? = null
+    private var initialDeckName = ""
+    private var shownDialog: MaterialDialog? = null
 
     enum class DeckDialogType {
         FILTERED_DECK, DECK, SUB_DECK, RENAME_DECK
@@ -61,7 +61,7 @@ class CreateDeckDialog(
 
     suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
-        mInitialDeckName = withCol {
+        initialDeckName = withCol {
             getOrCreateFilteredDeck(did = 0).name
         }
         showDialog()
@@ -69,10 +69,10 @@ class CreateDeckDialog(
 
     /** Used for rename  */
     var deckName: String
-        get() = mShownDialog!!.getInputField().text.toString()
+        get() = shownDialog!!.getInputField().text.toString()
         set(deckName) {
-            mPreviousDeckName = deckName
-            mInitialDeckName = deckName
+            previousDeckName = deckName
+            initialDeckName = deckName
         }
 
     fun showDialog(): MaterialDialog {
@@ -83,7 +83,7 @@ class CreateDeckDialog(
                 onPositiveButtonClicked()
             }
             negativeButton(R.string.dialog_cancel)
-            input(prefill = mInitialDeckName, waitForPositiveButton = false) { dialog, text ->
+            input(prefill = initialDeckName, waitForPositiveButton = false) { dialog, text ->
                 // we need the fully-qualified name for subdecks
                 val maybeDeckName = fullyQualifyDeckName(dialogText = text)
                 // if the name is empty, it seems distracting to show an error
@@ -95,7 +95,7 @@ class CreateDeckDialog(
             }
             displayKeyboard(getInputField())
         }
-        mShownDialog = dialog
+        shownDialog = dialog
         return dialog
     }
 
@@ -111,7 +111,7 @@ class CreateDeckDialog(
         }
 
     fun closeDialog() {
-        mShownDialog?.dismiss()
+        shownDialog?.dismiss()
     }
 
     fun createSubDeck(did: DeckId, deckName: String?) {
@@ -136,7 +136,7 @@ class CreateDeckDialog(
             // create filtered deck
             Timber.i("CreateDeckDialog::createFilteredDeck...")
             val newDeckId = col.decks.newDyn(deckName)
-            mOnNewDeckCreated!!.accept(newDeckId)
+            onNewDeckCreated!!.accept(newDeckId)
         } catch (ex: BackendDeckIsFilteredException) {
             displayFeedback(ex.localizedMessage ?: ex.message ?: "", Snackbar.LENGTH_LONG)
             return false
@@ -149,7 +149,7 @@ class CreateDeckDialog(
             // create normal deck or sub deck
             Timber.i("CreateDeckDialog::createNewDeck")
             val newDeckId = col.decks.id(deckName)
-            mOnNewDeckCreated!!.accept(newDeckId)
+            onNewDeckCreated!!.accept(newDeckId)
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             Timber.w(filteredAncestor)
             return false
@@ -184,12 +184,12 @@ class CreateDeckDialog(
         if (!Decks.isValidDeckName(newName)) {
             Timber.i("CreateDeckDialog::renameDeck not renaming deck to invalid name '%s'", newName)
             displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
-        } else if (newName != mPreviousDeckName) {
+        } else if (newName != previousDeckName) {
             try {
                 val decks = col.decks
-                val deckId = decks.id(mPreviousDeckName!!)
+                val deckId = decks.id(previousDeckName!!)
                 decks.rename(decks.get(deckId)!!, newName)
-                mOnNewDeckCreated!!.accept(deckId)
+                onNewDeckCreated!!.accept(deckId)
                 // 11668: Display feedback if a deck is renamed
                 displayFeedback(context.getString(R.string.deck_renamed))
             } catch (e: BackendDeckIsFilteredException) {
@@ -209,6 +209,6 @@ class CreateDeckDialog(
     }
 
     fun setOnNewDeckCreated(c: Consumer<Long>?) {
-        mOnNewDeckCreated = c
+        onNewDeckCreated = c
     }
 }
