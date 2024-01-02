@@ -48,8 +48,8 @@ import java.io.IOException
 import java.util.*
 
 class DatabaseErrorDialog : AsyncDialogFragment() {
-    private lateinit var mRepairValues: IntArray
-    private lateinit var mBackups: Array<File>
+    private lateinit var repairValues: IntArray
+    private lateinit var backups: Array<File>
 
     @Suppress("Deprecation") // Material dialog neutral button deprecation
     @SuppressLint("CheckResult")
@@ -138,18 +138,18 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 options.add(res.getString(R.string.backup_del_collection))
                 values.add(5)
                 val titles = arrayOfNulls<String>(options.size).toMutableList()
-                mRepairValues = IntArray(options.size)
+                repairValues = IntArray(options.size)
                 var i = 0
                 while (i < options.size) {
                     titles[i] = options[i]
-                    mRepairValues[i] = values[i]
+                    repairValues[i] = values[i]
                     i++
                 }
                 dialog.show {
                     icon(R.drawable.ic_warning)
                     negativeButton(R.string.dialog_cancel)
                     listItems(items = titles.toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, _: CharSequence ->
-                        when (mRepairValues[index]) {
+                        when (repairValues[index]) {
                             0 -> {
                                 ActivityCompat.recreate(activity as DeckPicker)
                                 return@listItems
@@ -174,7 +174,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_NEW_COLLECTION)
                                 return@listItems
                             }
-                            else -> throw RuntimeException("Unknown dialog selection: " + mRepairValues[index])
+                            else -> throw RuntimeException("Unknown dialog selection: " + repairValues[index])
                         }
                     }
                 }
@@ -194,8 +194,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_RESTORE_BACKUP -> {
                 // Allow user to restore one of the backups
                 val path = CollectionHelper.getCollectionPath(requireContext())
-                mBackups = BackupManager.getBackups(File(path))
-                if (mBackups.isEmpty()) {
+                backups = BackupManager.getBackups(File(path))
+                if (backups.isEmpty()) {
                     dialog.title(R.string.backup_restore)
                         .contentNullable(message)
                         .positiveButton(R.string.dialog_ok) {
@@ -204,9 +204,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         }
                 } else {
                     // Show backups sorted with latest on top
-                    mBackups.reverse()
+                    backups.reverse()
                     val formatter = LocalizedUnambiguousBackupTimeFormatter()
-                    val dates = mBackups.map { formatter.getTimeOfBackupAsText(it) }
+                    val dates = backups.map { formatter.getTimeOfBackupAsText(it) }
 
                     dialog.title(R.string.backup_restore_select_title)
                         .positiveButton(R.string.restore_backup_choose_another) {
@@ -216,11 +216,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         }
                         .negativeButton(R.string.dialog_cancel)
                         .listItemsSingleChoice(items = dates.toTypedArray().toList(), waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
-                            if (mBackups[index].length() > 0) {
+                            if (backups[index].length() > 0) {
                                 // restore the backup if it's valid
                                 (activity as DeckPicker?)
                                     ?.restoreFromBackup(
-                                        mBackups[index].path
+                                        backups[index].path
                                     )
                                 dismissAllDialogFragments()
                             } else {
