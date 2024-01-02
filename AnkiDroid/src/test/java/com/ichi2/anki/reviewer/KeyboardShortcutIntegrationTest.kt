@@ -41,14 +41,14 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class KeyboardShortcutIntegrationTest : RobolectricTest() {
-    private lateinit var mReviewer: Reviewer
+    private lateinit var reviewer: Reviewer
 
     @Before
     override fun setUp() {
         super.setUp()
         addNoteUsingBasicModel("Hello", "World")
         Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application).grantPermissions(Manifest.permission.RECORD_AUDIO)
-        mReviewer = super.startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, Intent())
+        reviewer = super.startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, Intent())
         waitForAsyncTasksToComplete()
     }
 
@@ -147,20 +147,20 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
     }
 
     private fun assertStatus(recording: AudioView.Status) {
-        assertThat(mReviewer.audioView!!.status, equalTo(recording))
+        assertThat(reviewer.audioView!!.status, equalTo(recording))
     }
 
     private fun setupPlayerMock(): AudioPlayer {
-        assertThat(mReviewer.openMicToolbar(), equalTo(true))
+        assertThat(reviewer.openMicToolbar(), equalTo(true))
         return mock(AudioPlayer::class.java).also {
-            mReviewer.audioView!!.setPlayer(it)
+            reviewer.audioView!!.setPlayer(it)
         }
     }
 
     private fun setupRecorderMock(): AudioRecorder {
-        assertThat(mReviewer.openMicToolbar(), equalTo(true))
+        assertThat(reviewer.openMicToolbar(), equalTo(true))
         return mock(AudioRecorder::class.java).also {
-            mReviewer.audioView!!.setRecorder(it)
+            reviewer.audioView!!.setRecorder(it)
         }
     }
 
@@ -174,9 +174,9 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
 
         val vKey = getVKey()
         whenever(vKey.isShiftPressed).thenReturn(true)
-        mReviewer.onKeyDown(KeyEvent.KEYCODE_V, vKey)
+        reviewer.onKeyDown(KeyEvent.KEYCODE_V, vKey)
         whenever(vKey.repeatCount).thenReturn(1)
-        mReviewer.onKeyDown(KeyEvent.KEYCODE_V, vKey)
+        reviewer.onKeyDown(KeyEvent.KEYCODE_V, vKey)
     }
 
     private fun pressShiftAndVThenRelease() {
@@ -191,13 +191,13 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
         whenever(mock.keyCode).thenReturn(KeyEvent.KEYCODE_V)
         whenever(mock.unicodeChar).thenReturn('v'.code)
         whenever(mock.getUnicodeChar(anyInt())).thenReturn('v'.code)
-        mReviewer.onKeyUp(KeyEvent.KEYCODE_V, mock)
+        reviewer.onKeyUp(KeyEvent.KEYCODE_V, mock)
     }
 
     private fun releaseShiftKey() {
         val mock = mock(KeyEvent::class.java)
         whenever(mock.keyCode).thenReturn(KeyEvent.KEYCODE_SHIFT_LEFT)
-        mReviewer.onKeyUp(KeyEvent.KEYCODE_SHIFT_LEFT, mock)
+        reviewer.onKeyUp(KeyEvent.KEYCODE_SHIFT_LEFT, mock)
     }
 
     private fun depressVKey() {
@@ -205,14 +205,14 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
         whenever(mock.keyCode).thenReturn(KeyEvent.KEYCODE_V)
         whenever(mock.unicodeChar).thenReturn('v'.code)
         whenever(mock.getUnicodeChar(anyInt())).thenReturn('v'.code)
-        mReviewer.onKeyDown(KeyEvent.KEYCODE_V, mock)
+        reviewer.onKeyDown(KeyEvent.KEYCODE_V, mock)
     }
 
     private fun depressVKeyWithShiftHeld() {
         val mock = mock(KeyEvent::class.java)
         whenever(mock.isShiftPressed).thenReturn(true)
         whenever(mock.keyCode).thenReturn(KeyEvent.KEYCODE_V)
-        mReviewer.onKeyDown(KeyEvent.KEYCODE_V, mock)
+        reviewer.onKeyDown(KeyEvent.KEYCODE_V, mock)
     }
 
     private fun depressShiftKey() {
@@ -227,6 +227,6 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
         whenever(mock.scanCode).thenReturn(42)
         whenever(mock.source).thenReturn(257)
         whenever(mock.repeatCount).thenReturn(0)
-        mReviewer.onKeyDown(KeyEvent.KEYCODE_SHIFT_LEFT, mock)
+        reviewer.onKeyDown(KeyEvent.KEYCODE_SHIFT_LEFT, mock)
     }
 }
