@@ -207,10 +207,9 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     }
 
     internal class KeyboardInputTestReviewer : Reviewer() {
-        private var mDisplayAnswer = false
-        private var mFocusTextField = false
-        private var mAnswered: Int? = null
-        private var mAnswerButtonCount = 4
+        private var focusTextField = false
+        private var answered: Int? = null
+        private var answerButtonCount = 4
         var editCardCalled = false
             private set
         var markCardCalled = false
@@ -229,7 +228,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         }
 
         override fun answerFieldIsFocused(): Boolean {
-            return mFocusTextField
+            return focusTextField
         }
 
         override fun displayCardAnswer() {
@@ -327,24 +326,24 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return keyEvent
         }
         fun focusTextField(): KeyboardInputTestReviewer {
-            mFocusTextField = true
+            focusTextField = true
             return this
         }
 
         override fun answerCard(ease: Int) {
             super.answerCard(ease)
-            mAnswered = ease
+            answered = ease
         }
 
         fun processedAnswer(): Int {
-            if (mAnswered == null) {
+            if (answered == null) {
                 Assert.fail("No card was answered")
             }
-            return mAnswered!!
+            return answered!!
         }
 
         fun withButtons(answerButtonCount: Int): KeyboardInputTestReviewer {
-            mAnswerButtonCount = answerButtonCount
+            this.answerButtonCount = answerButtonCount
             return this
         }
 
@@ -401,7 +400,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         }
 
         fun hasBeenAnswered(): Boolean {
-            return mAnswered != null
+            return answered != null
         }
 
         override fun performClickWithVisualFeedback(ease: Int) {
