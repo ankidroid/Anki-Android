@@ -48,8 +48,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     val backsideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
     val flagCode: MutableStateFlow<Int> = MutableStateFlow(Flag.NONE.code)
-
-    private var showingAnswer = false
+    private val showingAnswer = MutableStateFlow(false)
 
     private lateinit var currentCard: Card
 
@@ -57,7 +56,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         Timber.v("toggleBacksideOnly() %b", !backsideOnly.value)
         launchCatching {
             backsideOnly.emit(!backsideOnly.value)
-            if (backsideOnly.value && !showingAnswer) {
+            if (backsideOnly.value && !showingAnswer.value) {
                 showAnswer()
             }
         }
@@ -93,7 +92,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
             if (!this::currentCard.isInitialized || reload) {
                 currentCard = withCol { getCard(selectedCardIds[currentIndex.value]) }
             }
-            val answerShouldBeShown = showingAnswer || backsideOnly.value
+            val answerShouldBeShown = showingAnswer.value || backsideOnly.value
             showQuestion()
             if (answerShouldBeShown) {
                 showAnswer()
@@ -111,7 +110,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
 
     private suspend fun showQuestion() {
         Timber.v("showQuestion()")
-        showingAnswer = false
+        showingAnswer.emit(false)
 
         val question = prepareCardTextForDisplay(currentCard.question())
         val answer = withCol { media.escapeMediaFilenames(currentCard.answer()) }
@@ -127,7 +126,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
      * because of how the `_showAnswer()` javascript method works */
     private suspend fun showAnswer() {
         Timber.v("showAnswer()")
-        showingAnswer = true
+        showingAnswer.emit(true)
         val answer = prepareCardTextForDisplay(currentCard.answer())
         eval.emit("_showAnswer(${Json.encodeToString(answer)});")
     }
@@ -149,7 +148,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     }
 
     private suspend fun showAnswerOrDisplayCard(index: Int) {
-        if (!showingAnswer && !backsideOnly.value) {
+        if (!showingAnswer.value && !backsideOnly.value) {
             showAnswer()
         } else {
             displayCard(index)
