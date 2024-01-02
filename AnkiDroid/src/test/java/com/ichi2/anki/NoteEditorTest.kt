@@ -431,9 +431,9 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     inner class NoteEditorTestBuilder(notetype: NotetypeJson?) {
-        private val mNotetype: NotetypeJson
-        private var mFirstField: String? = null
-        private var mSecondField: String? = null
+        private val notetype: NotetypeJson
+        private var firstField: String? = null
+        private var secondField: String? = null
         fun build(): NoteEditor {
             val editor = build(NoteEditor::class.java)
             advanceRobolectricLooper()
@@ -447,12 +447,12 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         fun <T : NoteEditor?> build(clazz: Class<T>): T {
-            col.notetypes.setCurrent(mNotetype)
+            col.notetypes.setCurrent(notetype)
             val noteEditor = getNoteEditorAddingNote(REVIEWER, clazz)
             advanceRobolectricLooper()
-            noteEditor!!.setFieldValueFromUi(0, mFirstField)
-            if (mSecondField != null) {
-                noteEditor.setFieldValueFromUi(1, mSecondField)
+            noteEditor!!.setFieldValueFromUi(0, firstField)
+            if (secondField != null) {
+                noteEditor.setFieldValueFromUi(1, secondField)
             }
             return noteEditor
         }
@@ -462,18 +462,18 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         fun withFirstField(text: String?): NoteEditorTestBuilder {
-            mFirstField = text
+            firstField = text
             return this
         }
 
         fun withSecondField(text: String?): NoteEditorTestBuilder {
-            mSecondField = text
+            secondField = text
             return this
         }
 
         init {
             assertNotNull(notetype) { "model was null" }
-            mNotetype = notetype
+            this.notetype = notetype
         }
     }
 }
