@@ -23,30 +23,30 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.DrawableWrapper
 
 class BadgeDrawable(dr: Drawable?) : DrawableWrapper(dr) {
-    private val mPaint: Paint = Paint()
-    private var mBadge: Drawable? = null
-    private var mText: String? = null
-    private var mTextX = 0f
-    private var mTextY = 0f
+    private val paint: Paint = Paint()
+    private var badge: Drawable? = null
+    private var text: String? = null
+    private var textX = 0f
+    private var textY = 0f
     fun setBadgeDrawable(view: Drawable) {
-        mBadge = view
+        badge = view
         invalidateSize()
     }
 
     private fun invalidateSize() {
         // This goes out of bounds - it seems to be fine
         val size = (intrinsicWidth * iconScale).toInt()
-        mPaint.textSize = (size * 0.8).toFloat()
+        paint.textSize = (size * 0.8).toFloat()
         val left = left.toInt()
         val bottom = bottom.toInt()
         val right = left + size
         val top = bottom - size
-        if (mBadge != null) {
-            mBadge!!.setBounds(left, top, right, bottom)
+        if (badge != null) {
+            badge!!.setBounds(left, top, right, bottom)
         }
         val vcenter = (top + bottom) / 2.0f
-        mTextX = (left + right) / 2.0f
-        mTextY = vcenter - (mPaint.descent() + mPaint.ascent()) / 2
+        textX = (left + right) / 2.0f
+        textY = vcenter - (paint.descent() + paint.ascent()) / 2
     }
 
     private val bottom: Double
@@ -74,19 +74,19 @@ class BadgeDrawable(dr: Drawable?) : DrawableWrapper(dr) {
             ICON_SCALE_BARE
         }
     private val isShowingText: Boolean
-        get() = mText != null && mText!!.isNotEmpty()
+        get() = text != null && text!!.isNotEmpty()
 
     fun setText(c: Char) {
-        mText = String(charArrayOf(c))
+        text = String(charArrayOf(c))
         invalidateSize()
     }
 
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
-        if (mBadge != null) {
-            mBadge!!.draw(canvas)
-            if (mText != null) {
-                canvas.drawText(mText!!, mTextX, mTextY, mPaint)
+        if (badge != null) {
+            badge!!.draw(canvas)
+            if (text != null) {
+                canvas.drawText(text!!, textX, textY, paint)
             }
         }
     }
@@ -102,8 +102,8 @@ class BadgeDrawable(dr: Drawable?) : DrawableWrapper(dr) {
      * @param dr the drawable to wrap
      */
     init {
-        mPaint.typeface = Typeface.DEFAULT_BOLD
-        mPaint.textAlign = Paint.Align.CENTER
-        mPaint.color = Color.WHITE
+        paint.typeface = Typeface.DEFAULT_BOLD
+        paint.textAlign = Paint.Align.CENTER
+        paint.color = Color.WHITE
     }
 }
