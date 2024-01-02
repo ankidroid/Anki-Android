@@ -33,33 +33,33 @@ import java.util.*
  * This dialog fragment support a choice from a list of strings.
  */
 class PickStringDialogFragment : DialogFragment() {
-    private var mPossibleChoices: ArrayList<String>? = null
-    private var mListener: DialogInterface.OnClickListener? = null
-    private var mTitle: String? = null
+    private var possibleChoices: ArrayList<String>? = null
+    private var listener: DialogInterface.OnClickListener? = null
+    private var title: String? = null
 
     @KotlinCleanup("requireActivity")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Use the Builder class for convenient dialog construction
         val builder = AlertDialog.Builder(activity)
-        builder.setTitle(mTitle)
+        builder.setTitle(title)
         val adapter = ArrayAdapter(
             requireActivity(),
             R.layout.simple_list_item_1,
-            mPossibleChoices!!
+            possibleChoices!!
         )
-        builder.setAdapter(adapter, mListener)
+        builder.setAdapter(adapter, listener)
         return builder.create()
     }
 
     fun setTitle(title: String?) {
-        mTitle = title
+        this.title = title
     }
 
     fun setChoices(possibleClones: ArrayList<String>?) {
-        mPossibleChoices = possibleClones
+        possibleChoices = possibleClones
     }
 
     fun setOnclickListener(listener: DialogInterface.OnClickListener?) {
-        mListener = listener
+        this.listener = listener
     }
 }
