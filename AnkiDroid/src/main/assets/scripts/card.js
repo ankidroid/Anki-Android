@@ -218,6 +218,7 @@ function ankiSttResult(result) {
         return;
     }
     result = JSON.parse(result);
+    result.value = JSON.parse(result.value);
     for (var i = 0; i < speechToTextHook.length; i++) {
         speechToTextHook[i](result);
     }
