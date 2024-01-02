@@ -64,10 +64,10 @@ open class RobolectricTest : AndroidTest {
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)
 
-    private val mControllersForCleanup = ArrayList<ActivityController<*>>()
+    private val controllersForCleanup = ArrayList<ActivityController<*>>()
 
     protected fun saveControllerForCleanup(controller: ActivityController<*>) {
-        mControllersForCleanup.add(controller)
+        controllersForCleanup.add(controller)
     }
 
     protected open fun useInMemoryDatabase(): Boolean {
@@ -77,7 +77,7 @@ open class RobolectricTest : AndroidTest {
     open val disableCollectionLogFile = true
 
     @get:Rule
-    val mTaskScheduler = TaskSchedulerRule()
+    val taskScheduler = TaskSchedulerRule()
 
     /** Allows [com.ichi2.testutils.Flaky] to annotate tests in subclasses */
     @get:Rule
@@ -131,7 +131,7 @@ open class RobolectricTest : AndroidTest {
     @CallSuper
     open fun tearDown() {
         // If you don't clean up your ActivityControllers you will get OOM errors
-        for (controller in mControllersForCleanup) {
+        for (controller in controllersForCleanup) {
             Timber.d("Calling destroy on controller %s", controller.get().toString())
             try {
                 controller.destroy()
@@ -140,7 +140,7 @@ open class RobolectricTest : AndroidTest {
                 // No exception here should halt test execution since tests are over anyway.
             }
         }
-        mControllersForCleanup.clear()
+        controllersForCleanup.clear()
 
         try {
             if (CollectionHelper.instance.colIsOpenUnsafe()) {
