@@ -67,8 +67,8 @@ import java.util.regex.Pattern
 @KotlinCleanup("IDE Lint")
 open class AnkiDroidApp : Application() {
     /** An exception if the WebView subsystem fails to load  */
-    private var mWebViewError: Throwable? = null
-    private val mNotifications = MutableLiveData<Void?>()
+    private var webViewError: Throwable? = null
+    private val notifications = MutableLiveData<Void?>()
 
     lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
 
@@ -187,7 +187,7 @@ open class AnkiDroidApp : Application() {
         BootService().onReceive(this, Intent(this, BootService::class.java))
 
         // Register for notifications
-        mNotifications.observeForever { NotificationService.triggerNotificationFor(this) }
+        notifications.observeForever { NotificationService.triggerNotificationFor(this) }
 
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -247,7 +247,7 @@ open class AnkiDroidApp : Application() {
     }
 
     fun scheduleNotification() {
-        mNotifications.postValue(null)
+        notifications.postValue(null)
     }
 
     @Suppress("deprecation") // 7109: setAcceptFileSchemeCookies
@@ -259,7 +259,7 @@ open class AnkiDroidApp : Application() {
             // 5794: Errors occur if the WebView fails to load
             // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
             // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
-            mWebViewError = e
+            webViewError = e
             sendExceptionReport(e, "setAcceptFileSchemeCookies")
             Timber.e(e, "setAcceptFileSchemeCookies")
             false
@@ -474,12 +474,12 @@ open class AnkiDroidApp : Application() {
                 }
 
         fun webViewFailedToLoad(): Boolean {
-            return instance.mWebViewError != null
+            return instance.webViewError != null
         }
 
         val webViewErrorMessage: String?
             get() {
-                val error = instance.mWebViewError
+                val error = instance.webViewError
                 if (error == null) {
                     Timber.w("getWebViewExceptionMessage called without webViewFailedToLoad check")
                     return null
