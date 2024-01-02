@@ -58,7 +58,7 @@ import com.ichi2.anim.ActivityTransitionAnimation.Direction as Direction
 class AbstractFlashcardViewerTest : RobolectricTest() {
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
         var answered: Int? = null
-        private var mLastTime = 0
+        private var lastTime = 0
         override fun performReload() {
             // intentionally blank
         }
@@ -72,9 +72,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         override val elapsedRealTime: Long
             get() {
-                mLastTime += baseContext.sharedPrefs()
+                lastTime += baseContext.sharedPrefs()
                     .getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL)
-                return mLastTime.toLong()
+                return lastTime.toLong()
             }
         val hintLocale: String?
             get() {
