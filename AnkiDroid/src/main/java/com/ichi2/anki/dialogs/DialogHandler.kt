@@ -33,12 +33,12 @@ import java.lang.ref.WeakReference
  */
 class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
     // Use weak reference to main activity to prevent leaking the activity when it's closed
-    private val mActivity: WeakReference<AnkiActivity> = WeakReference(activity)
+    private val activity: WeakReference<AnkiActivity> = WeakReference(activity)
     override fun handleMessage(message: Message) {
         val msg = DialogHandlerMessage.fromMessage(message)
         UsageAnalytics.sendAnalyticsScreenView(msg.analyticName)
         Timber.i("Handling Message: %s", msg.analyticName)
-        val deckPicker = mActivity.get() as DeckPicker
+        val deckPicker = activity.get() as DeckPicker
         msg.handleAsyncMessage(deckPicker)
     }
 
