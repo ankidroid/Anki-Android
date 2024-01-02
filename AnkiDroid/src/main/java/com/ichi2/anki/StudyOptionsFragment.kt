@@ -53,20 +53,20 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     /**
      * Preferences
      */
-    private var mCurrentContentView = CONTENT_STUDY_OPTIONS
+    private var currentContentView = CONTENT_STUDY_OPTIONS
 
     /** Alerts to inform the user about different situations  */
     @Suppress("Deprecation")
-    private var mProgressDialog: android.app.ProgressDialog? = null
+    private var progressDialog: android.app.ProgressDialog? = null
 
     /** Whether we are closing in order to go to the reviewer. If it's the case, UPDATE_VALUES_FROM_DECK should not be
      * cancelled as the counts will be used in review.  */
-    private var mToReviewer = false
+    private var toReviewer = false
 
     /**
      * UI elements for "Study Options" view
      */
-    private var mStudyOptionsView: View? = null
+    private var studyOptionsView: View? = null
     private lateinit var deckInfoLayout: View
     private lateinit var buttonStart: Button
     private lateinit var textDeckName: TextView
@@ -76,21 +76,21 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var textTodayRev: TextView
     private lateinit var textNewTotal: TextView
     private lateinit var textTotal: TextView
-    private var mToolbar: Toolbar? = null
+    private var toolbar: Toolbar? = null
 
     // Flag to indicate if the fragment should load the deck options immediately after it loads
-    private var mLoadWithDeckOptions = false
-    private var mFragmented = false
-    private var mFullNewCountThread: Thread? = null
+    private var loadWithDeckOptions = false
+    private var fragmented = false
+    private var fullNewCountThread: Thread? = null
     private lateinit var listener: StudyOptionsListener
 
     /**
      * Callbacks for UI events
      */
-    private val mButtonClickListener = View.OnClickListener { v: View ->
+    private val buttonClickListener = View.OnClickListener { v: View ->
         if (v.id == R.id.studyoptions_start) {
             Timber.i("StudyOptionsFragment:: start study button pressed")
-            if (mCurrentContentView != CONTENT_CONGRATS) {
+            if (currentContentView != CONTENT_CONGRATS) {
                 openReviewer()
             } else {
                 showCustomStudyContextMenu()
@@ -129,19 +129,19 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         super.onCreate(savedInstanceState)
         // If we're being restored, don't launch deck options again.
         if (savedInstanceState == null && arguments != null) {
-            mLoadWithDeckOptions = requireArguments().getBoolean("withDeckOptions")
+            loadWithDeckOptions = requireArguments().getBoolean("withDeckOptions")
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Timber.i("onCreateView()")
         val studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false)
-        mStudyOptionsView = studyOptionsView
-        mFragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
+        this.studyOptionsView = studyOptionsView
+        fragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
         initAllContentViews(studyOptionsView)
-        mToolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar)
-        if (mToolbar != null) {
-            mToolbar!!.inflateMenu(R.menu.study_options_fragment)
+        toolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar)
+        if (toolbar != null) {
+            toolbar!!.inflateMenu(R.menu.study_options_fragment)
             configureToolbar()
         }
         refreshInterface()
@@ -150,8 +150,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mFullNewCountThread != null) {
-            mFullNewCountThread!!.interrupt()
+        if (fullNewCountThread != null) {
+            fullNewCountThread!!.interrupt()
         }
     }
 
@@ -162,7 +162,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private fun closeStudyOptions(result: Int) {
         val a: Activity? = activity
-        if (!mFragmented && a != null) {
+        if (!fragmented && a != null) {
             a.setResult(result)
             a.finish()
         } else if (a == null) {
@@ -175,8 +175,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private fun openReviewer() {
         Timber.i("openReviewer()")
         val reviewer = Intent(activity, Reviewer::class.java)
-        if (mFragmented) {
-            mToReviewer = true
+        if (fragmented) {
+            toReviewer = true
             Timber.i("openReviewer() fragmented mode")
             onRequestReviewActivityResult.launch(reviewer)
             // TODO #8913 should we finish the activity here? when it comes back from review it's dead and mToolbar is null and it crashes
@@ -189,7 +189,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun initAllContentViews(studyOptionsView: View) {
-        if (mFragmented) {
+        if (fragmented) {
             studyOptionsView.findViewById<View>(R.id.studyoptions_gradient).visibility = View.VISIBLE
         }
         deckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckcounts)
@@ -204,7 +204,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         textTodayRev = studyOptionsView.findViewById(R.id.studyoptions_rev)
         textNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new)
         textTotal = studyOptionsView.findViewById(R.id.studyoptions_total)
-        buttonStart.setOnClickListener(mButtonClickListener)
+        buttonStart.setOnClickListener(buttonClickListener)
     }
 
     /**
@@ -309,8 +309,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private fun configureToolbarInternal(recur: Boolean) {
         Timber.i("configureToolbarInternal()")
         try {
-            mToolbar!!.setOnMenuItemClickListener(this)
-            val menu = mToolbar!!.menu
+            toolbar!!.setOnMenuItemClickListener(this)
+            val menu = toolbar!!.menu
             // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
             if (col != null && col!!.decks.isDyn(col!!.decks.selected())) {
                 menu.findItem(R.id.action_rebuild).isVisible = true
@@ -324,11 +324,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 menu.findItem(R.id.action_deck_or_study_options).setTitle(R.string.menu__deck_options)
             }
             // Don't show custom study icon if congrats shown
-            if (mCurrentContentView == CONTENT_CONGRATS) {
+            if (currentContentView == CONTENT_CONGRATS) {
                 menu.findItem(R.id.action_custom_study).isVisible = false
             }
             // Switch on rename / delete / export if tablet layout
-            if (mFragmented) {
+            if (fragmented) {
                 menu.findItem(R.id.action_rename).isVisible = true
                 menu.findItem(R.id.action_delete).isVisible = true
                 menu.findItem(R.id.action_export).isVisible = true
@@ -352,11 +352,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 menu.findItem(R.id.action_undo).title = col?.undoLabel()
             }
             // Set the back button listener
-            if (!mFragmented) {
+            if (!fragmented) {
                 val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)
                 icon!!.isAutoMirrored = true
-                mToolbar!!.navigationIcon = icon
-                mToolbar!!.setNavigationOnClickListener { (activity as AnkiActivity).finish() }
+                toolbar!!.navigationIcon = icon
+                toolbar!!.setNavigationOnClickListener { (activity as AnkiActivity).finish() }
             }
         } catch (e: IllegalStateException) {
             if (!CollectionHelper.instance.colIsOpenUnsafe()) {
@@ -379,7 +379,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private var onRequestReviewActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         Timber.i("StudyOptionsFragment::mOnRequestReviewActivityResult")
         Timber.d("Handling onActivityResult for StudyOptionsFragment (openReview, resultCode = %d)", result.resultCode)
-        if (mToolbar != null) {
+        if (toolbar != null) {
             configureToolbar() // FIXME we were crashing here because mToolbar is null #8913
         } else {
             CrashReportService.sendExceptionReport("mToolbar null after return from tablet review session? Issue 8913", "StudyOptionsFragment")
@@ -390,8 +390,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
         if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
             // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
-            if (col!!.sched.totalCount() > 0 && mStudyOptionsView != null) {
-                mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
+            if (col!!.sched.totalCount() > 0 && studyOptionsView != null) {
+                studyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
                     .showSnackbar(R.string.studyoptions_no_cards_due)
             }
         }
@@ -404,8 +404,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             closeStudyOptions(result.resultCode)
             return@registerForActivityResult
         }
-        if (mLoadWithDeckOptions) {
-            mLoadWithDeckOptions = false
+        if (loadWithDeckOptions) {
+            loadWithDeckOptions = false
             val deck = col!!.decks.current()
             if (deck.isFiltered && deck.has("empty")) {
                 deck.remove("empty")
@@ -417,13 +417,13 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun dismissProgressDialog() {
-        if (mStudyOptionsView != null && mStudyOptionsView!!.findViewById<View?>(R.id.progress_bar) != null) {
-            mStudyOptionsView!!.findViewById<View>(R.id.progress_bar).visibility = View.GONE
+        if (studyOptionsView != null && studyOptionsView!!.findViewById<View?>(R.id.progress_bar) != null) {
+            studyOptionsView!!.findViewById<View>(R.id.progress_bar).visibility = View.GONE
         }
         // for rebuilding cram decks
-        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+        if (progressDialog != null && progressDialog!!.isShowing) {
             try {
-                mProgressDialog!!.dismiss()
+                progressDialog!!.dismiss()
             } catch (e: Exception) {
                 Timber.e("onPostExecute - Dialog dismiss Exception = %s", e.message)
             }
@@ -476,11 +476,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     /** Open cram deck option if deck is opened for the first time
      * @return Whether we opened the deck options */
     private fun tryOpenCramDeckOptions(): Boolean {
-        if (!mLoadWithDeckOptions) {
+        if (!loadWithDeckOptions) {
             return false
         }
         openFilteredDeckOptions(true)
-        mLoadWithDeckOptions = false
+        loadWithDeckOptions = false
         return true
     }
 
@@ -496,7 +496,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onPause() {
         super.onPause()
-        if (!mToReviewer) {
+        if (!toReviewer) {
             // In the reviewer, we need the count. So don't cancel it. Otherwise, (e.g. go to browser, selecting another
             // deck) cancel counts.
             updateValuesFromDeckJob?.cancel()
@@ -521,7 +521,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
 
             // #5506 If we have no view, short circuit all UI logic
-            if (mStudyOptionsView == null) {
+            if (studyOptionsView == null) {
                 tryOpenCramDeckOptions()
                 return
             }
@@ -530,7 +530,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 ?: throw NullPointerException("StudyOptionsFragment:: Collection is null while rebuilding Ui")
 
             // Reinitialize controls in case changed to filtered deck
-            initAllContentViews(mStudyOptionsView!!)
+            initAllContentViews(studyOptionsView!!)
             // Set the deck name
             val deck = col.decks.current()
             // Main deck name
@@ -557,11 +557,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             // Switch between the empty view, the ordinary view, and the "congratulations" view
             val isDynamic = deck.isFiltered
             if (result.numberOfCardsInDeck == 0 && !isDynamic) {
-                mCurrentContentView = CONTENT_EMPTY
+                currentContentView = CONTENT_EMPTY
                 deckInfoLayout.visibility = View.VISIBLE
                 buttonStart.visibility = View.GONE
             } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
-                mCurrentContentView = CONTENT_CONGRATS
+                currentContentView = CONTENT_CONGRATS
                 if (!isDynamic) {
                     deckInfoLayout.visibility = View.GONE
                     buttonStart.visibility = View.VISIBLE
@@ -570,7 +570,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     buttonStart.visibility = View.GONE
                 }
             } else {
-                mCurrentContentView = CONTENT_STUDY_OPTIONS
+                currentContentView = CONTENT_STUDY_OPTIONS
                 deckInfoLayout.visibility = View.VISIBLE
                 buttonStart.visibility = View.VISIBLE
                 buttonStart.setText(R.string.studyoptions_start)
@@ -601,11 +601,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             } else {
                 // if truncated then make a thread to allow full count to load
                 textNewTotal.text = ">1000"
-                if (mFullNewCountThread != null) {
+                if (fullNewCountThread != null) {
                     // a thread was previously made -- interrupt it
-                    mFullNewCountThread!!.interrupt()
+                    fullNewCountThread!!.interrupt()
                 }
-                mFullNewCountThread = Thread {
+                fullNewCountThread = Thread {
                     // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
                     val query = "SELECT count(*) FROM cards WHERE did IN " +
                         Utils.ids2str(col.decks.active()) +
@@ -629,7 +629,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
 
         // If in fragmented mode, refresh the deck list
-        if (mFragmented && refreshDecklist) {
+        if (fragmented && refreshDecklist) {
             listener.onRequireDeckListUpdate()
         }
     }
