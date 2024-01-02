@@ -47,7 +47,7 @@ class Note : Cloneable {
         private set
     lateinit var fields: MutableList<String>
         private set
-    private var mFMap: Map<String, Pair<Int, JSONObject>>? = null
+    private var fMap: Map<String, Pair<Int, JSONObject>>? = null
     var usn = 0
         private set
     var mod: Int = 0
@@ -67,7 +67,7 @@ class Note : Cloneable {
         mid = notetype.getLong("id")
         tags = mutableListOf()
         fields = emptyStringMutableList(notetype.getJSONArray("flds").length())
-        mFMap = Notetypes.fieldMap(this.notetype)
+        fMap = Notetypes.fieldMap(this.notetype)
     }
 
     fun load() {
@@ -85,7 +85,7 @@ class Note : Cloneable {
         // the lists in the protobuf are NOT mutable, even though they cast to MutableList
         this.tags = note.tagsList.toMutableList()
         this.fields = note.fieldsList.toMutableList()
-        this.mFMap = Notetypes.fieldMap(notetype)
+        this.fMap = Notetypes.fieldMap(notetype)
     }
 
     fun reloadModel() {
@@ -135,7 +135,7 @@ class Note : Cloneable {
      * ***********************************************************
      */
     fun keys(): Array<String> {
-        return mFMap!!.keys.toTypedArray()
+        return fMap!!.keys.toTypedArray()
     }
 
     @KotlinCleanup("see if we can make this immutable")
@@ -147,10 +147,10 @@ class Note : Cloneable {
         // TODO: Revisit this method. The field order returned differs from Anki.
         // The items here are only used in the note editor, so it's a low priority.
         val result = Array(
-            mFMap!!.size
+            fMap!!.size
         ) { emptyStringArray(2) }
-        for (fname in mFMap!!.keys) {
-            val i = mFMap!![fname]!!.first
+        for (fname in fMap!!.keys) {
+            val i = fMap!![fname]!!.first
             result[i][0] = fname
             result[i][1] = fields[i]
         }
@@ -158,7 +158,7 @@ class Note : Cloneable {
     }
 
     private fun fieldOrd(key: String): Int {
-        val fieldPair = mFMap!![key]
+        val fieldPair = fMap!![key]
             ?: throw IllegalArgumentException(
                 String.format(
                     "No field named '%s' found",
@@ -177,7 +177,7 @@ class Note : Cloneable {
     }
 
     operator fun contains(key: String): Boolean {
-        return mFMap!!.containsKey(key)
+        return fMap!!.containsKey(key)
     }
 
     /**
