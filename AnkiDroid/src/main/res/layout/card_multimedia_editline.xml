@@ -43,6 +43,7 @@
 
     <ImageButton
         android:id="@+id/id_expand_button"
+        android:nextFocusForward="@id/id_note_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"
@@ -61,7 +62,6 @@
         android:id="@+id/id_note_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nextFocusForward="@id/id_media_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/multimedia_barrier"
