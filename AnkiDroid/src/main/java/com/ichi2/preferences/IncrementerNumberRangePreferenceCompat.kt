@@ -42,7 +42,7 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
     constructor(context: Context) : super(context)
 
     class IncrementerNumberRangeDialogFragmentCompat : NumberRangeDialogFragmentCompat() {
-        private var mLastValidEntry = 0
+        private var lastValidEntry = 0
 
         /**
          * Sets [.mEditText] width and gravity.
@@ -57,7 +57,7 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
                 3.0f
             )
 
-            mLastValidEntry = try {
+            lastValidEntry = try {
                 editText.text.toString().toInt()
             } catch (nfe: NumberFormatException) {
                 // This should not be possible but just in case, recover with a valid minimum from superclass
@@ -113,13 +113,13 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
                 editText.text.toString().toInt()
             } catch (e: NumberFormatException) {
                 // If the user entered a non-number then incremented, restore to a good value
-                mLastValidEntry
+                lastValidEntry
             }
             value = if (isIncrement) value + 1 else value - 1
 
             // Make sure value is within range
-            mLastValidEntry = numberRangePreference.getValidatedRangeFromInt(value)
-            editText.setText(mLastValidEntry.toString())
+            lastValidEntry = numberRangePreference.getValidatedRangeFromInt(value)
+            editText.setText(lastValidEntry.toString())
             editText.setSelection(editText.text.length)
         }
     }
