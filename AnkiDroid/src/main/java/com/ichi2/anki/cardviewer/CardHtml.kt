@@ -21,6 +21,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.TtsParser
 import com.ichi2.anki.cardviewer.SingleSoundSide.ANSWER
 import com.ichi2.anki.cardviewer.SingleSoundSide.QUESTION
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.template.MathJax
 import net.ankiweb.rsdroid.RustCleanup
@@ -68,12 +69,13 @@ class CardHtml(
         }
     }
 
+    @NeedsTest("js files can be loaded with the specified sources")
     private fun getScripts(requiresMathjax: Boolean): String {
         return when (requiresMathjax) {
             false -> ""
             true ->
-                """        <script src="/assets/mathjax/conf.js"> </script>
-        <script src="/assets/mathjax/tex-chtml.js"> </script>"""
+                """        <script src="file:///android_asset/mathjax/conf.js"></script>
+        <script src="file:///android_asset/mathjax/tex-chtml.js"></script>"""
         }
     }
 
