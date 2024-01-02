@@ -47,6 +47,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.getViewerAssetLoader
 import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.previewer.PreviewerViewModel.Companion.stdHtml
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.themes.Themes
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
@@ -180,11 +181,10 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 }
         }
 
+        @NeedsTest("webview don't vanish when only one card is in the list")
         if (cardsCount == 1) {
             slider.visibility = View.GONE
             progressIndicator.visibility = View.GONE
-            nextButton.visibility = View.GONE
-            previousButton.visibility = View.GONE
         }
 
         slider.apply {
