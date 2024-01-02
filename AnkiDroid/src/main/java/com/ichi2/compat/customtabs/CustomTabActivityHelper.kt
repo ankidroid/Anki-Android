@@ -29,20 +29,20 @@ import timber.log.Timber
  * This is a helper class to manage the connection to the Custom Tabs Service.
  */
 class CustomTabActivityHelper : ServiceConnectionCallback {
-    private var mCustomTabsSession: CustomTabsSession? = null
-    private var mClient: CustomTabsClient? = null
-    private var mConnection: CustomTabsServiceConnection? = null
+    private var customTabsSession: CustomTabsSession? = null
+    private var client: CustomTabsClient? = null
+    private var connection: CustomTabsServiceConnection? = null
 
     /**
      * Unbinds the Activity from the Custom Tabs Service.
      * @param activity the activity that is connected to the service.
      */
     fun unbindCustomTabsService(activity: Activity) {
-        if (mConnection == null) return
-        mConnection.let { activity.unbindService(it!!) }
-        mClient = null
-        mCustomTabsSession = null
-        mConnection = null
+        if (connection == null) return
+        connection.let { activity.unbindService(it!!) }
+        client = null
+        customTabsSession = null
+        connection = null
     }
 
     /**
@@ -52,12 +52,12 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
      */
     val session: CustomTabsSession?
         get() {
-            if (mClient == null) {
-                mCustomTabsSession = null
-            } else if (mCustomTabsSession == null) {
-                mCustomTabsSession = mClient!!.newSession(null)
+            if (client == null) {
+                customTabsSession = null
+            } else if (customTabsSession == null) {
+                customTabsSession = client!!.newSession(null)
             }
-            return mCustomTabsSession
+            return customTabsSession
         }
 
     /**
@@ -65,11 +65,11 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
      * @param activity the activity to be bound to the service.
      */
     fun bindCustomTabsService(activity: Activity) {
-        if (mClient != null) return
+        if (client != null) return
         val packageName = CustomTabsHelper.getPackageNameToUse(activity) ?: return
-        mConnection = ServiceConnection(this)
+        connection = ServiceConnection(this)
         try {
-            CustomTabsClient.bindCustomTabsService(activity, packageName, mConnection!!)
+            CustomTabsClient.bindCustomTabsService(activity, packageName, connection!!)
         } catch (e: SecurityException) {
             Timber.w(e, "CustomTabsService bind attempt failed, using fallback")
             disableCustomTabHandler()
@@ -79,9 +79,9 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
     private fun disableCustomTabHandler() {
         Timber.i("Disabling custom tab handler and using fallback")
         sCustomTabsFailed = true
-        mClient = null
-        mCustomTabsSession = null
-        mConnection = null
+        client = null
+        customTabsSession = null
+        connection = null
     }
 
     /**
@@ -89,16 +89,16 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
      * @return true if call to mayLaunchUrl was accepted.
      */
     fun mayLaunchUrl(uri: Uri?, extras: Bundle?, otherLikelyBundles: List<Bundle?>?): Boolean {
-        if (mClient == null) return false
+        if (client == null) return false
         val session = session ?: return false
         return session.mayLaunchUrl(uri, extras, otherLikelyBundles)
     }
 
     override fun onServiceConnected(client: CustomTabsClient) {
         try {
-            mClient = client
+            this.client = client
             try {
-                mClient!!.warmup(0L)
+                this.client!!.warmup(0L)
             } catch (e: IllegalStateException) {
                 // Issue 5337 - some browsers like TorBrowser don't adhere to Android 8 background limits
                 // They will crash as they attempt to start services. warmup failure shouldn't be fatal though.
@@ -114,8 +114,8 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
     }
 
     override fun onServiceDisconnected() {
-        mClient = null
-        mCustomTabsSession = null
+        client = null
+        customTabsSession = null
     }
 
     /**
@@ -133,7 +133,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
     @get:CheckResult
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val isFailed: Boolean
-        get() = sCustomTabsFailed && mClient == null
+        get() = sCustomTabsFailed && client == null
 
     companion object {
         private var sCustomTabsFailed = false
