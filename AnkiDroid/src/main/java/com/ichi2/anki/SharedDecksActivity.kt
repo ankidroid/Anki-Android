@@ -40,10 +40,10 @@ import java.io.Serializable
  */
 class SharedDecksActivity : AnkiActivity() {
 
-    private lateinit var mWebView: WebView
+    private lateinit var webView: WebView
     lateinit var downloadManager: DownloadManager
 
-    private var mShouldHistoryBeCleared = false
+    private var shouldHistoryBeCleared = false
 
     /**
      * Handle condition when page finishes loading and history needs to be cleared.
@@ -52,14 +52,14 @@ class SharedDecksActivity : AnkiActivity() {
      * History should not be cleared before the page finishes loading otherwise there would be
      * an extra entry in the history since the previous page would not get cleared.
      */
-    private val mWebViewClient = object : WebViewClient() {
+    private val webViewClient = object : WebViewClient() {
         private var redirectTimes = 0
 
         override fun onPageFinished(view: WebView?, url: String?) {
             // Clear history if mShouldHistoryBeCleared is true and set it to false
-            if (mShouldHistoryBeCleared) {
-                mWebView.clearHistory()
-                mShouldHistoryBeCleared = false
+            if (shouldHistoryBeCleared) {
+                webView.clearHistory()
+                shouldHistoryBeCleared = false
             }
             super.onPageFinished(view, url)
         }
@@ -81,12 +81,12 @@ class SharedDecksActivity : AnkiActivity() {
             showSnackbar(R.string.shared_decks_login_required, LENGTH_INDEFINITE) {
                 if (isLoggedIn()) return@showSnackbar
                 setAction(R.string.sign_up) {
-                    mWebView.loadUrl(getString(R.string.shared_decks_sign_up_url))
+                    webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
                 }
             }
             if (redirectTimes++ < 3) {
                 Timber.i("HTTP 429, redirecting to login")
-                mWebView.loadUrl(getString(R.string.shared_decks_login_url))
+                webView.loadUrl(getString(R.string.shared_decks_login_url))
             } else {
                 Timber.w("HTTP 429 redirect limit exceeded, only displaying message")
             }
@@ -94,7 +94,7 @@ class SharedDecksActivity : AnkiActivity() {
 
         override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
             // Set mShouldHistoryBeCleared to false if error occurs since it might have been true
-            mShouldHistoryBeCleared = false
+            shouldHistoryBeCleared = false
             super.onReceivedError(view, request, error)
         }
     }
@@ -124,14 +124,14 @@ class SharedDecksActivity : AnkiActivity() {
 
         webviewToolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.close_icon)
 
-        mWebView = findViewById(R.id.web_view)
+        webView = findViewById(R.id.web_view)
 
         downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
-        mWebView.settings.javaScriptEnabled = true
-        mWebView.loadUrl(resources.getString(R.string.shared_decks_url))
-        mWebView.webViewClient = WebViewClient()
-        mWebView.setDownloadListener { url, userAgent, contentDisposition, mimetype, _ ->
+        webView.settings.javaScriptEnabled = true
+        webView.loadUrl(resources.getString(R.string.shared_decks_url))
+        webView.webViewClient = WebViewClient()
+        webView.setDownloadListener { url, userAgent, contentDisposition, mimetype, _ ->
             val sharedDecksDownloadFragment = SharedDecksDownloadFragment()
             sharedDecksDownloadFragment.arguments = bundleOf(DOWNLOAD_FILE to DownloadFile(url, userAgent, contentDisposition, mimetype))
 
@@ -140,7 +140,7 @@ class SharedDecksActivity : AnkiActivity() {
             }
         }
 
-        mWebView.webViewClient = mWebViewClient
+        webView.webViewClient = webViewClient
     }
 
     /**
@@ -170,9 +170,9 @@ class SharedDecksActivity : AnkiActivity() {
                 }
                 supportFragmentManager.popBackStackImmediate()
             }
-            mWebView.canGoBack() -> {
+            webView.canGoBack() -> {
                 Timber.i("Back pressed when user can navigate back to other webpages inside WebView")
-                mWebView.goBack()
+                webView.goBack()
             }
             else -> {
                 Timber.i("Back pressed which would lead to closing of the WebView")
@@ -193,7 +193,7 @@ class SharedDecksActivity : AnkiActivity() {
         searchView.queryHint = getString(R.string.search_using_deck_name)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                mWebView.loadUrl(resources.getString(R.string.shared_decks_url) + query)
+                webView.loadUrl(resources.getString(R.string.shared_decks_url) + query)
                 return true
             }
 
@@ -207,8 +207,8 @@ class SharedDecksActivity : AnkiActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.home) {
-            mShouldHistoryBeCleared = true
-            mWebView.loadUrl(resources.getString(R.string.shared_decks_url))
+            shouldHistoryBeCleared = true
+            webView.loadUrl(resources.getString(R.string.shared_decks_url))
         }
         return super.onOptionsItemSelected(item)
     }
