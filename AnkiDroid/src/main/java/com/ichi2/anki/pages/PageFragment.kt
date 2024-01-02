@@ -46,7 +46,12 @@ abstract class PageFragment : Fragment() {
         val view = inflater.inflate(R.layout.page_fragment, container, false)
 
         webView = view.findViewById<WebView>(R.id.pagesWebview).apply {
-            settings.javaScriptEnabled = true
+            with(settings) {
+                javaScriptEnabled = true
+                displayZoomControls = false
+                builtInZoomControls = true
+                setSupportZoom(true)
+            }
             webViewClient = this@PageFragment.webViewClient
             webChromeClient = this@PageFragment.webChromeClient
         }
