@@ -26,24 +26,24 @@ import timber.log.Timber
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use NumberRangePreferenceCompat
 open class NumberRangePreference : android.preference.EditTextPreference, AutoFocusable {
-    protected val mMin: Int
-    private val mMax: Int
+    protected val min: Int
+    private val max: Int
 
     constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
-        mMin = getMinFromAttributes(attrs)
-        mMax = getMaxFromAttributes(attrs)
+        min = getMinFromAttributes(attrs)
+        max = getMaxFromAttributes(attrs)
         updateSettings()
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        mMin = getMinFromAttributes(attrs)
-        mMax = getMaxFromAttributes(attrs)
+        min = getMinFromAttributes(attrs)
+        max = getMaxFromAttributes(attrs)
         updateSettings()
     }
 
     constructor(context: Context?) : super(context) {
-        mMin = getMinFromAttributes(null)
-        mMax = getMaxFromAttributes(null)
+        min = getMinFromAttributes(null)
+        max = getMaxFromAttributes(null)
         updateSettings()
     }
 
@@ -66,7 +66,7 @@ open class NumberRangePreference : android.preference.EditTextPreference, AutoFo
      * their Integer equivalents.
      */
     override fun getPersistedString(defaultReturnValue: String?): String? {
-        return getPersistedInt(mMin).toString()
+        return getPersistedInt(min).toString()
     }
 
     override fun persistString(value: String): Boolean {
@@ -82,13 +82,13 @@ open class NumberRangePreference : android.preference.EditTextPreference, AutoFo
      */
     private fun getValidatedRangeFromString(input: String): Int {
         return if (input.isEmpty()) {
-            mMin
+            min
         } else {
             try {
                 getValidatedRangeFromInt(input.toInt())
             } catch (e: NumberFormatException) {
                 Timber.w(e)
-                mMin
+                min
             }
         }
     }
@@ -101,10 +101,10 @@ open class NumberRangePreference : android.preference.EditTextPreference, AutoFo
      */
     protected fun getValidatedRangeFromInt(input: Int): Int {
         var result = input
-        if (input < mMin) {
-            result = mMin
-        } else if (input > mMax) {
-            result = mMax
+        if (input < min) {
+            result = min
+        } else if (input > max) {
+            result = max
         }
         return result
     }
@@ -142,7 +142,7 @@ open class NumberRangePreference : android.preference.EditTextPreference, AutoFo
         editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         // Set max number of digits
-        val maxLength = mMax.toString().length
+        val maxLength = max.toString().length
         // Clone the existing filters so we don't override them, then append our one at the end.
         val filters = editText.filters
         val newFilters = arrayOfNulls<InputFilter>(filters.size + 1)
@@ -156,7 +156,7 @@ open class NumberRangePreference : android.preference.EditTextPreference, AutoFo
          *
          * @return the persisted value.
          */
-        get() = getPersistedInt(mMin)
+        get() = getPersistedInt(min)
 
         /**
          * Set this preference's value. The value is validated and persisted as an Integer.

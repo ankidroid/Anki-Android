@@ -94,7 +94,7 @@ class IncrementerNumberRangePreference : NumberRangePreference {
             mEditText.text.toString().toInt()
         } catch (nfe: NumberFormatException) {
             // This should not be possible but just in case, recover with a valid minimum from superclass
-            mMin
+            min
         }
         mEditText.layoutParams = editTextParams
         // Centre text inside mEditText
