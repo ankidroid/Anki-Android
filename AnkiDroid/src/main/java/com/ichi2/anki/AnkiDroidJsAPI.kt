@@ -280,7 +280,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 // quote result to prevent JSON injection attack
                 val quoteResult = JSONObject.quote(searchResult.toString())
                 activity.runOnUiThread {
-                    activity.webView!!.evaluateJavascript("ankiSearchCard($quoteResult)", null)
+                    activity.webView?.evaluateJavascript("ankiSearchCard($quoteResult)", null)
                 }
                 convertToByteArray(apiContract, true)
             }
