@@ -45,10 +45,10 @@ import org.junit.Test
 @SuppressLint("DirectSystemCurrentTimeMillisUsage")
 class DeckPickerTest : InstrumentedTest() {
     @get:Rule
-    val mActivityRule = ActivityScenarioRule(DeckPicker::class.java)
+    val activityRule = ActivityScenarioRule(DeckPicker::class.java)
 
     @get:Rule
-    val mRuntimePermissionRule = grantPermissions(storagePermission, notificationPermission)
+    val runtimePermissionRule = grantPermissions(storagePermission, notificationPermission)
 
     @Ignore("This test appears to be flaky everywhere")
     @Test
