@@ -38,8 +38,8 @@ import timber.log.Timber
  * We do not allow the user to change the font size as this can be done in the Appearance settings.
  */
 class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
-    private lateinit var mQuestionEditText: EditText
-    private lateinit var mAnswerEditText: EditText
+    private lateinit var questionEditText: EditText
+    private lateinit var answerEditText: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -120,11 +120,11 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     private fun initializeUiFromBundle(bundle: Bundle) {
         setContentView(R.layout.card_browser_appearance)
 
-        mQuestionEditText = findViewById(R.id.question_format)
-        mQuestionEditText.setText(bundle.getString(INTENT_QUESTION_FORMAT))
+        questionEditText = findViewById(R.id.question_format)
+        questionEditText.setText(bundle.getString(INTENT_QUESTION_FORMAT))
 
-        mAnswerEditText = findViewById(R.id.answer_format)
-        mAnswerEditText.setText(bundle.getString(INTENT_ANSWER_FORMAT))
+        answerEditText = findViewById(R.id.answer_format)
+        answerEditText.setText(bundle.getString(INTENT_ANSWER_FORMAT))
 
         enableToolbar()
         setTitle(R.string.card_template_browser_appearance_title)
@@ -139,9 +139,9 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private val questionFormat: String
-        get() = getTextValue(mQuestionEditText)
+        get() = getTextValue(questionEditText)
     private val answerFormat: String
-        get() = getTextValue(mAnswerEditText)
+        get() = getTextValue(answerEditText)
 
     private fun getTextValue(editText: EditText): String {
         return editText.text.toString()
@@ -149,8 +149,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
     private fun restoreDefaultAndClose() {
         Timber.i("Restoring Default and Closing")
-        mQuestionEditText.setText(VALUE_USE_DEFAULT)
-        mAnswerEditText.setText(VALUE_USE_DEFAULT)
+        questionEditText.setText(VALUE_USE_DEFAULT)
+        answerEditText.setText(VALUE_USE_DEFAULT)
         saveAndExit()
     }
 
