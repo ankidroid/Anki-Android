@@ -57,20 +57,21 @@ import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
 @UiThread
+@KotlinCleanup("set activityName")
 open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
     /** The name of the parent class (example: 'Reviewer')  */
-    private val mActivityName: String
+    private val activityName: String
     val dialogHandler = DialogHandler(this)
 
     private val customTabActivityHelper: CustomTabActivityHelper = CustomTabActivityHelper()
 
     constructor() : super() {
-        mActivityName = javaClass.simpleName
+        activityName = javaClass.simpleName
     }
 
     constructor(@LayoutRes contentLayoutId: Int) : super(contentLayoutId) {
-        mActivityName = javaClass.simpleName
+        activityName = javaClass.simpleName
     }
 
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
