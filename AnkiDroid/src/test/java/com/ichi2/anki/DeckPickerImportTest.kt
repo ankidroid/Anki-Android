@@ -46,16 +46,16 @@ class DeckPickerImportTest : RobolectricTest() {
     }
 
     private class DeckPickerImport : DeckPicker() {
-        private var mDialogFragment: AsyncDialogFragment? = null
+        private var dialogFragment: AsyncDialogFragment? = null
         fun getAsyncDialogFragmentClass(): Class<*> {
-            if (mDialogFragment == null) {
+            if (dialogFragment == null) {
                 fail("No async fragment shown")
             }
-            return mDialogFragment!!.javaClass
+            return dialogFragment!!.javaClass
         }
 
         override fun showAsyncDialogFragment(newFragment: AsyncDialogFragment) {
-            mDialogFragment = newFragment
+            dialogFragment = newFragment
             super.showAsyncDialogFragment(newFragment)
         }
     }
