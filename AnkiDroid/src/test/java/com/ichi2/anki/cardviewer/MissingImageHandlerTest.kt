@@ -37,87 +37,87 @@ import java.util.function.Consumer
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class MissingImageHandlerTest {
-    private lateinit var mSut: MissingImageHandler
-    private var mTimesCalled = 0
-    private lateinit var mFileNames: MutableList<String?>
+    private lateinit var sut: MissingImageHandler
+    private var timesCalled = 0
+    private lateinit var fileNames: MutableList<String?>
 
     @Before
     fun before() {
-        mFileNames = ArrayList()
-        mSut = MissingImageHandler()
+        fileNames = ArrayList()
+        sut = MissingImageHandler()
     }
 
     private fun defaultHandler(): Consumer<String?> {
         return Consumer { f: String? ->
-            mTimesCalled++
-            mFileNames.add(f)
+            timesCalled++
+            fileNames.add(f)
         }
     }
 
     @Test
     fun firstTimeOnNewCardSends() {
         processFailure(getValidRequest("example.jpg"))
-        assertThat(mTimesCalled, equalTo(1))
-        assertThat(mFileNames, contains("example.jpg"))
+        assertThat(timesCalled, equalTo(1))
+        assertThat(fileNames, contains("example.jpg"))
     }
 
     @Test
     fun twoCallsOnSameSideCallsOnce() {
         processFailure(getValidRequest("example.jpg"))
         processFailure(getValidRequest("example2.jpg"))
-        assertThat(mTimesCalled, equalTo(1))
-        assertThat(mFileNames, contains("example.jpg"))
+        assertThat(timesCalled, equalTo(1))
+        assertThat(fileNames, contains("example.jpg"))
     }
 
     @Test
     fun callAfterFlipIsShown() {
         processFailure(getValidRequest("example.jpg"))
-        mSut.onCardSideChange()
+        sut.onCardSideChange()
         processFailure(getValidRequest("example2.jpg"))
-        assertThat(mTimesCalled, equalTo(2))
-        assertThat(mFileNames, contains("example.jpg", "example2.jpg"))
+        assertThat(timesCalled, equalTo(2))
+        assertThat(fileNames, contains("example.jpg", "example2.jpg"))
     }
 
     @Test
     fun thirdCallIsIgnored() {
         processFailure(getValidRequest("example.jpg"))
-        mSut.onCardSideChange()
+        sut.onCardSideChange()
         processFailure(getValidRequest("example2.jpg"))
-        mSut.onCardSideChange()
+        sut.onCardSideChange()
         processFailure(getValidRequest("example3.jpg"))
-        assertThat(mTimesCalled, equalTo(2))
-        assertThat(mFileNames, contains("example.jpg", "example2.jpg"))
+        assertThat(timesCalled, equalTo(2))
+        assertThat(fileNames, contains("example.jpg", "example2.jpg"))
     }
 
     @Test
     fun invalidRequestIsIgnored() {
         val invalidRequest = getInvalidRequest("example.jpg")
         processFailure(invalidRequest)
-        assertThat(mTimesCalled, equalTo(0))
+        assertThat(timesCalled, equalTo(0))
     }
 
     private fun processFailure(invalidRequest: WebResourceRequest, consumer: Consumer<String?> = defaultHandler()) {
-        mSut.processFailure(invalidRequest, consumer)
+        sut.processFailure(invalidRequest, consumer)
     }
 
     private fun processMissingSound(file: File?, onFailure: Consumer<String?>) {
-        mSut.processMissingSound(file, onFailure)
+        sut.processMissingSound(file, onFailure)
     }
 
     private fun processInefficientImage(onFailure: Runnable) {
-        mSut.processInefficientImage(onFailure)
+        sut.processInefficientImage(onFailure)
     }
 
     @Test
     fun uiFailureDoesNotCrash() {
         processFailure(getValidRequest("example.jpg")) { throw RuntimeException("expected") }
-        assertThat("Irrelevant assert to stop lint warnings", mTimesCalled, equalTo(0))
+        assertThat("Irrelevant assert to stop lint warnings", timesCalled, equalTo(0))
     }
 
     @Test
     fun testMissingSound_NullFile() {
         processMissingSound(null, defaultHandler())
-        assertThat(mTimesCalled, equalTo(0))
+        assertThat(timesCalled, equalTo(0))
     }
 
     @Test
@@ -125,12 +125,12 @@ class MissingImageHandlerTest {
         // Tests that the third call to processMissingSound is ignored
         val handler = defaultHandler()
         processMissingSound(File("example.wav"), handler)
-        mSut.onCardSideChange()
+        sut.onCardSideChange()
         processMissingSound(File("example2.wav"), handler)
-        mSut.onCardSideChange()
+        sut.onCardSideChange()
         processMissingSound(File("example3.wav"), handler)
-        assertThat(mTimesCalled, equalTo(2))
-        assertThat(mFileNames, contains("example.wav", "example2.wav"))
+        assertThat(timesCalled, equalTo(2))
+        assertThat(fileNames, contains("example.wav", "example2.wav"))
     }
 
     @Test
