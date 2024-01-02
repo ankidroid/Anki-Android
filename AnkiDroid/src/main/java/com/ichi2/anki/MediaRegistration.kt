@@ -36,7 +36,7 @@ import java.io.*
  */
 class MediaRegistration(private val context: Context) {
     // Use the same HTML if the same image is pasted multiple times.
-    private val mPastedImageCache = HashMap<String, String?>()
+    private val pastedImageCache = HashMap<String, String?>()
 
     /**
      * Loads an image into the collection.media directory and returns a HTML reference
@@ -129,10 +129,10 @@ class MediaRegistration(private val context: Context) {
     fun onImagePaste(uri: Uri): String? {
         return try {
             // check if cache already holds registered file or not
-            if (!mPastedImageCache.containsKey(uri.toString())) {
-                mPastedImageCache[uri.toString()] = loadImageIntoCollection(uri)
+            if (!pastedImageCache.containsKey(uri.toString())) {
+                pastedImageCache[uri.toString()] = loadImageIntoCollection(uri)
             }
-            mPastedImageCache[uri.toString()]
+            pastedImageCache[uri.toString()]
         } catch (ex: NullPointerException) {
             // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
             // This typically works if the user copies again - don't know the exact cause
