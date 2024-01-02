@@ -657,7 +657,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         when (keyCode) {
             KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER -> if (event.isCtrlPressed) {
-                launchCatchingTask { saveNote() }
+                // disable it in case of image occlusion
+                if (allowSaveAndPreview()) {
+                    launchCatchingTask { saveNote() }
+                }
             }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
@@ -684,7 +687,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             KeyEvent.KEYCODE_P -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
-                    performPreview()
+                    if (allowSaveAndPreview()) {
+                        performPreview()
+                    }
                 }
             }
             else -> {}
@@ -1005,13 +1010,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         menuInflater.inflate(R.menu.note_editor, menu)
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
+            val iconVisible = allowSaveAndPreview()
+            menu.findItem(R.id.action_save).isVisible = iconVisible
+            menu.findItem(R.id.action_preview).isVisible = iconVisible
         } else {
             menu.findItem(R.id.action_add_note_from_note_editor).isVisible = true
         }
         if (mEditFields != null) {
             for (i in mEditFields!!.indices) {
                 val fieldText = mEditFields!![i]!!.text
-                if (fieldText != null && fieldText.isNotEmpty()) {
+                if (!fieldText.isNullOrEmpty()) {
                     menu.findItem(R.id.action_copy_note).isEnabled = true
                     break
                 } else if (i == mEditFields!!.size - 1) {
@@ -1028,6 +1036,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     * When using the options such as image occlusion we don't need the menu's save/preview
+     * option to save/preview the card as it has a built in option and the user is notified
+     * when the card is saved successfully
+     */
+    private fun allowSaveAndPreview(): Boolean = when {
+        addNote && currentNotetypeIsImageOcclusion() -> false
+        else -> true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -1037,12 +1055,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
-                performPreview()
+                if (allowSaveAndPreview()) {
+                    performPreview()
+                }
                 return true
             }
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
-                launchCatchingTask { saveNote() }
+                if (allowSaveAndPreview()) {
+                    launchCatchingTask { saveNote() }
+                }
                 return true
             }
             R.id.action_add_note_from_note_editor -> {
@@ -2044,6 +2066,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
             // If a new column was selected then change the key used to map from mCards to the column TextView
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
+            // In case the type is changed while adding the card, the menu options need to be invalidated
+            invalidateMenu()
             val oldModelId = getColUnsafe.notetypes.current().getLong("id")
             val newId = mAllModelIds!![pos]
             Timber.i("Changing note type to '%d", newId)
