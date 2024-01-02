@@ -19,7 +19,7 @@ window.MathJax = {
     loader: {
         load: packagesForLoading(packages),
         paths: {
-            mathjax: "/assets/mathjax",
+            mathjax: "file:///android_asset/mathjax",
         },
     },
     startup: {
