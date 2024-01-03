@@ -166,11 +166,6 @@ open class CardBrowser :
     // DEFECT: Doesn't need to be a local
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
 
-    /** The query which is currently in the search box, potentially null. Only set when search box was open  */
-    private var mTempSearchQuery: String?
-        get() = viewModel.tempSearchQuery
-        set(value) { viewModel.tempSearchQuery = value }
-
     private var onEditCardActivityResult = registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
         Timber.d("onEditCardActivityResult: resultCode=%d", result.resultCode)
         if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -432,6 +427,20 @@ open class CardBrowser :
             .onEach { runOnUiThread { searchCards() } }
             .launchIn(lifecycleScope)
 
+        viewModel.searchQueryExpandedFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { searchQueryExpanded ->
+                Timber.d("query expansion changed: %b", searchQueryExpanded)
+                if (searchQueryExpanded) {
+                    runOnUiThread { mSearchItem?.expandActionView() }
+                } else {
+                    runOnUiThread { mSearchItem?.collapseActionView() }
+                    // invalidate options menu so that disappeared icons would appear again
+                    invalidateOptionsMenu()
+                }
+            }
+            .launchIn(lifecycleScope)
+
         viewModel.selectedRowsFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { runOnUiThread { onSelectionChanged() } }
@@ -465,6 +474,10 @@ open class CardBrowser :
                 deckSpinnerSelection!!.selectDeckById(deckId, true)
                 searchCards()
             }
+            .launchIn(lifecycleScope)
+
+        viewModel.canSaveSearchFlow
+            .onEach { canSave -> runOnUiThread { mSaveSearchItem?.isVisible = canSave } }
             .launchIn(lifecycleScope)
 
         viewModel.isInMultiSelectModeFlow
@@ -715,7 +728,7 @@ open class CardBrowser :
         super.onPause()
         // If the user entered something into the search, but didn't press "search", clear this.
         // It's confusing if the bar is shown with a query that does not relate to the data on the screen
-        mTempSearchQuery = null
+        viewModel.removeUnsubmittedInput()
         if (mPostAutoScroll) {
             mPostAutoScroll = false
         }
@@ -742,17 +755,16 @@ open class CardBrowser :
             mSearchItem = menu.findItem(R.id.action_search)
             mSearchItem!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
                 override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                    viewModel.setSearchQueryExpanded(true)
                     return true
                 }
 
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                    viewModel.setSearchQueryExpanded(false)
                     // SearchView doesn't support empty queries so we always reset the search when collapsing
                     mSearchTerms = ""
                     mSearchView!!.setQuery(mSearchTerms, false)
                     searchCards()
-                    // invalidate options menu so that disappeared icons would appear again
-                    invalidateOptionsMenu()
-                    mTempSearchQuery = null
                     return true
                 }
             })
@@ -762,8 +774,7 @@ open class CardBrowser :
                     if (mSearchView!!.shouldIgnoreValueChange()) {
                         return true
                     }
-                    mSaveSearchItem?.isVisible = newText.isNotEmpty()
-                    mTempSearchQuery = newText
+                    viewModel.updateQueryText(newText)
                     return true
                 }
 
@@ -774,10 +785,11 @@ open class CardBrowser :
                 }
             })
             // Fixes #6500 - keep the search consistent if coming back from note editor
-            // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu (mTempSearchQuery)
-            if (!mTempSearchQuery.isNullOrEmpty() || mSearchTerms.isNotEmpty()) {
+            // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
+            if (!viewModel.tempSearchQuery.isNullOrEmpty() || mSearchTerms.isNotEmpty()) {
                 mSearchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
-                val toUse = if (!mTempSearchQuery.isNullOrEmpty()) mTempSearchQuery else mSearchTerms
+                val toUse =
+                    if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else mSearchTerms
                 mSearchView!!.setQuery(toUse!!, false)
             }
             mSearchView!!.setOnSearchClickListener {

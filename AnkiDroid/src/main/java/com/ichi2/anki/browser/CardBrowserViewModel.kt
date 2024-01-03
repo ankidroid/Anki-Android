@@ -100,8 +100,17 @@ class CardBrowserViewModel(
     val column1Index get() = column1IndexFlow.value
     val column2Index get() = column2IndexFlow.value
 
+    val searchQueryExpandedFlow = MutableStateFlow(false)
+
+    private val searchQueryInputFlow = MutableStateFlow<String?>(null)
+
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
-    var tempSearchQuery: String? = null
+    val tempSearchQuery get() = searchQueryInputFlow.value
+
+    /** Whether the current element in the search bar can be saved */
+    val canSaveSearchFlow = searchQueryInputFlow
+        .map { it?.isNotEmpty() == true }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = false)
 
     val isTruncatedFlow: MutableStateFlow<Boolean> =
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
@@ -469,6 +478,31 @@ class CardBrowserViewModel(
     private fun indexOfFirstCheckedCard(): Int? {
         val idToFind = selectedRows.firstOrNull()?.id ?: return null
         return allCardIds.indexOf(idToFind)
+    }
+
+    fun setSearchQueryExpanded(expand: Boolean) {
+        if (expand) {
+            expandSearchQuery()
+        } else {
+            collapseSearchQuery()
+        }
+    }
+
+    private fun collapseSearchQuery() {
+        searchQueryInputFlow.update { null }
+        searchQueryExpandedFlow.update { false }
+    }
+
+    private fun expandSearchQuery() {
+        searchQueryExpandedFlow.update { true }
+    }
+
+    fun updateQueryText(newText: String) {
+        searchQueryInputFlow.update { newText }
+    }
+
+    fun removeUnsubmittedInput() {
+        searchQueryInputFlow.update { null }
     }
 
     suspend fun updateSelectedCardsFlag(flag: Flag): List<Card> {
