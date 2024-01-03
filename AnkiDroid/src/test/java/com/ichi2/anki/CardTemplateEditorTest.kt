@@ -22,7 +22,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.afollestad.materialdialogs.WhichButton
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.assertFalse
@@ -142,8 +141,8 @@ class CardTemplateEditorTest : RobolectricTest() {
         val shadowTestEditor = shadowOf(testEditor)
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
         advanceRobolectricLooperWithSleep()
-        assertEquals("Wrong dialog shown?", "Delete the “Card 1” card type, and its 0 cards?", getMaterialDialogText(true))
-        clickMaterialDialogButton(WhichButton.POSITIVE, true)
+        assertEquals("Wrong dialog shown?", "Delete the “Card 1” card type, and its 0 cards?", getAlertDialogText(true))
+        clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertTrue("Model should have changed", testEditor.modelHasChanged())
         assertEquals("Model should have 1 template now", 1, testEditor.tempModel?.templateCount)
@@ -249,8 +248,8 @@ class CardTemplateEditorTest : RobolectricTest() {
         val shadowTestEditor = shadowOf(testEditor)
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
         advanceRobolectricLooperWithSleep()
-        assertEquals("Wrong dialog shown?", "Delete the “Card 1” card type, and its 0 cards?", getMaterialDialogText(true))
-        clickMaterialDialogButton(WhichButton.NEGATIVE, true)
+        assertEquals("Wrong dialog shown?", "Delete the “Card 1” card type, and its 0 cards?", getAlertDialogText(true))
+        clickAlertDialogButton(DialogInterface.BUTTON_NEGATIVE, true)
         advanceRobolectricLooperWithSleep()
         assertFalse("Model should not have changed", testEditor.modelHasChanged())
 
@@ -341,9 +340,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about deleting template and it's card?",
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
-            getMaterialDialogText(true)
+            getAlertDialogText(true)
         )
-        clickMaterialDialogButton(WhichButton.NEGATIVE, true)
+        clickAlertDialogButton(DialogInterface.BUTTON_NEGATIVE, true)
         advanceRobolectricLooperWithSleep()
         assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
         assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
@@ -395,9 +394,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about deleting template and it's card?",
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
-            getMaterialDialogText(true)
+            getAlertDialogText(true)
         )
-        clickMaterialDialogButton(WhichButton.POSITIVE, true)
+        clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         advanceRobolectricLooperWithSleep()
         testEditor.viewPager.currentItem = 0
@@ -406,9 +405,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about deleting template and it's card?",
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
-            getMaterialDialogText(true)
+            getAlertDialogText(true)
         )
-        clickMaterialDialogButton(WhichButton.POSITIVE, true)
+        clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
         advanceRobolectricLooperWithSleep()
 
         // - assert can delete any 1 or 2 Card templates but not all
@@ -468,9 +467,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about deleting template and it's card?",
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
-            getMaterialDialogText(true)
+            getAlertDialogText(true)
         )
-        clickMaterialDialogButton(WhichButton.POSITIVE, true)
+        clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertTrue("Model should have changed", testEditor.modelHasChanged())
         assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
@@ -494,9 +493,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about deleting template and it's card?",
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 0, 0, "Card 2"),
-            getMaterialDialogText(true)
+            getAlertDialogText(true)
         )
-        clickMaterialDialogButton(WhichButton.POSITIVE, true)
+        clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertTrue("Model should have changed", testEditor.modelHasChanged())
         assertNotNull("Cannot delete template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
@@ -600,9 +599,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals(
             "Did not show dialog about adding template and it's card?",
             getQuantityString(R.plurals.card_template_editor_confirm_add, numAffectedCards, numAffectedCards),
-            getMaterialDialogText(true)
+            getAlertDialogText(true)
         )
-        clickMaterialDialogButton(WhichButton.POSITIVE, true)
+        clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
     }
 
     private fun getModelCardCount(notetype: NotetypeJson): Int {

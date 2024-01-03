@@ -30,9 +30,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.preferences.sharedPrefs
@@ -171,14 +168,6 @@ open class RobolectricTest : AndroidTest {
         runBlocking { CollectionManager.discardBackend() }
     }
 
-    protected fun clickMaterialDialogButton(button: WhichButton, @Suppress("SameParameterValue") checkDismissed: Boolean) {
-        val dialog = ShadowDialog.getLatestDialog() as MaterialDialog
-        dialog.getActionButton(button).performClick()
-        if (checkDismissed) {
-            Assert.assertTrue("Dialog not dismissed?", Shadows.shadowOf(dialog).hasBeenDismissed())
-        }
-    }
-
     /**
      * Click on a dialog button for an AlertDialog dialog box. Replaces the above helper.
      */
@@ -192,20 +181,6 @@ open class RobolectricTest : AndroidTest {
         if (checkDismissed) {
             Assert.assertTrue("Dialog not dismissed?", Shadows.shadowOf(dialog).hasBeenDismissed())
         }
-    }
-
-    /**
-     * Get the current dialog text. Will return null if no dialog visible *or* if you check for dismissed and it has been dismissed
-     *
-     * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
-     */
-    protected fun getMaterialDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
-        val dialog: MaterialDialog = ShadowDialog.getLatestDialog() as MaterialDialog
-        if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
-            Timber.e("The latest dialog has already been dismissed.")
-            return null
-        }
-        return dialog.view.contentLayout.findViewById<TextView>(com.afollestad.materialdialogs.R.id.md_text_message).text.toString()
     }
 
     /**
