@@ -37,8 +37,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.intellij.lang.annotations.Language
@@ -52,6 +54,10 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     val isMarked = MutableStateFlow(false)
     val flagCode: MutableStateFlow<Int> = MutableStateFlow(Flag.NONE.code)
     private val showingAnswer = MutableStateFlow(false)
+    val isBackButtonEnabled =
+        combine(currentIndex, showingAnswer, backsideOnly) { index, showingAnswer, isBackSideOnly ->
+            index != 0 || (showingAnswer && !isBackSideOnly)
+        }
 
     private lateinit var currentCard: Card
 
@@ -165,8 +171,18 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         }
     }
 
-    suspend fun showAnswerOrPreviousCard() {
-        showAnswerOrDisplayCard(currentIndex.value - 1)
+    /**
+     * Shows the previous' card question
+     * or hides the current answer if the first card is being shown
+     */
+    fun onPreviousButtonClick() {
+        launchCatching {
+            if (currentIndex.value > 0) {
+                currentIndex.update { it - 1 }
+            } else if (showingAnswer.value && !backsideOnly.value) {
+                showQuestion()
+            }
+        }
     }
 
     suspend fun showAnswerOrNextCard() {

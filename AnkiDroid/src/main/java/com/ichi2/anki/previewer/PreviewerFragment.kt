@@ -206,8 +206,14 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             viewModel.launchCatching { showAnswerOrNextCard() }
         }
 
+        lifecycleScope.launch {
+            viewModel.isBackButtonEnabled.collectLatest {
+                previousButton.isEnabled = it
+            }
+        }
+
         previousButton.setOnClickListener {
-            viewModel.launchCatching { showAnswerOrPreviousCard() }
+            viewModel.onPreviousButtonClick()
         }
 
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
