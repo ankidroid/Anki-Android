@@ -857,11 +857,11 @@ open class Reviewer :
         val buryIcon = menu.findItem(R.id.action_bury)
         MenuItemCompat.setActionProvider(suspendIcon, SuspendProvider(this))
         MenuItemCompat.setActionProvider(buryIcon, BuryProvider(this))
+
+        suspendIcon.setIcon(R.drawable.ic_suspend)
         if (suspendNoteAvailable()) {
-            suspendIcon.setIcon(R.drawable.ic_action_suspend_dropdown)
             suspendIcon.setTitle(R.string.menu_suspend)
         } else {
-            suspendIcon.setIcon(R.drawable.ic_suspend)
             suspendIcon.setTitle(R.string.menu_suspend_card)
         }
         if (buryNoteAvailable()) {

@@ -117,7 +117,7 @@
     <item
         android:id="@+id/action_suspend"
         android:title="@string/menu_suspend"
-        android:icon="@drawable/ic_action_suspend_dropdown" />
+        android:icon="@drawable/ic_suspend" />
     <item
         android:id="@+id/action_delete"
         android:title="@string/menu_delete_note"
