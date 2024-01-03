@@ -18,6 +18,7 @@ package com.ichi2.anki.previewer
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.android.material.color.MaterialColors.getColor
@@ -36,6 +37,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.intellij.lang.annotations.Language
@@ -48,16 +53,34 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     val backsideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
     val flagCode: MutableStateFlow<Int> = MutableStateFlow(Flag.NONE.code)
-
-    private var showingAnswer = false
+    private val showingAnswer = MutableStateFlow(false)
+    val isBackButtonEnabled =
+        combine(currentIndex, showingAnswer, backsideOnly) { index, showingAnswer, isBackSideOnly ->
+            index != 0 || (showingAnswer && !isBackSideOnly)
+        }
+    val isNextButtonEnabled = combine(currentIndex, showingAnswer) { index, showingAnswer ->
+        index != selectedCardIds.lastIndex || !showingAnswer
+    }
 
     private lateinit var currentCard: Card
+
+    init {
+        currentIndex
+            .onEach { index ->
+                currentCard = withCol { getCard(selectedCardIds[index]) }
+                showQuestion()
+                if (backsideOnly.value) {
+                    showAnswer()
+                }
+            }
+            .launchIn(viewModelScope)
+    }
 
     fun toggleBacksideOnly() {
         Timber.v("toggleBacksideOnly() %b", !backsideOnly.value)
         launchCatching {
             backsideOnly.emit(!backsideOnly.value)
-            if (backsideOnly.value && !showingAnswer) {
+            if (backsideOnly.value && !showingAnswer.value) {
                 showAnswer()
             }
         }
@@ -93,7 +116,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
             if (!this::currentCard.isInitialized || reload) {
                 currentCard = withCol { getCard(selectedCardIds[currentIndex.value]) }
             }
-            val answerShouldBeShown = showingAnswer || backsideOnly.value
+            val answerShouldBeShown = showingAnswer.value || backsideOnly.value
             showQuestion()
             if (answerShouldBeShown) {
                 showAnswer()
@@ -111,7 +134,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
 
     private suspend fun showQuestion() {
         Timber.v("showQuestion()")
-        showingAnswer = false
+        showingAnswer.emit(false)
 
         val question = prepareCardTextForDisplay(currentCard.question())
         val answer = withCol { media.escapeMediaFilenames(currentCard.answer()) }
@@ -127,7 +150,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
      * because of how the `_showAnswer()` javascript method works */
     private suspend fun showAnswer() {
         Timber.v("showAnswer()")
-        showingAnswer = true
+        showingAnswer.emit(true)
         val answer = prepareCardTextForDisplay(currentCard.answer())
         eval.emit("_showAnswer(${Json.encodeToString(answer)});")
     }
@@ -136,35 +159,35 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         return addPlayButtons(withCol { media.escapeMediaFilenames(text) })
     }
 
-    suspend fun displayCard(index: Int) {
-        if (index !in 0..selectedCardIds.lastIndex) {
-            return
-        }
-        currentIndex.emit(index)
-        currentCard = withCol { getCard(selectedCardIds[index]) }
-        showQuestion()
-        if (backsideOnly.value) {
-            showAnswer()
-        }
-    }
-
-    private suspend fun showAnswerOrDisplayCard(index: Int) {
-        if (!showingAnswer && !backsideOnly.value) {
-            showAnswer()
-        } else {
-            displayCard(index)
+    /**
+     * Shows the current card's answer
+     * or the next question if the answer is already being shown
+     */
+    fun onNextButtonClick() {
+        launchCatching {
+            if (!showingAnswer.value && !backsideOnly.value) {
+                showAnswer()
+            } else {
+                currentIndex.update { it + 1 }
+            }
         }
     }
 
-    suspend fun showAnswerOrPreviousCard() {
-        showAnswerOrDisplayCard(currentIndex.value - 1)
+    /**
+     * Shows the previous' card question
+     * or hides the current answer if the first card is being shown
+     */
+    fun onPreviousButtonClick() {
+        launchCatching {
+            if (currentIndex.value > 0) {
+                currentIndex.update { it - 1 }
+            } else if (showingAnswer.value && !backsideOnly.value) {
+                showQuestion()
+            }
+        }
     }
 
-    suspend fun showAnswerOrNextCard() {
-        showAnswerOrDisplayCard(currentIndex.value + 1)
-    }
-
-    fun launchCatching(block: suspend PreviewerViewModel.() -> Unit): Job {
+    private fun launchCatching(block: suspend PreviewerViewModel.() -> Unit): Job {
         return launchCatching(block, Dispatchers.IO) { message ->
             onError.emit(message)
         }
@@ -201,12 +224,22 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
             }
 
             val colors = if (!nightMode) {
-                val canvasColor = getColor(context, android.R.attr.colorBackground, android.R.color.white).toRGBHex()
-                val fgColor = getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
+                val canvasColor = getColor(
+                    context,
+                    android.R.attr.colorBackground,
+                    android.R.color.white
+                ).toRGBHex()
+                val fgColor =
+                    getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
                 ":root { --canvas: $canvasColor ; --fg: $fgColor; }"
             } else {
-                val canvasColor = getColor(context, android.R.attr.colorBackground, android.R.color.black).toRGBHex()
-                val fgColor = getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
+                val canvasColor = getColor(
+                    context,
+                    android.R.attr.colorBackground,
+                    android.R.color.black
+                ).toRGBHex()
+                val fgColor =
+                    getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
                 ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
             }
 
@@ -239,7 +272,10 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         }
 
         /** @return body classes used when showing a card */
-        fun bodyClassForCardOrd(cardOrd: Int, nightMode: Boolean = Themes.currentTheme.isNightMode): String {
+        fun bodyClassForCardOrd(
+            cardOrd: Int,
+            nightMode: Boolean = Themes.currentTheme.isNightMode
+        ): String {
             return "card card${cardOrd + 1} ${bodyClass(nightMode)}"
         }
 

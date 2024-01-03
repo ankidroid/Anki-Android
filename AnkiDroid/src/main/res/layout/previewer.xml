@@ -60,10 +60,8 @@
             app:icon="@drawable/ic_baseline_chevron_left_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/progress_indicator"
             app:layout_constraintTop_toBottomOf="@id/slider"
-            app:iconSize="32dp"
-            />
+            app:iconSize="32dp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/progress_indicator"
@@ -74,8 +72,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/slider"
             tools:text="421/732"
-            android:gravity="center_horizontal"/>
-
+            android:gravity="center_horizontal" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/show_next"
@@ -86,7 +83,6 @@
             app:icon="@drawable/ic_baseline_chevron_right_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/progress_indicator"
             app:layout_constraintTop_toBottomOf="@id/slider"
             app:iconSize="32dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
