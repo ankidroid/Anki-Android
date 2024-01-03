@@ -348,11 +348,7 @@ class AudioRecordingController :
             audioTimer.start()
             cancelAudioRecordingButton.isEnabled = true
             saveButton.isEnabled = true
-            recordButton.apply {
-                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
-                setIconResource(R.drawable.round_pause_24)
-            }
+            recordButton.setIconResource(R.drawable.round_pause_24)
         } catch (e: Exception) {
             Timber.e(e, "Failed to start recording")
         }
@@ -398,11 +394,7 @@ class AudioRecordingController :
 
     private fun clearRecording() {
         audioTimer.stop()
-        recordButton.apply {
-            iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-            strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-            setIconResource(R.drawable.ic_record)
-        }
+        recordButton.setIconResource(R.drawable.ic_record)
         cancelAudioRecordingButton.isEnabled = false
         audioRecorder.stopRecording()
         tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
