@@ -163,11 +163,11 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         currentIndex.emit(index)
     }
 
-    private suspend fun showAnswerOrDisplayCard(index: Int) {
+    suspend fun showAnswerOrNextCard() {
         if (!showingAnswer.value && !backsideOnly.value) {
             showAnswer()
         } else {
-            displayCard(index)
+            displayCard(currentIndex.value + 1)
         }
     }
 
@@ -183,10 +183,6 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
                 showQuestion()
             }
         }
-    }
-
-    suspend fun showAnswerOrNextCard() {
-        showAnswerOrDisplayCard(currentIndex.value + 1)
     }
 
     fun launchCatching(block: suspend PreviewerViewModel.() -> Unit): Job {
@@ -226,12 +222,22 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
             }
 
             val colors = if (!nightMode) {
-                val canvasColor = getColor(context, android.R.attr.colorBackground, android.R.color.white).toRGBHex()
-                val fgColor = getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
+                val canvasColor = getColor(
+                    context,
+                    android.R.attr.colorBackground,
+                    android.R.color.white
+                ).toRGBHex()
+                val fgColor =
+                    getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
                 ":root { --canvas: $canvasColor ; --fg: $fgColor; }"
             } else {
-                val canvasColor = getColor(context, android.R.attr.colorBackground, android.R.color.black).toRGBHex()
-                val fgColor = getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
+                val canvasColor = getColor(
+                    context,
+                    android.R.attr.colorBackground,
+                    android.R.color.black
+                ).toRGBHex()
+                val fgColor =
+                    getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
                 ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
             }
 
@@ -264,7 +270,10 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         }
 
         /** @return body classes used when showing a card */
-        fun bodyClassForCardOrd(cardOrd: Int, nightMode: Boolean = Themes.currentTheme.isNightMode): String {
+        fun bodyClassForCardOrd(
+            cardOrd: Int,
+            nightMode: Boolean = Themes.currentTheme.isNightMode
+        ): String {
             return "card card${cardOrd + 1} ${bodyClass(nightMode)}"
         }
 
