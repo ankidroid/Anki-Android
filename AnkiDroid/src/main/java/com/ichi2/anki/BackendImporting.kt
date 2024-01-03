@@ -27,7 +27,7 @@ import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-suspend fun importJsonFileRaw(input: ByteArray): ByteArray {
+suspend fun importAnkiPackageUndoable(input: ByteArray): ByteArray {
     return withContext(Dispatchers.Main) {
         val output = withCol { this.importAnkiPackageRaw(input) }
         val changes = OpChangesOnly.parseFrom(output)
