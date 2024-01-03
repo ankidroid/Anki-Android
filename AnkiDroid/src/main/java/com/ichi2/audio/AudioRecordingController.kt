@@ -301,15 +301,28 @@ class AudioRecordingController :
                 strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
             }
         }
+        val shortAudioDuration = 5000
         rewindAudioButton.setOnClickListener {
-            audioPlayer?.seekTo(audioPlayer!!.currentPosition - JUMP_VALUE)
-            audioProgressBar.progress -= JUMP_VALUE
-            audioTimer.start(audioPlayer!!.elapsed)
+            val audioDuration = audioPlayer?.duration ?: 0
+            if (audioDuration < shortAudioDuration) {
+                audioPlayer?.seekTo(0)
+                audioProgressBar.progress = 0
+            } else {
+                audioPlayer?.seekTo(audioPlayer!!.currentPosition - JUMP_VALUE)
+                audioProgressBar.progress -= JUMP_VALUE
+                audioTimer.start(audioPlayer!!.elapsed)
+            }
         }
         forwardAudioButton.setOnClickListener {
-            audioTimer.start(audioPlayer!!.elapsed)
-            audioPlayer!!.seekTo(audioPlayer!!.currentPosition + JUMP_VALUE)
-            audioProgressBar.progress += JUMP_VALUE
+            val audioDuration = audioPlayer?.duration ?: 0
+            if (audioDuration < shortAudioDuration) {
+                audioPlayer?.seekTo(audioDuration)
+                audioProgressBar.progress = audioDuration
+            } else {
+                audioTimer.start(audioPlayer!!.elapsed)
+                audioPlayer?.seekTo(audioPlayer!!.currentPosition + JUMP_VALUE)
+                audioProgressBar.progress += JUMP_VALUE
+            }
         }
 
         audioPlayer!!.setOnCompletionListener {
