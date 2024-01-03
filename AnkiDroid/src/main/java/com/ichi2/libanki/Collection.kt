@@ -740,4 +740,12 @@ open class Collection(
     fun congratsInfoRaw(input: ByteArray): ByteArray {
         return backend.congratsInfoRaw(input = input)
     }
+
+    fun compareAnswer(expected: String, provided: String): String {
+        return backend.compareAnswer(expected = expected, provided = provided)
+    }
+
+    fun extractClozeForTyping(text: String, ordinal: Int): String {
+        return backend.extractClozeForTyping(text = text, ordinal = ordinal)
+    }
 }
