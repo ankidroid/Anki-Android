@@ -864,11 +864,11 @@ open class Reviewer :
         } else {
             suspendIcon.setTitle(R.string.menu_suspend_card)
         }
+
+        buryIcon.setIcon(R.drawable.ic_flip_to_back_white)
         if (buryNoteAvailable()) {
-            buryIcon.setIcon(R.drawable.ic_flip_to_back_dropdown)
             buryIcon.setTitle(R.string.menu_bury)
         } else {
-            buryIcon.setIcon(R.drawable.ic_flip_to_back_white)
             buryIcon.setTitle(R.string.menu_bury_card)
         }
         alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
