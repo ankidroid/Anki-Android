@@ -749,4 +749,12 @@ open class Collection(
             .build()
             .toByteArray()
     }
+
+    fun compareAnswer(expected: String, provided: String): String {
+        return backend.compareAnswer(expected = expected, provided = provided)
+    }
+
+    fun extractClozeForTyping(text: String, ordinal: Int): String {
+        return backend.extractClozeForTyping(text = text, ordinal = ordinal)
+    }
 }
