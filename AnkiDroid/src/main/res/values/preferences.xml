@@ -46,6 +46,7 @@
     <string name="show_progress_preference">showProgress</string>
     <string name="show_audio_play_buttons_key">showAudioPlayButtons</string>
     <string name="pref_card_browser_font_scale_key">relativeCardBrowserFontSize</string>
+    <string name="show_deck_title_key">showDeckTitle</string>
     <!-- App bar buttons -->
     <string name="pref_app_bar_buttons_screen_key">appBarButtonsScreen</string>
     <string name="reset_custom_buttons_key">reset_custom_buttons</string>

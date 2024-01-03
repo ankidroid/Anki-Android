@@ -95,6 +95,7 @@ object PreferenceUpgradeService {
                 yield(RemoveBackupMax())
                 yield(RemoveInCardsMode())
                 yield(RemoveReviewerETA())
+                yield(SetShowDeckTitle())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -460,6 +461,15 @@ object PreferenceUpgradeService {
         internal class RemoveReviewerETA : PreferenceUpgrade(15) {
             override fun upgrade(preferences: SharedPreferences) =
                 preferences.edit { remove("showETA") }
+        }
+
+        /** default to true for existing users  */
+        internal class SetShowDeckTitle : PreferenceUpgrade(16) {
+            override fun upgrade(preferences: SharedPreferences) {
+                if (!preferences.contains("showDeckTitle")) {
+                    preferences.edit { putBoolean("showDeckTitle", true) }
+                }
+            }
         }
     }
 }
