@@ -194,9 +194,7 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     override fun onStartTrackingTouch(slider: Slider) {}
 
                     override fun onStopTrackingTouch(slider: Slider) {
-                        viewModel.launchCatching {
-                            displayCard(value.toInt() - 1)
-                        }
+                        viewModel.currentIndex.tryEmit(slider.value.toInt() - 1)
                     }
                 }
             )

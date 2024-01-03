@@ -159,13 +159,6 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         return addPlayButtons(withCol { media.escapeMediaFilenames(text) })
     }
 
-    suspend fun displayCard(index: Int) {
-        if (index !in 0..selectedCardIds.lastIndex) {
-            return
-        }
-        currentIndex.emit(index)
-    }
-
     /**
      * Shows the current card's answer
      * or the next question if the answer is already being shown
@@ -194,7 +187,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         }
     }
 
-    fun launchCatching(block: suspend PreviewerViewModel.() -> Unit): Job {
+    private fun launchCatching(block: suspend PreviewerViewModel.() -> Unit): Job {
         return launchCatching(block, Dispatchers.IO) { message ->
             onError.emit(message)
         }
