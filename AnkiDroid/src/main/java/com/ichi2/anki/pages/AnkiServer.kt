@@ -17,11 +17,13 @@
 
 package com.ichi2.anki.pages
 
+import com.ichi2.anki.AnkiDroidApp
 import fi.iki.elonen.NanoHTTPD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.ByteArrayInputStream
+import java.io.IOException
 
 const val PORT = 0
 // const val PORT = 40001
@@ -46,8 +48,12 @@ open class AnkiServer(
         val mime = getMimeFromUri(uri)
 
         if (session.method == Method.GET) {
-            val resourcePath = "web$uri"
-            val stream = this.javaClass.classLoader!!.getResourceAsStream(resourcePath)
+            val resourcePath = "backend/web$uri"
+            val stream = try {
+                AnkiDroidApp.instance.assets.open(resourcePath)
+            } catch (e: IOException) {
+                null
+            }
             Timber.d("GET: Requested %s (%s), found? %b", uri, resourcePath, stream != null)
             return newChunkedResponse(Response.Status.OK, mime, stream)
         }

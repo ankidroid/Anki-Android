@@ -21,8 +21,8 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.getBackend
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.importAnkiPackageUndoable
 import com.ichi2.anki.importCsvRaw
-import com.ichi2.anki.importJsonFileRaw
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.searchInBrowser
 import com.ichi2.libanki.completeTagRaw
@@ -31,6 +31,7 @@ import com.ichi2.libanki.getDeckConfigRaw
 import com.ichi2.libanki.getDeckConfigsForUpdateRaw
 import com.ichi2.libanki.getDeckNamesRaw
 import com.ichi2.libanki.getFieldNamesRaw
+import com.ichi2.libanki.getImportAnkiPackagePresetsRaw
 import com.ichi2.libanki.getNotetypeNamesRaw
 import com.ichi2.libanki.sched.computeFsrsWeightsRaw
 import com.ichi2.libanki.sched.computeOptimalRetentionRaw
@@ -56,8 +57,9 @@ suspend fun handleCollectionPostRequest(methodName: String, bytes: ByteArray): B
         "getDeckNames" -> withCol { getDeckNamesRaw(bytes) }
         "getCsvMetadata" -> withCol { getCsvMetadataRaw(bytes) }
         "importCsv" -> importCsvRaw(bytes)
-        "importJsonFile" -> importJsonFileRaw(bytes)
+        "importAnkiPackage" -> importAnkiPackageUndoable(bytes)
         "importDone" -> bytes
+        "getImportAnkiPackagePresets" -> withCol { getImportAnkiPackagePresetsRaw(bytes) }
         "completeTag" -> withCol { completeTagRaw(bytes) }
         "getFieldNames" -> withCol { getFieldNamesRaw(bytes) }
         "cardStats" -> withCol { cardStatsRaw(bytes) }
