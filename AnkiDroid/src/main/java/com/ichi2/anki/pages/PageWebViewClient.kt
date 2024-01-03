@@ -21,6 +21,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.view.isVisible
 import com.google.android.material.color.MaterialColors
+import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.utils.toRGBHex
 import timber.log.Timber
 
@@ -31,6 +32,8 @@ open class PageWebViewClient : WebViewClient() {
 
     /** Wait for the provided promise to complete before showing the WebView */
     open val promiseToWaitFor: String? = null
+
+    var onPageFinishedCallback: OnPageFinishedCallback? = null
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
@@ -45,7 +48,7 @@ open class PageWebViewClient : WebViewClient() {
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
         if (view == null) return
-
+        onPageFinishedCallback?.onPageFinished(view)
         if (promiseToWaitFor == null) {
             /** [PageFragment.webView] is invisible by default to avoid flashes while
              * the page is loaded, and can be made visible again after it finishes loading */
