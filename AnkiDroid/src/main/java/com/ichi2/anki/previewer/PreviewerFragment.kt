@@ -202,8 +202,14 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             )
         }
 
+        lifecycleScope.launch {
+            viewModel.isNextButtonEnabled.collectLatest {
+                nextButton.isEnabled = it
+            }
+        }
+
         nextButton.setOnClickListener {
-            viewModel.launchCatching { showAnswerOrNextCard() }
+            viewModel.onNextButtonClick()
         }
 
         lifecycleScope.launch {

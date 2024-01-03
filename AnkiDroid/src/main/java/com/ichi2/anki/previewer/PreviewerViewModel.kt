@@ -58,6 +58,9 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         combine(currentIndex, showingAnswer, backsideOnly) { index, showingAnswer, isBackSideOnly ->
             index != 0 || (showingAnswer && !isBackSideOnly)
         }
+    val isNextButtonEnabled = combine(currentIndex, showingAnswer) { index, showingAnswer ->
+        index != selectedCardIds.lastIndex || !showingAnswer
+    }
 
     private lateinit var currentCard: Card
 
@@ -163,11 +166,17 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         currentIndex.emit(index)
     }
 
-    suspend fun showAnswerOrNextCard() {
-        if (!showingAnswer.value && !backsideOnly.value) {
-            showAnswer()
-        } else {
-            displayCard(currentIndex.value + 1)
+    /**
+     * Shows the current card's answer
+     * or the next question if the answer is already being shown
+     */
+    fun onNextButtonClick() {
+        launchCatching {
+            if (!showingAnswer.value && !backsideOnly.value) {
+                showAnswer()
+            } else {
+                currentIndex.update { it + 1 }
+            }
         }
     }
 
