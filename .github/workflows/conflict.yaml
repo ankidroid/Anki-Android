@@ -1,6 +1,14 @@
 name: Conflict Scan
 
 on:
+  push:
+    # Ignore merge queue branches on push; avoids merge_group+push concurrency race since ref is same
+    branches-ignore:
+      - 'gh-readonly-queue/**'
+  merge_group:
+  pull_request:
+  pull_request_target:
+    types: [ opened ]
   schedule:
   - cron: "0 * * * *"
 
