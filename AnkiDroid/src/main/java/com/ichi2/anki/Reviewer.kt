@@ -193,8 +193,8 @@ open class Reviewer :
             else -> answerTimer.resume()
         }
         super.onResume()
-        if (answerField != null) {
-            answerField!!.focusWithKeyboard()
+        if (typeAnswer?.autoFocusEditText() == true) {
+            answerField?.focusWithKeyboard()
         }
     }
 
