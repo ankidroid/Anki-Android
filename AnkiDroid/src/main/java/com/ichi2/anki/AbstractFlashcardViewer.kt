@@ -467,7 +467,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** Invoked by [CardViewerWebClient.onPageFinished] */
-    override fun onPageFinished() {
+    override fun onPageFinished(view: WebView) {
         // intentionally blank
     }
 
@@ -2451,7 +2451,7 @@ abstract class AbstractFlashcardViewer :
             pageRenderStopwatch.logElapsed()
             Timber.d("Java onPageFinished triggered: %s", url)
             // onPageFinished will be called multiple times if the WebView redirects by setting window.location.href
-            onPageFinishedCallback?.onPageFinished()
+            onPageFinishedCallback?.onPageFinished(view)
             view.loadUrl("javascript:onPageFinished();")
         }
 

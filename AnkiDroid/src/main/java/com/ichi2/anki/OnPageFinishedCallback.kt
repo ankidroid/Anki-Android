@@ -16,9 +16,12 @@
 
 package com.ichi2.anki
 
+import android.webkit.WebView
+
 /**
  * Intended to be used with [android.webkit.WebViewClient.onPageFinished]
  */
-interface OnPageFinishedCallback {
-    fun onPageFinished()
+fun interface OnPageFinishedCallback {
+    /** @see android.webkit.WebViewClient.onPageFinished */
+    fun onPageFinished(view: WebView)
 }
