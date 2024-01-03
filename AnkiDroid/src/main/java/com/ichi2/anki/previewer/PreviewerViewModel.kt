@@ -18,6 +18,7 @@ package com.ichi2.anki.previewer
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.android.material.color.MaterialColors.getColor
@@ -36,6 +37,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.intellij.lang.annotations.Language
@@ -51,6 +54,18 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     private val showingAnswer = MutableStateFlow(false)
 
     private lateinit var currentCard: Card
+
+    init {
+        currentIndex
+            .onEach { index ->
+                currentCard = withCol { getCard(selectedCardIds[index]) }
+                showQuestion()
+                if (backsideOnly.value) {
+                    showAnswer()
+                }
+            }
+            .launchIn(viewModelScope)
+    }
 
     fun toggleBacksideOnly() {
         Timber.v("toggleBacksideOnly() %b", !backsideOnly.value)
@@ -140,11 +155,6 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
             return
         }
         currentIndex.emit(index)
-        currentCard = withCol { getCard(selectedCardIds[index]) }
-        showQuestion()
-        if (backsideOnly.value) {
-            showAnswer()
-        }
     }
 
     private suspend fun showAnswerOrDisplayCard(index: Int) {
