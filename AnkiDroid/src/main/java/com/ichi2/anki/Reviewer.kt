@@ -32,6 +32,7 @@ import android.os.Parcelable
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
+import android.webkit.WebView
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.*
@@ -1026,8 +1027,8 @@ open class Reviewer :
         }
     }
 
-    override fun onPageFinished() {
-        super.onPageFinished()
+    override fun onPageFinished(view: WebView) {
+        super.onPageFinished(view)
         onFlagChanged()
         onMarkChanged()
         if (!displayAnswer) {
