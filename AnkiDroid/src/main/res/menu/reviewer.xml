@@ -130,7 +130,7 @@
     <item
         android:id="@+id/action_schedule"
         android:title="@string/card_editor_reschedule_card"
-        android:icon="@drawable/ic_card_reschedule_white">
+        android:icon="@drawable/ic_reschedule">
         <menu/>
     </item>
     <item
