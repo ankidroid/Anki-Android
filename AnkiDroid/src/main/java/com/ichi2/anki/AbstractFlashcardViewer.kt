@@ -532,7 +532,9 @@ abstract class AbstractFlashcardViewer :
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         mGestureDetectorImpl = LinkDetectingGestureDetector()
         TtsVoicesFieldFilter.ensureApplied()
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        if (!sharedPrefs().getBoolean("showDeckTitle", false)) {
+            supportActionBar?.setDisplayShowTitleEnabled(false)
+        }
     }
 
     protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
@@ -1274,6 +1276,9 @@ abstract class AbstractFlashcardViewer :
 
     private fun updateDeckName() {
         if (currentCard == null) return
+        if (sharedPrefs().getBoolean("showDeckTitle", false)) {
+            supportActionBar?.title = Decks.basename(getColUnsafe.decks.name(currentCard!!.did))
+        }
         if (!prefShowTopbar) {
             topBarLayout!!.visibility = View.GONE
         }

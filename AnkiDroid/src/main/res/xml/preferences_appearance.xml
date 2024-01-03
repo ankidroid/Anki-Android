@@ -110,6 +110,10 @@
             android:defaultValue="true"
             tools:title="Show play buttons on cards with audio"
             />
+        <SwitchPreferenceCompat
+            android:key="@string/show_deck_title_key"
+            android:defaultValue="false"
+            android:title="@string/show_deck_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/card_browser">
         <SwitchPreferenceCompat

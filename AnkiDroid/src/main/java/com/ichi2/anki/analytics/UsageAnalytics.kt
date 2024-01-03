@@ -488,6 +488,7 @@ object UsageAnalytics {
         "showProgress", // Show remaining
         "showAudioPlayButtons", // Show play buttons on cards with audio (reversed in collection: HIDE_AUDIO_PLAY_BUTTONS)
         "card_browser_show_media_filenames", // Display filenames in card browser
+        "showDeckTitle", // Show deck title
         // Controls
         "gestures", // Enable gestures
         "gestureCornerTouch", // 9-point touch
