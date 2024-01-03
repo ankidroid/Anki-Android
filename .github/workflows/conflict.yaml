@@ -2,13 +2,6 @@ name: Conflict Scan
 
 on:
   push:
-    # Ignore merge queue branches on push; avoids merge_group+push concurrency race since ref is same
-    branches-ignore:
-      - 'gh-readonly-queue/**'
-  merge_group:
-  pull_request:
-  pull_request_target:
-    types: [ opened ]
   schedule:
   - cron: "0 * * * *"
 
@@ -94,6 +87,17 @@ jobs:
                             if (pullRequestData.data.labels.find(label => label.name === 'Has Conflicts')) {
                                 console.log(`Removing 'Has Conflicts' label from PR #${prNumber}`);
                                 await removeLabel(['Has Conflicts'], prNumber);
+                            }
+                        } else if (pullRequestData.data.mergeable_state === 'unstable') {
+                            console.log(`PR #${prNumber} is unstable`);
+                            const mergeable = pullRequestData.data.mergeable;
+                            if (mergeable) {
+                                console.log(`PR #${prNumber} is mergeable`);
+                                // if PR has no conflicts, remove the label
+                                if (pullRequestData.data.labels.find(label => label.name === 'Has Conflicts')) {
+                                    console.log(`Removing 'Has Conflicts' label from PR #${prNumber}`);
+                                    await removeLabel(['Has Conflicts'], prNumber);
+                                }
                             }
                         }
                     }
