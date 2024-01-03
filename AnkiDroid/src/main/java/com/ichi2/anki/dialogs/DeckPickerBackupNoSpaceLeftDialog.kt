@@ -17,26 +17,30 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
-import com.afollestad.materialdialogs.MaterialDialog
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.utils.message
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.title
 
 class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreate(savedInstanceState)
         val res = resources
         val space = BackupManager.getFreeDiscSpace(CollectionHelper.getCollectionPath(requireActivity()))
-        return MaterialDialog(requireActivity()).show {
+        val dialog = AlertDialog.Builder(requireContext()).apply {
             title(R.string.storage_almost_full_title)
             message(text = res.getString(R.string.storage_warning, space / 1024 / 1024))
             positiveButton(R.string.dialog_ok) {
                 (activity as DeckPicker).finish()
             }
-            cancelable(true)
-            setOnCancelListener { (activity as DeckPicker).finish() }
+        }.create()
+        return dialog.apply {
+            setCanceledOnTouchOutside(false)
         }
     }
 
