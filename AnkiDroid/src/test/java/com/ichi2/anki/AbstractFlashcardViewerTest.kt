@@ -33,6 +33,8 @@ import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.libanki.StdModels
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import com.ichi2.testutils.Flaky
+import com.ichi2.testutils.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
@@ -238,7 +240,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground // viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4) does not guarantee completion
+    @Flaky(OS.ALL, "executeCommand(FLIP_OR_ANSWER_EASE4) cannot be awaited")
     fun typedLanguageIsSet() = runTest {
         val withLanguage = StdModels.BASIC_TYPING_MODEL.add(col, "a")
         val normal = StdModels.BASIC_TYPING_MODEL.add(col, "b")
@@ -254,8 +256,6 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
-        // requires @RunInBackground ! - the above calls do not guarantee execution completion
-        waitForAsyncTasksToComplete()
 
         assertThat("A default model should have no preference", viewer.hintLocale, nullValue())
     }
