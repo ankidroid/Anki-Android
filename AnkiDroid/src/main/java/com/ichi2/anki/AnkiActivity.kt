@@ -123,7 +123,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
     }
 
     protected open fun onActionBarBackPressed(): Boolean {
-        finish()
+        Timber.v("onActionBarBackPressed")
+        onBackPressedDispatcher.onBackPressed()
         return true
     }
 
