@@ -20,6 +20,7 @@ import android.widget.TextView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.libanki.Card
+import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -170,10 +171,9 @@ class PreviewerTest : RobolectricTest() {
         return getPreviewerPreviewingList(arrayList, c)
     }
 
+    @KotlinCleanup("extension function")
     private fun setDeck(@Suppress("SameParameterValue") name: String, card: Card) {
-        val did = addDeck(name)
-        card.did = did
-        card.col.updateCard(card, skipUndoEntry = true)
+        card.update { did = addDeck(name) }
     }
 
     private fun getPreviewerPreviewingList(cardIds: LongArray, c: Array<Card?>): Previewer {
