@@ -22,7 +22,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
-import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.libanki.DeckId
@@ -41,9 +40,12 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             .cancelable(true)
             .noAutoDismiss()
             .listItems(items = contextMenuOptions.map { resources.getString(it.optionName) }) { _: MaterialDialog, index: Int, _: CharSequence ->
-                (requireActivity() as DeckPicker).handleContextMenuSelection(
-                    contextMenuOptions[index],
-                    requireArguments().getLong(ARG_DECK_ID)
+                parentFragmentManager.setFragmentResult(
+                    REQUEST_KEY_CONTEXT_MENU,
+                    bundleOf(
+                        CONTEXT_MENU_DECK_ID to requireArguments().getLong(ARG_DECK_ID),
+                        CONTEXT_MENU_DECK_OPTION to contextMenuOptions[index]
+                    )
                 )
             }
     }
@@ -95,6 +97,10 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
     }
 
     companion object {
+        const val REQUEST_KEY_CONTEXT_MENU = "request_key_context_menu"
+        const val CONTEXT_MENU_DECK_OPTION = "context_menu_deck_option"
+        const val CONTEXT_MENU_DECK_ID = "context_menu_deck_id"
+
         @VisibleForTesting
         const val ARG_DECK_ID = "arg_deck_id"
 

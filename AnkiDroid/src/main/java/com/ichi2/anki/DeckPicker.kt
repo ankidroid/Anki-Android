@@ -78,6 +78,7 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
+import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
@@ -491,14 +492,25 @@ open class DeckPicker :
         if (BuildConfig.DEBUG) {
             checkWebviewVersion()
         }
+
+        supportFragmentManager.setFragmentResultListener(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, this) { requestKey, arguments ->
+            when (requestKey) {
+                DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU -> handleContextMenuSelection(
+                    arguments.getSerializableCompat<DeckPickerContextMenuOption>(DeckPickerContextMenu.CONTEXT_MENU_DECK_OPTION)
+                        ?: error("Unable to retrieve selected context menu option"),
+                    arguments.getLong(DeckPickerContextMenu.CONTEXT_MENU_DECK_ID, -1)
+                )
+                else -> error("Unexpected fragment result key! Did you forget to update DeckPicker?")
+            }
+        }
     }
 
-    fun handleContextMenuSelection(
-        selectedOption: DeckPickerContextMenu.DeckPickerContextMenuOption,
+    private fun handleContextMenuSelection(
+        selectedOption: DeckPickerContextMenuOption,
         deckId: DeckId
     ) {
         when (selectedOption) {
-            DeckPickerContextMenu.DeckPickerContextMenuOption.DELETE_DECK -> {
+            DeckPickerContextMenuOption.DELETE_DECK -> {
                 Timber.i("ContextMenu: Delete deck selected")
 
                 /* we can only disable the shortcut for now as it is restricted by Google https://issuetracker.google.com/issues/68949561?pli=1#comment4
@@ -507,59 +519,59 @@ open class DeckPicker :
                 disableDeckAndChildrenShortcuts(deckId)
                 confirmDeckDeletion(deckId)
             }
-            DeckPickerContextMenu.DeckPickerContextMenuOption.DECK_OPTIONS -> {
+            DeckPickerContextMenuOption.DECK_OPTIONS -> {
                 Timber.i("ContextMenu: Open deck options selected")
                 showContextMenuDeckOptions(deckId)
                 dismissAllDialogFragments()
             }
-            DeckPickerContextMenu.DeckPickerContextMenuOption.CUSTOM_STUDY -> {
+            DeckPickerContextMenuOption.CUSTOM_STUDY -> {
                 Timber.i("ContextMenu: Custom study option selected")
                 val d = FragmentFactoryUtils.instantiate(this, CustomStudyDialog::class.java)
                 d.withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, deckId)
                 showDialogFragment(d)
             }
-            DeckPickerContextMenu.DeckPickerContextMenuOption.CREATE_SHORTCUT -> {
+            DeckPickerContextMenuOption.CREATE_SHORTCUT -> {
                 Timber.i("ContextMenu: Create icon for a deck")
                 createIcon(this, deckId)
             }
-            DeckPickerContextMenu.DeckPickerContextMenuOption.RENAME_DECK -> {
+            DeckPickerContextMenuOption.RENAME_DECK -> {
                 Timber.i("ContextMenu: Rename deck selected")
                 renameDeckDialog(deckId)
                 dismissAllDialogFragments()
             }
-            DeckPickerContextMenu.DeckPickerContextMenuOption.EXPORT_DECK -> {
+            DeckPickerContextMenuOption.EXPORT_DECK -> {
                 Timber.i("ContextMenu: Export deck selected")
                 exportDeck(deckId)
             }
-            DeckPickerContextMenu.DeckPickerContextMenuOption.UNBURY -> {
+            DeckPickerContextMenuOption.UNBURY -> {
                 Timber.i("ContextMenu: Unbury deck selected")
                 getColUnsafe.sched.unburyCardsForDeck(deckId)
                 onRequireDeckListUpdate()
                 dismissAllDialogFragments()
             }
-            DeckPickerContextMenu.DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD -> {
+            DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD -> {
                 Timber.i("ContextMenu: Rebuild deck selected")
                 rebuildFiltered(deckId)
                 dismissAllDialogFragments()
             }
-            DeckPickerContextMenu.DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY -> {
+            DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY -> {
                 Timber.i("ContextMenu: Empty deck selected")
                 emptyFiltered(deckId)
                 dismissAllDialogFragments()
             }
-            DeckPickerContextMenu.DeckPickerContextMenuOption.CREATE_SUBDECK -> {
+            DeckPickerContextMenuOption.CREATE_SUBDECK -> {
                 Timber.i("ContextMenu: Create Subdeck selected")
                 createSubDeckDialog(deckId)
                 dismissAllDialogFragments()
             }
-            DeckPickerContextMenu.DeckPickerContextMenuOption.BROWSE_CARDS -> {
+            DeckPickerContextMenuOption.BROWSE_CARDS -> {
                 Timber.i("ContextMenu: Browse cards")
                 getColUnsafe.decks.select(deckId)
                 val intent = Intent(this, CardBrowser::class.java)
                 startActivity(intent)
                 dismissAllDialogFragments()
             }
-            DeckPickerContextMenu.DeckPickerContextMenuOption.ADD_CARD -> {
+            DeckPickerContextMenuOption.ADD_CARD -> {
                 Timber.i("ContextMenu: Add selected")
                 getColUnsafe.decks.select(deckId)
                 addNote()
