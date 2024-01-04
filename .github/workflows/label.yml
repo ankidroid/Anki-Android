@@ -112,6 +112,15 @@ jobs:
               });
             }
 
+            async function removeLabel(labels, issue_number) {
+                await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue_number,
+                    name: labels,
+                });
+            }
+
             async function addComments() {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
@@ -149,6 +158,11 @@ jobs:
                 addComments();
                 break;
               }
+            }
+
+            // if no file changed, remove label
+            if (!fileChanged) {
+              removeLabel([stringsLabel], context.issue.number);
             }
 
   add_new_contributor_label:
