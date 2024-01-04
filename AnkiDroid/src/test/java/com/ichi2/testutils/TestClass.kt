@@ -147,9 +147,7 @@ interface TestClass {
         }
         check(deckId != null) { "$deckName not found" }
 
-        this.cards().forEach { card ->
-            card.update { did = deckId }
-        }
+        updateCards { did = deckId }
     }
 
     /** helper method to update deck config */
@@ -159,9 +157,15 @@ interface TestClass {
         col.decks.save(deckConfig)
     }
 
+    /** Helper method to all cards of a note */
+    fun Note.updateCards(update: Card.() -> Unit): Note {
+        cards().forEach { it.update(update) }
+        return this
+    }
+
     /** Helper method to update a card */
     fun Card.update(update: Card.() -> Unit): Card {
-        this.apply(update)
+        update(this)
         this@TestClass.col.updateCard(this, skipUndoEntry = true)
         return this
     }

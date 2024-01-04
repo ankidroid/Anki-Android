@@ -34,9 +34,7 @@ class CollectionTest : JvmTest() {
         // Technically, editing a card with conditional fields can also cause this, but cloze cards are much more common
         val n = addNoteUsingModelName("Cloze", "{{c1::Hello}} {{c2::World}}", "Extra")
         val did = addDeck("Testing")
-        for (c in n.cards()) {
-            c.update { this.did = did }
-        }
+        n.updateCards { this.did = did }
         assertThat("two cloze notes should be generated", n.numberOfCards(), equalTo(2))
 
         // create card 3

@@ -255,9 +255,7 @@ class NoteServiceTest : RobolectricTest() {
         assertEquals(175, NoteService.avgEase(note))
 
         // test case: all cards are new
-        for (card in note.cards()) {
-            card.update { type = Consts.CARD_TYPE_NEW }
-        }
+        note.updateCards { type = Consts.CARD_TYPE_NEW }
         // no cards are rev, so avg ease cannot be calculated
         assertEquals(null, NoteService.avgEase(note))
     }
@@ -289,9 +287,7 @@ class NoteServiceTest : RobolectricTest() {
         assertEquals(1750, NoteService.avgInterval(note))
 
         // case: all cards are new or learning
-        for (card in note.cards()) {
-            card.update { type = newOrLearningList.shuffled().first() }
-        }
+        note.updateCards { type = newOrLearningList.shuffled().first() }
 
         // no cards are rev or relearning, so avg interval cannot be calculated
         assertEquals(null, NoteService.avgInterval(note))
