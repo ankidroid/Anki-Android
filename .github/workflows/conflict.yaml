@@ -81,7 +81,12 @@ jobs:
 
                         if (pullRequestData.data.mergeable_state === 'dirty') {
                             console.log(`Conflict exists in PR #${prNumber}`);
-                            await addLabel(['Has Conflicts'], prNumber);
+                            if (pullRequestData.data.labels.find(label => label.name === 'Has Conflicts')) {
+                                console.log(`'Has Conflicts' label already exists on PR #${prNumber}`);
+                            } else {
+                                console.log(`Adding 'Has Conflicts' label to PR #${prNumber}`);
+                                await addLabel(['Has Conflicts'], prNumber);
+                            }
                         } else if (pullRequestData.data.mergeable_state === 'clean') {
                             // if PR has no conflicts, remove the label
                             if (pullRequestData.data.labels.find(label => label.name === 'Has Conflicts')) {
