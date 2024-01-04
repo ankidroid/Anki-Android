@@ -37,6 +37,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.OS
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -369,11 +370,13 @@ class ReviewerTest : RobolectricTest() {
         return startReviewer(this, clazz)
     }
 
+    @KotlinCleanup("use extension function")
     private fun moveToReviewQueue(reviewCard: Card) {
-        reviewCard.queue = Consts.QUEUE_TYPE_REV
-        reviewCard.type = Consts.CARD_TYPE_REV
-        reviewCard.due = 0
-        reviewCard.col.updateCard(reviewCard, skipUndoEntry = true)
+        reviewCard.update {
+            queue = Consts.QUEUE_TYPE_REV
+            type = Consts.CARD_TYPE_REV
+            due = 0
+        }
     }
 
     private class ReviewerForMenuItems : Reviewer() {

@@ -17,6 +17,7 @@
 package com.ichi2.testutils
 
 import com.ichi2.anki.CollectionManager
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
@@ -147,8 +148,7 @@ interface TestClass {
         check(deckId != null) { "$deckName not found" }
 
         this.cards().forEach { card ->
-            card.did = deckId
-            col.updateCard(card, skipUndoEntry = true)
+            card.update { did = deckId }
         }
     }
 
@@ -157,6 +157,13 @@ interface TestClass {
         val deckConfig = col.decks.confForDid(deckId)
         function(deckConfig)
         col.decks.save(deckConfig)
+    }
+
+    /** Helper method to update a card */
+    fun Card.update(update: Card.() -> Unit): Card {
+        this.apply(update)
+        this@TestClass.col.updateCard(this, skipUndoEntry = true)
+        return this
     }
 
     /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that

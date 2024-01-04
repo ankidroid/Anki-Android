@@ -239,27 +239,24 @@ class NoteServiceTest : RobolectricTest() {
         val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
         // factor for cards: 3000, 1500, 1000, 750
         for ((i, card) in note.cards().withIndex()) {
-            card.apply {
+            card.update {
                 type = Consts.CARD_TYPE_REV
                 factor = 3000 / (i + 1)
-                col.updateCard(this, skipUndoEntry = true)
             }
         }
         // avg ease = (3000/10 + 1500/10 + 100/10 + 750/10) / 4 = [156.25] = 156
         assertEquals(156, NoteService.avgEase(note))
 
         // test case: one card is new
-        note.cards()[2].apply {
+        note.cards()[2].update {
             type = Consts.CARD_TYPE_NEW
-            col.updateCard(this, skipUndoEntry = true)
         }
         // avg ease = (3000/10 + 1500/10 + 750/10) / 3 = [175] = 175
         assertEquals(175, NoteService.avgEase(note))
 
         // test case: all cards are new
         for (card in note.cards()) {
-            card.type = Consts.CARD_TYPE_NEW
-            card.col.updateCard(card, skipUndoEntry = true)
+            card.update { type = Consts.CARD_TYPE_NEW }
         }
         // no cards are rev, so avg ease cannot be calculated
         assertEquals(null, NoteService.avgEase(note))
@@ -274,10 +271,9 @@ class NoteServiceTest : RobolectricTest() {
 
         // interval for cards: 3000, 1500, 1000, 750
         for ((i, card) in note.cards().withIndex()) {
-            card.apply {
+            card.update {
                 type = reviewOrRelearningList.shuffled().first()
                 ivl = 3000 / (i + 1)
-                col.updateCard(this, skipUndoEntry = true)
             }
         }
 
@@ -285,9 +281,8 @@ class NoteServiceTest : RobolectricTest() {
         assertEquals(1562, NoteService.avgInterval(note))
 
         // case: one card is new or learning
-        note.cards()[2].apply {
+        note.cards()[2].update {
             type = newOrLearningList.shuffled().first()
-            col.updateCard(this, skipUndoEntry = true)
         }
 
         // avg interval = (3000 + 1500 + 750) / 3 = [1750] = 1750
@@ -295,8 +290,7 @@ class NoteServiceTest : RobolectricTest() {
 
         // case: all cards are new or learning
         for (card in note.cards()) {
-            card.type = newOrLearningList.shuffled().first()
-            card.col.updateCard(card, skipUndoEntry = true)
+            card.update { type = newOrLearningList.shuffled().first() }
         }
 
         // no cards are rev or relearning, so avg interval cannot be calculated

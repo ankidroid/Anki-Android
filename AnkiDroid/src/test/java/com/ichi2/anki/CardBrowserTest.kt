@@ -541,11 +541,10 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
     fun resetDataTest() = runTest {
-        addNoteUsingBasicModel("Hello", "World").firstCard().apply {
+        addNoteUsingBasicModel("Hello", "World").firstCard().update {
             due = 5
             queue = Consts.QUEUE_TYPE_REV
             type = Consts.CARD_TYPE_REV
-            col.updateCard(this, skipUndoEntry = true)
         }
 
         val b = browserWithNoNewCards
@@ -660,10 +659,9 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun checkSearchString() = runTest {
         addNoteUsingBasicModel("Hello", "John")
-        val deck = addDeck("Deck 1", setAsSelected = true)
-        val c2 = addNoteUsingBasicModel("New", "world").firstCard()
-        c2.did = deck
-        c2.col.updateCard(c2, skipUndoEntry = true)
+        addNoteUsingBasicModel("New", "world").firstCard().update {
+            did = addDeck("Deck 1", setAsSelected = true)
+        }
 
         val cardBrowser = browserWithNoNewCards
         cardBrowser.searchCards("world or hello")
@@ -731,10 +729,9 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun checkIfSearchAllDecksWorks() = runTest {
         addNoteUsingBasicModel("Hello", "World")
-        val deck = addDeck("Test Deck", setAsSelected = true)
-        val c2 = addNoteUsingBasicModel("Front", "Back").firstCard()
-        c2.did = deck
-        c2.col.updateCard(c2, skipUndoEntry = true)
+        addNoteUsingBasicModel("Front", "Back").firstCard().update {
+            did = addDeck("Test Deck", setAsSelected = true)
+        }
 
         val cardBrowser = browserWithNoNewCards
         cardBrowser.searchCards("Hello")
@@ -812,9 +809,9 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     private fun flagCardForNote(n: Note, flag: Flag) {
-        val c = n.firstCard()
-        c.setUserFlag(flag)
-        c.col.updateCard(c, skipUndoEntry = true)
+        n.firstCard().update {
+            setUserFlag(flag)
+        }
     }
 
     private fun selectDefaultDeck() {

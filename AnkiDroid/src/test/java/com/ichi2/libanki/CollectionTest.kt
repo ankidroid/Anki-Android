@@ -35,8 +35,7 @@ class CollectionTest : JvmTest() {
         val n = addNoteUsingModelName("Cloze", "{{c1::Hello}} {{c2::World}}", "Extra")
         val did = addDeck("Testing")
         for (c in n.cards()) {
-            c.did = did
-            c.col.updateCard(c, skipUndoEntry = true)
+            c.update { this.did = did }
         }
         assertThat("two cloze notes should be generated", n.numberOfCards(), equalTo(2))
 
