@@ -151,10 +151,7 @@ class DecksTest : JvmTest() {
     @Test
     fun curDeckIsLong() {
         // Regression for #8092
-        val col = col
-        val decks = col.decks
-        val id = addDeck("test")
-        decks.select(id)
+        addDeck("test", setAsSelected = true)
         assertDoesNotThrow("curDeck should be saved as a long. A deck id.") {
             col.config.get<DeckId>(
                 CURRENT_DECK

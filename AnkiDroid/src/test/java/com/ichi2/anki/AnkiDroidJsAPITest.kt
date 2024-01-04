@@ -36,12 +36,10 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiGetNextTimeTest() = runTest {
         val models = col.notetypes
-        val decks = col.decks
-        val didA = addDeck("Test")
+        val didA = addDeck("Test", setAsSelected = true)
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
-        decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
         val jsapi = reviewer.jsApi
@@ -71,12 +69,10 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiTestCurrentCard() = runTest {
         val models = col.notetypes
-        val decks = col.decks
-        val didA = addDeck("Test")
+        val didA = addDeck("Test", setAsSelected = true)
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
-        decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
         val jsapi = reviewer.jsApi
@@ -183,12 +179,10 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiJsUiTest() = runTest {
         val models = col.notetypes
-        val decks = col.decks
-        val didA = addDeck("Test")
+        val didA = addDeck("Test", setAsSelected = true)
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
-        decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
         val jsapi = reviewer.jsApi
@@ -227,12 +221,10 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiMarkAndFlagCardTest() = runTest {
         // js api test for marking and flagging card
         val models = col.notetypes
-        val decks = col.decks
-        val didA = addDeck("Test")
+        val didA = addDeck("Test", setAsSelected = true)
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
-        decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
         val jsapi = reviewer.jsApi
@@ -289,8 +281,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // count number of notes, if buried or suspended then
         // in scheduling the count will be less than previous scheduling
         val models = col.notetypes
-        val decks = col.decks
-        val didA = addDeck("Test")
+        val didA = addDeck("Test", setAsSelected = true)
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
@@ -298,7 +289,6 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         addNoteUsingBasicModel("Anki", "Droid")
         addNoteUsingBasicModel("Test Card", "Bury and Suspend Card")
         addNoteUsingBasicModel("Test Note", "Bury and Suspend Note")
-        decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
         val jsapi = reviewer.jsApi
@@ -361,13 +351,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiSetCardDueTest() = runTest {
         TimeManager.reset()
         val models = col.notetypes
-        val decks = col.decks
-        val didA = addDeck("Test")
+        val didA = addDeck("Test", setAsSelected = true)
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         addNoteUsingBasicModel("baz", "bak")
-        decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
         waitForAsyncTasksToComplete()

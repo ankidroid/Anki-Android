@@ -502,9 +502,7 @@ class CardBrowserTest : RobolectricTest() {
     /** 7420  */
     @Test
     fun addCardDeckISetIfDeckIsSelectedOnOpen() {
-        val initialDid = addDeck("NotDefault")
-
-        col.decks.select(initialDid)
+        val initialDid = addDeck("NotDefault", setAsSelected = true)
 
         val b = browserWithNoNewCards
 
@@ -662,8 +660,7 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun checkSearchString() = runTest {
         addNoteUsingBasicModel("Hello", "John")
-        val deck = addDeck("Deck 1")
-        col.decks.select(deck)
+        val deck = addDeck("Deck 1", setAsSelected = true)
         val c2 = addNoteUsingBasicModel("New", "world").firstCard()
         c2.did = deck
         c2.col.updateCard(c2, skipUndoEntry = true)
@@ -734,8 +731,7 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun checkIfSearchAllDecksWorks() = runTest {
         addNoteUsingBasicModel("Hello", "World")
-        val deck = addDeck("Test Deck")
-        col.decks.select(deck)
+        val deck = addDeck("Test Deck", setAsSelected = true)
         val c2 = addNoteUsingBasicModel("Front", "Back").firstCard()
         c2.did = deck
         c2.col.updateCard(c2, skipUndoEntry = true)

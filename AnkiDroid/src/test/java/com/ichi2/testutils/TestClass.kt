@@ -117,9 +117,11 @@ interface TestClass {
         col
     }
 
-    fun addDeck(deckName: String?): DeckId {
+    fun addDeck(deckName: String?, setAsSelected: Boolean = false): DeckId {
         return try {
-            col.decks.id(deckName!!)
+            col.decks.id(deckName!!).also { did ->
+                if (setAsSelected) col.decks.select(did)
+            }
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             throw RuntimeException(filteredAncestor)
         }
