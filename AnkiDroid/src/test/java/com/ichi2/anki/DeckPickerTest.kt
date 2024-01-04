@@ -17,6 +17,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
 import com.ichi2.testutils.*
 import com.ichi2.testutils.libanki.buryNewSiblings
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
 import org.apache.commons.exec.OS
 import org.hamcrest.MatcherAssert.assertThat
@@ -35,6 +36,7 @@ import java.io.File
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
+@KotlinCleanup("SPMockBuilder")
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class DeckPickerTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
