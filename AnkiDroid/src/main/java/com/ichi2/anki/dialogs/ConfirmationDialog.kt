@@ -30,8 +30,8 @@ import com.ichi2.utils.title
  * Create a new instance, call setArgs(...), setConfirm(), and setCancel() then show it via the fragment manager as usual.
  */
 class ConfirmationDialog : DialogFragment() {
-    private var mConfirm = Runnable {} // Do nothing by default
-    private var mCancel = Runnable {} // Do nothing by default
+    private var confirm = Runnable {} // Do nothing by default
+    private var cancel = Runnable {} // Do nothing by default
     fun setArgs(message: String?) {
         setArgs("", message)
     }
@@ -44,11 +44,11 @@ class ConfirmationDialog : DialogFragment() {
     }
 
     fun setConfirm(confirm: Runnable) {
-        mConfirm = confirm
+        this.confirm = confirm
     }
 
     fun setCancel(cancel: Runnable) {
-        mCancel = cancel
+        this.cancel = cancel
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
@@ -59,10 +59,10 @@ class ConfirmationDialog : DialogFragment() {
             title(text = (if ("" == title) res.getString(R.string.app_name) else title)!!)
             message(text = requireArguments().getString("message")!!)
             positiveButton(R.string.dialog_ok) {
-                mConfirm.run()
+                confirm.run()
             }
             negativeButton(R.string.dialog_cancel) {
-                mCancel.run()
+                cancel.run()
             }
         }.create()
     }

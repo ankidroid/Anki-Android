@@ -53,7 +53,7 @@ import java.util.function.Supplier
 */
 class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportReadyDialogListener {
     val mDialogsFactory: ExportDialogsFactory
-    private val mSaveFileLauncher: ActivityResultLauncher<Intent>
+    private val saveFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var fileExportPath: String
 
     override fun dismissAllDialogFragments() {
@@ -128,7 +128,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             putExtra("android.content.extra.FANCY", true)
             putExtra("android.content.extra.SHOW_FILESIZE", true)
         }
-        mSaveFileLauncher.launch(saveIntent)
+        saveFileLauncher.launch(saveIntent)
     }
 
     fun onSaveInstanceState(outState: Bundle) {
@@ -188,7 +188,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         val fragmentManager = activity.supportFragmentManager
         mDialogsFactory = ExportDialogsFactory(this).attachToActivity(activity)
         fragmentManager.fragmentFactory = mDialogsFactory
-        mSaveFileLauncher = activity.registerForActivityResult(
+        saveFileLauncher = activity.registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {

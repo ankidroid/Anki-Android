@@ -30,9 +30,9 @@ import com.ichi2.utils.displayKeyboard
 import java.util.function.Consumer
 
 open class IntegerDialog : AnalyticsDialogFragment() {
-    private var mConsumer: Consumer<Int>? = null
+    private var consumer: Consumer<Int>? = null
     fun setCallbackRunnable(consumer: Consumer<Int>?) {
-        mConsumer = consumer
+        this.consumer = consumer
     }
 
     /** use named arguments with this method for clarity */
@@ -56,7 +56,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
                 hint = requireArguments().getString("prompt"),
                 inputType = InputType.TYPE_CLASS_NUMBER,
                 maxLength = requireArguments().getInt("digits")
-            ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.accept(text.toString().toInt()) }
+            ) { _: MaterialDialog?, text: CharSequence -> consumer!!.accept(text.toString().toInt()) }
             contentNullable(requireArguments().getString("content"))
             onShow {
                 displayKeyboard(getInputField())

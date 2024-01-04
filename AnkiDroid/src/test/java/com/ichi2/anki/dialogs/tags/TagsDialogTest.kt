@@ -326,13 +326,13 @@ class TagsDialogTest {
             Assert.assertEquals("common::sport::football", item4.text)
             Assert.assertEquals("common::sport::football::small", item5.text)
             Assert.assertEquals("common::sport::tennis", item6.text)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item0.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item1.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, item2.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item3.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item4.mCheckBoxView.state)
-            Assert.assertTrue(item5.mCheckBoxView.isChecked)
-            Assert.assertTrue(item6.mCheckBoxView.isChecked)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item0.checkBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item1.checkBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, item2.checkBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item3.checkBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item4.checkBoxView.state)
+            Assert.assertTrue(item5.checkBoxView.isChecked)
+            Assert.assertTrue(item6.checkBoxView.isChecked)
         }
     }
 
@@ -368,9 +368,9 @@ class TagsDialogTest {
             Assert.assertEquals("common", item0.text)
             Assert.assertEquals("common::blank", item1.text)
             Assert.assertEquals("common::blank::careless", item2.text)
-            Assert.assertTrue(item0.mCheckBoxView.isChecked)
-            Assert.assertTrue(item1.mCheckBoxView.state == CheckBoxTriStates.State.INDETERMINATE)
-            Assert.assertTrue(item2.mCheckBoxView.isChecked)
+            Assert.assertTrue(item0.checkBoxView.isChecked)
+            Assert.assertTrue(item1.checkBoxView.state == CheckBoxTriStates.State.INDETERMINATE)
+            Assert.assertTrue(item2.checkBoxView.isChecked)
         }
     }
 
@@ -515,9 +515,9 @@ class TagsDialogTest {
             //     - tennis    [ ]
             Assert.assertEquals(7, recycler.adapter!!.itemCount.toLong())
 
-            getItem(2).mCheckBoxView.performClick()
+            getItem(2).checkBoxView.performClick()
             updateLayout()
-            getItem(5).mCheckBoxView.performClick()
+            getItem(5).checkBoxView.performClick()
             updateLayout()
             // v common        [-]
             //   v speak       [-]
@@ -534,9 +534,9 @@ class TagsDialogTest {
             Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
             Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
 
-            getItem(2).mCheckBoxView.performClick()
+            getItem(2).checkBoxView.performClick()
             updateLayout()
-            getItem(5).mCheckBoxView.performClick()
+            getItem(5).checkBoxView.performClick()
             updateLayout()
             // v common        [ ]
             //   v speak       [ ]
@@ -553,7 +553,7 @@ class TagsDialogTest {
             Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(5).checkboxState)
             Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
 
-            getItem(5).mCheckBoxView.performClick()
+            getItem(5).checkBoxView.performClick()
             updateLayout()
             // v common        [-]
             //   v speak       [ ]
@@ -570,9 +570,9 @@ class TagsDialogTest {
             Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
             Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
 
-            getItem(3).mCheckBoxView.performClick()
+            getItem(3).checkBoxView.performClick()
             updateLayout()
-            getItem(5).mCheckBoxView.performClick()
+            getItem(5).checkBoxView.performClick()
             updateLayout()
             // v common        [-]
             //   v speak       [ ]

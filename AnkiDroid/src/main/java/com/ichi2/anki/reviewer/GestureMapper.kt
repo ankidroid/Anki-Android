@@ -28,8 +28,8 @@ import kotlin.math.floor
 class GestureMapper {
     var tapGestureMode = TapGestureMode.NINE_POINT
         private set
-    private var mSwipeMinDistance = -1
-    private var mSwipeThresholdVelocity = -1
+    private var swipeMinDistance = -1
+    private var swipeThresholdVelocity = -1
     fun init(preferences: SharedPreferences) {
         val sensitivity = preferences.getInt("swipeSensitivity", 100)
         tapGestureMode = fromPreference(preferences)
@@ -44,11 +44,11 @@ class GestureMapper {
         }
         if (sensitivity != 100) {
             val sens = 100.0f / sensitivity
-            mSwipeMinDistance = (DEFAULT_SWIPE_MIN_DISTANCE * sens + 0.5f).toInt()
-            mSwipeThresholdVelocity = (DEFAULT_SWIPE_THRESHOLD_VELOCITY * sens + 0.5f).toInt()
+            swipeMinDistance = (DEFAULT_SWIPE_MIN_DISTANCE * sens + 0.5f).toInt()
+            swipeThresholdVelocity = (DEFAULT_SWIPE_THRESHOLD_VELOCITY * sens + 0.5f).toInt()
         } else {
-            mSwipeMinDistance = DEFAULT_SWIPE_MIN_DISTANCE
-            mSwipeThresholdVelocity = DEFAULT_SWIPE_THRESHOLD_VELOCITY
+            swipeMinDistance = DEFAULT_SWIPE_MIN_DISTANCE
+            swipeThresholdVelocity = DEFAULT_SWIPE_THRESHOLD_VELOCITY
         }
     }
 
@@ -64,16 +64,16 @@ class GestureMapper {
         try {
             if (abs(dx) > abs(dy)) {
                 // horizontal swipe if moved further in x direction than y direction
-                if (dx > mSwipeMinDistance && abs(velocityX) > mSwipeThresholdVelocity && !isXScrolling && !isSelecting) {
+                if (dx > swipeMinDistance && abs(velocityX) > swipeThresholdVelocity && !isXScrolling && !isSelecting) {
                     return Gesture.SWIPE_RIGHT
-                } else if (dx < -mSwipeMinDistance && abs(velocityX) > mSwipeThresholdVelocity && !isXScrolling && !isSelecting) {
+                } else if (dx < -swipeMinDistance && abs(velocityX) > swipeThresholdVelocity && !isXScrolling && !isSelecting) {
                     return Gesture.SWIPE_LEFT
                 }
             } else {
                 // otherwise vertical swipe
-                if (dy > mSwipeMinDistance && abs(velocityY) > mSwipeThresholdVelocity && !isYScrolling) {
+                if (dy > swipeMinDistance && abs(velocityY) > swipeThresholdVelocity && !isYScrolling) {
                     return Gesture.SWIPE_DOWN
-                } else if (dy < -mSwipeMinDistance && abs(velocityY) > mSwipeThresholdVelocity && !isYScrolling) {
+                } else if (dy < -swipeMinDistance && abs(velocityY) > swipeThresholdVelocity && !isYScrolling) {
                     return Gesture.SWIPE_UP
                 }
             }

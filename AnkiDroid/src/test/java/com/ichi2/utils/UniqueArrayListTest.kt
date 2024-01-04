@@ -29,7 +29,7 @@ import org.mockito.Mockito.never
 import java.util.*
 
 class UniqueArrayListTest {
-    private val mDupData = listOf(
+    private val dupData = listOf(
         "55",
         "TEst",
         "TEst",
@@ -46,7 +46,7 @@ class UniqueArrayListTest {
         "55"
     )
 
-    private val mNoDupData = listOf(
+    private val noDupData = listOf(
         "55",
         "TEst",
         "12",
@@ -141,8 +141,8 @@ class UniqueArrayListTest {
 
     @Test
     fun testFromCollection() {
-        var uniqueArrayList = UniqueArrayList.from(mDupData)
-        assertEquals(mNoDupData, uniqueArrayList)
+        var uniqueArrayList = UniqueArrayList.from(dupData)
+        assertEquals(noDupData, uniqueArrayList)
 
         uniqueArrayList = UniqueArrayList()
         assertTrue(uniqueArrayList.isEmpty())

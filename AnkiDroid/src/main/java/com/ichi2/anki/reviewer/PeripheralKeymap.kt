@@ -29,8 +29,8 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer.  */
 class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.CommandProcessor) {
-    private val mKeyMap: KeyMap
-    private var mHasSetup = false
+    private val keyMap: KeyMap
+    private var hasSetup = false
     fun setup() {
         val preferences = AnkiDroidApp.instance.sharedPrefs()
         setup(preferences)
@@ -40,7 +40,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
         for (command in ViewerCommand.entries) {
             add(command, preferences)
         }
-        mHasSetup = true
+        hasSetup = true
     }
 
     private fun add(command: ViewerCommand, preferences: SharedPreferences) {
@@ -50,15 +50,15 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
             if (!b.isKey) {
                 continue
             }
-            mKeyMap[b] = command
+            keyMap[b] = command
         }
     }
 
     fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        return if (!mHasSetup || event.repeatCount > 0) {
+        return if (!hasSetup || event.repeatCount > 0) {
             false
         } else {
-            mKeyMap.onKeyDown(keyCode, event)
+            keyMap.onKeyDown(keyCode, event)
         }
     }
 
@@ -72,7 +72,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
         private val reviewerUI: ReviewerUi,
         private val screenBuilder: (CardSide) -> Screen
     ) {
-        val mBindingMap = HashMap<MappableBinding, ViewerCommand>()
+        val bindingMap = HashMap<MappableBinding, ViewerCommand>()
 
         @Suppress("UNUSED_PARAMETER")
         fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -81,22 +81,22 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
             val side = fromAnswer(reviewerUI.isDisplayingAnswer)
             for (b in bindings) {
                 val binding = MappableBinding(b, screenBuilder(side))
-                val command = mBindingMap[binding] ?: continue
+                val command = bindingMap[binding] ?: continue
                 ret = ret or processor.executeCommand(command, fromGesture = null)
             }
             return ret
         }
 
         operator fun set(key: MappableBinding, value: ViewerCommand) {
-            mBindingMap[key] = value
+            bindingMap[key] = value
         }
 
         operator fun get(key: MappableBinding): ViewerCommand? {
-            return mBindingMap[key]
+            return bindingMap[key]
         }
     }
 
     init {
-        mKeyMap = KeyMap(commandProcessor, reviewerUi) { Screen.Reviewer(it) }
+        keyMap = KeyMap(commandProcessor, reviewerUi) { Screen.Reviewer(it) }
     }
 }

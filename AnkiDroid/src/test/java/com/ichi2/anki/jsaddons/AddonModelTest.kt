@@ -39,11 +39,11 @@ class AddonModelTest : RobolectricTest() {
     private lateinit var validNpmPackageJson: String
     private lateinit var notValidNpmPackageJson: String
     private lateinit var addonsPackageListTestJson: String
-    private lateinit var mPrefs: SharedPreferences
+    private lateinit var prefs: SharedPreferences
 
     @Before
     fun before() {
-        mPrefs = targetContext.sharedPrefs()
+        prefs = targetContext.sharedPrefs()
     }
 
     @Before
@@ -92,25 +92,25 @@ class AddonModelTest : RobolectricTest() {
         shadowOf(getMainLooper()).idle()
 
         // test that prefs hashset for reviewer is empty
-        var reviewerEnabledAddonSet = mPrefs.getStringSet(REVIEWER_ADDON, HashSet())
+        var reviewerEnabledAddonSet = prefs.getStringSet(REVIEWER_ADDON, HashSet())
         assertEquals(0, reviewerEnabledAddonSet?.size)
 
         val result: Pair<AddonModel?, List<String>> = getAddonModelFromJson(validNpmPackageJson)
         val addonModel = result.first!!
 
         // update the prefs make it enabled
-        addonModel.updatePrefs(mPrefs, REVIEWER_ADDON, false)
+        addonModel.updatePrefs(prefs, REVIEWER_ADDON, false)
 
         // test that new prefs added and size is 1 and the prefs hashset contains enabled addons name
-        reviewerEnabledAddonSet = mPrefs.getStringSet(REVIEWER_ADDON, HashSet())
+        reviewerEnabledAddonSet = prefs.getStringSet(REVIEWER_ADDON, HashSet())
         assertEquals(1, reviewerEnabledAddonSet?.size)
         assertTrue(reviewerEnabledAddonSet!!.contains(addonModel.name))
 
         // now remove the addons from prefs
-        addonModel.updatePrefs(mPrefs, REVIEWER_ADDON, true)
+        addonModel.updatePrefs(prefs, REVIEWER_ADDON, true)
 
         // prefs hashset size for reviewer should be zero and prefs will not have addon name
-        reviewerEnabledAddonSet = mPrefs.getStringSet(REVIEWER_ADDON, HashSet())
+        reviewerEnabledAddonSet = prefs.getStringSet(REVIEWER_ADDON, HashSet())
         assertEquals(0, reviewerEnabledAddonSet?.size)
         assertFalse(reviewerEnabledAddonSet!!.contains(addonModel.name))
     }

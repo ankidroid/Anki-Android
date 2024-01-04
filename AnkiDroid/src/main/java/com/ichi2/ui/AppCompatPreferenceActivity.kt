@@ -62,8 +62,8 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     protected lateinit var deck: Deck
 
     abstract inner class AbstractPreferenceHack : SharedPreferences {
-        val mValues: MutableMap<String, String> = HashUtil.hashMapInit(30) // At most as many as in cacheValues
-        val mSummaries: MutableMap<String, String?> = HashMap()
+        val values: MutableMap<String, String> = HashUtil.hashMapInit(30) // At most as many as in cacheValues
+        val summaries: MutableMap<String, String?> = HashMap()
         protected val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
         @KotlinCleanup("scope function")
@@ -126,11 +126,11 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         }
 
         override fun contains(key: String): Boolean {
-            return mValues.containsKey(key)
+            return values.containsKey(key)
         }
 
         override fun getAll(): Map<String, *> {
-            return mValues
+            return values
         }
 
         override fun getBoolean(key: String, defValue: Boolean): Boolean {
@@ -151,10 +151,10 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
         override fun getString(key: String, defValue: String?): String? {
             Timber.d("getString(key=%s, defValue=%s)", key, defValue)
-            return if (!mValues.containsKey(key)) {
+            return if (!values.containsKey(key)) {
                 defValue
             } else {
-                mValues[key]
+                values[key]
             }
         }
 

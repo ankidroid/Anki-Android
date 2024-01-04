@@ -33,24 +33,24 @@ import org.robolectric.annotation.Config
 @Config(application = EmptyApplication::class)
 @SuppressLint("CheckResult") // many usages: checking exceptions
 class JSONObjectTest {
-    private val mCorrectJsonBasic = "{\"key1\":\"value1\"}"
-    private val mCorrectJsonNested = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":\"value2\"}"
-    private val mCorrectJsonWithArray = "{\"key1\":\"value1\",\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}"
-    private val mCorrectJsonNestedWithArray = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}"
+    private val correctJsonBasic = "{\"key1\":\"value1\"}"
+    private val correctJsonNested = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":\"value2\"}"
+    private val correctJsonWithArray = "{\"key1\":\"value1\",\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}"
+    private val correctJsonNestedWithArray = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}"
 
-    private lateinit var mCorrectJsonObjectBasic: JSONObject
-    private lateinit var mCorrectJsonObjectNested: JSONObject
-    private lateinit var mCorrectJsonObjectWithArray: JSONObject
-    private lateinit var mCorrectJsonObjectNestedWithArray: JSONObject
+    private lateinit var correctJsonObjectBasic: JSONObject
+    private lateinit var correctJsonObjectNested: JSONObject
+    private lateinit var correctJsonObjectWithArray: JSONObject
+    private lateinit var correctJsonObjectNestedWithArray: JSONObject
     lateinit var booleanMap: MutableMap<String, Boolean>
 
     @Before
     @Test
     fun setUp() {
-        mCorrectJsonObjectBasic = JSONObject(mCorrectJsonBasic)
-        mCorrectJsonObjectNested = JSONObject(mCorrectJsonNested)
-        mCorrectJsonObjectWithArray = JSONObject(mCorrectJsonWithArray)
-        mCorrectJsonObjectNestedWithArray = JSONObject(mCorrectJsonNestedWithArray)
+        correctJsonObjectBasic = JSONObject(correctJsonBasic)
+        correctJsonObjectNested = JSONObject(correctJsonNested)
+        correctJsonObjectWithArray = JSONObject(correctJsonWithArray)
+        correctJsonObjectNestedWithArray = JSONObject(correctJsonNestedWithArray)
         booleanMap = HashMap()
         for (i in 0..9) {
             booleanMap["key$i"] = i % 2 == 0
@@ -59,9 +59,9 @@ class JSONObjectTest {
 
     @Test
     fun copyJsonTest() {
-        Assert.assertEquals(mCorrectJsonObjectBasic.toString(), mCorrectJsonObjectBasic.deepClone().toString())
-        Assert.assertEquals(mCorrectJsonObjectNested.toString(), mCorrectJsonObjectNested.deepClone().toString())
-        Assert.assertEquals(mCorrectJsonObjectWithArray.toString(), mCorrectJsonObjectWithArray.deepClone().toString())
+        Assert.assertEquals(correctJsonObjectBasic.toString(), correctJsonObjectBasic.deepClone().toString())
+        Assert.assertEquals(correctJsonObjectNested.toString(), correctJsonObjectNested.deepClone().toString())
+        Assert.assertEquals(correctJsonObjectWithArray.toString(), correctJsonObjectWithArray.deepClone().toString())
     }
 
     private class JSONObjectSubType : JSONObject() {
@@ -78,11 +78,11 @@ class JSONObjectTest {
         val jsonObjectSubType = JSONObjectSubType()
 
         // Clone base JSONObject Type into JSONObjectSubType
-        mCorrectJsonObjectNestedWithArray.deepClonedInto(jsonObjectSubType)
+        correctJsonObjectNestedWithArray.deepClonedInto(jsonObjectSubType)
 
         // Test by passing result of base JSONObject's toString() to removeQuotes()
         // This is already done in the JSONObjectSubType object
-        Assert.assertEquals(removeQuotes(mCorrectJsonObjectNestedWithArray.toString()), jsonObjectSubType.toString())
+        Assert.assertEquals(removeQuotes(correctJsonObjectNestedWithArray.toString()), jsonObjectSubType.toString())
     }
 
     /**
@@ -90,9 +90,9 @@ class JSONObjectTest {
      */
     @Test
     fun deepCloneReferenceTest() {
-        val clone = mCorrectJsonObjectBasic.deepClone()
+        val clone = correctJsonObjectBasic.deepClone()
         // Both objects should point to different memory address
-        Assert.assertNotEquals(clone, mCorrectJsonObjectBasic)
+        Assert.assertNotEquals(clone, correctJsonObjectBasic)
     }
 
     @Test

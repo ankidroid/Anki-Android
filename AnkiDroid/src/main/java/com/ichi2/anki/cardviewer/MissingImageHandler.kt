@@ -33,17 +33,17 @@ class MissingImageHandler {
         const val MAX_DISPLAY_TIMES = 2
     }
 
-    private var mMissingMediaCount = 0
-    private var mHasShownInefficientImage = false
-    private var mHasExecuted = false
+    private var missingMediaCount = 0
+    private var hasShownInefficientImage = false
+    private var hasExecuted = false
 
     private var automaticTtsFailureCount = 0
     fun processFailure(request: WebResourceRequest?, onFailure: Consumer<String?>) {
         // We do not want this to trigger more than once on the same side of the card as the UI will flicker.
-        if (request == null || mHasExecuted) return
+        if (request == null || hasExecuted) return
 
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
-        if (mMissingMediaCount >= MAX_DISPLAY_TIMES) return
+        if (missingMediaCount >= MAX_DISPLAY_TIMES) return
 
         val url = request.url.toString()
         // We could do better here (external images failing due to no HTTPS), but failures can occur due to no network.
@@ -54,11 +54,11 @@ class MissingImageHandler {
         try {
             val filename = URLUtil.guessFileName(url, null, null)
             onFailure.accept(filename)
-            mMissingMediaCount++
+            missingMediaCount++
         } catch (e: Exception) {
             Timber.w(e, "Failed to notify UI of media failure")
         } finally {
-            mHasExecuted = true
+            hasExecuted = true
         }
     }
 
@@ -68,29 +68,29 @@ class MissingImageHandler {
         if (file == null) return
 
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
-        if (mMissingMediaCount >= MAX_DISPLAY_TIMES) return
+        if (missingMediaCount >= MAX_DISPLAY_TIMES) return
 
         try {
             val fileName = file.name
             onFailure.accept(fileName)
-            if (!mHasExecuted) {
-                mMissingMediaCount++
+            if (!hasExecuted) {
+                missingMediaCount++
             }
         } catch (e: Exception) {
             Timber.w(e, "Failed to notify UI of media failure")
         } finally {
-            mHasExecuted = true
+            hasExecuted = true
         }
     }
 
     fun onCardSideChange() {
-        mHasExecuted = false
+        hasExecuted = false
     }
 
     fun processInefficientImage(onFailure: Runnable) {
-        if (mHasShownInefficientImage) return
+        if (hasShownInefficientImage) return
 
-        mHasShownInefficientImage = true
+        hasShownInefficientImage = true
         onFailure.run()
     }
 

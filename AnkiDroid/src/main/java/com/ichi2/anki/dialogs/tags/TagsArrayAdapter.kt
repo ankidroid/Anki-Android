@@ -38,11 +38,11 @@ import java.util.TreeSet
 class TagsArrayAdapter(private val tags: TagsList, private val resources: Resources) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(), Filterable {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal lateinit var node: TagTreeNode
-        internal val mExpandButton: ImageButton = itemView.findViewById(R.id.id_expand_button)
-        internal val mCheckBoxView: CheckBoxTriStates = itemView.findViewById(R.id.tags_dialog_tag_item_checkbox)
+        internal val expandButton: ImageButton = itemView.findViewById(R.id.id_expand_button)
+        internal val checkBoxView: CheckBoxTriStates = itemView.findViewById(R.id.tags_dialog_tag_item_checkbox)
 
         // TextView contains the displayed tag (only the last part), while the full tag is stored in TagTreeNode
-        internal val mTextView: TextView = itemView.findViewById(R.id.tags_dialog_tag_item_text)
+        internal val textView: TextView = itemView.findViewById(R.id.tags_dialog_tag_item_text)
 
         @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         val text: String
@@ -50,11 +50,11 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
 
         @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         val isChecked: Boolean
-            get() = mCheckBoxView.isChecked
+            get() = checkBoxView.isChecked
 
         @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         val checkboxState: CheckBoxTriStates.State
-            get() = mCheckBoxView.state
+            get() = checkBoxView.state
     }
 
     /**
@@ -89,9 +89,9 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
          * [vh] must be nonnull.
          */
         private var checkBoxState: CheckBoxTriStates.State?
-            get() = vh?.mCheckBoxView?.state
+            get() = vh?.checkBoxView?.state
             set(state) {
-                state?.let { vh?.mCheckBoxView?.state = it }
+                state?.let { vh?.checkBoxView?.state = it }
             }
 
         /**
@@ -114,7 +114,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
 
         /**
          * Toggle the expand state of the node, then iterate up to the root to maintain the tree.
-         * Should never be called on the root node [mTreeRoot].
+         * Should never be called on the root node [treeRoot].
          */
         fun toggleIsExpanded() {
             isExpanded = !isExpanded
@@ -137,8 +137,8 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         fun updateCheckBoxCycleStyle(tags: TagsList) {
             val realSubtreeCnt = subtreeCheckedCnt - if (tags.isChecked(tag)) 1 else 0
             val hasDescendantChecked = realSubtreeCnt > 0
-            vh?.mCheckBoxView?.cycleIndeterminateToChecked = hasDescendantChecked
-            vh?.mCheckBoxView?.cycleCheckedToIndeterminate = hasDescendantChecked
+            vh?.checkBoxView?.cycleIndeterminateToChecked = hasDescendantChecked
+            vh?.checkBoxView?.cycleCheckedToIndeterminate = hasDescendantChecked
         }
 
         /**
@@ -192,30 +192,30 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
      * A subset of all tags in [tags] satisfying the user's search.
      * @see getFilter
      */
-    private val mFilteredList: ArrayList<String>
+    private val filteredList: ArrayList<String>
 
     /**
      * The root node of the tag tree.
      */
-    private lateinit var mTreeRoot: TagTreeNode
+    private lateinit var treeRoot: TagTreeNode
 
     /**
      * A mapping from tag strings to corresponding nodes.
      */
-    private val mTagToNode: HashMap<String, TagTreeNode>
+    private val tagToNode: HashMap<String, TagTreeNode>
 
     /**
      * Whether there exists visible nested tag.
      * Recalculated everytime [buildTagTree] is called.
      */
-    private var mHasVisibleNestedTag: Boolean
+    private var hasVisibleNestedTag: Boolean
 
     /**
      * A mapping from tag strings to its expand state.
      * Used to restore expand states between filtering results.
      * Must be updated every time a node's [TagTreeNode.isExpanded] changed.
      */
-    private val mTagToIsExpanded: HashMap<String, Boolean>
+    private val tagToIsExpanded: HashMap<String, Boolean>
 
     /**
      * Long click listener for each tag item. Used to add a subtag for the clicked tag.
@@ -232,8 +232,8 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
             .inflate(R.layout.tags_item_list_dialog, parent, false)
         val vh = ViewHolder(v.findViewById(R.id.tags_dialog_tag_item))
         // clicking the checkbox toggles the tag's check state
-        vh.mCheckBoxView.setOnClickListener {
-            val checkBox = vh.mCheckBoxView
+        vh.checkBoxView.setOnClickListener {
+            val checkBox = vh.checkBoxView
             when (checkBox.state) {
                 CHECKED -> tags.check(vh.node.tag, false)
                 UNCHECKED -> tags.uncheck(vh.node.tag)
@@ -245,8 +245,8 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         vh.itemView.setOnClickListener {
             if (vh.node.isNotLeaf()) {
                 vh.node.toggleIsExpanded()
-                mTagToIsExpanded[vh.node.tag] = !mTagToIsExpanded[vh.node.tag]!!
-                updateExpanderBackgroundImage(vh.mExpandButton, vh.node)
+                tagToIsExpanded[vh.node.tag] = !tagToIsExpanded[vh.node.tag]!!
+                updateExpanderBackgroundImage(vh.expandButton, vh.node)
                 // content of RecyclerView may change due to the expansion / collapse
                 val deltaSize = vh.node.subtreeSize - 1
                 if (vh.node.isExpanded) {
@@ -256,7 +256,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
                 }
             } else {
                 // tapping on a leaf node toggles the checkbox
-                vh.mCheckBoxView.performClick()
+                vh.checkBoxView.performClick()
             }
         }
         // long clicking a tag opens the add tag dialog with the current tag as the prefix
@@ -269,25 +269,25 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         holder.node.vh = holder
         holder.itemView.tag = holder.node.tag
 
-        if (mHasVisibleNestedTag) {
-            holder.mExpandButton.visibility = if (holder.node.isNotLeaf()) View.VISIBLE else View.INVISIBLE
-            updateExpanderBackgroundImage(holder.mExpandButton, holder.node)
+        if (hasVisibleNestedTag) {
+            holder.expandButton.visibility = if (holder.node.isNotLeaf()) View.VISIBLE else View.INVISIBLE
+            updateExpanderBackgroundImage(holder.expandButton, holder.node)
             // shift according to the level
             val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
             lp.setMargins(HIERARCHY_SHIFT_BASE * holder.node.level, 0, 0, 0)
-            holder.mExpandButton.layoutParams = lp
+            holder.expandButton.layoutParams = lp
         } else {
             // do not add padding if there is no visible nested tag
-            holder.mExpandButton.visibility = View.GONE
+            holder.expandButton.visibility = View.GONE
         }
-        holder.mExpandButton.contentDescription = resources.getString(R.string.expand_tag, holder.node.tag.replace("::", " "))
+        holder.expandButton.contentDescription = resources.getString(R.string.expand_tag, holder.node.tag.replace("::", " "))
 
-        holder.mTextView.text = TagsUtil.getTagParts(holder.node.tag).last()
+        holder.textView.text = TagsUtil.getTagParts(holder.node.tag).last()
 
         if (tags.isIndeterminate(holder.node.tag)) {
-            holder.mCheckBoxView.state = INDETERMINATE
+            holder.checkBoxView.state = INDETERMINATE
         } else {
-            holder.mCheckBoxView.state = if (tags.isChecked(holder.node.tag)) CHECKED else UNCHECKED
+            holder.checkBoxView.state = if (tags.isChecked(holder.node.tag)) CHECKED else UNCHECKED
         }
         holder.node.updateCheckBoxCycleStyle(tags)
     }
@@ -301,7 +301,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
      */
     private fun getVisibleTagTreeNode(index: Int): TagTreeNode? {
         var remain = index
-        var node = mTreeRoot
+        var node = treeRoot
         while (remain < node.subtreeSize) {
             for (child in node.children) {
                 if (remain >= child.getContributeSize()) {
@@ -324,41 +324,41 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
      * @return The number of visible tags.
      */
     override fun getItemCount(): Int {
-        return mTreeRoot.subtreeSize
+        return treeRoot.subtreeSize
     }
 
     /**
      * Build the tag tree. The tags have been sorted using the hierarchical comparator
      * [TagsUtil.compareTag], which leads to a DFN order. Use a stack to build the tree without
      * recursion.
-     * The initial expand states are inherited through [mTagToIsExpanded].
+     * The initial expand states are inherited through [tagToIsExpanded].
      * A special tag can be set so that the path to it is expanded.
      *
      * @param expandTarget The target tag to expand. Do nothing if it is empty or not found.
      */
     private fun buildTagTree(expandTarget: String) {
         // init mapping for newly added tags
-        mFilteredList.forEach {
-            if (!mTagToIsExpanded.containsKey(it)) {
-                mTagToIsExpanded[it] = tags.isChecked(it) || tags.isIndeterminate(it)
+        filteredList.forEach {
+            if (!tagToIsExpanded.containsKey(it)) {
+                tagToIsExpanded[it] = tags.isChecked(it) || tags.isIndeterminate(it)
             }
         }
         TagsUtil.getTagAncestors(expandTarget).forEach {
-            if (mTagToIsExpanded.containsKey(it)) {
-                mTagToIsExpanded[it] = true
+            if (tagToIsExpanded.containsKey(it)) {
+                tagToIsExpanded[it] = true
             }
         }
-        mHasVisibleNestedTag = false
+        hasVisibleNestedTag = false
         val stack = Stack<TagTreeNode>()
-        mTreeRoot = TagTreeNode("", null, ArrayList(), -1, 0, true, 0, null)
-        stack.add(mTreeRoot)
-        mTagToNode.clear()
+        treeRoot = TagTreeNode("", null, ArrayList(), -1, 0, true, 0, null)
+        stack.add(treeRoot)
+        tagToNode.clear()
         fun stackPopAndPushUp() {
             val popped = stack.pop()
             stack.peek().subtreeSize += popped.getContributeSize()
             stack.peek().subtreeCheckedCnt += popped.subtreeCheckedCnt
         }
-        for (tag in mFilteredList) {
+        for (tag in filteredList) {
             // root will never be popped
             while (stack.size > 1) {
                 if (!tag.startsWith(stack.peek().tag + "::")) {
@@ -368,12 +368,12 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
                 }
             }
             val parent = stack.peek()
-            val node = TagTreeNode(tag, parent, ArrayList(), parent.level + 1, 1, mTagToIsExpanded[tag]!!, if (tags.isChecked(tag)) 1 else 0, null)
+            val node = TagTreeNode(tag, parent, ArrayList(), parent.level + 1, 1, tagToIsExpanded[tag]!!, if (tags.isChecked(tag)) 1 else 0, null)
             parent.children.add(node)
-            mTagToNode[tag] = node
+            tagToNode[tag] = node
             stack.add(node)
             if (stack.size > 2) {
-                mHasVisibleNestedTag = true
+                hasVisibleNestedTag = true
             }
         }
         while (stack.size > 1) {
@@ -408,7 +408,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
          * It is cleared every time after the filtered result is calculated.
          * @see publishResults
          */
-        private var mExpandTarget = String()
+        private var expandTarget = String()
 
         override fun filterResults(constraint: CharSequence, items: List<String>): List<String> {
             val shownTags = TreeSet<String>()
@@ -424,36 +424,36 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
             // show tags in the relative order in original list
             val res = items.filter { shownTags.contains(it) }
             // mark shown tags as expanded, so that they will be expanded next time the tree is built
-            res.forEach { mTagToIsExpanded[it] = true }
+            res.forEach { tagToIsExpanded[it] = true }
             return res
         }
 
         override fun publishResults(constraint: CharSequence?, results: List<String>) {
-            mFilteredList.clear()
-            mFilteredList.addAll(results)
+            filteredList.clear()
+            filteredList.addAll(results)
             sortData()
-            buildTagTree(mExpandTarget)
-            mExpandTarget = String()
+            buildTagTree(expandTarget)
+            expandTarget = String()
             notifyDataSetChanged()
         }
 
         /**
          * Set the target to expand in the next filtering (optional).
-         * @see mExpandTarget
+         * @see expandTarget
          */
         fun setExpandTarget(tag: String) {
-            mExpandTarget = tag
+            expandTarget = tag
         }
     }
 
     init {
         sortData()
-        mFilteredList = ArrayList(tags.toList())
-        mTagToNode = HashMap()
-        mTagToIsExpanded = HashMap()
+        filteredList = ArrayList(tags.toList())
+        tagToNode = HashMap()
+        tagToIsExpanded = HashMap()
         // set the initial expand state according to its checked state
-        tags.forEach { mTagToIsExpanded[it] = tags.isChecked(it) || tags.isIndeterminate(it) }
-        mHasVisibleNestedTag = false
+        tags.forEach { tagToIsExpanded[it] = tags.isChecked(it) || tags.isIndeterminate(it) }
+        hasVisibleNestedTag = false
         buildTagTree(String())
     }
 

@@ -25,7 +25,7 @@ import com.google.android.material.textfield.TextInputEditText
 
 class TextInputEditField : TextInputEditText {
     @RequiresApi(Build.VERSION_CODES.O)
-    private var mAutoFillListener: AutoFillListener? = null
+    private var autoFillListener: AutoFillListener? = null
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -34,8 +34,8 @@ class TextInputEditField : TextInputEditText {
     override fun autofill(value: AutofillValue) {
         super.autofill(value)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (mAutoFillListener != null) {
-                mAutoFillListener!!.onAutoFill(value)
+            if (autoFillListener != null) {
+                autoFillListener!!.onAutoFill(value)
             }
         }
     }
@@ -47,6 +47,6 @@ class TextInputEditField : TextInputEditText {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun setAutoFillListener(listener: AutoFillListener) {
-        mAutoFillListener = listener
+        autoFillListener = listener
     }
 }

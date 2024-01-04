@@ -51,30 +51,30 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.PromptOptions
 class DimmedPromptBackgroundDecorator(val promptBackgroundInterface: PromptBackgroundInterface) : PromptBackgroundInterface {
     constructor(promptBackground: PromptBackground) : this(promptBackground.toInterface())
 
-    private val mDimBounds = RectF()
-    private val mDimPaint: Paint = Paint()
+    private val dimBounds = RectF()
+    private val dimPaint: Paint = Paint()
 
     init {
-        mDimPaint.color = Color.BLACK
+        dimPaint.color = Color.BLACK
     }
 
     override fun prepare(options: PromptOptions<*>, clipToBounds: Boolean, clipBounds: Rect) {
         promptBackgroundInterface.prepare(options, clipToBounds, clipBounds)
         val metrics = Resources.getSystem().displayMetrics
         // Set the bounds to display as dimmed to the screen bounds.
-        mDimBounds.set(0f, 0f, metrics.widthPixels.toFloat(), (metrics.heightPixels * 2).toFloat())
+        dimBounds.set(0f, 0f, metrics.widthPixels.toFloat(), (metrics.heightPixels * 2).toFloat())
         // Multiplying metrics.heightPixels by 2 to fix issue where bottom area of the screen does not become dimmed.
     }
 
     override fun update(options: PromptOptions<*>, revealModifier: Float, alphaModifier: Float) {
         promptBackgroundInterface.update(options, revealModifier, alphaModifier)
         // Allow for the dimmed background to fade in and out.
-        mDimPaint.alpha = (150 * alphaModifier).toInt()
+        dimPaint.alpha = (150 * alphaModifier).toInt()
     }
 
     override fun draw(canvas: Canvas) {
         // Draw the dimmed background.
-        canvas.drawRect(mDimBounds, mDimPaint)
+        canvas.drawRect(dimBounds, dimPaint)
         // Draw the background.
         promptBackgroundInterface.draw(canvas)
     }

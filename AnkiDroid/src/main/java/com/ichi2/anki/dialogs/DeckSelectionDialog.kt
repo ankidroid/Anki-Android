@@ -65,7 +65,7 @@ import kotlin.collections.ArrayList
  */
 @NeedsTest("simulate 'don't keep activities'")
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
-    private var mDialog: MaterialDialog? = null
+    private var dialog: MaterialDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCancelable = true
@@ -98,15 +98,15 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val did = args.getLong("currentDeckId")
             recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
         }
-        mDialog = MaterialDialog(requireActivity())
+        dialog = MaterialDialog(requireActivity())
             .negativeButton(R.string.dialog_cancel)
             .customView(view = dialogView, noVerticalPadding = true)
         if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
-            (mDialog as MaterialDialog).positiveButton(R.string.restore_default) {
+            (dialog as MaterialDialog).positiveButton(R.string.restore_default) {
                 onDeckSelected(null)
             }
         }
-        return mDialog!!
+        return dialog!!
     }
 
     private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>) =
@@ -220,11 +220,11 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
      */
     protected fun selectDeckAndClose(deck: SelectableDeck) {
         onDeckSelected(deck)
-        mDialog!!.dismiss()
+        dialog!!.dismiss()
     }
 
     protected fun displayErrorAndCancel() {
-        mDialog!!.dismiss()
+        dialog!!.dismiss()
     }
 
     open inner class DecksArrayAdapter(deckNames: List<SelectableDeck>) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(), Filterable {
@@ -253,10 +253,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             }
         }
 
-        private val mAllDecksList = ArrayList<SelectableDeck>()
-        private val mCurrentlyDisplayedDecks = ArrayList<SelectableDeck>()
+        private val allDecksList = ArrayList<SelectableDeck>()
+        private val currentlyDisplayedDecks = ArrayList<SelectableDeck>()
         protected fun selectDeckByNameAndClose(deckName: String) {
-            for (d in mAllDecksList) {
+            for (d in allDecksList) {
                 if (d.name == deckName) {
                     selectDeckAndClose(d)
                     return
@@ -272,12 +272,12 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val deck = mCurrentlyDisplayedDecks[position]
+            val deck = currentlyDisplayedDecks[position]
             holder.setDeck(deck)
         }
 
         override fun getItemCount(): Int {
-            return mCurrentlyDisplayedDecks.size
+            return currentlyDisplayedDecks.size
         }
 
         override fun getFilter(): Filter {
@@ -285,10 +285,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
 
         fun getCurrentlyDisplayedDecks(): List<SelectableDeck> {
-            return mCurrentlyDisplayedDecks
+            return currentlyDisplayedDecks
         }
 
-        private inner class DecksFilter : TypedFilter<SelectableDeck>(mAllDecksList) {
+        private inner class DecksFilter : TypedFilter<SelectableDeck>(allDecksList) {
             override fun filterResults(constraint: CharSequence, items: List<SelectableDeck>): List<SelectableDeck> {
                 val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
                 return items.filter {
@@ -297,7 +297,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             }
 
             override fun publishResults(constraint: CharSequence?, results: List<SelectableDeck>) {
-                mCurrentlyDisplayedDecks.apply {
+                currentlyDisplayedDecks.apply {
                     clear()
                     addAll(results)
                     sort()
@@ -307,9 +307,9 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
 
         init {
-            mAllDecksList.addAll(deckNames)
-            mCurrentlyDisplayedDecks.addAll(deckNames)
-            mCurrentlyDisplayedDecks.sort()
+            allDecksList.addAll(deckNames)
+            currentlyDisplayedDecks.addAll(deckNames)
+            currentlyDisplayedDecks.sort()
         }
     }
 

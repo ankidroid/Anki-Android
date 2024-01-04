@@ -27,7 +27,7 @@ import com.ichi2.anki.ActionProviderCompat
  */
 class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(context) {
     @VisibleForTesting
-    val mActivity: Activity
+    val activity: Activity
 
     /**
      * The action to perform when clicking the associated menu item. By default this delegates to
@@ -49,7 +49,7 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
             if (!forItem.isEnabled) {
                 return@setOnClickListener
             }
-            clickHandler(mActivity, forItem)
+            clickHandler(activity, forItem)
         }
         return actionView
     }
@@ -74,6 +74,6 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
     }
 
     init {
-        mActivity = unwrapContext(context)
+        activity = unwrapContext(context)
     }
 }

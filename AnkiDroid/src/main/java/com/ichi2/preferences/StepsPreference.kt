@@ -30,23 +30,23 @@ import timber.log.Timber
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
-    private val mAllowEmpty: Boolean
+    private val allowEmpty: Boolean
 
     @Suppress("unused")
     constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
-        mAllowEmpty = getAllowEmptyFromAttributes(attrs)
+        allowEmpty = getAllowEmptyFromAttributes(attrs)
         updateSettings()
     }
 
     @Suppress("unused")
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        mAllowEmpty = getAllowEmptyFromAttributes(attrs)
+        allowEmpty = getAllowEmptyFromAttributes(attrs)
         updateSettings()
     }
 
     @Suppress("unused")
     constructor(context: Context?) : super(context) {
-        mAllowEmpty = getAllowEmptyFromAttributes(null)
+        allowEmpty = getAllowEmptyFromAttributes(null)
         updateSettings()
     }
 
@@ -70,7 +70,7 @@ class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
             val validated = getValidatedStepsInput(editText.text.toString())
             if (validated == null) {
                 showThemedToast(context, context.resources.getString(R.string.steps_error), false)
-            } else if (validated.isEmpty() && !mAllowEmpty) {
+            } else if (validated.isEmpty() && !allowEmpty) {
                 showThemedToast(
                     context,
                     context.resources.getString(R.string.steps_min_error),

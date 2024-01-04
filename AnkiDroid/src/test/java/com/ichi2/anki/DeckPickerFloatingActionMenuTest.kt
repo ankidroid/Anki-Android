@@ -47,39 +47,31 @@ class DeckPickerFloatingActionMenuTest {
 
     @Mock private val deckPicker: DeckPicker = mock()
 
-    @Mock private lateinit var mFabMain: FloatingActionButton
+    @Mock private lateinit var fabMain: FloatingActionButton
 
-    @Mock private val mAddSharedLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
+    @Mock private val addSharedLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
 
-    @Mock private val mAddDeckLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
+    @Mock private val addDeckLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
 
-    @Mock private val mAddFilteredDeckLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
+    @Mock private val addFilteredDeckLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
 
     @Mock private val addNoteLabel: TextView = mock(defaultAnswer = Answers.RETURNS_MOCKS)
 
-    @Mock private val mAddNoteLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
+    @Mock private val fabBGLayout: View = mock()
 
-    @Mock private val mFabBGLayout: View = mock()
+    @Mock private val linearLayout: LinearLayout = mock()
 
-    @Mock private val mLinearLayout: LinearLayout = mock()
-
-    @Mock private val mStudyOptionsFrame: View = mock()
+    @Mock private val studyOptionsFrame: View = mock()
 
     @Mock private lateinit var view: View
-
-    @Mock private val addNoteButton: FloatingActionButton = mock()
 
     @Mock private val addSharedButton: FloatingActionButton = mock()
 
     @Mock private val addDeckButton: FloatingActionButton = mock()
 
-    @Mock private val addFilteredDeckButton: FloatingActionButton = mock()
-
     @Mock private val addSharedLabel: TextView = mock()
 
     @Mock private val addDeckLabel: TextView = mock()
-
-    @Mock private val addFilteredDeckLabel: TextView = mock()
 
     @InjectMocks
     private lateinit var menu: DeckPickerFloatingActionMenu
@@ -88,17 +80,17 @@ class DeckPickerFloatingActionMenuTest {
     fun before() {
         val ankiActivity = Robolectric.buildActivity(AnkiActivity::class.java, Intent()).get()
         ankiActivity.setTheme(R.style.Theme_Light)
-        mFabMain = spy(FloatingActionButton(ankiActivity))
+        fabMain = spy(FloatingActionButton(ankiActivity))
 
         // TODO: Figure out a nicer way of mocking
         view = mock {
-            on { findViewById<FloatingActionButton>(R.id.fab_main) } doReturn mFabMain
-            on { findViewById<LinearLayout>(R.id.add_shared_layout) } doReturn mAddSharedLayout
-            on { findViewById<LinearLayout>(R.id.add_deck_layout) } doReturn mAddDeckLayout
-            on { findViewById<LinearLayout>(R.id.add_filtered_deck_layout) } doReturn mAddFilteredDeckLayout
-            on { findViewById<View>(R.id.fabBGLayout) } doReturn mFabBGLayout
-            on { findViewById<LinearLayout>(R.id.deckpicker_view) } doReturn mLinearLayout
-            on { findViewById<View>(R.id.studyoptions_fragment) } doReturn mStudyOptionsFrame
+            on { findViewById<FloatingActionButton>(R.id.fab_main) } doReturn fabMain
+            on { findViewById<LinearLayout>(R.id.add_shared_layout) } doReturn addSharedLayout
+            on { findViewById<LinearLayout>(R.id.add_deck_layout) } doReturn addDeckLayout
+            on { findViewById<LinearLayout>(R.id.add_filtered_deck_layout) } doReturn addFilteredDeckLayout
+            on { findViewById<View>(R.id.fabBGLayout) } doReturn fabBGLayout
+            on { findViewById<LinearLayout>(R.id.deckpicker_view) } doReturn linearLayout
+            on { findViewById<View>(R.id.studyoptions_fragment) } doReturn studyOptionsFrame
             on { findViewById<TextView>(R.id.add_note_label) } doReturn addNoteLabel
 
             on { findViewById<FloatingActionButton>(R.id.add_shared_action) } doReturn addSharedButton
@@ -113,7 +105,7 @@ class DeckPickerFloatingActionMenuTest {
 
     @Test
     fun doubleTapAddsNote() {
-        mFabMain.simulateDoubleTap()
+        fabMain.simulateDoubleTap()
 
         verify(deckPicker, times(1)).addNote()
     }
@@ -122,11 +114,11 @@ class DeckPickerFloatingActionMenuTest {
     fun singleTapTogglesFab() {
         assertFalse("before a tap, menu should not be open") { menu.isFABOpen }
 
-        mFabMain.simulateUnconfirmedSingleTap()
+        fabMain.simulateUnconfirmedSingleTap()
 
         assertTrue("after a tap, menu should be open") { menu.isFABOpen }
 
-        mFabMain.simulateUnconfirmedSingleTap()
+        fabMain.simulateUnconfirmedSingleTap()
 
         verify(deckPicker).addNote() // On single tap when FAB is already opened, it opens Add Note.
     }

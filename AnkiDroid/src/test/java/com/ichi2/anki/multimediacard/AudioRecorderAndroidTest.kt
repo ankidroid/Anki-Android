@@ -15,15 +15,12 @@
  */
 package com.ichi2.anki.multimediacard
 
-import android.media.MediaRecorder
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.InjectMocks
-import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import java.io.IOException
@@ -31,18 +28,12 @@ import java.io.IOException
 @RunWith(AndroidJUnit4::class)
 class AudioRecorderAndroidTest : RobolectricTest() {
 
-    private lateinit var mAudioRecorder: AudioRecorder
-
-    @Mock(name = "mRecorder")
-    private val mMockedMediaRecorder: MediaRecorder? = null
-
-    @InjectMocks
-    private lateinit var mInjectedRecorder: AudioRecorder
+    private lateinit var audioRecorder: AudioRecorder
 
     @Before
     fun before() {
         MockitoAnnotations.openMocks(this)
-        mAudioRecorder = AudioRecorder()
+        audioRecorder = AudioRecorder()
     }
 
     // verify that the audio recorder is initialized in high sampling mode
@@ -50,8 +41,8 @@ class AudioRecorderAndroidTest : RobolectricTest() {
     @Throws(IOException::class)
     fun testStartRecordingHighSampling() {
         val recordingHandler = Mockito.mock(Runnable::class.java)
-        mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler)
-        mAudioRecorder.startRecording(targetContext, "testpath")
+        audioRecorder.setOnRecordingInitializedHandler(recordingHandler)
+        audioRecorder.startRecording(targetContext, "testpath")
         Mockito.verify(recordingHandler, Mockito.times(1)).run()
     }
 
@@ -62,19 +53,19 @@ class AudioRecorderAndroidTest : RobolectricTest() {
         class InitHandlerWithError : Runnable {
             var timesRun = 0
                 private set
-            private var mHasThrown = false
+            private var hasThrown = false
             override fun run() {
                 timesRun++
-                if (!mHasThrown) {
-                    mHasThrown = true
+                if (!hasThrown) {
+                    hasThrown = true
                     throw RuntimeException()
                 }
             }
         }
 
         val recordingHandler = InitHandlerWithError()
-        mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler)
-        mAudioRecorder.startRecording(targetContext, "testpath")
+        audioRecorder.setOnRecordingInitializedHandler(recordingHandler)
+        audioRecorder.startRecording(targetContext, "testpath")
         Assert.assertEquals("Initialization handler should run twice", 2, recordingHandler.timesRun.toLong())
     }
 }

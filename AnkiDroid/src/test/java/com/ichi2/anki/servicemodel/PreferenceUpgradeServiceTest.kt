@@ -41,36 +41,36 @@ import kotlin.test.assertNotNull
 @RunWith(AndroidJUnit4::class)
 class PreferenceUpgradeServiceTest : RobolectricTest() {
 
-    private lateinit var mPrefs: SharedPreferences
+    private lateinit var prefs: SharedPreferences
 
     @Before
     override fun setUp() {
         super.setUp()
-        mPrefs = targetContext.sharedPrefs()
+        prefs = targetContext.sharedPrefs()
     }
 
     @Test
     fun first_app_load_performs_no_upgrades() {
-        PreferenceUpgradeService.setPreferencesUpToDate(mPrefs)
-        val result = PreferenceUpgradeService.upgradePreferences(mPrefs, 0)
+        PreferenceUpgradeService.setPreferencesUpToDate(prefs)
+        val result = PreferenceUpgradeService.upgradePreferences(prefs, 0)
         assertThat("no upgrade should have taken place", result, equalTo(false))
     }
 
     @Test
     fun preference_upgrade_leads_to_max_version_in_preferences() {
-        val result = PreferenceUpgradeService.upgradePreferences(mPrefs, 0)
+        val result = PreferenceUpgradeService.upgradePreferences(prefs, 0)
         assertThat("preferences were upgraded", result, equalTo(true))
-        val version = PreferenceUpgrade.getPreferenceVersion(mPrefs)
-        PreferenceUpgradeService.setPreferencesUpToDate(mPrefs)
-        val secondVersion = PreferenceUpgrade.getPreferenceVersion(mPrefs)
+        val version = PreferenceUpgrade.getPreferenceVersion(prefs)
+        PreferenceUpgradeService.setPreferencesUpToDate(prefs)
+        val secondVersion = PreferenceUpgrade.getPreferenceVersion(prefs)
         assertThat("setPreferencesUpToDate should not change the version", secondVersion, equalTo(version))
     }
 
     @Test
     fun two_upgrades_does_nothing() {
-        val result = PreferenceUpgradeService.upgradePreferences(mPrefs, 0)
+        val result = PreferenceUpgradeService.upgradePreferences(prefs, 0)
         assertThat("preferences were upgraded", result, equalTo(true))
-        val secondResult = PreferenceUpgradeService.upgradePreferences(mPrefs, 0)
+        val secondResult = PreferenceUpgradeService.upgradePreferences(prefs, 0)
         assertThat("a second preference upgrade does nothing", secondResult, equalTo(false))
     }
 
@@ -119,14 +119,14 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         values = arrayOf(1, "<p>", "</p>")
         buttons.add(values.joinToString(Consts.FIELD_SEPARATOR))
 
-        mPrefs.edit {
+        prefs.edit {
             putStringSet("note_editor_custom_buttons", buttons)
         }
 
         // now update it and check it
-        PreferenceUpgrade.UpdateNoteEditorToolbarPrefs().performUpgrade(mPrefs)
+        PreferenceUpgrade.UpdateNoteEditorToolbarPrefs().performUpgrade(prefs)
 
-        val set = mPrefs.getStringSet("note_editor_custom_buttons", HashUtil.hashSetInit<String>(0)) as Set<String?>
+        val set = prefs.getStringSet("note_editor_custom_buttons", HashUtil.hashSetInit<String>(0)) as Set<String?>
         val toolbarButtons = CustomToolbarButton.fromStringSet(set)
 
         assertEquals("Set size", 2, set.size)
@@ -139,40 +139,40 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     @Test
     fun day_and_night_themes() {
         // Plain and Dark
-        mPrefs.edit {
+        prefs.edit {
             putString("dayTheme", "1")
             putString("nightTheme", "1")
             putBoolean("invertedColors", true)
         }
-        PreferenceUpgrade.UpgradeDayAndNightThemes().performUpgrade(mPrefs)
+        PreferenceUpgrade.UpgradeDayAndNightThemes().performUpgrade(prefs)
 
-        assertThat(mPrefs.getString("dayTheme", "0"), equalTo("2"))
-        assertThat(mPrefs.getString("nightTheme", "0"), equalTo("4"))
-        assertThat(mPrefs.contains("invertedColors"), equalTo(false))
+        assertThat(prefs.getString("dayTheme", "0"), equalTo("2"))
+        assertThat(prefs.getString("nightTheme", "0"), equalTo("4"))
+        assertThat(prefs.contains("invertedColors"), equalTo(false))
 
         // Light and Black
-        mPrefs.edit {
+        prefs.edit {
             putString("dayTheme", "0")
             putString("nightTheme", "0")
         }
-        PreferenceUpgrade.UpgradeDayAndNightThemes().performUpgrade(mPrefs)
+        PreferenceUpgrade.UpgradeDayAndNightThemes().performUpgrade(prefs)
 
-        assertThat(mPrefs.getString("dayTheme", "1"), equalTo("1"))
-        assertThat(mPrefs.getString("nightTheme", "1"), equalTo("3"))
-        assertThat(mPrefs.contains("invertedColors"), equalTo(false))
+        assertThat(prefs.getString("dayTheme", "1"), equalTo("1"))
+        assertThat(prefs.getString("nightTheme", "1"), equalTo("3"))
+        assertThat(prefs.contains("invertedColors"), equalTo(false))
     }
 
     @Test
     fun `Fetch media pref's values are converted to 'always' if enabled and 'never' if disabled`() {
         // enabled -> always
-        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, true) }
-        PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(mPrefs)
-        assertThat(mPrefs.getString("syncFetchMedia", null), equalTo("always"))
+        prefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, true) }
+        PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(prefs)
+        assertThat(prefs.getString("syncFetchMedia", null), equalTo("always"))
 
         // disabled -> never
-        mPrefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, false) }
-        PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(mPrefs)
-        assertThat(mPrefs.getString("syncFetchMedia", null), equalTo("never"))
+        prefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, false) }
+        PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(prefs)
+        assertThat(prefs.getString("syncFetchMedia", null), equalTo("never"))
     }
 
     // ############################
@@ -182,11 +182,11 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     fun `Language preference value is updated to use language tags`() {
         val upgradeAppLocale = PreferenceUpgrade.UpgradeAppLocale()
         for (languageTag in LanguageUtil.APP_LANGUAGES.values) {
-            mPrefs.edit {
+            prefs.edit {
                 putString("language", Locale.forLanguageTag(languageTag).toString())
             }
-            upgradeAppLocale.performUpgrade(mPrefs)
-            val correctLanguage = mPrefs.getString("language", null)
+            upgradeAppLocale.performUpgrade(prefs)
+            val correctLanguage = prefs.getString("language", null)
             assertThat(languageTag, equalTo(correctLanguage))
             // The following assertion broke when updating targetSdk from 33->34 / robolectric from 32->34
             // However, a manual verification on an API33 and API34 emulator worked as follows:
@@ -200,18 +200,18 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
 
     @Test
     fun `Language preference value is set to system default correctly if it hasn't been set`() {
-        PreferenceUpgrade.UpgradeAppLocale().performUpgrade(mPrefs)
+        PreferenceUpgrade.UpgradeAppLocale().performUpgrade(prefs)
 
-        assertNotNull(mPrefs.getString("language", null))
+        assertNotNull(prefs.getString("language", null))
         assertThat(LanguageUtil.getCurrentLocaleTag(), equalTo(""))
     }
 
     @Test
     fun `Language preference value is set to system default correctly`() {
-        mPrefs.edit { putString("language", "") }
-        PreferenceUpgrade.UpgradeAppLocale().performUpgrade(mPrefs)
+        prefs.edit { putString("language", "") }
+        PreferenceUpgrade.UpgradeAppLocale().performUpgrade(prefs)
 
-        assertThat(mPrefs.getString("language", null), equalTo(""))
+        assertThat(prefs.getString("language", null), equalTo(""))
         assertThat(LanguageUtil.getCurrentLocaleTag(), equalTo(""))
     }
 }

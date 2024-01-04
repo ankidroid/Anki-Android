@@ -118,43 +118,43 @@ open class CollectionHelper {
      */
     @KotlinCleanup("extract this to another file")
     class CollectionIntegrityStorageCheck {
-        private val mErrorMessage: String?
+        private val errorMessage: String?
 
         // OR:
-        private val mRequiredSpace: Long?
-        private val mFreeSpace: Long?
+        private val requiredSpace: Long?
+        private val freeSpace: Long?
 
         private constructor(requiredSpace: Long, freeSpace: Long) {
-            mFreeSpace = freeSpace
-            mRequiredSpace = requiredSpace
-            mErrorMessage = null
+            this.freeSpace = freeSpace
+            this.requiredSpace = requiredSpace
+            errorMessage = null
         }
 
         private constructor(errorMessage: String) {
-            mRequiredSpace = null
-            mFreeSpace = null
-            mErrorMessage = errorMessage
+            requiredSpace = null
+            freeSpace = null
+            this.errorMessage = errorMessage
         }
 
         fun shouldWarnOnIntegrityCheck(): Boolean {
-            return mErrorMessage != null || fileSystemDoesNotHaveSpaceForBackup()
+            return errorMessage != null || fileSystemDoesNotHaveSpaceForBackup()
         }
 
         private fun fileSystemDoesNotHaveSpaceForBackup(): Boolean {
             // only to be called when mErrorMessage == null
-            if (mFreeSpace == null || mRequiredSpace == null) {
+            if (freeSpace == null || requiredSpace == null) {
                 Timber.e("fileSystemDoesNotHaveSpaceForBackup called in invalid state.")
                 return true
             }
-            Timber.d("Required Free Space: %d. Current: %d", mRequiredSpace, mFreeSpace)
-            return mRequiredSpace > mFreeSpace
+            Timber.d("Required Free Space: %d. Current: %d", requiredSpace, freeSpace)
+            return requiredSpace > freeSpace
         }
 
         fun getWarningDetails(context: Context): String {
-            if (mErrorMessage != null) {
-                return mErrorMessage
+            if (errorMessage != null) {
+                return errorMessage
             }
-            if (mFreeSpace == null || mRequiredSpace == null) {
+            if (freeSpace == null || requiredSpace == null) {
                 Timber.e("CollectionIntegrityCheckStatus in an invalid state")
                 val defaultRequiredFreeSpace = defaultRequiredFreeSpace(context)
                 return context.resources.getString(
@@ -162,14 +162,14 @@ open class CollectionHelper {
                     defaultRequiredFreeSpace
                 )
             }
-            val required = Formatter.formatShortFileSize(context, mRequiredSpace)
+            val required = Formatter.formatShortFileSize(context, requiredSpace)
             val insufficientSpace = context.resources.getString(
                 R.string.integrity_check_insufficient_space,
                 required
             )
 
             // Also concat in the extra content showing the current free space.
-            val currentFree = Formatter.formatShortFileSize(context, mFreeSpace)
+            val currentFree = Formatter.formatShortFileSize(context, freeSpace)
             val insufficientSpaceCurrentFree = context.resources.getString(
                 R.string.integrity_check_insufficient_space_extra_content,
                 currentFree

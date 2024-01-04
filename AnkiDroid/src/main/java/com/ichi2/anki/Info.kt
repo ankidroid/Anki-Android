@@ -46,7 +46,7 @@ private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
  * Shows an about box, which is a small HTML page.
  */
 class Info : AnkiActivity() {
-    private lateinit var mWebView: WebView
+    private lateinit var webView: WebView
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,8 +66,8 @@ class Info : AnkiActivity() {
         enableToolbar(mainView)
         findViewById<MaterialButton>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
         title = "$appName v$pkgVersionName"
-        mWebView = findViewById(R.id.info)
-        mWebView.webChromeClient = object : WebChromeClient() {
+        webView = findViewById(R.id.info)
+        webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
                 // Hide the progress indicator when the page has finished loaded
                 if (progress == 100) {
@@ -90,7 +90,7 @@ class Info : AnkiActivity() {
         }
         val onBackPressedCallback = object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
-                if (mWebView.canGoBack()) mWebView.goBack()
+                if (webView.canGoBack()) webView.goBack()
             }
         }
         // Apply Theme colors
@@ -101,9 +101,9 @@ class Info : AnkiActivity() {
         val anchorTextThemeColor = ThemeUtils.getThemeAttrColor(this, android.R.attr.colorAccent)
         val anchorTextColor = anchorTextThemeColor.toRGBHex()
 
-        mWebView.setBackgroundColor(backgroundColor)
-        mWebView.settings.allowFileAccess = true
-        mWebView.settings.allowContentAccess = true
+        webView.setBackgroundColor(backgroundColor)
+        webView.settings.allowFileAccess = true
+        webView.settings.allowContentAccess = true
         setRenderWorkaround(this)
         when (type) {
             TYPE_NEW_VERSION -> {
@@ -112,14 +112,14 @@ class Info : AnkiActivity() {
                     setOnClickListener { close() }
                 }
                 val background = backgroundColor.toRGBHex()
-                mWebView.loadUrl("/android_asset/changelog.html")
-                mWebView.settings.javaScriptEnabled = true
-                mWebView.webViewClient = object : WebViewClient() {
+                webView.loadUrl("/android_asset/changelog.html")
+                webView.settings.javaScriptEnabled = true
+                webView.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView, url: String) {
                         /* The order of below javascript code must not change (this order works both in debug and release mode)
                                  *  or else it will break in any one mode.
                                  */
-                        mWebView.loadUrl(
+                        webView.loadUrl(
                             "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
                                 "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"" + anchorTextColor + "\";}" +
                                 "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +

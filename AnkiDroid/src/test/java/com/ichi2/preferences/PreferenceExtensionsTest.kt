@@ -34,7 +34,7 @@ class PreferenceExtensionsTest {
     lateinit var mockPreferences: SharedPreferences
 
     @Mock
-    private val mMockEditor: SharedPreferences.Editor? = null
+    private val mockEditor: SharedPreferences.Editor? = null
     private fun getOrSetString(key: String, supplier: Supplier<String>): String {
         return mockPreferences.getOrSetString(key, supplier)
     }
@@ -48,10 +48,10 @@ class PreferenceExtensionsTest {
         ).thenReturn(
             VALID_RESULT
         )
-        Mockito.`when`(mockPreferences.edit()).thenReturn(mMockEditor)
+        Mockito.`when`(mockPreferences.edit()).thenReturn(mockEditor)
         Mockito.`when`(
-            mMockEditor!!.putString(anyString(), anyString())
-        ).thenReturn(mMockEditor)
+            mockEditor!!.putString(anyString(), anyString())
+        ).thenReturn(mockEditor)
     }
 
     private val forMissingKey: String?
@@ -72,8 +72,8 @@ class PreferenceExtensionsTest {
     @Test
     fun missingKeySetsPreference() {
         forMissingKey
-        Mockito.verify(mMockEditor)?.putString(MISSING_KEY, LAMBDA_RETURN)
-        Mockito.verify(mMockEditor)?.apply()
+        Mockito.verify(mockEditor)?.putString(MISSING_KEY, LAMBDA_RETURN)
+        Mockito.verify(mockEditor)?.apply()
     }
 
     @SuppressWarnings("unused")
