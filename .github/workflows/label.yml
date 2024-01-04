@@ -169,7 +169,7 @@ jobs:
             }
 
             // if no file changed, remove label
-            const pullRequestData = await getPullRequest(context.issue.number);
+            const pullRequestData = await getPullRequest();
             if (!fileChanged) {
               if (pullRequestData.data.labels.find(label => label.name === stringsLabel)) {
                 console.log(`Removing #${stringsLabel} label from PR #${context.issue.number}`);
