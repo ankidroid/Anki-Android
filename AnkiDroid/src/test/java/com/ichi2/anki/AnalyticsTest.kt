@@ -16,12 +16,13 @@
 package com.ichi2.anki
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.res.Resources
 import android.preference.*
+import androidx.core.content.edit
 import com.brsanthu.googleanalytics.GoogleAnalytics
 import com.brsanthu.googleanalytics.GoogleAnalyticsBuilder
 import com.brsanthu.googleanalytics.request.ExceptionHit
+import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.analytics.UsageAnalytics
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -39,11 +40,11 @@ class AnalyticsTest {
     @Mock
     private lateinit var mockResources: Resources
 
-    @Mock
-    private lateinit var mockSharedPreferences: SharedPreferences
-
-    @Mock
-    private lateinit var mockSharedPreferencesEditor: SharedPreferences.Editor
+    private val sharedPreferences = SPMockBuilder().createSharedPreferences().apply {
+        edit {
+            putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, true)
+        }
+    }
 
     @Before
     fun setUp() {
@@ -62,13 +63,7 @@ class AnalyticsTest {
         whenever(mockContext.packageName)
             .thenReturn("mock_context")
         whenever(mockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
-            .thenReturn(mockSharedPreferences)
-        whenever(mockSharedPreferences.getBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, false))
-            .thenReturn(true)
-        whenever(mockSharedPreferencesEditor.putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, true))
-            .thenReturn(mockSharedPreferencesEditor)
-        whenever(mockSharedPreferences.edit())
-            .thenReturn(mockSharedPreferencesEditor)
+            .thenReturn(sharedPreferences)
     }
 
     private class SpyGoogleAnalyticsBuilder : GoogleAnalyticsBuilder() {
@@ -89,7 +84,7 @@ class AnalyticsTest {
         mockStatic(PreferenceManager::class.java).use { _ ->
             mockStatic(GoogleAnalytics::class.java).use { _ ->
                 whenever(PreferenceManager.getDefaultSharedPreferences(any()))
-                    .thenReturn(mockSharedPreferences)
+                    .thenReturn(sharedPreferences)
                 whenever(GoogleAnalytics.builder())
                     .thenReturn(SpyGoogleAnalyticsBuilder())
 

@@ -390,6 +390,7 @@ dependencies {
     testImplementation("androidx.fragment:fragment-testing:$fragments_version")
     // in a JvmTest we need org.json.JSONObject to not be mocked
     testImplementation 'org.json:json:20231013'
+    testImplementation 'io.github.ivanshafran:shared-preferences-mock:1.2.4'
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation("androidx.test.espresso:espresso-contrib:$espresso_version") {
