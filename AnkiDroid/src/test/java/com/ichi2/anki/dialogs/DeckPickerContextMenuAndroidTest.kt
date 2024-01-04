@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.dialogs
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -36,7 +37,7 @@ class DeckPickerContextMenuAndroidTest : RobolectricTest() {
     fun delete_deck_is_last_in_menu_issue_10283() {
         // "Delete deck" was previously close to "Custom study" which caused misclicks.
         // This is less likely at the bottom of the list
-        testDialog(Consts.DEFAULT_DECK_ID) { dialog ->
+        testDialog(Consts.DEFAULT_DECK_ID, "Default") { dialog ->
             val lastItem = dialog.items.last()
             MatcherAssert.assertThat(
                 "'Delete deck' should be last item in the menu",
@@ -52,13 +53,19 @@ class DeckPickerContextMenuAndroidTest : RobolectricTest() {
      * @param deckId The deck ID to test
      * @param execAssertions the assertions to perform on the [MaterialDialog] under test
      */
-    private fun testDialog(@Suppress("SameParameterValue") deckId: DeckId, execAssertions: (MaterialDialog) -> Unit) {
-        val args = DeckPickerContextMenu(col)
-            .withArguments(deckId)
-            .arguments
+    private fun testDialog(
+        @Suppress("SameParameterValue") deckId: DeckId,
+        @Suppress("SameParameterValue") deckName: String,
+        execAssertions: (MaterialDialog) -> Unit
+    ) {
+        val args = bundleOf(
+            DeckPickerContextMenu.ARG_DECK_ID to deckId,
+            DeckPickerContextMenu.ARG_DECK_NAME to deckName,
+            DeckPickerContextMenu.ARG_DECK_IS_DYN to false,
+            DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to false
+        )
 
-        val factory = DeckPickerContextMenu.Factory { col }
-        FragmentScenario.launch(DeckPickerContextMenu::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        FragmentScenario.launch(DeckPickerContextMenu::class.java, args, androidx.appcompat.R.style.Theme_AppCompat)
             .use { scenario ->
                 scenario.moveToState(Lifecycle.State.STARTED)
                 scenario.onFragment { f: DeckPickerContextMenu ->

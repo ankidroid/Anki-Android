@@ -18,40 +18,33 @@ package com.ichi2.anki.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
+import androidx.annotation.VisibleForTesting
+import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
-import com.ichi2.utils.BundleUtils.requireLong
-import com.ichi2.utils.ExtendedFragmentFactory
-import java.util.function.Supplier
 
-class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialogFragment() {
-
-    fun withArguments(did: DeckId): DeckPickerContextMenu {
-        val args = this.arguments ?: Bundle()
-        args.putLong("did", did)
-        this.arguments = args
-        return this
-    }
-
-    /** The selected deck for the context menu */
-    val deckId get() = requireArguments().requireLong("did")
+class DeckPickerContextMenu : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val title = collection.decks.name(deckId)
+        assert(requireArguments().containsKey(ARG_DECK_ID))
+        assert(requireArguments().containsKey(ARG_DECK_NAME))
+        assert(requireArguments().containsKey(ARG_DECK_IS_DYN))
+        assert(requireArguments().containsKey(ARG_DECK_HAS_BURIED_IN_DECK))
+        val title = requireArguments().getString(ARG_DECK_NAME)
         return MaterialDialog(requireActivity())
             .title(text = title)
             .cancelable(true)
             .noAutoDismiss()
-            .listItems(items = contextMenuOptions.map { resources.getString(it.optionName) }) {
-                    _: MaterialDialog, index: Int, _: CharSequence ->
-                (requireActivity() as DeckPicker).handleContextMenuSelection(contextMenuOptions[index], deckId)
+            .listItems(items = contextMenuOptions.map { resources.getString(it.optionName) }) { _: MaterialDialog, index: Int, _: CharSequence ->
+                (requireActivity() as DeckPicker).handleContextMenuSelection(
+                    contextMenuOptions[index],
+                    requireArguments().getLong(ARG_DECK_ID)
+                )
             }
     }
 
@@ -60,9 +53,9 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
      */
     private val contextMenuOptions: List<DeckPickerContextMenuOption>
         get() {
-            val did = deckId
-            val dyn = collection.decks.isDyn(did)
-            val contextMenuOptions = ArrayList<DeckPickerContextMenuOption>(11) // init with our fixed list size for performance
+            val dyn = requireArguments().getBoolean(ARG_DECK_IS_DYN)
+            val contextMenuOptions =
+                ArrayList<DeckPickerContextMenuOption>(11) // init with our fixed list size for performance
             contextMenuOptions.add(DeckPickerContextMenuOption.ADD_CARD)
             contextMenuOptions.add(DeckPickerContextMenuOption.BROWSE_CARDS)
             if (dyn) {
@@ -78,7 +71,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY)
             }
             contextMenuOptions.add(DeckPickerContextMenuOption.EXPORT_DECK)
-            if (collection.sched.haveBuriedInCurrentDeck()) {
+            if (requireArguments().getBoolean(ARG_DECK_HAS_BURIED_IN_DECK)) {
                 contextMenuOptions.add(DeckPickerContextMenuOption.UNBURY)
             }
             contextMenuOptions.add(DeckPickerContextMenuOption.CREATE_SHORTCUT)
@@ -101,20 +94,31 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         ADD_CARD(R.string.menu_add);
     }
 
-    class Factory(val collectionSupplier: Supplier<Collection>) : ExtendedFragmentFactory() {
-        override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
-            val cls = loadFragmentClass(classLoader, className)
-            return if (cls == DeckPickerContextMenu::class.java) {
-                newDeckPickerContextMenu()
-            } else {
-                super.instantiate(classLoader, className)
-            }
+    companion object {
+        @VisibleForTesting
+        const val ARG_DECK_ID = "arg_deck_id"
+
+        @VisibleForTesting
+        const val ARG_DECK_NAME = "arg_deck_name"
+
+        @VisibleForTesting
+        const val ARG_DECK_IS_DYN = "arg_deck_is_dyn"
+
+        @VisibleForTesting
+        const val ARG_DECK_HAS_BURIED_IN_DECK = "arg_deck_has_buried_in_deck"
+
+        fun newInstance(
+            id: DeckId,
+            name: String,
+            isDynamic: Boolean,
+            hasBuriedInDeck: Boolean
+        ): DeckPickerContextMenu = DeckPickerContextMenu().apply {
+            arguments = bundleOf(
+                ARG_DECK_ID to id,
+                ARG_DECK_NAME to name,
+                ARG_DECK_IS_DYN to isDynamic,
+                ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedInDeck
+            )
         }
-
-        private fun newDeckPickerContextMenu(): DeckPickerContextMenu =
-            DeckPickerContextMenu(collectionSupplier.get())
-
-        fun newDeckPickerContextMenu(deckId: DeckId): DeckPickerContextMenu =
-            DeckPickerContextMenu(collectionSupplier.get()).withArguments(deckId)
     }
 }
