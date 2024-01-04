@@ -190,15 +190,13 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun jsAnkiGetDeckName() = runTest {
         val models = col.notetypes
-        val decks = col.decks
 
         val didAb = addDeck("A::B")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
 
-        val didA = addDeck("A")
-        decks.select(didA)
+        addDeck("A", setAsSelected = true)
 
         val reviewer = startReviewer()
         val javaScriptFunction = reviewer.jsApi
