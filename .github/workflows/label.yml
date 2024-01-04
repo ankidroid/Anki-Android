@@ -112,11 +112,11 @@ jobs:
               });
             }
 
-            async function removeLabel(labels, issue_number) {
+            async function removeLabel(labels) {
                 await github.rest.issues.removeLabel({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
-                    issue_number: issue_number,
+                    issue_number: context.issue.number,
                     name: labels,
                 });
             }
@@ -160,9 +160,21 @@ jobs:
               }
             }
 
+            async function getPullRequest() {
+                return await github.rest.pulls.get({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: context.issue.number,
+                });
+            }
+
             // if no file changed, remove label
+            const pullRequestData = await getPullRequest(context.issue.number);
             if (!fileChanged) {
-              removeLabel([stringsLabel], context.issue.number);
+              if (pullRequestData.data.labels.find(label => label.name === stringsLabel)) {
+                console.log(`Removing #${stringsLabel} label from PR #${context.issue.number}`);
+                removeLabel([stringsLabel]);
+              }
             }
 
   add_new_contributor_label:
