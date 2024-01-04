@@ -252,7 +252,6 @@ open class DeckPicker :
 
     private var mToolbarSearchView: SearchView? = null
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
-    private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
 
     override val permissionScreenLauncher = recreateActivityResultLauncher()
 
@@ -355,9 +354,23 @@ open class DeckPicker :
         val deckId = v.tag as DeckId
         Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId)
         launchCatchingTask {
-            withCol { decks.select(deckId) }
+            val (deckName, isDynamic, hasBuriedInDeck) = withCol {
+                decks.select(deckId)
+                Triple(
+                    decks.name(deckId),
+                    decks.isDyn(deckId),
+                    sched.haveBuriedInCurrentDeck()
+                )
+            }
             updateDeckList() // focus has changed
-            showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId))
+            showDialogFragment(
+                DeckPickerContextMenu.newInstance(
+                    id = deckId,
+                    name = deckName,
+                    isDynamic = isDynamic,
+                    hasBuriedInDeck = hasBuriedInDeck
+                )
+            )
         }
         true
     }
@@ -373,7 +386,6 @@ open class DeckPicker :
         }
         mExportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
         mCustomStudyDialogFactory = CustomStudyDialogFactory({ getColUnsafe }, this).attachToActivity(this)
-        mContextMenuFactory = DeckPickerContextMenu.Factory { getColUnsafe }.attachToActivity(this)
 
         // Then set theme and content view
         super.onCreate(savedInstanceState)

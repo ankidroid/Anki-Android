@@ -17,9 +17,11 @@
 package com.ichi2.anki.dialogs
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.content.pm.ShortcutManagerCompat.FLAG_MATCH_PINNED
+import androidx.fragment.app.testing.FragmentScenario
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.afollestad.materialdialogs.MaterialDialog
@@ -52,8 +54,32 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
-    fun ensure_cannot_be_instantiated_without_arguments() {
-        assertFailsWith<IllegalStateException> { DeckPickerContextMenu(col).deckId }
+    fun ensure_cannot_be_instantiated_without_expected_arguments() {
+        // fails on deck id missing from arguments
+        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("id") }
+        // fails on deck name missing from arguments
+        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("name") }
+        // fails on deck dynamic status missing from arguments
+        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("dynamic") }
+        // fails on deck having buried status missing from arguments
+        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("hasBuried") }
+    }
+
+    /**
+     * Create a [Bundle] with static data to be passed as arguments for [DeckPickerContextMenu].
+     * One option is excluded to simulate the argument missing.
+     *
+     * @param excluded a value from [id, name, dynamic, hasBuried] to be removed from the returned
+     * bundle. See source code for [DeckPickerContextMenu] for options meaning.
+     */
+    private fun startContextMenuWithMissingArgument(excluded: String) {
+        val arguments = Bundle().apply {
+            if (excluded != "id") { DeckPickerContextMenu.ARG_DECK_ID to 1000L }
+            if (excluded != "name") { DeckPickerContextMenu.ARG_DECK_NAME to "Deck" }
+            if (excluded != "dynamic") { DeckPickerContextMenu.ARG_DECK_IS_DYN to false }
+            if (excluded != "hasBuried") { DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to false }
+        }
+        FragmentScenario.launch(DeckPickerContextMenu::class.java, arguments, R.style.Theme_Light)
     }
 
     @Test
