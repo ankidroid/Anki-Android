@@ -112,6 +112,15 @@ jobs:
               });
             }
 
+            async function removeLabel(labels) {
+                await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: context.issue.number,
+                    name: labels,
+                });
+            }
+
             async function addComments() {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
@@ -148,6 +157,23 @@ jobs:
                 addLabel([stringsLabel]);
                 addComments();
                 break;
+              }
+            }
+
+            async function getPullRequest() {
+                return await github.rest.pulls.get({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: context.issue.number,
+                });
+            }
+
+            // if no file changed, remove label
+            const pullRequestData = await getPullRequest();
+            if (!fileChanged) {
+              if (pullRequestData.data.labels.find(label => label.name === stringsLabel)) {
+                console.log(`Removing #${stringsLabel} label from PR #${context.issue.number}`);
+                removeLabel([stringsLabel]);
               }
             }
 
