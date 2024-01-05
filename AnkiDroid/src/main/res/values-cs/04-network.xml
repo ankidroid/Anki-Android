@@ -64,7 +64,7 @@
     <string name="log_out">Odhlásit se</string>
     <string name="reset_password">Obnovit heslo</string>
     <string name="lost_mail_instructions">Zapomněli jste e-mail?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">Přihlašování</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Možnosti pro XXX</string>
     <string name="sync_title">Synchronizace</string>
