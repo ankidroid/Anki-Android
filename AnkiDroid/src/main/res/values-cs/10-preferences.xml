@@ -118,7 +118,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Klepnutí uprostřed ve středu</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Klepnutí vlevo dole</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Klepnutí vpravo dole</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Zatřesení zařízením</string>
     <string name="card_browser_enable_external_context_menu">Menu „%s“</string>
     <string name="card_browser_enable_external_context_menu_summary">Povolí globální kontextovou nabídku „%s“</string>
     <string name="double_scrolling_gap" maxLength="41">Dvojitý posun</string>
@@ -274,8 +274,8 @@
     <string name="binding_add_key">Přidat klávesu</string>
     <string name="binding_replace_key">Nahradit klávesu</string>
     <string name="key_picker_default_press_key">Stiskněte tlačítko</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">Přidat joystick / ovladač pohybu</string>
+    <string name="axis_picker_move_joystick">Pohnout joystickem / ovladačem pohybu</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Vybrat stranu karty</string>
     <string name="card_side_question">Otázka</string>
