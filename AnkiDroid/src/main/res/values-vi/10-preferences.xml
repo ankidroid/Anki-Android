@@ -203,6 +203,7 @@
     <string name="html_javascript_debugging_summ">Bật kết nối WebView từ xa và lưu HTML thẻ vào thư mục AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Người xem xét</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Trợ năng</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>

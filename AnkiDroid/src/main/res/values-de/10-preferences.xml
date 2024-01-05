@@ -205,6 +205,7 @@
     <string name="html_javascript_debugging_summ">Remote-WebView-Verbindungen aktivieren und Karten-HTML ins AnkiDroid-Verzeichnis speichern</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Feedback-Geber</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Bedienungshilfen</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Zwischenablage-Bilder als PNG einfügen</string>

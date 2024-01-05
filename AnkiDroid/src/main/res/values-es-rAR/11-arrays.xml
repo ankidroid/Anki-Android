@@ -103,4 +103,5 @@
     <string name="replay_voice">Reproducir Voz</string>
     <string name="automatic_answer_option_2">Difícil (Bueno si no está disponible)</string>
     <string name="automatic_answer_option_4">Fácil (Bueno si no está disponible)</string>
+    <string name="save_voice">Save Recording</string>
 </resources>

@@ -103,4 +103,5 @@
     <string name="replay_voice">ସ୍ୱର ପୁନର୍ବାର ଚଲାନ୍ତୁ</string>
     <string name="automatic_answer_option_2">କଠିନ (ଅନୁପଲବ୍ଧ ଥିଲେ ଭଲ)</string>
     <string name="automatic_answer_option_4">ସହଜ (ଅନୁପଲବ୍ଧ ଥିଲେ ଭଲ)</string>
+    <string name="save_voice">Save Recording</string>
 </resources>

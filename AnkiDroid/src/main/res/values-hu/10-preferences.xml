@@ -206,6 +206,7 @@
     <string name="html_javascript_debugging_summ">Távoli WebView kapcsolatok engedélyezése és a HTML kártyák AnkiDroid mappába mentése</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Felülvizsgáló</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Kisegítő lehetőségek</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Vágólap képeket PNG-ként illeszt be</string>
