@@ -250,8 +250,8 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
                 <html class="$docClass" dir="$languageDirectionality" data-bs-theme="$baseTheme">
                 <head>
                     <title>AnkiDroid</title>
-                        <link rel="stylesheet" type="text/css" href="/web/root-vars.css">
-                        <link rel="stylesheet" type="text/css" href="/web/reviewer.css">
+                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/root-vars.css">
+                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/reviewer.css">
                     <style type="text/css">
                         .night-mode button { --canvas: #606060; --fg: #eee; }
                         $colors
@@ -263,7 +263,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
                     <div id="qa"></div>
                     <script src="file:///android_asset/jquery.min.js"></script>
                     <script src="file:///android_asset/mathjax/tex-chtml.js"></script>
-                    <script src="/web/reviewer.js"></script>
+                    <script src="file:///android_asset/backend/web/reviewer.js"></script>
                     <script>bridgeCommand = function(){};</script>
                 </body>
                 </html>
