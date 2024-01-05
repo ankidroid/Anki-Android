@@ -837,11 +837,11 @@ open class Reviewer :
         if (mTTS.enabled && !mActionButtons.status.selectTtsIsDisabled()) {
             menu.findItem(R.id.action_select_tts).isVisible = true
         }
-        if (!suspendNoteAvailable()) {
+        if (!suspendNoteAvailable() && !mActionButtons.status.suspendIsDisabled()) {
             menu.findItem(R.id.action_suspend).isVisible = false
             menu.findItem(R.id.action_suspend_card).isVisible = true
         }
-        if (!buryNoteAvailable()) {
+        if (!buryNoteAvailable() && !mActionButtons.status.buryIsDisabled()) {
             menu.findItem(R.id.action_bury).isVisible = false
             menu.findItem(R.id.action_bury_card).isVisible = true
         }
