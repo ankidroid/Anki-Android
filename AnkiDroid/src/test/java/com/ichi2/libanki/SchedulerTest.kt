@@ -93,23 +93,23 @@ open class SchedulerTest : JvmTest() {
         val sched = col.sched
         MatcherAssert.assertThat(
             "new timezone should be enabled by default",
-            sched._new_timezone_enabled(),
+            sched.newTimezoneEnabled(),
             Matchers.equalTo(true)
         )
 
         // a second call should be fine
-        sched.set_creation_offset()
+        sched.setCreationOffset()
         MatcherAssert.assertThat(
             "new timezone should still be enabled",
-            sched._new_timezone_enabled(),
+            sched.newTimezoneEnabled(),
             Matchers.equalTo(true)
         )
         // we can obtain the offset from "crt" without an issue - do not test the return as it depends on the local timezone
-        sched._current_timezone_offset()
-        sched.clear_creation_offset()
+        sched.currentTimezoneOffset()
+        sched.clearCreationOffset()
         MatcherAssert.assertThat(
             "new timezone should be disabled after clear",
-            sched._new_timezone_enabled(),
+            sched.newTimezoneEnabled(),
             Matchers.equalTo(false)
         )
     }
@@ -178,7 +178,7 @@ open class SchedulerTest : JvmTest() {
             val note = col.newNote()
             note.setItem("Front", i.toString())
             if (i > 4) {
-                note.model().put("did", deck2)
+                note.notetype.put("did", deck2)
             }
             col.addNote(note)
         }
@@ -210,7 +210,7 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Front", "one")
         col.addNote(note)
         val c = col.sched.card!!
-        val conf = col.sched._cardConf(c)
+        val conf = col.sched.cardConf(c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 2.0, 3.0, 4.0, 5.0)))
         col.decks.save(conf)
         col.sched.answerCard(c, BUTTON_TWO)
@@ -241,7 +241,7 @@ open class SchedulerTest : JvmTest() {
         // sched.getCard should return it, since it's due in the past
         val c = col.sched.card!!
         assertNotNull(c)
-        val conf = col.sched._cardConf(c)
+        val conf = col.sched.cardConf(c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(0.5, 3.0, 10.0)))
         col.decks.save(conf)
         // fail it
@@ -288,9 +288,10 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals((col.sched.today + 1).toLong(), c.due)
         Assert.assertEquals(1, c.ivl)
         // or normal removal
-        c.type = CARD_TYPE_NEW
-        c.queue = QUEUE_TYPE_LRN
-        c.flush()
+        c.update {
+            type = CARD_TYPE_NEW
+            queue = QUEUE_TYPE_LRN
+        }
         col.sched.answerCard(c, BUTTON_FOUR)
         Assert.assertEquals(CARD_TYPE_REV, c.type)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
@@ -316,7 +317,7 @@ open class SchedulerTest : JvmTest() {
             queue = QUEUE_TYPE_REV
             type = CARD_TYPE_REV
         }
-        c.flush()
+        c.col.updateCard(c, skipUndoEntry = true)
 
         // fail the card
         c = col.sched.card!!
@@ -340,13 +341,13 @@ open class SchedulerTest : JvmTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        var c = note.cards()[0].apply {
+        var c = note.cards()[0].update {
             ivl = 100
             due = col.sched.today.toLong()
             queue = QUEUE_TYPE_REV
             type = CARD_TYPE_REV
         }
-        c.flush()
+        c.col.updateCard(c, skipUndoEntry = true)
         val conf = col.decks.confForDid(1)
         conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
         col.decks.save(conf)
@@ -373,17 +374,17 @@ open class SchedulerTest : JvmTest() {
         col.db.execute("update cards set queue=0, type=0")
         // should get '1' first
         var c = col.sched.card!!
-        Assert.assertTrue(c.q().endsWith("1"))
+        Assert.assertTrue(c.question().endsWith("1"))
         // pass it so it's due in 10 minutes
         col.sched.answerCard(c, BUTTON_THREE)
         // get the other card
         c = col.sched.card!!
-        Assert.assertTrue(c.q().endsWith("2"))
+        Assert.assertTrue(c.question().endsWith("2"))
         // fail it so it's due in 1 minute
         col.sched.answerCard(c, BUTTON_ONE)
         // we shouldn't get the same card again
         c = col.sched.card!!
-        Assert.assertFalse(c.q().endsWith("2"))
+        Assert.assertFalse(c.question().endsWith("2"))
     }
 
     @Test
@@ -396,7 +397,7 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Front", "one")
         col.addNote(note)
         var c = col.sched.card!!
-        var conf = col.sched._cardConf(c)
+        var conf = col.sched.cardConf(c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 10.0, 1440.0, 2880.0)))
         col.decks.save(conf)
         // pass it
@@ -412,8 +413,7 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals(QUEUE_TYPE_DAY_LEARN_RELEARN, c.queue)
         assertNull(col.sched.card)
         // for testing, move it back a day
-        c.due = c.due - 1
-        c.flush()
+        c.update { due -= 1 }
         Assert.assertEquals(Counts(0, 1, 0), col.sched.counts())
         c = col.sched.card!!
         // nextIvl should work
@@ -425,8 +425,7 @@ open class SchedulerTest : JvmTest() {
         c = col.sched.card!!
         col.sched.answerCard(c, BUTTON_THREE)
         // simulate the passing of another two days
-        c.due = c.due - 2
-        c.flush()
+        c.update { due -= 2 }
         // the last pass should graduate it into a review card
         Assert.assertEquals(SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
         col.sched.answerCard(c, BUTTON_THREE)
@@ -434,10 +433,9 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
         // if the lapse step is tomorrow, failing it should handle the counts
         // correctly
-        c.due = 0
-        c.flush()
+        c.update { due = 0 }
         Assert.assertEquals(Counts(0, 0, 1), col.sched.counts())
-        conf = col.sched._cardConf(c)
+        conf = col.sched.cardConf(c)
         conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf(1440.0)))
         col.decks.save(conf)
         c = col.sched.card!!
@@ -467,13 +465,13 @@ open class SchedulerTest : JvmTest() {
             ivl = 100
         }
         c.startTimer()
-        c.flush()
+        c.col.updateCard(c, skipUndoEntry = true)
         // save it for later use as well
         val cardcopy = c.clone()
         // try with an ease of 2
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         c = cardcopy.clone()
-        c.flush()
+        c.col.updateCard(c, skipUndoEntry = true)
         col.sched.answerCard(c, BUTTON_TWO)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
         // the new interval should be (100) * 1.2 = 120
@@ -487,7 +485,7 @@ open class SchedulerTest : JvmTest() {
         // ease 3
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         c = cardcopy.clone()
-        c.flush()
+        c.col.updateCard(c, skipUndoEntry = true)
         col.sched.answerCard(c, BUTTON_THREE)
         // the new interval should be (100 + 8/2) * 2.5 = 260
         Assert.assertTrue(AnkiAssert.checkRevIvl(c, 260))
@@ -497,7 +495,7 @@ open class SchedulerTest : JvmTest() {
         // ease 4
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         c = cardcopy.clone()
-        c.flush()
+        c.col.updateCard(c, skipUndoEntry = true)
         col.sched.answerCard(c, BUTTON_FOUR)
         // the new interval should be (100 + 8) * 2.5 * 1.3 = 351
         Assert.assertTrue(AnkiAssert.checkRevIvl(c, 351))
@@ -509,9 +507,7 @@ open class SchedulerTest : JvmTest() {
         val conf = col.decks.getConf(1)
         conf.getJSONObject("lapse").put("leechAction", LEECH_SUSPEND)
         col.decks.save(conf)
-        c = cardcopy.clone()
-        c.lapses = 7
-        c.flush()
+        cardcopy.clone().update { lapses = 7 }
         /* todo hook
         // steup hook
         hooked = new [] {};
@@ -536,14 +532,14 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Front", "one")
         col.addNote(note)
         // 1 day ivl review card due now
-        val c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.due = col.sched.today.toLong()
-        c.setReps(1)
-        c.ivl = 1
-        c.startTimer()
-        c.flush()
+        val c = note.cards()[0].update {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            due = col.sched.today.toLong()
+            setReps(1)
+            ivl = 1
+            startTimer()
+        }
         // Upstream, there is no space in 2d
         Assert.assertEquals(
             "2d",
@@ -618,47 +614,6 @@ open class SchedulerTest : JvmTest() {
 
     @Test
     @Throws(Exception::class)
-    fun test_finishedV2() {
-        val col = col
-        // nothing due
-        MatcherAssert.assertThat(
-            col.sched.finishedMsg().toString(),
-            Matchers.containsString("Congratulations")
-        )
-        MatcherAssert.assertThat(
-            col.sched.finishedMsg().toString(),
-            Matchers.not(
-                Matchers.containsString("limit")
-            )
-        )
-        val note = col.newNote()
-        note.setItem("Front", "one")
-        note.setItem("Back", "two")
-        col.addNote(note)
-        // have a new card
-        MatcherAssert.assertThat(
-            col.sched.finishedMsg().toString(),
-            Matchers.containsString("new cards available")
-        )
-        // turn it into a review
-        val c = note.cards()[0]
-        c.startTimer()
-        col.sched.answerCard(c, BUTTON_THREE)
-        // nothing should be due tomorrow, as it's due in a week
-        MatcherAssert.assertThat(
-            col.sched.finishedMsg().toString(),
-            Matchers.containsString("Congratulations")
-        )
-        MatcherAssert.assertThat(
-            col.sched.finishedMsg().toString(),
-            Matchers.not(
-                Matchers.containsString("limit")
-            )
-        )
-    }
-
-    @Test
-    @Throws(Exception::class)
     fun test_nextIvlV2() {
         val col = col
         val note = col.newNote()
@@ -694,20 +649,22 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals(4 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
         // lapsed cards
         // //////////////////////////////////////////////////////////////////////////////////////////////////
-        c.type = CARD_TYPE_RELEARNING
-        c.ivl = 100
-        c.factor = STARTING_FACTOR
-        c.flush()
+        c.update {
+            type = CARD_TYPE_RELEARNING
+            ivl = 100
+            factor = STARTING_FACTOR
+        }
         Assert.assertEquals(60, col.sched.nextIvl(c, BUTTON_ONE))
         Assert.assertEquals(100 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
         Assert.assertEquals(101 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
         // review cards
         // //////////////////////////////////////////////////////////////////////////////////////////////////
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.ivl = 100
-        c.factor = STARTING_FACTOR
-        c.flush()
+        c.update {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            ivl = 100
+            factor = STARTING_FACTOR
+        }
         // failing it should put it at 60s
         Assert.assertEquals(60, col.sched.nextIvl(c, BUTTON_ONE))
         // or 1 day if relearn is false
@@ -780,11 +737,12 @@ open class SchedulerTest : JvmTest() {
         col.sched.unsuspendCards(listOf(c.id))
         assertNotNull(col.sched.card)
         // should cope with rev cards being relearnt
-        c.due = 0
-        c.ivl = 100
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.flush()
+        c.update {
+            due = 0
+            ivl = 100
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+        }
         c = col.sched.card!!
         col.sched.answerCard(c, BUTTON_ONE)
         MatcherAssert.assertThat(
@@ -801,8 +759,7 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals(CARD_TYPE_RELEARNING, c.type)
         Assert.assertEquals(due, c.due)
         // should cope with cards in cram decks
-        c.due = 1
-        c.flush()
+        c.update { this.due = 1 }
         addDynamicDeck("tmp")
         col.sched.rebuildDyn()
         c.load()
@@ -823,7 +780,7 @@ open class SchedulerTest : JvmTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        var c = note.cards()[0].apply {
+        var c = note.cards()[0].update {
             ivl = 100
             queue = QUEUE_TYPE_REV
             type = CARD_TYPE_REV
@@ -834,7 +791,7 @@ open class SchedulerTest : JvmTest() {
         }
 
         c.startTimer()
-        c.flush()
+        c.col.updateCard(c, skipUndoEntry = true)
         Assert.assertEquals(Counts(0, 0, 0), col.sched.counts())
         // create a dynamic deck and refresh it
         val did = addDynamicDeck("Cram")
@@ -852,7 +809,7 @@ open class SchedulerTest : JvmTest() {
             (75 * 1.2).roundToInt() * SECONDS_PER_DAY,
             col.sched.nextIvl(c, BUTTON_TWO)
         )
-        val toLong = fun (v: Double) = v.roundToLong() * SECONDS_PER_DAY
+        val toLong = fun(v: Double) = v.roundToLong() * SECONDS_PER_DAY
         MatcherAssert.assertThat(
             col.sched.nextIvl(c, BUTTON_THREE),
             equalTo(toLong(75 * 2.5))
@@ -876,9 +833,10 @@ open class SchedulerTest : JvmTest() {
         )
 
         // due in 75 days, so it's been waiting 25 days
-        c.ivl = 100
-        c.due = (col.sched.today + 75).toLong()
-        c.flush()
+        c.update {
+            ivl = 100
+            due = (col.sched.today + 75).toLong()
+        }
         col.sched.rebuildDyn(did)
         c = col.sched.card!!
         Assert.assertEquals(60 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_TWO))
@@ -896,7 +854,7 @@ open class SchedulerTest : JvmTest() {
 
         // fail the card outside filtered deck
         val c = col.sched.card!!
-        val conf = col.sched._cardConf(c)
+        val conf = col.sched.cardConf(c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 10.0, 61.0)))
         col.decks.save(conf)
         col.sched.answerCard(c, BUTTON_ONE)
@@ -1097,11 +1055,11 @@ open class SchedulerTest : JvmTest() {
         note = col.newNote()
         note.setItem("Front", "three")
         col.addNote(note)
-        val c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.due = col.sched.today.toLong()
-        c.flush()
+        note.cards()[0].update {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            due = col.sched.today.toLong()
+        }
         Assert.assertEquals(Counts(0, 0, 1), col.sched.counts())
         col.sched.answerCard(col.sched.card!!, BUTTON_ONE)
         Assert.assertEquals(Counts(0, 1, 0), col.sched.counts())
@@ -1116,11 +1074,11 @@ open class SchedulerTest : JvmTest() {
             val note = col.newNote()
             note.setItem("Front", "num$i")
             col.addNote(note)
-            val c = note.cards()[0]
-            c.type = CARD_TYPE_REV
-            c.queue = QUEUE_TYPE_REV
-            c.due = 0
-            c.flush()
+            note.cards()[0].update {
+                type = CARD_TYPE_REV
+                queue = QUEUE_TYPE_REV
+                due = 0
+            }
         }
         // fail the first one
         var c = col.sched.card!!
@@ -1129,8 +1087,7 @@ open class SchedulerTest : JvmTest() {
         val c2 = col.sched.card!!
         Assert.assertEquals(QUEUE_TYPE_REV, c2.queue)
         // if the failed card becomes due, it should show first
-        c.due = time.intTime() - 1
-        c.flush()
+        c.update { due = time.intTime() - 1 }
         c = col.sched.card!!
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
     }
@@ -1163,22 +1120,22 @@ open class SchedulerTest : JvmTest() {
         note = col.newNote()
         note.setItem("Front", "two")
         val default1 = addDeck("Default::1")
-        note.model().put("did", default1)
+        note.notetype.put("did", default1)
         col.addNote(note)
         // make it a review card
-        val c = note.cards()[0]
-        c.queue = QUEUE_TYPE_REV
-        c.due = 0
-        c.flush()
+        val c = note.cards()[0].update {
+            queue = QUEUE_TYPE_REV
+            due = 0
+        }
         // add one more with a new deck
         note = col.newNote()
         note.setItem("Front", "two")
-        note.model().put("did", addDeck("foo::bar"))
+        note.notetype.put("did", addDeck("foo::bar"))
         col.addNote(note)
         // and one that's a sibling
         note = col.newNote()
         note.setItem("Front", "three")
-        note.model().put("did", addDeck("foo::baz"))
+        note.notetype.put("did", addDeck("foo::baz"))
         col.addNote(note)
         Assert.assertEquals(5, col.decks.allNamesAndIds().size.toLong())
         val tree = col.sched.deckDueTree().children[0]
@@ -1194,8 +1151,7 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals(1, value.revCount.toLong())
         Assert.assertEquals(0, value.newCount.toLong())
         // code should not fail if a card has an invalid deck
-        c.did = 12345
-        c.flush()
+        c.update { did = 12345 }
         col.sched.deckDueTree()
     }
 
@@ -1226,13 +1182,13 @@ open class SchedulerTest : JvmTest() {
         note = col.newNote()
         note.setItem("Front", "two")
         var default1 = addDeck("Default::2")
-        note.model().put("did", default1)
+        note.notetype.put("did", default1)
         col.addNote(note)
         // and another that's higher up
         note = col.newNote()
         note.setItem("Front", "three")
         default1 = addDeck("Default::1")
-        note.model().put("did", default1)
+        note.notetype.put("did", default1)
         col.addNote(note)
         // should get top level one first, then ::1, then ::2
         Assert.assertEquals(Counts(3, 0, 0), col.sched.counts())
@@ -1294,12 +1250,13 @@ open class SchedulerTest : JvmTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        val c = note.cards()[0]
-        c.queue = QUEUE_TYPE_REV
-        c.type = CARD_TYPE_REV
-        c.ivl = 100
-        c.due = 0
-        c.flush()
+        val c = note.cards()[0].update {
+            queue = QUEUE_TYPE_REV
+            type = CARD_TYPE_REV
+            ivl = 100
+            due = 0
+        }
+        c.col.updateCard(c, skipUndoEntry = true)
         Assert.assertEquals(Counts(0, 0, 1), col.sched.counts())
         col.sched.forgetCards(listOf(c.id))
         Assert.assertEquals(Counts(1, 0, 0), col.sched.counts())
@@ -1334,18 +1291,18 @@ open class SchedulerTest : JvmTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        val c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.due = 0
-        c.factor = STARTING_FACTOR
-        c.setReps(3)
-        c.lapses = 1
-        c.ivl = 100
-        c.startTimer()
-        c.flush()
+        val c = note.cards()[0].update {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            due = 0
+            factor = STARTING_FACTOR
+            setReps(3)
+            lapses = 1
+            ivl = 100
+            startTimer()
+        }
         col.sched.answerCard(c, BUTTON_ONE)
-        col.sched._cardConf(c).getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
+        col.sched.cardConf(c).getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
         col.sched.answerCard(c, BUTTON_ONE)
     }
 
@@ -1357,17 +1314,17 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Front", "one")
         note.setItem("Back", "two")
         col.addNote(note)
-        var c = note.cards()[0]
-        c.type = CARD_TYPE_REV
-        c.queue = QUEUE_TYPE_REV
-        c.ivl = 100
-        c.due = (col.sched.today - c.ivl).toLong()
-        c.factor = STARTING_FACTOR
-        c.setReps(3)
-        c.lapses = 1
-        c.startTimer()
-        c.flush()
-        val conf = col.sched._cardConf(c)
+        var c = note.cards()[0].update {
+            type = CARD_TYPE_REV
+            queue = QUEUE_TYPE_REV
+            ivl = 100
+            due = (col.sched.today - ivl).toLong()
+            factor = STARTING_FACTOR
+            setReps(3)
+            lapses = 1
+            startTimer()
+        }
+        val conf = col.sched.cardConf(c)
         conf.getJSONObject("lapse").put("mult", 0.5)
         col.decks.save(conf)
         c = col.sched.card!!
@@ -1389,12 +1346,11 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Front", "one")
         note.setItem("Back", "two")
         col.addNote(note)
-        val c = note.cards()[0]
-        c.due = -5
-        c.queue = QUEUE_TYPE_REV
-        c.ivl = 5
-        c.flush()
-
+        val c = note.cards()[0].update {
+            due = -5
+            queue = QUEUE_TYPE_REV
+            ivl = 5
+        }
         // into and out of filtered deck
         val did = addDynamicDeck("Cram")
         col.sched.rebuildDyn(did)

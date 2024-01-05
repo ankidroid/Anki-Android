@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/github-script@v6
+    - uses: actions/github-script@v7
       with:
         script: |
           let removeLabelsList = [
@@ -79,7 +79,7 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         with:
           script: |
             const I18N_FILES = [
@@ -110,6 +110,15 @@ jobs:
                 issue_number: context.issue.number,
                 labels: labels
               });
+            }
+
+            async function removeLabel(labels) {
+                await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: context.issue.number,
+                    name: labels,
+                });
             }
 
             async function addComments() {
@@ -151,6 +160,23 @@ jobs:
               }
             }
 
+            async function getPullRequest() {
+                return await github.rest.pulls.get({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: context.issue.number,
+                });
+            }
+
+            // if no file changed, remove label
+            const pullRequestData = await getPullRequest();
+            if (!fileChanged) {
+              if (pullRequestData.data.labels.find(label => label.name === stringsLabel)) {
+                console.log(`Removing #${stringsLabel} label from PR #${context.issue.number}`);
+                removeLabel([stringsLabel]);
+              }
+            }
+
   add_new_contributor_label:
     if: github.event.action == 'opened'
     permissions:
@@ -158,7 +184,7 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         with:
           script: |
             const creator = context.payload.sender.login

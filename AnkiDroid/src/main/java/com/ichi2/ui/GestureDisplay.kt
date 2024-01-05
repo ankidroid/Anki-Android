@@ -45,46 +45,46 @@ constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: 
     ConstraintLayout(context, attributeSet, defStyleAttr) {
 
     /** Converts a touch event into a call to [setGesture] */
-    private val mDetector: GestureDetector
+    private val detector: GestureDetector
 
     /** "Gesture Changed" callback, invoked if the gesture is changed and non-null */
-    private var mOnGestureChangeListener: GestureListener? = null
+    private var onGestureChangeListener: GestureListener? = null
 
     /** see [TapGestureMode] */
-    private val mTapGestureMode: TapGestureMode
+    private val tapGestureMode: TapGestureMode
 
     /** The last recorded gesture (null if no gestures provided, or if explicitly set)  */
-    private var mGesture: Gesture? = null
+    private var gesture: Gesture? = null
 
-    private var mSwipeView: ImageView
+    private var swipeView: ImageView
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.gesture_display, this)
 
         val listener = OnGestureListener.createInstance(this, this::setGesture)
-        mDetector = GestureDetector(context, listener)
-        mTapGestureMode = listener.getTapGestureMode()
-        setTapGestureMode(mTapGestureMode)
-        mSwipeView = findViewById(R.id.swipe_select)
+        detector = GestureDetector(context, listener)
+        tapGestureMode = listener.getTapGestureMode()
+        setTapGestureMode(tapGestureMode)
+        swipeView = findViewById(R.id.swipe_select)
         // if we don't call mutate, state is persisted outside the dialog when we call .setImageLevel
-        mSwipeView.drawable?.mutate()
+        swipeView.drawable?.mutate()
     }
 
     /** Lists all selectable gestures from this view (excludes null) */
-    fun availableValues(): List<Gesture> = Gesture.values().filter {
-        (mTapGestureMode == TapGestureMode.NINE_POINT || !NINE_POINT_TAP_GESTURES.contains(it))
+    fun availableValues(): List<Gesture> = entries.filter {
+        (tapGestureMode == TapGestureMode.NINE_POINT || !NINE_POINT_TAP_GESTURES.contains(it))
     }
 
     /** Sets a callback which is called when the gesture is changed, and non-null */
     fun setGestureChangedListener(listener: GestureListener) {
-        mOnGestureChangeListener = listener
+        onGestureChangeListener = listener
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(event: MotionEvent): Boolean = mDetector.onTouchEvent(event) || super.onTouchEvent(event)
+    override fun onTouchEvent(event: MotionEvent): Boolean = detector.onTouchEvent(event) || super.onTouchEvent(event)
 
-    fun getGesture() = mGesture
+    fun getGesture() = gesture
 
     /** Updates the UI from a new gesture
      * fires the "Gesture Changed" event if the gesture has changed and is non-null
@@ -92,19 +92,19 @@ constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: 
     fun setGesture(newGesture: Gesture?) {
         Timber.d("gesture: %s", newGesture?.toDisplayString(context))
 
-        if (mGesture == newGesture) {
+        if (gesture == newGesture) {
             Timber.d("Ignoring nop gesture change")
             return
         }
 
-        handleTapChange(newGesture, mGesture)
+        handleTapChange(newGesture, gesture)
         handleSwipeChange(newGesture)
 
-        this.mGesture = newGesture
+        this.gesture = newGesture
 
         if (newGesture == null) return
 
-        mOnGestureChangeListener?.onGesture(newGesture)
+        onGestureChangeListener?.onGesture(newGesture)
     }
 
     /**
@@ -119,7 +119,7 @@ constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: 
             SWIPE_RIGHT -> 4
             else -> 0
         }
-        mSwipeView.setImageLevel(level)
+        swipeView.setImageLevel(level)
     }
 
     /**

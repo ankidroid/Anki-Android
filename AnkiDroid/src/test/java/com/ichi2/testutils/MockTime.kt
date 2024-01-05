@@ -17,7 +17,6 @@ package com.ichi2.testutils
 
 import android.annotation.SuppressLint
 import com.ichi2.libanki.utils.Time
-import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
 /** @param [step] Number of milliseconds between each call.
@@ -75,21 +74,6 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
 
     companion object {
         /**
-         * Allow to get a timestamp which is independent of place where test occurs. MS are set to 0
-         * @param year Year
-         * @param month Month, 0-based
-         * @param date, day of month
-         * @param hourOfDay, hour, from 0 to 23
-         * @param minute, from 0 to 59
-         * @param second, From 0 to 59
-         * @return the time stamp of this instant in GMT calendar
-         */
-        @KotlinCleanup("After Kotlin Conversion, use default argument and remove this")
-        fun timeStamp(year: Int, month: Int, date: Int, hourOfDay: Int, minute: Int, second: Int): Long {
-            return timeStamp(year, month, date, hourOfDay, minute, second, 0)
-        }
-
-        /**
          * Allow to get a timestamp which is independent of place where test occurs.
          * @param year Year
          * @param month Month, 0-based
@@ -101,7 +85,7 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
          * @return the time stamp of this instant in GMT calendar
          */
         @SuppressLint("DirectGregorianInstantiation")
-        fun timeStamp(year: Int, month: Int, date: Int, hourOfDay: Int, minute: Int, second: Int, milliseconds: Int): Long {
+        fun timeStamp(year: Int, month: Int, date: Int, hourOfDay: Int, minute: Int, second: Int, milliseconds: Int = 0): Long {
             val timeZone = TimeZone.getTimeZone("GMT")
             val gregorianCalendar: Calendar = GregorianCalendar(year, month, date, hourOfDay, minute, second)
             gregorianCalendar.timeZone = timeZone

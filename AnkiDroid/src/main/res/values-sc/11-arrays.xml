@@ -79,10 +79,10 @@
     <string name="html_size_code_x_large">x-mannu</string>
     <string name="html_size_code_xx_large">xx-mannu</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">Torra a rispòndere</string>
+    <string name="answer_hard">Risposta difìtzile</string>
+    <string name="answer_good">Risposta bona</string>
+    <string name="answer_easy">Risposta fàtzile</string>
     <string name="gesture_play">Riprodui unu mèdiu</string>
     <string name="gesture_abort_learning">Firma s\'imparòngiu</string>
     <string name="gesture_flag_red">Allughe/istuda sa bandera ruja</string>
@@ -103,4 +103,5 @@
     <string name="replay_voice">Riprodui sa boghe</string>
     <string name="automatic_answer_option_2">Difìtzile (\"Bonu\" si no a disponimentu)</string>
     <string name="automatic_answer_option_4">Fàtzile (\"Bonu\" si no a disponimentu)</string>
+    <string name="save_voice">Save Recording</string>
 </resources>

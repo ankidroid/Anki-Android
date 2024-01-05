@@ -3,7 +3,6 @@
 
 package com.ichi2.anki
 
-import android.app.Activity
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
@@ -58,20 +57,21 @@ import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
 @UiThread
+@KotlinCleanup("set activityName")
 open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
     /** The name of the parent class (example: 'Reviewer')  */
-    private val mActivityName: String
+    private val activityName: String
     val dialogHandler = DialogHandler(this)
 
     private val customTabActivityHelper: CustomTabActivityHelper = CustomTabActivityHelper()
 
     constructor() : super() {
-        mActivityName = javaClass.simpleName
+        activityName = javaClass.simpleName
     }
 
     constructor(@LayoutRes contentLayoutId: Int) : super(contentLayoutId) {
-        mActivityName = javaClass.simpleName
+        activityName = javaClass.simpleName
     }
 
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
@@ -123,7 +123,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
     }
 
     protected open fun onActionBarBackPressed(): Boolean {
-        finish()
+        Timber.v("onActionBarBackPressed")
+        onBackPressedDispatcher.onBackPressed()
         return true
     }
 
@@ -204,35 +205,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         enableActivityAnimation(animation)
     }
 
-    @Deprecated("")
-    @Suppress("DEPRECATION") // startActivityForResult
-    override fun startActivityForResult(intent: Intent, requestCode: Int) {
-        try {
-            super.startActivityForResult(intent, requestCode)
-        } catch (e: ActivityNotFoundException) {
-            Timber.w(e)
-            this.showSnackbar(R.string.activity_start_failed)
-        }
-    }
-
-    @Suppress("DEPRECATION") // startActivityForResult
-    fun startActivityForResultWithoutAnimation(intent: Intent, requestCode: Int) {
-        disableIntentAnimation(intent)
-        startActivityForResult(intent, requestCode)
-        disableActivityAnimation()
-    }
-
-    @Suppress("DEPRECATION") // startActivityForResult
-    fun startActivityForResultWithAnimation(
-        intent: Intent,
-        requestCode: Int,
-        animation: Direction
-    ) {
-        enableIntentAnimation(intent)
-        startActivityForResult(intent, requestCode)
-        enableActivityAnimation(animation)
-    }
-
     private fun launchActivityForResult(
         intent: Intent?,
         launcher: ActivityResultLauncher<Intent?>,
@@ -247,15 +219,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
             Timber.w(e)
             this.showSnackbar(R.string.activity_start_failed)
         }
-    }
-
-    fun launchActivityForResultWithAnimation(
-        intent: Intent,
-        launcher: ActivityResultLauncher<Intent?>,
-        animation: Direction?
-    ) {
-        enableIntentAnimation(intent)
-        launchActivityForResult(intent, launcher, animation)
     }
 
     override fun finish() {
@@ -331,7 +294,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.putExtra("collectionLoadError", true) // don't currently do anything with this
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivityWithAnimation(deckPicker, START)
+        startActivity(deckPicker)
     }
 
     fun showProgressBar() {
@@ -463,9 +426,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
      * @param message
      * @param reload flag which forces app to be restarted when true
      */
-    @KotlinCleanup("make message non-null")
     open fun showSimpleMessageDialog(
-        message: String?,
+        message: String,
         title: String = "",
         reload: Boolean = false
     ) {
@@ -532,7 +494,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         if (reload) {
             val deckPicker = Intent(this, DeckPicker::class.java)
             deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivityWithoutAnimation(deckPicker)
+            startActivity(deckPicker)
         }
     }
 
@@ -578,17 +540,10 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         )
 
     companion object {
-        const val REQUEST_REVIEW = 901
         const val DIALOG_FRAGMENT_TAG = "dialog"
 
         /** Extra key to set the finish animation of an activity  */
         const val FINISH_ANIMATION_EXTRA = "finishAnimation"
-
-        /** Finish Activity using FADE animation  */
-        fun finishActivityWithFade(activity: Activity) {
-            activity.finish()
-            ActivityTransitionAnimation.slide(activity, FADE)
-        }
 
         fun showDialogFragment(activity: AnkiActivity, newFragment: DialogFragment) {
             showDialogFragment(activity.supportFragmentManager, newFragment)

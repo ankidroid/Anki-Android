@@ -24,6 +24,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
+    xmlns:tools="http://schemas.android.com/tools"
         android:title="@string/pref_cat_appearance"
         android:key="@string/pref_appearance_screen_key">
     <PreferenceCategory android:title="@string/pref_cat_themes" >
@@ -105,10 +106,14 @@
             android:summary="@string/show_progress_summ"
             android:title="@string/show_progress" />
         <SwitchPreferenceCompat
-            android:key="@string/show_eta_preference"
+            android:key="@string/show_audio_play_buttons_key"
             android:defaultValue="true"
-            android:summary="@string/show_eta_summ"
-            android:title="@string/show_eta" />
+            tools:title="Show play buttons on cards with audio"
+            />
+        <SwitchPreferenceCompat
+            android:key="@string/show_deck_title_key"
+            android:defaultValue="false"
+            android:title="@string/show_deck_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/card_browser">
         <SwitchPreferenceCompat

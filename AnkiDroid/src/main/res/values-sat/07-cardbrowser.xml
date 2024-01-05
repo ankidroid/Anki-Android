@@ -54,12 +54,15 @@
         <item quantity="other">%d notes shown</item>
     </plurals>
     <string name="card_browser_all_decks">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱠᱚ</string>
-    <string name="card_browser_delete_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
-    <string name="card_browser_suspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
-    <string name="card_browser_unsuspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
-    <string name="card_browser_mark_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱢᱟᱨᱠ ᱢᱮ</string>
-    <string name="card_browser_unmark_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱚ-ᱢᱟᱨᱠᱚᱭ ᱢᱮ</string>
     <string name="delete_card_title">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
     <string name="card_browser_show_marked">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱢᱮᱨᱠᱼᱠᱟᱱᱟ</string>
     <string name="card_browser_show_suspended">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱵᱚᱸᱫ ᱜᱤᱰᱤ ᱠᱟᱱᱟ</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

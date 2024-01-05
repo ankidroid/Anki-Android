@@ -54,12 +54,15 @@
         <item quantity="other">%d notas mostradas</item>
     </plurals>
     <string name="card_browser_all_decks">Todos los mazos</string>
-    <string name="card_browser_delete_card">Eliminar notas</string>
-    <string name="card_browser_suspend_card">Suspender tarjetas</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Cambiar mazo</string>
-    <string name="card_browser_unsuspend_card">Desuspender tarjetas</string>
-    <string name="card_browser_mark_card">Marcar notas</string>
-    <string name="card_browser_unmark_card">Desmarcar notas</string>
     <string name="delete_card_title">¿Eliminar nota?</string>
     <string name="card_browser_show_marked">Filtrar marcadas</string>
     <string name="card_browser_show_suspended">Filtrar suspendidas</string>
@@ -108,5 +111,4 @@
         <item quantity="one">Tarjeta %d eliminada</item>
         <item quantity="other">%d tarjetas eliminadas</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

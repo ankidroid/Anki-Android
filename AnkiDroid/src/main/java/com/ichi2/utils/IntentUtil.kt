@@ -39,7 +39,7 @@ object IntentUtil {
     fun tryOpenIntent(activity: AnkiActivity, intent: Intent) {
         try {
             if (canOpenIntent(activity, intent)) {
-                activity.startActivityWithoutAnimation(intent)
+                activity.startActivity(intent)
             } else {
                 val errorMsg = activity.getString(R.string.feedback_no_suitable_app_found)
                 activity.showSnackbar(errorMsg, Snackbar.LENGTH_SHORT)

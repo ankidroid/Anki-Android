@@ -67,10 +67,10 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
     }
 
     private class KeyboardInputTestCardViewer : AbstractFlashcardViewer() {
-        private var mDisplayAnswer = false
-        private var mFocusTextField = false
+        private var displayAnswer = false
+        private var focusTextField = false
         override fun answerFieldIsFocused(): Boolean {
-            return mFocusTextField
+            return focusTextField
         }
 
         override fun performReload() {
@@ -78,11 +78,11 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
         }
 
         override fun displayCardAnswer() {
-            mDisplayAnswer = true
+            displayAnswer = true
         }
 
         fun didDisplayAnswer(): Boolean {
-            return mDisplayAnswer
+            return displayAnswer
         }
 
         fun handleKeyPress(keycode: Int) {
@@ -101,7 +101,7 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
         }
 
         fun focusTextField() {
-            mFocusTextField = true
+            focusTextField = true
         }
 
         companion object {

@@ -59,6 +59,10 @@ object CollectionManager {
     @VisibleForTesting
     var emulateOpenFailure = false
 
+    /** A speed optimisation to remove the logging function of the collection */
+    @VisibleForTesting
+    var disableLogFile: Boolean = false
+
     /**
      * Execute the provided block on a serial background queue, to ensure
      * concurrent access does not happen.
@@ -145,7 +149,7 @@ object CollectionManager {
         }
 
     fun compareAnswer(expected: String, given: String): String {
-        // bypass the lock, as the type answer code is heavily nested in non-suspend funs
+        // bypass the lock, as the type answer code is heavily nested in non-suspend functions
         return getBackend().compareAnswer(expected, given)
     }
 
@@ -227,7 +231,7 @@ object CollectionManager {
         if (collection == null || collection!!.dbClosed) {
             val path = collectionPathInValidFolder()
             collection =
-                collection(path, log = true, backend)
+                collection(path, log = !disableLogFile, backend)
         }
     }
 
@@ -239,7 +243,8 @@ object CollectionManager {
     }
 
     fun getCollectionDirectory() =
-        File(CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.instance))
+        // Allow execution if AnkiDroidApp.instance is not initialized
+        File(CollectionHelper.getCurrentAnkiDroidDirectoryOptionalContext(AnkiDroidApp.sharedPrefs()) { AnkiDroidApp.instance })
 
     /** Ensures the AnkiDroid directory is created, then returns the path to the collection file
      * inside it. */

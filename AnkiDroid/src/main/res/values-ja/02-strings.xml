@@ -52,6 +52,7 @@
     <string name="CardEditorModel">ノートタイプ:</string>
     <string name="CardEditorTags">タグ: %1$s</string>
     <string name="CardEditorCards">カード: %1$s</string>
+    <string name="edit_occlusions">画像穴埋め問題を編集</string>
     <string name="tag_name">タグ名</string>
     <string name="add_new_filter_tags">タグフィルター / 新規タグ追加</string>
     <string name="add_tag">タグを追加</string>
@@ -86,7 +87,7 @@
     </string-array>
     <string-array name="browser_column2_headings">
         <item>解答</item>
-        <item>カード</item>
+        <item>カードタイプ</item>
         <item>デッキ</item>
         <item>ノートタイプ</item>
         <item>質問</item>
@@ -114,9 +115,9 @@
     <string name="discard_unsaved_changes">閉じて現在の入力を破棄しますか？</string>
     <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
     <string name="note_editor_no_first_field">最初のフィールドが空です</string>
-    <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め箇所が含まれている必要があります</string>
+    <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め問題の箇所が含まれている必要があります</string>
     <string name="note_editor_no_cards_created_all_fields">現在のノートタイプではカードを生成できませんでした。\n別のノートタイプを選択するか、「カード」をタップしてフィールドを挿入してください。</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">穴埋め箇所を示す文字列は、穴埋め型のノートタイプでのみ機能します</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">穴埋め問題箇所を示す文字列は、穴埋め問題型のノートタイプでのみ機能します</string>
     <string name="saving_facts">ノートを保存しています</string>
     <string name="saving_model">ノートタイプを保存しています</string>
     <string name="save">保存</string>
@@ -152,9 +153,7 @@
     <string name="import_title">インポート</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションはすべて削除され、ファイル \"%s\" のデータによって上書きされます。よろしいですか？</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="other">\"%s\n\" の内容をコレクションに追加しますか？　時間がかかる場合があります</item>
-    </plurals>
+    <string name="import_dialog_message_add">\"%s\" をコレクションに追加しますか？　長い時間がかかる場合があります</string>
     <string name="import_log_no_apkg">これは読み込み可能なAnkiパッケージファイル（*.apkg）ではありません</string>
     <string name="import_title_error" comment="Title of error dialog">エラー</string>
     <string name="import_error_handle_exception">ファイル\n\n%s\n\nのインポートに失敗しました</string>
@@ -162,19 +161,7 @@
     <string name="import_error_load_imported_database">Anki Database (.anki2) の置換はまだサポートされていません。マニュアルを参照してください。</string>
     <string name="import_error_content_provider">選択されたファイルをAnkiDroidによって自動的にインポートできませんでした。Ankiファイルを手動でインポートする方法については、マニュアルをご覧ください: \n %s</string>
     <string name="import_error_copy_to_cache">一時ファイルの作成に失敗しました（ストレージ容量が不足している可能性があります）</string>
-    <string name="import_error_multiple_colpkg">複数の colpkgファイルが選択されました。</string>
-    <string name="import_error_colpkg_apkg">apkgファイルとcolpkgファイルが選択されました。それらを一度にインポートすることはできません。</string>
     <string name="import_interrupted">インポートが中断されました: AnkiDroidが閉じられました</string>
-    <string name="export_include_schedule">スケジュール情報を含める</string>
-    <string name="export_include_media">メディアファイルを含める</string>
-    <string name="confirm_apkg_export">コレクションのバックアップをアプリ外部に保存するため、パッケージファイル（*.colpkg）を作成します。よろしいですか？</string>
-    <string name="confirm_apkg_export_deck">デッキ \"%s\" のバックアップをアプリ外部に保存するため、パッケージファイル（*.apkg）を作成します。よろしいですか？</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">選択した%d枚のカードをapkgファイルとしてエクスポートしますか？</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">選択した%d枚のノートを apkgファイルとしてエクスポートしますか？</item>
-    </plurals>
     <string name="export_preparation_in_progress">エクスポートの準備中...</string>
     <string name="export_ready_title">エクスポートの準備完了</string>
     <string name="export_send_no_handlers">Ankiパッケージに対応する他のアプリがありません。ファイルを保存します...</string>
@@ -201,10 +188,8 @@
     <string name="steps_error">習得ステップには1以上の数字を入力してください</string>
     <string name="steps_min_error">少なくとも 1 つの習得ステップが必要です</string>
     <string name="tag_editor_add_feedback">「%1$s」の追加を確定するには「%2$s」をタップしてください</string>
-    <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」が選択されました</string>
+    <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」を選択しました</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">そのデッキ名はすでに使用されています</string>
-    <string name="decks_rename_filtered_nosubdecks">フィルターデッキ内にはサブデッキを作成できません</string>
     <string name="reminder_title">今日も学習しましょう！</string>
     <plurals name="reminder_text">
         <item quantity="other">課題: %2$d枚 （%1$s）</item>
@@ -226,9 +211,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
     <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">JavaScriptでナビゲーションドロワーを表示するには、フルスクリーンモードをオンにしてください。</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">JavaScriptでオプションメニューを表示するには、フルスクリーンモードをオンにしてください。</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ホワイトボード画像の保存に失敗しました。 %s</string>
     <string name="white_board_image_saved">ホワイトボードの画像を \"%s\" に保存しました</string>
@@ -249,7 +231,6 @@
     <string name="card_viewer_could_not_find_image">カードコンテンツエラー: ’%s’ の読み込みに失敗しました</string>
     <string name="card_viewer_media_relative_protocol">カードコンテンツエラー: メディアの更新が必要です</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">デッキ \'%s\' の読み込みに失敗しました</string>
     <string name="search_decks">デッキ名を検索</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">移行の進行状況を表示</string>
     <string name="ankidroid_init_failed_webview_title">重大なエラー</string>
@@ -335,7 +316,7 @@
     <string name="intro_short_ankidroid_explanation">Ankiは、記憶を定着させ強化するのに適したスケジュールでカードを表示する間隔反復学習システムです。AnkiDroidでAnkiの効率的な学習をお楽しみください</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">開始する</string>
     <string name="intro_sync_from_ankiweb">AnkiWebから同期</string>
-    <string name="already_logged_in">既にログイン済みです</string>
+    <string name="already_logged_in">すでにログイン済みです</string>
     <!-- Deck Creation -->
     <string name="deck_created">デッキを作成しました</string>
     <string name="deck_renamed">デッキ名を変更しました</string>
@@ -353,4 +334,21 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">タップしてストレージ移行を開始</string>
     <string name="media_sync_required_title">メディアの同期が必要です</string>
     <string name="media_sync_unavailable_message">メディアの同期が設定で無効になっています。続行する前に、まだ同期していないメディアを同期することによってバックアップをとってください</string>
+    <string name="audio_saved">録音を保存しました</string>
+    <string name="deleting_selected_notes">選択したノートを削除しています</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        読み上げる音声をタップ 
+    </string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">使用前に音声をインストールする必要があります
+    </string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">とにかく使用
+    </string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">テキスト読み上げエラー (%s)</string>
+    <!-- Chips should probably be in a separate file, due to the additional length req -->
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        ｲﾝﾀｰﾈｯﾄ
+    </string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        ｲﾝｽﾄｰﾙ
+    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        テキスト読み上げの設定を開けませんでした
+    </string>
+    <string name="shared_decks_login_required">さらにデッキをダウンロードするにはログインしてください</string>
 </resources>

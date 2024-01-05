@@ -52,6 +52,7 @@
     <string name="CardEditorModel">ტიპი:</string>
     <string name="CardEditorTags">იარლიყები: %1$s</string>
     <string name="CardEditorCards">ბარათები: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">იარლიყის სახელი</string>
     <string name="add_new_filter_tags">იარლიყების დამატება/გაფილტვრა</string>
     <string name="add_tag">იარლიყის დამატება</string>
@@ -154,10 +155,7 @@
     <string name="import_title">იმპორტირება</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">დამატება</string>
     <string name="import_message_replace_confirm">არსებული კოლექცია წაიშლება და ჩანაცვლდება არჩეული ფაილის მონაცემებით %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">\"%s\" დაემატოს კოლექციას? ამას შეიძლება გარკვეული დრო დასჭირდეს</item>
-        <item quantity="other">გსურთ ჩამოთვლილი ფაილების  იმპორტირება:\n%s\nამას შეიძლება გარკვეული დრო დასჭირდეს</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">ეს არ არის მოქმედი Anki-პაკეტის ფაილი</string>
     <string name="import_title_error" comment="Title of error dialog">შეცდომა</string>
     <string name="import_error_handle_exception">ფაილის იმპორტირება ვერ მოხერხდა\n\n%s</string>
@@ -165,24 +163,10 @@
     <string name="import_error_load_imported_database">Anki მონაცემთა ბაზის შემცვლელი ფაილები (.anki2)  ჯერ არ არის მხარდაჭერილი. იხილეთ ინსტრუქცია შესაბამისი მითითებებისთვის</string>
     <string name="import_error_content_provider">მონიშნული ფაილის ავტომატური იმპორტირება ვერ მოხერხდა. იხილეთ ინსტრუქცია Anki-ფაილების არაავტომატური იმპორტირების მეთოდისთვის: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">მრავალი COLPKG ფაილი მოინიშნა.</string>
-    <string name="import_error_colpkg_apkg">apkg და colpkg ფაილები ერთბაშად მოინიშნა</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
-    <string name="export_include_schedule">სწავლის განრიგის თან გათვალისწინება</string>
-    <string name="export_include_media">მედიაფაილების მოცვა</string>
-    <string name="confirm_apkg_export">გსურთ კოლექციის Anki-პაკეტად ექსპორტირება?</string>
-    <string name="confirm_apkg_export_deck">დაექსპორტდეს \"%s\" როგორც apkg ფაილი?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">მონიშნული ბარათის APKG ფაილად შენახვა?</item>
-        <item quantity="other">მონიშნული %d ბარათის APKG ფაილად შენახვა?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">მონიშნული შენიშვნის APKG ფაილად შენახვა?</item>
-        <item quantity="other">მონიშნული %d შენიშვნის APKG ფაილად შენახვა?</item>
-    </plurals>
     <string name="export_preparation_in_progress">ექსპორტის გამზადება&#8230;</string>
     <string name="export_ready_title">ექსპორტი მზადაა</string>
-    <string name="export_send_no_handlers">არაა სხვა აპლიკაციები APKG-ფაილების გასახსნელად. ინახება…</string>
+    <string name="export_send_no_handlers">არაა სხვა აპლიკაციები APKG-ფაილების გასახსნელად. ინახება&#8230;</string>
     <string name="export_save_apkg_successful">Anki-პაკეტი წარმატებით შეინახა</string>
     <string name="export_save_apkg_unsuccessful">Anki-პაკეტი ვერ შეინახა</string>
     <string name="export_share_title">Anki-პაკეტის გაგზავნა:</string>
@@ -208,8 +192,6 @@
     <string name="tag_editor_add_feedback">„%1$s-ის“ დამატების დასადასტურებლად შეეხეთ „%2$s-ს“</string>
     <string name="tag_editor_add_feedback_existing">მოინიშნა არსებული იარლიყი „%1$s“</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">ეგ დასტა უკვე არსებობს</string>
-    <string name="decks_rename_filtered_nosubdecks">გაფილტრულ დასტას ვერ ექნება ქვედასტა</string>
     <string name="reminder_title">დღესაც ვიმეცადინოთ!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d ბარათია გადასახედი %1$s-ში</item>
@@ -232,9 +214,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">მაგალიტი</string>
     <string name="basic_answer_sample_text">მაგალითი</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ცარიელი</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">დაფის სურათი ვერ შეინახა. %s</string>
     <string name="white_board_image_saved">დაფის სურათი შეინახა %s-ში</string>
@@ -255,7 +234,6 @@
     <string name="card_viewer_could_not_find_image">ბარათის შიგთავსის შეცდომა: „%s“ ვერ ჩაიტვირთა</string>
     <string name="card_viewer_media_relative_protocol">ბარათის შიგთავსის შეცდომა: საჭიროა მედიაფაილების განახლება</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">შეცდომა დასტის „%s“ ჩატვირთვისას</string>
     <string name="search_decks">დასტების მოძიება</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">მიგრაციის პროგრესის ჩვენება</string>
     <string name="ankidroid_init_failed_webview_title">ფატალური შეცდომა</string>
@@ -360,4 +338,21 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">შეეხეთ საცავის მიგრაციისათვის</string>
     <string name="media_sync_required_title">საჭიროა მედიაფაილების სინქრონიზაცია</string>
     <string name="media_sync_unavailable_message">მედიაფაილების სინქრონიზაცია გამორთულია პარამეტრებში. გთხოვთ დაასინქრონოთ და სარეზერვო ფაილად შეინახოთ ყველა მედიაფაილი, რომელიც ჯერ არაა სინქრონიზებული</string>
+    <string name="audio_saved">ჩანაწერი შენახულია</string>
+    <string name="deleting_selected_notes">Deleting selected notes</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    </string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    </string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
+    </string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <!-- Chips should probably be in a separate file, due to the additional length req -->
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
+    </string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    </string>
+    <string name="shared_decks_login_required">Please log in to download more decks</string>
 </resources>

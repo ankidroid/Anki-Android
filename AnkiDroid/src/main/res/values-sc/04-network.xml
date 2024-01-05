@@ -64,6 +64,7 @@
     <string name="log_out">Essi</string>
     <string name="reset_password">Reseta sa crae</string>
     <string name="lost_mail_instructions">Indiritzu de posta ismentigadu?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Optziones pro XXX</string>
     <string name="sync_title">Sincronizatzione</string>

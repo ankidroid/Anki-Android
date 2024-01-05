@@ -25,10 +25,12 @@ import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
+import timber.log.Timber
 
 class TagsDialog : AnalyticsDialogFragment {
     /**
@@ -51,24 +53,25 @@ class TagsDialog : AnalyticsDialogFragment {
         CUSTOM_STUDY_TAGS
     }
 
-    private var mType: DialogType? = null
-    private var mTags: TagsList? = null
-    private var mPositiveText: String? = null
-    private var mDialogTitle: String? = null
-    private var mTagsArrayAdapter: TagsArrayAdapter? = null
-    private var mSelectedOption = -1
-    private var mToolbarSearchView: SearchView? = null
-    private var mToolbarSearchItem: MenuItem? = null
-    private var mNoTagsTextView: TextView? = null
-    private var mTagsListRecyclerView: RecyclerView? = null
-    private var mDialog: MaterialDialog? = null
-    private val mListener: TagsDialogListener?
+    private var type: DialogType? = null
+    private var tags: TagsList? = null
+    private var positiveText: String? = null
+    private var dialogTitle: String? = null
+    private var tagsArrayAdapter: TagsArrayAdapter? = null
+    private var toolbarSearchView: SearchView? = null
+    private var toolbarSearchItem: MenuItem? = null
+    private var noTagsTextView: TextView? = null
+    private var tagsListRecyclerView: RecyclerView? = null
+    private var dialog: MaterialDialog? = null
+    private val listener: TagsDialogListener?
+
+    private lateinit var selectedOption: CardStateFilter
 
     /**
      * Constructs a new [TagsDialog] that will communicate the results using the provided listener.
      */
     constructor(listener: TagsDialogListener?) {
-        mListener = listener
+        this.listener = listener
     }
 
     /**
@@ -77,7 +80,7 @@ class TagsDialog : AnalyticsDialogFragment {
      * @see [Fragment Result API](https://developer.android.com/guide/fragments/communicate.fragment-result)
      */
     constructor() {
-        mListener = null
+        listener = null
     }
 
     /**
@@ -119,8 +122,8 @@ class TagsDialog : AnalyticsDialogFragment {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         resizeWhenSoftInputShown(requireActivity().window)
-        mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)]
-        mTags = TagsList(
+        type = DialogType.entries[requireArguments().getInt(DIALOG_TYPE_KEY)]
+        tags = TagsList(
             requireArguments().getStringArrayList(ALL_TAGS_KEY)!!,
             requireArguments().getStringArrayList(CHECKED_TAGS_KEY)!!,
             requireArguments().getStringArrayList(UNCHECKED_TAGS_KEY)
@@ -129,7 +132,7 @@ class TagsDialog : AnalyticsDialogFragment {
     }
 
     private val tagsDialogListener: TagsDialogListener
-        get() = mListener
+        get() = listener
             ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)
 
     @NeedsTest(
@@ -139,16 +142,16 @@ class TagsDialog : AnalyticsDialogFragment {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         @SuppressLint("InflateParams")
         val tagsDialogView = LayoutInflater.from(activity).inflate(R.layout.tags_dialog, null, false)
-        mTagsListRecyclerView = tagsDialogView.findViewById(R.id.tags_dialog_tags_list)
-        val tagsListRecyclerView: RecyclerView? = mTagsListRecyclerView
+        tagsListRecyclerView = tagsDialogView.findViewById(R.id.tags_dialog_tags_list)
+        val tagsListRecyclerView: RecyclerView? = tagsListRecyclerView
         tagsListRecyclerView?.requestFocus()
         val tagsListLayout: RecyclerView.LayoutManager = LinearLayoutManager(activity)
         tagsListRecyclerView?.layoutManager = tagsListLayout
-        mTagsArrayAdapter = TagsArrayAdapter(mTags!!, resources)
-        tagsListRecyclerView?.adapter = mTagsArrayAdapter
-        mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview)
-        val noTagsTextView: TextView? = mNoTagsTextView
-        if (mTags!!.isEmpty) {
+        tagsArrayAdapter = TagsArrayAdapter(tags!!, resources)
+        tagsListRecyclerView?.adapter = tagsArrayAdapter
+        noTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview)
+        val noTagsTextView: TextView? = noTagsTextView
+        if (tags!!.isEmpty) {
             noTagsTextView?.visibility = View.VISIBLE
         }
         val optionsGroup = tagsDialogView.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
@@ -156,40 +159,51 @@ class TagsDialog : AnalyticsDialogFragment {
             optionsGroup.getChildAt(i).id = i
         }
         optionsGroup.check(0)
-        mSelectedOption = optionsGroup.checkedRadioButtonId
-        optionsGroup.setOnCheckedChangeListener { _: RadioGroup?, checkedId: Int -> mSelectedOption = checkedId }
-        if (mType == DialogType.EDIT_TAGS) {
-            mDialogTitle = resources.getString(R.string.card_details_tags)
+        selectedOption = radioButtonIdToCardState(optionsGroup.checkedRadioButtonId)
+        optionsGroup.setOnCheckedChangeListener { _: RadioGroup?, checkedId: Int -> selectedOption = radioButtonIdToCardState(checkedId) }
+        if (type == DialogType.EDIT_TAGS) {
+            dialogTitle = resources.getString(R.string.card_details_tags)
             optionsGroup.visibility = View.GONE
-            mPositiveText = getString(R.string.dialog_ok)
-            mTagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { v ->
+            positiveText = getString(R.string.dialog_ok)
+            tagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { v ->
                 createAddTagDialog(v.tag as String)
                 true
             }
         } else {
-            mDialogTitle = resources.getString(R.string.studyoptions_limit_select_tags)
-            mPositiveText = getString(R.string.select)
-            mTagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { false }
+            dialogTitle = resources.getString(R.string.studyoptions_limit_select_tags)
+            positiveText = getString(R.string.select)
+            tagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { false }
         }
         adjustToolbar(tagsDialogView)
-        mDialog = MaterialDialog(requireActivity())
-            .positiveButton(text = mPositiveText!!) {
+        dialog = MaterialDialog(requireActivity())
+            .positiveButton(text = positiveText!!) {
                 tagsDialogListener.onSelectedTags(
-                    mTags!!.copyOfCheckedTagList(),
-                    mTags!!.copyOfIndeterminateTagList(),
-                    mSelectedOption
+                    tags!!.copyOfCheckedTagList(),
+                    tags!!.copyOfIndeterminateTagList(),
+                    selectedOption
                 )
             }
             .negativeButton(R.string.dialog_cancel)
             .customView(view = tagsDialogView, noVerticalPadding = true)
-        val dialog: MaterialDialog? = mDialog
+        val dialog: MaterialDialog? = dialog
         resizeWhenSoftInputShown(dialog?.window!!)
         return dialog
     }
 
+    private fun radioButtonIdToCardState(id: Int) =
+        when (id) {
+            0 -> CardStateFilter.ALL_CARDS
+            1 -> CardStateFilter.NEW
+            2 -> CardStateFilter.DUE
+            else -> {
+                Timber.w("unexpected value: %d", id)
+                CardStateFilter.ALL_CARDS
+            }
+        }
+
     private fun adjustToolbar(tagsDialogView: View) {
         val toolbar: Toolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar)
-        toolbar.title = mDialogTitle
+        toolbar.title = dialogTitle
         toolbar.inflateMenu(R.menu.tags_dialog_menu)
 
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
@@ -198,43 +212,43 @@ class TagsDialog : AnalyticsDialogFragment {
         toolbarAddItem.icon = drawable
 
         toolbarAddItem.setOnMenuItemClickListener {
-            val query = mToolbarSearchView!!.query.toString()
-            if (mToolbarSearchItem!!.isActionViewExpanded && query.isNotEmpty()) {
+            val query = toolbarSearchView!!.query.toString()
+            if (toolbarSearchItem!!.isActionViewExpanded && query.isNotEmpty()) {
                 addTag(query)
-                mToolbarSearchView!!.setQuery("", true)
+                toolbarSearchView!!.setQuery("", true)
             } else {
                 createAddTagDialog(null)
             }
             true
         }
-        mToolbarSearchItem = toolbar.menu.findItem(R.id.tags_dialog_action_filter)
-        val toolbarSearchItem: MenuItem? = mToolbarSearchItem
-        mToolbarSearchView = toolbarSearchItem?.actionView as SearchView
-        val queryET = mToolbarSearchView!!.findViewById<EditText>(com.google.android.material.R.id.search_src_text)
+        toolbarSearchItem = toolbar.menu.findItem(R.id.tags_dialog_action_filter)
+        val toolbarSearchItem: MenuItem? = toolbarSearchItem
+        toolbarSearchView = toolbarSearchItem?.actionView as SearchView
+        val queryET = toolbarSearchView!!.findViewById<EditText>(com.google.android.material.R.id.search_src_text)
         queryET.filters = arrayOf(addTagFilter)
-        mToolbarSearchView!!.queryHint = getString(R.string.filter_tags)
-        mToolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        toolbarSearchView!!.queryHint = getString(R.string.filter_tags)
+        toolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                mToolbarSearchView!!.clearFocus()
+                toolbarSearchView!!.clearFocus()
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                val adapter = mTagsListRecyclerView!!.adapter as TagsArrayAdapter?
+                val adapter = tagsListRecyclerView!!.adapter as TagsArrayAdapter?
                 adapter!!.filter.filter(newText)
                 return true
             }
         })
         val checkAllItem = toolbar.menu.findItem(R.id.tags_dialog_action_select_all)
         checkAllItem.setOnMenuItemClickListener {
-            val didChange = mTags!!.toggleAllCheckedStatuses()
+            val didChange = tags!!.toggleAllCheckedStatuses()
             if (didChange) {
-                mTagsArrayAdapter!!.notifyDataSetChanged()
+                tagsArrayAdapter!!.notifyDataSetChanged()
             }
             true
         }
-        if (mType == DialogType.EDIT_TAGS) {
-            mToolbarSearchView!!.queryHint = getString(R.string.add_new_filter_tags)
+        if (type == DialogType.EDIT_TAGS) {
+            toolbarSearchView!!.queryHint = getString(R.string.add_new_filter_tags)
         } else {
             toolbarAddItem.isVisible = false
         }
@@ -278,33 +292,33 @@ class TagsDialog : AnalyticsDialogFragment {
         if (!rawTag.isNullOrEmpty()) {
             val tag = TagsUtil.getUniformedTag(rawTag)
             val feedbackText: String
-            if (mTags!!.add(tag)) {
-                if (mNoTagsTextView!!.visibility == View.VISIBLE) {
-                    mNoTagsTextView!!.visibility = View.GONE
+            if (tags!!.add(tag)) {
+                if (noTagsTextView!!.visibility == View.VISIBLE) {
+                    noTagsTextView!!.visibility = View.GONE
                 }
-                mTags!!.add(tag)
-                feedbackText = getString(R.string.tag_editor_add_feedback, tag, mPositiveText)
+                tags!!.add(tag)
+                feedbackText = getString(R.string.tag_editor_add_feedback, tag, positiveText)
             } else {
                 feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag)
             }
-            mTags!!.check(tag)
-            mTagsArrayAdapter!!.sortData()
-            mTagsArrayAdapter!!.notifyDataSetChanged()
+            tags!!.check(tag)
+            tagsArrayAdapter!!.sortData()
+            tagsArrayAdapter!!.notifyDataSetChanged()
             // Expand to reveal the newly added tag.
-            mTagsArrayAdapter!!.filter.apply {
+            tagsArrayAdapter!!.filter.apply {
                 setExpandTarget(tag)
                 refresh()
             }
 
             // Show a snackbar to let the user know the tag was added successfully
-            mDialog!!.view.findViewById<View>(R.id.tags_dialog_snackbar)
+            dialog!!.view.findViewById<View>(R.id.tags_dialog_snackbar)
                 .showSnackbar(feedbackText)
         }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     internal fun getSearchView(): SearchView? {
-        return mToolbarSearchView
+        return toolbarSearchView
     }
 
     companion object {

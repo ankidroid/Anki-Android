@@ -46,9 +46,9 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d картку показано</item>
-        <item quantity="few">%d картки показано</item>
-        <item quantity="many">%d картки показано</item>
+        <item quantity="one">%d картки/ок показано</item>
+        <item quantity="few">%d картки/ок показано</item>
+        <item quantity="many">%d картки/ок показано</item>
         <item quantity="other">%d карт показано</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
@@ -58,12 +58,19 @@
         <item quantity="other">%d карт показано</item>
     </plurals>
     <string name="card_browser_all_decks">Всі колоди</string>
-    <string name="card_browser_delete_card">Видалити записи</string>
-    <string name="card_browser_suspend_card">Призупинити картку</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Видалити картку</item>
+        <item quantity="few">Видалити картки</item>
+        <item quantity="many">Видалити картки</item>
+        <item quantity="other">Видалити картки</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Видалити запис</item>
+        <item quantity="few">Видалити записи</item>
+        <item quantity="many">Видалити записи</item>
+        <item quantity="other">Видалити записи</item>
+    </plurals>
     <string name="card_browser_change_deck">Змінити колоду</string>
-    <string name="card_browser_unsuspend_card">Відновити призупинені картки</string>
-    <string name="card_browser_mark_card">Позначити записи</string>
-    <string name="card_browser_unmark_card">Зняти позначку з записів</string>
     <string name="delete_card_title">Видалити запис?</string>
     <string name="card_browser_show_marked">Тільки з зірочокою</string>
     <string name="card_browser_show_suspended">Тільки призупинені</string>
@@ -118,5 +125,4 @@
         <item quantity="many">%d карток видалено</item>
         <item quantity="other">%d картки видалено</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

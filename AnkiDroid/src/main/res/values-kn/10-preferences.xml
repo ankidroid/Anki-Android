@@ -45,74 +45,78 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="disabled">Disabled</string>
+    <string name="disabled">ಅಂಗವಿಕಲ</string>
     <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">ಯಾವುದೇ ಫಲಿತಾಂಶಗಳಿಲ್ಲ</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">ಸಾಮಾನ್ಯ</string>
+    <string name="pref_cat_studying" maxLength="41">ಅಧ್ಯಯನ ಮಾಡುತ್ತಿದ್ದಾರೆ</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
-    <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ಸಿಂಕ್ ಮಾಡಿ</string>
+    <string name="pref_cat_scheduling" maxLength="41">ವೇಳಾಪಟ್ಟಿ</string>
+    <string name="pref_cat_whiteboard" maxLength="41">ವೈಟ್‌ಬೋರ್ಡ್</string>
     <string name="pref_cat_appearance" maxLength="41">Appearance</string>
-    <string name="pref_cat_themes" maxLength="41">Themes</string>
-    <string name="pref_cat_fonts" maxLength="41">Fonts</string>
-    <string name="pref_cat_gestures" maxLength="41">Gestures</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_advanced" maxLength="41">Advanced</string>
+    <string name="pref_cat_themes" maxLength="41">ಥೀಮ್ಗಳು</string>
+    <string name="pref_cat_fonts" maxLength="41">ಫಾಂಟ್‌ಗಳು</string>
+    <string name="pref_cat_gestures" maxLength="41">ಸನ್ನೆಗಳು</string>
+    <string name="pref_cat_controls" maxLength="41">ನಿಯಂತ್ರಣಗಳು</string>
+    <string name="pref_cat_advanced" maxLength="41">ಸುಧಾರಿತ</string>
     <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
     <string name="use_input_tag" maxLength="41">Type answer into the card</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-    <string name="reset_languages" maxLength="41">Reset languages</string>
+    <string name="reset_languages" maxLength="41">ಭಾಷೆಗಳನ್ನು ಮರುಹೊಂದಿಸಿ</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
-    <string name="reset_confirmation">All states reset</string>
-    <string name="card_zoom" maxLength="41">Card zoom</string>
-    <string name="image_zoom" maxLength="41">Image zoom</string>
-    <string name="button_size" maxLength="41">Answer button size</string>
+    <string name="reset_confirmation">ಎಲ್ಲಾ ರಾಜ್ಯಗಳನ್ನು ಮರುಹೊಂದಿಸಲಾಗಿದೆ</string>
+    <string name="card_zoom" maxLength="41">ಕಾರ್ಡ್ ಜೂಮ್</string>
+    <string name="image_zoom" maxLength="41">ಚಿತ್ರ ಜೂಮ್</string>
+    <string name="button_size" maxLength="41">ಉತ್ತರ ಬಟನ್ ಗಾತ್ರ</string>
     <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
-    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
+    <string name="card_browser_hide_media" maxLength="41">ಕಾರ್ಡ್ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಫೈಲ್ ಹೆಸರುಗಳನ್ನು ಪ್ರದರ್ಶಿಸಿ</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path" maxLength="41">AnkiDroid directory</string>
-    <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
+    <string name="col_path" maxLength="41">ಅಂಕಿಡ್ರಾಯ್ಡ್ ಡೈರೆಕ್ಟರಿ</string>
+    <string name="fullscreen_review" maxLength="41">ಪೂರ್ಣಪರದೆ ಮೋಡ್</string>
     <string name="full_screen_off">Off</string>
     <string name="full_screen_system">Hide the system bars</string>
     <string name="full_screen_complete">Hide the system bars and answer buttons</string>
     <string name="answer_buttons_position" maxLength="41">Answer buttons position</string>
     <string-array name="answer_buttons_position_labels">
-        <item>Top</item>
+        <item>ಟಾಪ್</item>
         <item>Bottom</item>
         <item>None</item>
     </string-array>
-    <string name="gestures" maxLength="41">Enable gestures</string>
+    <string name="gestures" maxLength="41">ಸನ್ನೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_none" maxLength="41">None</string>
-    <string name="gestures_swipe_up" maxLength="41">Swipe up</string>
-    <string name="gestures_swipe_down" maxLength="41">Swipe down</string>
-    <string name="gestures_swipe_left" maxLength="41">Swipe left</string>
-    <string name="gestures_swipe_right" maxLength="41">Swipe right</string>
-    <string name="gestures_double_tap" maxLength="41">Double touch</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
-    <string name="gestures_tap_top" maxLength="41">Touch top</string>
-    <string name="gestures_tap_left" maxLength="41">Touch left</string>
-    <string name="gestures_tap_right" maxLength="41">Touch right</string>
-    <string name="gestures_tap_bottom" maxLength="41">Touch bottom</string>
-    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_swipe_up" maxLength="41">ಮೇಲಕ್ಕೆ ಎಳಿ</string>
+    <string name="gestures_swipe_down" maxLength="41">ಕೆಳಗೆ ಸ್ವೈಪ್ ಮಾಡಿ</string>
+    <string name="gestures_swipe_left" maxLength="41">ಎಡಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ</string>
+    <string name="gestures_swipe_right" maxLength="41">ಬಲಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ</string>
+    <string name="gestures_double_tap" maxLength="41">ಡಬಲ್ ಟಚ್</string>
+    <string name="gestures_long_tap" maxLength="41">ದೀರ್ಘ ಸ್ಪರ್ಶ</string>
+    <string name="gestures_tap_top" maxLength="41">ಮೇಲ್ಭಾಗವನ್ನು ಸ್ಪರ್ಶಿಸಿ</string>
+    <string name="gestures_tap_left" maxLength="41">ಎಡಕ್ಕೆ ಸ್ಪರ್ಶಿಸಿ</string>
+    <string name="gestures_tap_right" maxLength="41">ಬಲಕ್ಕೆ ಸ್ಪರ್ಶಿಸಿ</string>
+    <string name="gestures_tap_bottom" maxLength="41">ಕೆಳಭಾಗವನ್ನು ಸ್ಪರ್ಶಿಸಿ</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">ಮೇಲಿನ ಎಡಭಾಗವನ್ನು ಸ್ಪರ್ಶಿಸಿ</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">ಮೇಲಿನ ಬಲಕ್ಕೆ ಸ್ಪರ್ಶಿಸಿ</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">ಮಧ್ಯದ ಕೇಂದ್ರವನ್ನು ಸ್ಪರ್ಶಿಸಿ</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">ಕೆಳಗಿನ ಎಡಭಾಗವನ್ನು ಸ್ಪರ್ಶಿಸಿ</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">ಕೆಳಗಿನ ಬಲಕ್ಕೆ ಸ್ಪರ್ಶಿಸಿ</string>
+    <string name="gestures_shake" maxLength="41">ಸಾಧನವನ್ನು ಅಲ್ಲಾಡಿಸಿ</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Double scrolling</string>
@@ -136,24 +140,24 @@
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="backup_limits_frequency">Frequency</string>
     <string name="backup_limits_lifetime">Lifetime</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="app_theme" maxLength="41">ಥೀಮ್</string>
     <string name="day_theme" maxLength="41">Day theme</string>
     <string name="night_theme" maxLength="41">Night theme</string>
-    <string name="language" maxLength="41">Language</string>
-    <string name="language_system">System language</string>
-    <string name="notification_pref" maxLength="41">Notifications</string>
+    <string name="language" maxLength="41">ಭಾಷೆ</string>
+    <string name="language_system">ಸಿಸ್ಟಮ್ ಭಾಷೆ</string>
+    <string name="notification_pref" maxLength="41">ಅಧಿಸೂಚನೆಗಳು</string>
     <string name="notification_pref_title" maxLength="41">Notify when</string>
     <string name="never_notify">Never notify</string>
     <string name="notify_when_pending">Pending messages available</string>
     <string name="notification_minimum_cards_due">More than %d cards due</string>
-    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">ವೈಬ್ರೇಟ್</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
     <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
     <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds" maxLength="41">Time to show answer</string>
     <string name="timeout_question_seconds" maxLength="41">Time to show next question</string>
-    <string name="select_locale_title">Select language</string>
+    <string name="select_locale_title">ಒಂದು ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display" maxLength="41">Safe display mode</string>
@@ -175,14 +179,15 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Show remaining</string>
     <string name="show_progress_summ">Show remaining card count</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">Deck for new cards</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d hour past midnight</item>
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
     <string name="enable_api_title" maxLength="41">Enable AnkiDroid API</string>
@@ -201,6 +206,7 @@
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
@@ -218,12 +224,12 @@
         If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sync url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">ಸಿಂಕ್ url</string>
     <!-- Key Bindings -->
     <string name="keyboard">Keyboard</string>
-    <string name="bluetooth">Bluetooth</string>
+    <string name="bluetooth">ಬ್ಲೂಟೂತ್</string>
     <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
+    <string name="card" maxLength="41">ಕಾರ್ಡ್</string>
     <string name="note" maxLength="41">Note</string>
     <string name="navigation" maxLength="41">Navigation</string>
     <string name="media" maxLength="41">Media</string>
@@ -266,6 +272,8 @@
     <string name="binding_add_key">Add key</string>
     <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Question</string>
@@ -317,8 +325,8 @@
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">ಬ್ಯಾಕ್‌ಅಪ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">ಬ್ಯಾಕ್‌ಅಪ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
     <string name="progress__deleting_backups">Deleting backups&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
@@ -332,16 +340,16 @@
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾವನ್ನು ಅಳಿಸಿ</string>
+    <string name="pref__delete_app_data__summary">ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಮತ್ತು ಇತರ ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾವನ್ನು ಅಳಿಸಿ</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾ ಅಳಿಸುವುದೇ</string>
     <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">ಸಂಗ್ರಹವಿಲ್ಲ</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">ದೋಷ</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>

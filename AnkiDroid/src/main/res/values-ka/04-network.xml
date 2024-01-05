@@ -64,6 +64,7 @@
     <string name="log_out">გასვლა</string>
     <string name="reset_password">პაროლის აღდგენა</string>
     <string name="lost_mail_instructions">დაგავიწყდათ ელფოსტა?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">პარამეტრები XXX-სათვის</string>
     <string name="sync_title">სინქრონიზაცია</string>

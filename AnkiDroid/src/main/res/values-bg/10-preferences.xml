@@ -47,7 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Изключен</string>
     <string name="pref_summary_seconds">%s сек</string>
-    <string name="pref_summary_minutes">%s мин.</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">Няма резултати</string>
     <!-- preferences.xml categories-->
@@ -113,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Двойно превъртане</string>
@@ -174,14 +178,15 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Показване на оставащото</string>
     <string name="show_progress_summ">Показване на брояч на оставащите карти</string>
-    <string name="show_eta" maxLength="41">Покажи ЕТА</string>
-    <string name="show_eta_summ">Показване на оставащото време</string>
     <string name="use_current" maxLength="41">Тесте за нови карти</string>
     <string name="learn_cutoff" maxLength="41">Учене над лимита</string>
     <string name="time_limit" maxLength="41">Ограничение на времето</string>
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d hour past midnight</item>
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Запазване на екрана включен</string>
     <string name="pref_keep_screen_on_summ">Изключване изчакването на екрана</string>
     <string name="enable_api_title" maxLength="41">Разрешаване на AnkiDroid API</string>
@@ -200,6 +205,7 @@
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Достъпност</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
@@ -265,6 +271,8 @@
     <string name="binding_add_key">Добавяне на клавиш</string>
     <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Натиснете клавиш</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Изберете страна на картата</string>
     <string name="card_side_question">Въпрос</string>

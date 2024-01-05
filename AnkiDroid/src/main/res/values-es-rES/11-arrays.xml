@@ -79,10 +79,10 @@
     <string name="html_size_code_x_large">x-grande</string>
     <string name="html_size_code_xx_large">xx-grande</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">Responder de nuevo</string>
+    <string name="answer_hard">Respuesta difícil</string>
+    <string name="answer_good">Respuesta buena</string>
+    <string name="answer_easy">Respuesta fácil</string>
     <string name="gesture_play">Reproducir multimedia</string>
     <string name="gesture_abort_learning">Abandonar aprendizaje</string>
     <string name="gesture_flag_red">Cambiar Bandera Roja</string>
@@ -103,4 +103,5 @@
     <string name="replay_voice">Reproducir Voz</string>
     <string name="automatic_answer_option_2">Difícil (Bueno si no está disponible)</string>
     <string name="automatic_answer_option_4">Fácil (Bueno si no está disponible)</string>
+    <string name="save_voice">Save Recording</string>
 </resources>

@@ -15,10 +15,9 @@
  */
 package com.ichi2.anki.reviewer
 
-import android.content.SharedPreferences
 import android.view.KeyEvent
+import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
@@ -32,7 +31,7 @@ class PeripheralKeymapTest {
         val processed: MutableList<ViewerCommand> = ArrayList()
 
         val peripheralKeymap = PeripheralKeymap(MockReviewerUi()) { e: ViewerCommand, _ -> processed.add(e) }
-        peripheralKeymap.setup(mock(SharedPreferences::class.java))
+        peripheralKeymap.setup(SPMockBuilder().createSharedPreferences())
         val event = mock(KeyEvent::class.java)
         whenever(event.unicodeChar).thenReturn(0)
         whenever(event.isCtrlPressed).thenReturn(true)
@@ -48,11 +47,6 @@ class PeripheralKeymapTest {
     }
 
     private class MockReviewerUi : ReviewerUi {
-        override val controlBlocked: ControlBlock?
-            get() = null
-
-        override val isControlBlocked = false
-
         override val isDisplayingAnswer: Boolean
             get() = false
     }

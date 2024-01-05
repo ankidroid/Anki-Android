@@ -27,15 +27,16 @@ import com.ichi2.utils.KotlinCleanup
 /**
  * Based on https://gist.github.com/kevin-barrientos/d75a5baa13a686367d45d17aaec7f030.
  */
+@KotlinCleanup("_state -> field = value in setter")
 class CheckBoxTriStates : AppCompatCheckBox {
     enum class State {
         INDETERMINATE, UNCHECKED, CHECKED
     }
 
-    private var mState: State = State.UNCHECKED
+    private var _state: State = State.UNCHECKED
 
     override fun setChecked(checked: Boolean) {
-        mState = if (checked) {
+        _state = if (checked) {
             State.CHECKED
         } else {
             State.UNCHECKED
@@ -45,12 +46,12 @@ class CheckBoxTriStates : AppCompatCheckBox {
     override fun setOnCheckedChangeListener(listener: OnCheckedChangeListener?) {
         // we never truly set the listener to the client implementation, instead we only hold
         // a reference to it and invoke it when needed.
-        if (mPrivateListener !== listener) {
-            mClientListener = listener
+        if (privateListener !== listener) {
+            clientListener = listener
         }
 
         // always use our implementation
-        super.setOnCheckedChangeListener(mPrivateListener)
+        super.setOnCheckedChangeListener(privateListener)
     }
 
     var cycleCheckedToIndeterminate = false
@@ -60,7 +61,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
      * This is the listener set to the super class which is going to be invoked each
      * time the check state has changed.
      */
-    private val mPrivateListener = OnCheckedChangeListener { _, _ ->
+    private val privateListener = OnCheckedChangeListener { _, _ ->
         // checkbox status is changed from unchecked to checked.
         toggle()
     }
@@ -68,14 +69,14 @@ class CheckBoxTriStates : AppCompatCheckBox {
     /**
      * Holds a reference to the listener set by a client, if any.
      */
-    private var mClientListener: OnCheckedChangeListener? = null
+    private var clientListener: OnCheckedChangeListener? = null
 
     /**
-     * This flag is needed to avoid accidentally changing the current [mState] when
+     * This flag is needed to avoid accidentally changing the current [_state] when
      * [onRestoreInstanceState] calls [setChecked]
-     * invoking our [mPrivateListener] and therefore changing the real state.
+     * invoking our [privateListener] and therefore changing the real state.
      */
-    private var mRestoring = false
+    private var restoring = false
 
     constructor(context: Context) : super(context) {
         init(context, null)
@@ -90,17 +91,17 @@ class CheckBoxTriStates : AppCompatCheckBox {
     }
 
     var state: State
-        get() = mState
+        get() = _state
         set(state) {
-            if (!mRestoring && mState != state) {
-                mState = state
-                mClientListener?.onCheckedChanged(this, this.isChecked)
+            if (!restoring && _state != state) {
+                _state = state
+                clientListener?.onCheckedChanged(this, this.isChecked)
                 updateBtn()
             }
         }
 
     override fun toggle() {
-        state = when (mState) {
+        state = when (_state) {
             State.INDETERMINATE -> if (cycleIndeterminateToChecked) {
                 State.CHECKED
             } else {
@@ -116,27 +117,27 @@ class CheckBoxTriStates : AppCompatCheckBox {
     }
 
     override fun isChecked(): Boolean {
-        return mState != State.UNCHECKED
+        return _state != State.UNCHECKED
     }
 
     override fun onSaveInstanceState(): Parcelable {
         val superState = super.onSaveInstanceState()
         val savedState = SavedState(superState)
-        savedState.state = mState
+        savedState.state = _state
         savedState.cycleCheckedToIndeterminate = cycleCheckedToIndeterminate
         savedState.cycleIndeterminateToChecked = cycleIndeterminateToChecked
         return savedState
     }
 
     override fun onRestoreInstanceState(state: Parcelable) {
-        mRestoring = true // indicates that the ui is restoring its state
+        restoring = true // indicates that the ui is restoring its state
         val savedState = state as SavedState
         super.onRestoreInstanceState(savedState.superState)
         this.state = savedState.state
         cycleCheckedToIndeterminate = savedState.cycleCheckedToIndeterminate
         cycleIndeterminateToChecked = savedState.cycleIndeterminateToChecked
         requestLayout()
-        mRestoring = false
+        restoring = false
     }
 
     private fun init(context: Context, attrs: AttributeSet?) {
@@ -159,11 +160,11 @@ class CheckBoxTriStates : AppCompatCheckBox {
             )
         }
         updateBtn()
-        setOnCheckedChangeListener(mPrivateListener)
+        setOnCheckedChangeListener(privateListener)
     }
 
     private fun updateBtn() {
-        val btnDrawable: Int = when (mState) {
+        val btnDrawable: Int = when (_state) {
             State.UNCHECKED -> R.drawable.ic_baseline_check_box_outline_blank_24_inset
             State.CHECKED -> R.drawable.ic_baseline_check_box_24_inset
             else -> R.drawable.ic_baseline_indeterminate_check_box_24_inset
@@ -177,9 +178,9 @@ class CheckBoxTriStates : AppCompatCheckBox {
         var cycleCheckedToIndeterminate = false
         var cycleIndeterminateToChecked = false
 
-        constructor(superState: Parcelable?) : super(superState) {}
+        constructor(superState: Parcelable?) : super(superState)
         private constructor(source: Parcel) : super(source) {
-            state = State.values()[source.readInt()]
+            state = State.entries[source.readInt()]
             cycleCheckedToIndeterminate = source.readInt() != 0
             cycleIndeterminateToChecked = source.readInt() != 0
         }

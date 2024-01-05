@@ -59,22 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Proširi</string>
     <string name="collapse">Sažmi</string>
-    <string name="study_more">Uči više</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minuta preostala</item>
-        <item quantity="few">%d minute preostale</item>
-        <item quantity="other">%d minuta preostalo</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Kreni dodavati kartice\nkoristeći + ikonu.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -88,6 +72,7 @@
     <string name="ease_button_easy">Jednostavno</string>
     <string name="menu_import">Uvezi</string>
     <string name="undo">Poništi</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo poteza</string>
     <string name="move_all_to_deck">Premjesti sve u skupinu</string>
     <string name="unbury">Otkopaj</string>
@@ -140,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">Ova skupina je prazna. Pritisnite tipku + kako biste dodali novi sadržaj.</string>
-    <string name="studyoptions_limit_reached">Dostignuto dnevno ograničenje učenja</string>
-    <string name="studyoptions_empty_schedule">Nema zakazanih kartica za učenje</string>
-    <string name="studyoptions_congrats_finished">Čestitamo! Za sada ste završili.</string>
     <string name="studyoptions_no_cards_due">Još nije potrebno dovršiti ni jednu karticu</string>
     <string name="sd_card_not_mounted">Pohrana uređaja nije montirana</string>
     <string name="button_sync" comment="Text of the sync button">Sinkroniziraj</string>
@@ -152,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Nastavi sinkronizaciju</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinkronizacija je otkazana</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Otkazivanje&#8230;\nOvo može potrajati neko vrijeme.</string>
-    <string name="export">Izvezi</string>
-    <string name="export_collection">Izvezi zbirku</string>
     <string name="export_deck">Izvezi skupinu</string>
     <string name="nothing">Ništa</string>
     <!-- Card template editor -->

@@ -228,9 +228,9 @@ class TgzPackageExtract(private val context: Context) {
 
         try {
             FileInputStream(inputFile).use { inputStream ->
-                ArchiveStreamFactory().createArchiveInputStream("tar", inputStream).use { tarInputStream ->
-                    val tarInputStream1 = tarInputStream as TarArchiveInputStream
-                    var entry: TarArchiveEntry? = tarInputStream1.nextEntry as TarArchiveEntry
+                ArchiveStreamFactory().createArchiveInputStream<TarArchiveInputStream>("tar", inputStream).use { tarInputStream ->
+
+                    var entry = tarInputStream.nextEntry
 
                     while (entry != null) {
                         val outputFile = File(outputDir, entry.name)
@@ -243,7 +243,7 @@ class TgzPackageExtract(private val context: Context) {
                             unTarFile(tarInputStream, entry, outputDir, outputFile)
                         }
 
-                        entry = tarInputStream.nextEntry as? TarArchiveEntry
+                        entry = tarInputStream.nextEntry
                     }
                 }
             }
@@ -347,15 +347,15 @@ class TgzPackageExtract(private val context: Context) {
         var unTarSize: Long = 0
 
         FileInputStream(tarFile).use { inputStream ->
-            ArchiveStreamFactory().createArchiveInputStream("tar", inputStream).use { tarInputStream ->
-                val tarInputStream1 = tarInputStream as TarArchiveInputStream
-                var entry: TarArchiveEntry? = tarInputStream1.nextEntry as TarArchiveEntry
+            ArchiveStreamFactory().createArchiveInputStream<TarArchiveInputStream>("tar", inputStream).use { tarInputStream ->
+
+                var entry = tarInputStream.nextEntry
                 var numOfEntries = 0
 
                 while (entry != null) {
                     numOfEntries++
                     unTarSize += entry.size
-                    entry = tarInputStream.nextEntry as? TarArchiveEntry
+                    entry = tarInputStream.nextEntry
                 }
 
                 if (numOfEntries > TOO_MANY_FILES) {

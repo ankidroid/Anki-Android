@@ -55,7 +55,7 @@
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">წინასწარ ნახვა</string>
     <string name="reposition_card_dialog_title">ახალი ბარათის გადაადგილება</string>
     <string name="reposition_card_dialog_message">საწყისი პოზიცია:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_not_new_error">პოზიციის შეცვლა მხოლოდ ახალი ბარათებისთვის შეიძლება</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">შეიცვალა %d ბარათის პოზიცია</item>
         <item quantity="other">შეიცვალა %d ბარათის პოზიცია</item>
@@ -112,7 +112,7 @@
     <string name="dialog_no">არა</string>
     <string name="dialog_yes">კი</string>
     <string name="dialog_continue">გაგრძელება</string>
-    <string name="dialog_processing">მუშავდება…</string>
+    <string name="dialog_processing">მუშავდება&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">შექმნა</string>
     <string name="dialog_positive_delete">წაშლა</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -174,7 +174,7 @@
     <string name="no_image_selected">გამოსახულება არაა მონიშნული</string>
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">შეცდომა სურათის წაშლისას</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="failed_to_apply_background_image">სურათის ფონზე დაყენება ვერ მოხერხდა %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
@@ -212,8 +212,8 @@
     <string name="help_item_ankidroid_privacy_policy">AnkiDroid-ის კონ&#173;ფი&#173;დენ&#173;ცია&#173;ლურ&#173;ობ&#173;ის პოლიტიკა</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb-ის კონ&#173;ფი&#173;დენ&#173;ცია&#173;ლურ&#173;ობ&#173;ის პოლიტიკა</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb-ის წესები და პირობები</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
+    <string name="help_title_send_exception">უწესივრობათა დიაგნოსტიკისა და აღმოფხვრის ანგარიშის გაგზავნა</string>
+    <string name="help_dialog_exception_report_debounce">შეტყობინება უკვე გაგზავნილია</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>
@@ -234,7 +234,7 @@
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">კოლექციის სარეზერვო ასლი</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="backup_collection_message">კარგი ხანია არ შეგიქმნიათ კოლექციის სარეზერვო ასლი. უმჯობესია ეს გააკეთოთ, რათა მონაცემები არ დაგეკარგოთ.</string>
     <string name="button_backup">სარეზერვო ასლი</string>
     <string name="button_disable_reminder">შეხსენების გამორთვა</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">მოგვიანებით</string>

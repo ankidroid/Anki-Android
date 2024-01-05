@@ -28,41 +28,41 @@ import org.mockito.Mockito.mock
 import kotlin.test.assertNull
 
 class GestureMapperTest {
-    private val mSut = GestureMapper()
+    private val sut = GestureMapper()
 
     @Test
     fun zeroWidthReturnsNothing() {
-        assertNull(mSut.gesture(0, 10, 10f, 10f))
+        assertNull(sut.gesture(0, 10, 10f, 10f))
     }
 
     @Test
     fun zeroHeightReturnsNothing() {
-        assertNull(mSut.gesture(10, 0, 10f, 10f))
+        assertNull(sut.gesture(10, 0, 10f, 10f))
     }
 
     @Test
     fun testOobTop() {
-        assertEquals(Gesture.TAP_TOP, mSut.gesture(100, 100, 50f, -5f))
+        assertEquals(Gesture.TAP_TOP, sut.gesture(100, 100, 50f, -5f))
     }
 
     @Test
     fun testOobLeft() {
-        assertEquals(Gesture.TAP_LEFT, mSut.gesture(100, 100, -10f, 50f))
+        assertEquals(Gesture.TAP_LEFT, sut.gesture(100, 100, -10f, 50f))
     }
 
     @Test
     fun testOobRight() {
-        assertEquals(Gesture.TAP_RIGHT, mSut.gesture(100, 100, 200f, 50f))
+        assertEquals(Gesture.TAP_RIGHT, sut.gesture(100, 100, 200f, 50f))
     }
 
     @Test
     fun testOobBottom() {
-        assertEquals(Gesture.TAP_BOTTOM, mSut.gesture(100, 100, 50f, 200f))
+        assertEquals(Gesture.TAP_BOTTOM, sut.gesture(100, 100, 50f, 200f))
     }
 
     @Test
     fun testCenter() {
-        assertEquals(Gesture.TAP_CENTER, mSut.gesture(100, 100, 50f, 50f))
+        assertEquals(Gesture.TAP_CENTER, sut.gesture(100, 100, 50f, 50f))
     }
 
     companion object {

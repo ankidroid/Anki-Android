@@ -54,12 +54,15 @@
         <item quantity="other">%d Notizen angezeigt</item>
     </plurals>
     <string name="card_browser_all_decks">Alle Stapel</string>
-    <string name="card_browser_delete_card">Notizen löschen</string>
-    <string name="card_browser_suspend_card">Karten ausschließen</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Karte löschen</item>
+        <item quantity="other">Karten löschen</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Notiz löschen</item>
+        <item quantity="other">Notizen löschen</item>
+    </plurals>
     <string name="card_browser_change_deck">Stapel wechseln</string>
-    <string name="card_browser_unsuspend_card">Karten einschließen</string>
-    <string name="card_browser_mark_card">Notizen markieren</string>
-    <string name="card_browser_unmark_card">Markierung entfernen</string>
     <string name="delete_card_title">Notiz löschen?</string>
     <string name="card_browser_show_marked">Markierte herausfiltern</string>
     <string name="card_browser_show_suspended">Nach Ausgeschlossenen filtern</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d Karte gelöscht</item>
         <item quantity="other">%d Karten gelöscht</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

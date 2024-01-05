@@ -16,12 +16,13 @@
 package com.ichi2.anki
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.res.Resources
 import android.preference.*
+import androidx.core.content.edit
 import com.brsanthu.googleanalytics.GoogleAnalytics
 import com.brsanthu.googleanalytics.GoogleAnalyticsBuilder
 import com.brsanthu.googleanalytics.request.ExceptionHit
+import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.analytics.UsageAnalytics
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -34,41 +35,35 @@ import org.mockito.kotlin.whenever
 
 class AnalyticsTest {
     @Mock
-    private lateinit var mMockContext: Context
+    private lateinit var mockContext: Context
 
     @Mock
-    private lateinit var mMockResources: Resources
+    private lateinit var mockResources: Resources
 
-    @Mock
-    private lateinit var mMockSharedPreferences: SharedPreferences
-
-    @Mock
-    private lateinit var mMockSharedPreferencesEditor: SharedPreferences.Editor
+    private val sharedPreferences = SPMockBuilder().createSharedPreferences().apply {
+        edit {
+            putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, true)
+        }
+    }
 
     @Before
     fun setUp() {
         UsageAnalytics.resetForTests()
         MockitoAnnotations.openMocks(this)
 
-        whenever((mMockResources.getBoolean(R.bool.ga_anonymizeIp))).thenReturn(true)
-        whenever(mMockResources.getInteger(R.integer.ga_sampleFrequency))
+        whenever((mockResources.getBoolean(R.bool.ga_anonymizeIp))).thenReturn(true)
+        whenever(mockResources.getInteger(R.integer.ga_sampleFrequency))
             .thenReturn(10)
-        whenever(mMockContext.resources)
-            .thenReturn(mMockResources)
-        whenever(mMockContext.getString(R.string.ga_trackingId))
+        whenever(mockContext.resources)
+            .thenReturn(mockResources)
+        whenever(mockContext.getString(R.string.ga_trackingId))
             .thenReturn("Mock Tracking ID")
-        whenever(mMockContext.getString(R.string.app_name))
+        whenever(mockContext.getString(R.string.app_name))
             .thenReturn("Mock Application Name")
-        whenever(mMockContext.packageName)
+        whenever(mockContext.packageName)
             .thenReturn("mock_context")
-        whenever(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
-            .thenReturn(mMockSharedPreferences)
-        whenever(mMockSharedPreferences.getBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, false))
-            .thenReturn(true)
-        whenever(mMockSharedPreferencesEditor.putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, true))
-            .thenReturn(mMockSharedPreferencesEditor)
-        whenever(mMockSharedPreferences.edit())
-            .thenReturn(mMockSharedPreferencesEditor)
+        whenever(mockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
+            .thenReturn(sharedPreferences)
     }
 
     private class SpyGoogleAnalyticsBuilder : GoogleAnalyticsBuilder() {
@@ -89,12 +84,12 @@ class AnalyticsTest {
         mockStatic(PreferenceManager::class.java).use { _ ->
             mockStatic(GoogleAnalytics::class.java).use { _ ->
                 whenever(PreferenceManager.getDefaultSharedPreferences(any()))
-                    .thenReturn(mMockSharedPreferences)
+                    .thenReturn(sharedPreferences)
                 whenever(GoogleAnalytics.builder())
                     .thenReturn(SpyGoogleAnalyticsBuilder())
 
                 // This is actually a Mockito Spy of GoogleAnalyticsImpl
-                val analytics = mMockContext.let { UsageAnalytics.initialize(it) }
+                val analytics = mockContext.let { UsageAnalytics.initialize(it) }
 
                 // no root cause
                 val exception = mock(Exception::class.java)

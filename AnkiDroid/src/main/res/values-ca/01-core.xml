@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Desplega</string>
     <string name="collapse">Replega</string>
-    <string name="study_more">Estudia més</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">Queda %d minut</item>
-        <item quantity="other">Queden %d minuts</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">Queda %1$d hora i %2$d minuts</item>
-        <item quantity="other">Queden %1$d hores i %2$d minuts</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Queda %1$d dia i %2$d hores</item>
-        <item quantity="other">Queden %1$d dies i %2$d hores</item>
-    </plurals>
     <string name="no_cards_placeholder_title">La col·lecció és buida</string>
     <string name="no_cards_placeholder_description">Comenceu a afegir cartes\n amb la icona +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Fàcil</string>
     <string name="menu_import">Importa</string>
     <string name="undo">Desfés</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Desfés el traç</string>
     <string name="move_all_to_deck">Mou tot al paquet</string>
     <string name="unbury">Desenterra</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Cerca un paquet</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Cerca un paquet</string>
     <string name="invalid_deck_name">El nom del paquet no és vàlid</string>
-    <string name="studyoptions_empty">Aquest paquet és buit. Premeu el botó + per afegir nou contingut.</string>
-    <string name="studyoptions_limit_reached">Heu arribat al límit d\'estudi diari</string>
-    <string name="studyoptions_empty_schedule">No hi ha targetes previstes per a estudiar</string>
-    <string name="studyoptions_congrats_finished">Felicitats! De moment ja heu acabat.</string>
     <string name="studyoptions_no_cards_due">No hi ha cartes previstes.</string>
     <string name="sd_card_not_mounted">La tarjeta SD no funciona correctament</string>
     <string name="button_sync" comment="Text of the sync button">Sincronització</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continua la sincronització</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">S\'ha cancel·lat la sincronització</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">S\'està cancel·lant...\nAixò pot trigar una estona.</string>
-    <string name="export">Exporta</string>
-    <string name="export_collection">Exporta la col·lecció</string>
     <string name="export_deck">Exporta el paquet</string>
     <string name="nothing">Res</string>
     <!-- Card template editor -->

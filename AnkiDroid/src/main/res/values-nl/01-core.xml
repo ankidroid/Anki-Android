@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Uitklappen</string>
     <string name="collapse">Inklappen</string>
-    <string name="study_more">Studeer meer</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minuut over</item>
-        <item quantity="other">%d minuten over</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d Uur %2$d Over</item>
-        <item quantity="other">%1$d Uren %2$d over</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d Dag %2$d over</item>
-        <item quantity="other">%1$d Dagen %2$d Over</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Collectie is leeg</string>
     <string name="no_cards_placeholder_description">Begin kaarten toe te voegen\nmet het + icoon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Makkelijk</string>
     <string name="menu_import">Kaarten importeren</string>
     <string name="undo">Ongedaan maken</string>
+    <string name="redo">Opnieuw</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Maak streek ongedaan</string>
     <string name="move_all_to_deck">Alles verplaatsen naar leerset</string>
     <string name="unbury">Opgraven</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Leerset zoeken</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Set doorzoeken</string>
     <string name="invalid_deck_name">Ongeldige setnaam</string>
-    <string name="studyoptions_empty">Deze leerset is leeg. Druk op de + knop om nieuwe inhoud toe te voegen.</string>
-    <string name="studyoptions_limit_reached">De dagelijkse studielimiet is bereikt</string>
-    <string name="studyoptions_empty_schedule">Er zijn geen kaarten gepland om te studeren</string>
-    <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
     <string name="studyoptions_no_cards_due">Nog geen kaarten te doen.</string>
     <string name="sd_card_not_mounted">Apparaatopslag niet aangesloten</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniseer</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Synchronisatie hervatten</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronisatie geannuleerd</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Annuleren&#8230;\nDit kan enige tijd duren.</string>
-    <string name="export">Exporteren</string>
-    <string name="export_collection">Verzameling exporteren</string>
     <string name="export_deck">Leerset exporteren</string>
     <string name="nothing">Niets</string>
     <!-- Card template editor -->
@@ -250,8 +232,8 @@
     <string name="create_new_collection">Nieuwe collectie aanmaken</string>
     <string name="new_unsafe_collection">De nieuwe collectie wordt verwijderd van uw telefoon als u AnkiDroid verwijdert</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid heeft wat machtigingen nodig om te werken</string>
+    <string name="storage_access_title">Toegang tot opslag</string>
+    <string name="storage_access_summary">Slaat uw collectie op een veilige plaats die niet zal worden verwijderd als de app is verwijderd</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Toegang tot alle bestanden</string>
 </resources>

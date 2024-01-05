@@ -103,4 +103,5 @@
     <string name="replay_voice">重播音頻</string>
     <string name="automatic_answer_option_2">困難 (很好如果無效)</string>
     <string name="automatic_answer_option_4">簡單 (很好如果無效)</string>
+    <string name="save_voice">Save Recording</string>
 </resources>

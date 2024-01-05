@@ -20,8 +20,11 @@ import android.view.Menu
 import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_DEFAULT
-import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.AnkiDroidJsAPITest.Companion.formatApiResult
+import com.ichi2.anki.AnkiDroidJsAPITest.Companion.getDataFromRequest
+import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
+import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
+import com.ichi2.anki.cardviewer.ViewerCommand.MARK
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ActionButtonStatus
@@ -34,6 +37,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.OS
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -49,28 +53,21 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun verifyStartupNoCollection() {
         enableNullCollection()
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.getColUnsafe } } }
+        ActivityScenario.launch(Reviewer::class.java)
+            .use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.getColUnsafe } } }
     }
 
     @Ignore("flaky")
     @Test
     @RunInBackground
     fun verifyNormalStartup() {
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertNotNull("Collection should be non-null", reviewer.getColUnsafe) } }
-    }
-
-    @Ignore("flaky")
-    @Test
-    @RunInBackground
-    @Flaky(os = OS.WINDOWS, "startUp: BackendCollectionAlreadyOpenException")
-    fun exitCommandWorksAfterControlsAreBlocked() {
-        ensureCollectionLoadIsSynchronous()
-        ActivityScenario.launchActivityForResult(Reviewer::class.java).use { scenario ->
+        ActivityScenario.launch(Reviewer::class.java).use { scenario ->
             scenario.onActivity { reviewer: Reviewer ->
-                reviewer.blockControls(true)
-                reviewer.executeCommand(ViewerCommand.EXIT)
+                assertNotNull(
+                    "Collection should be non-null",
+                    reviewer.getColUnsafe
+                )
             }
-            assertThat(scenario.result.resultCode, equalTo(RESULT_DEFAULT))
         }
     }
 
@@ -80,7 +77,6 @@ class ReviewerTest : RobolectricTest() {
         moveToReviewQueue(firstNote.firstCard())
 
         val reviewer = startReviewer()
-        reviewer.generateQuestionSoundList()
         reviewer.displayCardQuestion()
 
         assertThat("If the sound file with given name is not present, then no error occurs", true)
@@ -95,7 +91,11 @@ class ReviewerTest : RobolectricTest() {
 
         val visibleButtons: List<String> = reviewer.getVisibleButtonNames()
 
-        assertThat("No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons", visibleButtons, empty())
+        assertThat(
+            "No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons",
+            visibleButtons,
+            empty()
+        )
     }
 
     @Test
@@ -108,7 +108,11 @@ class ReviewerTest : RobolectricTest() {
 
         val visibleButtons = reviewer.getVisibleButtonNamesExcept(R.id.action_toggle_whiteboard)
 
-        assertThat("No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons", visibleButtons, empty())
+        assertThat(
+            "No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons",
+            visibleButtons,
+            empty()
+        )
     }
 
     @Test
@@ -178,46 +182,32 @@ class ReviewerTest : RobolectricTest() {
         time.addM(2)
         reviewer.answerCard(Consts.BUTTON_THREE)
         advanceRobolectricLooperWithSleep()
-        equalFirstField(cards[0], reviewer.currentCard!!) // This failed in #6898 because this card was not in the queue
+        equalFirstField(
+            cards[0],
+            reviewer.currentCard!!
+        ) // This failed in #6898 because this card was not in the queue
     }
 
     @Test
-    @Flaky(os = OS.WINDOWS, "startReviewer: NullPointerException - baseDeckName")
-    fun baseDeckName() {
+    fun jsAnkiGetDeckName() = runTest {
         val models = col.notetypes
-
-        val decks = col.decks
-        val didAb = addDeck("A::B")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
-        basic!!.put("did", didAb)
-        addNoteUsingBasicModel("foo", "bar")
-        // This deck already exists. This gets the deck, not create it.
-        val didA = addDeck("A")
-        decks.select(didA)
-        val reviewer = startReviewer()
-        waitForAsyncTasksToComplete()
-        // The only card is in deck A::B, so the title should be B
-        assertThat(reviewer.supportActionBar!!.title, equalTo("B"))
-    }
-
-    @Test
-    fun jsAnkiGetDeckName() {
-        val models = col.notetypes
-        val decks = col.decks
 
         val didAb = addDeck("A::B")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
 
-        val didA = addDeck("A")
-        decks.select(didA)
+        addDeck("A", setAsSelected = true)
 
         val reviewer = startReviewer()
-        val javaScriptFunction = reviewer.javaScriptFunction()
+        val javaScriptFunction = reviewer.jsApi
 
         waitForAsyncTasksToComplete()
-        assertThat(javaScriptFunction.ankiGetDeckName(), equalTo("B"))
+        assertThat(
+            javaScriptFunction.handleJsApiRequest("deckName", jsApiContract(), true)
+                .decodeToString(),
+            equalTo(formatApiResult("B"))
+        )
     }
 
     @Ignore("needs update for v3")
@@ -246,8 +236,29 @@ class ReviewerTest : RobolectricTest() {
         assertThat(
             "Counts after an undo should be the same as before an undo",
             countsAfterUndo,
-            `is`(countsBeforeUndo)
+            equalTo(countsBeforeUndo)
         )
+    }
+
+    @Test
+    fun `A card is not flipped after 'mark' Issue 14656`() = runTest {
+        startReviewer(withCards = 1).apply {
+            executeCommand(FLIP_OR_ANSWER_EASE1)
+            assertThat("card is showing answer", isDisplayingAnswer)
+            executeCommand(MARK)
+            assertThat("card is showing answer after mark", isDisplayingAnswer)
+        }
+    }
+
+    @Test
+    fun `Marking a card is undone by marking again`() = runTest {
+        startReviewer(withCards = 1).apply {
+            assertThat("card is not marked before action", !isDisplayingMark)
+            executeCommand(MARK)
+            assertThat("card is marked after action", isDisplayingMark)
+            executeCommand(MARK)
+            assertThat("marking a card twice disables the mark", !isDisplayingMark)
+        }
     }
 
     private fun toggleWhiteboard(reviewer: ReviewerForMenuItems) {
@@ -282,21 +293,22 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Suppress("SameParameterValue")
-    private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) {
-        val jsApi = r.javaScriptFunction()
+    private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) = runTest {
+        val jsApi = r.jsApi
         val countList = listOf(
-            jsApi.ankiGetNewCardCount(),
-            jsApi.ankiGetLrnCardCount(),
-            jsApi.ankiGetRevCardCount()
+            getDataFromRequest("newCardCount", jsApi),
+            getDataFromRequest("lrnCardCount", jsApi),
+            getDataFromRequest("revCardCount", jsApi)
         )
-
         val expected = listOf(
-            newCount,
-            stepCount,
-            revCount
+            formatApiResult(newCount),
+            formatApiResult(stepCount),
+            formatApiResult(revCount)
         )
-
-        assertThat(countList.toString(), equalTo(expected.toString())) // We use toString as hamcrest does not print the whole array and stops at [0].
+        assertThat(
+            countList.toString(),
+            equalTo(expected.toString())
+        ) // We use toString as hamcrest does not print the whole array and stops at [0].
     }
 
     private fun answerCardOrdinalAsGood(r: Reviewer, i: Int) {
@@ -327,7 +339,7 @@ class ReviewerTest : RobolectricTest() {
 
         val newNote = col.newNote()
         newNote.setField(0, "Hello")
-        assertThat(newNote.model()["name"], equalTo("Three"))
+        assertThat(newNote.notetype["name"], equalTo("Three"))
 
         assertThat(col.addNote(newNote), equalTo(3))
     }
@@ -347,7 +359,10 @@ class ReviewerTest : RobolectricTest() {
         notetypes.addTemplate(m, newTemplate)
     }
 
-    private fun startReviewer(): Reviewer {
+    private fun startReviewer(withCards: Int = 0): Reviewer {
+        for (i in 0 until withCards) {
+            addNoteUsingBasicModel()
+        }
         return startReviewer(this)
     }
 
@@ -355,11 +370,13 @@ class ReviewerTest : RobolectricTest() {
         return startReviewer(this, clazz)
     }
 
+    @KotlinCleanup("use extension function")
     private fun moveToReviewQueue(reviewCard: Card) {
-        reviewCard.queue = Consts.QUEUE_TYPE_REV
-        reviewCard.type = Consts.CARD_TYPE_REV
-        reviewCard.due = 0
-        reviewCard.flush()
+        reviewCard.update {
+            queue = Consts.QUEUE_TYPE_REV
+            type = Consts.CARD_TYPE_REV
+            due = 0
+        }
     }
 
     private class ReviewerForMenuItems : Reviewer() {
@@ -397,10 +414,9 @@ class ReviewerTest : RobolectricTest() {
             return startReviewer(testClass, Reviewer::class.java)
         }
 
-        fun <T : Reviewer?> startReviewer(testClass: RobolectricTest, clazz: Class<T>): T {
-            val reviewer = startActivityNormallyOpenCollectionWithIntent(testClass, clazz, Intent())
-            waitForAsyncTasksToComplete()
-            return reviewer
-        }
+        fun <T : Reviewer?> startReviewer(testClass: RobolectricTest, clazz: Class<T>): T =
+            startActivityNormallyOpenCollectionWithIntent(testClass, clazz, Intent())
     }
 }
+
+val Reviewer.isDisplayingMark: Boolean get() = this.mCardMarker!!.isDisplayingMark

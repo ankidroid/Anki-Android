@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.database.sqlite.SQLiteFullException
 import android.os.Environment
 import android.text.format.Formatter
@@ -117,43 +118,43 @@ open class CollectionHelper {
      */
     @KotlinCleanup("extract this to another file")
     class CollectionIntegrityStorageCheck {
-        private val mErrorMessage: String?
+        private val errorMessage: String?
 
         // OR:
-        private val mRequiredSpace: Long?
-        private val mFreeSpace: Long?
+        private val requiredSpace: Long?
+        private val freeSpace: Long?
 
         private constructor(requiredSpace: Long, freeSpace: Long) {
-            mFreeSpace = freeSpace
-            mRequiredSpace = requiredSpace
-            mErrorMessage = null
+            this.freeSpace = freeSpace
+            this.requiredSpace = requiredSpace
+            errorMessage = null
         }
 
         private constructor(errorMessage: String) {
-            mRequiredSpace = null
-            mFreeSpace = null
-            mErrorMessage = errorMessage
+            requiredSpace = null
+            freeSpace = null
+            this.errorMessage = errorMessage
         }
 
         fun shouldWarnOnIntegrityCheck(): Boolean {
-            return mErrorMessage != null || fileSystemDoesNotHaveSpaceForBackup()
+            return errorMessage != null || fileSystemDoesNotHaveSpaceForBackup()
         }
 
         private fun fileSystemDoesNotHaveSpaceForBackup(): Boolean {
             // only to be called when mErrorMessage == null
-            if (mFreeSpace == null || mRequiredSpace == null) {
+            if (freeSpace == null || requiredSpace == null) {
                 Timber.e("fileSystemDoesNotHaveSpaceForBackup called in invalid state.")
                 return true
             }
-            Timber.d("Required Free Space: %d. Current: %d", mRequiredSpace, mFreeSpace)
-            return mRequiredSpace > mFreeSpace
+            Timber.d("Required Free Space: %d. Current: %d", requiredSpace, freeSpace)
+            return requiredSpace > freeSpace
         }
 
         fun getWarningDetails(context: Context): String {
-            if (mErrorMessage != null) {
-                return mErrorMessage
+            if (errorMessage != null) {
+                return errorMessage
             }
-            if (mFreeSpace == null || mRequiredSpace == null) {
+            if (freeSpace == null || requiredSpace == null) {
                 Timber.e("CollectionIntegrityCheckStatus in an invalid state")
                 val defaultRequiredFreeSpace = defaultRequiredFreeSpace(context)
                 return context.resources.getString(
@@ -161,14 +162,14 @@ open class CollectionHelper {
                     defaultRequiredFreeSpace
                 )
             }
-            val required = Formatter.formatShortFileSize(context, mRequiredSpace)
+            val required = Formatter.formatShortFileSize(context, requiredSpace)
             val insufficientSpace = context.resources.getString(
                 R.string.integrity_check_insufficient_space,
                 required
             )
 
             // Also concat in the extra content showing the current free space.
-            val currentFree = Formatter.formatShortFileSize(context, mFreeSpace)
+            val currentFree = Formatter.formatShortFileSize(context, freeSpace)
             val insufficientSpaceCurrentFree = context.resources.getString(
                 R.string.integrity_check_insufficient_space_extra_content,
                 currentFree
@@ -477,12 +478,27 @@ open class CollectionHelper {
          * @return the absolute path to the AnkiDroid directory.
          */
         fun getCurrentAnkiDroidDirectory(context: Context): String {
-            val preferences = context.sharedPrefs()
+            return getCurrentAnkiDroidDirectoryOptionalContext(context.sharedPrefs()) { context }
+        }
+
+        fun getMediaDirectory(context: Context): File {
+            return File(getCurrentAnkiDroidDirectory(context), "collection.media")
+        }
+
+        /**
+         * An accessor which makes [Context] optional in the case that [PREF_COLLECTION_PATH] is set
+         *
+         * @return the absolute path to the AnkiDroid directory.
+         */
+        // This uses a lambda as we typically depends on the `lateinit` AnkiDroidApp.instance
+        // If we remove all Android references, we get a significant unit test speedup
+        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+        internal fun getCurrentAnkiDroidDirectoryOptionalContext(preferences: SharedPreferences, context: () -> Context): String {
             return if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
                 // create an "androidTest" directory inside the current collection directory which contains the test data
                 // "/AnkiDroid/androidTest" would be a new collection path
                 val currentCollectionDirectory = preferences.getOrSetString(PREF_COLLECTION_PATH) {
-                    getDefaultAnkiDroidDirectory(context)
+                    getDefaultAnkiDroidDirectory(context())
                 }
                 File(
                     currentCollectionDirectory,
@@ -493,7 +509,7 @@ open class CollectionHelper {
             } else {
                 preferences.getOrSetString(PREF_COLLECTION_PATH) {
                     getDefaultAnkiDroidDirectory(
-                        context
+                        context()
                     )
                 }
             }

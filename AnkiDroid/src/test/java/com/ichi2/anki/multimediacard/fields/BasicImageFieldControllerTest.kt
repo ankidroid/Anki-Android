@@ -18,6 +18,7 @@ package com.ichi2.anki.multimediacard.fields
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.CheckResult
@@ -35,7 +36,6 @@ import org.mockito.kotlin.whenever
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowToast
 import java.io.File
-import kotlin.test.fail
 
 @RunWith(RobolectricTestRunner::class)
 open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase() {
@@ -110,7 +110,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
                 input: I,
                 options: ActivityOptionsCompat?
             ) {
-                fail("Unexpected access to the activity result registry!")
+                dispatchResult(requestCode, ActivityResult(Activity.RESULT_OK, Intent()))
             }
         }
         val activity = setupActivityMock(controller, controller.getActivity())
@@ -122,7 +122,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
     }
 
     private fun performImageResult(controller: BasicImageFieldController, intent: Intent) {
-        controller.onActivityResult(BasicImageFieldController.ACTIVITY_SELECT_IMAGE, Activity.RESULT_OK, intent)
+        controller.selectImageLauncher.launch(intent)
     }
 
     @get:CheckResult

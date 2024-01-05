@@ -59,25 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Rozbalit</string>
     <string name="collapse">Sbalit</string>
-    <string name="study_more">Studovat více</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">Zbývá %d minuta</item>
-        <item quantity="few">Zbývají %d minuty</item>
-        <item quantity="many">Zbývá %d minuty</item>
-        <item quantity="other">Zbývá %d minut</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">Zbývá %1$d hodina %2$d</item>
-        <item quantity="few">Zbývají %1$d hodiny %2$d</item>
-        <item quantity="many">Zbývá %1$d hodiny %2$d</item>
-        <item quantity="other">Zbývá %1$d hodin %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Zbývá %1$d den %2$d</item>
-        <item quantity="few">Zbývají %1$d dny %2$d</item>
-        <item quantity="many">Zbývá %1$d dne %2$d</item>
-        <item quantity="other">Zbývá %1$d dní %2$d</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Kolekce je prázdná</string>
     <string name="no_cards_placeholder_description">Začněte přidávat karty\npoužitím ikony +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -91,6 +72,7 @@
     <string name="ease_button_easy">Snadné</string>
     <string name="menu_import">Import</string>
     <string name="undo">Vrátit zpět</string>
+    <string name="redo">Znovu</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Zrušit čáru</string>
     <string name="move_all_to_deck">Přesunout vše do balíčku</string>
     <string name="unbury">Zrušit přeskočení</string>
@@ -143,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Hledat balíček</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Hledat balíček</string>
     <string name="invalid_deck_name">Neplatný název balíčku</string>
-    <string name="studyoptions_empty">Tento balíček je prázdný. Stiskněte tlačítko +, abyste přidali nový obsah.</string>
-    <string name="studyoptions_limit_reached">Denní limit studia dosažen</string>
-    <string name="studyoptions_empty_schedule">Žádné další karty ke studiu</string>
-    <string name="studyoptions_congrats_finished">Blahopřejeme! Prozatím máte hotovo</string>
     <string name="studyoptions_no_cards_due">Žádné karty ještě nejsou ke zkoušení</string>
     <string name="sd_card_not_mounted">Zařízení úložiště není připojeno</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizovat</string>
@@ -155,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Pokračovat v synchronizaci</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronizace přrušena</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Přerušuje se&#8230;\nMůže to chvíli trvat.</string>
-    <string name="export">Export</string>
-    <string name="export_collection">Export kolekce</string>
     <string name="export_deck">Export balíčku</string>
     <string name="nothing">Nic</string>
     <!-- Card template editor -->

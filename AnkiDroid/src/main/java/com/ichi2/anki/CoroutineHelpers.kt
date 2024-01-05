@@ -24,20 +24,78 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.viewModelScope
 import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.*
-import kotlinx.coroutines.*
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
+import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
+import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+/**
+ * Runs a suspend function that catches any uncaught errors and reports them to the user.
+ * Errors from the backend contain localized text that is often suitable to show to the user as-is.
+ * Other errors should ideally be handled in the block.
+ */
+fun CoroutineScope.launchCatching(
+    block: suspend () -> Unit,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    errorMessageHandler: suspend (String) -> Unit
+): Job {
+    return launch(dispatcher) {
+        try {
+            block.invoke()
+        } catch (cancellationException: CancellationException) {
+            // CancellationException should be re-thrown to propagate it to the parent coroutine
+            throw cancellationException
+        } catch (backendException: BackendException) {
+            Timber.w(backendException)
+            val message = backendException.localizedMessage ?: backendException.toString()
+            errorMessageHandler.invoke(message)
+        } catch (exception: Exception) {
+            Timber.w(exception)
+            errorMessageHandler.invoke(exception.toString())
+        }
+    }
+}
+
+@Suppress("UNCHECKED_CAST")
+fun <T> ViewModel.launchCatching(
+    block: suspend T.() -> Unit,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    errorMessageHandler: suspend (String) -> Unit
+): Job {
+    return viewModelScope.launchCatching(
+        { block.invoke(this as T) },
+        dispatcher,
+        errorMessageHandler
+    )
+}
 
 /**
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
@@ -55,17 +113,28 @@ suspend fun <T> FragmentActivity.runCatchingTask(
 ): T? {
     try {
         return block()
-    } catch (cancellationException: CancellationException) {
-        throw cancellationException // CancellationException should be re-thrown to propagate it to the parent coroutine
-    } catch (exc: BackendInterruptedException) {
-        Timber.e(exc, errorMessage)
-        exc.localizedMessage?.let { showSnackbar(it) }
-    } catch (exc: BackendException) {
-        Timber.e(exc, errorMessage)
-        showError(this, exc.localizedMessage!!, exc)
     } catch (exc: Exception) {
-        Timber.e(exc, errorMessage)
-        showError(this, exc.toString(), exc)
+        when (exc) {
+            is CancellationException -> {
+                throw exc // CancellationException should be re-thrown to propagate it to the parent coroutine
+            }
+            is BackendInterruptedException -> {
+                Timber.w(exc, errorMessage)
+                exc.localizedMessage?.let { showSnackbar(it) }
+            }
+            is BackendNetworkException, is BackendSyncException -> {
+                // these exceptions do not generate worthwhile crash reports
+                showError(this, exc.localizedMessage!!, exc, false)
+            }
+            is BackendException -> {
+                Timber.e(exc, errorMessage)
+                showError(this, exc.localizedMessage!!, exc)
+            }
+            else -> {
+                Timber.e(exc, errorMessage)
+                showError(this, exc.toString(), exc)
+            }
+        }
     }
     return null
 }
@@ -124,17 +193,19 @@ fun Fragment.launchCatchingTask(
     }
 }
 
-private fun showError(context: Context, msg: String, exception: Throwable) {
+private fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
     try {
         AlertDialog.Builder(context).show {
             title(R.string.vague_error)
             message(text = msg)
             positiveButton(R.string.dialog_ok)
-            setOnDismissListener {
-                CrashReportService.sendExceptionReport(
-                    exception,
-                    origin = context::class.java.simpleName
-                )
+            if (crashReport) {
+                setOnDismissListener {
+                    CrashReportService.sendExceptionReport(
+                        exception,
+                        origin = context::class.java.simpleName
+                    )
+                }
             }
         }
     } catch (ex: BadTokenException) {
@@ -232,7 +303,7 @@ suspend fun <T> withProgressDialog(
     delayMillis: Long = 600,
     op: suspend (android.app.ProgressDialog) -> T
 ): T = coroutineScope {
-    val dialog = android.app.ProgressDialog(context).apply {
+    val dialog = android.app.ProgressDialog(context, R.style.AppCompatProgressDialogStyle).apply {
         setCancelable(onCancel != null)
         onCancel?.let {
             setOnCancelListener { it() }
@@ -346,4 +417,14 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
         withCol { modSchemaNoCheck() }
     }
     return hasAcceptedSchemaChange
+}
+
+/**
+ * Ensures that current continuation is not [cancelled][CancellableContinuation.isCancelled].
+ *
+ * @throws [CancellationException] if canceled. This does not contain the original cancellation cause
+*/
+fun <T> CancellableContinuation<T>.ensureActive() {
+    // we can't use .isActive here, or the exception would take precedence over a resumed exception
+    if (isCancelled) throw CancellationException()
 }

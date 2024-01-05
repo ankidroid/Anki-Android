@@ -47,7 +47,12 @@
     <!-- generic strings -->
     <string name="disabled">Vypnuto</string>
     <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="few">%d min</item>
+        <item quantity="many">%d min</item>
+        <item quantity="other">%d min</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s \%%</string>
     <string name="pref_search_no_results">Žádné výsledky</string>
     <!-- preferences.xml categories-->
@@ -113,6 +118,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Klepnutí uprostřed ve středu</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Klepnutí vlevo dole</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Klepnutí vpravo dole</string>
+    <string name="gestures_shake" maxLength="41">Zatřesení zařízením</string>
     <string name="card_browser_enable_external_context_menu">Menu „%s“</string>
     <string name="card_browser_enable_external_context_menu_summary">Povolí globální kontextovou nabídku „%s“</string>
     <string name="double_scrolling_gap" maxLength="41">Dvojitý posun</string>
@@ -174,14 +180,17 @@
     <string name="show_top_bar_summ">Zobrazit počty karet, příznak a označení v horní liště</string>
     <string name="show_progress" maxLength="41">Zobrazit zbývající</string>
     <string name="show_progress_summ">Zobrazit zbývající počet karet</string>
-    <string name="show_eta" maxLength="41">Zobrazit ETA</string>
-    <string name="show_eta_summ">Zobrazit zbývající čas</string>
     <string name="use_current" maxLength="41">Balíček pro nové karty</string>
     <string name="learn_cutoff" maxLength="41">Limit učení se napřed</string>
     <string name="time_limit" maxLength="41">Časové omezení</string>
     <string name="new_timezone" maxLength="41">Nové zpracování časového pásma</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne</string>
-    <string name="day_offset_summary">%s hodin(y) po půlnoci</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d hodina po půlnoci</item>
+        <item quantity="few">%d hodiny po půlnoci</item>
+        <item quantity="many">%d hodiny po půlnoci</item>
+        <item quantity="other">%d hodin po půlnoci</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Nevypínat obrazovku</string>
     <string name="pref_keep_screen_on_summ">Nepovolit zhasnutí displeje</string>
     <string name="enable_api_title" maxLength="41">Povolit AnkiDroid API</string>
@@ -200,6 +209,7 @@
     <string name="html_javascript_debugging_summ">Umožnit vzdálené připojení k WebView a uložit HTML karet do adresáře AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Opakování karet</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Usnadnění přístupu</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Vkládat obrázky ze schránky jako PNG</string>
@@ -265,6 +275,8 @@
     <string name="binding_add_key">Přidat klávesu</string>
     <string name="binding_replace_key">Nahradit klávesu</string>
     <string name="key_picker_default_press_key">Stiskněte tlačítko</string>
+    <string name="binding_add_axis">Přidat joystick / ovladač pohybu</string>
+    <string name="axis_picker_move_joystick">Pohnout joystickem / ovladačem pohybu</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Vybrat stranu karty</string>
     <string name="card_side_question">Otázka</string>

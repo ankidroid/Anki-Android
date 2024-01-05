@@ -22,8 +22,6 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
-import android.media.AudioFocusRequest
-import android.media.AudioManager
 import android.media.MediaRecorder
 import android.media.ThumbnailUtils
 import android.net.Uri
@@ -149,15 +147,6 @@ open class CompatV23 : Compat {
     }
 
     // Until API 26
-    override fun abandonAudioFocus(
-        audioManager: AudioManager,
-        audioFocusChangeListener: AudioManager.OnAudioFocusChangeListener,
-        audioFocusRequest: AudioFocusRequest?
-    ) {
-        audioManager.abandonAudioFocus(audioFocusChangeListener)
-    }
-
-    // Until API 26
     @Throws(IOException::class)
     override fun deleteFile(file: File) {
         if (!file.delete()) {
@@ -180,19 +169,6 @@ open class CompatV23 : Compat {
         if (!directory.mkdirs()) {
             throw IOException("Failed to create $directory")
         }
-    }
-
-    // Until API 26
-    override fun requestAudioFocus(
-        audioManager: AudioManager,
-        audioFocusChangeListener: AudioManager.OnAudioFocusChangeListener,
-        audioFocusRequest: AudioFocusRequest?
-    ) {
-        audioManager.requestAudioFocus(
-            audioFocusChangeListener,
-            AudioManager.STREAM_MUSIC,
-            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
-        )
     }
 
     // Until API 29
@@ -277,6 +253,15 @@ open class CompatV23 : Compat {
         // convert back from this key to a two-letter mapping
         return twoLetterSystemLocaleMapping[iso3Code] ?: locale
     }
+
+    override val AXIS_RELATIVE_X: Int = 27
+    override val AXIS_RELATIVE_Y: Int = 28
+    override val AXIS_GESTURE_X_OFFSET: Int = 48
+    override val AXIS_GESTURE_Y_OFFSET: Int = 49
+    override val AXIS_GESTURE_SCROLL_X_DISTANCE: Int = 50
+    override val AXIS_GESTURE_SCROLL_Y_DISTANCE: Int = 51
+    override val AXIS_GESTURE_PINCH_SCALE_FACTOR: Int = 52
+
     companion object {
         /**
          * Maps from the ISO 3 code of a locale to the locale in

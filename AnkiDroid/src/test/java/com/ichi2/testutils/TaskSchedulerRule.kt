@@ -22,14 +22,14 @@ import org.junit.runners.model.Statement
 
 /** A [org.junit.Rule] which detects if the test method has the [com.ichi2.anki.RunInBackground] annotation  */
 class TaskSchedulerRule : TestRule {
-    private var mRunInForeground: Boolean? = null
+    private var runInForeground: Boolean? = null
     override fun apply(base: Statement, description: Description): Statement {
-        mRunInForeground = description.getAnnotation(RunInBackground::class.java) == null
+        runInForeground = description.getAnnotation(RunInBackground::class.java) == null
         return base
     }
 
     /** Whether the currently executing test should be run in the foreground  */
     fun shouldRunInForeground(): Boolean {
-        return checkNotNull(mRunInForeground) { "Rule was queried before apply was called" }
+        return checkNotNull(runInForeground) { "Rule was queried before apply was called" }
     }
 }

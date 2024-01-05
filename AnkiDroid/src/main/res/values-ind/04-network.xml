@@ -64,6 +64,7 @@
     <string name="log_out">Log keluar</string>
     <string name="reset_password">Reset kata sandi</string>
     <string name="lost_mail_instructions">Lupa tentang surel elektronik?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opsi untuk XXX</string>
     <string name="sync_title">Sinkronisasi</string>

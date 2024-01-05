@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Tipe:</string>
     <string name="CardEditorTags">Tag: %1$s</string>
     <string name="CardEditorCards">Kartu: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Nama tag</string>
     <string name="add_new_filter_tags">Tambah/Filter tag</string>
     <string name="add_tag">Tambah tag</string>
@@ -141,7 +142,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pratinjau</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d dari %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Ubah nama</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">Periksa</string>
     <string name="check_db">Periksa basisdata</string>
     <string name="check_media">Periksa media</string>
     <string name="empty_cards">Kartu kosong</string>
@@ -152,9 +153,7 @@
     <string name="import_title">Mengimpor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Tambah</string>
     <string name="import_message_replace_confirm">Ini akan menghapus koleksimu yang ada dan menggantinya dengan data dari berkas %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Apakah anda ingin mengimpor file berikut:\n%s\nIni dapat memakan banyak waktu</item>
-    </plurals>
+    <string name="import_dialog_message_add">Tambahkan “%s” ke dalam koleksi ? Mungkin memakan waktu yang lama</string>
     <string name="import_log_no_apkg">Ini bukan paket Anki yang valid</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_error_handle_exception">Gagal mengimpor file\n\n%s</string>
@@ -162,19 +161,7 @@
     <string name="import_error_load_imported_database">Pengganti basisdata Anki (.anki2) belum didukung. Harap lihat panduan untuk langkah penggantian</string>
     <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas anki secara manual: \n%s</string>
     <string name="import_error_copy_to_cache">Gagal cache file (mungkin kehabisan ruang penyimpanan)</string>
-    <string name="import_error_multiple_colpkg">Beberapa file colpkg dipilih.</string>
-    <string name="import_error_colpkg_apkg">Kedua file apkg &amp; colpkg dipilih bersamaan.</string>
     <string name="import_interrupted">Impor terganggu</string>
-    <string name="export_include_schedule">Sertakan penjadwalan</string>
-    <string name="export_include_media">Sertakan media</string>
-    <string name="confirm_apkg_export">Ekspor koleksi sebagai paket Anki?</string>
-    <string name="confirm_apkg_export_deck">Ekspor \"%s\" sebagai berkas apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">Ekspor %d kartu terpilih sebagai file apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">Export %d selected notes as apkg file?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Mempersiapkan ekspor&#8230;</string>
     <string name="export_ready_title">Ekspor siap</string>
     <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan...</string>
@@ -203,8 +190,6 @@
     <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk konfirmasi menambah “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Tag “%1$s” dipilih</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Dek sudah ada</string>
-    <string name="decks_rename_filtered_nosubdecks">Dek yang difilter tidak dapat memiliki subdek</string>
     <string name="reminder_title">Jangan lupa belajar hari ini!</string>
     <plurals name="reminder_text">
         <item quantity="other">%2$d kartu perlu diulas di %1$s</item>
@@ -226,9 +211,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">Cntoh</string>
     <string name="basic_answer_sample_text">contoh</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Kosong</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Harap gunakan layar penuh untuk menggunakan Tampilkan Menu Navigasi menggunakan JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Harap memakai layar penuh untuk menggunakan Tampilkan Menu Pengaturan menggunakan JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Gagal menyimpan gambar di whiteboard. %s</string>
     <string name="white_board_image_saved">Gambar whiteboard disimpan ke %s</string>
@@ -249,7 +231,6 @@
     <string name="card_viewer_could_not_find_image">Isi Kartu Gagal: Gagal memuat \'%s\'</string>
     <string name="card_viewer_media_relative_protocol">Isi Kartu Gagal: Pembaruan media diperlukan</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Gagal memuat dek \'%s\'</string>
     <string name="search_decks">Cari dek</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Tampilkan progress migrasi</string>
     <string name="ankidroid_init_failed_webview_title">Kegagalan fatal</string>
@@ -353,4 +334,21 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="audio_saved">Recording saved</string>
+    <string name="deleting_selected_notes">Deleting selected notes</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    </string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    </string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
+    </string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <!-- Chips should probably be in a separate file, due to the additional length req -->
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
+    </string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    </string>
+    <string name="shared_decks_login_required">Please log in to download more decks</string>
 </resources>

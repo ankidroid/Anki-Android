@@ -27,19 +27,19 @@ import androidx.fragment.app.FragmentManager
  * This should be useful if you want to add extra instantiations without overriding the instantiations in an old factory
  */
 abstract class ExtendedFragmentFactory : FragmentFactory {
-    private var mBaseFactory: FragmentFactory? = null
+    private var baseFactory: FragmentFactory? = null
 
     /**
      * Create an extended factory from a base factory
      */
     constructor(baseFactory: FragmentFactory) {
-        mBaseFactory = baseFactory
+        this.baseFactory = baseFactory
     }
 
     /**
      * Create a factory with no base, you can assign a base factory later using [.setBaseFactory]
      */
-    constructor() {}
+    constructor()
 
     /**
      * Typically you want to return the result of a super call as the last result, so if the passed class couldn't be
@@ -47,7 +47,7 @@ abstract class ExtendedFragmentFactory : FragmentFactory {
      */
     @CallSuper
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
-        return mBaseFactory?.instantiate(classLoader, className)
+        return baseFactory?.instantiate(classLoader, className)
             ?: super.instantiate(classLoader, className)
     }
 
@@ -64,7 +64,7 @@ abstract class ExtendedFragmentFactory : FragmentFactory {
      * and updating the fragment manager with the extended factory
      */
     fun <F : ExtendedFragmentFactory?> attachToFragmentManager(fragmentManager: FragmentManager): F {
-        mBaseFactory = fragmentManager.fragmentFactory
+        baseFactory = fragmentManager.fragmentFactory
         fragmentManager.fragmentFactory = this
         @Suppress("UNCHECKED_CAST")
         return this as F

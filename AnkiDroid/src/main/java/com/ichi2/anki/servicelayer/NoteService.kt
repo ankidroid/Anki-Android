@@ -129,7 +129,7 @@ object NoteService {
                 if (inFile.exists() && inFile.length() > 0) {
                     val fname = col.media.addFile(inFile)
                     val outFile = File(col.media.dir, fname)
-                    Timber.e("%s %s", fname, outFile)
+                    Timber.v("""File "%s" should be copied to "%s""", fname, outFile)
                     if (field.hasTemporaryMedia && outFile.absolutePath != tmpMediaPath) {
                         // Delete original
                         inFile.delete()
@@ -181,14 +181,14 @@ object NoteService {
         }
     }
 
-    suspend fun toggleMark(note: Note) {
+    suspend fun toggleMark(note: Note, handler: Any? = null) {
         if (isMarked(note)) {
             note.delTag("marked")
         } else {
             note.addTag("marked")
         }
 
-        undoableOp {
+        undoableOp(handler) {
             updateNote(note)
         }
     }
@@ -230,6 +230,8 @@ object NoteService {
         val fieldText: String?
     }
 }
+
+const val MARKED_TAG = "marked"
 
 fun Card.totalLapsesOfNote() = NoteService.totalLapses(note())
 

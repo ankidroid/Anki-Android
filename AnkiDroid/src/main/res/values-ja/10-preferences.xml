@@ -47,7 +47,9 @@
     <!-- generic strings -->
     <string name="disabled">無効</string>
     <string name="pref_summary_seconds">%s秒</string>
-    <string name="pref_summary_minutes">%s分</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="other">%d分</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">該当なし</string>
     <!-- preferences.xml categories-->
@@ -113,6 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">中央をタップ</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">左下をタップ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">右下をタップ</string>
+    <string name="gestures_shake" maxLength="41">デバイスを振る</string>
     <string name="card_browser_enable_external_context_menu">「%s」メニュー</string>
     <string name="card_browser_enable_external_context_menu_summary">AnkiDroidおよび他のアプリ（ウェブブラウザなど）で、文字列を選択した際に表示されるコンテキストメニューに「%s」という項目を追加します</string>
     <string name="double_scrolling_gap" maxLength="41">ダブルスクロール</string>
@@ -159,9 +162,9 @@
     <string name="safe_display_summ">アニメーションを無効にし、より不具合が起こりくい方法でカードを表示します。電子ペーパー端末ではこの設定が必要となる場合があります</string>
     <string name="disable_extended_text_ui" maxLength="41">単一フィールド編集モードを無効にする</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め箇所」のコンテキストメニューを許可します</string>
+    <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め問題箇所」のコンテキストメニューを許可します</string>
     <string name="vertical_centering" maxLength="41">上下中央揃え</string>
-    <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
+    <string name="vertical_centering_summ">コンテンツを上下方向の中央に配置します</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔 (ミリ秒)</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、意図せずに回答してしまう操作ミスを防ぎます</string>
     <string name="pref_show_answer_long_press" maxLength="41">「解答を表示」するための長押し時間 (ミリ秒)</string>
@@ -174,14 +177,14 @@
     <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>
     <string name="show_progress_summ">トップバーに、残りのカード枚数を表示します（青: 新規、赤: 習得中および再習得中、緑: 復習）</string>
-    <string name="show_eta" maxLength="41">推定学習時間を表示</string>
-    <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの学習終了までの推定所要時間を表示します</string>
     <string name="use_current" maxLength="41">新規カードの既定の追加先デッキ</string>
     <string name="learn_cutoff" maxLength="41">習得学習の前倒し許容時間</string>
     <string name="time_limit" maxLength="41">タイムボックス（学習時間の目標・区切り）</string>
     <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
-    <string name="day_offset_summary">%s時</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="other">%d時</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">スクリーンをオンのままにする</string>
     <string name="pref_keep_screen_on_summ">画面の自動オフを無効にします</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API を有効にする</string>
@@ -200,6 +203,7 @@
     <string name="html_javascript_debugging_summ">リモートのWebView接続を有効にし、カードのHTMLをAnkiDroidディレクトリに保存します</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">学習画面</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">アクセシビリティ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">クリップボード画像をPNG形式で貼り付け</string>
@@ -265,6 +269,8 @@
     <string name="binding_add_key">キーを追加</string>
     <string name="binding_replace_key">キーを置換</string>
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
+    <string name="binding_add_axis">ジョイスティック/モーションコントローラーの動作を追加</string>
+    <string name="axis_picker_move_joystick">ジョイスティック/モーションコントローラーを動かしてください</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">カードの表面 (質問側) と裏面 (解答側) 、どちらでの操作ですか？</string>
     <string name="card_side_question">表面</string>
@@ -275,7 +281,7 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">%s を削除</string>
-    <string name="bindings_already_bound">既に「%s」の操作に割り当て済みです</string>
+    <string name="bindings_already_bound">すでに「%s」の操作に割り当て済みです</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">試験運用機能</string>
     <!-- Developer options -->

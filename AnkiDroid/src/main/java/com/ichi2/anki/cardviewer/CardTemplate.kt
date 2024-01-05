@@ -19,15 +19,15 @@ import androidx.annotation.CheckResult
 import java.lang.IllegalStateException
 
 class CardTemplate(template: String) {
-    private var mPreStyle: String? = null
-    private var mPreScript: String? = null
-    private var mPreClass: String? = null
-    private var mPreContent: String? = null
-    private var mPostContent: String? = null
+    private var preStyle: String? = null
+    private var preScript: String? = null
+    private var preClass: String? = null
+    private var preContent: String? = null
+    private var postContent: String? = null
 
     @CheckResult
     fun render(content: String, style: String, script: String, cardClass: String): String {
-        return mPreStyle + style + mPreScript + script + mPreClass + cardClass + mPreContent + content + mPostContent
+        return preStyle + style + preScript + script + preClass + cardClass + preContent + content + postContent
     }
 
     init {
@@ -42,11 +42,11 @@ class CardTemplate(template: String) {
         val classIndex = template.indexOf(classDelim)
         val contentIndex = template.indexOf(contentDelim)
         try {
-            mPreStyle = template.substring(0, styleIndex)
-            mPreScript = template.substring(styleIndex + styleDelim.length, scriptIndex)
-            mPreClass = template.substring(scriptIndex + scriptDelim.length, classIndex)
-            mPreContent = template.substring(classIndex + classDelim.length, contentIndex)
-            mPostContent = template.substring(contentIndex + contentDelim.length)
+            preStyle = template.substring(0, styleIndex)
+            preScript = template.substring(styleIndex + styleDelim.length, scriptIndex)
+            preClass = template.substring(scriptIndex + scriptDelim.length, classIndex)
+            preContent = template.substring(classIndex + classDelim.length, contentIndex)
+            postContent = template.substring(contentIndex + contentDelim.length)
         } catch (ex: StringIndexOutOfBoundsException) {
             throw IllegalStateException("The card template had replacement string order, or content changed", ex)
         }

@@ -59,16 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
-    <string name="study_more">さらに学習</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="other">残り約 %d 分</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">残り約%1$d時間%2$d分</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">残り約%1$d日と%2$d時間</item>
-    </plurals>
     <string name="no_cards_placeholder_title">まだカードがありません</string>
     <string name="no_cards_placeholder_description">画面右下の「＋」ボタンから\nカードを追加してください</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -82,6 +72,7 @@
     <string name="ease_button_easy">簡単</string>
     <string name="menu_import">インポート</string>
     <string name="undo">元に戻す</string>
+    <string name="redo">やり直す</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">描線を一つ取り消す</string>
     <string name="move_all_to_deck">移動先デッキを選択</string>
     <string name="unbury">非表示を解除</string>
@@ -134,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">デッキ検索</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">デッキを検索</string>
     <string name="invalid_deck_name">無効なデッキ名です</string>
-    <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
-    <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
-    <string name="studyoptions_empty_schedule">このデッキでは、今日このあと予定されている課題はありません</string>
-    <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの現在の課題をすべて達成しました！</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
@@ -146,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">同期を続行</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">同期がキャンセルされました</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
-    <string name="export">エクスポート</string>
-    <string name="export_collection">エクスポート（コレクション）</string>
     <string name="export_deck">デッキをエクスポート</string>
     <string name="nothing">なし</string>
     <!-- Card template editor -->

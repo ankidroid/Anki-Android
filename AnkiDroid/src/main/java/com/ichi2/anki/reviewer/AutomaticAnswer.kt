@@ -70,6 +70,14 @@ class AutomaticAnswer(
      */
     var isDisabled: Boolean = false
         private set
+
+    /**
+     * Whether the sounds for the current side of the card have been played
+     * So [scheduleAutomaticDisplayAnswer] and [scheduleAutomaticDisplayQuestion] do nothing
+     * if called multiple times on the same side of the card
+     */
+    private var hasPlayedSounds: Boolean = false
+
     private val showAnswerTask = Runnable {
         if (isDisabled) {
             Timber.d("showAnswer: disabled")
@@ -136,6 +144,7 @@ class AutomaticAnswer(
     fun onDisplayQuestion() {
         if (!settings.useTimer) return
         if (!settings.autoAdvanceAnswer) return
+        hasPlayedSounds = false
 
         stopShowAnswerTask()
     }
@@ -144,6 +153,7 @@ class AutomaticAnswer(
     fun onDisplayAnswer() {
         if (!settings.useTimer) return
         if (!settings.autoAdvanceQuestion) return
+        hasPlayedSounds = false
 
         stopShowQuestionTask()
     }
@@ -153,11 +163,13 @@ class AutomaticAnswer(
 
     /** Stops the current automatic display if the user has selected an answer */
     fun onSelectEase() {
+        Timber.v("onSelectEase")
         stopShowQuestionTask()
     }
 
     /** Stops the current automatic display if the user has flipped the card */
     fun onShowAnswer() {
+        Timber.v("onShowAnswer")
         stopShowAnswerTask()
     }
 
@@ -170,6 +182,8 @@ class AutomaticAnswer(
     fun scheduleAutomaticDisplayAnswer(additionalDelay: Long = 0) {
         if (!settings.useTimer) return
         if (!settings.autoAdvanceAnswer) return
+        if (hasPlayedSounds) return
+        hasPlayedSounds = true
         delayedShowAnswer(settings.answerDelayMilliseconds + additionalDelay)
     }
 
@@ -180,11 +194,19 @@ class AutomaticAnswer(
     fun scheduleAutomaticDisplayQuestion(additionalMediaDelay: Long = 0) {
         if (!settings.useTimer) return
         if (!settings.autoAdvanceQuestion) return
+        if (hasPlayedSounds) return
+        hasPlayedSounds = true
         delayedShowQuestion(settings.questionDelayMilliseconds + additionalMediaDelay)
     }
 
     fun isEnabled(): Boolean {
         return settings.useTimer
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    internal fun simulateCardFlip() {
+        Timber.d("simulateCardFlip")
+        hasPlayedSounds = false
     }
 
     interface AutomaticallyAnswered {

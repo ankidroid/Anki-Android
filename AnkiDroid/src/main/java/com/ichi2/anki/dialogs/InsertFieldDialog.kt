@@ -35,15 +35,15 @@ import java.util.*
  * @see [CardTemplateEditor.CardTemplateFragment]
  */
 class InsertFieldDialog : DialogFragment() {
-    private lateinit var mDialog: MaterialDialog
-    private lateinit var mFieldList: List<String>
+    private lateinit var dialog: MaterialDialog
+    private lateinit var fieldList: List<String>
 
     /**
      * A dialog for inserting field in card template editor
      */
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        mFieldList = requireArguments().getStringArrayList(KEY_FIELD_ITEMS)!!
+        fieldList = requireArguments().getStringArrayList(KEY_FIELD_ITEMS)!!
         val adapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
                 val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
@@ -52,19 +52,19 @@ class InsertFieldDialog : DialogFragment() {
 
             override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
                 val textView = holder.itemView as TextView
-                textView.text = mFieldList[position]
+                textView.text = fieldList[position]
                 textView.setOnClickListener { selectFieldAndClose(textView) }
             }
 
             override fun getItemCount(): Int {
-                return mFieldList.size
+                return fieldList.size
             }
         }
-        mDialog = MaterialDialog(requireContext())
+        dialog = MaterialDialog(requireContext())
             .title(R.string.card_template_editor_select_field)
             .negativeButton(R.string.dialog_cancel)
             .customListAdapter(adapter)
-        return mDialog
+        return dialog
     }
 
     private fun selectFieldAndClose(textView: TextView) {
@@ -72,7 +72,7 @@ class InsertFieldDialog : DialogFragment() {
             REQUEST_FIELD_INSERT,
             bundleOf(KEY_INSERTED_FIELD to textView.text.toString())
         )
-        mDialog.dismiss()
+        dialog.dismiss()
     }
 
     companion object {

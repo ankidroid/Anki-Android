@@ -43,8 +43,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContentResolverCompat
@@ -94,6 +97,36 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     @VisibleForTesting
     lateinit var registryToUse: ActivityResultRegistry
+
+    private lateinit var takePictureLauncher: ActivityResultLauncher<Intent?>
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var selectImageLauncher: ActivityResultLauncher<Intent?>
+
+    private lateinit var drawingLauncher: ActivityResultLauncher<Intent?>
+
+    private inner class BasicImageFieldControllerResultCallback(
+        private val onSuccess: (result: ActivityResult) -> Unit,
+        private val onFailure: (result: ActivityResult) -> Unit = {}
+    ) : ActivityResultCallback<ActivityResult> {
+        override fun onActivityResult(result: ActivityResult) {
+            if (result.resultCode != Activity.RESULT_OK) {
+                Timber.d("Activity was not successful")
+
+                onFailure(result)
+
+                // Some apps send this back with app-specific data, direct the user to another app
+                if (result.resultCode >= Activity.RESULT_FIRST_USER) {
+                    UIUtils.showThemedToast(mActivity, mActivity.getString(R.string.activity_result_unexpected), true)
+                }
+                return
+            }
+
+            mImageFileSizeWarning.visibility = View.GONE
+            onSuccess(result)
+            setPreviewImage(mViewModel.imagePath, maxImageSize)
+        }
+    }
 
     override fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
@@ -153,14 +186,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             setOnClickListener {
                 val i = Intent(Intent.ACTION_PICK)
                 i.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-                mActivity.startActivityForResultWithoutAnimation(i, ACTIVITY_SELECT_IMAGE)
+                selectImageLauncher.launch(i)
             }
         }
 
         val btnDraw = Button(mActivity).apply {
             text = gtxt(R.string.drawing)
             setOnClickListener {
-                mActivity.startActivityForResultWithoutAnimation(Intent(mActivity, DrawingActivity::class.java), ACTIVITY_DRAWING)
+                drawingLauncher.launch(Intent(mActivity, DrawingActivity::class.java))
             }
         }
 
@@ -214,6 +247,52 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 }
             }
         }
+
+        takePictureLauncher = registryToUse.register(
+            TAKE_PICTURE_LAUNCHER_KEY,
+            ActivityResultContracts.StartActivityForResult(),
+            BasicImageFieldControllerResultCallback(
+                onSuccess = {
+                    handleTakePictureResult()
+                },
+                onFailure = {
+                    cancelImageCapture()
+                }
+            )
+        )
+
+        selectImageLauncher = registryToUse.register(
+            SELECT_IMAGE_LAUNCHER_KEY,
+            ActivityResultContracts.StartActivityForResult(),
+            BasicImageFieldControllerResultCallback(
+                onSuccess = {
+                    try {
+                        handleSelectImageIntent(it.data)
+                        mImageFileSizeWarning.visibility = View.GONE
+                    } catch (e: Exception) {
+                        CrashReportService.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent")
+                        Timber.e(e, "Failed to select image")
+                        showSomethingWentWrong()
+                    }
+                }
+            )
+        )
+
+        drawingLauncher = registryToUse.register(
+            DRAWING_LAUNCHER_KEY,
+            ActivityResultContracts.StartActivityForResult(),
+            BasicImageFieldControllerResultCallback(
+                onSuccess = { result ->
+                    // receive image from drawing activity
+                    val savedImagePath = BundleCompat.getParcelable(
+                        result.data!!.extras!!,
+                        DrawingActivity.EXTRA_RESULT_WHITEBOARD,
+                        Uri::class.java
+                    )
+                    handleDrawingResult(savedImagePath)
+                }
+            )
+        )
     }
 
     @SuppressLint("UnsupportedChromeOsCameraSystemFeature")
@@ -249,16 +328,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             if (cameraIntent.resolveActivity(context.packageManager) == null) {
                 Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent")
                 showSomethingWentWrong()
-                onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null)
+                cancelImageCapture()
                 return toReturn
             }
-            try {
-                mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE)
-            } catch (e: Exception) {
-                Timber.w(e, "Unable to take picture")
-                showSomethingWentWrong()
-                onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null)
-            }
+            takePictureLauncher.launch(cameraIntent)
         } catch (e: IOException) {
             Timber.w(e, "mBtnCamera::onClickListener() unable to prepare file and launch camera")
         }
@@ -337,57 +410,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // All image modification methods come through here - this ensures that the state is consistent
-
-        Timber.d("onActivityResult()")
-        if (resultCode != Activity.RESULT_OK) {
-            Timber.d("Activity was not successful")
-            // Restore the old version of the image if the user cancelled
-            when (requestCode) {
-                ACTIVITY_TAKE_PICTURE ->
-                    if (!mPreviousImagePath.isNullOrEmpty()) {
-                        revertToPreviousImage()
-                    }
-                else -> {}
-            }
-
-            // Some apps send this back with app-specific data, direct the user to another app
-            if (resultCode >= Activity.RESULT_FIRST_USER) {
-                UIUtils.showThemedToast(mActivity, mActivity.getString(R.string.activity_result_unexpected), true)
-            }
-            return
+    private fun cancelImageCapture() {
+        if (!mPreviousImagePath.isNullOrEmpty()) {
+            revertToPreviousImage()
         }
-
-        mImageFileSizeWarning.visibility = View.GONE
-        when (requestCode) {
-            ACTIVITY_SELECT_IMAGE -> {
-                try {
-                    handleSelectImageIntent(data)
-                    mImageFileSizeWarning.visibility = View.GONE
-                } catch (e: Exception) {
-                    CrashReportService.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent")
-                    Timber.e(e, "Failed to select image")
-                    showSomethingWentWrong()
-                    return
-                }
-            }
-            ACTIVITY_TAKE_PICTURE -> handleTakePictureResult()
-            ACTIVITY_DRAWING -> {
-                // receive image from drawing activity
-                val savedImagePath = BundleCompat.getParcelable(
-                    data!!.extras!!,
-                    DrawingActivity.EXTRA_RESULT_WHITEBOARD,
-                    Uri::class.java
-                )
-                handleDrawingResult(savedImagePath)
-            }
-            else -> {
-                Timber.w("Unhandled request code: %d", requestCode)
-                return
-            }
-        }
-        setPreviewImage(mViewModel.imagePath, maxImageSize)
     }
 
     private fun revertToPreviousImage() {
@@ -500,8 +526,17 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     override fun onDone() {
         deletePreviousImage()
-        if (this::cropImageRequest.isInitialized) {
+        if (::cropImageRequest.isInitialized) {
             cropImageRequest.unregister()
+        }
+        if (::takePictureLauncher.isInitialized) {
+            takePictureLauncher.unregister()
+        }
+        if (::selectImageLauncher.isInitialized) {
+            selectImageLauncher.unregister()
+        }
+        if (::drawingLauncher.isInitialized) {
+            drawingLauncher.unregister()
         }
     }
 
@@ -819,12 +854,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     companion object {
-        @VisibleForTesting
-        val ACTIVITY_SELECT_IMAGE = 1
-        private const val ACTIVITY_TAKE_PICTURE = 2
-        private const val ACTIVITY_DRAWING = 4
         private const val IMAGE_SAVE_MAX_WIDTH = 1920
         private const val CROP_IMAGE_LAUNCHER_KEY = "crop_image_launcher_key"
+        private const val TAKE_PICTURE_LAUNCHER_KEY = "take_picture_launcher_key"
+        private const val SELECT_IMAGE_LAUNCHER_KEY = "select_image_launcher_key"
+        private const val DRAWING_LAUNCHER_KEY = "drawing_launcher_key"
 
         /**
          * Get Uri based on current image path

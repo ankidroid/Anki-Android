@@ -21,38 +21,38 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.SearchView
 
 class CardBrowserSearchView : SearchView {
-    constructor(context: Context) : super(context) {}
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     /** Whether an action to set text should be ignored  */
-    private var mIgnoreValueChange = false
+    private var ignoreValueChange = false
 
     /** Whether an action to set text should be ignored  */
     fun shouldIgnoreValueChange(): Boolean {
-        return mIgnoreValueChange
+        return ignoreValueChange
     }
 
     override fun onActionViewCollapsed() {
         try {
-            mIgnoreValueChange = true
+            ignoreValueChange = true
             super.onActionViewCollapsed()
         } finally {
-            mIgnoreValueChange = false
+            ignoreValueChange = false
         }
     }
 
     override fun onActionViewExpanded() {
         try {
-            mIgnoreValueChange = true
+            ignoreValueChange = true
             super.onActionViewExpanded()
         } finally {
-            mIgnoreValueChange = false
+            ignoreValueChange = false
         }
     }
 
     override fun setQuery(query: CharSequence, submit: Boolean) {
-        if (mIgnoreValueChange) {
+        if (ignoreValueChange) {
             return
         }
         super.setQuery(query, submit)

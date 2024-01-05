@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
@@ -41,7 +42,7 @@ import com.ichi2.libanki.syncCollection
 import com.ichi2.libanki.syncLogin
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
-import com.ichi2.utils.*
+import com.ichi2.utils.NetworkUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -153,6 +154,7 @@ fun DeckPicker.handleNewSync(
             updateLogin(baseContext, "", "")
             throw exc
         }
+        withCol { notetypes._clear_cache() }
         refreshState()
     }
 }
@@ -161,7 +163,12 @@ fun MyAccount.handleNewLogin(username: String, password: String) {
     val endpoint = getEndpoint(this)
     launchCatchingTask {
         val auth = try {
-            withProgress({}, onCancel = ::cancelSync) {
+            withProgress(
+                extractProgress = {
+                    text = getString(R.string.sign_in)
+                },
+                onCancel = ::cancelSync
+            ) {
                 withCol {
                     syncLogin(username, password, endpoint)
                 }
@@ -172,7 +179,8 @@ fun MyAccount.handleNewLogin(username: String, password: String) {
             throw exc
         }
         updateLogin(baseContext, username, auth.hkey)
-        finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
+        setResult(RESULT_OK)
+        finish()
     }
 }
 
@@ -194,6 +202,7 @@ private suspend fun handleNormalSync(
     auth: SyncAuth,
     syncMedia: Boolean
 ) {
+    var auth2 = auth
     val output = deckPicker.withProgress(
         extractProgress = {
             if (progress.hasNormalSync()) {
@@ -202,13 +211,14 @@ private suspend fun handleNormalSync(
         },
         onCancel = ::cancelSync
     ) {
-        withCol { syncCollection(auth, media = syncMedia) }
+        withCol { syncCollection(auth2, media = syncMedia) }
     }
 
     if (output.hasNewEndpoint()) {
         deckPicker.sharedPrefs().edit {
             putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
         }
+        auth2 = syncAuth { this.hkey = auth.hkey; endpoint = output.newEndpoint }
     }
     val mediaUsn = if (syncMedia) { output.serverMediaUsn } else { null }
 
@@ -225,11 +235,11 @@ private suspend fun handleNormalSync(
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD -> {
-            handleDownload(deckPicker, auth, mediaUsn)
+            handleDownload(deckPicker, auth2, mediaUsn)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> {
-            handleUpload(deckPicker, auth, mediaUsn)
+            handleUpload(deckPicker, auth2, mediaUsn)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {

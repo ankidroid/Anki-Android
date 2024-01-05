@@ -47,7 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Désactivé</string>
     <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s \%%</string>
     <string name="pref_search_no_results">Pas de résultat</string>
     <!-- preferences.xml categories-->
@@ -113,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Toucher au milieu au centre</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toucher en bas à gauche</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toucher en bas à droite</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">Menu « %s »</string>
     <string name="card_browser_enable_external_context_menu_summary">Active le menu contextuel « %s » globalement</string>
     <string name="double_scrolling_gap" maxLength="41">Défilement double</string>
@@ -133,8 +137,8 @@
     <string name="sync_status_badge_summ">Changer l\'icône de synchronisation quand des changements peuvent être téléversés</string>
     <string name="metered_sync_title" maxLength="41">Autoriser la synchronisation sur les connexions limitées</string>
     <string name="metered_sync_summary">Si ceci est désactivé, vous serez averti(e) si vous essayez de synchroniser sur une connexion limitée</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Fréquence</string>
+    <string name="backup_limits_lifetime">Durée de vie</string>
     <string name="app_theme" maxLength="41">Thème</string>
     <string name="day_theme" maxLength="41">Thème de jour</string>
     <string name="night_theme" maxLength="41">Thème de nuit</string>
@@ -174,14 +178,15 @@
     <string name="show_top_bar_summ">Afficher le nombre de cartes, la balise et la marque dans la barre supérieure</string>
     <string name="show_progress" maxLength="41">Afficher le nombre restant de révision</string>
     <string name="show_progress_summ">Montrer le nombre de cartes restantes</string>
-    <string name="show_eta" maxLength="41">Afficher le temps restant</string>
-    <string name="show_eta_summ">Afficher le temps restant</string>
     <string name="use_current" maxLength="41">Paquet pour les nouvelles cartes</string>
     <string name="learn_cutoff" maxLength="41">Limite d’apprentissage</string>
     <string name="time_limit" maxLength="41">Limite de temps</string>
     <string name="new_timezone" maxLength="41">Nouvelle gestion du fuseau horaire</string>
     <string name="day_offset_with_description" maxLength="41">Début du jour suivant (0 est minuit, 23 est 23 h)</string>
-    <string name="day_offset_summary">%s heures après minuit</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d heure après minuit</item>
+        <item quantity="other">%d heures après minuit</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Garder l’écran allumé</string>
     <string name="pref_keep_screen_on_summ">Désactiver l’extinction automatique de l’écran</string>
     <string name="enable_api_title" maxLength="41">Activer l\'API AnkiDroid</string>
@@ -200,6 +205,7 @@
     <string name="html_javascript_debugging_summ">Activer les connexions WebView distantes et enregistrer la carte HTML dans le répertoire AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Réviseur</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Accessibilité</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Coller les images du pressepapiers en PNG</string>
@@ -265,6 +271,8 @@
     <string name="binding_add_key">Ajouter une touche</string>
     <string name="binding_replace_key">Remplacer la clé</string>
     <string name="key_picker_default_press_key">Appuyer sur une touche</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Sélectionner le côté de la carte</string>
     <string name="card_side_question">Question</string>

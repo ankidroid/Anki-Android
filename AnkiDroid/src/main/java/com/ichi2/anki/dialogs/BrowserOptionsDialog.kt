@@ -25,25 +25,27 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
+import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.model.CardsOrNotes
 
-class BrowserOptionsDialog(private val inCardsMode: Boolean, private val isTruncated: Boolean) : AppCompatDialogFragment() {
+class BrowserOptionsDialog(private val cardsOrNotes: CardsOrNotes, private val isTruncated: Boolean) : AppCompatDialogFragment() {
     private lateinit var dialogView: View
 
-    private val positiveButtonClick = { _: DialogInterface, _: Int ->
-        val newCardsMode: Boolean
+    private val viewModel: CardBrowserViewModel by activityViewModels()
 
+    private val positiveButtonClick = { _: DialogInterface, _: Int ->
         @IdRes val selectedButtonId = dialogView.findViewById<RadioGroup>(R.id.select_browser_mode).checkedRadioButtonId
-        newCardsMode = selectedButtonId == R.id.select_cards_mode
-        if (inCardsMode != newCardsMode) {
-            (activity as CardBrowser).switchCardOrNote(newCardsMode)
+        val newCardsOrNotes = if (selectedButtonId == R.id.select_cards_mode) CardsOrNotes.CARDS else CardsOrNotes.NOTES
+        if (cardsOrNotes != newCardsOrNotes) {
+            viewModel.setCardsOrNotes(newCardsOrNotes)
         }
         val newTruncate = dialogView.findViewById<CheckBox>(R.id.truncate_checkbox).isChecked
 
         if (newTruncate != isTruncated) {
-            (activity as CardBrowser).onTruncate(newTruncate)
+            viewModel.setTruncated(newTruncate)
         }
     }
 
@@ -51,7 +53,7 @@ class BrowserOptionsDialog(private val inCardsMode: Boolean, private val isTrunc
         val layoutInflater = requireActivity().layoutInflater
         dialogView = layoutInflater.inflate(R.layout.browser_options_dialog, null)
 
-        if (inCardsMode) {
+        if (cardsOrNotes == CardsOrNotes.CARDS) {
             dialogView.findViewById<RadioButton>(R.id.select_cards_mode).isChecked = true
         } else {
             dialogView.findViewById<RadioButton>(R.id.select_notes_mode).isChecked = true

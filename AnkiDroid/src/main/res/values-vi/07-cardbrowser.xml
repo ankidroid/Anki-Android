@@ -52,12 +52,13 @@
         <item quantity="other">%d ghi chú hiển thị</item>
     </plurals>
     <string name="card_browser_all_decks">Tất cả bộ thẻ</string>
-    <string name="card_browser_delete_card">Xóa ghi chú</string>
-    <string name="card_browser_suspend_card">Tạm dừng thẻ</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="other">Xóa các thẻ</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="other">Xoá ghi chú</item>
+    </plurals>
     <string name="card_browser_change_deck">Thay đổi bộ thẻ</string>
-    <string name="card_browser_unsuspend_card">Thẻ chưa sử dụng</string>
-    <string name="card_browser_mark_card">Đánh dấu ghi chú</string>
-    <string name="card_browser_unmark_card">Bỏ đánh dấu ghi chú</string>
     <string name="delete_card_title">Xoá ghi chú?</string>
     <string name="card_browser_show_marked">Bộ lọc được đánh dấu</string>
     <string name="card_browser_show_suspended">Bộ lọc bị tạm dừng</string>
@@ -103,5 +104,4 @@
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d thẻ đã bị xóa</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

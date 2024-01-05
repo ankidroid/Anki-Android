@@ -19,29 +19,23 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
-import anki.generic.Empty
-import anki.import_export.ExportLimit
-import anki.import_export.exportLimit
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
-import com.ichi2.anki.dialogs.ExportDialogParams
 import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.utils.TimeManager
 import timber.log.Timber
 import java.io.File
@@ -51,94 +45,16 @@ import java.util.function.Supplier
 /**
  * A delegate class used in any [AnkiActivity] where the exporting feature is required.
  *
- * Must be constructed before calling {@link AnkiActivity#onCreate(Bundle, PersistableBundle)}, this is to fragment
- * factory {@link #mDialogsFactory} is set correctly.
+ * Must be constructed before calling [AnkiActivity.onCreate(Bundle, PersistableBundle)][AnkiActivity.onCreate],
+ * to ensure the fragment factory ([mDialogsFactory]) is set correctly.
  *
- * @param activity the calling activity (must implement {@link ExportReadyDialogListener})
+ * @param activity the calling activity (must implement [ExportReadyDialogListener])
  * @param collectionSupplier a predicate that supplies a collection instance
 */
-class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportDialogListener, ExportReadyDialogListener {
-    private val mDialogsFactory: ExportDialogsFactory
-    private val mSaveFileLauncher: ActivityResultLauncher<Intent>
-    private lateinit var mExportFileName: String
-
-    fun showExportDialog(params: ExportDialogParams) {
-        if (ScopedStorageService.mediaMigrationIsInProgress(activity)) {
-            activity.showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
-            return
-        }
-        activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(params))
-    }
-
-    private fun getTimeStampSuffix() =
-        "-" + run {
-            collectionSupplier.get()
-            getTimestamp(TimeManager.time)
-        }
-
-    private fun getColpkgExportName(exportDir: File): File {
-        // full collection export -- use "collection.colpkg"
-        val colPath = File(collectionSupplier.get().path)
-        val newFileName = colPath.name.replace(".anki2", "${getTimeStampSuffix()}.colpkg")
-        return File(exportDir, newFileName)
-    }
-
-    private fun getExportFileName(path: String?, prefix: String, includeSched: Boolean): File {
-        val exportDir = File(activity.externalCacheDir, "export")
-        exportDir.mkdirs()
-
-        return if (path != null) {
-            File(exportDir, path)
-        } else if (prefix == "All Decks" && includeSched) { // full collection export as .colpkg
-            getColpkgExportName(exportDir)
-        } else {
-            File(exportDir, "$prefix${getTimeStampSuffix()}.apkg")
-        }
-    }
-
-    @NeedsTest("exporting deck with name containing apostrophe")
-    override fun exportColAsApkgOrColpkg(path: String?, includeSched: Boolean, includeMedia: Boolean) {
-        val exportPath = getExportFileName(path, "All Decks", includeSched)
-
-        if (includeSched) {
-            activity.launchCatchingTask {
-                activity.exportColpkg(exportPath.path, includeMedia)
-                val dialog = mDialogsFactory.newExportReadyDialog().withArguments(exportPath.path)
-                activity.showAsyncDialogFragment(dialog)
-            }
-        } else {
-            val limit = exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
-            exportNewBackendApkg(exportPath, false, includeMedia, limit)
-        }
-    }
-
-    override fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean) {
-        // files can't have `/` in their names
-        val deckName = collectionSupplier.get().decks.name(did).replace("/", "_")
-        val exportPath = getExportFileName(path, deckName, includeSched)
-
-        val limit = exportLimit { this.deckId = did }
-        exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
-    }
-
-    /**
-     * Export selected cards or notes using the new backend
-     * TODO: Once new backend is default, exportColAsApkg and exportDeckAsApkg can be merged into this function
-     */
-    override fun exportSelectedAsApkg(path: String?, limit: ExportLimit, includeSched: Boolean, includeMedia: Boolean) {
-        val prefix = if (limit.hasCardIds()) "Cards" else "Notes"
-        val exportPath = getExportFileName(path, prefix, includeSched)
-        exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
-    }
-
-    // Only for new backend schema
-    private fun exportNewBackendApkg(exportPath: File, includeSched: Boolean, includeMedia: Boolean, limit: ExportLimit) {
-        activity.launchCatchingTask {
-            activity.exportApkg(exportPath.path, includeSched, includeMedia, limit)
-            val dialog = mDialogsFactory.newExportReadyDialog().withArguments(exportPath.path)
-            activity.showAsyncDialogFragment(dialog)
-        }
-    }
+class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportReadyDialogListener {
+    val mDialogsFactory: ExportDialogsFactory
+    private val saveFileLauncher: ActivityResultLauncher<Intent>
+    private lateinit var fileExportPath: String
 
     override fun dismissAllDialogFragments() {
         activity.dismissAllDialogFragments()
@@ -182,7 +98,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             activity.getString(R.string.export_share_title)
         )
         if (shareFileIntent.resolveActivity(activity.packageManager) != null) {
-            activity.startActivityWithoutAnimation(shareFileIntent)
+            activity.startActivity(shareFileIntent)
             // TODO: find if there is a way to check whether the activity successfully shared the collection.
             saveSuccessfulCollectionExportIfRelevant()
         } else {
@@ -201,8 +117,9 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             return
         }
 
+        fileExportPath = exportPath
+
         // Send the user to the standard Android file picker via Intent
-        mExportFileName = exportPath
         val saveIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "application/apkg"
@@ -211,7 +128,18 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             putExtra("android.content.extra.FANCY", true)
             putExtra("android.content.extra.SHOW_FILESIZE", true)
         }
-        mSaveFileLauncher.launch(saveIntent)
+        saveFileLauncher.launch(saveIntent)
+    }
+
+    fun onSaveInstanceState(outState: Bundle) {
+        if (::fileExportPath.isInitialized) {
+            outState.putString(EXPORT_FILE_NAME_KEY, fileExportPath)
+        }
+    }
+
+    fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        val restoredValue = savedInstanceState?.getString(EXPORT_FILE_NAME_KEY) ?: return
+        fileExportPath = restoredValue
     }
 
     private fun saveFileCallback(result: ActivityResult) {
@@ -231,12 +159,12 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             return false
         }
         val uri = intent.data
-        Timber.d("Exporting from file to ContentProvider URI: %s/%s", mExportFileName, uri.toString())
+        Timber.d("Exporting from file to ContentProvider URI: %s/%s", fileExportPath, uri.toString())
         try {
             activity.contentResolver.openFileDescriptor(uri!!, "w").use { pfd ->
                 if (pfd != null) {
                     FileOutputStream(pfd.fileDescriptor).use { fileOutputStream ->
-                        CompatHelper.compat.copyFile(mExportFileName, fileOutputStream)
+                        CompatHelper.compat.copyFile(fileExportPath, fileOutputStream)
                     }
                 } else {
                     Timber.w(
@@ -246,11 +174,11 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                     return false
                 }
             }
-            if (deleteAfterExport && !File(mExportFileName).delete()) {
-                Timber.w("Failed to delete temporary export file %s", mExportFileName)
+            if (deleteAfterExport && !File(fileExportPath).delete()) {
+                Timber.w("Failed to delete temporary export file %s", fileExportPath)
             }
         } catch (e: Exception) {
-            Timber.e(e, "Unable to export file to Uri: %s/%s", mExportFileName, uri.toString())
+            Timber.e(e, "Unable to export file to Uri: %s/%s", fileExportPath, uri.toString())
             return false
         }
         return true
@@ -258,9 +186,9 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
 
     init {
         val fragmentManager = activity.supportFragmentManager
-        mDialogsFactory = ExportDialogsFactory(this, this).attachToActivity(activity)
+        mDialogsFactory = ExportDialogsFactory(this).attachToActivity(activity)
         fragmentManager.fragmentFactory = mDialogsFactory
-        mSaveFileLauncher = activity.registerForActivityResult(
+        saveFileLauncher = activity.registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -272,12 +200,13 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     }
 
     /**
-     * If we exported a collection (hence [mExportFileName] ends with ".colpkg"), save in the preferences
+     * If we exported a collection (hence [fileExportPath] ends with ".colpkg"), save in the preferences
      * the mod of the collection and the time at which it occurred.
      * This will allow to check whether a recent export was made, hence scoped storage migration is safe.
      */
+    @NeedsTest("fix crash when sharing")
     private fun saveSuccessfulCollectionExportIfRelevant() {
-        if (::mExportFileName.isInitialized && !mExportFileName.endsWith(".colpkg")) return
+        if (::fileExportPath.isInitialized && !fileExportPath.endsWith(".colpkg")) return
         activity.sharedPrefs().edit {
             putLong(
                 LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY,
@@ -294,5 +223,6 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     }
 }
 
+private const val EXPORT_FILE_NAME_KEY = "export_file_name_key"
 const val LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY = "last_successful_export_mod"
 const val LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY = "last_successful_export_second"

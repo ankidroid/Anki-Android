@@ -18,7 +18,7 @@ import timber.log.Timber
 import java.util.Calendar
 
 class BootService : BroadcastReceiver() {
-    private var mFailedToShowNotifications = false
+    private var failedToShowNotifications = false
     override fun onReceive(context: Context, intent: Intent) {
         if (sWasRun) {
             Timber.d("BootService - Already run")
@@ -36,7 +36,7 @@ class BootService : BroadcastReceiver() {
         }
         Timber.i("Executing Boot Service")
         catchAlarmManagerErrors(context) { scheduleNotification(TimeManager.time, context) }
-        mFailedToShowNotifications = false
+        failedToShowNotifications = false
         sWasRun = true
     }
 
@@ -54,10 +54,10 @@ class BootService : BroadcastReceiver() {
             error = R.string.boot_service_failed_to_schedule_notifications
         }
         if (error != null) {
-            if (!mFailedToShowNotifications) {
+            if (!failedToShowNotifications) {
                 showThemedToast(context, context.getString(error), false)
             }
-            mFailedToShowNotifications = true
+            failedToShowNotifications = true
         }
     }
 

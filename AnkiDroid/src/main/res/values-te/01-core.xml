@@ -59,32 +59,20 @@
     <!-- DeckPicker.kt -->
     <string name="expand">విస్తరించు</string>
     <string name="collapse">కుదించు</string>
-    <string name="study_more">బాగా చదువు</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d నిమిషాలు మిగిలి ఉన్నాయి</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d గంట %2$d ఎడమ</item>
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
-    </plurals>
     <string name="no_cards_placeholder_title">సముదాయం ఖాళీ గా ఉంది </string>
     <string name="no_cards_placeholder_description">+ గుర్తు ని నొక్కి చీటీ కూర్చు</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">సమాధానం టైప్</string>
     <string name="show_answer">సమాధానం చూపించు</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">సమాధానం దాచండి</string>
     <string name="ease_button_again">మళ్ళీ</string>
     <string name="ease_button_hard">హార్డ్</string>
     <string name="ease_button_good">గుడ్</string>
     <string name="ease_button_easy">సులువు</string>
     <string name="menu_import">దిగుమతి</string>
     <string name="undo">చెరచు</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
     <string name="move_all_to_deck">అన్నింటినీ డెక్‌కి తరలించండి</string>
     <string name="unbury">త్రవ్వితీయు</string>
@@ -102,22 +90,22 @@
     <string name="menu_bury">దాయు</string>
     <string name="menu_suspend">సస్పెండ్</string>
     <string name="menu_delete_note">గమనికను తొలగించండి</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag">జెండా</string>
+    <string name="menu_flag_card">ఫ్లాగ్ కార్డ్</string>
+    <string name="menu_flag_card_zero">జెండా లేదు</string>
+    <string name="menu_flag_card_one">ఎర్ర జండా</string>
+    <string name="menu_flag_card_two">నారింజ జెండా</string>
+    <string name="menu_flag_card_three">పచ్చ జెండా</string>
+    <string name="menu_flag_card_four">నీలి జెండా</string>
+    <string name="menu_flag_card_five">గులాబీ జెండా</string>
     <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag_card_seven">ఊదా జెండా</string>
+    <string name="menu_edit_tags">ట్యాగ్‌లను సవరించండి</string>
     <string name="delete_note_message">ఈ గమనికను మరియు దాని అన్ని కార్డ్లను నిజంగా తొలగించాలా?\n%s</string>
     <string name="menu_search">లో చూడండి%1$s</string>
     <string name="menu_mark_note">గమనికను గుర్తు పెట్టుకోండి</string>
     <string name="menu_unmark_note">గమనిక నుండి గుర్తు తీసివేయండి</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">ఉచ్చారణను తనిఖీ చేయండి</string>
     <string name="new_deck">ఒక డెక్ సృష్టించండి</string>
     <string name="new_dynamic_deck">ఫిల్టర్ డెక్ను సృష్టించండి</string>
     <string name="directory_inaccessible">AnkiDroid డైరెక్టరీ అందుబాటులో లేదు</string>
@@ -134,13 +122,9 @@
     <string name="custom_study_deck_name">కస్టమ్ అధ్యయనం సెషన్</string>
     <string name="custom_study_deck_exists">మొదటి సానుకూల అధ్యయనం డెక్ యొక్క పేరు మార్చండి</string>
     <string name="empty_deck">ఈ డెక్ ఖాళీగా ఉంది</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">ఈ డెక్ ఖాళీగా ఉంది. క్రొత్త కంటెంట్ని జోడించడానికి + బటన్ నొక్కండి.</string>
-    <string name="studyoptions_limit_reached">రోజువారీ అధ్యయనం పరిమితిని చేరుకుంది</string>
-    <string name="studyoptions_empty_schedule">అధ్యయనం చేయడానికి కార్డులు లేవు</string>
-    <string name="studyoptions_congrats_finished">అభినందనలు! ఇప్పుడు మీరు పూర్తి చేసారు.</string>
+    <string name="search_deck" comment="Deck search for selecting it">డెక్ శోధన</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">డెక్ శోధన</string>
+    <string name="invalid_deck_name">చెల్లని డెక్ పేరు</string>
     <string name="studyoptions_no_cards_due">ఎక్కువ కార్డులు లేవు</string>
     <string name="sd_card_not_mounted">పరికర నిల్వ మౌంట్ చేయబడలేదు</string>
     <string name="button_sync" comment="Text of the sync button">సమకాలీకరణ</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">సమకాలీకరించండి</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">సమకాలీకరణ రద్దు చేయబడింది</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">రద్దు...\nదీనికి కొంత సమయం పట్టవచ్చు.</string>
-    <string name="export">ఎగుమతి</string>
-    <string name="export_collection">సేకరణను ఎగుమతి చేయండి</string>
     <string name="export_deck">ఎగుమతి డెక్</string>
     <string name="nothing">ఏమీ</string>
     <!-- Card template editor -->
@@ -159,7 +141,7 @@
     <string name="card_template_editor_back">బ్యాక్ టెంప్లేట్</string>
     <string name="card_template_editor_styling">స్టైలింగ్</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
+    <string name="card_template_editor_deck_override">డెక్ ఓవర్‌రైడ్</string>
     <string name="card_template_editor_insert_field">Insert field</string>
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">కనీసం ఒక కార్డు రకం అవసరం</string>
@@ -178,17 +160,17 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">కార్డ్ సమాచారం</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid డేటాబేస్కు చదవండి మరియు వ్రాయండి</string>
     <string name="read_write_permission_description">పొందు ప్రస్తుతం ఉన్న గమనికలు, కార్డులు, నోట్ రకాలు మరియు డెక్స్, కొత్త వాటిని సృష్టించడం</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">కార్డ్ బ్రౌజర్</string>
+    <string name="context_menu_anki_card_label">అంకీ కార్డ్</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
-    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
-    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">అంకిడ్రాయిడ్</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">అంకివెబ్</string>
     <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>

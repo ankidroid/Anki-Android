@@ -16,46 +16,27 @@
 package com.ichi2.preferences
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
+import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers.anyString
-import org.mockito.ArgumentMatchers.eq
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
 import java.lang.RuntimeException
 import java.util.function.Supplier
 
 // Unknown issue: @CheckResult should provide warnings on this class when return value is unused, but doesn't.
 class PreferenceExtensionsTest {
-    @Mock
-    lateinit var mockPreferences: SharedPreferences
+    private val mockPreferences: SharedPreferences = SPMockBuilder().createSharedPreferences().apply {
+        edit {
+            putString(VALID_KEY, VALID_RESULT)
+        }
+    }
 
-    @Mock
-    private val mMockEditor: SharedPreferences.Editor? = null
     private fun getOrSetString(key: String, supplier: Supplier<String>): String {
         return mockPreferences.getOrSetString(key, supplier)
     }
-
-    @Before
-    fun setUp() {
-        MockitoAnnotations.openMocks(this)
-        Mockito.`when`(mockPreferences.contains(VALID_KEY)).thenReturn(true)
-        Mockito.`when`(
-            mockPreferences.getString(eq(VALID_KEY), anyString())
-        ).thenReturn(
-            VALID_RESULT
-        )
-        Mockito.`when`(mockPreferences.edit()).thenReturn(mMockEditor)
-        Mockito.`when`(
-            mMockEditor!!.putString(anyString(), anyString())
-        ).thenReturn(mMockEditor)
-    }
-
-    private val forMissingKey: String?
-        get() = getOrSetString(MISSING_KEY) { LAMBDA_RETURN }
 
     @Test
     fun existingKeyReturnsMappedValue() {
@@ -65,18 +46,18 @@ class PreferenceExtensionsTest {
 
     @Test
     fun missingKeyReturnsLambdaValue() {
-        val ret = forMissingKey
+        val ret = getOrSetString(MISSING_KEY) { LAMBDA_RETURN }
         assertEquals(ret, LAMBDA_RETURN)
     }
 
     @Test
     fun missingKeySetsPreference() {
-        forMissingKey
-        Mockito.verify(mMockEditor)?.putString(MISSING_KEY, LAMBDA_RETURN)
-        Mockito.verify(mMockEditor)?.apply()
+        getOrSetString(MISSING_KEY) { LAMBDA_RETURN }
+        assertThat(mockPreferences.getString(MISSING_KEY, null), equalTo(LAMBDA_RETURN))
     }
 
     @SuppressWarnings("unused")
+    @Test
     fun noLambdaExceptionIfKeyExists() {
         assertDoesNotThrow { getOrSetString(VALID_KEY, EXCEPTION_SUPPLIER) }
     }

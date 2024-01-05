@@ -21,6 +21,7 @@ import android.annotation.TargetApi
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
 import androidx.annotation.StringRes
@@ -38,13 +39,13 @@ object NotificationChannels {
      * Note that once a channel is created, only the name may be changed as long as the application
      * is installed on the user device. All other settings are fully under user control.
 
-     * TODO should be called in response to {@link android.content.Intent#ACTION_LOCALE_CHANGED}
+     * TODO should be called in response to [Intent.ACTION_LOCALE_CHANGED]
      * @param context the context for access to localized strings for channel names
      */
     @TargetApi(26)
     fun setup(context: Context) {
         val res = context.resources
-        for (channel in Channel.values()) {
+        for (channel in Channel.entries) {
             val id = channel.id
             val name = channel.getName(res)
             val importance = channel.importance()

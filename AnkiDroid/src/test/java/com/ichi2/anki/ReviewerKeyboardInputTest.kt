@@ -25,7 +25,6 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_2
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_3
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import com.ichi2.libanki.Card
 import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
@@ -184,16 +183,6 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     }
 
     @Test
-    fun pressingUndoDoesNothingIfControlsAreBlocked() {
-        // We pick an arbitrary action to ensure that nothing happens if controls are blocked
-        val underTest = KeyboardInputTestReviewer.displayingQuestion()
-            .withUndoAvailable(true)
-            .withControlsBlocked(ControlBlock.SLOW)
-        underTest.handleUnicodeKeyPress('z')
-        assertThat("Undo should not be called as control are blocked", !underTest.undoCalled)
-    }
-
-    @Test
     fun defaultKeyboardInputsFlipAndAnswersCard() {
         // Issue 14214
         val underTest = KeyboardInputTestReviewer.displayingQuestion()
@@ -218,10 +207,9 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     }
 
     internal class KeyboardInputTestReviewer : Reviewer() {
-        private var mDisplayAnswer = false
-        private var mFocusTextField = false
-        private var mAnswered: Int? = null
-        private var mAnswerButtonCount = 4
+        private var focusTextField = false
+        private var answered: Int? = null
+        private var answerButtonCount = 4
         var editCardCalled = false
             private set
         var markCardCalled = false
@@ -230,22 +218,17 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             private set
         var replayAudioCalled = false
             private set
-        override var controlBlocked = ControlBlock.UNBLOCKED
 
         private val cardFlips = mutableListOf<String>()
         override val isDrawerOpen: Boolean
             get() = false
-        fun withControlsBlocked(value: ControlBlock): KeyboardInputTestReviewer {
-            controlBlocked = value
-            return this
-        }
 
         fun displayAnswerForTest() {
             displayAnswer = true
         }
 
         override fun answerFieldIsFocused(): Boolean {
-            return mFocusTextField
+            return focusTextField
         }
 
         override fun displayCardAnswer() {
@@ -343,24 +326,24 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return keyEvent
         }
         fun focusTextField(): KeyboardInputTestReviewer {
-            mFocusTextField = true
+            focusTextField = true
             return this
         }
 
         override fun answerCard(ease: Int) {
             super.answerCard(ease)
-            mAnswered = ease
+            answered = ease
         }
 
         fun processedAnswer(): Int {
-            if (mAnswered == null) {
+            if (answered == null) {
                 Assert.fail("No card was answered")
             }
-            return mAnswered!!
+            return answered!!
         }
 
         fun withButtons(answerButtonCount: Int): KeyboardInputTestReviewer {
-            mAnswerButtonCount = answerButtonCount
+            this.answerButtonCount = answerButtonCount
             return this
         }
 
@@ -417,7 +400,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         }
 
         fun hasBeenAnswered(): Boolean {
-            return mAnswered != null
+            return answered != null
         }
 
         override fun performClickWithVisualFeedback(ease: Int) {

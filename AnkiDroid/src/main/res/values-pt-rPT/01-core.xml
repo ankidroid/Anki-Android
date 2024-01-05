@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Expandir</string>
     <string name="collapse">Recolher</string>
-    <string name="study_more">Estudar mais</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minuto restante</item>
-        <item quantity="other">%d minutos restantes</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
-    </plurals>
     <string name="no_cards_placeholder_title">A coleção está vazia</string>
     <string name="no_cards_placeholder_description">Comece a adicionar fichas\ncom o ícone +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Fácil</string>
     <string name="menu_import">Importar</string>
     <string name="undo">Anular</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
     <string name="move_all_to_deck">Mover todos para o baralho</string>
     <string name="unbury">Mostrar</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralhos</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Nome inválido do baralho</string>
-    <string name="studyoptions_empty">Este baralho está vazio. Toque no botão \"+\" para adicionar novo conteúdo.</string>
-    <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
-    <string name="studyoptions_empty_schedule">Sem fichas agendadas para estudar</string>
-    <string name="studyoptions_congrats_finished">Parabéns! Terminou por agora.</string>
     <string name="studyoptions_no_cards_due">Não há fichas vencidas ainda</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continuar sincronização</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronização cancelada</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">A cancelar&#8230;\nPode levar algum tempo.</string>
-    <string name="export">Exportar</string>
-    <string name="export_collection">Exportar coleção</string>
     <string name="export_deck">Exportar baralho</string>
     <string name="nothing">Nada</string>
     <!-- Card template editor -->

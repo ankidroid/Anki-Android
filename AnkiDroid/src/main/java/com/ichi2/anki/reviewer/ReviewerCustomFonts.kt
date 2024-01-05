@@ -20,10 +20,10 @@ class ReviewerCustomFonts {
     /**
      * The CSS used to set the theme font.
      */
-    private val mCustomStyle =
+    private val customStyle =
         "BODY {font-family: 'OpenSans';font-weight: normal;font-style: normal;font-stretch: normal;}"
 
     fun updateCssStyle(cssStyle: StringBuilder) {
-        cssStyle.append(mCustomStyle)
+        cssStyle.append(customStyle)
     }
 }

@@ -64,6 +64,7 @@
     <string name="log_out">Desconnecta</string>
     <string name="reset_password">Restableix la contrasenya</string>
     <string name="lost_mail_instructions">Heu oblidat el correu electrònic?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opcions per XXX</string>
     <string name="sync_title">Sincronització</string>

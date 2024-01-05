@@ -1,0 +1,112 @@
+name: Conflict Scan
+
+on:
+  push:
+  schedule:
+  - cron: "0 * * * *"
+
+jobs:
+  scan_conflicts:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check for conflicts and label conflict
+        uses: actions/github-script@v7
+        with:
+          script: |
+            async function getPullRequestList() {
+                return await github.rest.pulls.list({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    state: 'open',
+                    sort: 'created',
+                });
+            }
+
+            async function getPullRequest(prNumber) {
+                return await github.rest.pulls.get({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: prNumber,
+                });
+            }
+
+            async function addLabel(labels, issue_number) {
+                await github.rest.issues.addLabels({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue_number,
+                    labels: labels,
+                });
+            }
+
+            async function removeLabel(labels, issue_number) {
+                await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue_number,
+                    name: labels,
+                });
+            }
+
+            async function wait(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            const maxIterations = 10;
+            async function checkPullRequests() {
+                const pullRequestList = await getPullRequestList();
+
+                if (pullRequestList.data !== null && pullRequestList.data.length > 0) {
+                    for (let pullRequest of pullRequestList.data) {
+                        const prNumber = pullRequest.number;
+                        console.log(`Checking PR #${prNumber}`);
+
+                        let pullRequestData;
+                        let iterations = 0;
+                        do {
+                            pullRequestData = await getPullRequest(prNumber);
+                            // introduce 1-second delay before the next check
+                            await wait(1000);
+                            iterations++;
+
+                            // Check for terminal conditions
+                            if (pullRequestData.data.mergeable_state !== 'unknown' || iterations >= maxIterations) {
+                              break;
+                            }
+                        } while (pullRequestData.data.mergeable_state === 'unknown');
+
+                        if (pullRequestData.data.mergeable_state === 'dirty') {
+                            console.log(`Conflict exists in PR #${prNumber}`);
+                            if (pullRequestData.data.labels.find(label => label.name === 'Has Conflicts')) {
+                                console.log(`'Has Conflicts' label already exists on PR #${prNumber}`);
+                            } else {
+                                console.log(`Adding 'Has Conflicts' label to PR #${prNumber}`);
+                                await addLabel(['Has Conflicts'], prNumber);
+                            }
+                        } else if (pullRequestData.data.mergeable_state === 'clean') {
+                            // if PR has no conflicts, remove the label
+                            if (pullRequestData.data.labels.find(label => label.name === 'Has Conflicts')) {
+                                console.log(`Removing 'Has Conflicts' label from PR #${prNumber}`);
+                                await removeLabel(['Has Conflicts'], prNumber);
+                            }
+                        } else if (pullRequestData.data.mergeable_state === 'unstable') {
+                            console.log(`PR #${prNumber} is unstable`);
+                            const mergeable = pullRequestData.data.mergeable;
+                            if (mergeable) {
+                                console.log(`PR #${prNumber} is mergeable`);
+                                // if PR has no conflicts, remove the label
+                                if (pullRequestData.data.labels.find(label => label.name === 'Has Conflicts')) {
+                                    console.log(`Removing 'Has Conflicts' label from PR #${prNumber}`);
+                                    await removeLabel(['Has Conflicts'], prNumber);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            checkPullRequests();

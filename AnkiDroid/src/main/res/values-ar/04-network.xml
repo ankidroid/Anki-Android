@@ -64,6 +64,7 @@
     <string name="log_out">تسجيل الخروج</string>
     <string name="reset_password">إعادة تعيين كلمة السر</string>
     <string name="lost_mail_instructions">هل نسيت بريدك الإلكتروني؟</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">خيارات XXX</string>
     <string name="sync_title">المزامنة</string>

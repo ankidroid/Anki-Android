@@ -54,12 +54,15 @@
         <item quantity="other">%d not gösteriliyor</item>
     </plurals>
     <string name="card_browser_all_decks">Bütün desteler</string>
-    <string name="card_browser_delete_card">Notları sil</string>
-    <string name="card_browser_suspend_card">Kartları askıya al</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Kartı sil</item>
+        <item quantity="other">Kartları sil</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Notu sil</item>
+        <item quantity="other">Notları sil</item>
+    </plurals>
     <string name="card_browser_change_deck">Desteyi değiştir</string>
-    <string name="card_browser_unsuspend_card">Kartları askıdan al</string>
-    <string name="card_browser_mark_card">Notları işâretle</string>
-    <string name="card_browser_unmark_card">Notlardan işâreti kaldır</string>
     <string name="delete_card_title">Notu sil</string>
     <string name="card_browser_show_marked">İşâretlileri göster</string>
     <string name="card_browser_show_suspended">Askıdakileri göster</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d kartı silindi</item>
         <item quantity="other">%d kartları silindi</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

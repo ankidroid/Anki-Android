@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Espandi</string>
     <string name="collapse">Nascondi</string>
-    <string name="study_more">Studia ancora</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">Resta %d minuto</item>
-        <item quantity="other">Restano %d minuti</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d ora %2$d rimanente</item>
-        <item quantity="other">%1$d ore %2$d rimanenti</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d giorno %2$d rimanente</item>
-        <item quantity="other">%1$d giorni %2$d rimanenti</item>
-    </plurals>
     <string name="no_cards_placeholder_title">La collezione è vuota</string>
     <string name="no_cards_placeholder_description">Inizia ad aggiungere carte\nusando l\'icona +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Facile</string>
     <string name="menu_import">Importa</string>
     <string name="undo">Annulla</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Indietro</string>
     <string name="move_all_to_deck">Sposta tutto nel mazzo</string>
     <string name="unbury">Disseppellisci</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Ricerca mazzo</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Ricerca mazzo</string>
     <string name="invalid_deck_name">Nome mazzo non valido</string>
-    <string name="studyoptions_empty">Questo mazzo è vuoto. Premi il pulsante + per aggiungere nuovi contenuti.</string>
-    <string name="studyoptions_limit_reached">Raggiunto il limite giornaliero di studio</string>
-    <string name="studyoptions_empty_schedule">Nessuna carta programmata per lo studio</string>
-    <string name="studyoptions_congrats_finished">Complimenti! Per ora hai finito.</string>
     <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
     <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizza</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continua la sincronizzazione</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronizzazione annullata</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Annullo...\nPotrebbe richiedere del tempo.</string>
-    <string name="export">Esportare</string>
-    <string name="export_collection">Esporta la collezione</string>
     <string name="export_deck">Esporta il mazzo</string>
     <string name="nothing">Niente</string>
     <!-- Card template editor -->

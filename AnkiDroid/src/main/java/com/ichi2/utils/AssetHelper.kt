@@ -35,10 +35,25 @@
  */
 package com.ichi2.utils
 
+import android.net.Uri
 import android.webkit.MimeTypeMap
+import java.io.File
+import java.util.Locale
 
 /** Clone of RestrictedApi functionality  */
 object AssetHelper {
+    /**
+     Returns the extension of [path].
+     It uses [MimeTypeMap.getFileExtensionFromUrl], with the path transformed into a Uri.
+     */
+    fun getFileExtensionFromFilePath(path: String): String {
+        return MimeTypeMap.getFileExtensionFromUrl(
+            Uri.fromFile(File(path)).toString().lowercase(
+                Locale.ROOT
+            )
+        )
+    }
+
     /**
      * Use [MimeTypeMap.getMimeTypeFromExtension] to guess MIME type or return the
      * "text/plain" if it can't guess.
@@ -48,8 +63,8 @@ object AssetHelper {
      * @param path path of the file to guess its MIME type.
      * @return MIME type guessed from file extension or "text/plain".
      */
-    fun guessMimeType(path: String?): String {
-        return when (val extension = MimeTypeMap.getFileExtensionFromUrl(path)) {
+    fun guessMimeType(path: String): String {
+        return when (val extension = getFileExtensionFromFilePath(path)) {
             "js" -> "text/javascript"
             "mjs" -> "text/javascript"
             "json" -> "application/json"

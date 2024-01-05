@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation,DuplicateCrowdInStrings">
+    <string name="search_preference_key">searchPreference</string>
     <!-- General -->
     <string name="pref_general_screen_key">generalScreen</string>
     <string name="deck_for_new_cards_key">useCurrent</string>
@@ -43,12 +44,14 @@
     <string name="pref_display_filenames_in_browser_key">card_browser_show_media_filenames</string>
     <string name="show_topbar_preference">showTopbar</string>
     <string name="show_progress_preference">showProgress</string>
-    <string name="show_eta_preference">showETA</string>
+    <string name="show_audio_play_buttons_key">showAudioPlayButtons</string>
     <string name="pref_card_browser_font_scale_key">relativeCardBrowserFontSize</string>
+    <string name="show_deck_title_key">showDeckTitle</string>
     <!-- App bar buttons -->
     <string name="pref_app_bar_buttons_screen_key">appBarButtonsScreen</string>
     <string name="reset_custom_buttons_key">reset_custom_buttons</string>
     <string name="custom_button_undo_key">customButtonUndo</string>
+    <string name="custom_button_redo_key">customButtonRedo</string>
     <string name="custom_button_schedule_card_key">customButtonScheduleCard</string>
     <string name="custom_button_flag_key">customButtonFlag</string>
     <string name="custom_button_edit_card_key">customButtonEditCard</string>
@@ -81,6 +84,7 @@
     <string name="answer_good_command_key">binding_FLIP_OR_ANSWER_EASE3</string>
     <string name="answer_easy_command_key">binding_FLIP_OR_ANSWER_EASE4</string>
     <string name="undo_command_key">binding_UNDO</string>
+    <string name="redo_command_key">binding_REDO</string>
     <string name="edit_command_key">binding_EDIT</string>
     <string name="mark_command_key">binding_MARK</string>
     <string name="bury_card_command_key">binding_BURY_CARD</string>
@@ -105,6 +109,7 @@
     <string name="abort_and_sync_command_key">binding_ABORT_AND_SYNC</string>
     <string name="record_voice_command_key">binding_RECORD_VOICE</string>
     <string name="replay_voice_command_key">binding_REPLAY_VOICE</string>
+    <string name="save_voice_command_key">binding_SAVE_VOICE</string>
     <string name="toggle_whiteboard_command_key">binding_TOGGLE_WHITEBOARD</string>
     <string name="clear_whiteboard_command_key">binding_CLEAR_WHITEBOARD</string>
     <string name="change_whiteboard_pen_color_command_key">binding_CHANGE_WHITEBOARD_PEN_COLOR</string>
@@ -154,6 +159,7 @@
     <string name="pref_trigger_crash_key">trigger_crash_preference</string>
     <string name="pref_analytics_debug_key">analytics_debug_preference</string>
     <string name="pref_lock_database_key">debug_lock_database</string>
+    <string name="new_previewer_pref_key">new_previewer</string>
     <string name="pref_show_onboarding_key">showOnboarding</string>
     <string name="pref_reset_onboarding_key">resetOnboarding</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>

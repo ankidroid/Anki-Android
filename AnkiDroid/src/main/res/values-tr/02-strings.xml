@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Tür:</string>
     <string name="CardEditorTags">Etiketler: %1$s</string>
     <string name="CardEditorCards">Kartlar: %1$s</string>
+    <string name="edit_occlusions">Örtüleri Düzenle</string>
     <string name="tag_name">Etiket adı</string>
     <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
     <string name="add_tag">Etiket ekle</string>
@@ -154,10 +155,7 @@
     <string name="import_title">İçeri Aktarılıyor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ekle</string>
     <string name="import_message_replace_confirm">Bu, varolan koleksiyonu silecek ve şu dosyanın verileriyle değiştirecek: %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">\"%s\" koleksiyona eklensin mi? Bu uzun sürebilir</item>
-        <item quantity="other">Aşağıdaki dosyaları içeri aktarmak istiyor musunuz:\n%s\nBu uzun sürebilir</item>
-    </plurals>
+    <string name="import_dialog_message_add">\"%s\" koleksiyona eklensin mi? Bu uzun sürebilir</string>
     <string name="import_log_no_apkg">Bu geçerli bir Anki paketi dosyası değil</string>
     <string name="import_title_error" comment="Title of error dialog">Hata</string>
     <string name="import_error_handle_exception">Dosya içeri aktarılamadı\n\n%s</string>
@@ -165,21 +163,7 @@
     <string name="import_error_load_imported_database">Anki Veritabanı (.anki2) değiştirmeleri henüz desteklenmiyor. Lütfen değiştirme yönergeleri için kılavuza bakın.</string>
     <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak içeri aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
     <string name="import_error_copy_to_cache">Dosya belleğe alınamadı (depolama alanı bitmiş olabilir)</string>
-    <string name="import_error_multiple_colpkg">Birden fazla colpkg dosyası seçilmiş.</string>
-    <string name="import_error_colpkg_apkg">Aynı zamanda hem apkg hem colpkg dosyaları seçilmiş.</string>
     <string name="import_interrupted">Aktarım yarıda kesildi: AnkiDroid kapatıldı</string>
-    <string name="export_include_schedule">Zamanlamayı dahil et</string>
-    <string name="export_include_media">Medyayı dahil et</string>
-    <string name="confirm_apkg_export">Koleksiyon Anki paketi hâlinde dışarı aktarılsın mı?</string>
-    <string name="confirm_apkg_export_deck">\"%s\" apkg dosyası olarak kaydedilsin mi?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Seçili kart apkg dosyası olarak dışarı aktarılsın mı?</item>
-        <item quantity="other">Seçili %d kartları apkg dosyası olarak dışarı aktarılsın mı?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Seçili not apkg dosyası olarak dışarı aktarılsın mı?</item>
-        <item quantity="other">Seçili %d notlar apkg dosyası olarak dışarı aktarılsın mı?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Dışa aktarım hazırlanıyor&#8230;</string>
     <string name="export_ready_title">Dışa aktarım hazır</string>
     <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor...</string>
@@ -208,8 +192,6 @@
     <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
     <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Bu deste zaten mevcut</string>
-    <string name="decks_rename_filtered_nosubdecks">Filtreli destenin altdestesi olamaz</string>
     <string name="reminder_title">Bugün çalışmayı unutmayın!</string>
     <plurals name="reminder_text">
         <item quantity="one">%1$s içinde çalışmak için %2$d kart</item>
@@ -232,9 +214,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">örnik</string>
     <string name="basic_answer_sample_text">bir örnek</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boş</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Navigasyon Çekmecesini Göster\'i JavaScript\'le kullanmak için lütfen tam ekranı açın.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Seçenek Menüsünü Göster\'i JavaScript\'le kullanmak için lütfen tam ekranı açın.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Yazı tahtası resmi kaydedilemedi. %s</string>
     <string name="white_board_image_saved">Yazı tahtası resmi bu adrese kaydedildi: %s</string>
@@ -255,7 +234,6 @@
     <string name="card_viewer_could_not_find_image">Kart İçeriği Hatası: \"%s\" yüklenemedi</string>
     <string name="card_viewer_media_relative_protocol">Kart İçeriği Hatası: Medya güncellemesi gerekli</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">\'%s\' destesinin yüklenmesi başarısız</string>
     <string name="search_decks">Deste ara</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Taşıma ilerlemesini göster</string>
     <string name="ankidroid_init_failed_webview_title">Kritik Hata</string>
@@ -360,4 +338,21 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Depolama taşımayı başlatmak için dokunun</string>
     <string name="media_sync_required_title">Medya Senkronizasyonu Gerekiyor</string>
     <string name="media_sync_unavailable_message">Medya senkronizasyonu ayarlardan kapalı. Lütfen devam etmeden önce senkronize edilmemiş medyayı senkronize edin ve yedekleyin.</string>
+    <string name="audio_saved">Alınan kayıtlar kaydedildi. </string>
+    <string name="deleting_selected_notes">Seçili notlar siliniyor</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Bir sesi dinlemek için dokunun
+    </string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Ses kullanmadan önce yüklenmelidir
+    </string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Yine de kullan
+    </string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Metin okuma hatası (%s)</string>
+    <!-- Chips should probably be in a separate file, due to the additional length req -->
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        İnternet
+    </string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Yükle
+    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Metin okuma ayarları açılamadı
+    </string>
+    <string name="shared_decks_login_required">Daha fazla deste indirmek için lütfen giriş yapın</string>
 </resources>

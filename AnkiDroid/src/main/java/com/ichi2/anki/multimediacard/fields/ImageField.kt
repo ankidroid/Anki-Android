@@ -34,7 +34,7 @@ import java.io.File
 class ImageField : FieldBase(), IField {
     @get:JvmName("getImagePath_unused")
     var extraImagePathRef: String? = null
-    private var mName: String? = null
+    private var _name: String? = null
 
     override val type: EFieldType = EFieldType.IMAGE
 
@@ -55,9 +55,9 @@ class ImageField : FieldBase(), IField {
     override var hasTemporaryMedia: Boolean = false
 
     override var name: String?
-        get() = mName
+        get() = _name
         set(value) {
-            mName = value
+            _name = value
         }
 
     override val formattedValue: String

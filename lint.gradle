@@ -11,5 +11,10 @@ android {
         // To output the lint report to stdout set textReport=true, and leave textOutput unset.
         textReport true
         warningsAsErrors true
+
+        if (System.getenv("CI") == "true") {
+            // 14853: we want this to appear in the IDE, but it adds noise to CI
+            disable += "WrongThread"
+        }
     }
 }

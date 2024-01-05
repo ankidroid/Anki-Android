@@ -23,10 +23,10 @@ jobs:
           key: gradle-${{ hashFiles('**/*.gradle*') }}-v1
 
       - name: Configure JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: "temurin"
-          java-version: "17" # newer libraries require 17 now, force it everywhere
+          java-version: "17" # newer libraries require 17, also change jitpack.yml
 
       - name: Verify JDK17
         # Default JDK varies depending on different runner flavors, make sure we are on 17

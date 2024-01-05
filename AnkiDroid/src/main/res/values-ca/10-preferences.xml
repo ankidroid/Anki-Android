@@ -47,7 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Deshabilitat</string>
     <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">Cap resultat</string>
     <!-- preferences.xml categories-->
@@ -113,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tocar al centre</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar a baix a l\'esquerra</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar a baix a la dreta</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">Menú ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Permet a tot arreu el menú contextual \'%s\'</string>
     <string name="double_scrolling_gap" maxLength="41">Desplaçament doble</string>
@@ -174,14 +178,15 @@
     <string name="show_top_bar_summ">Mostra contadors de carta, bandera i marca a la barra de dalt</string>
     <string name="show_progress" maxLength="41">Mostra el romanent</string>
     <string name="show_progress_summ">Mostra el recompte de cartes restants</string>
-    <string name="show_eta" maxLength="41">Mostra el temps restant</string>
-    <string name="show_eta_summ">Mostra el temps restant</string>
     <string name="use_current" maxLength="41">Paquet per a cartes noves</string>
     <string name="learn_cutoff" maxLength="41">Informeu-vos de límit per davant</string>
     <string name="time_limit" maxLength="41">Límit de temps de Timebox</string>
     <string name="new_timezone" maxLength="41">Gestió de nova zona horària</string>
     <string name="day_offset_with_description" maxLength="41">Principi del proper dia</string>
-    <string name="day_offset_summary">%s hores passada la mitjanit</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d hour past midnight</item>
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Mantenir la pantalla encesa</string>
     <string name="pref_keep_screen_on_summ">Desactiva la pantalla de bloqueig</string>
     <string name="enable_api_title" maxLength="41">Activa l\'API de l\'AnkiDroid</string>
@@ -200,6 +205,7 @@
     <string name="html_javascript_debugging_summ">Activeu les connexions WebView remotes i deseu l\'HTML de la carta al directori AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Revisor</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Accessibilitat</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Enganxa imatges del porta-retalls com PNG</string>
@@ -265,6 +271,8 @@
     <string name="binding_add_key">Afegir una clau</string>
     <string name="binding_replace_key">Substitueix la tecla</string>
     <string name="key_picker_default_press_key">Premeu una tecla</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecciona cara de la carta</string>
     <string name="card_side_question">Pregunta</string>

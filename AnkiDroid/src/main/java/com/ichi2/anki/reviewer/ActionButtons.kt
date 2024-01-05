@@ -21,11 +21,11 @@ import androidx.annotation.IdRes
 import androidx.appcompat.view.menu.MenuItemImpl
 import com.ichi2.anki.R
 
-class ActionButtons(private val reviewerUi: ReviewerUi) {
+class ActionButtons {
     // DEFECT: This should be private - it breaks the law of demeter, but it'll be a large refactoring to get
     // to this point
-    val status: ActionButtonStatus = ActionButtonStatus(reviewerUi)
-    private var mMenu: Menu? = null
+    val status: ActionButtonStatus = ActionButtonStatus()
+    private var menu: Menu? = null
     fun setup(preferences: SharedPreferences) {
         status.setup(preferences)
     }
@@ -33,10 +33,10 @@ class ActionButtons(private val reviewerUi: ReviewerUi) {
     /** Sets the order of the Action Buttons in the action bar  */
     fun setCustomButtonsStatus(menu: Menu) {
         status.setCustomButtons(menu)
-        mMenu = menu
+        this.menu = menu
     }
 
-    fun findMenuItem(@IdRes resId: Int) = mMenu?.findItem(resId) as? MenuItemImpl
+    fun findMenuItem(@IdRes resId: Int) = menu?.findItem(resId) as? MenuItemImpl
 
     companion object {
         @IdRes

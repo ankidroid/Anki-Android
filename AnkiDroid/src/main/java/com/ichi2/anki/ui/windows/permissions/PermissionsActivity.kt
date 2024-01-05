@@ -19,12 +19,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import androidx.activity.addCallback
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
+import com.ichi2.annotations.NeedsTest
+import com.ichi2.themes.setTransparentStatusBar
 
 /**
  * Screen responsible for getting permissions from the user.
@@ -45,6 +48,7 @@ class PermissionsActivity : AnkiActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.permissions_activity)
+        setTransparentStatusBar()
 
         findViewById<AppCompatButton>(R.id.continue_button).setOnClickListener {
             finish()
@@ -55,12 +59,9 @@ class PermissionsActivity : AnkiActivity() {
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
         }
-    }
-
-    @Suppress("DEPRECATION", "needs update to handle predictive back, see 14558")
-    override fun onBackPressed() {
-        super.onBackPressed()
         // only close the activity by tapping the continue button
+        @NeedsTest("activity can only be closed by tapping the continue button")
+        onBackPressedDispatcher.addCallback {}
     }
 
     fun setContinueButtonEnabled(isEnabled: Boolean) {

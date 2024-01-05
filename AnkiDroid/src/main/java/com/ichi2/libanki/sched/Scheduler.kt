@@ -17,10 +17,6 @@
 package com.ichi2.libanki.sched
 
 import android.app.Activity
-import android.content.Context
-import android.graphics.Typeface
-import android.text.SpannableStringBuilder
-import android.text.style.StyleSpan
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.ankidroid.schedTimingTodayLegacyRequest
@@ -43,7 +39,6 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager.time
-import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
 data class CurrentQueueState(
@@ -301,15 +296,6 @@ open class Scheduler(val col: Collection) {
     }
 
     /**
-     * Unbury all buried cards in all decks. Only used for tests.
-     */
-    open fun unburyCards() {
-        for (did in col.decks.allNamesAndIds().map { it.id }) {
-            unburyCardsForDeck(did)
-        }
-    }
-
-    /**
      * @return Whether there are buried card is selected deck
      */
     open fun haveBuriedInCurrentDeck(): Boolean {
@@ -328,7 +314,7 @@ open class Scheduler(val col: Collection) {
     /**
      * @param ids Ids of cards to put at the end of the new queue.
      */
-    open fun forgetCards(ids: List<Long>): OpChanges {
+    open fun forgetCards(ids: List<CardId>): OpChanges {
         val request = scheduleCardsAsNewRequest {
             cardIds.addAll(ids)
             log = true
@@ -345,7 +331,7 @@ open class Scheduler(val col: Collection) {
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
      */
-    open fun reschedCards(ids: List<Long>, imin: Int, imax: Int): OpChanges {
+    open fun reschedCards(ids: List<CardId>, imin: Int, imax: Int): OpChanges {
         return col.backend.setDueDate(ids, "$imin-$imax!", OptionalStringConfigKey.getDefaultInstance())
     }
 
@@ -357,7 +343,7 @@ open class Scheduler(val col: Collection) {
      * @param shift Whether the cards already new should be shifted to make room for cards of cids
      */
     open fun sortCards(
-        cids: List<Long>,
+        cids: List<CardId>,
         start: Int,
         step: Int = 1,
         shuffle: Boolean = false,
@@ -426,43 +412,7 @@ open class Scheduler(val col: Collection) {
         return DeckNode(col.backend.deckTree(now = if (includeCounts) time.intTime() else 0), "")
     }
 
-    /**
-     * @param context Some Context to access the lang
-     * @return A message to show to user when they reviewed the last card. Let them know if they can see learning card later today
-     * or if they could see more card today by extending review.
-     */
-    @RustCleanup("remove once new congrats screen is the default")
-    fun finishedMsg(): CharSequence {
-        val sb = SpannableStringBuilder()
-        sb.append(col.tr.schedulingCongratulationsFinished())
-        val boldSpan = StyleSpan(Typeface.BOLD)
-        sb.setSpan(boldSpan, 0, sb.length, 0)
-        sb.append(_nextDueMsg())
-        return sb
-    }
-
-    fun _nextDueMsg(): String {
-        val sb = StringBuilder()
-        if (revDue()) {
-            sb.append("\n\n")
-            sb.append(col.tr.schedulingTodayReviewLimitReached())
-        }
-        if (newDue()) {
-            sb.append("\n\n")
-            sb.append(col.tr.schedulingTodayNewLimitReached())
-        }
-        if (haveBuriedInCurrentDeck()) {
-            sb.append("\n\n")
-            sb.append(col.tr.schedulingBuriedCardsFound(col.tr.schedulingUnburyThem()))
-        }
-        if (col.decks.current().isNormal) {
-            sb.append("\n\n")
-            sb.append(col.tr.schedulingHowToCustomStudy(col.tr.schedulingCustomStudy()))
-        }
-        return sb.toString()
-    }
-
-    fun _deckLimit(): String {
+    fun deckLimit(): String {
         return Utils.ids2str(col.decks.active())
     }
 
@@ -471,7 +421,7 @@ open class Scheduler(val col: Collection) {
      */
     fun totalNewForCurrentDeck(): Int {
         return col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
             REPORT_LIMIT
         )
     }
@@ -480,7 +430,7 @@ open class Scheduler(val col: Collection) {
      */
     fun totalRevForCurrentDeck(): Int {
         return col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
             today,
             REPORT_LIMIT
         )
@@ -494,16 +444,16 @@ open class Scheduler(val col: Collection) {
      * @return Number of days since creation of the collection.
      */
     open val today: Int
-        get() = _timingToday().daysElapsed
+        get() = timingToday().daysElapsed
 
     /**
      * @return Timestamp of when the day ends. Takes into account hour at which day change for anki and timezone
      */
     open val dayCutoff: Long
-        get() = _timingToday().nextDayAt
+        get() = timingToday().nextDayAt
 
     /* internal */
-    fun _timingToday(): SchedTimingTodayResponse {
+    fun timingToday(): SchedTimingTodayResponse {
         return if (true) { // (BackendFactory.defaultLegacySchema) {
             val request = schedTimingTodayLegacyRequest {
                 createdSecs = col.crt
@@ -511,8 +461,8 @@ open class Scheduler(val col: Collection) {
                     createdMinsWest = it
                 }
                 nowSecs = time.intTime()
-                nowMinsWest = _current_timezone_offset()
-                rolloverHour = _rolloverHour()
+                nowMinsWest = currentTimezoneOffset()
+                rolloverHour = rolloverHour()
             }
             return col.backend.schedTimingTodayLegacy(request)
         } else {
@@ -522,11 +472,11 @@ open class Scheduler(val col: Collection) {
         }
     }
 
-    fun _rolloverHour(): Int {
+    fun rolloverHour(): Int {
         return col.config.get("rollover") ?: 4
     }
 
-    open fun _current_timezone_offset(): Int {
+    open fun currentTimezoneOffset(): Int {
         return localMinutesWest(time.intTime())
     }
 
@@ -547,7 +497,7 @@ open class Scheduler(val col: Collection) {
      * Save the UTC west offset at the time of creation into the DB.
      * Once stored, this activates the new timezone handling code.
      */
-    fun set_creation_offset() {
+    fun setCreationOffset() {
         val minsWest = localMinutesWest(col.crt)
         col.config.set("creationOffset", minsWest)
     }
@@ -555,15 +505,15 @@ open class Scheduler(val col: Collection) {
     // New timezone handling
     // ////////////////////////////////////////////////////////////////////////
 
-    fun _new_timezone_enabled(): Boolean {
+    fun newTimezoneEnabled(): Boolean {
         return col.config.get<Int?>("creationOffset") != null
     }
 
     fun useNewTimezoneCode() {
-        set_creation_offset()
+        setCreationOffset()
     }
 
-    fun clear_creation_offset() {
+    fun clearCreationOffset() {
         col.config.remove("creationOffset")
     }
 
@@ -571,7 +521,7 @@ open class Scheduler(val col: Collection) {
     open fun revDue(): Boolean {
         return col.db
             .queryScalar(
-                "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?" +
+                "SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?" +
                     " LIMIT 1",
                 today
             ) != 0
@@ -579,13 +529,13 @@ open class Scheduler(val col: Collection) {
 
     /** true if there are any new cards due.  */
     open fun newDue(): Boolean {
-        return col.db.queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0
+        return col.db.queryScalar("SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0
     }
 
     /** @return Number of cards in the current deck and its descendants.
      */
     fun cardCount(): Int {
-        val dids = _deckLimit()
+        val dids = deckLimit()
         return col.db.queryScalar("SELECT count() FROM cards WHERE did IN $dids")
     }
 
@@ -696,7 +646,7 @@ open class Scheduler(val col: Collection) {
      * @param card A random card
      * @return The conf of the deck of the card.
      */
-    fun _cardConf(card: Card): DeckConfig {
+    fun cardConf(card: Card): DeckConfig {
         return col.decks.confForDid(card.did)
     }
 

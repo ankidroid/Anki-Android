@@ -19,10 +19,13 @@ package com.ichi2.anki.cardviewer
 import android.content.Context
 import android.content.res.Resources
 import androidx.annotation.CheckResult
+import anki.config.ConfigKey
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Sound
+import com.ichi2.libanki.stripAvRefs
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.IOException
@@ -33,12 +36,13 @@ class HtmlGenerator(
     private val typeAnswer: TypeAnswer,
     val cardAppearance: CardAppearance,
     val cardTemplate: CardTemplate,
+    private val showAudioPlayButtons: Boolean,
     val resources: Resources
 ) {
 
     @CheckResult
-    fun generateHtml(card: Card, reload: Boolean, side: Side): CardHtml {
-        return CardHtml.createInstance(card, reload, side, this)
+    fun generateHtml(card: Card, side: Side): CardHtml {
+        return CardHtml.createInstance(card, side, this)
     }
 
     fun filterTypeAnswer(content: String, side: Side): String {
@@ -49,22 +53,28 @@ class HtmlGenerator(
     }
 
     fun expandSounds(content: String): String {
-        return Sound.expandSounds(content)
+        return if (showAudioPlayButtons) {
+            Sound.expandSounds(content)
+        } else {
+            stripAvRefs(content)
+        }
     }
 
     companion object {
         fun createInstance(
             context: Context,
+            col: Collection,
             typeAnswer: TypeAnswer
         ): HtmlGenerator {
             val preferences = context.sharedPrefs()
             val cardAppearance = CardAppearance.create(ReviewerCustomFonts(), preferences)
             val cardHtmlTemplate = loadCardTemplate(context)
-
+            val showAudioPlayButtons = !col.config.getBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS)
             return HtmlGenerator(
                 typeAnswer,
                 cardAppearance,
                 cardHtmlTemplate,
+                showAudioPlayButtons,
                 context.resources
             )
         }

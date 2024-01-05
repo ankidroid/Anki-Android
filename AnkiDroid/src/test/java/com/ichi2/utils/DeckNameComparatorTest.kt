@@ -9,18 +9,18 @@ import org.junit.Test
 import java.util.Arrays.sort
 
 class DeckNameComparatorTest {
-    private var mDeckNameComparator: DeckNameComparator? = null
+    private var deckNameComparator: DeckNameComparator? = null
 
     @Before
     fun setUp() {
-        mDeckNameComparator = DeckNameComparator()
+        deckNameComparator = DeckNameComparator()
     }
 
     // Testing DeckNameComparator by sorting an array of deck names.
     @Test
     fun sortDeckNames() {
         val deckNames = arrayOf("AA", "ab", "BB", "aa", "aa::bb", "aa::ab", "aa::ab::Aa", "aa::ab::aB", "aa::ab:bB")
-        sort(deckNames, mDeckNameComparator)
+        sort(deckNames, deckNameComparator)
         assertThat(deckNames, equalTo(arrayOf("AA", "aa", "aa::ab", "aa::ab::Aa", "aa::ab::aB", "aa::ab:bB", "aa::bb", "ab", "BB")))
     }
 }

@@ -23,15 +23,4 @@ object ThreadUtils {
             throw RuntimeException(e)
         }
     }
-
-    @Suppress("Unused")
-    fun runAndJoin(runnable: Runnable, timeout: Int) {
-        val t = Thread(runnable)
-        t.start()
-        try {
-            t.join(timeout.toLong())
-        } catch (e: InterruptedException) {
-            throw RuntimeException(e)
-        }
-    }
 }

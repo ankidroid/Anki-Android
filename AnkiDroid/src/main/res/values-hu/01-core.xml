@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Nagyítás</string>
     <string name="collapse">Összecsukás</string>
-    <string name="study_more">Tanulj többet</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d perc van hátra</item>
-        <item quantity="other">%d perc van hátra</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d óra %2$d maradt</item>
-        <item quantity="other">%1$d óra %2$d maradt</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d nap %2$d van hátra</item>
-        <item quantity="other">%1$d nap %2$d van hátra</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Üres gyűjtemény</string>
     <string name="no_cards_placeholder_description">Adj hozzá kártyákat\na + ikon használatával</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Könnyű</string>
     <string name="menu_import">Importálás</string>
     <string name="undo">Visszavonás</string>
+    <string name="redo">Újra</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Utolsó vonal törlése</string>
     <string name="move_all_to_deck">Összes pakli áthelyezése</string>
     <string name="unbury">Félretétel megszüntetése</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Paklik keresése</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Paklik keresése</string>
     <string name="invalid_deck_name">Érvénytelen paklinév</string>
-    <string name="studyoptions_empty">Ez a pakli üres. Adj hozzá új tartalmat a \"+\" megnyomásával.</string>
-    <string name="studyoptions_limit_reached">Elérted a napi tanulási mennyiséget</string>
-    <string name="studyoptions_empty_schedule">A tanuláshoz nincsenek kártyák ütemezve</string>
-    <string name="studyoptions_congrats_finished">Gratulálok! Mára végeztél.</string>
     <string name="studyoptions_no_cards_due">Jelenleg nincs esedékes kártya</string>
     <string name="sd_card_not_mounted">Nincs elérhető tárolóhely</string>
     <string name="button_sync" comment="Text of the sync button">Szinkronizálás</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Szinkronizálás folytatása</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Szinkronizálás megszakítva</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Visszavonás&#8230;\nEz eltarthat egy darabig.</string>
-    <string name="export">Exportálás</string>
-    <string name="export_collection">Gyűjtemény exportálása</string>
     <string name="export_deck">Pakli exportálása</string>
     <string name="nothing">Semmi</string>
     <!-- Card template editor -->
@@ -250,8 +232,8 @@
     <string name="create_new_collection">Új gyűjtemény létrehozása</string>
     <string name="new_unsafe_collection">Az új gyűjtemény törlődik a telefonról, ha eltávolítja az AnkiDroid alkalmazást.</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">Az AnkiDroid működéséhez bizonyos engedélyekre van szüksége</string>
+    <string name="storage_access_title">Tárolási hozzáférés</string>
+    <string name="storage_access_summary">Biztonságos helyre menti a gyűjteményed, amely nem törlődik, ha az alkalmazást eltávolítják.</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Hozzáférés minden fájlhoz</string>
 </resources>

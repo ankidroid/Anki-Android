@@ -25,9 +25,6 @@ import android.content.pm.PackageManager.NameNotFoundException
 import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
-import android.media.AudioFocusRequest
-import android.media.AudioManager
-import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
@@ -93,7 +90,7 @@ interface Compat {
      * Returns the value associated with the given key, or `null` if:
      * * No mapping of the desired type exists for the given key.
      * * A `null` value is explicitly associated with the key.
-     * * The object is not of type {@code clazz}.
+     * * The object is not of type `clazz`.
      *
      * @param key a String, or `null`
      * @param clazz The expected class of the returned type
@@ -165,8 +162,6 @@ interface Compat {
     @Throws(IOException::class)
     fun createDirectories(directory: File)
     fun hasVideoThumbnail(path: String): Boolean
-    fun requestAudioFocus(audioManager: AudioManager, audioFocusChangeListener: OnAudioFocusChangeListener, audioFocusRequest: AudioFocusRequest?)
-    fun abandonAudioFocus(audioManager: AudioManager, audioFocusChangeListener: OnAudioFocusChangeListener, audioFocusRequest: AudioFocusRequest?)
 
     /**
      * Writes an image represented by bitmap to the Pictures/AnkiDroid directory under the primary
@@ -207,9 +202,24 @@ interface Compat {
     @CheckResult
     fun normalize(locale: Locale): Locale
 
-    companion object {
-        /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */
-        const val ACTION_PROCESS_TEXT = "android.intent.action.PROCESS_TEXT"
-        const val EXTRA_PROCESS_TEXT = "android.intent.extra.PROCESS_TEXT"
-    }
+    @Suppress("PropertyName")
+    val AXIS_RELATIVE_X: Int
+
+    @Suppress("PropertyName")
+    val AXIS_RELATIVE_Y: Int
+
+    @Suppress("PropertyName")
+    val AXIS_GESTURE_X_OFFSET: Int
+
+    @Suppress("PropertyName")
+    val AXIS_GESTURE_Y_OFFSET: Int
+
+    @Suppress("PropertyName")
+    val AXIS_GESTURE_PINCH_SCALE_FACTOR: Int
+
+    @Suppress("PropertyName")
+    val AXIS_GESTURE_SCROLL_X_DISTANCE: Int
+
+    @Suppress("PropertyName")
+    val AXIS_GESTURE_SCROLL_Y_DISTANCE: Int
 }

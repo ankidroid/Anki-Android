@@ -31,7 +31,7 @@ class DeckPickerImportTest : RobolectricTest() {
     fun importAddShowsImportDialog() {
         val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
 
-        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, arrayListOf(""))
+        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, "")
 
         assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog::class.java))
     }
@@ -40,22 +40,22 @@ class DeckPickerImportTest : RobolectricTest() {
     fun replaceShowsImportDialog() {
         val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
 
-        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, arrayListOf(""))
+        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, "")
 
         assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog::class.java))
     }
 
     private class DeckPickerImport : DeckPicker() {
-        private var mDialogFragment: AsyncDialogFragment? = null
+        private var dialogFragment: AsyncDialogFragment? = null
         fun getAsyncDialogFragmentClass(): Class<*> {
-            if (mDialogFragment == null) {
+            if (dialogFragment == null) {
                 fail("No async fragment shown")
             }
-            return mDialogFragment!!.javaClass
+            return dialogFragment!!.javaClass
         }
 
         override fun showAsyncDialogFragment(newFragment: AsyncDialogFragment) {
-            mDialogFragment = newFragment
+            dialogFragment = newFragment
             super.showAsyncDialogFragment(newFragment)
         }
     }

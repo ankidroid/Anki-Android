@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Utvid</string>
     <string name="collapse">Skjul</string>
-    <string name="study_more">Studer mer</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minutt igjen</item>
-        <item quantity="other">%d minutter igjen</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d time %2$d gjenstår</item>
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d dag %2$d gjenstår</item>
-        <item quantity="other">%1$d days %2$d left</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Samlingen er tom</string>
     <string name="no_cards_placeholder_description">Begynn å legge til nye kort\nved å bruke + ikonet.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Lett</string>
     <string name="menu_import">Importer</string>
     <string name="undo">Angre</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Angre strek</string>
     <string name="move_all_to_deck">Flytt alle til kortstokk</string>
     <string name="unbury">Grav opp igjen</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Finn kortstokk</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Finn kortstokk</string>
     <string name="invalid_deck_name">Ugyldig navn</string>
-    <string name="studyoptions_empty">Denne kortstokken er tom. Bruk +-knappen for å legge til nytt innhold.</string>
-    <string name="studyoptions_limit_reached">Grensen for daglig studie er nådd</string>
-    <string name="studyoptions_empty_schedule">Ingen kort planlagt for i dag</string>
-    <string name="studyoptions_congrats_finished">Gratulerer! Du er ferdig for i dag.</string>
     <string name="studyoptions_no_cards_due">Ingen kort forfaller ennå</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="button_sync" comment="Text of the sync button">Synkroniser</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Fortsett synkronisering</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronisering Avbrutt</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Avbryter...\nDet kan ta en stund.</string>
-    <string name="export">Eksporter</string>
-    <string name="export_collection">Eksporter samling</string>
     <string name="export_deck">Eksporter kortstokk</string>
     <string name="nothing">Ingenting</string>
     <!-- Card template editor -->

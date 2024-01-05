@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Expandera</string>
     <string name="collapse">Minimera</string>
-    <string name="study_more">Studera mer</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minut kvar</item>
-        <item quantity="other">%d minuter kvar</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d timmar %2$d kvar</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d dagar %2$d kvar</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Samlingen är tom</string>
     <string name="no_cards_placeholder_description">Börja lägga till kort\nmed + knappen</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Lätt</string>
     <string name="menu_import">Importera</string>
     <string name="undo">Ångra</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Ångra penseldrag</string>
     <string name="move_all_to_deck">Flytta alla till kortlek</string>
     <string name="unbury">Sluta dölja</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kortlekssökning</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
-    <string name="studyoptions_empty">Den här leken är tom. Använd +-knappen för att lägga till nytt innehåll.</string>
-    <string name="studyoptions_limit_reached">Den dagliga studiegränsen har nåtts</string>
-    <string name="studyoptions_empty_schedule">Inga kort finns schemalagda</string>
-    <string name="studyoptions_congrats_finished">Grattis! Du är klar för stunden.</string>
     <string name="studyoptions_no_cards_due">Inga kort i kö.</string>
     <string name="sd_card_not_mounted">Lagringsenheten inte monterad</string>
     <string name="button_sync" comment="Text of the sync button">Synkronisera</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Fortsätt synkronisering</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronisering avbruten</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Avbryter&#8230;\nDetta kan ta en stund.</string>
-    <string name="export">Exportera</string>
-    <string name="export_collection">Exportera samling</string>
     <string name="export_deck">Exportera kortlek</string>
     <string name="nothing">Inget</string>
     <!-- Card template editor -->

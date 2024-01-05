@@ -28,14 +28,15 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Scheduler
-import com.ichi2.testutils.JsonUtils.toOrderedString
 import com.ichi2.testutils.ParametersUtils
+import com.ichi2.testutils.isJsonEqual
 import com.ichi2.testutils.items
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.hamcrest.core.IsNull
+import org.json.JSONObject
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -46,16 +47,16 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 class CustomStudyDialogTest : RobolectricTest() {
-    private var mMockListener: CustomStudyListener? = null
+    private var mockListener: CustomStudyListener? = null
     override fun setUp() {
         super.setUp()
-        mMockListener = Mockito.mock(CustomStudyListener::class.java)
+        mockListener = Mockito.mock(CustomStudyListener::class.java)
     }
 
     @After
     override fun tearDown() {
         super.tearDown()
-        Mockito.reset(mMockListener)
+        Mockito.reset(mockListener)
     }
 
     @Test
@@ -64,7 +65,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         val args = CustomStudyDialog(mock(), ParametersUtils.whatever())
             .withArguments(CustomStudyDialog.ContextMenuOption.STUDY_AHEAD, 1)
             .arguments
-        val factory = CustomStudyDialogFactory({ this.col }, mMockListener)
+        val factory = CustomStudyDialogFactory({ this.col }, mockListener)
         val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: CustomStudyDialog ->
@@ -94,7 +95,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             "\"timeToday\":[0,0]," +
             "\"usn\":-1" +
             "}"
-        MatcherAssert.assertThat(customStudy.toOrderedString(), Matchers.equalTo(expected))
+        MatcherAssert.assertThat(customStudy, isJsonEqual(JSONObject(expected)))
     }
 
     @Test
@@ -114,7 +115,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         val mockSched = Mockito.mock(Scheduler::class.java)
         whenever(mockCollection.sched).thenReturn(mockSched)
         whenever(mockSched.newCount()).thenReturn(0)
-        val factory = CustomStudyDialogFactory({ mockCollection }, mMockListener)
+        val factory = CustomStudyDialogFactory({ mockCollection }, mockListener)
         val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: CustomStudyDialog ->

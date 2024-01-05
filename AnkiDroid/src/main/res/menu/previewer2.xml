@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright (c) 2023 Brayan Oliveira <brayandso.dev@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_back_side_only"
+        android:icon="@drawable/ic_card_question"
+        android:title="@string/card_side_both"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_flag"
+        android:title="@string/menu_flag_card"
+        android:icon="@drawable/ic_flag_transparent"
+        app:showAsAction="always" >
+        <menu>
+            <item
+                android:id="@+id/action_flag_zero"
+                android:title="@string/menu_flag_card_zero"/>
+            <item
+                android:id="@+id/action_flag_one"
+                android:title="@string/menu_flag_card_one"
+                android:icon="@drawable/ic_flag_red"/>
+            <item
+                android:id="@+id/action_flag_two"
+                android:title="@string/menu_flag_card_two"
+                android:icon="@drawable/ic_flag_orange"/>
+            <item
+                android:id="@+id/action_flag_three"
+                android:title="@string/menu_flag_card_three"
+                android:icon="@drawable/ic_flag_green"/>
+            <item
+                android:id="@+id/action_flag_four"
+                android:title="@string/menu_flag_card_four"
+                android:icon="@drawable/ic_flag_blue"/>
+            <item
+                android:id="@+id/action_flag_five"
+                android:title="@string/menu_flag_card_five"
+                android:icon="@drawable/ic_flag_pink"/>
+            <item
+                android:id="@+id/action_flag_six"
+                android:title="@string/menu_flag_card_six"
+                android:icon="@drawable/ic_flag_turquoise"/>
+            <item
+                android:id="@+id/action_flag_seven"
+                android:title="@string/menu_flag_card_seven"
+                android:icon="@drawable/ic_flag_purple"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_mark"
+        android:icon="@drawable/ic_star_border_white"
+        android:title="@string/menu_mark_note"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_edit"
+        android:icon="@drawable/ic_mode_edit_white"
+        android:title="@string/cardeditor_title_edit_card"
+        app:showAsAction="always"/>
+</menu>

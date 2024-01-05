@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Cartões: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Nome da tag</string>
     <string name="add_new_filter_tags">Adicionar/filtrar tags</string>
     <string name="add_tag">Adicionar tag</string>
@@ -154,10 +155,7 @@
     <string name="import_title">Importando</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adicionar</string>
     <string name="import_message_replace_confirm">Isto irá excluir sua coleção atual e substituí-la pelo conteúdo do arquivo %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Adicionar \"%s\" à coleção? Isso pode demorar</item>
-        <item quantity="other">Você quer importar os seguintes arquivos: \n%s\n? Isso pode demorar</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Este não é um arquivo válido para o Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Erro</string>
     <string name="import_error_handle_exception">Falha ao importar arquivo\n\n%s</string>
@@ -165,21 +163,7 @@
     <string name="import_error_load_imported_database">Substituições do banco de dados do Anki (.anki2) não são ainda suportadas. Por favor, consulte o manual para obter instruções de substituição.</string>
     <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos anki: \n%s</string>
     <string name="import_error_copy_to_cache">Falha ao armazenar em cache o arquivo (possivelmente sem espaço de armazenamento)</string>
-    <string name="import_error_multiple_colpkg">Vários arquivos colpkg foram selecionados.</string>
-    <string name="import_error_colpkg_apkg">Tanto arquivos apkg &amp; colpkg foram selecionados de uma vez.</string>
     <string name="import_interrupted">Importação interrompida: AnkiDroid foi fechado</string>
-    <string name="export_include_schedule">Incluir agendamento</string>
-    <string name="export_include_media">Incluir mídia</string>
-    <string name="confirm_apkg_export">Exportar a coleção como arquivo Anki (.apkg)?</string>
-    <string name="confirm_apkg_export_deck">Exportar \"%s\" como arquivo apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Exportar cartão selecionado como arquivo apkg?</item>
-        <item quantity="other">Exportar %d cartões selecionados como arquivo apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Exportar nota selecionada como arquivo apkg?</item>
-        <item quantity="other">Exportar %d notas selecionadas como arquivo apkg?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Preparando exportação&#8230;</string>
     <string name="export_ready_title">Exportação pronta</string>
     <string name="export_send_no_handlers">Nenhum aplicativo disponível para lidar com apkg. Salvando...</string>
@@ -208,8 +192,6 @@
     <string name="tag_editor_add_feedback">Toque \"%2$s\" para confirmar a adição de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Tag existente \"%1$s\" selecionada</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Esse baralho já existe.</string>
-    <string name="decks_rename_filtered_nosubdecks">Um baralho filtrado não pode ter sub-baralhos.</string>
     <string name="reminder_title">Não se esqueça de estudar hoje!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d novo card para revisar em %1$s</item>
@@ -232,9 +214,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">ezemplo</string>
     <string name="basic_answer_sample_text">um exemplo</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vazio</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Por favor ative a tela cheia para usar \"Mostrar Opções de Navegação\" usando JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Por favor, ative a tela cheia para usar \"Mostrar Menu de Opções\" usando JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Falha ao salvar imagem do quadro. %s</string>
     <string name="white_board_image_saved">Imagem do quadro branco salva em %s</string>
@@ -255,7 +234,6 @@
     <string name="card_viewer_could_not_find_image">Erro de Conteúdo do Card: Falha ao carregar ‘%s\'</string>
     <string name="card_viewer_media_relative_protocol">Erro de conteúdo do card: Atualização de mídia necessária</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Falha ao carregar o baralho ‘%s\'</string>
     <string name="search_decks">Pesquisar baralhos</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostrar progresso da migração</string>
     <string name="ankidroid_init_failed_webview_title">Erro Fatal</string>
@@ -360,4 +338,21 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toque para iniciar a migração de armazenamento.</string>
     <string name="media_sync_required_title">Sincronização de Mídia Necessária</string>
     <string name="media_sync_unavailable_message">A sincronização de mídia está desativada nas configurações. Por favor, sincronize e faça uma cópia de qualquer mídia que ainda não tenha sido sincronizada antes de continuar.</string>
+    <string name="audio_saved">Recording saved</string>
+    <string name="deleting_selected_notes">Deleting selected notes</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    </string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    </string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
+    </string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <!-- Chips should probably be in a separate file, due to the additional length req -->
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
+    </string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    </string>
+    <string name="shared_decks_login_required">Please log in to download more decks</string>
 </resources>

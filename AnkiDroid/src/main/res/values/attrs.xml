@@ -31,7 +31,7 @@
         <!-- Whether the preference should automatically set its summary to the value saved for the
              preference, and update the summary when the value is changed. Defaults to false -->
         <attr name="useSimpleSummaryProvider" format="boolean"/>
-        <!-- Format string to be used as template to build the preference summary.
+        <!-- Format `string` or `plurals` to be used as template to build the preference summary.
              The placeholder is replaced by the preference value, and it must be only one placeholder.
              If the preference value is updated, the summary is automatically updated as well. -->
         <attr name="summaryFormat" format="string"/>
@@ -149,6 +149,7 @@
     <attr name="editTextDisabled" format="color"/>
 
     <attr name="snackbarBackgroundTintColor" format="color"/>
+    <attr name="dialogBackground" format="color"/>
     <attr name="snackbarButtonTextColor" format="color"/>
 
     <declare-styleable name="CheckBoxTriStates">

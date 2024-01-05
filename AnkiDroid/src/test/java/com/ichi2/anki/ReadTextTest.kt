@@ -21,7 +21,7 @@ import com.ichi2.anki.ReadText.closeForTests
 import com.ichi2.anki.ReadText.initializeTts
 import com.ichi2.anki.ReadText.releaseTts
 import com.ichi2.anki.ReadText.textToSpeech
-import com.ichi2.libanki.Sound.SoundSide.*
+import com.ichi2.anki.cardviewer.SoundSide.*
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.junit.Before

@@ -17,13 +17,11 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.StudyOptionsFragment.Companion.formatDescription
-import com.ichi2.utils.KotlinCleanup
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class) // required for String -> Spannable conversion in formatDescription
-@KotlinCleanup("add @Language to fromDescription")
 class StudyOptionsFragmentTest {
     // Fixes for #5715: In deck description, ignore what is in style and script tag
     @Test

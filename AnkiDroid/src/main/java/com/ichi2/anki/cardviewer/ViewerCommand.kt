@@ -26,6 +26,7 @@ import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.MappableBinding.*
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import java.util.*
@@ -40,6 +41,7 @@ enum class ViewerCommand(val resourceId: Int) {
     FLIP_OR_ANSWER_EASE3(R.string.answer_good),
     FLIP_OR_ANSWER_EASE4(R.string.answer_easy),
     UNDO(R.string.undo),
+    REDO(R.string.redo),
     EDIT(R.string.cardeditor_title_edit_card),
     MARK(R.string.menu_mark_note),
     BURY_CARD(R.string.menu_bury_card),
@@ -63,6 +65,7 @@ enum class ViewerCommand(val resourceId: Int) {
     CARD_INFO(R.string.card_info_title),
     ABORT_AND_SYNC(R.string.gesture_abort_sync),
     RECORD_VOICE(R.string.record_voice),
+    SAVE_VOICE(R.string.save_voice),
     REPLAY_VOICE(R.string.replay_voice),
     TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard),
     CLEAR_WHITEBOARD(R.string.clear_whiteboard),
@@ -74,9 +77,11 @@ enum class ViewerCommand(val resourceId: Int) {
 
     companion object {
         val allDefaultBindings: List<MappableBinding>
-            get() = Arrays.stream(values())
+            get() = Arrays.stream(entries.toTypedArray())
                 .flatMap { x: ViewerCommand -> x.defaultValue.stream() }
                 .collect(Collectors.toList())
+
+        fun fromPreferenceKey(key: String) = ViewerCommand.entries.first { it.preferenceKey == key }
     }
 
     val preferenceKey: String
@@ -121,19 +126,23 @@ enum class ViewerCommand(val resourceId: Int) {
 
     // If we use the serialised format, then this adds additional coupling to the properties.
     val defaultValue: List<MappableBinding>
-        get() = // If we use the serialised format, then this adds additional coupling to the properties.
-            when (this) {
-                FLIP_OR_ANSWER_EASE1 -> from(
+        get() {
+            // all of the default commands are currently for the Reviewer
+            fun keyCode(keycode: Int, side: CardSide, modifierKeys: ModifierKeys = ModifierKeys.none()) =
+                keyCode(keycode, Screen.Reviewer(side), modifierKeys)
+            fun unicode(c: Char, side: CardSide) = unicode(c, Screen.Reviewer(side))
+            return when (this) {
+                FLIP_OR_ANSWER_EASE1 -> listOf(
                     keyCode(KeyEvent.KEYCODE_BUTTON_Y, CardSide.BOTH),
                     keyCode(KeyEvent.KEYCODE_1, CardSide.ANSWER),
                     keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.ANSWER)
                 )
-                FLIP_OR_ANSWER_EASE2 -> from(
+                FLIP_OR_ANSWER_EASE2 -> listOf(
                     keyCode(KeyEvent.KEYCODE_BUTTON_X, CardSide.BOTH),
                     keyCode(KeyEvent.KEYCODE_2, CardSide.ANSWER),
                     keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.ANSWER)
                 )
-                FLIP_OR_ANSWER_EASE3 -> from(
+                FLIP_OR_ANSWER_EASE3 -> listOf(
                     keyCode(KeyEvent.KEYCODE_BUTTON_B, CardSide.BOTH),
                     keyCode(KeyEvent.KEYCODE_3, CardSide.ANSWER),
                     keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.ANSWER),
@@ -142,48 +151,43 @@ enum class ViewerCommand(val resourceId: Int) {
                     keyCode(KeyEvent.KEYCODE_ENTER, CardSide.ANSWER),
                     keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, CardSide.ANSWER)
                 )
-                FLIP_OR_ANSWER_EASE4 -> from(
+                FLIP_OR_ANSWER_EASE4 -> listOf(
                     keyCode(KeyEvent.KEYCODE_BUTTON_A, CardSide.BOTH),
                     keyCode(KeyEvent.KEYCODE_4, CardSide.ANSWER),
                     keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.ANSWER)
                 )
-                EDIT -> from(keyCode(KeyEvent.KEYCODE_E, CardSide.BOTH))
-                MARK -> from(unicode('*', CardSide.BOTH))
-                BURY_CARD -> from(unicode('-', CardSide.BOTH))
-                BURY_NOTE -> from(unicode('=', CardSide.BOTH))
-                SUSPEND_CARD -> from(unicode('@', CardSide.BOTH))
-                SUSPEND_NOTE -> from(unicode('!', CardSide.BOTH))
-                PLAY_MEDIA -> from(keyCode(KeyEvent.KEYCODE_R, CardSide.BOTH), keyCode(KeyEvent.KEYCODE_F5, CardSide.BOTH))
-                REPLAY_VOICE -> from(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH))
-                RECORD_VOICE -> from(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH, shift()))
-                UNDO -> from(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH))
-                TOGGLE_FLAG_RED -> from(keyCode(KeyEvent.KEYCODE_1, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.BOTH, ctrl()))
-                TOGGLE_FLAG_ORANGE -> from(keyCode(KeyEvent.KEYCODE_2, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.BOTH, ctrl()))
-                TOGGLE_FLAG_GREEN -> from(keyCode(KeyEvent.KEYCODE_3, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.BOTH, ctrl()))
-                TOGGLE_FLAG_BLUE -> from(keyCode(KeyEvent.KEYCODE_4, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.BOTH, ctrl()))
-                TOGGLE_FLAG_PINK -> from(keyCode(KeyEvent.KEYCODE_5, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_5, CardSide.BOTH, ctrl()))
-                TOGGLE_FLAG_TURQUOISE -> from(keyCode(KeyEvent.KEYCODE_6, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_6, CardSide.BOTH, ctrl()))
-                TOGGLE_FLAG_PURPLE -> from(keyCode(KeyEvent.KEYCODE_7, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_7, CardSide.BOTH, ctrl()))
-                SHOW_HINT -> from(keyCode(KeyEvent.KEYCODE_H, CardSide.BOTH))
-                SHOW_ALL_HINTS -> from(keyCode(KeyEvent.KEYCODE_G, CardSide.BOTH))
-                ADD_NOTE -> from(keyCode(KeyEvent.KEYCODE_A, CardSide.BOTH))
-                else -> ArrayList()
+                EDIT -> listOf(keyCode(KeyEvent.KEYCODE_E, CardSide.BOTH))
+                MARK -> listOf(unicode('*', CardSide.BOTH))
+                BURY_CARD -> listOf(unicode('-', CardSide.BOTH))
+                BURY_NOTE -> listOf(unicode('=', CardSide.BOTH))
+                SUSPEND_CARD -> listOf(unicode('@', CardSide.BOTH))
+                SUSPEND_NOTE -> listOf(unicode('!', CardSide.BOTH))
+                PLAY_MEDIA -> listOf(keyCode(KeyEvent.KEYCODE_R, CardSide.BOTH), keyCode(KeyEvent.KEYCODE_F5, CardSide.BOTH))
+                REPLAY_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH))
+                RECORD_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH, shift()))
+                SAVE_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_S, CardSide.BOTH, shift()))
+                UNDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH))
+                REDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ModifierKeys(shift = true, ctrl = true, alt = false)))
+                TOGGLE_FLAG_RED -> listOf(keyCode(KeyEvent.KEYCODE_1, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.BOTH, ctrl()))
+                TOGGLE_FLAG_ORANGE -> listOf(keyCode(KeyEvent.KEYCODE_2, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.BOTH, ctrl()))
+                TOGGLE_FLAG_GREEN -> listOf(keyCode(KeyEvent.KEYCODE_3, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.BOTH, ctrl()))
+                TOGGLE_FLAG_BLUE -> listOf(keyCode(KeyEvent.KEYCODE_4, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.BOTH, ctrl()))
+                TOGGLE_FLAG_PINK -> listOf(keyCode(KeyEvent.KEYCODE_5, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_5, CardSide.BOTH, ctrl()))
+                TOGGLE_FLAG_TURQUOISE -> listOf(keyCode(KeyEvent.KEYCODE_6, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_6, CardSide.BOTH, ctrl()))
+                TOGGLE_FLAG_PURPLE -> listOf(keyCode(KeyEvent.KEYCODE_7, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_7, CardSide.BOTH, ctrl()))
+                SHOW_HINT -> listOf(keyCode(KeyEvent.KEYCODE_H, CardSide.BOTH))
+                SHOW_ALL_HINTS -> listOf(keyCode(KeyEvent.KEYCODE_G, CardSide.BOTH))
+                ADD_NOTE -> listOf(keyCode(KeyEvent.KEYCODE_A, CardSide.BOTH))
+                else -> emptyList()
             }
+        }
 
-    private fun keyCode(keycode: Int, side: CardSide, keys: ModifierKeys): MappableBinding {
-        return MappableBinding(keyCode(keys, keycode), MappableBinding.Screen.Reviewer(side))
+    private fun keyCode(keycode: Int, screen: Screen, keys: ModifierKeys = ModifierKeys.none()): MappableBinding {
+        return MappableBinding(keyCode(keys, keycode), screen)
     }
 
-    private fun unicode(c: Char, side: CardSide): MappableBinding {
-        return MappableBinding(unicode(c), MappableBinding.Screen.Reviewer(side))
-    }
-
-    private fun from(vararg bindings: MappableBinding): List<MappableBinding> {
-        return ArrayList(listOf(*bindings))
-    }
-
-    private fun keyCode(keyCode: Int, side: CardSide): MappableBinding {
-        return MappableBinding(keyCode(keyCode), MappableBinding.Screen.Reviewer(side))
+    private fun unicode(c: Char, screen: Screen): MappableBinding {
+        return MappableBinding(unicode(c), screen)
     }
 
     fun interface CommandProcessor {

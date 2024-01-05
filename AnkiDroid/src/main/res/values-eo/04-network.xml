@@ -64,6 +64,7 @@
     <string name="log_out">Elsaluti</string>
     <string name="reset_password">Restarigi pasvorton</string>
     <string name="lost_mail_instructions">Ĉu vi forgesis la retpoŝtadreson?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Agordoj por XXX</string>
     <string name="sync_title">Samtempigo</string>

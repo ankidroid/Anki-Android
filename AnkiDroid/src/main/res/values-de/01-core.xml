@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Ausklappen</string>
     <string name="collapse">Einklappen</string>
-    <string name="study_more">Weiter lernen</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">noch %d Minute</item>
-        <item quantity="other">noch %d Minuten</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d Stunde %2$d verbleibend</item>
-        <item quantity="other">%1$d Stunden %2$d verbleibend</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d Tag %2$d verbleibend</item>
-        <item quantity="other">%1$d Tage %2$d verbleibend</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>
     <string name="no_cards_placeholder_description">Fügen Sie Karten \nmit dem + -Symbol hinzu.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Einfach</string>
     <string name="menu_import">Importieren</string>
     <string name="undo">Rückgängig</string>
+    <string name="redo">Wiederholen</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Strich rückgängig machen</string>
     <string name="move_all_to_deck">Alle diesem Stapel hinzufügen</string>
     <string name="unbury">Nicht mehr aufschieben</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Stapelsuche</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Stapelsuche</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
-    <string name="studyoptions_empty">Dieser Stapel ist leer. Berühren Sie die »+«-Schaltfläche, um neue Inhalte hinzuzufügen.</string>
-    <string name="studyoptions_limit_reached">Tageslimit erreicht</string>
-    <string name="studyoptions_empty_schedule">Keine Karten zum Lernen eingeplant</string>
-    <string name="studyoptions_congrats_finished">Herzlichen Glückwunsch! Sie sind für heute fertig.</string>
     <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
     <string name="sd_card_not_mounted">Gerätespeicher nicht eingebunden</string>
     <string name="button_sync" comment="Text of the sync button">Synchronisieren</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Synchronisierung fortsetzen</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronisation abgebrochen</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Breche ab&#8230;\nDies kann einige Zeit dauern.</string>
-    <string name="export">Exportieren</string>
-    <string name="export_collection">Sammlung exportieren</string>
     <string name="export_deck">Stapel exportieren</string>
     <string name="nothing">Nichts</string>
     <!-- Card template editor -->

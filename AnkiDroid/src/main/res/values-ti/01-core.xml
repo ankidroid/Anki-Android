@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ዘርግሕ</string>
     <string name="collapse">ኣብ ሓደ ኣኪብ</string>
-    <string name="study_more">መጽናዕቲ ወስኽ</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">ተሪፉካ ዘሎ ደቒቕ %d</item>
-        <item quantity="other">%d ተሪፊካ ዘሎ ደቓይቕ</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">ቀሊል</string>
     <string name="menu_import">ኣምጽእ</string>
     <string name="undo">ንድሕሪት ተመለስ</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">ገንጽል</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">ባይታ ጥርሑ ኣሎ። መልጎም + ጠውቅ ሓዲሽ ትሕዝቶ ክትውስኹ።</string>
-    <string name="studyoptions_limit_reached">መዓልታዊ መጽናዕቲ ክትበጽሖ ትኽእል።</string>
-    <string name="studyoptions_empty_schedule">ኣብ መጽናዕቲ ዝተመደቡ ካርድታት የለውን</string>
-    <string name="studyoptions_congrats_finished">እንቋዕ ሓጎሰኩም ንሕጂ ወዲእኩም ኣለኹም</string>
     <string name="studyoptions_no_cards_due">ክሳብ ሕጂ ዝተገብኡ ካርድታ የለውን</string>
     <string name="sd_card_not_mounted">ናይ መባይል ቦታ ኣይተጻዕነን ኣሎ።</string>
     <string name="button_sync" comment="Text of the sync button">ምውህሃድ</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ምውህሃድ ቀጽል</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ምውህሃድ ተቋሪጹ ኣሎ</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ይቋረጽ......\n ውሑድ ግዜ ክወስድ ይኽእል ኢዩ</string>
-    <string name="export">ስደድ</string>
-    <string name="export_collection">እኩባት ስደድ</string>
     <string name="export_deck">ባይታ ስደድ</string>
     <string name="nothing">የለን</string>
     <!-- Card template editor -->

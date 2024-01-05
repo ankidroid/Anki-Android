@@ -17,35 +17,29 @@
 
 package com.ichi2.anki.pages
 
-import androidx.fragment.app.FragmentActivity
-import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.importCsvRaw
-import com.ichi2.anki.searchInBrowser
-import com.ichi2.libanki.*
-import com.ichi2.libanki.sched.computeFsrsWeightsRaw
-import com.ichi2.libanki.sched.computeOptimalRetentionRaw
-import com.ichi2.libanki.sched.evaluateWeightsRaw
-import com.ichi2.libanki.stats.*
 import fi.iki.elonen.NanoHTTPD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
-private const val PORT = 0
+const val PORT = 0
 // const val PORT = 40001
 
 // local debugging:
 // ~/Local/Android/Sdk/platform-tools/adb forward tcp:40001 tcp:40001
 
 open class AnkiServer(
-    val activity: FragmentActivity
-) : NanoHTTPD("127.0.0.1", PORT) {
+    private val postHandler: PostRequestHandler
+) : NanoHTTPD(LOCALHOST, PORT) {
 
     fun baseUrl(): String {
-        return "http://127.0.0.1:$listeningPort/"
+        return "http://$LOCALHOST:$listeningPort/"
     }
+
+    // it's faster to serve local files without GZip. see 'page render' in logs
+    // This also removes 'W/System: A resource failed to call end.'
+    override fun useGzipWhenAccepted(r: Response?) = false
 
     override fun serve(session: IHTTPSession): Response {
         val uri = session.uri
@@ -61,48 +55,14 @@ open class AnkiServer(
         if (session.method == Method.POST) {
             Timber.d("POST: Requested %s", uri)
             val inputBytes = getSessionBytes(session)
-            if (uri.startsWith(ANKI_PREFIX)) {
-                return buildResponse { handlePostRequest(uri.substring(ANKI_PREFIX.length), inputBytes) }
+            return buildResponse {
+                postHandler.handlePostRequest(uri, inputBytes)
             }
         }
         return newFixedLengthResponse(null)
     }
 
-    private suspend fun handlePostRequest(methodName: String, bytes: ByteArray): ByteArray {
-        return when (methodName) {
-            "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
-            "getGraphPreferences" -> withCol { getGraphPreferencesRaw() }
-            "setGraphPreferences" -> withCol { setGraphPreferencesRaw(bytes) }
-            "graphs" -> withCol { graphsRaw(bytes) }
-            "getNotetypeNames" -> withCol { getNotetypeNamesRaw(bytes) }
-            "getDeckNames" -> withCol { getDeckNamesRaw(bytes) }
-            "getCsvMetadata" -> withCol { getCsvMetadataRaw(bytes) }
-            "importCsv" -> activity.importCsvRaw(bytes)
-            "importDone" -> bytes
-            "searchInBrowser" -> activity.searchInBrowser(bytes)
-            "completeTag" -> withCol { completeTagRaw(bytes) }
-            "getFieldNames" -> withCol { getFieldNamesRaw(bytes) }
-            "cardStats" -> withCol { cardStatsRaw(bytes) }
-            "getDeckConfig" -> withCol { getDeckConfigRaw(bytes) }
-            "getDeckConfigsForUpdate" -> withCol { getDeckConfigsForUpdateRaw(bytes) }
-            "updateDeckConfigs" -> activity.updateDeckConfigsRaw(bytes)
-            "computeFsrsWeights" -> withCol { computeFsrsWeightsRaw(bytes) }
-            "computeOptimalRetention" -> withCol { computeOptimalRetentionRaw(bytes) }
-            "setWantsAbort" -> CollectionManager.getBackend().setWantsAbortRaw(bytes)
-            "evaluateWeights" -> withCol { evaluateWeightsRaw(bytes) }
-            "latestProgress" -> CollectionManager.getBackend().latestProgressRaw(bytes)
-            else -> { throw Exception("unhandled request: $methodName") }
-        }
-    }
-
-    fun getSessionBytes(session: IHTTPSession): ByteArray {
-        val contentLength = session.headers["content-length"]!!.toInt()
-        val bytes = ByteArray(contentLength)
-        session.inputStream.read(bytes, 0, contentLength)
-        return bytes
-    }
-
-    fun buildResponse(
+    private fun buildResponse(
         block: suspend CoroutineScope.() -> ByteArray
     ): Response {
         return try {
@@ -116,8 +76,11 @@ open class AnkiServer(
     }
 
     companion object {
+        const val LOCALHOST = "127.0.0.1"
+
         /** Common prefix used on Anki requests */
         const val ANKI_PREFIX = "/_anki/"
+        const val ANKIDROID_JS_PREFIX = "/jsapi/"
 
         fun getMimeFromUri(uri: String): String {
             return when (uri.substringAfterLast(".")) {
@@ -127,6 +90,13 @@ open class AnkiServer(
                 "html" -> "text/html"
                 else -> "application/binary"
             }
+        }
+
+        fun getSessionBytes(session: IHTTPSession): ByteArray {
+            val contentLength = session.headers["content-length"]!!.toInt()
+            val bytes = ByteArray(contentLength)
+            session.inputStream.read(bytes, 0, contentLength)
+            return bytes
         }
 
         fun newChunkedResponse(

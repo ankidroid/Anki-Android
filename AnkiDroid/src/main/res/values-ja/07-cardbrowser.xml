@@ -52,12 +52,13 @@
         <item quantity="other">%d枚のノート</item>
     </plurals>
     <string name="card_browser_all_decks">すべてのデッキ</string>
-    <string name="card_browser_delete_card">ノートを削除</string>
-    <string name="card_browser_suspend_card">カードを休止</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="other">カードを削除</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="other">ノートを削除</item>
+    </plurals>
     <string name="card_browser_change_deck">デッキを変更</string>
-    <string name="card_browser_unsuspend_card">カードの休止を解除</string>
-    <string name="card_browser_mark_card">ノートにマーク</string>
-    <string name="card_browser_unmark_card">ノートのマークを解除</string>
     <string name="delete_card_title">ノートの削除</string>
     <string name="card_browser_show_marked">マーク付きカードを抽出</string>
     <string name="card_browser_show_suspended">休止中カードを抽出</string>
@@ -68,7 +69,7 @@
     <string name="card_browser_list_my_searches_title">保存済み検索条件を選択</string>
     <string name="card_browser_list_my_searches_new_name">現在の検索条件に付ける名前</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">名前なしで検索条件を保存することはできません</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">同じ名前が既に存在します</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">同じ名前がすでに存在します</string>
     <string name="card_browser_list_my_searches_remove_content">「%1$s」を削除しますか？</string>
     <string name="card_browser_change_display_order">表示順を変更</string>
     <string name="card_browser_change_display_order_title">表示順の選択</string>
@@ -103,5 +104,4 @@
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d枚のカードを削除しました</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

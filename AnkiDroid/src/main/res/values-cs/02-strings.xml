@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Typ poznámky:</string>
     <string name="CardEditorTags">Štítky: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
+    <string name="edit_occlusions">Upravit okluze</string>
     <string name="tag_name">Název štítku</string>
     <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
     <string name="add_tag">Přidat štítek</string>
@@ -158,12 +159,7 @@
     <string name="import_title">Importuje se</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Přidat</string>
     <string name="import_message_replace_confirm">To odstraní vaši stávající kolekci a nahradí ji daty ze souboru %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Přidat „%s“ do kolekce? To může trvat dlouhou dobu</item>
-        <item quantity="few">Chcete importovat následující soubory:\n%s\nTo může trvat dlouhou dobu</item>
-        <item quantity="many">Chcete importovat následující soubory:\n%s\nTo může trvat dlouhou dobu</item>
-        <item quantity="other">Chcete importovat následující soubory:\n%s\nTo může trvat dlouhou dobu</item>
-    </plurals>
+    <string name="import_dialog_message_add">Přidat „%s“ do kolekce? To může trvat dlouhou dobu</string>
     <string name="import_log_no_apkg">Toto není platný Anki balíček</string>
     <string name="import_title_error" comment="Title of error dialog">Chyba</string>
     <string name="import_error_handle_exception">Nepodařilo se importovat soubor\n\n%s</string>
@@ -171,25 +167,7 @@
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
     <string name="import_error_copy_to_cache">Nepodařilo se uložit soubor do mezipaměti (možná nedostatek místa v úložišti)</string>
-    <string name="import_error_multiple_colpkg">Bylo vybráno více colpkg souborů.</string>
-    <string name="import_error_colpkg_apkg">Soubory apkg &amp; colpkg byly vybrány najednou.</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
-    <string name="export_include_schedule">Zahrnout plánování</string>
-    <string name="export_include_media">Zahrnout multimédia</string>
-    <string name="confirm_apkg_export">Exportovat kolekci jako Anki balíček?</string>
-    <string name="confirm_apkg_export_deck">Exportovat „%s“ jako apkg soubor?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Exportovat vybranou kartu jako soubor apkg?</item>
-        <item quantity="few">Exportovat %d vybrané karty jako soubor apkg?</item>
-        <item quantity="many">Exportovat %d vybrané karty jako soubor apkg?</item>
-        <item quantity="other">Exportovat %d vybraných karet jako soubor apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Exportovat vybranou poznámku jako soubor apkg?</item>
-        <item quantity="few">Exportovat %d vybrané poznámky jako soubor apkg?</item>
-        <item quantity="many">Exportovat %d vybrané poznámky jako soubor apkg?</item>
-        <item quantity="other">Exportovat %d vybraných poznámek jako soubor apkg?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Připravuje se export&#8230;</string>
     <string name="export_ready_title">Export připraven</string>
     <string name="export_send_no_handlers">Nenalezena žádná aplikace pro zpracování apkg. Ukládá se...</string>
@@ -218,8 +196,6 @@
     <string name="tag_editor_add_feedback">Klepněte na „%2$s“, abyste potvrdili přidání „%1$s“</string>
     <string name="tag_editor_add_feedback_existing">Vybrán stávající štítek „%1$s“</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Balíček již existuje</string>
-    <string name="decks_rename_filtered_nosubdecks">Filtrovaný balíček nemůže obsahovat podřízené balíčky</string>
     <string name="reminder_title">Nezapomeňte dnes studovat!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d karta k zopakování v %1$s</item>
@@ -244,9 +220,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">případ</string>
     <string name="basic_answer_sample_text">příklad</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Prázdné</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Prosím zapněte režim celé obrazovky, abyste mohli použít Zobrazit navigační menu pomocí JavaScriptu.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Prosím zapněte režim celé obrazovky, abyste mohli použít Zobrazit menu možnosti pomocí JavaScriptu.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Nepodařilo se uložit obrázek tabule. %s</string>
     <string name="white_board_image_saved">Obrázek tabule uložen do %s</string>
@@ -267,7 +240,6 @@
     <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
     <string name="card_viewer_media_relative_protocol">Chyba obsahu karty: Je vyžadována aktualizace multimédií</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Nepodařilo se načíst balíček „%s“</string>
     <string name="search_decks">Hledat balíčky</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Zobrazit průběh přesunu dat</string>
     <string name="ankidroid_init_failed_webview_title">Kritická chyba</string>
@@ -374,4 +346,21 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Klepnutím spustíte přesun úložiště</string>
     <string name="media_sync_required_title">Je vyžadována synchronizace multimédií</string>
     <string name="media_sync_unavailable_message">Synchronizace multimédií je zakázána v nastavení. Před pokračováním prosím synchronizujte a zazálohujte multimédia, která nebyla synchronizována</string>
+    <string name="audio_saved">Nahrávka uložena</string>
+    <string name="deleting_selected_notes">Mažou se vybrané poznámky</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    </string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Hlas by měl být před použitím nainstalován
+    </string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Přesto použít
+    </string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Chyba převodu textu na řeč (%s)</string>
+    <!-- Chips should probably be in a separate file, due to the additional length req -->
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
+    </string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Instalovat
+    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Nepodařilo se otevřít nastavení převodu textu na řeč
+    </string>
+    <string name="shared_decks_login_required">Prosím přihlaste se, abyste mohli stáhnout více balíčků</string>
 </resources>

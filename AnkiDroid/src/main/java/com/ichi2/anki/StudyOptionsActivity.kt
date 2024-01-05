@@ -18,7 +18,6 @@ package com.ichi2.anki
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.commit
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
@@ -70,9 +69,10 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
     private fun closeStudyOptions(result: Int = RESULT_OK) {
         // mCompat.invalidateOptionsMenu(this);
         setResult(result)
-        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+        finish()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (isDrawerOpen) {
             super.onBackPressed()

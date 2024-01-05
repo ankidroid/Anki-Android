@@ -54,12 +54,15 @@
         <item quantity="other">%d jegyzetet mutat</item>
     </plurals>
     <string name="card_browser_all_decks">Minden pakli</string>
-    <string name="card_browser_delete_card">Jegyzet törlése</string>
-    <string name="card_browser_suspend_card">Kártyák felfüggesztése</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Pakli csere</string>
-    <string name="card_browser_unsuspend_card">Kártya felfüggesztése</string>
-    <string name="card_browser_mark_card">Jegyzet megjelölése</string>
-    <string name="card_browser_unmark_card">Bejegyzések elvetése</string>
     <string name="delete_card_title">Jegyzet törlése?</string>
     <string name="card_browser_show_marked">Megjelöltek szűrése</string>
     <string name="card_browser_show_suspended">Szűrés felfüggesztve</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d kártya törölve</item>
         <item quantity="other">%d kártya törölve</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

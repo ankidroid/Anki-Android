@@ -54,12 +54,15 @@
         <item quantity="other">%d notater vist</item>
     </plurals>
     <string name="card_browser_all_decks">Alle kortstokker</string>
-    <string name="card_browser_delete_card">Slett notater</string>
-    <string name="card_browser_suspend_card">Suspender kort</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Forandre kortstokk</string>
-    <string name="card_browser_unsuspend_card">Av-suspender kort</string>
-    <string name="card_browser_mark_card">Marker notater</string>
-    <string name="card_browser_unmark_card">Fjern notatmarkering</string>
     <string name="delete_card_title">Slett notat</string>
     <string name="card_browser_show_marked">Filtrer merkede</string>
     <string name="card_browser_show_suspended">Filtrer suspenderte</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d card deleted</item>
         <item quantity="other">%d cards deleted</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

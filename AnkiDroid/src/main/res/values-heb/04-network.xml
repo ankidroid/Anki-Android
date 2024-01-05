@@ -64,6 +64,7 @@
     <string name="log_out">יציאה</string>
     <string name="reset_password">איפוס ססמה</string>
     <string name="lost_mail_instructions">שכחת את הדוא\"ל?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">אפשרויות עבור XXX</string>
     <string name="sync_title">סנכרון</string>

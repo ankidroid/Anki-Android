@@ -42,7 +42,7 @@ import timber.log.Timber
  * The spinner displayed in the activity.
  * Empty at construction. After initialization, it contains in this order:
  * 1. "All decks" if [showAllDecks] is true
- * 2. All decks from [mAllDeckIds].
+ * 2. All decks from [allDeckIds].
  * @param showAllDecks Whether the deck selection should allow "All Decks" as an option
  * @param alwaysShowDefault If true, never hide the default deck. If false, match [DeckPicker]'s logic
  * @param showFilteredDecks whether to show filtered decks
@@ -58,37 +58,36 @@ class DeckSpinnerSelection(
     /**
      * All of the decks shown to the user.
      */
-    private lateinit var mAllDeckIds: ArrayList<Long>
+    private lateinit var allDeckIds: ArrayList<Long>
 
-    private val mFragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier()
+    private val fragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier()
 
-    lateinit var dropDownDecks: List<DeckNameId>
-        private set
-    private var mDeckDropDownAdapter: DeckDropDownAdapter? = null
+    private lateinit var dropDownDecks: List<DeckNameId>
+    private var deckDropDownAdapter: DeckDropDownAdapter? = null
 
     fun initializeActionBarDeckSpinner(actionBar: ActionBar) {
         actionBar.setDisplayShowTitleEnabled(false)
 
         // Add drop-down menu to select deck to action bar.
         dropDownDecks = computeDropDownDecks(includeFiltered = showFilteredDecks)
-        mAllDeckIds = ArrayList(dropDownDecks.size)
+        allDeckIds = ArrayList(dropDownDecks.size)
         for (d in dropDownDecks) {
             val thisDid = d.id
-            mAllDeckIds.add(thisDid)
+            allDeckIds.add(thisDid)
         }
-        mDeckDropDownAdapter = DeckDropDownAdapter(context, dropDownDecks)
-        spinner.adapter = mDeckDropDownAdapter
+        deckDropDownAdapter = DeckDropDownAdapter(context, dropDownDecks)
+        spinner.adapter = deckDropDownAdapter
         setSpinnerListener()
     }
 
     fun initializeNoteEditorDeckSpinner() {
         dropDownDecks = computeDropDownDecks(includeFiltered = false)
         val deckNames = ArrayList<String>(dropDownDecks.size)
-        mAllDeckIds = ArrayList(dropDownDecks.size)
+        allDeckIds = ArrayList(dropDownDecks.size)
         for (d in dropDownDecks) {
             val currentName = d.name
             deckNames.add(currentName)
-            mAllDeckIds.add(d.id)
+            allDeckIds.add(d.id)
         }
         val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -116,7 +115,7 @@ class DeckSpinnerSelection(
         return collection.decks.allNamesAndIds(includeFiltered = includeFiltered)
     }
 
-    fun setSpinnerListener() {
+    private fun setSpinnerListener() {
         spinner.setOnTouchListener { _: View?, motionEvent: MotionEvent ->
             if (motionEvent.action == MotionEvent.ACTION_UP) {
                 displayDeckSelectionDialog(collection)
@@ -132,7 +131,7 @@ class DeckSpinnerSelection(
      * @param deckId The ID of the deck to select
      */
     fun updateDeckPosition(deckId: DeckId) {
-        val position = mAllDeckIds.indexOf(deckId)
+        val position = allDeckIds.indexOf(deckId)
         if (position != -1) {
             spinner.setSelection(position)
         } else {
@@ -141,7 +140,7 @@ class DeckSpinnerSelection(
     }
 
     fun notifyDataSetChanged() {
-        mDeckDropDownAdapter!!.notifyDataSetChanged()
+        deckDropDownAdapter!!.notifyDataSetChanged()
     }
 
     fun setEnabledActionBarSpinner(enabled: Boolean) {
@@ -176,8 +175,8 @@ class DeckSpinnerSelection(
      * @return whether it was found
      */
     private fun selectDeck(deckId: DeckId, setAsCurrentDeck: Boolean): Boolean {
-        for (dropDownDeckIdx in mAllDeckIds.indices) {
-            if (mAllDeckIds[dropDownDeckIdx] == deckId) {
+        for (dropDownDeckIdx in allDeckIds.indices) {
+            if (allDeckIds[dropDownDeckIdx] == deckId) {
                 val position = if (showAllDecks) dropDownDeckIdx + 1 else dropDownDeckIdx
                 spinner.setSelection(position)
                 if (setAsCurrentDeck) {
@@ -211,7 +210,7 @@ class DeckSpinnerSelection(
             decks.add(SelectableDeck(ALL_DECKS_ID, context.resources.getString(R.string.card_browser_all_decks)))
         }
         val dialog = DeckSelectionDialog.newInstance(context.getString(R.string.search_deck), null, false, decks)
-        AnkiActivity.showDialogFragment(mFragmentManagerSupplier.getFragmentManager(), dialog)
+        AnkiActivity.showDialogFragment(fragmentManagerSupplier.getFragmentManager(), dialog)
     }
 
     companion object {

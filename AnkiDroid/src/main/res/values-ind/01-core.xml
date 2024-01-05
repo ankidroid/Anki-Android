@@ -59,16 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Perluas</string>
     <string name="collapse">Tutup</string>
-    <string name="study_more">Belajar lagi</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="other">%d menit lagi</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d jam %2$d tersisa</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d hari %2$d tersisa</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Koleksi kosong</string>
     <string name="no_cards_placeholder_description">Mulai tambahkan kartu\nmenggunakan ikon +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -82,6 +72,7 @@
     <string name="ease_button_easy">Mudah</string>
     <string name="menu_import">Impor</string>
     <string name="undo">Urungkan</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Batalkan Coretan</string>
     <string name="move_all_to_deck">Pindahkan semua ke dek</string>
     <string name="unbury">Angkat</string>
@@ -134,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Mencari Dek</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pencarian Dek</string>
     <string name="invalid_deck_name">Nama dek tidak valid</string>
-    <string name="studyoptions_empty">Dek Ini kosong. Tekan tombol + untuk menambah konten baru.</string>
-    <string name="studyoptions_limit_reached">Batas belajar harian tercapai</string>
-    <string name="studyoptions_empty_schedule">Tidak ada kartu yang dijadwalkan untuk dipelajari</string>
-    <string name="studyoptions_congrats_finished">Selamat! Kamu telah selesai untuk sekarang.</string>
     <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
     <string name="sd_card_not_mounted">Penyimpanan perangkat tidak terpasang</string>
     <string name="button_sync" comment="Text of the sync button">Sinkronisasi</string>
@@ -146,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Lanjutkan sinkronisasi</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinkronisasi dibatalkan</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Membatalkan&#8230;\nIni dapat memakan waktu lama.</string>
-    <string name="export">Ekspor</string>
-    <string name="export_collection">Ekspor koleksi</string>
     <string name="export_deck">Ekspor dek</string>
     <string name="nothing">Tidak ada</string>
     <!-- Card template editor -->

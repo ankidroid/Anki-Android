@@ -20,22 +20,19 @@ package com.ichi2.libanki
 import androidx.annotation.WorkerThread
 import com.google.protobuf.kotlin.toByteString
 import com.ichi2.libanki.exception.EmptyMediaException
-import com.ichi2.utils.*
 import timber.log.Timber
 import java.io.*
-import java.util.*
 
 /**
  * Media manager - handles the addition and removal of media files from the media directory (collection.media) and
  * maintains the media database, which is used to determine the state of files for syncing.
  */
-@KotlinCleanup("IDE Lint")
 @WorkerThread
 open class Media(private val col: Collection) {
     val dir = getCollectionMediaPath(col.path)
 
     init {
-        Timber.e("dir %s", dir)
+        Timber.v("dir %s", dir)
         val file = File(dir)
         if (!file.exists()) {
             file.mkdirs()
@@ -51,20 +48,20 @@ open class Media(private val col: Collection) {
         if (oFile == null || oFile.length() == 0L) {
             throw EmptyMediaException()
         }
-        Timber.e("dir now %s", dir)
+        Timber.v("dir now %s", dir)
         return col.backend.addMediaFile(oFile.name, oFile.readBytes().toByteString())
     }
+
+    /*
+     * String manipulation
+     * ***********************************************************
+     */
 
     /**
      * Extract media filenames from an HTML string.
      *
      * @param string The string to scan for media filenames ([sound:...] or <img...>).
-     * @param includeRemote If true will also include external http/https/ftp urls.
      * @return A list containing all the sound and image filenames found in the input string.
-     */
-    /**
-     * String manipulation
-     * ***********************************************************
      */
     fun filesInStr(string: String): List<String> {
         return col.backend.extractAvTags(string, true).avTagsList.filter {
@@ -78,8 +75,7 @@ open class Media(private val col: Collection) {
         return check().unusedFileNames.map { File(dir, it) }
     }
 
-    @KotlinCleanup("fix 'string' as var")
-    fun escapeImages(string: String, unescape: Boolean = false): String {
+    fun escapeMediaFilenames(string: String, unescape: Boolean = false): String {
         return if (unescape) {
             col.backend.decodeIriPaths(string)
         } else {

@@ -46,11 +46,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸುವುದೇ?</string>
     <string name="check_db_warning">ಇದು ಬಹಳ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳಬಹುದು</string>
-    <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
-    <string name="delete_deck_title">Delete deck?</string>
-    <string name="no_tts_available_message">No text-to-speech language available</string>
+    <string name="contextmenu_deckpicker_delete_deck">ಸ್ಪಷ್ಟ ಡೆಕ್</string>
+    <string name="delete_deck_title">ಸ್ಪಷ್ಟ ಡೆಕ್?</string>
+    <string name="no_tts_available_message">ಯಾವುದೇ ಪಠ್ಯದಿಂದ ಭಾಷಣಕ್ಕೆ ಭಾಷೆ ಲಭ್ಯವಿಲ್ಲ</string>
     <string name="initializing_tts">Initializing TTS&#8230;</string>
-    <string name="tts_no_tts">Don’t speak</string>
+    <string name="tts_no_tts">ಮಾತನಾಡಬೇಡ</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Preview</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
@@ -99,26 +99,26 @@
     <string name="custom_study_random">Select x cards randomly from the deck:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
+    <string name="storage_full_title">ಸಂಗ್ರಹಣೆ ತುಂಬಿದೆ</string>
+    <string name="storage_almost_full_title">ಸಂಗ್ರಹಣೆಯು ಬಹುತೇಕ ಪೂರ್ಣವಾಗಿದೆ</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ಜಾಗ ಇಲ್ಲ</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
     <string name="restore_backup_choose_another">Choose another</string>
-    <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_cancel">ರದ್ದುಮಾಡು</string>
+    <string name="dialog_ok">ಸರಿ</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">ದೃಢೀಕರಿಸಿ</string>
+    <string name="dialog_no">ಸಂ</string>
     <string name="dialog_yes">ಹೌದು</string>
-    <string name="dialog_continue">Continue</string>
-    <string name="dialog_processing">Processing...</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
-    <string name="dialog_positive_delete">Delete</string>
+    <string name="dialog_continue">ಮುಂದುವರಿಸಿ</string>
+    <string name="dialog_processing">ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಲಾಗುತ್ತಿದೆ...</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ರಚಿಸಿ</string>
+    <string name="dialog_positive_delete">ಅಳಿಸಿ</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_repair">Repair</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
+    <string name="dialog_positive_overwrite">ತಿದ್ದಿ ಬರೆಯಿರಿ</string>
+    <string name="dialog_positive_repair">ದುರಸ್ತಿ</string>
     <string name="dialog_positive_replace">Replace</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
@@ -131,7 +131,7 @@
     <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
     <string name="check_media_no_unused_missing">No unused or missing files found</string>
     <string name="check_media_db_updated">Media database rebuilt</string>
-    <string name="check_media_delete_unused">Delete unused</string>
+    <string name="check_media_delete_unused">ಬಳಕೆಯಾಗದ ಅಳಿಸಿ</string>
     <string name="delete_media_message">Deleting media&#8230;</string>
     <string name="delete_media_result_title">Deletion result</string>
     <plurals name="delete_media_result_message">
@@ -139,8 +139,8 @@
         <item quantity="other">%d files deleted</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
+    <string name="tags_dialog_option_all_cards">ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳು</string>
+    <string name="tags_dialog_option_new_cards">ಹೊಸದು</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
@@ -193,14 +193,14 @@
     <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
     <string name="help_item_anki_manual">Anki Manual</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
+    <string name="help_title_get_help">ಸಹಾಯ ಪಡೆ</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">Support AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_rate_ankidroid">ದರ</string>
     <string name="help_item_support_other_ankidroid">Other</string>
     <string name="multimedia_editor_trans_translate">Translate</string>
     <string name="help_title_community">Community</string>
@@ -235,11 +235,11 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Backup your collection</string>
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_backup">ಬ್ಯಾಕಪ್</string>
+    <string name="button_disable_reminder">ಜ್ಞಾಪನೆಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ಅದನ್ನು ಮತ್ತೆ ತೋರಿಸಬೇಡ</string>
+    <string name="dismiss_backup_warning_title">ಡೇಟಾ ನಷ್ಟದ ಎಚ್ಚರಿಕೆ</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled

@@ -223,7 +223,7 @@ public object FlashCardsContract {
         /**
          * This is the ID of the note. It is the same as the note ID in Anki. This ID can be
          * used for accessing the data of a note using the URI
-         * "content://com.ichi2.anki.flashcards/notes/&lt;ID&gt;/data
+         * "content://com.ichi2.anki.flashcards/notes/<ID>/data
          */
         @Suppress("ObjectPropertyName")
         public const val _ID: String = "_id"
@@ -358,7 +358,7 @@ public object FlashCardsContract {
         /**
          * This is the ID of the model. It is the same as the note ID in Anki. This ID can be
          * used for accessing the data of the model using the URI
-         * "content://com.ichi2.anki.flashcards/models/&lt;ID&gt;
+         * `content://com.ichi2.anki.flashcards/models/<ID>`
          */
         @Suppress("ObjectPropertyName")
         public const val _ID: String = "_id"
@@ -407,8 +407,8 @@ public object FlashCardsContract {
     /**
      * Card template for a model. A template defines how to render the fields of a note into the actual HTML that
      * makes up a flashcard. A model can define multiple card templates, for example a Forward and Reverse Card could
-     * be defined with the forward card allowing to review a word from Japanese-&gt;English (e.g. 犬 -&gt; dog), and the
-     * reverse card allowing review in the "reverse" direction (e.g dog -&gt; 犬). When a Note is inserted, a Card will
+     * be defined with the forward card allowing to review a word from Japanese -> English (e.g. 犬 -> dog), and the
+     * reverse card allowing review in the "reverse" direction (e.g dog -> 犬). When a Note is inserted, a Card will
      * be generated for each active CardTemplate which is defined.
      */
     public object CardTemplate {

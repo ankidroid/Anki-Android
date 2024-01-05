@@ -22,6 +22,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
@@ -43,12 +44,17 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.Locale
@@ -61,8 +67,8 @@ import java.util.regex.Pattern
 @KotlinCleanup("IDE Lint")
 open class AnkiDroidApp : Application() {
     /** An exception if the WebView subsystem fails to load  */
-    private var mWebViewError: Throwable? = null
-    private val mNotifications = MutableLiveData<Void?>()
+    private var webViewError: Throwable? = null
+    private val notifications = MutableLiveData<Void?>()
 
     lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
 
@@ -152,12 +158,7 @@ open class AnkiDroidApp : Application() {
         )
         CompatHelper.compat.setupNotificationChannel(applicationContext)
 
-        if (Build.FINGERPRINT != "robolectric") {
-            // Prevent sqlite throwing error 6410 due to the lack of /tmp on Android
-            Os.setenv("TMPDIR", cacheDir.path, false)
-            // Load backend library
-            System.loadLibrary("rsdroid")
-        }
+        makeBackendUsable(this)
 
         // Configure WebView to allow file scheme pages to access cookies.
         if (!acceptFileSchemeCookies()) {
@@ -186,7 +187,7 @@ open class AnkiDroidApp : Application() {
         BootService().onReceive(this, Intent(this, BootService::class.java))
 
         // Register for notifications
-        mNotifications.observeForever { NotificationService.triggerNotificationFor(this) }
+        notifications.observeForever { NotificationService.triggerNotificationFor(this) }
 
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -225,6 +226,9 @@ open class AnkiDroidApp : Application() {
         })
 
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
+        TtsVoices.launchBuildLocalesJob()
+        // enable {{tts-voices:}} field filter
+        TtsVoicesFieldFilter.ensureApplied()
     }
 
     /**
@@ -243,7 +247,7 @@ open class AnkiDroidApp : Application() {
     }
 
     fun scheduleNotification() {
-        mNotifications.postValue(null)
+        notifications.postValue(null)
     }
 
     @Suppress("deprecation") // 7109: setAcceptFileSchemeCookies
@@ -255,7 +259,7 @@ open class AnkiDroidApp : Application() {
             // 5794: Errors occur if the WebView fails to load
             // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
             // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
-            mWebViewError = e
+            webViewError = e
             sendExceptionReport(e, "setAcceptFileSchemeCookies")
             Timber.e(e, "setAcceptFileSchemeCookies")
             false
@@ -328,6 +332,29 @@ open class AnkiDroidApp : Application() {
     }
 
     companion object {
+
+        /**
+         * [CoroutineScope] tied to the [Application], allowing executing of tasks which should
+         * execute as long as the app is running
+         *
+         * This scope is bound by default to [Dispatchers.Main.immediate][kotlinx.coroutines.MainCoroutineDispatcher.immediate].
+         * Use an alternate dispatcher if the main thread is not required: [Dispatchers.Default] or [Dispatchers.IO]
+         *
+         * This scope will not be cancelled; exceptions are handled by [SupervisorJob]
+         *
+         * See: [Operations that shouldn't be cancelled in Coroutines](https://medium.com/androiddevelopers/coroutines-patterns-for-work-that-shouldnt-be-cancelled-e26c40f142ad#d425)
+         *
+         * This replicates the manner which `lifecycleScope`/`viewModelScope` is exposed in Android
+         */
+        val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
+        /**
+         * A [SharedPreferencesProvider] which does not require [onCreate] when run from tests
+         *
+         * @see sharedPreferencesTestingOverride
+         */
+        val sharedPreferencesProvider get() = SharedPreferencesProvider { sharedPrefs() }
+
         /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection  */
         var INSTRUMENTATION_TESTING = false
         const val XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki"
@@ -341,6 +368,23 @@ open class AnkiDroidApp : Application() {
          */
         lateinit var instance: AnkiDroidApp
             private set
+
+        /**
+         * An override for Shared Preferences to use for unit tests
+         *
+         * This does not depend on an instance of AnkiDroidApp and therefore has no Android
+         * implementations
+         */
+        @VisibleForTesting
+        var sharedPreferencesTestingOverride: SharedPreferences? = null
+
+        /**
+         * A test-friendly accessor to Shared Preferences.
+         *
+         * In tests, this can avoid an instance of `AnkiDroidApp`, which is slow
+         * This was added to avoid code churn
+         */
+        fun sharedPrefs() = sharedPreferencesTestingOverride ?: instance.sharedPrefs()
 
         /**
          * The latest package version number that included important changes to the database integrity check routine. All
@@ -375,6 +419,18 @@ open class AnkiDroidApp : Application() {
                 isAccessible = true
                 set(field, value)
             }
+        }
+
+        /** Load the libraries to allow access to Anki-Android-Backend */
+        @NeedsTest("Not calling this in the ContentProvider should have failed a test")
+        fun makeBackendUsable(context: Context) {
+            // Robolectric uses RustBackendLoader.ensureSetup()
+            if (Build.FINGERPRINT == "robolectric") return
+
+            // Prevent sqlite throwing error 6410 due to the lack of /tmp on Android
+            Os.setenv("TMPDIR", context.cacheDir.path, false)
+            // Load backend library
+            System.loadLibrary("rsdroid")
         }
 
         val appResources: Resources
@@ -418,12 +474,12 @@ open class AnkiDroidApp : Application() {
                 }
 
         fun webViewFailedToLoad(): Boolean {
-            return instance.mWebViewError != null
+            return instance.webViewError != null
         }
 
         val webViewErrorMessage: String?
             get() {
-                val error = instance.mWebViewError
+                val error = instance.webViewError
                 if (error == null) {
                     Timber.w("getWebViewExceptionMessage called without webViewFailedToLoad check")
                     return null
@@ -435,8 +491,10 @@ open class AnkiDroidApp : Application() {
     class RobolectricDebugTree : DebugTree() {
         override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
             // This is noisy in test environments
-            if (tag == "Backend\$checkMainThreadOp") {
-                return
+            when (tag) {
+                "Backend\$checkMainThreadOp" -> return
+                "Media" -> if (priority == Log.VERBOSE && message.startsWith("dir")) return
+                "CollectionManager" -> if (message.startsWith("blocked main thread")) return
             }
             super.log(priority, tag, message, t)
         }

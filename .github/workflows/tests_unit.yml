@@ -8,30 +8,11 @@ on:
         required: false
         type: string
   pull_request:
-    branches:
-      - '**'
-    paths:
-      - '.github/workflows/**'
-      - 'AnkiDroid/**'
-      - 'api/**'
-      - 'lint-rules/**'
-      - 'annotations/**'
-      - '**/*.gradle'
-      - 'gradle/**'
   push:
-    branches:
-      - main
-      - i18n_sync
-      - dependency-updates
-      - 'release**'
-    paths:
-      - '.github/workflows/**'
-      - 'AnkiDroid/**'
-      - 'api/**'
-      - 'lint-rules/**'
-      - 'annotations/**'
-      - '**/*.gradle'
-      - 'gradle/**'
+    # Ignore merge queue branches on push; avoids merge_group+push concurrency race since ref is same
+    branches-ignore:
+      - 'gh-readonly-queue/**'
+  merge_group:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -62,7 +43,7 @@ jobs:
           fetch-depth: 50
 
       - name: Configure JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: "temurin"
           java-version: "17" # newer libraries require 17 now, force it everywhere

@@ -21,14 +21,13 @@ import android.widget.ImageButton
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.TooltipCompat
 import com.ichi2.anki.ActionProviderCompat
-import com.ichi2.anki.R
 
 /**
  * An Rtl version of a normal action view, where the drawable is mirrored
  */
 class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(context) {
     @VisibleForTesting
-    val mActivity: Activity
+    val activity: Activity
 
     /**
      * The action to perform when clicking the associated menu item. By default this delegates to
@@ -46,12 +45,11 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
             it.isAutoMirrored = true
             actionView.setImageDrawable(it)
         }
-        actionView.id = R.id.action_undo
         actionView.setOnClickListener {
             if (!forItem.isEnabled) {
                 return@setOnClickListener
             }
-            clickHandler(mActivity, forItem)
+            clickHandler(activity, forItem)
         }
         return actionView
     }
@@ -76,6 +74,6 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
     }
 
     init {
-        mActivity = unwrapContext(context)
+        activity = unwrapContext(context)
     }
 }

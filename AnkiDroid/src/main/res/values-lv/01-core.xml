@@ -59,22 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Paplašināt</string>
     <string name="collapse">Sakļaut</string>
-    <string name="study_more">Mācīties vairāk</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="zero">%d minūtes atlikušas</item>
-        <item quantity="one">%d minūte atlikusi</item>
-        <item quantity="other">%d minūtes atlikušas</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="zero">%1$d stundas %2$d atlikušas</item>
-        <item quantity="one">%1$d stunda %2$d atlikusi</item>
-        <item quantity="other">%1$d stundas %2$d atlikušas</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="zero">%1$d dienas %2$d atlikušas</item>
-        <item quantity="one">%1$d diena %2$d atlikusi</item>
-        <item quantity="other">%1$d dienas %2$d atlikušas</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Nekā te nav</string>
     <string name="no_cards_placeholder_description">Sāc pievienot jaunas kārtis, n\spiežot + pogu</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -88,6 +72,7 @@
     <string name="ease_button_easy">Viegli</string>
     <string name="menu_import">Ienest</string>
     <string name="undo">Atsaukt</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Atsaukt vilkumu</string>
     <string name="move_all_to_deck">Pārnest visu uz kavu</string>
     <string name="unbury">Atklāt</string>
@@ -140,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Kavu pārlūks</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kavu meklētājs</string>
     <string name="invalid_deck_name">Nederīgs kavas nosaukums</string>
-    <string name="studyoptions_empty">Šī kava ir tukša. Spied +, lai pievienotu kārtis</string>
-    <string name="studyoptions_limit_reached">Ikdienas ierobežojums sasniegts</string>
-    <string name="studyoptions_empty_schedule">Nav nekas paredzēts</string>
-    <string name="studyoptions_congrats_finished">Apsveicu! Pagaidām viss pabeigts</string>
     <string name="studyoptions_no_cards_due">Nav gaidāmu kāršu</string>
     <string name="sd_card_not_mounted">Ierīces krātuve nav uzstādīta</string>
     <string name="button_sync" comment="Text of the sync button">Saskaņošana</string>
@@ -152,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Turpināt</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Saskaņošana atcelta</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Pārtrauc&#8230;\nTas var aizņemt labu laiku.</string>
-    <string name="export">Izrakstīt</string>
-    <string name="export_collection">Izrakstīt krājumu</string>
     <string name="export_deck">izrakstīt kavu</string>
     <string name="nothing">Nekā</string>
     <!-- Card template editor -->

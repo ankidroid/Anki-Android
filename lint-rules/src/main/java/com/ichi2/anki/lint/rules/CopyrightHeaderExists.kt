@@ -42,7 +42,7 @@ class CopyrightHeaderExists : Detector(), SourceCodeScanner {
 
         /**
          * &#64;SuppressWarnings doesn't work as it's the first statement, so allow suppression via:
-         * <pre>//noinspection MissingCopyrightHeader &lt;reason&gt;</pre>
+         * `//noinspection MissingCopyrightHeader <reason>`
          */
         private val IGNORE_CHECK_PATTERN = Pattern.compile("MissingCopyrightHeader")
 

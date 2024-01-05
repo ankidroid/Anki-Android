@@ -49,16 +49,16 @@ import timber.log.Timber
 class ACRATest : InstrumentedTest() {
     @get:Rule
     var runtimePermissionRule = GrantStoragePermission.instance
-    private var mApp: AnkiDroidApp? = null
-    private val mDebugLogcatArguments = arrayOf("-t", "1500", "-v", "long", "ACRA:S")
+    private var app: AnkiDroidApp? = null
+    private val debugLogcatArguments = arrayOf("-t", "1500", "-v", "long", "ACRA:S")
 
     // private String[] prodLogcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" };
     @Before
     @UiThreadTest
     fun setUp() {
-        mApp = testContext.applicationContext as AnkiDroidApp
+        app = testContext.applicationContext as AnkiDroidApp
         // Note: attachBaseContext can't be called twice as we're using the same instance between all tests.
-        mApp!!.onCreate()
+        app!!.onCreate()
     }
 
     @Test
@@ -69,7 +69,7 @@ class ACRATest : InstrumentedTest() {
         assertArrayEquals(
             "Debug logcat arguments not set correctly",
             CrashReportService.acraCoreConfigBuilder.build().logcatArguments.toTypedArray(),
-            mDebugLogcatArguments
+            debugLogcatArguments
         )
         verifyDebugACRAPreferences()
     }
@@ -257,7 +257,7 @@ class ACRATest : InstrumentedTest() {
         for (configuration in config.pluginConfigurations) {
             if (configuration.javaClass.toString().contains("Toast")) {
                 assertEquals(
-                    mApp!!.resources.getString(res),
+                    app!!.resources.getString(res),
                     (configuration as ToastConfiguration).text
                 )
                 assertTrue("Toast should be enabled", configuration.enabled())

@@ -18,23 +18,23 @@ package com.ichi2.anki
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
+import com.ichi2.anki.cardviewer.SingleSoundSide
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.getFieldsAsBundleForPreview
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.NotetypeJson
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.stringIterable
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
-import org.junit.Ignore
 import org.junit.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@Ignore("needs updating to new backend")
 @RunWith(RobolectricTestRunner::class)
 class CardTemplatePreviewerTest : RobolectricTest() {
 
@@ -54,8 +54,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         var testCardTemplatePreviewer = previewerController.get()
         Assert.assertTrue(
             "model change did not show up?",
-            testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.q().contains("PREVIEWER_TEST") &&
-                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.a().contains("PREVIEWER_TEST")
+            testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.question().contains("PREVIEWER_TEST") &&
+                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.answer().contains("PREVIEWER_TEST")
         )
 
         // Take it through a destroy/re-create lifecycle in order to test instance state persistence
@@ -67,8 +67,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         testCardTemplatePreviewer = previewerController.get()
         Assert.assertTrue(
             "model change not preserved in lifecycle??",
-            testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.q().contains("PREVIEWER_TEST") &&
-                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.a().contains("PREVIEWER_TEST")
+            testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.question().contains("PREVIEWER_TEST") &&
+                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.answer().contains("PREVIEWER_TEST")
         )
 
         // Make sure we can click
@@ -206,7 +206,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
@@ -230,7 +229,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
@@ -240,7 +238,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
     }
 
     @Test
-    fun clozeFromEditorHasMultipleCards() {
+    fun `Note Editor Cloze preview displays multiple cards - Issue 14717`() {
         val fields: MutableList<NoteService.NoteField?> = ArrayList()
         fields.add(Field(0, "{{c1::Hello}} {{c3::World}}"))
         fields.add(Field(1, "World"))
@@ -253,13 +251,18 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
+        assertThat("card 1 has content", testCardTemplatePreviewer.cardContent, containsString("World"))
+
         assertTwoCards(testCardTemplatePreviewer)
+
+        // ensure that template 2 is valid
+        testCardTemplatePreviewer.onNextCard()
+        assertThat("card 2 has content", testCardTemplatePreviewer.cardContent, containsString("Hello"))
     }
 
     @Test
@@ -283,7 +286,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
     }
 
     @Test
-    fun cardTemplatePreviewerNoCards_issue9687() {
+    fun `Previewing an empty note should not crash`() {
         val fields: MutableList<NoteService.NoteField?> = ArrayList()
         fields.add(Field(0, ""))
         fields.add(Field(1, ""))
@@ -296,13 +299,98 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
-        assertThat("Activity should be finishing - no cards to show", testCardTemplatePreviewer.isFinishing, equalTo(true))
+        assertThat("A blank card can be previewed", testCardTemplatePreviewer.cardContent, containsString("The front of this card is blank"))
+    }
+
+    @Test
+    fun `Issue 14692 - 'Read Text' enabled, and previewing a card from the note editor`() {
+        // Hack: TTS Doesn't work in Robolectric, instead we directly test the `readCardTts` method
+        val fields: MutableList<NoteService.NoteField?> = arrayListOf(
+            Field(0, "Hello"),
+            Field(1, "World")
+        )
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            val basicModel = getCurrentDatabaseModelCopy("Basic (and reversed card)")
+            val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, basicModel)
+            putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+            putExtra(
+                "noteEditorBundle",
+                bundleOf(
+                    "editFields" to getFieldsAsBundleForPreview(fields),
+                    "did" to 1L
+                )
+            )
+        }
+
+        val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
+
+        // TTS doesn't get initialized in Robolectric, but we've passed through rendering the card
+        // so treat the UninitializedPropertyAccessException as a success
+        assertThrows<UninitializedPropertyAccessException> {
+            testCardTemplatePreviewer.readCardTts(SingleSoundSide.QUESTION)
+        }
+    }
+
+    @Test
+    fun `The ordinal provided is used (standard) - Issue 14694`() {
+        val fields: MutableList<NoteService.NoteField?> = arrayListOf(
+            Field(0, "Hello"),
+            Field(1, "World")
+        )
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            val basicModel = getCurrentDatabaseModelCopy("Basic (and reversed card)")
+            val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, basicModel)
+            putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+            putExtra(
+                "noteEditorBundle",
+                bundleOf(
+                    "editFields" to getFieldsAsBundleForPreview(fields),
+                    "did" to 1L
+                )
+            )
+            putExtra("ordinal", 1)
+        }
+
+        val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
+
+        assertThat("Front is not displayed", testCardTemplatePreviewer.cardContent, not(containsString(">Hello<")))
+        assertThat("Back is displayed", testCardTemplatePreviewer.cardContent, containsString(">World<"))
+    }
+
+    @Test
+    fun `The ordinal provided is used (cloze)- Issue 14694`() {
+        val fields: MutableList<NoteService.NoteField?> = arrayListOf(
+            Field(0, "{{c1::Hello}} {{c3::World}}"),
+            Field(1, "Extra")
+        )
+        val ordinalOfSecondCard = 2
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            val clozeModel = getCurrentDatabaseModelCopy("Cloze")
+            val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, clozeModel)
+            putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+            putExtra(
+                "noteEditorBundle",
+                bundleOf(
+                    "editFields" to getFieldsAsBundleForPreview(fields),
+                    "did" to 1L
+                )
+            )
+            putExtra("ordinal", ordinalOfSecondCard)
+        }
+
+        val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
+
+        // data-cloze contains the string, even if the cloze is hidden, so search for >term<
+        assertThat("ord 1 is displayed", testCardTemplatePreviewer.cardContent, containsString(">Hello<"))
+        assertThat("ord 1 is hidden", testCardTemplatePreviewer.cardContent, not(containsString(">World<")))
     }
 
     private fun getFieldsAsBundleForPreview(fields: List<NoteService.NoteField?>?): Bundle {
@@ -313,23 +401,23 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         assertThat("prev should not be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(false))
         assertThat("next should be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
 
-        testCardTemplatePreviewer.onNextTemplate()
+        testCardTemplatePreviewer.onNextCard()
 
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(1))
+        assertThat("index is changed", testCardTemplatePreviewer.cardIndex, equalTo(1))
         assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(true))
         assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(false))
 
-        testCardTemplatePreviewer.onNextTemplate()
+        testCardTemplatePreviewer.onNextCard()
 
         // no effect
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(1))
+        assertThat("index is changed", testCardTemplatePreviewer.cardIndex, equalTo(1))
         assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(true))
         assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(false))
 
-        testCardTemplatePreviewer.onPreviousTemplate()
+        testCardTemplatePreviewer.onPreviousCard()
 
         // previous
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(0))
+        assertThat("index is changed", testCardTemplatePreviewer.cardIndex, equalTo(0))
         assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(false))
         assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
     }
@@ -340,15 +428,13 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         for (i in fieldNames.indices) {
             n.setField(i, fieldNames[i])
         }
-        n.flush()
+        col.addNote(n)
         print(ordinal)
-        throw Exception("not implemented")
-//        return col.getNewLinkedCard(Card(col), n, model.getJSONArray("tmpls").getJSONObject(ordinal), 1, 1, true)
+        return n.cards()[0]
     }
 
-    @KotlinCleanup("Override fieldText in constructor and remove text")
-    private inner class Field(override val ord: Int, private val text: String) : NoteService.NoteField {
+    private inner class Field(
+        override val ord: Int,
         override val fieldText: String
-            get() = text
-    }
+    ) : NoteService.NoteField
 }

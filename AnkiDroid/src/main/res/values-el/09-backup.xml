@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="backup_deck_no_storage_left">Δεν αποθηκεύτηκε αντίγραφο ασφαλείας. Δεν έχει απομείνει αρκετός χώρος στον χώρο αποθήκευσης. Μειώστε το βάθος αντιγράφου ασφαλείας ή αφαιρέστε κάποια άλλα αρχεία.</string>
+    <string name="storage_warning">Απομένει λιγότερο από %d MB στον αποθηκευτικό σας χώρο .\nΑπελευθερώστε λίγο χώρο για να αποφύγετε την απώλεια δεδομένων.</string>
     <string name="backup_restore">Επαναφορά από αντίγραφο</string>
     <string name="backup_new_collection">Νέα συλλογή</string>
     <string name="backup_del_collection">Διαγραφή συλλογής και δημιουργία καινούργιας</string>
@@ -62,7 +62,7 @@
     <string name="backup_restore_select_title">Επιλέξτε το αντίγραφο για επαναφορά</string>
     <string name="backup_restore_no_backups">Δε βρέθηκαν αντίγραφα ασφαλείας γι\' αυτή τη συλλογή στη συσκευή. Αν έχετε αντίγραφα στον υπολογιστή σας, παρακαλούμε αντιγράψτε τα στο φάκελο Ανκί-Ντρόιντ.</string>
     <string name="open_collection_failed_title">Η συλλογή δεν άνοιξε</string>
-    <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-    <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
+    <string name="corrupt_db_message">Η συλλογή σας έχει καταστραφεί.\n\nΑγγίξτε «επιλογές» για να επαναφέρετε από ένα αντίγραφο ασφαλείας, ή αν αυτό δεν λειτουργεί, δείτε τις παρακάτω οδηγίες για τη χειροκίνητη επισκευή της βάσης δεδομένων:\n%1$s</string>
+    <string name="access_collection_failed_message">Παρουσιάστηκε σφάλμα κατά την πρόσβαση στη συλλογή σας. Μπορεί να έχει προκληθεί από ένα αβλαβές σφάλμα, ή μπορεί να υπάρξει κάποιο πρόβλημα με αυτήν. \n\nΠροσπαθήστε να εκτελέσετε έλεγχο βάσης δεδομένων, ή επαναφορά από αντίγραφο ασφαλείας πατώντας το κουμπί “επιλογές”. Αν συνεχίσετε να βλέπετε αυτό το μήνυμα, παρακαλώ συμπληρώστε μια αναφορά σφάλματος:\n%1$s</string>
     <string name="deck_repair_error">Η συλλογή δε μπόρεσε να επιδιορθωθεί</string>
 </resources>

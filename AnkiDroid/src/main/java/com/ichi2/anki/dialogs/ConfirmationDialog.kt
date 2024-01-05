@@ -17,17 +17,21 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.title
 
 /**
  * This is a reusable convenience class which makes it easy to show a confirmation dialog as a DialogFragment.
  * Create a new instance, call setArgs(...), setConfirm(), and setCancel() then show it via the fragment manager as usual.
  */
 class ConfirmationDialog : DialogFragment() {
-    private var mConfirm = Runnable {} // Do nothing by default
-    private var mCancel = Runnable {} // Do nothing by default
+    private var confirm = Runnable {} // Do nothing by default
+    private var cancel = Runnable {} // Do nothing by default
     fun setArgs(message: String?) {
         setArgs("", message)
     }
@@ -40,26 +44,26 @@ class ConfirmationDialog : DialogFragment() {
     }
 
     fun setConfirm(confirm: Runnable) {
-        mConfirm = confirm
+        this.confirm = confirm
     }
 
     fun setCancel(cancel: Runnable) {
-        mCancel = cancel
+        this.cancel = cancel
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreate(savedInstanceState)
         val res = requireActivity().resources
         val title = requireArguments().getString("title")
-        return MaterialDialog(requireActivity()).show {
+        return AlertDialog.Builder(requireContext()).apply {
             title(text = (if ("" == title) res.getString(R.string.app_name) else title)!!)
             message(text = requireArguments().getString("message")!!)
             positiveButton(R.string.dialog_ok) {
-                mConfirm.run()
+                confirm.run()
             }
             negativeButton(R.string.dialog_cancel) {
-                mCancel.run()
+                cancel.run()
             }
-        }
+        }.create()
     }
 }

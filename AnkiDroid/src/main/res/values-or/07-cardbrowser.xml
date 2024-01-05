@@ -54,12 +54,15 @@
         <item quantity="other">%dଟି ନୋଟ୍ ଦର୍ଶାଯାଉଛି</item>
     </plurals>
     <string name="card_browser_all_decks">ସମସ୍ତ ତାସଖଣ୍ଡ</string>
-    <string name="card_browser_delete_card">ନୋଟଗୁଡ଼ିକୁ ଵିଲୋପ କରିବା</string>
-    <string name="card_browser_suspend_card">ପତ୍ରଗୁଡ଼ିକୁ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">ପତ୍ର ବିଲୋପ କରିବା</item>
+        <item quantity="other">ପତ୍ରଗୁଡ଼ିକୁ ବିଲୋପ କରିବା</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">ନୋଟ୍ ବିଲୋପ କରିବା</item>
+        <item quantity="other">ନୋଟଗୁଡ଼ିକୁ ବିଲୋପ କରିବା</item>
+    </plurals>
     <string name="card_browser_change_deck">ତାସଖଣ୍ଡ ବଦଳାନ୍ତୁ</string>
-    <string name="card_browser_unsuspend_card">ପତ୍ରଗୁଡ଼ିକୁ ଅନିଲମ୍ବିତ କରନ୍ତୁ</string>
-    <string name="card_browser_mark_card">ନୋଟଗୁଡ଼ିକୁ ଚିନ୍ହିତ କରନ୍ତୁ</string>
-    <string name="card_browser_unmark_card">ନୋଟଗୁଡ଼ିକୁ ଅଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="delete_card_title">ନୋଟ୍ ଵିଲୋପ କରିବେ ତ?</string>
     <string name="card_browser_show_marked">ଚିହ୍ନିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
     <string name="card_browser_show_suspended">ନିଲମ୍ବିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%dଟିଏ ପତ୍ର ବିଲୋପ ହେଲା</item>
         <item quantity="other">%dଟି ପତ୍ର ବିଲୋପ ହେଲା</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

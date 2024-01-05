@@ -54,12 +54,15 @@
         <item quantity="other">%d notes shown</item>
     </plurals>
     <string name="card_browser_all_decks">Όλες οι τράπουλες</string>
-    <string name="card_browser_delete_card">Διαγραφή σημειώσεων</string>
-    <string name="card_browser_suspend_card">Αναστολή καρτών</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Διαγραφή καρτών</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Διαγραφή σημειώσεων</item>
+    </plurals>
     <string name="card_browser_change_deck">Αλλαγή τράπουλας</string>
-    <string name="card_browser_unsuspend_card">Αναίρεση αναστολής καρτών</string>
-    <string name="card_browser_mark_card">Μαρκάρισμα σημειώσεων</string>
-    <string name="card_browser_unmark_card">Ξεμαρκάρισμα σημειώσεων</string>
     <string name="delete_card_title">Διαγραφή σημείωσης;</string>
     <string name="card_browser_show_marked">Δείξε μαρκαρισμένες</string>
     <string name="card_browser_show_suspended">Δείξε ανεσταλμένες</string>
@@ -95,7 +98,7 @@
     <string name="card_browser_no_cards_in_deck">Δεν βρέθηκαν κάρτες στην τράπουλα ‘%s’</string>
     <string name="card_browser_search_all_decks">Αναζήτηση όλων των τραπουλών</string>
     <string name="card_browser_unknown_deck_name">Άγνωστο</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Περιορισμός περιεχομένου</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Εξαγωγή κάρτας</item>
         <item quantity="other">Εξαγωγή καρτών</item>
@@ -108,5 +111,4 @@
         <item quantity="one">Διαγράφηκε %d κάρτα</item>
         <item quantity="other">Διαγράφηκαν %d κάρτες</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

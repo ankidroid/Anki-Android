@@ -19,29 +19,53 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
+import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.updateDeckConfigsRaw
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
+@NeedsTest("pressing back: icon + button should go to the previous screen")
+@NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
 class DeckOptions : PageFragment() {
-    override val title = R.string.menu__deck_options
+    override val title: String
+        get() = resources.getString(R.string.menu__deck_options)
     override val pageName = "deck-options"
     override lateinit var webViewClient: PageWebViewClient
     override var webChromeClient = PageChromeClient()
+
+    // handle going back from the manual
+    private val onBackCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            Timber.v("webView: navigating back")
+            webView.goBack()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val deckId = arguments?.getLong(ARG_DECK_ID)
             ?: throw Exception("missing deck ID")
         webViewClient = DeckOptionsWebClient(deckId)
         super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackCallback)
+        webViewClient.onPageFinishedCallback = OnPageFinishedCallback { view ->
+            Timber.v("canGoBack: %b", view.canGoBack())
+            onBackCallback.isEnabled = view.canGoBack()
+        }
     }
 
     class DeckOptionsWebClient(val deckId: Long) : PageWebViewClient() {
+        override val promiseToWaitFor: String
+            get() = "\$deckOptions"
+
         override fun onPageFinished(view: WebView?, url: String?) {
             // from upstream: https://github.com/ankitects/anki/blob/678c354fed4d98c0a8ef84fb7981ee085bd744a7/qt/aqt/deckoptions.py#L55
             view!!.evaluateJavascript("const \$deckOptions = anki.setupDeckOptions($deckId);") {
@@ -57,7 +81,7 @@ class DeckOptions : PageFragment() {
             val arguments = Bundle().apply {
                 putLong(ARG_DECK_ID, deckId)
             }
-            return PagesActivity.getIntent(context, DeckOptions::class, arguments)
+            return SingleFragmentActivity.getIntent(context, DeckOptions::class, arguments)
         }
     }
 }

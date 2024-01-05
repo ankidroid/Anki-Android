@@ -111,22 +111,20 @@
         <item name="tabTextAppearance">@style/TextAppearance.Material3.LabelLarge</item>
         <item name="tabIndicator">@drawable/tab_layout_indicator_floating_pill</item>
         <item name="tabIndicatorHeight">14dp</item>
+        <item name="tabTextColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/white</item>
     </style>
     <style name="ThemeOverlay.App.TabLayout" parent="">
         <item name="colorSurface">?attr/tabLayoutBackgroundColor</item> <!-- Background -->
-        <item name="colorPrimary">@color/white</item> <!-- Selected text color -->
         <item name="colorOnSurfaceVariant">#cfff</item> <!-- Not selected text color -->
     </style>
 
     <style name="BottomNavigationViewStyle" parent="@style/Widget.Material3.BottomNavigationView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
-        <item name="elevation">0dp</item> <!-- Prevent slight changes of surface color -->
     </style>
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorPrimary">#afff</item> <!-- Ripple & other things -->
         <item name="colorSecondaryContainer">#fff</item> <!-- Selected item indicator -->
         <item name="colorOnSecondaryContainer">?attr/tabLayoutBackgroundColor</item> <!-- Active icon -->
-        <item name="colorSurface">?attr/tabLayoutBackgroundColor</item> <!-- Container background -->
         <item name="colorOnSurface">#fff</item> <!-- Active icon -->
         <item name="colorOnSurfaceVariant">#fff</item> <!-- Inactive icon & label -->
         <item name="textAppearanceTitleSmall">@style/TextAppearance.Material3.TitleSmall</item>
@@ -182,4 +180,15 @@
         <item name="labelStyle">@style/SliderLabelStyle</item>
         <item name="tickVisible">false</item>
     </style>
+
+    <style name="PreferenceThemeOverlay.AnkiDroid">
+        <item name="singleLineTitle">false</item>
+    </style>
+
+    <style name="AppCompatProgressDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/material_light_blue_500</item>
+        <item name="android:textColorPrimary">?android:attr/textColor</item>
+        <item name="android:background">?attr/dialogBackground</item>
+    </style>
+
 </resources>

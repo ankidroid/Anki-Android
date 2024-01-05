@@ -26,9 +26,9 @@ open class ModelEditorContextMenu : AnalyticsDialogFragment() {
         super.onCreate(savedInstanceState)
         // add only the actions which can be done at the current API level
         var availableItems = if (isAtLeastAtN()) {
-            ModelEditorContextMenuAction.values().toList()
+            ModelEditorContextMenuAction.entries.toList()
         } else {
-            ModelEditorContextMenuAction.values().filterNot { it == AddLanguageHint }
+            ModelEditorContextMenuAction.entries.filterNot { it == AddLanguageHint }
         }
         availableItems = availableItems.sortedBy { it.order }
 

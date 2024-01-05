@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Palawakin</string>
     <string name="collapse">Itiklop</string>
-    <string name="study_more">Pag-aralan ang iba pa</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d natitirang minuto</item>
-        <item quantity="other">%d mga natitirang minuto</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d oras %2$d pa ang natititra</item>
-        <item quantity="other">%1$d oras %2$d pa ang natititra</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d araw %2$d pa ang natititra</item>
-        <item quantity="other">%1$d araw %2$d pa ang natititra</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Walang laman ang tipon</string>
     <string name="no_cards_placeholder_description">Magsimulang magdadag ng mga cards\n gamit ang + na aykon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Madali</string>
     <string name="menu_import">Mag-angkat</string>
     <string name="undo">Ibalik sa dati</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Magtanggal ng guhit</string>
     <string name="move_all_to_deck">Iusong lahat sa deck</string>
     <string name="unbury">Hukayin</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Maghanap ng Deck</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Maghanap ng Deck</string>
     <string name="invalid_deck_name">Hindi wasto ang pangalan ng deck</string>
-    <string name="studyoptions_empty">Ang deck na ito ay walang laman. Pindotin ang + na button para magdagdag ng laman.</string>
-    <string name="studyoptions_limit_reached">Naabot na ang limit sa pang-araw-araw na pag-aaral</string>
-    <string name="studyoptions_empty_schedule">Walang card na nakatakdang pag-aralan</string>
-    <string name="studyoptions_congrats_finished">Binabati kita! Natapos mo na sa ngayon.</string>
     <string name="studyoptions_no_cards_due">Wala pang card na nakatakda</string>
     <string name="sd_card_not_mounted">Ang device storage ay hindi naka-mount</string>
     <string name="button_sync" comment="Text of the sync button">I-sync</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Ipagtuloy ang pagsync</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Nakansela ang sync</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Kinakansela...\nIto ay maaaring matagalan.</string>
-    <string name="export">I-export</string>
-    <string name="export_collection">Iluwas ang mga tipon</string>
     <string name="export_deck">I-export ang deck</string>
     <string name="nothing">Wala</string>
     <!-- Card template editor -->

@@ -34,12 +34,12 @@ import java.util.*
  * This primarily exists so we can use saved instance state to repopulate the dynamically created FieldEditLine
  */
 class FieldState private constructor(private val editor: NoteEditor) {
-    private var mSavedFieldData: List<View.BaseSavedState>? = null
+    private var savedFieldData: List<View.BaseSavedState>? = null
     fun loadFieldEditLines(type: FieldChangeType): List<FieldEditLine> {
         val fieldEditLines: List<FieldEditLine>
-        if (type.type == Type.INIT && mSavedFieldData != null) {
+        if (type.type == Type.INIT && savedFieldData != null) {
             fieldEditLines = recreateFieldsFromState()
-            mSavedFieldData = null
+            savedFieldData = null
         } else {
             fieldEditLines = createFields(type)
         }
@@ -66,8 +66,8 @@ class FieldState private constructor(private val editor: NoteEditor) {
     }
 
     private fun recreateFieldsFromState(): List<FieldEditLine> {
-        val editLines: MutableList<FieldEditLine> = ArrayList(mSavedFieldData!!.size)
-        for (state in mSavedFieldData!!) {
+        val editLines: MutableList<FieldEditLine> = ArrayList(savedFieldData!!.size)
+        for (state in savedFieldData!!) {
             val edit_line_view = FieldEditLine(editor)
             if (edit_line_view.id == 0) {
                 edit_line_view.id = View.generateViewId()
@@ -94,7 +94,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
     private fun getFields(type: FieldChangeType): Array<Array<String>> {
         if (type.type == Type.REFRESH_WITH_MAP) {
             val items = editor.fieldsFromSelectedNote
-            val fMapNew = Notetypes.fieldMap(type.mNewNotetype!!)
+            val fMapNew = Notetypes.fieldMap(type.newNotetype!!)
             return fromFieldMap(editor, items, fMapNew, type.modelChangeFieldMap)
         }
         return editor.fieldsFromSelectedNote
@@ -121,18 +121,18 @@ class FieldState private constructor(private val editor: NoteEditor) {
         for (i in customViewIds) {
             important.add(views[i!!] as View.BaseSavedState)
         }
-        mSavedFieldData = important
+        savedFieldData = important
     }
 
     /** How fields should be changed when the UI is rebuilt  */
     class FieldChangeType(val type: Type, val replaceNewlines: Boolean) {
         var modelChangeFieldMap: Map<Int, Int>? = null
-        var mNewNotetype: NotetypeJson? = null
+        var newNotetype: NotetypeJson? = null
 
         companion object {
             fun refreshWithMap(newNotetype: NotetypeJson?, modelChangeFieldMap: Map<Int, Int>?, replaceNewlines: Boolean): FieldChangeType {
                 val typeClass = FieldChangeType(Type.REFRESH_WITH_MAP, replaceNewlines)
-                typeClass.mNewNotetype = newNotetype
+                typeClass.newNotetype = newNotetype
                 typeClass.modelChangeFieldMap = modelChangeFieldMap
                 return typeClass
             }

@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Дэд цуглуулгуудыг харах</string>
     <string name="collapse">Дэд цуглуулгуудыг нуух</string>
-    <string name="study_more">Илүү карт сурах</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d минут үлдлээ</item>
-        <item quantity="other">%d минут үлдлээ</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d цаг %2$d үлдлээ</item>
-        <item quantity="other">%1$d цаг %2$d үлдлээ</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d өдөр %2$d үлдлээ</item>
-        <item quantity="other">%1$d өдөр %2$d үлдлээ</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Таны том  цуглуулга хоосон  байна</string>
     <string name="no_cards_placeholder_description">+ товчийг ашиглан шинэ карт нэмээрэй</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Амархан</string>
     <string name="menu_import">Оруулж ирэх</string>
     <string name="undo">Буцаах</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Зургаа буцаах</string>
     <string name="move_all_to_deck">Бүгдийг цуглуулга руу зөөх</string>
     <string name="unbury">Булснаа болих</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Багц хайх</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Интернетээс багц хайх</string>
     <string name="invalid_deck_name">Ингэж нэрлэх боломжгүй байна</string>
-    <string name="studyoptions_empty">Энэ цуглуулга хоосон байна. Шинэ зүйлс нэмэхийн тулд, +  товчийг дарна уу</string>
-    <string name="studyoptions_limit_reached">Өдрийн тогтоосон  хэмжээнд хүрсэн байна</string>
-    <string name="studyoptions_empty_schedule">Суралцах ёстой карт алга байна</string>
-    <string name="studyoptions_congrats_finished">Баяр хүргэе! Та одоохондоо цуглуулгаа дуусгалаа</string>
     <string name="studyoptions_no_cards_due">Одоохондоо сурах, давтах карт алга байна</string>
     <string name="sd_card_not_mounted">Багтаамжийн  хэрэгсэл холбогдоогүй байна</string>
     <string name="button_sync" comment="Text of the sync button">Зэрэгцүүлэх</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Зэрэгцүүлэлтийг үргэлжлүүлэх</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Зэрэгцүүлэлтийг зогсоолоо</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Цуцалж байна&#8230;\n Бага зэрэг удаж магадгүй</string>
-    <string name="export">Экспортлох</string>
-    <string name="export_collection">Цуглуулгийг экспортлох</string>
     <string name="export_deck">Багцыг экспортлох</string>
     <string name="nothing">Юу ч үгүй</string>
     <!-- Card template editor -->

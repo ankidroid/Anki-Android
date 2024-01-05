@@ -5,17 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeight"
-    android:paddingStart="?attr/listPreferredItemPaddingStart"
     android:paddingTop="16dp"
-    android:paddingEnd="8dp"
-    android:paddingBottom="16dp"
+    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     tools:context=".ui.windows.permissions.PermissionItem">
 
     <ImageView
         android:id="@+id/icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline_front"
@@ -29,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintEnd_toStartOf="@id/switch_widget"
         app:layout_constraintStart_toStartOf="@+id/guideline_front"
         app:layout_constraintTop_toTopOf="parent"
         tools:maxLines="1"
@@ -43,7 +42,7 @@
         android:layout_marginTop="2dp"
         android:textColor="?android:attr/textColorSecondary"
         app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintEnd_toStartOf="@id/switch_widget"
         app:layout_constraintStart_toStartOf="@+id/guideline_front"
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:maxLines="3"
@@ -55,10 +54,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/summary"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="12dp"
-        />
+        android:paddingStart="16dp"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_front"
@@ -66,12 +64,4 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="56dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="56dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,12 +15,15 @@
  */
 package com.ichi2.anki.dialogs
 
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.testutils.AnkiAssert
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class RecursivePictureMenuTest : RecursivePictureMenuUtilTest() {
     @Test
     fun removeChild() {

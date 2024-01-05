@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Kengaytirish</string>
     <string name="collapse">Toraytirish</string>
-    <string name="study_more">Ko\'proq o\'rganish</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minut qoldi</item>
-        <item quantity="other">%d minutes left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d soat %2$d qoldi</item>
-        <item quantity="other">%1$d soatlar %2$d qoldi</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d kun %2$d qoldi</item>
-        <item quantity="other">%1$d kunlar %2$d qoldi</item>
-    </plurals>
     <string name="no_cards_placeholder_title">To\'plam bo\'sh</string>
     <string name="no_cards_placeholder_description">Kartalar qo\'shishni\n+ belgisi orqali boshlang</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Oson</string>
     <string name="menu_import">Import qilish</string>
     <string name="undo">Bekor qilish</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Qatlamni bekor qilish</string>
     <string name="move_all_to_deck">Hammasini to\'plamga ko\'chirish</string>
     <string name="unbury">Tiklash</string>
@@ -130,17 +118,13 @@
     <string name="rebuild_cram_label">Qayta qurish</string>
     <string name="empty_cram_label">Bo\'sh</string>
     <string name="create_subdeck">Palubani o‘rnini bosuvchi narsa yaratish</string>
-    <string name="empty_filtered_deck">I</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Qo\'shimcha shug\'ullanish</string>
     <string name="custom_study_deck_exists">Avval qo\'shimcha shug\'ullanish to\'plamini qayta nomlang</string>
     <string name="empty_deck">Bu to\'plam bo\'sh</string>
     <string name="search_deck" comment="Deck search for selecting it">To\'plam qidirish</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">To\'plam qidirish</string>
     <string name="invalid_deck_name">To\'plamning nomi yaroqsiz</string>
-    <string name="studyoptions_empty">Bu to\'plam bo\'sh. Yangi karta qo\'shish uchun + tugmasini bosing.</string>
-    <string name="studyoptions_limit_reached">Kunlik o\'rganish limitiga yetdingiz</string>
-    <string name="studyoptions_empty_schedule">O\'rganilishi rejalashtirilgan karta yo\'q</string>
-    <string name="studyoptions_congrats_finished">Tabriklaymiz! Siz hozircha tugatdingiz</string>
     <string name="studyoptions_no_cards_due">Tugashi lozim kartalar halicha yo\'q</string>
     <string name="sd_card_not_mounted">Qurilma xotirasi o\'rnatilmagan</string>
     <string name="button_sync" comment="Text of the sync button">Sinxronlash</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Sinxronlashni davom ettirish</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinxronlash bekor qilindi</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Bekor qilinyapti...\n Bu biroz vaqt olishi mumkin</string>
-    <string name="export">Eksport qilish</string>
-    <string name="export_collection">Jamlanmani eksport qilish</string>
     <string name="export_deck">To\'plamni eksport qilish</string>
     <string name="nothing">Hechnima</string>
     <!-- Card template editor -->
@@ -164,12 +146,12 @@
     <string name="card_template_editor_select_field">Maydonni tanlash</string>
     <string name="card_template_editor_cant_delete">Kamida bir turdagi karta turi kerak</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">Bu  %1$d ta kartani yaratadi. Davom etasizmi?</item>
+        <item quantity="other">Bu  %1$d ta kartalarni yaratadi. Davom etasizmi?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+        <item quantity="one">“%2$s” turdagi kartani va uning  %1$d ta kartasini ochirasizmi?</item>
+        <item quantity="other">“%2$s” turdagi kartani va uning  %1$d ta kartalarini ochirasizmi?</item>
     </plurals>
     <string name="invalid_template">A card could not be generated</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>

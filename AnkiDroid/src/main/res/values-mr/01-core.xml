@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">विस्तृत करा</string>
     <string name="collapse">कोसळणे</string>
-    <string name="study_more">अधिक अभ्यास करा</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d मिनिट शिल्लक आहे</item>
-        <item quantity="other">%d मिनिटे शिल्लक आहेत</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d तास %2$d शिल्लक</item>
-        <item quantity="other">%1$d तास %2$d शिल्लक</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d दिवस %2$d बाकी</item>
-        <item quantity="other">%1$d दिवस %2$d शिल्लक</item>
-    </plurals>
     <string name="no_cards_placeholder_title">संग्रह रिक्त आहे</string>
     <string name="no_cards_placeholder_description">कार्ड जोडण्यास प्रारंभ करण्यासाठी + चिन्हाचा उपयोग करा.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">सोपे</string>
     <string name="menu_import">आयात करा</string>
     <string name="undo">पूर्ववत् करा</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">स्ट्रोक पूर्ववत करा</string>
     <string name="move_all_to_deck">सर्व डेकम्धे पाठवा</string>
     <string name="unbury">अनबरी</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">डेक शोध</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">डेक शोध</string>
     <string name="invalid_deck_name">अवैध डेक नाव</string>
-    <string name="studyoptions_empty">हा डेक रिक्त आहे. नवीन सामग्री जोडण्यासाठी + बटण दाबा.</string>
-    <string name="studyoptions_limit_reached">दररोज अभ्यासाची मर्यादा गाठली</string>
-    <string name="studyoptions_empty_schedule">अभ्यासासाठी कोणतेही कार्ड शेड्यूल केलेले नाही</string>
-    <string name="studyoptions_congrats_finished">अभिनंदन! आपण आत्ताच संपविले आहे.</string>
     <string name="studyoptions_no_cards_due">अद्याप कोणतीही कार्ड शिल्लक नाही</string>
     <string name="sd_card_not_mounted">डिव्हाइस संचयन आरोहित नाही</string>
     <string name="button_sync" comment="Text of the sync button">समक्रमित करा</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">संकालन सुरू ठेवा</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">संकालन रद्द केले</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द करीत आहे... \n यास काही वेळ लागू शकेल.</string>
-    <string name="export">निर्यात करा</string>
-    <string name="export_collection">निर्यात संग्रह</string>
     <string name="export_deck">निर्यात डेक</string>
     <string name="nothing">काही नाही</string>
     <!-- Card template editor -->

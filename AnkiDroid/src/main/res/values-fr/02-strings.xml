@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Type :</string>
     <string name="CardEditorTags">Étiquettes : %1$s</string>
     <string name="CardEditorCards">Cartes : %1$s</string>
+    <string name="edit_occlusions">Modifier les Occlusions</string>
     <string name="tag_name">Nom d\'étiquette</string>
     <string name="add_new_filter_tags">Ajouter/filtrer étiquettes</string>
     <string name="add_tag">Ajouter une étiquette</string>
@@ -143,7 +144,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Aperçu</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d sur %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renommer</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">Vérifier</string>
     <string name="check_db">Vérifier la base de données</string>
     <string name="check_media">Vérifier les médias</string>
     <string name="empty_cards">Cartes vides</string>
@@ -154,10 +155,7 @@
     <string name="import_title">Importation en cours</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ajouter</string>
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Ajouter « %s » à la collection ? Ceci peut prendre beaucoup de temps</item>
-        <item quantity="other">Voulez-vous importer ces fichiers : \n%s\nCeci peut prendre beaucoup de temps</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Ceci n\'est pas un fichier Anki valide</string>
     <string name="import_title_error" comment="Title of error dialog">Erreur</string>
     <string name="import_error_handle_exception">Impossible d\'importer le fichier\n\n%s</string>
@@ -165,21 +163,7 @@
     <string name="import_error_load_imported_database">Les remplacements de la base de données Anki (.anki2) ne sont pas pris en charge. Veuillez voir le guide d’utilisation pour les instructions de remplacement.</string>
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
     <string name="import_error_copy_to_cache">Échec de la mise en cache du fichier (éventuellement à court d\'espace de stockage)</string>
-    <string name="import_error_multiple_colpkg">Plusieurs fichiers colpkg étaient sélectionnés.</string>
-    <string name="import_error_colpkg_apkg">Des fichiers apkg &amp; colpkg étaient sélectionnés à la fois.</string>
     <string name="import_interrupted">Importation interrompue : AnkiDroid a fermé</string>
-    <string name="export_include_schedule">Inclure la planification</string>
-    <string name="export_include_media">Inclure les médias</string>
-    <string name="confirm_apkg_export">Exporter la collection sous forme de paquet Anki ?</string>
-    <string name="confirm_apkg_export_deck">Exporter « %s » au format apkg ?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Exporter les cartes sélectionnées au format .apkg ?</item>
-        <item quantity="other">Exporter les %d cartes sélectionnées au format .apkg ?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Exporter les notes sélectionnées au format .apkg ?</item>
-        <item quantity="other">Exporter les %d notes sélectionnées au format .apkg ?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Préparation de l\'export...</string>
     <string name="export_ready_title">Exportation prête</string>
     <string name="export_send_no_handlers">Aucune application disponible pour ouvrir le fichier APKG. Sauvegarde...</string>
@@ -208,8 +192,6 @@
     <string name="tag_editor_add_feedback">Appuyez sur « %2$s » pour confirmer l\'addition de « %1$s »</string>
     <string name="tag_editor_add_feedback_existing">Étiquette existante «%1$s» sélectionnée</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Ce paquet existe déjà.</string>
-    <string name="decks_rename_filtered_nosubdecks">Un paquet filtré ne peut pas avoir de sous-paquets.</string>
     <string name="reminder_title">N’oubliez pas d’étudier aujourd\'hui !</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d carte à réviser en %1$s</item>
@@ -232,9 +214,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
     <string name="basic_answer_sample_text">un exemple</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vide</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Veuillez activer le plein écran pour utiliser Afficher le tiroir de navigation en utilisant JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Veuillez activer le plein écran pour utiliser Afficher le menu d\'options en utilisant JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Impossible d\'enregistrer l\'image du tableau blanc. %s</string>
     <string name="white_board_image_saved">Image du tableau blanc enregistrée dans %s</string>
@@ -255,7 +234,6 @@
     <string name="card_viewer_could_not_find_image">Impossible de charger « %s »</string>
     <string name="card_viewer_media_relative_protocol">Erreur de contenu de la carte : mise à jour du média requise</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Impossible de charger le paquet « %s »</string>
     <string name="search_decks">Rechercher dans les paquets</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Afficher la progression de la migration</string>
     <string name="ankidroid_init_failed_webview_title">Erreur fatale</string>
@@ -359,4 +337,21 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Appuyez pour démarrer la migration de stockage</string>
     <string name="media_sync_required_title">Synchronisation des médias requise</string>
     <string name="media_sync_unavailable_message">La synchronisation des médias est désactivée dans les paramètres. Veuillez synchroniser et sauvegarder tout média qui n\'a pas encore été synchronisé avant de continuer.</string>
+    <string name="audio_saved">Enregistrement sauvegardé</string>
+    <string name="deleting_selected_notes">Deleting selected notes</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    </string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    </string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
+    </string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <!-- Chips should probably be in a separate file, due to the additional length req -->
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
+    </string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    </string>
+    <string name="shared_decks_login_required">Please log in to download more decks</string>
 </resources>

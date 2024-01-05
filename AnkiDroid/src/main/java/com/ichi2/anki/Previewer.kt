@@ -57,7 +57,7 @@ class Previewer : AbstractFlashcardViewer() {
             return
         }
         super.onCreate(savedInstanceState)
-        mCardList = intent.getLongArrayExtra("cardList")!!
+        mCardList = requireNotNull(intent.getLongArrayExtra("cardList")) { "'cardList' required" }
         mIndex = intent.getIntExtra("index", -1)
         if (savedInstanceState != null) {
             mIndex = savedInstanceState.getInt("index", mIndex)
@@ -75,6 +75,7 @@ class Previewer : AbstractFlashcardViewer() {
         disableDrawerSwipe()
         startLoadingCollection()
         initPreviewProgress()
+        setOkResult()
     }
 
     private fun initPreviewProgress() {
@@ -161,13 +162,8 @@ class Previewer : AbstractFlashcardViewer() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackPressed() {
-        setResult(RESULT_OK, resultIntent)
-        super.onBackPressed()
-    }
-
     override fun onNavigationPressed() {
-        setResult(RESULT_OK, resultIntent)
+        setOkResult()
         super.onNavigationPressed()
     }
 
@@ -214,6 +210,7 @@ class Previewer : AbstractFlashcardViewer() {
 
     override fun performReload() {
         mReloadRequired = true
+        setOkResult()
         val newCardList = getColUnsafe.filterToValidCards(mCardList)
         if (newCardList.isEmpty()) {
             finish()
@@ -228,6 +225,7 @@ class Previewer : AbstractFlashcardViewer() {
     override fun onEditedNoteChanged() {
         super.onEditedNoteChanged()
         mNoteChanged = true
+        setOkResult()
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -267,21 +265,24 @@ class Previewer : AbstractFlashcardViewer() {
         mProgressText.text = progress
     }
 
-    private val resultIntent: Intent
-        get() {
-            val intent = Intent()
-            intent.putExtra("reloadRequired", mReloadRequired)
-            intent.putExtra("noteChanged", mNoteChanged)
-            return intent
-        }
+    private fun setOkResult() {
+        setResult(
+            RESULT_OK,
+            Intent().apply {
+                putExtra("reloadRequired", mReloadRequired)
+                putExtra("noteChanged", mNoteChanged)
+            }
+        )
+    }
 
     companion object {
         @CheckResult
-        fun getPreviewIntent(context: Context?, index: Int, cardList: LongArray?): Intent {
-            val intent = Intent(context, Previewer::class.java)
-            intent.putExtra("index", index)
-            intent.putExtra("cardList", cardList)
-            return intent
-        }
+        fun PreviewDestination.toIntent(context: Context) =
+            Intent(context, Previewer::class.java).apply {
+                putExtra("index", index)
+                putExtra("cardList", cardList)
+            }
     }
 }
+
+class PreviewDestination(val index: Int, val cardList: LongArray)

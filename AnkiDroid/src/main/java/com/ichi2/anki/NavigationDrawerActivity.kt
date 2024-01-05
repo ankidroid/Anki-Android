@@ -274,9 +274,9 @@ abstract class NavigationDrawerActivity :
      * Called, when navigation button of the action bar is pressed.
      * Design pattern: template method. Subclasses can override this to define their own behaviour.
      */
-    protected open fun onNavigationPressed() {
+    public open fun onNavigationPressed() {
         if (mNavButtonGoesBack) {
-            finishWithAnimation(END)
+            finish()
         } else {
             openDrawer()
         }
@@ -301,7 +301,7 @@ abstract class NavigationDrawerActivity :
                     val deckPicker = Intent(this@NavigationDrawerActivity, DeckPicker::class.java)
                     // opening DeckPicker should use the instance on the back stack & clear back history
                     deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                    startActivityWithAnimation(deckPicker, END)
+                    startActivity(deckPicker)
                 }
 
                 R.id.nav_browser -> {
@@ -312,19 +312,13 @@ abstract class NavigationDrawerActivity :
                 R.id.nav_stats -> {
                     Timber.i("Navigating to stats")
                     val intent = com.ichi2.anki.pages.Statistics.getIntent(this)
-                    startActivityWithAnimation(intent, START)
+                    startActivity(intent)
                 }
 
                 R.id.nav_settings -> {
                     Timber.i("Navigating to settings")
-                    launchActivityForResultWithAnimation(
-                        Intent(
-                            this@NavigationDrawerActivity,
-                            Preferences::class.java
-                        ),
-                        mPreferencesLauncher,
-                        FADE
-                    )
+                    val intent = Intent(this, Preferences::class.java)
+                    mPreferencesLauncher.launch(intent)
                 }
 
                 R.id.nav_help -> {
@@ -347,7 +341,7 @@ abstract class NavigationDrawerActivity :
         if (currentCardId != null) {
             intent.putExtra("currentCard", currentCardId)
         }
-        startActivityWithAnimation(intent, START)
+        startActivity(intent)
     }
 
     // Override this to specify a specific card id

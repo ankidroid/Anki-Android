@@ -63,7 +63,7 @@
     <string name="add_to_deck_use_current_deck">Χρήση προσωρινής τράπουλας</string>
     <string name="add_to_deck_decide_by_note_type">Απόφαση κατά τύπο σημείωσης</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Βάσει συστήματος</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Φωτεινό</string>
     <string name="day_theme_plain">Απλό</string>
@@ -95,12 +95,13 @@
     <string name="gesture_flag_remove">Αφαίρεση σημαίας</string>
     <string name="gesture_page_up">Page Up</string>
     <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_abort_sync">Διακοπή διαβάσματος και συγχρονισμού</string>
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_hint">Εμφάνιση Υπόδειξης</string>
+    <string name="gesture_show_all_hints">Εμφάνιση Όλων Των Υποδείξεων</string>
     <string name="record_voice">Εγγραφή φωνής</string>
     <string name="replay_voice">Επανάληψη φωνής</string>
     <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
     <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="save_voice">Save Recording</string>
 </resources>

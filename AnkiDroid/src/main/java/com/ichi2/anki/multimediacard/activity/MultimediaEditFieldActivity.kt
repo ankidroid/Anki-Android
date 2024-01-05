@@ -27,6 +27,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import com.ichi2.anki.AnkiActivity
@@ -34,6 +35,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.audio.AudioRecordingController
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
@@ -86,7 +88,15 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         mFieldIndex = extras.first
         mField = extras.second
         mNote = extras.third
+        onBack()
         recreateEditingUi(ChangeUIRequest.init(mField), controllerBundle)
+    }
+
+    // in case media is saved by view button then allows it to be inserted into the filed
+    private fun onBack() {
+        findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener {
+            done()
+        }
     }
 
     private fun finishCancel() {
@@ -245,17 +255,6 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
             val request = ChangeUIRequest.uiChange(TextField())
             recreateEditingUi(request)
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    @Suppress("deprecation") // onActivityResult
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Timber.d("onActivityResult()")
-        if (fieldController != null) {
-            fieldController!!.onActivityResult(requestCode, resultCode, data)
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-        invalidateOptionsMenu()
     }
 
     private fun recreateEditingUIUsingCachedRequest() {
@@ -424,12 +423,10 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     }
 
     private fun createControllerForField(field: IField): IFieldController {
-        @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
-        // the return of field.type is non nullable
         return when (field.type) {
             EFieldType.TEXT -> BasicTextFieldController()
             EFieldType.IMAGE -> BasicImageFieldController()
-            EFieldType.AUDIO_RECORDING -> BasicAudioRecordingFieldController()
+            EFieldType.AUDIO_RECORDING -> AudioRecordingController()
             EFieldType.MEDIA_CLIP -> BasicMediaClipFieldController()
         }
     }

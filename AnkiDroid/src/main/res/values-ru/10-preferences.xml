@@ -47,7 +47,12 @@
     <!-- generic strings -->
     <string name="disabled">Выкл.</string>
     <string name="pref_summary_seconds">%s с</string>
-    <string name="pref_summary_minutes">%s мин.</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="few">%d mins</item>
+        <item quantity="many">%d mins</item>
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">Не найдено</string>
     <!-- preferences.xml categories-->
@@ -113,6 +118,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Касание в центре экрана</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Касание внизу в левом углу</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Касание внизу в правом углу</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">Пункт «%s» в меню</string>
     <string name="card_browser_enable_external_context_menu_summary">Добавляет пункт «%s» в контекстное меню системы</string>
     <string name="double_scrolling_gap" maxLength="41">Двойная прокрутка</string>
@@ -174,14 +180,17 @@
     <string name="show_top_bar_summ">Показывает счётчик карточек и кнопки «Флажок» и «Отметить»</string>
     <string name="show_progress" maxLength="41">Показать оставшиеся</string>
     <string name="show_progress_summ">Показывает число оставшихся карточек</string>
-    <string name="show_eta" maxLength="41">Показывать оценку времени</string>
-    <string name="show_eta_summ">Показывает оставшееся время</string>
     <string name="use_current" maxLength="41">Колода для новых карточек</string>
     <string name="learn_cutoff" maxLength="41">Лимит опережения</string>
     <string name="time_limit" maxLength="41">Лимит учебного блока</string>
     <string name="new_timezone" maxLength="41">Новая обработка часовых поясов</string>
     <string name="day_offset_with_description" maxLength="41">Начало нового дня</string>
-    <string name="day_offset_summary">%s ч. после полуночи</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d hour past midnight</item>
+        <item quantity="few">%d hours past midnight</item>
+        <item quantity="many">%d hours past midnight</item>
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Не выключать экран</string>
     <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>
     <string name="enable_api_title" maxLength="41">Включить AnkiDroid API</string>
@@ -200,6 +209,7 @@
     <string name="html_javascript_debugging_summ">Включает удалённые соединения WebView и сохраняет HTML карточек в директорию AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Повторение</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Специальные возможности</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставлять изображения буфера как PNG</string>
@@ -264,6 +274,8 @@
     <string name="binding_add_key">Добавить кнопку</string>
     <string name="binding_replace_key">Заменить клавишу</string>
     <string name="key_picker_default_press_key">Нажмите кнопку</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберите сторону карточки</string>
     <string name="card_side_question">Вопрос</string>

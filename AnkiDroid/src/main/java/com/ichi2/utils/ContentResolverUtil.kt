@@ -22,10 +22,6 @@ import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 import androidx.annotation.CheckResult
 import timber.log.Timber
-import java.io.File
-import java.lang.Exception
-import java.lang.IllegalStateException
-import java.util.*
 
 object ContentResolverUtil {
     /** Obtains the filename from the url. Throws if all methods return exception  */
@@ -62,7 +58,7 @@ object ContentResolverUtil {
             // If scheme is a File
             // This will replace white spaces with %20 and also other special characters. This will avoid returning null values on file name with spaces and special characters.
             if (uri.path != null) {
-                extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(File(uri.path as String)).toString().lowercase(Locale.ROOT))
+                extension = AssetHelper.getFileExtensionFromFilePath(uri.path as String)
             }
         }
         return if (extension == null) {

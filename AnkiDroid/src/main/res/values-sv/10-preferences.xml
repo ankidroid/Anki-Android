@@ -47,7 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Inaktiverad</string>
     <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">No results</string>
     <!-- preferences.xml categories-->
@@ -113,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tryck vid mitten</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tryck längst ner till vänster</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tryck längst ner till höger</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Meny</string>
     <string name="card_browser_enable_external_context_menu_summary">Aktiverar sammanhangsmenyn ‘%s’ globalt</string>
     <string name="double_scrolling_gap" maxLength="41">Dubbelrullning</string>
@@ -174,14 +178,15 @@
     <string name="show_top_bar_summ">Visa kortstatistik, flagga och märkning i översta raden</string>
     <string name="show_progress" maxLength="41">Visa återstående</string>
     <string name="show_progress_summ">Visa antal återstående kort</string>
-    <string name="show_eta" maxLength="41">Visa ETA</string>
-    <string name="show_eta_summ">Visa återstående tid</string>
     <string name="use_current" maxLength="41">Kortlek för nya kort</string>
     <string name="learn_cutoff" maxLength="41">Gräns för att lära i förväg</string>
     <string name="time_limit" maxLength="41">Tidsgräns</string>
     <string name="new_timezone" maxLength="41">Ny hantering av tidszoner</string>
     <string name="day_offset_with_description" maxLength="41">Början av nästa dag</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d hour past midnight</item>
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Håll skärm på</string>
     <string name="pref_keep_screen_on_summ">Inaktivera skärmtimeout</string>
     <string name="enable_api_title" maxLength="41">Aktivera AnkiDroid API</string>
@@ -200,6 +205,7 @@
     <string name="html_javascript_debugging_summ">Aktivera WebView fjärråtkomst, och spara korts HTML till AnkiDroid-katalogen</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Klistra in urklipps bilder som PNG</string>
@@ -265,6 +271,8 @@
     <string name="binding_add_key">Lägg till knapp</string>
     <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Tryck på en knapp</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Välj kortsida</string>
     <string name="card_side_question">Fråga</string>

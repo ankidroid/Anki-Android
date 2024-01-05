@@ -47,7 +47,9 @@
     <!-- generic strings -->
     <string name="disabled">Đã tắt</string>
     <string name="pref_summary_seconds">%s giây</string>
-    <string name="pref_summary_minutes">%s phút</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="other">%d phút</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">Không có kết quả</string>
     <!-- preferences.xml categories-->
@@ -113,6 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Chạm vào chính giữa</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Chạm vào dưới cùng bên trái</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Chạm vào dưới cùng bên phải</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Bật menu ngữ cảnh ‘%s’ trên toàn cầu</string>
     <string name="double_scrolling_gap" maxLength="41">Bấm phím scrolling (chuột giữa) hai lần</string>
@@ -174,14 +177,14 @@
     <string name="show_top_bar_summ">Hiển thị số lượng thẻ, gắn cờ và đánh dấu trên thanh trên cùng</string>
     <string name="show_progress" maxLength="41">Hiển thị còn lại</string>
     <string name="show_progress_summ">Hiển thị số thẻ còn lại</string>
-    <string name="show_eta" maxLength="41">Hiển thị ETA</string>
-    <string name="show_eta_summ">Hiển thị thời gian còn lại</string>
     <string name="use_current" maxLength="41">Bộ thẻ cho thẻ mới</string>
     <string name="learn_cutoff" maxLength="41">Tìm hiểu trước giới hạn</string>
     <string name="time_limit" maxLength="41">Giới hạn thời gian của hộp thời gian</string>
     <string name="new_timezone" maxLength="41">Xử lý múi giờ mới</string>
     <string name="day_offset_with_description" maxLength="41">Bắt đầu ngày hôm sau (0 là nửa đêm, 23 là 11 giờ tối)</string>
-    <string name="day_offset_summary">%s giờ đã qua nửa đêm</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Luôn bật màn hình</string>
     <string name="pref_keep_screen_on_summ">Tắt thời gian chờ của màn hình</string>
     <string name="enable_api_title" maxLength="41">Bật AnkiDroid API</string>
@@ -200,6 +203,7 @@
     <string name="html_javascript_debugging_summ">Bật kết nối WebView từ xa và lưu HTML thẻ vào thư mục AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Người xem xét</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Trợ năng</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
@@ -264,6 +268,8 @@
     <string name="binding_add_key">Add key</string>
     <string name="binding_replace_key">Thay thế khoá</string>
     <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Question</string>

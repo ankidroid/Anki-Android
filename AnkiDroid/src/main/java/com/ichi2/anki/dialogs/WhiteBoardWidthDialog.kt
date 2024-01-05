@@ -28,12 +28,12 @@ import com.ichi2.utils.*
 import java.util.function.Consumer
 
 class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWidth: Int) {
-    private var mWbStrokeWidthText: FixedTextView? = null
+    private var strokeWidthText: FixedTextView? = null
     var onStrokeWidthChanged: Consumer<Int>? = null
     private val seekBarChangeListener: OnSeekBarChangeListener = object : OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar, value: Int, b: Boolean) {
             wbStrokeWidth = value
-            mWbStrokeWidthText!!.text = "" + value
+            strokeWidthText!!.text = "" + value
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -49,12 +49,12 @@ class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWi
         val layout = LinearLayout(context)
         layout.orientation = LinearLayout.VERTICAL
         layout.setPadding(6, 6, 6, 6)
-        mWbStrokeWidthText = FixedTextView(context)
-        mWbStrokeWidthText!!.gravity = Gravity.CENTER_HORIZONTAL
-        mWbStrokeWidthText!!.textSize = 30f
-        mWbStrokeWidthText!!.text = "" + wbStrokeWidth
+        strokeWidthText = FixedTextView(context)
+        strokeWidthText!!.gravity = Gravity.CENTER_HORIZONTAL
+        strokeWidthText!!.textSize = 30f
+        strokeWidthText!!.text = "" + wbStrokeWidth
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        layout.addView(mWbStrokeWidthText, params)
+        layout.addView(strokeWidthText, params)
         val seekBar = SeekBar(context)
         seekBar.progress = wbStrokeWidth
         seekBar.setOnSeekBarChangeListener(seekBarChangeListener)

@@ -17,8 +17,6 @@
 package com.ichi2.libanki
 
 import anki.import_export.ExportLimit
-import anki.import_export.ImportResponse
-import anki.import_export.importAnkiPackageOptions
 import anki.search.SearchNode
 import net.ankiweb.rsdroid.Backend
 
@@ -84,20 +82,17 @@ fun Collection.exportCollectionPackage(
     includeMedia: Boolean,
     legacy: Boolean = true
 ) {
-    close(downgrade = false, forFullSync = true)
+    close(forFullSync = true)
     backend.exportCollectionPackage(
         outPath = outPath,
         includeMedia = includeMedia,
         legacy = legacy
     )
-    reopen(afterFullSync = false)
+    reopen()
 }
 
-/**
- * Import an .apkg file into the current collection.
- */
-fun Collection.importAnkiPackage(path: String): ImportResponse {
-    return backend.importAnkiPackage(packagePath = path, importAnkiPackageOptions { withScheduling = true })
+fun Collection.importAnkiPackageRaw(input: ByteArray): ByteArray {
+    return backend.importAnkiPackageRaw(input)
 }
 
 /**
@@ -113,6 +108,22 @@ fun Collection.exportAnkiPackage(
     legacy: Boolean = true
 ) {
     backend.exportAnkiPackage(outPath, withScheduling, withMedia, legacy, limit)
+}
+
+fun Collection.exportNotesCsv(
+    outPath: String,
+    withHtml: Boolean,
+    withTags: Boolean,
+    withDeck: Boolean,
+    withNotetype: Boolean,
+    withGuid: Boolean,
+    limit: ExportLimit
+) {
+    backend.exportNoteCsv(outPath, withHtml, withTags, withDeck, withNotetype, withGuid, limit)
+}
+
+fun Collection.exportCardsCsv(outPath: String, withHtml: Boolean, limit: ExportLimit) {
+    backend.exportCardCsv(outPath, withHtml, limit)
 }
 
 fun Collection.getCsvMetadataRaw(input: ByteArray): ByteArray {

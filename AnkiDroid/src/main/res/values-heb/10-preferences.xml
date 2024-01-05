@@ -46,8 +46,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">מבוטל</string>
-    <string name="pref_summary_seconds">%sשניות</string>
-    <string name="pref_summary_minutes">%s דקות</string>
+    <string name="pref_summary_seconds">%s שניות</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">דקה %d</item>
+        <item quantity="two">%d דקות</item>
+        <item quantity="many">%d דקות</item>
+        <item quantity="other">%d דקות</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">אין תוצאות</string>
     <!-- preferences.xml categories-->
@@ -113,6 +118,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">גע במרכז האמצע</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">נגיעה בצד שמאל למטה</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">נגיעה בצד ימין למטה</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">תפריט %s</string>
     <string name="card_browser_enable_external_context_menu_summary">מאפשר את תפריט ההקשר \'%s\' גלובלית במערכת</string>
     <string name="double_scrolling_gap" maxLength="41">גלילה כפולה</string>
@@ -134,8 +140,8 @@
     <string name="sync_status_badge_summ">שנה את סמל הסנכרון כאשר ניתן להעלות שינויים</string>
     <string name="metered_sync_title" maxLength="41">אפשר סנכרון בחיבורים מדורגים</string>
     <string name="metered_sync_summary">אם מושבת, תקבל אזהרה אם תנסה לסנכרן בחיבור בנדידה</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">תדירות</string>
+    <string name="backup_limits_lifetime">אורך חיים</string>
     <string name="app_theme" maxLength="41">ערכת נושא</string>
     <string name="day_theme" maxLength="41">ערכת יום</string>
     <string name="night_theme" maxLength="41">ערכת לילה</string>
@@ -175,14 +181,17 @@
     <string name="show_top_bar_summ">הצג ספירת כרטיסים, דגל וסמן בסרגל העליון</string>
     <string name="show_progress" maxLength="41">הצג נותרים</string>
     <string name="show_progress_summ">הצג את מספר הכרטיסים שנותרו</string>
-    <string name="show_eta" maxLength="41">הצג הערכת זמן לסיום</string>
-    <string name="show_eta_summ">הצג זמן שנותר</string>
     <string name="use_current" maxLength="41">חפיסה לכרטיסים חדשים</string>
     <string name="learn_cutoff" maxLength="41">לימוד מעבר למכסה</string>
     <string name="time_limit" maxLength="41">מגבלת זמן בתיבת-זמן</string>
     <string name="new_timezone" maxLength="41">טיפול באזור זמן חדש</string>
     <string name="day_offset_with_description" maxLength="41">התחל את היום הבא</string>
-    <string name="day_offset_summary">%s שעות אחרי חצות</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d שעה אחרי חצות</item>
+        <item quantity="two">%d שעות אחרי חצות</item>
+        <item quantity="many">%d שעות אחרי חצות</item>
+        <item quantity="other">%d שעות אחרי חצות</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">להשאיר את המסך דולק</string>
     <string name="pref_keep_screen_on_summ">השבת כיבוי מסך</string>
     <string name="enable_api_title" maxLength="41">הפעלת ה־API של AnkiDroid</string>
@@ -201,6 +210,7 @@
     <string name="html_javascript_debugging_summ">אפשר חיבורי WebView מרוחקים ושמור HTML של כרטיס בספריית AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">סוקר</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">נגישות</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">הדבק תמונות לוח כ-PNG</string>
@@ -265,6 +275,8 @@
     <string name="binding_add_key">הוסף כפתור</string>
     <string name="binding_replace_key">החלף כפתור</string>
     <string name="key_picker_default_press_key">לחץ על כפתור</string>
+    <string name="binding_add_axis">הוסף ג\'ויסטיק/בקר תנועה</string>
+    <string name="axis_picker_move_joystick">הזז ג\'ויסטיק/בקר תנועה</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">בחר צד קלף</string>
     <string name="card_side_question">שאלה</string>

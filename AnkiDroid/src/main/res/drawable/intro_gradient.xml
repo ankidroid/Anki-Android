@@ -17,7 +17,7 @@
 <!-- the top gradient for the app intro -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <gradient
-        android:startColor="@color/theme_light_primary"
+        android:startColor="@color/material_light_blue_500"
         android:endColor="?android:attr/colorBackground"
         android:type="linear"
         android:angle="270"

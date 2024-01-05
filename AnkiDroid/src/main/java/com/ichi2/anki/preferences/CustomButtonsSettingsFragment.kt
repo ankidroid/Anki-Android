@@ -39,31 +39,14 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
                 positiveButton(R.string.reset) {
                     // Reset the settings to default
                     requireContext().sharedPrefs().edit {
-                        remove("customButtonUndo")
-                        remove("customButtonScheduleCard")
-                        remove("customButtonEditCard")
-                        remove("customButtonTags")
-                        remove("customButtonAddCard")
-                        remove("customButtonReplay")
-                        remove("customButtonCardInfo")
-                        remove("customButtonSelectTts")
-                        remove("customButtonDeckOptions")
-                        remove("customButtonMarkCard")
-                        remove("customButtonToggleMicToolBar")
-                        remove("customButtonBury")
-                        remove("customButtonSuspend")
-                        remove("customButtonFlag")
-                        remove("customButtonDelete")
-                        remove("customButtonEnableWhiteboard")
-                        remove("customButtonSaveWhiteboard")
-                        remove("customButtonWhiteboardPenColor")
-                        remove("customButtonClearWhiteboard")
-                        remove("customButtonShowHideWhiteboard")
+                        allKeys().forEach {
+                            remove(it)
+                        }
                     }
                     // #9263: refresh the screen to display the changes
                     refreshScreen()
                 }
-                negativeButton(R.string.dialog_cancel, null)
+                negativeButton(R.string.dialog_cancel)
             }
             true
         }

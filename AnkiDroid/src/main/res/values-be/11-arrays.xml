@@ -103,4 +103,5 @@
     <string name="replay_voice">Узнавіць голас</string>
     <string name="automatic_answer_option_2">Цяжкое (добра, калі недаступна)</string>
     <string name="automatic_answer_option_4">Лёгкае (добра, калі недаступна)</string>
+    <string name="save_voice">Save Recording</string>
 </resources>

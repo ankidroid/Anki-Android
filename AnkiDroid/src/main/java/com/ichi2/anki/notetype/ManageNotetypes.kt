@@ -38,7 +38,6 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
@@ -151,7 +150,7 @@ class ManageNotetypes : AnkiActivity() {
             AlertDialog.Builder(this@ManageNotetypes).show {
                 title(R.string.model_browser_delete)
                 message(messageResourceId)
-                positiveButton(R.string.dialog_ok) {
+                positiveButton(R.string.dialog_positive_delete) {
                     launchCatchingTask {
                         runAndRefreshAfter { removeNotetype(noteTypeUiModel.id) }
                     }
@@ -164,7 +163,7 @@ class ManageNotetypes : AnkiActivity() {
     private suspend fun addNewNotetype() {
         val optionsToDisplay = withProgress {
             withCol {
-                val standardNotetypesModels = StockNotetype.Kind.values()
+                val standardNotetypesModels = StockNotetype.Kind.entries
                     .filter { it != StockNotetype.Kind.UNRECOGNIZED }
                     .map {
                         val stockNotetype = from_json_bytes(getStockNotetypeLegacy(it))
@@ -287,11 +286,7 @@ class ManageNotetypes : AnkiActivity() {
         val targetIntent = Intent(this@ManageNotetypes, T::class.java).apply {
             extras.forEach { toExtra(it) }
         }
-        launchActivityForResultWithAnimation(
-            targetIntent,
-            outsideChangesLauncher,
-            ActivityTransitionAnimation.Direction.START
-        )
+        outsideChangesLauncher.launch(targetIntent)
     }
 
     private fun Intent.toExtra(newExtra: Map.Entry<String, Any>) {

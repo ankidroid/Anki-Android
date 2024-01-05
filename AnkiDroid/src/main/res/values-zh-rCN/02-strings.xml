@@ -52,6 +52,7 @@
     <string name="CardEditorModel">笔记模板：</string>
     <string name="CardEditorTags">标签：%1$s</string>
     <string name="CardEditorCards">卡片：%1$s</string>
+    <string name="edit_occlusions">编辑闭合</string>
     <string name="tag_name">标签</string>
     <string name="add_new_filter_tags">添加/过滤标签</string>
     <string name="add_tag">添加标签</string>
@@ -149,12 +150,10 @@
     <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
     <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
     <string name="info_rate">给 AnkiDroid 评分</string>
-    <string name="import_title">正在导入…</string>
+    <string name="import_title">正在导入&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">添加</string>
     <string name="import_message_replace_confirm">这将删除你当前的所有记忆库，并用文件%s中的内容加以替换。你确定吗？</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="other">您想要导入以下文件吗？\n%s\n 这可能需要很长的时间</item>
-    </plurals>
+    <string name="import_dialog_message_add">将“%s”添加到牌组集合吗？这可能需要很长的时间。</string>
     <string name="import_log_no_apkg">这不是一个有效的 apkg 文件</string>
     <string name="import_title_error" comment="Title of error dialog">错误</string>
     <string name="import_error_handle_exception">导入文件\n\n%s 失败</string>
@@ -162,19 +161,7 @@
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
     <string name="import_error_copy_to_cache">缓存文件失败（可能超出存储空间）</string>
-    <string name="import_error_multiple_colpkg">选择了多个 colpkg 文件。</string>
-    <string name="import_error_colpkg_apkg">同时选择了 apkg &amp; colpkg 文件。</string>
     <string name="import_interrupted">导入中断</string>
-    <string name="export_include_schedule">包括学习进度</string>
-    <string name="export_include_media">包括媒体文件</string>
-    <string name="confirm_apkg_export">要将集合导出为 apkg 文件吗？</string>
-    <string name="confirm_apkg_export_deck">将「%s」导出为 akpg 文件？</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">导出 %d 张选定卡片为 apkg 文件？</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">导出 %d 个选定笔记为 apkg 文件？</item>
-    </plurals>
     <string name="export_preparation_in_progress">正在准备导出&#8230;</string>
     <string name="export_ready_title">已准备好导出</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>
@@ -203,8 +190,6 @@
     <string name="tag_editor_add_feedback">点击「%2$s」以确认添加「%1$s」</string>
     <string name="tag_editor_add_feedback_existing">已选中 %1$s</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">该牌组已存在</string>
-    <string name="decks_rename_filtered_nosubdecks">筛选牌组不能有子牌组</string>
     <string name="reminder_title">不要忘记今天去学习 ！</string>
     <plurals name="reminder_text">
         <item quantity="other">%2$d 张卡片在 %1$s 中待复习</item>
@@ -226,9 +211,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">示例</string>
     <string name="basic_answer_sample_text">一个示例</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">请开启全屏以使用 JavaScript 显示导航抽屉。</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">请开启全屏以使用 JavaScript 显示选项菜单。</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">保存白板图像失败。 %s</string>
     <string name="white_board_image_saved">白板图像已保存到 %s</string>
@@ -249,7 +231,6 @@
     <string name="card_viewer_could_not_find_image">卡片内容错误：加载「%s」失败</string>
     <string name="card_viewer_media_relative_protocol">卡片内容错误：需要更新媒体</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">加载牌组「%s」失败</string>
     <string name="search_decks">搜索牌组</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">显示迁移进度</string>
     <string name="ankidroid_init_failed_webview_title">严重错误</string>
@@ -353,4 +334,21 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">轻按开始存储迁移</string>
     <string name="media_sync_required_title">需要进行媒体同步</string>
     <string name="media_sync_unavailable_message">媒体同步在设置中被禁用。请同步并备份任何尚未同步的媒体，然后继续</string>
+    <string name="audio_saved">录音已保存</string>
+    <string name="deleting_selected_notes">删除选定笔记</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        轻按声音来聆听
+    </string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">使用声音前应先安装声音
+    </string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">仍要使用
+    </string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">文本到语音错误(%s)</string>
+    <!-- Chips should probably be in a separate file, due to the additional length req -->
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        互联网
+    </string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        安装
+    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        打开文本转语音设置失败
+    </string>
+    <string name="shared_decks_login_required">请登录以下载更多牌组</string>
 </resources>

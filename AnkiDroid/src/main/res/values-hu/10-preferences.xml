@@ -47,7 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Kikapcsolva</string>
     <string name="pref_summary_seconds">%s mp</string>
-    <string name="pref_summary_minutes">%s perc</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">Nincs találat</string>
     <!-- preferences.xml categories-->
@@ -113,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Érintés a közepén</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Érintés bal alul</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Érintés jobb alul</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">\'%s\' Menü</string>
     <string name="card_browser_enable_external_context_menu_summary">Engedélyezi a \'%s\' kontextus menüt globálisan</string>
     <string name="double_scrolling_gap" maxLength="41">Dupla görgetés</string>
@@ -134,8 +138,8 @@
     <string name="sync_status_badge_summ">A szinkronizálás ikonjának módosítása, amikor a változások feltölthetők</string>
     <string name="metered_sync_title" maxLength="41">Szinkronizálás forgalmi díjas kapcsolaton</string>
     <string name="metered_sync_summary">Ha letiltva, figyelmeztet, ha szinkronizálni próbál mért kapcsolaton.</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Gyakoriság</string>
+    <string name="backup_limits_lifetime">Időköz</string>
     <string name="app_theme" maxLength="41">Sablon</string>
     <string name="day_theme" maxLength="41">Nappali téma</string>
     <string name="night_theme" maxLength="41">Éjszakai téma</string>
@@ -175,14 +179,15 @@
     <string name="show_top_bar_summ">Kártya számlálók, jelölők és jelölések mutatása a felső bárban,</string>
     <string name="show_progress" maxLength="41">Hátralévő mutatása</string>
     <string name="show_progress_summ">Hátralévő kártyák számának megjelenítése</string>
-    <string name="show_eta" maxLength="41">ETA megjelenítése</string>
-    <string name="show_eta_summ">Hátralévő idő mutatása</string>
     <string name="use_current" maxLength="41">Új kártyák paklija</string>
     <string name="learn_cutoff" maxLength="41">Korai tanulás korlátai</string>
     <string name="time_limit" maxLength="41">Időkorlát érték</string>
     <string name="new_timezone" maxLength="41">Új időzóna kezelés</string>
     <string name="day_offset_with_description" maxLength="41">Nap kezdete</string>
-    <string name="day_offset_summary">%s órával éjfél után</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d hour past midnight</item>
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Ne kapcsolja ki a képernyőt</string>
     <string name="pref_keep_screen_on_summ">Képernyő időtúllépésének kikapcsolása</string>
     <string name="enable_api_title" maxLength="41">Engedélyezze az AnkiDroid API-t</string>
@@ -201,6 +206,7 @@
     <string name="html_javascript_debugging_summ">Távoli WebView kapcsolatok engedélyezése és a HTML kártyák AnkiDroid mappába mentése</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Felülvizsgáló</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Kisegítő lehetőségek</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Vágólap képeket PNG-ként illeszt be</string>
@@ -265,6 +271,8 @@
     <string name="binding_add_key">Kulcs hozzáadása</string>
     <string name="binding_replace_key">Kulcs felcserélése</string>
     <string name="key_picker_default_press_key">Nyomj meg egy billentyűt</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kártya oldalának kiválasztása</string>
     <string name="card_side_question">Kérdés</string>

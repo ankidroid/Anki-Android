@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">გაშლა</string>
     <string name="collapse">ჩაკეცვა</string>
-    <string name="study_more">მეტის სწავლა</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">დარჩა %d წუთი</item>
-        <item quantity="other">დარჩა %d წუთი</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">დარჩა %1$d საათი %2$d</item>
-        <item quantity="other">დარჩა %1$d საათი %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">დარჩა %1$d დღე %2$d</item>
-        <item quantity="other">დარჩა %1$d დღე %2$d</item>
-    </plurals>
     <string name="no_cards_placeholder_title">კოლექცია ცარიელია</string>
     <string name="no_cards_placeholder_description">ატვირთეთ ბარათები\n+ნიშნით</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">მარტივი</string>
     <string name="menu_import">შემოტანა</string>
     <string name="undo">აღდგენა</string>
+    <string name="redo">გამეორება</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">ხაზის გაუქმება</string>
     <string name="move_all_to_deck">ყველას გადატანა დასტაში</string>
     <string name="unbury">გამოჩენა</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">დასტის ძებნა</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">დასტის ძიება</string>
     <string name="invalid_deck_name">დასტის სახელი არასწორია</string>
-    <string name="studyoptions_empty">დასტა ცარიელია. დააჭირეთ + ნიშანს, რომ დაამატოთ ახალი კონტენტი.</string>
-    <string name="studyoptions_limit_reached">დღიური სწავლის ლიმიტი მიღწეულია</string>
-    <string name="studyoptions_empty_schedule">ბარათები სასწავლად არაა დაგეგმილი</string>
-    <string name="studyoptions_congrats_finished">გილოცავთ! ამჯერად დაასრულეთ.</string>
     <string name="studyoptions_no_cards_due">ჯერ ბარათები არ არის</string>
     <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
     <string name="button_sync" comment="Text of the sync button">სინქრონიზაცია</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">სინქრონიზაციის გაგრძელება</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">სინქრონიზაცია გაუქმებულია</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">გაუქმება\&#8230;\nამან შეიძლება ცოტა დრო წაიღოს.</string>
-    <string name="export">ექსპორტი</string>
-    <string name="export_collection">კოლექციის ექსპორტი</string>
     <string name="export_deck">დასტის ექსპორტი</string>
     <string name="nothing">არაფერი</string>
     <!-- Card template editor -->
@@ -252,7 +234,7 @@
     <string name="new_unsafe_collection">ახალი კოლექცია წაიშლება თქვენი მოწყობილობიდან თუკი მოახდენთ AnkiDroid-ის დეინსტალაციას</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
+    <string name="storage_access_title">წვდომა მეხსიერებაზე</string>
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">წვდომა ყველა ფაილზე</string>
 </resources>

@@ -32,7 +32,7 @@ class PermissionsActivityTest : RobolectricTest() {
     @Test
     fun `Each screen starts normally and has the same permissions of a PermissionSet`() {
         ActivityScenario.launch(PermissionsActivity::class.java).onActivity { activity ->
-            for (permissionSet in PermissionSet.values()) {
+            for (permissionSet in PermissionSet.entries) {
                 val fragment = permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance() ?: continue
                 activity.supportFragmentManager.commitNow {
                     replace(R.id.fragment_container, fragment)

@@ -59,16 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Тулысынча күрсәтү</string>
     <string name="collapse">Борып ябу</string>
-    <string name="study_more">Тагын укырга</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="other">%d минут калды</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d сәгатъ %2$d калды</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d көн %2$d калды</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Коллекция буш</string>
     <string name="no_cards_placeholder_description">Кәртләрне\n+ төймәсена басып беркетә башлагыз.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -82,6 +72,7 @@
     <string name="ease_button_easy">Җиңел</string>
     <string name="menu_import">Импортлау</string>
     <string name="undo">Кире алу</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Штрихны кире алу</string>
     <string name="move_all_to_deck">Бөтенесен колодага кую</string>
     <string name="unbury">Кайтару</string>
@@ -134,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Колода эзләү</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Колода эзләү</string>
     <string name="invalid_deck_name">Шундый колода исеме була алмый</string>
-    <string name="studyoptions_empty">Бу колода буш. Берәрнәрсә өстәү өчен + төймәсенә басыгыз.</string>
-    <string name="studyoptions_limit_reached">Бүгенге өйрәнү үтәлде</string>
-    <string name="studyoptions_empty_schedule">Өйрәнергә планланган кәртләр юк</string>
-    <string name="studyoptions_congrats_finished">Котлыйбыз! Хәзергә бетердегез.</string>
     <string name="studyoptions_no_cards_due">Хәзерге вакытка кәртләр юк</string>
     <string name="sd_card_not_mounted">Хәтер картасы куелмаган</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизацияләргә</string>
@@ -146,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Синхронизацияне дәвам итү</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизация кире кагылган</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Кире кагу...\nБу бераз вакыт алырга мөмкин </string>
-    <string name="export">Экспортлау</string>
-    <string name="export_collection">Коллекцияне экспортлау</string>
     <string name="export_deck">Колоданы экспортлау</string>
     <string name="nothing">Берни </string>
     <!-- Card template editor -->

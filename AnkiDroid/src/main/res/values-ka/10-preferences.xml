@@ -47,7 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">გამორთულია</string>
     <string name="pref_summary_seconds">%s წმ</string>
-    <string name="pref_summary_minutes">%s წთ</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d წთ</item>
+        <item quantity="other">%d წთ</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">ვერაფერი მოიძებნა</string>
     <!-- preferences.xml categories-->
@@ -69,7 +72,7 @@
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">ხაზის სისქე</string>
     <string name="use_input_tag" maxLength="41">პასუხის აკრეფა ბარათში</string>
-    <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+    <string name="use_input_tag_summ">პასუხის ჩასაწერად ბარათში ტექსტის შესაყვანი ველის დამატება</string>
     <string name="reset_languages" maxLength="41">ენების გადატვირთვა</string>
     <string name="reset_languages_summ">ყველა დასტისთვის (ხმოვანი წამკითხველისთვის და ლექსიკონებისთვის) მისადაგებული ენების დაყენება საწყის პარამეტრებზე</string>
     <string name="reset_languages_question">დაყენდეს ყველა მისადაგებული ენა საწყის პარამეტრებზე?</string>
@@ -113,8 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">ცენტრის შუაგულში შეხება</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ქვედა მარცხენა კუთხეში შეხება</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ქვედა მარჯვენა კუთხეში შეხება</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">„%s“-მენიუ</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu_summary">გლობალურად ამატებს „%s“ ღილაკს კონტექსტურ მენიუში (მენიუ, რომელიც ტექსტის მონიშვნისას ჩნდება)</string>
     <string name="double_scrolling_gap" maxLength="41">ორმაგი ჩამოყოლა</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
     <string name="swipe_sensitivity" maxLength="41">თითის გასმის აღქმადობა</string>
@@ -125,8 +129,7 @@
     <string name="sync_account" maxLength="41">AnkiWeb ანგარიში</string>
     <string name="sync_account_summ_logged_out">არ ხართ შესული</string>
     <string name="automatic_sync_choice" maxLength="41">ავტომატური სინქრონიზაცია</string>
-    <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+    <string name="automatic_sync_choice_summ">ავტომატური სინქრონიზაცია აპლიკაციის გახსნისას/აპლიკაციიდან გამოსვლისას, თუკი ბოლო სინქრონიზაცია 10-ზე მეტი წუთის წინ იყო.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">ყოველთვის</string>
     <string name="sync_media_only_unmetered">მხოლოდ ულიმიტო ინტერნეტ-კავშირის ქონისას</string>
     <string name="sync_media_never">არასდროს</string>
@@ -134,8 +137,8 @@
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">სინქრონიზაციის დაშვება ლიმიტირებული ტარიფის მქონე კავშირებით</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">სიხშირე</string>
+    <string name="backup_limits_lifetime">არსებობის ხანგრძლივობა</string>
     <string name="app_theme" maxLength="41">იერსახე</string>
     <string name="day_theme" maxLength="41">დღის იერსახე</string>
     <string name="night_theme" maxLength="41">ღამის იერსახე</string>
@@ -165,7 +168,7 @@
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ორმაგი შეხების შუალედის დრო (მილიწამებში)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press" maxLength="41">ხანგრძლივი შეხების საჭირო დრო (მწმ) პასუხის საჩვენებლად</string>
     <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">ღილაკზე დროის ჩვენება</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
@@ -175,14 +178,15 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">დარჩენილის ჩვენება</string>
     <string name="show_progress_summ">ბარათების დარჩენილი რაოდენობის ჩვენება</string>
-    <string name="show_eta" maxLength="41">სავარაუდოდ დარჩენილი დროის ჩვენება</string>
-    <string name="show_eta_summ">დარჩენილი დროის ჩვენება</string>
     <string name="use_current" maxLength="41">დასტა ახალი ბარათებისთვის</string>
     <string name="learn_cutoff" maxLength="41">წინასწარი სწავლის ლიმიტი</string>
     <string name="time_limit" maxLength="41">განკუთვნილი დროის ლიმიტი</string>
     <string name="new_timezone" maxLength="41">ახალი სასაათო სარტყლის გათვალისწინება</string>
     <string name="day_offset_with_description" maxLength="41">ახალი დღის დასაწყისი</string>
-    <string name="day_offset_summary">ნაშუაღამევის %s საათზე</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">ნაშუაღამევის %d საათზე</item>
+        <item quantity="other">ნაშუაღამევის %d საათზე</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">ეკრანი ჩართული დარჩეს</string>
     <string name="pref_keep_screen_on_summ">ეკრანის თვითგამორთვის გამორთვა</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API-ს ჩართვა</string>
@@ -201,14 +205,15 @@
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">გადამხედველი</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">მარტივი წვდომა</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">გაცვლითი ბუფერის სურათების PNG-ფაილებად ჩასმა</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="paste_as_png_summary">Anki გაცვლის ბუფერიდან ჩასმულ სურათებს სტანდარტულად JPG-ფაილებად სვამს, რათა მეხსიერების სივრცე დაზოგოს. ამ პარამეტრის ჩართვით სურათები PNG ფორმატში ჩაისმევა.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">სწავლის რეჟიმიდან/აპლიკაციიდან გამოსასვლელად უკან წასასვლელ ღილაკზე ორჯერ დაჭერა</string>
+    <string name="exit_via_double_tap_back_summ">ამცირებს იმის ალბათობას, რომ შემთხვევით გახვიდეთ</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files" maxLength="41">ყველა ფაილის დაშვება მედიაფაილების იმპორტირებისას</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">სინქრონიზაციის სხვა სერვერი</string>
@@ -222,12 +227,12 @@
     <!-- Key Bindings -->
     <string name="keyboard">კლავიატურა</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="answer_buttons" maxLength="41">პასუხის ღილაკები</string>
+    <string name="card" maxLength="41">ბარათი</string>
+    <string name="note" maxLength="41">შენიშვნა</string>
+    <string name="navigation" maxLength="41">ნავიგაცია</string>
+    <string name="media" maxLength="41">მედიაფაილები</string>
+    <string name="misc" maxLength="41">სხვადასხვა</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">იარლიყების მონიშვნა</string>
     <!-- Deck configurations -->
@@ -245,13 +250,13 @@
     <!-- analytics options -->
     <string name="analytics_dialog_title">მოგვეხმარეთ AnkiDroid-ის გაუმჯობესებაში!</string>
     <string name="analytics_title" maxLength="41">ფუნქციების მოხმარების მონაცემების გაზიარება</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_summ">დეველოპერთა გუნდისთვის ფუნქციების გამოყენების სტატისტიკის გაზიარებით შეგიძლიათ AnkiDroid-ში წვლილი შეიტანოთ</string>
     <string name="note_editor_replace_newlines" maxLength="41">აბზაცების ჩანაცვლება HTML-ით</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="no_code_formatting" maxLength="41">აკრეფილი პასუხების მარტივი ფორმატირება</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="no_code_formatting_summ">ხელს უშლის „􏿾“ სიმბოლოს აკრეფილ პასუხებში წარმოქმნას</string>
+    <string name="type_in_answer_focus" maxLength="41">დაფოკუსება „პასუხის ჩაწერაზე“</string>
+    <string name="type_in_answer_focus_summ">გადამხედველში „პასუხის ჩაწერის“ ველის ავტომატურად დაფოკუსება</string>
     <!-- About -->
     <string name="open_changelog">ცვლილებების ჩამონათვალის გახსნა</string>
     <string name="pref_cat_about_title" maxLength="41">შესახებ</string>
@@ -266,6 +271,8 @@
     <string name="binding_add_key">კლავიშის დამატება</string>
     <string name="binding_replace_key">კლავიშის შეცვლა</string>
     <string name="key_picker_default_press_key">დააჭირეთ ნებისმიერ კლავიშს</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">ბარათის გვერდის არჩევა</string>
     <string name="card_side_question">კითხვა</string>
@@ -324,7 +331,7 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">კოლექციის წაშლა</string>
     <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">კოლექციის წაშლა</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ნამდვილად გსურთ თქვენი კოლექციის, მედიაფაილებისა და სარეზერვო ასლების წაშლა?\n\nშენიშვნა: ამ ოპერაციის შედეგად ფანჯარა დაიხურება.</string>
     <string name="progress__deleting_collection">მიმდინარეობს კოლექციის წაშლა&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">ყველაფრის წაშლა</string>
@@ -335,7 +342,7 @@
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">აპლიკაციის მონაცემების წაშლა</string>
     <string name="pref__delete_app_data__summary">პარამეტრებისა და აპლიკაციის სხვა მონაცემების წაშლა</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">აპლიკაციის მონაცემების წაშლა</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ნამდვილად გსურთ აპლიკაციის მონაცემების წაშლა? ამაში შედის პარამეტრები და აპლიკაციის სხვა მონაცემებიც.\n\nშენიშვნა: ამ ოპერაციის შედეგად ფანჯარა დაიხურება.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->

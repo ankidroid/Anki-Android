@@ -52,6 +52,7 @@
     <string name="CardEditorModel">النوع:</string>
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">اسم الوسم</string>
     <string name="add_new_filter_tags">إضافة/فلترة الوسوم</string>
     <string name="add_tag">إضافة وسم</string>
@@ -73,7 +74,7 @@
     <string name="leech_notification">عُلِّمت البطاقة كمستعصية</string>
     <string name="webview_crash_unknown">‏‏خطأ غير معروف</string>
     <string name="webview_crash_unknwon_detailed">حدث هذا بسبب خطأ داخلي في عارض الويب</string>
-    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom">الذاكرة ممتلئة</string>
     <string name="webview_crash_oom_details">تم إنهاء عارض الويب من قبل النظام. يحدث هذا عادة عندما ينفذ التطبيق من الذاكرة، غالبًا بسبب خطوط أو وسائط كبيرة.</string>
     <string name="webview_crash_nonfatal">توقف معالج عارض الويب عن العمل. السبب: %s</string>
     <string name="webview_crash_fatal">خطأ قاتل: توقف معالج عارض الويب عن العمل. السبب: %s</string>
@@ -151,7 +152,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">معاينة</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d من %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">إعادة التسمية</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">تحقق</string>
     <string name="check_db">فحص قاعدة البيانات</string>
     <string name="check_media">فحص الوسائط</string>
     <string name="empty_cards">بطاقات فارغة</string>
@@ -162,14 +163,7 @@
     <string name="import_title">استيراد</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
     <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="zero">إضافة \"%s\" إلى المجموعة؟ قد يستغرق ذلك وقتاً طويلاً</item>
-        <item quantity="one">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
-        <item quantity="two">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
-        <item quantity="few">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
-        <item quantity="many">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
-        <item quantity="other">هل تريد استيراد الملفات التالية:\n%s\nقد يستغرق هذا وقتًا طويلًا.</item>
-    </plurals>
+    <string name="import_dialog_message_add">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا</string>
     <string name="import_log_no_apkg">ملف حزمة أنكي غير صالح</string>
     <string name="import_title_error" comment="Title of error dialog">خطأ</string>
     <string name="import_error_handle_exception">فشل استيراد الملف\n\n%s</string>
@@ -177,29 +171,7 @@
     <string name="import_error_load_imported_database">استبدالات قاعدة بيانات أنكي (.anki2) غير مدعومة. الرجاء الاطلاع على الدليل لتعليمات الاستبدال.</string>
     <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة أنكيدرويد. الرجاء الاطلاع على دليل المستخدم لكيفية استيراد ملفات أنكي يدويًا: \n%s</string>
     <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاذ مساحة التخزين)</string>
-    <string name="import_error_multiple_colpkg">تم تحديد العديد من ملفات colpkg.</string>
-    <string name="import_error_colpkg_apkg">تم تحديد كل من ملفات apkg &amp; colpkg في وقت واحد.</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
-    <string name="export_include_schedule">تضمين معلومات الجدولة</string>
-    <string name="export_include_media">تضمين الوسائط</string>
-    <string name="confirm_apkg_export">هل تريد تصدير المجموعة كحزمة أنكي؟</string>
-    <string name="confirm_apkg_export_deck">هل تريد تصدير “%s” كملف apkg؟</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="zero">هل تريد تصدير البطاقة المحددة كملف apkg؟</item>
-        <item quantity="one">هل تريد تصدير البطاقة المحددة كملف apkg؟</item>
-        <item quantity="two">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
-        <item quantity="few">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
-        <item quantity="many">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
-        <item quantity="other">هل تريد تصدير %d بطاقات محددة كملف apkg؟</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="zero">هل تريد تصدير الملحوظة المحددة كملف apkg؟</item>
-        <item quantity="one">هل تريد تصدير الملحوظة المحددة كملف apkg؟</item>
-        <item quantity="two">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
-        <item quantity="few">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
-        <item quantity="many">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
-        <item quantity="other">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
-    </plurals>
     <string name="export_preparation_in_progress">يجري تجهيز التصدير&#8230;</string>
     <string name="export_ready_title">جهز التصدير</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ...</string>
@@ -228,8 +200,6 @@
     <string name="tag_editor_add_feedback">انقر “%2$s” لتأكيد إضافة “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود “%1$s”</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">هذه الرزمة موجودة بالفعل</string>
-    <string name="decks_rename_filtered_nosubdecks">لا يمكن أن يكون لرزمة مفلترة رزم فرعية</string>
     <string name="reminder_title">لا تنسَ أن تدرس اليوم!</string>
     <plurals name="reminder_text">
         <item quantity="zero">%2$d بطاقة بانتظار المراجعة في %1$s</item>
@@ -256,9 +226,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">متال</string>
     <string name="basic_answer_sample_text">مثال</string>
     <string name="reviewer_tts_cloze_spoken_replacement">فارغ</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">الرجاء تفعيل وضع ملء الشاشة لاستخدام ميزة إظهار قائمة التنقل باستخدام جافا سكريبت.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">الرجاء تفعيل وضع ملء الشاشة لاستخدام ميزة إظهار الخيارات باستخدام جافا سكريبت.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">فشل حفظ صورة السبورة. %s</string>
     <string name="white_board_image_saved">تم حفظ صورة السبورة إلى %s</string>
@@ -279,7 +246,6 @@
     <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">خطأ في محتوى البطاقة: تحديث الوسائط مطلوب</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">فشل تحميل رزمة ‘%s’</string>
     <string name="search_decks">بحث في الرزم</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">إظهار تقدم النقل</string>
     <string name="ankidroid_init_failed_webview_title">خطأٌ فادح</string>
@@ -387,4 +353,21 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">انقر لبدء نقل التخزين</string>
     <string name="media_sync_required_title">مزامنة الوسائط مطلوبة</string>
     <string name="media_sync_unavailable_message">مزامنة الوسائط معطلة في الإعدادات. الرجاء مزامنة النسخ الاحتياطي لأي وسائط لم تتم مزامنتها قبل المتابعة</string>
+    <string name="audio_saved">تم حفظ التسجيل</string>
+    <string name="deleting_selected_notes">حذف الملحوظات المحددة</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        انقر على صوت للاستماع
+    </string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">يجب تثبيت الصوت قبل استخدامه
+    </string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">استخدم على أي حال
+    </string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <!-- Chips should probably be in a separate file, due to the additional length req -->
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        إنترنت
+    </string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        تنصيب
+    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        فشل فتح إعدادات تحويل النص إلى كلام
+    </string>
+    <string name="shared_decks_login_required">Please log in to download more decks</string>
 </resources>

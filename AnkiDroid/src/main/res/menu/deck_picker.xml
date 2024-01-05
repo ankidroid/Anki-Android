@@ -67,7 +67,6 @@
             android:title="@string/menu_import"/>
         <item
             android:id="@+id/action_export"
-            android:menuCategory="secondary"
-            android:title="@string/export_collection"/>
+            android:menuCategory="secondary" />
     </group>
 </menu>

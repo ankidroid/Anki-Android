@@ -28,9 +28,11 @@ import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.model.WhiteboardPenColor
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
 import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.MappableBinding.Screen
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.testutils.Flaky
@@ -284,9 +286,10 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     private fun disableGestures(vararg gestures: Gesture) {
         val prefs = targetContext.sharedPrefs()
-        for (command in ViewerCommand.values()) {
+        for (command in ViewerCommand.entries) {
             for (mappableBinding in MappableBinding.fromPreference(prefs, command)) {
-                if (mappableBinding.binding.gesture in gestures) {
+                val gestureBinding = mappableBinding.binding as? Binding.GestureInput? ?: continue
+                if (gestureBinding.gesture in gestures) {
                     command.removeBinding(prefs, mappableBinding)
                 }
             }
@@ -296,7 +299,12 @@ class ReviewerNoParamTest : RobolectricTest() {
     /** Enables a gesture (without changing the overall setting of whether gestures are allowed)  */
     private fun enableGesture(gesture: Gesture) {
         val prefs = targetContext.sharedPrefs()
-        ViewerCommand.FLIP_OR_ANSWER_EASE1.addBinding(prefs, MappableBinding.fromGesture(gesture))
+        ViewerCommand.FLIP_OR_ANSWER_EASE1.addBinding(
+            prefs,
+            MappableBinding.fromGesture(gesture) {
+                Screen.Reviewer(it)
+            }
+        )
     }
 
     private fun startReviewerFullScreen(): ReviewerExt {

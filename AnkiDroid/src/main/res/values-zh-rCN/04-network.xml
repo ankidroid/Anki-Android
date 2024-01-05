@@ -64,6 +64,7 @@
     <string name="log_out">注销</string>
     <string name="reset_password">重置密码</string>
     <string name="lost_mail_instructions">忘了电子邮件地址吗？</string>
+    <string name="sign_in">正在登录</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX 选项</string>
     <string name="sync_title">同步</string>

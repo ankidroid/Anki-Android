@@ -47,7 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Malaktiva</string>
     <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">Neniuj rezultoj</string>
     <!-- preferences.xml categories-->
@@ -113,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Frapeti centron</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Frapeti suban maldekstron</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Frapeti suban dekstron</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">Menuo “%s”</string>
     <string name="card_browser_enable_external_context_menu_summary">Aktivigi la kuntekstan menuon “%s” tutaplikaĵe</string>
     <string name="double_scrolling_gap" maxLength="41">Duobla rulumado</string>
@@ -174,14 +178,15 @@
     <string name="show_top_bar_summ">Montri nombron da kartoj, flagon kaj markon sur la supra breto</string>
     <string name="show_progress" maxLength="41">Montri pliajn kartojn</string>
     <string name="show_progress_summ">Montri nombron da pliaj kartoj</string>
-    <string name="show_eta" maxLength="41">Montri tempon</string>
-    <string name="show_eta_summ">Montri plian tempon</string>
     <string name="use_current" maxLength="41">Kartaro por novaj kartoj</string>
     <string name="learn_cutoff" maxLength="41">Limigo de anticipa lernado</string>
     <string name="time_limit" maxLength="41">Limigo de lernada tempero (timebox)</string>
     <string name="new_timezone" maxLength="41">Pritraktado de nova horzono</string>
     <string name="day_offset_with_description" maxLength="41">Komenco de tago (0 estas la horo 00:00. 23 estas la horo 23:00)</string>
-    <string name="day_offset_summary">%s horoj post noktmezo.</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d hour past midnight</item>
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Teni ekranon ŝaltita</string>
     <string name="pref_keep_screen_on_summ">Ne malŝalti ekranon</string>
     <string name="enable_api_title" maxLength="41">Aktivigi AnkiDroid-API</string>
@@ -200,6 +205,7 @@
     <string name="html_javascript_debugging_summ">Aktivigi forajn konektojn por WebView kaj konservi HTML de kartoj al la dosierujo “AnkiDroid”</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Alglui bildojn kiel PNG</string>
@@ -265,6 +271,8 @@
     <string name="binding_add_key">Aldoni klavon</string>
     <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Premu klavon</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Elekti kartflankon</string>
     <string name="card_side_question">Demando</string>

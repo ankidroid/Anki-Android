@@ -16,6 +16,7 @@
 package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
+import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.GestureMapper
 import com.ichi2.anki.reviewer.MappableBinding
 
@@ -38,6 +39,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
     private var gestureTapCenter: ViewerCommand? = null
     private var gestureTapBottomLeft: ViewerCommand? = null
     private var gestureTapBottomRight: ViewerCommand? = null
+    private var gestureShake: ViewerCommand? = null
     private val gestureMapper = GestureMapper()
 
     /**
@@ -52,10 +54,10 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         isEnabled = preferences.getBoolean(PREF_KEY, false)
 
         val associatedCommands = HashMap<Gesture, ViewerCommand>()
-        for (command in ViewerCommand.values()) {
+        for (command in ViewerCommand.entries) {
             for (mappableBinding in MappableBinding.fromPreference(preferences, command)) {
-                if (mappableBinding.binding.isGesture) {
-                    associatedCommands[mappableBinding.binding.gesture!!] = command
+                if (mappableBinding.binding is Binding.GestureInput) {
+                    associatedCommands[mappableBinding.binding.gesture] = command
                 }
             }
         }
@@ -70,6 +72,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         gestureTapRight = associatedCommands[Gesture.TAP_RIGHT]
         gestureTapTop = associatedCommands[Gesture.TAP_TOP]
         gestureTapBottom = associatedCommands[Gesture.TAP_BOTTOM]
+        gestureShake = associatedCommands[Gesture.SHAKE]
 
         val useCornerTouch = preferences.getBoolean("gestureCornerTouch", false)
         if (useCornerTouch) {
@@ -99,13 +102,13 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         return execute(gesture)
     }
 
+    fun onShake(): Boolean? {
+        return execute(Gesture.SHAKE)
+    }
+
     private fun execute(gesture: Gesture?): Boolean? {
-        val command = mapGestureToCommand(gesture)
-        return if (command != null) {
-            processor?.executeCommand(command, gesture)
-        } else {
-            false
-        }
+        val command = mapGestureToCommand(gesture) ?: return false
+        return processor?.executeCommand(command, gesture)
     }
 
     private fun mapGestureToCommand(gesture: Gesture?): ViewerCommand? {
@@ -125,6 +128,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
             Gesture.TAP_BOTTOM_RIGHT -> gestureTapBottomRight
             Gesture.DOUBLE_TAP -> gestureDoubleTap
             Gesture.LONG_TAP -> gestureLongclick
+            Gesture.SHAKE -> gestureShake
             else -> null
         }
     }
@@ -135,14 +139,8 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
      * @return `false` if none of the gestures are bound. `true` otherwise
      */
     fun isBound(vararg gestures: Gesture): Boolean {
-        if (!isEnabled) {
-            return false
-        }
-        for (gesture in gestures) {
-            if (mapGestureToCommand(gesture) != null) {
-                return true
-            }
-        }
-        return false
+        if (!isEnabled) return false
+
+        return gestures.any { mapGestureToCommand(it) != null }
     }
 }

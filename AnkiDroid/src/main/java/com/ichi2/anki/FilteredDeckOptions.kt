@@ -20,8 +20,6 @@ package com.ichi2.anki
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.*
-import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
@@ -39,10 +37,10 @@ import timber.log.Timber
 class FilteredDeckOptions :
     AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>(),
     SharedPreferences.OnSharedPreferenceChangeListener {
-    private var mAllowCommit = true
+    private var allowCommit = true
 
     // TODO: not anymore used in libanki?
-    private val mDynExamples = arrayOf(
+    private val dynExamples = arrayOf(
         null,
         "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
         "{'search'=\"added:1\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
@@ -60,24 +58,24 @@ class FilteredDeckOptions :
             val ar = deck.getJSONArray("terms").getJSONArray(0)
             secondFilter = deck.getJSONArray("terms").length() > 1
             val ar2: JSONArray?
-            mValues["search"] = ar.getString(0)
-            mValues["limit"] = ar.getString(1)
-            mValues["order"] = ar.getString(2)
+            values["search"] = ar.getString(0)
+            values["limit"] = ar.getString(1)
+            values["order"] = ar.getString(2)
             if (secondFilter) {
                 ar2 = deck.getJSONArray("terms").getJSONArray(1)
-                mValues["search_2"] = ar2.getString(0)
-                mValues["limit_2"] = ar2.getString(1)
-                mValues["order_2"] = ar2.getString(2)
+                values["search_2"] = ar2.getString(0)
+                values["limit_2"] = ar2.getString(1)
+                values["order_2"] = ar2.getString(2)
             }
             val delays = deck.optJSONArray("delays")
             if (delays != null) {
-                mValues["steps"] = convertFromJSON(delays)
-                mValues["stepsOn"] = java.lang.Boolean.toString(true)
+                values["steps"] = convertFromJSON(delays)
+                values["stepsOn"] = java.lang.Boolean.toString(true)
             } else {
-                mValues["steps"] = "1 10"
-                mValues["stepsOn"] = java.lang.Boolean.toString(false)
+                values["steps"] = "1 10"
+                values["stepsOn"] = java.lang.Boolean.toString(false)
             }
-            mValues["resched"] = java.lang.Boolean.toString(deck.getBoolean("resched"))
+            values["resched"] = java.lang.Boolean.toString(deck.getBoolean("resched"))
         }
 
         inner class Editor : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
@@ -116,7 +114,7 @@ class FilteredDeckOptions :
                         "stepsOn" -> {
                             val on = value as Boolean
                             if (on) {
-                                val steps = convertToJSON(mValues["steps"]!!)
+                                val steps = convertToJSON(values["steps"]!!)
                                 if (steps!!.length() > 0) {
                                     deck.put("delays", steps)
                                 }
@@ -130,7 +128,7 @@ class FilteredDeckOptions :
                         "preset" -> {
                             val i: Int = (value as String).toInt()
                             if (i > 0) {
-                                val presetValues = JSONObject(mDynExamples[i]!!)
+                                val presetValues = JSONObject(dynExamples[i]!!)
                                 val arr = presetValues.names() ?: continue
                                 for (name in arr.stringIterable()) {
                                     if ("steps" == name) {
@@ -138,10 +136,10 @@ class FilteredDeckOptions :
                                     }
                                     if ("resched" == name) {
                                         update.put(name, presetValues.getBoolean(name))
-                                        mValues[name] = java.lang.Boolean.toString(presetValues.getBoolean(name))
+                                        values[name] = java.lang.Boolean.toString(presetValues.getBoolean(name))
                                     } else {
                                         update.put(name, presetValues.getString(name))
-                                        mValues[name] = presetValues.getString(name)
+                                        values[name] = presetValues.getString(name)
                                     }
                                 }
                                 update.put("preset", "0")
@@ -264,14 +262,13 @@ class FilteredDeckOptions :
             }
         }
         finish()
-        slide(this, ActivityTransitionAnimation.Direction.FADE)
     }
 
     @Suppress("deprecation") // conversion to fragments tracked in github as #5019
     override fun updateSummaries() {
-        mAllowCommit = false
+        allowCommit = false
         // for all text preferences, set summary as current database value
-        val keys: Set<String> = pref.mValues.keys
+        val keys: Set<String> = pref.values.keys
         for (key in keys) {
             val pref = findPreference(key)
             val value: String? = if (pref == null) {
@@ -289,18 +286,18 @@ class FilteredDeckOptions :
                 pref.text = value
             }
             // update summary
-            if (!this.pref.mSummaries.containsKey(key)) {
+            if (!this.pref.summaries.containsKey(key)) {
                 val s = pref.summary
-                this.pref.mSummaries[key] = if (s != null) pref.summary.toString() else null
+                this.pref.summaries[key] = if (s != null) pref.summary.toString() else null
             }
-            val summ = this.pref.mSummaries[key]
+            val summ = this.pref.summaries[key]
             if (summ != null && summ.contains("XXX")) {
                 pref.summary = summ.replace("XXX", value!!)
             } else {
                 pref.summary = value
             }
         }
-        mAllowCommit = true
+        allowCommit = true
     }
 
     @Suppress("deprecation") // Tracked as #5019 on github

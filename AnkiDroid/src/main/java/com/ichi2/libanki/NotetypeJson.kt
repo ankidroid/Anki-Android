@@ -18,8 +18,10 @@ package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
 import com.ichi2.utils.*
+import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.HashSet
 
 /**
  * Represents a note type, a.k.a. Model.
@@ -44,7 +46,6 @@ class NotetypeJson : JSONObject {
      *
      * @see NotetypeJson.from
      */
-    @KotlinCleanup("non-null")
     constructor(json: JSONObject) : super() {
         json.deepClonedInto(this)
     }
@@ -52,8 +53,7 @@ class NotetypeJson : JSONObject {
     /**
      * Creates a model object form json string
      */
-    @KotlinCleanup("non-null")
-    constructor(json: String?) : super(json!!) {}
+    constructor(@Language("json") json: String) : super(json)
 
     @CheckResult
     fun deepClone(): NotetypeJson {
@@ -82,19 +82,13 @@ class NotetypeJson : JSONObject {
 
     /**
      * @param sfld Fields of a note of this note type
-     * @return The set of name of non-empty fields.
+     * @return The names of non-empty fields
      */
-    @KotlinCleanup("filter")
-    fun nonEmptyFields(sfld: Array<String>): Set<String> {
-        val fieldNames = fieldsNames
-        val nonemptyFields: MutableSet<String> = HashUtil.hashSetInit(sfld.size)
-        for (i in sfld.indices) {
-            if (sfld[i].trim { it <= ' ' }.isNotEmpty()) {
-                nonemptyFields.add(fieldNames[i])
-            }
-        }
-        return nonemptyFields
-    }
+    fun nonEmptyFields(sfld: Array<String>): Set<String> =
+        sfld.zip(fieldsNames)
+            // filter to the fields which are non-empty
+            .filter { (sfld, _) -> sfld.trim { it <= ' ' }.isNotEmpty() }
+            .mapTo(HashSet()) { (_, fieldName) -> fieldName }
 
     /** Python method
      * https://docs.python.org/3/library/stdtypes.html?highlight=dict#dict.update

@@ -59,25 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">הרחב</string>
     <string name="collapse">צמצם</string>
-    <string name="study_more">למידה נוספת</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">נותרה דקה %d</item>
-        <item quantity="two">נותרו %d דקות</item>
-        <item quantity="many">נותרו %d דקות</item>
-        <item quantity="other">נותרו %d דקות</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">שעה %2$d %1$d נותרה</item>
-        <item quantity="two">%1$d שעות %2$d נותרו</item>
-        <item quantity="many">%1$d שעות %2$d נותרו</item>
-        <item quantity="other">%1$d שעות %2$d נותרו</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">יום %2$d  %1$d נותר</item>
-        <item quantity="two">%1$d ימים %2$d נותרו</item>
-        <item quantity="many">%1$d ימים %2$d נותרו</item>
-        <item quantity="other">%1$d ימים %2$d נותרו</item>
-    </plurals>
     <string name="no_cards_placeholder_title">האוסף ריק</string>
     <string name="no_cards_placeholder_description">אפשר להוסיף כרטיסים\n
 באמצעות הסמל +.</string>
@@ -92,6 +73,7 @@
     <string name="ease_button_easy">קל</string>
     <string name="menu_import">ייבוא</string>
     <string name="undo">ביטול</string>
+    <string name="redo">בצע שוב</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">בטל שרבוט</string>
     <string name="move_all_to_deck">העברת הכול לחפיסה</string>
     <string name="unbury">ביטול דילוג</string>
@@ -99,16 +81,16 @@
     <string name="create_shortcut">צור קיצור דרך</string>
     <string name="browse_cards">דפדף בכרטיסים</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">הוספה</string>
-    <string name="menu_add_note">הוספת פתק</string>
+    <string name="menu_add_note">הוספת רשומה</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">סנכרון חשבון</string>
     <string name="menu_dismiss_note">הסתרה / מחיקה</string>
     <string name="menu_bury_card">לקבור קלף</string>
-    <string name="menu_bury_note">קבור על פתק</string>
+    <string name="menu_bury_note">קבור הערה</string>
     <string name="menu_suspend_card">הקפאת קלף</string>
     <string name="menu_suspend_note">הקפאת רשומה</string>
     <string name="menu_bury">דילוג</string>
     <string name="menu_suspend">הקפאה</string>
-    <string name="menu_delete_note">מחיקת פתק</string>
+    <string name="menu_delete_note">מחיקת רשומה</string>
     <string name="menu_flag">דגל</string>
     <string name="menu_flag_card">סימון קלף</string>
     <string name="menu_flag_card_zero">ללא סימון</string>
@@ -144,10 +126,6 @@
     <string name="search_deck" comment="Deck search for selecting it">חיפוש חפיסה</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">חיפוש חפיסה</string>
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
-    <string name="studyoptions_empty">החפיסה ריקה. לחץ על כפתור ה+ להוספת תוכן חדש.</string>
-    <string name="studyoptions_limit_reached">יעד הלמידה היומי הושלם</string>
-    <string name="studyoptions_empty_schedule">אין קלפים מתוכננים ללמידה</string>
-    <string name="studyoptions_congrats_finished">מזל טוב! סיימת לרגע.‏</string>
     <string name="studyoptions_no_cards_due">אין כרטיסים נוספים</string>
     <string name="sd_card_not_mounted">התקן אחסון לא מחובר</string>
     <string name="button_sync" comment="Text of the sync button">סנכרון</string>
@@ -156,8 +134,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">המשך סנכרון</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">סנכרון בוטל</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">מבטל&#8230;\n אנא המתן.</string>
-    <string name="export">ייצוא</string>
-    <string name="export_collection">ייצוא אוסף</string>
     <string name="export_deck">ייצוא חפיסה</string>
     <string name="nothing">ריק</string>
     <!-- Card template editor -->
@@ -261,8 +237,8 @@
     <string name="create_new_collection">צור אוסף חדש</string>
     <string name="new_unsafe_collection">האוסף החדש יימחק מהטלפון שלך אם תסיר את ההתקנה של AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid צריך כמה הרשאות כדי לעבוד</string>
+    <string name="storage_access_title">גישה לאחסון</string>
+    <string name="storage_access_summary">שומר את האוסף שלך במקום בטוח כך שלא יימחק אם האפליקציה תוסר</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">גישה לכל הקבצים</string>
 </resources>

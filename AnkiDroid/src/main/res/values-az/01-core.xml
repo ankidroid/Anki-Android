@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Genişləndir</string>
     <string name="collapse">Daralt</string>
-    <string name="study_more">Daha çox öyrən</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d dəqiqə qaldı</item>
-        <item quantity="other">%d dəqiqə qaldı</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Dəstə boşdur</string>
     <string name="no_cards_placeholder_description">+ işarəsindən istifadə edərək kart əlavə etməyə başlayın</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Asan</string>
     <string name="menu_import">İdxal et</string>
     <string name="undo">Geri qaytar</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
     <string name="move_all_to_deck">Hamısın dəstəyə köçürün</string>
     <string name="unbury">Görünən et</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Dəstə axtar</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Dəstə axtar</string>
     <string name="invalid_deck_name">Etibarsız kart adı</string>
-    <string name="studyoptions_empty">Bu dəstə boşdur. Yeni məzmun əlavə etmək üçün + düyməsinə basın.</string>
-    <string name="studyoptions_limit_reached">Gündəlik öyrənmə limitinə çatıldı</string>
-    <string name="studyoptions_empty_schedule">Öyrənmək üçün planlaşdırılmış kart yoxdur</string>
-    <string name="studyoptions_congrats_finished">Təbriklər! Hələlik bitirdiniz.</string>
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
     <string name="sd_card_not_mounted">Cihaz yaddaşı bağlı deyil</string>
     <string name="button_sync" comment="Text of the sync button">Sinxronlaşdır</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continue sync</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sync cancelled</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis may take some time.</string>
-    <string name="export">İxrac et</string>
-    <string name="export_collection">Kolleksiyanı ixrac et</string>
     <string name="export_deck">Export deck</string>
     <string name="nothing">Heçnə</string>
     <!-- Card template editor -->

@@ -150,10 +150,10 @@ object HelpDialog {
     @KotlinCleanup("Convert to @Parcelize")
     class LinkItem : RecursivePictureMenu.Item, Parcelable {
         @StringRes
-        private val mUrlLocationRes: Int
+        private val urlLocationRes: Int
 
         constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String?, @StringRes urlLocation: Int) : super(titleRes, iconRes, analyticsRes) {
-            mUrlLocationRes = urlLocation
+            urlLocationRes = urlLocation
         }
 
         override fun onClicked(activity: AnkiActivity) {
@@ -161,11 +161,11 @@ object HelpDialog {
         }
 
         private fun getUrl(ctx: Context): Uri {
-            return Uri.parse(ctx.getString(mUrlLocationRes))
+            return Uri.parse(ctx.getString(urlLocationRes))
         }
 
         private constructor(source: Parcel) : super(source) {
-            mUrlLocationRes = source.readInt()
+            urlLocationRes = source.readInt()
         }
 
         override fun remove(toRemove: RecursivePictureMenu.Item?) {
@@ -174,7 +174,7 @@ object HelpDialog {
 
         override fun writeToParcel(dest: Parcel, flags: Int) {
             super.writeToParcel(dest, flags)
-            dest.writeInt(mUrlLocationRes)
+            dest.writeInt(urlLocationRes)
         }
 
         companion object {
@@ -195,18 +195,18 @@ object HelpDialog {
     @KotlinCleanup("Convert to @Parcelize")
     class FunctionItem : RecursivePictureMenu.Item, Parcelable {
 
-        private val mFunc: ActivityConsumer
+        private val func: ActivityConsumer
 
         constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String?, func: ActivityConsumer) : super(titleRes, iconRes, analyticsRes) {
-            mFunc = func
+            this.func = func
         }
 
         override fun onClicked(activity: AnkiActivity) {
-            mFunc.consume(activity)
+            func.consume(activity)
         }
 
         private constructor(source: Parcel) : super(source) {
-            mFunc = ParcelCompat.readSerializable(
+            func = ParcelCompat.readSerializable(
                 source,
                 ActivityConsumer::class.java.classLoader,
                 ActivityConsumer::class.java
@@ -219,7 +219,7 @@ object HelpDialog {
 
         override fun writeToParcel(dest: Parcel, flags: Int) {
             super.writeToParcel(dest, flags)
-            dest.writeSerializable(mFunc)
+            dest.writeSerializable(func)
         }
 
         fun interface ActivityConsumer : Serializable {

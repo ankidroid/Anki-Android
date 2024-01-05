@@ -47,7 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Ei käytössä</string>
     <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d min</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s \%%</string>
     <string name="pref_search_no_results">Ei tuloksia</string>
     <!-- preferences.xml categories-->
@@ -113,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Kosketa ylös keskelle</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Kosketa alavasemmalle</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Kosketa alaoikealle</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">\"%s\" -valikko</string>
     <string name="card_browser_enable_external_context_menu_summary">Ota \"%s\" -valikko käyttöön koko sovelluksessa</string>
     <string name="double_scrolling_gap" maxLength="41">Kaksoisvieritys</string>
@@ -174,14 +178,15 @@
     <string name="show_top_bar_summ">Näytä korttien lukumäärät, liput ja merkinnät yläpalkissa</string>
     <string name="show_progress" maxLength="41">Näytä jäljelläoleva</string>
     <string name="show_progress_summ">Näytä jäljelläolevien korttien määrä</string>
-    <string name="show_eta" maxLength="41">Näytä ETA</string>
-    <string name="show_eta_summ">Näytä jäljellä oleva aika</string>
     <string name="use_current" maxLength="41">Pakka uusille korteille</string>
     <string name="learn_cutoff" maxLength="41">Ennalta oppimisen aikaraja</string>
     <string name="time_limit" maxLength="41">Edistymisen näyttämisen aikaväli</string>
     <string name="new_timezone" maxLength="41">Uusi aikavyöhykkeiden käsittely</string>
     <string name="day_offset_with_description" maxLength="41">Seuraava päivä alkaa</string>
-    <string name="day_offset_summary">%s tuntia keskiyön jälkeen</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d tunti keskiyön jälkeen</item>
+        <item quantity="other">%d tuntia keskiyön jälkeen</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Pidä näyttö päällä</string>
     <string name="pref_keep_screen_on_summ">Poista näytön aikakatkaisu</string>
     <string name="enable_api_title" maxLength="41">Ota käyttöön AnkiDroid-rajapinta</string>
@@ -200,6 +205,7 @@
     <string name="html_javascript_debugging_summ">Salli WebView-etäyhteydet ja tallenna kortin HTML AnkiDroid-hakemistoon</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Kertaaminen</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Esteettömyys</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Liitä leikepöydän kuvat PNG:nä</string>
@@ -265,6 +271,8 @@
     <string name="binding_add_key">Lisää näppäin</string>
     <string name="binding_replace_key">Korvaa näppäin</string>
     <string name="key_picker_default_press_key">Paina näppäintä</string>
+    <string name="binding_add_axis">Lisää peliohjain tai liikeohjain</string>
+    <string name="axis_picker_move_joystick">Liikuta peli- tai liikeohjainta</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Valitse kortin puoli</string>
     <string name="card_side_question">Kysymys</string>

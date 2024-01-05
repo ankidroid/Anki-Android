@@ -3,13 +3,13 @@ import groovy.transform.Memoized
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.8"
+    toolVersion = "0.8.11"
 
 }
 
 android {
     testCoverage {
-        jacocoVersion '0.8.8'
+        jacocoVersion '0.8.11'
     }
 }
 
@@ -54,7 +54,7 @@ def openReport(htmlOutDir) {
     }
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     jacoco.includeNoLocationClasses = true
     jacoco.excludes = ['jdk.internal.*']
 }
@@ -92,8 +92,8 @@ def fileFilter = [
 ]
 
 // Our merge report task
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest', 'connectedPlayDebugAndroidTest']) {
-    def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
+def testReport = tasks.register('jacocoTestReport', JacocoReport) {
+    def htmlOutDir = project.layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
         openReport htmlOutDir
@@ -104,19 +104,23 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest', '
         html.destination htmlOutDir
     }
 
-    def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
+    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir('tmp/kotlin-classes/playDebug'), excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
     classDirectories.from = files([kotlinClasses])
-    executionData.from = fileTree(dir: project.buildDir, includes: [
+    executionData.from = fileTree(dir: project.layout.buildDirectory, includes: [
             '**/*.exec',
             '**/*.ec'
     ])
 }
+testReport.configure {
+    dependsOn('testPlayDebugUnitTest')
+    dependsOn('connectedPlayDebugAndroidTest')
+}
 
 // A unit-test only report task
-task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest']) {
+def unitTestReport = tasks.register('jacocoUnitTestReport', JacocoReport) {
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
@@ -128,19 +132,20 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest
         html.destination htmlOutDir
     }
 
-    def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
+    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir('tmp/kotlin-classes/playDebug'), excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
     classDirectories.from = files([kotlinClasses])
-    executionData.from = fileTree(dir: project.buildDir, includes: [
+    executionData.from = fileTree(dir: project.layout.buildDirectory, includes: [
             '**/*.exec'
 
     ])
 }
+unitTestReport.configure { dependsOn('testPlayDebugUnitTest') }
 
 // A connected android tests only report task
-task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedPlayDebugAndroidTest']) {
+def androidTestReport = tasks.register('jacocoAndroidTestReport', JacocoReport) {
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
@@ -152,12 +157,13 @@ task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedPlayDebug
         html.destination htmlOutDir
     }
 
-    def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
+    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir('tmp/kotlin-classes/playDebug'), excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
     classDirectories.from = files([kotlinClasses])
-    executionData.from = fileTree(dir: project.buildDir, includes: [
+    executionData.from = fileTree(dir: project.layout.buildDirectory, includes: [
             '**/*.ec'
     ])
 }
+androidTestReport.configure { dependsOn('connectedPlayDebugAndroidTest') }

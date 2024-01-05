@@ -47,7 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Uitgeschakeld</string>
     <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d min</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">Geen resultaten</string>
     <!-- preferences.xml categories-->
@@ -113,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Druk midden rechts</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Druk linksonder</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Druk rechtsonder</string>
+    <string name="gestures_shake" maxLength="41">Schud apparaat</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Schakelt het contextmenu \' \'%s\' overal in</string>
     <string name="double_scrolling_gap" maxLength="41">Sneller scrollen</string>
@@ -127,14 +131,14 @@
     <string name="automatic_sync_choice" maxLength="41">Automatische synchronisatie</string>
     <string name="automatic_sync_choice_summ">Synchronizeer automatisch bij het starten en sluiten van de app indien de laatste synchronisatie meer dan 10 minuten geleden was.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Altijd</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_only_unmetered">Alleen bij ongelimiteerde verbindingen</string>
     <string name="sync_media_never">Nooit</string>
     <string name="sync_status_badge" maxLength="41">Synchronisatiestatus weergeven</string>
     <string name="sync_status_badge_summ">Verander het synchronisatie-icoon wanneer wijzigingen kunnen worden geüpload</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_title" maxLength="41">Synchroniseren bij verbinding met datalimieten toestaan</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Frequentie</string>
+    <string name="backup_limits_lifetime">Levenslang</string>
     <string name="app_theme" maxLength="41">Thema</string>
     <string name="day_theme" maxLength="41">Dag thema</string>
     <string name="night_theme" maxLength="41">Nacht thema</string>
@@ -174,14 +178,15 @@
     <string name="show_top_bar_summ">Toon aantal kaarten, vlag en markering in de bovenste balk</string>
     <string name="show_progress" maxLength="41">Resterende weergeven</string>
     <string name="show_progress_summ">Toon resterend aantal kaarten</string>
-    <string name="show_eta" maxLength="41">Toon ETA</string>
-    <string name="show_eta_summ">Resterende tijd tonen</string>
     <string name="use_current" maxLength="41">Set voor nieuwe kaarten</string>
     <string name="learn_cutoff" maxLength="41">Max vooruit leren</string>
     <string name="time_limit" maxLength="41">Stel een tijdslimiet in</string>
     <string name="new_timezone" maxLength="41">Nieuwe tijdzone afhandeling</string>
     <string name="day_offset_with_description" maxLength="41">Begin van de volgende dag (0 is middernacht, 23 is 11PM)</string>
-    <string name="day_offset_summary">%s uur na middernacht</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d uur na middernacht</item>
+        <item quantity="other">%d uur na middernacht</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Scherm aanlaten</string>
     <string name="pref_keep_screen_on_summ">Schermtimeout uitschakelen</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API inschakelen</string>
@@ -200,6 +205,7 @@
     <string name="html_javascript_debugging_summ">Schakel externe WebView-verbindingen in en sla de kaart HTML op in de AnkiDroid-folder</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Toegankelijkheid</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Plak klembord afbeeldingen als PNG</string>
@@ -265,6 +271,8 @@
     <string name="binding_add_key">Sleutel toevoegen</string>
     <string name="binding_replace_key">Vervang sleutel</string>
     <string name="key_picker_default_press_key">Druk op een toets</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecteer kaart zijde</string>
     <string name="card_side_question">Vraag</string>
@@ -334,7 +342,7 @@
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">App-gegevens verwijderen</string>
     <string name="pref__delete_app_data__summary">Instellingen en andere app-gegevens verwijderen</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">App-gegevens verwijderen</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Weet u zeker dat u de app data wilt verwijderen? Dit omvat instellingen en andere app gegevens.\n\nOpmerking: deze actie zal het venster sluiten.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->

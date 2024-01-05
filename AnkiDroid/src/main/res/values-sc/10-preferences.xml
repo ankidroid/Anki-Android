@@ -47,7 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Disabilitadu</string>
     <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">Perunu resurtadu</string>
     <!-- preferences.xml categories-->
@@ -97,7 +100,7 @@
     <string name="gestures_corner_touch_summary">Permiti sos gestos tàtiles in sos àngulos de s\'ischermu</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Pannellu de navigatzione a ischermu intreu</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Aberi su pannellu de navigatzione cando trìsinas cara a dereta dae cale si siat puntu de s\'ischermu</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Perunu</string>
     <string name="gestures_swipe_up" maxLength="41">Trìsina cara a artu</string>
     <string name="gestures_swipe_down" maxLength="41">Trìsina cara a bassu</string>
     <string name="gestures_swipe_left" maxLength="41">Trìsina cara a manca</string>
@@ -113,6 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Toca in su tzentru</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toca in bassu a manca</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toca in bassu a dereta</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">Menù ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Abilitat su menù de cuntestu ‘%s’ globalmente</string>
     <string name="double_scrolling_gap" maxLength="41">Iscurrimentu dòpiu</string>
@@ -126,15 +130,15 @@
     <string name="sync_account_summ_logged_out">Non ses intradu</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronizatzione automàtica</string>
     <string name="automatic_sync_choice_summ">Sincroniza in manera automàtica a s\'allughidura/serrada de s\'aplicatzione si s\'ùrtima sincronizatzione est prus betza de 10 minutos.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Semper</string>
+    <string name="sync_media_only_unmetered">Petzi in sas connessiones chene lìmites</string>
+    <string name="sync_media_never">Mai</string>
     <string name="sync_status_badge" maxLength="41">Ammustra s\'istadu de sincronizatzione</string>
     <string name="sync_status_badge_summ">Muda s\'icona de sincronizatzione cando  sas modìficas si podent carrigare</string>
     <string name="metered_sync_title" maxLength="41">Permite sa sincronizatzione cun connessiones a consumu</string>
     <string name="metered_sync_summary">Si est disabilitadu at a retzire un\'avisu si as a proare a sincronizare cun una connessione a consumu</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Frecuèntzia</string>
+    <string name="backup_limits_lifetime">Totu sa vida</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema pro sa die</string>
     <string name="night_theme" maxLength="41">Tema pro sa note</string>
@@ -164,8 +168,8 @@
     <string name="vertical_centering_summ">Tzentra in verticale su cuntenutu de sas cartas</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervallu de tempus tocu dòpiu (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Su de duos tocos in sos butones de risposta s\'at a ignorare si custu tempus no at a èssere coladu. Custu prevenit tocos dòpios atzidentales</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Tempus de incarcada longa pro mustrare sa risposta (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Tempus mìnimu de incarcada longa in antis chi su butone pro mustrare sa risposta registret unu tocu. Diat pòdere minimare sa possibilidade de incarcadas de su butones additzionales. Su valore predefinidu est de 0ms</string>
     <string name="show_estimates" maxLength="41">Ammustra s\'iscadèntzia de sos butones</string>
     <string name="show_estimates_summ">Ammustra s\'iscadèntzia imbieniente in subra de sos butones de risposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Ammustra sos butones de risposta mannos</string>
@@ -174,14 +178,15 @@
     <string name="show_top_bar_summ">Ammustra su nùmeru de cartas, sa bandera e su marcadore in sa barra de susu</string>
     <string name="show_progress" maxLength="41">Ammustra ite mancat</string>
     <string name="show_progress_summ">Ammustra su nùmeru de cartas chi mancant</string>
-    <string name="show_eta" maxLength="41">Ammustra su tempus chi mancat</string>
-    <string name="show_eta_summ">Ammustra su tempus chi mancat</string>
     <string name="use_current" maxLength="41">Matzu pro sas cartas noas</string>
     <string name="learn_cutoff" maxLength="41">Lìmite pro s\'antitzipatzione de s\'imparu</string>
     <string name="time_limit" maxLength="41">Lìmite de tempus pro sessione</string>
     <string name="new_timezone" maxLength="41">Gestione noa de su fusu oràriu</string>
     <string name="day_offset_with_description" maxLength="41">Incumintzu de sa die chi benit</string>
-    <string name="day_offset_summary">%s oras a pustis de mesanote</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d hour past midnight</item>
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Mantene s\'ischermu allutu</string>
     <string name="pref_keep_screen_on_summ">Disabìlita s\'istudadura automàtica de s\'ischermu</string>
     <string name="enable_api_title" maxLength="41">Abìlita s\'API de AnkiDroid</string>
@@ -192,14 +197,15 @@
     <string name="custom_buttons_setting_if_room">Ammustra si b\'at logu</string>
     <string name="custom_buttons_setting_menu_only">Menù ebbia</string>
     <string name="reset_custom_buttons" maxLength="41">Torra a sos paràmetros predefinidos</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">Riprìstina sas impostatziones predefinidas</string>
+    <string name="reset">Reseta</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplicatziones API esternas (de tertzas partes)</string>
     <string name="thirdparty_apps_summary">Pòmpia·ti una lista de aplicatziones chi impreant s\'API de AnkiDroid che a ditzionàrios o àteras ainas.</string>
     <string name="html_javascript_debugging" maxLength="41">Depuratzione de còdighe HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Abìlita sas connessiones remotas WebView, e sarva s\'HTML de sa carta in sa cartella de AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Revisore</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Atzessibilidade</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Incolla sas immàgines in PNG</string>
@@ -221,12 +227,12 @@
     <!-- Key Bindings -->
     <string name="keyboard">Tecladu</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="answer_buttons" maxLength="41">Butones de risposta</string>
+    <string name="card" maxLength="41">Carta</string>
+    <string name="note" maxLength="41">Nota</string>
+    <string name="navigation" maxLength="41">Navigatzione</string>
+    <string name="media" maxLength="41">Mèdios</string>
+    <string name="misc" maxLength="41">Vàrias</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Seletziona sas etichetas</string>
     <!-- Deck configurations -->
@@ -265,6 +271,8 @@
     <string name="binding_add_key">Annanghe una tecla</string>
     <string name="binding_replace_key">Sostitui sa tecla</string>
     <string name="key_picker_default_press_key">Incarca una tecla</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Seletziona su ladu de sa carta</string>
     <string name="card_side_question">Pregunta</string>
@@ -303,7 +311,7 @@
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Amministra su logu</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
@@ -316,32 +324,32 @@
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Iscantzella sas còpias de seguresa</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Iscantzella sas còpias de seguresa</string>
+    <string name="progress__deleting_backups">Iscantzellende sas còpias de seguresa&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Iscantzella sa colletzione</string>
     <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Iscantzella sa colletzione</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="progress__deleting_collection">Iscantzellende sa colletzione&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Iscantzella totu</string>
     <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Iscantzella totu</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Iscantzella sos datos de s\'aplicatzione</string>
     <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Iscantzella sos datos de s\'aplicatzione</string>
     <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Peruna colletzione</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Faddina</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Recuperende&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Carculende&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Sa colletzione no esistit</string>
 </resources>

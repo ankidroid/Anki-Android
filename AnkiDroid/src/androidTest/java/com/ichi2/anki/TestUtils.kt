@@ -24,30 +24,10 @@ import androidx.test.espresso.ViewAction
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
-import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.TypeSafeMatcher
+import kotlin.math.min
 
-@KotlinCleanup("IDE Lint")
 object TestUtils {
-    /**
-     * Get view at a particular index when there are multiple views with the same ID
-     */
-    fun withIndex(matcher: Matcher<View?>, index: Int): Matcher<View> {
-        return object : TypeSafeMatcher<View>() {
-            var currentIndex = 0
-            override fun describeTo(description: Description) {
-                description.appendText("with index: ")
-                description.appendValue(index)
-                matcher.describeTo(description)
-            }
-
-            public override fun matchesSafely(view: View?): Boolean {
-                return matcher.matches(view) && currentIndex++ == index
-            }
-        }
-    }
 
     /**
      * Get instance of current activity
@@ -78,7 +58,7 @@ object TestUtils {
             activityInstance!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
             val widthDp = displayMetrics.widthPixels / displayMetrics.density
             val heightDp = displayMetrics.heightPixels / displayMetrics.density
-            val screenSw = Math.min(widthDp, heightDp)
+            val screenSw = min(widthDp, heightDp)
             return screenSw >= 600
         }
 

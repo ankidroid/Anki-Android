@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Laajenna</string>
     <string name="collapse">Pienennä</string>
-    <string name="study_more">Opiskele lisää</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minuutti jäljellä</item>
-        <item quantity="other">%d minuuttia jäljellä</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d tunti %2$d jäljellä</item>
-        <item quantity="other">%1$d tuntia %2$d jäljellä</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d päivä %2$d jäljellä</item>
-        <item quantity="other">%1$d päivää %2$d jäljellä</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Kokoelma on tyhjä</string>
     <string name="no_cards_placeholder_description">Aloita korttien lisääminen\nkäyttäen + kuvaketta</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Helppo</string>
     <string name="menu_import">Tuo</string>
     <string name="undo">Kumoa</string>
+    <string name="redo">Tee uudelleen</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Peru piirto</string>
     <string name="move_all_to_deck">Siirrä kaikki pakkaan</string>
     <string name="unbury">Paljasta</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Hae pakkaa</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Hae pakkaa</string>
     <string name="invalid_deck_name">Virheellinen pakan nimi</string>
-    <string name="studyoptions_empty">Tämä pakka on tyhjä. Paina + painiketta lisätäksesi uutta sisältöä.</string>
-    <string name="studyoptions_limit_reached">Päivittäinen opiskeluraja saavutettu</string>
-    <string name="studyoptions_empty_schedule">Ei opeteltavaksi ajoitettuja kortteja</string>
-    <string name="studyoptions_congrats_finished">Onnittelut! Homma hoidettu toistaiseksi.</string>
     <string name="studyoptions_no_cards_due">Kortteja ei tarvitse vielä kerrata</string>
     <string name="sd_card_not_mounted">Laitteen tallennustilaa ei ole kiinnitetty</string>
     <string name="button_sync" comment="Text of the sync button">Synkronoi</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Jatka synkronointia</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronointi peruutettu</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Peruutetaan&#8230;\nTämä voi kestää jonkin aikaa.</string>
-    <string name="export">Vie</string>
-    <string name="export_collection">Vie kokoelma</string>
     <string name="export_deck">Vie pakka</string>
     <string name="nothing">Ei mitään</string>
     <!-- Card template editor -->

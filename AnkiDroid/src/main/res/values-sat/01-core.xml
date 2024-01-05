@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ᱣᱤᱥᱛᱟᱨ ᱢᱮ</string>
     <string name="collapse">ᱦᱚᱯᱚᱱ ᱢᱮ</string>
-    <string name="study_more">ᱟᱨᱦᱚᱸ ᱯᱟᱰᱦᱣ ᱢᱮ</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱟᱡ ᱟᱠᱟᱱᱟ</item>
-        <item quantity="other">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱟᱡ ᱟᱠᱟᱱᱟ</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d ᱴᱚᱲᱚᱝ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
-        <item quantity="other">%1$d ᱴᱚᱲᱚᱝ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d ᱫᱤᱱ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
-        <item quantity="other">%1$d ᱫᱤᱱ %2$d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
-    </plurals>
     <string name="no_cards_placeholder_title">ᱴᱩᱢᱟᱹᱞ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="no_cards_placeholder_description">+ᱟᱭᱠᱚᱱ ᱵᱮᱵᱷᱟᱵᱨ ᱠᱟᱛᱮ\nᱠᱟᱰ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱦᱚᱵ ᱢᱮ ᱾</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">ᱥᱚᱦᱚᱡ</string>
     <string name="menu_import">ᱟᱭᱟᱛ</string>
     <string name="undo">ᱢᱟᱲᱟᱝᱟᱜ</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">ᱜᱟᱨ ᱛᱮᱭᱟᱨ ᱛᱟᱭᱚᱢ ᱢᱮ</string>
     <string name="move_all_to_deck">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱛᱮ ᱩᱪᱟ.ᱰ ᱡᱮ</string>
     <string name="unbury">ᱛᱚᱯᱟ ᱚᱰᱚᱠ ᱢᱮ</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱷᱩᱞ</string>
-    <string name="studyoptions_empty">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ ᱾ + ᱵᱚᱴᱚᱱ ᱯᱨᱮᱥ ᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱡᱤᱱᱥᱚ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭ ᱢᱮ ᱾</string>
-    <string name="studyoptions_limit_reached">ᱫᱤᱱ ᱨᱮᱭᱟᱜ ᱯᱟᱲᱦᱟᱣ ᱚᱠᱛᱚ ᱥᱮᱴᱮᱨ ᱮᱱᱟ</string>
-    <string name="studyoptions_empty_schedule">ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ </string>
-    <string name="studyoptions_congrats_finished">ᱥᱟᱨᱦᱟᱣ! ᱱᱤᱛᱚᱜ ᱞᱟᱹᱜᱤᱫ ᱪᱟᱵᱟ ᱠᱮᱟᱢ</string>
     <string name="studyoptions_no_cards_due">ᱱᱤᱛᱚᱜ ᱫᱚ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <string name="sd_card_not_mounted">ᱥᱟᱫᱷᱚᱱ ᱜᱚᱫᱟᱢ ᱫᱚ ᱵᱟᱭ ᱢᱟᱩᱱᱴ ᱟᱠᱟᱱᱟ</string>
     <string name="button_sync" comment="Text of the sync button">ᱟᱭᱩᱨ ᱢᱤᱫ</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ᱟᱭᱩᱨ ᱢᱤᱫ ᱪᱟᱹᱞᱩ ᱫᱚᱦᱚᱭ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤ</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ᱵᱟᱫ ᱜᱤᱰᱤᱼᱜ ᱠᱟᱱᱟ &#8230;\n ᱠᱤᱪᱷᱤ ᱥᱚᱢᱟᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱭ ᱾ </string>
-    <string name="export">ᱵᱷᱮᱡᱟ</string>
-    <string name="export_collection">ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="export_deck">ᱰᱮᱠ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="nothing">ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <!-- Card template editor -->

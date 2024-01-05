@@ -33,12 +33,12 @@ import java.lang.ref.WeakReference
  */
 class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
     // Use weak reference to main activity to prevent leaking the activity when it's closed
-    private val mActivity: WeakReference<AnkiActivity> = WeakReference(activity)
+    private val activity: WeakReference<AnkiActivity> = WeakReference(activity)
     override fun handleMessage(message: Message) {
         val msg = DialogHandlerMessage.fromMessage(message)
         UsageAnalytics.sendAnalyticsScreenView(msg.analyticName)
         Timber.i("Handling Message: %s", msg.analyticName)
-        val deckPicker = mActivity.get() as DeckPicker
+        val deckPicker = activity.get() as DeckPicker
         msg.handleAsyncMessage(deckPicker)
     }
 
@@ -55,10 +55,9 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
      * Read and handle Message which was stored via [storeMessage]
      */
     fun executeMessage() {
+        if (sStoredMessage == null) return
         Timber.d("Reading persistent message")
-        if (sStoredMessage != null) {
-            sendStoredMessage(sStoredMessage!!)
-        }
+        sendStoredMessage(sStoredMessage!!)
         sStoredMessage = null
     }
 
@@ -116,6 +115,7 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
                 WhichDialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG -> ForceFullSyncDialog.fromMessage(message)
                 WhichDialogHandler.MSG_DO_SYNC -> IntentHandler.Companion.DoSync()
                 WhichDialogHandler.MSG_MIGRATE_ON_SYNC_SUCCESS -> MigrateStorageOnSyncSuccess.MigrateOnSyncSuccessHandler()
+                WhichDialogHandler.MSG_EXPORT_READY -> ExportReadyDialog.ExportReadyDialogMessage.fromMessage(message)
             }
         }
     }
@@ -131,10 +131,11 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
         MSG_SHOW_DATABASE_ERROR_DIALOG(6),
         MSG_SHOW_FORCE_FULL_SYNC_DIALOG(7),
         MSG_DO_SYNC(8),
-        MSG_MIGRATE_ON_SYNC_SUCCESS(9)
+        MSG_MIGRATE_ON_SYNC_SUCCESS(9),
+        MSG_EXPORT_READY(10)
         ;
         companion object {
-            fun fromInt(value: Int) = WhichDialogHandler.values().first { it.what == value }
+            fun fromInt(value: Int) = entries.first { it.what == value }
         }
     }
 }

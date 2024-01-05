@@ -64,6 +64,7 @@
     <string name="log_out">लॉग आउट</string>
     <string name="reset_password">पासवर्ड रीसेट करें</string>
     <string name="lost_mail_instructions">ईमेल भूल गए?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX के लिए विकल्प</string>
     <string name="sync_title">समकालन</string>
@@ -75,7 +76,7 @@
     <string name="sync_sanity_remote">दूरस्थ</string>
     <string name="force_full_sync_title">पूर्ण सिंक्रनाइज़ेशन को बाध्य करें</string>
     <string name="force_full_sync_summary">अगले सिंक पर, एक दिशा में परिवर्तन बल</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">पूर्ण समन्वयन को बाध्य करें</string>
     <string name="full_sync_confirmation">जब आप अगले अपने संग्रह सिंक्रनाइज़ अनुरोध परिवर्तन डेटाबेस का एक पूर्ण अपलोड की आवश्यकता होगी । यदि आपके पास अभी तक सिंक्रनाइज़ नहीं किए गए किसी अन्य डिवाइस पर प्रतीक्षारत समीक्षाएँ या अन्य परिवर्तन हैं, तो वे खो जाएँगे. जारी?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid के पहले से स्थापित संस्करण में एक बग के कारण, यह एक पूर्ण सिंक मजबूर करने के लिए सिफारिश की है.</string>
     <!-- Deck Picker Sync Icon -->

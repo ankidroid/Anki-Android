@@ -23,7 +23,6 @@ import com.ichi2.anki.CardUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.template.TemplateFilters
@@ -67,7 +66,7 @@ class TTS {
      * @param qa   The card question or card answer
      */
     fun selectTts(context: Context, card: Card, qa: SoundSide) {
-        val textToRead = if (qa == SoundSide.QUESTION) card.q(true) else card.pureAnswer
+        val textToRead = if (qa == SoundSide.QUESTION) card.question(true) else card.pureAnswer
         // get the text from the card
         ReadText.selectTts(
             getTextForTts(context, textToRead),
@@ -94,7 +93,7 @@ class TTS {
      * Request that TextToSpeech is stopped and shutdown after it it no longer being used
      * by the context that initialized it.
      * No-op if the current instance of TextToSpeech was initialized by another Context
-     * @param context The context used during {@link #initializeTts(Context, ReadTextListener)}
+     * @param context The context used during [ReadText.initializeTts]
      */
     fun releaseTts(context: Context) {
         if (!enabled) {

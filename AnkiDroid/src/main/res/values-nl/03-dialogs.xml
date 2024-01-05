@@ -219,7 +219,7 @@
         <item quantity="one">Een automatische synchronisatie kan worden geactiveerd in %d seconde</item>
         <item quantity="other">Een automatische synchronisatie kan worden geactiveerd in %d seconden</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">Uw verbinding is gemeten. Overdracht van gegevens kan geld kosten</string>
     <string name="deck_picker_new">Aantal nieuwe kaarten die u vandaag in deze leerset ziet.</string>
     <string name="deck_picker_rev">Aantal nieuwe kaarten die u vandaag in deze leerset ziet.</string>
     <string name="deck_picker_lrn">Aantal kaarten in \"leren\" in deze leerset</string>

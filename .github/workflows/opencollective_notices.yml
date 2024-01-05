@@ -20,7 +20,7 @@ jobs:
             pull-requests: write
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/github-script@v6
+            - uses: actions/github-script@v7
               with:
                   script: |
                       // First get the month we are working on and prepare our PR query range

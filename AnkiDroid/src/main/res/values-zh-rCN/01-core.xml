@@ -59,16 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">展开</string>
     <string name="collapse">折叠</string>
-    <string name="study_more">学习更多</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="other">剩余 %d 分钟</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">剩余 %1$d 小时 %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">剩余 %1$d 天 %2$d</item>
-    </plurals>
     <string name="no_cards_placeholder_title">收藏夹为空</string>
     <string name="no_cards_placeholder_description">开始添加卡牌\n使用 + 图标。</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -82,6 +72,7 @@
     <string name="ease_button_easy">简单</string>
     <string name="menu_import">导入牌组</string>
     <string name="undo">撤销</string>
+    <string name="redo">重做</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">撤销画笔</string>
     <string name="move_all_to_deck">全部移动至牌组</string>
     <string name="unbury">取消搁置</string>
@@ -134,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">牌组搜索</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">牌组搜索</string>
     <string name="invalid_deck_name">无效的牌组名称</string>
-    <string name="studyoptions_empty">这个牌组是空的，请点击 + 按钮来添加内容。</string>
-    <string name="studyoptions_limit_reached">达到每日学习限制</string>
-    <string name="studyoptions_empty_schedule">计划中没有需要学习的卡片</string>
-    <string name="studyoptions_congrats_finished">恭喜！你已经完成了目前的学习任务。</string>
     <string name="studyoptions_no_cards_due">没有卡片待复习。</string>
     <string name="sd_card_not_mounted">未挂载储存设备</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
@@ -146,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">继续同步</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">同步已取消</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">正在取消&#8230;\n这可能需要一点时间。</string>
-    <string name="export">导出</string>
-    <string name="export_collection">导出集合</string>
     <string name="export_deck">导出牌组</string>
     <string name="nothing">无</string>
     <!-- Card template editor -->

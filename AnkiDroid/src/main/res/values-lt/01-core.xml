@@ -59,25 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Išskleisti</string>
     <string name="collapse">Suskleisti</string>
-    <string name="study_more">Mokytis toliau</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">Liko %d minutė</item>
-        <item quantity="few">Liko %d minutės</item>
-        <item quantity="many">Liko %d minučių</item>
-        <item quantity="other">Liko %d min.</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Kolekcija tuščia</string>
     <string name="no_cards_placeholder_description">Pridėkite korteles\nnaudodami + mygtuką.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -91,6 +72,7 @@
     <string name="ease_button_easy">L. lengva</string>
     <string name="menu_import">Importuoti</string>
     <string name="undo">Atšaukti</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
     <string name="move_all_to_deck">Viską perkelti į rinkinį</string>
     <string name="unbury">Ištraukti</string>
@@ -143,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Rinkinio paieška</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Rinkinio paieška </string>
     <string name="invalid_deck_name">Blogas rinkinio vardas</string>
-    <string name="studyoptions_empty">Šis rinkinys yra tuščias. Norėdami pridėti naują turinį, spauskite +.</string>
-    <string name="studyoptions_limit_reached">Pasiekta dienos mokymosi norma</string>
-    <string name="studyoptions_empty_schedule">Kortelių mokytis nenumatyta</string>
-    <string name="studyoptions_congrats_finished">Sveikiname! Kol kas daugiau peržiūrų nėra.</string>
     <string name="studyoptions_no_cards_due">Numatytų kortelių kol kas dar nėra</string>
     <string name="sd_card_not_mounted">Atminties įrenginys neprijungtas</string>
     <string name="button_sync" comment="Text of the sync button">Sinchronizuoti</string>
@@ -155,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Tęsti sinchronizavimą</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinchronizavimas atšauktas</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Atšaukiama&#8230;\nTai gali šiek tiek užtrukti.</string>
-    <string name="export">Eksportuoti</string>
-    <string name="export_collection">Eksportuoti kolekciją</string>
     <string name="export_deck">Eksportuoti rinkinį</string>
     <string name="nothing">Nieko</string>
     <!-- Card template editor -->

@@ -37,7 +37,7 @@ class RtlCompliantActionProviderTest {
             )
         )
         val provider = RtlCompliantActionProvider(c)
-        assertEquals(provider.mActivity, a)
+        assertEquals(provider.activity, a)
     }
 
     @Test

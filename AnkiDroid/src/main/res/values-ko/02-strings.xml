@@ -52,6 +52,7 @@
     <string name="CardEditorModel">유형:</string>
     <string name="CardEditorTags">태그: %1$s</string>
     <string name="CardEditorCards">카드: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">태그 이름</string>
     <string name="add_new_filter_tags">태그 추가/필터링</string>
     <string name="add_tag">태그 추가</string>
@@ -153,9 +154,7 @@
     <string name="import_title">가져오는 중</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">추가</string>
     <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="other">다음을 컬렉션에 추가합니까?\n%s\n시간이 걸릴 수도 있습니다.</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">이것은 유효한 Anki package 파일이 아닙니다。</string>
     <string name="import_title_error" comment="Title of error dialog">오류</string>
     <string name="import_error_handle_exception">패키지를 가져오는데 실패했습니다.\n\n%s</string>
@@ -163,19 +162,7 @@
     <string name="import_error_load_imported_database">Anki 데이터베이스 (.anki2)의 덮어쓰기는 아직 지원되지 않습니다. 덮어쓰려면 설명서를 참조해주십시오.</string>
     <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
     <string name="import_error_copy_to_cache">파일 캐시 실패 (저장 공간이 부족하기 때문일 수 있습니다)</string>
-    <string name="import_error_multiple_colpkg">여러 colpkg 파일이 선택되었습니다.</string>
-    <string name="import_error_colpkg_apkg">apkg 랑 colpkg 파일이 동시에 선택되었습니다.</string>
     <string name="import_interrupted">불러오기 중단됨: AnkiDroid가 닫힘</string>
-    <string name="export_include_schedule">일정 포함</string>
-    <string name="export_include_media">미디어 포함</string>
-    <string name="confirm_apkg_export">Anki 패키지로 컬렉션을 내보내시겠습니까?</string>
-    <string name="confirm_apkg_export_deck">\"%s\"를 apkg 파일로 내보낼까요?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">Export %d selected cards as apkg file?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">Export %d selected notes as apkg file?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">apkg. 파일을 처리할 수 있는 응용 프로그램이 없습니다. 저장 중...</string>
@@ -206,8 +193,6 @@ Context | Request Context    [1]</string>
     <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
     <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">카드 묶음이 이미 존재합니다</string>
-    <string name="decks_rename_filtered_nosubdecks">필터링된 카드 묶음은 하위 카드 묶음을 가질 수 없습니다</string>
     <string name="reminder_title">오늘의 학습 잊지 마세요!</string>
     <plurals name="reminder_text">
         <item quantity="other">%1$s에서 복습할 카드 %2$d장</item>
@@ -229,9 +214,6 @@ Context | Request Context    [1]</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
     <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">공백</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">JavaScript를 이용하여 탐색창 서랍을 이용하려면 전체 화면을 켜주십시오.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">JavaScript를 이용하여 옵션 메뉴를 이용하려면 전체화면을 켜주십시오.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">화이트보드 이미지 저장에 실패했습니다. %s</string>
     <string name="white_board_image_saved">%s에 화이트보드 이미지가 저장되었습니다.</string>
@@ -252,7 +234,6 @@ Context | Request Context    [1]</string>
     <string name="card_viewer_could_not_find_image">카드 내용 오류: \'%s\' 읽기 실패</string>
     <string name="card_viewer_media_relative_protocol">카드 내용 오류: 미디어 업데이트 요청</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">\'%s\' 뭉치를 가져오는데 실패했습니다.</string>
     <string name="search_decks">덱 검색</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">심각한 오류</string>
@@ -356,4 +337,21 @@ Context | Request Context    [1]</string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="audio_saved">Recording saved</string>
+    <string name="deleting_selected_notes">Deleting selected notes</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    </string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    </string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
+    </string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <!-- Chips should probably be in a separate file, due to the additional length req -->
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
+    </string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    </string>
+    <string name="shared_decks_login_required">Please log in to download more decks</string>
 </resources>

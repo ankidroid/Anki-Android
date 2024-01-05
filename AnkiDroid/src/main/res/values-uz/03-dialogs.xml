@@ -57,28 +57,28 @@
     <string name="reposition_card_dialog_message">Start position:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d ta karta qayta joylandi</item>
+        <item quantity="other">%d ta kartalar qayta joylandi</item>
     </plurals>
     <string name="reset_card_dialog_title">Reset card progress</string>
     <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d karta restart qilindi</item>
+        <item quantity="other">%d kartalar restart qilindi</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">%d ta kartani qayta rejalash</item>
+        <item quantity="other">%d ta kartalarni qayta rejalash</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Hozirgi interval: har %d kunda</item>
+        <item quantity="other">Hozirgi interval: har %d kunda</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Reschedule for review in x days</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d ta karta qayta rejalashtirildi</item>
+        <item quantity="other">%d ta kartalar qayta rejalashtirildi</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
@@ -216,8 +216,8 @@
     <string name="help_dialog_exception_report_debounce">Report already submitted</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">Avtomatik sinxronizatsiyalashni %d sekunddan keyin ishga tushurish mumkin</item>
+        <item quantity="other">Avtomatik sinxronizatsiyalashni %d sekunddan keyin ishga tushurish mumkin</item>
     </plurals>
     <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">Number of new cards to see today in this deck.</string>

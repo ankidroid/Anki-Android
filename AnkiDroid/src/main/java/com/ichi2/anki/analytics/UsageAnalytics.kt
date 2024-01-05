@@ -486,8 +486,9 @@ object UsageAnalytics {
         "answerButtonPosition", // Answer buttons position
         "showTopbar", // Show top bar
         "showProgress", // Show remaining
-        "showETA", // Show ETA
+        "showAudioPlayButtons", // Show play buttons on cards with audio (reversed in collection: HIDE_AUDIO_PLAY_BUTTONS)
         "card_browser_show_media_filenames", // Display filenames in card browser
+        "showDeckTitle", // Show deck title
         // Controls
         "gestures", // Enable gestures
         "gestureCornerTouch", // 9-point touch
@@ -499,6 +500,7 @@ object UsageAnalytics {
         "binding_FLIP_OR_ANSWER_EASE3",
         "binding_FLIP_OR_ANSWER_EASE4",
         "binding_UNDO",
+        "binding_REDO",
         "binding_EDIT",
         "binding_MARK",
         "binding_BURY_CARD",
@@ -523,6 +525,7 @@ object UsageAnalytics {
         "binding_ABORT_AND_SYNC",
         "binding_RECORD_VOICE",
         "binding_REPLAY_VOICE",
+        "binding_SAVE_VOICE",
         "binding_TOGGLE_WHITEBOARD",
         "binding_CLEAR_WHITEBOARD",
         "binding_CHANGE_WHITEBOARD_PEN_COLOR",
@@ -552,6 +555,7 @@ object UsageAnalytics {
         // App bar buttons
         "reset_custom_buttons",
         "customButtonUndo",
+        "customButtonRedo",
         "customButtonScheduleCard",
         "customButtonFlag",
         "customButtonEditCard",

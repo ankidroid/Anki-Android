@@ -26,17 +26,17 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
+    <string name="front_field_name">ముందు</string>
+    <string name="back_field_name">వెనుకకు</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">వచనం</string>
     <string name="extra_field_name_new">Back Extra</string>
     <string name="field_to_ask_front_name">Add Reverse</string>
     <!--Card type-->
     <string name="card_n_name">Card %d</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
-    <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
+    <string name="basic_model_name">ప్రాథమిక</string>
+    <string name="cloze_model_name">క్లోజ్</string>
+    <string name="basic_typing_model_name">ప్రాథమిక (సమాధానాన్ని టైప్ చేయండి)</string>
     <string name="forward_reverse_model_name">Basic (and reversed card)</string>
     <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
 </resources>

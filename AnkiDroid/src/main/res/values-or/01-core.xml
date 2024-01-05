@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ପ୍ରସାରଣ</string>
     <string name="collapse">ସଙ୍କୋଚନ</string>
-    <string name="study_more">ଆହୁରି ଅଧ୍ୟୟନ କରିବେ</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d ମିନିଟ୍ ବାକି ଅଛି</item>
-        <item quantity="other">%d ମିନିଟ୍ ବାକି ଅଛି</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d ଘଣ୍ଟା %2$d ବାକି ଅଛି</item>
-        <item quantity="other">%1$d ଘଣ୍ଟା %2$d ବାକି ଅଛି</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d ଦିନ %2$d ବାକି ଅଛି</item>
-        <item quantity="other">%1$d ଦିନ %2$d ବାକି ଅଛି</item>
-    </plurals>
     <string name="no_cards_placeholder_title">ସଂଗ୍ରହ ଖାଲି ଅଛି</string>
     <string name="no_cards_placeholder_description">+ ଆଇକନ୍ ଵ୍ୟଵହାର କରି\nପତ୍ର ଯୋଡ଼ିବା ଆରମ୍ଭ କରନ୍ତୁ।</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">ସହଜ</string>
     <string name="menu_import">ଆମଦାନି କରିବା</string>
     <string name="undo">ପୂର୍ଵଵତ୍</string>
+    <string name="redo">ପୁନଃକରଣ</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">ଗାର ଲିଭାଇବା</string>
     <string name="move_all_to_deck">ସବୁ ଏହି ତାସଖଣ୍ଡକୁ ନେଇ ଯାଆନ୍ତୁ</string>
     <string name="unbury">ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
-    <string name="studyoptions_empty">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି। ନୂଆ ଵିଷୟଵସ୍ତୁ ଯୋଡ଼ିବା ପାଇଁ + ବଟନ୍ ଦବାନ୍ତୁ।</string>
-    <string name="studyoptions_limit_reached">ଦୈନିକ ଅଧ୍ୟୟନ ସୀମା ପହଞ୍ଚିଛି</string>
-    <string name="studyoptions_empty_schedule">ଅଧ୍ୟୟନ ପାଇଁ କୌଣସି ପତ୍ର ନିର୍ଦ୍ଧାରିତ ହୋଇନାହିଁ</string>
-    <string name="studyoptions_congrats_finished">ଅଭିନନ୍ଦନ! ଆପଣ ଏବେ ପାଇଁ ସବୁ ସାରିଛନ୍ତି।</string>
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
     <string name="sd_card_not_mounted">ଡିଵାଇସ୍ ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
     <string name="button_sync" comment="Text of the sync button">ସୀଙ୍କ୍</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ସୀଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ସୀଙ୍କ୍ ବାତିଲ୍ ହେଲା</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ବାତିଲ ହେଉଛି&#8230;\nଏହା କିଛି ସମୟ ନେଇପାରେ।</string>
-    <string name="export">ରପ୍ତାନି</string>
-    <string name="export_collection">ସଂଗ୍ରହ ରପ୍ତାନି କରନ୍ତୁ</string>
     <string name="export_deck">ତାସଖଣ୍ଡ ରପ୍ତାନି କରନ୍ତୁ</string>
     <string name="nothing">କିଛି ନାହିଁ</string>
     <!-- Card template editor -->

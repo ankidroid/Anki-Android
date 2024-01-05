@@ -5,16 +5,20 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.view.Menu
+import android.widget.TextView
 import androidx.core.content.edit
+import androidx.core.view.children
 import androidx.test.core.app.ActivityScenario
+import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
 import com.ichi2.testutils.*
+import com.ichi2.testutils.libanki.buryNewSiblings
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.apache.commons.exec.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -32,7 +36,7 @@ import java.io.File
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@KotlinCleanup("SPMockBuilder")
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class DeckPickerTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
@@ -299,7 +303,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "Options menu displayed when collection is accessible",
                 d.optionsMenuState,
-                `is`(notNullValue())
+                notNullValue()
             )
         } finally {
             revokeWritePermissions()
@@ -488,6 +492,55 @@ class DeckPickerTest : RobolectricTest() {
             deckPicker.hasAtLeastOneDeckBeingDisplayed(),
             equalTo(false)
         )
+    }
+
+    @Test
+    fun `unbury is usable - Issue 15050`() {
+        // We had an issue where 'Unbury' was not visible
+        // This was because the deck selection was not changed when a long press occurred
+
+        // one empty deck to be initially selected, one with cards to check 'unbury' status
+        val emptyDeck = addDeck("No Cards")
+        val deckWithCards = addDeck("With Cards")
+        updateDeckConfig(deckWithCards) { buryNewSiblings = true }
+
+        // Add a note with 2 cards in deck "With Cards", one of these cards is to be buried
+        col.notetypes.byName("Basic (and reversed card)")!!.also { noteType ->
+            col.notetypes.save(noteType.apply { put("did", deckWithCards) })
+        }
+        addNoteUsingBasicAndReversedModel()
+
+        // Answer 'Easy' for one of the cards, burying the other
+        col.decks.select(deckWithCards)
+        col.sched.deckDueTree() // ? if not called, decks.select(toSelect) un-buries a card
+        col.sched.answerCard(col.sched.card!!, EASE_4)
+        assertThat("the other card is buried", col.sched.card, nullValue())
+
+        // select a deck with no cards
+        col.decks.select(emptyDeck)
+        assertThat("unbury is not visible: deck has no cards", !col.sched.haveBuriedInCurrentDeck())
+
+        deckPicker {
+            assertThat("deck focus is set", mFocusedDeck, equalTo(emptyDeck))
+
+            // ACT: open up the Deck Context Menu
+            val deckToClick = recyclerView.children.single {
+                it.findViewById<TextView>(R.id.deckpicker_name).text == "With Cards"
+            }
+            deckToClick.performLongClick()
+
+            // ASSERT
+            assertThat("unbury is visible: one card is buried", col.sched.haveBuriedInCurrentDeck())
+            assertThat("deck focus has changed", mFocusedDeck, equalTo(deckWithCards))
+        }
+    }
+
+    private fun deckPicker(function: suspend DeckPicker.() -> Unit) = runTest {
+        val deckPicker = startActivityNormallyOpenCollectionWithIntent(
+            DeckPicker::class.java,
+            Intent()
+        )
+        function(deckPicker)
     }
 
     private fun useCollection(collectionType: CollectionType) {

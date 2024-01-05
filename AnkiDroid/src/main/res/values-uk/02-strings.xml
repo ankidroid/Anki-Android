@@ -52,6 +52,7 @@
     <string name="CardEditorModel">Тип:</string>
     <string name="CardEditorTags">Теги: %1$s</string>
     <string name="CardEditorCards">Картки: %1$s</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Назва позначки</string>
     <string name="add_new_filter_tags">Додати/фільтрувати позначки</string>
     <string name="add_tag">Додати позначку</string>
@@ -147,7 +148,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Попередній перегляд</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d з %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Перейменувати</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">Перевірити</string>
     <string name="check_db">Перевірити базу даних</string>
     <string name="check_media">Перевірити медіафайли</string>
     <string name="empty_cards">Порожні картки</string>
@@ -158,12 +159,7 @@
     <string name="import_title">Імпортування</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додати</string>
     <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Додати \"%s\" до колекції? Це може зайняти багато часу</item>
-        <item quantity="few">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
-        <item quantity="many">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
-        <item quantity="other">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
-    </plurals>
+    <string name="import_dialog_message_add">Додати \"%s\" до колекції? Це може зайняти багато часу</string>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Помилка</string>
     <string name="import_error_handle_exception">Не вдалося імпортувати пакет\n\n%s</string>
@@ -171,25 +167,7 @@
     <string name="import_error_load_imported_database">Заміна Anki Database (.anki2) ще не підтримується. Перегляньте у посібнику інструкцію по заміні.</string>
     <string name="import_error_content_provider">Вибраний файл не вдалося імпортувати автоматично до AnkiDroid. Будь ласка, перегляньте посібник користувача для того аби вручну імпортувати anki файли: \n%s</string>
     <string name="import_error_copy_to_cache">Не вдалося зберегти файл в кеш (можливо закінчується пам\'ять на пристрої)</string>
-    <string name="import_error_multiple_colpkg">Було вибрано декілька файлів colpkl.</string>
-    <string name="import_error_colpkg_apkg">Файли apkg &amp; colpkg були вибрані одночасно</string>
     <string name="import_interrupted">Імпортування перервано</string>
-    <string name="export_include_schedule">Додати планування</string>
-    <string name="export_include_media">Додати медіа</string>
-    <string name="confirm_apkg_export">Вивантажити збірку у вигляді пакунку Anki ?</string>
-    <string name="confirm_apkg_export_deck">Експортувати \"%s\" як файл apkg?</string>
-    <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Експортувати вибрану картку як файл apkg?</item>
-        <item quantity="few">Експортувати вибрані картки як файл apkg?</item>
-        <item quantity="many">Експортувати вибрані картки як файл apkg?</item>
-        <item quantity="other">Експортувати вибрані картки як файл apkg?</item>
-    </plurals>
-    <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Експортувати вибраний запис як файл apkg?</item>
-        <item quantity="few">Експортувати вибрані записи як файл apkg?</item>
-        <item quantity="many">Експортувати вибрані записи як файл apkg?</item>
-        <item quantity="other">Експортувати вибрані записи як файл apkg?</item>
-    </plurals>
     <string name="export_preparation_in_progress">Підготовка експорту&#8230;</string>
     <string name="export_ready_title">Експорт готовий</string>
     <string name="export_send_no_handlers">Не знайдено додатків для обробки apkg. Збереження...</string>
@@ -218,8 +196,6 @@
     <string name="tag_editor_add_feedback">Натисніть \"%2$s\", аби підтвердити додавання \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Обрано існуючу позначку \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="decks_rename_exists">Така колода вже існує</string>
-    <string name="decks_rename_filtered_nosubdecks">Фільтрована колода не може мати підколод</string>
     <string name="reminder_title">Не забудьте про сьогоднішнє навчання!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d картка для повторення в %1$s</item>
@@ -244,9 +220,6 @@
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">пріклад</string>
     <string name="basic_answer_sample_text">приклад</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Порожня</string>
-    <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Будь ласка, увімкніть повноекранний режим, щоб показати відображувач навігації використовуючи JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Будь ласка, увімкніть повноекранний режим, щоб показати меню параметрів використовуючи JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
@@ -267,7 +240,6 @@
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
     <string name="card_viewer_media_relative_protocol">Помилка вмісту картки: необхідне оновлення медіа</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Не вдалося завантажити колоду «%s»</string>
     <string name="search_decks">Шукати колоди</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Показати прогрес перенесення даних</string>
     <string name="ankidroid_init_failed_webview_title">Критична помилка</string>
@@ -373,4 +345,20 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Натисніть, щоб почати перенесення сховища</string>
     <string name="media_sync_required_title">Необхідна синхронізація медіа</string>
     <string name="media_sync_unavailable_message">Синхронізацію мультимедійних файлів вимкнено в налаштуваннях. Будь ласка, синхронізуйте та створіть резервну копію всіх медіафайлів, які не були синхронізовані, перш ніж продовжити</string>
+    <string name="audio_saved">Запис аудіо збережено</string>
+    <string name="deleting_selected_notes">Видалення вибраних записів</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Натисніть на голос, щоб прослухати
+    </string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Перед використанням слід встановити голос</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Все одно використати
+    </string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <!-- Chips should probably be in a separate file, due to the additional length req -->
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Інтернет
+    </string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Встановити
+    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Не вдалося відкрити налаштування синтезу мовлення
+    </string>
+    <string name="shared_decks_login_required">Please log in to download more decks</string>
 </resources>

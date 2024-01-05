@@ -33,5 +33,7 @@ class AssetHelperTest {
         assertThat(AssetHelper.guessMimeType("test.txt"), equalTo("text/plain"))
         assertThat(AssetHelper.guessMimeType("test.png"), equalTo("image/png"))
         assertThat(AssetHelper.guessMimeType("test.zip"), equalTo("application/zip"))
+        // #14696: path with space in it
+        assertThat(AssetHelper.guessMimeType("/Dominant seventh arpeggio-C-right-1-increasing_test.svg"), equalTo("image/svg+xml"))
     }
 }

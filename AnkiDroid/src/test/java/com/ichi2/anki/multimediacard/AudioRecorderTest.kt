@@ -24,26 +24,26 @@ import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
 class AudioRecorderTest {
-    private lateinit var mAudioRecorder: AudioRecorder
+    private lateinit var audioRecorder: AudioRecorder
 
     @Mock(name = "mRecorder")
-    private val mMockedMediaRecorder: MediaRecorder? = null
+    private val mockedMediaRecorder: MediaRecorder? = null
 
     @InjectMocks
-    private lateinit var mInjectedRecorder: AudioRecorder
+    private lateinit var injectedRecorder: AudioRecorder
 
     @Before
     fun before() {
         MockitoAnnotations.openMocks(this)
-        mAudioRecorder = AudioRecorder()
+        audioRecorder = AudioRecorder()
     }
 
     // verifies that stopRecording() and release() calls the proper methods in mRecorder
     @Test
     fun testStopAndRelease() {
-        mInjectedRecorder.stopRecording()
-        mInjectedRecorder.release()
-        verify(mMockedMediaRecorder, times(1))?.stop()
-        verify(mMockedMediaRecorder, times(1))?.release()
+        injectedRecorder.stopRecording()
+        injectedRecorder.release()
+        verify(mockedMediaRecorder, times(1))?.stop()
+        verify(mockedMediaRecorder, times(1))?.release()
     }
 }

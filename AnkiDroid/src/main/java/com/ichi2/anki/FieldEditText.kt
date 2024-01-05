@@ -53,9 +53,9 @@ import kotlin.math.min
 
 class FieldEditText : FixedEditText, NoteService.NoteField {
     override var ord = 0
-    private var mOrigBackground: Drawable? = null
-    private var mSelectionChangeListener: TextSelectionListener? = null
-    private var mImageListener: ImagePasteListener? = null
+    private var origBackground: Drawable? = null
+    private var selectionChangeListener: TextSelectionListener? = null
+    private var imageListener: ImagePasteListener? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var clipboard: ClipboardManager? = null
@@ -90,14 +90,14 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             Timber.w(e)
         }
         minimumWidth = 400
-        mOrigBackground = background
+        origBackground = background
         // Fixes bug where new instances of this object have wrong colors, probably
         // from some reuse mechanic in Android.
         setDefaultStyle()
     }
 
     fun setImagePasteListener(imageListener: ImagePasteListener?) {
-        mImageListener = imageListener
+        this.imageListener = imageListener
     }
 
     @KotlinCleanup("add extension method to iterate clip items")
@@ -113,7 +113,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
                     val uriContent = pair.first
                     val remaining = pair.second
 
-                    if (mImageListener == null || uriContent == null) {
+                    if (imageListener == null || uriContent == null) {
                         return remaining
                     }
 
@@ -144,9 +144,9 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     }
 
     override fun onSelectionChanged(selStart: Int, selEnd: Int) {
-        if (mSelectionChangeListener != null) {
+        if (selectionChangeListener != null) {
             try {
-                mSelectionChangeListener!!.onSelectionChanged(selStart, selEnd)
+                selectionChangeListener!!.onSelectionChanged(selStart, selEnd)
             } catch (e: Exception) {
                 Timber.w(e, "mSelectionChangeListener")
             }
@@ -171,7 +171,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
      * Restore the default style of this view.
      */
     fun setDefaultStyle() {
-        background = mOrigBackground
+        background = origBackground
     }
 
     fun setContent(content: String?, replaceNewLine: Boolean) {
@@ -219,7 +219,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return if (imageUri == null) {
             false
         } else {
-            mImageListener!!.onImagePaste(this, imageUri)
+            imageListener!!.onImagePaste(this, imageUri)
         }
     }
 

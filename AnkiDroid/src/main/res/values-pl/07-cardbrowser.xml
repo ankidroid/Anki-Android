@@ -58,12 +58,19 @@
         <item quantity="other">%d notatek pokazanych</item>
     </plurals>
     <string name="card_browser_all_decks">Wszystkie talie</string>
-    <string name="card_browser_delete_card">Usuń notatki</string>
-    <string name="card_browser_suspend_card">Zawieś karty</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="few">Delete cards</item>
+        <item quantity="many">Delete cards</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="few">Delete notes</item>
+        <item quantity="many">Delete notes</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Zmień talie</string>
-    <string name="card_browser_unsuspend_card">Odwieś karty</string>
-    <string name="card_browser_mark_card">Wyróżnij notatki</string>
-    <string name="card_browser_unmark_card">Cofnij wyróżnienie notatek</string>
     <string name="delete_card_title">Usuń notatkę</string>
     <string name="card_browser_show_marked">Odfiltruj zaznaczone</string>
     <string name="card_browser_show_suspended">Odfiltruj zawieszone</string>
@@ -118,5 +125,4 @@
         <item quantity="many">Usunięto %d kart</item>
         <item quantity="other">Usunięto %d kart</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

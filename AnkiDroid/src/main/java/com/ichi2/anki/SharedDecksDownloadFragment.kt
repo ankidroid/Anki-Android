@@ -31,9 +31,9 @@ import android.webkit.URLUtil
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -45,7 +45,7 @@ import kotlin.math.abs
 
 /**
  * Used when a download is captured from AnkiWeb shared decks WebView.
- * Only for downloads started via SharedDecksActivity.
+ * Only for downloads started via [SharedDecksActivity].
  *
  * Only one download is supported at a time, since importing multiple decks
  * simultaneously is not supported.
@@ -77,7 +77,7 @@ class SharedDecksDownloadFragment : Fragment() {
 
     var isDownloadInProgress = false
 
-    private var mDownloadCancelConfirmationDialog: MaterialDialog? = null
+    private var downloadCancelConfirmationDialog: AlertDialog? = null
 
     companion object {
         const val DOWNLOAD_PROGRESS_CHECK_DELAY = 1000L
@@ -468,23 +468,22 @@ class SharedDecksDownloadFragment : Fragment() {
 
     @Suppress("deprecation") // onBackPressed
     fun showCancelConfirmationDialog() {
-        mDownloadCancelConfirmationDialog = context?.let {
-            MaterialDialog(it).show {
-                title(R.string.cancel_download_question_title)
-                positiveButton(R.string.dialog_yes) {
-                    mDownloadManager.remove(mDownloadId)
-                    unregisterReceiver()
-                    isDownloadInProgress = false
-                    activity?.onBackPressed()
-                }
-                negativeButton(R.string.dialog_no) {
-                    dismiss()
-                }
+        downloadCancelConfirmationDialog = AlertDialog.Builder(requireContext()).apply {
+            setTitle(R.string.cancel_download_question_title)
+            setPositiveButton(R.string.dialog_yes) { _, _ ->
+                mDownloadManager.remove(mDownloadId)
+                unregisterReceiver()
+                isDownloadInProgress = false
+                activity?.onBackPressed()
             }
-        }
+            setNegativeButton(R.string.dialog_no) { _, _ ->
+                downloadCancelConfirmationDialog?.dismiss()
+            }
+        }.create()
+        downloadCancelConfirmationDialog?.show()
     }
 
     private fun removeCancelConfirmationDialog() {
-        mDownloadCancelConfirmationDialog?.dismiss()
+        downloadCancelConfirmationDialog?.dismiss()
     }
 }

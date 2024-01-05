@@ -18,9 +18,9 @@ package com.ichi2.libanki
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
-import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.JvmTest
+import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertThrows
@@ -39,7 +39,7 @@ class DecksTest : JvmTest() {
         val deck1 = addDeck("deck1")
         val note = col.newNote()
         note.setItem("Front", "1")
-        note.model().put("did", deck1)
+        note.notetype.put("did", deck1)
         col.addNote(note)
         val c = note.cards()[0]
         assertEquals(deck1, c.did)
@@ -52,7 +52,6 @@ class DecksTest : JvmTest() {
 
     @Test
     @SuppressLint("CheckResult")
-    @Throws(DeckRenameException::class)
     fun test_rename() {
         val col = col
         var id = addDeck("hello::world")
@@ -85,13 +84,13 @@ class DecksTest : JvmTest() {
         col.decks.get(filteredId)
         val childId = addDeck("child")
         val child = col.decks.get(childId)!!
-        assertThrows(DeckRenameException::class.java) {
+        assertThrows(BackendDeckIsFilteredException::class.java) {
             col.decks.rename(
                 child,
                 "filtered::child"
             )
         }
-        assertThrows(DeckRenameException::class.java) {
+        assertThrows(BackendDeckIsFilteredException::class.java) {
             col.decks.rename(
                 child,
                 "FILTERED::child"
@@ -152,10 +151,7 @@ class DecksTest : JvmTest() {
     @Test
     fun curDeckIsLong() {
         // Regression for #8092
-        val col = col
-        val decks = col.decks
-        val id = addDeck("test")
-        decks.select(id)
+        addDeck("test", setAsSelected = true)
         assertDoesNotThrow("curDeck should be saved as a long. A deck id.") {
             col.config.get<DeckId>(
                 CURRENT_DECK

@@ -45,25 +45,26 @@
 
 -->
 <resources>
-    <string name="youre_offline">You are offline</string>
+    <string name="youre_offline">ನೀವು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿರುವಿರಿ</string>
     <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
-    <string name="retry">Retry</string>
+    <string name="vague_error" comment="Network error dialog title">ದೋಷ</string>
+    <string name="retry">ಮರುಪ್ರಯತ್ನಿಸಿ</string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">A network error has occurred</string>
     <string name="not_logged_in_title">Log in to AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.kt -->
-    <string name="username">Email address</string>
-    <string name="password">Password</string>
-    <string name="log_in">Log in</string>
+    <string name="username">ಇಮೇಲ್ ವಿಳಾಸ</string>
+    <string name="password">ಗುಪ್ತಪದ</string>
+    <string name="log_in">ಲಾಗ್ ಇನ್ ಮಾಡಿ</string>
     <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
     <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
-    <string name="sign_up">Sign up</string>
-    <string name="logged_as">Logged in as</string>
-    <string name="log_out">Log out</string>
-    <string name="reset_password">Reset password</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="sign_up">ಸೈನ್ ಅಪ್ ಮಾಡಿ</string>
+    <string name="logged_as">ಎಂದು ಲಾಗಿನ್ ಮಾಡಲಾಗಿದೆ</string>
+    <string name="log_out">ಲಾಗ್ ಔಟ್</string>
+    <string name="reset_password">ಪಾಸ್ವರ್ಡ್ ಮರುಹೊಂದಿಸಿ</string>
+    <string name="lost_mail_instructions">ಇಮೇಲ್ ಮರೆತಿರುವಿರಾ?</string>
+    <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Options for XXX</string>
     <string name="sync_title">Synchronization</string>
@@ -71,8 +72,8 @@
     <string name="sync_database_acknowledge">Collection synchronized</string>
     <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_sanity_local">Local</string>
-    <string name="sync_sanity_remote">Remote</string>
+    <string name="sync_sanity_local">ಸ್ಥಳೀಯ</string>
+    <string name="sync_sanity_remote">ರಿಮೋಟ್</string>
     <string name="force_full_sync_title">Force full sync</string>
     <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
     <string name="force_full_sync_confirmation">Forced full sync</string>

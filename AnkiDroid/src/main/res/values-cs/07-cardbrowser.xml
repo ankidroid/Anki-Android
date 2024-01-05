@@ -58,12 +58,19 @@
         <item quantity="other">zobrazeno %d poznámek</item>
     </plurals>
     <string name="card_browser_all_decks">Všechny balíčky</string>
-    <string name="card_browser_delete_card">Odstranit poznámky</string>
-    <string name="card_browser_suspend_card">Vyřadit karty</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Odstranit kartu</item>
+        <item quantity="few">Odstranit karty</item>
+        <item quantity="many">Odstranit karty</item>
+        <item quantity="other">Odstranit karty</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Odstranit poznámku</item>
+        <item quantity="few">Odstranit poznámky</item>
+        <item quantity="many">Odstranit poznámky</item>
+        <item quantity="other">Odstranit poznámky</item>
+    </plurals>
     <string name="card_browser_change_deck">Změnit balíček</string>
-    <string name="card_browser_unsuspend_card">Zrušit vyřazení karet</string>
-    <string name="card_browser_mark_card">Označit poznámky</string>
-    <string name="card_browser_unmark_card">Odznačit poznámky</string>
     <string name="delete_card_title">Odstranit poznámku?</string>
     <string name="card_browser_show_marked">Filtrovat označené</string>
     <string name="card_browser_show_suspended">Filtrovat vyřazené</string>
@@ -118,5 +125,4 @@
         <item quantity="many">%d karty odstraněno</item>
         <item quantity="other">%d karet odstraněno</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

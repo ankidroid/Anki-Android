@@ -30,6 +30,8 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.ichi2.anki.R
+import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates
@@ -42,7 +44,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.whenever
 import java.util.*
-import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(AndroidJUnit4::class)
@@ -56,7 +57,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -64,8 +65,8 @@ class TagsDialogTest {
             val body = dialog!!.getCustomView()
             val optionsGroup = body.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
             Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
-            val expectedOption = 1
-            optionsGroup.getChildAt(expectedOption).performClick()
+            val expectedOption = CardStateFilter.NEW
+            optionsGroup.getChildAt(1).performClick()
             dialog.getActionButton(WhichButton.POSITIVE).callOnClick()
             Mockito.verify(mockListener, Mockito.times(1)).onSelectedTags(ArrayList(), ArrayList(), expectedOption)
         }
@@ -78,29 +79,29 @@ class TagsDialogTest {
         val args = TagsDialog(ParametersUtils.whatever())
             .withArguments(type, ArrayList(), allTags)
             .arguments
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
             MatcherAssert.assertThat(dialog, IsNull.notNullValue())
             val returnedList = AtomicReference<List<String>?>()
-            val returnedOption = AtomicInteger()
+            val returnedOption = AtomicReference<CardStateFilter>()
             f.parentFragmentManager.setFragmentResultListener(
                 TagsDialogListener.ON_SELECTED_TAGS_KEY,
                 mockLifecycleOwner(),
                 { _: String?, bundle: Bundle ->
                     returnedList.set(bundle.getStringArrayList(TagsDialogListener.ON_SELECTED_TAGS__SELECTED_TAGS))
-                    returnedOption.set(bundle.getInt(TagsDialogListener.ON_SELECTED_TAGS__OPTION))
+                    returnedOption.set(bundle.getSerializableCompat<CardStateFilter>(TagsDialogListener.ON_SELECTED_TAGS__OPTION))
                 }
             )
             val body = dialog!!.getCustomView()
             val optionsGroup = body.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
             Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
-            val expectedOption = 2
-            optionsGroup.getChildAt(expectedOption).performClick()
+            val expectedOption = CardStateFilter.DUE
+            optionsGroup.getChildAt(2).performClick()
             dialog.getActionButton(WhichButton.POSITIVE).callOnClick()
             ListUtil.assertListEquals(ArrayList(), returnedList.get())
-            Assert.assertEquals(expectedOption.toLong(), returnedOption.get().toLong())
+            Assert.assertEquals(expectedOption, returnedOption.get())
         }
     }
 
@@ -116,7 +117,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -151,7 +152,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -189,7 +190,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -244,7 +245,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -291,7 +292,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -325,13 +326,13 @@ class TagsDialogTest {
             Assert.assertEquals("common::sport::football", item4.text)
             Assert.assertEquals("common::sport::football::small", item5.text)
             Assert.assertEquals("common::sport::tennis", item6.text)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item0.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item1.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, item2.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item3.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item4.mCheckBoxView.state)
-            Assert.assertTrue(item5.mCheckBoxView.isChecked)
-            Assert.assertTrue(item6.mCheckBoxView.isChecked)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item0.checkBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item1.checkBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, item2.checkBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item3.checkBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item4.checkBoxView.state)
+            Assert.assertTrue(item5.checkBoxView.isChecked)
+            Assert.assertTrue(item6.checkBoxView.isChecked)
         }
     }
 
@@ -345,7 +346,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -367,9 +368,9 @@ class TagsDialogTest {
             Assert.assertEquals("common", item0.text)
             Assert.assertEquals("common::blank", item1.text)
             Assert.assertEquals("common::blank::careless", item2.text)
-            Assert.assertTrue(item0.mCheckBoxView.isChecked)
-            Assert.assertTrue(item1.mCheckBoxView.state == CheckBoxTriStates.State.INDETERMINATE)
-            Assert.assertTrue(item2.mCheckBoxView.isChecked)
+            Assert.assertTrue(item0.checkBoxView.isChecked)
+            Assert.assertTrue(item1.checkBoxView.state == CheckBoxTriStates.State.INDETERMINATE)
+            Assert.assertTrue(item2.checkBoxView.isChecked)
         }
     }
 
@@ -393,7 +394,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -434,7 +435,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -481,7 +482,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -514,9 +515,9 @@ class TagsDialogTest {
             //     - tennis    [ ]
             Assert.assertEquals(7, recycler.adapter!!.itemCount.toLong())
 
-            getItem(2).mCheckBoxView.performClick()
+            getItem(2).checkBoxView.performClick()
             updateLayout()
-            getItem(5).mCheckBoxView.performClick()
+            getItem(5).checkBoxView.performClick()
             updateLayout()
             // v common        [-]
             //   v speak       [-]
@@ -533,9 +534,9 @@ class TagsDialogTest {
             Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
             Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
 
-            getItem(2).mCheckBoxView.performClick()
+            getItem(2).checkBoxView.performClick()
             updateLayout()
-            getItem(5).mCheckBoxView.performClick()
+            getItem(5).checkBoxView.performClick()
             updateLayout()
             // v common        [ ]
             //   v speak       [ ]
@@ -552,7 +553,7 @@ class TagsDialogTest {
             Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(5).checkboxState)
             Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
 
-            getItem(5).mCheckBoxView.performClick()
+            getItem(5).checkBoxView.performClick()
             updateLayout()
             // v common        [-]
             //   v speak       [ ]
@@ -569,9 +570,9 @@ class TagsDialogTest {
             Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
             Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
 
-            getItem(3).mCheckBoxView.performClick()
+            getItem(3).checkBoxView.performClick()
             updateLayout()
-            getItem(5).mCheckBoxView.performClick()
+            getItem(5).checkBoxView.performClick()
             updateLayout()
             // v common        [-]
             //   v speak       [ ]
@@ -600,7 +601,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?

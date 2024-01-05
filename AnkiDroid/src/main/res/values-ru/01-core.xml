@@ -59,25 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Развернуть</string>
     <string name="collapse">Свернуть</string>
-    <string name="study_more">Учить ещё</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">Осталась %d минута</item>
-        <item quantity="few">Осталось %d минуты</item>
-        <item quantity="many">Осталось %d минут</item>
-        <item quantity="other">Осталось %d минут</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">Остался %1$d час %2$d</item>
-        <item quantity="few">Осталось %1$d часа %2$d</item>
-        <item quantity="many">Осталось %1$d часов %2$d</item>
-        <item quantity="other">Осталось %1$d часов %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Остался %1$d день %2$d</item>
-        <item quantity="few">Осталось %1$d дня %2$d</item>
-        <item quantity="many">Осталось %1$d дней %2$d</item>
-        <item quantity="other">Осталось %1$d дней %2$d</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Коллекция пуста</string>
     <string name="no_cards_placeholder_description">Добавляйте карточки\nс помощью значка «+».</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -91,6 +72,7 @@
     <string name="ease_button_easy">Легко</string>
     <string name="menu_import">Импортировать</string>
     <string name="undo">Отменить</string>
+    <string name="redo">Вернуть</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Отменить штрих</string>
     <string name="move_all_to_deck">Переместить всё в колоду</string>
     <string name="unbury">Вернуть</string>
@@ -143,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Поиск колод</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Поиск колоды</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
-    <string name="studyoptions_empty">Эта колода пуста. Нажмите кнопку +, чтобы добавить что-нибудь.</string>
-    <string name="studyoptions_limit_reached">На сегодня всё</string>
-    <string name="studyoptions_empty_schedule">Нет запланированых карточек</string>
-    <string name="studyoptions_congrats_finished">Ура! На сегодня всё.</string>
     <string name="studyoptions_no_cards_due">Нет карточек на сегодня</string>
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизировать</string>
@@ -155,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Продолжить синхронизацию</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизация отменена</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Отмена...\nЭто может занять некоторое время.</string>
-    <string name="export">Экспортировать</string>
-    <string name="export_collection">Экспортировать</string>
     <string name="export_deck">Экспортировать колоду</string>
     <string name="nothing">Ничего</string>
     <!-- Card template editor -->
@@ -261,8 +237,8 @@
     <string name="create_new_collection">Создать новую коллекцию</string>
     <string name="new_unsafe_collection">Новая коллекция будет удалена с вашего телефона, если вы удалите AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid требует дополнительных разрешений для работы </string>
+    <string name="storage_access_title">Доступ к хранилищу</string>
+    <string name="storage_access_summary">Сохраняет вашу коллекцию в безопасном месте, чтобы она не исчезла при удалении приложения</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Доступ ко всем файлам</string>
 </resources>

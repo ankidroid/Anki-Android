@@ -43,16 +43,17 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfigura
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.*
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DYN_PRIORITY
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.hashMapInit
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.asLocalizedMessage
+import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -64,7 +65,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         fun onExtendStudyLimits()
         fun showDialogFragment(newFragment: DialogFragment)
         fun dismissAllDialogFragments()
-        fun startActivityForResultWithoutAnimation(intent: Intent, requestCode: Int)
+        fun startActivity(intent: Intent)
     }
 
     fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: DeckId, jumpToReviewer: Boolean = false): CustomStudyDialog {
@@ -316,16 +317,13 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * Gathers the final selection of tags and type of cards,
      * Generates the search screen for the custom study deck.
      */
-    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
-        val sb = StringBuilder()
-        when (option) {
-            1 -> sb.append("is:new ")
-            2 -> sb.append("is:due ")
-        }
+    @NeedsTest("14537: limit to particular tags")
+    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
+        val sb = StringBuilder(stateFilter.toSearch)
         val arr: MutableList<String?> = ArrayList(selectedTags.size)
         if (selectedTags.isNotEmpty()) {
             for (tag in selectedTags) {
-                arr.add("tag:'$tag'")
+                arr.add("tag:\"$tag\"")
             }
             sb.append("(").append(arr.joinToString(" or ")).append(")")
         }
@@ -454,8 +452,8 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck)
             dyn = try {
                 decks.get(decks.newDyn(customStudyDeck))!!
-            } catch (ex: DeckRenameException) {
-                showThemedToast(requireActivity(), ex.asLocalizedMessage(requireContext()), true)
+            } catch (ex: BackendDeckIsFilteredException) {
+                showThemedToast(requireActivity(), ex.localizedMessage ?: ex.message ?: "", true)
                 return
             }
         }
@@ -491,7 +489,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     private fun onLimitsExtended(jumpToReviewer: Boolean) {
         if (jumpToReviewer) {
-            customStudyListener?.startActivityForResultWithoutAnimation(Intent(requireContext(), Reviewer::class.java), AnkiActivity.REQUEST_REVIEW)
+            customStudyListener?.startActivity(Intent(requireContext(), Reviewer::class.java))
         } else {
             customStudyListener?.onExtendStudyLimits()
         }

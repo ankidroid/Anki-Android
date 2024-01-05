@@ -30,12 +30,11 @@ import com.ichi2.anki.TestUtils.activityInstance
 import com.ichi2.anki.TestUtils.clickChildViewWithId
 import com.ichi2.anki.TestUtils.isScreenSw600dp
 import com.ichi2.anki.TestUtils.wasBuiltOnCI
-import com.ichi2.anki.tests.InstrumentedTest.Companion.isEmulator
+import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.ThreadUtils.sleep
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
-import com.ichi2.anki.utils.EnsureAllFilesAccessRule
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Assume.assumeFalse
 import org.junit.Assume.assumeTrue
@@ -44,15 +43,12 @@ import org.junit.Rule
 import org.junit.Test
 
 @SuppressLint("DirectSystemCurrentTimeMillisUsage")
-class DeckPickerTest {
+class DeckPickerTest : InstrumentedTest() {
     @get:Rule
-    val mActivityRule = ActivityScenarioRule(DeckPicker::class.java)
+    val activityRule = ActivityScenarioRule(DeckPicker::class.java)
 
     @get:Rule
-    val mRuntimePermissionRule = grantPermissions(storagePermission, notificationPermission)
-
-    @get:Rule
-    val ensureAllFilesAccessRule = EnsureAllFilesAccessRule()
+    val runtimePermissionRule = grantPermissions(storagePermission, notificationPermission)
 
     @Ignore("This test appears to be flaky everywhere")
     @Test

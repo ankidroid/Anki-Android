@@ -17,21 +17,15 @@
 package com.ichi2.anki.export
 
 import androidx.fragment.app.Fragment
-import com.ichi2.anki.dialogs.ExportDialog
-import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.dialogs.ExportReadyDialog
 import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
 import com.ichi2.utils.ExtendedFragmentFactory
 
-internal class ExportDialogsFactory(
-    private val ExportReadyDialogListener: ExportReadyDialogListener,
-    private val exportDialogListener: ExportDialogListener
+class ExportDialogsFactory(
+    private val exportReadyDialogListener: ExportReadyDialogListener
 ) : ExtendedFragmentFactory() {
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         val cls = loadFragmentClass(classLoader, className)
-        if (cls == ExportDialog::class.java) {
-            return newExportDialog()
-        }
         return if (cls == ExportReadyDialog::class.java) {
             newExportReadyDialog()
         } else {
@@ -39,11 +33,11 @@ internal class ExportDialogsFactory(
         }
     }
 
-    fun newExportDialog(): ExportDialog {
-        return ExportDialog(exportDialogListener)
-    }
-
     fun newExportReadyDialog(): ExportReadyDialog {
-        return ExportReadyDialog(ExportReadyDialogListener)
+        return ExportReadyDialog(exportReadyDialogListener)
     }
+}
+
+interface ExportDialogsFactoryProvider {
+    fun exportDialogsFactory(): ExportDialogsFactory
 }

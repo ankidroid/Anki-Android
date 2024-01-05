@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Desplegar</string>
     <string name="collapse">Ocultar</string>
-    <string name="study_more">Estudiar más</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d minuto restante</item>
-        <item quantity="other">%d minutos restantes</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hora %2$d restante</item>
-        <item quantity="other">%1$d horas %2$d restantes</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d día %2$d restante</item>
-        <item quantity="other">%1$d días %2$d restantes</item>
-    </plurals>
     <string name="no_cards_placeholder_title">La colección está vacía</string>
     <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Fácil</string>
     <string name="menu_import">Importar</string>
     <string name="undo">Deshacer</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Deshacer trazo</string>
     <string name="move_all_to_deck">Mover todo al mazo</string>
     <string name="unbury">Desenterrar</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Buscar Mazos</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Búsqueda de Mazo</string>
     <string name="invalid_deck_name">Nombre de mazo no válido</string>
-    <string name="studyoptions_empty">Este mazo está vacío. Pulsa el botón + para añadir contenido nuevo.</string>
-    <string name="studyoptions_limit_reached">Límite de estudio diario alcanzado</string>
-    <string name="studyoptions_empty_schedule">Sin tarjetas programadas para estudiar</string>
-    <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
     <string name="studyoptions_no_cards_due">Todavía no hay ninguna tarjeta pendiente.</string>
     <string name="sd_card_not_mounted">Almacenamiento del dispositivo no montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continuar la sincronización</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronización cancelada</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelando&#8230;\nEsto puede tardar un poco.</string>
-    <string name="export">Exportar</string>
-    <string name="export_collection">Exportar colección</string>
     <string name="export_deck">Exportar mazo</string>
     <string name="nothing">Nada</string>
     <!-- Card template editor -->
@@ -223,18 +205,18 @@
 . Para resolver el problema, puede que necesites liberar espacio en el disco o re-inserte la memoria extraíble.
 <br><br>
 <a href="%2$s">Obtenga más información y ayuda</a>]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        El traslado de archivos multimedia se detiene después de haber fallado con el error: %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        Los cambios <i>no</i> fueron revertidos.
+        Aunque no debería haberse perdido ningún dato, 
+        los archivos multimedia podrían estar divididos entre la carpeta antigua y la nueva.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Por favor, intente volver a ejecutar la migración.
+        Para resolver el problema, puede que necesites liberar algo de espacio en disco,
+        o volver a conectar el almacenamiento extraíble que contiene tu colección.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
+        <a href="%2$s">Aprende más y consigue ayuda</a>
+            ]]></string>
     <string name="migration__resume_after_failed_dialog__message"><![CDATA[        La migración del almacenamiento ha sido pausada debido al error: %1$s.
         <br><br>
         <a href="%2$s">Más información y ayuda</a>]]></string>
@@ -248,8 +230,8 @@
     <string name="create_new_collection">Crear una nueva colección</string>
     <string name="new_unsafe_collection">La nueva colección se eliminará de tu teléfono si desinstalas AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid necesita algunos permisos para funcionar</string>
+    <string name="storage_access_title">Acceso al almacenamiento</string>
+    <string name="storage_access_summary">Guarda tu colección en un lugar seguro que no se borrará si se desinstala la aplicación</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acceso a todos los archivos</string>
 </resources>

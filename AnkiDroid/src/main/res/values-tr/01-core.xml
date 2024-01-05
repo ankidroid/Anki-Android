@@ -59,19 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Genişlet</string>
     <string name="collapse">Daralt</string>
-    <string name="study_more">Daha fazla çalış</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="one">%d dakika kaldı</item>
-        <item quantity="other">%d dakika kaldı</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d saat %2$d kaldı</item>
-        <item quantity="other">%1$d saat %2$d kaldı</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d gün %2$d kaldı</item>
-        <item quantity="other">%1$d gün %2$d kaldı</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Bu koleksiyon boş</string>
     <string name="no_cards_placeholder_description">+ ikonunu kullanarak\nkart eklemeye başlayın.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -85,6 +72,7 @@
     <string name="ease_button_easy">Kolay</string>
     <string name="menu_import">İçeri aktar</string>
     <string name="undo">Geri al</string>
+    <string name="redo">Tekrarla</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Konturu geri al</string>
     <string name="move_all_to_deck">Hepsini desteye taşı</string>
     <string name="unbury">Gömmeyi geri al</string>
@@ -137,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Deste Ara</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deste Ara</string>
     <string name="invalid_deck_name">Geçersiz deste adı</string>
-    <string name="studyoptions_empty">Bu deste boş. Yeni içerik eklemek için + düğmesine basın.</string>
-    <string name="studyoptions_limit_reached">Günlük çalışma sınırına ulaşıldı</string>
-    <string name="studyoptions_empty_schedule">Çalışılması planlanmış kart yok</string>
-    <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
     <string name="studyoptions_no_cards_due">Henüz sırası gelmiş kart yok</string>
     <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
     <string name="button_sync" comment="Text of the sync button">Senkronize et</string>
@@ -149,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Senkronizasyona devam et</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Senkronizasyon iptal edildi</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">İptal ediliyor&#8230;\nBu biraz zaman alabilir.</string>
-    <string name="export">Dışa aktar</string>
-    <string name="export_collection">Koleksiyonu dışa aktar</string>
     <string name="export_deck">Desteyi dışa aktar</string>
     <string name="nothing">Hiçbir şey</string>
     <!-- Card template editor -->

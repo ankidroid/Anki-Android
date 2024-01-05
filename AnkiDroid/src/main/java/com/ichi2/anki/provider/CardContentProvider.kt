@@ -30,7 +30,9 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Notetypes
-import com.ichi2.libanki.backend.exception.DeckRenameException
+import com.ichi2.libanki.Sound.replaceWithSoundTags
+import com.ichi2.libanki.TemplateManager.*
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.*
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.DeckNode
@@ -38,6 +40,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
+import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -150,6 +153,7 @@ class CardContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         // Initialize content provider on startup.
         Timber.d("CardContentProvider: onCreate")
+        AnkiDroidApp.makeBackendUsable(context!!)
         return true
     }
 
@@ -454,7 +458,7 @@ class CardContentProvider : ContentProvider() {
                  */if (isDeckUpdate && did >= 0) {
                     Timber.d("CardContentProvider: Moving card to other deck...")
                     currentCard.did = did
-                    currentCard.flush()
+                    col.updateCard(currentCard)
 
                     updated++
                 } else {
@@ -732,7 +736,7 @@ class CardContentProvider : ContentProvider() {
             col.addNote(newNote, deckId)
             for (card: Card in newNote.cards()) {
                 card.did = deckId
-                card.flush()
+                col.updateCard(card)
             }
             result++
         }
@@ -758,7 +762,8 @@ class CardContentProvider : ContentProvider() {
                 val tags = values.getAsString(FlashCardsContract.Note.TAGS)
 //                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
                 // Create empty note
-                val newNote = Note(col, col.notetypes.get(modelId)!!)
+                val model = requireNotNull(col.notetypes.get(modelId)) { "Invalid modelId: $modelId" }
+                val newNote = Note(col, model)
                 // Set fields
                 val fldsArray = Utils.splitFields(flds)
                 // Check that correct number of flds specified
@@ -917,7 +922,7 @@ class CardContentProvider : ContentProvider() {
                 }
                 try {
                     did = col.decks.id(deckName)
-                } catch (filteredSubdeck: DeckRenameException) {
+                } catch (filteredSubdeck: BackendDeckIsFilteredException) {
                     throw IllegalArgumentException(filteredSubdeck.message)
                 }
                 val deck: Deck = col.decks.get(did)!!
@@ -1039,8 +1044,8 @@ class CardContentProvider : ContentProvider() {
         } catch (je: JSONException) {
             throw IllegalArgumentException("Card is using an invalid template", je)
         }
-        val question = currentCard.q()
-        val answer = currentCard.a()
+        val question = currentCard.renderOutput().questionWithFixedSoundTags()
+        val answer = currentCard.renderOutput().answerWithFixedSoundTags()
         val rb = rv.newRow()
         for (column in columns) {
             when (column) {
@@ -1051,7 +1056,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.QUESTION -> rb.add(question)
                 FlashCardsContract.Card.ANSWER -> rb.add(answer)
                 FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple())
-                FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(false).answer_text)
+                FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(false).answerText)
                 FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer)
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
@@ -1066,7 +1071,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.ReviewInfo.CARD_ORD -> rb.add(currentCard.ord)
                 FlashCardsContract.ReviewInfo.BUTTON_COUNT -> rb.add(buttonCount)
                 FlashCardsContract.ReviewInfo.NEXT_REVIEW_TIMES -> rb.add(nextReviewTimesJson.toString())
-                FlashCardsContract.ReviewInfo.MEDIA_FILES -> rb.add(JSONArray(col.media.filesInStr(currentCard.q() + currentCard.a())))
+                FlashCardsContract.ReviewInfo.MEDIA_FILES -> rb.add(JSONArray(col.media.filesInStr(currentCard.question() + currentCard.answer())))
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }
@@ -1233,3 +1238,11 @@ class CardContentProvider : ContentProvider() {
     private fun knownRogueClient(): Boolean =
         !context!!.arePermissionsDefinedInManifest(callingPackage!!, FlashCardsContract.READ_WRITE_PERMISSION)
 }
+
+/** replaces [anki:play...] with [sound:] */
+private fun TemplateRenderOutput.questionWithFixedSoundTags() =
+    replaceWithSoundTags(questionText, this)
+
+/** replaces [anki:play...] with [sound:] */
+private fun TemplateRenderOutput.answerWithFixedSoundTags() =
+    replaceWithSoundTags(answerText, this)

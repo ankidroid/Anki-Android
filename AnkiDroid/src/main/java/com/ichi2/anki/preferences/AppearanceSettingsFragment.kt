@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
+import anki.config.ConfigKey
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
@@ -35,7 +36,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 
 class AppearanceSettingsFragment : SettingsFragment() {
-    private var mBackgroundImage: SwitchPreferenceCompat? = null
+    private var backgroundImage: SwitchPreferenceCompat? = null
     override val preferenceResource: Int
         get() = R.xml.preferences_appearance
     override val analyticsScreenNameConstant: String
@@ -43,17 +44,17 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         // Configure background
-        mBackgroundImage = requirePreference<SwitchPreferenceCompat>("deckPickerBackground")
-        mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            if (mBackgroundImage!!.isChecked) {
+        backgroundImage = requirePreference<SwitchPreferenceCompat>("deckPickerBackground")
+        backgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            if (backgroundImage!!.isChecked) {
                 try {
-                    mBackgroundImageResultLauncher.launch("image/*")
-                    mBackgroundImage!!.isChecked = true
+                    backgroundImageResultLauncher.launch("image/*")
+                    backgroundImage!!.isChecked = true
                 } catch (ex: Exception) {
                     Timber.e("%s", ex.localizedMessage)
                 }
             } else {
-                mBackgroundImage!!.isChecked = false
+                backgroundImage!!.isChecked = false
                 val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
                 val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
                 if (imgFile.exists()) {
@@ -141,9 +142,19 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 true
             }
         }
+
+        // Show play buttons on cards with audio
+        // Note: Stored inverted in the collection as HIDE_AUDIO_PLAY_BUTTONS
+        requirePreference<SwitchPreferenceCompat>(R.string.show_audio_play_buttons_key).apply {
+            title = CollectionManager.TR.preferencesShowPlayButtonsOnCardsWith()
+            launchCatchingTask { isChecked = withCol { !config.getBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS) } }
+            setOnPreferenceChangeListener { newValue ->
+                launchCatchingTask { withCol { config.setBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS, !(newValue as Boolean)) } }
+            }
+        }
     }
 
-    private val mBackgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
+    private val backgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
         if (selectedImage != null) {
             // handling file may result in exception
             try {
@@ -164,7 +175,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
                             }
                         }
                     } else {
-                        mBackgroundImage!!.isChecked = false
+                        backgroundImage!!.isChecked = false
                         UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, 10), false)
                     }
                 }
@@ -176,7 +187,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
             }
         } else {
-            mBackgroundImage!!.isChecked = false
+            backgroundImage!!.isChecked = false
             showSnackbar(R.string.no_image_selected)
         }
     }

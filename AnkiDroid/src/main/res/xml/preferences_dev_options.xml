@@ -45,6 +45,10 @@
         android:summary="Touch here to lock the database (all threads block in-process, exception if using second process)"
         android:key="@string/pref_lock_database_key"/>
     <SwitchPreferenceCompat
+        android:title="New previewer"
+        android:key="@string/new_previewer_pref_key"
+        android:defaultValue="false"/>
+    <SwitchPreferenceCompat
         android:title="@string/show_onboarding"
         android:summary="@string/show_onboarding_desc"
         android:key="@string/pref_show_onboarding_key"

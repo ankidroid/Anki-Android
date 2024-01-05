@@ -47,7 +47,12 @@
     <!-- generic strings -->
     <string name="disabled">Вимкнено</string>
     <string name="pref_summary_seconds">%s сек</string>
-    <string name="pref_summary_minutes">%s хв</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d хв.</item>
+        <item quantity="few">%d хв.</item>
+        <item quantity="many">%d хв.</item>
+        <item quantity="other">%d хв.</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">Немає результатів</string>
     <!-- preferences.xml categories-->
@@ -113,6 +118,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Дотик посередині</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Дотик лівого нижнього кута</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Дотик правого нижнього кута</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">\'%s\' Меню</string>
     <string name="card_browser_enable_external_context_menu_summary">Включає \'%s\' в загальне контекстне меню</string>
     <string name="double_scrolling_gap" maxLength="41">Подвійне прокручування</string>
@@ -134,8 +140,8 @@
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
     <string name="metered_sync_title" maxLength="41">Дозволити синхронізацію на вимірюваному Інтернет-підключенні</string>
     <string name="metered_sync_summary">Якщо вимкнено, то вас буде попереджено коли ви спробуєте синхронізувати при вимірюваному Інтернет підключенні</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Частота</string>
+    <string name="backup_limits_lifetime">Довічно</string>
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Денна тема</string>
     <string name="night_theme" maxLength="41">Нічна тема</string>
@@ -175,14 +181,17 @@
     <string name="show_top_bar_summ">Показувати кількість карт, прапорець та зірочку на верхній панелі</string>
     <string name="show_progress" maxLength="41">Показати ті, що залишилися</string>
     <string name="show_progress_summ">Показувати кількість карток, що залишилися</string>
-    <string name="show_eta" maxLength="41">Показувати залишок часу</string>
-    <string name="show_eta_summ">Показувати скільки залишилося часу навчання</string>
     <string name="use_current" maxLength="41">Колода для нових карт</string>
     <string name="learn_cutoff" maxLength="41">Ліміт вивчення карток наперед</string>
     <string name="time_limit" maxLength="41">Період лічильника переглядів</string>
     <string name="new_timezone" maxLength="41">Обробка нового часового поясу</string>
     <string name="day_offset_with_description" maxLength="41">Початок наступного дня (0 – опівніч, 23 – 23:00)</string>
-    <string name="day_offset_summary">%s годин після опівночі</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="one">%d година після опівночі</item>
+        <item quantity="few">%d години після опівночі</item>
+        <item quantity="many">%d годин після опівночі</item>
+        <item quantity="other">%d годин після опівночі</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Не вимикати екран</string>
     <string name="pref_keep_screen_on_summ">Відключити таймаут екрану</string>
     <string name="enable_api_title" maxLength="41">Увімкнути AnkiDroid API</string>
@@ -201,6 +210,7 @@
     <string name="html_javascript_debugging_summ">Увімкнути віддалені з\'єднання WebView і зберегти HTML-карту в каталозі AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Повторення</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Доступність</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставити зображення у форматі PNG</string>
@@ -266,6 +276,8 @@
     <string name="binding_add_key">Додати ключ</string>
     <string name="binding_replace_key">Замінити клавішу</string>
     <string name="key_picker_default_press_key">Натисніть клавішу</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Вибрати сторону карти</string>
     <string name="card_side_question">Питання</string>

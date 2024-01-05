@@ -25,12 +25,13 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
+import com.ichi2.anki.tests.InstrumentedTest
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ModelEditorContextMenuTest {
+class ModelEditorContextMenuTest : InstrumentedTest() {
     private val testDialogTitle = "test editor title"
 
     @Test
@@ -41,7 +42,7 @@ class ModelEditorContextMenuTest {
             themeResId = R.style.Theme_Light
         ) { MockModelEditorContextMenu(isAtLeastAtN = true) }
         onView(withText(testDialogTitle)).check(matches(isDisplayed()))
-        ModelEditorContextMenuAction.values().forEach {
+        ModelEditorContextMenuAction.entries.forEach {
             onView(withText(it.actionTextId)).check(matches(isDisplayed()))
         }
     }
@@ -59,7 +60,7 @@ class ModelEditorContextMenuTest {
             doesNotExist()
         )
         // make sure we aren't losing other items besides ModelEditorContextMenuAction.AddLanguageHint
-        ModelEditorContextMenuAction.values()
+        ModelEditorContextMenuAction.entries
             .filterNot { it == ModelEditorContextMenuAction.AddLanguageHint }.forEach {
                 onView(withText(it.actionTextId)).check(matches(isDisplayed()))
             }

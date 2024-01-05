@@ -47,7 +47,9 @@
     <!-- generic strings -->
     <string name="disabled">已停用</string>
     <string name="pref_summary_seconds">%s 秒</string>
-    <string name="pref_summary_minutes">%s 分鐘</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">無結果</string>
     <!-- preferences.xml categories-->
@@ -113,6 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">輕觸正中間</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">輕觸左下方</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">輕觸右下方</string>
+    <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ 選單</string>
     <string name="card_browser_enable_external_context_menu_summary">啟用全域性‘%s’內容選單</string>
     <string name="double_scrolling_gap" maxLength="41">加速捲動</string>
@@ -174,14 +177,14 @@
     <string name="show_top_bar_summ">顯示卡片計數，標記和頂部列標識</string>
     <string name="show_progress" maxLength="41">顯示剩餘數量</string>
     <string name="show_progress_summ">顯示剩餘卡片數量</string>
-    <string name="show_eta" maxLength="41">顯示預計完成時間</string>
-    <string name="show_eta_summ">顯示剩餘時間</string>
     <string name="use_current" maxLength="41">存放新卡片的牌組</string>
     <string name="learn_cutoff" maxLength="41">提早學習上限</string>
     <string name="time_limit" maxLength="41">時間盒的時間上限</string>
     <string name="new_timezone" maxLength="41">時區變更處理</string>
     <string name="day_offset_with_description" maxLength="41">下一天開始的時間</string>
-    <string name="day_offset_summary">午夜過後%s小時</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">保持螢幕開啟</string>
     <string name="pref_keep_screen_on_summ">關閉螢幕逾時</string>
     <string name="enable_api_title" maxLength="41">開啟 AnkiDroid API</string>
@@ -200,6 +203,7 @@
     <string name="html_javascript_debugging_summ">啟用控制 WebView 連線，並儲存卡片 HTML 到 AnkiDroid 資料夾</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">複習介面</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">無障礙功能</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">複製PNG格式的圖像到剪貼簿上</string>
@@ -265,6 +269,8 @@
     <string name="binding_add_key">新增按鍵</string>
     <string name="binding_replace_key">替換按鍵</string>
     <string name="key_picker_default_press_key">按一個按鍵</string>
+    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">選取卡面</string>
     <string name="card_side_question">問題</string>

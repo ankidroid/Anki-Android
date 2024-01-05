@@ -59,16 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">확장</string>
     <string name="collapse">감추기</string>
-    <string name="study_more">더 학습하기</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="other">%d분 남음</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d hours %2$d left</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d일 %2$d시간 남음</item>
-    </plurals>
     <string name="no_cards_placeholder_title">이 컬렉션은 비어 있습니다</string>
     <string name="no_cards_placeholder_description">＋아이콘을 눌러 \n카드를 추가해 주십시오</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -82,6 +72,7 @@
     <string name="ease_button_easy">쉬움</string>
     <string name="menu_import">가져오기</string>
     <string name="undo">실행 취소</string>
+    <string name="redo">다시 실행</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">실행 취소</string>
     <string name="move_all_to_deck">카드묶음으로 모두 이동</string>
     <string name="unbury">지금 보기</string>
@@ -134,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">뭉치 검색</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">뭉치 검색</string>
     <string name="invalid_deck_name">유효하지 않은 뭉치 이름입니다</string>
-    <string name="studyoptions_empty">이 카드 묶음은 비어있습니다. + 버튼을 눌러 새 컨텐츠를 추가하세요.</string>
-    <string name="studyoptions_limit_reached">일일 학습량에 도달했습니다</string>
-    <string name="studyoptions_empty_schedule">학습 예정인 카드가 없습니다</string>
-    <string name="studyoptions_congrats_finished">축하합니다! 오늘의 학습을 모두 끝냈습니다.</string>
     <string name="studyoptions_no_cards_due">남은 카드가 없습니다.</string>
     <string name="sd_card_not_mounted">장치 저장소가 마운트되지 않음</string>
     <string name="button_sync" comment="Text of the sync button">동기화</string>
@@ -146,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">동기화 계속하기</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">동기화 취소됨</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">취소하는 중...\n시간이 걸릴 수 있습니다.</string>
-    <string name="export">내보내기</string>
-    <string name="export_collection">컬렉션 내보내기</string>
     <string name="export_deck">카드 묶음 내보내기</string>
     <string name="nothing">없음</string>
     <!-- Card template editor -->

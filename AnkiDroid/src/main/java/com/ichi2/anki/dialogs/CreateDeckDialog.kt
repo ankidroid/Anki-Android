@@ -33,10 +33,9 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
-import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.getOrCreateFilteredDeck
-import com.ichi2.utils.asLocalizedMessage
 import com.ichi2.utils.displayKeyboard
+import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import timber.log.Timber
 import java.util.function.Consumer
 
@@ -49,10 +48,10 @@ class CreateDeckDialog(
     private val parentId: Long?
 ) {
     var snackbar: Snackbar? = null
-    private var mPreviousDeckName: String? = null
-    private var mOnNewDeckCreated: Consumer<Long>? = null
-    private var mInitialDeckName = ""
-    private var mShownDialog: MaterialDialog? = null
+    private var previousDeckName: String? = null
+    private var onNewDeckCreated: Consumer<Long>? = null
+    private var initialDeckName = ""
+    private var shownDialog: MaterialDialog? = null
 
     enum class DeckDialogType {
         FILTERED_DECK, DECK, SUB_DECK, RENAME_DECK
@@ -63,7 +62,7 @@ class CreateDeckDialog(
 
     suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
-        mInitialDeckName = withCol {
+        initialDeckName = withCol {
             getOrCreateFilteredDeck(did = 0).name
         }
         showDialog()
@@ -71,10 +70,10 @@ class CreateDeckDialog(
 
     /** Used for rename  */
     var deckName: String
-        get() = mShownDialog!!.getInputField().text.toString()
+        get() = shownDialog!!.getInputField().text.toString()
         set(deckName) {
-            mPreviousDeckName = deckName
-            mInitialDeckName = deckName
+            previousDeckName = deckName
+            initialDeckName = deckName
         }
 
     fun showDialog(): MaterialDialog {
@@ -85,11 +84,11 @@ class CreateDeckDialog(
                 onPositiveButtonClicked()
             }
             negativeButton(R.string.dialog_cancel)
-            input(prefill = mInitialDeckName, waitForPositiveButton = false) { dialog, text ->
+            input(prefill = initialDeckName, waitForPositiveButton = false) { dialog, text ->
                 // we need the fully-qualified name for subdecks
-                val fullyQualifiedDeckName = fullyQualifyDeckName(dialogText = text)
+                val maybeDeckName = fullyQualifyDeckName(dialogText = text)
                 // if the name is empty, it seems distracting to show an error
-                if (!Decks.isValidDeckName(fullyQualifiedDeckName)) {
+                if (maybeDeckName == null || !Decks.isValidDeckName(maybeDeckName)) {
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
                     return@input
                 }
@@ -97,7 +96,7 @@ class CreateDeckDialog(
             }
             displayKeyboard(getInputField())
         }
-        mShownDialog = dialog
+        shownDialog = dialog
         return dialog
     }
 
@@ -113,7 +112,7 @@ class CreateDeckDialog(
         }
 
     fun closeDialog() {
-        mShownDialog?.dismiss()
+        shownDialog?.dismiss()
     }
 
     fun createSubDeck(did: DeckId, deckName: String?) {
@@ -138,9 +137,9 @@ class CreateDeckDialog(
             // create filtered deck
             Timber.i("CreateDeckDialog::createFilteredDeck...")
             val newDeckId = col.decks.newDyn(deckName)
-            mOnNewDeckCreated!!.accept(newDeckId)
-        } catch (ex: DeckRenameException) {
-            displayFeedback(ex.asLocalizedMessage(context), Snackbar.LENGTH_LONG)
+            onNewDeckCreated!!.accept(newDeckId)
+        } catch (ex: BackendDeckIsFilteredException) {
+            displayFeedback(ex.localizedMessage ?: ex.message ?: "", Snackbar.LENGTH_LONG)
             return false
         }
         return true
@@ -151,8 +150,8 @@ class CreateDeckDialog(
             // create normal deck or sub deck
             Timber.i("CreateDeckDialog::createNewDeck")
             val newDeckId = col.decks.id(deckName)
-            mOnNewDeckCreated!!.accept(newDeckId)
-        } catch (filteredAncestor: DeckRenameException) {
+            onNewDeckCreated!!.accept(newDeckId)
+        } catch (filteredAncestor: BackendDeckIsFilteredException) {
             Timber.w(filteredAncestor)
             return false
         }
@@ -186,18 +185,18 @@ class CreateDeckDialog(
         if (!Decks.isValidDeckName(newName)) {
             Timber.i("CreateDeckDialog::renameDeck not renaming deck to invalid name '%s'", newName)
             displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
-        } else if (newName != mPreviousDeckName) {
+        } else if (newName != previousDeckName) {
             try {
                 val decks = col.decks
-                val deckId = decks.id(mPreviousDeckName!!)
+                val deckId = decks.id(previousDeckName!!)
                 decks.rename(decks.get(deckId)!!, newName)
-                mOnNewDeckCreated!!.accept(deckId)
+                onNewDeckCreated!!.accept(deckId)
                 // 11668: Display feedback if a deck is renamed
                 displayFeedback(context.getString(R.string.deck_renamed))
-            } catch (e: DeckRenameException) {
+            } catch (e: BackendDeckIsFilteredException) {
                 Timber.w(e)
                 // We get a localized string from libanki to explain the error
-                displayFeedback(e.asLocalizedMessage(context), Snackbar.LENGTH_LONG)
+                displayFeedback(e.localizedMessage ?: e.message ?: "", Snackbar.LENGTH_LONG)
             }
         }
     }
@@ -213,6 +212,6 @@ class CreateDeckDialog(
     }
 
     fun setOnNewDeckCreated(c: Consumer<Long>?) {
-        mOnNewDeckCreated = c
+        onNewDeckCreated = c
     }
 }

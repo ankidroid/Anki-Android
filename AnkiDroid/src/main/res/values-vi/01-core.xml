@@ -59,16 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Mở rộng</string>
     <string name="collapse">Thu gọn</string>
-    <string name="study_more">Học thêm</string>
-    <plurals name="reviewer_window_title">
-        <item quantity="other">còn %d phút</item>
-    </plurals>
-    <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">Còn %1$d giờ %2$d</item>
-    </plurals>
-    <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">Còn %1$d ngày %2$d</item>
-    </plurals>
     <string name="no_cards_placeholder_title">Bộ sưu tập đang trống</string>
     <string name="no_cards_placeholder_description">Hãy thêm thẻ\nbằng biểu tượng +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -82,6 +72,7 @@
     <string name="ease_button_easy">Dễ</string>
     <string name="menu_import">Nhập</string>
     <string name="undo">Hoàn tác</string>
+    <string name="redo">Làm lại thao tác</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Hoàn tác</string>
     <string name="move_all_to_deck">Di chuyển tất cả đến bộ thẻ</string>
     <string name="unbury">Bỏ tạm ẩn</string>
@@ -134,10 +125,6 @@
     <string name="search_deck" comment="Deck search for selecting it">Tìm kiếm bộ thẻ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Tìm kiếm bộ thẻ</string>
     <string name="invalid_deck_name">Tên bộ thẻ không hợp lệ</string>
-    <string name="studyoptions_empty">Bộ thẻ này rỗng. Bấm bút + để thêm nội dung mới.</string>
-    <string name="studyoptions_limit_reached">Đã đạt giới hạn học hằng ngày</string>
-    <string name="studyoptions_empty_schedule">Không có thẻ nào được lên lịch học</string>
-    <string name="studyoptions_congrats_finished">Chúc mừng! Bạn đã tạm thời hoàn thành.</string>
     <string name="studyoptions_no_cards_due">Chưa có thẻ nào tới hạn</string>
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
     <string name="button_sync" comment="Text of the sync button">Đồng bộ</string>
@@ -146,8 +133,6 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Tiếp tục đồng bộ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Đã huỷ đồng bộ</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Đang huỷ&#8230;\nCó thể hơi lâu.</string>
-    <string name="export">Xuất</string>
-    <string name="export_collection">Xuất bộ sưu tập</string>
     <string name="export_deck">Xuất bộ thẻ</string>
     <string name="nothing">Không có gì</string>
     <!-- Card template editor -->

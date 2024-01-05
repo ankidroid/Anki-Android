@@ -126,8 +126,12 @@
 
     <color name="fab_background">#777</color>
 
+    <color name="theme_light_drawer_row_current">#E8E8E8</color>
     <color name="popup_background_theme_dark">#434343</color>
     <color name="popup_background_theme_black">#252525</color>
 
+    <!-- Audio Recorder Colors -->
+    <color name="audio_recorder_red">#FF4747</color>
+    <color name="audio_recorder_green">#6FF06F</color>
 </resources>
 
