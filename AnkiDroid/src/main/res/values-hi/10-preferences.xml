@@ -205,6 +205,7 @@
     <string name="html_javascript_debugging_summ">दूरस्थ वेब्वयेव कनेक्शन सक्षम करें और कार्ड हटम्ल को अंकिड़रोइड निर्देशिका में सहेजें</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">समीक्षक</string>
+    <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">सरल उपयोग</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">क्लिपबोर्ड इमेजेज को पीएनजी प्रारूप में चिपकाएँ</string>
