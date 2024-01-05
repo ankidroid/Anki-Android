@@ -413,15 +413,8 @@ open class Reviewer :
                     }
                 } ?: Timber.w("Null ActionProvider for bury menu item in Reviewer!")
             }
-            R.id.action_suspend -> {
-                Timber.i("Reviewer:: Suspend button pressed")
-                MenuItemCompat.getActionProvider(item)?.hasSubMenu()?.let { isAvailable ->
-                    if (!isAvailable) {
-                        Timber.d("Suspend card due to no submenu")
-                        suspendCard()
-                    }
-                } ?: Timber.w("Null ActionProvider for suspend menu item in Reviewer!")
-            }
+            R.id.action_suspend_card -> suspendCard()
+            R.id.action_suspend_note -> suspendNote()
             R.id.action_delete -> {
                 Timber.i("Reviewer:: Delete note button pressed")
                 showDeleteNoteDialog()
@@ -852,18 +845,14 @@ open class Reviewer :
         if (mTTS.enabled && !mActionButtons.status.selectTtsIsDisabled()) {
             menu.findItem(R.id.action_select_tts).isVisible = true
         }
-        // Setup bury / suspend providers
-        val suspendIcon = menu.findItem(R.id.action_suspend)
-        val buryIcon = menu.findItem(R.id.action_bury)
-        MenuItemCompat.setActionProvider(suspendIcon, SuspendProvider(this))
-        MenuItemCompat.setActionProvider(buryIcon, BuryProvider(this))
-
-        suspendIcon.setIcon(R.drawable.ic_suspend)
-        if (suspendNoteAvailable()) {
-            suspendIcon.setTitle(R.string.menu_suspend)
-        } else {
-            suspendIcon.setTitle(R.string.menu_suspend_card)
+        if (!suspendNoteAvailable()) {
+            menu.findItem(R.id.action_suspend).isVisible = false
+            menu.findItem(R.id.action_suspend_card).isVisible = true
         }
+
+        // Setup bury providers
+        val buryIcon = menu.findItem(R.id.action_bury)
+        MenuItemCompat.setActionProvider(buryIcon, BuryProvider(this))
 
         buryIcon.setIcon(R.drawable.ic_flip_to_back_white)
         if (buryNoteAvailable()) {
@@ -873,7 +862,6 @@ open class Reviewer :
         }
         alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
         buryIcon.iconAlpha = alpha
-        suspendIcon.iconAlpha = alpha
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_schedule), ScheduleProvider(this))
         mOnboarding.onCreate()
 
@@ -1522,40 +1510,6 @@ open class Reviewer :
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun hasDrawerSwipeConflicts(): Boolean {
         return mHasDrawerSwipeConflicts
-    }
-
-    /**
-     * Inner class which implements the submenu for the Suspend button
-     */
-    internal inner class SuspendProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
-
-        override fun onCreateActionView(forItem: MenuItem): View {
-            return createActionViewWith(context, forItem, R.menu.reviewer_suspend, ::onMenuItemClick) {
-                hasSubMenu()
-            }
-        }
-
-        override fun hasSubMenu(): Boolean {
-            return suspendNoteAvailable()
-        }
-
-        override fun onPrepareSubMenu(subMenu: SubMenu) {
-            subMenu.clear()
-            menuInflater.inflate(R.menu.reviewer_suspend, subMenu)
-            for (i in 0 until subMenu.size()) {
-                subMenu.getItem(i).setOnMenuItemClickListener(this)
-            }
-        }
-
-        override fun onMenuItemClick(item: MenuItem): Boolean {
-            val itemId = item.itemId
-            if (itemId == R.id.action_suspend_card) {
-                return suspendCard()
-            } else if (itemId == R.id.action_suspend_note) {
-                return suspendNote()
-            }
-            return false
-        }
     }
 
     /**
