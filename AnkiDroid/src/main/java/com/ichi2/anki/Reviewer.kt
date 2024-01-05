@@ -21,7 +21,6 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -39,10 +38,8 @@ import androidx.annotation.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
-import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
@@ -408,6 +405,8 @@ open class Reviewer :
             R.id.action_bury_note -> buryNote()
             R.id.action_suspend_card -> suspendCard()
             R.id.action_suspend_note -> suspendNote()
+            R.id.action_reschedule_card -> showRescheduleCardDialog()
+            R.id.action_reset_card_progress -> showResetCardDialog()
             R.id.action_delete -> {
                 Timber.i("Reviewer:: Delete note button pressed")
                 showDeleteNoteDialog()
@@ -847,7 +846,6 @@ open class Reviewer :
             menu.findItem(R.id.action_bury_card).isVisible = true
         }
 
-        MenuItemCompat.setActionProvider(menu.findItem(R.id.action_schedule), ScheduleProvider(this))
         mOnboarding.onCreate()
 
         increaseHorizontalPaddingOfOverflowMenuIcons(menu)
@@ -1495,67 +1493,6 @@ open class Reviewer :
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun hasDrawerSwipeConflicts(): Boolean {
         return mHasDrawerSwipeConflicts
-    }
-
-    private fun createActionViewWith(
-        context: Context,
-        menuItem: MenuItem,
-        @MenuRes subMenuRes: Int,
-        onMenuItemSelection: (MenuItem) -> Boolean,
-        showsSubMenu: () -> Boolean
-    ): View = ImageButton(context, null, android.R.attr.actionButtonStyle).apply {
-        TooltipCompat.setTooltipText(this, menuItem.title)
-        menuItem.icon?.isAutoMirrored = true
-        setImageDrawable(menuItem.icon)
-        id = menuItem.itemId
-        setOnClickListener {
-            if (!menuItem.isEnabled) {
-                return@setOnClickListener
-            }
-            if (showsSubMenu()) {
-                PopupMenu(context, this).apply {
-                    inflate(subMenuRes)
-                    setOnMenuItemClickListener(onMenuItemSelection)
-                    show()
-                }
-            } else {
-                onOptionsItemSelected(menuItem)
-            }
-        }
-    }
-
-    /**
-     * Inner class which implements the submenu for the Schedule button
-     */
-    internal inner class ScheduleProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
-
-        override fun onCreateActionView(forItem: MenuItem): View {
-            return createActionViewWith(context, forItem, R.menu.reviewer_schedule, ::onMenuItemClick) { true }
-        }
-
-        override fun hasSubMenu(): Boolean {
-            return true
-        }
-
-        override fun onPrepareSubMenu(subMenu: SubMenu) {
-            subMenu.clear()
-            menuInflater.inflate(R.menu.reviewer_schedule, subMenu)
-            for (i in 0 until subMenu.size()) {
-                subMenu.getItem(i).setOnMenuItemClickListener(this)
-            }
-        }
-
-        override fun onMenuItemClick(item: MenuItem): Boolean {
-            val itemId = item.itemId
-            if (itemId == R.id.action_reschedule_card) {
-                showRescheduleCardDialog()
-                return true
-            } else if (itemId == R.id.action_reset_card_progress) {
-                showResetCardDialog()
-                return true
-            }
-            return false
-        }
     }
 
     override fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {

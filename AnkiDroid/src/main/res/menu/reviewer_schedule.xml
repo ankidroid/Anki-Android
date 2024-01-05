@@ -1,8 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/action_reschedule_card"
-        android:title="@string/reschedule_card_dialog_message" />
-    <item
-        android:id="@+id/action_reset_card_progress"
-        android:title="@string/card_editor_reset_card" />
-</menu>
