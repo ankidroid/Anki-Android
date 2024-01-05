@@ -49,14 +49,13 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
-import com.ichi2.anki.multimediacard.AudioView
-import com.ichi2.anki.multimediacard.AudioView.Companion.createRecorderInstance
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKIDROID_JS_PREFIX
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKI_PREFIX
@@ -77,7 +76,12 @@ import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.audio.AudioRecordingController
 import com.ichi2.audio.AudioRecordingController.Companion.generateTempAudioFile
+import com.ichi2.audio.AudioRecordingController.Companion.isRecording
+import com.ichi2.audio.AudioRecordingController.Companion.isSaved
+import com.ichi2.audio.AudioRecordingController.Companion.setReviewerStatus
+import com.ichi2.audio.AudioRecordingController.Companion.tempAudioPath
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
@@ -151,11 +155,10 @@ open class Reviewer :
         protected set
 
     // Record Audio
-    /** File of the temporary mic record  */
-    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    var audioView: AudioView? = null
-        protected set
-    private var tempAudioPath: String? = null
+    private var isMicToolBarVisible = false
+    private var audioRecordingController: AudioRecordingController? = null
+    private var isAudioUIInitialized = false
+    private lateinit var micToolBarLayer: LinearLayout
 
     // ETA
     private var mEta = 0
@@ -195,6 +198,7 @@ open class Reviewer :
         mTextBarLearn = findViewById(R.id.learn_number)
         mTextBarReview = findViewById(R.id.review_number)
         mToolbar = findViewById(R.id.toolbar)
+        micToolBarLayer = findViewById(R.id.mic_tool_bar_layer)
 
         startLoadingCollection()
     }
@@ -544,16 +548,29 @@ open class Reviewer :
         if (!openMicToolbar()) {
             return
         }
-
-        // COULD_BE_BETTER: this shows "Failed" if nothing was recorded
-        audioView!!.togglePlay()
+        if (isSaved) {
+            audioRecordingController?.playPausePlayer()
+        } else {
+            return
+        }
     }
 
     override fun recordVoice() {
         if (!openMicToolbar()) {
             return
         }
-        audioView!!.toggleRecord()
+        audioRecordingController?.toggleToRecorder()
+    }
+
+    override fun saveRecording() {
+        if (!openMicToolbar()) {
+            return
+        }
+        if (isRecording) {
+            audioRecordingController?.toggleSave()
+        } else {
+            return
+        }
     }
 
     override fun updateForNewCard() {
@@ -572,7 +589,7 @@ open class Reviewer :
 
     override fun closeReviewer(result: Int) {
         // Stop the mic recording if still pending
-        audioView?.notifyStopRecord()
+        if (isRecording) audioRecordingController?.stopAndSaveRecording()
 
         // Remove the temporary audio file
         tempAudioPath?.let {
@@ -590,10 +607,10 @@ open class Reviewer :
      */
     @VisibleForTesting
     fun openMicToolbar(): Boolean {
-        if (audioView == null || audioView!!.visibility != View.VISIBLE) {
+        if (micToolBarLayer.visibility != View.VISIBLE || audioRecordingController == null) {
             openOrToggleMicToolbar()
         }
-        return audioView != null
+        return audioRecordingController != null
     }
 
     private fun openOrToggleMicToolbar() {
@@ -609,35 +626,29 @@ open class Reviewer :
     }
 
     private fun toggleMicToolBar() {
-        audioView?.let {
-            it.visibility = if (it.visibility != View.VISIBLE) View.VISIBLE else View.GONE
-            return
-        }
-        // Record mic tool bar does not exist yet
         tempAudioPath = generateTempAudioFile(this)
-        if (tempAudioPath == null) {
-            return
+        if (isMicToolBarVisible) {
+            micToolBarLayer.visibility = View.GONE
+        } else {
+            setReviewerStatus(false)
+            if (!isAudioUIInitialized) {
+                try {
+                    audioRecordingController = AudioRecordingController()
+                    audioRecordingController?.createUI(this, micToolBarLayer)
+                } catch (e: Exception) {
+                    Timber.w(e, "unable to add the audio recorder to toolbar")
+                    CrashReportService.sendExceptionReport(e, "Unable to create recorder tool bar")
+                    showThemedToast(
+                        this,
+                        this.getText(R.string.multimedia_editor_audio_view_create_failed).toString(),
+                        true
+                    )
+                }
+                isAudioUIInitialized = true
+            }
+            micToolBarLayer.visibility = View.VISIBLE
         }
-        audioView = createRecorderInstance(
-            this,
-            R.drawable.ic_play_arrow_white_24dp,
-            R.drawable.ic_pause_white_24dp,
-            R.drawable.ic_stop_white_24dp,
-            R.drawable.ic_rec,
-            R.drawable.ic_rec_stop,
-            tempAudioPath!!
-        )
-        if (audioView == null) {
-            tempAudioPath = null
-            return
-        }
-        val lp2 = FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-        audioView!!.layoutParams = lp2
-        val micToolBarLayer = findViewById<LinearLayout>(R.id.mic_tool_bar_layer)
-        micToolBarLayer.addView(audioView)
+        isMicToolBarVisible = !isMicToolBarVisible
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

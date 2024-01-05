@@ -209,7 +209,12 @@
         <com.ichi2.preferences.ControlPreference
             android:key="@string/replay_voice_command_key"
             android:title="@string/replay_voice"
+            app:icon="@drawable/ic_replay"
             />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/save_voice_command_key"
+            android:title="@string/save_voice"
+            app:icon="@drawable/round_done_24"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_cat_whiteboard">

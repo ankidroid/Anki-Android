@@ -16,11 +16,15 @@
 package com.ichi2.anki.utils
 
 import android.content.Context
+import android.media.MediaPlayer
+import android.os.Handler
 import com.ichi2.anki.R
 import com.ichi2.libanki.utils.Time
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlin.math.abs
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 const val SECONDS_PER_DAY = 86400L
 
@@ -86,4 +90,25 @@ fun roundedTimeSpan(context: Context, time_s: Long): String {
 
 fun getTimestamp(time: Time): String {
     return SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
+}
+
+/** @see Handler.postDelayed */
+fun Handler.postDelayed(runnable: Runnable, delay: Duration) =
+    this.postDelayed(runnable, delay.inWholeMilliseconds)
+
+/** Gets the current playback position */
+val MediaPlayer.elapsed get() = this.currentPosition.milliseconds
+
+/** Formats the time as '00:00.00' (m:s:ms), OR 00:00:00.00 (h:m:s.ms) */
+fun Duration.formatAsString(): String {
+    val milliseconds = this.inWholeMilliseconds
+    val ms = milliseconds % 1000
+    val s = (milliseconds / 1000) % 60
+    val m = (milliseconds / (1000 * 60)) % 60
+    val h = (milliseconds / (1000 * 60 * 60)) % 60
+    return if (h > 0) {
+        "%02d:%02d:%02d.%02d".format(h, m, s, ms / 10)
+    } else {
+        "%02d:%02d.%02d".format(m, s, ms / 10)
+    }
 }

@@ -17,63 +17,74 @@ package com.ichi2.audio
 
 import android.os.Handler
 import android.os.Looper
+import com.ichi2.anki.utils.postDelayed
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * AudioTimer class is a utility for managing timing operations when playing audio.
  * It includes a Handler for scheduling tasks, and a Runnable for incrementing the duration and
- * triggering a callback to a listener at regular intervals. The [formatTime] function formats the
- * current duration into a readable time format and returns it in the form of a string.
- * The [OnTimerTickListener] interface defines a callback method [onTimerTick] for notifying external
- * components about the timer's progress.
+ * triggering a callback to a listener at regular intervals.
+ * [OnTimerTickListener.onTimerTick] notifies components about the timer's progress.
  **/
-class AudioTimer(listener: OnTimerTickListener) {
-    private var handler = Handler(Looper.getMainLooper())
-    private var runnable: Runnable
+class AudioTimer(listener: OnTimerTickListener, audioWaveListener: OnAudioTickListener) {
+    private var audioTimeHandler = Handler(Looper.getMainLooper())
+    private var audioTimeRunnable: Runnable
 
-    private var duration = 0L
-    private var delay = 50L
+    // we use a different handler to audio waveform as 16L is too fast
+    private var audioWaveHandler = Handler(Looper.getMainLooper())
+    private var audioWaveRunnable: Runnable
+
+    private var audioTimeDuration = 0.milliseconds
+    private var audioTimeDelay = 16.milliseconds
+    private var audioWaveDuration = 0L
+    private var audioWaveDelay = 50L
     init {
-        runnable = object : Runnable {
+        audioTimeRunnable = object : Runnable {
             override fun run() {
-                duration += delay
-                handler.postDelayed(this, delay)
-                listener.onTimerTick(formatTime())
+                audioTimeDuration += audioTimeDelay
+                audioTimeHandler.postDelayed(this, audioTimeDelay)
+                listener.onTimerTick(audioTimeDuration)
+            }
+        }
+
+        audioWaveRunnable = object : Runnable {
+            override fun run() {
+                audioWaveDuration += audioWaveDelay
+                audioWaveHandler.postDelayed(this, audioWaveDelay)
+                audioWaveListener.onAudioTick()
             }
         }
     }
 
     fun start() {
-        handler.postDelayed(runnable, delay)
+        audioWaveHandler.postDelayed(audioWaveRunnable, audioWaveDelay)
+        audioTimeHandler.postDelayed(audioTimeRunnable, audioTimeDelay)
     }
 
     fun pause() {
-        handler.removeCallbacks(runnable)
+        audioWaveHandler.removeCallbacks(audioWaveRunnable)
+        audioTimeHandler.removeCallbacks(audioTimeRunnable)
     }
 
     fun stop() {
-        handler.removeCallbacks(runnable)
-        duration = 0L
+        audioWaveHandler.removeCallbacks(audioWaveRunnable)
+        audioTimeHandler.removeCallbacks(audioTimeRunnable)
+        audioTimeDuration = 0.milliseconds
+        audioWaveDuration = 0L
     }
 
-    fun start(customDuration: Long) {
-        handler.removeCallbacks(runnable)
-        duration = customDuration
-        handler.postDelayed(runnable, delay)
-    }
-
-    fun formatTime(): String {
-        val ms = duration % 1000
-        val s = (duration / 1000) % 60
-        val m = (duration / (1000 * 60)) % 60
-        val h = (duration / (1000 * 60 * 60)) % 60
-        return if (h > 0) {
-            "%02d:%02d:%02d.%02d".format(h, m, s, ms / 10)
-        } else {
-            "%02d:%02d.%02d".format(m, s, ms / 10)
-        }
+    fun start(customDuration: Duration) {
+        audioTimeHandler.removeCallbacks(audioTimeRunnable)
+        audioTimeDuration = customDuration
+        audioTimeHandler.postDelayed(audioTimeRunnable, audioTimeDelay)
     }
 
     interface OnTimerTickListener {
-        fun onTimerTick(duration: String)
+        fun onTimerTick(duration: Duration)
+    }
+
+    interface OnAudioTickListener {
+        fun onAudioTick()
     }
 }
