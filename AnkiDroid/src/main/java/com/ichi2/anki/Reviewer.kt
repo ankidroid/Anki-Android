@@ -404,15 +404,8 @@ open class Reviewer :
                 Timber.i("Reviewer:: Edit note button pressed")
                 editCard()
             }
-            R.id.action_bury -> {
-                Timber.i("Reviewer:: Bury button pressed")
-                MenuItemCompat.getActionProvider(item)?.hasSubMenu()?.let { isAvailable ->
-                    if (!isAvailable) {
-                        Timber.d("Bury card due to no submenu")
-                        buryCard()
-                    }
-                } ?: Timber.w("Null ActionProvider for bury menu item in Reviewer!")
-            }
+            R.id.action_bury_card -> buryCard()
+            R.id.action_bury_note -> buryNote()
             R.id.action_suspend_card -> suspendCard()
             R.id.action_suspend_note -> suspendNote()
             R.id.action_delete -> {
@@ -713,7 +706,7 @@ open class Reviewer :
         menuInflater.inflate(R.menu.reviewer, menu)
         displayIcons(menu)
         mActionButtons.setCustomButtonsStatus(menu)
-        var alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
+        val alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
         if (currentCard != null && isMarked(currentCard!!.note())) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
@@ -849,19 +842,11 @@ open class Reviewer :
             menu.findItem(R.id.action_suspend).isVisible = false
             menu.findItem(R.id.action_suspend_card).isVisible = true
         }
-
-        // Setup bury providers
-        val buryIcon = menu.findItem(R.id.action_bury)
-        MenuItemCompat.setActionProvider(buryIcon, BuryProvider(this))
-
-        buryIcon.setIcon(R.drawable.ic_flip_to_back_white)
-        if (buryNoteAvailable()) {
-            buryIcon.setTitle(R.string.menu_bury)
-        } else {
-            buryIcon.setTitle(R.string.menu_bury_card)
+        if (!buryNoteAvailable()) {
+            menu.findItem(R.id.action_bury).isVisible = false
+            menu.findItem(R.id.action_bury_card).isVisible = true
         }
-        alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
-        buryIcon.iconAlpha = alpha
+
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_schedule), ScheduleProvider(this))
         mOnboarding.onCreate()
 
@@ -1510,40 +1495,6 @@ open class Reviewer :
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun hasDrawerSwipeConflicts(): Boolean {
         return mHasDrawerSwipeConflicts
-    }
-
-    /**
-     * Inner class which implements the submenu for the Bury button
-     */
-    internal inner class BuryProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
-
-        override fun onCreateActionView(forItem: MenuItem): View {
-            return createActionViewWith(context, forItem, R.menu.reviewer_bury, ::onMenuItemClick) {
-                hasSubMenu()
-            }
-        }
-
-        override fun hasSubMenu(): Boolean {
-            return buryNoteAvailable()
-        }
-
-        override fun onPrepareSubMenu(subMenu: SubMenu) {
-            subMenu.clear()
-            menuInflater.inflate(R.menu.reviewer_bury, subMenu)
-            for (i in 0 until subMenu.size()) {
-                subMenu.getItem(i).setOnMenuItemClickListener(this)
-            }
-        }
-
-        override fun onMenuItemClick(item: MenuItem): Boolean {
-            val itemId = item.itemId
-            if (itemId == R.id.action_bury_card) {
-                return buryCard()
-            } else if (itemId == R.id.action_bury_note) {
-                return buryNote()
-            }
-            return false
-        }
     }
 
     private fun createActionViewWith(

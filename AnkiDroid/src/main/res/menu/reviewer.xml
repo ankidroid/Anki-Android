@@ -111,9 +111,25 @@
         android:title="@string/menu_edit_tags"
         ankidroid:showAsAction="never"/>
     <item
+        android:id="@+id/action_bury_card"
+        android:title="@string/menu_bury_card"
+        android:icon="@drawable/ic_flip_to_back_white"
+        android:visible="false"
+        />
+    <item
         android:id="@+id/action_bury"
         android:title="@string/menu_bury"
-        android:icon="@drawable/ic_flip_to_back_white"/>
+        android:icon="@drawable/ic_flip_to_back_white">
+        <menu>
+            <item
+                android:id="@+id/action_bury_card"
+                android:title="@string/menu_bury_card" />
+            <item
+                android:id="@+id/action_bury_note"
+                android:title="@string/menu_bury_note" />
+        </menu>
+
+    </item>
     <item android:id="@+id/action_suspend_card"
         android:title="@string/menu_suspend_card"
         android:icon="@drawable/ic_suspend"
