@@ -916,8 +916,8 @@ open class SchedulerTest : JvmTest() {
         col.sched.rebuildDyn(did)
         // grab the first card
         c = col.sched.card!!
-        Assert.assertEquals(600, col.sched.nextIvl(c, BUTTON_ONE))
-        Assert.assertEquals(900, col.sched.nextIvl(c, BUTTON_TWO))
+        Assert.assertEquals(60, col.sched.nextIvl(c, BUTTON_ONE))
+        Assert.assertEquals(600, col.sched.nextIvl(c, BUTTON_TWO))
         // failing it will push its due time back
         val due = c.due
         col.sched.answerCard(c, BUTTON_ONE)
