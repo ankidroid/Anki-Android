@@ -19,12 +19,12 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.libanki.DeckId
+import com.ichi2.utils.title
 
 class DeckPickerContextMenu : AnalyticsDialogFragment() {
 
@@ -34,51 +34,46 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         assert(requireArguments().containsKey(ARG_DECK_NAME))
         assert(requireArguments().containsKey(ARG_DECK_IS_DYN))
         assert(requireArguments().containsKey(ARG_DECK_HAS_BURIED_IN_DECK))
-        val title = requireArguments().getString(ARG_DECK_NAME)
-        return MaterialDialog(requireActivity())
-            .title(text = title)
-            .cancelable(true)
-            .noAutoDismiss()
-            .listItems(items = contextMenuOptions.map { resources.getString(it.optionName) }) { _: MaterialDialog, index: Int, _: CharSequence ->
+        val options = createOptionsList()
+        return AlertDialog.Builder(requireActivity())
+            .title(text = requireArguments().getString(ARG_DECK_NAME))
+            .setItems(
+                options.map { resources.getString(it.optionName) }.toTypedArray()
+            ) { _, index: Int ->
                 parentFragmentManager.setFragmentResult(
                     REQUEST_KEY_CONTEXT_MENU,
                     bundleOf(
                         CONTEXT_MENU_DECK_ID to requireArguments().getLong(ARG_DECK_ID),
-                        CONTEXT_MENU_DECK_OPTION to contextMenuOptions[index]
+                        CONTEXT_MENU_DECK_OPTION to options[index]
                     )
                 )
             }
+            .create()
     }
 
-    /**
-     * Retrieve the list of menu options to put in the context menu.
-     */
-    private val contextMenuOptions: List<DeckPickerContextMenuOption>
-        get() {
+    private fun createOptionsList(): List<DeckPickerContextMenuOption> =
+        mutableListOf<DeckPickerContextMenuOption>().apply {
             val dyn = requireArguments().getBoolean(ARG_DECK_IS_DYN)
-            val contextMenuOptions =
-                ArrayList<DeckPickerContextMenuOption>(11) // init with our fixed list size for performance
-            contextMenuOptions.add(DeckPickerContextMenuOption.ADD_CARD)
-            contextMenuOptions.add(DeckPickerContextMenuOption.BROWSE_CARDS)
+            add(DeckPickerContextMenuOption.ADD_CARD)
+            add(DeckPickerContextMenuOption.BROWSE_CARDS)
             if (dyn) {
-                contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD)
-                contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY)
+                add(DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD)
+                add(DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY)
             }
-            contextMenuOptions.add(DeckPickerContextMenuOption.RENAME_DECK)
+            add(DeckPickerContextMenuOption.RENAME_DECK)
             if (!dyn) {
-                contextMenuOptions.add(DeckPickerContextMenuOption.CREATE_SUBDECK)
+                add(DeckPickerContextMenuOption.CREATE_SUBDECK)
             }
-            contextMenuOptions.add(DeckPickerContextMenuOption.DECK_OPTIONS)
+            add(DeckPickerContextMenuOption.DECK_OPTIONS)
             if (!dyn) {
-                contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY)
+                add(DeckPickerContextMenuOption.CUSTOM_STUDY)
             }
-            contextMenuOptions.add(DeckPickerContextMenuOption.EXPORT_DECK)
+            add(DeckPickerContextMenuOption.EXPORT_DECK)
             if (requireArguments().getBoolean(ARG_DECK_HAS_BURIED_IN_DECK)) {
-                contextMenuOptions.add(DeckPickerContextMenuOption.UNBURY)
+                add(DeckPickerContextMenuOption.UNBURY)
             }
-            contextMenuOptions.add(DeckPickerContextMenuOption.CREATE_SHORTCUT)
-            contextMenuOptions.add(DeckPickerContextMenuOption.DELETE_DECK)
-            return contextMenuOptions
+            add(DeckPickerContextMenuOption.CREATE_SHORTCUT)
+            add(DeckPickerContextMenuOption.DELETE_DECK)
         }
 
     enum class DeckPickerContextMenuOption(@StringRes val optionName: Int) {
