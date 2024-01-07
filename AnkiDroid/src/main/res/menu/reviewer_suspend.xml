@@ -1,8 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/action_suspend_card"
-        android:title="@string/menu_suspend_card" />
-    <item
-        android:id="@+id/action_suspend_note"
-        android:title="@string/menu_suspend_note" />
-</menu>

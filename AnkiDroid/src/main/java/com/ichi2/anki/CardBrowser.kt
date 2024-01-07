@@ -858,7 +858,7 @@ open class CardBrowser :
         if (viewModel.hasSelectedAnyRows()) {
             mActionBarMenu!!.findItem(R.id.action_suspend_card).apply {
                 title = TR.browsingToggleSuspend()
-                setIcon(R.drawable.ic_pause_circle_outline)
+                setIcon(R.drawable.ic_suspend)
             }
             mActionBarMenu!!.findItem(R.id.action_mark_card).apply {
                 title = TR.browsingToggleMark()

@@ -21,7 +21,6 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -39,10 +38,8 @@ import androidx.annotation.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
-import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
@@ -404,24 +401,12 @@ open class Reviewer :
                 Timber.i("Reviewer:: Edit note button pressed")
                 editCard()
             }
-            R.id.action_bury -> {
-                Timber.i("Reviewer:: Bury button pressed")
-                MenuItemCompat.getActionProvider(item)?.hasSubMenu()?.let { isAvailable ->
-                    if (!isAvailable) {
-                        Timber.d("Bury card due to no submenu")
-                        buryCard()
-                    }
-                } ?: Timber.w("Null ActionProvider for bury menu item in Reviewer!")
-            }
-            R.id.action_suspend -> {
-                Timber.i("Reviewer:: Suspend button pressed")
-                MenuItemCompat.getActionProvider(item)?.hasSubMenu()?.let { isAvailable ->
-                    if (!isAvailable) {
-                        Timber.d("Suspend card due to no submenu")
-                        suspendCard()
-                    }
-                } ?: Timber.w("Null ActionProvider for suspend menu item in Reviewer!")
-            }
+            R.id.action_bury_card -> buryCard()
+            R.id.action_bury_note -> buryNote()
+            R.id.action_suspend_card -> suspendCard()
+            R.id.action_suspend_note -> suspendNote()
+            R.id.action_reschedule_card -> showRescheduleCardDialog()
+            R.id.action_reset_card_progress -> showResetCardDialog()
             R.id.action_delete -> {
                 Timber.i("Reviewer:: Delete note button pressed")
                 showDeleteNoteDialog()
@@ -720,7 +705,7 @@ open class Reviewer :
         menuInflater.inflate(R.menu.reviewer, menu)
         displayIcons(menu)
         mActionButtons.setCustomButtonsStatus(menu)
-        var alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
+        val alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
         if (currentCard != null && isMarked(currentCard!!.note())) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
@@ -852,29 +837,15 @@ open class Reviewer :
         if (mTTS.enabled && !mActionButtons.status.selectTtsIsDisabled()) {
             menu.findItem(R.id.action_select_tts).isVisible = true
         }
-        // Setup bury / suspend providers
-        val suspendIcon = menu.findItem(R.id.action_suspend)
-        val buryIcon = menu.findItem(R.id.action_bury)
-        MenuItemCompat.setActionProvider(suspendIcon, SuspendProvider(this))
-        MenuItemCompat.setActionProvider(buryIcon, BuryProvider(this))
-        if (suspendNoteAvailable()) {
-            suspendIcon.setIcon(R.drawable.ic_action_suspend_dropdown)
-            suspendIcon.setTitle(R.string.menu_suspend)
-        } else {
-            suspendIcon.setIcon(R.drawable.ic_pause_circle_outline)
-            suspendIcon.setTitle(R.string.menu_suspend_card)
+        if (!suspendNoteAvailable() && !mActionButtons.status.suspendIsDisabled()) {
+            menu.findItem(R.id.action_suspend).isVisible = false
+            menu.findItem(R.id.action_suspend_card).isVisible = true
         }
-        if (buryNoteAvailable()) {
-            buryIcon.setIcon(R.drawable.ic_flip_to_back_dropdown)
-            buryIcon.setTitle(R.string.menu_bury)
-        } else {
-            buryIcon.setIcon(R.drawable.ic_flip_to_back_white)
-            buryIcon.setTitle(R.string.menu_bury_card)
+        if (!buryNoteAvailable() && !mActionButtons.status.buryIsDisabled()) {
+            menu.findItem(R.id.action_bury).isVisible = false
+            menu.findItem(R.id.action_bury_card).isVisible = true
         }
-        alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
-        buryIcon.iconAlpha = alpha
-        suspendIcon.iconAlpha = alpha
-        MenuItemCompat.setActionProvider(menu.findItem(R.id.action_schedule), ScheduleProvider(this))
+
         mOnboarding.onCreate()
 
         increaseHorizontalPaddingOfOverflowMenuIcons(menu)
@@ -1522,135 +1493,6 @@ open class Reviewer :
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun hasDrawerSwipeConflicts(): Boolean {
         return mHasDrawerSwipeConflicts
-    }
-
-    /**
-     * Inner class which implements the submenu for the Suspend button
-     */
-    internal inner class SuspendProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
-
-        override fun onCreateActionView(forItem: MenuItem): View {
-            return createActionViewWith(context, forItem, R.menu.reviewer_suspend, ::onMenuItemClick) {
-                hasSubMenu()
-            }
-        }
-
-        override fun hasSubMenu(): Boolean {
-            return suspendNoteAvailable()
-        }
-
-        override fun onPrepareSubMenu(subMenu: SubMenu) {
-            subMenu.clear()
-            menuInflater.inflate(R.menu.reviewer_suspend, subMenu)
-            for (i in 0 until subMenu.size()) {
-                subMenu.getItem(i).setOnMenuItemClickListener(this)
-            }
-        }
-
-        override fun onMenuItemClick(item: MenuItem): Boolean {
-            val itemId = item.itemId
-            if (itemId == R.id.action_suspend_card) {
-                return suspendCard()
-            } else if (itemId == R.id.action_suspend_note) {
-                return suspendNote()
-            }
-            return false
-        }
-    }
-
-    /**
-     * Inner class which implements the submenu for the Bury button
-     */
-    internal inner class BuryProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
-
-        override fun onCreateActionView(forItem: MenuItem): View {
-            return createActionViewWith(context, forItem, R.menu.reviewer_bury, ::onMenuItemClick) {
-                hasSubMenu()
-            }
-        }
-
-        override fun hasSubMenu(): Boolean {
-            return buryNoteAvailable()
-        }
-
-        override fun onPrepareSubMenu(subMenu: SubMenu) {
-            subMenu.clear()
-            menuInflater.inflate(R.menu.reviewer_bury, subMenu)
-            for (i in 0 until subMenu.size()) {
-                subMenu.getItem(i).setOnMenuItemClickListener(this)
-            }
-        }
-
-        override fun onMenuItemClick(item: MenuItem): Boolean {
-            val itemId = item.itemId
-            if (itemId == R.id.action_bury_card) {
-                return buryCard()
-            } else if (itemId == R.id.action_bury_note) {
-                return buryNote()
-            }
-            return false
-        }
-    }
-
-    private fun createActionViewWith(
-        context: Context,
-        menuItem: MenuItem,
-        @MenuRes subMenuRes: Int,
-        onMenuItemSelection: (MenuItem) -> Boolean,
-        showsSubMenu: () -> Boolean
-    ): View = ImageButton(context, null, android.R.attr.actionButtonStyle).apply {
-        TooltipCompat.setTooltipText(this, menuItem.title)
-        menuItem.icon?.isAutoMirrored = true
-        setImageDrawable(menuItem.icon)
-        id = menuItem.itemId
-        setOnClickListener {
-            if (!menuItem.isEnabled) {
-                return@setOnClickListener
-            }
-            if (showsSubMenu()) {
-                PopupMenu(context, this).apply {
-                    inflate(subMenuRes)
-                    setOnMenuItemClickListener(onMenuItemSelection)
-                    show()
-                }
-            } else {
-                onOptionsItemSelected(menuItem)
-            }
-        }
-    }
-
-    /**
-     * Inner class which implements the submenu for the Schedule button
-     */
-    internal inner class ScheduleProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
-
-        override fun onCreateActionView(forItem: MenuItem): View {
-            return createActionViewWith(context, forItem, R.menu.reviewer_schedule, ::onMenuItemClick) { true }
-        }
-
-        override fun hasSubMenu(): Boolean {
-            return true
-        }
-
-        override fun onPrepareSubMenu(subMenu: SubMenu) {
-            subMenu.clear()
-            menuInflater.inflate(R.menu.reviewer_schedule, subMenu)
-            for (i in 0 until subMenu.size()) {
-                subMenu.getItem(i).setOnMenuItemClickListener(this)
-            }
-        }
-
-        override fun onMenuItemClick(item: MenuItem): Boolean {
-            val itemId = item.itemId
-            if (itemId == R.id.action_reschedule_card) {
-                showRescheduleCardDialog()
-                return true
-            } else if (itemId == R.id.action_reset_card_progress) {
-                showResetCardDialog()
-                return true
-            }
-            return false
-        }
     }
 
     override fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
