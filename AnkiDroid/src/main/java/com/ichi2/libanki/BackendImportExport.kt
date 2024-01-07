@@ -108,6 +108,7 @@ fun Collection.getImportAnkiPackagePresetsRaw(input: ByteArray): ByteArray {
 fun Collection.exportAnkiPackage(
     outPath: String,
     withScheduling: Boolean,
+    withDeckConfigs: Boolean,
     withMedia: Boolean,
     limit: ExportLimit,
     legacy: Boolean = true
@@ -116,7 +117,7 @@ fun Collection.exportAnkiPackage(
         this.withScheduling = withScheduling
         this.withMedia = withMedia
         this.legacy = legacy
-        this.withDeckConfigs = withScheduling
+        this.withDeckConfigs = withDeckConfigs
     }
     backend.exportAnkiPackage(outPath, options, limit)
 }

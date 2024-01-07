@@ -24,6 +24,7 @@ import com.ichi2.libanki.exportNotesCsv
 fun AnkiActivity.exportApkgPackage(
     exportPath: String,
     withScheduling: Boolean,
+    withDeckConfigs: Boolean,
     withMedia: Boolean,
     limit: ExportLimit
 ) {
@@ -34,7 +35,7 @@ fun AnkiActivity.exportApkgPackage(
             }
         }
         withProgress(extractProgress = onProgress) {
-            withCol { exportAnkiPackage(exportPath, withScheduling, withMedia, limit) }
+            withCol { exportAnkiPackage(exportPath, withScheduling, withDeckConfigs, withMedia, limit) }
         }
         val factory =
             (this@exportApkgPackage as ExportDialogsFactoryProvider).exportDialogsFactory()
