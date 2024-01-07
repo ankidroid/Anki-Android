@@ -40,14 +40,14 @@ import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
-import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
-import com.ichi2.anki.dialogs.HelpDialog
+import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.CardId
 import com.ichi2.utils.HandlerUtils
+import com.ichi2.utils.IntentUtil
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
@@ -323,12 +323,13 @@ abstract class NavigationDrawerActivity :
 
                 R.id.nav_help -> {
                     Timber.i("Navigating to help")
-                    showDialogFragment(HelpDialog.createInstance())
+                    showDialogFragment(HelpDialog.newHelpInstance())
                 }
 
                 R.id.support_ankidroid -> {
                     Timber.i("Navigating to support AnkiDroid")
-                    showDialogFragment(HelpDialog.createInstanceForSupportAnkiDroid(this))
+                    val canRateApp = IntentUtil.canOpenIntent(this, AnkiDroidApp.getMarketIntent(this))
+                    showDialogFragment(HelpDialog.newSupportInstance(canRateApp))
                 }
             }
         }
