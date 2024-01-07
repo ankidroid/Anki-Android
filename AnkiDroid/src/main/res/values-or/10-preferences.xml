@@ -116,7 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">ମଝି କେନ୍ଦ୍ରକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ତଳ ବାମକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ତଳ ଡାହାଣକୁ ସ୍ପର୍ଶ କଲେ</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">ଡିଵାଇସ୍ ଝାଙ୍କିଲେ</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ ମେନୁ</string>
     <string name="card_browser_enable_external_context_menu_summary">ସବୁ ଜାଗାରେ ‘%s’ ପ୍ରସଙ୍ଗ ମେନୁକୁ ସକ୍ଷମ କରିଥାଏ</string>
     <string name="double_scrolling_gap" maxLength="41">ଦ୍ୱିଗୁଣ ସ୍କ୍ରୋଲିଂ</string>
@@ -125,7 +125,7 @@
     <string name="tts" maxLength="41">ପାଠ୍ୟ ରୁ କଥନ</string>
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
     <!-- Sync -->
-    <string name="sync_fetch_missing_media" maxLength="41">ସୀଙ୍କ୍‌ରେ ମିଡ଼ିଆ ଆଣ</string>
+    <string name="sync_fetch_missing_media" maxLength="41">ସୀଙ୍କ୍‌ରେ ମିଡ଼ିଆ ଆନୟନ</string>
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
     <string name="automatic_sync_choice" maxLength="41">ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
@@ -205,7 +205,7 @@
     <string name="html_javascript_debugging_summ">ସୁଦୂର WebView ସଂଯୋଗଗୁଡ଼ିକ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରିବା</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">ସମୀକ୍ଷକ</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">ତାସଖଣ୍ଡ ଆଖ୍ୟା ଦେଖାଇବା</string>
     <string name="accessibility" maxLength="41">ଅଭିଗମ୍ୟତା</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିଗୁଡ଼ିକୁ PNG ଭାବରେ ଲେପନ</string>
@@ -350,7 +350,7 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">କୌଣସି ସଂଗ୍ରହ ନାହିଁ</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">ତ୍ରୁଟି</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">ପ୍ରାପ୍ତ ହେଉଛି&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">ଆନୟନ ଚାଲିଛି&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">ଗଣନା ଚାଲିଛି&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">ସଂଗ୍ରହ ଵିଦ୍ୟମାନ ନାହିଁ</string>
 </resources>
