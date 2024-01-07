@@ -70,6 +70,7 @@ class ExportDialogFragment : DialogFragment() {
     private lateinit var decksSelectorContainer: FrameLayout
     private lateinit var collectionIncludeMedia: CheckBox
     private lateinit var apkgIncludeSchedule: CheckBox
+    private lateinit var apkgIncludeDeckConfigs: CheckBox
     private lateinit var apkgIncludeMedia: CheckBox
     private lateinit var notesIncludeHtml: CheckBox
     private lateinit var notesIncludeTags: CheckBox
@@ -210,6 +211,9 @@ class ExportDialogFragment : DialogFragment() {
         apkgIncludeMedia = findViewById<CheckBox>(R.id.export_apkg_media).apply {
             text = exportingIncludeMedia()
         }
+        apkgIncludeDeckConfigs = findViewById<CheckBox>(R.id.export_apkg_deck_configs).apply {
+            text = exportingIncludeDeckConfigs()
+        }
         apkgIncludeSchedule = findViewById<CheckBox>(R.id.export_apkg_schedule).apply {
             text = exportingIncludeSchedulingInformation()
         }
@@ -280,6 +284,7 @@ class ExportDialogFragment : DialogFragment() {
 
     private fun handleAnkiPackageExport() {
         val includeSchedule = apkgIncludeSchedule.isChecked
+        val includeDeckConfigs = apkgIncludeDeckConfigs.isChecked
         val includeMedia = apkgIncludeMedia.isChecked
         val limits = buildExportLimit()
         var packagePrefix = getNonCollectionNamePrefix()
@@ -292,6 +297,7 @@ class ExportDialogFragment : DialogFragment() {
         (requireActivity() as AnkiActivity).exportApkgPackage(
             exportPath = exportPath,
             withScheduling = includeSchedule,
+            withDeckConfigs = includeDeckConfigs,
             withMedia = includeMedia,
             limit = limits
         )
