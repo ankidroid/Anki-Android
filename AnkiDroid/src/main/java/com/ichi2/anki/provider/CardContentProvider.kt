@@ -1057,7 +1057,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.ANSWER -> rb.add(answer)
                 FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple())
                 FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(false).answerText)
-                FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer)
+                FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer())
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }
