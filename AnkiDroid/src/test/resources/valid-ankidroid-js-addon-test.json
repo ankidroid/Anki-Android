@@ -2,7 +2,7 @@
     "name": "valid-ankidroid-js-addon-test",
     "addonTitle": "Valid AnkiDroid JS Addon",
     "version": "1.0.0",
-    "ankidroidJsApi": "0.0.2",
+    "ankidroidJsApi": "0.0.3",
     "addonType": "reviewer",
     "description": "This addon will listed in Addon Browser. Also AddonInfo.isValidAnkiDroidAddon return true for this package. For more view. https://github.com/ankidroid/Anki-Android/pull/9232",
     "main": "index.js",

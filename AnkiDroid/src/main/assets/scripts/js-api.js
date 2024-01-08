@@ -1,6 +1,6 @@
 /*
  * AnkiDroid JavaScript API
- * Version: 0.0.2
+ * Version: 0.0.3
  */
 
 /**
@@ -51,6 +51,7 @@ const jsApiList = {
     ankiResetProgress: "resetProgress",
     ankiMarkCard: "markCard",
     ankiToggleFlag: "toggleFlag",
+    ankiOpenCardBrowser: "openCardBrowser",
     ankiSearchCard: "searchCard",
     ankiSearchCardWithCallback: "searchCardWithCallback",
     ankiTtsSpeak: "ttsSpeak",

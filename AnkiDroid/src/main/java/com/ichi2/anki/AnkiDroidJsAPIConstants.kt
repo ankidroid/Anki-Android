@@ -35,8 +35,8 @@ object AnkiDroidJsAPIConstants {
     const val ankiJsErrorCodeSearchCard: Int = 8
 
     // js api developer contact
-    const val sCurrentJsApiVersion = "0.0.2"
-    const val sMinimumJsApiVersion = "0.0.2"
+    const val sCurrentJsApiVersion = "0.0.3"
+    const val sMinimumJsApiVersion = "0.0.3"
 
     val flagCommands = mapOf(
         "none" to ViewerCommand.UNSET_FLAG,
