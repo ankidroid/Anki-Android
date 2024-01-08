@@ -1156,7 +1156,7 @@ open class CardBrowser :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun exportDialogsFactory(): ExportDialogsFactory = mExportingDelegate.mDialogsFactory
+    override fun exportDialogsFactory(): ExportDialogsFactory = mExportingDelegate.dialogsFactory
 
     private fun exportSelected() = launchCatchingTask {
         val (type, selectedIds) = viewModel.getSelectionExportData() ?: return@launchCatchingTask

@@ -1082,7 +1082,7 @@ open class DeckPicker :
         }
     }
 
-    override fun exportDialogsFactory(): ExportDialogsFactory = mExportingDelegate.mDialogsFactory
+    override fun exportDialogsFactory(): ExportDialogsFactory = mExportingDelegate.dialogsFactory
 
     fun exportCollection() {
         if (mediaMigrationIsInProgress(this)) {
