@@ -117,7 +117,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
                 // Some apps send this back with app-specific data, direct the user to another app
                 if (result.resultCode >= Activity.RESULT_FIRST_USER) {
-                    UIUtils.showThemedToast(mActivity, mActivity.getString(R.string.activity_result_unexpected), true)
+                    UIUtils.showThemedToast(_activity, _activity.getString(R.string.activity_result_unexpected), true)
                 }
                 return
             }
@@ -151,9 +151,9 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     override fun createUI(context: Context, layout: LinearLayout) {
         Timber.d("createUI()")
-        mViewModel = mViewModel.replaceNullValues(mField, mActivity)
+        mViewModel = mViewModel.replaceNullValues(_field, _activity)
 
-        mImagePreview = ImageView(mActivity)
+        mImagePreview = ImageView(_activity)
         val externalCacheDirRoot = context.externalCacheDir
         if (externalCacheDirRoot == null) {
             Timber.e("createUI() unable to get external cache directory")
@@ -175,13 +175,13 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
         drawUIComponents(context)
 
-        mCropButton = Button(mActivity).apply {
+        mCropButton = Button(_activity).apply {
             text = gtxt(R.string.crop_button)
             setOnClickListener { mViewModel = requestCrop(mViewModel) }
             visibility = View.INVISIBLE
         }
 
-        val btnGallery = Button(mActivity).apply {
+        val btnGallery = Button(_activity).apply {
             text = gtxt(R.string.multimedia_editor_image_field_editing_galery)
             setOnClickListener {
                 val i = Intent(Intent.ACTION_PICK)
@@ -190,14 +190,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             }
         }
 
-        val btnDraw = Button(mActivity).apply {
+        val btnDraw = Button(_activity).apply {
             text = gtxt(R.string.drawing)
             setOnClickListener {
-                drawingLauncher.launch(Intent(mActivity, DrawingActivity::class.java))
+                drawingLauncher.launch(Intent(_activity, DrawingActivity::class.java))
             }
         }
 
-        val btnCamera = Button(mActivity).apply {
+        val btnCamera = Button(_activity).apply {
             text = gtxt(R.string.multimedia_editor_image_field_editing_photo)
             setOnClickListener { mViewModel = captureImage(context) }
             if (!canUseCamera(context)) {
@@ -223,7 +223,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     override fun setEditingActivity(activity: MultimediaEditFieldActivity) {
         super.setEditingActivity(activity)
-        val registryToUse = if (this::registryToUse.isInitialized) registryToUse else mActivity.activityResultRegistry
+        val registryToUse = if (this::registryToUse.isInitialized) registryToUse else this._activity.activityResultRegistry
         @NeedsTest("check the happy/failure path for the crop action")
         cropImageRequest = registryToUse.register(CROP_IMAGE_LAUNCHER_KEY, CropImageContract()) { cropResult ->
             if (cropResult.isSuccessful) {
@@ -370,7 +370,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         val height = metrics.heightPixels
         val width = metrics.widthPixels
 
-        mImagePreview = ImageView(mActivity).apply {
+        mImagePreview = ImageView(_activity).apply {
             scaleType = ImageView.ScaleType.CENTER_INSIDE
             adjustViewBounds = true
 
@@ -399,14 +399,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     private fun gtxt(id: Int): String {
-        return mActivity.getText(id).toString()
+        return _activity.getText(id).toString()
     }
 
     // #9333: getDefaultDisplay & getMetrics
     @Suppress("deprecation") // defaultDisplay
     private val displayMetrics: DisplayMetrics by lazy {
         DisplayMetrics().apply {
-            mActivity.windowManager.defaultDisplay.getMetrics(this)
+            _activity.windowManager.defaultDisplay.getMetrics(this)
         }
     }
 
@@ -419,14 +419,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     private fun revertToPreviousImage() {
         mViewModel.deleteImagePath()
         mViewModel = ImageViewModel(mPreviousImagePath, mPreviousImageUri)
-        mField.imagePath = mPreviousImagePath
+        _field.imagePath = mPreviousImagePath
         mPreviousImagePath = null
         mPreviousImageUri = null
     }
 
     private fun showSomethingWentWrong() {
         try {
-            UIUtils.showThemedToast(mActivity, mActivity.resources.getString(R.string.multimedia_editor_something_wrong), false)
+            UIUtils.showThemedToast(_activity, _activity.resources.getString(R.string.multimedia_editor_something_wrong), false)
         } catch (e: Exception) {
             // ignore. A NullPointerException may occur in Robolectric
             Timber.w(e, "Failed to display toast")
@@ -434,7 +434,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     private fun showSVGPreviewToast() {
-        UIUtils.showThemedToast(mActivity, mActivity.resources.getString(R.string.multimedia_editor_svg_preview), false)
+        UIUtils.showThemedToast(_activity, _activity.resources.getString(R.string.multimedia_editor_svg_preview), false)
     }
 
     private fun handleSelectImageIntent(data: Intent?) {
@@ -450,7 +450,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             if (data.extras == null) "null" else data.extras!!.keySet().joinToString(", ")
         )
 
-        val selectedImage = getImageUri(mActivity, data)
+        val selectedImage = getImageUri(_activity, data)
         if (selectedImage == null) {
             Timber.w("handleSelectImageIntent() selectedImage was null")
             showSomethingWentWrong()
@@ -494,7 +494,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     private fun internalizeUri(uri: Uri): File? {
         val internalFile: File
-        val uriFileName = getImageNameFromUri(mActivity, uri)
+        val uriFileName = getImageNameFromUri(_activity, uri)
 
         // Use the display name from the image info to create a new file with correct extension
         if (uriFileName == null) {
@@ -510,7 +510,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             return null
         }
         return try {
-            val returnFile = FileUtil.internalizeUri(uri, internalFile, mActivity.contentResolver)
+            val returnFile = FileUtil.internalizeUri(uri, internalFile, _activity.contentResolver)
             Timber.d("internalizeUri successful. Returning internalFile.")
             returnFile
         } catch (e: Exception) {
@@ -570,7 +570,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 Timber.w("rotateAndCompress() delete of pre-compressed image failed %s", imagePath)
             }
             mViewModel = imageViewModel.rotateAndCompressTo(outFile.absolutePath, getUriForFile(outFile))
-            mField.imagePath = outFile.absolutePath
+            _field.imagePath = outFile.absolutePath
             Timber.d("rotateAndCompress out path %s has size %d", outFile.absolutePath, outFile.length())
         } catch (e: FileNotFoundException) {
             Timber.w(e, "rotateAndCompress() File not found for image compression %s", imagePath)
@@ -607,7 +607,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             }
             Timber.d("setPreviewImage path %s has size %d", f.absolutePath, f.length())
             b = ExifUtil.rotateFromCamera(f, b)
-            onValidImage(b, Formatter.formatFileSize(mActivity, f.length()))
+            onValidImage(b, Formatter.formatFileSize(_activity, f.length()))
         }
     }
 
@@ -635,7 +635,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             Timber.i("handleTakePictureResult appears to have an invalid picture")
             return
         }
-        showCropDialog(mActivity.getString(R.string.crop_image), null)
+        showCropDialog(_activity.getString(R.string.crop_image), null)
     }
 
     /**
@@ -677,7 +677,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     private fun setTemporaryMedia(imagePath: String) {
-        mField.apply {
+        _field.apply {
             this.imagePath = imagePath
             hasTemporaryMedia = true
         }
@@ -689,7 +689,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             return
         }
 
-        AlertDialog.Builder(mActivity).show {
+        AlertDialog.Builder(_activity).show {
             message(text = content)
             positiveButton(R.string.dialog_yes) {
                 mViewModel = requestCrop(mViewModel)
@@ -703,12 +703,12 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     private fun handleCropResult(result: CropImageView.CropResult) {
         Timber.d("handleCropResult")
         mViewModel.deleteImagePath()
-        mViewModel = ImageViewModel(result.getUriFilePath(mActivity, true), result.uriContent)
+        mViewModel = ImageViewModel(result.getUriFilePath(_activity, true), result.uriContent)
         if (!rotateAndCompress()) {
             Timber.i("handleCropResult() appears to have an invalid file, reverting")
             return
         }
-        Timber.d("handleCropResult() = image path now %s", mField.imagePath)
+        Timber.d("handleCropResult() = image path now %s", _field.imagePath)
     }
 
     private fun rotateAndCompress(): Boolean {
@@ -718,12 +718,12 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             showSomethingWentWrong()
             return false
         }
-        mField.hasTemporaryMedia = true
+        _field.hasTemporaryMedia = true
         return true
     }
 
     private fun getUriForFile(file: File): Uri {
-        return getUriForFile(file, mActivity)
+        return getUriForFile(file, _activity)
     }
 
     /**
