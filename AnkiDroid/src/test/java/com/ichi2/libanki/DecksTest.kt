@@ -34,7 +34,6 @@ import kotlin.test.assertTrue
 class DecksTest : JvmTest() {
     @Test
     fun test_remove() {
-        val col = col
         // create a new col, and add a note/card to it
         val deck1 = addDeck("deck1")
         val note = col.newNote()
@@ -53,7 +52,6 @@ class DecksTest : JvmTest() {
     @Test
     @SuppressLint("CheckResult")
     fun test_rename() {
-        val col = col
         var id = addDeck("hello::world")
         // should be able to rename into a completely different branch, creating
         // parents as necessary
@@ -161,7 +159,6 @@ class DecksTest : JvmTest() {
 
     @Test
     fun isDynStd() {
-        val col = col
         val decks = col.decks
         val filteredId = addDynamicDeck("filtered")
         val filtered = decks.get(filteredId)!!

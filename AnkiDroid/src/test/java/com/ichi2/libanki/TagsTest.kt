@@ -27,7 +27,6 @@ class TagsTest : JvmTest() {
 
     @Test
     fun test_split() {
-        val col = col
         val tags = Tags(col)
         val tags_list1 = ArrayList<String>()
         tags_list1.add("Todo")
@@ -47,7 +46,6 @@ class TagsTest : JvmTest() {
 
     @Test
     fun test_in_list() {
-        val col = col
         val tags = Tags(col)
 
         val tags_list = ArrayList<String>()

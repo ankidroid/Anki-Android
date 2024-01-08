@@ -167,7 +167,6 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     fun limitAppliedAfterReview() {
-        val col = col
         val sched = col.sched
         val dconf = col.decks.getConf(1)
         assertNotNull(dconf)

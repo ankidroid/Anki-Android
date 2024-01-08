@@ -108,7 +108,6 @@ class FinderTest : JvmTest() {
     @Test
     fun test_findCards() {
         TimeManager.reset()
-        val col = col
         var note = col.newNote()
         note.setItem("Front", "dog")
         note.setItem("Back", "cat")
@@ -358,7 +357,6 @@ class FinderTest : JvmTest() {
 
     @Test
     fun test_findCardsHierarchyTag() {
-        val col = col
         var note = col.newNote()
         note.setItem("Front", "foo")
         note.setItem("Back", "bar")
@@ -396,7 +394,6 @@ class FinderTest : JvmTest() {
 
     @Test
     fun test_findReplace() {
-        val col = col
         val note = col.newNote()
         note.setItem("Front", "foo")
         note.setItem("Back", "bar")

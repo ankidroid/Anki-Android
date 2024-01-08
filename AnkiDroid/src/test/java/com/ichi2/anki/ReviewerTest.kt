@@ -221,7 +221,6 @@ class ReviewerTest : RobolectricTest() {
         // #6587
         addNoteUsingBasicModel("Hello", "World")
 
-        val col = col
         val sched = col.sched
 
         val cardBeforeUndo = sched.card
