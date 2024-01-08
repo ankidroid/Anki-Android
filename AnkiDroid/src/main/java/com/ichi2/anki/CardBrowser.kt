@@ -1988,7 +1988,7 @@ open class CardBrowser :
                 CardBrowserColumn.DUE -> card.dueString
                 CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note().mod.toLong())
-                CardBrowserColumn.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.note().id)
+                CardBrowserColumn.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
                 CardBrowserColumn.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note().mod)
                 CardBrowserColumn.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
                 CardBrowserColumn.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote()).toString()
