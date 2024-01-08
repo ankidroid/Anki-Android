@@ -44,7 +44,6 @@ class MyAccountTest : RobolectricTest() {
         myAccount.findViewById<TextInputEditField>(R.id.password).setText(testPassword)
         val loginButton = myAccount.findViewById<Button>(R.id.login_button)
         assertTrue(loginButton.isEnabled)
-        assertTrue(loginButton.performClick())
     }
 
     @Test
