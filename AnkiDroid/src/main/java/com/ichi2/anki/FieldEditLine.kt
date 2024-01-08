@@ -43,15 +43,18 @@ import com.ichi2.ui.AnimationUtil.expandView
 import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
+@KotlinCleanup("replace _name with `field`")
+@KotlinCleanup("remove setTypeface")
+@KotlinCleanup("replace setEnableAnimation with var")
 class FieldEditLine : FrameLayout {
     val editText: FieldEditText
-    private val mLabel: TextView
+    private val label: TextView
     val toggleSticky: ImageButton
     val mediaButton: ImageButton
-    private val mExpandButton: ImageButton
-    private var mName: String? = null
-    private var mExpansionState = ExpansionState.EXPANDED
-    private var mEnableAnimation = true
+    private val expandButton: ImageButton
+    private var _name: String? = null
+    private var expansionState = ExpansionState.EXPANDED
+    private var enableAnimation = true
 
     constructor(context: Context) : super(context)
 
@@ -62,41 +65,41 @@ class FieldEditLine : FrameLayout {
     init {
         LayoutInflater.from(context).inflate(R.layout.card_multimedia_editline, this, true)
         editText = findViewById(R.id.id_note_editText)
-        mLabel = findViewById(R.id.id_label)
+        label = findViewById(R.id.id_label)
         toggleSticky = findViewById(R.id.id_toggle_sticky_button)
         mediaButton = findViewById(R.id.id_media_button)
         val constraintLayout: ConstraintLayout = findViewById(R.id.constraint_layout)
-        mExpandButton = findViewById(R.id.id_expand_button)
+        expandButton = findViewById(R.id.id_expand_button)
         // 7433 -
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             editText.id = ViewCompat.generateViewId()
             toggleSticky.id = ViewCompat.generateViewId()
             mediaButton.id = ViewCompat.generateViewId()
-            mExpandButton.id = ViewCompat.generateViewId()
+            expandButton.id = ViewCompat.generateViewId()
             editText.nextFocusForwardId = toggleSticky.id
             toggleSticky.nextFocusForwardId = mediaButton.id
-            mediaButton.nextFocusForwardId = mExpandButton.id
+            mediaButton.nextFocusForwardId = expandButton.id
             ConstraintSet().apply {
                 clone(constraintLayout)
                 connect(toggleSticky.id, ConstraintSet.END, mediaButton.id, ConstraintSet.START)
-                connect(mediaButton.id, ConstraintSet.END, mExpandButton.id, ConstraintSet.START)
+                connect(mediaButton.id, ConstraintSet.END, expandButton.id, ConstraintSet.START)
                 applyTo(constraintLayout)
             }
         }
         setExpanderBackgroundImage()
-        mExpandButton.setOnClickListener { toggleExpansionState() }
+        expandButton.setOnClickListener { toggleExpansionState() }
         editText.init()
-        mLabel.setPadding(getDensityAdjustedValue(context, 3.4f).toInt(), 0, 0, 0)
+        label.setPadding(getDensityAdjustedValue(context, 3.4f).toInt(), 0, 0, 0)
     }
 
     private fun toggleExpansionState() {
-        mExpansionState = when (mExpansionState) {
+        expansionState = when (expansionState) {
             ExpansionState.EXPANDED -> {
-                collapseView(editText, mEnableAnimation)
+                collapseView(editText, enableAnimation)
                 ExpansionState.COLLAPSED
             }
             ExpansionState.COLLAPSED -> {
-                expandView(editText, mEnableAnimation)
+                expandView(editText, enableAnimation)
                 ExpansionState.EXPANDED
             }
         }
@@ -104,9 +107,9 @@ class FieldEditLine : FrameLayout {
     }
 
     private fun setExpanderBackgroundImage() {
-        when (mExpansionState) {
-            ExpansionState.COLLAPSED -> mExpandButton.background = getBackgroundImage(R.drawable.ic_expand_more_black_24dp_xml)
-            ExpansionState.EXPANDED -> mExpandButton.background = getBackgroundImage(R.drawable.ic_expand_less_black_24dp)
+        when (expansionState) {
+            ExpansionState.COLLAPSED -> expandButton.background = getBackgroundImage(R.drawable.ic_expand_more_black_24dp_xml)
+            ExpansionState.EXPANDED -> expandButton.background = getBackgroundImage(R.drawable.ic_expand_less_black_24dp)
         }
     }
 
@@ -140,19 +143,19 @@ class FieldEditLine : FrameLayout {
     }
 
     fun setEnableAnimation(value: Boolean) {
-        mEnableAnimation = value
+        enableAnimation = value
     }
 
     var name: String?
-        get() = mName
+        get() = _name
         set(name) {
-            mName = name
+            _name = name
             editText.contentDescription = name
-            mLabel.text = name
+            label.text = name
         }
 
     val lastViewInTabOrder: View
-        get() = mExpandButton
+        get() = expandButton
 
     fun loadState(state: AbsSavedState) {
         onRestoreInstanceState(state)
@@ -175,11 +178,11 @@ class FieldEditLine : FrameLayout {
         savedState.editTextId = editText.id
         savedState.toggleStickyId = toggleSticky.id
         savedState.mediaButtonId = mediaButton.id
-        savedState.expandButtonId = mExpandButton.id
+        savedState.expandButtonId = expandButton.id
         for (i in 0 until childCount) {
             getChildAt(i).saveHierarchyState(savedState.childrenStates)
         }
-        savedState.expansionState = mExpansionState
+        savedState.expansionState = expansionState
         return savedState
     }
 
@@ -191,11 +194,11 @@ class FieldEditLine : FrameLayout {
         val editTextId = editText.id
         val toggleStickyId = toggleSticky.id
         val mediaButtonId = mediaButton.id
-        val expandButtonId = mExpandButton.id
+        val expandButtonId = expandButton.id
         editText.id = state.editTextId
         toggleSticky.id = state.toggleStickyId
         mediaButton.id = state.mediaButtonId
-        mExpandButton.id = state.expandButtonId
+        expandButton.id = state.expandButtonId
         super.onRestoreInstanceState(state.superState)
         for (i in 0 until childCount) {
             getChildAt(i).restoreHierarchyState(state.childrenStates)
@@ -203,11 +206,11 @@ class FieldEditLine : FrameLayout {
         editText.id = editTextId
         toggleSticky.id = toggleStickyId
         mediaButton.id = mediaButtonId
-        mExpandButton.id = expandButtonId
-        if (mExpansionState != state.expansionState) {
+        expandButton.id = expandButtonId
+        if (expansionState != state.expansionState) {
             toggleExpansionState()
         }
-        mExpansionState = state.expansionState ?: ExpansionState.EXPANDED
+        expansionState = state.expansionState ?: ExpansionState.EXPANDED
     }
 
     @KotlinCleanup("convert to parcelable")
