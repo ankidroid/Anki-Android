@@ -66,7 +66,7 @@ class TTS {
      * @param qa   The card question or card answer
      */
     fun selectTts(context: Context, card: Card, qa: SoundSide) {
-        val textToRead = if (qa == SoundSide.QUESTION) card.question(true) else card.pureAnswer
+        val textToRead = if (qa == SoundSide.QUESTION) card.question(true) else card.pureAnswer()
         // get the text from the card
         ReadText.selectTts(
             getTextForTts(context, textToRead),

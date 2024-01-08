@@ -43,7 +43,7 @@ class CardTest : JvmTest() {
         col.addNote(note)
         val card = note.cards()[0]
 
-        assertThat(card.pureAnswer, equalTo("2"))
+        assertThat(card.pureAnswer(), equalTo("2"))
     }
 
     /******************
