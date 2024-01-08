@@ -45,7 +45,6 @@ import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.trimToLength
 import timber.log.Timber
 import java.io.File
-import java.util.function.Consumer
 import kotlin.math.max
 import kotlin.math.min
 
@@ -69,11 +68,11 @@ class IntentHandler : Activity() {
         val action = intent.action
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
-        val runIfStoragePermissions = Consumer { runnable: Runnable -> performActionIfStorageAccessible(runnable, reloadIntent, action) }
+        val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
         when (getLaunchType(intent)) {
-            LaunchType.FILE_IMPORT -> runIfStoragePermissions.accept(Runnable { handleFileImport(intent, reloadIntent, action) })
-            LaunchType.SYNC -> runIfStoragePermissions.accept(Runnable { handleSyncIntent(reloadIntent, action) })
-            LaunchType.REVIEW -> runIfStoragePermissions.accept(Runnable { handleReviewIntent(intent) })
+            LaunchType.FILE_IMPORT -> runIfStoragePermissions { handleFileImport(intent, reloadIntent, action) }
+            LaunchType.SYNC -> runIfStoragePermissions { handleSyncIntent(reloadIntent, action) }
+            LaunchType.REVIEW -> runIfStoragePermissions { handleReviewIntent(intent) }
             LaunchType.DEFAULT_START_APP_IF_NEW -> {
                 Timber.d("onCreate() performing default action")
                 launchDeckPickerIfNoOtherTasks(reloadIntent)
@@ -105,10 +104,10 @@ class IntentHandler : Activity() {
      *
      */
     @NeedsTest("clicking a file in 'Files' to import")
-    private fun performActionIfStorageAccessible(runnable: Runnable, reloadIntent: Intent, action: String?) {
+    private fun performActionIfStorageAccessible(reloadIntent: Intent, action: String?, block: () -> Unit) {
         if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this) || Permissions.isExternalStorageManagerCompat()) {
             Timber.i("User has storage permissions. Running intent: %s", action)
-            runnable.run()
+            block()
         } else {
             Timber.i("No Storage Permission, cancelling intent '%s'", action)
             showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
