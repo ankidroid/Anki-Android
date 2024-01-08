@@ -261,8 +261,7 @@ class Note : Cloneable {
         return DupeOrEmpty.CORRECT
     }
 
-    val sFld: String
-        get() = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
+    fun sFld(): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
     fun setField(index: Int, value: String) {
         fields[index] = value

@@ -1981,7 +1981,7 @@ open class CardBrowser :
                 CardBrowserColumn.FLAGS -> Integer.valueOf(card.userFlag()).toString()
                 CardBrowserColumn.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
                 CardBrowserColumn.MARKED -> if (isMarked(card.note())) "marked" else null
-                CardBrowserColumn.SFLD -> card.note().sFld
+                CardBrowserColumn.SFLD -> card.note().sFld()
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
                 CardBrowserColumn.TAGS -> card.note().stringTags()
                 CardBrowserColumn.CARD -> if (inCardMode) card.template().optString("name") else "${card.note().numberOfCards()}"
