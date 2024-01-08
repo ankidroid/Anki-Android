@@ -33,6 +33,7 @@ import androidx.core.content.edit
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.getTimestamp
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.Time
 import com.ichi2.themes.Themes.currentTheme
@@ -48,6 +49,7 @@ import kotlin.math.max
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  */
 @SuppressLint("ViewConstructor")
+@NeedsTest("15176 ensure whiteboard drawing works")
 class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, inverted: Boolean) : View(activity, null) {
     private val paint: Paint
     private val undo = UndoList()
@@ -253,10 +255,10 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
     }
 
     private fun drawAlong(x: Float, y: Float) {
-        val dx = abs(x - x)
-        val dy = abs(y - y)
+        val dx = abs(x - this.x)
+        val dy = abs(y - this.y)
         if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-            path.quadTo(x, y, (x + x) / 2, (y + y) / 2)
+            path.quadTo(this.x, this.y, (this.x + x) / 2, (this.y + y) / 2)
             this.x = x
             this.y = y
         }
