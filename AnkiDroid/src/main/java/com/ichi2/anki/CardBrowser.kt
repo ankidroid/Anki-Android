@@ -1985,7 +1985,7 @@ open class CardBrowser :
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
                 CardBrowserColumn.TAGS -> card.note().stringTags()
                 CardBrowserColumn.CARD -> if (inCardMode) card.template().optString("name") else "${card.note().numberOfCards()}"
-                CardBrowserColumn.DUE -> card.dueString
+                CardBrowserColumn.DUE -> card.dueString()
                 CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note().mod.toLong())
                 CardBrowserColumn.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
