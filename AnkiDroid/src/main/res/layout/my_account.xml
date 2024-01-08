@@ -62,6 +62,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_baseline_email_24"
                         android:drawablePadding="8dp"
+                        android:nextFocusForward="@id/password_layout"
                         android:inputType="textNoSuggestions|textEmailAddress"
                         />
                 </com.google.android.material.textfield.TextInputLayout>

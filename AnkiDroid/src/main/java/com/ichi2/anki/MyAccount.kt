@@ -161,14 +161,6 @@ open class MyAccount : AnkiActivity() {
             }
         }
 
-        username.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_TAB) {
-                password.requestFocus()
-                return@setOnKeyListener true
-            }
-            false
-        }
-
         password.setOnKeyListener(
             View.OnKeyListener { _: View?, keyCode: Int, event: KeyEvent ->
                 if (event.action == KeyEvent.ACTION_DOWN) {
