@@ -395,6 +395,12 @@ dependencies {
     // in a JvmTest we need org.json.JSONObject to not be mocked
     testImplementation 'org.json:json:20231013'
     testImplementation 'io.github.ivanshafran:shared-preferences-mock:1.2.4'
+    testImplementation "androidx.test:runner:$androidx_test_version"
+    testImplementation "androidx.test:rules:$androidx_test_version"
+    testImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    testImplementation("androidx.test.espresso:espresso-contrib:$espresso_version") {
+        exclude module: "protobuf-lite"
+    }
 
     androidTestImplementation project(':testlib')
 
