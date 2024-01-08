@@ -834,7 +834,7 @@ open class Reviewer :
         if (colIsOpenUnsafe() && getColUnsafe.decks.isDyn(parentDid)) {
             menu.findItem(R.id.action_open_deck_options).isVisible = false
         }
-        if (mTTS.enabled && !mActionButtons.status.selectTtsIsDisabled()) {
+        if (tts.enabled && !mActionButtons.status.selectTtsIsDisabled()) {
             menu.findItem(R.id.action_select_tts).isVisible = true
         }
         if (!suspendNoteAvailable() && !mActionButtons.status.suspendIsDisabled()) {
@@ -958,10 +958,10 @@ open class Reviewer :
     }
 
     private fun updateWhiteboardEditorPosition() {
-        mAnswerButtonsPosition = this.sharedPrefs()
+        answerButtonsPosition = this.sharedPrefs()
             .getString("answerButtonPosition", "bottom")
         val layoutParams: RelativeLayout.LayoutParams
-        when (mAnswerButtonsPosition) {
+        when (answerButtonsPosition) {
             "none", "top" -> {
                 layoutParams = mColorPalette.layoutParams as RelativeLayout.LayoutParams
                 layoutParams.removeRule(RelativeLayout.ABOVE)
@@ -1439,7 +1439,7 @@ open class Reviewer :
     }
 
     private fun disableDrawerSwipeOnConflicts() {
-        if (mGestureProcessor.isBound(Gesture.SWIPE_UP, Gesture.SWIPE_DOWN, Gesture.SWIPE_RIGHT)) {
+        if (gestureProcessor.isBound(Gesture.SWIPE_UP, Gesture.SWIPE_DOWN, Gesture.SWIPE_RIGHT)) {
             mHasDrawerSwipeConflicts = true
             super.disableDrawerSwipe()
         }
