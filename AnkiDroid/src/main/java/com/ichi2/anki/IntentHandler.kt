@@ -19,6 +19,7 @@ package com.ichi2.anki
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import androidx.annotation.CheckResult
@@ -138,38 +139,12 @@ class IntentHandler : Activity() {
         val importResult = handleFileImport(this, intent)
         // attempt to delete the downloaded deck if it is a shared deck download import
         if (intent.hasExtra(SharedDecksDownloadFragment.EXTRA_IS_SHARED_DOWNLOAD)) {
-            try {
-                val sharedDeckUri = intent.data
-                if (sharedDeckUri != null) {
-                    // TODO move the file deletion on a background thread
-                    contentResolver.delete(intent.data!!, null, null)
-                    Timber.i("onCreate: downloaded shared deck deleted")
-                } else {
-                    Timber.i("onCreate: downloaded a shared deck but uri was null when trying to delete its file")
-                }
-            } catch (e: Exception) {
-                Timber.w(e, "onCreate: failed to delete downloaded shared deck")
-            }
+            deleteDownloadedDeck(intent.data)
         }
 
         // Start DeckPicker if we correctly processed ACTION_VIEW
         if (importResult.isSuccess) {
-            try {
-                val file = File(intent.data!!.path!!)
-                val fileUri = applicationContext?.let {
-                    FileProvider.getUriForFile(
-                        it,
-                        it.applicationContext?.packageName + ".apkgfileprovider",
-                        File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name)
-                    )
-                }
-                // TODO move the file deletion on a background thread
-                contentResolver.delete(fileUri!!, null, null)
-                Timber.i("onCreate() import successful and downloaded file deleted")
-            } catch (e: Exception) {
-                Timber.w(e, "onCreate() import successful and cannot delete file")
-            }
-
+            deleteImportedDeck(intent.data?.path)
             reloadIntent.action = action
             reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(reloadIntent)
@@ -178,6 +153,39 @@ class IntentHandler : Activity() {
             Timber.i("File import failed")
             // Don't import the file if it didn't load properly or doesn't have apkg extension
             showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, true)
+        }
+    }
+
+    private fun deleteImportedDeck(path: String?) {
+        try {
+            val file = File(path!!)
+            val fileUri = applicationContext?.let {
+                FileProvider.getUriForFile(
+                    it,
+                    it.applicationContext?.packageName + ".apkgfileprovider",
+                    File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name)
+                )
+            }
+            // TODO move the file deletion on a background thread
+            contentResolver.delete(fileUri!!, null, null)
+            Timber.i("onCreate() import successful and downloaded file deleted")
+        } catch (e: Exception) {
+            Timber.w(e, "onCreate() import successful and cannot delete file")
+        }
+    }
+
+    private fun deleteDownloadedDeck(sharedDeckUri: Uri?) {
+        if (sharedDeckUri == null) {
+            Timber.i("onCreate: downloaded a shared deck but uri was null when trying to delete its file")
+            return
+        }
+
+        try {
+            // TODO move the file deletion on a background thread
+            contentResolver.delete(sharedDeckUri, null, null)
+            Timber.i("onCreate: downloaded shared deck deleted")
+        } catch (e: Exception) {
+            Timber.w(e, "onCreate: failed to delete downloaded shared deck")
         }
     }
 
