@@ -35,7 +35,6 @@ import kotlin.test.assertNotNull
 class AbstractSchedTest : JvmTest() {
     @Test
     fun ensureUndoCorrectCounts() {
-        val col = col
         val sched = col.sched
         val dconf = col.decks.getConf(1)
         assertThat(dconf, notNullValue())
@@ -59,7 +58,6 @@ class AbstractSchedTest : JvmTest() {
 
     @Test
     fun undoAndRedo() {
-        val col = col
         val conf = col.decks.confForDid(1)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 3.0, 5.0, 10.0)))
         col.decks.save(conf)
