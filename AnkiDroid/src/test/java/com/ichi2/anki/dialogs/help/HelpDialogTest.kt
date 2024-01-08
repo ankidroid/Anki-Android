@@ -13,9 +13,27 @@
  ****************************************************************************************/
 package com.ichi2.anki.dialogs.help
 
+import androidx.core.os.bundleOf
+import androidx.fragment.app.testing.launchFragment
+import androidx.lifecycle.Lifecycle
+import androidx.test.espresso.Espresso.onData
+import androidx.test.espresso.Espresso.pressBackUnconditionally
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.help.HelpItem.Action.Rate
+import io.mockk.mockk
+import io.mockk.verify
+import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.instanceOf
+import org.hamcrest.Description
+import org.hamcrest.Matcher
+import org.hamcrest.TypeSafeMatcher
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
@@ -24,6 +42,13 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class HelpDialogTest {
+
+    private lateinit var mockActionDispatcher: HelpItemActionsDispatcher
+
+    @Before
+    fun setUp() {
+        mockActionDispatcher = mockk(relaxed = true)
+    }
 
     @Test
     fun `Support menu handles Rate item availability correctly`() {
@@ -96,5 +121,93 @@ class HelpDialogTest {
                 .any { it == null || !mainHelpMenuItems.map { entry -> entry.id }.contains(it) },
             "Help item has an invalid parentId"
         )
+    }
+
+    @Test
+    fun `Help menu handles submenus correctly`() {
+        // simulate a help menu start
+        launchFragment<HelpDialog>(
+            fragmentArgs = bundleOf(
+                HelpDialog.ARG_MENU_TITLE to R.string.help,
+                ARG_MENU_ITEMS to mainHelpMenuItems
+            ),
+            themeResId = R.style.Theme_Light,
+            initialState = Lifecycle.State.RESUMED
+        ).onFragment {
+            onData(matcherOf(R.string.help_title_community)).inRoot(isDialog()).perform(click())
+            // check that the expected six children are shown
+            onData(matcherOf(R.string.help_item_discord)).inRoot(isDialog())
+                .check(matches(isDisplayed()))
+            onData(matcherOf(R.string.help_item_reddit)).inRoot(isDialog())
+                .check(matches(isDisplayed()))
+            onData(matcherOf(R.string.help_item_facebook)).inRoot(isDialog())
+                .check(matches(isDisplayed()))
+            onData(matcherOf(R.string.help_item_mailing_list)).inRoot(isDialog())
+                .check(matches(isDisplayed()))
+            onData(matcherOf(R.string.help_item_twitter)).inRoot(isDialog())
+                .check(matches(isDisplayed()))
+            onData(matcherOf(R.string.help_item_anki_forums)).inRoot(isDialog())
+                .check(matches(isDisplayed()))
+            // press back
+            pressBackUnconditionally()
+            // check that the expected initial four menu items are shown
+            onData(matcherOf(R.string.help_title_community)).inRoot(isDialog())
+                .check(matches(isDisplayed()))
+            onData(matcherOf(R.string.help_title_get_help)).inRoot(isDialog())
+                .check(matches(isDisplayed()))
+            onData(matcherOf(R.string.help_title_privacy)).inRoot(isDialog())
+                .check(matches(isDisplayed()))
+            onData(matcherOf(R.string.help_title_using_ankidroid)).inRoot(isDialog())
+                .check(matches(isDisplayed()))
+        }
+    }
+
+    /**
+     * Matches a [HelpItem] with the requested [HelpItem.titleResId].
+     */
+    private fun matcherOf(titleRes: Int): Matcher<HelpItem> = allOf(
+        instanceOf(HelpItem::class.java),
+        object : TypeSafeMatcher<HelpItem>(HelpItem::class.java) {
+            override fun describeTo(description: Description?) {
+                description?.appendText("match HelpItem with titleRes: $titleRes")
+            }
+
+            override fun matchesSafely(item: HelpItem?): Boolean = item?.titleResId == titleRes
+        }
+    )
+
+    @Test
+    fun `Help menu item executes expected action on menu item selection`() {
+        // simulate a help menu start
+        launchFragment<HelpDialog>(
+            fragmentArgs = bundleOf(
+                HelpDialog.ARG_MENU_TITLE to R.string.help,
+                ARG_MENU_ITEMS to mainHelpMenuItems
+            ),
+            themeResId = R.style.Theme_Light,
+            initialState = Lifecycle.State.RESUMED
+        ).onFragment { fragment ->
+            fragment.actionsDispatcher = mockActionDispatcher
+            // start the first submenu
+            onData(matcherOf(R.string.help_title_using_ankidroid)).inRoot(isDialog())
+                .perform(click())
+            // the manual url is being shown
+            onData(matcherOf(R.string.help_item_ankidroid_manual)).inRoot(isDialog())
+                .perform(click())
+            verify(exactly = 1) { mockActionDispatcher.onOpenUrl(AnkiDroidApp.manualUrl) }
+            // an url resource is being shown
+            onData(matcherOf(R.string.help_item_anki_manual)).inRoot(isDialog()).perform(click())
+            verify(exactly = 1) { mockActionDispatcher.onOpenUrlResource(R.string.link_anki_manual) }
+            pressBackUnconditionally()
+            // start the second submenu
+            onData(matcherOf(R.string.help_title_get_help)).inRoot(isDialog()).perform(click())
+            // the feedback url is being shown
+            onData(matcherOf(R.string.help_item_report_bug)).inRoot(isDialog()).perform(click())
+            verify(exactly = 1) { mockActionDispatcher.onOpenUrl(AnkiDroidApp.feedbackUrl) }
+            // a report is sent
+            onData(matcherOf(R.string.help_title_send_exception)).inRoot(isDialog())
+                .perform(click())
+            verify(exactly = 1) { mockActionDispatcher.onSendReport() }
+        }
     }
 }
