@@ -109,8 +109,8 @@ open class Collection(
     lateinit var sched: Scheduler
         protected set
 
-    private var mStartTime: Long
-    private var mStartReps: Int
+    private var startTime: Long
+    private var startReps: Int
 
     val mod: Long
         get() = db.queryLongScalar("select mod from col")
@@ -131,15 +131,15 @@ open class Collection(
     var ls: Long = 0
     // END: SQL table columns
 
-    private var mLogHnd: PrintWriter? = null
+    private var logHnd: PrintWriter? = null
 
     init {
         media = Media(this)
         tags = Tags(this)
         val created = reopen()
         log(path, VersionUtils.pkgVersionName)
-        mStartReps = 0
-        mStartTime = 0
+        startReps = 0
+        startTime = 0
         _loadScheduler()
         if (created) {
             sched.useNewTimezoneCode()
@@ -457,8 +457,8 @@ open class Collection(
      */
 
     fun startTimebox() {
-        mStartTime = TimeManager.time.intTime()
-        mStartReps = sched.reps
+        startTime = TimeManager.time.intTime()
+        startReps = sched.reps
     }
 
     data class TimeboxReached(val secs: Int, val reps: Int)
@@ -470,12 +470,12 @@ open class Collection(
             // timeboxing disabled
             return null
         }
-        val elapsed = TimeManager.time.intTime() - mStartTime
+        val elapsed = TimeManager.time.intTime() - startTime
         val limit = sched.timeboxSecs()
         return if (elapsed > limit) {
             TimeboxReached(
                 limit,
-                sched.reps - mStartReps
+                sched.reps - startReps
             ).also {
                 startTimebox()
             }
@@ -592,7 +592,7 @@ open class Collection(
     }
 
     private fun writeLog(s: String) {
-        mLogHnd?.let {
+        logHnd?.let {
             try {
                 it.println(s)
             } catch (e: Exception) {
@@ -616,7 +616,7 @@ open class Collection(
                 }
                 lpath.renameTo(lpath2)
             }
-            mLogHnd = PrintWriter(BufferedWriter(FileWriter(lpath, true)), true)
+            logHnd = PrintWriter(BufferedWriter(FileWriter(lpath, true)), true)
         } catch (e: IOException) {
             // turn off logging if we can't open the log file
             Timber.e("Failed to open collection.log file - disabling logging")
@@ -627,8 +627,8 @@ open class Collection(
     private fun _closeLog() {
         if (!debugLog) return
         Timber.i("Closing Collection Log")
-        mLogHnd?.close()
-        mLogHnd = null
+        logHnd?.close()
+        logHnd = null
     }
 
     /**
