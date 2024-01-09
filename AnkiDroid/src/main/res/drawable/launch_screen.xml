@@ -1,15 +1,16 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
   <!-- The background color, preferably the same as your normal theme -->
   <item android:drawable="@color/material_theme_grey"/>
-  <!-- Your product logo - 144dp color version of your app icon -->
-  <item>
-    <bitmap
-      android:src="@drawable/logo_star_144dp"
+  <!-- Your product logo - 192dp color version of your app icon -->
+  <item
+      android:width="288dp"
+      android:height="288dp"
+      android:drawable="@drawable/splash_icon"
       android:gravity="center"/>
-  </item>
-    <item android:top="200dp">
-        <bitmap
-            android:src="@drawable/ankidroid_txt"
-            android:gravity="center"/>
-    </item>
+  <item
+      android:width="200dp"
+      android:height="80dp"
+      android:drawable="@drawable/splash_branding"
+      android:gravity="center|bottom"
+      android:bottom="48dp"/>
 </layer-list>
