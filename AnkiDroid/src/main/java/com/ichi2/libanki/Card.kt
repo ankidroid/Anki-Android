@@ -460,7 +460,7 @@ open class Card : Cloneable {
     open class Cache : Cloneable {
         val col: Collection
         val id: Long
-        private var mCard: Card? = null
+        private var _card: Card? = null
 
         constructor(col: Collection, id: Long) {
             this.col = col
@@ -471,7 +471,7 @@ open class Card : Cloneable {
         protected constructor(cache: Cache) {
             col = cache.col
             this.id = cache.id
-            mCard = cache.mCard
+            _card = cache._card
         }
 
         /**
@@ -481,16 +481,16 @@ open class Card : Cloneable {
         @get:Synchronized
         val card: Card
             get() {
-                if (mCard == null) {
-                    mCard = col.getCard(this.id)
+                if (_card == null) {
+                    _card = col.getCard(this.id)
                 }
-                return mCard!!
+                return _card!!
             }
 
         /** Next access to card will reload the card from the database.  */
         @Synchronized
         open fun reload() {
-            mCard = null
+            _card = null
         }
 
         override fun hashCode(): Int {

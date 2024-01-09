@@ -66,7 +66,7 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
     ) {
         override fun handleAsyncMessage(deckPicker: DeckPicker) {
             deckPicker.showDialogFragment(
-                deckPicker.mExportingDelegate.mDialogsFactory.newExportReadyDialog().withArguments(exportPath)
+                deckPicker.exportingDelegate.dialogsFactory.newExportReadyDialog().withArguments(exportPath)
             )
         }
 

@@ -46,13 +46,13 @@ import java.util.function.Supplier
  * A delegate class used in any [AnkiActivity] where the exporting feature is required.
  *
  * Must be constructed before calling [AnkiActivity.onCreate(Bundle, PersistableBundle)][AnkiActivity.onCreate],
- * to ensure the fragment factory ([mDialogsFactory]) is set correctly.
+ * to ensure the fragment factory ([dialogsFactory]) is set correctly.
  *
  * @param activity the calling activity (must implement [ExportReadyDialogListener])
  * @param collectionSupplier a predicate that supplies a collection instance
 */
 class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportReadyDialogListener {
-    val mDialogsFactory: ExportDialogsFactory
+    val dialogsFactory: ExportDialogsFactory
     private val saveFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var fileExportPath: String
 
@@ -186,8 +186,8 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
 
     init {
         val fragmentManager = activity.supportFragmentManager
-        mDialogsFactory = ExportDialogsFactory(this).attachToActivity(activity)
-        fragmentManager.fragmentFactory = mDialogsFactory
+        dialogsFactory = ExportDialogsFactory(this).attachToActivity(activity)
+        fragmentManager.fragmentFactory = dialogsFactory
         saveFileLauncher = activity.registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result: ActivityResult ->

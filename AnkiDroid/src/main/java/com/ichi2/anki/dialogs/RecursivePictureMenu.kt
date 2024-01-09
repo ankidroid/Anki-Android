@@ -53,7 +53,7 @@ class RecursivePictureMenu : DialogFragment() {
                 val item = items[position]
                 textView.setText(item.title)
                 textView.setOnClickListener { item.execute(requireActivity() as AnkiActivity) }
-                val icon = item.mIcon
+                val icon = item.icon
                 textView.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, 0, 0, 0)
             }
 
@@ -73,13 +73,13 @@ class RecursivePictureMenu : DialogFragment() {
         val title: Int
 
         @DrawableRes
-        val mIcon: Int
-        private val mAnalyticsId: String?
+        val icon: Int
+        private val analyticsId: String?
 
         constructor(@StringRes titleString: Int, @DrawableRes iconDrawable: Int, analyticsId: String?) {
             title = titleString
-            mIcon = iconDrawable
-            mAnalyticsId = analyticsId
+            icon = iconDrawable
+            this.analyticsId = analyticsId
         }
 
         open val children: List<Item?>
@@ -87,8 +87,8 @@ class RecursivePictureMenu : DialogFragment() {
 
         protected constructor(parcel: Parcel) {
             title = parcel.readInt()
-            mIcon = parcel.readInt()
-            mAnalyticsId = parcel.readString()
+            icon = parcel.readInt()
+            analyticsId = parcel.readString()
         }
 
         override fun describeContents(): Int {
@@ -97,13 +97,13 @@ class RecursivePictureMenu : DialogFragment() {
 
         override fun writeToParcel(dest: Parcel, flags: Int) {
             dest.writeInt(title)
-            dest.writeInt(mIcon)
-            dest.writeString(mAnalyticsId)
+            dest.writeInt(icon)
+            dest.writeString(analyticsId)
         }
 
         protected abstract fun onClicked(activity: AnkiActivity)
         fun sendAnalytics() {
-            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, mAnalyticsId!!)
+            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, analyticsId!!)
         }
 
         /* This method calls onClicked method to handle click event in a suitable manner and
@@ -118,14 +118,14 @@ class RecursivePictureMenu : DialogFragment() {
     }
 
     class ItemHeader : Item, Parcelable {
-        private val mChildren: MutableList<Item?>?
+        private val _children: MutableList<Item?>?
 
         constructor(@StringRes titleString: Int, i: Int, analyticsStringId: String?, vararg children: Item?) : super(titleString, i, analyticsStringId) {
-            mChildren = ArrayList(listOf(*children))
+            _children = ArrayList(listOf(*children))
         }
 
         override val children: List<Item?>
-            get() = ArrayList(mChildren!!.toMutableList())
+            get() = ArrayList(_children!!.toMutableList())
 
         public override fun onClicked(activity: AnkiActivity) {
             val children = ArrayList(children)
@@ -134,28 +134,28 @@ class RecursivePictureMenu : DialogFragment() {
         }
 
         override fun remove(toRemove: Item?) {
-            mChildren!!.remove(toRemove)
-            for (i in mChildren) {
+            _children!!.remove(toRemove)
+            for (i in _children) {
                 i!!.remove(toRemove)
             }
         }
 
         protected constructor(parcel: Parcel) : super(parcel) {
             if (parcel.readByte().toInt() == 0x01) {
-                mChildren = ArrayList()
-                ParcelCompat.readList(parcel, mChildren, Item::class.java.classLoader, Item::class.java)
+                _children = ArrayList()
+                ParcelCompat.readList(parcel, _children, Item::class.java.classLoader, Item::class.java)
             } else {
-                mChildren = ArrayList(0)
+                _children = ArrayList(0)
             }
         }
 
         override fun writeToParcel(dest: Parcel, flags: Int) {
             super.writeToParcel(dest, flags)
-            if (mChildren == null) {
+            if (_children == null) {
                 dest.writeByte(0x00.toByte())
             } else {
                 dest.writeByte(0x01.toByte())
-                dest.writeList(mChildren)
+                dest.writeList(_children)
             }
         }
 

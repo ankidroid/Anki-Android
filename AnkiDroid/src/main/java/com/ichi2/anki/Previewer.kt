@@ -42,30 +42,30 @@ import timber.log.Timber
  */
 
 class Previewer : AbstractFlashcardViewer() {
-    private lateinit var mCardList: LongArray
-    private var mIndex = 0
-    private var mShowingAnswer = false
-    private lateinit var mProgressSeekBar: SeekBar
-    private lateinit var mProgressText: TextView
+    private lateinit var cardList: LongArray
+    private var index = 0
+    private var showingAnswer = false
+    private lateinit var progressSeekBar: SeekBar
+    private lateinit var progressText: TextView
 
     /** Communication with Browser  */
-    private var mReloadRequired = false
-    private var mNoteChanged = false
+    private var reloadRequired = false
+    private var noteChanged = false
     private var previewLayout: PreviewLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
         super.onCreate(savedInstanceState)
-        mCardList = requireNotNull(intent.getLongArrayExtra("cardList")) { "'cardList' required" }
-        mIndex = intent.getIntExtra("index", -1)
+        cardList = requireNotNull(intent.getLongArrayExtra("cardList")) { "'cardList' required" }
+        index = intent.getIntExtra("index", -1)
         if (savedInstanceState != null) {
-            mIndex = savedInstanceState.getInt("index", mIndex)
-            mShowingAnswer = savedInstanceState.getBoolean("showingAnswer", mShowingAnswer)
-            mReloadRequired = savedInstanceState.getBoolean("reloadRequired")
-            mNoteChanged = savedInstanceState.getBoolean("noteChanged")
+            index = savedInstanceState.getInt("index", index)
+            showingAnswer = savedInstanceState.getBoolean("showingAnswer", showingAnswer)
+            reloadRequired = savedInstanceState.getBoolean("reloadRequired")
+            noteChanged = savedInstanceState.getBoolean("noteChanged")
         }
-        if (mCardList.isEmpty() || mIndex < 0 || mIndex > mCardList.size - 1) {
+        if (cardList.isEmpty() || index < 0 || index > cardList.size - 1) {
             Timber.e("Previewer started with empty card list or invalid index")
             finish()
             return
@@ -79,26 +79,26 @@ class Previewer : AbstractFlashcardViewer() {
     }
 
     private fun initPreviewProgress() {
-        mProgressSeekBar = findViewById(R.id.preview_progress_seek_bar)
-        mProgressText = findViewById(R.id.preview_progress_text)
+        progressSeekBar = findViewById(R.id.preview_progress_seek_bar)
+        progressText = findViewById(R.id.preview_progress_text)
         val progressLayout = findViewById<LinearLayout>(R.id.preview_progress_layout)
 
         // Show layout only when the cardList is bigger than 1
-        if (mCardList.size > 1) {
+        if (cardList.size > 1) {
             progressLayout.visibility = View.VISIBLE
-            mProgressSeekBar.max = mCardList.size - 1
+            progressSeekBar.max = cardList.size - 1
             setSeekBarListener()
             updateProgress()
         }
     }
 
     private fun setSeekBarListener() {
-        mProgressSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+        progressSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
-                    mIndex = progress
+                    index = progress
                     updateProgress()
-                    currentCard = getColUnsafe.getCard(mCardList[mIndex])
+                    currentCard = getColUnsafe.getCard(cardList[index])
                     displayCardQuestion()
                 }
             }
@@ -108,8 +108,8 @@ class Previewer : AbstractFlashcardViewer() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                if (mIndex >= 0 && mIndex < mCardList.size) {
-                    currentCard = getColUnsafe.getCard(mCardList[mIndex])
+                if (index >= 0 && index < cardList.size) {
+                    currentCard = getColUnsafe.getCard(cardList[index])
                     displayCardQuestion()
                 }
             }
@@ -118,9 +118,9 @@ class Previewer : AbstractFlashcardViewer() {
 
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
-        currentCard = col.getCard(mCardList[mIndex])
+        currentCard = col.getCard(cardList[index])
         displayCardQuestion()
-        if (mShowingAnswer) {
+        if (showingAnswer) {
             displayCardAnswer()
         }
         showBackIcon()
@@ -131,14 +131,14 @@ class Previewer : AbstractFlashcardViewer() {
      * This occurs as many cards can be deleted when editing a note (from the Card Template Editor)  */
     private fun getNextIndex(newCardList: List<Long>): Int {
         val validIndices = HashSet(newCardList)
-        for (i in mIndex downTo 0) {
-            if (validIndices.contains(mCardList[i])) {
-                return newCardList.indexOf(mCardList[i])
+        for (i in index downTo 0) {
+            if (validIndices.contains(cardList[i])) {
+                return newCardList.indexOf(cardList[i])
             }
         }
-        for (i in mIndex + 1 until validIndices.size) {
-            if (validIndices.contains(mCardList[i])) {
-                return newCardList.indexOf(mCardList[i])
+        for (i in index + 1 until validIndices.size) {
+            if (validIndices.contains(cardList[i])) {
+                return newCardList.indexOf(cardList[i])
             }
         }
         throw IllegalStateException("newCardList was empty")
@@ -149,7 +149,7 @@ class Previewer : AbstractFlashcardViewer() {
         topBarLayout!!.visibility = View.GONE
         findViewById<View>(R.id.answer_options_layout).visibility = View.GONE
         findViewById<View>(R.id.bottom_area_layout).visibility = View.VISIBLE
-        previewLayout = PreviewLayout.createAndDisplay(this, mToggleAnswerHandler)
+        previewLayout = PreviewLayout.createAndDisplay(this, toggleAnswerHandler)
         previewLayout!!.setOnNextCard { changePreviewedCard(true) }
         previewLayout!!.setOnPreviousCard { changePreviewedCard(false) }
     }
@@ -173,17 +173,17 @@ class Previewer : AbstractFlashcardViewer() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putLongArray("cardList", mCardList)
-        outState.putInt("index", mIndex)
-        outState.putBoolean("showingAnswer", mShowingAnswer)
-        outState.putBoolean("reloadRequired", mReloadRequired)
-        outState.putBoolean("noteChanged", mNoteChanged)
+        outState.putLongArray("cardList", cardList)
+        outState.putInt("index", index)
+        outState.putBoolean("showingAnswer", showingAnswer)
+        outState.putBoolean("reloadRequired", reloadRequired)
+        outState.putBoolean("noteChanged", noteChanged)
         super.onSaveInstanceState(outState)
     }
 
     override fun displayCardQuestion() {
         super.displayCardQuestion()
-        mShowingAnswer = false
+        showingAnswer = false
         updateButtonsState()
     }
 
@@ -191,7 +191,7 @@ class Previewer : AbstractFlashcardViewer() {
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     override fun displayCardAnswer() {
         super.displayCardAnswer()
-        mShowingAnswer = true
+        showingAnswer = true
         updateButtonsState()
     }
 
@@ -209,35 +209,35 @@ class Previewer : AbstractFlashcardViewer() {
     }
 
     override fun performReload() {
-        mReloadRequired = true
+        reloadRequired = true
         setOkResult()
-        val newCardList = getColUnsafe.filterToValidCards(mCardList)
+        val newCardList = getColUnsafe.filterToValidCards(cardList)
         if (newCardList.isEmpty()) {
             finish()
             return
         }
-        mIndex = getNextIndex(newCardList)
-        mCardList = newCardList.toLongArray()
-        currentCard = getColUnsafe.getCard(mCardList[mIndex])
+        index = getNextIndex(newCardList)
+        cardList = newCardList.toLongArray()
+        currentCard = getColUnsafe.getCard(cardList[index])
         displayCardQuestion()
     }
 
     override fun onEditedNoteChanged() {
         super.onEditedNoteChanged()
-        mNoteChanged = true
+        noteChanged = true
         setOkResult()
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun changePreviewedCard(nextCard: Boolean) {
-        mIndex = if (nextCard) mIndex + 1 else mIndex - 1
-        currentCard = getColUnsafe.getCard(mCardList[mIndex])
+        index = if (nextCard) index + 1 else index - 1
+        currentCard = getColUnsafe.getCard(cardList[index])
         displayCardQuestion()
         updateProgress()
     }
 
-    private val mToggleAnswerHandler = View.OnClickListener {
-        if (mShowingAnswer) {
+    private val toggleAnswerHandler = View.OnClickListener {
+        if (showingAnswer) {
             displayCardQuestion()
         } else {
             displayCardAnswer()
@@ -245,32 +245,32 @@ class Previewer : AbstractFlashcardViewer() {
     }
 
     private fun updateButtonsState() {
-        previewLayout!!.setShowingAnswer(mShowingAnswer)
+        previewLayout!!.setShowingAnswer(showingAnswer)
 
         // If we are in single-card mode, we show the "Show Answer" button on the question side
         // and hide navigation buttons.
-        if (mCardList.size == 1) {
+        if (cardList.size == 1) {
             previewLayout!!.hideNavigationButtons()
             return
         }
-        previewLayout!!.setPrevButtonEnabled(mIndex > 0)
-        previewLayout!!.setNextButtonEnabled(mIndex < mCardList.size - 1)
+        previewLayout!!.setPrevButtonEnabled(index > 0)
+        previewLayout!!.setNextButtonEnabled(index < cardList.size - 1)
     }
 
     private fun updateProgress() {
-        if (mProgressSeekBar.progress != mIndex) {
-            mProgressSeekBar.progress = mIndex
+        if (progressSeekBar.progress != index) {
+            progressSeekBar.progress = index
         }
-        val progress = getString(R.string.preview_progress_bar_text, mIndex + 1, mCardList.size)
-        mProgressText.text = progress
+        val progress = getString(R.string.preview_progress_bar_text, index + 1, cardList.size)
+        progressText.text = progress
     }
 
     private fun setOkResult() {
         setResult(
             RESULT_OK,
             Intent().apply {
-                putExtra("reloadRequired", mReloadRequired)
-                putExtra("noteChanged", mNoteChanged)
+                putExtra("reloadRequired", reloadRequired)
+                putExtra("noteChanged", noteChanged)
             }
         )
     }

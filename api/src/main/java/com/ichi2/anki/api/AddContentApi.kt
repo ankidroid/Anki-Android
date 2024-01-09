@@ -46,8 +46,8 @@ import java.util.*
  */
 @Suppress("unused")
 public class AddContentApi(context: Context) {
-    private val mContext: Context = context.applicationContext
-    private val mResolver: ContentResolver = mContext.contentResolver
+    private val context: Context = context.applicationContext
+    private val resolver: ContentResolver = this.context.contentResolver
 
     /**
      * Create a new note with specified fields, tags, and model and place it in the specified deck.
@@ -78,16 +78,16 @@ public class AddContentApi(context: Context) {
     }
 
     private fun addNoteForContentValues(deckId: Long, values: ContentValues): Uri? {
-        val newNoteUri = mResolver.insert(Note.CONTENT_URI, values) ?: return null
+        val newNoteUri = resolver.insert(Note.CONTENT_URI, values) ?: return null
         // Move cards to specified deck
         val cardsUri = Uri.withAppendedPath(newNoteUri, "cards")
-        val cardsQuery = mResolver.query(cardsUri, null, null, null, null) ?: return null
+        val cardsQuery = resolver.query(cardsUri, null, null, null, null) ?: return null
         cardsQuery.use { cardsCursor ->
             while (cardsCursor.moveToNext()) {
                 val ord = cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_ORD))
                 val cardValues = ContentValues().apply { put(Card.DECK_ID, deckId) }
                 val cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri, "cards"), ord)
-                mResolver.update(cardUri, cardValues, null, null)
+                resolver.update(cardUri, cardValues, null, null)
             }
         }
         return newNoteUri
@@ -167,7 +167,7 @@ public class AddContentApi(context: Context) {
             put(AnkiMedia.PREFERRED_NAME, preferredName.replace(" ", "_"))
         }
         return try {
-            val returnUri = mResolver.insert(AnkiMedia.CONTENT_URI, contentValues)
+            val returnUri = resolver.insert(AnkiMedia.CONTENT_URI, contentValues)
             // get the filename from Uri, return [sound:%s] % file.getName()
             val fname = File(returnUri!!.path!!).toString()
             formatMediaName(fname, mimeType)
@@ -244,7 +244,7 @@ public class AddContentApi(context: Context) {
      */
     public fun getNote(noteId: Long): NoteInfo? {
         val noteUri = Uri.withAppendedPath(Note.CONTENT_URI, noteId.toString())
-        val query = mResolver.query(noteUri, PROJECTION, null, null, null) ?: return null
+        val query = resolver.query(noteUri, PROJECTION, null, null, null) ?: return null
         return query.use { cursor ->
             if (!cursor.moveToNext()) {
                 null
@@ -260,7 +260,7 @@ public class AddContentApi(context: Context) {
             if (fields != null) put(Note.FLDS, Utils.joinFields(fields))
             if (tags != null) put(Note.TAGS, Utils.joinTags(tags))
         }
-        val numRowsUpdated = mResolver.update(contentUri, values, null, null)
+        val numRowsUpdated = resolver.update(contentUri, values, null, null)
         // provider doesn't check whether fields actually changed, so just returns number of notes with id == noteId
         return numRowsUpdated > 0
     }
@@ -281,7 +281,7 @@ public class AddContentApi(context: Context) {
         // Build map of HTML for each generated card
         val cards: MutableMap<String, Map<String, String>> = HashMap()
         val cardsUri = Uri.withAppendedPath(newNoteUri, "cards")
-        val cardsQuery = mResolver.query(cardsUri, null, null, null, null) ?: return null
+        val cardsQuery = resolver.query(cardsUri, null, null, null, null) ?: return null
         cardsQuery.use { cardsCursor ->
             while (cardsCursor.moveToNext()) {
                 // add question and answer for each card to map
@@ -295,7 +295,7 @@ public class AddContentApi(context: Context) {
             }
         }
         // Delete the note
-        mResolver.delete(newNoteUri!!, null, null)
+        resolver.delete(newNoteUri!!, null, null)
         return cards
     }
 
@@ -371,7 +371,7 @@ public class AddContentApi(context: Context) {
             put(Model.DECK_ID, did)
             put(Model.SORT_FIELD_INDEX, sortf)
         }
-        val modelUri = mResolver.insert(Model.CONTENT_URI, values) ?: return null
+        val modelUri = resolver.insert(Model.CONTENT_URI, values) ?: return null
         // Set the remaining template parameters
         val templatesUri = Uri.withAppendedPath(modelUri, "templates")
         for (i in cards.indices) {
@@ -382,7 +382,7 @@ public class AddContentApi(context: Context) {
                 put(CardTemplate.ANSWER_FORMAT, afmt[i])
                 put(CardTemplate.ANSWER_FORMAT, afmt[i])
             }
-            mResolver.update(uri, values, null, null)
+            resolver.update(uri, values, null, null)
         }
         return modelUri.lastPathSegment!!.toLong()
     } // Get the current model
@@ -395,7 +395,7 @@ public class AddContentApi(context: Context) {
         get() {
             // Get the current model
             val uri = Uri.withAppendedPath(Model.CONTENT_URI, Model.CURRENT_MODEL_ID)
-            val singleModelQuery = mResolver.query(uri, null, null, null, null) ?: return -1L
+            val singleModelQuery = resolver.query(uri, null, null, null, null) ?: return -1L
             return singleModelQuery.use { singleModelCursor ->
                 singleModelCursor.moveToFirst()
                 singleModelCursor.getLong(singleModelCursor.getColumnIndex(Model._ID))
@@ -410,7 +410,7 @@ public class AddContentApi(context: Context) {
     public fun getFieldList(modelId: Long): Array<String>? {
         // Get the current model
         val uri = Uri.withAppendedPath(Model.CONTENT_URI, modelId.toString())
-        val modelQuery = mResolver.query(uri, null, null, null, null) ?: return null
+        val modelQuery = resolver.query(uri, null, null, null, null) ?: return null
         var splitFlds: Array<String>? = null
         modelQuery.use { modelCursor ->
             if (modelCursor.moveToNext()) {
@@ -437,7 +437,7 @@ public class AddContentApi(context: Context) {
     public fun getModelList(minNumFields: Int): Map<Long, String>? {
         // Get the current model
         val allModelsQuery =
-            mResolver.query(Model.CONTENT_URI, null, null, null, null)
+            resolver.query(Model.CONTENT_URI, null, null, null, null)
                 ?: return null
         val models: MutableMap<Long, String> = HashMap()
         allModelsQuery.use { allModelsCursor ->
@@ -470,7 +470,7 @@ public class AddContentApi(context: Context) {
     public fun addNewDeck(deckName: String): Long? {
         // Create a new note
         val values = ContentValues().apply { put(Deck.DECK_NAME, deckName) }
-        val newDeckUri = mResolver.insert(Deck.CONTENT_ALL_URI, values)
+        val newDeckUri = resolver.insert(Deck.CONTENT_ALL_URI, values)
         return if (newDeckUri != null) {
             newDeckUri.lastPathSegment!!.toLong()
         } else {
@@ -484,7 +484,7 @@ public class AddContentApi(context: Context) {
      */
     public val selectedDeckName: String?
         get() {
-            val selectedDeckQuery = mResolver.query(
+            val selectedDeckQuery = resolver.query(
                 Deck.CONTENT_SELECTED_URI,
                 null,
                 null,
@@ -508,7 +508,7 @@ public class AddContentApi(context: Context) {
         get() {
             // Get the current model
             val allDecksQuery =
-                mResolver.query(Deck.CONTENT_ALL_URI, null, null, null, null) ?: return null
+                resolver.query(Deck.CONTENT_ALL_URI, null, null, null, null) ?: return null
             val decks: MutableMap<Long, String> = HashMap()
             allDecksQuery.use { allDecksCursor ->
                 while (allDecksCursor.moveToNext()) {
@@ -547,14 +547,14 @@ public class AddContentApi(context: Context) {
             // GET_META_DATA seems to work anyway
             val info =
                 if (Build.VERSION.SDK_INT >= 33) {
-                    mContext.packageManager.resolveContentProvider(
+                    context.packageManager.resolveContentProvider(
                         FlashCardsContract.AUTHORITY,
                         PackageManager.ComponentInfoFlags.of(
                             PackageManager.GET_META_DATA.toLong()
                         )
                     )
                 } else {
-                    mContext.packageManager.resolveContentProvider(
+                    context.packageManager.resolveContentProvider(
                         FlashCardsContract.AUTHORITY,
                         PackageManager.GET_META_DATA
                     )
@@ -571,7 +571,7 @@ public class AddContentApi(context: Context) {
         }
 
     private fun hasReadWritePermission(): Boolean =
-        mContext.checkPermission(
+        context.checkPermission(
             READ_WRITE_PERMISSION,
             Process.myPid(),
             Process.myUid()
@@ -615,7 +615,7 @@ public class AddContentApi(context: Context) {
         override fun queryNotes(modelId: Long): Cursor? {
             val modelName = getModelName(modelId) ?: return null
             val queryFormat = "note:\"$modelName\""
-            return mResolver.query(
+            return resolver.query(
                 Note.CONTENT_URI,
                 PROJECTION,
                 queryFormat,
@@ -639,7 +639,7 @@ public class AddContentApi(context: Context) {
             val queryFormat = "${modelFieldList[0]}:\"%%s\" note:\"$modelName\""
             for (outputPos in keys.indices) {
                 val selection = String.format(queryFormat, keys[outputPos])
-                val query = mResolver.query(
+                val query = resolver.query(
                     Note.CONTENT_URI,
                     PROJECTION,
                     selection,
@@ -677,7 +677,7 @@ public class AddContentApi(context: Context) {
 
     private inner class CompatV2 : CompatV1() {
         override fun queryNotes(modelId: Long): Cursor? {
-            return mResolver.query(
+            return resolver.query(
                 Note.CONTENT_URI_V2,
                 PROJECTION,
                 String.format(Locale.US, "%s=%d", Note.MID, modelId),
@@ -691,7 +691,7 @@ public class AddContentApi(context: Context) {
                 Note.DECK_ID_QUERY_PARAM,
                 deckId.toString()
             )
-            return mResolver.bulkInsert(builder.build(), valuesArr)
+            return resolver.bulkInsert(builder.build(), valuesArr)
         }
 
         override fun findDuplicateNotes(
@@ -718,7 +718,7 @@ public class AddContentApi(context: Context) {
                 Note.CSUM,
                 csums.joinToString(separator = ",")
             )
-            val notesTableQuery = mResolver.query(
+            val notesTableQuery = resolver.query(
                 Note.CONTENT_URI_V2,
                 PROJECTION,
                 sel,

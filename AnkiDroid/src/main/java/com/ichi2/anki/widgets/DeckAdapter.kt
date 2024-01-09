@@ -46,34 +46,34 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     /** The non-collapsed subset of the deck tree that matches the current search. */
     private var filteredDeckList: List<DeckNode> = ArrayList()
-    private val mZeroCountColor: Int
-    private val mNewCountColor: Int
-    private val mLearnCountColor: Int
-    private val mReviewCountColor: Int
-    private val mRowCurrentDrawable: Int
-    private val mDeckNameDefaultColor: Int
-    private val mDeckNameDynColor: Int
-    private val mExpandImage: Drawable?
-    private val mCollapseImage: Drawable?
+    private val zeroCountColor: Int
+    private val newCountColor: Int
+    private val learnCountColor: Int
+    private val reviewCountColor: Int
+    private val rowCurrentDrawable: Int
+    private val deckNameDefaultColor: Int
+    private val deckNameDynColor: Int
+    private val expandImage: Drawable?
+    private val collapseImage: Drawable?
     private var currentDeckId: DeckId = 0
 
     // Listeners
-    private var mDeckClickListener: View.OnClickListener? = null
-    private var mDeckExpanderClickListener: View.OnClickListener? = null
-    private var mDeckLongClickListener: OnLongClickListener? = null
-    private var mCountsClickListener: View.OnClickListener? = null
+    private var deckClickListener: View.OnClickListener? = null
+    private var deckExpanderClickListener: View.OnClickListener? = null
+    private var deckLongClickListener: OnLongClickListener? = null
+    private var countsClickListener: View.OnClickListener? = null
 
     // Totals accumulated as each deck is processed
-    private var mNew = 0
-    private var mLrn = 0
-    private var mRev = 0
-    private var mNumbersComputed = false
+    private var new = 0
+    private var lrn = 0
+    private var rev = 0
+    private var numbersComputed = false
 
     // Flags
-    private var mHasSubdecks = false
+    private var hasSubdecks = false
 
     // Whether we have a background (so some items should be partially transparent).
-    private var mPartiallyTransparentForBackground = false
+    private var partiallyTransparentForBackground = false
 
     // ViewHolder class to save inflated views for recycling
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -99,24 +99,24 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     fun setDeckClickListener(listener: View.OnClickListener?) {
-        mDeckClickListener = listener
+        deckClickListener = listener
     }
 
     fun setCountsClickListener(listener: View.OnClickListener?) {
-        mCountsClickListener = listener
+        countsClickListener = listener
     }
 
     fun setDeckExpanderClickListener(listener: View.OnClickListener?) {
-        mDeckExpanderClickListener = listener
+        deckExpanderClickListener = listener
     }
 
     fun setDeckLongClickListener(listener: OnLongClickListener?) {
-        mDeckLongClickListener = listener
+        deckLongClickListener = listener
     }
 
     /** Sets whether the control should have partial transparency to allow a background to be seen  */
     fun enablePartialTransparencyForBackground(isTransparent: Boolean) {
-        mPartiallyTransparentForBackground = isTransparent
+        partiallyTransparentForBackground = isTransparent
     }
 
     private val mutex = Mutex()
@@ -131,12 +131,12 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         // and do I/O inside it. Better to calculate the new lists outside the lock, then swap
         mutex.withLock {
             deckTree = node
-            mHasSubdecks = node.children.any { it.children.any() }
+            hasSubdecks = node.children.any { it.children.any() }
             currentDeckId = withCol { decks.current().optLong("id") }
-            mRev = node.revCount
-            mLrn = node.lrnCount
-            mNew = node.newCount
-            mNumbersComputed = true
+            rev = node.revCount
+            lrn = node.lrnCount
+            new = node.newCount
+            numbersComputed = true
             // Filtering performs notifyDataSetChanged after the async work is complete
             getFilter()?.filter(filter)
         }
@@ -159,7 +159,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         // Set the expander icon and padding according to whether or not there are any subdecks
         val deckLayout = holder.deckLayout
         val rightPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_right_padding).toInt()
-        if (mHasSubdecks) {
+        if (hasSubdecks) {
             val smallPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_left_padding_small).toInt()
             deckLayout.setPadding(smallPadding, 0, rightPadding, 0)
             holder.deckExpander.visibility = View.VISIBLE
@@ -172,16 +172,16 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
         if (node.children.isNotEmpty()) {
             holder.deckExpander.tag = node.did
-            holder.deckExpander.setOnClickListener(mDeckExpanderClickListener)
+            holder.deckExpander.setOnClickListener(deckExpanderClickListener)
         } else {
             holder.deckExpander.isClickable = false
             holder.deckExpander.setOnClickListener(null)
         }
-        holder.deckLayout.setBackgroundResource(mRowCurrentDrawable)
+        holder.deckLayout.setBackgroundResource(rowCurrentDrawable)
         // Set background colour. The current deck has its own color
         if (isCurrentlySelectedDeck(node)) {
-            holder.deckLayout.setBackgroundResource(mRowCurrentDrawable)
-            if (mPartiallyTransparentForBackground) {
+            holder.deckLayout.setBackgroundResource(rowCurrentDrawable)
+            if (partiallyTransparentForBackground) {
                 setBackgroundAlpha(holder.deckLayout, SELECTED_DECK_ALPHA_AGAINST_BACKGROUND)
             }
         } else {
@@ -196,27 +196,27 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         val filtered =
             node.filtered
         if (filtered) {
-            holder.deckName.setTextColor(mDeckNameDynColor)
+            holder.deckName.setTextColor(deckNameDynColor)
         } else {
-            holder.deckName.setTextColor(mDeckNameDefaultColor)
+            holder.deckName.setTextColor(deckNameDefaultColor)
         }
 
         // Set the card counts and their colors
         holder.deckNew.text = node.newCount.toString()
-        holder.deckNew.setTextColor(if (node.newCount == 0) mZeroCountColor else mNewCountColor)
+        holder.deckNew.setTextColor(if (node.newCount == 0) zeroCountColor else newCountColor)
         holder.deckLearn.text = node.lrnCount.toString()
-        holder.deckLearn.setTextColor(if (node.lrnCount == 0) mZeroCountColor else mLearnCountColor)
+        holder.deckLearn.setTextColor(if (node.lrnCount == 0) zeroCountColor else learnCountColor)
         holder.deckRev.text = node.revCount.toString()
-        holder.deckRev.setTextColor(if (node.revCount == 0) mZeroCountColor else mReviewCountColor)
+        holder.deckRev.setTextColor(if (node.revCount == 0) zeroCountColor else reviewCountColor)
 
         // Store deck ID in layout's tag for easy retrieval in our click listeners
         holder.deckLayout.tag = node.did
         holder.countsLayout.tag = node.did
 
         // Set click listeners
-        holder.deckLayout.setOnClickListener(mDeckClickListener)
-        holder.deckLayout.setOnLongClickListener(mDeckLongClickListener)
-        holder.countsLayout.setOnClickListener(mCountsClickListener)
+        holder.deckLayout.setOnClickListener(deckClickListener)
+        holder.deckLayout.setOnLongClickListener(deckLongClickListener)
+        holder.countsLayout.setOnClickListener(countsClickListener)
     }
 
     private fun setBackgroundAlpha(view: View, alphaPercentage: Double) {
@@ -239,10 +239,10 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         if (node.children.isNotEmpty()) {
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
             if (node.collapsed) {
-                expander.setImageDrawable(mExpandImage)
+                expander.setImageDrawable(expandImage)
                 expander.contentDescription = expander.context.getString(R.string.expand)
             } else {
-                expander.setImageDrawable(mCollapseImage)
+                expander.setImageDrawable(collapseImage)
                 expander.contentDescription = expander.context.getString(R.string.collapse)
             }
         } else {
@@ -275,8 +275,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     val due: Int?
-        get() = if (mNumbersComputed) {
-            mNew + mLrn + mRev
+        get() = if (numbersComputed) {
+            new + lrn + rev
         } else {
             null
         }
@@ -324,17 +324,17 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             R.attr.collapseRef
         )
         val ta = context.obtainStyledAttributes(attrs)
-        mZeroCountColor = ta.getColor(0, context.getColor(R.color.black))
-        mNewCountColor = ta.getColor(1, context.getColor(R.color.black))
-        mLearnCountColor = ta.getColor(2, context.getColor(R.color.black))
-        mReviewCountColor = ta.getColor(3, context.getColor(R.color.black))
-        mRowCurrentDrawable = ta.getResourceId(4, 0)
-        mDeckNameDefaultColor = ta.getColor(5, context.getColor(R.color.black))
-        mDeckNameDynColor = ta.getColor(6, context.getColor(R.color.material_blue_A700))
-        mExpandImage = ta.getDrawable(7)
-        mExpandImage!!.isAutoMirrored = true
-        mCollapseImage = ta.getDrawable(8)
-        mCollapseImage!!.isAutoMirrored = true
+        zeroCountColor = ta.getColor(0, context.getColor(R.color.black))
+        newCountColor = ta.getColor(1, context.getColor(R.color.black))
+        learnCountColor = ta.getColor(2, context.getColor(R.color.black))
+        reviewCountColor = ta.getColor(3, context.getColor(R.color.black))
+        rowCurrentDrawable = ta.getResourceId(4, 0)
+        deckNameDefaultColor = ta.getColor(5, context.getColor(R.color.black))
+        deckNameDynColor = ta.getColor(6, context.getColor(R.color.material_blue_A700))
+        expandImage = ta.getDrawable(7)
+        expandImage!!.isAutoMirrored = true
+        collapseImage = ta.getDrawable(8)
+        collapseImage!!.isAutoMirrored = true
         ta.recycle()
     }
 }

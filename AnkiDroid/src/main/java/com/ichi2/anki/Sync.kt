@@ -406,7 +406,7 @@ class MigrateStorageOnSyncSuccess(res: Resources) : AsyncOperation() {
  * @param messageResource String resource for message
  */
 fun DeckPicker.showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
-    if (mActivityPaused) {
+    if (activityPaused) {
         val res = AnkiDroidApp.appResources
         showSimpleNotification(
             res.getString(R.string.app_name),

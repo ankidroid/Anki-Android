@@ -23,33 +23,32 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.utils.KotlinCleanup
 
-@KotlinCleanup("remove hungarian notation")
-@Suppress("VariableNamingDetector")
+@Suppress("PropertyName") // issues with overriding `setActivity` etc...
 abstract class FieldControllerBase : IFieldController {
-    @KotlinCleanup("transform mActivity into a property")
-    protected lateinit var mActivity: MultimediaEditFieldActivity
-    protected lateinit var mField: IField
-    protected lateinit var mNote: IMultimediaEditableNote
-    protected var mIndex = 0
+    @KotlinCleanup("transform into a property")
+    protected lateinit var _activity: MultimediaEditFieldActivity
+    protected lateinit var _field: IField
+    protected lateinit var _note: IMultimediaEditableNote
+    protected var index = 0
 
     override fun setField(field: IField) {
-        mField = field
+        this._field = field
     }
 
     override fun setNote(note: IMultimediaEditableNote) {
-        mNote = note
+        this._note = note
     }
 
     override fun setFieldIndex(index: Int) {
-        mIndex = index
+        this.index = index
     }
 
     override fun setEditingActivity(activity: MultimediaEditFieldActivity) {
-        mActivity = activity
+        this._activity = activity
     }
 
     fun getActivity(): MultimediaEditFieldActivity {
-        return mActivity
+        return _activity
     }
 
     override fun loadInstanceState(savedInstanceState: Bundle?) { /* Default implementation does nothing */
