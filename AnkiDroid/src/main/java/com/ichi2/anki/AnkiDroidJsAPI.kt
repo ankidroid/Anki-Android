@@ -132,8 +132,8 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 }
                 return false
             }
-            val versionCurrent = Version.valueOf(AnkiDroidJsAPIConstants.sCurrentJsApiVersion)
-            val versionSupplied = Version.valueOf(apiVer)
+            val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.sCurrentJsApiVersion)
+            val versionSupplied = Version.parse(apiVer)
 
             /*
             * if api major version equals to supplied major version then return true and also check for minor version and patch version
@@ -144,11 +144,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 versionSupplied == versionCurrent -> {
                     true
                 }
-                versionSupplied.lessThan(versionCurrent) -> {
+                versionSupplied.isLowerThan(versionCurrent) -> {
                     activity.runOnUiThread {
                         activity.showSnackbar(context.getString(R.string.update_js_api_version, apiDevContact))
                     }
-                    versionSupplied.greaterThanOrEqualTo(Version.valueOf(AnkiDroidJsAPIConstants.sMinimumJsApiVersion))
+                    versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.sMinimumJsApiVersion))
                 }
                 else -> {
                     activity.runOnUiThread {
