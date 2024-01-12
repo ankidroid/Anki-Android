@@ -21,7 +21,7 @@
         "axios": "^1.6.2",
         "dotenv": "^16.3.1",
         "extract-zip": "^2.0.1",
-        "typescript": "^5.3.2"
+        "typescript": "^5.3.3"
     },
     "devDependencies": {
         "@types/jest": "^29.5.10",
