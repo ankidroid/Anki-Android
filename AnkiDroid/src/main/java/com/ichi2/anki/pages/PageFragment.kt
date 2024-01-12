@@ -44,8 +44,10 @@ abstract class PageFragment : Fragment(), PostRequestHandler {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.page_fragment, container, false)
+        return inflater.inflate(R.layout.page_fragment, container, false)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         webView = view.findViewById<WebView>(R.id.webview).apply {
             with(settings) {
                 javaScriptEnabled = true
@@ -68,7 +70,6 @@ abstract class PageFragment : Fragment(), PostRequestHandler {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
-        return view
     }
 
     override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
