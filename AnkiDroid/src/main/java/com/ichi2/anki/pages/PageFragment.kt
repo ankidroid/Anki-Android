@@ -77,7 +77,7 @@ abstract class PageFragment : Fragment(), PostRequestHandler {
             webChromeClient = onCreateWebChromeClient(savedInstanceState)
         }
         val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
-        val url = server.baseUrl() + "$pageName.html$nightMode"
+        val url = server.baseUrl() + "backend/web/$pageName.html$nightMode"
 
         Timber.i("Loading $url")
         webView.loadUrl(url)
