@@ -650,6 +650,13 @@ open class CardBrowser :
                     return true
                 }
             }
+            KeyEvent.KEYCODE_P -> {
+                if (event.isShiftPressed && event.isCtrlPressed) {
+                    Timber.i("Ctrl+Shift+P - Preview")
+                    onPreview()
+                    return true
+                }
+            }
         }
         return super.onKeyDown(keyCode, event)
     }
