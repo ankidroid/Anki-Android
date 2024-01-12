@@ -302,10 +302,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@crowdin/crowdin-api-client@^1.28.0":
-  version "1.28.0"
-  resolved "https://registry.yarnpkg.com/@crowdin/crowdin-api-client/-/crowdin-api-client-1.28.0.tgz#6447aab1e1e859ec6231966ee686f7b9f6ae0571"
-  integrity sha512-6TCZ8oQBTQAWGCPIfa5Z+4149CeObqSOaGoo4hBTzayq6tZ25BdNElKbYn35VXyrmxaSrHCEJURfIlKLvzWr2g==
+"@crowdin/crowdin-api-client@^1.29.4":
+  version "1.29.4"
+  resolved "https://registry.yarnpkg.com/@crowdin/crowdin-api-client/-/crowdin-api-client-1.29.4.tgz#43de6af7922edd09d334da72f59600c1294503b8"
+  integrity sha512-q18/y4wMVRtJj39LymnRr/Va0AGzOQBceyC0rOqqlWysW0YsDn7hz4jJCGQD9nGnwP0OHE1Axow7Lvbbjc4aFw==
   dependencies:
     axios "^1"
 

@@ -16,7 +16,7 @@
     "author": "AnkiDroid Open Source Team",
     "license": "GPL-3.0",
     "dependencies": {
-        "@crowdin/crowdin-api-client": "^1.28.0",
+        "@crowdin/crowdin-api-client": "^1.29.4",
         "@types/node": "^20.9.4",
         "axios": "^1.6.2",
         "dotenv": "^16.3.1",
