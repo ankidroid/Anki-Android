@@ -20,6 +20,7 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -32,7 +33,9 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
+import com.ichi2.utils.performClickIfEnabled
 import timber.log.Timber
 
 /**
@@ -152,6 +155,23 @@ class Previewer : AbstractFlashcardViewer() {
         previewLayout = PreviewLayout.createAndDisplay(this, toggleAnswerHandler)
         previewLayout!!.setOnNextCard { changePreviewedCard(true) }
         previewLayout!!.setOnPreviousCard { changePreviewedCard(false) }
+    }
+
+    @NeedsTest("handling: when valid and invalid")
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        when (keyCode) {
+            KeyEvent.KEYCODE_DPAD_LEFT -> {
+                Timber.i("Left pressed: previous card")
+                previewLayout?.prevCard?.performClickIfEnabled()
+                return true
+            }
+            KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                Timber.i("Right pressed: next card")
+                previewLayout?.nextCard?.performClickIfEnabled()
+                return true
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
