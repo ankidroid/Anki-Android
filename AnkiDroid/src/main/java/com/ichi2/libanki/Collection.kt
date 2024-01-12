@@ -27,7 +27,6 @@ import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
-import anki.scheduler.CongratsInfoResponse
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
@@ -738,15 +737,7 @@ open class Collection(
         return backend.updateImageOcclusionNoteRaw(input = input)
     }
 
-    // TODO either support bridgeCommand here
-    //   or replace it with POST requests in Anki Desktop (preferable)
-    //   https://github.com/ankidroid/Anki-Android/issues/14361#issuecomment-1701946364
     fun congratsInfoRaw(input: ByteArray): ByteArray {
-        val byteArray = backend.congratsInfoRaw(input = input)
-        val response = CongratsInfoResponse.parseFrom(byteArray)
-        return CongratsInfoResponse.newBuilder(response)
-            .setBridgeCommandsSupported(false)
-            .build()
-            .toByteArray()
+        return backend.congratsInfoRaw(input = input)
     }
 }

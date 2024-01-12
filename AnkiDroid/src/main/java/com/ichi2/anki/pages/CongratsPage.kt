@@ -17,11 +17,37 @@ package com.ichi2.anki.pages
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.webkit.JavascriptInterface
+import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.SingleFragmentActivity
 
 class CongratsPage : PageFragment() {
     override val title: String = ""
     override val pageName = "congrats"
+
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
+        return super.onCreateWebViewClient(savedInstanceState).also { client ->
+            client.onPageFinishedCallback = OnPageFinishedCallback { webView ->
+                webView.evaluateJavascript(
+                    "bridgeCommand = function(request){ ankidroid.bridgeCommand(request); };"
+                ) {}
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        webView.addJavascriptInterface(BridgeCommand(), "ankidroid")
+    }
+
+    inner class BridgeCommand {
+        @JavascriptInterface
+        fun bridgeCommand(request: String) {
+            TODO("$request will be handled in the next commit ;)")
+        }
+    }
 
     companion object {
         fun getIntent(context: Context): Intent {
