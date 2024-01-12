@@ -32,7 +32,6 @@ class AnkiPackageImporterFragment : PageFragment() {
     override val pageName: String
         get() = "import-anki-package"
     override lateinit var webViewClient: PageWebViewClient
-    override var webChromeClient: PageChromeClient = PageChromeClient()
     private lateinit var backCallback: OnBackPressedCallback
 
     override fun onCreate(savedInstanceState: Bundle?) {
