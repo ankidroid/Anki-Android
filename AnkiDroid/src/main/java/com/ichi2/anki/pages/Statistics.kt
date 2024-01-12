@@ -36,7 +36,6 @@ class Statistics : PageFragment() {
         get() = resources.getString(R.string.statistics)
 
     override val pageName = "graphs"
-    override var webViewClient = PageWebViewClient()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -31,10 +31,9 @@ class AnkiPackageImporterFragment : PageFragment() {
         get() = resources.getString(R.string.menu_import)
     override val pageName: String
         get() = "import-anki-package"
-    override lateinit var webViewClient: PageWebViewClient
     private lateinit var backCallback: OnBackPressedCallback
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         // the back callback is only enabled when import is running and showing progress
         backCallback = object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
@@ -45,9 +44,8 @@ class AnkiPackageImporterFragment : PageFragment() {
         }
         val path = arguments?.getString(ARG_FILE_PATH)
             ?: throw IllegalStateException("No path provided for apkg package to import")
-        webViewClient = AnkiPackageImporterWebViewClient(path, backCallback)
-        super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this, backCallback)
+        return AnkiPackageImporterWebViewClient(path, backCallback)
     }
 
     class AnkiPackageImporterWebViewClient(
