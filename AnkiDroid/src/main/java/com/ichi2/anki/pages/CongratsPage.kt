@@ -21,22 +21,26 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.JavascriptInterface
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.launchCatching
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 
-class CongratsPage : PageFragment() {
+class CongratsPage : PageFragment(), CustomStudyDialog.CustomStudyListener {
     override val title: String = ""
     override val pageName = "congrats"
 
@@ -77,6 +81,7 @@ class CongratsPage : PageFragment() {
         fun bridgeCommand(request: String) {
             when (request) {
                 "unbury" -> viewModel.onUnbury()
+                "customStudy" -> onStudyMore()
             }
         }
     }
@@ -87,6 +92,43 @@ class CongratsPage : PageFragment() {
         }
         startActivity(intent, null)
         requireActivity().finish()
+    }
+
+    private fun onStudyMore() {
+        val col = CollectionManager.getColUnsafe()
+        val dialogFragment = CustomStudyDialog(CollectionManager.getColUnsafe(), this).withArguments(
+            CustomStudyDialog.ContextMenuConfiguration.STANDARD,
+            col.decks.selected()
+        )
+        dialogFragment.show(childFragmentManager, null)
+    }
+
+    /******************************** CustomStudyListener methods ********************************/
+    override fun onExtendStudyLimits() {
+        Timber.v("CustomStudyListener::onExtendStudyLimits()")
+        openStudyOptionsAndFinish()
+    }
+
+    override fun showDialogFragment(newFragment: DialogFragment) {
+        Timber.v("CustomStudyListener::showDialogFragment()")
+        newFragment.show(childFragmentManager, null)
+    }
+
+    override fun onCreateCustomStudySession() {
+        Timber.v("CustomStudyListener::onCreateCustomStudySession()")
+        openStudyOptionsAndFinish()
+    }
+
+    override fun showProgressBar() {
+        Timber.v("CustomStudyListener::showProgressBar() - not handled")
+    }
+
+    override fun dismissAllDialogFragments() {
+        Timber.v("CustomStudyListener::dismissAllDialogFragments() - not handled")
+    }
+
+    override fun hideProgressBar() {
+        Timber.v("CustomStudyListener::hideProgressBar() - not handled")
     }
 
     companion object {
