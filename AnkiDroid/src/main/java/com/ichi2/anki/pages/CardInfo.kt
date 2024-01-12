@@ -30,7 +30,6 @@ class CardInfo : PageFragment() {
 
     override val pageName = "card-info"
     override lateinit var webViewClient: PageWebViewClient
-    override var webChromeClient = PageChromeClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val cardId = arguments?.getLong(ARG_CARD_ID)

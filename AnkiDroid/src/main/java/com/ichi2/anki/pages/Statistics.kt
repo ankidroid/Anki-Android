@@ -37,7 +37,6 @@ class Statistics : PageFragment() {
 
     override val pageName = "graphs"
     override var webViewClient = PageWebViewClient()
-    override var webChromeClient = PageChromeClient()
 
     override fun onCreateView(
         inflater: LayoutInflater,

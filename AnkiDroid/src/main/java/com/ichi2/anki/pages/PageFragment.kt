@@ -19,6 +19,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
@@ -34,7 +35,6 @@ abstract class PageFragment : Fragment(), PostRequestHandler {
     abstract val title: String
     abstract val pageName: String
     abstract var webViewClient: PageWebViewClient
-    abstract var webChromeClient: PageChromeClient
 
     lateinit var webView: WebView
     private val server = AnkiServer(this).also { it.start() }
@@ -47,6 +47,15 @@ abstract class PageFragment : Fragment(), PostRequestHandler {
         return inflater.inflate(R.layout.page_fragment, container, false)
     }
 
+    /**
+     * Override this to set a custom [WebChromeClient] to the page.
+     * This is called in [onViewCreated].
+     *
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     */
+    protected open fun onCreateWebChromeClient(savedInstanceState: Bundle?) = PageChromeClient()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         webView = view.findViewById<WebView>(R.id.webview).apply {
             with(settings) {
@@ -56,7 +65,7 @@ abstract class PageFragment : Fragment(), PostRequestHandler {
                 setSupportZoom(true)
             }
             webViewClient = this@PageFragment.webViewClient
-            webChromeClient = this@PageFragment.webChromeClient
+            webChromeClient = onCreateWebChromeClient(savedInstanceState)
         }
         val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
         val url = server.baseUrl() + "$pageName.html$nightMode"

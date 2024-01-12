@@ -30,7 +30,6 @@ class ImageOcclusion : PageFragment() {
         get() = TR.notetypesImageOcclusionName()
     override val pageName = "image-occlusion"
     override lateinit var webViewClient: PageWebViewClient
-    override var webChromeClient = PageChromeClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val kind = arguments?.getString(ARG_KEY_KIND) ?: throw Exception("missing kind")

@@ -23,7 +23,6 @@ class CongratsPage : PageFragment() {
     override val title: String = ""
     override val pageName = "congrats"
     override var webViewClient: PageWebViewClient = PageWebViewClient()
-    override var webChromeClient: PageChromeClient = PageChromeClient()
 
     companion object {
         fun getIntent(context: Context): Intent {

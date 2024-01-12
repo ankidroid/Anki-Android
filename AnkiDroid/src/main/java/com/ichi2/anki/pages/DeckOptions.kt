@@ -40,7 +40,6 @@ class DeckOptions : PageFragment() {
         get() = resources.getString(R.string.menu__deck_options)
     override val pageName = "deck-options"
     override lateinit var webViewClient: PageWebViewClient
-    override var webChromeClient = PageChromeClient()
 
     // handle going back from the manual
     private val onBackCallback = object : OnBackPressedCallback(false) {

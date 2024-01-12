@@ -34,7 +34,6 @@ class CsvImporter : PageFragment() {
 
     override val pageName = "import-csv"
     override lateinit var webViewClient: PageWebViewClient
-    override var webChromeClient = PageChromeClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // the back callback is only enabled when import is running and showing progress
