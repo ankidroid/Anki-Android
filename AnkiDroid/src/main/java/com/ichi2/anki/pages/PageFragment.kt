@@ -21,6 +21,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
@@ -34,7 +35,6 @@ import timber.log.Timber
 abstract class PageFragment : Fragment(), PostRequestHandler {
     abstract val title: String
     abstract val pageName: String
-    abstract var webViewClient: PageWebViewClient
 
     lateinit var webView: WebView
     private val server = AnkiServer(this).also { it.start() }
@@ -46,6 +46,15 @@ abstract class PageFragment : Fragment(), PostRequestHandler {
     ): View? {
         return inflater.inflate(R.layout.page_fragment, container, false)
     }
+
+    /**
+     * Override this to set a custom [WebViewClient] to the page.
+     * This is called in [onViewCreated].
+     *
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     */
+    protected open fun onCreateWebViewClient(savedInstanceState: Bundle?) = PageWebViewClient()
 
     /**
      * Override this to set a custom [WebChromeClient] to the page.
@@ -64,7 +73,7 @@ abstract class PageFragment : Fragment(), PostRequestHandler {
                 builtInZoomControls = true
                 setSupportZoom(true)
             }
-            webViewClient = this@PageFragment.webViewClient
+            webViewClient = onCreateWebViewClient(savedInstanceState)
             webChromeClient = onCreateWebChromeClient(savedInstanceState)
         }
         val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
