@@ -26,7 +26,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
@@ -34,6 +37,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.launchCatching
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
@@ -73,7 +77,25 @@ class CongratsPage : PageFragment(), CustomStudyDialog.CustomStudyListener {
             .onEach { openStudyOptionsAndFinish() }
             .launchIn(lifecycleScope)
 
+        viewModel.deckOptionsDestination
+            .flowWithLifecycle(lifecycle)
+            .onEach { destination ->
+                val intent = destination.getIntent(requireContext())
+                startActivity(intent, null)
+            }
+            .launchIn(lifecycleScope)
+
         webView.addJavascriptInterface(BridgeCommand(), "ankidroid")
+
+        with(view.findViewById<MaterialToolbar>(R.id.toolbar)) {
+            inflateMenu(R.menu.congrats)
+            setOnMenuItemClickListener { item ->
+                if (item.itemId == R.id.action_open_deck_options) {
+                    viewModel.onDeckOptions()
+                }
+                true
+            }
+        }
     }
 
     inner class BridgeCommand {
@@ -141,6 +163,7 @@ class CongratsPage : PageFragment(), CustomStudyDialog.CustomStudyListener {
 class CongratsViewModel : ViewModel(), OnErrorListener {
     override val onError = MutableSharedFlow<String>()
     val openStudyOptions = MutableSharedFlow<Boolean>()
+    val deckOptionsDestination = MutableSharedFlow<DeckOptionsDestination>()
 
     fun onUnbury() {
         launchCatching {
@@ -148,6 +171,24 @@ class CongratsViewModel : ViewModel(), OnErrorListener {
                 sched.unburyDeck(decks.getCurrentId())
             }
             openStudyOptions.emit(true)
+        }
+    }
+
+    fun onDeckOptions() {
+        launchCatching {
+            val deckId = withCol { decks.getCurrentId() }
+            val isFiltered = withCol { decks.isDyn(deckId) }
+            deckOptionsDestination.emit(DeckOptionsDestination(deckId, isFiltered))
+        }
+    }
+}
+
+class DeckOptionsDestination(private val deckId: DeckId, private val isFiltered: Boolean) {
+    fun getIntent(context: Context): Intent {
+        return if (isFiltered) {
+            Intent(context, FilteredDeckOptions::class.java)
+        } else {
+            DeckOptions.getIntent(context, deckId)
         }
     }
 }
