@@ -33,8 +33,8 @@ class AutomaticAnswerActionTest {
     fun fromPreferenceValue() {
         assertThat(fromConfigValue(0), equalTo(BURY_CARD))
         assertThat(fromConfigValue(1), equalTo(ANSWER_AGAIN))
-        assertThat(fromConfigValue(2), equalTo(ANSWER_HARD))
-        assertThat(fromConfigValue(3), equalTo(ANSWER_GOOD))
+        assertThat(fromConfigValue(2), equalTo(ANSWER_GOOD))
+        assertThat(fromConfigValue(3), equalTo(ANSWER_HARD))
         assertThat(fromConfigValue(4), equalTo(SHOW_REMINDER))
     }
 
