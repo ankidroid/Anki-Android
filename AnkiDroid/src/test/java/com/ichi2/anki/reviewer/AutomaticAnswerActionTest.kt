@@ -19,7 +19,7 @@ package com.ichi2.anki.reviewer
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.*
-import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.fromPreferenceValue
+import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.fromConfigValue
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -31,11 +31,11 @@ class AutomaticAnswerActionTest {
 
     @Test
     fun fromPreferenceValue() {
-        assertThat(fromPreferenceValue(0), equalTo(BURY_CARD))
-        assertThat(fromPreferenceValue(1), equalTo(ANSWER_AGAIN))
-        assertThat(fromPreferenceValue(2), equalTo(ANSWER_HARD))
-        assertThat(fromPreferenceValue(3), equalTo(ANSWER_GOOD))
-        assertThat(fromPreferenceValue(4), equalTo(ANSWER_EASY))
+        assertThat(fromConfigValue(0), equalTo(BURY_CARD))
+        assertThat(fromConfigValue(1), equalTo(ANSWER_AGAIN))
+        assertThat(fromConfigValue(2), equalTo(ANSWER_HARD))
+        assertThat(fromConfigValue(3), equalTo(ANSWER_GOOD))
+        assertThat(fromConfigValue(4), equalTo(SHOW_REMINDER))
     }
 
     @Test
@@ -45,7 +45,6 @@ class AutomaticAnswerActionTest {
         assertExecuteReturns(ANSWER_AGAIN, ViewerCommand.FLIP_OR_ANSWER_EASE1)
         assertExecuteReturns(ANSWER_HARD, ViewerCommand.FLIP_OR_ANSWER_EASE2)
         assertExecuteReturns(ANSWER_GOOD, ViewerCommand.FLIP_OR_ANSWER_EASE3)
-        assertExecuteReturns(ANSWER_EASY, ViewerCommand.FLIP_OR_ANSWER_EASE4)
     }
 
     private fun assertExecuteReturns(action: AutomaticAnswerAction, expectedCommand: ViewerCommand) {

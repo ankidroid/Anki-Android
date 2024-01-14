@@ -55,7 +55,8 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
     }
 
     private fun setPreference(value: Int) {
-        col.config.set("automaticAnswerAction", value)
+        val conf = col.decks.confForDid(col.decks.selected())
+        conf.put("automaticAnswerAction", value)
     }
 
     private fun createInstance() =
