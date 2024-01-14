@@ -31,7 +31,7 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
     @Test
     fun default_is_bury() {
         assertThat("no value", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
-        setPreference(-1) // invalid
+        setPreference(99) // invalid
         assertThat("bad pref", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
         assertThat("default", AutomaticAnswer.defaultInstance(mock()).settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
 
