@@ -167,13 +167,6 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-    <string-array name="automatic_answer_options">
-        <item>@string/menu_bury_card</item>
-        <item>@string/ease_button_again</item>
-        <item>@string/automatic_answer_option_2</item>
-        <item>@string/ease_button_good</item>
-        <item>@string/automatic_answer_option_4</item>
-    </string-array>
     <string-array name="full_screen_mode_values">
         <item>0</item>
         <item>1</item>
