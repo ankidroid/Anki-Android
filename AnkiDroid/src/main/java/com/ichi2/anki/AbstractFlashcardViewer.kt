@@ -1295,6 +1295,12 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    private suspend fun automaticAnswerShouldWaitForAudio(): Boolean {
+        return withCol {
+            decks.confForDid(currentCard!!.did).optBoolean("waitForAudio", true)
+        }
+    }
+
     internal inner class ReadTextListener : ReadText.ReadTextListener {
         override fun onDone(playedSide: SoundSide?) {
             Timber.d("done reading text")
@@ -1318,6 +1324,11 @@ abstract class AbstractFlashcardViewer :
         }
         val content = htmlGenerator!!.generateHtml(currentCard!!, Side.FRONT)
         automaticAnswer.onDisplayQuestion()
+        launchCatchingTask {
+            if (!automaticAnswerShouldWaitForAudio()) {
+                automaticAnswer.scheduleAutomaticDisplayAnswer()
+            }
+        }
         updateCard(content)
         hideEaseButtons()
         // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
@@ -1359,6 +1370,11 @@ abstract class AbstractFlashcardViewer :
         isSelecting = false
         val answerContent = htmlGenerator!!.generateHtml(currentCard!!, Side.BACK)
         automaticAnswer.onDisplayAnswer()
+        launchCatchingTask {
+            if (!automaticAnswerShouldWaitForAudio()) {
+                automaticAnswer.scheduleAutomaticDisplayQuestion()
+            }
+        }
         updateCard(answerContent)
         displayAnswerBottomBar()
     }
@@ -1473,11 +1489,14 @@ abstract class AbstractFlashcardViewer :
      */
     open fun onSoundGroupCompleted() {
         Timber.v("onSoundGroupCompleted")
-//        TODO: consider waitForAudio option
-        if (isDisplayingAnswer) {
-            automaticAnswer.scheduleAutomaticDisplayQuestion()
-        } else {
-            automaticAnswer.scheduleAutomaticDisplayAnswer()
+        launchCatchingTask {
+            if (automaticAnswerShouldWaitForAudio()) {
+                if (isDisplayingAnswer) {
+                    automaticAnswer.scheduleAutomaticDisplayQuestion()
+                } else {
+                    automaticAnswer.scheduleAutomaticDisplayAnswer()
+                }
+            }
         }
     }
 
