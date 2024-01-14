@@ -132,7 +132,7 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
     <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
     <string name="timeout_answer" maxLength="41">Timeout answer</string>
-    <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+    <string name="timeout_answer_summ">Show answer automatically without user input. Configure from deck options.</string>
     <string name="timeout_answer_seconds" maxLength="41">Time to show answer</string>
     <string name="timeout_question_seconds" maxLength="41">Time to show next question</string>
     <string name="select_locale_title">Select language</string>

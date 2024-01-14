@@ -1473,6 +1473,7 @@ abstract class AbstractFlashcardViewer :
      */
     open fun onSoundGroupCompleted() {
         Timber.v("onSoundGroupCompleted")
+//        TODO: consider waitForAudio option
         if (isDisplayingAnswer) {
             automaticAnswer.scheduleAutomaticDisplayQuestion()
         } else {
