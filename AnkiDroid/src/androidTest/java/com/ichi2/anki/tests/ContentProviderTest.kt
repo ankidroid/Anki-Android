@@ -1327,6 +1327,6 @@ class ContentProviderTest : InstrumentedTest() {
  */
 fun Scheduler.unburyCards() {
     for (did in col.decks.allNamesAndIds().map { it.id }) {
-        unburyCardsForDeck(did)
+        unburyDeck(did)
     }
 }

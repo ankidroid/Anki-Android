@@ -545,7 +545,7 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.UNBURY -> {
                 Timber.i("ContextMenu: Unbury deck selected")
-                getColUnsafe.sched.unburyCardsForDeck(deckId)
+                getColUnsafe.sched.unburyDeck(deckId)
                 onRequireDeckListUpdate()
                 dismissAllDialogFragments()
             }

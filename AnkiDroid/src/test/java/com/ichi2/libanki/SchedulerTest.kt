@@ -16,6 +16,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.scheduler.UnburyDeckRequest
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.Consts.BUTTON_FOUR
 import com.ichi2.libanki.Consts.BUTTON_ONE
@@ -36,7 +37,6 @@ import com.ichi2.libanki.Consts.STARTING_FACTOR
 import com.ichi2.libanki.Consts.SYNC_VER
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.Counts
-import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
@@ -685,6 +685,7 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Front", "two")
         col.addNote(note)
         val c2 = note.cards()[0]
+        val did = col.decks.getCurrentId()
         // burying
         col.sched.buryCards(listOf(c.id), true)
         c.load()
@@ -693,16 +694,16 @@ open class SchedulerTest : JvmTest() {
         c2.load()
         Assert.assertEquals(QUEUE_TYPE_SIBLING_BURIED, c2.queue)
         assertNull(col.sched.card)
-        col.sched.unburyCardsForDeck(Scheduler.UnburyType.MANUAL)
+        col.sched.unburyDeck(did, UnburyDeckRequest.Mode.USER_ONLY)
         c.load()
         Assert.assertEquals(QUEUE_TYPE_NEW, c.queue)
         c2.load()
         Assert.assertEquals(QUEUE_TYPE_SIBLING_BURIED, c2.queue)
-        col.sched.unburyCardsForDeck(Scheduler.UnburyType.SIBLINGS)
+        col.sched.unburyDeck(did, UnburyDeckRequest.Mode.SCHED_ONLY)
         c2.load()
         Assert.assertEquals(QUEUE_TYPE_NEW, c2.queue)
         col.sched.buryCards(listOf(c.id, c2.id))
-        col.sched.unburyCardsForDeck(Scheduler.UnburyType.ALL)
+        col.sched.unburyDeck(did, UnburyDeckRequest.Mode.ALL)
         Assert.assertEquals(Counts(2, 0, 0), col.sched.counts())
     }
 

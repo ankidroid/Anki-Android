@@ -245,7 +245,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             R.id.action_unbury -> {
                 Timber.i("StudyOptionsFragment:: unbury button pressed")
-                col!!.sched.unburyCardsForDeck()
+                launchCatchingTask {
+                    withCol { sched.unburyDeck(decks.getCurrentId()) }
+                }
                 refreshInterface(true)
                 item.isVisible = false
                 return true

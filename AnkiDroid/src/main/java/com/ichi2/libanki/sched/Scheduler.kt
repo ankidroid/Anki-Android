@@ -39,6 +39,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager.time
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
 data class CurrentQueueState(
@@ -254,45 +255,12 @@ open class Scheduler(val col: Collection) {
         )
     }
 
-    /**
-     * Unbury cards.
-     * @param type Which kind of cards should be unburied. See [UnburyType]
-     * @param did: the deck whose cards must be unburied
-     */
-    open fun unburyCardsForDeck(did: DeckId, type: UnburyType = UnburyType.ALL) {
-        val mode = when (type) {
-            UnburyType.ALL -> UnburyDeckRequest.Mode.ALL
-            UnburyType.MANUAL -> UnburyDeckRequest.Mode.USER_ONLY
-            UnburyType.SIBLINGS -> UnburyDeckRequest.Mode.SCHED_ONLY
-        }
-        col.backend.unburyDeck(deckId = did, mode = mode)
-    }
-
-    /**
-     * Parameter to describe what kind of cards must be unburied.
-     */
-    enum class UnburyType {
-        /**
-         * Represents all buried cards
-         */
-        ALL,
-
-        /**
-         * Represents cards that have been buried explicitly by the user using the reviewer
-         */
-        MANUAL,
-
-        /**
-         * Represents cards that were buried because they are the siblings of a reviewed cards.
-         */
-        SIBLINGS
-    }
-
-    /**
-     * Unbury all buried cards in selected decks
-     */
-    fun unburyCardsForDeck(type: UnburyType = UnburyType.ALL) {
-        unburyCardsForDeck(col.decks.selected(), type)
+    @RustCleanup("check if callers use the correct UnburyDeckRequest.Mode for their cases")
+    fun unburyDeck(
+        deckId: DeckId,
+        mode: UnburyDeckRequest.Mode = UnburyDeckRequest.Mode.ALL
+    ): OpChanges {
+        return col.backend.unburyDeck(deckId, mode)
     }
 
     /**
