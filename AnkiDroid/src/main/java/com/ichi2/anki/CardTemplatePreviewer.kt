@@ -240,8 +240,21 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
                 cardCount = toPreview.note().numberOfCardsEphemeral()
+
                 if (cardCount >= 2) {
-                    previewLayout!!.showNavigationButtons()
+                    val fields = getBundleEditFields(mNoteEditorBundle)
+                    if (fields.size > 2 && fields[2].isEmpty()) {
+                        previewLayout!!.hideNavigationButtons()
+                    } else {
+                        previewLayout!!.showNavigationButtons()
+                        if (cardIndex == 0) {
+                            previewLayout!!.setNextButtonEnabled(true)
+                            previewLayout!!.setPrevButtonEnabled(false)
+                        } else {
+                            previewLayout!!.setNextButtonEnabled(false)
+                            previewLayout!!.setPrevButtonEnabled(true)
+                        }
+                    }
                 }
             }
         } else {
