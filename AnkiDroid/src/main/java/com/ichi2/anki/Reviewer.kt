@@ -71,7 +71,6 @@ import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.audio.AudioRecordingController
 import com.ichi2.audio.AudioRecordingController.Companion.generateTempAudioFile
@@ -184,11 +183,6 @@ open class Reviewer :
             return
         }
         super.onCreate(savedInstanceState)
-        if (handledLaunchFromWebBrowser(intent, this)) {
-            this.setResult(RESULT_CANCELED)
-            finish()
-            return
-        }
         colorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
         textBarNew = findViewById(R.id.new_number)
