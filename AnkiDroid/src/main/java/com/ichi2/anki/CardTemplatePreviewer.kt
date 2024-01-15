@@ -242,7 +242,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                 cardCount = toPreview.note().numberOfCardsEphemeral()
 
                 if (cardCount >= 2) {
-                    val fields = getBundleEditFields(mNoteEditorBundle)
+                    val fields = getBundleEditFields(mNoteEditorBundle!!)
                     if (fields.size > 2 && fields[2].isEmpty()) {
                         previewLayout!!.hideNavigationButtons()
                     } else {
