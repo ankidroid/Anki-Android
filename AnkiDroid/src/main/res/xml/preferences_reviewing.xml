@@ -54,7 +54,7 @@
             android:defaultValue="false"
             android:disableDependentsState="false"
             android:key="@string/timeout_answer_preference"
-            android:summary="@string/timeout_answer_summ"
+            android:summary="@string/timeout_answer_summ2"
             android:title="@string/timeout_answer_text" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_advanced">
