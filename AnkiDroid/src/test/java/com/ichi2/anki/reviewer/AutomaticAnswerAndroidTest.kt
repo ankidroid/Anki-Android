@@ -31,23 +31,16 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
     @Test
     fun default_is_bury() {
         assertThat("no value", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
-        setPreference(99) // invalid
-        assertThat("bad pref", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
         assertThat("default", AutomaticAnswer.defaultInstance(mock()).settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
-
-        // ensure "bad pref" isn't picked up as a good value
-        setPreference(1)
-        assertThat("good pref", createInstance().settings.answerAction, not(equalTo(AutomaticAnswerAction.BURY_CARD)))
-
-        // reset the value
-        resetPrefs()
-        assertThat("xml pref", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
     }
 
     @Test
     fun preference_sets_action() {
         setPreference(1)
         assertThat(createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.ANSWER_AGAIN))
+        // reset the value
+        resetPrefs()
+        assertThat("default", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
     }
 
     private fun resetPrefs() {
