@@ -26,6 +26,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.LanguageUtils
+import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.launchCatching
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
@@ -33,8 +34,6 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound.addPlayButtons
 import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -46,9 +45,12 @@ import kotlinx.serialization.json.Json
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
-class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int) : ViewModel() {
+class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int) :
+    ViewModel(),
+    OnErrorListener {
+
+    override val onError = MutableSharedFlow<String>()
     val eval = MutableSharedFlow<String>()
-    val onError = MutableSharedFlow<String>()
     val currentIndex = MutableStateFlow(firstIndex)
     val backsideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
@@ -188,12 +190,6 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
             } else if (showingAnswer.value && !backsideOnly.value) {
                 showQuestion()
             }
-        }
-    }
-
-    private fun launchCatching(block: suspend PreviewerViewModel.() -> Unit): Job {
-        return launchCatching(block, Dispatchers.IO) { message ->
-            onError.emit(message)
         }
     }
 
