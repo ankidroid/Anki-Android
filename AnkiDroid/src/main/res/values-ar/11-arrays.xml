@@ -103,5 +103,5 @@
     <string name="replay_voice">إعادة تشغيل الصوت</string>
     <string name="automatic_answer_option_2">صعب (جيد إذا لم يكن متوفرًا)</string>
     <string name="automatic_answer_option_4">سهل (جيد إذا لم يكن متوفرًا)</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="save_voice">حفظ التسجيل</string>
 </resources>

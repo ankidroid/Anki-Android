@@ -153,7 +153,7 @@
         <item quantity="one">\"%2$s\" ପତ୍ର ପ୍ରକାର ଏବଂ ଏହାର %1$dଟିଏ ପତ୍ର ବିଲୋପ କରିବେ କି?</item>
         <item quantity="other">\"%2$s\" ପତ୍ର ପ୍ରକାର ଏବଂ ଏହାର %1$dଟି ପତ୍ର ବିଲୋପ କରିବେ କି?</item>
     </plurals>
-    <string name="invalid_template">ଗୋଟିଏ ପତ୍ର ସୃଷ୍ଟି କରାଯାଇପାରିଲା ନାହିଁ</string>
+    <string name="invalid_template">ଏକ ପତ୍ର ସୃଷ୍ଟି କରିହେଲା ନାହିଁ</string>
     <string name="card_template_editor_would_delete_note">ଏହି ପତ୍ର ପ୍ରକାର ଅପସାରଣ କରିବା ଦ୍ୱାରା ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ବିଲୋପ ହୋଇପାରେ। ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ ପତ୍ର ପ୍ରକାର ସୃଷ୍ଟି କରି ସଂରକ୍ଷଣ କରନ୍ତୁ।</string>
     <string name="card_template_editor_save_error">ପତ୍ର ଟେମ୍ପଲେଟ୍ ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଞ୍ଚୟ କରିବାରେ ଅସମର୍ଥ: %s</string>
     <string name="template_for_current_card_deleted">ସାମ୍ପ୍ରତିକ ପତ୍ରର ପତ୍ର ପ୍ରକାର ବିଲୋପ ହେଇଯାଇଛି।</string>

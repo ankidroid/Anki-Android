@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Τύπος:</string>
     <string name="CardEditorTags">Ετικέτες:%1$s</string>
     <string name="CardEditorCards">Κάρτες %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">Επεξεργασία αποκρύψεων</string>
     <string name="tag_name">Όνομα ετικέτας</string>
     <string name="add_new_filter_tags">Προσθήκη/φιλτράρισμα ετικετών</string>
     <string name="add_tag">Προσθήκη ετικέτας</string>
@@ -97,9 +97,9 @@
         <item>Διάστημα</item>
         <item>Ευκολία</item>
         <item>Due</item>
-        <item>Card Modified</item>
+        <item>Τροποποιημένες κάρτες</item>
         <item>Δημιουργήθηκε</item>
-        <item>Note Modified</item>
+        <item>Τροποποιημένες σημειώσεις</item>
     </string-array>
     <string name="filter_by_flags">Σημαίες</string>
     <!-- Custom study options -->
@@ -224,7 +224,7 @@
     <string name="api_version_developer_contact">Αυτή η κάρτα χρησιμοποιεί μη υποστηριζόμενες δυνατότητες του  AnkiDroid. Επικοινωνήστε με τον προγραμματιστή %1$s, ή δείτε το wiki. %2$s</string>
     <string name="invalid_json_data">Η κάρτα παρείχε μη έγκυρα δεδομένα. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="update_js_api_version">Διαθέσιμη ενημέρωση του AnkiDroid JS API. Επικοινωνήστε με τον προγραμματιστή %sή δείτε το wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Προβολή</string>
     <string name="anki_js_error_code">(Κωδικός σφάλματος: %d)</string>
     <!-- About AnkiDroid screen -->
@@ -232,7 +232,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Σφάλμα αντιγραφής πληροφοριών αποσφαλμάτωσης στο πρόχειρο</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Σφάλμα περιεχομένου κάρτας: Αποτυχία φόρτωσης του ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">Σφάλμα Περιεχομένου Κάρτας: Απαιτείται ενημέρωση πολυμέσων</string>
     <!-- Deck Picker -->
     <string name="search_decks">Αναζήτηση τραπουλών</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Εμφάνιση προόδου μετεγκατάστασης</string>
@@ -322,7 +322,7 @@
     <string name="intro_sync_from_ankiweb">Συγχρονισμός απο το AnkiWeb</string>
     <string name="already_logged_in">Ήδη συνδεδεμένος</string>
     <!-- Deck Creation -->
-    <string name="deck_created">Deck created</string>
+    <string name="deck_created">Η τράπουλα δημιουργήθηκε</string>
     <string name="deck_renamed">Η τράπουλα μετονομάστηκε</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Η τράπουλα διαγράφηκε. Παρακαλώ αφαιρέστε την συντόμευση</string>
