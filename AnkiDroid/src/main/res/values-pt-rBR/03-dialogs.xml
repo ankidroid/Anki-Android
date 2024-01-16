@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Um novo card está sendo reagendado. O reagendamento também transforma os novos cards em cards de revisão. Usar a opção \'reposicionar o card\' para mudar a posição do novo card dentro da nova fila.</string>
     <string name="reschedule_card_dialog_warning_ease_reset">O reagendamento também redefine como o agendador lida com o card no futuro (a retenção será configurada para %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Selecione o baralho no seu gerenciador de arquivos ou visite a página about:downloads para importá-lo</string>
     <string name="answering_error_title">Erro de banco de dados</string>
     <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Isso pode estar relacionado a um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso ocorrer frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso pode ser um bug do AnkiDroid; relate o erro para que possamos verificar o problema.</string>
     <string name="answering_error_report">Reportar erro</string>

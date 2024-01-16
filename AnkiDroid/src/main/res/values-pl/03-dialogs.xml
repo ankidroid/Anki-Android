@@ -92,7 +92,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Karta zostanie ponownie zaplanowana. Ponowne zaplanowanie spowoduje zmianę statusu karty z \"nowa\" na \"powtarzana\". Użyj opcji \"przestaw kartę\" by zmienić pozycję nowej karty karty w kolejce bez zmiany jej statusu</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Ponowne zaplanowanie karty spowoduje także zresetowanie poziomu łatwości (zostanie ustawiona na: %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Wybierz talię w twoim menedżerze plików lub odwiedź stronę about:downloads, by ją zaimportować</string>
     <string name="answering_error_title">Błąd bazy danych</string>
     <string name="answering_error_message">Wystąpił błąd podczas zapisywania do kolekcji. Powodem może być uszkodzenie bazy danych albo niewystarczająca ilość miejsca na dysku.\n\nJeśli błąd ten występuje często, spróbuj użyć opcji \"sprawdź bazę danych\" oraz naprawić kolekcję lub przywróć ją z kopii zapasowej (by tego dokonać kliknij „opcje”).\n\nRównie dobrze może to być też błąd AnkiDroid; zgłoś go abyśmy mogli to sprawdzić.</string>
     <string name="answering_error_report">Zgłoś błąd</string>

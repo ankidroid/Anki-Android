@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Μια νέα κάρτα επαναπρογραμματίζεται.Η αναδιάταξη μετατρέπει επίσης τις νέες κάρτες σε κάρτες προς επανάληψη. Χρησιμοποιήστε την επιλογή \'reposition card\' για να αλλάξετε τη θέση μιας νέας κάρτας στη νέα ουρά</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Επιλέξτε την τράπουλα στον διαχειριστή αρχείων σας ή επισκεφθείτε την σελίδα about:downloads για να την εισάγετε</string>
     <string name="answering_error_title">Σφάλμα βάσης δεδομένων</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Αναφορά σφάλματος</string>

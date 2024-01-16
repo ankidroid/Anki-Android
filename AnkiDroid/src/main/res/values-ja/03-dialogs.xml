@@ -77,7 +77,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">新規カードのスケジュールを変更しようとしています。 スケジュールを変更すると、新規カードは習得ステップを飛ばして復習カードに移行します。新規カードのまま表示の順序を変更したい場合は、カードブラウザーの 「新規カードの表示順序を変更」機能を使用してください</string>
     <string name="reschedule_card_dialog_warning_ease_reset">スケジュール変更を行うと、そのカードの復習履歴に基づいて間隔を調整する指標がリセットされます（易しさが初期値の%d%%に戻ります）</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">ファイルマネージャーでデッキを選択するか、「about:downloads」ページに移動してデッキをインポートしてください</string>
     <string name="answering_error_title">データベース エラー</string>
     <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。データベースの破損しているか、ストレージの空き容量が不足している可能性があります。\n\n繰り返しエラーが発生する場合には、「データベースをチェック」、コレクションの修復、「バックアップから復元」を試してみてください。\nまた、AnkiDroidのバグである可能性が考えられる場合は、開発者にご報告ください。</string>
     <string name="answering_error_report">エラーを報告</string>

@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Schlagwörter: %1$s</string>
     <string name="CardEditorCards">Karten: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">Occlusions bearbeiten</string>
     <string name="tag_name">Schlagwortname</string>
     <string name="add_new_filter_tags">Schlagwörter hinzufügen/filtern</string>
     <string name="add_tag">Schlagwort hinzufügen</string>
@@ -339,9 +339,9 @@
     <string name="media_sync_unavailable_message">Die Medien-Synchronisation ist in den Einstellungen deaktiviert. Bitte synchronisieren und sichern Sie alle Medien, die nicht synchronisiert wurden, bevor Sie fortfahren</string>
     <string name="audio_saved">Aufnahme gespeichert</string>
     <string name="deleting_selected_notes">Lösche ausgewählte Notizen</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Stimme berühren, um sie anzuhören
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Stimme sollte vor der Benutzung installiert sein
     </string>
     <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Trotzdem
     verwenden    </string>
