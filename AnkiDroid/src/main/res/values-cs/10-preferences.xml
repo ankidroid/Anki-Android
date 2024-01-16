@@ -209,7 +209,7 @@
     <string name="html_javascript_debugging_summ">Umožnit vzdálené připojení k WebView a uložit HTML karet do adresáře AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Opakování karet</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Zobrazit název balíčku</string>
     <string name="accessibility" maxLength="41">Usnadnění přístupu</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Vkládat obrázky ze schránky jako PNG</string>

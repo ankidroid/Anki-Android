@@ -55,12 +55,12 @@
     </plurals>
     <string name="card_browser_all_decks">Ĉiuj kartaroj</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">Forigi karton</item>
+        <item quantity="other">Forigi kartojn</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Forgi noton</item>
+        <item quantity="other">Forigi notojn</item>
     </plurals>
     <string name="card_browser_change_deck">Ŝanĝi kartaron</string>
     <string name="delete_card_title">Ĉu forigi noton?</string>

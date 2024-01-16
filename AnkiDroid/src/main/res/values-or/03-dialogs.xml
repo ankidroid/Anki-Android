@@ -98,7 +98,7 @@
     <string name="custom_study_ahead">x ଦିନ ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_random">ତାସଖଣ୍ଡରୁ ଅନିୟମିତ ଭାବରେ x ଟି ପତ୍ର ଚୟନ କରନ୍ତୁ:</string>
     <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ାଯାଇଥିବା ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ଵାଵଲୋକନ କରିବା:</string>
-    <string name="custom_study_rebuild_deck_corrupt">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ପୁନଃନିର୍ମାଣ କରିହେଲା ନାହିଁ </string>
+    <string name="custom_study_rebuild_deck_corrupt">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ପୁନଃନିର୍ମାଣ କରିହେଲା ନାହିଁ</string>
     <string name="storage_full_title">ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି ହେଲାଣି</string>
     <string name="storage_almost_full_title">ଷ୍ଟୋରେଜ୍ ପ୍ରାୟ ଭର୍ତ୍ତି ହେବାକୁ ବସିଲାଣି</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ଜାଗା ନାହିଁ</string>
@@ -147,8 +147,8 @@
     <string name="empty_cards_count">ବିଲୋପ କରିବାକୁ ପତ୍ର : %d</string>
     <string name="empty_cards_deleted">ବିଲୋପିତ ପତ୍ର: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">ମାଇକ୍ରୋଫୋନ୍ ଅନୁମତି ପାଇପାରିଲା ନାହିଁ।</string>
-    <string name="multimedia_editor_camera_permission_refused">କ୍ୟାମେରା ଅନୁମତି ପାଇପାରିଲା ନାହିଁ। କାର୍ଯ୍ୟକାରିତା ଅକ୍ଷମ ହୋଇଛି।</string>
+    <string name="multimedia_editor_audio_permission_refused">ମାଇକ୍ରୋଫୋନ୍ ଅନୁମତି ପାଇପାରିଲୁ ନାହିଁ।</string>
+    <string name="multimedia_editor_camera_permission_refused">କ୍ୟାମେରା ଅନୁମତି ପାଇପାରିଲୁ ନାହିଁ। ଶକ୍ୟତାଟି ଅକ୍ଷମ ହୋଇଛି।</string>
     <string name="multimedia_editor_failed">ମଲ୍ଟିମିଡ଼ିଆ ସମ୍ପାଦକ ଖୋଲିବାରେ ବିଫଳ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ଅଡ଼ିଓ ରେକର୍ଡିଂ ଅନୁମତି ପ୍ରତ୍ୟାଖାନ ହେଲା</string>

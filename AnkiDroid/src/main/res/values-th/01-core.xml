@@ -60,20 +60,20 @@
     <string name="expand">ขยาย</string>
     <string name="collapse">ซ่อน</string>
     <string name="no_cards_placeholder_title">ไม่มีคอเล็คชั่น</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_description">เริ่มต้นเพิ่มการ์ดได้\nโดยการกดที่ไอคอน +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">พิมพ์คำตอบ</string>
     <string name="show_answer">แสดงคำตอบ</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">ซ่อนคำตอบ</string>
     <string name="ease_button_again">อีกครั้ง</string>
     <string name="ease_button_hard">ยาก</string>
     <string name="ease_button_good">ดี</string>
     <string name="ease_button_easy">ง่าย</string>
     <string name="menu_import">นําเข้า</string>
     <string name="undo">เรียกคืน</string>
-    <string name="redo">Redo</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
+    <string name="redo">ทำใหม่</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">ย้อนกลับการขีดเส้น</string>
     <string name="move_all_to_deck">ย้ายทั้งหมดไปที่สำรับ</string>
     <string name="unbury">ยกเลิกการซ่อน</string>
     <string name="rename_deck">เปลี่ยนชื่อสำรับ</string>
@@ -97,16 +97,16 @@
     <string name="menu_flag_card_two">เครื่องหมายสีส้ม</string>
     <string name="menu_flag_card_three">เครื่องหมายสีเขียว</string>
     <string name="menu_flag_card_four">เครื่องหมายสีน้ำเงิน</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag_card_five">ธงสีชมพู</string>
+    <string name="menu_flag_card_six">ธงสีฟ้าเขียว</string>
+    <string name="menu_flag_card_seven">ธงสีม่วง</string>
+    <string name="menu_edit_tags">แก้ไขแท็ก</string>
     <string name="delete_note_message">คุณต้องการจะลบโน้ตนี้และการ์ดภายในทั้งหมดหรือไม่?\n%s</string>
     <string name="menu_search">ค้นหาใน %1$s</string>
-    <string name="menu_mark_note">Mark note</string>
-    <string name="menu_unmark_note">Unmark note</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
-    <string name="new_deck">Create deck</string>
+    <string name="menu_mark_note">ทำเครื่องหมายโน้ต</string>
+    <string name="menu_unmark_note">ยกเลิกการทำเครื่องหมายโน้ต</string>
+    <string name="menu_toggle_mic_tool_bar">ตรวจสอบวิธีการออกเสียง</string>
+    <string name="new_deck">สร้างกองใหม่</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
