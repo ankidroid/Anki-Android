@@ -92,7 +92,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Новая карточка перепланирована и стала повторяемой. Чтобы изменить номер карточки в очереди, используйте «Переместить карточку»</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Планировщик учтёт, что карточка была перепланирована (лёгкость установлена на %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Для импорта выберите колоду в файловом менеджере или посетите страницу about:downloads</string>
     <string name="answering_error_title">Ошибка в базе данных</string>
     <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибкой в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>

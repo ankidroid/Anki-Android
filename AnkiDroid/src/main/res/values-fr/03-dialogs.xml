@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Une nouvelle carte est en cours de replanification. La replanification transforme également les nouvelles cartes en cartes de révision. Utilisez l\'option « repositionner la carte » pour changer la position d\'une nouvelle carte dans la nouvelle file d\'attente</string>
     <string name="reschedule_card_dialog_warning_ease_reset">La replanification réinitialise également la façon dont le planificateur traite la carte dans le futur (la facilité sera réglée à %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Sélectionnez le paquet dans votre gestionnaire de fichiers ou visitez la page about:downloads pour l’importer</string>
     <string name="answering_error_title">Erreur de la base de données</string>
     <string name="answering_error_message">L\'écriture de la collection a échoué. La base de données pourrait être corrompue ou il se peut qu\'il n\'y ait pas assez d\'espace libre sur le disque.\n\nSi ceci se produit plus souvent, essayez de vérifier la base de données, de réparer la collection ou de la restaurer à partir d\'une sauvegarde. Touchez « options » pour cela.\n\Ou il pourrait s\'agir d\'une erreur AnkiDroid ; veuillez signaler l\'erreur pour que nous puissions vérifier ceci.</string>
     <string name="answering_error_report">Signaler les erreurs</string>

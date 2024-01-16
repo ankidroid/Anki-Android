@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Se está reprogramando una nueva tarjeta. Reprogramar también convierte nuevas tarjetas en tarjetas de revisión. Utilice la opción \'reposiciónar tarjetas\' para cambiar la posición de una nueva tarjeta dentro de la nueva cola</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Reprogramar también reinicia cómo el planificador trata la tarjeta en el futuro (la facilidad se establecerá en %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Selecciona el mazo en tu gestor de archivos o visita la página about:downloads para importarlo</string>
     <string name="answering_error_title">Error en la base de datos</string>
     <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, presiona \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
     <string name="answering_error_report">Reportar error</string>

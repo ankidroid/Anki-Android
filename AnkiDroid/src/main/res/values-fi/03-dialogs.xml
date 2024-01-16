@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Uutta korttia ollaan aikatauluttamassa uudelleen. Uusi aikataulutus muuttaa myös uudet kortit kerrattaviksi korteiksi. Voit muuttaa uuden kortin sijaintia uudessa jonossa käyttämällä \"Kortin uudelleensijoitus\" -toimintoa.</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Uusi aikataulutus nollaa myös sen, miten aikataulutusohjelma käsittelee korttia tulevaisuudessa (helppous asetetaan arvoon %d %%).</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Valitse pakka tiedostonhallinnan avulla tai käy about:downloads-sivulla tuodaksesi sen</string>
     <string name="answering_error_title">Tietokantavirhe</string>
     <string name="answering_error_message">Kirjoittaminen kokoelmaan epäonnistui. Tietokanta voi olla vioittunut tai levyllä ei ole tarpeeksi tyhjää tilaa.\n\nJos näin tapahtuu useammin, tarkista tietokanta, korjaa kokoelma tai palauta se varmuuskopiosta. Löydät tämän asetuksista.\n\Mahdollisesti kyseessä voi olla myös AnkiDroidin virhe; ilmoita virheestä, jotta voimme tarkistaa sen.</string>
     <string name="answering_error_report">Ilmoita viasta</string>
