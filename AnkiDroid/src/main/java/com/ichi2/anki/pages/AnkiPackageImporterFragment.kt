@@ -31,11 +31,10 @@ class AnkiPackageImporterFragment : PageFragment() {
         get() = resources.getString(R.string.menu_import)
     override val pageName: String
         get() = "import-anki-package"
-    private lateinit var backCallback: OnBackPressedCallback
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         // the back callback is only enabled when import is running and showing progress
-        backCallback = object : OnBackPressedCallback(false) {
+        val backCallback = object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 CollectionManager.getBackend().setWantsAbort()
                 // once triggered the callback is not needed as the import process can't be resumed
