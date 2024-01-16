@@ -16,9 +16,7 @@
 package com.ichi2.anki.pages
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -32,20 +30,12 @@ import timber.log.Timber
  * Base class for displaying Anki HTML pages
  */
 @Suppress("LeakingThis")
-abstract class PageFragment : Fragment(), PostRequestHandler {
+abstract class PageFragment : Fragment(R.layout.page_fragment), PostRequestHandler {
     abstract val title: String
     abstract val pageName: String
 
     lateinit var webView: WebView
     private val server = AnkiServer(this).also { it.start() }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.page_fragment, container, false)
-    }
 
     /**
      * Override this to set a custom [WebViewClient] to the page.

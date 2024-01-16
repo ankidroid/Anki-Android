@@ -35,9 +35,7 @@ package com.ichi2.anki.introduction
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
@@ -60,11 +58,7 @@ import kotlinx.parcelize.Parcelize
  * for example: selecting a 'safe' folder using scoped storage, which would not have been deleted
  * if the app is uninstalled.
  */
-class SetupCollectionFragment : Fragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.introduction_layout, container, false)
-    }
+class SetupCollectionFragment : Fragment(R.layout.introduction_layout) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

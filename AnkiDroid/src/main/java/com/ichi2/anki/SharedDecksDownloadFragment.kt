@@ -23,9 +23,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.webkit.URLUtil
 import android.widget.Button
@@ -50,7 +48,7 @@ import kotlin.math.abs
  * Only one download is supported at a time, since importing multiple decks
  * simultaneously is not supported.
  */
-class SharedDecksDownloadFragment : Fragment() {
+class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_download) {
 
     private var downloadId: Long = 0
 
@@ -95,14 +93,6 @@ class SharedDecksDownloadFragment : Fragment() {
          * so our FileProvider can actually serve the file!
          */
         const val SHARED_DECKS_DOWNLOAD_FOLDER = "shared_decks"
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_shared_decks_download, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
