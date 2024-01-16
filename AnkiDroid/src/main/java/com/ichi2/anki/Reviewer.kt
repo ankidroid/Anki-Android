@@ -75,6 +75,8 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.audio.AudioRecordingController
 import com.ichi2.audio.AudioRecordingController.Companion.generateTempAudioFile
+import com.ichi2.audio.AudioRecordingController.Companion.isPaused
+import com.ichi2.audio.AudioRecordingController.Companion.isPlaying
 import com.ichi2.audio.AudioRecordingController.Companion.isRecording
 import com.ichi2.audio.AudioRecordingController.Companion.isSaved
 import com.ichi2.audio.AudioRecordingController.Companion.setReviewerStatus
@@ -561,6 +563,16 @@ open class Reviewer :
         super.updateForNewCard()
         if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
+        }
+        try {
+            if (isPlaying) {
+                audioRecordingController!!.discardAudio()
+            }
+            if (isRecording || isPaused) {
+                audioRecordingController!!.clearRecording()
+            }
+        } catch (e: Exception) {
+            Timber.d("Unable to reset the audio recorder", e)
         }
     }
 
