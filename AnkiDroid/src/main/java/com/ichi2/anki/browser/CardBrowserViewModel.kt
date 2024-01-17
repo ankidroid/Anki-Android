@@ -363,7 +363,7 @@ class CardBrowserViewModel(
             CARDS -> Pair(ExportDialogFragment.ExportType.Cards, selectedCardIds)
             NOTES -> Pair(
                 ExportDialogFragment.ExportType.Notes,
-                withCol { CardService.selectedNoteIds(selectedCardIds, this) }
+                withCol { CardService.selectedNoteIds(selectedCardIds) }
             )
         }
     }

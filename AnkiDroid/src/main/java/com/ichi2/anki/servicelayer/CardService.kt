@@ -17,6 +17,7 @@
 package com.ichi2.anki.servicelayer
 
 import com.ichi2.anki.CardUtils
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
 
 object CardService {
@@ -24,11 +25,11 @@ object CardService {
      * get unique note ids from a list of card ids
      * @param selectedCardIds list of card ids
      * can do better with performance here
-     * TODO: blocks the UI, should be fixed
      */
-    fun selectedNoteIds(selectedCardIds: List<Long>, col: Collection) =
+    context (Collection)
+    fun selectedNoteIds(selectedCardIds: List<CardId>) =
         CardUtils.getNotes(
-            col,
-            selectedCardIds.map { col.getCard(it) }
+            this@Collection,
+            selectedCardIds.map { this@Collection.getCard(it) }
         ).map { it.id }
 }
