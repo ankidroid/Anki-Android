@@ -78,11 +78,11 @@ object HelpDialog {
             ItemHeader(
                 R.string.help_title_community, R.drawable.ic_people_black_24dp, UsageAnalytics.Actions.OPENED_COMMUNITY,
                 LinkItem(R.string.help_item_anki_forums, R.drawable.ic_forum_black_24dp, UsageAnalytics.Actions.OPENED_ANKI_FORUMS, R.string.link_anki_forum),
-                LinkItem(R.string.help_item_reddit, R.drawable.reddit, UsageAnalytics.Actions.OPENED_REDDIT, R.string.link_reddit),
+                LinkItem(R.string.help_item_reddit, R.drawable.ic_forum_black_24dp, UsageAnalytics.Actions.OPENED_REDDIT, R.string.link_reddit),
                 LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_MAILING_LIST, R.string.link_forum),
-                LinkItem(R.string.help_item_discord, R.drawable.discord, UsageAnalytics.Actions.OPENED_DISCORD, R.string.link_discord),
-                LinkItem(R.string.help_item_facebook, R.drawable.facebook, UsageAnalytics.Actions.OPENED_FACEBOOK, R.string.link_facebook),
-                LinkItem(R.string.help_item_twitter, R.drawable.twitter, UsageAnalytics.Actions.OPENED_TWITTER, R.string.link_twitter)
+                LinkItem(R.string.help_item_discord, R.drawable.ic_link, UsageAnalytics.Actions.OPENED_DISCORD, R.string.link_discord),
+                LinkItem(R.string.help_item_facebook, R.drawable.ic_link, UsageAnalytics.Actions.OPENED_FACEBOOK, R.string.link_facebook),
+                LinkItem(R.string.help_item_twitter, R.drawable.ic_link, UsageAnalytics.Actions.OPENED_TWITTER, R.string.link_twitter)
             ),
             ItemHeader(
                 R.string.help_title_privacy,
