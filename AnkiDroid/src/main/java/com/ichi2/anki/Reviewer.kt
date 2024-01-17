@@ -191,7 +191,7 @@ open class Reviewer :
         textBarReview = findViewById(R.id.review_number)
         toolbar = findViewById(R.id.toolbar)
         micToolBarLayer = findViewById(R.id.mic_tool_bar_layer)
-        window!!.navigationBarColor = ThemeUtils.getThemeAttrColor(
+        window.navigationBarColor = ThemeUtils.getThemeAttrColor(
             this,
             R.attr.showAnswerColor
         )
