@@ -531,3 +531,8 @@ open class Card : Cloneable {
         }
     }
 }
+
+/** @see Card.renderOutput */
+context (Collection)
+fun Card.renderOutput(reload: Boolean = false, browser: Boolean = false) =
+    this@Card.renderOutput(this@Collection, reload, browser)

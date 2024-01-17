@@ -477,7 +477,7 @@ abstract class AbstractFlashcardViewer :
         // despite that making no sense outside of Reviewer.kt
         currentCard = withCol {
             sched.card?.apply {
-                renderOutput(this@withCol)
+                renderOutput()
             }
         }
     }

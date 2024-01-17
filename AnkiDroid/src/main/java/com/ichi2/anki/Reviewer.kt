@@ -1015,7 +1015,7 @@ open class Reviewer :
     override suspend fun updateCurrentCard() {
         val state = withCol {
             sched.currentQueueState()?.apply {
-                topCard.renderOutput(this@withCol, true)
+                topCard.renderOutput(true)
             }
         }
         state?.timeboxReached?.let { dealWithTimeBox(it) }
