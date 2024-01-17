@@ -17,7 +17,6 @@
 package com.ichi2.async
 
 import com.ichi2.anki.*
-import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import kotlinx.coroutines.Dispatchers
@@ -120,23 +119,6 @@ suspend fun renderBrowserQA(
         withContext(Dispatchers.Main) { onProgressUpdate(progress.toInt()) }
     }
     Pair(cards, invalidCardIds)
-}
-
-/**
- * Goes through selected cards and checks selected and marked attribute
- * @return If there are unselected cards, if there are unmarked cards
- */
-suspend fun checkCardSelection(checkedCards: Set<CardBrowser.CardCache>): Pair<Boolean, Boolean> = withContext(Dispatchers.IO) {
-    var hasUnsuspended = false
-    var hasUnmarked = false
-    for (c in checkedCards) {
-        ensureActive() // check if job is not cancelled
-        val card = c.card
-        hasUnsuspended = hasUnsuspended || card.queue != Consts.QUEUE_TYPE_SUSPENDED
-        hasUnmarked = hasUnmarked || !NoteService.isMarked(card.note())
-        if (hasUnsuspended && hasUnmarked) break
-    }
-    Pair(hasUnsuspended, hasUnmarked)
 }
 
 /**
