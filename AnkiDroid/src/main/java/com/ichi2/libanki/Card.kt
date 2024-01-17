@@ -59,8 +59,6 @@ import java.util.*
  * - lrn queue: integer timestamp
  */
 open class Card : Cloneable {
-    // Needed for tests
-    var col: Collection
 
     /**
      * Time in MS when timer was started
@@ -104,12 +102,11 @@ open class Card : Cloneable {
     private var note: Note?
 
     constructor(col: Collection) {
-        this.col = col
         timerStarted = 0L
         renderOutput = null
         note = null
         // to flush, set nid, ord, and due
-        this.id = TimeManager.time.timestampID(this.col.db, "cards")
+        this.id = TimeManager.time.timestampID(col.db, "cards")
         did = 1
         this.type = Consts.CARD_TYPE_NEW
         queue = Consts.QUEUE_TYPE_NEW
@@ -124,8 +121,7 @@ open class Card : Cloneable {
     }
 
     /** Construct an instance from a backend Card */
-    constructor(col: Collection, card: anki.cards.Card) {
-        this.col = col
+    constructor(card: anki.cards.Card) {
         timerStarted = 0L
         renderOutput = null
         note = null
@@ -134,20 +130,19 @@ open class Card : Cloneable {
     }
 
     constructor(col: Collection, id: Long?) {
-        this.col = col
         timerStarted = 0L
         renderOutput = null
         note = null
         if (id != null) {
             this.id = id
-            load()
+            load(col)
         } else {
             // ephemeral card
             this.id = 0
         }
     }
 
-    fun load() {
+    fun load(col: Collection) {
         val card = col.backend.getCard(id)
         loadFromBackendCard(card)
     }
@@ -198,42 +193,42 @@ open class Card : Cloneable {
         return builder.build()
     }
 
-    fun question(reload: Boolean = false, browser: Boolean = false): String {
-        return renderOutput(reload, browser).questionAndStyle()
+    fun question(col: Collection, reload: Boolean = false, browser: Boolean = false): String {
+        return renderOutput(col, reload, browser).questionAndStyle()
     }
 
-    fun answer(): String {
-        return renderOutput().answerAndStyle()
+    fun answer(col: Collection): String {
+        return renderOutput(col).answerAndStyle()
     }
 
     @RustCleanup("legacy")
-    fun css(): String {
-        return "<style>${renderOutput().css}</style>"
+    fun css(col: Collection): String {
+        return "<style>${renderOutput(col).css}</style>"
     }
 
-    fun questionAvTags(): List<AvTag> {
-        return renderOutput().questionAvTags
+    fun questionAvTags(col: Collection): List<AvTag> {
+        return renderOutput(col).questionAvTags
     }
 
-    fun answerAvTags(): List<AvTag> {
-        return renderOutput().answerAvTags
+    fun answerAvTags(col: Collection): List<AvTag> {
+        return renderOutput(col).answerAvTags
     }
 
     /**
      * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
      */
-    open fun renderOutput(reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
+    open fun renderOutput(col: Collection, reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
         if (renderOutput == null || reload) {
-            renderOutput = TemplateManager.TemplateRenderContext.fromExistingCard(this, browser).render()
+            renderOutput = TemplateManager.TemplateRenderContext.fromExistingCard(col, this, browser).render()
         }
         return renderOutput!!
     }
 
-    open fun note(): Note {
-        return note(false)
+    open fun note(col: Collection): Note {
+        return note(col, false)
     }
 
-    open fun note(reload: Boolean): Note {
+    open fun note(col: Collection, reload: Boolean): Note {
         if (note == null || reload) {
             note = col.getNote(nid)
         }
@@ -241,16 +236,16 @@ open class Card : Cloneable {
     }
 
     // not in upstream
-    open fun model(): NotetypeJson {
-        return note().notetype
+    open fun model(col: Collection): NotetypeJson {
+        return note(col).notetype
     }
 
-    fun template(): JSONObject {
-        val m = model()
+    fun template(col: Collection): JSONObject {
+        val m = model(col)
         return if (m.isStd) {
             m.getJSONArray("tmpls").getJSONObject(ord)
         } else {
-            model().getJSONArray("tmpls").getJSONObject(0)
+            model(col).getJSONArray("tmpls").getJSONObject(0)
         }
     }
 
@@ -261,7 +256,7 @@ open class Card : Cloneable {
     /**
      * Time limit for answering in milliseconds.
      */
-    fun timeLimit(): Int {
+    fun timeLimit(col: Collection): Int {
         val conf = col.decks.confForDid(if (!isInDynamicDeck) did else oDid)
         return conf.getInt("maxTaken") * 1000
     }
@@ -269,10 +264,10 @@ open class Card : Cloneable {
     /*
      * Time taken to answer card, in integer MS.
      */
-    fun timeTaken(): Int {
+    fun timeTaken(col: Collection): Int {
         // Indeed an int. Difference between two big numbers is still small.
         val total = (TimeManager.time.intTimeMS() - timerStarted).toInt()
-        return Math.min(total, timeLimit())
+        return Math.min(total, timeLimit(col))
     }
 
     /*
@@ -280,15 +275,15 @@ open class Card : Cloneable {
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-    fun qSimple(): String {
-        return renderOutput().questionText
+    fun qSimple(col: Collection): String {
+        return renderOutput(col).questionText
     }
 
     /**
      * Returns the answer with anything before the `<hr id=answer>` tag removed
      */
-    fun pureAnswer(): String {
-        val s = renderOutput().answerText
+    fun pureAnswer(col: Collection): String {
+        val s = renderOutput(col).answerText
         for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
             val pos = s.indexOf(target)
             if (pos == -1) continue
@@ -313,8 +308,8 @@ open class Card : Cloneable {
      *
      * Unlike the desktop client, AnkiDroid must pause and resume the process in the middle of
      * reviewing. This method is required to keep track of the actual amount of time spent in
-     * the reviewer and *must* be called on resume before any calls to timeTaken() take place
-     * or the result of timeTaken() will be wrong.
+     * the reviewer and *must* be called on resume before any calls to timeTaken(col) take place
+     * or the result of timeTaken(col) will be wrong.
      */
     fun resumeTimer() {
         timerStarted = TimeManager.time.intTimeMS() - elapsedTime
@@ -325,7 +320,7 @@ open class Card : Cloneable {
         return reps.also { this.reps = it }
     }
 
-    fun showTimer(): Boolean {
+    fun showTimer(col: Collection): Boolean {
         val options = col.decks.confForDid(if (!isInDynamicDeck) did else oDid)
         return DeckConfig.parseTimerOpt(options, true)
     }
@@ -388,8 +383,8 @@ open class Card : Cloneable {
     }
 
     // not in Anki.
-    fun dueString(): String {
-        var t = nextDue()
+    fun dueString(col: Collection): String {
+        var t = nextDue(col)
         if (queue < 0) {
             t = "($t)"
         }
@@ -398,7 +393,7 @@ open class Card : Cloneable {
 
     // as in Anki aqt/browser.py
     @VisibleForTesting
-    fun nextDue(): String {
+    fun nextDue(col: Collection): String {
         val date: Long
         val due = due
         date = if (isInDynamicDeck) {
@@ -417,7 +412,7 @@ open class Card : Cloneable {
         return LanguageUtil.getShortDateFormatFromS(date)
     } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
 
-    fun avgEaseOfNote() = avgEase(note())
+    fun avgEaseOfNote(col: Collection) = avgEase(note(col))
 
     /** Non libAnki  */
     val isInDynamicDeck: Boolean

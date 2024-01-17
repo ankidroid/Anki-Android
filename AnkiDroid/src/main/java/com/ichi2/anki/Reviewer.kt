@@ -202,7 +202,7 @@ open class Reviewer :
     override fun onResume() {
         when {
             stopTimerOnAnswer && isDisplayingAnswer -> {}
-            else -> answerTimer.resume()
+            else -> launchCatchingTask { withCol { answerTimer.resume(this) } }
         }
         super.onResume()
         if (typeAnswer?.autoFocusEditText() == true) {
@@ -248,7 +248,7 @@ open class Reviewer :
             return
         }
         launchCatchingTask {
-            toggleMark(card.note(), handler = this@Reviewer)
+            toggleMark(card.note(getColUnsafe), handler = this@Reviewer)
             refreshActionBar()
             onMarkChanged()
         }
@@ -701,7 +701,7 @@ open class Reviewer :
         actionButtons.setCustomButtonsStatus(menu)
         val alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
-        if (currentCard != null && isMarked(currentCard!!.note())) {
+        if (currentCard != null && isMarked(currentCard!!.note(getColUnsafe))) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
         } else {
             markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)
@@ -1015,7 +1015,7 @@ open class Reviewer :
     override suspend fun updateCurrentCard() {
         val state = withCol {
             sched.currentQueueState()?.apply {
-                topCard.renderOutput(true)
+                topCard.renderOutput(this@withCol, true)
             }
         }
         state?.timeboxReached?.let { dealWithTimeBox(it) }
@@ -1033,7 +1033,7 @@ open class Reviewer :
             }
         }.also {
             if (ease == Consts.BUTTON_ONE && wasLeech) {
-                state.topCard.load()
+                state.topCard.load(getColUnsafe)
                 val leechMessage: String = if (state.topCard.queue < 0) {
                     resources.getString(R.string.leech_suspend_notification)
                 } else {
@@ -1064,7 +1064,7 @@ open class Reviewer :
     override fun displayCardQuestion() {
         statesMutated = false
         // show timer, if activated in the deck's preferences
-        answerTimer.setupForCard(currentCard!!)
+        answerTimer.setupForCard(getColUnsafe, currentCard!!)
         delayedHide(100)
         super.displayCardQuestion()
     }

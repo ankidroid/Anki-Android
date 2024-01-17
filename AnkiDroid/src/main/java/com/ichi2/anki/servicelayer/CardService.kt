@@ -17,6 +17,7 @@
 package com.ichi2.anki.servicelayer
 
 import com.ichi2.anki.CardUtils
+import com.ichi2.libanki.Collection
 
 object CardService {
     /**
@@ -25,8 +26,9 @@ object CardService {
      * can do better with performance here
      * TODO: blocks the UI, should be fixed
      */
-    fun selectedNoteIds(selectedCardIds: List<Long>, col: com.ichi2.libanki.Collection) =
+    fun selectedNoteIds(selectedCardIds: List<Long>, col: Collection) =
         CardUtils.getNotes(
+            col,
             selectedCardIds.map { col.getCard(it) }
         ).map { it.id }
 }

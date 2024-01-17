@@ -432,7 +432,7 @@ abstract class AbstractFlashcardViewer :
         val card = editorCard!!
         withProgress {
             undoableOp {
-                updateNote(card.note())
+                updateNote(card.note(this))
             }
         }
         onCardUpdated(card)
@@ -477,7 +477,7 @@ abstract class AbstractFlashcardViewer :
         // despite that making no sense outside of Reviewer.kt
         currentCard = withCol {
             sched.card?.apply {
-                renderOutput()
+                renderOutput(this@withCol)
             }
         }
     }
@@ -824,7 +824,7 @@ abstract class AbstractFlashcardViewer :
             message(
                 text = resources.getString(
                     R.string.delete_note_message,
-                    Utils.stripHTML(currentCard!!.question(true))
+                    Utils.stripHTML(currentCard!!.question(getColUnsafe, true))
                 )
             )
             positiveButton(R.string.dialog_positive_delete) {
@@ -1308,7 +1308,7 @@ abstract class AbstractFlashcardViewer :
         backButtonPressedToReturn = false
         setInterface()
         typeAnswer?.input = ""
-        typeAnswer?.updateInfo(currentCard!!, resources)
+        typeAnswer?.updateInfo(getColUnsafe, currentCard!!, resources)
         if (typeAnswer?.validForEditText() == true) {
             // Show text entry based on if the user wants to write the answer
             answerField?.visibility = View.VISIBLE
@@ -1316,7 +1316,7 @@ abstract class AbstractFlashcardViewer :
         } else {
             answerField?.visibility = View.GONE
         }
-        val content = htmlGenerator!!.generateHtml(currentCard!!, Side.FRONT)
+        val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.FRONT)
         automaticAnswer.onDisplayQuestion()
         updateCard(content)
         hideEaseButtons()
@@ -1342,7 +1342,7 @@ abstract class AbstractFlashcardViewer :
 
         // TODO needs testing: changing a card's model without flipping it back to the front
         //  (such as editing a card, then editing the card template)
-        typeAnswer!!.updateInfo(currentCard!!, resources)
+        typeAnswer!!.updateInfo(getColUnsafe, currentCard!!, resources)
 
         // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
         // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
@@ -1357,7 +1357,7 @@ abstract class AbstractFlashcardViewer :
             typeAnswer!!.input = answerField!!.text.toString()
         }
         isSelecting = false
-        val answerContent = htmlGenerator!!.generateHtml(currentCard!!, Side.BACK)
+        val answerContent = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.BACK)
         automaticAnswer.onDisplayAnswer()
         updateCard(answerContent)
         displayAnswerBottomBar()
@@ -1413,7 +1413,7 @@ abstract class AbstractFlashcardViewer :
         Timber.d("updateCard()")
         // TODO: This doesn't need to be blocking
         runBlocking {
-            soundPlayer.loadCardSounds(currentCard!!, if (displayAnswer) Side.BACK else Side.FRONT)
+            soundPlayer.loadCardSounds(getColUnsafe, currentCard!!, if (displayAnswer) Side.BACK else Side.FRONT)
         }
         cardContent = content.getTemplateHtml()
         fillFlashcard()
@@ -1464,8 +1464,8 @@ abstract class AbstractFlashcardViewer :
 
     @VisibleForTesting
     fun readCardTts(side: SingleSoundSide) {
-        val tags = legacyGetTtsTags(currentCard!!, side, this)
-        tts.readCardText(tags, currentCard!!, side.toSoundSide())
+        val tags = legacyGetTtsTags(getColUnsafe, currentCard!!, side, this)
+        tts.readCardText(getColUnsafe, tags, currentCard!!, side.toSoundSide())
     }
 
     /**
@@ -1486,6 +1486,7 @@ abstract class AbstractFlashcardViewer :
     protected fun showSelectTtsDialogue() {
         if (ttsInitialized) {
             tts.selectTts(
+                getColUnsafe,
                 this,
                 currentCard!!,
                 if (displayAnswer) SoundSide.ANSWER else SoundSide.QUESTION
@@ -1823,14 +1824,14 @@ abstract class AbstractFlashcardViewer :
      * @see refreshIfRequired - calls through to [updateCurrentCard]
      */
     private fun reloadWebViewContent() {
-        currentCard?.renderOutput(reload = true, browser = false)
+        currentCard?.renderOutput(getColUnsafe, reload = true, browser = false)
         if (!isDisplayingAnswer) {
             Timber.d("displayCardQuestion()")
             displayAnswer = false
             backButtonPressedToReturn = false
             setInterface()
             typeAnswer?.input = ""
-            typeAnswer?.updateInfo(currentCard!!, resources)
+            typeAnswer?.updateInfo(getColUnsafe, currentCard!!, resources)
             if (typeAnswer?.validForEditText() == true) {
                 // Show text entry based on if the user wants to write the answer
                 answerField?.visibility = View.VISIBLE
@@ -1838,7 +1839,7 @@ abstract class AbstractFlashcardViewer :
             } else {
                 answerField?.visibility = View.GONE
             }
-            val content = htmlGenerator!!.generateHtml(currentCard!!, Side.FRONT)
+            val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.FRONT)
             automaticAnswer.onDisplayQuestion()
             updateCard(content)
             hideEaseButtons()
@@ -2143,7 +2144,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun shouldDisplayMark(): Boolean {
-        return isMarked(currentCard!!.note())
+        return isMarked(currentCard!!.note(getColUnsafe))
     }
 
     val writeLock: Lock
@@ -2435,7 +2436,7 @@ abstract class AbstractFlashcardViewer :
         @NeedsTest("14221: 'playsound' should play the sound from the start")
         @BlocksSchemaUpgrade("handle TTS tags")
         private suspend fun controlSound(url: String) {
-            val avTag = when (val tag = currentCard?.let { getAvTag(it, url) }) {
+            val avTag = when (val tag = currentCard?.let { getAvTag(getColUnsafe, it, url) }) {
                 is SoundOrVideoTag -> tag
                 is TTSTag -> tag
                 // not currently supported
@@ -2513,7 +2514,7 @@ abstract class AbstractFlashcardViewer :
 
     internal fun showTagsDialog() {
         val tags = ArrayList(getColUnsafe.tags.all())
-        val selTags = ArrayList(currentCard!!.note().tags)
+        val selTags = ArrayList(currentCard!!.note(getColUnsafe).tags)
         val dialog = tagsDialogFactory!!.newTagsDialog()
             .withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
         showDialogFragment(dialog)
@@ -2525,9 +2526,9 @@ abstract class AbstractFlashcardViewer :
         indeterminateTags: List<String>,
         stateFilter: CardStateFilter
     ) {
-        if (currentCard!!.note().tags != selectedTags) {
+        if (currentCard!!.note(getColUnsafe).tags != selectedTags) {
             val tagString = selectedTags.joinToString(" ")
-            val note = currentCard!!.note()
+            val note = currentCard!!.note(getColUnsafe)
             note.setTagsFromStr(tagString)
             note.flush()
             // Reload current card to reflect tag changes

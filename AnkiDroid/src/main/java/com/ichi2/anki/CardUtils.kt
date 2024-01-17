@@ -2,6 +2,7 @@
 package com.ichi2.anki
 
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
 import com.ichi2.utils.HashUtil.hashSetInit
 
@@ -12,10 +13,10 @@ object CardUtils {
     /**
      * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
      */
-    fun getNotes(cards: Collection<Card>): Set<Note> {
+    fun getNotes(col: Collection, cards: kotlin.collections.Collection<Card>): Set<Note> {
         val notes: MutableSet<Note> = hashSetInit(cards.size)
         for (card in cards) {
-            notes.add(card.note())
+            notes.add(card.note(col))
         }
         return notes
     }

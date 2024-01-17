@@ -130,8 +130,8 @@ class TemplateManager {
         private var noteType: NotetypeJson = notetype ?: note.notetype
 
         companion object {
-            fun fromExistingCard(card: Card, browser: Boolean): TemplateRenderContext {
-                return TemplateRenderContext(card.col, card, card.note(), browser)
+            fun fromExistingCard(col: Collection, card: Card, browser: Boolean): TemplateRenderContext {
+                return TemplateRenderContext(col, card, card.note(col), browser)
             }
 
             fun fromCardLayout(
