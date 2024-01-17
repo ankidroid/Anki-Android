@@ -88,11 +88,12 @@ class CardTemplateNotetype(val notetype: NotetypeJson) {
         addTemplateChange(ChangeType.DELETE, ord)
     }
 
-    fun saveToDatabase(collection: Collection) {
+    context(Collection)
+    fun saveToDatabase() {
         Timber.d("saveToDatabase() called")
         dumpChanges()
         clearTempModelFiles()
-        return saveModel(collection, notetype, adjustedTemplateChanges)
+        return saveModel(notetype, adjustedTemplateChanges)
     }
 
     /**
@@ -441,10 +442,4 @@ class CardTemplateNotetype(val notetype: NotetypeJson) {
             return -1
         }
     }
-}
-
-/** @see CardTemplateNotetype.saveToDatabase */
-context (Collection)
-fun CardTemplateNotetype.saveToDatabase() {
-    this.saveToDatabase(this@Collection)
 }

@@ -121,13 +121,13 @@ suspend fun renderBrowserQA(
  * Handles everything for a model change at once - template add / deletes as well as content updates
  * @return Pair<Boolean, String> : (true, null) when success, (false, exceptionMessage) when failure
  */
+context (Collection)
 fun saveModel(
-    col: Collection,
     notetype: NotetypeJson,
     templateChanges: ArrayList<Array<Any>>
 ) {
     Timber.d("doInBackgroundSaveModel")
-    val oldModel = col.notetypes.get(notetype.getLong("id"))
+    val oldModel = this@Collection.notetypes.get(notetype.getLong("id"))
 
     // TODO: make undoable
     val newTemplates = notetype.getJSONArray("tmpls")
@@ -136,11 +136,11 @@ fun saveModel(
         when (change[1] as CardTemplateNotetype.ChangeType) {
             CardTemplateNotetype.ChangeType.ADD -> {
                 Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
-                col.notetypes.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
+                this@Collection.notetypes.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
             }
             CardTemplateNotetype.ChangeType.DELETE -> {
                 Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
-                col.notetypes.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
+                this@Collection.notetypes.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
             }
         }
     }
@@ -148,6 +148,6 @@ fun saveModel(
     // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
     // This could be done better
     notetype.put("mod", oldModel!!.getLong("mod"))
-    col.notetypes.save(notetype)
-    col.notetypes.update(notetype)
+    this@Collection.notetypes.save(notetype)
+    this@Collection.notetypes.update(notetype)
 }
