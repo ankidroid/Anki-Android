@@ -42,6 +42,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.intellij.lang.annotations.Language
+import org.jetbrains.annotations.VisibleForTesting
+import org.json.JSONObject
 import timber.log.Timber
 
 class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int) : ViewModel() {
@@ -137,7 +139,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         showingAnswer.emit(false)
 
         val questionData = withCol { currentCard.question(this) }
-        val question = prepareCardTextForDisplay(questionData)
+        val question = mungeQA(questionData)
         val answer = withCol { media.escapeMediaFilenames(currentCard.answer(this)) }
         val bodyClass = bodyClassForCardOrd(currentCard.ord)
 
@@ -153,12 +155,25 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
         Timber.v("showAnswer()")
         showingAnswer.emit(true)
         val answerData = withCol { currentCard.answer(this) }
-        val answer = prepareCardTextForDisplay(answerData)
+        val answer = mungeQA(answerData)
         eval.emit("_showAnswer(${Json.encodeToString(answer)});")
     }
 
+    /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L358) */
+    private suspend fun mungeQA(text: String): String =
+        typeAnsFilter(prepareCardTextForDisplay(text))
+
     private suspend fun prepareCardTextForDisplay(text: String): String {
         return addPlayButtons(withCol { media.escapeMediaFilenames(text) })
+    }
+
+    /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L671) */
+    private suspend fun typeAnsFilter(text: String): String {
+        return if (showingAnswer.value) {
+            typeAnsAnswerFilter(currentCard, text)
+        } else {
+            typeAnsQuestionFilter(text)
+        }
     }
 
     /**
@@ -283,6 +298,66 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
 
         private fun bodyClass(nightMode: Boolean = Themes.currentTheme.isNightMode): String {
             return if (nightMode) "nightMode night_mode" else ""
+        }
+
+        /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L669] */
+        @VisibleForTesting
+        val typeAnsRe = Regex("\\[\\[type:(.+?)]]")
+
+        /** removes `[[type:]]` blocks in questions */
+        @VisibleForTesting
+        fun typeAnsQuestionFilter(text: String) =
+            typeAnsRe.replace(text, "")
+
+        private suspend fun getTypeAnswerField(card: Card, text: String): JSONObject? {
+            val match = typeAnsRe.find(text) ?: return null
+
+            val typeAnsFieldName = match.groups[1]!!.value.let {
+                if (it.startsWith("cloze:")) {
+                    it.split(":")[1]
+                } else {
+                    it
+                }
+            }
+
+            val fields = withCol { card.model(this).flds }
+            for (i in 0 until fields.length()) {
+                val field = fields.get(i) as JSONObject
+                if (field.getString("name") == typeAnsFieldName) {
+                    return field
+                }
+            }
+            return null
+        }
+
+        private suspend fun getExpectedTypeInAnswer(card: Card, field: JSONObject): String? {
+            val fieldName = field.getString("name")
+            val expected = withCol { card.note(this).getItem(fieldName) }
+            return if (fieldName.startsWith("cloze:")) {
+                val clozeIdx = card.ord + 1
+                withCol {
+                    extractClozeForTyping(expected, clozeIdx).takeIf { it.isNotBlank() }
+                }
+            } else {
+                expected
+            }
+        }
+
+        /** Adapted from the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L720) */
+        suspend fun typeAnsAnswerFilter(card: Card, text: String): String {
+            val typeAnswerField = getTypeAnswerField(card, text)
+                ?: return typeAnsRe.replace(text, "")
+            val expectedAnswer = getExpectedTypeInAnswer(card, typeAnswerField)
+                ?: return typeAnsRe.replace(text, "")
+            val typeFont = typeAnswerField.getString("font")
+            val typeSize = typeAnswerField.getString("size")
+            val answerComparison = withCol { compareAnswer(expectedAnswer, provided = "") }
+            return typeAnsRe.replace(text) {
+                @Language("HTML")
+                val output =
+                    """<div style="font-family: '$typeFont'; font-size: ${typeSize}px">$answerComparison</div>"""
+                output
+            }
         }
     }
 }
