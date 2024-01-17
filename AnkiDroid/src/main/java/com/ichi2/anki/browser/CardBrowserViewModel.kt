@@ -209,7 +209,7 @@ class CardBrowserViewModel(
         viewModelScope.launch {
             // PERF: slightly inefficient if the source was lastDeckId
             setDeckId(getInitialDeck())
-            val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this) }
+            val cardsOrNotes = withCol { CardsOrNotes.fromCollection() }
             cardsOrNotesFlow.update { cardsOrNotes }
 
             withCol {

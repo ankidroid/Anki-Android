@@ -33,8 +33,9 @@ enum class CardsOrNotes {
     }
 
     companion object {
-        fun fromCollection(col: Collection): CardsOrNotes =
-            when (col.config.getBool(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE)) {
+        context (Collection)
+        fun fromCollection(): CardsOrNotes =
+            when (this@Collection.config.getBool(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE)) {
                 true -> NOTES
                 false -> CARDS
             }
