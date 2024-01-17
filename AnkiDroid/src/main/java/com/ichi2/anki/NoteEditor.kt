@@ -290,8 +290,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return
         }
         deckId = deck.deckId
-        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner()
-        mDeckSpinnerSelection!!.selectDeckById(deck.deckId, false)
+        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner(getColUnsafe)
+        launchCatchingTask {
+            mDeckSpinnerSelection!!.selectDeckById(deckId, false)
+        }
     }
 
     override val subtitleText: String
@@ -550,13 +552,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         mDeckSpinnerSelection =
             DeckSpinnerSelection(
                 this,
-                col,
                 findViewById(R.id.note_deck_spinner),
                 showAllDecks = false,
                 alwaysShowDefault = true,
                 showFilteredDecks = false
             )
-        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner()
+        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner(col)
         deckId = intent.getLongExtra(EXTRA_DID, deckId)
         val getTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW)
         setDid(mEditorNote)
@@ -664,7 +665,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
-                    mDeckSpinnerSelection!!.displayDeckSelectionDialog(getColUnsafe)
+                    launchCatchingTask { mDeckSpinnerSelection!!.displayDeckSelectionDialog() }
                 }
             KeyEvent.KEYCODE_L -> if (event.isCtrlPressed) {
                 showCardTemplateEditor()
@@ -1711,32 +1712,31 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun setDid(note: Note?) {
-        // If the target deck ID has already been set, we use that value and avoid trying to
-        // determine what it should be again. An existing value means we are resuming the activity
-        // where the target deck was already decided by the user.
-        if (deckId != 0L) {
-            mDeckSpinnerSelection!!.selectDeckById(deckId, false)
-            return
-        }
-        if (note == null || addNote || mCurrentEditedCard == null) {
-            val model = getColUnsafe.notetypes.current()
-            if (getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-                deckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1
-                if (getColUnsafe.decks.isDyn(deckId)) {
-                    /*
-                     * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
-                     * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been
-                     * selected previously in the activity.
-                     */
-                    deckId = 1
-                }
-            } else {
-                deckId = model.did
+        fun calculateDeckId(): DeckId {
+            if (deckId != 0L) return deckId
+            if (note != null && !addNote && mCurrentEditedCard != null) {
+                return mCurrentEditedCard!!.did
             }
-        } else {
-            deckId = mCurrentEditedCard!!.did
+
+            if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
+                return getColUnsafe.notetypes.current().did
+            }
+
+            val currentDeckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1L
+            return if (getColUnsafe.decks.isDyn(currentDeckId)) {
+                /*
+                 * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
+                 * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been
+                 * selected previously in the activity.
+                 */
+                1
+            } else {
+                currentDeckId
+            }
         }
-        mDeckSpinnerSelection!!.selectDeckById(deckId, false)
+
+        deckId = calculateDeckId()
+        launchCatchingTask { mDeckSpinnerSelection!!.selectDeckById(deckId, false) }
     }
 
     /** Refreshes the UI using the currently selected model as a template  */

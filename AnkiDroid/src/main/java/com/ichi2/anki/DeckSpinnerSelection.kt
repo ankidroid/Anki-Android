@@ -21,8 +21,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.annotation.MainThread
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
@@ -50,7 +52,6 @@ import timber.log.Timber
  */
 class DeckSpinnerSelection(
     private val context: AppCompatActivity,
-    private val collection: Collection,
     private val spinner: Spinner,
     private val showAllDecks: Boolean,
     private val alwaysShowDefault: Boolean,
@@ -66,19 +67,21 @@ class DeckSpinnerSelection(
     private lateinit var dropDownDecks: List<DeckNameId>
     private var deckDropDownAdapter: DeckDropDownAdapter? = null
 
-    fun initializeActionBarDeckSpinner(actionBar: ActionBar) {
+    @MainThread // spinner.adapter
+    fun initializeActionBarDeckSpinner(col: Collection, actionBar: ActionBar) {
         actionBar.setDisplayShowTitleEnabled(false)
 
         // Add drop-down menu to select deck to action bar.
-        dropDownDecks = computeDropDownDecks(includeFiltered = showFilteredDecks)
+        dropDownDecks = computeDropDownDecks(col, includeFiltered = showFilteredDecks)
         allDeckIds = dropDownDecks.map { it.id }
         deckDropDownAdapter = DeckDropDownAdapter(context, dropDownDecks)
         spinner.adapter = deckDropDownAdapter
         setSpinnerListener()
     }
 
-    fun initializeNoteEditorDeckSpinner() {
-        dropDownDecks = computeDropDownDecks(includeFiltered = false)
+    @MainThread // spinner.adapter
+    fun initializeNoteEditorDeckSpinner(col: Collection) {
+        dropDownDecks = computeDropDownDecks(col, includeFiltered = false)
         val deckNames = dropDownDecks.map { it.name }
         allDeckIds = dropDownDecks.map { it.id }
         val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
@@ -100,17 +103,18 @@ class DeckSpinnerSelection(
         setSpinnerListener()
     }
 
-    /**
-     * @return All decks.
-     */
-    fun computeDropDownDecks(includeFiltered: Boolean): List<DeckNameId> {
-        return collection.decks.allNamesAndIds(includeFiltered = includeFiltered)
-    }
+    /** @return All decks.  */
+    suspend fun computeDropDownDecks(includeFiltered: Boolean): List<DeckNameId> =
+        withCol { computeDropDownDecks(this, includeFiltered) }
+
+    /** @return All decks. */
+    private fun computeDropDownDecks(col: Collection, includeFiltered: Boolean): List<DeckNameId> =
+        col.decks.allNamesAndIds(includeFiltered = includeFiltered)
 
     private fun setSpinnerListener() {
         spinner.setOnTouchListener { _: View?, motionEvent: MotionEvent ->
             if (motionEvent.action == MotionEvent.ACTION_UP) {
-                displayDeckSelectionDialog(collection)
+                context.launchCatchingTask { displayDeckSelectionDialog() }
             }
             true
         }
@@ -152,7 +156,7 @@ class DeckSpinnerSelection(
      * the current deck id of Collection.
      * @return True if selection succeeded.
      */
-    fun selectDeckById(deckId: DeckId, setAsCurrentDeck: Boolean): Boolean {
+    suspend fun selectDeckById(deckId: DeckId, setAsCurrentDeck: Boolean): Boolean {
         return if (deckId == ALL_DECKS_ID) {
             selectAllDecks()
         } else {
@@ -166,13 +170,13 @@ class DeckSpinnerSelection(
      * @param setAsCurrentDeck whether this deck should be selected in the collection (if it exists)
      * @return whether it was found
      */
-    private fun selectDeck(deckId: DeckId, setAsCurrentDeck: Boolean): Boolean {
+    private suspend fun selectDeck(deckId: DeckId, setAsCurrentDeck: Boolean): Boolean {
         for (dropDownDeckIdx in allDeckIds.indices) {
             if (allDeckIds[dropDownDeckIdx] == deckId) {
                 val position = if (showAllDecks) dropDownDeckIdx + 1 else dropDownDeckIdx
                 spinner.setSelection(position)
                 if (setAsCurrentDeck) {
-                    collection.decks.select(deckId)
+                    withCol { decks.select(deckId) }
                 }
                 return true
             }
@@ -196,8 +200,8 @@ class DeckSpinnerSelection(
     /**
      * Displays a [DeckSelectionDialog]
      */
-    fun displayDeckSelectionDialog(col: Collection?) {
-        val decks = fromCollection(col!!, includeFiltered = false).toMutableList()
+    suspend fun displayDeckSelectionDialog() {
+        val decks = fromCollection(includeFiltered = false).toMutableList()
         if (showAllDecks) {
             decks.add(SelectableDeck(ALL_DECKS_ID, context.resources.getString(R.string.card_browser_all_decks)))
         }
