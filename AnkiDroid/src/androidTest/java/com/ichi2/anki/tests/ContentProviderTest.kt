@@ -201,7 +201,7 @@ class ContentProviderTest : InstrumentedTest() {
         // Check that it looks as expected
         assertNotNull("check note URI path", newNoteUri!!.lastPathSegment)
         val addedNote = Note(col, newNoteUri.lastPathSegment!!.toLong())
-        addedNote.load()
+        addedNote.load(col)
         assertEquals(
             "Check that fields were set correctly",
             addedNote.fields,
@@ -211,11 +211,11 @@ class ContentProviderTest : InstrumentedTest() {
         val model: JSONObject? = col.notetypes.get(modelId)
         assertNotNull("Check model", model)
         val expectedNumCards = model!!.getJSONArray("tmpls").length()
-        assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.numberOfCards())
+        assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.numberOfCards(col))
         // Now delete the note
         cr.delete(newNoteUri, null, null)
         try {
-            addedNote.load()
+            addedNote.load(col)
             fail("Expected RuntimeException to be thrown when deleting note")
         } catch (e: RuntimeException) {
             // Expect RuntimeException to be thrown when loading deleted note
@@ -1300,7 +1300,7 @@ class ContentProviderTest : InstrumentedTest() {
             fields: Array<String>,
             tag: String
         ): Uri {
-            val newNote = Note(col, col.notetypes.get(mid)!!)
+            val newNote = Note(col.notetypes.get(mid)!!)
             for (idx in fields.indices) {
                 newNote.setField(idx, fields[idx])
             }
@@ -1310,7 +1310,7 @@ class ContentProviderTest : InstrumentedTest() {
                 col.addNote(newNote),
                 greaterThanOrEqualTo(1)
             )
-            for (c in newNote.cards()) {
+            for (c in newNote.cards(col)) {
                 c.did = did
                 col.updateCard(c, skipUndoEntry = true)
             }

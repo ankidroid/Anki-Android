@@ -57,7 +57,7 @@ class NoteServiceTest : RobolectricTest() {
         multiMediaNote!!.getField(0)!!.text = "foo"
         multiMediaNote.getField(1)!!.text = "bar"
 
-        val basicNote = Note(col, testModel).apply {
+        val basicNote = Note(testModel).apply {
             setField(0, "this should be changed to foo")
             setField(1, "this should be changed to bar")
         }
@@ -76,7 +76,7 @@ class NoteServiceTest : RobolectricTest() {
 
         // model with ID 45
         testNotetype = NotetypeJson("""{"flds": [{"name": "foo bar", "ord": "1"}], "id": "45"}""")
-        val noteWithID45 = Note(col, testNotetype)
+        val noteWithID45 = Note(testNotetype)
         val expectedException: Throwable = assertThrows(RuntimeException::class.java) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
         assertEquals(expectedException.message, "Source and Destination Note ID do not match.")
     }
@@ -245,19 +245,19 @@ class NoteServiceTest : RobolectricTest() {
             }
         }
         // avg ease = (3000/10 + 1500/10 + 100/10 + 750/10) / 4 = [156.25] = 156
-        assertEquals(156, NoteService.avgEase(note))
+        assertEquals(156, NoteService.avgEase(col, note))
 
         // test case: one card is new
         note.cards()[2].update {
             type = Consts.CARD_TYPE_NEW
         }
         // avg ease = (3000/10 + 1500/10 + 750/10) / 3 = [175] = 175
-        assertEquals(175, NoteService.avgEase(note))
+        assertEquals(175, NoteService.avgEase(col, note))
 
         // test case: all cards are new
         note.updateCards { type = Consts.CARD_TYPE_NEW }
         // no cards are rev, so avg ease cannot be calculated
-        assertEquals(null, NoteService.avgEase(note))
+        assertEquals(null, NoteService.avgEase(col, note))
     }
 
     @Test
@@ -276,7 +276,7 @@ class NoteServiceTest : RobolectricTest() {
         }
 
         // avg interval = (3000 + 1500 + 1000 + 750) / 4 = [1562.5] = 1562
-        assertEquals(1562, NoteService.avgInterval(note))
+        assertEquals(1562, NoteService.avgInterval(col, note))
 
         // case: one card is new or learning
         note.cards()[2].update {
@@ -284,12 +284,12 @@ class NoteServiceTest : RobolectricTest() {
         }
 
         // avg interval = (3000 + 1500 + 750) / 3 = [1750] = 1750
-        assertEquals(1750, NoteService.avgInterval(note))
+        assertEquals(1750, NoteService.avgInterval(col, note))
 
         // case: all cards are new or learning
         note.updateCards { type = newOrLearningList.shuffled().first() }
 
         // no cards are rev or relearning, so avg interval cannot be calculated
-        assertEquals(null, NoteService.avgInterval(note))
+        assertEquals(null, NoteService.avgInterval(col, note))
     }
 }

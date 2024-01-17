@@ -29,7 +29,6 @@ import java.util.regex.Pattern
 
 @KotlinCleanup("lots to do")
 class Note : Cloneable {
-    val col: Collection
 
     /**
      * Should only be mutated by addNote()
@@ -54,13 +53,11 @@ class Note : Cloneable {
         private set
 
     constructor(col: Collection, id: Long) {
-        this.col = col
         this.id = id
-        load()
+        load(col)
     }
 
-    constructor(col: Collection, notetype: NotetypeJson) {
-        this.col = col
+    constructor(notetype: NotetypeJson) {
         this.id = 0
         guId = Utils.guid64()
         this.notetype = notetype
@@ -70,12 +67,12 @@ class Note : Cloneable {
         fMap = Notetypes.fieldMap(this.notetype)
     }
 
-    fun load() {
+    fun load(col: Collection) {
         val note = col.backend.getNote(this.id)
-        loadFromBackendNote(note)
+        loadFromBackendNote(col, note)
     }
 
-    private fun loadFromBackendNote(note: anki.notes.Note) {
+    private fun loadFromBackendNote(col: Collection, note: anki.notes.Note) {
         this.id = note.id
         this.guId = note.guid
         this.mid = note.notetypeId
@@ -88,7 +85,7 @@ class Note : Cloneable {
         this.fMap = Notetypes.fieldMap(notetype)
     }
 
-    fun reloadModel() {
+    fun reloadModel(col: Collection) {
         notetype = col.notetypes.get(mid)!!
     }
 
@@ -96,21 +93,21 @@ class Note : Cloneable {
      * If fields or tags have changed, write changes to disk.
      */
     @RustCleanup("code should call col.updateNote() instead, in undoableOp {}")
-    fun flush() {
+    fun flush(col: Collection) {
         col.updateNote(this)
     }
 
-    fun numberOfCards(): Int {
+    fun numberOfCards(col: Collection): Int {
         return col.db.queryLongScalar("SELECT count() FROM cards WHERE nid = ?", this.id).toInt()
     }
 
-    fun cids(): List<Long> {
+    fun cids(col: Collection): List<Long> {
         return col.db.queryLongList("SELECT id FROM cards WHERE nid = ? ORDER BY ord", this.id)
     }
 
-    fun cards(): ArrayList<Card> {
-        val cards = ArrayList<Card>(cids().size)
-        for (cid in cids()) {
+    fun cards(col: Collection): ArrayList<Card> {
+        val cards = ArrayList<Card>(cids(col).size)
+        for (cid in cids(col)) {
             // each getCard access database. This is inefficient.
             // Seems impossible to solve without creating a constructor of a list of card.
             // Not a big trouble since most note have a small number of cards.
@@ -121,7 +118,7 @@ class Note : Cloneable {
 
     /** The first card, assuming it exists. */
     @CheckResult
-    fun firstCard(): Card {
+    fun firstCard(col: Collection): Card {
         return col.getCard(
             col.db.queryLongScalar(
                 "SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1",
@@ -184,15 +181,15 @@ class Note : Cloneable {
      * Tags
      * ***********************************************************
      */
-    fun hasTag(tag: String?): Boolean {
+    fun hasTag(col: Collection, tag: String?): Boolean {
         return col.tags.inList(tag!!, tags)
     }
 
-    fun stringTags(): String {
+    fun stringTags(col: Collection): String {
         return col.tags.join(col.tags.canonify(tags))
     }
 
-    fun setTagsFromStr(str: String?) {
+    fun setTagsFromStr(col: Collection, str: String?) {
         tags = col.tags.split(str!!)
     }
 
@@ -233,7 +230,7 @@ class Note : Cloneable {
      *
      * @return whether it has no content, dupe first field, or nothing remarkable.
      */
-    fun dupeOrEmpty(): DupeOrEmpty {
+    fun dupeOrEmpty(col: Collection): DupeOrEmpty {
         if (fields[0].trim { it <= ' ' }.isEmpty()) {
             return DupeOrEmpty.EMPTY
         }
@@ -261,7 +258,7 @@ class Note : Cloneable {
         return DupeOrEmpty.CORRECT
     }
 
-    fun sFld(): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
+    fun sFld(col: Collection): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
     fun setField(index: Int, value: String) {
         fields[index] = value
@@ -315,3 +312,15 @@ class Note : Cloneable {
         }
     }
 }
+
+/** @see Note.hasTag */
+context (Collection)
+fun Note.hasTag(tag: String) = this.hasTag(this@Collection, tag)
+
+/** @see Note.setTagsFromStr */
+context (Collection)
+fun Note.setTagsFromStr(str: String?) = this.setTagsFromStr(this@Collection, str)
+
+/** @see Note.load */
+context (Collection)
+fun Note.load() = this.load(this@Collection)

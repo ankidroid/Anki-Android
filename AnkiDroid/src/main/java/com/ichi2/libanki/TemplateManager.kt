@@ -135,6 +135,7 @@ class TemplateManager {
             }
 
             fun fromCardLayout(
+                col: Collection,
                 note: Note,
                 card: Card,
                 notetype: NotetypeJson,
@@ -142,7 +143,7 @@ class TemplateManager {
                 fillEmpty: Boolean
             ): TemplateRenderContext {
                 return TemplateRenderContext(
-                    note.col,
+                    col,
                     card,
                     note,
                     notetype = notetype,

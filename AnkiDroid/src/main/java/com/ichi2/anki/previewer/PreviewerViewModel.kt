@@ -31,6 +31,7 @@ import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound.addPlayButtons
+import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.note
 import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
@@ -132,8 +133,8 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     }
 
     private suspend fun updateMarkIcon() {
-        val note = withCol { currentCard.note() }
-        isMarked.emit(note.hasTag(MARKED_TAG))
+        val isMarkedValue = withCol { currentCard.note().hasTag(MARKED_TAG) }
+        isMarked.emit(isMarkedValue)
     }
 
     private suspend fun showQuestion() {

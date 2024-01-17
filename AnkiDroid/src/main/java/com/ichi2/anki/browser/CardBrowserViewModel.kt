@@ -41,6 +41,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

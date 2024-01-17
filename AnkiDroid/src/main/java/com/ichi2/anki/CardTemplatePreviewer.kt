@@ -239,7 +239,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
-                cardCount = toPreview.note(getColUnsafe).numberOfCardsEphemeral()
+                cardCount = toPreview.note(col).numberOfCardsEphemeral(col)
                 if (cardCount >= 2) {
                     previewLayout!!.showNavigationButtons()
                 }
@@ -304,7 +304,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             currentNote.delTag(tag)
         }
         if (tagsList != null) {
-            val tagsSet = currentNote.col.tags.canonify(tagsList)
+            val tagsSet = getColUnsafe.tags.canonify(tagsList)
             currentNote.addTags(tagsSet)
         }
     }
@@ -425,6 +425,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                     ord
                 }
                 val context = TemplateManager.TemplateRenderContext.fromCardLayout(
+                    col,
                     note(col),
                     this,
                     model(col),
@@ -447,7 +448,7 @@ private class EphemeralCard(col: Collection, id: Long?) : Card(col, id) {
         fun fromNote(n: Note, col: Collection, cardIndex: Int = 0): EphemeralCard {
             val card = EphemeralCard(col, null)
             card.did = 1
-            card.ord = n.cardIndexToOrd(cardIndex)
+            card.ord = n.cardIndexToOrd(col, cardIndex)
             Timber.v("Generating ephemeral note, idx %d ord %d", cardIndex, card.ord)
 
             val nt = n.notetype
@@ -460,6 +461,7 @@ private class EphemeralCard(col: Collection, id: Long?) : Card(col, id) {
             template.put("ord", card.ord)
 
             val output = TemplateManager.TemplateRenderContext.fromCardLayout(
+                col,
                 n,
                 card,
                 notetype = nt,
@@ -474,7 +476,7 @@ private class EphemeralCard(col: Collection, id: Long?) : Card(col, id) {
 }
 
 /** returns the number of cards from a note which has not had data saved in the database */
-private fun Note.numberOfCardsEphemeral(): Int {
+private fun Note.numberOfCardsEphemeral(col: Collection): Int {
     // We can't use note.numberOfCards() as this uses the database value
     return when {
         this.notetype.isCloze -> col.clozeNumbersInNote(this).size
@@ -485,7 +487,7 @@ private fun Note.numberOfCardsEphemeral(): Int {
 /**
  * Given a card index, returns the 'ord' of the card
  */
-private fun Note.cardIndexToOrd(index: Int): Int {
+private fun Note.cardIndexToOrd(col: Collection, index: Int): Int {
     // We can't use note.numberOfCards() as this uses the database value
     return when {
         this.notetype.isCloze -> col.clozeNumbersInNote(this)[index] - 1

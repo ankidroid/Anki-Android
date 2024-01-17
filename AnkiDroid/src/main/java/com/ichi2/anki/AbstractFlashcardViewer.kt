@@ -2164,7 +2164,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun shouldDisplayMark(): Boolean {
-        return isMarked(currentCard!!.note(getColUnsafe))
+        return isMarked(getColUnsafe, currentCard!!.note(getColUnsafe))
     }
 
     val writeLock: Lock
@@ -2550,8 +2550,8 @@ abstract class AbstractFlashcardViewer :
         if (currentCard!!.note(getColUnsafe).tags != selectedTags) {
             val tagString = selectedTags.joinToString(" ")
             val note = currentCard!!.note(getColUnsafe)
-            note.setTagsFromStr(tagString)
-            note.flush()
+            note.setTagsFromStr(getColUnsafe, tagString)
+            note.flush(getColUnsafe)
             // Reload current card to reflect tag changes
             reloadWebViewContent()
         }

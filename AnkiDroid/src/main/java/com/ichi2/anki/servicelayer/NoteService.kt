@@ -22,6 +22,7 @@ package com.ichi2.anki.servicelayer
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
@@ -33,6 +34,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.exception.EmptyMediaException
+import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.CollectionUtils.average
 import org.json.JSONException
@@ -72,7 +74,7 @@ object NoteService {
         return null
     }
 
-    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
+    fun updateMultimediaNoteFromFields(col: Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
         for (i in fields.indices) {
             val value = fields[i]
             val field: IField = if (value.startsWith("<img")) {
@@ -116,7 +118,7 @@ object NoteService {
      *
      * @param field
      */
-    fun importMediaToDirectory(col: com.ichi2.libanki.Collection, field: IField?) {
+    fun importMediaToDirectory(col: Collection, field: IField?) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
             EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> tmpMediaPath = field.audioPath
@@ -194,8 +196,10 @@ object NoteService {
         }
     }
 
-    fun isMarked(note: Note): Boolean {
-        return note.hasTag("marked")
+    suspend fun isMarked(note: Note): Boolean = withCol { isMarked(this, note) }
+
+    fun isMarked(col: Collection, note: Note): Boolean {
+        return note.hasTag(col, tag = "marked")
     }
 
     //  TODO: should make a direct SQL query to do this
@@ -203,23 +207,23 @@ object NoteService {
      * returns the average ease of all the non-new cards in the note,
      * or if all the cards in the note are new, returns null
      */
-    fun avgEase(note: Note): Int? {
-        val nonNewCards = note.cards().filter { it.type != Consts.CARD_TYPE_NEW }
+    fun avgEase(col: Collection, note: Note): Int? {
+        val nonNewCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW }
 
         return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
     }
 
     //  TODO: should make a direct SQL query to do this
-    fun totalLapses(note: Note) = note.cards().sumOf { it.lapses }
+    fun totalLapses(col: Collection, note: Note) = note.cards(col).sumOf { it.lapses }
 
-    fun totalReviews(note: Note) = note.cards().sumOf { it.reps }
+    fun totalReviews(col: Collection, note: Note) = note.cards(col).sumOf { it.reps }
 
     /**
      * Returns the average interval of all the non-new and non-learning cards in the note,
      * or if all the cards in the note are new or learning, returns null
      */
-    fun avgInterval(note: Note): Int? {
-        val nonNewOrLearningCards = note.cards().filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
+    fun avgInterval(col: Collection, note: Note): Int? {
+        val nonNewOrLearningCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
 
         return nonNewOrLearningCards.average { it.ivl }?.toInt()
     }
@@ -234,8 +238,8 @@ object NoteService {
 
 const val MARKED_TAG = "marked"
 
-fun Card.totalLapsesOfNote(col: Collection) = NoteService.totalLapses(note(col))
+fun Card.totalLapsesOfNote(col: Collection) = NoteService.totalLapses(col, note(col))
 
-fun Card.totalReviewsForNote(col: Collection) = NoteService.totalReviews(note(col))
+fun Card.totalReviewsForNote(col: Collection) = NoteService.totalReviews(col, note(col))
 
-fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(note(col))
+fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(col, note(col))

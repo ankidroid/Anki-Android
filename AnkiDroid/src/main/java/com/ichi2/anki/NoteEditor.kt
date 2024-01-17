@@ -228,8 +228,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         NoteEditorActivityResultCallback {
             // Model can change regardless of exit type - update ourselves and CardBrowser
             mReloadRequired = true
-            mEditorNote!!.reloadModel()
-            if (mCurrentEditedCard == null || !mEditorNote!!.cids()
+            mEditorNote!!.reloadModel(getColUnsafe)
+            if (mCurrentEditedCard == null || !mEditorNote!!.cids(getColUnsafe)
                 .contains(mCurrentEditedCard!!.id)
             ) {
                 if (!addNote) {
@@ -885,7 +885,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Save deck to model
             mEditorNote!!.notetype.put("did", deckId)
             // Save tags to model
-            mEditorNote!!.setTagsFromStr(tagsAsString(mSelectedTags!!))
+            mEditorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(mSelectedTags!!))
             val tags = JSONArray()
             for (t in mSelectedTags!!) {
                 tags.put(t)
@@ -908,7 +908,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             val oldModel = if (mCurrentEditedCard == null) null else mCurrentEditedCard!!.model(getColUnsafe)
             if (newModel != oldModel) {
                 mReloadRequired = true
-                if (mModelChangeCardMap!!.size < mEditorNote!!.numberOfCards() || mModelChangeCardMap!!.containsValue(
+                if (mModelChangeCardMap!!.size < mEditorNote!!.numberOfCards(getColUnsafe) || mModelChangeCardMap!!.containsValue(
                         null
                     )
                 ) {
@@ -951,7 +951,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             // added tag?
             for (t in mSelectedTags!!) {
-                modified = modified || !mEditorNote!!.hasTag(t)
+                modified = modified || !mEditorNote!!.hasTag(getColUnsafe, tag = t)
             }
             // removed tag?
             modified = modified || mEditorNote!!.tags.size > mSelectedTags!!.size
@@ -961,7 +961,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 return
             }
 
-            mEditorNote!!.setTagsFromStr(tagsAsString(mSelectedTags!!))
+            mEditorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(mSelectedTags!!))
             changed = true
 
             if (caller != CALLER_PREVIEWER_EDIT) {
@@ -971,7 +971,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
             withProgress {
                 undoableOp {
-                    updateNote(mCurrentEditedCard!!.note(this))
+                    updateNote(mCurrentEditedCard!!.note())
                 }
                 closeNoteEditor()
             }
@@ -987,9 +987,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         val noteId = mEditorNote!!.id
         undoableOp {
             notetypes.change(oldNotetype, noteId, newNotetype, mModelChangeFieldMap!!, mModelChangeCardMap!!)
+            // refresh the note object to reflect the database changes
+            mEditorNote!!.load()
         }
-        // refresh the note object to reflect the database changes
-        mEditorNote!!.load()
         // close note editor
         closeNoteEditor()
     }
@@ -1681,7 +1681,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Update the field in the Note so we can run a dupe check on it.
         updateField(field)
         // 1 is empty, 2 is dupe, null is neither.
-        val dupeCode = mEditorNote!!.dupeOrEmpty()
+        val dupeCode = mEditorNote!!.dupeOrEmpty(getColUnsafe)
         // Change bottom line color of text field
         if (dupeCode == DupeOrEmpty.DUPE) {
             field!!.setDupeStyle()
@@ -1746,7 +1746,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun setNote(note: Note?, changeType: FieldChangeType) {
         mEditorNote = if (note == null || addNote) {
             val model = getColUnsafe.notetypes.current()
-            Note(getColUnsafe, model)
+            Note(model)
         } else {
             note
         }
@@ -2124,7 +2124,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 val templatesLength = tmpls.length()
                 mModelChangeCardMap = HashUtil.hashMapInit(templatesLength)
                 for (i in 0 until templatesLength) {
-                    if (i < mEditorNote!!.numberOfCards()) {
+                    if (i < mEditorNote!!.numberOfCards(getColUnsafe)) {
                         mModelChangeCardMap!![i] = i
                     } else {
                         mModelChangeCardMap!![i] = null
