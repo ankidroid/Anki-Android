@@ -351,17 +351,12 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         companion object {
             /**
-             * @param filter A method deciding which deck to add
-             * @return the list of all SelectableDecks from the collection satisfying filter
+             * @param includeFiltered Whether to include filtered decks in the output
+             * @return all [SelectableDecks][SelectableDeck] in the collection satisfying the filter
              */
-            fun fromCollection(c: Collection, includeFiltered: Boolean): List<SelectableDeck> {
-                val all = c.decks.allNamesAndIds(includeFiltered = includeFiltered)
-                val ret: MutableList<SelectableDeck> = ArrayList(all.size)
-                for (d in all) {
-                    ret.add(SelectableDeck(d))
-                }
-                return ret
-            }
+            fun fromCollection(c: Collection, includeFiltered: Boolean): List<SelectableDeck> =
+                c.decks.allNamesAndIds(includeFiltered = includeFiltered)
+                    .map { SelectableDeck(it) }
         }
     }
 

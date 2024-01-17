@@ -58,7 +58,7 @@ class DeckSpinnerSelection(
     /**
      * All of the decks shown to the user.
      */
-    private lateinit var allDeckIds: ArrayList<Long>
+    private lateinit var allDeckIds: List<Long>
 
     private val fragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier()
 
@@ -70,11 +70,7 @@ class DeckSpinnerSelection(
 
         // Add drop-down menu to select deck to action bar.
         dropDownDecks = computeDropDownDecks(includeFiltered = showFilteredDecks)
-        allDeckIds = ArrayList(dropDownDecks.size)
-        for (d in dropDownDecks) {
-            val thisDid = d.id
-            allDeckIds.add(thisDid)
-        }
+        allDeckIds = dropDownDecks.map { it.id }
         deckDropDownAdapter = DeckDropDownAdapter(context, dropDownDecks)
         spinner.adapter = deckDropDownAdapter
         setSpinnerListener()
@@ -82,13 +78,8 @@ class DeckSpinnerSelection(
 
     fun initializeNoteEditorDeckSpinner() {
         dropDownDecks = computeDropDownDecks(includeFiltered = false)
-        val deckNames = ArrayList<String>(dropDownDecks.size)
-        allDeckIds = ArrayList(dropDownDecks.size)
-        for (d in dropDownDecks) {
-            val currentName = d.name
-            deckNames.add(currentName)
-            allDeckIds.add(d.id)
-        }
+        val deckNames = dropDownDecks.map { it.name }
+        allDeckIds = dropDownDecks.map { it.id }
         val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
                 // Cast the drop down items (popup items) as text view
