@@ -1038,14 +1038,14 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addCardToCursor(currentCard: Card, rv: MatrixCursor, @Suppress("UNUSED_PARAMETER") col: Collection, columns: Array<String>) {
+    private fun addCardToCursor(currentCard: Card, rv: MatrixCursor, col: Collection, columns: Array<String>) {
         val cardName: String = try {
-            currentCard.template().getString("name")
+            currentCard.template(col).getString("name")
         } catch (je: JSONException) {
             throw IllegalArgumentException("Card is using an invalid template", je)
         }
-        val question = currentCard.renderOutput().questionWithFixedSoundTags()
-        val answer = currentCard.renderOutput().answerWithFixedSoundTags()
+        val question = currentCard.renderOutput(col).questionWithFixedSoundTags()
+        val answer = currentCard.renderOutput(col).answerWithFixedSoundTags()
         val rb = rv.newRow()
         for (column in columns) {
             when (column) {
@@ -1055,9 +1055,9 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.DECK_ID -> rb.add(currentCard.did)
                 FlashCardsContract.Card.QUESTION -> rb.add(question)
                 FlashCardsContract.Card.ANSWER -> rb.add(answer)
-                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple())
-                FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(false).answerText)
-                FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer())
+                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple(col))
+                FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(col, false).answerText)
+                FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer(col))
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }
@@ -1071,7 +1071,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.ReviewInfo.CARD_ORD -> rb.add(currentCard.ord)
                 FlashCardsContract.ReviewInfo.BUTTON_COUNT -> rb.add(buttonCount)
                 FlashCardsContract.ReviewInfo.NEXT_REVIEW_TIMES -> rb.add(nextReviewTimesJson.toString())
-                FlashCardsContract.ReviewInfo.MEDIA_FILES -> rb.add(JSONArray(col.media.filesInStr(currentCard.question() + currentCard.answer())))
+                FlashCardsContract.ReviewInfo.MEDIA_FILES -> rb.add(JSONArray(col.media.filesInStr(currentCard.question(col) + currentCard.answer(col))))
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }

@@ -88,7 +88,8 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
 
     fun toggleMark() {
         launchCatching {
-            val note = currentCard.note()
+            // TODO: Consider a context receiver
+            val note = withCol { currentCard.note(this) }
             NoteService.toggleMark(note)
             isMarked.emit(NoteService.isMarked(note))
         }
@@ -129,15 +130,17 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     }
 
     private suspend fun updateMarkIcon() {
-        isMarked.emit(currentCard.note().hasTag(MARKED_TAG))
+        val note = withCol { currentCard.note(this) }
+        isMarked.emit(note.hasTag(MARKED_TAG))
     }
 
     private suspend fun showQuestion() {
         Timber.v("showQuestion()")
         showingAnswer.emit(false)
 
-        val question = prepareCardTextForDisplay(currentCard.question())
-        val answer = withCol { media.escapeMediaFilenames(currentCard.answer()) }
+        val questionData = withCol { currentCard.question(this) }
+        val question = prepareCardTextForDisplay(questionData)
+        val answer = withCol { media.escapeMediaFilenames(currentCard.answer(this)) }
         val bodyClass = bodyClassForCardOrd(currentCard.ord)
 
         eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '$bodyClass');")
@@ -151,7 +154,8 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     private suspend fun showAnswer() {
         Timber.v("showAnswer()")
         showingAnswer.emit(true)
-        val answer = prepareCardTextForDisplay(currentCard.answer())
+        val answerData = withCol { currentCard.answer(this) }
+        val answer = prepareCardTextForDisplay(answerData)
         eval.emit("_showAnswer(${Json.encodeToString(answer)});")
     }
 

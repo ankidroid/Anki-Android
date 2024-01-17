@@ -239,7 +239,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
-                cardCount = toPreview.note().numberOfCardsEphemeral()
+                cardCount = toPreview.note(getColUnsafe).numberOfCardsEphemeral()
                 if (cardCount >= 2) {
                     previewLayout!!.showNavigationButtons()
                 }
@@ -287,7 +287,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             currentCard!!.oDid = currentCard!!.did
         }
         currentCard!!.did = newDid
-        val currentNote = currentCard!!.note()
+        val currentNote = currentCard!!.note(col)
         val tagsList = noteEditorBundle!!.getStringArrayList("tags")
         setTags(currentNote, tagsList)
         return currentCard
@@ -397,14 +397,15 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
         /* if we have an unsaved note saved, use it instead of a collection lookup */
         override fun note(
+            col: Collection,
             reload: Boolean
         ): Note {
-            return _note ?: super.note(reload)
+            return _note ?: super.note(col, reload)
         }
 
         /** if we have an unsaved note saved, use it instead of a collection lookup  */
-        override fun note(): Note {
-            return _note ?: super.note()
+        override fun note(col: Collection): Note {
+            return _note ?: super.note(col)
         }
 
         /** if we have an unsaved note, never return empty  */
@@ -412,22 +413,22 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             get() = _note != null
 
         /** Override the method that fetches the model so we can render unsaved models  */
-        override fun model(): NotetypeJson {
-            return editedNotetype ?: super.model()
+        override fun model(col: Collection): NotetypeJson {
+            return editedNotetype ?: super.model(col)
         }
 
-        override fun renderOutput(reload: Boolean, browser: Boolean): TemplateRenderOutput {
+        override fun renderOutput(col: Collection, reload: Boolean, browser: Boolean): TemplateRenderOutput {
             if (renderOutput == null || reload) {
-                val index = if (model().isCloze) {
+                val index = if (model(col).isCloze) {
                     0
                 } else {
                     ord
                 }
                 val context = TemplateManager.TemplateRenderContext.fromCardLayout(
-                    note(),
+                    note(col),
                     this,
-                    model(),
-                    model().getJSONArray("tmpls")[index] as JSONObject,
+                    model(col),
+                    model(col).getJSONArray("tmpls")[index] as JSONObject,
                     fillEmpty = false
                 )
                 renderOutput =
@@ -439,7 +440,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 }
 
 private class EphemeralCard(col: Collection, id: Long?) : Card(col, id) {
-    override fun renderOutput(reload: Boolean, browser: Boolean): TemplateRenderOutput {
+    override fun renderOutput(col: Collection, reload: Boolean, browser: Boolean): TemplateRenderOutput {
         return this.renderOutput!!
     }
     companion object {

@@ -1177,7 +1177,7 @@ class ContentProviderTest : InstrumentedTest() {
         // get the first card due
         // ----------------------
         val card = getFirstCardFromScheduler(col)
-        val note = card!!.note()
+        val note = card!!.note(col)
         val noteId = note.id
 
         // make sure the tag is what we expect initially
@@ -1312,7 +1312,7 @@ class ContentProviderTest : InstrumentedTest() {
             )
             for (c in newNote.cards()) {
                 c.did = did
-                c.col.updateCard(c, skipUndoEntry = true)
+                col.updateCard(c, skipUndoEntry = true)
             }
             return Uri.withAppendedPath(
                 FlashCardsContract.Note.CONTENT_URI,

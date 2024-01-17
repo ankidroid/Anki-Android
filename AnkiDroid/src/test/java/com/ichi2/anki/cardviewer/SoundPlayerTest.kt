@@ -224,7 +224,7 @@ class SoundPlayerTest : RobolectricTest() {
         val card = addNoteUsingBasicModel().firstCard()
         mockkObject(card)
 
-        every { card.renderOutput() } answers {
+        every { card.renderOutput(any()) } answers {
             TemplateManager.TemplateRenderContext.TemplateRenderOutput(
                 questionText = "",
                 answerText = "",
@@ -245,7 +245,7 @@ class SoundPlayerTest : RobolectricTest() {
             }
         }
 
-        this.loadCardSounds(card, side)
+        this.loadCardSounds(col, card, side)
     }
 }
 
