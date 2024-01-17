@@ -45,12 +45,11 @@ fun deleteMedia(unused: List<String>): Int {
 
 // TODO: Once [com.ichi2.async.CollectionTask.RebuildCram] and [com.ichi2.async.CollectionTask.EmptyCram]
 // are migrated to Coroutines, move this function to [com.ichi2.anki.StudyOptionsFragment]
-fun updateValuesFromDeck(
-    col: Collection
-): StudyOptionsFragment.DeckStudyData? {
+context (Collection)
+fun updateValuesFromDeck(): StudyOptionsFragment.DeckStudyData? {
     Timber.d("doInBackgroundUpdateValuesFromDeck")
     return try {
-        val sched = col.sched
+        val sched = this@Collection.sched
         val counts = sched.counts()
         val totalNewCount = sched.totalNewForCurrentDeck()
         val totalCount = sched.cardCount()

@@ -2127,7 +2127,7 @@ open class DeckPicker :
                     Timber.d("rebuildFiltered: doInBackground - RebuildCram")
                     decks.select(did)
                     sched.rebuildDyn(decks.selected())
-                    updateValuesFromDeck(this)
+                    updateValuesFromDeck()
                 }
             }
             updateDeckList()
@@ -2142,7 +2142,7 @@ open class DeckPicker :
                 withCol {
                     Timber.d("doInBackgroundEmptyCram")
                     sched.emptyDyn(decks.selected())
-                    updateValuesFromDeck(this)
+                    updateValuesFromDeck()
                 }
             }
             updateDeckList()
