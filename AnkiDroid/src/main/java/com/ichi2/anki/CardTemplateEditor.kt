@@ -528,7 +528,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                 return true
                             }
                             R.id.action_add_deck_override -> {
-                                displayDeckOverrideDialog(col, tempModel!!)
+                                displayDeckOverrideDialog(tempModel!!)
                                 return true
                             }
                             R.id.action_preview -> {
@@ -609,17 +609,17 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             onRequestPreviewResult.launch(i)
         }
 
-        private fun displayDeckOverrideDialog(col: Collection, tempModel: CardTemplateNotetype) {
+        private fun displayDeckOverrideDialog(tempModel: CardTemplateNotetype) = launchCatchingTask {
             val activity = requireActivity() as AnkiActivity
             if (tempModel.notetype.isCloze) {
                 showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
-                return
+                return@launchCatchingTask
             }
             val name = getCurrentTemplateName(tempModel)
             val explanation = getString(R.string.deck_override_explanation, name)
             // Anki Desktop allows Dynamic decks, have reported this as a bug:
             // https://forums.ankiweb.net/t/minor-bug-deck-override-to-filtered-deck/1493
-            val decks = SelectableDeck.fromCollection(col, false)
+            val decks = SelectableDeck.fromCollection(includeFiltered = false)
             val title = getString(R.string.card_template_editor_deck_override)
             val dialog = DeckSelectionDialog.newInstance(title, explanation, true, decks)
             showDialogFragment(activity, dialog)

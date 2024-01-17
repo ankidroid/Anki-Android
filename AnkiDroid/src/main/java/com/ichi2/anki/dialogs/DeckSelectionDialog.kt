@@ -43,7 +43,6 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
-import com.ichi2.libanki.Collection
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
@@ -354,8 +353,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
              * @param includeFiltered Whether to include filtered decks in the output
              * @return all [SelectableDecks][SelectableDeck] in the collection satisfying the filter
              */
-            fun fromCollection(c: Collection, includeFiltered: Boolean): List<SelectableDeck> =
-                c.decks.allNamesAndIds(includeFiltered = includeFiltered)
+            suspend fun fromCollection(includeFiltered: Boolean): List<SelectableDeck> =
+                withCol { decks.allNamesAndIds(includeFiltered = includeFiltered) }
                     .map { SelectableDeck(it) }
         }
     }

@@ -1109,3 +1109,6 @@ fun ListView.getViewByPosition(pos: Int): View {
 
 val CardBrowser.lastDeckId
     get() = viewModel.lastDeckId
+
+val CardBrowser.validDecksForChangeDeck
+    get() = runBlocking { getValidDecksForChangeDeck() }

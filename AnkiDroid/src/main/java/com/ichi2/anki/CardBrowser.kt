@@ -120,7 +120,7 @@ open class CardBrowser :
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
             val deckId = deck.deckId
-            deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
+            deckSpinnerSelection!!.initializeActionBarDeckSpinner(getColUnsafe, this.supportActionBar!!)
             launchCatchingTask { selectDeckAndSave(deckId) }
         }
     }
@@ -585,14 +585,13 @@ open class CardBrowser :
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         deckSpinnerSelection = DeckSpinnerSelection(
             this,
-            col,
             findViewById(R.id.toolbar_spinner),
             showAllDecks = true,
             alwaysShowDefault = false,
             showFilteredDecks = true
         ).apply {
-            initializeActionBarDeckSpinner(supportActionBar!!)
-            selectDeckById(viewModel.deckId ?: ALL_DECKS_ID, false)
+            initializeActionBarDeckSpinner(col, supportActionBar!!)
+            launchCatchingTask { selectDeckById(viewModel.deckId ?: ALL_DECKS_ID, false) }
         }
     }
 
@@ -1274,12 +1273,12 @@ open class CardBrowser :
         return dialog
     }
 
-    private fun showChangeDeckDialog() {
+    private fun showChangeDeckDialog() = launchCatchingTask {
         if (!viewModel.hasSelectedAnyRows()) {
             Timber.i("Not showing Change Deck - No Cards")
-            return
+            return@launchCatchingTask
         }
-        val selectableDecks = validDecksForChangeDeck
+        val selectableDecks = getValidDecksForChangeDeck()
             .map { d -> SelectableDeck(d) }
         val dialog = getChangeDeckDialog(selectableDecks)
         showDialogFragment(dialog)
@@ -1504,9 +1503,8 @@ open class CardBrowser :
     }
 
     /** Returns the decks which are valid targets for "Change Deck"  */
-    @get:VisibleForTesting
-    val validDecksForChangeDeck: List<DeckNameId>
-        get() = deckSpinnerSelection!!.computeDropDownDecks(includeFiltered = false)
+    suspend fun getValidDecksForChangeDeck(): List<DeckNameId> =
+        deckSpinnerSelection!!.computeDropDownDecks(includeFiltered = false)
 
     @RustCleanup("this isn't how Desktop Anki does it")
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
