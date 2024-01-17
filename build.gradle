@@ -96,7 +96,7 @@ subprojects {
         tasks.withType(KotlinCompile).configureEach {
             compilerOptions {
                 allWarningsAsErrors = fatalWarnings
-                def compilerArgs = ['-Xjvm-default=all']
+                def compilerArgs = ['-Xjvm-default=all', '-Xcontext-receivers']
                 if (project.name != "api") {
                     compilerArgs += ['-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi']
                 }
