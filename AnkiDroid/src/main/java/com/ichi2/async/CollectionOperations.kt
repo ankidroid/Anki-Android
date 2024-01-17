@@ -33,16 +33,13 @@ import java.util.*
  */
 
 /**
- * Takes a list of media file names and removes them from the Collection
- * @param col Collection from which media is to be deleted
+ * Takes a list of media file names and removes them from the [Collection]
  * @param unused List of media names to be deleted
  */
-fun deleteMedia(
-    col: Collection,
-    unused: List<String>
-): Int {
+context (Collection)
+fun deleteMedia(unused: List<String>): Int {
     // FIXME: this provides progress info that is not currently used
-    col.media.removeFiles(unused)
+    this@Collection.media.removeFiles(unused)
     return unused.size
 }
 

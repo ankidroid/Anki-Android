@@ -84,9 +84,9 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
         }
     }
 
-    suspend fun deleteMedia(filesNamesToDelete: List<String>) {
+    suspend fun deleteMediaFiles(filesNamesToDelete: List<String>) {
         try {
-            withCol { deleteMedia(this, filesNamesToDelete) }
+            withCol { deleteMedia(filesNamesToDelete) }
         } finally {
             launchCalculationOfSizeOfEverything()
             launchCalculationOfCollectionSize()
@@ -225,7 +225,7 @@ class ManageSpaceFragment : SettingsFragment() {
                 val filesNamesToDelete = unusedFileNames.filterIndexed { index, _ -> checkedItems[index] }
 
                 withProgress(R.string.delete_media_message) {
-                    viewModel.deleteMedia(filesNamesToDelete)
+                    viewModel.deleteMediaFiles(filesNamesToDelete)
                 }
             }
         } else {

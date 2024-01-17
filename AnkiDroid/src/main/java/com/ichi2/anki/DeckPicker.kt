@@ -1618,7 +1618,7 @@ open class DeckPicker :
         launchCatchingTask {
             // Number of deleted files
             val noOfDeletedFiles = withProgress(resources.getString(R.string.delete_media_message)) {
-                withCol { deleteMedia(this, unused) }
+                withCol { deleteMedia(unused) }
             }
             showSimpleMessageDialog(
                 title = resources.getString(R.string.delete_media_result_title),
