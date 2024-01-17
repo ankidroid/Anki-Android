@@ -108,7 +108,7 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
 
     suspend fun deleteBackups(backupsToDelete: List<File>) {
         try {
-            withCol { BackupManager.deleteBackups(this, backupsToDelete) }
+            withCol { BackupManager.deleteBackups(backupsToDelete) }
         } finally {
             launchCalculationOfBackupsSize()
             launchCalculationOfCollectionSize()

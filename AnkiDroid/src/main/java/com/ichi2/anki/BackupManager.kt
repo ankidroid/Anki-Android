@@ -457,9 +457,10 @@ open class BackupManager {
          *
          * @return Whether all specified backups were successfully deleted.
          */
+        context (Collection)
         @Throws(IllegalArgumentException::class)
-        fun deleteBackups(collection: Collection, backupsToDelete: List<File>): Boolean {
-            val allBackups = getBackups(File(collection.path))
+        fun deleteBackups(backupsToDelete: List<File>): Boolean {
+            val allBackups = getBackups(File(this@Collection.path))
             val invalidBackupsToDelete = backupsToDelete.toSet() - allBackups.toSet()
 
             if (invalidBackupsToDelete.isNotEmpty()) {
