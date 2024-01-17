@@ -20,6 +20,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.view.allViews
@@ -29,7 +30,7 @@ import com.ichi2.anki.UIUtils
 /**
  * Base class for constructing a permissions screen
  */
-abstract class PermissionsFragment : Fragment() {
+abstract class PermissionsFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
     /**
      * All the [PermissionItem]s in the fragment.
      * Must be called ONLY AFTER [onCreateView]
