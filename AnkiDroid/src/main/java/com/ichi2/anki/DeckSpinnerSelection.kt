@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
@@ -48,7 +49,7 @@ import timber.log.Timber
  * @param showFilteredDecks whether to show filtered decks
  */
 class DeckSpinnerSelection(
-    private val context: AnkiActivity,
+    private val context: AppCompatActivity,
     private val collection: Collection,
     private val spinner: Spinner,
     private val showAllDecks: Boolean,
