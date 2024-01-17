@@ -15,13 +15,17 @@
  */
 package com.ichi2.anki.pages
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.appbar.MaterialToolbar
+import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
 import timber.log.Timber
@@ -75,8 +79,27 @@ abstract class PageFragment : Fragment(R.layout.page_fragment), PostRequestHandl
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
             title = this@PageFragment.title
             setNavigationOnClickListener {
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+                handleBackPressed()
             }
+        }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                handleBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+    private fun handleBackPressed() {
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        if (fragmentManager.backStackEntryCount == 0) {
+            requireActivity().finish()
+            val deckPickerIntent = Intent(requireContext(), IntentHandler::class.java)
+            deckPickerIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(deckPickerIntent)
+        } else {
+            fragmentManager.popBackStack()
         }
     }
 

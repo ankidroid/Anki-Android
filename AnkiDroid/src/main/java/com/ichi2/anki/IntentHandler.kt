@@ -22,6 +22,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Message
+import android.webkit.MimeTypeMap
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.FileProvider
@@ -71,6 +72,10 @@ class IntentHandler : Activity() {
         val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
         when (getLaunchType(intent)) {
             LaunchType.FILE_IMPORT -> runIfStoragePermissions { handleFileImport(intent, reloadIntent, action) }
+            LaunchType.TEXT_IMPORT -> runIfStoragePermissions {
+                this.onSelectedCsvForImport(intent)
+                finish()
+            }
             LaunchType.SYNC -> runIfStoragePermissions { handleSyncIntent(reloadIntent, action) }
             LaunchType.REVIEW -> runIfStoragePermissions { handleReviewIntent(intent) }
             LaunchType.DEFAULT_START_APP_IF_NEW -> {
@@ -202,7 +207,14 @@ class IntentHandler : Activity() {
     // COULD_BE_BETTER: Also extract the parameters into here to reduce coupling
     @VisibleForTesting
     enum class LaunchType {
-        DEFAULT_START_APP_IF_NEW, FILE_IMPORT, SYNC, REVIEW, COPY_DEBUG_INFO
+        DEFAULT_START_APP_IF_NEW,
+
+        /** colpkg/apkg/unknown */
+        FILE_IMPORT,
+
+        /** csv/tsv */
+        TEXT_IMPORT,
+        SYNC, REVIEW, COPY_DEBUG_INFO
     }
 
     companion object {
@@ -220,7 +232,11 @@ class IntentHandler : Activity() {
         fun getLaunchType(intent: Intent): LaunchType {
             val action = intent.action
             return if (Intent.ACTION_VIEW == action && isValidViewIntent(intent)) {
-                LaunchType.FILE_IMPORT
+                val mimeType = intent.resolveTypeIfNeeded() // Resolve the type if it's a URI
+                when (mimeType) {
+                    "text/tab-separated-values", "text/comma-separated-values" -> LaunchType.TEXT_IMPORT
+                    else -> LaunchType.FILE_IMPORT
+                }
             } else if ("com.ichi2.anki.DO_SYNC" == action) {
                 LaunchType.SYNC
             } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
@@ -229,6 +245,15 @@ class IntentHandler : Activity() {
                 LaunchType.COPY_DEBUG_INFO
             } else {
                 LaunchType.DEFAULT_START_APP_IF_NEW
+            }
+        }
+
+        private fun Intent.resolveTypeIfNeeded(): String? {
+            return if (type == null) {
+                val extension = MimeTypeMap.getFileExtensionFromUrl(data.toString())
+                MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+            } else {
+                type
             }
         }
 
