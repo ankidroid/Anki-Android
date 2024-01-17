@@ -1516,7 +1516,7 @@ open class CardBrowser :
     private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) = withProgress {
         undoableOp {
             val selectedNotes = selectedCardIds
-                .map { cardId -> getCard(cardId).note(this) }
+                .map { cardId -> getCard(cardId).note() }
                 .distinct()
                 .onEach { note ->
                     val previousTags: List<String> = note.tags
@@ -1556,7 +1556,7 @@ open class CardBrowser :
         val card = cardBrowserCard!!
         withProgress {
             undoableOp {
-                updateNote(card.note(this))
+                updateNote(card.note())
             }
         }
         updateCardInList(card)

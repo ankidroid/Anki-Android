@@ -536,3 +536,8 @@ open class Card : Cloneable {
 context (Collection)
 fun Card.renderOutput(reload: Boolean = false, browser: Boolean = false) =
     this@Card.renderOutput(this@Collection, reload, browser)
+
+/** @see Card.note */
+context (Collection)
+fun Card.note() =
+    this@Card.note(this@Collection)

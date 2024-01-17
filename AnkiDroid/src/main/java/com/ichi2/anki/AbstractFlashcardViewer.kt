@@ -432,7 +432,7 @@ abstract class AbstractFlashcardViewer :
         val card = editorCard!!
         withProgress {
             undoableOp {
-                updateNote(card.note(this))
+                updateNote(card.note())
             }
         }
         onCardUpdated(card)
