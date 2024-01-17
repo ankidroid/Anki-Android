@@ -18,7 +18,6 @@ package com.ichi2.anki.previewer
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.android.material.color.MaterialColors.getColor
@@ -36,9 +35,8 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -67,15 +65,15 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     private lateinit var currentCard: Card
 
     init {
-        currentIndex
-            .onEach { index ->
+        launchCatching {
+            currentIndex.collectLatest { index ->
                 currentCard = withCol { getCard(selectedCardIds[index]) }
                 showQuestion()
                 if (backsideOnly.value) {
                     showAnswer()
                 }
             }
-            .launchIn(viewModelScope)
+        }
     }
 
     fun toggleBacksideOnly() {
