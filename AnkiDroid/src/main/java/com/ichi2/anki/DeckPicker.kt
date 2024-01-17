@@ -1559,7 +1559,7 @@ open class DeckPicker :
                 withCol {
                     Timber.i("RepairCollection: Closing collection")
                     close()
-                    BackupManager.repairCollection(this)
+                    BackupManager.repairCollection()
                 }
             }
             if (!result) {
