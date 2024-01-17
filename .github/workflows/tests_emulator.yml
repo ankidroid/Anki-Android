@@ -66,7 +66,7 @@ jobs:
         # Repo limit is 10GB; branch caches are independent; branches may read default branch cache.
         # We don't want branches to evict main branch snapshot, so save on main, read-only all else
       - name: AVD cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: avd-cache
         with:
           path: |
