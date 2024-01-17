@@ -2252,13 +2252,14 @@ suspend fun searchForCards(
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
         (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query, order)).asSequence()
-            .toCardCache(this, cardsOrNotes)
+            .toCardCache(cardsOrNotes)
             .toMutableList()
     }
 }
 
-private fun Sequence<CardId>.toCardCache(col: com.ichi2.libanki.Collection, isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
-    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
+context (com.ichi2.libanki.Collection)
+private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
+    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
 
 class Previewer2Destination(val currentIndex: Int, val selectedCardIds: LongArray)
