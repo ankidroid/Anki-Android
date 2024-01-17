@@ -28,8 +28,9 @@ enum class CardsOrNotes {
     CARDS,
     NOTES;
 
-    fun saveToCollection(collection: Collection) {
-        collection.config.setBool(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE, this == NOTES)
+    context (Collection)
+    fun saveToCollection() {
+        this@Collection.config.setBool(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE, this == NOTES)
     }
 
     companion object {

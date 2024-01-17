@@ -260,7 +260,7 @@ class CardBrowserViewModel(
     fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch {
         withCol {
             // Change this to only change the preference on a state change
-            newValue.saveToCollection(this)
+            newValue.saveToCollection()
         }
         cardsOrNotesFlow.update { newValue }
     }
