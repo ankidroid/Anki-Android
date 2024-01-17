@@ -1063,7 +1063,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     private val CardCache.isMarked
-        get() = NoteService.isMarked(card.note(col))
+        get() = NoteService.isMarked(col, card.note(col))
 }
 
 fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean =

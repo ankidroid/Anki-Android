@@ -1979,7 +1979,7 @@ open class CardBrowser :
                     6 -> R.attr.flagTurquoise
                     7 -> R.attr.flagPurple
                     else -> {
-                        if (isMarked(card.note(col))) {
+                        if (isMarked(col, card.note(col))) {
                             R.attr.markedColor
                         } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
                             R.attr.suspendedColor
@@ -1994,11 +1994,11 @@ open class CardBrowser :
             return when (key) {
                 CardBrowserColumn.FLAGS -> Integer.valueOf(card.userFlag()).toString()
                 CardBrowserColumn.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
-                CardBrowserColumn.MARKED -> if (isMarked(card.note(col))) "marked" else null
-                CardBrowserColumn.SFLD -> card.note(col).sFld()
+                CardBrowserColumn.MARKED -> if (isMarked(col, card.note(col))) "marked" else null
+                CardBrowserColumn.SFLD -> card.note(col).sFld(col)
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
-                CardBrowserColumn.TAGS -> card.note(col).stringTags()
-                CardBrowserColumn.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards()}"
+                CardBrowserColumn.TAGS -> card.note(col).stringTags(col)
+                CardBrowserColumn.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards(col)}"
                 CardBrowserColumn.DUE -> card.dueString(col)
                 CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note(col).mod.toLong())

@@ -301,7 +301,7 @@ open class Collection(
      * @return The new note
      */
     fun newNote(m: NotetypeJson): Note {
-        return Note(this, m)
+        return Note(m)
     }
 
     /**
@@ -530,7 +530,7 @@ open class Collection(
     @RustCleanup("Remove this in favour of addNote() above; call addNote() inside undoableOp()")
     fun addNote(note: Note): Int {
         addNote(note, note.notetype.did)
-        return note.numberOfCards()
+        return note.numberOfCards(this)
     }
 
     /**

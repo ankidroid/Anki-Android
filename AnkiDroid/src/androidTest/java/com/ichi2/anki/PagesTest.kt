@@ -88,14 +88,14 @@ fun PagesTest.getStatistics(context: Context): Intent {
 }
 
 fun PagesTest.getCardInfo(context: Context): Intent {
-    return addNoteUsingBasicModel().firstCard().let { card ->
+    return addNoteUsingBasicModel().firstCard(col).let { card ->
         this.card = card
         CardInfoDestination(card.id).toIntent(context)
     }
 }
 
 fun PagesTest.getCongratsPage(context: Context): Intent {
-    return addNoteUsingBasicModel().firstCard().let { card ->
+    return addNoteUsingBasicModel().firstCard(col).let { card ->
         this.card = card
         CardInfoDestination(card.id).toIntent(context)
     }
