@@ -74,7 +74,6 @@ class IntentHandler : Activity() {
             LaunchType.FILE_IMPORT -> runIfStoragePermissions { handleFileImport(intent, reloadIntent, action) }
             LaunchType.TEXT_IMPORT -> runIfStoragePermissions {
                 this.onSelectedCsvForImport(intent)
-                finish()
             }
             LaunchType.SYNC -> runIfStoragePermissions { handleSyncIntent(reloadIntent, action) }
             LaunchType.REVIEW -> runIfStoragePermissions { handleReviewIntent(intent) }
