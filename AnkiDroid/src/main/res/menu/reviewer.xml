@@ -49,7 +49,7 @@
     <item
         android:id="@+id/action_toggle_whiteboard"
         android:title="@string/enable_whiteboard"
-        android:icon="@drawable/ic_gesture_white"
+        android:icon="@drawable/ic_enable_whiteboard"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_flag"
