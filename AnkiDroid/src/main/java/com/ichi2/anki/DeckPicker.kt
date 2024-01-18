@@ -1108,7 +1108,7 @@ open class DeckPicker :
         // As `loadDeckCounts` is cancelled in `migrate()`
         val message = dialogHandler.popMessage()
         super.onResume()
-        if (navDrawerIsReady()) {
+        if (navDrawerIsReady() && hasCollectionStoragePermissions()) {
             refreshState()
         }
         message?.let { dialogHandler.sendStoredMessage(it) }
