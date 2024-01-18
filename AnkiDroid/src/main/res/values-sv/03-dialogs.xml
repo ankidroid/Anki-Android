@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Ett nytt kort håller på att läggas om. Omläggning förvandlar också nya kort till repetitionskort. Använd alternativet \'ompositionera kort\' för att ändra ett nytt korts position i den nya kön</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Omschemaläggning återställer också hur schemaläggaren behandlar kortet i framtiden (lätthet kommer att sättas till %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Välj kortlek i din filhanterare eller besök sidan about:downloads för att importera den</string>
     <string name="answering_error_title">Databasfel</string>
     <string name="answering_error_message">Ett fel uppstod när data skrevs till samlingen. Detta kan bero på en korrupt databas eller otillräckligt diskutrymme.\n\nOm detta händer flera gånger, vänligen kontrollera databasen, reparera samlingen eller återställ den från en säkerhetskopia. Klicka på \'alternativ\' för det.\n\nAnnars kan detta också bero på en bug i AnkiDroid; vänligen rapportera felet så vi kan kontrollera detta.</string>
     <string name="answering_error_report">Rapportera fel</string>

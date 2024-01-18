@@ -42,17 +42,8 @@ open class AnkiServer(
     override fun useGzipWhenAccepted(r: Response?) = false
 
     override fun serve(session: IHTTPSession): Response {
-        val uri = session.uri
-        val mime = getMimeFromUri(uri)
-
-        if (session.method == Method.GET) {
-            val resourcePath = "web$uri"
-            val stream = this.javaClass.classLoader!!.getResourceAsStream(resourcePath)
-            Timber.d("GET: Requested %s (%s), found? %b", uri, resourcePath, stream != null)
-            return newChunkedResponse(Response.Status.OK, mime, stream)
-        }
-
         if (session.method == Method.POST) {
+            val uri = session.uri
             Timber.d("POST: Requested %s", uri)
             val inputBytes = getSessionBytes(session)
             return buildResponse {
@@ -81,16 +72,6 @@ open class AnkiServer(
         /** Common prefix used on Anki requests */
         const val ANKI_PREFIX = "/_anki/"
         const val ANKIDROID_JS_PREFIX = "/jsapi/"
-
-        fun getMimeFromUri(uri: String): String {
-            return when (uri.substringAfterLast(".")) {
-                "ico" -> "image/x-icon"
-                "css" -> "text/css"
-                "js" -> "text/javascript"
-                "html" -> "text/html"
-                else -> "application/binary"
-            }
-        }
 
         fun getSessionBytes(session: IHTTPSession): ByteArray {
             val contentLength = session.headers["content-length"]!!.toInt()

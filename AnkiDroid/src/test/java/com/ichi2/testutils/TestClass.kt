@@ -170,6 +170,18 @@ interface TestClass {
         return this
     }
 
+    fun Card.note() = this.note(col)
+    fun Card.note(reload: Boolean) = this.note(col, reload)
+    fun Card.model() = this.model(col)
+    fun Card.template() = this.template(col)
+    fun Card.question() = this.question(col)
+    fun Card.question(reload: Boolean = false, browser: Boolean = false) = this.question(col, reload, browser)
+    fun Card.answer() = this.answer(col)
+    fun Card.load() = this.load(col)
+    fun Card.nextDue() = this.nextDue(col)
+    fun Card.dueString() = this.dueString(col)
+    fun Card.pureAnswer() = this.pureAnswer(col)
+
     /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
      * takes care of updating the dispatcher used by CollectionManager as well.
      * * An argument could be made for using [StandardTestDispatcher] and

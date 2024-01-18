@@ -24,6 +24,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.LanguageHint
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.utils.jsonObjectIterable
 import org.intellij.lang.annotations.Language
 import org.json.JSONArray
@@ -84,9 +85,9 @@ class TypeAnswer(
      * Extract type answer/cloze text and font/size
      * @param card The next card to display
      */
-    fun updateInfo(card: Card, res: Resources) {
+    fun updateInfo(col: Collection, card: Card, res: Resources) {
         correct = null
-        val q = card.question()
+        val q = card.question(col)
         val m = PATTERN.matcher(q)
         var clozeIdx = 0
         if (!m.find()) {
@@ -100,11 +101,11 @@ class TypeAnswer(
             fldTag = fldTag.split(":").toTypedArray()[1]
         }
         // loop through fields for a match
-        val flds: JSONArray = card.model().getJSONArray("flds")
+        val flds: JSONArray = card.model(col).getJSONArray("flds")
         for (fld in flds.jsonObjectIterable()) {
             val name = fld.getString("name")
             if (name == fldTag) {
-                correct = card.note().getItem(name)
+                correct = card.note(col).getItem(name)
                 if (clozeIdx != 0) {
                     // narrow to cloze
                     correct = contentForCloze(correct!!, clozeIdx)

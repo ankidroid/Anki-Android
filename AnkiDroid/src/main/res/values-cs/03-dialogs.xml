@@ -92,7 +92,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Přeplánovává se nová karta. Přeplánování také změní novou kartu na opakovanou kartu. Použijte volbu „změnit pořadí karty“, abyste změnili pořadí nové karty v rámci fronty nových karet</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Přeplánování také obnoví to, jak bude plánovač v budoucnu zacházet s kartou (snadnost bude nastavena na %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Vyberte balíček ve správci souborů nebo navštivte stránku about:downloads, abyste ho importovali</string>
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>

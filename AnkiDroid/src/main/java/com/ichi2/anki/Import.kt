@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import android.app.Activity
 import android.content.Intent
 import androidx.core.content.edit
 import com.google.android.material.snackbar.Snackbar
@@ -51,7 +52,7 @@ fun DeckPicker.onSelectedPackageToImport(data: Intent) {
     }
 }
 
-fun DeckPicker.onSelectedCsvForImport(data: Intent) {
+fun Activity.onSelectedCsvForImport(data: Intent) {
     val path = ImportUtils.getFileCachedCopy(this, data) ?: return
     startActivity(CsvImporter.getIntent(this, path))
 }

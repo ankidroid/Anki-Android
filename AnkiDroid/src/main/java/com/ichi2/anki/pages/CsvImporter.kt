@@ -33,10 +33,8 @@ class CsvImporter : PageFragment() {
         get() = resources.getString(R.string.menu_import)
 
     override val pageName = "import-csv"
-    override lateinit var webViewClient: PageWebViewClient
-    override var webChromeClient = PageChromeClient()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         // the back callback is only enabled when import is running and showing progress
         val backCallback = object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
@@ -46,9 +44,9 @@ class CsvImporter : PageFragment() {
             }
         }
         val path = arguments?.getString(ARG_KEY_PATH) ?: throw Exception("missing path")
-        webViewClient = CsvImporterWebViewClient(path, backCallback)
         super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this, backCallback)
+        return CsvImporterWebViewClient(path, backCallback)
     }
 
     class CsvImporterWebViewClient(

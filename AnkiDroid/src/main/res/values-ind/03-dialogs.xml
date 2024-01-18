@@ -77,7 +77,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Kartu baru sedang dijadwalkan ulang. Menjadwalkan ulang membuat kartu baru menjadi kartu ulasan. Gunakan opsi \'Pindah posisi kartu\' untuk mengubah posisi kartu baru dalam antrean baru</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Penjadwalan ulang juga mereset bagaimana algoritma menjadwalkan kartu kedepannya (renggang akan diatur ke %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Pilih dek di manajer penyimpanan atau kunjungi halaman about:downloads untuk mengimpor</string>
     <string name="answering_error_title">Galat basisdata</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Basisdata mungkin korup atau tidak cukup ruang pada penyimpanan. \ n \ n Jika ini sering terjadi, cobalah periksa database, perbaiki koleksi atau mengembalikan dari cadangan. Sentuh \"pengaturan\" untuk ini. \ n \ Atau bisa juga bug dari AnkiDroid; harap laporkan galatnya agar kami bisa mengeceknya.</string>
     <string name="answering_error_report">Laporkan galat</string>

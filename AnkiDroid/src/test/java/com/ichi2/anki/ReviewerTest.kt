@@ -221,7 +221,6 @@ class ReviewerTest : RobolectricTest() {
         // #6587
         addNoteUsingBasicModel("Hello", "World")
 
-        val col = col
         val sched = col.sched
 
         val cardBeforeUndo = sched.card
@@ -419,4 +418,4 @@ class ReviewerTest : RobolectricTest() {
     }
 }
 
-val Reviewer.isDisplayingMark: Boolean get() = this.mCardMarker!!.isDisplayingMark
+val Reviewer.isDisplayingMark: Boolean get() = this.cardMarker!!.isDisplayingMark

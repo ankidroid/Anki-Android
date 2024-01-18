@@ -77,7 +77,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Một thẻ mới đang được lên lịch lại. Việc đổi lịch cũng biến thẻ mới thành thẻ đánh giá. Sử dụng tùy chọn \'định vị lại thẻ\' để thay đổi vị trí của thẻ mới trong hàng đợi mới</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Việc lên lịch cũng đặt lại cách lên lịch xử lý thẻ trong tương lai (dễ dàng thiết lập thành %d %%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Chọn bộ thẻ trong trình quản lý tệp của bạn hoặc truy cập trang giới thiệu: tải xuống để nhập bộ thẻ</string>
     <string name="answering_error_title">Lỗi cơ sở dữ liệu</string>
     <string name="answering_error_message">Ghi vào bộ sưu tập không thành công. Cơ sở dữ liệu có thể bị hỏng hoặc có thể không có đủ dung lượng trống.\n\nNếu điều này xảy ra thường xuyên hơn, hãy thử kiểm tra cơ sở dữ liệu, sửa chữa bộ sưu tập hoặc khôi phục nó từ bản sao lưu. Chạm vào “tùy chọn” cho điều đó. \n\Hoặc nó cũng có thể là lỗi AnkiDroid; vui lòng thông báo lỗi để chúng tôi có thể kiểm tra điều này.</string>
     <string name="answering_error_report">Báo cáo lỗi</string>

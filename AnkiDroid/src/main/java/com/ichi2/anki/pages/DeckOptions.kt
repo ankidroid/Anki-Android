@@ -39,8 +39,6 @@ class DeckOptions : PageFragment() {
     override val title: String
         get() = resources.getString(R.string.menu__deck_options)
     override val pageName = "deck-options"
-    override lateinit var webViewClient: PageWebViewClient
-    override var webChromeClient = PageChromeClient()
 
     // handle going back from the manual
     private val onBackCallback = object : OnBackPressedCallback(false) {
@@ -50,15 +48,16 @@ class DeckOptions : PageFragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         val deckId = arguments?.getLong(ARG_DECK_ID)
             ?: throw Exception("missing deck ID")
-        webViewClient = DeckOptionsWebClient(deckId)
-        super.onCreate(savedInstanceState)
+
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackCallback)
-        webViewClient.onPageFinishedCallback = OnPageFinishedCallback { view ->
-            Timber.v("canGoBack: %b", view.canGoBack())
-            onBackCallback.isEnabled = view.canGoBack()
+        return DeckOptionsWebClient(deckId).apply {
+            onPageFinishedCallback = OnPageFinishedCallback { view ->
+                Timber.v("canGoBack: %b", view.canGoBack())
+                onBackCallback.isEnabled = view.canGoBack()
+            }
         }
     }
 

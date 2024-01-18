@@ -16,156 +16,67 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItems
-import com.ichi2.anki.CardBrowser
-import com.ichi2.anki.DeckPicker
+import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
-import com.ichi2.utils.BundleUtils.requireLong
-import com.ichi2.utils.ExtendedFragmentFactory
-import com.ichi2.utils.FragmentFactoryUtils
-import timber.log.Timber
-import java.util.function.Supplier
+import com.ichi2.utils.title
 
-class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialogFragment() {
-
-    fun withArguments(did: DeckId): DeckPickerContextMenu {
-        val args = this.arguments ?: Bundle()
-        args.putLong("did", did)
-        this.arguments = args
-        return this
-    }
-
-    /** The selected deck for the context menu */
-    val deckId get() = requireArguments().requireLong("did")
+class DeckPickerContextMenu : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val title = collection.decks.name(deckId)
-        return MaterialDialog(requireActivity())
-            .title(text = title)
-            .cancelable(true)
-            .noAutoDismiss()
-            .listItems(items = contextMenuOptions.map { resources.getString(it.optionName) }) {
-                    _: MaterialDialog, index: Int, _: CharSequence ->
-                handleActionOnLongClick(contextMenuOptions[index])
+        assert(requireArguments().containsKey(ARG_DECK_ID))
+        assert(requireArguments().containsKey(ARG_DECK_NAME))
+        assert(requireArguments().containsKey(ARG_DECK_IS_DYN))
+        assert(requireArguments().containsKey(ARG_DECK_HAS_BURIED_IN_DECK))
+        val options = createOptionsList()
+        return AlertDialog.Builder(requireActivity())
+            .title(text = requireArguments().getString(ARG_DECK_NAME))
+            .setItems(
+                options.map { resources.getString(it.optionName) }.toTypedArray()
+            ) { _, index: Int ->
+                parentFragmentManager.setFragmentResult(
+                    REQUEST_KEY_CONTEXT_MENU,
+                    bundleOf(
+                        CONTEXT_MENU_DECK_ID to requireArguments().getLong(ARG_DECK_ID),
+                        CONTEXT_MENU_DECK_OPTION to options[index]
+                    )
+                )
             }
+            .create()
     }
 
-    /**
-     * Retrieve the list of menu options to put in the context menu.
-     */
-    private val contextMenuOptions: List<DeckPickerContextMenuOption>
-        get() {
-            val did = deckId
-            val dyn = collection.decks.isDyn(did)
-            val contextMenuOptions = ArrayList<DeckPickerContextMenuOption>(11) // init with our fixed list size for performance
-            contextMenuOptions.add(DeckPickerContextMenuOption.ADD_CARD)
-            contextMenuOptions.add(DeckPickerContextMenuOption.BROWSE_CARDS)
+    private fun createOptionsList(): List<DeckPickerContextMenuOption> =
+        mutableListOf<DeckPickerContextMenuOption>().apply {
+            val dyn = requireArguments().getBoolean(ARG_DECK_IS_DYN)
+            add(DeckPickerContextMenuOption.ADD_CARD)
+            add(DeckPickerContextMenuOption.BROWSE_CARDS)
             if (dyn) {
-                contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD)
-                contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY)
+                add(DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD)
+                add(DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY)
             }
-            contextMenuOptions.add(DeckPickerContextMenuOption.RENAME_DECK)
+            add(DeckPickerContextMenuOption.RENAME_DECK)
             if (!dyn) {
-                contextMenuOptions.add(DeckPickerContextMenuOption.CREATE_SUBDECK)
+                add(DeckPickerContextMenuOption.CREATE_SUBDECK)
             }
-            contextMenuOptions.add(DeckPickerContextMenuOption.DECK_OPTIONS)
+            add(DeckPickerContextMenuOption.DECK_OPTIONS)
             if (!dyn) {
-                contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY)
+                add(DeckPickerContextMenuOption.CUSTOM_STUDY)
             }
-            contextMenuOptions.add(DeckPickerContextMenuOption.EXPORT_DECK)
-            if (collection.sched.haveBuriedInCurrentDeck()) {
-                contextMenuOptions.add(DeckPickerContextMenuOption.UNBURY)
+            add(DeckPickerContextMenuOption.EXPORT_DECK)
+            if (requireArguments().getBoolean(ARG_DECK_HAS_BURIED_IN_DECK)) {
+                add(DeckPickerContextMenuOption.UNBURY)
             }
-            contextMenuOptions.add(DeckPickerContextMenuOption.CREATE_SHORTCUT)
-            contextMenuOptions.add(DeckPickerContextMenuOption.DELETE_DECK)
-            return contextMenuOptions
+            add(DeckPickerContextMenuOption.CREATE_SHORTCUT)
+            add(DeckPickerContextMenuOption.DELETE_DECK)
         }
 
-    // Handle item selection on context menu which is shown when the user long-clicks on a deck
-    private fun handleActionOnLongClick(selectedOption: DeckPickerContextMenuOption) {
-        val activity = requireActivity() as DeckPicker
-        when (selectedOption) {
-            DeckPickerContextMenuOption.DELETE_DECK -> {
-                Timber.i("Delete deck selected")
-
-                /* we can only disable the shortcut for now as it is restricted by Google https://issuetracker.google.com/issues/68949561?pli=1#comment4
-                 * if fixed or given free hand to delete the shortcut with the help of API update this method and use the new one
-                 */
-                activity.disableDeckAndChildrenShortcuts(deckId)
-
-                activity.confirmDeckDeletion(deckId)
-            }
-            DeckPickerContextMenuOption.DECK_OPTIONS -> {
-                Timber.i("Open deck options selected")
-                activity.showContextMenuDeckOptions(deckId)
-                activity.dismissAllDialogFragments()
-            }
-            DeckPickerContextMenuOption.CUSTOM_STUDY -> {
-                Timber.i("Custom study option selected")
-                val d = FragmentFactoryUtils.instantiate(activity, CustomStudyDialog::class.java)
-                d.withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, deckId)
-                activity.showDialogFragment(d)
-            }
-            DeckPickerContextMenuOption.CREATE_SHORTCUT -> {
-                Timber.i("Create icon for a deck")
-                activity.createIcon(requireContext(), deckId)
-            }
-            DeckPickerContextMenuOption.RENAME_DECK -> {
-                Timber.i("Rename deck selected")
-                activity.renameDeckDialog(deckId)
-                activity.dismissAllDialogFragments()
-            }
-            DeckPickerContextMenuOption.EXPORT_DECK -> {
-                Timber.i("Export deck selected")
-                activity.exportDeck(deckId)
-            }
-            DeckPickerContextMenuOption.UNBURY -> {
-                Timber.i("Unbury deck selected")
-                collection.sched.unburyCardsForDeck(deckId)
-                activity.onRequireDeckListUpdate()
-                activity.dismissAllDialogFragments()
-            }
-            DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD -> {
-                Timber.i("Rebuild deck selected")
-                activity.rebuildFiltered(deckId)
-                activity.dismissAllDialogFragments()
-            }
-            DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY -> {
-                Timber.i("Empty deck selected")
-                activity.emptyFiltered(deckId)
-                activity.dismissAllDialogFragments()
-            }
-            DeckPickerContextMenuOption.CREATE_SUBDECK -> {
-                Timber.i("Create Subdeck selected")
-                activity.createSubDeckDialog(deckId)
-                activity.dismissAllDialogFragments()
-            }
-            DeckPickerContextMenuOption.BROWSE_CARDS -> {
-                collection.decks.select(deckId)
-                val intent = Intent(activity, CardBrowser::class.java)
-                activity.startActivity(intent)
-                activity.dismissAllDialogFragments()
-            }
-            DeckPickerContextMenuOption.ADD_CARD -> {
-                Timber.i("Add selected")
-                collection.decks.select(deckId)
-                activity.addNote()
-                activity.dismissAllDialogFragments()
-            }
-        }
-    }
-
-    private enum class DeckPickerContextMenuOption(@StringRes val optionName: Int) {
+    enum class DeckPickerContextMenuOption(@StringRes val optionName: Int) {
         RENAME_DECK(R.string.rename_deck),
         DECK_OPTIONS(R.string.menu__deck_options),
         CUSTOM_STUDY(R.string.custom_study),
@@ -180,20 +91,35 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         ADD_CARD(R.string.menu_add);
     }
 
-    class Factory(val collectionSupplier: Supplier<Collection>) : ExtendedFragmentFactory() {
-        override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
-            val cls = loadFragmentClass(classLoader, className)
-            return if (cls == DeckPickerContextMenu::class.java) {
-                newDeckPickerContextMenu()
-            } else {
-                super.instantiate(classLoader, className)
-            }
+    companion object {
+        const val REQUEST_KEY_CONTEXT_MENU = "request_key_context_menu"
+        const val CONTEXT_MENU_DECK_OPTION = "context_menu_deck_option"
+        const val CONTEXT_MENU_DECK_ID = "context_menu_deck_id"
+
+        @VisibleForTesting
+        const val ARG_DECK_ID = "arg_deck_id"
+
+        @VisibleForTesting
+        const val ARG_DECK_NAME = "arg_deck_name"
+
+        @VisibleForTesting
+        const val ARG_DECK_IS_DYN = "arg_deck_is_dyn"
+
+        @VisibleForTesting
+        const val ARG_DECK_HAS_BURIED_IN_DECK = "arg_deck_has_buried_in_deck"
+
+        fun newInstance(
+            id: DeckId,
+            name: String,
+            isDynamic: Boolean,
+            hasBuriedInDeck: Boolean
+        ): DeckPickerContextMenu = DeckPickerContextMenu().apply {
+            arguments = bundleOf(
+                ARG_DECK_ID to id,
+                ARG_DECK_NAME to name,
+                ARG_DECK_IS_DYN to isDynamic,
+                ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedInDeck
+            )
         }
-
-        private fun newDeckPickerContextMenu(): DeckPickerContextMenu =
-            DeckPickerContextMenu(collectionSupplier.get())
-
-        fun newDeckPickerContextMenu(deckId: DeckId): DeckPickerContextMenu =
-            DeckPickerContextMenu(collectionSupplier.get()).withArguments(deckId)
     }
 }

@@ -50,8 +50,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         ankiCacheDirectory = context.externalCacheDir?.absolutePath
         // #9639: .opus is application/octet-stream in API 26,
         // requires a workaround as we don't want to enable application/octet-stream by default
-        val btnLibrary = Button(mActivity)
-        btnLibrary.text = mActivity.getText(R.string.multimedia_editor_import_audio)
+        val btnLibrary = Button(_activity)
+        btnLibrary.text = _activity.getText(R.string.multimedia_editor_import_audio)
         btnLibrary.setOnClickListener {
             openChooserPrompt(
                 "audio/*",
@@ -60,8 +60,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             )
         }
         layout.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT)
-        val btnVideo = Button(mActivity).apply {
-            text = mActivity.getText(R.string.multimedia_editor_import_video)
+        val btnVideo = Button(_activity).apply {
+            text = _activity.getText(R.string.multimedia_editor_import_video)
             setOnClickListener {
                 openChooserPrompt(
                     "video/*",
@@ -71,11 +71,11 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             }
         }
         layout.addView(btnVideo, ViewGroup.LayoutParams.MATCH_PARENT)
-        tvAudioClip = FixedTextView(mActivity)
-        if (mField.audioPath == null) {
+        tvAudioClip = FixedTextView(_activity)
+        if (_field.audioPath == null) {
             tvAudioClip.visibility = View.GONE
         } else {
-            tvAudioClip.text = mField.audioPath
+            tvAudioClip.text = _field.audioPath
             tvAudioClip.visibility = View.VISIBLE
         }
         layout.addView(tvAudioClip, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -83,7 +83,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
 
     private fun openChooserPrompt(initialMimeType: String, extraMimeTypes: Array<String>, @StringRes prompt: Int) {
         val allowAllFiles =
-            this.mActivity.sharedPrefs().getBoolean("mediaImportAllowAllFiles", false)
+            this._activity.sharedPrefs().getBoolean("mediaImportAllowAllFiles", false)
         val i = Intent()
         i.type = if (allowAllFiles) "*/*" else initialMimeType
         if (!allowAllFiles && extraMimeTypes.any()) {
@@ -94,17 +94,17 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         i.action = Intent.ACTION_GET_CONTENT
         // Only get openable files, to avoid virtual files issues with Android 7+
         i.addCategory(Intent.CATEGORY_OPENABLE)
-        val chooserPrompt = mActivity.resources.getString(prompt)
+        val chooserPrompt = _activity.resources.getString(prompt)
         selectMediaLauncher.launch(Intent.createChooser(i, chooserPrompt))
     }
 
     override fun setEditingActivity(activity: MultimediaEditFieldActivity) {
         super.setEditingActivity(activity)
-        val registry = mActivity.activityResultRegistry
+        val registry = this._activity.activityResultRegistry
 
         selectMediaLauncher = registry.register(SELECT_MEDIA_LAUNCHER_KEY, ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode != Activity.RESULT_CANCELED) {
-                executeSafe(mActivity, "handleMediaSelection:unhandled") {
+                executeSafe(this._activity, "handleMediaSelection:unhandled") {
                     handleMediaSelection(result.data!!)
                 }
             }
@@ -117,7 +117,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         // Get information about the selected document
         val queryColumns = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.MIME_TYPE)
         var mediaClipFullNameParts: Array<String>
-        mActivity.contentResolver.query(selectedClip!!, queryColumns, null, null, null).use { cursor ->
+        _activity.contentResolver.query(selectedClip!!, queryColumns, null, null, null).use { cursor ->
             if (cursor == null) {
                 showThemedToast(
                     AnkiDroidApp.instance.applicationContext,
@@ -167,12 +167,12 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
 
         // Copy file contents into new temp file. Possibly check file size first and warn if large?
         try {
-            mActivity.contentResolver.openInputStream(selectedClip).use { inputStream ->
+            _activity.contentResolver.openInputStream(selectedClip).use { inputStream ->
                 CompatHelper.compat.copyFile(inputStream!!, clipCopy.absolutePath)
 
                 // If everything worked, hand off the information
-                mField.hasTemporaryMedia = true
-                mField.audioPath = clipCopy.absolutePath
+                _field.hasTemporaryMedia = true
+                _field.audioPath = clipCopy.absolutePath
                 tvAudioClip.text = clipCopy.name
                 tvAudioClip.visibility = View.VISIBLE
             }

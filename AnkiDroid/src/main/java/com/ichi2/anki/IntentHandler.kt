@@ -19,6 +19,7 @@ package com.ichi2.anki
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import androidx.annotation.CheckResult
@@ -44,7 +45,6 @@ import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.trimToLength
 import timber.log.Timber
 import java.io.File
-import java.util.function.Consumer
 import kotlin.math.max
 import kotlin.math.min
 
@@ -68,11 +68,11 @@ class IntentHandler : Activity() {
         val action = intent.action
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
-        val runIfStoragePermissions = Consumer { runnable: Runnable -> performActionIfStorageAccessible(runnable, reloadIntent, action) }
+        val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
         when (getLaunchType(intent)) {
-            LaunchType.FILE_IMPORT -> runIfStoragePermissions.accept(Runnable { handleFileImport(intent, reloadIntent, action) })
-            LaunchType.SYNC -> runIfStoragePermissions.accept(Runnable { handleSyncIntent(reloadIntent, action) })
-            LaunchType.REVIEW -> runIfStoragePermissions.accept(Runnable { handleReviewIntent(intent) })
+            LaunchType.FILE_IMPORT -> runIfStoragePermissions { handleFileImport(intent, reloadIntent, action) }
+            LaunchType.SYNC -> runIfStoragePermissions { handleSyncIntent(reloadIntent, action) }
+            LaunchType.REVIEW -> runIfStoragePermissions { handleReviewIntent(intent) }
             LaunchType.DEFAULT_START_APP_IF_NEW -> {
                 Timber.d("onCreate() performing default action")
                 launchDeckPickerIfNoOtherTasks(reloadIntent)
@@ -104,10 +104,10 @@ class IntentHandler : Activity() {
      *
      */
     @NeedsTest("clicking a file in 'Files' to import")
-    private fun performActionIfStorageAccessible(runnable: Runnable, reloadIntent: Intent, action: String?) {
+    private fun performActionIfStorageAccessible(reloadIntent: Intent, action: String?, block: () -> Unit) {
         if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this) || Permissions.isExternalStorageManagerCompat()) {
             Timber.i("User has storage permissions. Running intent: %s", action)
-            runnable.run()
+            block()
         } else {
             Timber.i("No Storage Permission, cancelling intent '%s'", action)
             showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
@@ -138,38 +138,12 @@ class IntentHandler : Activity() {
         val importResult = handleFileImport(this, intent)
         // attempt to delete the downloaded deck if it is a shared deck download import
         if (intent.hasExtra(SharedDecksDownloadFragment.EXTRA_IS_SHARED_DOWNLOAD)) {
-            try {
-                val sharedDeckUri = intent.data
-                if (sharedDeckUri != null) {
-                    // TODO move the file deletion on a background thread
-                    contentResolver.delete(intent.data!!, null, null)
-                    Timber.i("onCreate: downloaded shared deck deleted")
-                } else {
-                    Timber.i("onCreate: downloaded a shared deck but uri was null when trying to delete its file")
-                }
-            } catch (e: Exception) {
-                Timber.w(e, "onCreate: failed to delete downloaded shared deck")
-            }
+            deleteDownloadedDeck(intent.data)
         }
 
         // Start DeckPicker if we correctly processed ACTION_VIEW
         if (importResult.isSuccess) {
-            try {
-                val file = File(intent.data!!.path!!)
-                val fileUri = applicationContext?.let {
-                    FileProvider.getUriForFile(
-                        it,
-                        it.applicationContext?.packageName + ".apkgfileprovider",
-                        File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name)
-                    )
-                }
-                // TODO move the file deletion on a background thread
-                contentResolver.delete(fileUri!!, null, null)
-                Timber.i("onCreate() import successful and downloaded file deleted")
-            } catch (e: Exception) {
-                Timber.w(e, "onCreate() import successful and cannot delete file")
-            }
-
+            deleteImportedDeck(intent.data?.path)
             reloadIntent.action = action
             reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(reloadIntent)
@@ -178,6 +152,39 @@ class IntentHandler : Activity() {
             Timber.i("File import failed")
             // Don't import the file if it didn't load properly or doesn't have apkg extension
             showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, true)
+        }
+    }
+
+    private fun deleteImportedDeck(path: String?) {
+        try {
+            val file = File(path!!)
+            val fileUri = applicationContext?.let {
+                FileProvider.getUriForFile(
+                    it,
+                    it.applicationContext?.packageName + ".apkgfileprovider",
+                    File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name)
+                )
+            }
+            // TODO move the file deletion on a background thread
+            contentResolver.delete(fileUri!!, null, null)
+            Timber.i("onCreate() import successful and downloaded file deleted")
+        } catch (e: Exception) {
+            Timber.w(e, "onCreate() import successful and cannot delete file")
+        }
+    }
+
+    private fun deleteDownloadedDeck(sharedDeckUri: Uri?) {
+        if (sharedDeckUri == null) {
+            Timber.i("onCreate: downloaded a shared deck but uri was null when trying to delete its file")
+            return
+        }
+
+        try {
+            // TODO move the file deletion on a background thread
+            contentResolver.delete(sharedDeckUri, null, null)
+            Timber.i("onCreate: downloaded shared deck deleted")
+        } catch (e: Exception) {
+            Timber.w(e, "onCreate: failed to delete downloaded shared deck")
         }
     }
 

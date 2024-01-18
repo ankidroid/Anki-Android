@@ -43,7 +43,6 @@ class NotetypeTest : JvmTest() {
     @Test
     fun test_frontSide_field() {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
-        val col = col
         val m = col.notetypes.current()
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}")
         col.notetypes.save(m)
@@ -67,7 +66,6 @@ class NotetypeTest : JvmTest() {
     @Test
     fun test_field_named_frontSide() {
         // #8951 - A field named "FrontSide" is ignored - this matches Anki 2.1.34 (8af8f565)
-        val col = col
         val m = col.notetypes.current()
 
         // Add a field called FrontSide and FrontSide2 (to ensure that fields are added correctly)
@@ -96,7 +94,6 @@ class NotetypeTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_modelDelete() {
-        val col = col
         val note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
@@ -108,7 +105,6 @@ class NotetypeTest : JvmTest() {
 
     @Test
     fun test_modelCopy() {
-        val col = col
         val m = col.notetypes.current()
         val m2 = col.notetypes.copy(m)
         assertEquals("Basic copy", m2.getString("name"))
@@ -127,7 +123,6 @@ class NotetypeTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_fields() {
-        val col = col
         var note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
@@ -235,7 +230,6 @@ class NotetypeTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_templates() {
-        val col = col
         val m = col.notetypes.current()
         val mm = col.notetypes
         var t = Notetypes.newTemplate("Reverse")
@@ -284,7 +278,6 @@ class NotetypeTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_cloze_ordinals() {
-        val col = col
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         val m = col.notetypes.current()
         val mm = col.notetypes
@@ -312,7 +305,6 @@ class NotetypeTest : JvmTest() {
 
     @Test
     fun test_text() {
-        val col = col
         val m = col.notetypes.current()
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{text:Front}}")
         col.notetypes.save(m)
@@ -328,7 +320,6 @@ class NotetypeTest : JvmTest() {
             // backend protects against adding the same note twice
             note.id = 0
         }
-        val col = col
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         var note = col.newNote()
         assertEquals("Cloze", note.notetype.getString("name"))
@@ -351,7 +342,6 @@ class NotetypeTest : JvmTest() {
 
     @Test
     fun test_cloze_mathjax() {
-        val col = col
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         var note = col.newNote()
         note.setItem(
@@ -377,7 +367,6 @@ class NotetypeTest : JvmTest() {
 
     @Test
     fun test_type_and_cloze() {
-        val col = col
         val m = col.notetypes.byName("Cloze")
         col.notetypes.setCurrent(m!!)
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{cloze:Text}}{{type:cloze:Text}}")
@@ -395,7 +384,6 @@ class NotetypeTest : JvmTest() {
     @Throws(ConfirmModSchemaException::class)
     @Suppress("SpellCheckingInspection") // chaine
     fun test_chained_mods() {
-        val col = col
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         val m = col.notetypes.current()
         val mm = col.notetypes
@@ -427,7 +415,6 @@ class NotetypeTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_modelChange() {
-        val col = col
         val cloze = col.notetypes.byName("Cloze")
         // enable second template and add a note
         val basic = col.notetypes.current()
@@ -528,7 +515,6 @@ class NotetypeTest : JvmTest() {
 
     @Test
     fun nonEmptyFieldTest() {
-        val col = col
         val mm = col.notetypes
         val basic = mm.byName("Basic")
         val s: MutableSet<String> = HashSet<String>()
@@ -550,7 +536,6 @@ class NotetypeTest : JvmTest() {
 
     @Test
     fun getDid_test() {
-        val col = col
         val mm = col.notetypes
         val basic = mm.byName("Basic")
         basic!!.put("did", 999L)

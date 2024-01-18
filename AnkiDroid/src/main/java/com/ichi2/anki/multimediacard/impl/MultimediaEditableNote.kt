@@ -33,14 +33,14 @@ import java.util.*
 class MultimediaEditableNote : IMultimediaEditableNote {
     override var isModified = false
         private set
-    private var mFields: ArrayList<IField?>? = null
+    private var fields: ArrayList<IField?>? = null
     var modelId: NoteTypeId = 0
 
     /**
      * Field values in the note editor, before any editing has taken place
      * These values should not be modified
      */
-    private var mInitialFields: ArrayList<IField?>? = null
+    private var initialFields: ArrayList<IField?>? = null
     private fun setThisModified() {
         isModified = true
     }
@@ -55,10 +55,10 @@ class MultimediaEditableNote : IMultimediaEditableNote {
 
     private val fieldsPrivate: ArrayList<IField?>
         get() {
-            if (mFields == null) {
-                mFields = ArrayList(0)
+            if (fields == null) {
+                fields = ArrayList(0)
             }
-            return mFields!!
+            return fields!!
         }
     override val numberOfFields: Int
         get() = fieldsPrivate.size
@@ -88,17 +88,17 @@ class MultimediaEditableNote : IMultimediaEditableNote {
     }
 
     fun freezeInitialFieldValues() {
-        mInitialFields = ArrayList()
-        for (f in mFields!!) {
-            mInitialFields!!.add(cloneField(f))
+        initialFields = ArrayList()
+        for (f in fields!!) {
+            initialFields!!.add(cloneField(f))
         }
     }
 
     override val initialFieldCount: Int
-        get() = mInitialFields!!.size
+        get() = initialFields!!.size
 
     override fun getInitialField(index: Int): IField? {
-        return cloneField(mInitialFields!![index])
+        return cloneField(initialFields!![index])
     }
 
     private fun cloneField(f: IField?): IField? {

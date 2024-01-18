@@ -17,13 +17,16 @@ package com.ichi2.anki.pages
 
 import android.graphics.Bitmap
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.view.isVisible
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.OnPageFinishedCallback
+import com.ichi2.utils.AssetHelper
 import com.ichi2.utils.toRGBHex
 import timber.log.Timber
+import java.io.IOException
 
 /**
  * Base WebViewClient to be used on [PageFragment]
@@ -34,6 +37,23 @@ open class PageWebViewClient : WebViewClient() {
     open val promiseToWaitFor: String? = null
 
     var onPageFinishedCallback: OnPageFinishedCallback? = null
+
+    override fun shouldInterceptRequest(
+        view: WebView,
+        request: WebResourceRequest
+    ): WebResourceResponse? {
+        val path = request.url.path
+        if (request.method == "GET" && path?.startsWith("/backend/web") == true) {
+            try {
+                val mime = AssetHelper.guessMimeType(path)
+                val inputStream = view.context.assets.open(path.substring(1))
+                return WebResourceResponse(mime, null, inputStream)
+            } catch (_: IOException) {
+                Timber.w("%s not found", path)
+            }
+        }
+        return super.shouldInterceptRequest(view, request)
+    }
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)

@@ -20,11 +20,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.material.appbar.MaterialToolbar
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.utils.getTimestamp
@@ -35,18 +34,11 @@ class Statistics : PageFragment() {
         get() = resources.getString(R.string.statistics)
 
     override val pageName = "graphs"
-    override var webViewClient = PageWebViewClient()
-    override var webChromeClient = PageChromeClient()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-
-        view?.findViewById<MaterialToolbar>(R.id.toolbar)?.apply {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.findViewById<MaterialToolbar>(R.id.toolbar)?.apply {
             inflateMenu(R.menu.statistics)
+            menu.findItem(R.id.action_export_stats).title = CollectionManager.TR.statisticsSavePdf()
             setOnMenuItemClickListener { item ->
                 if (item.itemId == R.id.action_export_stats) {
                     exportWebViewContentAsPDF()
@@ -54,8 +46,6 @@ class Statistics : PageFragment() {
                 true
             }
         }
-
-        return view
     }
 
     /**Prepares and initiates a printing task for the content(stats) displayed in the WebView.

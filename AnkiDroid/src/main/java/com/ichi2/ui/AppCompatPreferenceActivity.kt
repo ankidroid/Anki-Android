@@ -48,11 +48,12 @@ import java.util.*
  * This technique can be used with an [android.app.Activity] class, not just
  * [android.preference.PreferenceActivity].
  */
+@KotlinCleanup("replace _delegate with `field`")
 abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceActivity<PreferenceHack>.AbstractPreferenceHack> :
     PreferenceActivity(),
     CoroutineScope by MainScope(),
     SharedPreferences.OnSharedPreferenceChangeListener {
-    private var mDelegate: AppCompatDelegate? = null
+    private var _delegate: AppCompatDelegate? = null
     fun isColInitialized() = ::col.isInitialized
     protected var prefChanged = false
     lateinit var unmountReceiver: BroadcastReceiver
@@ -264,10 +265,10 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
     private val delegate: AppCompatDelegate
         get() {
-            if (mDelegate == null) {
-                mDelegate = AppCompatDelegate.create(this, null)
+            if (_delegate == null) {
+                _delegate = AppCompatDelegate.create(this, null)
             }
-            return mDelegate!! // safe as mDelegate is only initialized here, before being returned
+            return _delegate!! // safe as mDelegate is only initialized here, before being returned
         }
 
     /**

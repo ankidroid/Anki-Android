@@ -35,16 +35,16 @@ import com.ichi2.ui.FixedEditText
  * Controllers work with the edit field activity and create UI on it to edit a field.
  */
 class BasicTextFieldController : FieldControllerBase(), IFieldController, DialogInterface.OnClickListener {
-    private lateinit var mEditText: EditText
+    private lateinit var editText: EditText
 
     // This is used to copy from another field value to this field
-    private lateinit var mPossibleClones: ArrayList<String>
+    private lateinit var possibleClones: ArrayList<String>
     override fun createUI(context: Context, layout: LinearLayout) {
-        mEditText = FixedEditText(mActivity)
-        mEditText.minLines = 3
-        mEditText.setText(mField.text)
-        layout.addView(mEditText, LinearLayout.LayoutParams.MATCH_PARENT)
-        val layoutTools = LinearLayout(mActivity)
+        editText = FixedEditText(_activity)
+        editText.minLines = 3
+        editText.setText(_field.text)
+        layout.addView(editText, LinearLayout.LayoutParams.MATCH_PARENT)
+        val layoutTools = LinearLayout(_activity)
         layoutTools.orientation = LinearLayout.HORIZONTAL
         layout.addView(layoutTools)
         val p = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1F)
@@ -53,14 +53,14 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
     }
 
     private fun gtxt(id: Int): String {
-        return mActivity.getText(id).toString()
+        return _activity.getText(id).toString()
     }
 
     private fun createClearButton(layoutTools: LinearLayout, p: LinearLayout.LayoutParams) {
-        val clearButton = Button(mActivity)
+        val clearButton = Button(_activity)
         clearButton.text = gtxt(R.string.multimedia_editor_text_field_editing_clear)
         layoutTools.addView(clearButton, p)
-        clearButton.setOnClickListener { mEditText.setText("") }
+        clearButton.setOnClickListener { editText.setText("") }
     }
 
     /**
@@ -70,23 +70,23 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
      */
     private fun createCloneButton(layoutTools: LinearLayout, p: LinearLayout.LayoutParams) {
         // Makes sense only for two and more fields
-        if (mNote.numberOfFields > 1) {
+        if (_note.numberOfFields > 1) {
             // Should be more than one text not empty fields for clone to make
             // sense
-            mPossibleClones = ArrayList(mNote.numberOfFields)
+            possibleClones = ArrayList(_note.numberOfFields)
             var numTextFields = 0
-            for (i in 0 until mNote.numberOfFields) {
+            for (i in 0 until _note.numberOfFields) {
                 // Sort out non text and empty fields
-                val curField = mNote.getField(i) ?: continue
+                val curField = _note.getField(i) ?: continue
                 if (curField.type !== EFieldType.TEXT) {
                     continue
                 }
                 val currFieldText = curField.text ?: continue
-                if (currFieldText.isEmpty() || currFieldText.contentEquals(mField.text)) {
+                if (currFieldText.isEmpty() || currFieldText.contentEquals(_field.text)) {
                     continue
                 }
                 // collect clone sources
-                mPossibleClones.add(currFieldText)
+                possibleClones.add(currFieldText)
                 numTextFields++
             }
 
@@ -94,16 +94,16 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
             if (numTextFields < 1) {
                 return
             }
-            val btnOtherField = Button(mActivity)
+            val btnOtherField = Button(_activity)
             btnOtherField.text = gtxt(R.string.multimedia_editor_text_field_editing_clone)
             layoutTools.addView(btnOtherField, p)
             val controller = this
             btnOtherField.setOnClickListener {
                 val fragment = PickStringDialogFragment()
-                fragment.setChoices(mPossibleClones)
+                fragment.setChoices(possibleClones)
                 fragment.setOnclickListener(controller)
                 fragment.setTitle(gtxt(R.string.multimedia_editor_text_field_editing_clone_source))
-                fragment.show(mActivity.supportFragmentManager, "pick.clone")
+                fragment.show(_activity.supportFragmentManager, "pick.clone")
             }
         }
     }
@@ -114,19 +114,19 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
 
     // When Done button is clicked
     override fun onDone() {
-        mField.text = mEditText.text.toString()
+        _field.text = editText.text.toString()
     }
 
     // This is when the dialog for clone ends
     override fun onClick(dialog: DialogInterface, which: Int) {
-        mEditText.setText(mPossibleClones[which])
+        editText.setText(possibleClones[which])
     }
 
     /**
      * @param text A short cut to show a toast
      */
     private fun showToast(text: CharSequence) {
-        showThemedToast(mActivity, text, true)
+        showThemedToast(_activity, text, true)
     }
 
     override fun onDestroy() {

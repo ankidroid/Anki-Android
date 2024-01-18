@@ -20,7 +20,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Message
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
@@ -66,7 +65,7 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
     ) {
         override fun handleAsyncMessage(deckPicker: DeckPicker) {
             deckPicker.showDialogFragment(
-                deckPicker.mExportingDelegate.mDialogsFactory.newExportReadyDialog().withArguments(exportPath)
+                deckPicker.exportingDelegate.dialogsFactory.newExportReadyDialog().withArguments(exportPath)
             )
         }
 
@@ -77,7 +76,7 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
 
         companion object {
             fun fromMessage(message: Message): ExportReadyDialogMessage {
-                val exportPath = BundleCompat.getParcelable(message.data, "exportPath", String::class.java)!!
+                val exportPath = message.data.getString("exportPath")!!
                 return ExportReadyDialogMessage(exportPath)
             }
         }

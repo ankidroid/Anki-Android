@@ -40,6 +40,7 @@ import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.setMaxLines
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SortOrder
 import com.ichi2.utils.NetworkUtils
@@ -53,6 +54,9 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private val currentCard: Card
         get() = activity.currentCard!!
 
+    private val getColUnsafe: Collection
+        get() = activity.getColUnsafe
+
     /**
      Javascript Interface class for calling Java function from AnkiDroid WebView
      see js-api.js for available functions
@@ -61,7 +65,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private val context: Context = activity
 
     // Text to speech
-    private val mTalker = JavaScriptTTS()
+    private val talker = JavaScriptTTS()
 
     open fun convertToByteArray(apiContract: ApiContract, boolean: Boolean): ByteArray {
         return ApiResult(apiContract.isValid, boolean.toString()).toString().toByteArray()
@@ -132,8 +136,8 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 }
                 return false
             }
-            val versionCurrent = Version.valueOf(AnkiDroidJsAPIConstants.sCurrentJsApiVersion)
-            val versionSupplied = Version.valueOf(apiVer)
+            val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.sCurrentJsApiVersion)
+            val versionSupplied = Version.parse(apiVer)
 
             /*
             * if api major version equals to supplied major version then return true and also check for minor version and patch version
@@ -144,11 +148,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 versionSupplied == versionCurrent -> {
                     true
                 }
-                versionSupplied.lessThan(versionCurrent) -> {
+                versionSupplied.isLowerThan(versionCurrent) -> {
                     activity.runOnUiThread {
                         activity.showSnackbar(context.getString(R.string.update_js_api_version, apiDevContact))
                     }
-                    versionSupplied.greaterThanOrEqualTo(Version.valueOf(AnkiDroidJsAPIConstants.sMinimumJsApiVersion))
+                    versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.sMinimumJsApiVersion))
                 }
                 else -> {
                     activity.runOnUiThread {
@@ -226,7 +230,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 activity.launchCatchingTask { activity.resetCards(cardIds) }
                 convertToByteArray(apiContract, true)
             }
-            "cardMark" -> convertToByteArray(apiContract, currentCard.note().hasTag("marked"))
+            "cardMark" -> convertToByteArray(apiContract, currentCard.note(getColUnsafe).hasTag("marked"))
             "cardFlag" -> convertToByteArray(apiContract, currentCard.userFlag())
             "cardReps" -> convertToByteArray(apiContract, currentCard.reps)
             "cardInterval" -> convertToByteArray(apiContract, currentCard.ivl)
@@ -244,22 +248,22 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             "cardDue" -> convertToByteArray(apiContract, currentCard.due)
             "deckName" -> convertToByteArray(apiContract, Decks.basename(activity.getColUnsafe.decks.name(currentCard.did)))
             "isActiveNetworkMetered" -> convertToByteArray(apiContract, NetworkUtils.isActiveNetworkMetered())
-            "ttsSetLanguage" -> convertToByteArray(apiContract, mTalker.setLanguage(apiParams))
+            "ttsSetLanguage" -> convertToByteArray(apiContract, talker.setLanguage(apiParams))
             "ttsSpeak" -> {
                 val jsonObject = JSONObject(apiParams)
                 val text = jsonObject.getString("text")
                 val queueMode = jsonObject.getInt("queueMode")
-                convertToByteArray(apiContract, mTalker.speak(text, queueMode))
+                convertToByteArray(apiContract, talker.speak(text, queueMode))
             }
-            "ttsIsSpeaking" -> convertToByteArray(apiContract, mTalker.isSpeaking)
-            "ttsSetPitch" -> convertToByteArray(apiContract, mTalker.setPitch(apiParams.toFloat()))
-            "ttsSetSpeechRate" -> convertToByteArray(apiContract, mTalker.setSpeechRate(apiParams.toFloat()))
+            "ttsIsSpeaking" -> convertToByteArray(apiContract, talker.isSpeaking)
+            "ttsSetPitch" -> convertToByteArray(apiContract, talker.setPitch(apiParams.toFloat()))
+            "ttsSetSpeechRate" -> convertToByteArray(apiContract, talker.setSpeechRate(apiParams.toFloat()))
             "ttsFieldModifierIsAvailable" -> {
                 // Know if {{tts}} is supported - issue #10443
                 // Return false for now
                 convertToByteArray(apiContract, false)
             }
-            "ttsStop" -> convertToByteArray(apiContract, mTalker.stop())
+            "ttsStop" -> convertToByteArray(apiContract, talker.stop())
             "searchCard" -> {
                 val intent = Intent(context, CardBrowser::class.java).apply {
                     putExtra("currentCard", currentCard.id)
@@ -355,10 +359,10 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         val searchResult: MutableList<String> = ArrayList()
         for (s in cards) {
             val jsonObject = JSONObject()
-            val fieldsData = s.card.note().fields
-            val fieldsName = s.card.model().fieldsNames
+            val fieldsData = s.card.note(getColUnsafe).fields
+            val fieldsName = s.card.model(getColUnsafe).fieldsNames
 
-            val noteId = s.card.note().id
+            val noteId = s.card.nid
             val cardId = s.card.id
             jsonObject.put("cardId", cardId)
             jsonObject.put("noteId", noteId)

@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">ଏକ ନୂତନ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଯାଉଛି। ପୁନଃନିର୍ଦ୍ଧାରଣ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସମୀକ୍ଷା ପତ୍ରରେ ବି ପରିଣତ କରେ। ନୂତନ ଧାଡ଼ି ମଧ୍ୟରେ ଏକ ନୂତନ ପତ୍ରର ପୋଜିସନ୍ ପରିବର୍ତ୍ତନ କରିବାକୁ ‘ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା’ ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="reschedule_card_dialog_warning_ease_reset">ପୁନଃନିର୍ଦ୍ଧାରଣ କରିବା ଫଳରେ ଭବିଷ୍ୟତରେ ଅନୁସୂଚକ ପତ୍ରକୁ କିପରି ଵ୍ୟଵହାର କରିବ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ ହୋଇଯାଏ (ଅର୍ଥାତ୍ ସହଜତା %dକୁ ସେଟ୍ ହେବ)।</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">ତାସଖଣ୍ଡଟି ଆମଦାନୀ କରିବାକୁ ଆପଣଙ୍କ ଫାଇଲ୍ ପରିଚାଳକରେ ଏହାକୁ ଚୟନ କରନ୍ତୁ କିମ୍ୱା about:downloads ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
     <string name="answering_error_message">ସଂଗ୍ରହରେ ଲିଖନ ବିଫଳ ହେଲା। ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ।\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ।\nକିମ୍ବା ଏହା ଏକ AnkiDroid ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ। ଦୟାକରି ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ।</string>
     <string name="answering_error_report">ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ</string>
@@ -98,7 +97,7 @@
     <string name="custom_study_ahead">x ଦିନ ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_random">ତାସଖଣ୍ଡରୁ ଅନିୟମିତ ଭାବରେ x ଟି ପତ୍ର ଚୟନ କରନ୍ତୁ:</string>
     <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ାଯାଇଥିବା ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ଵାଵଲୋକନ କରିବା:</string>
-    <string name="custom_study_rebuild_deck_corrupt">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ପୁନଃନିର୍ମାଣ କରିହେଲା ନାହିଁ </string>
+    <string name="custom_study_rebuild_deck_corrupt">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ପୁନଃନିର୍ମାଣ କରିହେଲା ନାହିଁ</string>
     <string name="storage_full_title">ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି ହେଲାଣି</string>
     <string name="storage_almost_full_title">ଷ୍ଟୋରେଜ୍ ପ୍ରାୟ ଭର୍ତ୍ତି ହେବାକୁ ବସିଲାଣି</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ଜାଗା ନାହିଁ</string>
@@ -108,7 +107,7 @@
     <string name="restore_backup_choose_another">ଅନ୍ୟ ଗୋଟେ ବାଛନ୍ତୁ</string>
     <string name="dialog_cancel">ବାତିଲ୍ କର</string>
     <string name="dialog_ok">ଠିକ୍ ଅଛି</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">ନିଶ୍ଚିତ କରିବା</string>
     <string name="dialog_no">ନା</string>
     <string name="dialog_yes">ହଁ</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>
@@ -147,8 +146,8 @@
     <string name="empty_cards_count">ବିଲୋପ କରିବାକୁ ପତ୍ର : %d</string>
     <string name="empty_cards_deleted">ବିଲୋପିତ ପତ୍ର: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">ମାଇକ୍ରୋଫୋନ୍ ଅନୁମତି ପାଇପାରିଲା ନାହିଁ।</string>
-    <string name="multimedia_editor_camera_permission_refused">କ୍ୟାମେରା ଅନୁମତି ପାଇପାରିଲା ନାହିଁ। କାର୍ଯ୍ୟକାରିତା ଅକ୍ଷମ ହୋଇଛି।</string>
+    <string name="multimedia_editor_audio_permission_refused">ମାଇକ୍ରୋଫୋନ୍ ଅନୁମତି ପାଇପାରିଲୁ ନାହିଁ।</string>
+    <string name="multimedia_editor_camera_permission_refused">କ୍ୟାମେରା ଅନୁମତି ପାଇପାରିଲୁ ନାହିଁ। ଶକ୍ୟତାଟି ଅକ୍ଷମ ହୋଇଛି।</string>
     <string name="multimedia_editor_failed">ମଲ୍ଟିମିଡ଼ିଆ ସମ୍ପାଦକ ଖୋଲିବାରେ ବିଫଳ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ଅଡ଼ିଓ ରେକର୍ଡିଂ ଅନୁମତି ପ୍ରତ୍ୟାଖାନ ହେଲା</string>

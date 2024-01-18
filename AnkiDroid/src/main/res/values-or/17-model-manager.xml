@@ -70,7 +70,7 @@
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">ପ୍ରତିଲିପି ତିଆରି କରନ୍ତୁ: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">ଆପଣଙ୍କ ପତ୍ର ପ୍ରଦର୍ଶନ କରିବା ପାଇଁ ପତ୍ର ବ୍ରାଉଜର୍ ବ୍ୟବହାର କରୁଥିବା ଟେମ୍ପଲେଟ୍ ପ୍ରବେଶ କରନ୍ତୁ। ଅଧିକ ସଂକ୍ଷିପ୍ତ ଉତ୍ତର ପ୍ରଦର୍ଶନ କରିବା ପାଇଁ ଏହାକୁ ବ୍ୟବହାର କରନ୍ତୁ।\n\nଏକ ସାମ୍ନା ଟେମ୍ପଲେଟ୍\n“{{Country}} ର ରାଜଧାନୀ ହେଉଛି:”\nକୁ ପତ୍ର ବ୍ରାଉଜରରେ \n“ରାଜଧାନୀ: {{Country}}” କୁ ସଙ୍କୋଚନ କରାଯାଇପାରିବ</string>
+    <string name="card_template_browser_appearance_summary">ଆପଣଙ୍କ ପତ୍ର ପ୍ରଦର୍ଶନ କରିବା ପାଇଁ ପତ୍ର ବ୍ରାଉଜର୍ ବ୍ୟବହାର କରୁଥିବା ଟେମ୍ପଲେଟ୍ ପ୍ରବେଶ କରନ୍ତୁ। ଅଧିକ ସଂକ୍ଷିପ୍ତ ଉତ୍ତର ପ୍ରଦର୍ଶନ କରିବା ପାଇଁ ଏହାକୁ ବ୍ୟବହାର କରନ୍ତୁ।\n\nଏକ ସାମ୍ନା ଟେମ୍ପଲେଟ୍\n“{{Country}} ର ରାଜଧାନୀ ହେଉଛି:”\nକୁ ପତ୍ର ବ୍ରାଉଜର୍‌ରେ \n“ରାଜଧାନୀ: {{Country}}” କୁ ସଙ୍କୋଚନ କରାଯାଇପାରିବ</string>
     <string name="card_template_browser_appearance_question_format">ପ୍ରଶ୍ନ ଶୈଳୀ</string>
     <string name="card_template_browser_appearance_answer_format">ଉତ୍ତର ଶୈଳୀ</string>
     <string name="card_template_browser_appearance_restore_default_dialog">ଡିଫଲ୍ଟ ମୂଲ୍ୟଗୁଡିକ ପୁନରୁଦ୍ଧାର କରିବେ?</string>

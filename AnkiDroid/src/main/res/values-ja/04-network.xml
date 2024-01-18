@@ -64,7 +64,7 @@
     <string name="log_out">ログアウト</string>
     <string name="reset_password">パスワードをリセット</string>
     <string name="lost_mail_instructions">メールアドレスを忘れましたか？</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">ログインしています...</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX のオプション</string>
     <string name="sync_title">同期</string>

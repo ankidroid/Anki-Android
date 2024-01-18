@@ -16,247 +16,177 @@
 
 package com.ichi2.anki.dialogs
 
-import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.core.content.pm.ShortcutManagerCompat
-import androidx.core.content.pm.ShortcutManagerCompat.FLAG_MATCH_PINNED
-import androidx.recyclerview.widget.RecyclerView
+import androidx.core.os.bundleOf
+import androidx.fragment.app.testing.FragmentScenario.Companion.launch
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.internal.rtl.RtlTextView
 import com.ichi2.anki.*
-import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.libanki.DeckId
 import com.ichi2.testutils.BackupManagerTestUtilities.setupSpaceForBackup
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.containsInAnyOrder
-import org.hamcrest.Matchers.not
-import org.junit.Assert.assertEquals
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.MatcherAssert
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Shadows.shadowOf
-import org.robolectric.shadows.ShadowDialog
-import org.robolectric.shadows.ShadowLooper
-import timber.log.Timber
 import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
-class DeckPickerContextMenuTest : RobolectricTest() {
+class DeckPickerContextMenuTest {
     @Before
     fun before() {
-        getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
-        setupSpaceForBackup(this.targetContext)
+        val context = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
+        context.sharedPrefs().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+        setupSpaceForBackup(context)
     }
 
     @Test
-    fun ensure_cannot_be_instantiated_without_arguments() {
-        assertFailsWith<IllegalStateException> { DeckPickerContextMenu(col).deckId }
+    fun ensure_cannot_be_instantiated_without_expected_arguments() {
+        // fails on deck id missing from arguments
+        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("id") }
+        // fails on deck name missing from arguments
+        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("name") }
+        // fails on deck dynamic status missing from arguments
+        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("dynamic") }
+        // fails on deck having buried status missing from arguments
+        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("hasBuried") }
+    }
+
+    /**
+     * Create a [Bundle] with static data to be passed as arguments for [DeckPickerContextMenu].
+     * One option is excluded to simulate the argument missing.
+     *
+     * @param excluded a value from [id, name, dynamic, hasBuried] to be removed from the returned
+     * bundle. See source code for [DeckPickerContextMenu] for options meaning.
+     */
+    private fun startContextMenuWithMissingArgument(excluded: String) {
+        val arguments = Bundle().apply {
+            if (excluded != "id") {
+                DeckPickerContextMenu.ARG_DECK_ID to 1000L
+            }
+            if (excluded != "name") {
+                DeckPickerContextMenu.ARG_DECK_NAME to "Deck"
+            }
+            if (excluded != "dynamic") {
+                DeckPickerContextMenu.ARG_DECK_IS_DYN to false
+            }
+            if (excluded != "hasBuried") {
+                DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to false
+            }
+        }
+        launch(DeckPickerContextMenu::class.java, arguments, R.style.Theme_Light)
     }
 
     @Test
-    fun addCards() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val models = getColUnsafe.notetypes
-            val didA = addDeck("Deck 1")
-            updateDeckList()
-            getColUnsafe.decks.select(didA)
-            val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
-            basic!!.put("did", didA)
-            addNoteUsingBasicModel("Front", "Back")
-            assertEquals(1, visibleDeckCount)
-            openContextMenuAndSelectItem(recyclerView, 0)
-            assertEquals(1, getColUnsafe.cardCount(didA))
+    fun `Shows standard options`() {
+        launch(
+            DeckPickerContextMenu::class.java,
+            withArguments(),
+            R.style.Theme_Light
+        ).onFragment { fragment ->
+            fragment.assertOptionPresent(R.string.menu_add)
+            fragment.assertOptionPresent(R.string.browse_cards)
+            fragment.assertOptionPresent(R.string.rename_deck)
+            fragment.assertOptionPresent(R.string.menu__deck_options)
+            fragment.assertOptionPresent(R.string.export_deck)
+            fragment.assertOptionPresent(R.string.create_shortcut)
+            fragment.assertOptionPresent(R.string.contextmenu_deckpicker_delete_deck)
         }
     }
 
-    @Test
-    fun testBrowseCards() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val deckId = addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
-
-            openContextMenuAndSelectItem(recyclerView, 1)
-
-            val browser = shadowOf(this).nextStartedActivity!!
-            assertEquals("com.ichi2.anki.CardBrowser", browser.component!!.className)
-
-            assertEquals(deckId, getColUnsafe.decks.selected())
-        }
+    private fun DeckPickerContextMenu.assertOptionPresent(optionStringRes: Int) {
+        val optionTitle = getString(optionStringRes)
+        assertTrue(
+            foundOptions().contains(optionTitle),
+            "'$optionTitle' should be present"
+        )
     }
 
     @Test
-    fun testRenameDeck() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
-
-            openContextMenuAndSelectItem(recyclerView, 2)
-
-            assertDialogTitleEquals("Rename deck")
-        }
-    }
-
-    @Test
-    fun testCreateSubdeck() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
-
-            openContextMenuAndSelectItem(recyclerView, 3)
-
-            assertDialogTitleEquals("Create subdeck")
-        }
-    }
-
-    @Test
-    fun testShowDeckOptions() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
-
-            openContextMenuAndSelectItem(recyclerView, 4)
-        }
-    }
-
-    @Test
-    fun testDeleteDeck() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val deckId = addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
-
-            openContextMenuAndSelectItem(recyclerView, 8)
-
-            assertThat(getColUnsafe.decks.allNamesAndIds().map { it.id }, not(containsInAnyOrder(deckId)))
-        }
-    }
-
-    @Test
-    fun testCreateShortcut() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
-
-            openContextMenuAndSelectItem(recyclerView, 7)
-
-            assertEquals(
-                "Deck 1",
-                ShortcutManagerCompat.getShortcuts(this, FLAG_MATCH_PINNED).first().shortLabel
+    fun `DELETE_DECK is the last option in the menu(issue 10283)`() {
+        // "Delete deck" was previously close to "Custom study" which caused misclicks.
+        // This is less likely at the bottom of the list
+        launch(
+            DeckPickerContextMenu::class.java,
+            withArguments(),
+            R.style.Theme_Light
+        ).onFragment { fragment ->
+            MatcherAssert.assertThat(
+                "'Delete deck' should be last item in the menu",
+                fragment.foundOptions().last(),
+                equalTo(fragment.getString(R.string.contextmenu_deckpicker_delete_deck))
             )
         }
     }
 
     @Test
-    fun testUnbury() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            TimeManager.reset()
-            // stop 'next day' code running, which calls 'unbury'
-            updateDeckList()
-
-            val deckId = addDeck("Deck 1")
-            getColUnsafe.decks.select(deckId)
-            getColUnsafe.notetypes.byName("Basic")!!.put("did", deckId)
-            val card = addNoteUsingBasicModel("front", "back").firstCard()
-            getColUnsafe.sched.buryCards(listOf(card.id))
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
-
-            assertTrue(getColUnsafe.sched.haveBuriedInCurrentDeck(), "Deck should have buried cards")
-
-            openContextMenuAndSelectItem(recyclerView, 7)
-
-            assertFalse(getColUnsafe.sched.haveBuriedInCurrentDeck())
+    fun `Shows options to empty and rebuild when deck is dynamic`() {
+        launch(
+            DeckPickerContextMenu::class.java,
+            withArguments(isDynamic = true),
+            R.style.Theme_Light
+        ).onFragment { fragment ->
+            assertTrue(
+                fragment.foundOptions().contains(fragment.getString(R.string.empty_cram_label)),
+                "'Empty' should be present when deck is dynamic"
+            )
+            assertTrue(
+                fragment.foundOptions().contains(fragment.getString(R.string.rebuild_cram_label)),
+                "'Rebuild' should be present when deck is dynamic"
+            )
         }
     }
 
     @Test
-    fun testCustomStudy() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
-
-            openContextMenuAndSelectItem(recyclerView, 5)
-
-            assertDialogTitleEquals("Custom study")
+    fun `Shows option to create subdeck when deck is not dynamic`() {
+        launch(
+            DeckPickerContextMenu::class.java,
+            withArguments(),
+            R.style.Theme_Light
+        ).onFragment { fragment ->
+            assertTrue(
+                fragment.foundOptions().contains(fragment.getString(R.string.create_subdeck)),
+                "'Create subdeck' should be present when deck is not dynamic"
+            )
         }
     }
 
     @Test
-    @Ignore("Export dialog uses AlertDialog which fails the test as it expects a MaterialDialog")
-    fun testExportDeck() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            addDeck("Deck 1")
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
-
-            openContextMenuAndSelectItem(recyclerView, 6)
-
-            assertDialogTitleEquals("Export")
+    fun `Shows option to unbury if deck has buried cards`() {
+        launch(
+            DeckPickerContextMenu::class.java,
+            withArguments(hasBuriedCards = true),
+            R.style.Theme_Light
+        ).onFragment { fragment ->
+            assertTrue(
+                fragment.foundOptions().contains(fragment.getString(R.string.unbury)),
+                "'Unbury' should be present when deck has buried cards"
+            )
         }
     }
 
-    @Test
-    fun testDynRebuildAndEmpty() = runTest {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val cardIds = (0..3)
-                .map { addNoteUsingBasicModel("$it", "").firstCard().id }
-            assertTrue(allCardsInSameDeck(cardIds, 1))
-            val deckId = addDynamicDeck("Deck 1")
-            getColUnsafe.sched.rebuildDyn(deckId)
-            assertTrue(allCardsInSameDeck(cardIds, deckId))
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
-
-            openContextMenuAndSelectItem(recyclerView, 3) // Empty
-
-            assertTrue(allCardsInSameDeck(cardIds, 1))
-
-            openContextMenuAndSelectItem(recyclerView, 2) // Rebuild
-
-            assertTrue(allCardsInSameDeck(cardIds, deckId))
+    private fun DeckPickerContextMenu.foundOptions(): List<String> {
+        val foundOptions = mutableListOf<String>()
+        val menuAdapter = (dialog as AlertDialog).listView.adapter
+        for (index in 0 until menuAdapter.count) {
+            foundOptions.add(menuAdapter.getItem(index).toString())
         }
+        return foundOptions
     }
 
-    private fun assertDialogTitleEquals(expectedTitle: String) {
-        val actualTitle =
-            (ShadowDialog.getLatestDialog() as MaterialDialog)
-                .view
-                .findViewById<RtlTextView>(com.afollestad.materialdialogs.R.id.md_text_title)
-                ?.text
-        Timber.d("titles = \"$actualTitle\", \"$expectedTitle\"")
-        assertEquals(expectedTitle, "$actualTitle")
-    }
-
-    private fun allCardsInSameDeck(cardIds: List<Long>, deckId: Long): Boolean =
-        cardIds.all { col.getCard(it).did == deckId }
-
-    private fun openContextMenuAndSelectItem(contextMenu: RecyclerView, index: Int) {
-        ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
-        contextMenu.postDelayed({
-            contextMenu.findViewHolderForAdapterPosition(0)!!
-                .itemView.performLongClick()
-
-            val dialogRecyclerView = (ShadowDialog.getLatestDialog() as MaterialDialog?)!!
-                .view.findViewById<RecyclerView>(com.afollestad.materialdialogs.R.id.md_recyclerview_content)
-
-            dialogRecyclerView.apply {
-                scrollToPosition(index)
-                postDelayed({
-                    findViewHolderForAdapterPosition(index)!!
-                        .itemView.performClick()
-                }, 1)
-            }
-            ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
-        }, 1)
-        ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
-    }
+    private fun withArguments(
+        deckId: DeckId = 1000L,
+        deckName: String = "Deck 1",
+        isDynamic: Boolean = false,
+        hasBuriedCards: Boolean = false
+    ) = bundleOf(
+        DeckPickerContextMenu.ARG_DECK_ID to deckId,
+        DeckPickerContextMenu.ARG_DECK_NAME to deckName,
+        DeckPickerContextMenu.ARG_DECK_IS_DYN to isDynamic,
+        DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedCards
+    )
 }

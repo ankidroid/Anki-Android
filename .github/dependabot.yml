@@ -16,3 +16,12 @@ updates:
   ignore:
   # Ignore all Rust backend updates, these are always done as manual pulls
   - dependency-name: io.github.david-allison-1:anki-android-backend
+- package-ecosystem: npm
+  directory: "/tools/localization"
+  schedule:
+    interval: daily
+    time: "10:00"
+  open-pull-requests-limit: 10
+  target-branch: dependency-updates
+  labels:
+  - "dependencies"

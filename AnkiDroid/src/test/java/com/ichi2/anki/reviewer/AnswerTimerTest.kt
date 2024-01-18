@@ -22,6 +22,7 @@ import android.widget.Chronometer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -37,6 +38,7 @@ import org.robolectric.annotation.Config
 @Config(application = EmptyApplication::class)
 class AnswerTimerTest {
     lateinit var chronometer: Chronometer
+    val mockCol = Mockito.mock(Collection::class.java)
 
     @Before
     fun init() {
@@ -48,10 +50,10 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val card: Card = mock {
-            on { showTimer() } doReturn false
+            on { showTimer(any()) } doReturn false
         }
 
-        timer.setupForCard(card)
+        timer.setupForCard(mockCol, card)
 
         assertThat("timer should not be enabled", timer.showTimer, equalTo(false))
 
@@ -67,14 +69,14 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val card: Card = mock {
-            on { showTimer() } doReturn true
-            on { timeLimit() } doReturn 12
+            on { showTimer(any()) } doReturn true
+            on { timeLimit(any()) } doReturn 12
         }
 
         Mockito.mockStatic(SystemClock::class.java).use { mocked ->
             mocked.`when`<Long> { SystemClock.elapsedRealtime() }.doReturn(13)
 
-            timer.setupForCard(card)
+            timer.setupForCard(mockCol, card)
         }
 
         assertThat("timer should be enabled", timer.showTimer, equalTo(true))
@@ -93,23 +95,23 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer() } doReturn true
+            on { showTimer(any()) } doReturn true
         }
 
         val nonTimerCard: Card = mock {
-            on { showTimer() } doReturn false
+            on { showTimer(any()) } doReturn false
         }
 
-        timer.setupForCard(timerCard)
+        timer.setupForCard(mockCol, timerCard)
         assertThat("timer should be enabled", timer.showTimer, equalTo(true))
         assertThat("chronometer should be visible", chronometer.visibility, equalTo(View.VISIBLE))
 
-        timer.setupForCard(nonTimerCard)
+        timer.setupForCard(mockCol, nonTimerCard)
 
         assertThat("timer should not be enabled", timer.showTimer, equalTo(false))
         assertThat("chronometer should not be visible", chronometer.visibility, equalTo(View.INVISIBLE))
 
-        timer.setupForCard(timerCard)
+        timer.setupForCard(mockCol, timerCard)
         assertThat("timer should be enabled", timer.showTimer, equalTo(true))
         assertThat("chronometer should be visible", chronometer.visibility, equalTo(View.VISIBLE))
     }
@@ -119,7 +121,7 @@ class AnswerTimerTest {
         val timer = getTimer()
         // before we call setupForCard
         timer.pause()
-        timer.resume()
+        timer.resume(mockCol)
     }
 
     @Test
@@ -127,16 +129,16 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer() } doReturn true
-            on { timeLimit() } doReturn 1000
+            on { showTimer(mockCol) } doReturn true
+            on { timeLimit(mockCol) } doReturn 1000
         }
 
-        timer.setupForCard(timerCard)
+        timer.setupForCard(mockCol, timerCard)
 
         reset(chronometer)
         timer.pause()
         verify(chronometer).stop()
-        timer.resume()
+        timer.resume(mockCol)
         verify(chronometer).start()
     }
 
@@ -145,17 +147,17 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer() } doReturn true
-            on { timeLimit() } doReturn 1000
-            on { timeTaken() } doReturn 1001
+            on { showTimer(any()) } doReturn true
+            on { timeLimit(any()) } doReturn 1000
+            on { timeTaken(any()) } doReturn 1001
         }
 
-        timer.setupForCard(timerCard)
+        timer.setupForCard(mockCol, timerCard)
 
         reset(chronometer)
         timer.pause()
         verify(chronometer).stop()
-        timer.resume()
+        timer.resume(mockCol)
         verify(chronometer, never()).start()
     }
 
@@ -167,15 +169,15 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val nonTimerCard: Card = mock {
-            on { showTimer() } doReturn false
+            on { showTimer(any()) } doReturn false
         }
 
-        timer.setupForCard(nonTimerCard)
+        timer.setupForCard(mockCol, nonTimerCard)
 
         timer.pause()
         verify(nonTimerCard).stopTimer()
         verify(nonTimerCard, never()).resumeTimer()
-        timer.resume()
+        timer.resume(mockCol)
         verify(nonTimerCard).resumeTimer()
 
         verify(chronometer, never()).start()

@@ -23,6 +23,7 @@ import com.ichi2.anki.cardviewer.SingleSoundSide.ANSWER
 import com.ichi2.anki.cardviewer.SingleSoundSide.QUESTION
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.template.MathJax
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -80,8 +81,8 @@ class CardHtml(
     }
 
     companion object {
-        fun createInstance(card: Card, side: Side, context: HtmlGenerator): CardHtml {
-            val content = displayString(card, side, context)
+        fun createInstance(col: Collection, card: Card, side: Side, context: HtmlGenerator): CardHtml {
+            val content = displayString(col, card, side, context)
             return CardHtml(
                 content,
                 card.ord,
@@ -95,9 +96,9 @@ class CardHtml(
          * Or warning if required
          * TODO: This is no longer entirely true as more post-processing occurs
          */
-        private fun displayString(card: Card, side: Side, context: HtmlGenerator): String {
-            var content: String = if (side == Side.FRONT) card.question() else card.answer()
-            content = card.col.media.escapeMediaFilenames(content)
+        private fun displayString(col: Collection, card: Card, side: Side, context: HtmlGenerator): String {
+            var content: String = if (side == Side.FRONT) card.question(col) else card.answer(col)
+            content = col.media.escapeMediaFilenames(content)
             content = context.filterTypeAnswer(content, side)
             Timber.v("question: '%s'", content)
             return enrichWithQADiv(content)
@@ -117,10 +118,10 @@ class CardHtml(
             return sb.toString()
         }
 
-        fun legacyGetTtsTags(card: Card, cardSide: SingleSoundSide, context: Context): List<TTSTag> {
+        fun legacyGetTtsTags(col: Collection, card: Card, cardSide: SingleSoundSide, context: Context): List<TTSTag> {
             val cardSideContent: String = when (cardSide) {
-                QUESTION -> card.question(true)
-                ANSWER -> card.pureAnswer
+                QUESTION -> card.question(col, true)
+                ANSWER -> card.pureAnswer(col)
             }
             return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
         }

@@ -86,7 +86,7 @@ class AudioRecordingController :
     override fun createUI(context: Context, layout: LinearLayout) {
         audioRecorder = AudioRecorder()
         if (inEditField) {
-            val origAudioPath = this.mField.audioPath
+            val origAudioPath = this._field.audioPath
             var bExist = false
             if (origAudioPath != null) {
                 val f = File(origAudioPath)
@@ -96,7 +96,7 @@ class AudioRecordingController :
                 }
             }
             if (!bExist) {
-                tempAudioPath = generateTempAudioFile(mActivity)
+                tempAudioPath = generateTempAudioFile(_activity)
             }
         }
 
@@ -121,8 +121,8 @@ class AudioRecordingController :
                 label.gravity = Gravity.CENTER_HORIZONTAL
                 previewLayout.addView(label)
                 var hasTextContents = false
-                for (i in 0 until mNote.initialFieldCount) {
-                    val field = mNote.getInitialField(i)
+                for (i in 0 until _note.initialFieldCount) {
+                    val field = _note.getInitialField(i)
                     FixedTextView(this).apply {
                         text = field?.text
                         textSize = 16f
@@ -355,8 +355,8 @@ class AudioRecordingController :
     }
 
     private fun saveRecording() {
-        mField.audioPath = tempAudioPath
-        mField.hasTemporaryMedia = true
+        _field.audioPath = tempAudioPath
+        _field.hasTemporaryMedia = true
     }
 
     fun stopAndSaveRecording() {

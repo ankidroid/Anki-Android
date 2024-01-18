@@ -94,7 +94,6 @@ class CollectionTest : JvmTest() {
       } */
     @Test
     fun test_noteAddDelete() {
-        val col = col
         // add a note
         var note = col.newNote()
         note.setItem("Front", "one")
@@ -135,7 +134,6 @@ class CollectionTest : JvmTest() {
     @Test
     @Ignore("I don't understand this csum")
     fun test_fieldChecksum() {
-        val col = col
         val note = col.newNote()
         note.setItem("Front", "new")
         note.setItem("Back", "new2")
@@ -149,7 +147,6 @@ class CollectionTest : JvmTest() {
 
     @Test
     fun test_addDelTags() {
-        val col = col
         val note = col.newNote()
         note.setItem("Front", "1")
         col.addNote(note)
@@ -171,7 +168,6 @@ class CollectionTest : JvmTest() {
 
     @Test
     fun test_timestamps() {
-        val col = col
         val stdModelSize = StdModels.STD_MODELS.size
         assertEquals(col.notetypes.all().size, stdModelSize)
         for (i in 0..99) {
@@ -183,7 +179,6 @@ class CollectionTest : JvmTest() {
     @Test
     @Ignore("Pending port of media search from Rust code")
     fun test_furigana() {
-        val col = col
         val mm = col.notetypes
         val m = mm.current()
         // filter should work
@@ -207,7 +202,6 @@ class CollectionTest : JvmTest() {
 
     @Test
     fun test_filterToValidCards() {
-        val col = col
         val cid = addNoteUsingBasicModel("foo", "bar").firstCard().id
         assertEquals(ArrayList(setOf(cid)), col.filterToValidCards(longArrayOf(cid, cid + 1)))
     }

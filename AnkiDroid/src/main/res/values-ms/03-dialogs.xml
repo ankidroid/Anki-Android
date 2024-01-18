@@ -77,7 +77,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Kad baru sedang dijadualkan semula. Penjadualan semula juga menukarkan kad baru kepada kad semakan. Guna pilihan \'alih posisi kad\' untuk ubah posisi kad baru dalam aturan baru</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Penjadualan semula juga tetap semula cara penjadual mengolah kard pada masa hadapan (longgaran akan ditetapkan ke %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Pilih dek dalam pengurus fail anda atau lawat halaman about:downloads untuk mengimportnya</string>
     <string name="answering_error_title">Ralat pangkalan data</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Pangkalan data mungkin rosak atau kehabisan ruang kosong pada cakera.\n\nJika ini berlaku kerap, cuba periksa pangkalan data, baiki koleksi atau pulih dari suatu sandaran. Sentuh \"tetapan\" untuk lakukannya.\n\Atau ia mungkin pepijat AnkiDroid; sila laporkannya agar kami boleh memeriksa ralat tersebut.</string>
     <string name="answering_error_report">Lapor ralat</string>

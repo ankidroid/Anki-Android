@@ -102,7 +102,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">تجري إعادة جدولة بطاقة جديدة. تحول إعادة الجدولة البطاقات الجديدة إلى بطاقات مراجعة. استخدم خيار «تغيير الموضع» لتغيير موضع بطاقة جديدة في صف البطاقات الجديدة</string>
     <string name="reschedule_card_dialog_warning_ease_reset">ستغير إعادة الجدولة طريقة المجدول في التعامل مع البطاقة في المستقبل (سيتم ضبط السهولة إلى %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">اختر الرزمة في مدير الملفات أو زر صفحة حول:تنزيلات لاستيرادها</string>
     <string name="answering_error_title">خطأ في قاعدة البيانات</string>
     <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا كان هذا يحدث غالبًا، جرب فحص قاعدة البيانات، أو إصلاح المجموعة، أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في أنكي درويد ربما؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
     <string name="answering_error_report">إبلاغ عن الخطأ</string>

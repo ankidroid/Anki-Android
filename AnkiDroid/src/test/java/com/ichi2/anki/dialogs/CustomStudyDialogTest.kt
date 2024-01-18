@@ -87,7 +87,8 @@ class CustomStudyDialogTest : RobolectricTest() {
             "\"dyn\":1," +
             "\"lrnToday\":[0,0]," +
             "\"newToday\":[0,0]," +
-            "\"previewDelay\":10," +
+            "\"previewDelay\":0," +
+            "\"previewAgainSecs\":60,\"previewHardSecs\":600,\"previewGoodSecs\":0," +
             "\"resched\":true," +
             "\"revToday\":[0,0]," +
             "\"separate\":true," +

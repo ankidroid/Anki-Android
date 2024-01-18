@@ -64,14 +64,14 @@ open class Scheduler(val col: Collection) {
     /** Legacy API */
     open val card: Card?
         get() = queuedCards.cardsList.firstOrNull()?.card?.let {
-            Card(col, it).apply { startTimer() }
+            Card(it).apply { startTimer() }
         }
 
     fun currentQueueState(): CurrentQueueState? {
         val queue = queuedCards
         return queue.cardsList.firstOrNull()?.let {
             CurrentQueueState(
-                topCard = Card(col, it.card).apply { startTimer() },
+                topCard = Card(it.card).apply { startTimer() },
                 countsIndex = when (it.queue) {
                     QueuedCards.Queue.NEW -> Counts.Queue.NEW
                     QueuedCards.Queue.LEARNING -> Counts.Queue.LRN
@@ -109,7 +109,7 @@ open class Scheduler(val col: Collection) {
         col.backend.answerCard(answer)
         reps += 1
         // tests assume the card was mutated
-        card.load()
+        card.load(col)
     }
 
     fun againIsLeech(info: CurrentQueueState): Boolean {
@@ -123,7 +123,7 @@ open class Scheduler(val col: Collection) {
             newState = stateFromEase(states, ease)
             rating = ratingFromEase(ease)
             answeredAtMillis = time.intTimeMS()
-            millisecondsTaken = card.timeTaken()
+            millisecondsTaken = card.timeTaken(col)
         }
     }
 

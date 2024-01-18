@@ -40,19 +40,19 @@ import java.io.IOException
  */
 @NeedsTest("after switch to new schema as default, add test to confirm audio tags rendered")
 open class CardTemplatePreviewer : AbstractFlashcardViewer() {
-    private var mEditedModelFileName: String? = null
-    private var mEditedNotetype: NotetypeJson? = null
-    private var mOrdinal = 0
+    private var editedModelFileName: String? = null
+    private var editedNotetype: NotetypeJson? = null
+    private var ordinal = 0
 
     /** The index of the card in cardList to show  */
-    private var mCardListIndex = 0
+    private var cardListIndex = 0
 
     /** The list (currently singular) of cards to be previewed
      * A single template was selected, and there was an associated card which exists
      */
-    private var mCardList: LongArray? = null
-    private var mNoteEditorBundle: Bundle? = null
-    private var mShowingAnswer = false
+    private var cardList: LongArray? = null
+    private var noteEditorBundle: Bundle? = null
+    private var showingAnswer = false
 
     /**
      * The number of valid cards for the note
@@ -68,8 +68,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
      */
     var cardIndex = 0
         private set
-    private var mAllFieldsNull = true
-    private var mCardType: String? = null
+    private var allFieldsNull = true
+    private var cardType: String? = null
     protected var previewLayout: PreviewLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -81,20 +81,20 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             parameters = intent.extras
         }
         if (parameters != null) {
-            mNoteEditorBundle = parameters.getBundle("noteEditorBundle")
-            mEditedModelFileName = parameters.getString(CardTemplateNotetype.INTENT_MODEL_FILENAME)
-            mCardList = parameters.getLongArray("cardList")
-            mOrdinal = parameters.getInt("ordinal")
-            mCardListIndex = parameters.getInt("cardListIndex")
-            mShowingAnswer = parameters.getBoolean("showingAnswer", mShowingAnswer)
+            noteEditorBundle = parameters.getBundle("noteEditorBundle")
+            editedModelFileName = parameters.getString(CardTemplateNotetype.INTENT_MODEL_FILENAME)
+            cardList = parameters.getLongArray("cardList")
+            ordinal = parameters.getInt("ordinal")
+            cardListIndex = parameters.getInt("cardListIndex")
+            showingAnswer = parameters.getBoolean("showingAnswer", showingAnswer)
         }
-        if (mEditedModelFileName != null) {
-            Timber.d("onCreate() loading edited model from %s", mEditedModelFileName)
+        if (editedModelFileName != null) {
+            Timber.d("onCreate() loading edited model from %s", editedModelFileName)
             try {
-                mEditedNotetype = CardTemplateNotetype.getTempModel(mEditedModelFileName!!)
-                mCardType = mEditedNotetype!!.optString("name")
+                editedNotetype = CardTemplateNotetype.getTempModel(editedModelFileName!!)
+                cardType = editedNotetype!!.optString("name")
             } catch (e: IOException) {
-                Timber.w(e, "Unable to load temp model from file %s", mEditedModelFileName)
+                Timber.w(e, "Unable to load temp model from file %s", editedModelFileName)
                 closeCardTemplatePreviewer()
             }
         }
@@ -106,7 +106,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     override fun onResume() {
         super.onResume()
-        if (currentCard == null || mOrdinal < 0) {
+        if (currentCard == null || ordinal < 0) {
             Timber.e("CardTemplatePreviewer started with empty card list or invalid index")
             closeCardTemplatePreviewer()
         }
@@ -142,7 +142,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         topBarLayout!!.visibility = View.GONE
         findViewById<View>(R.id.answer_options_layout).visibility = View.GONE
         findViewById<View>(R.id.bottom_area_layout).visibility = View.VISIBLE
-        previewLayout = createAndDisplay(this, mToggleAnswerHandler)
+        previewLayout = createAndDisplay(this, toggleAnswerHandler)
         previewLayout!!.setOnPreviousCard { onPreviousCard() }
         previewLayout!!.setOnNextCard { onNextCard() }
         previewLayout!!.hideNavigationButtons()
@@ -151,16 +151,16 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     override fun displayCardQuestion() {
         super.displayCardQuestion()
-        mShowingAnswer = false
+        showingAnswer = false
         previewLayout!!.setShowingAnswer(false)
     }
 
     override fun displayCardAnswer() {
-        if (mAllFieldsNull && mCardType != null && mCardType == getString(R.string.basic_typing_model_name)) {
+        if (allFieldsNull && cardType != null && cardType == getString(R.string.basic_typing_model_name)) {
             answerField!!.setText(getString(R.string.basic_answer_sample_text_user))
         }
         super.displayCardAnswer()
-        mShowingAnswer = true
+        showingAnswer = true
         previewLayout!!.setShowingAnswer(true)
     }
 
@@ -172,8 +172,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         /* do nothing */
     }
 
-    private val mToggleAnswerHandler = View.OnClickListener {
-        if (mShowingAnswer) {
+    private val toggleAnswerHandler = View.OnClickListener {
+        if (showingAnswer) {
             displayCardQuestion()
         } else {
             displayCardAnswer()
@@ -221,26 +221,26 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(CardTemplateNotetype.INTENT_MODEL_FILENAME, mEditedModelFileName)
-        outState.putLongArray("cardList", mCardList)
-        outState.putInt("ordinal", mOrdinal)
-        outState.putInt("cardListIndex", mCardListIndex)
-        outState.putBundle("noteEditorBundle", mNoteEditorBundle)
-        outState.putBoolean("showingAnswer", mShowingAnswer)
+        outState.putString(CardTemplateNotetype.INTENT_MODEL_FILENAME, editedModelFileName)
+        outState.putLongArray("cardList", cardList)
+        outState.putInt("ordinal", ordinal)
+        outState.putInt("cardListIndex", cardListIndex)
+        outState.putBundle("noteEditorBundle", noteEditorBundle)
+        outState.putBoolean("showingAnswer", showingAnswer)
         super.onSaveInstanceState(outState)
     }
 
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
-        if (mNoteEditorBundle != null) {
-            mAllFieldsNull = false
-            cardIndex = indexFromOrdinal(col, mNoteEditorBundle!!, mOrdinal)
-            Timber.d("ord %d => idx %d", mOrdinal, cardIndex)
+        if (noteEditorBundle != null) {
+            allFieldsNull = false
+            cardIndex = indexFromOrdinal(col, noteEditorBundle!!, ordinal)
+            Timber.d("ord %d => idx %d", ordinal, cardIndex)
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
-                cardCount = toPreview.note().numberOfCardsEphemeral()
 
+                cardCount = toPreview.note(getColUnsafe).numberOfCardsEphemeral()
                 if (cardCount >= 2) {
                     val fields = getBundleEditFields(mNoteEditorBundle!!)
                     if (fields.size > 2 && fields[2].isEmpty()) {
@@ -259,13 +259,13 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             }
         } else {
             // loading from the card template editor
-            mAllFieldsNull = true
+            allFieldsNull = true
             // card template with associated card due to opening from note editor
-            if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList!!.size) {
-                currentCard = PreviewerCard(col, mCardList!![mCardListIndex])
-            } else if (mEditedNotetype != null) { // bare note type (not coming from note editor), or new card template
+            if (cardList != null && cardListIndex >= 0 && cardListIndex < cardList!!.size) {
+                currentCard = PreviewerCard(col, cardList!![cardListIndex])
+            } else if (editedNotetype != null) { // bare note type (not coming from note editor), or new card template
                 Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting")
-                currentCard = getDummyCard(mEditedNotetype!!, mOrdinal)
+                currentCard = getDummyCard(editedNotetype!!, ordinal)
                 if (currentCard == null) {
                     showThemedToast(applicationContext, getString(R.string.invalid_template), false)
                     closeCardTemplatePreviewer()
@@ -278,7 +278,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             return
         }
         displayCardQuestion()
-        if (mShowingAnswer) {
+        if (showingAnswer) {
             displayCardAnswer()
         }
         showBackIcon()
@@ -289,19 +289,19 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     }
 
     private fun setCurrentCardFromNoteEditorBundle(col: Collection): Card? {
-        assert(mNoteEditorBundle != null)
-        currentCard = getDummyCard(mEditedNotetype, cardIndex, getBundleEditFields(mNoteEditorBundle))
+        assert(noteEditorBundle != null)
+        currentCard = getDummyCard(editedNotetype, cardIndex, getBundleEditFields(noteEditorBundle))
         // example: a basic card with no fields provided
         if (currentCard == null) {
             return null
         }
-        val newDid = mNoteEditorBundle!!.getLong("did")
+        val newDid = noteEditorBundle!!.getLong("did")
         if (col.decks.isDyn(newDid)) {
             currentCard!!.oDid = currentCard!!.did
         }
         currentCard!!.did = newDid
-        val currentNote = currentCard!!.note()
-        val tagsList = mNoteEditorBundle!!.getStringArrayList("tags")
+        val currentNote = currentCard!!.note(col)
+        val tagsList = noteEditorBundle!!.getStringArrayList("tags")
         setTags(currentNote, tagsList)
         return currentCard
     }
@@ -323,10 +323,10 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     }
 
     private fun getLabels(fieldValues: MutableList<String>) {
-        if (mCardType != null && mCardType == getString(R.string.cloze_model_name)) {
+        if (cardType != null && cardType == getString(R.string.cloze_model_name)) {
             fieldValues[0] = getString(R.string.cloze_sample_text, "c1")
         }
-        if (mCardType != null && mCardType == getString(R.string.basic_typing_model_name)) {
+        if (cardType != null && cardType == getString(R.string.basic_typing_model_name)) {
             fieldValues[1] = getString(R.string.basic_answer_sample_text)
         }
     }
@@ -345,14 +345,14 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     }
 
     private fun indexFromOrdinal(col: Collection, fieldsBundle: Bundle, ordinal: Int): Int {
-        return when (mEditedNotetype?.isCloze) {
+        return when (editedNotetype?.isCloze) {
             true -> {
-                val note = col.newNote(mEditedNotetype!!).apply {
+                val note = col.newNote(editedNotetype!!).apply {
                     for ((index, field) in getBundleEditFields(fieldsBundle).withIndex()) {
                         this.setField(index, field)
                     }
                 }
-                val clozeNumber = mOrdinal + 1
+                val clozeNumber = this.ordinal + 1
                 col.clozeNumbersInNote(note).indexOf(clozeNumber)
             }
             else -> ordinal
@@ -376,15 +376,15 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         if (notetype == null) {
             return null
         }
-        if (mAllFieldsNull) {
+        if (allFieldsNull) {
             getLabels(fieldValues)
         }
         val n = getColUnsafe.newNote(notetype)
         var i = 0
         while (i < fieldValues.size && i < n.fields.size) {
-            if (mAllFieldsNull) {
-                if (mCardType != null && mCardType == getString(R.string.cloze_model_name) && i == 0 ||
-                    mCardType == getString(R.string.basic_typing_model_name) && i == 1
+            if (allFieldsNull) {
+                if (cardType != null && cardType == getString(R.string.cloze_model_name) && i == 0 ||
+                    cardType == getString(R.string.basic_typing_model_name) && i == 1
                 ) {
                     n.setField(i, fieldValues[i])
                 } else {
@@ -406,41 +406,42 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     /** Override certain aspects of Card behavior so we may display unsaved data  */
     inner class PreviewerCard(col: Collection, id: Long) : Card(col, id) {
-        private val mNote: Note? = null
+        private val _note: Note? = null
 
         /* if we have an unsaved note saved, use it instead of a collection lookup */
         override fun note(
+            col: Collection,
             reload: Boolean
         ): Note {
-            return mNote ?: super.note(reload)
+            return _note ?: super.note(col, reload)
         }
 
         /** if we have an unsaved note saved, use it instead of a collection lookup  */
-        override fun note(): Note {
-            return mNote ?: super.note()
+        override fun note(col: Collection): Note {
+            return _note ?: super.note(col)
         }
 
         /** if we have an unsaved note, never return empty  */
         val isEmpty: Boolean
-            get() = mNote != null
+            get() = _note != null
 
         /** Override the method that fetches the model so we can render unsaved models  */
-        override fun model(): NotetypeJson {
-            return mEditedNotetype ?: super.model()
+        override fun model(col: Collection): NotetypeJson {
+            return editedNotetype ?: super.model(col)
         }
 
-        override fun renderOutput(reload: Boolean, browser: Boolean): TemplateRenderOutput {
+        override fun renderOutput(col: Collection, reload: Boolean, browser: Boolean): TemplateRenderOutput {
             if (renderOutput == null || reload) {
-                val index = if (model().isCloze) {
+                val index = if (model(col).isCloze) {
                     0
                 } else {
                     ord
                 }
                 val context = TemplateManager.TemplateRenderContext.fromCardLayout(
-                    note(),
+                    note(col),
                     this,
-                    model(),
-                    model().getJSONArray("tmpls")[index] as JSONObject,
+                    model(col),
+                    model(col).getJSONArray("tmpls")[index] as JSONObject,
                     fillEmpty = false
                 )
                 renderOutput =
@@ -452,7 +453,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 }
 
 private class EphemeralCard(col: Collection, id: Long?) : Card(col, id) {
-    override fun renderOutput(reload: Boolean, browser: Boolean): TemplateRenderOutput {
+    override fun renderOutput(col: Collection, reload: Boolean, browser: Boolean): TemplateRenderOutput {
         return this.renderOutput!!
     }
     companion object {

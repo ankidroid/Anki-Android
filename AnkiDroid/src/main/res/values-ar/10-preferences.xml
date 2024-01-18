@@ -120,7 +120,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">النقر في الوسط</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">النقر في أسفل اليسار</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">النقر في أسفل اليمين</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">رج الجهاز</string>
     <string name="card_browser_enable_external_context_menu">قائمة \'%s\'</string>
     <string name="card_browser_enable_external_context_menu_summary">يفعل قائمة سياق \'%s\' عمومًا</string>
     <string name="double_scrolling_gap" maxLength="41">مضاعفة فجوة التمرير</string>
@@ -191,9 +191,9 @@
         <item quantity="zero">%d ساعة بعد منتصف الليل</item>
         <item quantity="one">%d ساعة بعد منتصف الليل</item>
         <item quantity="two">%d ساعة بعد منتصف الليل</item>
-        <item quantity="few">%d hours past midnight</item>
-        <item quantity="many">%d hours past midnight</item>
-        <item quantity="other">%d ساعات بعد منتصف الليل</item>
+        <item quantity="few">%d ساعت بعد منتصف الليل</item>
+        <item quantity="many">%d ساعت بعد منتصف الليل</item>
+        <item quantity="other">%d ساعة بعد منتصف الليل</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">إبقاء الشاشة مضيئة</string>
     <string name="pref_keep_screen_on_summ">تعطيل مهلة الشاشة</string>
@@ -213,7 +213,7 @@
     <string name="html_javascript_debugging_summ">تمكين اتصالات عارض الويب البعيدة، وحفظ HTML البطاقة إلى مجلد أنكيدرويد</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">شاشة المراجعة</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">إظهار عنوان المجموعة</string>
     <string name="accessibility" maxLength="41">إمكانية الوصول</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">لصق صور الحافظة كـ PNG</string>
@@ -279,8 +279,8 @@
     <string name="binding_add_key">إضافة مفتاح</string>
     <string name="binding_replace_key">استبدال المفتاح</string>
     <string name="key_picker_default_press_key">ضغط مفتاح</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">إضافة وحدة عصا التحكم أو جهاز التحرك/حركة</string>
+    <string name="axis_picker_move_joystick">نقل وحدة عصا التحكم أو جهاز التحرك/حركة</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">حدد جانب بطاقة</string>
     <string name="card_side_question">سؤال</string>

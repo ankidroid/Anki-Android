@@ -88,7 +88,8 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
 
     fun toggleMark() {
         launchCatching {
-            val note = currentCard.note()
+            // TODO: Consider a context receiver
+            val note = withCol { currentCard.note(this) }
             NoteService.toggleMark(note)
             isMarked.emit(NoteService.isMarked(note))
         }
@@ -129,15 +130,17 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     }
 
     private suspend fun updateMarkIcon() {
-        isMarked.emit(currentCard.note().hasTag(MARKED_TAG))
+        val note = withCol { currentCard.note(this) }
+        isMarked.emit(note.hasTag(MARKED_TAG))
     }
 
     private suspend fun showQuestion() {
         Timber.v("showQuestion()")
         showingAnswer.emit(false)
 
-        val question = prepareCardTextForDisplay(currentCard.question())
-        val answer = withCol { media.escapeMediaFilenames(currentCard.answer()) }
+        val questionData = withCol { currentCard.question(this) }
+        val question = prepareCardTextForDisplay(questionData)
+        val answer = withCol { media.escapeMediaFilenames(currentCard.answer(this)) }
         val bodyClass = bodyClassForCardOrd(currentCard.ord)
 
         eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '$bodyClass');")
@@ -151,7 +154,8 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     private suspend fun showAnswer() {
         Timber.v("showAnswer()")
         showingAnswer.emit(true)
-        val answer = prepareCardTextForDisplay(currentCard.answer())
+        val answerData = withCol { currentCard.answer(this) }
+        val answer = prepareCardTextForDisplay(answerData)
         eval.emit("_showAnswer(${Json.encodeToString(answer)});")
     }
 
@@ -250,8 +254,8 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
                 <html class="$docClass" dir="$languageDirectionality" data-bs-theme="$baseTheme">
                 <head>
                     <title>AnkiDroid</title>
-                        <link rel="stylesheet" type="text/css" href="/web/root-vars.css">
-                        <link rel="stylesheet" type="text/css" href="/web/reviewer.css">
+                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/root-vars.css">
+                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/reviewer.css">
                     <style type="text/css">
                         .night-mode button { --canvas: #606060; --fg: #eee; }
                         $colors
@@ -263,7 +267,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
                     <div id="qa"></div>
                     <script src="file:///android_asset/jquery.min.js"></script>
                     <script src="file:///android_asset/mathjax/tex-chtml.js"></script>
-                    <script src="/web/reviewer.js"></script>
+                    <script src="file:///android_asset/backend/web/reviewer.js"></script>
                     <script>bridgeCommand = function(){};</script>
                 </body>
                 </html>
