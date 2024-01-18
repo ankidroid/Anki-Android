@@ -111,6 +111,19 @@ suspend fun <T> FragmentActivity.runCatchingTask(
     errorMessage: String? = null,
     block: suspend () -> T?
 ): T? {
+    // appends the pre-coroutine stack to the error message. Example:
+    // at com.ichi2.anki.CoroutineHelpersKt.launchCatchingTask(CoroutineHelpers.kt:188)
+    // at com.ichi2.anki.CoroutineHelpersKt.launchCatchingTask$default(CoroutineHelpers.kt:184)
+    // at com.ichi2.anki.BackendBackupsKt.performBackupInBackground(BackendBackups.kt:26)
+    //  This is only performed in DEBUG mode to reduce performance impact
+    val callerTrace = if (BuildConfig.DEBUG) {
+        Thread.currentThread().stackTrace
+            .drop(14)
+            .joinToString(prefix = "\tat ", separator = "\n\tat ")
+    } else {
+        null
+    }
+
     try {
         return block()
     } catch (exc: Exception) {
@@ -128,10 +141,12 @@ suspend fun <T> FragmentActivity.runCatchingTask(
             }
             is BackendException -> {
                 Timber.e(exc, errorMessage)
+                if (callerTrace != null) Timber.e(callerTrace)
                 showError(this, exc.localizedMessage!!, exc)
             }
             else -> {
                 Timber.e(exc, errorMessage)
+                if (callerTrace != null) Timber.e(callerTrace)
                 showError(this, exc.toString(), exc)
             }
         }
