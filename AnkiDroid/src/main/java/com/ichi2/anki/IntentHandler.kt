@@ -231,7 +231,7 @@ class IntentHandler : Activity() {
         fun getLaunchType(intent: Intent): LaunchType {
             val action = intent.action
             return if (Intent.ACTION_VIEW == action && isValidViewIntent(intent)) {
-                val mimeType = intent.resolveTypeIfNeeded()
+                val mimeType = intent.resolveMimeType()
                 when (mimeType) {
                     "text/tab-separated-values", "text/comma-separated-values" -> LaunchType.TEXT_IMPORT
                     else -> LaunchType.FILE_IMPORT
@@ -247,7 +247,7 @@ class IntentHandler : Activity() {
             }
         }
 
-        private fun Intent.resolveTypeIfNeeded(): String? {
+        private fun Intent.resolveMimeType(): String? {
             return if (type == null) {
                 val extension = MimeTypeMap.getFileExtensionFromUrl(data.toString())
                 MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
