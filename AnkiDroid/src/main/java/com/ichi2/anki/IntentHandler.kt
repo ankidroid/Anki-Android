@@ -231,7 +231,7 @@ class IntentHandler : Activity() {
         fun getLaunchType(intent: Intent): LaunchType {
             val action = intent.action
             return if (Intent.ACTION_VIEW == action && isValidViewIntent(intent)) {
-                val mimeType = intent.resolveTypeIfNeeded() // Resolve the type if it's a URI
+                val mimeType = intent.resolveTypeIfNeeded()
                 when (mimeType) {
                     "text/tab-separated-values", "text/comma-separated-values" -> LaunchType.TEXT_IMPORT
                     else -> LaunchType.FILE_IMPORT
