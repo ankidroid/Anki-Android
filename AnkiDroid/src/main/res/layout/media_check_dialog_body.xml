@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="@color/material_blue_grey_050"
+        android:background="?attr/checkMediaListBackground"
         android:gravity="center"
         android:maxLines="7"
         android:minHeight="48dp"
@@ -44,6 +44,6 @@
         android:paddingRight="10dp"
         android:paddingTop="5dp"
         android:scrollbars="vertical"
-        android:textColor="@color/material_grey_700"
+        android:textColor="?attr/checkMediaListForeground"
         android:textSize="12.5sp" />
 </LinearLayout>

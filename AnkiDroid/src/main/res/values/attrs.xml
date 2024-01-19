@@ -161,4 +161,7 @@
          The latter is set by colorPrimary, but theme overlay can't use it,
          as it itself overrides colorPrimary, which is used by the view directly. -->
     <attr name="tabLayoutBackgroundColor" format="color"/>
+
+    <attr name="checkMediaListBackground" format="color" />
+    <attr name="checkMediaListForeground" format="color" />
 </resources>
