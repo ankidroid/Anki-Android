@@ -589,14 +589,9 @@ open class CardBrowser :
             showAllDecks = true,
             alwaysShowDefault = false,
             showFilteredDecks = true
-        )
-        deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-
-        launchCatchingTask {
-            when (val deckId = viewModel.getInitialDeck()) {
-                ALL_DECKS_ID -> selectAllDecks()
-                else -> deckSpinnerSelection!!.selectDeckById(deckId, false)
-            }
+        ).apply {
+            initializeActionBarDeckSpinner(supportActionBar!!)
+            selectDeckById(viewModel.deckId ?: ALL_DECKS_ID, false)
         }
     }
 
