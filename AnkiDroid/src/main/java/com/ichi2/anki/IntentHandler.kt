@@ -72,9 +72,7 @@ class IntentHandler : Activity() {
         val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
         when (getLaunchType(intent)) {
             LaunchType.FILE_IMPORT -> runIfStoragePermissions { handleFileImport(intent, reloadIntent, action) }
-            LaunchType.TEXT_IMPORT -> runIfStoragePermissions {
-                this.onSelectedCsvForImport(intent)
-            }
+            LaunchType.TEXT_IMPORT -> runIfStoragePermissions { onSelectedCsvForImport(intent) }
             LaunchType.SYNC -> runIfStoragePermissions { handleSyncIntent(reloadIntent, action) }
             LaunchType.REVIEW -> runIfStoragePermissions { handleReviewIntent(intent) }
             LaunchType.DEFAULT_START_APP_IF_NEW -> {
