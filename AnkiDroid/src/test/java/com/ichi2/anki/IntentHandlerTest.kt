@@ -69,6 +69,21 @@ class IntentHandlerTest {
     }
 
     @Test
+    fun textImportIntentReturnsTextImport() {
+        // TSV import
+        var intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(Uri.parse("content://valid"), "text/tab-separated-values")
+        var expected = getLaunchType(intent)
+        assertThat(expected, equalTo(LaunchType.TEXT_IMPORT))
+
+        // CSV import
+        intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(Uri.parse("content://valid"), "text/comma-separated-values")
+        expected = getLaunchType(intent)
+        assertThat(expected, equalTo(LaunchType.TEXT_IMPORT))
+    }
+
+    @Test
     fun viewWithNoDataPerformsDefaultAction() {
         // #6312 - Smart Launcher double-tap launches us with this. No data at all in the intent
         // so we can only perform the default action
