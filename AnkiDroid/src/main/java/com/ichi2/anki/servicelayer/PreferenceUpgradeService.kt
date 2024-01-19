@@ -22,6 +22,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.os.LocaleListCompat
+import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.noteeditor.CustomToolbarButton
@@ -96,6 +97,7 @@ object PreferenceUpgradeService {
                 yield(RemoveInCardsMode())
                 yield(RemoveReviewerETA())
                 yield(SetShowDeckTitle())
+                yield(ResetAnalyticsOptIn())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -471,6 +473,24 @@ object PreferenceUpgradeService {
                     preferences.edit { putBoolean("showDeckTitle", true) }
                 }
             }
+        }
+
+        /**
+         * Issue 14386: Opening preferences opted users in to analytics in 2.16 due to an oversight
+         *
+         * Despite the fact that analytics were broken at the time due to Google's migration from
+         * Universal Analytics to Google Analytics 4, we want analytics to STRICTLY be opt-in
+         *
+         * As we likely have inadvertent opt-ins, we stated that we would opt everyone out:
+         * https://ankidroid.org/docs/changelog.html#_version_2_16_5_20230906
+         *
+         * We now use "analytics_opt_in"
+         *
+         * @see [UsageAnalytics.ANALYTICS_OPTIN_KEY]
+         */
+        internal class ResetAnalyticsOptIn : PreferenceUpgrade(17) {
+            override fun upgrade(preferences: SharedPreferences) =
+                preferences.edit { remove("analyticsOptIn") }
         }
     }
 }

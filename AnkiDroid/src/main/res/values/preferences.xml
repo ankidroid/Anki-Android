@@ -5,7 +5,7 @@
     <string name="pref_general_screen_key">generalScreen</string>
     <string name="deck_for_new_cards_key">useCurrent</string>
     <string name="pref_language_key">language</string>
-    <string name="analytics_opt_in_key">analyticsOptIn</string>
+    <string name="analytics_opt_in_key">analytics_opt_in</string>
     <string name="paste_png_key">pastePNG</string>
     <string name="error_reporting_mode_key">reportErrorMode</string>
     <!-- Reviewing -->
