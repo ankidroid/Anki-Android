@@ -2289,6 +2289,7 @@ abstract class AbstractFlashcardViewer :
             }
             if (url.startsWith("state-mutation-error:")) {
                 onStateMutationError()
+                return true
             }
             if (url.startsWith("tts-voices:")) {
                 showDialogFragment(TtsVoicesDialogFragment())
