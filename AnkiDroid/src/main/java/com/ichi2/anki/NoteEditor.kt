@@ -56,7 +56,6 @@ import anki.notetypes.StockNotetype
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -97,6 +96,7 @@ import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.utils.*
+import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
 import org.json.JSONException
@@ -365,6 +365,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 savedInstanceState.getSerializable("toggleSticky") as HashMap<Int, String?>
             changed = savedInstanceState.getBoolean(NOTE_CHANGED_EXTRA_KEY)
         } else {
+            if (intentLaunchedWithImage(intent)) {
+                intent.putExtra(EXTRA_CALLER, CALLER_ADD_IMAGE)
+            }
             caller = intent.getIntExtra(EXTRA_CALLER, CALLER_NO_CALLER)
             if (caller == CALLER_NO_CALLER) {
                 val action = intent.action
@@ -403,6 +406,29 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
 
         setNavigationBarColor(R.attr.toolbarBackgroundColor)
+    }
+
+    private fun intentLaunchedWithImage(intent: Intent): Boolean {
+        val action = intent.action
+        return action == Intent.ACTION_SEND || (
+            Intent.ACTION_VIEW == action &&
+                !ImportUtils.isInvalidViewIntent(intent) &&
+                intent.resolveMimeType()?.startsWith("image/") == true
+            )
+    }
+
+    @NeedsTest("Test when the user directly passes image to the edit note field")
+    private fun handleImageIntent(data: Intent) {
+        val imageUri = if (data.action == Intent.ACTION_SEND) {
+            IntentCompat.getParcelableExtra(data, Intent.EXTRA_STREAM, Uri::class.java)
+        } else {
+            data.data
+        }
+        Timber.d("Image Uri : $imageUri")
+        // ImageIntentManager.saveImageUri(imageUri)
+        // the field won't exist so it will always be a new card
+        val note = getCurrentMultimediaEditableNote(getColUnsafe)
+        startMultimediaFieldEditor(0, note, imageUri)
     }
 
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
@@ -500,6 +526,21 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 addNote = true
             }
+            CALLER_IMG_OCCLUSION -> {
+                addNote = true
+                // val saveImageUri = ImageIntentManager.getImageUri()
+                val saveImageUri = IntentCompat.getParcelableExtra(intent, EXTRA_IMG_OCCLUSION, Uri::class.java)
+                if (saveImageUri != null) {
+                    ImportUtils.getFileCachedCopy(this, saveImageUri)?.let { path ->
+                        setupImageOcclusionEditor(path)
+                    }
+                } else {
+                    Timber.w("Image uri is null")
+                }
+            }
+            CALLER_ADD_IMAGE -> {
+                addNote = true
+            }
             else -> {}
         }
 
@@ -586,6 +627,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             contents?.let { setEditFieldTexts(it) }
             tags?.let { setTags(it) }
+            if (caller == CALLER_ADD_IMAGE) handleImageIntent(intent)
         } else {
             mNoteTypeSpinner!!.onItemSelectedListener = EditNoteTypeListener()
             setTitle(R.string.cardeditor_title_edit_card)
@@ -1596,9 +1638,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     }
 
-    private fun startMultimediaFieldEditor(index: Int, note: IMultimediaEditableNote?) {
+    private fun startMultimediaFieldEditor(index: Int, note: IMultimediaEditableNote?, imageUri: Uri? = null) {
         val field = note!!.getField(index)!!
         val editCard = Intent(this@NoteEditor, MultimediaEditFieldActivity::class.java)
+        editCard.putExtra(MultimediaEditFieldActivity.INTENT_IMAGE_URI, imageUri)
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY, MultimediaEditFieldActivityExtra(index, field, note))
         requestMultiMediaEditLauncher.launch(editCard)
     }
@@ -2323,6 +2366,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         private const val ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND"
         const val NOTE_CHANGED_EXTRA_KEY = "noteChanged"
         const val RELOAD_REQUIRED_EXTRA_KEY = "reloadRequired"
+        const val EXTRA_IMG_OCCLUSION = "image_uri"
 
         // calling activity
         const val CALLER_NO_CALLER = 0
@@ -2335,8 +2379,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         const val CALLER_NOTEEDITOR = 8
         const val CALLER_PREVIEWER_EDIT = 9
         const val CALLER_NOTEEDITOR_INTENT_ADD = 10
-
         const val RESULT_UPDATED_IO_NOTE = 11
+        const val CALLER_IMG_OCCLUSION = 12
+        const val CALLER_ADD_IMAGE = 13
 
         // preferences keys
         const val PREF_NOTE_EDITOR_SCROLL_TOOLBAR = "noteEditorScrollToolbar"
