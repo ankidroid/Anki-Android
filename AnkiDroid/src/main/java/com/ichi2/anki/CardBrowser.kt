@@ -658,8 +658,9 @@ open class CardBrowser :
      * If one or more card is unmarked, all will be marked,
      * otherwise, they will be unmarked  */
     @NeedsTest("Test that the mark get toggled as expected for a list of selected cards")
-    private fun toggleMark() {
-        launchCatchingTask { withProgress { viewModel.toggleMark(selectedCardIds) } }
+    @VisibleForTesting
+    fun toggleMark() = launchCatchingTask {
+        withProgress { viewModel.toggleMark(selectedCardIds) }
     }
 
     @VisibleForTesting

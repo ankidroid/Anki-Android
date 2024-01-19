@@ -35,6 +35,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KE
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
+import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
@@ -1039,6 +1040,31 @@ class CardBrowserTest : RobolectricTest() {
             assertThat("deckId is searched", viewModel.rowCount, equalTo(1))
         }
     }
+
+    @Test
+    @Ignore("14950")
+    fun `selection is maintained after toggle mark 14950`() = withBrowser(noteCount = 5) {
+        // TODO: Once refactoring is completed, move this to the ViewModel Test
+        selectRowsWithPositions(0, 1, 2)
+
+        assertThat("3 rows are selected", viewModel.selectedRows.size, equalTo(3))
+        assertThat("selection is not marked", viewModel.selectedRows.all { !it.isMarked })
+
+        toggleMark().join()
+
+        assertThat("3 rows are still selected", viewModel.selectedRows.size, equalTo(3))
+        assertThat("selection is now marked", viewModel.selectedRows.all { it.isMarked })
+    }
+
+    @Suppress("SameParameterValue")
+    private fun withBrowser(noteCount: Int = 0, block: suspend CardBrowser.() -> Unit) = runTest {
+        getBrowserWithNotes(noteCount).apply {
+            block(this)
+        }
+    }
+
+    private val CardCache.isMarked
+        get() = NoteService.isMarked(card.note(col))
 }
 
 fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean =
