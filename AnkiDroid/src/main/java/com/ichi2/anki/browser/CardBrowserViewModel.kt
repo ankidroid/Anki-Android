@@ -234,7 +234,7 @@ class CardBrowserViewModel(
             Timber.i("Not marking cards - nothing selected")
             return
         }
-        undoableOp {
+        undoableOp(this) {
             val noteIds = notesOfCards(cardIds)
             // if all notes are marked, remove the mark
             // if no notes are marked, add the mark
@@ -247,6 +247,7 @@ class CardBrowserViewModel(
                 tags.bulkRemove(noteIds, "marked")
             }
         }
+        selectedRows.forEach { it.reload() }
     }
 
     /**

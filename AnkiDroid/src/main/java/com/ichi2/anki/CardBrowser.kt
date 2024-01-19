@@ -661,6 +661,7 @@ open class CardBrowser :
     @VisibleForTesting
     fun toggleMark() = launchCatchingTask {
         withProgress { viewModel.toggleMark(selectedCardIds) }
+        cardsAdapter.notifyDataSetChanged()
     }
 
     @VisibleForTesting
@@ -2178,12 +2179,16 @@ open class CardBrowser :
     }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
+        if (handler === this || handler === viewModel) {
+            return
+        }
+
         if ((
             changes.browserSidebar ||
                 changes.browserTable ||
                 changes.noteText ||
                 changes.card
-            ) && handler !== this
+            )
         ) {
             refreshAfterUndo()
         }
