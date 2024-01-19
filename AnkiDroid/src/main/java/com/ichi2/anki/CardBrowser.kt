@@ -89,6 +89,7 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.libanki.*
+import com.ichi2.libanki.Collection
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
@@ -515,7 +516,7 @@ open class CardBrowser :
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
-    override fun onCollectionLoaded(col: com.ichi2.libanki.Collection) {
+    override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         Timber.d("onCollectionLoaded()")
         registerExternalStorageListener()
@@ -1566,7 +1567,7 @@ open class CardBrowser :
      * Removes cards from view. Doesn't delete them in model (database).
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
-    private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
+    private fun removeNotesView(cardsIds: List<Long>, reorderCards: Boolean) {
         val idToPos = viewModel.cardIdToPositionMap
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
         mReloadRequired = mReloadRequired || cardsIds.contains(reviewerCardId)
@@ -1933,7 +1934,7 @@ open class CardBrowser :
         override var position: Int
 
         private val inCardMode: Boolean
-        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
+        constructor(id: Long, col: Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
             this.position = position
             this.inCardMode = cardsOrNotes == CARDS
         }
@@ -2257,7 +2258,7 @@ suspend fun searchForCards(
     }
 }
 
-context (com.ichi2.libanki.Collection)
+context (Collection)
 private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
