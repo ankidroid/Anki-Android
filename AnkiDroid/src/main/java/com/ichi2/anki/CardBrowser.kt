@@ -503,6 +503,11 @@ open class CardBrowser :
                 invalidateOptionsMenu()
             }
             .launchIn(lifecycleScope)
+
+        viewModel.initCompletedFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { completed -> if (completed) searchCards() }
+            .launchIn(lifecycleScope)
     }
 
     fun searchWithFilterQuery(filterQuery: String) = launchCatchingTask {

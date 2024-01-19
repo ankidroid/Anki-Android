@@ -64,6 +64,7 @@ import kotlin.math.min
 
 @NeedsTest("reverseDirectionFlow/sortTypeFlow are not updated on .launch { }")
 @NeedsTest("13442: selected deck is not changed, as this affects the reviewer")
+@NeedsTest("search is called after launch()")
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
     preferences: SharedPreferencesProvider
@@ -176,7 +177,7 @@ class CardBrowserViewModel(
         }
     }
 
-    private val initCompletedFlow = MutableStateFlow(false)
+    val initCompletedFlow = MutableStateFlow(false)
 
     /**
      * Whether the task launched from CardBrowserViewModel.init has completed.
