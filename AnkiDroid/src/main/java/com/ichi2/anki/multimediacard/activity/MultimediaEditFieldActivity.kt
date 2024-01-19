@@ -21,6 +21,7 @@ package com.ichi2.anki.multimediacard.activity
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -30,6 +31,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
+import androidx.core.content.IntentCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.ichi2.anki.AnkiActivity
@@ -98,8 +100,21 @@ class MultimediaEditFieldActivity :
         fieldIndex = extras.first
         field = extras.second
         note = extras.third
+
+        val savedImageUri = getIntentImageUri()
+        if (savedImageUri != null) {
+            intentEditImage()
+        }
         onBack()
         recreateEditingUi(ChangeUIRequest.init(field), controllerBundle)
+    }
+
+    fun getIntentImageUri(): Uri? {
+        return IntentCompat.getParcelableExtra(intent, INTENT_IMAGE_URI, Uri::class.java)
+    }
+
+    private fun intentEditImage() {
+        recreateEditingUi(ChangeUIRequest.uiChange(ImageField()), intentImgEdit = true)
     }
 
     // in case media is saved by view button then allows it to be inserted into the filed
@@ -148,7 +163,7 @@ class MultimediaEditFieldActivity :
         if (isAudioUIInitialized) audioRecordingController.onViewFocusChanged()
     }
 
-    private fun recreateEditingUi(newUI: ChangeUIRequest, savedInstanceState: Bundle? = null) {
+    private fun recreateEditingUi(newUI: ChangeUIRequest, savedInstanceState: Bundle? = null, intentImgEdit: Boolean = false) {
         Timber.d("recreateEditingUi()")
 
         // Permissions are checked async, save our current state to allow continuation
@@ -163,6 +178,9 @@ class MultimediaEditFieldActivity :
             return
         }
         val fieldController = createControllerForField(newUI.field)
+        if (intentImgEdit) {
+            (fieldController as? BasicImageFieldController)?.directImageEdit = true
+        }
         UIRecreationHandler.onPreFieldControllerReplacement(this.fieldController)
         this.fieldController = fieldController
         field = newUI.field
@@ -462,6 +480,7 @@ class MultimediaEditFieldActivity :
         const val EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index"
         const val EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY = "multim.card.ed.extra"
         private const val BUNDLE_KEY_SHUT_OFF = "key.edit.field.shut.off"
+        const val INTENT_IMAGE_URI = "intent_img_uri"
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val REQUEST_CAMERA_PERMISSION = 1
         const val IMAGE_LIMIT = 1024 * 1024 // 1MB in bytes

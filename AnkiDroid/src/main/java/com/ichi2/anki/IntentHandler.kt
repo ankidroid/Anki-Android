@@ -22,10 +22,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Message
-import android.webkit.MimeTypeMap
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.core.app.TaskStackBuilder
 import androidx.core.content.FileProvider
+import androidx.core.content.IntentCompat
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
@@ -39,6 +40,7 @@ import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
+import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
@@ -71,8 +73,18 @@ class IntentHandler : Activity() {
         // as this requires nothing
         val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
         when (getLaunchType(intent)) {
-            LaunchType.FILE_IMPORT -> runIfStoragePermissions { handleFileImport(intent, reloadIntent, action) }
-            LaunchType.TEXT_IMPORT -> runIfStoragePermissions { onSelectedCsvForImport(intent) }
+            LaunchType.FILE_IMPORT -> runIfStoragePermissions {
+                handleFileImport(fileIntent, reloadIntent, action)
+                finish()
+            }
+            LaunchType.TEXT_IMPORT -> runIfStoragePermissions {
+                onSelectedCsvForImport(fileIntent)
+                finish()
+            }
+            LaunchType.IMAGE_IMPORT -> runIfStoragePermissions {
+                handleImageImport(intent)
+                finish()
+            }
             LaunchType.SYNC -> runIfStoragePermissions { handleSyncIntent(reloadIntent, action) }
             LaunchType.REVIEW -> runIfStoragePermissions { handleReviewIntent(intent) }
             LaunchType.DEFAULT_START_APP_IF_NEW -> {
@@ -96,6 +108,15 @@ class IntentHandler : Activity() {
 
         showThemedToast(this, R.string.about_ankidroid_successfully_copied_debug_info, true)
     }
+
+    private val fileIntent: Intent
+        get() {
+            return if (intent.action == Intent.ACTION_SEND) {
+                IntentCompat.getParcelableExtra(intent, Intent.EXTRA_STREAM, Intent::class.java) ?: intent
+            } else {
+                intent
+            }
+        }
 
     /**
      * Execute the runnable if one of the two following conditions are satisfied:
@@ -175,6 +196,22 @@ class IntentHandler : Activity() {
         }
     }
 
+    private fun handleImageImport(data: Intent) {
+        val imageUri = if (intent.action == Intent.ACTION_SEND) {
+            IntentCompat.getParcelableExtra(intent, Intent.EXTRA_STREAM, Uri::class.java)
+        } else {
+            data.data
+        }
+
+        val imageOcclusionIntentBuilder = ImageOcclusionIntentBuilder(this)
+        val intentImageOcclusion = imageOcclusionIntentBuilder.buildIntent(imageUri)
+
+        TaskStackBuilder.create(this)
+            .addNextIntentWithParentStack(Intent(this, DeckPicker::class.java))
+            .addNextIntent(intentImageOcclusion)
+            .startActivities()
+    }
+
     private fun deleteDownloadedDeck(sharedDeckUri: Uri?) {
         if (sharedDeckUri == null) {
             Timber.i("onCreate: downloaded a shared deck but uri was null when trying to delete its file")
@@ -211,6 +248,10 @@ class IntentHandler : Activity() {
 
         /** csv/tsv */
         TEXT_IMPORT,
+
+        /** image */
+        IMAGE_IMPORT,
+
         SYNC, REVIEW, COPY_DEBUG_INFO
     }
 
@@ -228,10 +269,11 @@ class IntentHandler : Activity() {
         @CheckResult
         fun getLaunchType(intent: Intent): LaunchType {
             val action = intent.action
-            return if (Intent.ACTION_VIEW == action && isValidViewIntent(intent)) {
+            return if (action == Intent.ACTION_SEND || Intent.ACTION_VIEW == action && isValidViewIntent(intent)) {
                 val mimeType = intent.resolveMimeType()
-                when (mimeType) {
-                    "text/tab-separated-values", "text/comma-separated-values" -> LaunchType.TEXT_IMPORT
+                when {
+                    mimeType?.startsWith("image/") == true -> LaunchType.IMAGE_IMPORT
+                    mimeType == "text/tab-separated-values" || mimeType == "text/comma-separated-values" -> LaunchType.TEXT_IMPORT
                     else -> LaunchType.FILE_IMPORT
                 }
             } else if ("com.ichi2.anki.DO_SYNC" == action) {
@@ -242,15 +284,6 @@ class IntentHandler : Activity() {
                 LaunchType.COPY_DEBUG_INFO
             } else {
                 LaunchType.DEFAULT_START_APP_IF_NEW
-            }
-        }
-
-        private fun Intent.resolveMimeType(): String? {
-            return if (type == null) {
-                val extension = MimeTypeMap.getFileExtensionFromUrl(data.toString())
-                MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
-            } else {
-                type
             }
         }
 

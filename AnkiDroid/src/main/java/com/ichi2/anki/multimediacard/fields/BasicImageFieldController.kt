@@ -83,6 +83,8 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     private var ankiCacheDirectory: String? = null // system provided 'External Cache Dir' with "temp-photos" on it
     // e.g.  '/self/primary/Android/data/com.ichi2.anki.AnkiDroid/cache/temp-photos'
 
+    var directImageEdit: Boolean = false
+
     private lateinit var cropButton: Button
     private val maxImageSize: Int
         get() {
@@ -219,6 +221,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             layout.addView(btnCamera, ViewGroup.LayoutParams.MATCH_PARENT)
         }
         layout.addView(cropButton, ViewGroup.LayoutParams.MATCH_PARENT)
+
+        if (directImageEdit) {
+            directImageIntent(_activity.getIntentImageUri())
+        }
     }
 
     override fun setEditingActivity(activity: MultimediaEditFieldActivity) {
@@ -469,6 +475,29 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         setTemporaryMedia(imagePath)
 
         Timber.i("handleSelectImageIntent() Decoded image: '%s'", imagePath)
+    }
+
+    private fun directImageIntent(imageUri: Uri?) {
+        if (imageUri == null) {
+            Timber.w("Image Uri is null; user may select the image")
+            return
+        }
+
+        val internalizedPick = internalizeUri(imageUri)
+        if (internalizedPick == null) {
+            Timber.w("handleSelectImageIntent() unable to internalize image from Uri %s", imageUri)
+            showSomethingWentWrong()
+            return
+        }
+
+        val imagePath = internalizedPick.absolutePath
+        viewModel = ImageViewModel(imagePath, getUriForFile(internalizedPick))
+        setTemporaryMedia(imagePath)
+        imageFileSizeWarning.visibility = View.GONE
+
+        setPreviewImage(viewModel.imagePath, maxImageSize)
+
+        Timber.d("handleSelectImageIntent() Decoded image: '%s'", imagePath)
     }
 
     private fun handleDrawingResult(imageUri: Uri?) {
