@@ -1042,7 +1042,6 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("14950")
     fun `selection is maintained after toggle mark 14950`() = withBrowser(noteCount = 5) {
         // TODO: Once refactoring is completed, move this to the ViewModel Test
         selectRowsWithPositions(0, 1, 2)
