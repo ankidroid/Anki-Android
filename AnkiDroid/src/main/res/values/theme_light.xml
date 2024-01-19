@@ -136,5 +136,8 @@
 
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/white</item>
+
+        <item name="checkMediaListBackground">@color/material_blue_grey_050</item>
+        <item name="checkMediaListForeground">@color/material_grey_700</item>
     </style>
 </resources>
