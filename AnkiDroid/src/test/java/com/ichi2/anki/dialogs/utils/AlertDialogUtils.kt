@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2022 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -16,9 +16,15 @@
 
 package com.ichi2.anki.dialogs.utils
 
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.input.getInputField
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import com.ichi2.utils.getInputField
 
-var MaterialDialog.input
-    get() = this.getInputField().text.toString()
-    set(value) = this.getInputField().setText(value)
+var AlertDialog.input
+    get() = getInputField().text.toString()
+    set(value) { getInputField().setText(value) }
+
+val AlertDialog.title
+    get() = requireNotNull(this.findViewById<TextView>(androidx.appcompat.R.id.alertTitle)) {
+        "androidx.appcompat.R.id.alertTitle not found"
+    }.text.toString()

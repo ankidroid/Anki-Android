@@ -22,13 +22,17 @@ import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
 
@@ -196,3 +200,55 @@ fun AlertDialog.Builder.customListAdapter(adapter: RecyclerView.Adapter<*>) {
     recyclerView.layoutManager = LinearLayoutManager(context)
     this.setView(recyclerView)
 }
+
+/**
+ * @param prefill The text to initially appear in the [EditText]
+ * @param allowEmpty If true, [DialogInterface.BUTTON_POSITIVE] is disabled if the [EditText] is empty
+ * @param displayKeyboard Whether to open the keyboard when the dialog appears
+ * @param callback called whenever the text is changed
+ */
+fun AlertDialog.input(
+    prefill: CharSequence? = null,
+    allowEmpty: Boolean = false,
+    displayKeyboard: Boolean = false,
+    callback: (AlertDialog, CharSequence) -> Unit
+): AlertDialog {
+    getInputField().apply {
+        if (displayKeyboard) {
+            AndroidUiUtils.setFocusAndOpenKeyboard(this, window!!)
+        }
+
+        doOnTextChanged { text, _, _, _ ->
+            callback(this@input, text ?: "")
+            // called after the callback so allowEmpty takes priority
+            if (!allowEmpty && text.isNullOrEmpty()) {
+                this@input.positiveButton.isEnabled = false
+            }
+        }
+
+        requestFocus()
+        // this calls callback(this, prefill). positiveButton may be disabled if there's no prefill
+        setText(prefill)
+        moveCursorToEnd()
+    }
+    return this
+}
+
+/**
+ * @return the layout for the input text of the dialog
+ * @throws IllegalArgumentException if the dialog does not contain [R.id.dialog_text_input_layout]]
+ */
+fun AlertDialog.getInputTextLayout() =
+    requireNotNull(findViewById<TextInputLayout>(R.id.dialog_text_input_layout)) {
+        "view must be dialog_generic_text_input"
+    }
+
+/**
+ * @return the [EditText] of the dialog
+ * @throws IllegalArgumentException if the dialog does not contain [R.id.dialog_text_input_layout]]
+ */
+fun AlertDialog.getInputField() = getInputTextLayout().editText!!
+
+/** @see AlertDialog.getButton */
+val AlertDialog.positiveButton: Button
+    get() = getButton(DialogInterface.BUTTON_POSITIVE)
