@@ -20,6 +20,7 @@ import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
@@ -55,6 +56,7 @@ abstract class PageFragment : Fragment(R.layout.page_fragment), PostRequestHandl
      */
     protected open fun onCreateWebChromeClient(savedInstanceState: Bundle?) = PageChromeClient()
 
+    @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         webView = view.findViewById<WebView>(R.id.webview).apply {
             with(settings) {
