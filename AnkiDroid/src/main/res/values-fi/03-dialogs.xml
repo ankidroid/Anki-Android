@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Muistutusten asettaminen ei onnistunut</string>
     <string name="boot_service_too_many_notifications">Liian monta muistutusta asetettu. Jotkin niistä eivät näy</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Näppäimistön kielen valinta</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Jotkin monikieliset näppäimistöt, kuten Gboard, tukevat kielen vaihtamista tekstiä muokattaessa\n\nPyydä käyttämäsi näppäimistön tekijältä tukea \"setImeHintLocales\"-ominaisuudelle, jos näppäimistösi ei vaihda kieltä.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroidin käyttäminen</string>

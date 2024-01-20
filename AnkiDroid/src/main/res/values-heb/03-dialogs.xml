@@ -198,7 +198,7 @@
     <string name="boot_service_failed_to_schedule_notifications">לא ניתן היה לתזמן תזכורות</string>
     <string name="boot_service_too_many_notifications">תזמנו יותר מדי תזכורות. חלקם לא יופיעו</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">בחירת שפת מקלדת</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">חלק מהמקלדות הרב-לשוניות, כגון GBoard תומכות בשינוי שפה בעת עריכת טקסט\n\nאנא בקש את התכונה \"setImeHintLocales\" מיצרן המקלדת שלך אם המקלדת שלך לא משנה שפה.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">שימוש ב־AnkiDroid</string>

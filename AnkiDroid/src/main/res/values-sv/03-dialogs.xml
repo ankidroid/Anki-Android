@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Det gick inte att schemalägga påminnelser</string>
     <string name="boot_service_too_many_notifications">För många påminnelser schemalagda. Vissa kommer inte att visas</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Välj tangentbordsspråk</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Vissa flerspråkiga tangentbord, till exempel GBoard har stöd för att ändra språk vid redigering av text\n\nVänligen begär funktionen ”setImeHintLocales” från din tangentbordstillverkare om ditt tangentbord inte ändrar språk.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Hur man använder AnkiDroid</string>

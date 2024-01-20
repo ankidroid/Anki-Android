@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Ստեղնաշարի լեզու</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Մի շարք բազմալեզու ստեղնաշար, որոնցից է Gboard-ը, կարող են տեքստը խմբագրելուց փոխել լեզուն։\n\nԵթե ձեր ստեղնաշարի լեզուն չի փոխվում, ապա այն մշակողից խնդրեք «setImeHintLocales» գործառույթը։</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid-ի օգտագործում</string>

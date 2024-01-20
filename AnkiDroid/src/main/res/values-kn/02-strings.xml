@@ -266,7 +266,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">ಇಮೇಲ್ ವಿಳಾಸದ ಅಗತ್ಯವಿದೆ</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">ಗುಪ್ತಪದದ ಅಗತ್ಯವಿದೆ</string>
     <string name="back_pressed_once">ನಿರ್ಗಮಿಸಲು ಮತ್ತೆ ಒತ್ತಿರಿ</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>

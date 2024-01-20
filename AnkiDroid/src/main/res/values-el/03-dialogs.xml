@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Αποτυχία προγραμματισμού υπενθυμίσεων</string>
     <string name="boot_service_too_many_notifications">Έχουν προγραμματιστεί πάρα πολλές υπενθυμίσεις. Μερικές δεν θα εμφανιστούν</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Επιλογή Γλώσσας Πληκτρολογίου</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Χρήση του AnkiDroid</string>

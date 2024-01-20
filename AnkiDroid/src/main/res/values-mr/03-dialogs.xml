@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">स्मरणपत्रे शेड्यूल करण्यात अयशस्वी</string>
     <string name="boot_service_too_many_notifications">बरीच स्मरणपत्रे शेड्यूल केली. काही दिसणार नाहीत</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">कीबोर्ड भाषा निवड</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">मजकूर संपादित करताना जीबीआर्ड बदलणारी भाषा समर्थन करणारे काही बहुभाषिक कीबोर्ड \n\n कृपया आपला कीबोर्ड भाषा बदलत नसेल तर आपल्या कीबोर्ड निर्मात्याकडून “setImeHintLocales” वैशिष्ट्याची विनंती करा.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid वापरणे</string>

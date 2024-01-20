@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">კლავიატურის ენის არჩევა</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">ზოგ მრავალენოვან კლავიატურას, როგორც მაგალითად Gboard-ს, ტექსტის რედაქტირებისას ენის შეცვლის ფუნქცია აქვს\n\nთუკი თქვენი კლავიატურა ენას ვერ ცვლის, გთხოვთ კლავიატურის მწარმოებელს მიმართოთ და \"setImeHintLocales\" ფუნქციის დამატება მოსთხოვოთ</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid-ის გამოყენება</string>

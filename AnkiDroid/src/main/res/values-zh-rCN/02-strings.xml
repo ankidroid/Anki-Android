@@ -263,7 +263,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">电子邮件地址是必填项</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">密码是必填项</string>
     <string name="back_pressed_once">再按一次返回键以退出</string>
     <string name="back_pressed_once_reviewer">再按一次返回键以返回</string>

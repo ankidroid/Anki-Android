@@ -197,7 +197,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Не вдалося запланувати нагадування</string>
     <string name="boot_service_too_many_notifications">Забагато нагадувань заплановано. Деякі з них не з’являться</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Вибір підказок клавіатури</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Деякі багатомовні клавіатури, такі як GBoard, підтримують зміну мови під час редагування тексту\n\nБудь ласка, попросіть функцію \"setImeHintLocals\" від виробника клавіатури, якщо ваша клавіатура не змінює мову.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Використання AnkiDroid</string>

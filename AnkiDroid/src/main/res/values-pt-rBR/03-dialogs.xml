@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Falha ao agendar lembretes</string>
     <string name="boot_service_too_many_notifications">Muitos lembretes programados. Alguns não aparecerão</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Seleção de dicas para o teclado</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Alguns teclados multilíngues, como GBoard suportam alterar o idioma ao editar o texto\n\nPor favor, solicite o recurso \"setImeHintLocales\" do seu fabricante de teclado se o seu teclado não alterar o idioma. </string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Usando o AnkiDroid</string>
