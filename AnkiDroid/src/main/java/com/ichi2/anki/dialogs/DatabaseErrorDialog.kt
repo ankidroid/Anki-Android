@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.os.Message
 import android.os.Parcelable
 import android.view.KeyEvent
+import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -560,6 +561,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
          *
          * @param dialogType the sub-dialog to show
          */
+        @CheckResult
         fun newInstance(dialogType: DatabaseErrorDialogType): DatabaseErrorDialog {
             val f = DatabaseErrorDialog()
             val args = Bundle()
