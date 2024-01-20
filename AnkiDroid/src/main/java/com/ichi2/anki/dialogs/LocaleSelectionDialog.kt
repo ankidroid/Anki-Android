@@ -99,7 +99,6 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
 
     private fun inflateMenu(tagsDialogView: View, adapter: LocaleListAdapter) {
         val toolbar: Toolbar = tagsDialogView.findViewById(R.id.locale_dialog_selection_toolbar)
-        toolbar.setTitle(R.string.locale_selection_dialog_title)
         toolbar.inflateMenu(R.menu.locale_dialog_search_bar)
         toolbar.setNavigationOnClickListener { dialogHandler!!.onLocaleSelectionCancelled() }
         val searchItem = toolbar.menu.findItem(R.id.locale_dialog_action_search)
