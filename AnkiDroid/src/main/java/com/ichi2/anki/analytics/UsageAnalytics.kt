@@ -458,9 +458,6 @@ object UsageAnalytics {
         "learnCutoff", // Learn ahead limit
         "timeLimit", // Timebox time limit
         "timeoutAnswer", // Automatic display answer
-        "automaticAnswerAction", // Timeout answer
-        "timeoutAnswerSeconds", // Time to show answer
-        "timeoutQuestionSeconds", // Time to show next question
         "keepScreenOn", // Disable screen timeout
         "newTimezoneHandling", // New timezone handling
         "doubleTapTimeInterval", // Double tap time interval (milliseconds)
