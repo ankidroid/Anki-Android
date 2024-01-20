@@ -19,7 +19,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="8dp">
 
     <androidx.appcompat.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/locale_dialog_selection_toolbar"
@@ -31,6 +32,8 @@
         android:layout_alignParentTop="true"
         app:title="@string/locale_selection_dialog_title"
         app:popupTheme="@style/ActionBar.Popup"
+        app:navigationContentDescription="@string/abc_action_bar_up_description"
+        app:navigationIcon="@drawable/close_icon"
         />
 
 
@@ -42,6 +45,7 @@
         android:layout_below="@+id/locale_dialog_selection_toolbar"
         android:layout_above="@+id/locale_dialog_summary"
         android:fadeScrollbars="false"
+        android:paddingStart="8dp"
         />
 
     <com.ichi2.ui.FixedTextView
@@ -52,6 +56,8 @@
         android:text="@string/locale_selection_dialog_summary"
         android:padding="@dimen/content_vertical_padding"
         android:layout_alignParentBottom="true"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         />
 
 </RelativeLayout>
