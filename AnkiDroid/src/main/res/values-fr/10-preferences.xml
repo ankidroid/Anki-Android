@@ -116,7 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Toucher au milieu au centre</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toucher en bas à gauche</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toucher en bas à droite</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Secouer l\'appareil</string>
     <string name="card_browser_enable_external_context_menu">Menu « %s »</string>
     <string name="card_browser_enable_external_context_menu_summary">Active le menu contextuel « %s » globalement</string>
     <string name="double_scrolling_gap" maxLength="41">Défilement double</string>
@@ -205,7 +205,7 @@
     <string name="html_javascript_debugging_summ">Activer les connexions WebView distantes et enregistrer la carte HTML dans le répertoire AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Réviseur</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Afficher le titre du deck</string>
     <string name="accessibility" maxLength="41">Accessibilité</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Coller les images du pressepapiers en PNG</string>
