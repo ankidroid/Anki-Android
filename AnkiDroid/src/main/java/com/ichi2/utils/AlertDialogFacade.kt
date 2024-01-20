@@ -20,12 +20,15 @@ package com.ichi2.utils
 
 import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
 import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
 
@@ -185,4 +188,11 @@ fun AlertDialog.Builder.customView(
     setView(container)
 
     return this
+}
+
+fun AlertDialog.Builder.customListAdapter(adapter: RecyclerView.Adapter<*>) {
+    val recyclerView = LayoutInflater.from(context).inflate(R.layout.dialog_generic_recycler_view, null, false) as RecyclerView
+    recyclerView.adapter = adapter
+    recyclerView.layoutManager = LinearLayoutManager(context)
+    this.setView(recyclerView)
 }
