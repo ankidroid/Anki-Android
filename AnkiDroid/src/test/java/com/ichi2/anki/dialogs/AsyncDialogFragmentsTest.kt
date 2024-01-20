@@ -17,7 +17,6 @@
 package com.ichi2.anki.dialogs
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
@@ -26,7 +25,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class AsyncDialogFragmentsTest {
     @Test
-    @Ignore("failing")
     fun `SyncErrorDialog does not require context`() {
         for (dialogType in SyncErrorDialog.dialogTypes) {
             val instance = SyncErrorDialog.newInstance(dialogType, dialogMessage = null)
@@ -37,7 +35,6 @@ class AsyncDialogFragmentsTest {
     }
 
     @Test
-    @Ignore("failing")
     fun `DatabaseErrorDialog does not require context`() {
         for (dialogType in DatabaseErrorDialog.DatabaseErrorDialogType.entries) {
             val instance = DatabaseErrorDialog.newInstance(dialogType)
