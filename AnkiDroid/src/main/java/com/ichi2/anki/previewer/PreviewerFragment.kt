@@ -260,10 +260,7 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
     }
 
     private fun editCard() {
-        val intent = Intent(requireContext(), NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
-            putExtra(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, viewModel.cardId())
-        }
+        val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
         editCardLauncher.launch(intent)
     }
 

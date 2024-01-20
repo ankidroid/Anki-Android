@@ -16,6 +16,7 @@
 package com.ichi2.anki.previewer
 
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
@@ -25,6 +26,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.LanguageUtils
+import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.launchCatching
@@ -109,7 +111,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         }
     }
 
-    fun cardId() = currentCard.id
+    fun getNoteEditorDestination() = NoteEditorDestination(currentCard.id)
 
     fun cardsCount() = selectedCardIds.count()
 
@@ -361,4 +363,12 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
             }
         }
     }
+}
+
+class NoteEditorDestination(val cardId: Long) {
+    fun toIntent(context: Context): Intent =
+        Intent(context, NoteEditor::class.java).apply {
+            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
+            putExtra(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, cardId)
+        }
 }
