@@ -79,23 +79,10 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
             PreviewerViewModel.factory(previewerIdsFile, currentIndex)
         )[PreviewerViewModel::class.java]
 
-        val assetLoader = requireContext().getViewerAssetLoader(LOCALHOST)
         val webView = view.findViewById<WebView>(R.id.webview)
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         with(webView) {
-            webViewClient = object : WebViewClient() {
-                override fun shouldInterceptRequest(
-                    view: WebView?,
-                    request: WebResourceRequest
-                ): WebResourceResponse? {
-                    return assetLoader.shouldInterceptRequest(request.url)
-                }
-
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    super.onPageFinished(view, url)
-                    viewModel.loadCurrentCard()
-                }
-            }
+            webViewClient = onCreateWebViewClient()
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
                 javaScriptEnabled = true
@@ -219,6 +206,23 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         }
 
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun onCreateWebViewClient(): WebViewClient {
+        val assetLoader = requireContext().getViewerAssetLoader(LOCALHOST)
+        return object : WebViewClient() {
+            override fun shouldInterceptRequest(
+                view: WebView?,
+                request: WebResourceRequest
+            ): WebResourceResponse? {
+                return assetLoader.shouldInterceptRequest(request.url)
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                viewModel.loadCurrentCard()
+            }
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
