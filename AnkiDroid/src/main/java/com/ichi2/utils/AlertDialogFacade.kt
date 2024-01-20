@@ -127,9 +127,9 @@ fun AlertDialog.Builder.cancelable(cancelable: Boolean): AlertDialog.Builder {
  * Executes the provided block, then creates an [AlertDialog] with the arguments supplied
  * and immediately displays the dialog
  */
-inline fun AlertDialog.Builder.show(block: AlertDialog.Builder.() -> Unit): AlertDialog.Builder = apply {
-    this.block()
-    this.show()
+inline fun AlertDialog.Builder.show(block: AlertDialog.Builder.() -> Unit): AlertDialog {
+    this.apply { block() }
+    return this.show()
 }
 
 /**
