@@ -82,38 +82,36 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
     }
 
     private fun setupRecyclerView(activity: Activity, tagsDialogView: View, adapter: LocaleListAdapter) {
-        val recyclerView: RecyclerView = tagsDialogView.findViewById(R.id.locale_dialog_selection_list)
-        recyclerView.requestFocus()
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = adapter
-        recyclerView.addOnItemTouchListener(
-            RecyclerSingleTouchAdapter(
-                activity
-            ) { _, position ->
-                val l = adapter.getLocaleAtPosition(position)
-                dialogHandler!!.onSelectedLocale(l)
-            }
-        )
+        tagsDialogView.findViewById<RecyclerView>(R.id.locale_dialog_selection_list).apply {
+            requestFocus()
+            this.adapter = adapter
+            layoutManager = LinearLayoutManager(activity)
+            addOnItemTouchListener(
+                RecyclerSingleTouchAdapter(activity) { _, position ->
+                    dialogHandler!!.onSelectedLocale(adapter.getLocaleAtPosition(position))
+                }
+            )
+        }
     }
 
     private fun inflateMenu(tagsDialogView: View, adapter: LocaleListAdapter) {
-        val toolbar: Toolbar = tagsDialogView.findViewById(R.id.locale_dialog_selection_toolbar)
-        toolbar.inflateMenu(R.menu.locale_dialog_search_bar)
-        toolbar.setNavigationOnClickListener { dialogHandler!!.onLocaleSelectionCancelled() }
-        val searchItem = toolbar.menu.findItem(R.id.locale_dialog_action_search)
-        val searchView = searchItem.actionView as SearchView
-        searchView.imeOptions = EditorInfo.IME_ACTION_DONE
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
+        tagsDialogView.findViewById<Toolbar>(R.id.locale_dialog_selection_toolbar).apply {
+            inflateMenu(R.menu.locale_dialog_search_bar)
+            setNavigationOnClickListener { dialogHandler!!.onLocaleSelectionCancelled() }
+            (menu.findItem(R.id.locale_dialog_action_search).actionView as SearchView).apply {
+                imeOptions = EditorInfo.IME_ACTION_DONE
+                setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        return false
+                    }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                adapter.filter.filter(newText)
-                return false
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        adapter.filter.filter(newText)
+                        return false
+                    }
+                })
             }
-        })
+        }
     }
 
     class LocaleListAdapter(locales: Array<Locale>) : RecyclerView.Adapter<TextViewHolder>(), Filterable {
