@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Disabilitato</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibra</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lampeggia</string>
     <string name="timeout_answer_text" maxLength="41">Mostra automaticamente la risposta</string>
-    <string name="timeout_answer" maxLength="41">Tempo per rispondere</string>
-    <string name="timeout_answer_summ">Visualizza la risposta automaticamente senza input dell\'utente. Il ritardo include il tempo per i file audio riprodotti automaticamente.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Tempo prima di mostrare la risposta</string>
-    <string name="timeout_question_seconds" maxLength="41">Tempo prima di mostrare la prossima domanda</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Scegli la lingua</string>
     <string name="software_render" maxLength="41">Disabilita il rendering hardware scheda</string>
     <string name="software_render_summ">Il rendering hardware è più veloce, ma può avere problemi, in particolare su Android 8/8.1. Se non riesci a vedere parti dell\'interfaccia utente di revisione della carta, prova questa impostazione.</string>

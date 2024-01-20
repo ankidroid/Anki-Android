@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Desativado</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz de piscamento</string>
     <string name="timeout_answer_text" maxLength="41">Exibir resposta automaticamente</string>
-    <string name="timeout_answer" maxLength="41">Resposta de tempo limite</string>
-    <string name="timeout_answer_summ">Mostra a resposta automaticamente sem intervenção do usuário. Inclui atraso para reprodução automatica de arquivos de áudio.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Tempo para mostrar a resposta</string>
-    <string name="timeout_question_seconds" maxLength="41">Tempo para mostrar próxima questão</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Selecionar Idioma</string>
     <string name="software_render" maxLength="41">Desativar render de hardware da placa</string>
     <string name="software_render_summ">Renderização de hardware é mais rápida, mas pode causar problemas, especificamente no Android 8/8.1. Se você não consegue ver partes da interface de revisão do cartão, tente essa configuração.</string>

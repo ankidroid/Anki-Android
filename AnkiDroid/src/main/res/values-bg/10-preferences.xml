@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Изключен</string>
-    <string name="pref_summary_seconds">%s сек</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибриране</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мигаща светлина</string>
     <string name="timeout_answer_text" maxLength="41">Автоматично  показване на отговор</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
-    <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Време за показване на отговора</string>
-    <string name="timeout_question_seconds" maxLength="41">Време за показване на следващия въпрос</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Изберете език</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>

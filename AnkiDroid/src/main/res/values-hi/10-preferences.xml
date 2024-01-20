@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">अक्षम</string>
-    <string name="pref_summary_seconds">%s एस</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d मिनट</item>
         <item quantity="other">%d मिनट</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">वाइब्रेट</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">पलक लाइट</string>
     <string name="timeout_answer_text" maxLength="41">स्वचालित उत्तर प्रदर्शन</string>
-    <string name="timeout_answer" maxLength="41">समय के पश्चात उत्तर</string>
-    <string name="timeout_answer_summ">उपयोगकर्ता इनपुट के बिना स्वचालित रूप से उत्तर दिखाएं । देरी स्वचालित रूप से खेला ऑडियो फ़ाइलों के लिए समय शामिल है ।</string>
-    <string name="timeout_answer_seconds" maxLength="41">जवाब दिखाने के लिए समय</string>
-    <string name="timeout_question_seconds" maxLength="41">अगला प्रश्न दिखाने का समय</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">भाषा चुनें</string>
     <string name="software_render" maxLength="41">कार्ड हार्डवेयर रेंडर अक्षम करें</string>
     <string name="software_render_summ">हार्डवेयर रेंडर तेज़ है लेकिन इसमें समस्याएँ हो सकती हैं, विशेष रूप से Android 8/8.1 पर।  यदि आप कार्ड समीक्षा उपयोगकर्ता इंटरफ़ेस के कुछ हिस्सों को नहीं देख पा रहे हैं, तो इस सेटिंग को आज़माएँ।</string>

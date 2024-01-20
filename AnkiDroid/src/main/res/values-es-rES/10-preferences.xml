@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Deshabilitado</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibración</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Parpadeo de luz</string>
     <string name="timeout_answer_text" maxLength="41">Visualización automática de la respuesta</string>
-    <string name="timeout_answer" maxLength="41">Tiempo de respuesta agotado</string>
-    <string name="timeout_answer_summ">Mostrar respuesta automáticamente sin intervención del usuario. El retraso incluye tiempo para reproduciones automáticas de archivos de audio.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Tiempo para mostrar respuesta</string>
-    <string name="timeout_question_seconds" maxLength="41">Tiempo para mostrar la siguiente pregunta</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Selecciona idioma</string>
     <string name="software_render" maxLength="41">Deshabilitar el procesamiento de hardware de la tarjeta</string>
     <string name="software_render_summ">El procesamiento de hardware es más rápido, pero puede tener problemas, específicamente en Android 8/8.1. Si no puede ver partes de la interfaz de usuario de la tarjeta, prueba esta opción.</string>

@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">გამორთულია</string>
-    <string name="pref_summary_seconds">%s წმ</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d წთ</item>
         <item quantity="other">%d წთ</item>
@@ -116,7 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">ცენტრის შუაგულში შეხება</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ქვედა მარცხენა კუთხეში შეხება</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ქვედა მარჯვენა კუთხეში შეხება</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">მოწყობილობის შენჯღრევა</string>
     <string name="card_browser_enable_external_context_menu">„%s“-მენიუ</string>
     <string name="card_browser_enable_external_context_menu_summary">გლობალურად ამატებს „%s“ ღილაკს კონტექსტურ მენიუში (მენიუ, რომელიც ტექსტის მონიშვნისას ჩნდება)</string>
     <string name="double_scrolling_gap" maxLength="41">ორმაგი ჩამოყოლა</string>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">ვიბრაცია</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">სინათლის ციმციმი</string>
     <string name="timeout_answer_text" maxLength="41">პასუხის ავტომატური ჩვენება</string>
-    <string name="timeout_answer" maxLength="41">პასუხი დროის ამოწურვის შემთხვევაში</string>
-    <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
-    <string name="timeout_answer_seconds" maxLength="41">დრო პასუხის ჩვენებამდე</string>
-    <string name="timeout_question_seconds" maxLength="41">დრო შემდეგი კითხვის ჩვენებამდე</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">ენის არჩევა</string>
     <string name="software_render" maxLength="41">ბარათების აპარატული ვიზუალიზაციის გამორთვა</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>

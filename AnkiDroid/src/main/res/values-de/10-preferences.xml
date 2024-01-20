@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Deaktiviert</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d Minuten</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrieren</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blinken</string>
     <string name="timeout_answer_text" maxLength="41">Antwort automatisch anzeigen</string>
-    <string name="timeout_answer" maxLength="41">Timeout-Antwort</string>
-    <string name="timeout_answer_summ">Antwort automatisch ohne Benutzereingabe anzeigen. Verzögerung enthält die Zeit für automatisch abgespielte Audiodateien.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Zeit bis zur Anzeige der Antwort</string>
-    <string name="timeout_question_seconds" maxLength="41">Zeit bis zur Anzeige der nächsten Frage</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Sprache wählen</string>
     <string name="software_render" maxLength="41">Karten-Hardware-Rendering deaktivieren</string>
     <string name="software_render_summ">Hardware-Rendering ist schneller, kann aber Probleme haben, insbesondere auf Android 8/8.1. Wenn Sie Teile der Benutzeroberfläche der Karte nicht sehen können, versuchen Sie diese Einstellung.</string>

@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">ଅକ୍ଷମ</string>
-    <string name="pref_summary_seconds">%s ସେ</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d ମି</item>
         <item quantity="other">%d ମି</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">କମ୍ପନ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED ସୂଚକ</string>
     <string name="timeout_answer_text" maxLength="41">ସ୍ୱଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ</string>
-    <string name="timeout_answer" maxLength="41">ସମୟ-ସମାପ୍ତି ଉତ୍ତର</string>
-    <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱଚାଳିତ ଭାଵେ ଉତ୍ତର ଦେଖାଅ। ଵିଳମ୍ବରେ ସ୍ୱଚାଳିତ ଭାଵେ ଚାଳନ ହୋଇଥିବା ଅଡ଼ିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ</string>
-    <string name="timeout_answer_seconds" maxLength="41">ଉତ୍ତର ଦେଖାଇବା ସମୟ</string>
-    <string name="timeout_question_seconds" maxLength="41">ପରଵର୍ତ୍ତୀ ପ୍ରଶ୍ନ ଦେଖାଇବା ସମୟ</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">ଭାଷା ବାଛନ୍ତୁ</string>
     <string name="software_render" maxLength="41">କାର୍ଡ ହାର୍ଡୱେର ପ୍ରସ୍ତୁତକର୍ତ୍ତା କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="software_render_summ">ହାର୍ଡୱେୟାର୍ ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦ୍ରୁତ ଅଟେ କିନ୍ତୁ ବିଶେଷ କରି ଆଣ୍ଡ୍ରଏଡ୍ 8/8.1 ରେ ସମସ୍ୟା ହୋଇପାରେ। ଯଦି ଆପଣ ପତ୍ର ସମୀକ୍ଷା ଇଣ୍ଟରଫେସର କିଛି ଅଂଶ ଦେଖିପାରୁ ନାହାନ୍ତି, ତେବେ ଏହି ସେଟିଂ ଚେଷ୍ଟା କରନ୍ତୁ।</string>

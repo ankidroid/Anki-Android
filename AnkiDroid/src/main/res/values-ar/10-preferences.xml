@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">معطل</string>
-    <string name="pref_summary_seconds">%s ث</string>
     <plurals name="pref_summ_minutes">
         <item quantity="zero">%d دقيقة</item>
         <item quantity="one">%d دقيقة</item>
@@ -156,10 +155,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">اهتزاز</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">وميض الضوء</string>
     <string name="timeout_answer_text" maxLength="41">عرض الجواب تلقائيًا</string>
-    <string name="timeout_answer" maxLength="41">الإجابة بعد انتهاء المهلة</string>
-    <string name="timeout_answer_summ">إظهار الجواب تلقائيًا بدون تدخل المستخدم. تتضمن المهلة وقت تشغيل الملفات الصوتية تلقائيًا.</string>
-    <string name="timeout_answer_seconds" maxLength="41">مهلة إظهار الجواب</string>
-    <string name="timeout_question_seconds" maxLength="41">مهلة إظهار السؤال التالي</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">حدد اللغة</string>
     <string name="software_render" maxLength="41">تعطيل عارض العتاد للبطاقات</string>
     <string name="software_render_summ">عرض العتاد أسرع لكنه قد يسبب مشاكل، خصوصًا على أندرويد 8/8.1. إذا لم تكن قادرًا على رؤية أقسام من واجهة مراجعة البطاقة، جرب هذا الخيار.</string>

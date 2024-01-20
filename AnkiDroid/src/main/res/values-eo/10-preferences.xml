@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Malaktiva</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibri</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lumpulsi</string>
     <string name="timeout_answer_text" maxLength="41">Aŭtomate montri respondon</string>
-    <string name="timeout_answer" maxLength="41">Respondo post elĉerpi tempon</string>
-    <string name="timeout_answer_summ">Aŭtomate montri respondon sen enigo de uzanto. Prokrasto enhavas tempon por aŭtomate ludi sonaĵon.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Montri respondon post</string>
-    <string name="timeout_question_seconds" maxLength="41">Montri sekvan demandon post</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Elekti lingvon</string>
     <string name="software_render" maxLength="41">Malaktivigi aparataran bildigilon de kartoj</string>
     <string name="software_render_summ">Aparatara bildigilo estas pli rapida, sed povas kaŭzi problemojn, precipe ĉe Android 8/8.1. Se parto de fasado ĉe la ekrano “ripeti karton” ne aperas, provu aktivigi tiun ĉi agordon.</string>
