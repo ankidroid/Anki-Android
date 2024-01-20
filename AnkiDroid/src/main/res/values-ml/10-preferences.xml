@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">പ്രവര്‍ത്തന രഹിതമാക്കിയത്‌</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">വൈബ്രേറ്റുചെയ്യുക</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ബ്ലിങ്ക് ലൈറ്റ്</string>
     <string name="timeout_answer_text" maxLength="41">യാന്ത്രിക പ്രദർശന ഉത്തരം</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
-    <string name="timeout_answer_summ">ഉപയോക്തൃ ഇൻ‌പുട്ട് ഇല്ലാതെ സ്വപ്രേരിതമായി ഉത്തരം കാണിക്കുക. സ്വപ്രേരിതമായി പ്ലേ ചെയ്യുന്ന ഓഡിയോ ഫയലുകൾക്കുള്ള സമയം കാലതാമസം ഉൾക്കൊള്ളുന്നു.</string>
-    <string name="timeout_answer_seconds" maxLength="41">ഉത്തരം കാണിക്കാനുള്ള സമയം</string>
-    <string name="timeout_question_seconds" maxLength="41">അടുത്ത ചോദ്യം കാണിക്കാനുള്ള സമയം</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">ഭാഷ തിരഞ്ഞെടുക്കുക</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">ഹാർഡ്‌വെയർ റെൻഡർ വേഗതയേറിയതാണെങ്കിലും പ്രശ്‌നങ്ങളുണ്ടാകാം, പ്രത്യേകിച്ചും Android 8 / 8.1. കാർഡ് അവലോകന ഉപയോക്തൃ ഇന്റർഫേസിന്റെ ഭാഗങ്ങൾ നിങ്ങൾക്ക് കാണാൻ കഴിയുന്നില്ലെങ്കിൽ, ഈ ക്രമീകരണം പരീക്ഷിക്കുക.</string>

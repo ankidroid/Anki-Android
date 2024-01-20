@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Kikapcsolva</string>
-    <string name="pref_summary_seconds">%s mp</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -153,10 +152,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Rezgés</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Villogó fény</string>
     <string name="timeout_answer_text" maxLength="41">Automatikusan mutassa a választ</string>
-    <string name="timeout_answer" maxLength="41">Időtúllépésnél a válasz</string>
-    <string name="timeout_answer_summ">Válasz automatikus megjelenítése, felhasználói beavatkozása nélkül. A késleltetés magában foglalja az automatikusan lejátszott audió fájlok idejét.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Válasz mutatása ennyi idő elteltével</string>
-    <string name="timeout_question_seconds" maxLength="41">A következő kérdés megjelenítése ennyi idő után</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Nyelv kiválasztása</string>
     <string name="software_render" maxLength="41">Kártya hw megjelenítő (render) tiltása</string>
     <string name="software_render_summ">A hw renderelés gyorsabb, de okozhat problémát, különösen az Android 8/8.1-en. Ha nem látod a kártya ismétléskor a kezelőfelület egy részét, próbáld meg ezt a beállítást.</string>

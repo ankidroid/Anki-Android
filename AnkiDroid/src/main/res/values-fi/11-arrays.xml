@@ -101,7 +101,5 @@
     <string name="gesture_show_all_hints">Näytä kaikki vihjeet</string>
     <string name="record_voice">Nauhoita ääntä</string>
     <string name="replay_voice">Toista ääni uudelleen</string>
-    <string name="automatic_answer_option_2">Vaikea (Hyvä, jos ei saatavilla</string>
-    <string name="automatic_answer_option_4">Helppo (Hyvä, jos ei saatavilla)</string>
     <string name="save_voice">Save Recording</string>
 </resources>

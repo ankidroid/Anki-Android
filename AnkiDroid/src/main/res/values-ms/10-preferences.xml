@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Dilumpuhkan</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="other">%d mins</item>
     </plurals>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Getaran</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Kelip lampu</string>
     <string name="timeout_answer_text" maxLength="41">Papar jawapan secara automatik</string>
-    <string name="timeout_answer" maxLength="41">Jawapan tamat masa</string>
-    <string name="timeout_answer_summ">Tunjuk jawapan secara automatik tanpa input pengguna. Kiraan mula selepas memainkan fail audio secara automatik.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Masa untuk tunjuk jawapan</string>
-    <string name="timeout_question_seconds" maxLength="41">Masa untuk tunjuk soalan seterusnya</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="software_render" maxLength="41">Lumpuhkan pemapar perkakasan kad</string>
     <string name="software_render_summ">Pemapar perkakasan lebih pantas namun mungkin terdapat kesulitan, khususnya pada Android 8/8.1. Jika anda tidak dapat melihat sebahagian daripada antara muka semakan kad, cuba tetapan ini.</string>

@@ -101,7 +101,5 @@
     <string name="gesture_show_all_hints">Exibir todas as dicas</string>
     <string name="record_voice">Gravar voz</string>
     <string name="replay_voice">Reproduzir voz</string>
-    <string name="automatic_answer_option_2">Difícil (bom se indisponível)</string>
-    <string name="automatic_answer_option_4">Fácil (bom se indisponível)</string>
     <string name="save_voice">Save Recording</string>
 </resources>

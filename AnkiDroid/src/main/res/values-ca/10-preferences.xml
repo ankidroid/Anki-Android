@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Deshabilitat</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibra</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Parpellejar el llum</string>
     <string name="timeout_answer_text" maxLength="41">Visualització automàtica de la resposta</string>
-    <string name="timeout_answer" maxLength="41">Resposta fora de temps</string>
-    <string name="timeout_answer_summ">Mostra la resposta automàticament sense aportació d\'usuari. El retard inclou el temps de les reproduccions automàtiques d\'arxius d\'àudio.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Temps per mostrar la resposta</string>
-    <string name="timeout_question_seconds" maxLength="41">Temps per mostrar la següent pregunta</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Seleccioneu l\'idioma</string>
     <string name="software_render" maxLength="41">Desactiva hardware de mostrar carta</string>
     <string name="software_render_summ">La mostra per hardware és més ràpida, però pot tenir problemes, concretament a Android 8 / 8.1. Si no podeu veure parts de la carta, proveu aquesta configuració.</string>
