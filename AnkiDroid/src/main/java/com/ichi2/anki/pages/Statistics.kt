@@ -36,6 +36,7 @@ class Statistics : PageFragment() {
     override val pageName = "graphs"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         view.findViewById<MaterialToolbar>(R.id.toolbar)?.apply {
             inflateMenu(R.menu.statistics)
             menu.findItem(R.id.action_export_stats).title = CollectionManager.TR.statisticsSavePdf()
