@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2022 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -14,11 +14,9 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.dialogs.utils
+package com.ichi2.utils
 
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.input.getInputField
+import android.widget.EditText
 
-var MaterialDialog.input
-    get() = this.getInputField().text.toString()
-    set(value) = this.getInputField().setText(value)
+/** Moves the cursor to the end of the [EditText] */
+fun EditText.moveCursorToEnd() = setSelection(text?.length ?: 0)
