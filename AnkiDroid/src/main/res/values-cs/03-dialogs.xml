@@ -197,7 +197,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Nepodařilo se naplánovat upomínky</string>
     <string name="boot_service_too_many_notifications">Naplánováno příliš mnoho upomínek. Některé se nezobrazí</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Výběr nápovědy klávesnice</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Některé vícejazyčné klávesnice, např. GBoard podporují změnu jazyka při úpravách textu\n\nProsím požádejte výrobce klávesnice o funkci „setImeHintLocales“, pokud vaše klávesnice nepřepíná mezi jazyky.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Používání AnkiDroid</string>

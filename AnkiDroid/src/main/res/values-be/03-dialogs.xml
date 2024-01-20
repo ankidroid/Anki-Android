@@ -197,7 +197,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Не атрымалася запланаваць напаміны</string>
     <string name="boot_service_too_many_notifications">Запланавана вельмі многа напамінаў. Некаторыя з іх не будуць адлюстраваныя</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Выбар мовы клавіятуры</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Некаторыя шматмоўныя клавіятуры (напрыклад, GBoard) падтрымліваюць змену мовы падчас рэдагавання тэксту\n\nКалі ласка, запытайце функцыю “setImeHintLocales” ад распрацоўшчыка клавіятуры, калі яна не змяняе мову.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Выкарыстанне AnkiDroid</string>

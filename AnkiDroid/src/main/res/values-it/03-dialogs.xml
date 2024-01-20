@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Pianificazione dei promemoria fallita</string>
     <string name="boot_service_too_many_notifications">Troppi promemoria pianificati. Alcuni non appariranno.</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Selezione Suggerimento Tastiera</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Alcune tastiere multilingue, come GBoard, supportano il cambio di lingua durante la modifica del testo\n\nSi prega di richiedere la funzione “setImeHintLocales” dal produttore della tastiera se la tastiera non cambia lingua.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Usare AnkiDroid</string>

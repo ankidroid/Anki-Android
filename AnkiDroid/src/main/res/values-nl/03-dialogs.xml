@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Herinneringen plannen mislukt</string>
     <string name="boot_service_too_many_notifications">Te veel herinneringen gepland. Sommige zullen niet verschijnen</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Selectie van toetsenbordtaal</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Sommige meertalige toetsenborden, zoals GBoard, ondersteunen het veranderen van taal bij het bewerken van tekst\n\nVraag de \"setImeHintLocales\"-functie aan bij uw toetsenbordfabrikant als uw toetsenbord niet van taal verandert.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Gebruik van AnkiDroid</string>

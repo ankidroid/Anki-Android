@@ -197,7 +197,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Nepodarilo sa naplánovať pripomienky</string>
     <string name="boot_service_too_many_notifications">Naplánovaných príliš veľa pripomienok. Niektoré sa nezobrazia</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Voľba klávesnice nápovede</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Niektoré multimediálne klávesnice, akými sú GBoard podporujú zmenu jazyka pri úprave textu\n\nProsím, vyžiadajte si od svojho výrobcu klávesnice prvok “setImeHintLocales”, ak vaša klávesnica nemení jazyk.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Používanie AnkiDroid-u</string>

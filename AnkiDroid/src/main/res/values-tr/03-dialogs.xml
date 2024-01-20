@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Hatırlatıcılar planlanamadı</string>
     <string name="boot_service_too_many_notifications">Çok fazla hatırlatıcı planlandı. Bazıları görünmeyecek</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Klavye dili seçimi</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">GBoard gibi bazı çok dilli klavyeler, metin düzenlerken dil değiştirmeyi destekler\n\nKlavyeniz dili değiştirmiyorsa lütfen klavye üreticinizden “setImeHintLocales” özelliğini isteyin.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid kullanımı</string>

@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etiquetas: %1$s</string>
     <string name="CardEditorCards">Tarjetas: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">Editar Oclusiones</string>
     <string name="tag_name">Nombre de la etiqueta</string>
     <string name="add_new_filter_tags">Añadir/filtrar etiquetas</string>
     <string name="add_tag">Añadir etiqueta</string>
@@ -266,7 +266,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">La dirección de correo electrónico es obligatoria</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">La contraseña es requerida</string>
     <string name="back_pressed_once">Presione atrás de nuevo para salir</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>

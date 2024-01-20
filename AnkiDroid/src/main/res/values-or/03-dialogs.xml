@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">ସ୍ମାରକଗୁଡ଼ିକୁ ନିର୍ଦ୍ଧାରଣ କରିବାରେ ବିଫଳ ହୋଇଛି</string>
     <string name="boot_service_too_many_notifications">ଅତ୍ୟଧିକ ସ୍ମାରକ ନିର୍ଦ୍ଧାରିତ ହୋଇଛି। କିଛିଟା ଦେଖାଯିବ ନାହିଁ</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">କୀବୋର୍ଡ୍ ଭାଷା ଚୟନ</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">କିଛି ବହୁଭାଷୀ କୀବୋର୍ଡ୍, ଯେପରିକି GBoard ପାଠ୍ୟ ସମ୍ପାଦନ କରିବା ସମୟରେ ଭାଷା ପରିବର୍ତ୍ତନକୁ ସମର୍ଥନ କରେ\n\nଦୟାକରି ଆପଣଙ୍କର କୀବୋର୍ଡ୍ ନିର୍ମାତାଙ୍କ ଠାରୁ “setImeHintLocales” ବୈଶିଷ୍ଟ୍ୟ ଅନୁରୋଧ କରନ୍ତୁ ଯଦି ଆପଣଙ୍କର କୀବୋର୍ଡ୍ ଭାଷା ପରିବର୍ତ୍ତନ ନକରେ।</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ବ୍ୟବହାର କରିବାରେ</string>

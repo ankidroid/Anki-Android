@@ -179,7 +179,7 @@
     <string name="boot_service_failed_to_schedule_notifications">计划提醒失败</string>
     <string name="boot_service_too_many_notifications">已计划的提醒太多。有些提醒将不会出现</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">键盘提示选择</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">某些多语言键盘，如 GBoard，支持编辑文本时更改语言\n\n如果您的键盘不会更改语言，请向您的键盘发布方请求“设置输入法编辑器本地化语言提示”特性。</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">使用 AnkiDroid</string>

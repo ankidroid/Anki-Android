@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Az emlékeztetők ütemezése sikertelen</string>
     <string name="boot_service_too_many_notifications">Túl sok emlékeztető van beütemezve. Néhány nem fog megjelenni</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Billentyűzet nyelvének kiválasztása</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Néhány többnyelvű billentyűzet, mint a GBoard, támogatja a nyelv váltás szöveg bevitel közben\n\nKérd meg  a billentyűzet gyártóját, hogy engedélyezze a “setImeHintLocales” tulajdonságot, ha a billentyűzete nem vált nyelvet.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid használata</string>
