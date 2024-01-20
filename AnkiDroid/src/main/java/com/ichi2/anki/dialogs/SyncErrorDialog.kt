@@ -20,6 +20,8 @@ import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
 import android.os.Message
+import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
@@ -239,12 +241,28 @@ class SyncErrorDialog : AsyncDialogFragment() {
         const val DIALOG_SYNC_CORRUPT_COLLECTION = 10
         const val DIALOG_SYNC_BASIC_CHECK_ERROR = 11
 
+        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+        val dialogTypes = arrayOf(
+            DIALOG_USER_NOT_LOGGED_IN_SYNC,
+            DIALOG_CONNECTION_ERROR,
+            DIALOG_SYNC_CONFLICT_RESOLUTION,
+            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL,
+            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE,
+            DIALOG_SYNC_SANITY_ERROR,
+            DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL,
+            DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE,
+            DIALOG_MEDIA_SYNC_ERROR,
+            DIALOG_SYNC_CORRUPT_COLLECTION,
+            DIALOG_SYNC_BASIC_CHECK_ERROR
+        )
+
         /**
          * A set of dialogs belonging to AnkiActivity which deal with sync problems
          *
          * @param dialogType An integer which specifies which of the sub-dialogs to show
          * @param dialogMessage A string which can be optionally used to set the dialog message
          */
+        @CheckResult
         fun newInstance(dialogType: Int, dialogMessage: String?): SyncErrorDialog {
             val f = SyncErrorDialog()
             val args = Bundle()
