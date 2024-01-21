@@ -27,7 +27,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.*
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.snackbar.showSnackbar
@@ -113,17 +112,10 @@ class AboutFragment : Fragment(R.layout.about_layout) {
      */
     private fun copyDebugInfo() {
         val debugInfo = DebugInfoService.getDebugInfo(requireContext())
-        if (requireContext().copyToClipboard(debugInfo)) {
-            showSnackbar(
-                R.string.about_ankidroid_successfully_copied_debug_info,
-                Snackbar.LENGTH_SHORT
-            )
-        } else {
-            showSnackbar(
-                R.string.about_ankidroid_error_copy_debug_info,
-                Snackbar.LENGTH_SHORT
-            )
-        }
+        requireContext().copyToClipboard(
+            debugInfo,
+            failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+        )
     }
 
     /**

@@ -32,7 +32,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs.Companion.MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY
 import com.ichi2.anki.utils.getUserFriendlyErrorText
-import com.ichi2.utils.copyToClipboardAndShowConfirmation
+import com.ichi2.utils.copyToClipboard
 import makeLinksClickable
 
 // TODO BEFORE-RELEASE Dismiss the related notification, if any, when the dialog is dismissed.
@@ -81,9 +81,8 @@ class MigrationFailedDialogFragment : DialogFragment() {
             .setMessage(message)
             .setPositiveButton(R.string.dialog_ok) { _, _ -> dismiss() }
             .setNegativeButton(R.string.feedback_copy_debug) { _, _ ->
-                requireContext().copyToClipboardAndShowConfirmation(
+                requireContext().copyToClipboard(
                     text = stacktrace,
-                    successMessageId = R.string.about_ankidroid_successfully_copied_debug_info,
                     failureMessageId = R.string.about_ankidroid_error_copy_debug_info
                 )
             }

@@ -425,4 +425,6 @@ opening the system text to speech settings fails">
     <string name="shared_decks_login_required">Please log in to download more decks</string>
 
     <string name="deck_description_field_hint">Description</string>
+
+    <string name="failed_to_copy">Failed to copy</string>
 </resources>

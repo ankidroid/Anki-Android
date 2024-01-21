@@ -100,13 +100,11 @@ class IntentHandler : Activity() {
 
     private fun copyDebugInfoToClipboard(intent: Intent) {
         Timber.i("Copying debug info to clipboard")
-        if (!this.copyToClipboard(intent.getStringExtra(CLIPBOARD_INTENT_EXTRA_DATA)!!)) {
-            Timber.w("Failed to obtain ClipboardManager")
-            showThemedToast(this, R.string.something_wrong, true)
-            return
-        }
-
-        showThemedToast(this, R.string.about_ankidroid_successfully_copied_debug_info, true)
+        // null string is handled by copyToClipboard in try-catch
+        this.copyToClipboard(
+            text = (intent.getStringExtra(CLIPBOARD_INTENT_EXTRA_DATA)!!),
+            failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+        )
     }
 
     private val fileIntent: Intent
