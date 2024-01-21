@@ -57,18 +57,6 @@ import timber.log.Timber
 class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickListener {
     private lateinit var viewModel: PreviewerViewModel
 
-    private val menu: Menu
-        get() = requireView().findViewById<Toolbar>(R.id.toolbar).menu
-
-    private val backsideOnlyOption: MenuItem
-        get() = menu.findItem(R.id.action_back_side_only)
-
-    private val markOption: MenuItem
-        get() = menu.findItem(R.id.action_mark)
-
-    private val flagOption: MenuItem
-        get() = menu.findItem(R.id.action_flag)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(IDS_FILE_EXTRA)) {
             "$IDS_FILE_EXTRA is required"
@@ -122,13 +110,6 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
                 webView.evaluateJavascript(eval, null)
             }
             .launchIn(lifecycleScope)
-        lifecycleScope.launch {
-            viewModel.backsideOnly
-                .flowWithLifecycle(lifecycle)
-                .collectLatest { isBacksideOnly ->
-                    setBacksideOnlyButtonIcon(isBacksideOnly)
-                }
-        }
 
         val cardsCount = viewModel.cardsCount()
         lifecycleScope.launch {
@@ -141,24 +122,38 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
                         getString(R.string.preview_progress_bar_text, displayIndex, cardsCount)
                 }
         }
+        /* ************************************* Menu items ************************************* */
+        val menu = view.findViewById<Toolbar>(R.id.toolbar).menu
+
+        lifecycleScope.launch {
+            viewModel.backsideOnly
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { isBacksideOnly ->
+                    setBacksideOnlyButtonIcon(menu, isBacksideOnly)
+                }
+        }
+
         lifecycleScope.launch {
             viewModel.isMarked
                 .flowWithLifecycle(lifecycle)
                 .collectLatest { isMarked ->
-                    if (isMarked) {
-                        markOption.setIcon(R.drawable.ic_star)
-                        markOption.setTitle(R.string.menu_unmark_note)
-                    } else {
-                        markOption.setIcon(R.drawable.ic_star_border_white)
-                        markOption.setTitle(R.string.menu_mark_note)
+                    with(menu.findItem(R.id.action_mark)) {
+                        if (isMarked) {
+                            setIcon(R.drawable.ic_star)
+                            setTitle(R.string.menu_unmark_note)
+                        } else {
+                            setIcon(R.drawable.ic_star_border_white)
+                            setTitle(R.string.menu_mark_note)
+                        }
                     }
                 }
         }
+
         lifecycleScope.launch {
             viewModel.flagCode
                 .flowWithLifecycle(lifecycle)
                 .collectLatest { flagCode ->
-                    flagOption.setIcon(Flag.fromCode(flagCode).drawableRes)
+                    menu.findItem(R.id.action_flag).setIcon(Flag.fromCode(flagCode).drawableRes)
                 }
         }
 
@@ -252,8 +247,8 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         return true
     }
 
-    private fun setBacksideOnlyButtonIcon(isBacksideOnly: Boolean) {
-        backsideOnlyOption.apply {
+    private fun setBacksideOnlyButtonIcon(menu: Menu, isBacksideOnly: Boolean) {
+        menu.findItem(R.id.action_back_side_only).apply {
             if (isBacksideOnly) {
                 setIcon(R.drawable.ic_card_answer)
                 setTitle(R.string.card_side_answer)
