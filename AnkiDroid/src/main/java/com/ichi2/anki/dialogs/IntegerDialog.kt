@@ -46,7 +46,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
-        super.onCreate(savedInstanceState)
+        super.onCreateDialog(savedInstanceState)
         @SuppressLint("CheckResult")
         val show = MaterialDialog(requireActivity()).show {
             title(text = requireArguments().getString("title")!!)
