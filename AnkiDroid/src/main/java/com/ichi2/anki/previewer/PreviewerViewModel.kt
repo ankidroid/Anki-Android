@@ -30,7 +30,7 @@ import com.ichi2.anki.LanguageUtils
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.browser.PreviewerIdsFile
-import com.ichi2.anki.launchCatching
+import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Card
@@ -84,10 +84,10 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         /* if currentCard has already been initialized, it means that this method was already called
         once and the fragment is being recreated, which happens in configuration changes. */
         if (this::currentCard.isInitialized) {
-            launchCatching { showCard(showAnswerOnReload) }
+            launchCatchingIO { showCard(showAnswerOnReload) }
             return
         }
-        launchCatching {
+        launchCatchingIO {
             currentIndex.collectLatest {
                 showCard(showAnswer = backsideOnly.value)
             }
@@ -96,7 +96,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
 
     fun toggleBacksideOnly() {
         Timber.v("toggleBacksideOnly() %b", !backsideOnly.value)
-        launchCatching {
+        launchCatchingIO {
             backsideOnly.emit(!backsideOnly.value)
             if (backsideOnly.value) {
                 showAnswer()
@@ -107,7 +107,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
     }
 
     fun toggleMark() {
-        launchCatching {
+        launchCatchingIO {
             val note = withCol { currentCard.note() }
             NoteService.toggleMark(note)
             isMarked.emit(NoteService.isMarked(note))
@@ -115,7 +115,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
     }
 
     fun setFlag(flag: Flag) {
-        launchCatching {
+        launchCatchingIO {
             withCol {
                 setUserFlagForCards(listOf(currentCard.id), flag.code)
             }
@@ -128,7 +128,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
      * or the next question if the answer is already being shown
      */
     fun onNextButtonClick() {
-        launchCatching {
+        launchCatchingIO {
             if (!showingAnswer.value && !backsideOnly.value) {
                 showAnswer()
             } else {
@@ -142,7 +142,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
      * or hides the current answer if the first card is being shown
      */
     fun onPreviousButtonClick() {
-        launchCatching {
+        launchCatchingIO {
             if (currentIndex.value > 0) {
                 currentIndex.update { it - 1 }
             } else if (showingAnswer.value && !backsideOnly.value) {
@@ -157,7 +157,8 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
             result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
         ) {
-            launchCatching {
+            Timber.v("handleEditCardResult()")
+            launchCatchingIO {
                 showCard(showAnswerOnReload)
             }
         }

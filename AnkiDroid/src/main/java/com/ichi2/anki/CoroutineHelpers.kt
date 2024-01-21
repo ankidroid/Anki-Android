@@ -40,7 +40,6 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -92,12 +91,9 @@ interface OnErrorListener {
     val onError: MutableSharedFlow<String>
 }
 
-fun <T> T.launchCatching(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    block: suspend T.() -> Unit
-): Job where T : ViewModel, T : OnErrorListener {
+fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel, T : OnErrorListener {
     return viewModelScope.launchCatching(
-        dispatcher,
+        Dispatchers.IO,
         { onError.emit(it) },
         { block() }
     )
