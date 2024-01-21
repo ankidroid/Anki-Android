@@ -81,7 +81,7 @@ class CreateDeckDialog(
             positiveButton(R.string.dialog_ok) { onPositiveButtonClicked() }
             negativeButton(R.string.dialog_cancel)
             setView(R.layout.dialog_generic_text_input)
-        }.input(prefill = initialDeckName, displayKeyboard = true) { dialog, text ->
+        }.input(prefill = initialDeckName, displayKeyboard = true, waitForPositiveButton = false) { dialog, text ->
             // we need the fully-qualified name for subdecks
             val maybeDeckName = fullyQualifyDeckName(dialogText = text)
             // if the name is empty, it seems distracting to show an error
