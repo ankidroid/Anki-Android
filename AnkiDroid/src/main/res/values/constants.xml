@@ -126,7 +126,6 @@
     <string name="link_faq_tts">https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking</string>
     <string name="link_faq_missing_media" tools:ignore="Typos">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid</string>
     <string name="link_third_party_api_apps">https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps</string>
-    <string name="link_faq_invalid_protocol_relative">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-do-my-images-need-a-protocol</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="shared_decks_login_url">https://ankiweb.net/account/login</string>
     <string name="shared_decks_sign_up_url">https://ankiweb.net/account/signup</string>

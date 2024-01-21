@@ -2258,18 +2258,9 @@ abstract class AbstractFlashcardViewer :
                 loader!!.shouldInterceptRequest(url)?.let { return it }
             }
             if (url.toString().startsWith("file://")) {
-                if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
-                    mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
-                }
                 url.path?.let { path -> migrationService?.migrateFileImmediately(File(path)) }
             }
             return null
-        }
-
-        private fun isLoadedFromProtocolRelativeUrl(url: String): Boolean {
-            // a URL provided as "//wikipedia.org" is currently transformed to file://wikipedia.org, we can catch this
-            // because <img src="x.png"> maps to file:///.../x.png
-            return url.startsWith("file://") && !url.startsWith("file:///")
         }
 
         override fun onReceivedError(
@@ -2508,12 +2499,6 @@ abstract class AbstractFlashcardViewer :
     internal fun displayCouldNotFindMediaSnackbar(filename: String?) {
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
             setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
-        }
-    }
-
-    private fun displayMediaUpgradeRequiredSnackbar() {
-        showSnackbar(R.string.card_viewer_media_relative_protocol) {
-            setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_invalid_protocol_relative))) }
         }
     }
 
