@@ -587,6 +587,9 @@ abstract class AbstractFlashcardViewer :
         super.onPause()
         automaticAnswer.disable()
         gestureDetectorImpl.stopShakeDetector()
+        if (this::soundPlayer.isInitialized) {
+            soundPlayer.isEnabled = false
+        }
         longClickHandler.removeCallbacks(startLongClickAction)
         // Prevent loss of data in Cookies
         CookieManager.getInstance().flush()
@@ -596,6 +599,9 @@ abstract class AbstractFlashcardViewer :
         super.onResume()
         automaticAnswer.enable()
         gestureDetectorImpl.startShakeDetector()
+        if (this::soundPlayer.isInitialized) {
+            soundPlayer.isEnabled = true
+        }
         // Reset the activity title
         updateActionBar()
         selectNavigationItem(-1)
@@ -637,6 +643,9 @@ abstract class AbstractFlashcardViewer :
             cardFrame!!.removeAllViews()
         }
         destroyWebView(webView) // OK to do without a lock
+        if (this::soundPlayer.isInitialized) {
+            soundPlayer.close()
+        }
     }
 
     override fun onBackPressed() {
