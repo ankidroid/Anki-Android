@@ -27,6 +27,7 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ALWAYS
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ASK
 import com.ichi2.anki.R
+import com.ichi2.anki.logging.ProductionCrashReportingTree
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.testutil.GrantStoragePermission
 import org.acra.ACRA
@@ -119,7 +120,7 @@ class ACRATest : InstrumentedTest() {
     @Throws(Exception::class)
     fun testCrashReportLimit() {
         // To test ACRA switch on  reporting, plant a production tree, and trigger a report
-        Timber.plant(AnkiDroidApp.ProductionCrashReportingTree())
+        Timber.plant(ProductionCrashReportingTree())
 
         // set up as if the user had prefs saved to full auto
         setReportConfig(FEEDBACK_REPORT_ALWAYS)

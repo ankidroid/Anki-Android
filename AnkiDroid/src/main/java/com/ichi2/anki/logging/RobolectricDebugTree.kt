@@ -16,25 +16,18 @@
 
 package com.ichi2.anki.logging
 
-import com.ichi2.anki.BuildConfig
-import com.ichi2.utils.isRobolectric
+import android.util.Log
 import timber.log.Timber
 
-enum class LogType {
-    /** @see Timber.DebugTree */
-    DEBUG,
-
-    /** @see RobolectricDebugTree */
-    ROBOLECTRIC,
-
-    /** @see ProductionCrashReportingTree */
-    PRODUCTION;
-
-    companion object {
-        val value: LogType
-            get() {
-                if (!BuildConfig.DEBUG) return PRODUCTION
-                return if (isRobolectric) ROBOLECTRIC else DEBUG
-            }
+/** Enable verbose error logging and do method tracing to put the Class name as log tag */
+class RobolectricDebugTree : Timber.DebugTree() {
+    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+        // This is noisy in test environments
+        when (tag) {
+            "Backend\$checkMainThreadOp" -> return
+            "Media" -> if (priority == Log.VERBOSE && message.startsWith("dir")) return
+            "CollectionManager" -> if (message.startsWith("blocked main thread")) return
+        }
+        super.log(priority, tag, message, t)
     }
 }
