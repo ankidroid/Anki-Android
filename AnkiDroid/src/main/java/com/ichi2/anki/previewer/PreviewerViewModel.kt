@@ -93,8 +93,10 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         Timber.v("toggleBacksideOnly() %b", !backsideOnly.value)
         launchCatching {
             backsideOnly.emit(!backsideOnly.value)
-            if (backsideOnly.value && !showingAnswer.value) {
+            if (backsideOnly.value) {
                 showAnswer()
+            } else {
+                showQuestion()
             }
         }
     }
