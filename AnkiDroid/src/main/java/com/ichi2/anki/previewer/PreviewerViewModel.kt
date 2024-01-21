@@ -85,6 +85,10 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         }
     }
 
+    /* *********************************************************************************************
+    ************************ Public methods: meant to be used by the View **************************
+    ********************************************************************************************* */
+
     fun toggleBacksideOnly() {
         Timber.v("toggleBacksideOnly() %b", !backsideOnly.value)
         launchCatching {
@@ -109,6 +113,34 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
                 setUserFlagForCards(listOf(currentCard.id), flag.code)
             }
             flagCode.emit(flag.code)
+        }
+    }
+
+    /**
+     * Shows the current card's answer
+     * or the next question if the answer is already being shown
+     */
+    fun onNextButtonClick() {
+        launchCatching {
+            if (!showingAnswer.value && !backsideOnly.value) {
+                showAnswer()
+            } else {
+                currentIndex.update { it + 1 }
+            }
+        }
+    }
+
+    /**
+     * Shows the previous' card question
+     * or hides the current answer if the first card is being shown
+     */
+    fun onPreviousButtonClick() {
+        launchCatching {
+            if (currentIndex.value > 0) {
+                currentIndex.update { it - 1 }
+            } else if (showingAnswer.value && !backsideOnly.value) {
+                showQuestion()
+            }
         }
     }
 
@@ -142,6 +174,10 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
             }
         }
     }
+
+    /* *********************************************************************************************
+    *************************************** Internal methods ***************************************
+    ********************************************************************************************* */
 
     private suspend fun updateFlagIcon() {
         flagCode.emit(currentCard.userFlag())
@@ -194,34 +230,6 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         }
     }
 
-    /**
-     * Shows the current card's answer
-     * or the next question if the answer is already being shown
-     */
-    fun onNextButtonClick() {
-        launchCatching {
-            if (!showingAnswer.value && !backsideOnly.value) {
-                showAnswer()
-            } else {
-                currentIndex.update { it + 1 }
-            }
-        }
-    }
-
-    /**
-     * Shows the previous' card question
-     * or hides the current answer if the first card is being shown
-     */
-    fun onPreviousButtonClick() {
-        launchCatching {
-            if (currentIndex.value > 0) {
-                currentIndex.update { it - 1 }
-            } else if (showingAnswer.value && !backsideOnly.value) {
-                showQuestion()
-            }
-        }
-    }
-
     companion object {
         fun factory(previewerIdsFile: PreviewerIdsFile, currentIndex: Int): ViewModelProvider.Factory {
             return viewModelFactory {
@@ -230,6 +238,8 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
                 }
             }
         }
+
+        /* *********************************** Card's HTML ************************************** */
 
         /**
          * Not exactly equal to anki's stdHtml.
@@ -311,6 +321,8 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         private fun bodyClass(nightMode: Boolean = Themes.currentTheme.isNightMode): String {
             return if (nightMode) "nightMode night_mode" else ""
         }
+
+        /* ********************************** Type-in answer ************************************ */
 
         /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L669] */
         @VisibleForTesting
