@@ -44,6 +44,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.logging.LogType
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.services.BootService
@@ -108,15 +109,11 @@ open class AnkiDroidApp : Application() {
         val preferences = this.sharedPrefs()
 
         CrashReportService.initialize(this)
-        if (BuildConfig.DEBUG) {
-            // Enable verbose error logging and do method tracing to put the Class name as log tag
-            if (isRobolectric) {
-                Timber.plant(RobolectricDebugTree())
-            } else {
-                Timber.plant(DebugTree())
-            }
-        } else {
-            Timber.plant(ProductionCrashReportingTree())
+        val logType = LogType.value
+        when (logType) {
+            LogType.DEBUG -> Timber.plant(DebugTree())
+            LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
+            LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
         }
         if (BuildConfig.ENABLE_LEAK_CANARY) {
             LeakCanaryConfiguration.setInitialConfigFor(this)
@@ -125,6 +122,7 @@ open class AnkiDroidApp : Application() {
         }
         Timber.tag(TAG)
         Timber.d("Startup - Application Start")
+        Timber.i("Timber config: $logType")
 
         // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
         UsageAnalytics.initialize(this)
@@ -488,6 +486,7 @@ open class AnkiDroidApp : Application() {
             }
     }
 
+    /** Enable verbose error logging and do method tracing to put the Class name as log tag */
     class RobolectricDebugTree : DebugTree() {
         override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
             // This is noisy in test environments
