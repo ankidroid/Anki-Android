@@ -16,7 +16,6 @@
 package com.ichi2.preferences
 
 import android.content.Context
-import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.InputType
 import android.util.AttributeSet
@@ -142,13 +141,7 @@ open class NumberRangePreference : android.preference.EditTextPreference, AutoFo
         editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         // Set max number of digits
-        val maxLength = max.toString().length
-        // Clone the existing filters so we don't override them, then append our one at the end.
-        val filters = editText.filters
-        val newFilters = arrayOfNulls<InputFilter>(filters.size + 1)
-        System.arraycopy(filters, 0, newFilters, 0, filters.size)
-        newFilters[newFilters.size - 1] = LengthFilter(maxLength)
-        editText.filters = newFilters
+        editText.filters += LengthFilter(max.toString().length)
     }
     var value: Int
         /**
