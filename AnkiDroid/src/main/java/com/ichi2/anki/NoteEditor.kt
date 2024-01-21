@@ -971,7 +971,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
             withProgress {
                 undoableOp {
-                    updateNote(mCurrentEditedCard!!.note(getColUnsafe))
+                    updateNote(mCurrentEditedCard!!.note(this))
                 }
                 closeNoteEditor()
             }
