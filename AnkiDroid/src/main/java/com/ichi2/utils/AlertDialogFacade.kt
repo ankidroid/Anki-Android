@@ -20,6 +20,7 @@ package com.ichi2.utils
 
 import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -202,29 +203,62 @@ fun AlertDialog.Builder.customListAdapter(adapter: RecyclerView.Adapter<*>) {
 }
 
 /**
+ * @param hint The hint text to be displayed to the user
  * @param prefill The text to initially appear in the [EditText]
  * @param allowEmpty If true, [DialogInterface.BUTTON_POSITIVE] is disabled if the [EditText] is empty
  * @param displayKeyboard Whether to open the keyboard when the dialog appears
- * @param callback called whenever the text is changed
+ * @param callback if [waitForPositiveButton], called when [positiveButton] is pressed, otherwise
+ *  called whenever the text is changed
+ * @param maxLength if set, the user may not enter more than the supplied number of digits
+ * @param inputType see [EditText.setInputType]
+ * @param waitForPositiveButton MaterialDialog compat: if `false` [callback] is called on input
+ * if `true` [callback] is called when [positiveButton] is pressed
  */
 fun AlertDialog.input(
+    hint: String? = null,
+    inputType: Int? = null,
     prefill: CharSequence? = null,
     allowEmpty: Boolean = false,
+    maxLength: Int? = null,
     displayKeyboard: Boolean = false,
+    waitForPositiveButton: Boolean = true,
     callback: (AlertDialog, CharSequence) -> Unit
 ): AlertDialog {
+    // Builder.setView() may not be called before show()
+    if (!this.isShowing) throw IllegalStateException("input() requires .show()")
+
+    getInputTextLayout().hint = hint
+
     getInputField().apply {
         if (displayKeyboard) {
             AndroidUiUtils.setFocusAndOpenKeyboard(this, window!!)
         }
 
-        doOnTextChanged { text, _, _, _ ->
-            callback(this@input, text ?: "")
-            // called after the callback so allowEmpty takes priority
-            if (!allowEmpty && text.isNullOrEmpty()) {
-                this@input.positiveButton.isEnabled = false
+        inputType?.let { this.inputType = it }
+
+        if (!waitForPositiveButton) {
+            doOnTextChanged { text, _, _, _ ->
+                callback(this@input, text ?: "")
+            }
+        } else {
+            positiveButton.setOnClickListener { callback(this@input, this.text.toString()) }
+        }
+
+        if (!allowEmpty) {
+            // this is called after callback() so allowEmpty takes priority
+            doOnTextChanged { text, _, _, _ ->
+                if (waitForPositiveButton) {
+                    // this is the only validation filter we apply - toggle on or off
+                    this@input.positiveButton.isEnabled = !text.isNullOrEmpty()
+                } else if (text.isNullOrEmpty()) {
+                    // potentially other filters in `waitForPositiveButton`.
+                    // WARN: this could be buggy as it does not toggle the button back on
+                    this@input.positiveButton.isEnabled = false
+                }
             }
         }
+
+        maxLength?.let { filters += InputFilter.LengthFilter(it) }
 
         requestFocus()
         // this calls callback(this, prefill). positiveButton may be disabled if there's no prefill
