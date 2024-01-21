@@ -27,7 +27,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 
 class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
-        super.onCreate(savedInstanceState)
+        super.onCreateDialog(savedInstanceState)
         return MaterialDialog(requireActivity()).show {
             title(R.string.analytics_dialog_title)
             message(R.string.analytics_summ)
