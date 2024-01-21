@@ -17,6 +17,7 @@ package com.ichi2.anki.previewer
 
 import android.content.Context
 import android.content.Intent
+import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
@@ -112,6 +113,14 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
     }
 
     fun getNoteEditorDestination() = NoteEditorDestination(currentCard.id)
+
+    fun handleEditCardResult(result: ActivityResult) {
+        if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
+            result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
+        ) {
+            loadCurrentCard(reload = true)
+        }
+    }
 
     fun cardsCount() = selectedCardIds.count()
 
