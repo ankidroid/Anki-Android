@@ -76,7 +76,8 @@ import java.io.File
  *
  * @see AvTag
  *
- * @param onSoundGroupCompleted Function to be called when [playAllSounds] or [replayAllSounds] completes
+ * [setOnSoundGroupCompletedListener] can be used to call
+ * something when [playAllSounds] or [replayAllSounds] completes
  *
  * **Out of scope**
  * [com.ichi2.anki.ReadText]: AnkiDroid has a legacy "tts" setting, before Anki Desktop TTS.
@@ -86,7 +87,6 @@ import java.io.File
 class SoundPlayer(
     private val soundTagPlayer: SoundTagPlayer,
     private val ttsPlayer: Deferred<TtsPlayer>,
-    private val onSoundGroupCompleted: () -> Unit,
     private val soundErrorListener: SoundErrorListener
 ) : Closeable {
 
@@ -106,6 +106,12 @@ class SoundPlayer(
         }
 
     private var playSoundsJob: Job? = null
+
+    private var onSoundGroupCompleted: (() -> Unit)? = null
+
+    fun setOnSoundGroupCompletedListener(listener: (() -> Unit)?) {
+        onSoundGroupCompleted = listener
+    }
 
     suspend fun loadCardSounds(card: Card, side: Side) {
         Timber.i("loading sounds for card %s (%s)", card.id, side)
@@ -212,7 +218,7 @@ class SoundPlayer(
             }
         } finally {
             // call the completion listener, even if a CancellationException was thrown
-            onSoundGroupCompleted()
+            onSoundGroupCompleted?.invoke()
         }
     }
 
@@ -320,9 +326,10 @@ class SoundPlayer(
             return SoundPlayer(
                 soundTagPlayer = soundPlayer,
                 ttsPlayer = tts,
-                onSoundGroupCompleted = viewer::onSoundGroupCompleted,
                 soundErrorListener = soundErrorListener
-            )
+            ).apply {
+                setOnSoundGroupCompletedListener(viewer::onSoundGroupCompleted)
+            }
         }
     }
 }
