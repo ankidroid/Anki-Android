@@ -30,6 +30,7 @@ import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AndroidTtsError
 import com.ichi2.anki.AndroidTtsError.TtsErrorCode
 import com.ichi2.anki.AndroidTtsPlayer
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
@@ -39,7 +40,6 @@ import com.ichi2.anki.cardviewer.SoundSide.QUESTION_AND_ANSWER
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.TtsPlayer
@@ -114,11 +114,11 @@ class SoundPlayer(
         close()
     }
 
-    suspend fun loadCardSounds(col: Collection, card: Card, side: Side) {
+    suspend fun loadCardSounds(card: Card, side: Side) {
         Timber.i("loading sounds for card %s (%s)", card.id, side)
         stopSounds()
-        this.questions = card.renderOutput(col).questionAvTags
-        this.answers = card.renderOutput(col).answerAvTags
+        this.questions = withCol { card.renderOutput(this).questionAvTags }
+        this.answers = withCol { card.renderOutput(this).answerAvTags }
         this.side = side
 
         if (!this::config.isInitialized || !config.appliesTo(card)) {

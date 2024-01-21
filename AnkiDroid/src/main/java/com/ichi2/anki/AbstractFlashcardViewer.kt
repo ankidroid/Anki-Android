@@ -1429,7 +1429,7 @@ abstract class AbstractFlashcardViewer :
         Timber.d("updateCard()")
         // TODO: This doesn't need to be blocking
         runBlocking {
-            soundPlayer.loadCardSounds(getColUnsafe, currentCard!!, if (displayAnswer) Side.BACK else Side.FRONT)
+            soundPlayer.loadCardSounds(currentCard!!, if (displayAnswer) Side.BACK else Side.FRONT)
         }
         cardContent = content.getTemplateHtml()
         fillFlashcard()

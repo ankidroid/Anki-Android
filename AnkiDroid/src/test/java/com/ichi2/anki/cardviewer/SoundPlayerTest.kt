@@ -245,7 +245,7 @@ class SoundPlayerTest : RobolectricTest() {
             }
         }
 
-        this.loadCardSounds(col, card, side)
+        this.loadCardSounds(card, side)
     }
 }
 
