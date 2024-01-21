@@ -2457,7 +2457,7 @@ abstract class AbstractFlashcardViewer :
         @NeedsTest("14221: 'playsound' should play the sound from the start")
         @BlocksSchemaUpgrade("handle TTS tags")
         private suspend fun controlSound(url: String) {
-            val avTag = when (val tag = currentCard?.let { getAvTag(getColUnsafe, it, url) }) {
+            val avTag = when (val tag = currentCard?.let { getAvTag(it, url) }) {
                 is SoundOrVideoTag -> tag
                 is TTSTag -> tag
                 // not currently supported
