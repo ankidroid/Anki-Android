@@ -265,9 +265,9 @@ fun SoundPlayerTest.runSoundPlayerTest(
         val soundPlayer = SoundPlayer(
             soundTagPlayer = tagPlayer,
             ttsPlayer = CompletableDeferred(ttsPlayer),
-            onSoundGroupCompleted = onSoundGroupCompleted,
             soundErrorListener = mockk()
         )
+        soundPlayer.setOnSoundGroupCompletedListener(onSoundGroupCompleted)
         assertThat("can play sounds", soundPlayer.isEnabled)
         soundPlayer.setup(questions, answers, side, replayQuestion, autoplay)
         testBody(soundPlayer)
