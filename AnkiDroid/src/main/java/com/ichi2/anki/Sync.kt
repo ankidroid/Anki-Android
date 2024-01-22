@@ -207,7 +207,8 @@ private suspend fun handleNormalSync(
                 text = progress.normalSync.run { "$added\n$removed" }
             }
         },
-        onCancel = ::cancelSync
+        onCancel = ::cancelSync,
+        manualCancelButton = R.string.dialog_cancel
     ) {
         withCol { syncCollection(auth2, media = syncMedia) }
     }
