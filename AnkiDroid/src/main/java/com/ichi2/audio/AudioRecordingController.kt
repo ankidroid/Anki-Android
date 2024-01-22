@@ -264,9 +264,13 @@ class AudioRecordingController :
         isPaused = false
         isCleared = true
         isRecording = false
-        audioTimer.stop()
-        audioPlayer?.stop()
-        audioPlayer?.release()
+        try {
+            audioTimer.stop()
+            audioPlayer?.stop()
+            audioPlayer?.release()
+        } catch (e: Exception) {
+            Timber.w(e)
+        }
         audioTimer = AudioTimer(this, this)
         saveButton.isEnabled = false
         playAudioButtonLayout.visibility = View.GONE
