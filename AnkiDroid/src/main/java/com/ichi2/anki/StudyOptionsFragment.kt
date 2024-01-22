@@ -283,7 +283,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             withCol {
                 Timber.d("doInBackground - RebuildCram")
                 sched.rebuildDyn(decks.selected())
-                updateValuesFromDeck(this)
+                updateValuesFromDeck()
             }
         }
         rebuildUi(result, true)
@@ -295,7 +295,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             withCol {
                 Timber.d("doInBackgroundEmptyCram")
                 sched.emptyDyn(decks.selected())
-                updateValuesFromDeck(this)
+                updateValuesFromDeck()
             }
         }
         rebuildUi(result, true)
@@ -446,7 +446,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         // Load the deck counts for the deck from Collection asynchronously
         updateValuesFromDeckJob = launchCatchingTask {
             if (CollectionManager.isOpenUnsafe()) {
-                val result = withCol { updateValuesFromDeck(this) }
+                val result = withCol { updateValuesFromDeck() }
                 rebuildUi(result, resetDecklist)
             }
         }

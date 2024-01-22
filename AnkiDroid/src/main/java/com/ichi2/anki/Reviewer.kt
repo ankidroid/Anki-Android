@@ -202,7 +202,7 @@ open class Reviewer :
     override fun onResume() {
         when {
             stopTimerOnAnswer && isDisplayingAnswer -> {}
-            else -> launchCatchingTask { withCol { answerTimer.resume(this) } }
+            else -> launchCatchingTask { withCol { answerTimer.resume() } }
         }
         super.onResume()
         if (typeAnswer?.autoFocusEditText() == true) {
@@ -1015,7 +1015,7 @@ open class Reviewer :
     override suspend fun updateCurrentCard() {
         val state = withCol {
             sched.currentQueueState()?.apply {
-                topCard.renderOutput(this@withCol, true)
+                topCard.renderOutput(true)
             }
         }
         state?.timeboxReached?.let { dealWithTimeBox(it) }

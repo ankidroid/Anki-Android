@@ -31,6 +31,7 @@ import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound.addPlayButtons
+import com.ichi2.libanki.note
 import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -90,8 +91,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
 
     fun toggleMark() {
         launchCatching {
-            // TODO: Consider a context receiver
-            val note = withCol { currentCard.note(this) }
+            val note = withCol { currentCard.note() }
             NoteService.toggleMark(note)
             isMarked.emit(NoteService.isMarked(note))
         }
@@ -132,7 +132,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     }
 
     private suspend fun updateMarkIcon() {
-        val note = withCol { currentCard.note(this) }
+        val note = withCol { currentCard.note() }
         isMarked.emit(note.hasTag(MARKED_TAG))
     }
 
@@ -328,7 +328,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
 
         private suspend fun getExpectedTypeInAnswer(card: Card, field: JSONObject): String? {
             val fieldName = field.getString("name")
-            val expected = withCol { card.note(this).getItem(fieldName) }
+            val expected = withCol { card.note().getItem(fieldName) }
             return if (fieldName.startsWith("cloze:")) {
                 val clozeIdx = card.ord + 1
                 withCol {

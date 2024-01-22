@@ -30,6 +30,7 @@ import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AndroidTtsError
 import com.ichi2.anki.AndroidTtsError.TtsErrorCode
 import com.ichi2.anki.AndroidTtsPlayer
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
@@ -122,7 +123,7 @@ class SoundPlayer(
         this.side = side
 
         if (!this::config.isInitialized || !config.appliesTo(card)) {
-            config = CardSoundConfig.create(card)
+            config = withCol { CardSoundConfig.create(card) }
         }
     }
 

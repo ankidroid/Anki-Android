@@ -89,6 +89,7 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.libanki.*
+import com.ichi2.libanki.Collection
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
@@ -515,7 +516,7 @@ open class CardBrowser :
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
-    override fun onCollectionLoaded(col: com.ichi2.libanki.Collection) {
+    override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         Timber.d("onCollectionLoaded()")
         registerExternalStorageListener()
@@ -1523,7 +1524,7 @@ open class CardBrowser :
     private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) = withProgress {
         undoableOp {
             val selectedNotes = selectedCardIds
-                .map { cardId -> getCard(cardId).note(this) }
+                .map { cardId -> getCard(cardId).note() }
                 .distinct()
                 .onEach { note ->
                     val previousTags: List<String> = note.tags
@@ -1563,7 +1564,7 @@ open class CardBrowser :
         val card = cardBrowserCard!!
         withProgress {
             undoableOp {
-                updateNote(card.note(this))
+                updateNote(card.note())
             }
         }
         updateCardInList(card)
@@ -1573,7 +1574,7 @@ open class CardBrowser :
      * Removes cards from view. Doesn't delete them in model (database).
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
-    private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
+    private fun removeNotesView(cardsIds: List<Long>, reorderCards: Boolean) {
         val idToPos = viewModel.cardIdToPositionMap
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
         mReloadRequired = mReloadRequired || cardsIds.contains(reviewerCardId)
@@ -1940,7 +1941,7 @@ open class CardBrowser :
         override var position: Int
 
         private val inCardMode: Boolean
-        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
+        constructor(id: Long, col: Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
             this.position = position
             this.inCardMode = cardsOrNotes == CARDS
         }
@@ -2259,13 +2260,14 @@ suspend fun searchForCards(
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
         (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query, order)).asSequence()
-            .toCardCache(this, cardsOrNotes)
+            .toCardCache(cardsOrNotes)
             .toMutableList()
     }
 }
 
-private fun Sequence<CardId>.toCardCache(col: com.ichi2.libanki.Collection, isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
-    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
+context (Collection)
+private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
+    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
 
 class Previewer2Destination(val currentIndex: Int, val selectedCardIds: LongArray)
