@@ -41,7 +41,6 @@ object Utils {
     private val scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>")
     private val tagPattern = Pattern.compile("(?s)<.*?>")
     private val imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>")
-    private val soundPattern = Pattern.compile("(?i)\\[sound:([^]]+)]")
     private val htmlEntitiesPattern = Pattern.compile("&#?\\w+;")
     private const val ALL_CHARACTERS =
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -85,14 +84,6 @@ object Utils {
     fun stripHTMLMedia(s: String, replacement: String = " $1 "): String {
         val imgMatcher = imgPattern.matcher(s)
         return stripHTML(imgMatcher.replaceAll(replacement))
-    }
-
-    /**
-     * Strip sound but keep media filenames
-     */
-    fun stripSoundMedia(s: String, replacement: String = " $1 "): String {
-        val soundMatcher = soundPattern.matcher(s)
-        return soundMatcher.replaceAll(replacement)
     }
 
     /**

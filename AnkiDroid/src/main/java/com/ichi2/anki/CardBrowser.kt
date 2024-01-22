@@ -2097,8 +2097,8 @@ open class CardBrowser :
             if (a.startsWith(q)) {
                 a = a.substring(q.length)
             }
-            a = formatQA(a, AnkiDroidApp.instance)
-            q = formatQA(q, AnkiDroidApp.instance)
+            a = formatQA(a, qa, AnkiDroidApp.instance)
+            q = formatQA(q, qa, AnkiDroidApp.instance)
             mQa = Pair(q, a)
         }
 
@@ -2222,10 +2222,14 @@ open class CardBrowser :
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
         @CheckResult
-        private fun formatQA(text: String, context: Context): String {
+        private fun formatQA(
+            text: String,
+            qa: TemplateManager.TemplateRenderContext.TemplateRenderOutput,
+            context: Context
+        ): String {
             val showFilenames =
                 context.sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
-            return formatQAInternal(text, showFilenames)
+            return formatQAInternal(text, qa, showFilenames)
         }
 
         /**
@@ -2235,7 +2239,11 @@ open class CardBrowser :
          */
         @VisibleForTesting
         @CheckResult
-        fun formatQAInternal(txt: String, showFileNames: Boolean): String {
+        fun formatQAInternal(
+            txt: String,
+            qa: TemplateManager.TemplateRenderContext.TemplateRenderOutput,
+            showFileNames: Boolean
+        ): String {
             /* Strips all formatting from the string txt for use in displaying question/answer in browser */
             var s = txt
             s = s.replace("<!--.*?-->".toRegex(), "")
@@ -2243,7 +2251,9 @@ open class CardBrowser :
             s = s.replace("<br />", " ")
             s = s.replace("<div>", " ")
             s = s.replace("\n", " ")
-            s = if (showFileNames) Utils.stripSoundMedia(s) else Utils.stripSoundMedia(s, " ")
+            // we use " " as often users won't leave a space between the '[sound:] tag
+            // and continuation of the content
+            s = if (showFileNames) Sound.replaceWithFileNames(s, qa) else stripAvRefs(s, " ")
             s = s.replace("\\[\\[type:[^]]+]]".toRegex(), "")
             s = if (showFileNames) Utils.stripHTMLMedia(s) else Utils.stripHTMLMedia(s, " ")
             s = s.trim { it <= ' ' }
