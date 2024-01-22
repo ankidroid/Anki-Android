@@ -76,6 +76,9 @@ class FilteredDeckOptions :
                 values["stepsOn"] = java.lang.Boolean.toString(false)
             }
             values["resched"] = java.lang.Boolean.toString(deck.getBoolean("resched"))
+            values["previewAgainSecs"] = deck.getString("previewAgainSecs")
+            values["previewHardSecs"] = deck.getString("previewHardSecs")
+            values["previewGoodSecs"] = deck.getString("previewGoodSecs")
         }
 
         inner class Editor : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
@@ -110,6 +113,15 @@ class FilteredDeckOptions :
                         }
                         "resched" -> {
                             deck.put("resched", value)
+                        }
+                        "previewAgainSecs" -> {
+                            deck.put("previewAgainSecs", value)
+                        }
+                        "previewHardSecs" -> {
+                            deck.put("previewHardSecs", value)
+                        }
+                        "previewGoodSecs" -> {
+                            deck.put("previewGoodSecs", value)
                         }
                         "stepsOn" -> {
                             val on = value as Boolean
@@ -233,6 +245,7 @@ class FilteredDeckOptions :
             Timber.d("sched v2: removing filtered deck custom study steps")
             // getPreferenceScreen.removePreference didn't return true, so remove from the category
             setupSecondFilterListener()
+            setupPreviewDelaysListener()
             val category = findPreference("studyOptions") as PreferenceCategory
             removePreference(category, "stepsOn")
             removePreference(category, "steps")
@@ -339,6 +352,20 @@ class FilteredDeckOptions :
                 val newOrderPrefSecond = findPreference("order_2") as ListPreference
                 newOrderPrefSecond.value = "5"
             }
+            true
+        }
+    }
+
+    @Suppress("deprecation")
+    private fun setupPreviewDelaysListener() {
+        val reschedPref = findPreference(getString(R.string.filtered_deck_resched_key)) as CheckBoxPreference
+        val delaysPrefCategory = findPreference(getString(R.string.filtered_deck_previewDelays_key)) as PreferenceCategory
+        delaysPrefCategory.isEnabled = !reschedPref.isChecked
+        reschedPref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any? ->
+            if (newValue !is Boolean) {
+                return@OnPreferenceChangeListener true
+            }
+            delaysPrefCategory.isEnabled = !newValue
             true
         }
     }
