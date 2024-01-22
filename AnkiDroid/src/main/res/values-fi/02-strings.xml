@@ -232,7 +232,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Virhe kopioitaessa vianmääritystietoja leikepöydälle</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kortin sisällön virhe: \"%s\" lataaminen epäonnistui</string>
-    <string name="card_viewer_media_relative_protocol">Kortin sisällön virhe: Median päivitys vaaditaan</string>
     <!-- Deck Picker -->
     <string name="search_decks">Etsi pakkoja</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Näytä siirtymän edistyminen</string>

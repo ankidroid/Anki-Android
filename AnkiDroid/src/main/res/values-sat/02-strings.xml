@@ -232,7 +232,6 @@
     <string name="about_ankidroid_error_copy_debug_info">ᱠᱞᱤᱯᱵᱚᱰ ᱛᱮ ᱰᱮᱵᱩᱜ ᱵᱤᱵᱨᱚᱬ ᱱᱚᱠᱟᱞ ᱵᱷᱩᱞ</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞ:  ‘%s’ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ</string>
-    <string name="card_viewer_media_relative_protocol">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞᱺ ᱢᱮᱰᱤᱭᱟ ᱟᱹᱯᱰᱮᱴ ᱫᱚᱨᱠᱟᱨ</string>
     <!-- Deck Picker -->
     <string name="search_decks">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
