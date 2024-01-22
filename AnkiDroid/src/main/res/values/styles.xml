@@ -193,6 +193,6 @@
     </style>
 
     <style name="CustomButtonBarButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">?android:attr/textColor</item>
+        <item name="android:textColor">@color/material_light_blue_500</item>
     </style>
 </resources>
