@@ -238,7 +238,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Помилка копіювання даних відлагодження до буфера обміну</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
-    <string name="card_viewer_media_relative_protocol">Помилка вмісту картки: необхідне оновлення медіа</string>
     <!-- Deck Picker -->
     <string name="search_decks">Шукати колоди</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Показати прогрес перенесення даних</string>

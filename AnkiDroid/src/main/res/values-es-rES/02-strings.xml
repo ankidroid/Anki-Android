@@ -232,7 +232,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Error al copiar información de depuración al portapapeles</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contenido de la tarjeta: Error al cargar ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Error de contenido de la tarjeta: es necesario actualizar medios</string>
     <!-- Deck Picker -->
     <string name="search_decks">Buscar mazos</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostrar el progreso de la migración</string>

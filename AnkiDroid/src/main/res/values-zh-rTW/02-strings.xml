@@ -229,7 +229,6 @@
     <string name="about_ankidroid_error_copy_debug_info">將錯誤資訊複製到剪貼簿時發生錯誤</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">卡片內容錯誤：載入 ‘%s’ 失敗</string>
-    <string name="card_viewer_media_relative_protocol">卡片內容錯誤：需要更新媒體</string>
     <!-- Deck Picker -->
     <string name="search_decks">搜尋牌組</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">顯示遷移進度</string>

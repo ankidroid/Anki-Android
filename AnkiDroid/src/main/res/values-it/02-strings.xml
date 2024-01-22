@@ -232,7 +232,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Errore nella copia delle informazioni di debug negli appunti</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Errore nel contenuto della carta: impossibile caricare «%s»</string>
-    <string name="card_viewer_media_relative_protocol">Errore del Contenuto della Carta: Richiesto aggiornamento multimediale</string>
     <!-- Deck Picker -->
     <string name="search_decks">Cerca mazzi</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostra l\'avanzamento della migrazione </string>
