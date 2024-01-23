@@ -541,3 +541,13 @@ fun Card.renderOutput(reload: Boolean = false, browser: Boolean = false) =
 context (Collection)
 fun Card.note() =
     this@Card.note(this@Collection)
+
+/** @see Card.timeTaken */
+context (Collection)
+fun Card.timeTaken() =
+    this@Card.timeTaken(this@Collection)
+
+/** @see Card.timeLimit */
+context (Collection)
+fun Card.timeLimit() =
+    this@Card.timeLimit(this@Collection)

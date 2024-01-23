@@ -207,7 +207,7 @@ open class Reviewer :
     override fun onResume() {
         when {
             stopTimerOnAnswer && isDisplayingAnswer -> {}
-            else -> launchCatchingTask { withCol { answerTimer.resume() } }
+            else -> launchCatchingTask { answerTimer.resume() }
         }
         super.onResume()
         if (typeAnswer?.autoFocusEditText() == true) {

@@ -123,7 +123,7 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
         // before we call setupForCard
         timer.pause()
-        timer.resume(col)
+        timer.resume()
     }
 
     @Test
@@ -141,7 +141,7 @@ class AnswerTimerTest : JvmTest() {
         reset(chronometer)
         timer.pause()
         verify(chronometer).stop()
-        timer.resume(col)
+        timer.resume()
         verify(chronometer).start()
     }
 
@@ -160,7 +160,7 @@ class AnswerTimerTest : JvmTest() {
         reset(chronometer)
         timer.pause()
         verify(chronometer).stop()
-        timer.resume(col)
+        timer.resume()
         verify(chronometer, never()).start()
     }
 
@@ -180,7 +180,7 @@ class AnswerTimerTest : JvmTest() {
         timer.pause()
         verify(nonTimerCard).stopTimer()
         verify(nonTimerCard, never()).resumeTimer()
-        timer.resume(col)
+        timer.resume()
         verify(nonTimerCard).resumeTimer()
 
         verify(chronometer, never()).start()
