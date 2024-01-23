@@ -475,6 +475,20 @@ class AudioRecordingController :
         audioRecorder.release()
     }
 
+    // when answer button is clicked in reviewer
+    fun updateUIForNewCard() {
+        try {
+            if (isPlaying) {
+                discardAudio()
+            }
+            if (isRecording || isPaused) {
+                clearRecording()
+            }
+        } catch (e: Exception) {
+            Timber.d("Unable to reset the audio recorder", e)
+        }
+    }
+
     override fun onTimerTick(duration: Duration) {
         if (isPlaying && !isRecording) {
             // This may remain at 0 for a few hundred ms while the audio player starts
