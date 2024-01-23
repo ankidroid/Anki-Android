@@ -1389,6 +1389,10 @@ open class CardBrowser :
     @RustCleanup("remove card cache; switch to RecyclerView and browserRowForId (#11889)")
     @VisibleForTesting
     fun searchCards() {
+        if (!viewModel.initCompleted) {
+            Timber.d("!initCompleted, not searching")
+            return
+        }
         // cancel the previous search & render tasks if still running
         invalidate()
         if ("" != mSearchTerms && mSearchView != null) {
