@@ -105,7 +105,7 @@ class MultimediaEditFieldActivity :
     // in case media is saved by view button then allows it to be inserted into the filed
     private fun onBack() {
         findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener {
-            if (isAudioUIInitialized && isAudioRecordingSaved) {
+            if (isAudioUIInitialized) {
                 done()
             } else {
                 saveAndExit()
@@ -153,6 +153,8 @@ class MultimediaEditFieldActivity :
 
         // Permissions are checked async, save our current state to allow continuation
         currentChangeRequest = newUI
+
+        if (isAudioUIInitialized) audioRecordingController.onViewFocusChanged()
 
         // If we went through the permission check once, we don't need to do it again.
         // As we only get here a second time if we have the required permissions
@@ -206,6 +208,9 @@ class MultimediaEditFieldActivity :
             }
             R.id.multimedia_edit_field_done -> {
                 Timber.i("Save button pressed")
+                if (isAudioUIInitialized && isRecording) {
+                    audioRecordingController.stopAndSaveRecording()
+                }
                 done()
                 return true
             }
@@ -215,9 +220,6 @@ class MultimediaEditFieldActivity :
 
     @KotlinCleanup("rename: bChangeToText")
     private fun done() {
-        if (isAudioUIInitialized) {
-            if (isRecording) audioRecordingController.stopAndSaveRecording()
-        }
         var bChangeToText = false
         if (field.type === EFieldType.IMAGE) {
             if (field.imagePath == null) {
@@ -235,7 +237,7 @@ class MultimediaEditFieldActivity :
                     }
                 }
             }
-        } else if (field.type === EFieldType.AUDIO_RECORDING) {
+        } else if (field.type === EFieldType.AUDIO_RECORDING && isAudioRecordingSaved) {
             if (field.audioPath == null) {
                 bChangeToText = true
             }

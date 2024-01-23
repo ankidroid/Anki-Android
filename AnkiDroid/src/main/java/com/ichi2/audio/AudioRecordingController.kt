@@ -154,13 +154,7 @@ class AudioRecordingController :
 
         saveButton.setIconResource(if (!inEditField) R.drawable.ic_done_white else R.drawable.ic_save_white)
 
-        if (audioPlayer == null) {
-            Timber.d("Creating media player for playback")
-            audioPlayer = MediaPlayer()
-        } else {
-            Timber.d("Resetting media for playback")
-            audioPlayer!!.reset()
-        }
+        setUpMediaPlayer()
 
         audioTimer = AudioTimer(this, this)
         recordButton.setOnClickListener {
@@ -231,6 +225,20 @@ class AudioRecordingController :
                     // not needed
                 }
             })
+        }
+    }
+
+    private fun setUpMediaPlayer() {
+        try {
+            if (audioPlayer == null) {
+                Timber.d("Creating media player for playback")
+                audioPlayer = MediaPlayer()
+            } else {
+                Timber.d("Resetting media for playback")
+                audioPlayer!!.reset()
+            }
+        } catch (e: IllegalStateException) {
+            Timber.w("Media Player couldn't be reset or already reset", e)
         }
     }
 
