@@ -25,6 +25,7 @@ import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.R
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import timber.log.Timber
 
 /**
  * Responsible for pause/resume of the card timer and the UI element displaying the amount of time to answer a card
@@ -119,7 +120,10 @@ class AnswerTimer(private val cardTimer: Chronometer) {
         cardTimer.base = elapsedRealTime - currentCard.timeTaken(col)
         // Don't start the timer if we have already reached the time limit or it will tick over
         if (elapsedRealTime - cardTimer.base < currentCard.timeLimit(col)) {
+            Timber.v("restarting timer")
             cardTimer.start()
+        } else {
+            Timber.v("not restarting timer - at time limit")
         }
     }
 
