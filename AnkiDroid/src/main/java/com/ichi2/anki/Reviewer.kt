@@ -74,8 +74,8 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.audio.AudioRecordingController
 import com.ichi2.audio.AudioRecordingController.Companion.generateTempAudioFile
+import com.ichi2.audio.AudioRecordingController.Companion.isAudioRecordingSaved
 import com.ichi2.audio.AudioRecordingController.Companion.isRecording
-import com.ichi2.audio.AudioRecordingController.Companion.isSaved
 import com.ichi2.audio.AudioRecordingController.Companion.setReviewerStatus
 import com.ichi2.audio.AudioRecordingController.Companion.tempAudioPath
 import com.ichi2.libanki.*
@@ -527,7 +527,7 @@ open class Reviewer :
         if (!openMicToolbar()) {
             return
         }
-        if (isSaved) {
+        if (isAudioRecordingSaved) {
             audioRecordingController?.playPausePlayer()
         } else {
             return

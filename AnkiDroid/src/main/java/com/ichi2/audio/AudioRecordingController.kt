@@ -75,6 +75,8 @@ class AudioRecordingController :
     private lateinit var audioProgressBar: LinearProgressIndicator
     lateinit var context: Context
     private var isCleared = false
+    private var isPaused = false
+    private var isPlaying = false
     private lateinit var cancelAudioRecordingButton: MaterialButton
     private lateinit var playAudioButtonLayout: LinearLayout
     private lateinit var recordAudioButtonLayout: LinearLayout
@@ -166,7 +168,7 @@ class AudioRecordingController :
         }
 
         saveButton.setOnClickListener {
-            isSaved = false
+            isAudioRecordingSaved = false
             toggleSave()
         }
 
@@ -232,7 +234,7 @@ class AudioRecordingController :
         }
     }
 
-    private fun onViewFocusChanged() {
+    fun onViewFocusChanged() {
         if (isRecording || isPaused) {
             clearRecording()
         }
@@ -241,7 +243,7 @@ class AudioRecordingController :
         }
     }
 
-    fun discardAudio() {
+    private fun discardAudio() {
         CompatHelper.compat.vibrate(context, 20)
         recordButton.apply {
             iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
@@ -428,7 +430,7 @@ class AudioRecordingController :
         cancelAudioRecordingButton.isEnabled = false
         audioTimeView.text = DEFAULT_TIME
         audioWaveform.clear()
-        isSaved = true
+        isAudioRecordingSaved = true
         // save recording only in the edit field not in the reviewer but save it temporarily
         if (inEditField) saveRecording()
     }
@@ -447,7 +449,7 @@ class AudioRecordingController :
         recordButton.setIconResource(R.drawable.round_pause_24)
     }
 
-    fun clearRecording() {
+    private fun clearRecording() {
         CompatHelper.compat.vibrate(context, 20)
         isCleared = true
         audioTimer.stop()
@@ -514,9 +516,7 @@ class AudioRecordingController :
 
     companion object {
         var isRecording = false
-        var isSaved = false
-        var isPaused = false
-        var isPlaying = false
+        var isAudioRecordingSaved = false
         private var inEditField: Boolean = true
         const val DEFAULT_TIME = "00:00.00"
         const val JUMP_VALUE = 500
