@@ -246,8 +246,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Preplánovať</string>
     <string name="deck_conf_cram_reschedule_summ">Preplánovať kartičky podľa mojich odpovedí v tomto balíčku</string>
     <string name="deck_conf_cram_filter_2_check">Povoliť druhý filter</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Vlastný postup (v minútach)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definovať vlastný postup</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Pomôžte spraviť AnkiDroid lepším!</string>
     <string name="analytics_title" maxLength="41">Zdieľať používanie prvkov</string>

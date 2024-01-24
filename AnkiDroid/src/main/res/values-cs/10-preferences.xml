@@ -153,7 +153,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrace</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blikající světlo</string>
     <string name="timeout_answer_text" maxLength="41">Automatické zobrazení odpovědi</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Automaticky zobrazit odpověď bez zásahu uživatele. Konfiguruje se v nastavení balíčku.</string>
     <string name="select_locale_title">Vyberte jazyk</string>
     <string name="software_render" maxLength="41">Zakázat hardwarové vykreslování karty</string>
     <string name="software_render_summ">Hardwarové vykreslování je rychlejší, ale může způsobovat problémy, konkrétně na Android 8/8.1. Pokud nevidíte části uživatelského rozhraní pro opakování karet, zkuste toto nastavení</string>
@@ -245,8 +245,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Přeplánovat</string>
     <string name="deck_conf_cram_reschedule_summ">Přeplánovat karty podle mých odpovědí v tomto balíčku</string>
     <string name="deck_conf_cram_filter_2_check">Povolit druhý filtr</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Vlastní kroky (v minutách)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definovat vlastní kroky</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Pomozte udělat AnkiDroid lepší!</string>
     <string name="analytics_title" maxLength="41">Sdílet používání funkcí</string>
