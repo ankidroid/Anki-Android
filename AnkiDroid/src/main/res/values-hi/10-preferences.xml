@@ -238,8 +238,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">पुनः शेड्यूल करें</string>
     <string name="deck_conf_cram_reschedule_summ">इस डेक में मेरे जवाब के आधार पर कार्ड पुनर्निर्धारित</string>
     <string name="deck_conf_cram_filter_2_check">दूसरा फ़िल्टर सक्षम करें</string>
-    <string name="deck_conf_cram_steps" maxLength="41">कस्टम चरण (मिनटों में)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">कस्टम चरणों को परिभाषित करें</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid को बेहतर बनाने में मदद करें!</string>
     <string name="analytics_title" maxLength="41">सुविधा उपयोग साझा करें</string>

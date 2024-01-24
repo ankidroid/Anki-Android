@@ -241,8 +241,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">వాయిదా</string>
     <string name="deck_conf_cram_reschedule_summ">ఈ డెక్లో నా సమాధానాల ఆధారంగా కార్డులను రిచెస్ చేయండి</string>
     <string name="deck_conf_cram_filter_2_check">రెండవ ఫిల్టర్‌ని ప్రారంభించండి</string>
-    <string name="deck_conf_cram_steps" maxLength="41">అనుకూల దశలు (నిమిషాల్లో)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">అనుకూల దశలను నిర్వచించండి</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroidని మెరుగుపరచడంలో సహాయపడండి!</string>
     <string name="analytics_title" maxLength="41">ఫీచర్ వినియోగాన్ని భాగస్వామ్యం చేయండి</string>

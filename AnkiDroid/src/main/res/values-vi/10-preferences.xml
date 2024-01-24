@@ -238,8 +238,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Lên lịch lại</string>
     <string name="deck_conf_cram_reschedule_summ">Lên lịch lại thẻ dựa trên câu trả lời của tôi trong chủ đề này</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Các bước tùy chỉnh (tính bằng phút)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Xác định các bước tùy chỉnh</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Giúp cải thiện AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Chia sẻ việc sử dụng tính năng</string>

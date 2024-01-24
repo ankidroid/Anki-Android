@@ -241,8 +241,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Omplanera</string>
     <string name="deck_conf_cram_reschedule_summ">Omplanera kort baserat på mina svar i denna kortlek</string>
     <string name="deck_conf_cram_filter_2_check">Aktivera sekundär filter</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Anpassade steg (i minuter)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definiera anpassade steg</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Hjälp till att förbättra AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Dela funktionsanvändning</string>
