@@ -179,7 +179,7 @@
     <string name="boot_service_failed_to_schedule_notifications">リマインダーのスケジュールに失敗しました</string>
     <string name="boot_service_too_many_notifications">スケジュールされたリマインダーが多すぎます。一部のリマインダーは表示されません</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">キーボード言語の選択</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Gboardなどの多言語入力対応キーボードでは、文字編集のために各フィールドを選択した際にキーボードの言語を自動的に切り替えることができます\n\n使用しているキーボードで言語の変更ができない場合は、キーボードアプリの開発者に「setImeHintLocales」機能をリクエストしてください</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">使い方</string>

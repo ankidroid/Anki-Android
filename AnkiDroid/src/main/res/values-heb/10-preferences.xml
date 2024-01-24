@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">מבוטל</string>
-    <string name="pref_summary_seconds">%s שניות</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">דקה %d</item>
         <item quantity="two">%d דקות</item>
@@ -155,10 +154,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">רטט</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">אור מהבהב</string>
     <string name="timeout_answer_text" maxLength="41">הצגת התשובה באופן אוטומטי</string>
-    <string name="timeout_answer" maxLength="41">פסק זמן לתשובה</string>
-    <string name="timeout_answer_summ">הצג תשובה אוטומטית ללא קלט משתמש. השהיה כולל זמן לקבצי שמע המושמעים אוטומטית.</string>
-    <string name="timeout_answer_seconds" maxLength="41">זמן להצגת התשובה</string>
-    <string name="timeout_question_seconds" maxLength="41">הגיע הזמן להציג את השאלה הבאה</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">בחר שפה</string>
     <string name="software_render" maxLength="41">השבת את עיבוד החומרה של הכרטיס</string>
     <string name="software_render_summ">עיבוד החומרה מהיר יותר אך עשוי ליצור בעיות, במיוחד באנדרואיד 8/8.1. אם אינך יכול לראות חלקים מממשק המשתמש של סקירת הכרטיסים, נסה את ההגדרה הזו.</string>
@@ -249,8 +245,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">תזמון מחדש</string>
     <string name="deck_conf_cram_reschedule_summ">לתזמן את הקלפים מחדש בהתאם לתשובות שלי בחפיסה הזאת</string>
     <string name="deck_conf_cram_filter_2_check">אפשר סינון משני</string>
-    <string name="deck_conf_cram_steps" maxLength="41">שלבים מותאמים אישית (בדקות)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">הגדר שלבים מותאמים אישית</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">סיוע בשיפור AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">שיתוף השימוש ביכולת</string>

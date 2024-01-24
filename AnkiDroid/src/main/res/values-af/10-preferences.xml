@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Disabled</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -153,10 +152,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
     <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
-    <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Time to show answer</string>
-    <string name="timeout_question_seconds" maxLength="41">Time to show next question</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Kies taal</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
@@ -246,8 +242,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title" maxLength="41">Share feature usage</string>

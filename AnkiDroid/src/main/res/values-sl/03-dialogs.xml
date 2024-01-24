@@ -197,7 +197,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Using AnkiDroid</string>

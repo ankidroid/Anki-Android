@@ -101,7 +101,5 @@
     <string name="gesture_show_all_hints">Show All Hints</string>
     <string name="record_voice">ᱥᱟᱲᱮ ᱨᱮᱠᱚᱰ ᱢᱮ</string>
     <string name="replay_voice">ᱥᱟᱲᱮ ᱨᱤᱯᱞᱮ ᱢᱮ</string>
-    <string name="automatic_answer_option_2">ᱠᱮᱴᱮᱡ (ᱵᱟᱝᱧᱟᱢᱚᱜ ᱠᱷᱟᱱ ᱱᱟᱯᱟᱭ)</string>
-    <string name="automatic_answer_option_4">ᱟᱞᱜᱟ (ᱵᱟᱝᱧᱟᱢᱚᱜ ᱠᱷᱟᱱ ᱱᱟᱯᱟᱭ)</string>
     <string name="save_voice">Save Recording</string>
 </resources>

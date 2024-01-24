@@ -62,6 +62,7 @@
         <item name="goodButtonTextColor">@color/white</item>
         <item name="easyButtonTextColor">@color/white</item>
         <!-- Reviewer button drawables -->
+        <item name="showAnswerColor">@color/material_blue_grey_700</item>
         <item name="againButtonRef">@drawable/footer_button_again</item>
         <item name="hardButtonRef">@drawable/footer_button_hard</item>
         <item name="goodButtonRef">@drawable/footer_button_good</item>
@@ -136,5 +137,8 @@
 
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/white</item>
+
+        <item name="checkMediaListBackground">@color/material_blue_grey_050</item>
+        <item name="checkMediaListForeground">@color/material_grey_700</item>
     </style>
 </resources>

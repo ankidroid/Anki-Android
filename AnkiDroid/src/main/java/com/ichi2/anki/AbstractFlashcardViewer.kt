@@ -45,6 +45,8 @@ import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
@@ -60,8 +62,6 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
 import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
 import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
-import com.ichi2.anki.cardviewer.SingleSoundSide
-import com.ichi2.anki.cardviewer.SoundSide
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -433,7 +433,7 @@ abstract class AbstractFlashcardViewer :
         val card = editorCard!!
         withProgress {
             undoableOp {
-                updateNote(card.note(this))
+                updateNote(card.note())
             }
         }
         onCardUpdated(card)
@@ -478,7 +478,7 @@ abstract class AbstractFlashcardViewer :
         // despite that making no sense outside of Reviewer.kt
         currentCard = withCol {
             sched.card?.apply {
-                renderOutput(this@withCol)
+                renderOutput()
             }
         }
     }
@@ -1296,6 +1296,12 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    private suspend fun automaticAnswerShouldWaitForAudio(): Boolean {
+        return withCol {
+            decks.confForDid(currentCard!!.did).optBoolean("waitForAudio", true)
+        }
+    }
+
     internal inner class ReadTextListener : ReadText.ReadTextListener {
         override fun onDone(playedSide: SoundSide?) {
             Timber.d("done reading text")
@@ -1319,6 +1325,11 @@ abstract class AbstractFlashcardViewer :
         }
         val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.FRONT)
         automaticAnswer.onDisplayQuestion()
+        launchCatchingTask {
+            if (!automaticAnswerShouldWaitForAudio()) {
+                automaticAnswer.scheduleAutomaticDisplayAnswer()
+            }
+        }
         updateCard(content)
         hideEaseButtons()
         // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
@@ -1360,6 +1371,11 @@ abstract class AbstractFlashcardViewer :
         isSelecting = false
         val answerContent = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.BACK)
         automaticAnswer.onDisplayAnswer()
+        launchCatchingTask {
+            if (!automaticAnswerShouldWaitForAudio()) {
+                automaticAnswer.scheduleAutomaticDisplayQuestion()
+            }
+        }
         updateCard(answerContent)
         displayAnswerBottomBar()
     }
@@ -1474,10 +1490,14 @@ abstract class AbstractFlashcardViewer :
      */
     open fun onSoundGroupCompleted() {
         Timber.v("onSoundGroupCompleted")
-        if (isDisplayingAnswer) {
-            automaticAnswer.scheduleAutomaticDisplayQuestion()
-        } else {
-            automaticAnswer.scheduleAutomaticDisplayAnswer()
+        launchCatchingTask {
+            if (automaticAnswerShouldWaitForAudio()) {
+                if (isDisplayingAnswer) {
+                    automaticAnswer.scheduleAutomaticDisplayQuestion()
+                } else {
+                    automaticAnswer.scheduleAutomaticDisplayAnswer()
+                }
+            }
         }
     }
 
@@ -1791,7 +1811,7 @@ abstract class AbstractFlashcardViewer :
     /**
      * Provides a hook for calling "alert" from javascript. Useful for debugging your javascript.
      */
-    class AnkiDroidWebChromeClient : WebChromeClient() {
+    inner class AnkiDroidWebChromeClient : WebChromeClient() {
         override fun onJsAlert(
             view: WebView,
             url: String,
@@ -1801,6 +1821,39 @@ abstract class AbstractFlashcardViewer :
             Timber.i("AbstractFlashcardViewer:: onJsAlert: %s", message)
             result.confirm()
             return true
+        }
+
+        private lateinit var customView: View
+
+        // used for displaying `<video>` in fullscreen.
+        // This implementation requires configChanges="orientation" in the manifest
+        // to avoid destroying the View if the device is rotated
+        override fun onShowCustomView(
+            paramView: View,
+            paramCustomViewCallback: CustomViewCallback?
+        ) {
+            customView = paramView
+            (window.decorView as FrameLayout).addView(
+                customView,
+                FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+            )
+            // hide system bars
+            with(WindowInsetsControllerCompat(window, window.decorView)) {
+                systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                hide(WindowInsetsCompat.Type.systemBars())
+            }
+        }
+
+        override fun onHideCustomView() {
+            (window.decorView as FrameLayout).removeView(customView)
+            // show system bars back
+            with(WindowInsetsControllerCompat(window, window.decorView)) {
+                systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+                show(WindowInsetsCompat.Type.systemBars())
+            }
         }
     }
 
@@ -2239,18 +2292,9 @@ abstract class AbstractFlashcardViewer :
                 loader!!.shouldInterceptRequest(url)?.let { return it }
             }
             if (url.toString().startsWith("file://")) {
-                if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
-                    mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
-                }
                 url.path?.let { path -> migrationService?.migrateFileImmediately(File(path)) }
             }
             return null
-        }
-
-        private fun isLoadedFromProtocolRelativeUrl(url: String): Boolean {
-            // a URL provided as "//wikipedia.org" is currently transformed to file://wikipedia.org, we can catch this
-            // because <img src="x.png"> maps to file:///.../x.png
-            return url.startsWith("file://") && !url.startsWith("file:///")
         }
 
         override fun onReceivedError(
@@ -2290,6 +2334,7 @@ abstract class AbstractFlashcardViewer :
             }
             if (url.startsWith("state-mutation-error:")) {
                 onStateMutationError()
+                return true
             }
             if (url.startsWith("tts-voices:")) {
                 showDialogFragment(TtsVoicesDialogFragment())
@@ -2488,12 +2533,6 @@ abstract class AbstractFlashcardViewer :
     internal fun displayCouldNotFindMediaSnackbar(filename: String?) {
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
             setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
-        }
-    }
-
-    private fun displayMediaUpgradeRequiredSnackbar() {
-        showSnackbar(R.string.card_viewer_media_relative_protocol) {
-            setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_invalid_protocol_relative))) }
         }
     }
 

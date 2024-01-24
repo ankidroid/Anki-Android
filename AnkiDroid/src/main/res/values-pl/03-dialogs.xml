@@ -197,7 +197,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Nie udało się ustawić przypomnień</string>
     <string name="boot_service_too_many_notifications">Ustawiono zbyt dużo przypomnień. Niektóre się nie pojawią</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Wybór języka klawiatury</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Niektóre wielojęzyczne klawiatury takie jak GBoard obsługują zmianę języka podczas edycji tekstu\n\nJeśli twoja klawiatura automatycznie nie zmienia języka, możesz spróbować poprosić jej twórcę o włączenie funkcji „setImeHintLocales”.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Używanie AnkiDroid</string>

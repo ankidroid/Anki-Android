@@ -547,9 +547,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                     }
                                     launchCatchingTask(resources.getString(R.string.card_template_editor_save_error)) {
                                         requireActivity().withProgress(resources.getString(R.string.saving_model)) {
-                                            withCol {
-                                                tempModel!!.saveToDatabase(this)
-                                            }
+                                            withCol { tempModel!!.saveToDatabase() }
                                         }
                                         onModelSaved()
                                     }

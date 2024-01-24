@@ -229,7 +229,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Galat menyalin informasi debug ke papan klip</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Isi Kartu Gagal: Gagal memuat \'%s\'</string>
-    <string name="card_viewer_media_relative_protocol">Isi Kartu Gagal: Pembaruan media diperlukan</string>
     <!-- Deck Picker -->
     <string name="search_decks">Cari dek</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Tampilkan progress migrasi</string>
@@ -263,7 +262,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Alamat surel diperlukan</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Kata Sandi diperlukan</string>
     <string name="back_pressed_once">Mohon tekan sekali lagi untuk keluar</string>
     <string name="back_pressed_once_reviewer">Mohon tekan sekali lagi untuk kembali</string>

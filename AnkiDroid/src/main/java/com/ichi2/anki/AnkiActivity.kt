@@ -408,7 +408,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         try {
             showDialogFragment(newFragment)
         } catch (e: IllegalStateException) {
-            Timber.w(e)
+            Timber.w("failed to show fragment, activity is likely paused. Sending notification")
             // Store a persistent message to SharedPreferences instructing AnkiDroid to show dialog
             DialogHandler.storeMessage(newFragment.dialogHandlerMessage?.toMessage())
             // Show a basic notification to the user in the notification bar in the meantime

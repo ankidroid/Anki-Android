@@ -233,7 +233,6 @@
     <string name="about_ankidroid_error_copy_debug_info">ڈیبگ کی معلومات کو کلپ بورڈ میں کاپی کرنے میں خرابی</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">کارڈ کے مواد کی خرابی: \'%s\' لوڈ کرنے میں ناکام</string>
-    <string name="card_viewer_media_relative_protocol">کارڈ کے مواد کی خرابی: میڈیا اپ ڈیٹ درکار ہے۔</string>
     <!-- Deck Picker -->
     <string name="search_decks">ڈیکس تلاش کریں</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">منتقلی کی پیشرفت دکھائیں</string>
@@ -267,7 +266,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">ای میل ایڈریس درکار ہے</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">پاس ورڈ درکار ہے</string>
     <string name="back_pressed_once">باہر نکلنے کے لیے دوبارہ دبائیں۔</string>
     <string name="back_pressed_once_reviewer">واپس آنے کے لیے دوبارہ دبائیں</string>

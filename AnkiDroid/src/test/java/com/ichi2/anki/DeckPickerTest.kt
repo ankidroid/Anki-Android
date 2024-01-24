@@ -1,7 +1,6 @@
 // noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -20,6 +19,7 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
+import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.annotations.NeedsTest
@@ -50,7 +50,6 @@ import java.io.File
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
-import kotlin.test.fail
 
 @KotlinCleanup("SPMockBuilder")
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -403,26 +402,14 @@ class DeckPickerTest : RobolectricTest() {
 
     // TODO delete test or at least use espresso, this is a poor implementation that can break at any time
     private fun assertDialogTitleEquals(expectedTitle: String) {
-        val actualTitle =
-            (ShadowDialog.getLatestDialog() as MaterialDialog)
-                .view
-                .findViewById<RtlTextView>(com.afollestad.materialdialogs.R.id.md_text_title)
-                ?.text
-        Timber.d("titles = \"$actualTitle\", \"$expectedTitle\"")
-        assertEquals(expectedTitle, "$actualTitle")
-    }
-
-    // TODO delete test or at least use espresso, this is a poor implementation that can break at any time
-    @SuppressLint("DiscouragedApi")
-    private fun assertAlertDialogTitleEquals(expectedTitle: String) {
-        val dialog = (ShadowDialog.getLatestDialog() as AlertDialog)
-        val titleId = dialog.context.resources.getIdentifier(
-            "alertTitle",
-            "id",
-            dialog.context.packageName
-        )
-        if (titleId <= 0) fail("Unable to find dialog title for matching")
-        val actualTitle = dialog.findViewById<TextView>(titleId)?.text
+        val actualTitle = when (val dialog = ShadowDialog.getLatestDialog()) {
+            is MaterialDialog ->
+                dialog.view
+                    .findViewById<RtlTextView>(com.afollestad.materialdialogs.R.id.md_text_title)
+                    ?.text
+            is AlertDialog -> dialog.title
+            else -> TODO()
+        }
         Timber.d("titles = \"$actualTitle\", \"$expectedTitle\"")
         assertEquals(expectedTitle, "$actualTitle")
     }

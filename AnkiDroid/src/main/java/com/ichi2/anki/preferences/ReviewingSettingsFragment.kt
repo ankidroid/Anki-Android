@@ -15,14 +15,12 @@
  */
 package com.ichi2.anki.preferences
 
-import androidx.preference.ListPreference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
 import com.ichi2.anki.preferences.Preferences.Companion.setDayOffset
-import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
 
@@ -63,20 +61,6 @@ class ReviewingSettingsFragment : SettingsFragment() {
             }
         }
 
-        /**
-         * Timeout answer
-         * An integer representing the action when "Automatic Answer" flips a card from answer to question
-         * 0 represents "bury", 1-4 represents the named buttons
-         * @see com.ichi2.anki.reviewer.AutomaticAnswerAction
-         * We use the same key in the collection config
-         * @see com.ichi2.anki.reviewer.AutomaticAnswerAction.CONFIG_KEY
-         * */
-        requirePreference<ListPreference>(R.string.automatic_answer_action_preference).apply {
-            launchCatchingTask { setValueIndex(withCol { config.get(AutomaticAnswerAction.CONFIG_KEY) ?: 0 }) }
-            setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.set(AutomaticAnswerAction.CONFIG_KEY, (newValue as String).toInt()) } }
-            }
-        }
         // New timezone handling
         requirePreference<SwitchPreferenceCompat>(R.string.new_timezone_handling_preference).apply {
             launchCatchingTask {

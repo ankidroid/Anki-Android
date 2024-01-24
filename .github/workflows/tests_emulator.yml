@@ -44,13 +44,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
-          java-version: "17" # newer libraries require 17 now, force it everywhere
-
-      - name: Verify JDK17
-        # Default JDK varies depending on different runner flavors, make sure we are on 17
-        # Run a check that exits with error unless it is 17 version to future-proof against unexpected upgrades
-        run: java -fullversion 2>&1 | grep '17.0'
-        shell: bash
+          java-version: "21"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -66,7 +60,7 @@ jobs:
         # Repo limit is 10GB; branch caches are independent; branches may read default branch cache.
         # We don't want branches to evict main branch snapshot, so save on main, read-only all else
       - name: AVD cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: avd-cache
         with:
           path: |

@@ -9,6 +9,8 @@ import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.os.bundleOf
@@ -138,6 +140,11 @@ class MediaCheckDialog : AsyncDialogFragment() {
     companion object {
         const val DIALOG_CONFIRM_MEDIA_CHECK = 0
         const val DIALOG_MEDIA_CHECK_RESULTS = 1
+
+        @VisibleForTesting
+        val dialogTypes = arrayOf(DIALOG_CONFIRM_MEDIA_CHECK, DIALOG_MEDIA_CHECK_RESULTS)
+
+        @CheckResult
         fun newInstance(dialogType: Int): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()

@@ -101,7 +101,5 @@
     <string name="gesture_show_all_hints">显示所有提示</string>
     <string name="record_voice">录制音频</string>
     <string name="replay_voice">重播音频</string>
-    <string name="automatic_answer_option_2">难（如果不可用很好）</string>
-    <string name="automatic_answer_option_4">易（如果不可用很好）</string>
     <string name="save_voice">保存录音</string>
 </resources>

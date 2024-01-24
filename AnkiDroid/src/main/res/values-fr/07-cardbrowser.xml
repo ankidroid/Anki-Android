@@ -55,11 +55,11 @@
     </plurals>
     <string name="card_browser_all_decks">Tous les jeux de cartes</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
+        <item quantity="one">Supprimer la carte</item>
         <item quantity="other">Delete cards</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
+        <item quantity="one">Supprimer la note</item>
         <item quantity="other">Delete notes</item>
     </plurals>
     <string name="card_browser_change_deck">Changer de paquet</string>

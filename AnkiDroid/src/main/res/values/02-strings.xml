@@ -231,7 +231,6 @@
 
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
 
     <!-- Deck Picker -->
     <string name="search_decks">Search decks</string>
@@ -283,7 +282,7 @@
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
 
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Password is required</string>
 
     <string name="back_pressed_once">Press back again to exit</string>

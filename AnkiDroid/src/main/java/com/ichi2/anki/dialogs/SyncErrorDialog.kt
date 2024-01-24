@@ -20,6 +20,8 @@ import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
 import android.os.Message
+import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.os.bundleOf
@@ -166,10 +168,10 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
     private val title: String
         get() = when (requireArguments().getInt("dialogType")) {
-            DIALOG_USER_NOT_LOGGED_IN_SYNC -> resources.getString(R.string.not_logged_in_title)
-            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL, DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE -> resources.getString(R.string.sync_conflict_replace_title)
-            DIALOG_SYNC_CONFLICT_RESOLUTION -> resources.getString(R.string.sync_conflict_title_new)
-            else -> resources.getString(R.string.sync_error)
+            DIALOG_USER_NOT_LOGGED_IN_SYNC -> res().getString(R.string.not_logged_in_title)
+            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL, DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE -> res().getString(R.string.sync_conflict_replace_title)
+            DIALOG_SYNC_CONFLICT_RESOLUTION -> res().getString(R.string.sync_conflict_title_new)
+            else -> res().getString(R.string.sync_error)
         }
 
     /**
@@ -180,7 +182,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
     override val notificationTitle: String
         get() {
             return if (requireArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
-                resources.getString(R.string.sync_error)
+                res().getString(R.string.sync_error)
             } else {
                 title
             }
@@ -188,15 +190,15 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
     private val message: String?
         get() = when (requireArguments().getInt("dialogType")) {
-            DIALOG_USER_NOT_LOGGED_IN_SYNC -> resources.getString(R.string.login_create_account_message)
-            DIALOG_CONNECTION_ERROR -> resources.getString(R.string.connection_error_message)
-            DIALOG_SYNC_CONFLICT_RESOLUTION -> resources.getString(R.string.sync_conflict_message_new)
-            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL, DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL -> resources.getString(R.string.sync_conflict_local_confirm_new)
-            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE, DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE -> resources.getString(R.string.sync_conflict_remote_confirm_new)
+            DIALOG_USER_NOT_LOGGED_IN_SYNC -> res().getString(R.string.login_create_account_message)
+            DIALOG_CONNECTION_ERROR -> res().getString(R.string.connection_error_message)
+            DIALOG_SYNC_CONFLICT_RESOLUTION -> res().getString(R.string.sync_conflict_message_new)
+            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL, DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL -> res().getString(R.string.sync_conflict_local_confirm_new)
+            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE, DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE -> res().getString(R.string.sync_conflict_remote_confirm_new)
             DIALOG_SYNC_CORRUPT_COLLECTION -> {
                 val syncMessage = requireArguments().getString("dialogMessage")
-                val repairUrl = getString(R.string.repair_deck)
-                val dialogMessage = getString(R.string.sync_corrupt_database, repairUrl)
+                val repairUrl = res().getString(R.string.repair_deck)
+                val dialogMessage = res().getString(R.string.sync_corrupt_database, repairUrl)
                 joinSyncMessages(dialogMessage, syncMessage)
             }
             else -> requireArguments().getString("dialogMessage")
@@ -210,7 +212,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
     override val notificationMessage: String?
         get() {
             return if (requireArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
-                resources.getString(R.string.not_logged_in_title)
+                res().getString(R.string.not_logged_in_title)
             } else {
                 message
             }
@@ -240,12 +242,28 @@ class SyncErrorDialog : AsyncDialogFragment() {
         const val DIALOG_SYNC_CORRUPT_COLLECTION = 10
         const val DIALOG_SYNC_BASIC_CHECK_ERROR = 11
 
+        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+        val dialogTypes = arrayOf(
+            DIALOG_USER_NOT_LOGGED_IN_SYNC,
+            DIALOG_CONNECTION_ERROR,
+            DIALOG_SYNC_CONFLICT_RESOLUTION,
+            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL,
+            DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE,
+            DIALOG_SYNC_SANITY_ERROR,
+            DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL,
+            DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE,
+            DIALOG_MEDIA_SYNC_ERROR,
+            DIALOG_SYNC_CORRUPT_COLLECTION,
+            DIALOG_SYNC_BASIC_CHECK_ERROR
+        )
+
         /**
          * A set of dialogs belonging to AnkiActivity which deal with sync problems
          *
          * @param dialogType An integer which specifies which of the sub-dialogs to show
          * @param dialogMessage A string which can be optionally used to set the dialog message
          */
+        @CheckResult
         fun newInstance(dialogType: Int, dialogMessage: String?): SyncErrorDialog {
             val f = SyncErrorDialog()
             val args = Bundle()

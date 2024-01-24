@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">غیر فعال شده</string>
-    <string name="pref_summary_seconds">%s ثانیه</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d دقیقه</item>
         <item quantity="other">%d دقیقه</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">لرزش</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">چشمک زدن نور</string>
     <string name="timeout_answer_text" maxLength="41">نمایش پاسخ بصورت خودکار</string>
-    <string name="timeout_answer" maxLength="41">جواب اگر وقت تمام شد</string>
-    <string name="timeout_answer_summ">نمایش خودکار پاسخ بدون درخواست کاربر. تأخیر شامل زمان پخش فایل صوتی نیز می‌شود.</string>
-    <string name="timeout_answer_seconds" maxLength="41">زمان نمایش پاسخ</string>
-    <string name="timeout_question_seconds" maxLength="41">زمان نمایش پرسش بعدی</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">زبان را انتخاب کنید</string>
     <string name="software_render" maxLength="41">غیر فعال کردن رندر سخت‌افزار کارت</string>
     <string name="software_render_summ">رندر سخت افزاری سریع تر است ولی ممکن است مشکل داشته باشد، مخصوصا روی اندروید 8 یا 8.1. اگر بعضی از دکمه های مرور کارت ها را نمیبینید، این تنظیمات را امتحان کنید.</string>
@@ -245,8 +241,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">برنا مه ریزی مجدد</string>
     <string name="deck_conf_cram_reschedule_summ">برنامه ریزی مجدد کارتها براساس جوابهای من در این دسته</string>
     <string name="deck_conf_cram_filter_2_check">فیلتر دوم را فعال کن</string>
-    <string name="deck_conf_cram_steps" maxLength="41">قدم‌های سفارشی (به دقیقه)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">تعریف مراحل سفارشی</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">کمک به بهتر شدن AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">به اشتراک گذاشتن ویژگی‌های مورد استفاده</string>

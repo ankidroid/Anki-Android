@@ -179,7 +179,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Không thể lên lịch lời nhắc</string>
     <string name="boot_service_too_many_notifications">Có quá nhiều lời nhắc được lên lịch. Một số sẽ không xuất hiện</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Ngôn ngữ của bàn phím</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Một số bàn phím đa ngôn ngữ, chẳng hạn như GBoard hỗ trợ thay đổi ngôn ngữ khi soạn thảo văn bản\n\nVui lòng yêu cầu tính năng “setImeHintLocales” từ nhà sản xuất bàn phím nếu bàn phím của bạn không thay đổi ngôn ngữ.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Sử dụng AnkiDroid</string>

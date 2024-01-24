@@ -155,7 +155,7 @@
     <string name="import_title">Importation en cours</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ajouter</string>
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">Ajouter \"%s\" à la collection ? Cela peut prendre beaucoup de temps</string>
     <string name="import_log_no_apkg">Ceci n\'est pas un fichier Anki valide</string>
     <string name="import_title_error" comment="Title of error dialog">Erreur</string>
     <string name="import_error_handle_exception">Impossible d\'importer le fichier\n\n%s</string>
@@ -232,7 +232,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Erreur lors de la copie des informations de débogage dans le presse-papiers</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Impossible de charger « %s »</string>
-    <string name="card_viewer_media_relative_protocol">Erreur de contenu de la carte : mise à jour du média requise</string>
     <!-- Deck Picker -->
     <string name="search_decks">Rechercher dans les paquets</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Afficher la progression de la migration</string>
@@ -266,7 +265,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">L\'adresse courriel est requise</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Mot de passe requis</string>
     <string name="back_pressed_once">Réappuyez sur la touche Retour pour quitter</string>
     <string name="back_pressed_once_reviewer">Réappuyez sur la touche retour pour revenir en arrière.</string>
@@ -338,20 +337,20 @@
     <string name="media_sync_required_title">Synchronisation des médias requise</string>
     <string name="media_sync_unavailable_message">La synchronisation des médias est désactivée dans les paramètres. Veuillez synchroniser et sauvegarder tout média qui n\'a pas encore été synchronisé avant de continuer.</string>
     <string name="audio_saved">Enregistrement sauvegardé</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    <string name="deleting_selected_notes">Suppression des notes sélectionnées</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Touchez une voix pour l\'écouter
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">La voix doit être installée avant l\'utilisation
     </string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Utiliser quand même
     </string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Erreur de synthèse vocale (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
     </string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Installer
     </string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Échec de l\'ouverture des paramètres de synthèse vocale
     </string>
-    <string name="shared_decks_login_required">Please log in to download more decks</string>
+    <string name="shared_decks_login_required">Veuillez vous connecter pour télécharger plus de decks</string>
 </resources>

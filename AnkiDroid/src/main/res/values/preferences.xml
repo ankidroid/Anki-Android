@@ -5,7 +5,7 @@
     <string name="pref_general_screen_key">generalScreen</string>
     <string name="deck_for_new_cards_key">useCurrent</string>
     <string name="pref_language_key">language</string>
-    <string name="analytics_opt_in_key">analyticsOptIn</string>
+    <string name="analytics_opt_in_key">analytics_opt_in</string>
     <string name="paste_png_key">pastePNG</string>
     <string name="error_reporting_mode_key">reportErrorMode</string>
     <!-- Reviewing -->
@@ -14,9 +14,6 @@
     <string name="learn_cutoff_preference">learnCutoff</string>
     <string name="time_limit_preference">timeLimit</string>
     <string name="timeout_answer_preference">timeoutAnswer</string>
-    <string name="automatic_answer_action_preference">automaticAnswerAction</string>
-    <string name="timeout_answer_seconds_preference">timeoutAnswerSeconds</string>
-    <string name="timeout_question_seconds_preference">timeoutQuestionSeconds</string>
     <string name="keep_screen_on_preference">keepScreenOn</string>
     <string name="new_timezone_handling_preference">newTimezoneHandling</string>
     <string name="double_tap_time_interval_preference">doubleTapTimeInterval</string>

@@ -179,7 +179,7 @@
     <string name="boot_service_failed_to_schedule_notifications">排定提醒失敗</string>
     <string name="boot_service_too_many_notifications">已設定太多提醒。部分將不會出現</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">鍵盤提示選擇</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">有些多國語言鍵盤，想是GBoard支援編輯文字時切換語言。\n\n如果您的鍵盤不會切換語言，句請請求您的鍵盤開發人員提供「setImeHintLocales」功能。</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">使用 AnkiDroid</string>

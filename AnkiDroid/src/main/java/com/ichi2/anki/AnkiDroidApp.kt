@@ -17,7 +17,6 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.content.Context
@@ -29,14 +28,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.system.Os
-import android.util.Log
-import android.view.View
 import android.webkit.CookieManager
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -44,6 +39,10 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.logging.FragmentLifecycleLogger
+import com.ichi2.anki.logging.LogType
+import com.ichi2.anki.logging.ProductionCrashReportingTree
+import com.ichi2.anki.logging.RobolectricDebugTree
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.services.BootService
@@ -51,14 +50,17 @@ import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
-import com.ichi2.utils.*
+import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.ExceptionUtil
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.LanguageUtil
+import com.ichi2.utils.Permissions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.Locale
-import java.util.regex.Pattern
 
 /**
  * Application class.
@@ -108,15 +110,11 @@ open class AnkiDroidApp : Application() {
         val preferences = this.sharedPrefs()
 
         CrashReportService.initialize(this)
-        if (BuildConfig.DEBUG) {
-            // Enable verbose error logging and do method tracing to put the Class name as log tag
-            if (isRobolectric) {
-                Timber.plant(RobolectricDebugTree())
-            } else {
-                Timber.plant(DebugTree())
-            }
-        } else {
-            Timber.plant(ProductionCrashReportingTree())
+        val logType = LogType.value
+        when (logType) {
+            LogType.DEBUG -> Timber.plant(DebugTree())
+            LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
+            LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
         }
         if (BuildConfig.ENABLE_LEAK_CANARY) {
             LeakCanaryConfiguration.setInitialConfigFor(this)
@@ -125,6 +123,7 @@ open class AnkiDroidApp : Application() {
         }
         Timber.tag(TAG)
         Timber.d("Startup - Application Start")
+        Timber.i("Timber config: $logType")
 
         // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
         UsageAnalytics.initialize(this)
@@ -263,71 +262,6 @@ open class AnkiDroidApp : Application() {
             sendExceptionReport(e, "setAcceptFileSchemeCookies")
             Timber.e(e, "setAcceptFileSchemeCookies")
             false
-        }
-    }
-
-    /**
-     * A tree which logs necessary data for crash reporting.
-     *
-     * Requirements:
-     * 1) ignore verbose and debug log levels
-     * 2) use the fixed AnkiDroidApp.TAG log tag (ACRA filters logcat for it when reporting errors)
-     * 3) dynamically discover the class name and prepend it to the message for warn and error
-     */
-    @SuppressLint("LogNotTimber")
-    class ProductionCrashReportingTree : Timber.Tree() {
-        /**
-         * Extract the tag which should be used for the message from the `element`. By default
-         * this will use the class name without any anonymous class suffixes (e.g., `Foo$1`
-         * becomes `Foo`).
-         *
-         *
-         * Note: This will not be called if an API with a manual tag was called with a non-null tag
-         */
-        fun createStackElementTag(element: StackTraceElement): String {
-            val m = ANONYMOUS_CLASS.matcher(element.className)
-            val tag = if (m.find()) m.replaceAll("") else element.className
-            return tag.substring(tag.lastIndexOf('.') + 1)
-        } // --- this is not present in the Timber.DebugTree copy/paste ---
-
-        // We are in production and should not crash the app for a logging failure
-        // throw new IllegalStateException(
-        //        "Synthetic stacktrace didn't have enough elements: are you using proguard?");
-        // --- end of alteration from upstream Timber.DebugTree.getTag ---
-        // DO NOT switch this to Thread.getCurrentThread().getStackTrace(). The test will pass
-        // because Robolectric runs them on the JVM but on Android the elements are different.
-        val tag: String
-            get() {
-                // DO NOT switch this to Thread.getCurrentThread().getStackTrace(). The test will pass
-                // because Robolectric runs them on the JVM but on Android the elements are different.
-                val stackTrace = Throwable().stackTrace
-                return if (stackTrace.size <= CALL_STACK_INDEX) {
-
-                    // --- this is not present in the Timber.DebugTree copy/paste ---
-                    // We are in production and should not crash the app for a logging failure
-                    "$TAG unknown class"
-                    // throw new IllegalStateException(
-                    //        "Synthetic stacktrace didn't have enough elements: are you using proguard?");
-                    // --- end of alteration from upstream Timber.DebugTree.getTag ---
-                } else {
-                    createStackElementTag(stackTrace[CALL_STACK_INDEX])
-                }
-            }
-
-        // ----  END copied from Timber.DebugTree because DebugTree.getTag() is package private ----
-        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-            when (priority) {
-                Log.VERBOSE, Log.DEBUG -> {}
-                Log.INFO -> Log.i(TAG, message, t)
-                Log.WARN -> Log.w(TAG, "${this.tag}/ $message", t)
-                Log.ERROR, Log.ASSERT -> Log.e(TAG, "${this.tag}/ $message", t)
-            }
-        }
-
-        companion object {
-            // ----  BEGIN copied from Timber.DebugTree because DebugTree.getTag() is package private ----
-            private const val CALL_STACK_INDEX = 6
-            private val ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$")
         }
     }
 
@@ -486,82 +420,5 @@ open class AnkiDroidApp : Application() {
                 }
                 return ExceptionUtil.getExceptionMessage(error)
             }
-    }
-
-    class RobolectricDebugTree : DebugTree() {
-        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-            // This is noisy in test environments
-            when (tag) {
-                "Backend\$checkMainThreadOp" -> return
-                "Media" -> if (priority == Log.VERBOSE && message.startsWith("dir")) return
-                "CollectionManager" -> if (message.startsWith("blocked main thread")) return
-            }
-            super.log(priority, tag, message, t)
-        }
-    }
-
-    private class FragmentLifecycleLogger(
-        private val activity: Activity
-    ) : FragmentManager.FragmentLifecycleCallbacks() {
-        override fun onFragmentAttached(
-            fm: FragmentManager,
-            f: Fragment,
-            context: Context
-        ) {
-            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onAttach")
-        }
-
-        override fun onFragmentCreated(
-            fm: FragmentManager,
-            f: Fragment,
-            savedInstanceState: Bundle?
-        ) {
-            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onCreate")
-        }
-
-        override fun onFragmentViewCreated(
-            fm: FragmentManager,
-            f: Fragment,
-            v: View,
-            savedInstanceState: Bundle?
-        ) {
-            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onViewCreated")
-        }
-
-        override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
-            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onStart")
-        }
-
-        override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
-            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onResume")
-        }
-
-        override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
-            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onPause")
-        }
-
-        override fun onFragmentStopped(fm: FragmentManager, f: Fragment) {
-            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onStop")
-        }
-
-        override fun onFragmentSaveInstanceState(
-            fm: FragmentManager,
-            f: Fragment,
-            outState: Bundle
-        ) {
-            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onSaveInstanceState")
-        }
-
-        override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
-            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onViewDestroyed")
-        }
-
-        override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
-            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onDestroy")
-        }
-
-        override fun onFragmentDetached(fm: FragmentManager, f: Fragment) {
-            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onDetach")
-        }
     }
 }

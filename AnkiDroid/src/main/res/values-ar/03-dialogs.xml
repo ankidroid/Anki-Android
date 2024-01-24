@@ -209,7 +209,7 @@
     <string name="boot_service_failed_to_schedule_notifications">تعذرت جدولة التنبيهات</string>
     <string name="boot_service_too_many_notifications">تمت جدولة كثير من التنبيهات. لن يظهر بعضها</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">تحديد تلميح لوحة المفاتيح</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">بعض لوحات المفاتيح متعددة اللغات، مثل GBoard، تدعم تغيير اللغة عند تحرير النص\n\nيرجى طلب ميزة “setImeHintLocales” من مصنّع لوحة المفاتيح الخاصة بك إذا كانت لوحة المفاتيح لا تغيّر اللغة.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">استخدام أنكيدرويد</string>

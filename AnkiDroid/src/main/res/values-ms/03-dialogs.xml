@@ -179,7 +179,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Gagal menjadualkan peringatan</string>
     <string name="boot_service_too_many_notifications">Terlalu banyak peringatan dijadualkan. Beberapa peringatan tidak akan muncul</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Pemilihan Bahasa Papan Kekunci</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Sesetengah papan kekunci pelbagai bahasa, seperti Gboard menyokong pertukaran bahasa ketika menyunting teks\n\nSila minta ciri “setImeHintLocales” daripada pengusaha papan kekunci jika papan kekunci anda tidak tukar bahasa.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Menggunakan AnkiDroid</string>

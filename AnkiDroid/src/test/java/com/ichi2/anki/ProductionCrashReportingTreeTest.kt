@@ -17,6 +17,7 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.ichi2.anki.logging.ProductionCrashReportingTree
 import com.ichi2.testutils.AnkiAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -36,7 +37,7 @@ class ProductionCrashReportingTreeTest {
     @Before
     fun setUp() {
         // setup - simply instrument the class and do same log init as production
-        Timber.plant(AnkiDroidApp.ProductionCrashReportingTree())
+        Timber.plant(ProductionCrashReportingTree())
     }
 
     @After

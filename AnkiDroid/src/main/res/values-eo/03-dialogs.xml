@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Fiaskis plani memorigaĵojn</string>
     <string name="boot_service_too_many_notifications">Tro multe da memorigaĵoj planitaj. Iuj ne aperos</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Elekti klavarajn sugestojn</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Iuj plurlingvaj klavaroj – ekzemple GBoard – ebligas ŝanĝi lingvon dum enigi tekston\n\nSe via klavaro aŭtomate ne ŝanĝas lingvon, provu peti ĝiajn programistojn pri aldoni la eblaĵon “setImeHintLocales”.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Uzado de AnkiDroid</string>

@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Error al programar recordatorios</string>
     <string name="boot_service_too_many_notifications">Demasiados recordatorios programados. Algunos no aparecerán</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Selección de idioma del teclado</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Algunos teclados multilingües, tales como el soporte de GBoard para cambiar el idioma cuando se edite el texto\n\nSolicite la función \"setImeHintLocales\" de su fabricante de teclado si su teclado no cambia el idioma.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Usando AnkiDroid</string>

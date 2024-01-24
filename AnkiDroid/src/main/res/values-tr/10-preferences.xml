@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Devredışı</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d dk</item>
         <item quantity="other">%d dk</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Titreş</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Işığı yanıp söndür</string>
     <string name="timeout_answer_text" maxLength="41">Cevabı otomatik göster</string>
-    <string name="timeout_answer" maxLength="41">Zaman aşımı yanıtı</string>
-    <string name="timeout_answer_summ">Cevabı kullanıcı girişi yapılmadan otomatik olarak göster. Ses dosyasını otomatik oynatmak için gecikme zamanı içerir.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Cevabı gösterme zamanı</string>
-    <string name="timeout_question_seconds" maxLength="41">Sonraki soruyu gösterme zamanı</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Dil Seç</string>
     <string name="software_render" maxLength="41">Kart donanım renderını devredışı bırak</string>
     <string name="software_render_summ">Donanım renderı daha hızlıdır ama sorunları olabilir, özellikle de Android 8/8.1\'de. Kart çalışma kullanıcı arayüzünün bazı kısımlarını göremiyorsanız, bunu ayarı deneyin.</string>
@@ -245,8 +241,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Yeniden planlama</string>
     <string name="deck_conf_cram_reschedule_summ">Bu destedeki cevaplarıma göre kartları yeniden planlama</string>
     <string name="deck_conf_cram_filter_2_check">İkinci filtreyi etkinleştir</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Özel adımlar (dakika cinsinden)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Kendi adımlarınızı tanımlayın</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid\'in iyileştirilmesine yardım et!</string>
     <string name="analytics_title" maxLength="41">Özellik kullanımını paylaş</string>

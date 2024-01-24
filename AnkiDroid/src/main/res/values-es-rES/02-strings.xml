@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etiquetas: %1$s</string>
     <string name="CardEditorCards">Tarjetas: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">Editar Oclusiones</string>
     <string name="tag_name">Nombre de la etiqueta</string>
     <string name="add_new_filter_tags">Añadir/filtrar etiquetas</string>
     <string name="add_tag">Añadir etiqueta</string>
@@ -232,7 +232,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Error al copiar información de depuración al portapapeles</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contenido de la tarjeta: Error al cargar ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Error de contenido de la tarjeta: es necesario actualizar medios</string>
     <!-- Deck Picker -->
     <string name="search_decks">Buscar mazos</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostrar el progreso de la migración</string>
@@ -266,7 +265,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Se requiere dirección de correo electrónico</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">La contraseña es requerida</string>
     <string name="back_pressed_once">Presione atrás de nuevo para salir</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>

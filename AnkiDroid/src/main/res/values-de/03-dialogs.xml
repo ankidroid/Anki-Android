@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Erinnerungen konnten nicht eingeplant werden</string>
     <string name="boot_service_too_many_notifications">Zu viele Erinnerungen eingeplant. Einige werden nicht erscheinen.</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Tastatur-Sprachauswahl</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Einige mehrsprachige Tastaturen, wie zum Beispiel GBoard unterstützten das Ändern der Sprache beim Bearbeiten von Text\n\nBitte fordern Sie die „setImeHintLocales“-Funktion Ihres Tastatur-Herstellers an, falls Ihre Tastatur keine Sprache ändert.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Verwendung von AnkiDroid</string>

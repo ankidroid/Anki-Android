@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">ഓർമ്മപ്പെടുത്തലുകൾ ഷെഡ്യൂൾ ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="boot_service_too_many_notifications">വളരെയധികം ഓർമ്മപ്പെടുത്തലുകൾ ഷെഡ്യൂൾ ചെയ്‌തു. ചിലത് ദൃശ്യമാകില്ല</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">കീബോർഡ് ഭാഷാ തിരഞ്ഞെടുപ്പ്</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">വാചകം എഡിറ്റുചെയ്യുമ്പോൾ ഭാഷ മാറ്റുന്നതിനെ GBoard പോലുള്ള ചില ബഹുഭാഷാ കീബോർഡുകൾ \n\n നിങ്ങളുടെ കീബോർഡ് ഭാഷ മാറ്റിയില്ലെങ്കിൽ കീബോർഡ് നിർമ്മാതാവിൽ നിന്ന് “setImeHintLocales” സവിശേഷത അഭ്യർത്ഥിക്കുക.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ഉപയോഗിക്കുന്നു</string>

@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Nonaktif</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="other">%d mins</item>
     </plurals>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Getar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Berkedip</string>
     <string name="timeout_answer_text" maxLength="41">Otomatis tampilkan jawaban</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
-    <string name="timeout_answer_summ">Tampilkan jawaban secara otomatis tanpa masukan dari pengguna. Jeda termasuk waktu untuk memutar berkas audio secara otomatis.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Waktu menampilkan jawaban</string>
-    <string name="timeout_question_seconds" maxLength="41">Waktu menampilkan pertanyaan selanjutnya</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="software_render" maxLength="41">Matikan perangkat keras pe-render kartu</string>
     <string name="software_render_summ">Render menggunakan perangkat keras lebih cepat namun dapat mengakibatkan masalah, terutama pada Android 8/8.1. Jika Anda tidak dapat melihat bagian review kartu dari antarmuka pengguna, coba pengaturan berikut ini.</string>
@@ -244,8 +240,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Jadwalkan ulang</string>
     <string name="deck_conf_cram_reschedule_summ">Jadwalkan ulang kartu berdasarkan jawabanku di dek ini</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Langkah kustom(dalam menit)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Tentukan langkah kustom</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Bantu AnkiDroid jadi lebih baik!</string>
     <string name="analytics_title" maxLength="41">Bagikan data penggunaan fitur</string>

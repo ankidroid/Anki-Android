@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Désactivé</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -116,7 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Toucher au milieu au centre</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toucher en bas à gauche</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toucher en bas à droite</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Secouer l\'appareil</string>
     <string name="card_browser_enable_external_context_menu">Menu « %s »</string>
     <string name="card_browser_enable_external_context_menu_summary">Active le menu contextuel « %s » globalement</string>
     <string name="double_scrolling_gap" maxLength="41">Défilement double</string>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrer</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lumière de notification</string>
     <string name="timeout_answer_text" maxLength="41">Affichage automatique de la réponse</string>
-    <string name="timeout_answer" maxLength="41">Délai pour répondre</string>
-    <string name="timeout_answer_summ">Voir la réponse automatiquement sans intervention de l’utilisateur. Ceci comprend le temps utilisé par les fichiers audio joués automatiquements.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Temps avant d’afficher la réponse</string>
-    <string name="timeout_question_seconds" maxLength="41">Temps avant de montrer la question suivante</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Sélectionnez la langue</string>
     <string name="software_render" maxLength="41">Désactiver le rendu matériel de carte</string>
     <string name="software_render_summ">Le rendu matériel est plus rapide mais peut rencontrer des problèmes, en particulier sur Android 8/8.1. Si vous ne pouvez pas visualiser certaines parties de l\'interface de révision des cartes, essayez d\'activer cette option.</string>
@@ -205,7 +201,7 @@
     <string name="html_javascript_debugging_summ">Activer les connexions WebView distantes et enregistrer la carte HTML dans le répertoire AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Réviseur</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Afficher le titre du deck</string>
     <string name="accessibility" maxLength="41">Accessibilité</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Coller les images du pressepapiers en PNG</string>
@@ -245,8 +241,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replanifier</string>
     <string name="deck_conf_cram_reschedule_summ">Replanifier les cartes selon mes réponses dans ce paquet</string>
     <string name="deck_conf_cram_filter_2_check">Activer le second filtrage</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Étapes personnalisées (en minute)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Définir le pas personnalisé</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Aidez à améliorer AnkiDroid !</string>
     <string name="analytics_title" maxLength="41">Partager l\'utilisation de la fonctionnalité</string>

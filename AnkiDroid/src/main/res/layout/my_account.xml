@@ -49,9 +49,11 @@
                 <!--&lt;!&ndash; TODO JS - move into strings.xml &ndash;&gt;-->
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/username_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/username"
+                    app:endIconMode="clear_text"
                     android:layout_margin="@dimen/content_vertical_padding">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -60,6 +62,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_baseline_email_24"
                         android:drawablePadding="8dp"
+                        android:nextFocusForward="@id/password_layout"
                         android:inputType="textNoSuggestions|textEmailAddress"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -69,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
-                    app:passwordToggleEnabled="true"
+                    app:endIconMode="password_toggle"
                     android:layout_margin="@dimen/content_vertical_padding">
 
                     <com.ichi2.ui.TextInputEditField
@@ -89,6 +92,7 @@
                     android:minWidth="200dp"
                     android:layout_gravity="center"
                     android:text="@string/log_in"
+                    android:enabled="false"
                     android:layout_margin="@dimen/content_vertical_padding"/>
 
                 <com.google.android.material.button.MaterialButton

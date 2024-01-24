@@ -992,7 +992,7 @@ class NoteEditor :
 
             withProgress {
                 undoableOp {
-                    updateNote(mCurrentEditedCard!!.note(getColUnsafe))
+                    updateNote(mCurrentEditedCard!!.note(this))
                 }
                 closeNoteEditor()
             }
@@ -1474,10 +1474,9 @@ class NoteEditor :
         mediaButton.setOnClickListener { v: View ->
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index)
             if (mEditorNote!!.items()[index][1].isNotEmpty()) {
-                val col = CollectionHelper.instance.getColUnsafe(this@NoteEditor)!!
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
-                val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col)
+                val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(getColUnsafe)
                 startMultimediaFieldEditor(index, note)
             } else {
                 // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
@@ -1585,8 +1584,7 @@ class NoteEditor :
     }
 
     private fun startMultimediaFieldEditorForField(index: Int, field: IField) {
-        val col = CollectionHelper.instance.getColUnsafe(this@NoteEditor)!!
-        val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col)
+        val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(getColUnsafe)
         note.setField(index, field)
         startMultimediaFieldEditor(index, note)
     }

@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">No s\'han pogut planificar els recordatoris</string>
     <string name="boot_service_too_many_notifications">Hi ha massa recordatoris planificats. Alguns no apareixeran</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Selecció d\'idioma del teclat</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Alguns teclats multilingües, com GBoard, admeten canviar d\'idioma mentre s\'edita text\n\nSol·liciteu al fabricant del teclat la funció \"setImeHintLocales\" si el teclat no canvia d\'idioma.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Com usar AnkiDroid</string>
