@@ -28,6 +28,7 @@ import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
@@ -168,7 +169,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         }
         fieldNameInput?.let { _fieldNameInput ->
             _fieldNameInput.isSingleLine = true
-            AlertDialog.Builder(this).show {
+            AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
                 customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(R.string.model_field_editor_add)
                 positiveButton(R.string.dialog_ok) {
@@ -289,7 +290,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             _fieldNameInput.isSingleLine = true
             _fieldNameInput.setText(fieldsLabels[currentPos])
             _fieldNameInput.setSelection(_fieldNameInput.text!!.length)
-            AlertDialog.Builder(this).show {
+            AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
                 customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(R.string.model_field_editor_rename)
                 positiveButton(R.string.rename) {
@@ -332,7 +333,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldNameInput = FixedEditText(this).apply { focusWithKeyboard() }
         fieldNameInput?.let { _fieldNameInput ->
             _fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
-            AlertDialog.Builder(this).show {
+            AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
                 customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(text = String.format(resources.getString(R.string.model_field_editor_reposition), 1, fieldsLabels.size))
                 positiveButton(R.string.dialog_ok) {

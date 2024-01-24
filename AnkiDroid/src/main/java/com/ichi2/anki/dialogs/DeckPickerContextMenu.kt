@@ -20,6 +20,7 @@ import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.os.bundleOf
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -35,7 +36,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         assert(requireArguments().containsKey(ARG_DECK_IS_DYN))
         assert(requireArguments().containsKey(ARG_DECK_HAS_BURIED_IN_DECK))
         val options = createOptionsList()
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog.Builder(ContextThemeWrapper(requireActivity(), R.style.AlertDialogStyle))
             .title(text = requireArguments().getString(ARG_DECK_NAME))
             .setItems(
                 options.map { resources.getString(it.optionName) }.toTypedArray()

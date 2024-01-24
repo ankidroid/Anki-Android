@@ -19,6 +19,7 @@ package com.ichi2.anki.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -30,7 +31,7 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog.Builder(ContextThemeWrapper(requireActivity(), R.style.AlertDialogStyle))
             .setTitle(R.string.delete_deck_title)
             .setMessage(requireArguments().getString("dialogMessage"))
             .setIcon(R.drawable.ic_warning)

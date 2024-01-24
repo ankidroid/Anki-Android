@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.R
 import com.ichi2.utils.message
@@ -55,7 +56,7 @@ class ConfirmationDialog : DialogFragment() {
         super.onCreate(savedInstanceState)
         val res = requireActivity().resources
         val title = requireArguments().getString("title")
-        return AlertDialog.Builder(requireContext()).apply {
+        return AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle)).apply {
             title(text = (if ("" == title) res.getString(R.string.app_name) else title)!!)
             message(text = requireArguments().getString("message")!!)
             positiveButton(R.string.dialog_ok) {

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -84,7 +85,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
     }
 
     private fun removeSearch(searchName: String) {
-        AlertDialog.Builder(requireActivity()).show {
+        AlertDialog.Builder(ContextThemeWrapper(requireActivity(), R.style.AlertDialogStyle)).show {
             message(text = resources.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
             positiveButton(android.R.string.ok) {
                 mySearchesDialogListener!!.onRemoveSearch(searchName)

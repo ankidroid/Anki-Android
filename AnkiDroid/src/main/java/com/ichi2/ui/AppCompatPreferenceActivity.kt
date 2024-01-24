@@ -318,7 +318,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
             closeWithResult()
         } catch (e: BackendException) {
             Timber.e(e, "Backend exception while trying to finish an AppCompatPreferenceActivity")
-            AlertDialog.Builder(this).show {
+            AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
                 title(text = resources.getString(R.string.pref__widget_text__error))
                 message(text = e.message)
                 positiveButton(R.string.dialog_ok) { dialogInterface ->

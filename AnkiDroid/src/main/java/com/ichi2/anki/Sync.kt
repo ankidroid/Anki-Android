@@ -22,6 +22,7 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.edit
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
@@ -349,7 +350,7 @@ private suspend fun monitorMediaSync(
     // TODO: show this in a way that is clear it can be continued in background,
     // but also warn user that media files will not be available until it completes.
     // TODO: provide a way for users to abort later, and see it's still going
-    val dialog = AlertDialog.Builder(deckPicker)
+    val dialog = AlertDialog.Builder(ContextThemeWrapper(deckPicker, R.style.AlertDialogStyle))
         .setTitle(TR.syncMediaLogTitle())
         .setMessage("")
         .setPositiveButton("Background") { _, _ -> }

@@ -23,6 +23,7 @@ import android.view.MenuItem
 import android.widget.EditText
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -102,7 +103,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private fun showRestoreDefaultDialog() {
-        AlertDialog.Builder(this).show {
+        AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
             positiveButton(R.string.dialog_ok) {
                 restoreDefaultAndClose()
             }

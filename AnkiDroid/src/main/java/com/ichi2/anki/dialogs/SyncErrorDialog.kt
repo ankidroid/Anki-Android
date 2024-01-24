@@ -21,6 +21,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.ConflictResolution
@@ -41,7 +42,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val dialog = AlertDialog.Builder(requireContext())
+        val dialog = AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle))
             .setTitle(title)
             .setMessage(message)
         return when (requireArguments().getInt("dialogType")) {

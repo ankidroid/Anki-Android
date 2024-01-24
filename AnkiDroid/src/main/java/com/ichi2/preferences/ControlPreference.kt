@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.util.AttributeSet
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.preference.ListPreference
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
@@ -105,7 +106,7 @@ class ControlPreference : ListPreference {
         when (val index: Int = (newValue as String).toInt()) {
             ADD_GESTURE_INDEX -> {
                 val actionName = title
-                AlertDialog.Builder(context).show {
+                AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogStyle)).show {
                     title(text = actionName.toString())
 
                     val gesturePicker = GestureSelectionDialogUtils.getGesturePicker(context)
@@ -138,7 +139,7 @@ class ControlPreference : ListPreference {
             }
             ADD_KEY_INDEX -> {
                 val actionName = title
-                AlertDialog.Builder(context).show {
+                AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogStyle)).show {
                     val keyPicker: KeyPicker = KeyPicker.inflate(context)
                     customView(view = keyPicker.rootLayout)
                     title(text = actionName.toString())
@@ -186,7 +187,7 @@ class ControlPreference : ListPreference {
     private fun displayAddAxisDialog() {
         val actionName = title
         val axisPicker: AxisPicker = AxisPicker.inflate(context)
-        val dialog = AlertDialog.Builder(context)
+        val dialog = AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogStyle))
             .customView(view = axisPicker.rootLayout)
             .title(text = actionName.toString())
             .negativeButton(R.string.dialog_cancel) { it.dismiss() }
@@ -259,7 +260,7 @@ class ControlPreference : ListPreference {
     private fun showDialogToReplaceBinding(binding: MappableBinding, title: String, parentDialog: DialogInterface) {
         val commandName = context.getString(getCommandWithBindingExceptThis(binding)!!.resourceId)
 
-        AlertDialog.Builder(context).show {
+        AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogStyle)).show {
             title(text = title)
             message(text = context.getString(R.string.bindings_already_bound, commandName))
             positiveButton(R.string.dialog_positive_replace) {

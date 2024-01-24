@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import com.ichi2.anki.R
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.utils.show
@@ -35,7 +36,7 @@ class CardSideSelectionDialog {
                 R.string.card_side_answer
             )
 
-            AlertDialog.Builder(ctx).show {
+            AlertDialog.Builder(ContextThemeWrapper(ctx, R.style.AlertDialogStyle)).show {
                 title(R.string.card_side_selection_title)
                 setItems(items.map { ctx.getString(it) }.toTypedArray()) { _, index ->
                     when (items[index]) {

@@ -27,6 +27,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.StockNotetype
@@ -147,7 +148,7 @@ class ManageNotetypes : AnkiActivity() {
                 showSnackbar(getString(R.string.toast_last_model))
                 return@launchCatchingTask
             }
-            AlertDialog.Builder(this@ManageNotetypes).show {
+            AlertDialog.Builder(ContextThemeWrapper(this@ManageNotetypes, R.style.AlertDialogStyle)).show {
                 title(R.string.model_browser_delete)
                 message(messageResourceId)
                 positiveButton(R.string.dialog_positive_delete) {

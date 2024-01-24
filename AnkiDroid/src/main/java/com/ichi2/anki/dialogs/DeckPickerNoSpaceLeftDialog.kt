@@ -19,6 +19,7 @@ package com.ichi2.anki.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.utils.cancelable
@@ -29,7 +30,7 @@ import com.ichi2.utils.title
 class DeckPickerNoSpaceLeftDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        return AlertDialog.Builder(requireActivity()).apply {
+        return AlertDialog.Builder(ContextThemeWrapper(requireActivity(), R.style.AlertDialogStyle)).apply {
             title(R.string.storage_full_title)
             message(R.string.backup_deck_no_storage_left)
             cancelable(true)

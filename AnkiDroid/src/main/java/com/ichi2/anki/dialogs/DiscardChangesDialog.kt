@@ -17,6 +17,7 @@ package com.ichi2.anki.dialogs
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import com.ichi2.anki.R
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -28,7 +29,7 @@ class DiscardChangesDialog {
         fun showDialog(
             context: Context,
             positiveMethod: () -> Unit
-        ) = AlertDialog.Builder(context).show {
+        ) = AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogStyle)).show {
             message(R.string.discard_unsaved_changes)
             positiveButton(R.string.dialog_ok) { positiveMethod() }
             negativeButton(R.string.dialog_cancel)

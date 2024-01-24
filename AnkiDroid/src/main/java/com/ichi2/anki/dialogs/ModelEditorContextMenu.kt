@@ -9,6 +9,7 @@ import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.os.bundleOf
 import com.ichi2.anki.ModelFieldEditor
 import com.ichi2.anki.R
@@ -32,7 +33,7 @@ open class ModelEditorContextMenu : AnalyticsDialogFragment() {
         }
         availableItems = availableItems.sortedBy { it.order }
 
-        return AlertDialog.Builder(requireActivity()).apply {
+        return AlertDialog.Builder(ContextThemeWrapper(requireActivity(), R.style.AlertDialogStyle)).apply {
             setTitle(requireArguments().getString(KEY_LABEL))
             setItems(availableItems.map { resources.getString(it.actionTextId) }.toTypedArray()) { _, index ->
                 (activity as? ModelFieldEditor)?.run { handleAction(availableItems[index]) }

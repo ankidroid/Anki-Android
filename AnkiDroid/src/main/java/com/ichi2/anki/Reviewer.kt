@@ -1049,7 +1049,7 @@ open class Reviewer :
         val nMins = timebox.secs / 60
         val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
         val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
-        AlertDialog.Builder(this).show {
+        AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
             title(R.string.timebox_reached_title)
             message(text = timeboxMessage)
             positiveButton(R.string.dialog_continue) {}

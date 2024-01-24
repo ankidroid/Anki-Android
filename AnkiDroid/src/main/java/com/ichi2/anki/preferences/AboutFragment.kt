@@ -25,6 +25,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
@@ -147,7 +148,7 @@ class AboutFragment : Fragment(R.layout.about_layout) {
          * Shows a dialog to confirm if developer options should be enabled or not
          */
         fun showEnableDevOptionsDialog(context: Context) {
-            AlertDialog.Builder(context).show {
+            AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogStyle)).show {
                 setTitle(R.string.dev_options_enabled_pref)
                 setIcon(R.drawable.ic_warning)
                 setMessage(R.string.dev_options_warning)

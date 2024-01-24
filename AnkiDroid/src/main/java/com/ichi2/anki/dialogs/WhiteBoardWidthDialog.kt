@@ -22,6 +22,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import com.ichi2.anki.R
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
@@ -65,7 +66,7 @@ class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWi
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
         )
-        AlertDialog.Builder(context).show {
+        AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogStyle)).show {
             title(R.string.whiteboard_stroke_width)
             positiveButton(R.string.save) {
                 onStrokeWidthChanged?.accept(wbStrokeWidth)

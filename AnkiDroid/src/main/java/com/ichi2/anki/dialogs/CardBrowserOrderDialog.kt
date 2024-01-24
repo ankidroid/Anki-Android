@@ -20,6 +20,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.activityViewModels
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -47,7 +48,7 @@ class CardBrowserOrderDialog : AnalyticsDialogFragment() {
             }
         }
 
-        return AlertDialog.Builder(requireContext())
+        return AlertDialog.Builder(ContextThemeWrapper(requireActivity(), R.style.AlertDialogStyle))
             .setTitle(R.string.card_browser_change_display_order_title)
             .setSingleChoiceItems(items, viewModel.order.cardBrowserLabelIndex, orderSingleChoiceDialogListener)
             .create()

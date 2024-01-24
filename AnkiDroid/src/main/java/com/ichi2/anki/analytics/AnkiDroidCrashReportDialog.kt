@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.edit
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
@@ -44,7 +45,7 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val dialogBuilder = AlertDialog.Builder(this)
+        val dialogBuilder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle))
         dialogBuilder.setIcon(R.drawable.logo_star_144dp)
         dialogBuilder.setTitle(R.string.feedback_title)
         dialogBuilder.setPositiveButton(getString(R.string.feedback_report), this@AnkiDroidCrashReportDialog)

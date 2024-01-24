@@ -44,6 +44,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
@@ -818,7 +819,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected fun showDeleteNoteDialog() {
-        AlertDialog.Builder(this).show {
+        AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
             title(R.string.delete_card_title)
             setIcon(R.drawable.ic_warning)
             message(

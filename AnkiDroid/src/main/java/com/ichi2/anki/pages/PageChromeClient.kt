@@ -20,6 +20,7 @@ import android.webkit.JsResult
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import com.ichi2.anki.R
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.message
@@ -36,7 +37,7 @@ open class PageChromeClient : WebChromeClient() {
         result: JsResult?
     ): Boolean {
         try {
-            AlertDialog.Builder(view.context).show {
+            AlertDialog.Builder(ContextThemeWrapper(view.context, R.style.AlertDialogStyle)).show {
                 message?.let { message(text = message) }
                 positiveButton(R.string.dialog_ok) { result?.confirm() }
                 setOnCancelListener { result?.cancel() }
@@ -56,7 +57,7 @@ open class PageChromeClient : WebChromeClient() {
         result: JsResult?
     ): Boolean {
         try {
-            AlertDialog.Builder(view.context).show {
+            AlertDialog.Builder(ContextThemeWrapper(view.context, R.style.AlertDialogStyle)).show {
                 message?.let { message(text = message) }
                 positiveButton(R.string.dialog_ok) { result?.confirm() }
                 negativeButton(R.string.dialog_cancel) { result?.cancel() }

@@ -25,6 +25,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.DialogFragment
 import com.ichi2.utils.KotlinCleanup
 import java.util.*
@@ -40,7 +41,7 @@ class PickStringDialogFragment : DialogFragment() {
     @KotlinCleanup("requireActivity")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Use the Builder class for convenient dialog construction
-        val builder = AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(ContextThemeWrapper(context, com.ichi2.anki.R.style.AlertDialogStyle))
         builder.setTitle(title)
         val adapter = ArrayAdapter(
             requireActivity(),

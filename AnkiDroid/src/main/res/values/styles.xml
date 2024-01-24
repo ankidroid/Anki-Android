@@ -38,6 +38,7 @@
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:singleLine">true</item>
     </style>
+
     <style name="FooterButton" parent="FooterButtonBase">
         <item name="android:fontFamily">@string/font_fontFamily_medium</item>
     </style>
@@ -56,7 +57,8 @@
         <item name="android:textSize">14sp</item>
         <item name="android:typeface">sans</item>
     </style>
-    <style name="FooterButtonEaseText" parent="FooterButtonEaseTextBase" >
+
+    <style name="FooterButtonEaseText" parent="FooterButtonEaseTextBase">
         <item name="android:fontFamily">@string/font_fontFamily_medium</item>
     </style>
 
@@ -65,12 +67,15 @@
     <style name="AgainButtonEaseStyle" parent="FooterButtonEaseText">
         <item name="android:textColor">?attr/againButtonTextColor</item>
     </style>
+
     <style name="HardButtonEaseStyle" parent="FooterButtonEaseText">
         <item name="android:textColor">?attr/hardButtonTextColor</item>
     </style>
+
     <style name="GoodButtonEaseStyle" parent="FooterButtonEaseText">
         <item name="android:textColor">?attr/goodButtonTextColor</item>
     </style>
+
     <style name="EasyButtonEaseStyle" parent="FooterButtonEaseText">
         <item name="android:textColor">?attr/easyButtonTextColor</item>
     </style>
@@ -78,12 +83,15 @@
     <style name="AgainButtonTimeStyle" parent="FooterButtonNextTime">
         <item name="android:textColor">?attr/againButtonTextColor</item>
     </style>
+
     <style name="HardButtonTimeStyle" parent="FooterButtonNextTime">
         <item name="android:textColor">?attr/hardButtonTextColor</item>
     </style>
+
     <style name="GoodButtonTimeStyle" parent="FooterButtonNextTime">
         <item name="android:textColor">?attr/goodButtonTextColor</item>
     </style>
+
     <style name="EasyButtonTimeStyle" parent="FooterButtonNextTime">
         <item name="android:textColor">?attr/easyButtonTextColor</item>
     </style>
@@ -114,6 +122,7 @@
         <item name="tabTextColor">@color/white</item>
         <item name="tabIndicatorColor">@color/white</item>
     </style>
+
     <style name="ThemeOverlay.App.TabLayout" parent="">
         <item name="colorSurface">?attr/tabLayoutBackgroundColor</item> <!-- Background -->
         <item name="colorOnSurfaceVariant">#cfff</item> <!-- Not selected text color -->
@@ -122,9 +131,11 @@
     <style name="BottomNavigationViewStyle" parent="@style/Widget.Material3.BottomNavigationView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
     </style>
+
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
         <item name="colorSecondaryContainer">#fff</item> <!-- Selected item indicator -->
-        <item name="colorOnSecondaryContainer">?attr/tabLayoutBackgroundColor</item> <!-- Active icon -->
+        <item name="colorOnSecondaryContainer">?attr/tabLayoutBackgroundColor
+        </item> <!-- Active icon -->
         <item name="colorOnSurface">#fff</item> <!-- Active icon -->
         <item name="colorOnSurfaceVariant">#fff</item> <!-- Inactive icon & label -->
         <item name="textAppearanceTitleSmall">@style/TextAppearance.Material3.TitleSmall</item>
@@ -159,6 +170,7 @@
     <style name="SnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
         <item name="android:backgroundTint">?attr/snackbarBackgroundTintColor</item>
     </style>
+
     <style name="SnackbarButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
         <item name="android:textColor">?attr/snackbarButtonTextColor</item>
     </style>
@@ -189,6 +201,11 @@
         <item name="colorAccent">@color/material_light_blue_500</item>
         <item name="android:textColorPrimary">?android:attr/textColor</item>
         <item name="android:background">?attr/dialogBackground</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:textColorAlertDialogListItem">?android:attr/textColor</item>
+        <item name="android:background">?attr/md_background_color</item>
     </style>
 
 </resources>

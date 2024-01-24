@@ -23,6 +23,7 @@ import android.os.Parcelable
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
@@ -41,7 +42,7 @@ class ImportFileSelectionFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val entries = buildImportEntries()
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog.Builder(ContextThemeWrapper(requireActivity(), R.style.AlertDialogStyle))
             .title(R.string.menu_import)
             .setItems(
                 entries.map { requireActivity().getString(it.titleRes) }.toTypedArray()

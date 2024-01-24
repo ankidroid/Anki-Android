@@ -30,6 +30,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
@@ -458,7 +459,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
     @Suppress("deprecation") // onBackPressed
     fun showCancelConfirmationDialog() {
-        downloadCancelConfirmationDialog = AlertDialog.Builder(requireContext()).apply {
+        downloadCancelConfirmationDialog = AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle)).apply {
             setTitle(R.string.cancel_download_question_title)
             setPositiveButton(R.string.dialog_yes) { _, _ ->
                 downloadManager.remove(downloadId)

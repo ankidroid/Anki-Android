@@ -17,6 +17,7 @@ package com.ichi2.anki.preferences
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.*
@@ -91,7 +92,7 @@ class DevOptionsFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.pref_fill_collection_key).setOnPreferenceClickListener {
             val sizeOfFiles = sizePreference.getValue()
             val numberOfFiles = numberOfFilePreference.getValue()
-            AlertDialog.Builder(requireContext()).show {
+            AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle)).show {
                 setTitle("Warning!")
                 setMessage("You'll add $numberOfFiles files with no meaningful content, potentially overriding existing files. Do not do it on a collection you care about.")
                 setPositiveButton("OK") { _, _ ->
@@ -130,7 +131,7 @@ class DevOptionsFragment : SettingsFragment() {
      * Shows dialog to confirm if developer options should be disabled
      */
     private fun showDisableDevOptionsDialog() {
-        AlertDialog.Builder(requireContext()).show {
+        AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle)).show {
             setTitle(R.string.disable_dev_options)
             setPositiveButton(R.string.dialog_ok) { _, _ ->
                 disableDevOptions()

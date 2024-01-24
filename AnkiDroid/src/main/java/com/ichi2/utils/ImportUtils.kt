@@ -25,6 +25,7 @@ import android.os.Message
 import android.provider.OpenableColumns
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.os.bundleOf
 import com.ichi2.anki.*
 import com.ichi2.anki.dialogs.DialogHandler
@@ -259,7 +260,7 @@ object ImportUtils {
         fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
             Timber.e("showImportUnsuccessfulDialog() message %s", errorMessage)
             val title = activity.resources.getString(R.string.import_title_error)
-            AlertDialog.Builder(activity).show {
+            AlertDialog.Builder(ContextThemeWrapper(activity, R.style.AlertDialogStyle)).show {
                 title(text = title)
                 message(text = errorMessage!!)
                 setCancelable(false)

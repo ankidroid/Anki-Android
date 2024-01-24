@@ -25,6 +25,7 @@ import android.os.Parcelable
 import android.view.KeyEvent
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.ActivityCompat
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
@@ -225,7 +226,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 dismissAllDialogFragments()
                             } else {
                                 // otherwise show an error dialog
-                                AlertDialog.Builder(requireActivity()).show {
+                                AlertDialog.Builder(ContextThemeWrapper(requireActivity(), R.style.AlertDialogStyle)).show {
                                     title(R.string.vague_error)
                                     message(R.string.backup_invalid_file_error)
                                     positiveButton(R.string.dialog_ok)
@@ -429,7 +430,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         companion object {
             /** A dialog which creates a new collection in an unsafe location */
             fun displayResetToNewDirectoryDialog(context: DeckPicker) {
-                AlertDialog.Builder(context).show {
+                AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogStyle)).show {
                     title(R.string.backup_new_collection)
                     setIcon(R.drawable.ic_warning)
                     message(R.string.new_unsafe_collection)

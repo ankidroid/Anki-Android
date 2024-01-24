@@ -50,6 +50,7 @@ import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContentResolverCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
@@ -689,7 +690,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             return
         }
 
-        AlertDialog.Builder(_activity).show {
+        AlertDialog.Builder(ContextThemeWrapper(_activity, R.style.AlertDialogStyle)).show {
             message(text = content)
             positiveButton(R.string.dialog_yes) {
                 viewModel = requestCrop(viewModel)

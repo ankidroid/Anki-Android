@@ -16,6 +16,7 @@
 package com.ichi2.anki.preferences
 
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.preference.Preference
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.withCol
@@ -43,7 +44,7 @@ class SyncSettingsFragment : SettingsFragment() {
 
         // Configure force full sync option
         requirePreference<Preference>(R.string.force_full_sync_key).setOnPreferenceClickListener {
-            AlertDialog.Builder(requireContext()).show {
+            AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle)).show {
                 setTitle(R.string.force_full_sync_title)
                 setMessage(R.string.force_full_sync_summary)
                 setPositiveButton(R.string.dialog_ok) { _, _ ->

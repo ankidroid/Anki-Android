@@ -22,6 +22,7 @@ import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
@@ -195,7 +196,7 @@ fun Fragment.launchCatchingTask(
 
 private fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
     try {
-        AlertDialog.Builder(context).show {
+        AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogStyle)).show {
             title(R.string.vague_error)
             message(text = msg)
             positiveButton(R.string.dialog_ok)
@@ -389,7 +390,7 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(col: Collection): Boolean {
         return true
     }
     return suspendCoroutine { coroutine ->
-        AlertDialog.Builder(this).show {
+        AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
             message(text = col.tr.deckConfigWillRequireFullSync()) // generic message
             positiveButton(R.string.dialog_ok) {
                 col.modSchemaNoCheck()
@@ -406,7 +407,7 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
         return true
     }
     val hasAcceptedSchemaChange = suspendCoroutine { coroutine ->
-        AlertDialog.Builder(this).show {
+        AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
             message(text = TR.deckConfigWillRequireFullSync().replace("\\s+".toRegex(), " "))
             positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
             negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }

@@ -20,6 +20,7 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.edit
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -209,7 +210,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
                 return
             }
 
-            AlertDialog.Builder(context).show {
+            AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogStyle)).show {
                 title(R.string.dismiss_backup_warning_title)
                 message(message)
                 setIcon(R.drawable.ic_warning)

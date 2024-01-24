@@ -26,6 +26,7 @@ import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
@@ -98,7 +99,7 @@ class ExportDialogFragment : DialogFragment() {
         } else {
             showExtrasOptionsFor(dialogView, ExportConfiguration.Collection)
         }
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog.Builder(ContextThemeWrapper(requireActivity(), R.style.AlertDialogStyle))
             .setView(dialogView)
             .negativeButton(R.string.dialog_cancel)
             .positiveButton(R.string.dialog_ok) {

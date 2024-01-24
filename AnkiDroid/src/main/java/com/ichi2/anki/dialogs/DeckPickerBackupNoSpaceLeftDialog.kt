@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.DeckPicker
@@ -33,7 +34,7 @@ class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
         super.onCreate(savedInstanceState)
         val res = resources
         val space = BackupManager.getFreeDiscSpace(CollectionHelper.getCollectionPath(requireActivity()))
-        return AlertDialog.Builder(requireContext()).apply {
+        return AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle)).apply {
             title(R.string.storage_almost_full_title)
             message(text = res.getString(R.string.storage_warning, space / 1024 / 1024))
             positiveButton(R.string.dialog_ok) {

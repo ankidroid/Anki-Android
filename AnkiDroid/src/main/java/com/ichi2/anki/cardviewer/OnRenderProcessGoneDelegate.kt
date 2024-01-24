@@ -21,6 +21,7 @@ import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.lifecycle.Lifecycle
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.R
@@ -130,7 +131,7 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
         val cardInformation = currentCardId.toString()
         val res = target.resources
         val errorDetails = if (detail.didCrash()) res.getString(R.string.webview_crash_unknwon_detailed) else res.getString(R.string.webview_crash_oom_details)
-        AlertDialog.Builder(target).show {
+        AlertDialog.Builder(ContextThemeWrapper(target, R.style.AlertDialogStyle)).show {
             title(R.string.webview_crash_loop_dialog_title)
             message(text = res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
             positiveButton(R.string.dialog_ok) {

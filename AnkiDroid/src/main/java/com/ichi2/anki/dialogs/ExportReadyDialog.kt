@@ -20,6 +20,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Message
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.os.bundleOf
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
@@ -41,7 +42,7 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
 
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
-        val dialog = AlertDialog.Builder(requireActivity())
+        val dialog = AlertDialog.Builder(ContextThemeWrapper(requireActivity(), R.style.AlertDialogStyle))
 
         dialog.setTitle(notificationTitle)
             .positiveButton(R.string.export_choice_save_to) { listener.saveExportFile(exportPath) }

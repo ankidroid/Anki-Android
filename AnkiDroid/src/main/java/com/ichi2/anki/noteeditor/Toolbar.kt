@@ -228,7 +228,12 @@ class Toolbar : FrameLayout {
         val results = resources.getStringArray(R.array.html_size_codes)
 
         // Might be better to add this as a fragment - let's see.
-        AlertDialog.Builder(context).show {
+        AlertDialog.Builder(
+            androidx.appcompat.view.ContextThemeWrapper(
+                context,
+                R.style.AlertDialogStyle
+            )
+        ).show {
             setItems(R.array.html_size_code_labels) { _, index ->
                 val formatter = TextWrapper(
                     prefix = "<span style=\"font-size:${results[index]}\">",
@@ -246,7 +251,12 @@ class Toolbar : FrameLayout {
     @SuppressLint("CheckResult")
     private fun displayInsertHeadingDialog() {
         val headingList = arrayOf("h1", "h2", "h3", "h4", "h5")
-        AlertDialog.Builder(context).show {
+        AlertDialog.Builder(
+            androidx.appcompat.view.ContextThemeWrapper(
+                context,
+                R.style.AlertDialogStyle
+            )
+        ).show {
             setItems(headingList) { _, index ->
                 val charSequence = headingList[index]
                 val formatter = TextWrapper(prefix = "<$charSequence>", suffix = "</$charSequence>")

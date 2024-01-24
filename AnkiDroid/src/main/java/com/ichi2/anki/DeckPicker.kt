@@ -44,6 +44,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
@@ -705,7 +706,7 @@ open class DeckPicker :
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             }
-            WEBVIEW_FAILED -> AlertDialog.Builder(this).show {
+            WEBVIEW_FAILED -> AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
                 title(R.string.ankidroid_init_failed_webview_title)
                 message(
                     text = getString(
@@ -1416,7 +1417,7 @@ open class DeckPicker :
                 Timber.i("showStartupScreensAndDialogs() running integrityCheck()")
                 // #5852 - since we may have a warning about disk space, we don't want to force a check database
                 // and show a warning before the user knows what is happening.
-                AlertDialog.Builder(this).show {
+                AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
                     title(R.string.integrity_check_startup_title)
                     message(R.string.integrity_check_startup_content)
                     positiveButton(R.string.check_db) {
@@ -1582,7 +1583,7 @@ open class DeckPicker :
         val status = CollectionIntegrityStorageCheck.createInstance(this)
         if (status.shouldWarnOnIntegrityCheck()) {
             Timber.d("Displaying File Size confirmation")
-            AlertDialog.Builder(this).show {
+            AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
                 title(R.string.check_db_title)
                 message(text = status.getWarningDetails(this@DeckPicker))
                 positiveButton(R.string.integrity_check_continue_anyway) {
@@ -1690,7 +1691,7 @@ open class DeckPicker :
         val meteredSyncIsAllowed =
             preferences.getBoolean(getString(R.string.metered_sync_key), false)
         if (!meteredSyncIsAllowed && isActiveNetworkMetered()) {
-            AlertDialog.Builder(this).show {
+            AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
                 message(R.string.metered_sync_warning)
                 positiveButton(R.string.dialog_continue) { doSync() }
                 negativeButton(R.string.dialog_cancel)
@@ -1815,7 +1816,7 @@ open class DeckPicker :
     }
 
     private fun promptUserToUpdateScheduler() {
-        AlertDialog.Builder(this).show {
+        AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
             message(text = getColUnsafe.tr.schedulingUpdateRequired())
             positiveButton(R.string.dialog_ok) {
                 launchCatchingTask {
@@ -2183,7 +2184,7 @@ open class DeckPicker :
                     emptyCids()
                 }
             }
-            AlertDialog.Builder(this@DeckPicker).show {
+            AlertDialog.Builder(ContextThemeWrapper(this@DeckPicker, R.style.AlertDialogStyle)).show {
                 setTitle(TR.emptyCardsWindowTitle())
                 if (emptyCids.isEmpty()) {
                     setMessage(TR.emptyCardsNotFound())
@@ -2408,7 +2409,7 @@ open class DeckPicker :
         }
 
         var userCheckedDoNotShowAgain = false
-        var dialog = AlertDialog.Builder(this)
+        var dialog = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle))
             .setTitle(R.string.scoped_storage_title)
             .setMessage(message)
             .setPositiveButton(
@@ -2440,7 +2441,7 @@ open class DeckPicker :
         val message = getString(R.string.migration__resume_after_failed_dialog__message, errorText, helpUrl)
             .parseAsHtml()
 
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle))
             .setTitle(R.string.scoped_storage_title)
             .setMessage(message)
             .setNegativeButton(R.string.dialog_cancel) { _, _ -> }
@@ -2476,7 +2477,7 @@ open class DeckPicker :
             sync()
         } else {
             Timber.i("media sync disabled: displaying dialog")
-            AlertDialog.Builder(this).show {
+            AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogStyle)).show {
                 setTitle(R.string.media_sync_required_title)
                 setIcon(R.drawable.ic_warning)
                 setMessage(R.string.media_sync_unavailable_message)

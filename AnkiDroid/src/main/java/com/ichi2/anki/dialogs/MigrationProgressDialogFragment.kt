@@ -21,6 +21,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.text.format.Formatter.formatShortFileSize
 import android.widget.TextView
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -85,7 +86,7 @@ class MigrationProgressDialogFragment : DialogFragment() {
                 }
         }
 
-        return AlertDialog.Builder(activity)
+        return AlertDialog.Builder(ContextThemeWrapper(activity, R.style.AlertDialogStyle))
             .setView(layout)
             .setPositiveButton(R.string.dialog_ok) { _, _ -> dismiss() }
             .setNegativeButton(R.string.scoped_storage_learn_more) { _, _ ->

@@ -22,6 +22,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
@@ -43,7 +44,7 @@ import makeLinksClickable
 //   as you have to press a button to dismiss the dialog.
 class MigrationSucceededDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return AlertDialog.Builder(requireContext())
+        return AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle))
             .setTitle(R.string.migration_successful_message)
             .setMessage(R.string.migration__succeeded__message)
             .setPositiveButton(R.string.dialog_ok) { _, _ -> dismiss() }
@@ -76,7 +77,7 @@ class MigrationFailedDialogFragment : DialogFragment() {
         val helpUrl = getString(R.string.link_migration_failed_dialog_learn_more_en)
         val message = getString(messageTemplateId, errorText, helpUrl).parseAsHtml()
 
-        return AlertDialog.Builder(requireContext())
+        return AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle))
             .setTitle(R.string.migration__failed__title)
             .setMessage(message)
             .setPositiveButton(R.string.dialog_ok) { _, _ -> dismiss() }

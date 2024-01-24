@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import com.ichi2.anki.R
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -34,7 +35,7 @@ class ImportDialog : AsyncDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreate(savedInstanceState)
         val type = requireArguments().getInt("dialogType")
-        val dialog = AlertDialog.Builder(requireActivity())
+        val dialog = AlertDialog.Builder(ContextThemeWrapper(requireActivity(), R.style.AlertDialogStyle))
         dialog.setCancelable(true)
         val packagePath = requireArguments().getString("packagePath")!!
         val displayFileName = filenameFromPath(convertToDisplayName(packagePath))

@@ -28,6 +28,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -119,7 +120,7 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         viewModel.onError
             .flowWithLifecycle(lifecycle)
             .onEach { errorMessage ->
-                AlertDialog.Builder(requireContext())
+                AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle))
                     .setTitle(R.string.vague_error)
                     .setMessage(errorMessage)
                     .show()

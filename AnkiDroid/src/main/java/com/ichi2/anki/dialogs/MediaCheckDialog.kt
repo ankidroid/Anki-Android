@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.os.bundleOf
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
@@ -26,7 +27,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val dialog = AlertDialog.Builder(requireContext())
+        val dialog = AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle))
             .setTitle(notificationTitle)
         return when (requireArguments().getInt("dialogType")) {
             DIALOG_CONFIRM_MEDIA_CHECK -> {

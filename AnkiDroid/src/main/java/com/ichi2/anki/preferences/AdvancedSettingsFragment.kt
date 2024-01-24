@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.preference.*
 import com.ichi2.anki.*
 import com.ichi2.anki.R
@@ -52,7 +53,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 } catch (e: StorageAccessException) {
                     // TODO: Request MANAGE_EXTERNAL_STORAGE
                     Timber.e(e, "Could not initialize directory: %s", newPath)
-                    AlertDialog.Builder(requireContext()).show {
+                    AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle)).show {
                         setTitle(R.string.dialog_collection_path_not_dir)
                         setPositiveButton(R.string.dialog_ok) { _, _ -> }
                         setNegativeButton(R.string.reset_custom_buttons) { _, _ ->
@@ -66,7 +67,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
         // Configure "Reset languages" preference
         requirePreference<Preference>(R.string.pref_reset_languages_key).setOnPreferenceClickListener {
-            AlertDialog.Builder(requireContext()).show {
+            AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogStyle)).show {
                 setTitle(R.string.reset_languages)
                 setIcon(R.drawable.ic_warning)
                 setMessage(R.string.reset_languages_question)
