@@ -39,6 +39,7 @@
         <item name="reviewCountColor">@color/material_green_400</item>
         <item name="zeroCountColor">#202020</item>
         <!-- Reviewer colors -->
+        <item name="showAnswerColor">@color/theme_black_primary</item>
         <item name="topBarColor">@color/theme_black_primary</item>
         <item name="maxTimerColor">@color/material_red_300</item>
         <item name="answerButtonTextColor">@color/theme_black_primary_text</item>

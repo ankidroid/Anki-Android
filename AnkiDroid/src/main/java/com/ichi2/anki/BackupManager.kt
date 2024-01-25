@@ -262,15 +262,15 @@ open class BackupManager {
          * Run the sqlite3 command-line-tool (if it exists) on the collection to dump to a text file
          * and reload as a new database. Recently this command line tool isn't available on many devices
          *
-         * @param col Collection
          * @return whether the repair was successful
          */
-        fun repairCollection(col: Collection): Boolean {
-            val colPath = col.path
+        context (Collection)
+        fun repairCollection(): Boolean {
+            val colPath = this@Collection.path
             val colFile = File(colPath)
             val time = TimeManager.time
             Timber.i("BackupManager - RepairCollection - Closing Collection")
-            col.close()
+            this@Collection.close()
 
             // repair file
             val execString = "sqlite3 $colPath .dump | sqlite3 $colPath.tmp"
@@ -457,9 +457,10 @@ open class BackupManager {
          *
          * @return Whether all specified backups were successfully deleted.
          */
+        context (Collection)
         @Throws(IllegalArgumentException::class)
-        fun deleteBackups(collection: Collection, backupsToDelete: List<File>): Boolean {
-            val allBackups = getBackups(File(collection.path))
+        fun deleteBackups(backupsToDelete: List<File>): Boolean {
+            val allBackups = getBackups(File(this@Collection.path))
             val invalidBackupsToDelete = backupsToDelete.toSet() - allBackups.toSet()
 
             if (invalidBackupsToDelete.isNotEmpty()) {

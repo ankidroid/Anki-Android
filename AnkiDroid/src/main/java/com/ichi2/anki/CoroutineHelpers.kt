@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.StringRes
@@ -46,6 +47,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
@@ -63,13 +65,13 @@ import kotlin.coroutines.suspendCoroutine
  * Other errors should ideally be handled in the block.
  */
 fun CoroutineScope.launchCatching(
-    block: suspend () -> Unit,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    errorMessageHandler: suspend (String) -> Unit
+    errorMessageHandler: suspend (String) -> Unit,
+    block: suspend () -> Unit
 ): Job {
     return launch(dispatcher) {
         try {
-            block.invoke()
+            block()
         } catch (cancellationException: CancellationException) {
             // CancellationException should be re-thrown to propagate it to the parent coroutine
             throw cancellationException
@@ -84,16 +86,18 @@ fun CoroutineScope.launchCatching(
     }
 }
 
-@Suppress("UNCHECKED_CAST")
-fun <T> ViewModel.launchCatching(
-    block: suspend T.() -> Unit,
+interface OnErrorListener {
+    val onError: MutableSharedFlow<String>
+}
+
+fun <T> T.launchCatching(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    errorMessageHandler: suspend (String) -> Unit
-): Job {
+    block: suspend T.() -> Unit
+): Job where T : ViewModel, T : OnErrorListener {
     return viewModelScope.launchCatching(
-        { block.invoke(this as T) },
         dispatcher,
-        errorMessageHandler
+        { onError.emit(it) },
+        { block() }
     )
 }
 
@@ -260,6 +264,7 @@ suspend fun <T> Backend.withProgress(
 suspend fun <T> FragmentActivity.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
+    @StringRes manualCancelButton: Int? = null,
     op: suspend () -> T
 ): T {
     val backend = CollectionManager.getBackend()
@@ -269,7 +274,8 @@ suspend fun <T> FragmentActivity.withProgress(
             fun() { onCancel(backend) }
         } else {
             null
-        }
+        },
+        manualCancelButton = manualCancelButton
     ) { dialog ->
         backend.withProgress(
             extractProgress = extractProgress,
@@ -316,12 +322,20 @@ suspend fun <T> withProgressDialog(
     context: Activity,
     onCancel: (() -> Unit)?,
     delayMillis: Long = 600,
+    @StringRes manualCancelButton: Int? = null,
     op: suspend (android.app.ProgressDialog) -> T
 ): T = coroutineScope {
     val dialog = android.app.ProgressDialog(context, R.style.AppCompatProgressDialogStyle).apply {
         setCancelable(onCancel != null)
-        onCancel?.let {
-            setOnCancelListener { it() }
+        if (manualCancelButton != null) {
+            setCancelable(false)
+            setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(manualCancelButton)) { _, _ ->
+                onCancel?.let { it() }
+            }
+        } else {
+            onCancel?.let {
+                setOnCancelListener { it() }
+            }
         }
     }
     // disable taps immediately

@@ -206,10 +206,11 @@ class Decks(private val col: Collection) {
         return result
     }
 
-    /** The currently selected did. */
-    fun selected(): DeckId {
-        return this.col.backend.getCurrentDeck().id
-    }
+    /** @return The currently selected deck ID. */
+    fun getCurrentId(): DeckId = col.backend.getCurrentDeck().id
+
+    /** @return The currently selected deck ID. */
+    fun selected(): DeckId = getCurrentId()
 
     fun current(): Deck {
         return this.get(this.selected()) ?: this.get(1)!!

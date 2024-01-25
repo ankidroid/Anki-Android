@@ -135,3 +135,9 @@ class AnswerTimer(private val cardTimer: Chronometer) {
     private val elapsedRealTime
         get() = SystemClock.elapsedRealtime()
 }
+
+/** @see AnswerTimer.resume */
+context (Collection)
+fun AnswerTimer.resume() {
+    this@AnswerTimer.resume(this@Collection)
+}

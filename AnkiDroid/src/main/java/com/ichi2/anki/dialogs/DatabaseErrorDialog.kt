@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.os.Message
 import android.os.Parcelable
 import android.view.KeyEvent
+import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -493,7 +494,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     databaseVersion
                 )
             }
-            DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> res().getString(R.string.directory_inaccessible_after_uninstall_summary, CollectionHelper.getCurrentAnkiDroidDirectory(requireContext()))
+            DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> {
+                val directory = context?.let { CollectionHelper.getCurrentAnkiDroidDirectory(it) }
+                    ?: res().getString(R.string.card_browser_unknown_deck_name)
+                res().getString(R.string.directory_inaccessible_after_uninstall_summary, directory)
+            }
             else -> requireArguments().getString("dialogMessage")
         }
     private val title: String
@@ -560,6 +565,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
          *
          * @param dialogType the sub-dialog to show
          */
+        @CheckResult
         fun newInstance(dialogType: DatabaseErrorDialogType): DatabaseErrorDialog {
             val f = DatabaseErrorDialog()
             val args = Bundle()

@@ -89,6 +89,7 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.libanki.*
+import com.ichi2.libanki.Collection
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
@@ -515,7 +516,7 @@ open class CardBrowser :
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
-    override fun onCollectionLoaded(col: com.ichi2.libanki.Collection) {
+    override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         Timber.d("onCollectionLoaded()")
         registerExternalStorageListener()
@@ -650,6 +651,13 @@ open class CardBrowser :
                     return true
                 }
             }
+            KeyEvent.KEYCODE_P -> {
+                if (event.isShiftPressed && event.isCtrlPressed) {
+                    Timber.i("Ctrl+Shift+P - Preview")
+                    onPreview()
+                    return true
+                }
+            }
         }
         return super.onKeyDown(keyCode, event)
     }
@@ -658,8 +666,10 @@ open class CardBrowser :
      * If one or more card is unmarked, all will be marked,
      * otherwise, they will be unmarked  */
     @NeedsTest("Test that the mark get toggled as expected for a list of selected cards")
-    private fun toggleMark() {
-        launchCatchingTask { withProgress { viewModel.toggleMark(selectedCardIds) } }
+    @VisibleForTesting
+    fun toggleMark() = launchCatchingTask {
+        withProgress { viewModel.toggleMark(selectedCardIds) }
+        cardsAdapter.notifyDataSetChanged()
     }
 
     @VisibleForTesting
@@ -1379,6 +1389,10 @@ open class CardBrowser :
     @RustCleanup("remove card cache; switch to RecyclerView and browserRowForId (#11889)")
     @VisibleForTesting
     fun searchCards() {
+        if (!viewModel.initCompleted) {
+            Timber.d("!initCompleted, not searching")
+            return
+        }
         // cancel the previous search & render tasks if still running
         invalidate()
         if ("" != mSearchTerms && mSearchView != null) {
@@ -1514,7 +1528,7 @@ open class CardBrowser :
     private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) = withProgress {
         undoableOp {
             val selectedNotes = selectedCardIds
-                .map { cardId -> getCard(cardId).note(this) }
+                .map { cardId -> getCard(cardId).note() }
                 .distinct()
                 .onEach { note ->
                     val previousTags: List<String> = note.tags
@@ -1554,7 +1568,7 @@ open class CardBrowser :
         val card = cardBrowserCard!!
         withProgress {
             undoableOp {
-                updateNote(card.note(this))
+                updateNote(card.note())
             }
         }
         updateCardInList(card)
@@ -1564,7 +1578,7 @@ open class CardBrowser :
      * Removes cards from view. Doesn't delete them in model (database).
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
-    private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
+    private fun removeNotesView(cardsIds: List<Long>, reorderCards: Boolean) {
         val idToPos = viewModel.cardIdToPositionMap
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
         mReloadRequired = mReloadRequired || cardsIds.contains(reviewerCardId)
@@ -1931,7 +1945,7 @@ open class CardBrowser :
         override var position: Int
 
         private val inCardMode: Boolean
-        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
+        constructor(id: Long, col: Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
             this.position = position
             this.inCardMode = cardsOrNotes == CARDS
         }
@@ -2088,8 +2102,8 @@ open class CardBrowser :
             if (a.startsWith(q)) {
                 a = a.substring(q.length)
             }
-            a = formatQA(a, AnkiDroidApp.instance)
-            q = formatQA(q, AnkiDroidApp.instance)
+            a = formatQA(a, qa, AnkiDroidApp.instance)
+            q = formatQA(q, qa, AnkiDroidApp.instance)
             mQa = Pair(q, a)
         }
 
@@ -2177,12 +2191,16 @@ open class CardBrowser :
     }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
+        if (handler === this || handler === viewModel) {
+            return
+        }
+
         if ((
             changes.browserSidebar ||
                 changes.browserTable ||
                 changes.noteText ||
                 changes.card
-            ) && handler !== this
+            )
         ) {
             refreshAfterUndo()
         }
@@ -2209,10 +2227,14 @@ open class CardBrowser :
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
         @CheckResult
-        private fun formatQA(text: String, context: Context): String {
+        private fun formatQA(
+            text: String,
+            qa: TemplateManager.TemplateRenderContext.TemplateRenderOutput,
+            context: Context
+        ): String {
             val showFilenames =
                 context.sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
-            return formatQAInternal(text, showFilenames)
+            return formatQAInternal(text, qa, showFilenames)
         }
 
         /**
@@ -2222,7 +2244,11 @@ open class CardBrowser :
          */
         @VisibleForTesting
         @CheckResult
-        fun formatQAInternal(txt: String, showFileNames: Boolean): String {
+        fun formatQAInternal(
+            txt: String,
+            qa: TemplateManager.TemplateRenderContext.TemplateRenderOutput,
+            showFileNames: Boolean
+        ): String {
             /* Strips all formatting from the string txt for use in displaying question/answer in browser */
             var s = txt
             s = s.replace("<!--.*?-->".toRegex(), "")
@@ -2230,7 +2256,9 @@ open class CardBrowser :
             s = s.replace("<br />", " ")
             s = s.replace("<div>", " ")
             s = s.replace("\n", " ")
-            s = if (showFileNames) Utils.stripSoundMedia(s) else Utils.stripSoundMedia(s, " ")
+            // we use " " as often users won't leave a space between the '[sound:] tag
+            // and continuation of the content
+            s = if (showFileNames) Sound.replaceWithFileNames(s, qa) else stripAvRefs(s, " ")
             s = s.replace("\\[\\[type:[^]]+]]".toRegex(), "")
             s = if (showFileNames) Utils.stripHTMLMedia(s) else Utils.stripHTMLMedia(s, " ")
             s = s.trim { it <= ' ' }
@@ -2246,13 +2274,14 @@ suspend fun searchForCards(
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
         (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query, order)).asSequence()
-            .toCardCache(this, cardsOrNotes)
+            .toCardCache(cardsOrNotes)
             .toMutableList()
     }
 }
 
-private fun Sequence<CardId>.toCardCache(col: com.ichi2.libanki.Collection, isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
-    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
+context (Collection)
+private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
+    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
 
 class Previewer2Destination(val currentIndex: Int, val selectedCardIds: LongArray)

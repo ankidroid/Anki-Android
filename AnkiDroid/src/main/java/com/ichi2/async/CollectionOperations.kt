@@ -27,33 +27,23 @@ import timber.log.Timber
 import java.util.*
 
 /**
- * This file contains functions that have been migrated from [CollectionTask]
- * Remove this comment when migration has been completed
- * TODO: All functions associated to Collection can be converted to extension function to avoid redundant parameter [col] in each.
- */
-
-/**
- * Takes a list of media file names and removes them from the Collection
- * @param col Collection from which media is to be deleted
+ * Takes a list of media file names and removes them from the [Collection]
  * @param unused List of media names to be deleted
  */
-fun deleteMedia(
-    col: Collection,
-    unused: List<String>
-): Int {
+context (Collection)
+fun deleteMedia(unused: List<String>): Int {
     // FIXME: this provides progress info that is not currently used
-    col.media.removeFiles(unused)
+    this@Collection.media.removeFiles(unused)
     return unused.size
 }
 
 // TODO: Once [com.ichi2.async.CollectionTask.RebuildCram] and [com.ichi2.async.CollectionTask.EmptyCram]
 // are migrated to Coroutines, move this function to [com.ichi2.anki.StudyOptionsFragment]
-fun updateValuesFromDeck(
-    col: Collection
-): StudyOptionsFragment.DeckStudyData? {
+context (Collection)
+fun updateValuesFromDeck(): StudyOptionsFragment.DeckStudyData? {
     Timber.d("doInBackgroundUpdateValuesFromDeck")
     return try {
-        val sched = col.sched
+        val sched = this@Collection.sched
         val counts = sched.counts()
         val totalNewCount = sched.totalNewForCurrentDeck()
         val totalCount = sched.cardCount()
@@ -125,13 +115,13 @@ suspend fun renderBrowserQA(
  * Handles everything for a model change at once - template add / deletes as well as content updates
  * @return Pair<Boolean, String> : (true, null) when success, (false, exceptionMessage) when failure
  */
+context (Collection)
 fun saveModel(
-    col: Collection,
     notetype: NotetypeJson,
     templateChanges: ArrayList<Array<Any>>
 ) {
     Timber.d("doInBackgroundSaveModel")
-    val oldModel = col.notetypes.get(notetype.getLong("id"))
+    val oldModel = this@Collection.notetypes.get(notetype.getLong("id"))
 
     // TODO: make undoable
     val newTemplates = notetype.getJSONArray("tmpls")
@@ -140,11 +130,11 @@ fun saveModel(
         when (change[1] as CardTemplateNotetype.ChangeType) {
             CardTemplateNotetype.ChangeType.ADD -> {
                 Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
-                col.notetypes.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
+                this@Collection.notetypes.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
             }
             CardTemplateNotetype.ChangeType.DELETE -> {
                 Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
-                col.notetypes.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
+                this@Collection.notetypes.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
             }
         }
     }
@@ -152,6 +142,6 @@ fun saveModel(
     // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
     // This could be done better
     notetype.put("mod", oldModel!!.getLong("mod"))
-    col.notetypes.save(notetype)
-    col.notetypes.update(notetype)
+    this@Collection.notetypes.save(notetype)
+    this@Collection.notetypes.update(notetype)
 }

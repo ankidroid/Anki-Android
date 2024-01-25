@@ -229,7 +229,6 @@
     <string name="about_ankidroid_error_copy_debug_info">复制调试信息到剪贴板时出错</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">卡片内容错误：加载「%s」失败</string>
-    <string name="card_viewer_media_relative_protocol">卡片内容错误：需要更新媒体</string>
     <!-- Deck Picker -->
     <string name="search_decks">搜索牌组</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">显示迁移进度</string>
@@ -263,7 +262,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">电子邮件地址是必填项</string>
+    <string name="invalid_email">输入有效的电子邮件地址</string>
     <string name="password_empty">密码是必填项</string>
     <string name="back_pressed_once">再按一次返回键以退出</string>
     <string name="back_pressed_once_reviewer">再按一次返回键以返回</string>

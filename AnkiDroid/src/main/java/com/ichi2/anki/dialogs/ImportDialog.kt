@@ -17,6 +17,8 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
+import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
 import com.ichi2.utils.negativeButton
@@ -93,12 +95,19 @@ class ImportDialog : AsyncDialogFragment() {
         const val DIALOG_IMPORT_ADD_CONFIRM = 2
         const val DIALOG_IMPORT_REPLACE_CONFIRM = 3
 
+        @VisibleForTesting
+        val dialogTypes = arrayOf(
+            DIALOG_IMPORT_ADD_CONFIRM,
+            DIALOG_IMPORT_REPLACE_CONFIRM
+        )
+
         /**
          * A set of dialogs which deal with importing a file
          *
          * @param dialogType An integer which specifies which of the sub-dialogs to show
          * @param packagePath the path of the package to import
          */
+        @CheckResult
         fun newInstance(dialogType: Int, packagePath: String): ImportDialog {
             val f = ImportDialog()
             val args = Bundle()

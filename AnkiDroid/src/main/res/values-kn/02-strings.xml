@@ -232,7 +232,6 @@
     <string name="about_ankidroid_error_copy_debug_info">ಡೀಬಗ್ ಮಾಹಿತಿಯನ್ನು ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ಗೆ ನಕಲಿಸುವಲ್ಲಿ ದೋಷ</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ಕಾರ್ಡ್ ವಿಷಯ ದೋಷ: ‘%s’ ಲೋಡ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ</string>
-    <string name="card_viewer_media_relative_protocol">ಕಾರ್ಡ್ ವಿಷಯ ದೋಷ: ಮಾಧ್ಯಮ ನವೀಕರಣ ಅಗತ್ಯವಿದೆ</string>
     <!-- Deck Picker -->
     <string name="search_decks">ಹುಡುಕಾಟ ಡೆಕ್‌ಗಳು</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
@@ -266,7 +265,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">ಇಮೇಲ್ ವಿಳಾಸದ ಅಗತ್ಯವಿದೆ</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">ಗುಪ್ತಪದದ ಅಗತ್ಯವಿದೆ</string>
     <string name="back_pressed_once">ನಿರ್ಗಮಿಸಲು ಮತ್ತೆ ಒತ್ತಿರಿ</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>

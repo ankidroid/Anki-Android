@@ -179,7 +179,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Gagal menjadwalkan pengingat</string>
     <string name="boot_service_too_many_notifications">Terlalu banyak pengingat dijadwalkan. Sebagian tidak akan muncul</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Seleksi Petunjuk Papan Tik</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Beberapa papan tik multibahasa, seperti GBoard mendukung pergantian bahasa saat mengedit teks\n\nHarap meminta fitur “setImeHintLocales” dari pembuat papan tikmu jika tidak dapat mengganti bahasa</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Menggunakan AnkiDroid</string>

@@ -16,6 +16,8 @@
 package com.ichi2.anki
 
 import androidx.annotation.CheckResult
+import com.ichi2.libanki.SoundOrVideoTag
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -23,13 +25,13 @@ import org.junit.Test
 class CardBrowserNonAndroidTest {
     @Test
     fun soundIsStrippedCorrectly() {
-        val output = formatWithFilenamesStripped("aou[sound:foo.mp3]aou")
+        val output = formatWithFilenamesStripped("aou[anki:play:a:0]aou")
         assertThat(output, equalTo("aou aou"))
     }
 
     @Test
     fun soundIsRetainedWithoutTag() {
-        val output = formatWithFilenamesRetained("aou[sound:foo.mp3]aou")
+        val output = formatWithFilenamesRetained("aou[anki:play:a:0]aou")
         assertThat(output, equalTo("aou foo.mp3 aou"))
     }
 
@@ -47,11 +49,33 @@ class CardBrowserNonAndroidTest {
 
     @CheckResult
     private fun formatWithFilenamesRetained(input: String): String {
-        return CardBrowser.formatQAInternal(input, true)
+        return CardBrowser.formatQAInternal(
+            input,
+            TemplateRenderOutput(
+                questionText = input,
+                answerText = input,
+                questionAvTags = listOf(SoundOrVideoTag("foo.mp3")),
+                answerAvTags = listOf(SoundOrVideoTag("foo.mp3")),
+                css = ""
+
+            ),
+            true
+        )
     }
 
     @CheckResult
     private fun formatWithFilenamesStripped(input: String): String {
-        return CardBrowser.formatQAInternal(input, false)
+        return CardBrowser.formatQAInternal(
+            input,
+            TemplateRenderOutput(
+                questionText = input,
+                answerText = input,
+                questionAvTags = listOf(SoundOrVideoTag("foo.mp3")),
+                answerAvTags = listOf(SoundOrVideoTag("foo.mp3")),
+                css = ""
+
+            ),
+            false
+        )
     }
 }

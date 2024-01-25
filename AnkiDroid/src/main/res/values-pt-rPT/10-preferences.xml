@@ -242,8 +242,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reagendar</string>
     <string name="deck_conf_cram_reschedule_summ">Reagendar as fichas, com base nas minhas respostas neste baralho</string>
     <string name="deck_conf_cram_filter_2_check">Ativar segundo filtro</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Etapas personalizadas (em minutos)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definir passos personalizados</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Ajude a tornar o AnkiDroid melhor!</string>
     <string name="analytics_title" maxLength="41">Partilhar dados de utilização da funcionalidade</string>

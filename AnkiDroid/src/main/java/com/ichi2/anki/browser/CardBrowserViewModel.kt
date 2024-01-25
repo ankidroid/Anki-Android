@@ -209,7 +209,7 @@ class CardBrowserViewModel(
         viewModelScope.launch {
             // PERF: slightly inefficient if the source was lastDeckId
             setDeckId(getInitialDeck())
-            val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this) }
+            val cardsOrNotes = withCol { CardsOrNotes.fromCollection() }
             cardsOrNotesFlow.update { cardsOrNotes }
 
             withCol {
@@ -234,7 +234,7 @@ class CardBrowserViewModel(
             Timber.i("Not marking cards - nothing selected")
             return
         }
-        undoableOp {
+        undoableOp(this) {
             val noteIds = notesOfCards(cardIds)
             // if all notes are marked, remove the mark
             // if no notes are marked, add the mark
@@ -247,6 +247,7 @@ class CardBrowserViewModel(
                 tags.bulkRemove(noteIds, "marked")
             }
         }
+        selectedRows.forEach { it.reload() }
     }
 
     /**
@@ -259,7 +260,7 @@ class CardBrowserViewModel(
     fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch {
         withCol {
             // Change this to only change the preference on a state change
-            newValue.saveToCollection(this)
+            newValue.saveToCollection()
         }
         cardsOrNotesFlow.update { newValue }
     }
@@ -362,7 +363,7 @@ class CardBrowserViewModel(
             CARDS -> Pair(ExportDialogFragment.ExportType.Cards, selectedCardIds)
             NOTES -> Pair(
                 ExportDialogFragment.ExportType.Notes,
-                withCol { CardService.selectedNoteIds(selectedCardIds, this) }
+                withCol { CardService.selectedNoteIds(selectedCardIds) }
             )
         }
     }

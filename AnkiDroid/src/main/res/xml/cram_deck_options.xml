@@ -50,6 +50,27 @@
             android:key="@string/filtered_deck_order_2_key"
             android:title="@string/deck_conf_cram_order" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/deck_conf_cram_preview_delays" android:key="@string/filtered_deck_previewDelays_key">
+        <Preference android:summary="@string/deck_conf_cram_preview_delays_summ" android:selectable="false"></Preference>
+        <com.ichi2.preferences.IncrementerNumberRangePreference
+            android:key="@string/filtered_deck_preview_again"
+            android:numeric="integer"
+            android:title="@string/ease_button_again"
+            app:max="99999"
+            app:min="1" />
+        <com.ichi2.preferences.IncrementerNumberRangePreference
+            android:key="@string/filtered_deck_preview_hard"
+            android:numeric="integer"
+            android:title="@string/ease_button_hard"
+            app:max="99999"
+            app:min="0" />
+        <com.ichi2.preferences.IncrementerNumberRangePreference
+            android:key="@string/filtered_deck_preview_good"
+            android:numeric="integer"
+            android:title="@string/ease_button_good"
+            app:max="99999"
+            app:min="0" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/study_options" android:key="@string/filtered_deck_studyOptions_key" >
         <CheckBoxPreference
             android:defaultValue="true"
@@ -61,12 +82,6 @@
             android:disableDependentsState="false"
             android:key="@string/filtered_deck_stepsOn_key"
             android:title="@string/deck_conf_cram_steps_summ" />
-
-        <com.ichi2.preferences.StepsPreference
-            android:dependency="@string/filtered_deck_stepsOn_key"
-            android:key="@string/filtered_deck_steps_key"
-            android:title="@string/deck_conf_cram_steps"
-            app:allowEmpty="false" />
 
         <CheckBoxPreference
             android:key="@string/filtered_deck_filterSecond_key"

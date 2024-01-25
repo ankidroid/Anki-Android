@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Échec de la planification des rappels</string>
     <string name="boot_service_too_many_notifications">Trop de rappels planifiés. Certains n’apparaîtront pas</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Sélection des indices clavier</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Certains claviers multilingues, comme GBoard, prennent en charge le changement de langue lors de l\'édition du texte\n\nVeuillez demander la fonctionnalité « setImeHintLocales » du fabricant de votre clavier si votre clavier ne change pas de langue.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Utilisation d\'AnkiDroid</string>

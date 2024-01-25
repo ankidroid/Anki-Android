@@ -104,10 +104,6 @@ class MissingImageHandlerTest {
         sut.processMissingSound(file, onFailure)
     }
 
-    private fun processInefficientImage(onFailure: Runnable) {
-        sut.processInefficientImage(onFailure)
-    }
-
     @Test
     fun uiFailureDoesNotCrash() {
         processFailure(getValidRequest("example.jpg")) { throw RuntimeException("expected") }
@@ -136,24 +132,6 @@ class MissingImageHandlerTest {
     @Test
     fun testMissingSound_ExceptionCaught() {
         assertDoesNotThrow { processMissingSound(File("example.wav")) { throw RuntimeException("expected") } }
-    }
-
-    @Test
-    fun testInefficientImage() {
-        // Tests that the runnable passed to processInefficientImage only runs once
-        class RunTest : Runnable {
-            var nTimesRun = 0
-                private set
-
-            override fun run() {
-                nTimesRun++
-            }
-        }
-
-        val runnableTest = RunTest()
-        processInefficientImage(runnableTest)
-        processInefficientImage(runnableTest)
-        assertThat(runnableTest.nTimesRun, equalTo(1))
     }
 
     private fun getValidRequest(fileName: String): WebResourceRequest {

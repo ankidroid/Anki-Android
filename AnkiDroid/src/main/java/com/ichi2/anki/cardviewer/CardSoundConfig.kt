@@ -18,7 +18,6 @@ package com.ichi2.anki.cardviewer
 
 import androidx.annotation.CheckResult
 import com.ichi2.anki.CardUtils
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
@@ -38,10 +37,11 @@ class CardSoundConfig(val replayQuestion: Boolean, val autoplay: Boolean, val de
     fun appliesTo(card: Card): Boolean = CardUtils.getDeckIdForCard(card) == deckId
 
     companion object {
+        context(Collection)
         @CheckResult
-        fun create(collection: Collection, card: Card): CardSoundConfig {
+        fun create(card: Card): CardSoundConfig {
             Timber.v("start loading SoundConfig")
-            val deckConfig = collection.decks.confForDid(CardUtils.getDeckIdForCard(card))
+            val deckConfig = this@Collection.decks.confForDid(CardUtils.getDeckIdForCard(card))
 
             val autoPlay = deckConfig.optBoolean("autoplay", false)
 
@@ -51,8 +51,5 @@ class CardSoundConfig(val replayQuestion: Boolean, val autoplay: Boolean, val de
                 Timber.d("loaded SoundConfig: %s", this)
             }
         }
-
-        @CheckResult
-        suspend fun create(card: Card): CardSoundConfig = withCol { create(this, card) }
     }
 }

@@ -17,11 +17,7 @@
 package com.ichi2.anki.dialogs.utils
 
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.input.getInputField
-
-val MaterialDialog.positiveButton get() = this.getActionButton(WhichButton.POSITIVE)
 
 var MaterialDialog.input
     get() = this.getInputField().text.toString()

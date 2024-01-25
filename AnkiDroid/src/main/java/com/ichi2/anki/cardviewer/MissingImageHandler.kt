@@ -34,7 +34,6 @@ class MissingImageHandler {
     }
 
     private var missingMediaCount = 0
-    private var hasShownInefficientImage = false
     private var hasExecuted = false
 
     private var automaticTtsFailureCount = 0
@@ -85,13 +84,6 @@ class MissingImageHandler {
 
     fun onCardSideChange() {
         hasExecuted = false
-    }
-
-    fun processInefficientImage(onFailure: Runnable) {
-        if (hasShownInefficientImage) return
-
-        hasShownInefficientImage = true
-        onFailure.run()
     }
 
     fun processTtsFailure(activity: AnkiActivity, error: TtsPlayer.TtsError, playingAutomatically: Boolean) {

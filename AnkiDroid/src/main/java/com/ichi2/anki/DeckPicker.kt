@@ -545,7 +545,7 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.UNBURY -> {
                 Timber.i("ContextMenu: Unbury deck selected")
-                getColUnsafe.sched.unburyCardsForDeck(deckId)
+                getColUnsafe.sched.unburyDeck(deckId)
                 onRequireDeckListUpdate()
                 dismissAllDialogFragments()
             }
@@ -1559,7 +1559,7 @@ open class DeckPicker :
                 withCol {
                     Timber.i("RepairCollection: Closing collection")
                     close()
-                    BackupManager.repairCollection(this)
+                    BackupManager.repairCollection()
                 }
             }
             if (!result) {
@@ -1618,7 +1618,7 @@ open class DeckPicker :
         launchCatchingTask {
             // Number of deleted files
             val noOfDeletedFiles = withProgress(resources.getString(R.string.delete_media_message)) {
-                withCol { deleteMedia(this, unused) }
+                withCol { deleteMedia(unused) }
             }
             showSimpleMessageDialog(
                 title = resources.getString(R.string.delete_media_result_title),
@@ -2127,7 +2127,7 @@ open class DeckPicker :
                     Timber.d("rebuildFiltered: doInBackground - RebuildCram")
                     decks.select(did)
                     sched.rebuildDyn(decks.selected())
-                    updateValuesFromDeck(this)
+                    updateValuesFromDeck()
                 }
             }
             updateDeckList()
@@ -2142,7 +2142,7 @@ open class DeckPicker :
                 withCol {
                     Timber.d("doInBackgroundEmptyCram")
                     sched.emptyDyn(decks.selected())
-                    updateValuesFromDeck(this)
+                    updateValuesFromDeck()
                 }
             }
             updateDeckList()

@@ -37,6 +37,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -190,6 +191,10 @@ open class Reviewer :
         textBarReview = findViewById(R.id.review_number)
         toolbar = findViewById(R.id.toolbar)
         micToolBarLayer = findViewById(R.id.mic_tool_bar_layer)
+        window.navigationBarColor = ThemeUtils.getThemeAttrColor(
+            this,
+            R.attr.showAnswerColor
+        )
 
         startLoadingCollection()
     }
@@ -202,7 +207,7 @@ open class Reviewer :
     override fun onResume() {
         when {
             stopTimerOnAnswer && isDisplayingAnswer -> {}
-            else -> launchCatchingTask { withCol { answerTimer.resume(this) } }
+            else -> launchCatchingTask { withCol { answerTimer.resume() } }
         }
         super.onResume()
         if (typeAnswer?.autoFocusEditText() == true) {
@@ -1015,7 +1020,7 @@ open class Reviewer :
     override suspend fun updateCurrentCard() {
         val state = withCol {
             sched.currentQueueState()?.apply {
-                topCard.renderOutput(this@withCol, true)
+                topCard.renderOutput(true)
             }
         }
         state?.timeboxReached?.let { dealWithTimeBox(it) }

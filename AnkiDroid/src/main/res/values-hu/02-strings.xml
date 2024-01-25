@@ -232,7 +232,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Hiba történt a hibakeresési információk vágólapra másolása közben</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Hibás kártya tartalom: \"%s\" betöltése sikertelen</string>
-    <string name="card_viewer_media_relative_protocol">Hiba a kártya tartalmában: a média frissítése szükséges</string>
     <!-- Deck Picker -->
     <string name="search_decks">Keresés a paklikban</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Áttelepítés állapota</string>
@@ -266,7 +265,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email cím megadása kötelező</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Jelszó kötelező</string>
     <string name="back_pressed_once">Kilépéshez érintsd meg újra a vissza gombot</string>
     <string name="back_pressed_once_reviewer">Visszatéréshez nyomd meg újra a Vissza gombot</string>

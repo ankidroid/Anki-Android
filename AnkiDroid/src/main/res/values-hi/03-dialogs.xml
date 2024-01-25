@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">रिमाइंडर शेड्यूल करने में विफल</string>
     <string name="boot_service_too_many_notifications">बहुत सारे अनुस्मारक निर्धारित हैं। कुछ दिखाई नहीं देगा</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">कीबोर्ड संकेत चयन</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">कुछ बहुभाषी कीबोर्ड, जैसे कि GBoard टेक्स्ट को बदलते समय भाषा का समर्थन करते हैं, जब टेक्स्ट का \n\n कृपया संपादन करें, तो यदि आपका कीबोर्ड भाषा नहीं बदलता है, तो अपने कीबोर्ड निर्माता से \"setImeHintLocales\" सुविधा का अनुरोध करें।</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid का उपयोग करने में</string>

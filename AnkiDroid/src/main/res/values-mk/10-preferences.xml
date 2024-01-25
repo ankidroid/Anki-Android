@@ -242,8 +242,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Презакажи</string>
     <string name="deck_conf_cram_reschedule_summ">Презакажи карти според мојте одговори во овој шпил</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Сопствени чекори (во минути)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Дефинирај сопствени чекори</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Помогни AnkiDroid да стане подобро!</string>
     <string name="analytics_title" maxLength="41">Share feature usage</string>

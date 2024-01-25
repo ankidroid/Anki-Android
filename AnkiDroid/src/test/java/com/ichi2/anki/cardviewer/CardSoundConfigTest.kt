@@ -17,8 +17,9 @@
 package com.ichi2.anki.cardviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.libanki.Card
 import com.ichi2.testutils.JvmTest
-import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
@@ -34,7 +35,7 @@ class CardSoundConfigTest : JvmTest() {
         // defaults as-of Anki Desktop 23.10 (51a10f09)
         val note = addNoteUsingBasicModel()
         val card = note.firstCard()
-        CardSoundConfig.create(card).run {
+        createCardSoundConfig(card).run {
             assertThat("deckId", deckId, equalTo(card.did))
             // Anki Desktop: "Skip question when replaying answer" -> false
             // our variable is reversed, so true
@@ -49,7 +50,7 @@ class CardSoundConfigTest : JvmTest() {
     fun `cards from the same note are equal`() = runTest {
         val note = addNoteUsingBasicAndReversedModel()
         val (card1, card2) = note.cards()
-        CardSoundConfig.create(card1).run {
+        createCardSoundConfig(card1).run {
             assertThat("same note", this.appliesTo(card2))
         }
     }
@@ -57,7 +58,7 @@ class CardSoundConfigTest : JvmTest() {
     @Test
     fun `cards from the same deck are equal`() = runTest {
         val (note1, note2) = addNotes(count = 2)
-        CardSoundConfig.create(note1.firstCard()).run {
+        createCardSoundConfig(note1.firstCard()).run {
             assertThat("same note", this.appliesTo(note2.firstCard()))
         }
     }
@@ -66,4 +67,6 @@ class CardSoundConfigTest : JvmTest() {
     @Test
     fun `cards with the same deck options are equal`() {
     }
+
+    private suspend fun createCardSoundConfig(card: Card) = withCol { CardSoundConfig.create(card) }
 }
