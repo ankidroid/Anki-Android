@@ -191,4 +191,9 @@
         <item name="android:background">?attr/dialogBackground</item>
     </style>
 
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:textColorAlertDialogListItem">?android:attr/textColor</item>
+        <item name="android:background">?attr/md_background_color</item>
+    </style>
+
 </resources>
