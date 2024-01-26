@@ -184,7 +184,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     fun calculateCardCount(): Int {
         var count = 0
         for (i in 0 until newCardList!!.size) {
-            if (!newCardList!![i].pureAnswer.equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
+            if (!newCardList!![i].pureAnswer(getColUnsafe).equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
                 count++
             }
         }
@@ -199,7 +199,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
         var i = index + 1
         while (i < newCardList!!.size) {
-            if (!newCardList!![i].pureAnswer.equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
+            if (!newCardList!![i].pureAnswer(getColUnsafe).equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
                 cardIndex = i
                 break
             }
@@ -219,7 +219,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
         var i = index - 1
         while (i >= 0) {
-            if (!newCardList!![i].pureAnswer.equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
+            if (!newCardList!![i].pureAnswer(getColUnsafe).equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
                 cardIndex = i
                 break
             }
@@ -246,7 +246,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     private fun isPrevBtnEnabled(cardIndex: Int): Boolean {
         var i = cardIndex - 1
         while (i >= 0) {
-            if (!newCardList!![i].pureAnswer.equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
+            if (!newCardList!![i].pureAnswer(getColUnsafe).equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
                 return true
             }
             i--
@@ -257,7 +257,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     private fun isNextBtnEnabled(cardIndex: Int): Boolean {
         var i = cardIndex + 1
         while (i < newCardList!!.size) {
-            if (!newCardList!![i].pureAnswer.equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
+            if (!newCardList!![i].pureAnswer(getColUnsafe).equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
                 return true
             }
             i++
@@ -284,9 +284,10 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
-                cardCount = toPreview.note().numberOfCardsEphemeral()
+                cardCount = toPreview.note(getColUnsafe).numberOfCardsEphemeral()
                 for (i in 0..cardCount - 1) {
-                    val card = getDummyCard(mEditedNotetype, i, getBundleEditFields(mNoteEditorBundle))
+                    val card =
+                        getDummyCard(editedNotetype, i, getBundleEditFields(noteEditorBundle))
                     if (card != null) {
                         newCardList!!.add(card)
                     }
@@ -295,49 +296,37 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                     previewLayout!!.setNextButtonEnabled(isNextBtnEnabled(cardIndex))
                     previewLayout!!.setPrevButtonEnabled(isPrevBtnEnabled(cardIndex))
                     previewLayout!!.showNavigationButtons()
-
-                cardCount = toPreview.note(getColUnsafe).numberOfCardsEphemeral()
-                if (cardCount >= 2) {
-                    val fields = getBundleEditFields(mNoteEditorBundle!!)
-                    if (fields.size > 2 && fields[2].isEmpty()) {
-                        previewLayout!!.hideNavigationButtons()
-                    } else {
-                        previewLayout!!.showNavigationButtons()
-                        if (cardIndex == 0) {
-                            previewLayout!!.setNextButtonEnabled(true)
-                            previewLayout!!.setPrevButtonEnabled(false)
-                        } else {
-                            previewLayout!!.setNextButtonEnabled(false)
-                            previewLayout!!.setPrevButtonEnabled(true)
-                        }
+                }
+            } else {
+                // loading from the card template editor
+                allFieldsNull = true
+                // card template with associated card due to opening from note editor
+                if (cardList != null && cardListIndex >= 0 && cardListIndex < cardList!!.size) {
+                    currentCard = PreviewerCard(col, cardList!![cardListIndex])
+                } else if (editedNotetype != null) { // bare note type (not coming from note editor), or new card template
+                    Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting")
+                    currentCard = getDummyCard(editedNotetype!!, ordinal)
+                    if (currentCard == null) {
+                        showThemedToast(
+                            applicationContext,
+                            getString(R.string.invalid_template),
+                            false
+                        )
+                        closeCardTemplatePreviewer()
                     }
                 }
             }
-        } else {
-            // loading from the card template editor
-            allFieldsNull = true
-            // card template with associated card due to opening from note editor
-            if (cardList != null && cardListIndex >= 0 && cardListIndex < cardList!!.size) {
-                currentCard = PreviewerCard(col, cardList!![cardListIndex])
-            } else if (editedNotetype != null) { // bare note type (not coming from note editor), or new card template
-                Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting")
-                currentCard = getDummyCard(editedNotetype!!, ordinal)
-                if (currentCard == null) {
-                    showThemedToast(applicationContext, getString(R.string.invalid_template), false)
-                    closeCardTemplatePreviewer()
-                }
+            if (currentCard == null) {
+                showThemedToast(applicationContext, getString(R.string.invalid_template), false)
+                closeCardTemplatePreviewer()
+                return
             }
+            displayCardQuestion()
+            if (showingAnswer) {
+                displayCardAnswer()
+            }
+            showBackIcon()
         }
-        if (currentCard == null) {
-            showThemedToast(applicationContext, getString(R.string.invalid_template), false)
-            closeCardTemplatePreviewer()
-            return
-        }
-        displayCardQuestion()
-        if (showingAnswer) {
-            displayCardAnswer()
-        }
-        showBackIcon()
     }
 
     protected fun getCard(col: Collection, cardListIndex: Long): Card {
