@@ -110,6 +110,10 @@
 
         <!-- ProgressDialog-->
         <item name="dialogBackground">#ff303030</item>
+
+        <!-- AlertDialogTheme-->
+        <item name="alertDialogTheme">@style/AlertDialogStyle</item>
+
     </style>
 
     <style name="SnackbarTextStyleBlack" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
