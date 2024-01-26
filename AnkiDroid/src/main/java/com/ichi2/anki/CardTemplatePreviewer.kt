@@ -51,6 +51,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
      * A single template was selected, and there was an associated card which exists
      */
     private var cardList: LongArray? = null
+    private var newCardList: MutableList<Card>? = mutableListOf()
     private var noteEditorBundle: Bundle? = null
     private var showingAnswer = false
 
@@ -180,13 +181,33 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
     }
 
+    fun calculateCardCount(): Int {
+        var count = 0
+        for (i in 0 until newCardList!!.size) {
+            if (!newCardList!![i].pureAnswer.equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
+                count++
+            }
+        }
+        return count
+    }
+
     /** When the next template is requested  */
     fun onNextCard() {
         var index = cardIndex
         if (!isNextBtnEnabled(index)) {
             return
         }
-        cardIndex = ++index
+        var i = index + 1
+        while (i < newCardList!!.size) {
+            if (!newCardList!![i].pureAnswer.equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
+                cardIndex = i
+                break
+            }
+            i++
+        }
+        if (i == newCardList!!.size) {
+            return
+        }
         onCardIndexChanged()
     }
 
@@ -196,7 +217,17 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         if (!isPrevBtnEnabled(index)) {
             return
         }
-        cardIndex = --index
+        var i = index - 1
+        while (i >= 0) {
+            if (!newCardList!![i].pureAnswer.equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
+                cardIndex = i
+                break
+            }
+            i--
+        }
+        if (i < 0) {
+            return
+        }
         onCardIndexChanged()
     }
 
@@ -213,11 +244,25 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     }
 
     private fun isPrevBtnEnabled(cardIndex: Int): Boolean {
-        return cardIndex > 0
+        var i = cardIndex - 1
+        while (i >= 0) {
+            if (!newCardList!![i].pureAnswer.equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
+                return true
+            }
+            i--
+        }
+        return false
     }
 
     private fun isNextBtnEnabled(cardIndex: Int): Boolean {
-        return cardIndex < cardCount - 1
+        var i = cardIndex + 1
+        while (i < newCardList!!.size) {
+            if (!newCardList!![i].pureAnswer.equals("<div>The front of this card is blank.<br><a href='https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank'>More information</a></div>")) {
+                return true
+            }
+            i++
+        }
+        return false
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
@@ -239,6 +284,17 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
+                cardCount = toPreview.note().numberOfCardsEphemeral()
+                for (i in 0..cardCount - 1) {
+                    val card = getDummyCard(mEditedNotetype, i, getBundleEditFields(mNoteEditorBundle))
+                    if (card != null) {
+                        newCardList!!.add(card)
+                    }
+                }
+                if (calculateCardCount() >= 2) {
+                    previewLayout!!.setNextButtonEnabled(isNextBtnEnabled(cardIndex))
+                    previewLayout!!.setPrevButtonEnabled(isPrevBtnEnabled(cardIndex))
+                    previewLayout!!.showNavigationButtons()
 
                 cardCount = toPreview.note(getColUnsafe).numberOfCardsEphemeral()
                 if (cardCount >= 2) {
