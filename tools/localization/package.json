@@ -17,14 +17,14 @@
     "license": "GPL-3.0",
     "dependencies": {
         "@crowdin/crowdin-api-client": "^1.29.5",
-        "axios": "^1.6.5",
-        "dotenv": "^16.4.0",
+        "axios": "^1.6.7",
+        "dotenv": "^16.4.1",
         "extract-zip": "^2.0.1",
         "typescript": "^5.3.3"
     },
     "devDependencies": {
         "@types/jest": "^29.5.11",
-        "@types/node": "^20.11.6",
+        "@types/node": "^20.11.7",
         "@typescript-eslint/eslint-plugin": "^6.19.1",
         "@typescript-eslint/parser": "^6.19.1",
         "eslint": "^8.56.0",
