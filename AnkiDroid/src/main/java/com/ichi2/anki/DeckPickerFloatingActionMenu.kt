@@ -352,9 +352,7 @@ class DeckPickerFloatingActionMenu(
                     null
                 )
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
-                createDeckDialog.showDialog().positiveButton {
-                    createDeckSnackBar = createDeckDialog.snackbar
-                }
+                createDeckDialog.showDialog().positiveButton(click = { createDeckSnackBar = createDeckDialog.snackbar })
             }
         }
         addDeckButton.setOnClickListener(addDeckListener)
