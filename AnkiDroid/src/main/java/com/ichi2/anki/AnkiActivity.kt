@@ -17,12 +17,14 @@ import android.view.*
 import android.view.animation.Animation
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.AttrRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.annotation.UiThread
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
@@ -538,6 +540,11 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
             savedInstanceState = savedInstanceState,
             activitySuperOnCreate = { state -> super.onCreate(state) }
         )
+
+    /** @see Window.setNavigationBarColor */
+    fun setNavigationBarColor(@AttrRes attr: Int) {
+        window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, attr)
+    }
 
     companion object {
         const val DIALOG_FRAGMENT_TAG = "dialog"

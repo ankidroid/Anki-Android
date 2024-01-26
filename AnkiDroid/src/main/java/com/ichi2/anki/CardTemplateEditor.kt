@@ -28,7 +28,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.widget.ThemeUtils.getThemeAttrColor
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -125,7 +124,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         slidingTabLayout = findViewById(R.id.sliding_tabs)
-        window.navigationBarColor = getThemeAttrColor(this, R.attr.appBarColor)
+        setNavigationBarColor(R.attr.appBarColor)
 
         // Disable the home icon
         enableToolbar()
