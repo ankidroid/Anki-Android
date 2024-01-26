@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   unit:
-    name: JUnit Tests (${{ matrix.os}}
+    name: JUnit Tests (${{ matrix.os}})
     timeout-minutes: 40
     strategy:
       fail-fast: false
