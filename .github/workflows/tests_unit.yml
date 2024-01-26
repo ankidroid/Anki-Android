@@ -59,7 +59,7 @@ jobs:
           java-version: "21"
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
         timeout-minutes: 5
         with:
           # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
@@ -85,13 +85,13 @@ jobs:
           command: ./gradlew robolectricSdkDownload --daemon
 
       - name: Run Unit Tests
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: jacocoUnitTestReport --daemon
 
       - name: Stop Gradle
         if: matrix.os == 'windows-latest'
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: --stop
 

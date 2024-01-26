@@ -48,7 +48,7 @@ jobs:
           java-version: "21"
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
         timeout-minutes: 5
         with:
           # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
