@@ -45,6 +45,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.ThemeUtils.getThemeAttrColor
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
@@ -399,6 +400,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             Timber.i("NoteEditor:: onBackPressed()")
             closeCardEditorWithCheck()
         }
+
+        window.navigationBarColor = getThemeAttrColor(this, R.attr.toolbarBackgroundColor)
     }
 
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
