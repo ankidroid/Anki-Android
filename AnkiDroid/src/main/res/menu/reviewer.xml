@@ -49,7 +49,7 @@
     <item
         android:id="@+id/action_toggle_whiteboard"
         android:title="@string/enable_whiteboard"
-        android:icon="@drawable/ic_gesture_white"
+        android:icon="@drawable/ic_enable_whiteboard"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_flag"
@@ -111,13 +111,43 @@
         android:title="@string/menu_edit_tags"
         ankidroid:showAsAction="never"/>
     <item
+        android:id="@+id/action_bury_card"
+        android:title="@string/menu_bury_card"
+        android:icon="@drawable/ic_flip_to_back_white"
+        android:visible="false"
+        />
+    <item
         android:id="@+id/action_bury"
         android:title="@string/menu_bury"
-        android:icon="@drawable/ic_flip_to_back_white"/>
+        android:icon="@drawable/ic_flip_to_back_white">
+        <menu>
+            <item
+                android:id="@+id/action_bury_card"
+                android:title="@string/menu_bury_card" />
+            <item
+                android:id="@+id/action_bury_note"
+                android:title="@string/menu_bury_note" />
+        </menu>
+
+    </item>
+    <item android:id="@+id/action_suspend_card"
+        android:title="@string/menu_suspend_card"
+        android:icon="@drawable/ic_suspend"
+        android:visible="false"/>
     <item
         android:id="@+id/action_suspend"
         android:title="@string/menu_suspend"
-        android:icon="@drawable/ic_action_suspend_dropdown" />
+        android:icon="@drawable/ic_suspend">
+        <menu>
+            <item
+                android:id="@+id/action_suspend_card"
+                android:title="@string/menu_suspend_card" />
+            <item
+                android:id="@+id/action_suspend_note"
+                android:title="@string/menu_suspend_note" />
+        </menu>
+    </item>
+
     <item
         android:id="@+id/action_delete"
         android:title="@string/menu_delete_note"
@@ -130,8 +160,15 @@
     <item
         android:id="@+id/action_schedule"
         android:title="@string/card_editor_reschedule_card"
-        android:icon="@drawable/ic_card_reschedule_white">
-        <menu/>
+        android:icon="@drawable/ic_reschedule">
+        <menu>
+            <item
+                android:id="@+id/action_reschedule_card"
+                android:title="@string/reschedule_card_dialog_message" />
+            <item
+                android:id="@+id/action_reset_card_progress"
+                android:title="@string/card_editor_reset_card" />
+        </menu>
     </item>
     <item
         android:id="@+id/action_replay"

@@ -92,7 +92,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Nová kartička je preplánovaná. Preplánovanie tiež mení nové kartičky na kartičky na zopakovanie. Použite možnosť ‘premiestniť kartičku’ na zmenu pozície novej kartičky v rámci nového radu</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Preplánovanie tiež resetuje ako plánovač pracuje s kartička v budúcnosti (ľahkosť bude nastavená na %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Zvoľte balíček v manažéri súborov alebo navštívte stránku about:downloads na jeho importovanie</string>
     <string name="answering_error_title">Chyba databázy</string>
     <string name="answering_error_message">Zápis zbierky zlyhal. Databáza môže byť poškodená alebo na úložisku nie je dostatok miesta.\n\nAk sa toto stáva častejšie, skúste kontrolu databázy, opravu zbierky alebo jej obnovu zo zálohy. Ak to chcete urobiť, stlačte  “možnosti” .\n\Alebo to mohla byť tiež AnkiDroid chyba; prosím oznámte túto chybu aby sme to mohli skontrolovať.</string>
     <string name="answering_error_report">Nahlásiť chybu</string>
@@ -198,7 +197,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Nepodarilo sa naplánovať pripomienky</string>
     <string name="boot_service_too_many_notifications">Naplánovaných príliš veľa pripomienok. Niektoré sa nezobrazia</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Voľba klávesnice nápovede</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Niektoré multimediálne klávesnice, akými sú GBoard podporujú zmenu jazyka pri úprave textu\n\nProsím, vyžiadajte si od svojho výrobcu klávesnice prvok “setImeHintLocales”, ak vaša klávesnica nemení jazyk.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Používanie AnkiDroid-u</string>

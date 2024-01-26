@@ -28,10 +28,6 @@ fun Context.getViewerAssetLoader(domain: String): WebViewAssetLoader {
     return WebViewAssetLoader.Builder()
         .setHttpAllowed(true)
         .setDomain(domain)
-        .addPathHandler("/web/") { path: String ->
-            val inputStream = this.javaClass.classLoader!!.getResourceAsStream("web/$path")
-            WebResourceResponse(guessMimeType(path), null, inputStream)
-        }
         .addPathHandler("/") { path: String ->
             try {
                 val file = File(mediaDir, path)

@@ -209,7 +209,8 @@ private suspend fun handleNormalSync(
                 text = progress.normalSync.run { "$added\n$removed" }
             }
         },
-        onCancel = ::cancelSync
+        onCancel = ::cancelSync,
+        manualCancelButton = R.string.dialog_cancel
     ) {
         withCol { syncCollection(auth2, media = syncMedia) }
     }
@@ -409,7 +410,7 @@ class MigrateStorageOnSyncSuccess(res: Resources) : AsyncOperation() {
  */
 fun DeckPicker.showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?): Snackbar? {
     var syncSnackbar: Snackbar? = null
-    if (mActivityPaused) {
+    if (activityPaused) {
         val res = AnkiDroidApp.appResources
         showSimpleNotification(
             res.getString(R.string.app_name),

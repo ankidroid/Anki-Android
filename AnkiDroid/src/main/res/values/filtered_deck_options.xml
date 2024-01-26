@@ -25,6 +25,9 @@
     <string name="filtered_deck_studyOptions_key">studyOptions</string>
     <string name="filtered_deck_resched_key">resched</string>
     <string name="filtered_deck_stepsOn_key">stepsOn</string>
-    <string name="filtered_deck_steps_key">steps</string>
     <string name="filtered_deck_filterSecond_key">filterSecond</string>
+    <string name="filtered_deck_previewDelays_key">previewDelays</string>
+    <string name="filtered_deck_preview_again">previewAgainSecs</string>
+    <string name="filtered_deck_preview_hard">previewHardSecs</string>
+    <string name="filtered_deck_preview_good">previewGoodSecs</string>
 </resources>

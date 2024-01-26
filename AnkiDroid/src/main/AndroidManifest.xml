@@ -70,6 +70,9 @@
             <action android:name="android.intent.action.PROCESS_TEXT" />
             <data android:mimeType="text/plain" />
         </intent>
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
     </queries>
 
     <!--
@@ -171,7 +174,56 @@
                     android:pathPattern=".*\\.colpkg"
                     android:scheme="file"
                     />
-
+                <!-- tsv files -->
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.tsv"
+                    android:scheme="http"
+                    />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.tsv"
+                    android:scheme="https"
+                    />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.tsv"
+                    android:scheme="content"
+                    />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.tsv"
+                    android:scheme="file"
+                    />
+                <!-- csv files -->
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.csv"
+                    android:scheme="http"
+                    />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.csv"
+                    android:scheme="https"
+                    />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.csv"
+                    android:scheme="content"
+                    />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.csv"
+                    android:scheme="file"
+                    />
             </intent-filter>
             <!-- MIME type matcher for .apkg files coming from providers like gmail which hide the file extension -->
             <intent-filter>
@@ -184,6 +236,8 @@
                 <data android:mimeType="application/x-colpkg"/>
                 <data android:mimeType="application/octet-stream"/>
                 <data android:mimeType="application/zip"/>
+                <data android:mimeType="text/tab-separated-values"/>
+                <data android:mimeType="text/comma-separated-values"/>
             </intent-filter>
 
             <!-- Tasker DO_SYNC intent -->

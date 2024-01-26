@@ -77,7 +77,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">新規カードのスケジュールを変更しようとしています。 スケジュールを変更すると、新規カードは習得ステップを飛ばして復習カードに移行します。新規カードのまま表示の順序を変更したい場合は、カードブラウザーの 「新規カードの表示順序を変更」機能を使用してください</string>
     <string name="reschedule_card_dialog_warning_ease_reset">スケジュール変更を行うと、そのカードの復習履歴に基づいて間隔を調整する指標がリセットされます（易しさが初期値の%d%%に戻ります）</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">ファイルマネージャーでデッキを選択するか、「about:downloads」ページに移動してデッキをインポートしてください</string>
     <string name="answering_error_title">データベース エラー</string>
     <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。データベースの破損しているか、ストレージの空き容量が不足している可能性があります。\n\n繰り返しエラーが発生する場合には、「データベースをチェック」、コレクションの修復、「バックアップから復元」を試してみてください。\nまた、AnkiDroidのバグである可能性が考えられる場合は、開発者にご報告ください。</string>
     <string name="answering_error_report">エラーを報告</string>
@@ -180,7 +179,7 @@
     <string name="boot_service_failed_to_schedule_notifications">リマインダーのスケジュールに失敗しました</string>
     <string name="boot_service_too_many_notifications">スケジュールされたリマインダーが多すぎます。一部のリマインダーは表示されません</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">キーボード言語の選択</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Gboardなどの多言語入力対応キーボードでは、文字編集のために各フィールドを選択した際にキーボードの言語を自動的に切り替えることができます\n\n使用しているキーボードで言語の変更ができない場合は、キーボードアプリの開発者に「setImeHintLocales」機能をリクエストしてください</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">使い方</string>

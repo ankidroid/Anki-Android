@@ -19,11 +19,13 @@ package com.ichi2.anki.reviewer
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.R
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AnswerButtons.*
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.HandlerUtils
 import timber.log.Timber
@@ -260,52 +262,30 @@ class AutomaticAnswerSettings(
 
     companion object {
         /**
-         * Obtains the options for [AutomaticAnswer] in the deck config ("review" section)
-         * @return null if the deck is dynamic (use global settings),
-         * or if "useGeneralTimeoutSettings" is set
+         * Obtains the options for [AutomaticAnswer] in the deck config
          */
-        fun queryDeckSpecificOptions(
-            action: AutomaticAnswerAction,
+        fun queryOptions(
+            preferences: SharedPreferences,
             col: Collection,
             selectedDid: DeckId
-        ): AutomaticAnswerSettings? {
-            // Dynamic don't have review options; attempt to get deck-specific auto-advance options
-            // but be prepared to go with all default if it's a dynamic deck
-            if (col.decks.isDyn(selectedDid)) {
-                return null
-            }
+        ): AutomaticAnswerSettings {
+            val conf = col.decks.confForDid(selectedDid)
+            val action = getAction(conf)
+            val useTimer = preferences.getBoolean("timeoutAnswer", false)
+            val waitQuestionSecond = conf.optInt("secondsToShowQuestion", 0)
+            val waitAnswerSecond = conf.optInt("secondsToShowAnswer", 0)
 
-            val revOptions = col.decks.confForDid(selectedDid).getJSONObject("rev")
-
-            if (revOptions.optBoolean("useGeneralTimeoutSettings", true)) {
-                // we want to use the general settings, no need for per-deck settings
-                return null
-            }
-
-            val useTimer = revOptions.optBoolean("timeoutAnswer", false)
-            val waitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60)
-            val waitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20)
             return AutomaticAnswerSettings(action, useTimer, waitQuestionSecond, waitAnswerSecond)
         }
 
-        fun queryFromPreferences(preferences: SharedPreferences, action: AutomaticAnswerAction): AutomaticAnswerSettings {
-            val prefUseTimer: Boolean = preferences.getBoolean("timeoutAnswer", false)
-            val prefWaitQuestionSecond: Int = preferences.getInt("timeoutQuestionSeconds", 60)
-            val prefWaitAnswerSecond: Int = preferences.getInt("timeoutAnswerSeconds", 20)
-            return AutomaticAnswerSettings(action, prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
-        }
-
         fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
-            // deck specific options take precedence over general (preference-based) options.
-            // the action can only be set via preferences (but is stored in the collection).
-            val action = getAction(col)
-            return queryDeckSpecificOptions(action, col, col.decks.selected()) ?: queryFromPreferences(preferences, action)
+            return queryOptions(preferences, col, col.decks.selected())
         }
 
-        private fun getAction(col: Collection): AutomaticAnswerAction {
+        private fun getAction(conf: DeckConfig): AutomaticAnswerAction {
             return try {
-                val value: Int = col.config.get(AutomaticAnswerAction.CONFIG_KEY) ?: return AutomaticAnswerAction.BURY_CARD
-                AutomaticAnswerAction.fromPreferenceValue(value)
+                val value: Int = conf.optInt(AutomaticAnswerAction.CONFIG_KEY)
+                AutomaticAnswerAction.fromConfigValue(value)
             } catch (e: Exception) {
                 AutomaticAnswerAction.BURY_CARD
             }
@@ -314,43 +294,46 @@ class AutomaticAnswerSettings(
 }
 
 /**
- * Represents a value from [R.array.automatic_answer_values]/[R.array.automatic_answer_options]
+ * Represents a value from [anki.deck_config.DeckConfig.Config.AnswerAction]
  * Executed when answering a card (showing the question).
  */
-enum class AutomaticAnswerAction(private val preferenceValue: Int) {
+enum class AutomaticAnswerAction(private val configValue: Int) {
     /** Default: least invasive action */
     BURY_CARD(0),
     ANSWER_AGAIN(1),
-    ANSWER_HARD(2),
-    ANSWER_GOOD(3),
-    ANSWER_EASY(4);
+    ANSWER_GOOD(2),
+    ANSWER_HARD(3),
+    SHOW_REMINDER(4);
 
     fun execute(reviewer: Reviewer) {
         val numberOfButtons = 4
         val actualAction = handleInvalidButtons(numberOfButtons)
         val action = actualAction.toCommand(numberOfButtons)
-        Timber.i("Executing %s", action)
-        reviewer.executeCommand(action)
+        if (action != null) {
+            Timber.i("Executing %s", action)
+            reviewer.executeCommand(action)
+        } else {
+            reviewer.showSnackbar(TR.studyingAnswerTimeElapsed())
+        }
     }
 
     /** Handle **Hard/Easy** uf they don't appear */
     private fun handleInvalidButtons(numberOfButtons: Int): AutomaticAnswerAction {
         return when (this) {
             ANSWER_HARD -> if (AnswerButtons.canAnswerHard(numberOfButtons)) ANSWER_HARD else ANSWER_GOOD
-            ANSWER_EASY -> if (AnswerButtons.canAnswerEasy(numberOfButtons)) ANSWER_EASY else ANSWER_GOOD
             // Again and Good always appear. So does Bury
             else -> this
         }
     }
 
     /** Convert to a [ViewerCommand] */
-    private fun toCommand(numberOfButtons: Int): ViewerCommand {
+    private fun toCommand(numberOfButtons: Int): ViewerCommand? {
         return when (this) {
             BURY_CARD -> ViewerCommand.BURY_CARD
             ANSWER_AGAIN -> AGAIN.toViewerCommand(numberOfButtons)
             ANSWER_HARD -> HARD.toViewerCommand(numberOfButtons)
             ANSWER_GOOD -> GOOD.toViewerCommand(numberOfButtons)
-            ANSWER_EASY -> EASY.toViewerCommand(numberOfButtons)
+            else -> null
         }
     }
 
@@ -358,17 +341,13 @@ enum class AutomaticAnswerAction(private val preferenceValue: Int) {
         /**
          * An integer representing the action when Automatic Answer flips a card from answer to question
          *
-         * 0 represents "bury", 1-4 represents the named buttons
-         *
-         * Although AnkiMobile and AnkiDroid have the feature, this config key is currently AnkiDroid only
-         *
          * @see AutomaticAnswerAction
          */
-        const val CONFIG_KEY = "automaticAnswerAction"
+        const val CONFIG_KEY = "answerAction"
 
-        /** convert from [R.array.automatic_answer_values] ([R.array.automatic_answer_options]) to the enum */
-        fun fromPreferenceValue(i: Int): AutomaticAnswerAction {
-            return values().firstOrNull { it.preferenceValue == i } ?: BURY_CARD
+        /** convert from [anki.deck_config.DeckConfig.Config.AnswerAction] to the enum */
+        fun fromConfigValue(i: Int): AutomaticAnswerAction {
+            return values().firstOrNull { it.configValue == i } ?: BURY_CARD
         }
     }
 }

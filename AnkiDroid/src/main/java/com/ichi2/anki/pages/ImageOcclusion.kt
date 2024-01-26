@@ -29,15 +29,12 @@ class ImageOcclusion : PageFragment() {
     override val title: String
         get() = TR.notetypesImageOcclusionName()
     override val pageName = "image-occlusion"
-    override lateinit var webViewClient: PageWebViewClient
-    override var webChromeClient = PageChromeClient()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         val kind = arguments?.getString(ARG_KEY_KIND) ?: throw Exception("missing kind")
         val id = arguments?.getLong(ARG_KEY_ID) ?: throw Exception("missing ID")
         val path = arguments?.getString(ARG_KEY_PATH) ?: if (kind == "add") throw Exception("missing path") else ""
-        webViewClient = ImageOcclusionWebViewClient(kind, id, path)
-        super.onCreate(savedInstanceState)
+        return ImageOcclusionWebViewClient(kind, id, path)
     }
 
     class ImageOcclusionWebViewClient(val kind: String, private val noteOrNotetypeId: Long, private val path: String?) : PageWebViewClient() {

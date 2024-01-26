@@ -18,14 +18,13 @@ package com.ichi2.anki.cardviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardUtils
-import com.ichi2.anki.IntroductionActivity
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Side.BACK
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.*
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TtsPlayer
+import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.TestException
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -41,7 +40,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class SoundPlayerTest : RobolectricTest() {
+class SoundPlayerTest : JvmTest() {
     internal val tagPlayer: SoundTagPlayer = mockk<SoundTagPlayer>()
     internal val ttsPlayer: TtsPlayer = mockk<TtsPlayer>()
     internal val onSoundGroupCompleted: () -> Unit = mockk<() -> Unit>().also {
@@ -224,7 +223,7 @@ class SoundPlayerTest : RobolectricTest() {
         val card = addNoteUsingBasicModel().firstCard()
         mockkObject(card)
 
-        every { card.renderOutput() } answers {
+        every { card.renderOutput(any()) } answers {
             TemplateManager.TemplateRenderContext.TemplateRenderOutput(
                 questionText = "",
                 answerText = "",
@@ -263,19 +262,13 @@ fun SoundPlayerTest.runSoundPlayerTest(
     testBody: suspend SoundPlayer.() -> Unit
 ) =
     runTest {
-        // PERF: See if we can make this faster
-        val lifecycle = startRegularActivity<IntroductionActivity>().lifecycle
-        // val lifecycle = mockk<Lifecycle>()
-        // every { lifecycle.currentState } answers { Lifecycle.State.RESUMED }
-
         val soundPlayer = SoundPlayer(
             soundTagPlayer = tagPlayer,
             ttsPlayer = CompletableDeferred(ttsPlayer),
-            lifecycle = lifecycle,
             onSoundGroupCompleted = onSoundGroupCompleted,
             soundErrorListener = mockk()
         )
-        assertThat("can play sounds", soundPlayer.canPlaySounds())
+        assertThat("can play sounds", soundPlayer.isEnabled)
         soundPlayer.setup(questions, answers, side, replayQuestion, autoplay)
         testBody(soundPlayer)
     }

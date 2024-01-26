@@ -92,7 +92,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Новая картка перапланавана. Дадзеная аперацыя дадае новыя карткі ў паўтораныя. Скарыстайцеся параметрам \"перамясціць картку\" для змянення пазіцыі новай карткі ў чарзе.</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Перапланаванне таксама скіне налады таго, як планіроўшчык будзе апрацоўваць картку ў будучым (лёгкасць карткі будзе прызначаная на %d%%) </string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Выберыце калоду ў вашым менеджары файлаў або наведайце старонку about:downloads для яе імпартавання.</string>
     <string name="answering_error_title">Памылка базы даных</string>
     <string name="answering_error_message">Збой запісу ў калекцыю. Прычынаю можа быць пашкоджаная база даных або недахоп свабоднага месца на дыску.\n\nПаспрабуйце праверыць базу даных або аднавіць калекцыю з рэзервовай копіі. Для гэтага націсніце \"Параметры\". \n\Таксама гэта памылка можа быць выклікана самой праграмай; паведаміце пра гэта распрацоўшчыкам.</string>
     <string name="answering_error_report">Паведаміць пра памылку</string>
@@ -198,7 +197,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Не атрымалася запланаваць напаміны</string>
     <string name="boot_service_too_many_notifications">Запланавана вельмі многа напамінаў. Некаторыя з іх не будуць адлюстраваныя</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Выбар мовы клавіятуры</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Некаторыя шматмоўныя клавіятуры (напрыклад, GBoard) падтрымліваюць змену мовы падчас рэдагавання тэксту\n\nКалі ласка, запытайце функцыю “setImeHintLocales” ад распрацоўшчыка клавіятуры, калі яна не змяняе мову.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Выкарыстанне AnkiDroid</string>

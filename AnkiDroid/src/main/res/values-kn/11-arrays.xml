@@ -101,7 +101,5 @@
     <string name="gesture_show_all_hints">ಎಲ್ಲಾ ಸುಳಿವುಗಳನ್ನು ತೋರಿಸಿ</string>
     <string name="record_voice">ಧ್ವನಿಯನ್ನು ರೆಕಾರ್ಡ್ ಮಾಡಿ</string>
     <string name="replay_voice">ರಿಪ್ಲೇ ವಾಯ್ಸ್</string>
-    <string name="automatic_answer_option_2">ಕಠಿಣ (ಲಭ್ಯವಿಲ್ಲದಿದ್ದರೆ ಒಳ್ಳೆಯದು)</string>
-    <string name="automatic_answer_option_4">ಸುಲಭ (ಲಭ್ಯವಿಲ್ಲದಿದ್ದರೆ ಒಳ್ಳೆಯದು)</string>
     <string name="save_voice">Save Recording</string>
 </resources>

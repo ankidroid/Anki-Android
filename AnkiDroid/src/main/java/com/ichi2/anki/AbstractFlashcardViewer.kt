@@ -44,6 +44,8 @@ import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
@@ -59,8 +61,6 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
 import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
 import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
-import com.ichi2.anki.cardviewer.SingleSoundSide
-import com.ichi2.anki.cardviewer.SoundSide
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -81,6 +81,8 @@ import com.ichi2.anki.services.migrationServiceWhileStartedOrNull
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
+import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
@@ -121,15 +123,15 @@ abstract class AbstractFlashcardViewer :
     OnPageFinishedCallback,
     BaseSnackbarBuilderProvider,
     ChangeManager.Subscriber {
-    private var mTtsInitialized = false
-    private var mReplayOnTtsInit = false
-    private var mAnkiDroidJsAPI: AnkiDroidJsAPI? = null
+    private var ttsInitialized = false
+    private var replayOnTtsInit = false
+    private var ankiDroidJsAPI: AnkiDroidJsAPI? = null
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
-    private var mUnmountReceiver: BroadcastReceiver? = null
-    private var mTagsDialogFactory: TagsDialogFactory? = null
+    private var unmountReceiver: BroadcastReceiver? = null
+    private var tagsDialogFactory: TagsDialogFactory? = null
 
     /**
      * Variables to hold preferences
@@ -138,13 +140,13 @@ abstract class AbstractFlashcardViewer :
     internal var prefShowTopbar = false
     protected var fullscreenMode = DEFAULT
         private set
-    private var mRelativeButtonSize = 0
+    private var relativeButtonSize = 0
     private var minimalClickSpeed = 0
-    private var mDoubleScrolling = false
-    private var mGesturesEnabled = false
-    private var mLargeAnswerButtons = false
-    protected var mAnswerButtonsPosition: String? = "bottom"
-    private var mDoubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL
+    private var doubleScrolling = false
+    private var gesturesEnabled = false
+    private var largeAnswerButtons = false
+    protected var answerButtonsPosition: String? = "bottom"
+    private var doubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL
 
     // Android WebView
     var automaticAnswer = AutomaticAnswer.defaultInstance(this)
@@ -153,24 +155,24 @@ abstract class AbstractFlashcardViewer :
     internal var typeAnswer: TypeAnswer? = null
 
     /** Generates HTML content  */
-    private var mHtmlGenerator: HtmlGenerator? = null
+    private var htmlGenerator: HtmlGenerator? = null
 
     // Default short animation duration, provided by Android framework
     private var shortAnimDuration = 0
-    private var mBackButtonPressedToReturn = false
+    private var backButtonPressedToReturn = false
 
     // Preferences from the collection
-    private var mShowNextReviewTime = false
-    private var mIsSelecting = false
-    private var mInAnswer = false
+    private var showNextReviewTime = false
+    private var isSelecting = false
+    private var inAnswer = false
 
     /**
      * Variables to hold layout objects that we need to update or handle events for
      */
     var webView: WebView? = null
         private set
-    private var mCardFrame: FrameLayout? = null
-    private var mTouchLayer: FrameLayout? = null
+    private var cardFrame: FrameLayout? = null
+    private var touchLayer: FrameLayout? = null
     protected var answerField: FixedEditText? = null
     protected var flipCardLayout: FrameLayout? = null
     private var easeButtonsLayout: LinearLayout? = null
@@ -187,12 +189,12 @@ abstract class AbstractFlashcardViewer :
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal var easeButton4: EaseButton? = null
     protected var topBarLayout: RelativeLayout? = null
-    private val mClipboard: ClipboardManager? = null
-    private var mPreviousAnswerIndicator: PreviousAnswerIndicator? = null
+    private val clipboard: ClipboardManager? = null
+    private var previousAnswerIndicator: PreviousAnswerIndicator? = null
 
-    private var mCurrentEase = 0
-    private var mInitialFlipCardHeight = 0
-    private var mButtonHeightSet = false
+    private var currentEase = 0
+    private var initialFlipCardHeight = 0
+    private var buttonHeightSet = false
 
     /**
      * A record of the last time the "show answer" or ease buttons were pressed. We keep track
@@ -206,14 +208,14 @@ abstract class AbstractFlashcardViewer :
      */
     var gestureDetector: GestureDetector? = null
         private set
-    private lateinit var mGestureDetectorImpl: MyGestureDetector
-    private var mIsXScrolling = false
-    private var mIsYScrolling = false
+    private lateinit var gestureDetectorImpl: MyGestureDetector
+    private var isXScrolling = false
+    private var isYScrolling = false
 
     /**
      * Gesture Allocation
      */
-    protected val mGestureProcessor = GestureProcessor(this)
+    protected val gestureProcessor = GestureProcessor(this)
 
     /** Handle joysticks/pedals */
     // needs to be lateinit due to a reliance on Context
@@ -224,36 +226,36 @@ abstract class AbstractFlashcardViewer :
         private set
     open val baseUrl = "http://$LOCALHOST"
     open val webviewDomain = LOCALHOST
-    private var mViewerUrl: String? = null
-    private val mFadeDuration = 300
+    private var viewerUrl: String? = null
+    private val fadeDuration = 300
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal lateinit var soundPlayer: SoundPlayer
 
     /** Reference to the parent of the cardFrame to allow regeneration of the cardFrame in case of crash  */
-    private var mCardFrameParent: ViewGroup? = null
+    private var cardFrameParent: ViewGroup? = null
 
     /** Lock to allow thread-safe regeneration of mCard  */
-    private val mCardLock: ReadWriteLock = ReentrantReadWriteLock()
+    private val cardLock: ReadWriteLock = ReentrantReadWriteLock()
 
     /** Preference: Whether the user wants press back twice to return to the main screen"  */
-    private var mExitViaDoubleTapBack = false
+    private var exitViaDoubleTapBack = false
 
     @VisibleForTesting
-    val mOnRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
-    protected val mTTS = TTS()
+    val onRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
+    protected val tts = TTS()
 
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
-    private val mLongClickHandler = newHandler()
-    private val mStartLongClickAction = Runnable { mGestureProcessor.onLongTap() }
+    private val longClickHandler = newHandler()
+    private val startLongClickAction = Runnable { gestureProcessor.onLongTap() }
 
     // Handler for the "show answer" button
-    private val mFlipCardListener = View.OnClickListener {
+    private val flipCardListener = View.OnClickListener {
         Timber.i("AbstractFlashcardViewer:: Show answer button pressed")
         // Ignore what is most likely an accidental double-tap.
-        if (elapsedRealTime - lastClickTime < mDoubleTapTimeInterval) {
+        if (elapsedRealTime - lastClickTime < doubleTapTimeInterval) {
             return@OnClickListener
         }
         lastClickTime = elapsedRealTime
@@ -316,27 +318,27 @@ abstract class AbstractFlashcardViewer :
 
     // Event handler for eases (answer buttons)
     inner class SelectEaseHandler : View.OnClickListener, OnTouchListener {
-        private var mPrevCard: Card? = null
-        private var mHasBeenTouched = false
-        private var mTouchX = 0f
-        private var mTouchY = 0f
+        private var prevCard: Card? = null
+        private var hasBeenTouched = false
+        private var touchX = 0f
+        private var touchY = 0f
         override fun onTouch(view: View, event: MotionEvent): Boolean {
             if (event.action == MotionEvent.ACTION_DOWN) {
                 // Save states when button pressed
-                mPrevCard = currentCard
-                mHasBeenTouched = true
+                prevCard = currentCard
+                hasBeenTouched = true
                 // We will need to check if a touch is followed by a click
                 // Since onTouch always come before onClick, we should check if
                 // the touch is going to be a click by storing the start coordinates
                 // and comparing with the end coordinates of the touch
-                mTouchX = event.rawX
-                mTouchY = event.rawY
+                touchX = event.rawX
+                touchY = event.rawY
             } else if (event.action == MotionEvent.ACTION_UP) {
-                val diffX = abs(event.rawX - mTouchX)
-                val diffY = abs(event.rawY - mTouchY)
+                val diffX = abs(event.rawX - touchX)
+                val diffY = abs(event.rawY - touchY)
                 // If a click is not coming then we reset the touch
                 if (diffX > Companion.CLICK_ACTION_THRESHOLD || diffY > Companion.CLICK_ACTION_THRESHOLD) {
-                    mHasBeenTouched = false
+                    hasBeenTouched = false
                 }
             }
             return false
@@ -345,11 +347,11 @@ abstract class AbstractFlashcardViewer :
         override fun onClick(view: View) {
             // Try to perform intended action only if the button has been pressed for current card,
             // or if the button was not touched,
-            if (mPrevCard === currentCard || !mHasBeenTouched) {
+            if (prevCard === currentCard || !hasBeenTouched) {
                 // Only perform if the click was not an accidental double-tap
-                if (elapsedRealTime - lastClickTime >= mDoubleTapTimeInterval) {
+                if (elapsedRealTime - lastClickTime >= doubleTapTimeInterval) {
                     // For whatever reason, performClick does not return a visual feedback anymore
-                    if (!mHasBeenTouched) {
+                    if (!hasBeenTouched) {
                         view.isPressed = true
                     }
                     lastClickTime = elapsedRealTime
@@ -375,29 +377,29 @@ abstract class AbstractFlashcardViewer :
                             answerCard(Consts.BUTTON_FOUR)
                         }
 
-                        else -> mCurrentEase = 0
+                        else -> currentEase = 0
                     }
-                    if (!mHasBeenTouched) {
+                    if (!hasBeenTouched) {
                         view.isPressed = false
                     }
                 }
             }
             // We will have to reset the touch after every onClick event
             // Do not return early without considering this
-            mHasBeenTouched = false
+            hasBeenTouched = false
         }
     }
 
-    private val mEaseHandler = SelectEaseHandler()
+    private val easeHandler = SelectEaseHandler()
 
     @get:VisibleForTesting
     protected open val elapsedRealTime: Long
         get() = SystemClock.elapsedRealtime()
-    private val mGestureListener = OnTouchListener { _, event ->
+    private val gestureListener = OnTouchListener { _, event ->
         if (gestureDetector!!.onTouchEvent(event)) {
             return@OnTouchListener true
         }
-        if (!mGestureDetectorImpl.eventCanBeSentToWebView(event)) {
+        if (!gestureDetectorImpl.eventCanBeSentToWebView(event)) {
             return@OnTouchListener false
         }
         // Gesture listener is added before mCard is set
@@ -419,7 +421,7 @@ abstract class AbstractFlashcardViewer :
 
     @CheckResult
     private fun <T> processCardFunction(cardFunction: Function<WebView?, T>): T {
-        val readLock = mCardLock.readLock()
+        val readLock = cardLock.readLock()
         return try {
             readLock.lock()
             cardFunction.apply(webView)
@@ -514,7 +516,7 @@ abstract class AbstractFlashcardViewer :
     // ----------------------------------------------------------------------------
     override fun onCreate(savedInstanceState: Bundle?) {
         restorePreferences()
-        mTagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
+        tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         super.onCreate(savedInstanceState)
         motionEventHandler = MotionEventHandler.createInstance(this)
 
@@ -528,9 +530,9 @@ abstract class AbstractFlashcardViewer :
         delegate.isHandleNativeActionModesEnabled = true
         val mainView = findViewById<View>(android.R.id.content)
         initNavigationDrawer(mainView)
-        mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
+        previousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
-        mGestureDetectorImpl = LinkDetectingGestureDetector()
+        gestureDetectorImpl = LinkDetectingGestureDetector()
         TtsVoicesFieldFilter.ensureApplied()
         if (!sharedPrefs().getBoolean("showDeckTitle", false)) {
             supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -559,10 +561,10 @@ abstract class AbstractFlashcardViewer :
         registerExternalStorageListener()
         restoreCollectionPreferences(col)
         initLayout()
-        mHtmlGenerator = createInstance(this, col, typeAnswer!!)
+        htmlGenerator = createInstance(this, col, typeAnswer!!)
 
         // Initialize text-to-speech. This is an asynchronous operation.
-        mTTS.initialize(this, ReadTextListener())
+        tts.initialize(this, ReadTextListener())
         updateActionBar()
         invalidateOptionsMenu()
     }
@@ -586,8 +588,11 @@ abstract class AbstractFlashcardViewer :
     override fun onPause() {
         super.onPause()
         automaticAnswer.disable()
-        mGestureDetectorImpl.stopShakeDetector()
-        mLongClickHandler.removeCallbacks(mStartLongClickAction)
+        gestureDetectorImpl.stopShakeDetector()
+        if (this::soundPlayer.isInitialized) {
+            soundPlayer.isEnabled = false
+        }
+        longClickHandler.removeCallbacks(startLongClickAction)
         // Prevent loss of data in Cookies
         CookieManager.getInstance().flush()
     }
@@ -595,7 +600,10 @@ abstract class AbstractFlashcardViewer :
     override fun onResume() {
         super.onResume()
         automaticAnswer.enable()
-        mGestureDetectorImpl.startShakeDetector()
+        gestureDetectorImpl.startShakeDetector()
+        if (this::soundPlayer.isInitialized) {
+            soundPlayer.isEnabled = true
+        }
         // Reset the activity title
         updateActionBar()
         selectNavigationItem(-1)
@@ -627,16 +635,19 @@ abstract class AbstractFlashcardViewer :
 
     override fun onDestroy() {
         super.onDestroy()
-        mTTS.releaseTts(this)
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver)
+        tts.releaseTts(this)
+        if (unmountReceiver != null) {
+            unregisterReceiver(unmountReceiver)
         }
         // WebView.destroy() should be called after the end of use
         // http://developer.android.com/reference/android/webkit/WebView.html#destroy()
-        if (mCardFrame != null) {
-            mCardFrame!!.removeAllViews()
+        if (cardFrame != null) {
+            cardFrame!!.removeAllViews()
         }
         destroyWebView(webView) // OK to do without a lock
+        if (this::soundPlayer.isInitialized) {
+            soundPlayer.close()
+        }
     }
 
     override fun onBackPressed() {
@@ -644,14 +655,14 @@ abstract class AbstractFlashcardViewer :
             super.onBackPressed()
         } else {
             Timber.i("Back key pressed")
-            if (!mExitViaDoubleTapBack || mBackButtonPressedToReturn) {
+            if (!exitViaDoubleTapBack || backButtonPressedToReturn) {
                 closeReviewer(RESULT_DEFAULT)
             } else {
                 showSnackbar(R.string.back_pressed_once_reviewer, Snackbar.LENGTH_SHORT)
             }
-            mBackButtonPressedToReturn = true
+            backButtonPressedToReturn = true
             executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) {
-                mBackButtonPressedToReturn = false
+                backButtonPressedToReturn = false
             }
         }
     }
@@ -695,14 +706,14 @@ abstract class AbstractFlashcardViewer :
     private fun processHardwareButtonScroll(keyCode: Int, card: WebView?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
             card!!.pageUp(false)
-            if (mDoubleScrolling) {
+            if (doubleScrolling) {
                 card.pageUp(false)
             }
             return true
         }
         if (keyCode == KeyEvent.KEYCODE_PAGE_DOWN) {
             card!!.pageDown(false)
-            if (mDoubleScrolling) {
+            if (doubleScrolling) {
                 card.pageDown(false)
             }
             return true
@@ -715,7 +726,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected fun clipboardHasText(): Boolean {
-        return !getText(mClipboard).isNullOrEmpty()
+        return !getText(clipboard).isNullOrEmpty()
     }
 
     /**
@@ -725,7 +736,7 @@ abstract class AbstractFlashcardViewer :
      * @return the text in clipboard or the empty string.
      */
     private fun clipboardGetText(): CharSequence {
-        val text = getText(mClipboard)
+        val text = getText(clipboard)
         return text ?: ""
     }
 
@@ -779,8 +790,8 @@ abstract class AbstractFlashcardViewer :
      * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
      */
     private fun registerExternalStorageListener() {
-        if (mUnmountReceiver == null) {
-            mUnmountReceiver = object : BroadcastReceiver() {
+        if (unmountReceiver == null) {
+            unmountReceiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {
                     if (intent.action == SdCardReceiver.MEDIA_EJECT) {
                         finish()
@@ -789,7 +800,7 @@ abstract class AbstractFlashcardViewer :
             }
             val iFilter = IntentFilter()
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiver(mUnmountReceiver, iFilter)
+            registerReceiver(unmountReceiver, iFilter)
         }
     }
 
@@ -824,7 +835,7 @@ abstract class AbstractFlashcardViewer :
             message(
                 text = resources.getString(
                     R.string.delete_note_message,
-                    Utils.stripHTML(currentCard!!.question(true))
+                    Utils.stripHTML(currentCard!!.question(getColUnsafe, true))
                 )
             )
             positiveButton(R.string.dialog_positive_delete) {
@@ -859,20 +870,20 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    open fun answerCard(@BUTTON_TYPE ease: Int) {
+    open fun answerCard(@BUTTON_TYPE ease: Int) = preventSimultaneousExecutions(ANSWER_CARD) {
         launchCatchingTask {
-            if (mInAnswer) {
+            if (inAnswer) {
                 return@launchCatchingTask
             }
-            mIsSelecting = false
-            if (mPreviousAnswerIndicator == null) {
+            isSelecting = false
+            if (previousAnswerIndicator == null) {
                 // workaround for a broken ReviewerKeyboardInputTest
                 return@launchCatchingTask
             }
             // Temporarily sets the answer indicator dots appearing below the toolbar
-            mPreviousAnswerIndicator?.displayAnswerIndicator(ease)
+            previousAnswerIndicator?.displayAnswerIndicator(ease)
             soundPlayer.stopSounds()
-            mCurrentEase = ease
+            currentEase = ease
 
             answerCardInner(ease)
             updateCardAndRedraw()
@@ -890,40 +901,40 @@ abstract class AbstractFlashcardViewer :
     @KotlinCleanup("Move a lot of these to onCreate()")
     protected open fun initLayout() {
         topBarLayout = findViewById(R.id.top_bar)
-        mCardFrame = findViewById(R.id.flashcard)
-        mCardFrameParent = mCardFrame!!.parent as ViewGroup
-        mTouchLayer =
-            findViewById<FrameLayout>(R.id.touch_layer).apply { setOnTouchListener(mGestureListener) }
-        mCardFrame!!.removeAllViews()
+        cardFrame = findViewById(R.id.flashcard)
+        cardFrameParent = cardFrame!!.parent as ViewGroup
+        touchLayer =
+            findViewById<FrameLayout>(R.id.touch_layer).apply { setOnTouchListener(gestureListener) }
+        cardFrame!!.removeAllViews()
 
         // Initialize swipe
-        gestureDetector = GestureDetector(this, mGestureDetectorImpl)
+        gestureDetector = GestureDetector(this, gestureDetectorImpl)
         easeButtonsLayout = findViewById(R.id.ease_buttons)
         easeButton1 = EaseButton(
             EASE_1,
             findViewById(R.id.flashcard_layout_ease1),
             findViewById(R.id.ease1),
             findViewById(R.id.nextTime1)
-        ).apply { setListeners(mEaseHandler) }
+        ).apply { setListeners(easeHandler) }
         easeButton2 = EaseButton(
             EASE_2,
             findViewById(R.id.flashcard_layout_ease2),
             findViewById(R.id.ease2),
             findViewById(R.id.nextTime2)
-        ).apply { setListeners(mEaseHandler) }
+        ).apply { setListeners(easeHandler) }
         easeButton3 = EaseButton(
             EASE_3,
             findViewById(R.id.flashcard_layout_ease3),
             findViewById(R.id.ease3),
             findViewById(R.id.nextTime3)
-        ).apply { setListeners(mEaseHandler) }
+        ).apply { setListeners(easeHandler) }
         easeButton4 = EaseButton(
             EASE_4,
             findViewById(R.id.flashcard_layout_ease4),
             findViewById(R.id.ease4),
             findViewById(R.id.nextTime4)
-        ).apply { setListeners(mEaseHandler) }
-        if (!mShowNextReviewTime) {
+        ).apply { setListeners(easeHandler) }
+        if (!showNextReviewTime) {
             easeButton1!!.hideNextReviewTime()
             easeButton2!!.hideNextReviewTime()
             easeButton3!!.hideNextReviewTime()
@@ -932,14 +943,14 @@ abstract class AbstractFlashcardViewer :
         flipCardLayout = findViewById(R.id.flashcard_layout_flip)
         flipCardLayout?.let { layout ->
             if (minimalClickSpeed == 0) {
-                layout.setOnClickListener(mFlipCardListener)
+                layout.setOnClickListener(flipCardListener)
             } else {
                 val handler = Handler(Looper.getMainLooper())
                 layout.setOnTouchListener { _, event ->
                     when (event.action) {
                         MotionEvent.ACTION_DOWN -> {
                             handler.postDelayed({
-                                mFlipCardListener.onClick(layout)
+                                flipCardListener.onClick(layout)
                             }, minimalClickSpeed.toLong())
                             false
                         }
@@ -957,19 +968,19 @@ abstract class AbstractFlashcardViewer :
         if (animationEnabled()) {
             flipCardLayout?.setBackgroundResource(getResFromAttr(this, R.attr.hardButtonRippleRef))
         }
-        if (!mButtonHeightSet && mRelativeButtonSize != 100) {
+        if (!buttonHeightSet && relativeButtonSize != 100) {
             val params = flipCardLayout!!.layoutParams
-            params.height = params.height * mRelativeButtonSize / 100
-            easeButton1!!.setButtonScale(mRelativeButtonSize)
-            easeButton2!!.setButtonScale(mRelativeButtonSize)
-            easeButton3!!.setButtonScale(mRelativeButtonSize)
-            easeButton4!!.setButtonScale(mRelativeButtonSize)
-            mButtonHeightSet = true
+            params.height = params.height * relativeButtonSize / 100
+            easeButton1!!.setButtonScale(relativeButtonSize)
+            easeButton2!!.setButtonScale(relativeButtonSize)
+            easeButton3!!.setButtonScale(relativeButtonSize)
+            easeButton4!!.setButtonScale(relativeButtonSize)
+            buttonHeightSet = true
         }
-        mInitialFlipCardHeight = flipCardLayout!!.layoutParams.height
-        if (mLargeAnswerButtons) {
+        initialFlipCardHeight = flipCardLayout!!.layoutParams.height
+        if (largeAnswerButtons) {
             val params = flipCardLayout!!.layoutParams
-            params.height = mInitialFlipCardHeight * 2
+            params.height = initialFlipCardHeight * 2
         }
         answerField = findViewById(R.id.answer_field)
         initControls()
@@ -979,14 +990,14 @@ abstract class AbstractFlashcardViewer :
             getString(R.string.answer_buttons_position_preference),
             "bottom"
         )
-        mAnswerButtonsPosition = answerButtonsPosition
+        this.answerButtonsPosition = answerButtonsPosition
         val answerArea = findViewById<LinearLayout>(R.id.bottom_area_layout)
         val answerAreaParams = answerArea.layoutParams as RelativeLayout.LayoutParams
         val whiteboardContainer = findViewById<FrameLayout>(R.id.whiteboard)
         val whiteboardContainerParams =
             whiteboardContainer.layoutParams as RelativeLayout.LayoutParams
-        val flashcardContainerParams = mCardFrame!!.layoutParams as RelativeLayout.LayoutParams
-        val touchLayerContainerParams = mTouchLayer!!.layoutParams as RelativeLayout.LayoutParams
+        val flashcardContainerParams = cardFrame!!.layoutParams as RelativeLayout.LayoutParams
+        val touchLayerContainerParams = touchLayer!!.layoutParams as RelativeLayout.LayoutParams
         when (answerButtonsPosition) {
             "top" -> {
                 whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
@@ -1021,8 +1032,8 @@ abstract class AbstractFlashcardViewer :
         }
         answerArea.layoutParams = answerAreaParams
         whiteboardContainer.layoutParams = whiteboardContainerParams
-        mCardFrame!!.layoutParams = flashcardContainerParams
-        mTouchLayer!!.layoutParams = touchLayerContainerParams
+        cardFrame!!.layoutParams = flashcardContainerParams
+        touchLayer!!.layoutParams = touchLayerContainerParams
     }
 
     protected open fun createWebView(): WebView {
@@ -1101,13 +1112,13 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected fun shouldShowNextReviewTime(): Boolean {
-        return mShowNextReviewTime
+        return showNextReviewTime
     }
 
     protected open fun displayAnswerBottomBar() {
         flipCardLayout!!.isClickable = false
         easeButtonsLayout!!.visibility = View.VISIBLE
-        if (mLargeAnswerButtons) {
+        if (largeAnswerButtons) {
             easeButtonsLayout!!.orientation = LinearLayout.VERTICAL
             easeButtonsLayout!!.removeAllViewsInLayout()
             easeButton1!!.detachFromParent()
@@ -1175,12 +1186,12 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun switchTopBarVisibility(visible: Int) {
-        mPreviousAnswerIndicator!!.setVisibility(visible)
+        previousAnswerIndicator!!.setVisibility(visible)
     }
 
     protected open fun initControls() {
-        mCardFrame!!.visibility = View.VISIBLE
-        mPreviousAnswerIndicator!!.setVisibility(View.VISIBLE)
+        cardFrame!!.visibility = View.VISIBLE
+        previousAnswerIndicator!!.setVisibility(View.VISIBLE)
         flipCardLayout!!.visibility = View.VISIBLE
         answerField!!.visibility = if (typeAnswer!!.validForEditText()) View.VISIBLE else View.GONE
         answerField!!.setOnEditorActionListener { _, actionId: Int, _ ->
@@ -1207,17 +1218,17 @@ abstract class AbstractFlashcardViewer :
         // mDeckFilename = preferences.getString("deckFilename", "");
         minimalClickSpeed = preferences.getInt("showCardAnswerButtonTime", 0)
         fullscreenMode = fromPreference(preferences)
-        mRelativeButtonSize = preferences.getInt("answerButtonSize", 100)
-        mTTS.enabled = preferences.getBoolean("tts", false)
-        mDoubleScrolling = preferences.getBoolean("double_scrolling", false)
+        relativeButtonSize = preferences.getInt("answerButtonSize", 100)
+        tts.enabled = preferences.getBoolean("tts", false)
+        doubleScrolling = preferences.getBoolean("double_scrolling", false)
         prefShowTopbar = preferences.getBoolean("showTopbar", true)
-        mLargeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false)
-        mDoubleTapTimeInterval =
+        largeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false)
+        doubleTapTimeInterval =
             preferences.getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL)
-        mExitViaDoubleTapBack = preferences.getBoolean("exitViaDoubleTapBack", false)
-        mGesturesEnabled = preferences.getBoolean(GestureProcessor.PREF_KEY, false)
-        if (mGesturesEnabled) {
-            mGestureProcessor.init(preferences)
+        exitViaDoubleTapBack = preferences.getBoolean("exitViaDoubleTapBack", false)
+        gesturesEnabled = preferences.getBoolean(GestureProcessor.PREF_KEY, false)
+        if (gesturesEnabled) {
+            gestureProcessor.init(preferences)
         }
         if (preferences.getBoolean("timeoutAnswer", false) || preferences.getBoolean(
                 "keepScreenOn",
@@ -1232,7 +1243,7 @@ abstract class AbstractFlashcardViewer :
     protected open fun restoreCollectionPreferences(col: Collection) {
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
-            mShowNextReviewTime = col.config.get("estTimes") ?: true
+            showNextReviewTime = col.config.get("estTimes") ?: true
             val preferences = baseContext.sharedPrefs()
             automaticAnswer = AutomaticAnswer.createInstance(this, preferences, col)
         } catch (ex: Exception) {
@@ -1252,8 +1263,8 @@ abstract class AbstractFlashcardViewer :
         if (webView == null) {
             webView = createWebView()
             initializeDebugging(this.sharedPrefs())
-            mCardFrame!!.addView(webView)
-            mGestureDetectorImpl.onWebViewCreated(webView!!)
+            cardFrame!!.addView(webView)
+            gestureDetectorImpl.onWebViewCreated(webView!!)
         }
         if (webView!!.visibility != View.VISIBLE) {
             webView!!.visibility = View.VISIBLE
@@ -1295,6 +1306,12 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    private suspend fun automaticAnswerShouldWaitForAudio(): Boolean {
+        return withCol {
+            decks.confForDid(currentCard!!.did).optBoolean("waitForAudio", true)
+        }
+    }
+
     internal inner class ReadTextListener : ReadText.ReadTextListener {
         override fun onDone(playedSide: SoundSide?) {
             Timber.d("done reading text")
@@ -1305,10 +1322,10 @@ abstract class AbstractFlashcardViewer :
     open fun displayCardQuestion() {
         Timber.d("displayCardQuestion()")
         displayAnswer = false
-        mBackButtonPressedToReturn = false
+        backButtonPressedToReturn = false
         setInterface()
         typeAnswer?.input = ""
-        typeAnswer?.updateInfo(currentCard!!, resources)
+        typeAnswer?.updateInfo(getColUnsafe, currentCard!!, resources)
         if (typeAnswer?.validForEditText() == true) {
             // Show text entry based on if the user wants to write the answer
             answerField?.visibility = View.VISIBLE
@@ -1316,8 +1333,13 @@ abstract class AbstractFlashcardViewer :
         } else {
             answerField?.visibility = View.GONE
         }
-        val content = mHtmlGenerator!!.generateHtml(currentCard!!, Side.FRONT)
+        val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.FRONT)
         automaticAnswer.onDisplayQuestion()
+        launchCatchingTask {
+            if (!automaticAnswerShouldWaitForAudio()) {
+                automaticAnswer.scheduleAutomaticDisplayAnswer()
+            }
+        }
         updateCard(content)
         hideEaseButtons()
         // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
@@ -1333,7 +1355,7 @@ abstract class AbstractFlashcardViewer :
         actualHideEaseButtons()
         Timber.d("displayCardAnswer()")
         mMissingImageHandler.onCardSideChange()
-        mBackButtonPressedToReturn = false
+        backButtonPressedToReturn = false
 
         // prevent answering (by e.g. gestures) before card is loaded
         if (currentCard == null) {
@@ -1342,7 +1364,7 @@ abstract class AbstractFlashcardViewer :
 
         // TODO needs testing: changing a card's model without flipping it back to the front
         //  (such as editing a card, then editing the card template)
-        typeAnswer!!.updateInfo(currentCard!!, resources)
+        typeAnswer!!.updateInfo(getColUnsafe, currentCard!!, resources)
 
         // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
         // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
@@ -1356,9 +1378,14 @@ abstract class AbstractFlashcardViewer :
         if (!typeAnswer!!.useInputTag) {
             typeAnswer!!.input = answerField!!.text.toString()
         }
-        mIsSelecting = false
-        val answerContent = mHtmlGenerator!!.generateHtml(currentCard!!, Side.BACK)
+        isSelecting = false
+        val answerContent = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.BACK)
         automaticAnswer.onDisplayAnswer()
+        launchCatchingTask {
+            if (!automaticAnswerShouldWaitForAudio()) {
+                automaticAnswer.scheduleAutomaticDisplayQuestion()
+            }
+        }
         updateCard(answerContent)
         displayAnswerBottomBar()
     }
@@ -1435,7 +1462,7 @@ abstract class AbstractFlashcardViewer :
         }
         if (!soundPlayer.config.autoplay && !doAudioReplay) return
         // Use TTS if TTS preference enabled and no other sound source
-        val useTTS = mTTS.enabled && !soundPlayer.hasSounds(displayAnswer)
+        val useTTS = tts.enabled && !soundPlayer.hasSounds(displayAnswer)
         // We need to play the sounds from the proper side of the card
         if (!useTTS) {
             launchCatchingTask {
@@ -1450,7 +1477,7 @@ abstract class AbstractFlashcardViewer :
         val replayQuestion = soundPlayer.config.replayQuestion
         // Text to speech is in effect here
         // If the question is displayed or if the question should be replayed, read the question
-        if (mTtsInitialized) {
+        if (ttsInitialized) {
             if (!displayAnswer || doAudioReplay && replayQuestion) {
                 readCardTts(SingleSoundSide.QUESTION)
             }
@@ -1458,14 +1485,14 @@ abstract class AbstractFlashcardViewer :
                 readCardTts(SingleSoundSide.ANSWER)
             }
         } else {
-            mReplayOnTtsInit = true
+            replayOnTtsInit = true
         }
     }
 
     @VisibleForTesting
     fun readCardTts(side: SingleSoundSide) {
-        val tags = legacyGetTtsTags(currentCard!!, side, this)
-        mTTS.readCardText(tags, currentCard!!, side.toSoundSide())
+        val tags = legacyGetTtsTags(getColUnsafe, currentCard!!, side, this)
+        tts.readCardText(getColUnsafe, tags, currentCard!!, side.toSoundSide())
     }
 
     /**
@@ -1473,10 +1500,14 @@ abstract class AbstractFlashcardViewer :
      */
     open fun onSoundGroupCompleted() {
         Timber.v("onSoundGroupCompleted")
-        if (isDisplayingAnswer) {
-            automaticAnswer.scheduleAutomaticDisplayQuestion()
-        } else {
-            automaticAnswer.scheduleAutomaticDisplayAnswer()
+        launchCatchingTask {
+            if (automaticAnswerShouldWaitForAudio()) {
+                if (isDisplayingAnswer) {
+                    automaticAnswer.scheduleAutomaticDisplayQuestion()
+                } else {
+                    automaticAnswer.scheduleAutomaticDisplayAnswer()
+                }
+            }
         }
     }
 
@@ -1484,8 +1515,9 @@ abstract class AbstractFlashcardViewer :
      * Shows the dialogue for selecting TTS for the current card and cardside.
      */
     protected fun showSelectTtsDialogue() {
-        if (mTtsInitialized) {
-            mTTS.selectTts(
+        if (ttsInitialized) {
+            tts.selectTts(
+                getColUnsafe,
                 this,
                 currentCard!!,
                 if (displayAnswer) SoundSide.ANSWER else SoundSide.QUESTION
@@ -1500,7 +1532,7 @@ abstract class AbstractFlashcardViewer :
             return
         }
         processCardAction { cardWebView: WebView? -> loadContentIntoCard(cardWebView, cardContent!!) }
-        mGestureDetectorImpl.onFillFlashcard()
+        gestureDetectorImpl.onFillFlashcard()
         if (!displayAnswer) {
             updateForNewCard()
         }
@@ -1520,17 +1552,17 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun unblockControls() {
-        mCardFrame!!.isEnabled = true
+        cardFrame!!.isEnabled = true
         flipCardLayout?.isEnabled = true
-        easeButton1?.unblockBasedOnEase(mCurrentEase)
-        easeButton2?.unblockBasedOnEase(mCurrentEase)
-        easeButton3?.unblockBasedOnEase(mCurrentEase)
-        easeButton4?.unblockBasedOnEase(mCurrentEase)
+        easeButton1?.unblockBasedOnEase(currentEase)
+        easeButton2?.unblockBasedOnEase(currentEase)
+        easeButton3?.unblockBasedOnEase(currentEase)
+        easeButton4?.unblockBasedOnEase(currentEase)
         if (typeAnswer?.validForEditText() == true) {
             answerField?.isEnabled = true
         }
-        mTouchLayer?.visibility = View.VISIBLE
-        mInAnswer = false
+        touchLayer?.visibility = View.VISIBLE
+        inAnswer = false
         invalidateOptionsMenu()
     }
 
@@ -1751,7 +1783,7 @@ abstract class AbstractFlashcardViewer :
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         // Configure the snackbar to avoid the bottom answer buttons
-        if (mAnswerButtonsPosition == "bottom") {
+        if (answerButtonsPosition == "bottom") {
             val easeButtons = findViewById<View>(R.id.answer_options_layout)
             val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
             anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
@@ -1789,7 +1821,7 @@ abstract class AbstractFlashcardViewer :
     /**
      * Provides a hook for calling "alert" from javascript. Useful for debugging your javascript.
      */
-    class AnkiDroidWebChromeClient : WebChromeClient() {
+    inner class AnkiDroidWebChromeClient : WebChromeClient() {
         override fun onJsAlert(
             view: WebView,
             url: String,
@@ -1800,12 +1832,45 @@ abstract class AbstractFlashcardViewer :
             result.confirm()
             return true
         }
+
+        private lateinit var customView: View
+
+        // used for displaying `<video>` in fullscreen.
+        // This implementation requires configChanges="orientation" in the manifest
+        // to avoid destroying the View if the device is rotated
+        override fun onShowCustomView(
+            paramView: View,
+            paramCustomViewCallback: CustomViewCallback?
+        ) {
+            customView = paramView
+            (window.decorView as FrameLayout).addView(
+                customView,
+                FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+            )
+            // hide system bars
+            with(WindowInsetsControllerCompat(window, window.decorView)) {
+                systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                hide(WindowInsetsCompat.Type.systemBars())
+            }
+        }
+
+        override fun onHideCustomView() {
+            (window.decorView as FrameLayout).removeView(customView)
+            // show system bars back
+            with(WindowInsetsControllerCompat(window, window.decorView)) {
+                systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+                show(WindowInsetsCompat.Type.systemBars())
+            }
+        }
     }
 
     protected open fun closeReviewer(result: Int) {
         automaticAnswer.disable()
-        mPreviousAnswerIndicator!!.stopAutomaticHide()
-        mLongClickHandler.removeCallbacks(mStartLongClickAction)
+        previousAnswerIndicator!!.stopAutomaticHide()
+        longClickHandler.removeCallbacks(startLongClickAction)
         this@AbstractFlashcardViewer.setResult(result)
         finish()
     }
@@ -1823,14 +1888,14 @@ abstract class AbstractFlashcardViewer :
      * @see refreshIfRequired - calls through to [updateCurrentCard]
      */
     private fun reloadWebViewContent() {
-        currentCard?.renderOutput(reload = true, browser = false)
+        currentCard?.renderOutput(getColUnsafe, reload = true, browser = false)
         if (!isDisplayingAnswer) {
             Timber.d("displayCardQuestion()")
             displayAnswer = false
-            mBackButtonPressedToReturn = false
+            backButtonPressedToReturn = false
             setInterface()
             typeAnswer?.input = ""
-            typeAnswer?.updateInfo(currentCard!!, resources)
+            typeAnswer?.updateInfo(getColUnsafe, currentCard!!, resources)
             if (typeAnswer?.validForEditText() == true) {
                 // Show text entry based on if the user wants to write the answer
                 answerField?.visibility = View.VISIBLE
@@ -1838,7 +1903,7 @@ abstract class AbstractFlashcardViewer :
             } else {
                 answerField?.visibility = View.GONE
             }
-            val content = mHtmlGenerator!!.generateHtml(currentCard!!, Side.FRONT)
+            val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.FRONT)
             automaticAnswer.onDisplayQuestion()
             updateCard(content)
             hideEaseButtons()
@@ -1870,13 +1935,13 @@ abstract class AbstractFlashcardViewer :
         override fun onScrollChanged(horiz: Int, vert: Int, oldHoriz: Int, oldVert: Int) {
             super.onScrollChanged(horiz, vert, oldHoriz, oldVert)
             if (abs(horiz - oldHoriz) > abs(vert - oldVert)) {
-                mIsXScrolling = true
-                mScrollHandler.removeCallbacks(mScrollXRunnable)
-                mScrollHandler.postDelayed(mScrollXRunnable, 300)
+                isXScrolling = true
+                scrollHandler.removeCallbacks(scrollXRunnable)
+                scrollHandler.postDelayed(scrollXRunnable, 300)
             } else {
-                mIsYScrolling = true
-                mScrollHandler.removeCallbacks(mScrollYRunnable)
-                mScrollHandler.postDelayed(mScrollYRunnable, 300)
+                isYScrolling = true
+                scrollHandler.removeCallbacks(scrollYRunnable)
+                scrollHandler.postDelayed(scrollYRunnable, 300)
             }
         }
 
@@ -1911,9 +1976,9 @@ abstract class AbstractFlashcardViewer :
             return null
         }
 
-        private val mScrollHandler = newHandler()
-        private val mScrollXRunnable = Runnable { mIsXScrolling = false }
-        private val mScrollYRunnable = Runnable { mIsYScrolling = false }
+        private val scrollHandler = newHandler()
+        private val scrollXRunnable = Runnable { isXScrolling = false }
+        private val scrollYRunnable = Runnable { isYScrolling = false }
     }
 
     internal open inner class MyGestureDetector : SimpleOnGestureListener() {
@@ -1935,18 +2000,18 @@ abstract class AbstractFlashcardViewer :
 
             // Go back to immersive mode if the user had temporarily exited it (and then execute swipe gesture)
             this@AbstractFlashcardViewer.onFling()
-            if (e1 != null && mGesturesEnabled) {
+            if (e1 != null && gesturesEnabled) {
                 try {
                     val dy = e2.y - e1.y
                     val dx = e2.x - e1.x
-                    mGestureProcessor.onFling(
+                    gestureProcessor.onFling(
                         dx,
                         dy,
                         velocityX,
                         velocityY,
-                        mIsSelecting,
-                        mIsXScrolling,
-                        mIsYScrolling
+                        isSelecting,
+                        isXScrolling,
+                        isYScrolling
                     )
                 } catch (e: Exception) {
                     Timber.e(e, "onFling Exception")
@@ -1956,15 +2021,15 @@ abstract class AbstractFlashcardViewer :
         }
 
         private fun isTouchingEdge(e1: MotionEvent): Boolean {
-            val height = mTouchLayer!!.height
-            val width = mTouchLayer!!.width
+            val height = touchLayer!!.height
+            val width = touchLayer!!.width
             val margin = Companion.NO_GESTURE_BORDER_DIP * resources.displayMetrics.density + 0.5f
             return e1.x < margin || e1.y < margin || height - e1.y < margin || width - e1.x < margin
         }
 
         override fun onDoubleTap(e: MotionEvent): Boolean {
-            if (mGesturesEnabled) {
-                mGestureProcessor.onDoubleTap()
+            if (gesturesEnabled) {
+                gestureProcessor.onDoubleTap()
             }
             return true
         }
@@ -1983,14 +2048,14 @@ abstract class AbstractFlashcardViewer :
         }
 
         protected open fun executeTouchCommand(e: MotionEvent) {
-            if (mGesturesEnabled && !mIsSelecting) {
-                val height = mTouchLayer!!.height
-                val width = mTouchLayer!!.width
+            if (gesturesEnabled && !isSelecting) {
+                val height = touchLayer!!.height
+                val width = touchLayer!!.width
                 val posX = e.x
                 val posY = e.y
-                mGestureProcessor.onTap(height, width, posX, posY)
+                gestureProcessor.onTap(height, width, posX, posY)
             }
-            mIsSelecting = false
+            isSelecting = false
         }
 
         open fun onWebViewCreated(webView: WebView) {
@@ -2032,7 +2097,7 @@ abstract class AbstractFlashcardViewer :
 
         private fun initShakeDetector() {
             Timber.d("Initializing shake detector")
-            if (mGestureProcessor.isBound(Gesture.SHAKE)) {
+            if (gestureProcessor.isBound(Gesture.SHAKE)) {
                 val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
                 shakeDetector = ShakeDetector(this).apply {
                     start(sensorManager, SensorManager.SENSOR_DELAY_UI)
@@ -2052,25 +2117,25 @@ abstract class AbstractFlashcardViewer :
         }
 
         /** A list of events to process when listening to WebView touches   */
-        private val mDesiredTouchEvents = hashSetInit<MotionEvent>(2)
+        private val desiredTouchEvents = hashSetInit<MotionEvent>(2)
 
         /** A list of events we sent to the WebView (to block double-processing)  */
-        private val mDispatchedTouchEvents = hashSetInit<MotionEvent>(2)
+        private val dispatchedTouchEvents = hashSetInit<MotionEvent>(2)
 
         override fun hearShake() {
             Timber.d("Shake detected!")
-            mGestureProcessor.onShake()
+            gestureProcessor.onShake()
         }
 
         override fun onFillFlashcard() {
             Timber.d("Removing pending touch events for gestures")
-            mDesiredTouchEvents.clear()
-            mDispatchedTouchEvents.clear()
+            desiredTouchEvents.clear()
+            dispatchedTouchEvents.clear()
         }
 
         override fun eventCanBeSentToWebView(event: MotionEvent): Boolean {
             // if we processed the event, we don't want to perform it again
-            return !mDispatchedTouchEvents.remove(event)
+            return !dispatchedTouchEvents.remove(event)
         }
 
         override fun executeTouchCommand(e: MotionEvent) {
@@ -2079,12 +2144,12 @@ abstract class AbstractFlashcardViewer :
             upEvent.action = MotionEvent.ACTION_UP
 
             // mark the events we want to process
-            mDesiredTouchEvents.add(e)
-            mDesiredTouchEvents.add(upEvent)
+            desiredTouchEvents.add(e)
+            desiredTouchEvents.add(upEvent)
 
             // mark the events to can guard against double-processing
-            mDispatchedTouchEvents.add(e)
-            mDispatchedTouchEvents.add(upEvent)
+            dispatchedTouchEvents.add(e)
+            dispatchedTouchEvents.add(upEvent)
             Timber.d("Dispatching touch events")
             processCardAction { cardWebView: WebView? ->
                 cardWebView!!.dispatchTouchEvent(e)
@@ -2096,7 +2161,7 @@ abstract class AbstractFlashcardViewer :
         override fun onWebViewCreated(webView: WebView) {
             Timber.d("Initializing WebView touch handler")
             webView.setOnTouchListener { webViewAsView: View, motionEvent: MotionEvent ->
-                if (!mDesiredTouchEvents.remove(motionEvent)) {
+                if (!desiredTouchEvents.remove(motionEvent)) {
                     return@setOnTouchListener false
                 }
 
@@ -2136,18 +2201,18 @@ abstract class AbstractFlashcardViewer :
 
     /** Callback for when TTS has been initialized.  */
     fun ttsInitialized() {
-        mTtsInitialized = true
-        if (mReplayOnTtsInit) {
+        ttsInitialized = true
+        if (replayOnTtsInit) {
             playSounds(true)
         }
     }
 
     protected open fun shouldDisplayMark(): Boolean {
-        return isMarked(currentCard!!.note())
+        return isMarked(currentCard!!.note(getColUnsafe))
     }
 
     val writeLock: Lock
-        get() = mCardLock.writeLock()
+        get() = cardLock.writeLock()
     open var currentCard: Card? = null
 
     /** Refreshes the WebView after a crash  */
@@ -2155,13 +2220,13 @@ abstract class AbstractFlashcardViewer :
         // Destroy the current WebView (to ensure WebView is GCed).
         // Otherwise, we get the following error:
         // "crash wasn't handled by all associated webviews, triggering application crash"
-        mCardFrame!!.removeAllViews()
-        mCardFrameParent!!.removeView(mCardFrame)
+        cardFrame!!.removeAllViews()
+        cardFrameParent!!.removeView(cardFrame)
         // destroy after removal from the view - produces logcat warnings otherwise
         destroyWebView(webView)
         webView = null
         // inflate a new instance of mCardFrame
-        mCardFrame = inflateNewView<FrameLayout>(R.id.flashcard)
+        cardFrame = inflateNewView<FrameLayout>(R.id.flashcard)
         // Even with the above, I occasionally saw the above error. Manually trigger the GC.
         // I'll keep this line unless I see another crash, which would point to another underlying issue.
         System.gc()
@@ -2169,7 +2234,7 @@ abstract class AbstractFlashcardViewer :
 
     fun recreateWebViewFrame() {
         // we need to add at index 0 so gestures still go through.
-        mCardFrameParent!!.addView(mCardFrame, 0)
+        cardFrameParent!!.addView(cardFrame, 0)
         recreateWebView()
     }
 
@@ -2237,18 +2302,9 @@ abstract class AbstractFlashcardViewer :
                 loader!!.shouldInterceptRequest(url)?.let { return it }
             }
             if (url.toString().startsWith("file://")) {
-                if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
-                    mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
-                }
                 url.path?.let { path -> migrationService?.migrateFileImmediately(File(path)) }
             }
             return null
-        }
-
-        private fun isLoadedFromProtocolRelativeUrl(url: String): Boolean {
-            // a URL provided as "//wikipedia.org" is currently transformed to file://wikipedia.org, we can catch this
-            // because <img src="x.png"> maps to file:///.../x.png
-            return url.startsWith("file://") && !url.startsWith("file:///")
         }
 
         override fun onReceivedError(
@@ -2288,6 +2344,7 @@ abstract class AbstractFlashcardViewer :
             }
             if (url.startsWith("state-mutation-error:")) {
                 onStateMutationError()
+                return true
             }
             if (url.startsWith("tts-voices:")) {
                 showDialogFragment(TtsVoicesDialogFragment())
@@ -2459,7 +2516,7 @@ abstract class AbstractFlashcardViewer :
 
         @TargetApi(Build.VERSION_CODES.O)
         override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
-            return mOnRenderProcessGoneDelegate.onRenderProcessGone(view, detail)
+            return onRenderProcessGoneDelegate.onRenderProcessGone(view, detail)
         }
     }
 
@@ -2489,12 +2546,6 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private fun displayMediaUpgradeRequiredSnackbar() {
-        showSnackbar(R.string.card_viewer_media_relative_protocol) {
-            setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_invalid_protocol_relative))) }
-        }
-    }
-
     @SuppressLint("WebViewApiAvailability")
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun handleUrlFromJavascript(url: String) {
@@ -2513,8 +2564,8 @@ abstract class AbstractFlashcardViewer :
 
     internal fun showTagsDialog() {
         val tags = ArrayList(getColUnsafe.tags.all())
-        val selTags = ArrayList(currentCard!!.note().tags)
-        val dialog = mTagsDialogFactory!!.newTagsDialog()
+        val selTags = ArrayList(currentCard!!.note(getColUnsafe).tags)
+        val dialog = tagsDialogFactory!!.newTagsDialog()
             .withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
         showDialogFragment(dialog)
     }
@@ -2525,9 +2576,9 @@ abstract class AbstractFlashcardViewer :
         indeterminateTags: List<String>,
         stateFilter: CardStateFilter
     ) {
-        if (currentCard!!.note().tags != selectedTags) {
+        if (currentCard!!.note(getColUnsafe).tags != selectedTags) {
             val tagString = selectedTags.joinToString(" ")
-            val note = currentCard!!.note()
+            val note = currentCard!!.note(getColUnsafe)
             note.setTagsFromStr(tagString)
             note.flush()
             // Reload current card to reflect tag changes

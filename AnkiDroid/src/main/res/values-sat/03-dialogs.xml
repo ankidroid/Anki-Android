@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">ᱱᱟᱶᱟ ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱠᱟᱱᱟ ᱾ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱞᱮᱠᱷᱟᱱ ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ ‌ᱛᱮ‌ ᱵᱚᱫᱚᱞᱚᱜᱼᱟ ᱾ ᱱᱟᱶᱟ ᱫᱷᱟᱲᱤ ᱨᱮ ᱱᱟᱶᱟ ᱡᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱟᱭᱜᱟ ᱵᱚᱫᱚᱞ‌ ᱞᱟᱹᱜᱤᱫ ᱨᱤᱯᱚᱡᱤᱥᱚᱱ ᱠᱟᱰ ᱵᱮᱵᱷᱟᱨ ᱢᱮ‌ᱸ</string>
     <string name="reschedule_card_dialog_warning_ease_reset">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱫᱚ ᱵᱷᱚᱵᱤᱥᱭᱚᱛ ᱨᱮ ᱚᱠᱟᱞᱠᱟᱛᱮ ᱠᱟᱰ ᱠᱚ ᱥᱮᱰᱭᱩᱞ ᱟ ᱚᱱᱟ ᱦᱚᱸ ᱨᱤᱥᱚᱴ ᱟᱭ (ᱮᱡᱽ ᱫᱚ %d%% ᱛᱮ ᱥᱮᱴᱚᱜᱼᱟ)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">ᱨᱮᱫ ᱢᱮᱱᱮᱡᱟᱨ ᱛᱮ ᱰᱮᱠ ᱠᱷᱚᱱ ᱠᱟᱰ ᱵᱟᱪᱷᱟᱣ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ about:downloads ᱥᱟᱠᱟᱢ ᱠᱷᱟᱱ import ᱢᱮ</string>
     <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
     <string name="answering_error_message">ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱚᱞ ᱵᱷᱩᱞ ᱾ database ᱫᱚ ᱠᱦᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱰᱤᱥᱠ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱱᱩᱜᱟ ᱾ \n\nᱡᱚᱫᱤ ᱵᱟᱨᱚᱢᱵᱟᱨ ᱱᱚᱠᱟ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ, ᱮᱱᱰᱮᱠᱷᱟᱱ ᱟᱨ ᱢᱤᱫ ᱡᱮᱠᱷᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ backup ᱠᱷᱚᱱ ᱰᱟᱴᱟ restore ᱛᱟᱵᱚᱱ ᱯᱮ ᱾ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ \&quot;options\&quot; ᱨᱮ ᱚᱛᱟᱭ ᱯᱮ ᱾\n\ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱱᱚᱟ ᱫᱚ bug ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱟ; ᱫᱚᱭᱟᱠᱟᱛᱮ report ᱯᱮ ᱾ </string>
     <string name="answering_error_report">ᱦᱩᱰᱟᱜ ᱥᱚᱱᱫᱮᱥ</string>
@@ -186,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱰᱤᱜᱟᱹᱣ</string>
     <string name="boot_service_too_many_notifications">ᱟᱹᱰᱤᱜᱟᱱ ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱾ ᱛᱤᱱᱟᱹᱝᱜᱟᱱ ᱡᱤᱱᱥ ᱵᱟᱭ ᱫᱮᱠᱷᱟᱣᱟ</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">ᱠᱤᱵᱚᱰ ᱦᱤᱸᱴ ᱵᱟᱪᱷᱟᱣ</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">ᱠᱤᱪᱷᱤ ᱢᱟᱹᱞᱴᱤᱞᱤᱱᱜᱩᱟᱞ ᱠᱤᱭᱵᱚᱰ, ᱡᱮᱢᱚᱱ GBoard  ᱫᱚ ᱚᱞ ᱠᱚ ᱥᱟᱯᱲᱟᱣ ᱡᱷᱚᱜ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱜᱟᱱᱚᱜᱼᱟ \n\n ᱡᱩᱫᱤ ᱟᱢᱟᱜᱽ ᱠᱤᱭᱵᱚᱰ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱵᱟᱭ ᱜᱟᱱᱚᱜ ᱠᱟᱱ ᱠᱷᱟᱱ ᱫᱚᱭᱟ ᱠᱟᱛᱮ ᱠᱮᱭᱵᱚᱰ ᱢᱮᱱᱭᱩᱯᱷᱮᱠᱪᱚᱨᱟᱹᱨ ᱨᱮᱭᱟᱜ “setImeHintLocales” ᱱᱮᱦᱚᱨᱮᱢ ᱾</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ᱵᱮᱵᱷᱟᱨᱮᱫᱟᱹᱧ</string>

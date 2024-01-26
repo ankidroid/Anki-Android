@@ -77,7 +77,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">正在重新安排新卡片。重新安排也会将新卡片转为复习卡片。请使用“更改卡片位置”选项来更改新卡片在新队列中的位置</string>
     <string name="reschedule_card_dialog_warning_ease_reset">重新安排计划还将重置调度器将来如何处理卡片（难度系数将设置为 %d%%）</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">在您的文件管理器中选择牌组，或访问关于：下载页面以便导入</string>
     <string name="answering_error_title">数据库错误</string>
     <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是 AnkiDroid 的 bug，请报告这个错误，我们会尽力解决。</string>
     <string name="answering_error_report">报告错误</string>
@@ -180,7 +179,7 @@
     <string name="boot_service_failed_to_schedule_notifications">计划提醒失败</string>
     <string name="boot_service_too_many_notifications">已计划的提醒太多。有些提醒将不会出现</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">键盘提示选择</string>
+    <string name="locale_selection_dialog_title_new">设置语言</string>
     <string name="locale_selection_dialog_summary">某些多语言键盘，如 GBoard，支持编辑文本时更改语言\n\n如果您的键盘不会更改语言，请向您的键盘发布方请求“设置输入法编辑器本地化语言提示”特性。</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">使用 AnkiDroid</string>

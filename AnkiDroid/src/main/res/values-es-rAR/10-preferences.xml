@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Deshabilitado</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz parpadeante</string>
     <string name="timeout_answer_text" maxLength="41">Mostrar automáticamente la respuesta</string>
-    <string name="timeout_answer" maxLength="41">Tiempo de respuesta agotado</string>
-    <string name="timeout_answer_summ">Mostrar respuesta automáticamente sin intervención del usuario. Retraso incluye tiempo para archivos de audio automáticamente reproducidas.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Tiempo para mostrar respuesta</string>
-    <string name="timeout_question_seconds" maxLength="41">Tiempo para mostrar la siguiente pregunta</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Seleccionar idioma</string>
     <string name="software_render" maxLength="41">Deshabilitar el procesamiento de hardware de la tarjeta</string>
     <string name="software_render_summ">El procesamiento de hardware es más rápido, pero puede tener problemas, específicamente en Android 8/8.1. Si no puede ver partes de la interfaz de usuario de la tarjeta, prueba esta opción.</string>
@@ -245,8 +241,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reprogramar</string>
     <string name="deck_conf_cram_reschedule_summ">Reprogramar las tarjetas basándose en mis respuestas en este mazo</string>
     <string name="deck_conf_cram_filter_2_check">Activar segundo filtro</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Pasos personalizados (en minutos)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definir pasos personalizados</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">¡Ayuda a mejorar AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Compartir uso de funciones</string>

@@ -157,7 +157,7 @@ class Note : Cloneable {
         return result
     }
 
-    private fun fieldOrd(key: String): Int {
+    private fun fieldIndex(key: String): Int {
         val fieldPair = fMap!![key]
             ?: throw IllegalArgumentException(
                 String.format(
@@ -169,11 +169,11 @@ class Note : Cloneable {
     }
 
     fun getItem(key: String): String {
-        return fields[fieldOrd(key)]
+        return fields[fieldIndex(key)]
     }
 
     fun setItem(key: String, value: String) {
-        fields[fieldOrd(key)] = value
+        fields[fieldIndex(key)] = value
     }
 
     operator fun contains(key: String): Boolean {
@@ -261,8 +261,7 @@ class Note : Cloneable {
         return DupeOrEmpty.CORRECT
     }
 
-    val sFld: String
-        get() = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
+    fun sFld(): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
     fun setField(index: Int, value: String) {
         fields[index] = value

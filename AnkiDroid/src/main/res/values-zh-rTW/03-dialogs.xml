@@ -77,7 +77,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">一張新卡片正在重新排程。重新排程也會將新卡片變為複習卡。使用選項「變更位置」來變更一張新卡片的新排序位置</string>
     <string name="reschedule_card_dialog_warning_ease_reset">重新排程也會重設排程對卡片未來的影響改變 (間格倍數會被設為 %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">選擇你的檔案管理器中的牌組，或訪問 about:downloads 頁面以匯入</string>
     <string name="answering_error_title">資料庫錯誤</string>
     <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的集合或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>
     <string name="answering_error_report">回報錯誤</string>
@@ -180,7 +179,7 @@
     <string name="boot_service_failed_to_schedule_notifications">排定提醒失敗</string>
     <string name="boot_service_too_many_notifications">已設定太多提醒。部分將不會出現</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">鍵盤提示選擇</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">有些多國語言鍵盤，想是GBoard支援編輯文字時切換語言。\n\n如果您的鍵盤不會切換語言，句請請求您的鍵盤開發人員提供「setImeHintLocales」功能。</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">使用 AnkiDroid</string>

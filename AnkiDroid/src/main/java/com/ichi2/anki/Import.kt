@@ -16,7 +16,9 @@
 
 package com.ichi2.anki
 
+import android.app.Activity
 import android.content.Intent
+import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -51,9 +53,15 @@ fun DeckPicker.onSelectedPackageToImport(data: Intent) {
     }
 }
 
-fun DeckPicker.onSelectedCsvForImport(data: Intent) {
+fun Activity.onSelectedCsvForImport(data: Intent) {
     val path = ImportUtils.getFileCachedCopy(this, data) ?: return
-    startActivity(CsvImporter.getIntent(this, path))
+    val csvImporterIntent = CsvImporter.getIntent(this, path)
+
+    val stackBuilder = TaskStackBuilder.create(this)
+    stackBuilder.addNextIntentWithParentStack(Intent(this, DeckPicker::class.java))
+    stackBuilder.addNextIntent(csvImporterIntent)
+
+    stackBuilder.startActivities()
 }
 
 fun DeckPicker.showImportDialog(id: Int, importPath: String) {

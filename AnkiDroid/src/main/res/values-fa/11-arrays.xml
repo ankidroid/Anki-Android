@@ -101,7 +101,5 @@
     <string name="gesture_show_all_hints">همه ی راهنما ها را نمایش بده</string>
     <string name="record_voice">ضبط صدا</string>
     <string name="replay_voice">صدا را دوباره پخش کن</string>
-    <string name="automatic_answer_option_2">سخت(خوب است اگر در دسترس نبود)</string>
-    <string name="automatic_answer_option_4">آسان (خوب است اگر در دسترس نبود)</string>
     <string name="save_voice">Save Recording</string>
 </resources>

@@ -18,7 +18,6 @@ package com.ichi2.anki.previewer
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.android.material.color.MaterialColors.getColor
@@ -26,29 +25,33 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.LanguageUtils
+import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.launchCatching
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound.addPlayButtons
+import com.ichi2.libanki.note
 import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.intellij.lang.annotations.Language
+import org.jetbrains.annotations.VisibleForTesting
+import org.json.JSONObject
 import timber.log.Timber
 
-class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int) : ViewModel() {
+class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int) :
+    ViewModel(),
+    OnErrorListener {
+
+    override val onError = MutableSharedFlow<String>()
     val eval = MutableSharedFlow<String>()
-    val onError = MutableSharedFlow<String>()
     val currentIndex = MutableStateFlow(firstIndex)
     val backsideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
@@ -65,15 +68,15 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     private lateinit var currentCard: Card
 
     init {
-        currentIndex
-            .onEach { index ->
+        launchCatching {
+            currentIndex.collectLatest { index ->
                 currentCard = withCol { getCard(selectedCardIds[index]) }
                 showQuestion()
                 if (backsideOnly.value) {
                     showAnswer()
                 }
             }
-            .launchIn(viewModelScope)
+        }
     }
 
     fun toggleBacksideOnly() {
@@ -88,7 +91,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
 
     fun toggleMark() {
         launchCatching {
-            val note = currentCard.note()
+            val note = withCol { currentCard.note() }
             NoteService.toggleMark(note)
             isMarked.emit(NoteService.isMarked(note))
         }
@@ -129,15 +132,17 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     }
 
     private suspend fun updateMarkIcon() {
-        isMarked.emit(currentCard.note().hasTag(MARKED_TAG))
+        val note = withCol { currentCard.note() }
+        isMarked.emit(note.hasTag(MARKED_TAG))
     }
 
     private suspend fun showQuestion() {
         Timber.v("showQuestion()")
         showingAnswer.emit(false)
 
-        val question = prepareCardTextForDisplay(currentCard.question())
-        val answer = withCol { media.escapeMediaFilenames(currentCard.answer()) }
+        val questionData = withCol { currentCard.question(this) }
+        val question = mungeQA(questionData)
+        val answer = withCol { media.escapeMediaFilenames(currentCard.answer(this)) }
         val bodyClass = bodyClassForCardOrd(currentCard.ord)
 
         eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '$bodyClass');")
@@ -151,12 +156,26 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     private suspend fun showAnswer() {
         Timber.v("showAnswer()")
         showingAnswer.emit(true)
-        val answer = prepareCardTextForDisplay(currentCard.answer())
+        val answerData = withCol { currentCard.answer(this) }
+        val answer = mungeQA(answerData)
         eval.emit("_showAnswer(${Json.encodeToString(answer)});")
     }
 
+    /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L358) */
+    private suspend fun mungeQA(text: String): String =
+        typeAnsFilter(prepareCardTextForDisplay(text))
+
     private suspend fun prepareCardTextForDisplay(text: String): String {
         return addPlayButtons(withCol { media.escapeMediaFilenames(text) })
+    }
+
+    /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L671) */
+    private suspend fun typeAnsFilter(text: String): String {
+        return if (showingAnswer.value) {
+            typeAnsAnswerFilter(currentCard, text)
+        } else {
+            typeAnsQuestionFilter(text)
+        }
     }
 
     /**
@@ -184,12 +203,6 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
             } else if (showingAnswer.value && !backsideOnly.value) {
                 showQuestion()
             }
-        }
-    }
-
-    private fun launchCatching(block: suspend PreviewerViewModel.() -> Unit): Job {
-        return launchCatching(block, Dispatchers.IO) { message ->
-            onError.emit(message)
         }
     }
 
@@ -250,8 +263,8 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
                 <html class="$docClass" dir="$languageDirectionality" data-bs-theme="$baseTheme">
                 <head>
                     <title>AnkiDroid</title>
-                        <link rel="stylesheet" type="text/css" href="/web/root-vars.css">
-                        <link rel="stylesheet" type="text/css" href="/web/reviewer.css">
+                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/root-vars.css">
+                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/reviewer.css">
                     <style type="text/css">
                         .night-mode button { --canvas: #606060; --fg: #eee; }
                         $colors
@@ -263,7 +276,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
                     <div id="qa"></div>
                     <script src="file:///android_asset/jquery.min.js"></script>
                     <script src="file:///android_asset/mathjax/tex-chtml.js"></script>
-                    <script src="/web/reviewer.js"></script>
+                    <script src="file:///android_asset/backend/web/reviewer.js"></script>
                     <script>bridgeCommand = function(){};</script>
                 </body>
                 </html>
@@ -281,6 +294,66 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
 
         private fun bodyClass(nightMode: Boolean = Themes.currentTheme.isNightMode): String {
             return if (nightMode) "nightMode night_mode" else ""
+        }
+
+        /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L669] */
+        @VisibleForTesting
+        val typeAnsRe = Regex("\\[\\[type:(.+?)]]")
+
+        /** removes `[[type:]]` blocks in questions */
+        @VisibleForTesting
+        fun typeAnsQuestionFilter(text: String) =
+            typeAnsRe.replace(text, "")
+
+        private suspend fun getTypeAnswerField(card: Card, text: String): JSONObject? {
+            val match = typeAnsRe.find(text) ?: return null
+
+            val typeAnsFieldName = match.groups[1]!!.value.let {
+                if (it.startsWith("cloze:")) {
+                    it.split(":")[1]
+                } else {
+                    it
+                }
+            }
+
+            val fields = withCol { card.model(this).flds }
+            for (i in 0 until fields.length()) {
+                val field = fields.get(i) as JSONObject
+                if (field.getString("name") == typeAnsFieldName) {
+                    return field
+                }
+            }
+            return null
+        }
+
+        private suspend fun getExpectedTypeInAnswer(card: Card, field: JSONObject): String? {
+            val fieldName = field.getString("name")
+            val expected = withCol { card.note().getItem(fieldName) }
+            return if (fieldName.startsWith("cloze:")) {
+                val clozeIdx = card.ord + 1
+                withCol {
+                    extractClozeForTyping(expected, clozeIdx).takeIf { it.isNotBlank() }
+                }
+            } else {
+                expected
+            }
+        }
+
+        /** Adapted from the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L720) */
+        suspend fun typeAnsAnswerFilter(card: Card, text: String): String {
+            val typeAnswerField = getTypeAnswerField(card, text)
+                ?: return typeAnsRe.replace(text, "")
+            val expectedAnswer = getExpectedTypeInAnswer(card, typeAnswerField)
+                ?: return typeAnsRe.replace(text, "")
+            val typeFont = typeAnswerField.getString("font")
+            val typeSize = typeAnswerField.getString("size")
+            val answerComparison = withCol { compareAnswer(expectedAnswer, provided = "") }
+            return typeAnsRe.replace(text) {
+                @Language("HTML")
+                val output =
+                    """<div style="font-family: '$typeFont'; font-size: ${typeSize}px">$answerComparison</div>"""
+                output
+            }
         }
     }
 }

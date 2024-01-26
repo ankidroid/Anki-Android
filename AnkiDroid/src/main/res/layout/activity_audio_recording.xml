@@ -90,7 +90,6 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:backgroundTint="@color/material_blue_500"
-                app:icon="@drawable/ic_save_white"
                 app:iconPadding="0dp"
                 app:iconSize="22dp" />
 

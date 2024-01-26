@@ -20,21 +20,23 @@
 package com.ichi2.anki.multimediacard.fields
 
 import com.ichi2.libanki.Collection
+import com.ichi2.utils.KotlinCleanup
 import java.io.File
 import java.util.regex.Pattern
 
 /**
  * Implementation of Audio field types
  */
+@KotlinCleanup("replace _audioPath with `field`")
 abstract class AudioField : FieldBase(), IField {
-    private var mAudioPath: String? = null
+    private var _audioPath: String? = null
 
     override var imagePath: String? = null
 
     override var audioPath: String?
-        get() = mAudioPath
+        get() = _audioPath
         set(value) {
-            mAudioPath = value
+            _audioPath = value
             setThisModified()
         }
 

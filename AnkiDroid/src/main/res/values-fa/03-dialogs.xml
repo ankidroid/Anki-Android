@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">یک کارت جدید در حال زمان‌بندی مجدد است. زمان‌بندی مجدد، کارت های جدید را هم به کارت های مروری تبدیل میکند. برای این که مکان این کارت جدید را در ترتیب کارت ها تغییر دهید، گزینه ی \'تغییر مکان کارت\' را انتخاب کنید</string>
     <string name="reschedule_card_dialog_warning_ease_reset">زمان‌بندی مجدد طوری که برنامه‌ریز با کارت در آینده رفتار میکند را هم مجددا تنظیم می‌کند (سادگی به %d%% تنظیم خواهد شد)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">دسته را در نرم افزار مدیریت فایل خود انتخاب کنید یا برای وارد کردن آن به صفحۀ about:downloads مراجعه کنید</string>
     <string name="answering_error_title">خطای پایگاه داده</string>
     <string name="answering_error_message">ذخیرۀ مجموعه انجام نشد. دیتابیس ممکن است خراب باشد یا ممکن است فضای کافی نداشته باشید.\n\nاگر این اتفاق غالباً رخ می‌دهد، بررسی دیتابیس، تعمیر مجموعه یا بازنشانی مجموعه از یک فایل پشتیبان قبلی را برای حل کردن مشکل امتحان کنید. برای این کار به \"گزینه‌ها\" مراجعه کنید.\nاین خطا همچنین ممکن است به دلیل مشکل در آنکی‌دروید باشد؛ اگر هیچ یک از موارد بالا مشکل شما را حل نکرد، لطفاً خطا را به ما گزارش دهید تا ما بتوانیم به بررسی آن بپردازیم.</string>
     <string name="answering_error_report">گزارش خطا</string>
@@ -186,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">تنظیم یادآور انجام نشد</string>
     <string name="boot_service_too_many_notifications">یادآورهای زیادی تنظیم شده‌اند. بعضی از آنها نمایش داده نخواهند شد</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">انتخاب زبان کیبرد</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">بعضی کیبورد‌های چند‌زبانه مثل GBoard توانایی این را دارند که هنگام تغییر نوشته زبانتان را تغییر دهند\n\nلطفا ویژگی “setImeHintLocales” را از سازنده‌ی کیبورد خود درخواست کنید اگر کیبوردتان توانایی تغییر زبان ندارد.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">استفاده از AnkiDroid</string>

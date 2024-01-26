@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Выкл.</string>
-    <string name="pref_summary_seconds">%s с</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="few">%d mins</item>
@@ -154,10 +153,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибросигнал</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мерцание светодиода</string>
     <string name="timeout_answer_text" maxLength="41">Автоматически показывать ответ</string>
-    <string name="timeout_answer" maxLength="41">Задержка ответа</string>
-    <string name="timeout_answer_summ">Показывает ответ автоматически. Задержка включает в себя время для воспроизведения звука.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Показать ответ через</string>
-    <string name="timeout_question_seconds" maxLength="41">Показать следующий вопрос через</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Выберите язык</string>
     <string name="software_render" maxLength="41">Отключить аппаратную отрисовку</string>
     <string name="software_render_summ">Аппаратная отрисовка быстрее, но может вызывать проблемы (особенно на Android 8/8.1). Попробуйте отключить её если при повторении пропадают элементы интерфейса.</string>
@@ -248,8 +244,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланировать</string>
     <string name="deck_conf_cram_reschedule_summ">Перепланировать карточки в зависимости от ответов</string>
     <string name="deck_conf_cram_filter_2_check">Включить второй фильтр</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Заданные шаги (мин.)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Задать свои шаги</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Помогите сделать AnkiDroid лучше!</string>
     <string name="analytics_title" maxLength="41">Делиться статистикой использования</string>

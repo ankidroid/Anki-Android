@@ -43,7 +43,7 @@ class CardTest : JvmTest() {
         col.addNote(note)
         val card = note.cards()[0]
 
-        assertThat(card.pureAnswer, equalTo("2"))
+        assertThat(card.pureAnswer(), equalTo("2"))
     }
 
     /******************
@@ -248,82 +248,82 @@ class CardTest : JvmTest() {
         c.due = 27L
         c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
         assertEquals("27", c.nextDue())
-        assertEquals("(27)", c.dueString)
+        assertEquals("(27)", c.dueString())
         c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
         assertEquals("27", c.nextDue())
-        assertEquals("(27)", c.dueString)
+        assertEquals("(27)", c.dueString())
         c.queue = Consts.QUEUE_TYPE_SUSPENDED
         assertEquals("27", c.nextDue())
-        assertEquals("(27)", c.dueString)
+        assertEquals("(27)", c.dueString())
         c.queue = Consts.QUEUE_TYPE_NEW
         c.due = 27L
         assertEquals("27", c.nextDue())
-        assertEquals("27", c.dueString)
+        assertEquals("27", c.dueString())
         c.queue = Consts.QUEUE_TYPE_PREVIEW
         assertEquals("27", c.nextDue())
-        assertEquals("27", c.dueString)
+        assertEquals("27", c.dueString())
         c.type = Consts.CARD_TYPE_LRN
         c.due = id
         c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
         assertEquals("", c.nextDue())
-        assertEquals("()", c.dueString)
+        assertEquals("()", c.dueString())
         c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
         assertEquals("", c.nextDue())
-        assertEquals("()", c.dueString)
+        assertEquals("()", c.dueString())
         c.queue = Consts.QUEUE_TYPE_SUSPENDED
         assertEquals("", c.nextDue())
-        assertEquals("()", c.dueString)
+        assertEquals("()", c.dueString())
         c.queue = Consts.QUEUE_TYPE_LRN
         assertEquals("3/19/21", c.nextDue())
-        assertEquals("3/19/21", c.dueString)
+        assertEquals("3/19/21", c.dueString())
         c.queue = Consts.QUEUE_TYPE_PREVIEW
         assertEquals("", c.nextDue())
-        assertEquals("", c.dueString)
+        assertEquals("", c.dueString())
         c.type = Consts.CARD_TYPE_REV
         c.due = 20
         //  Since tests run the 7th of august, in 20 days we are the 27th of august 2020
         c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
         assertEquals("8/27/20", c.nextDue())
-        assertEquals("(8/27/20)", c.dueString)
+        assertEquals("(8/27/20)", c.dueString())
         c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
         assertEquals("8/27/20", c.nextDue())
-        assertEquals("(8/27/20)", c.dueString)
+        assertEquals("(8/27/20)", c.dueString())
         c.queue = Consts.QUEUE_TYPE_SUSPENDED
         assertEquals("8/27/20", c.nextDue())
-        assertEquals("(8/27/20)", c.dueString)
+        assertEquals("(8/27/20)", c.dueString())
         c.queue = Consts.QUEUE_TYPE_REV
         assertEquals("8/27/20", c.nextDue())
-        assertEquals("8/27/20", c.dueString)
+        assertEquals("8/27/20", c.dueString())
         c.queue = Consts.QUEUE_TYPE_PREVIEW
         assertEquals("", c.nextDue())
-        assertEquals("", c.dueString)
+        assertEquals("", c.dueString())
         c.type = Consts.CARD_TYPE_RELEARNING
         c.due = id
         c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
         assertEquals("", c.nextDue())
-        assertEquals("()", c.dueString)
+        assertEquals("()", c.dueString())
         c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
         assertEquals("", c.nextDue())
-        assertEquals("()", c.dueString)
+        assertEquals("()", c.dueString())
         c.queue = Consts.QUEUE_TYPE_SUSPENDED
         assertEquals("", c.nextDue())
-        assertEquals("()", c.dueString)
+        assertEquals("()", c.dueString())
         c.queue = Consts.QUEUE_TYPE_LRN
         c.due = id
         assertEquals("3/19/21", c.nextDue())
-        assertEquals("3/19/21", c.dueString)
+        assertEquals("3/19/21", c.dueString())
         c.queue = Consts.QUEUE_TYPE_PREVIEW
         assertEquals("", c.nextDue())
-        assertEquals("", c.dueString)
+        assertEquals("", c.dueString())
 
         // Dynamic deck
         val dyn = decks.newDyn("dyn")
         c.oDid = c.did
         c.did = dyn
         assertEquals("(filtered)", c.nextDue())
-        assertEquals("(filtered)", c.dueString)
+        assertEquals("(filtered)", c.dueString())
         c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
         assertEquals("(filtered)", c.nextDue())
-        assertEquals("((filtered))", c.dueString)
+        assertEquals("((filtered))", c.dueString())
     }
 }

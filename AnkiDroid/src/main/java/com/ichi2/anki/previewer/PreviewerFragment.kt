@@ -18,11 +18,9 @@ package com.ichi2.anki.previewer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -54,7 +52,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
+class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickListener {
     private lateinit var viewModel: PreviewerViewModel
 
     private val menu: Menu
@@ -68,14 +66,6 @@ class PreviewerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private val flagOption: MenuItem
         get() = menu.findItem(R.id.action_flag)
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.previewer, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val selectedCardIds = requireArguments().getLongArray(CARD_IDS_EXTRA)!!

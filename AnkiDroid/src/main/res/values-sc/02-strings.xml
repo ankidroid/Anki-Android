@@ -235,7 +235,6 @@
     <string name="about_ankidroid_error_copy_debug_info">B\'at àpidu una faddina copiende sas informatziones de depuratzione in punta de billete</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Errore de cuntenutu de sa carta: carrigamentu de ‘%s’ fallidu</string>
-    <string name="card_viewer_media_relative_protocol">Errore de cuntenutu de sa carta: atualizatzione multimediale netzessària</string>
     <!-- Deck Picker -->
     <string name="search_decks">Chirca matzos</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Ammustra su protzessu de tramudòngiu</string>
@@ -269,7 +268,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">S\'indiritzu de posta eletrònica est netzessàriu</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Sa crae est netzessària</string>
     <string name="back_pressed_once">Incarca torra in segus pro essire</string>
     <string name="back_pressed_once_reviewer">Incarca torra in segus pro torrare</string>

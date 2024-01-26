@@ -16,14 +16,9 @@
 
 package com.ichi2.anki.dialogs
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.input.getInputField
-import com.afollestad.materialdialogs.input.input
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
@@ -34,7 +29,12 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.getOrCreateFilteredDeck
-import com.ichi2.utils.displayKeyboard
+import com.ichi2.utils.getInputField
+import com.ichi2.utils.input
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import timber.log.Timber
 import java.util.function.Consumer
@@ -51,7 +51,7 @@ class CreateDeckDialog(
     private var previousDeckName: String? = null
     private var onNewDeckCreated: Consumer<Long>? = null
     private var initialDeckName = ""
-    private var shownDialog: MaterialDialog? = null
+    private var shownDialog: AlertDialog? = null
 
     enum class DeckDialogType {
         FILTERED_DECK, DECK, SUB_DECK, RENAME_DECK
@@ -76,25 +76,21 @@ class CreateDeckDialog(
             initialDeckName = deckName
         }
 
-    fun showDialog(): MaterialDialog {
-        @SuppressLint("CheckResult")
-        val dialog = MaterialDialog(context).show {
+    fun showDialog(): AlertDialog {
+        val dialog = AlertDialog.Builder(context).show {
             title(title)
-            positiveButton(R.string.dialog_ok) {
-                onPositiveButtonClicked()
-            }
+            positiveButton(R.string.dialog_ok) { onPositiveButtonClicked() }
             negativeButton(R.string.dialog_cancel)
-            input(prefill = initialDeckName, waitForPositiveButton = false) { dialog, text ->
-                // we need the fully-qualified name for subdecks
-                val maybeDeckName = fullyQualifyDeckName(dialogText = text)
-                // if the name is empty, it seems distracting to show an error
-                if (maybeDeckName == null || !Decks.isValidDeckName(maybeDeckName)) {
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
-                    return@input
-                }
-                dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
+            setView(R.layout.dialog_generic_text_input)
+        }.input(prefill = initialDeckName, displayKeyboard = true) { dialog, text ->
+            // we need the fully-qualified name for subdecks
+            val maybeDeckName = fullyQualifyDeckName(dialogText = text)
+            // if the name is empty, it seems distracting to show an error
+            if (maybeDeckName == null || !Decks.isValidDeckName(maybeDeckName)) {
+                dialog.positiveButton.isEnabled = false
+                return@input
             }
-            displayKeyboard(getInputField())
+            dialog.positiveButton.isEnabled = true
         }
         shownDialog = dialog
         return dialog

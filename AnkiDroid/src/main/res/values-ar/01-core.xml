@@ -60,7 +60,7 @@
     <string name="expand">إسدال</string>
     <string name="collapse">إخفاء</string>
     <string name="no_cards_placeholder_title">المجموعة فارغة</string>
-    <string name="no_cards_placeholder_description">ابدأ بإضافة بطاقات\nباستخدام أيقونة +.</string>
+    <string name="no_cards_placeholder_description">ابدأ بإضافة البطاقات\nباستخدام أيقونة +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">أدخل الإجابة</string>

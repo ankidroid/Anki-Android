@@ -89,6 +89,7 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.libanki.*
+import com.ichi2.libanki.Collection
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
@@ -503,6 +504,11 @@ open class CardBrowser :
                 invalidateOptionsMenu()
             }
             .launchIn(lifecycleScope)
+
+        viewModel.initCompletedFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { completed -> if (completed) searchCards() }
+            .launchIn(lifecycleScope)
     }
 
     fun searchWithFilterQuery(filterQuery: String) = launchCatchingTask {
@@ -510,7 +516,7 @@ open class CardBrowser :
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
-    override fun onCollectionLoaded(col: com.ichi2.libanki.Collection) {
+    override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         Timber.d("onCollectionLoaded()")
         registerExternalStorageListener()
@@ -584,14 +590,9 @@ open class CardBrowser :
             showAllDecks = true,
             alwaysShowDefault = false,
             showFilteredDecks = true
-        )
-        deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-
-        launchCatchingTask {
-            when (val deckId = viewModel.getInitialDeck()) {
-                ALL_DECKS_ID -> selectAllDecks()
-                else -> deckSpinnerSelection!!.selectDeckById(deckId, false)
-            }
+        ).apply {
+            initializeActionBarDeckSpinner(supportActionBar!!)
+            selectDeckById(viewModel.deckId ?: ALL_DECKS_ID, false)
         }
     }
 
@@ -650,6 +651,13 @@ open class CardBrowser :
                     return true
                 }
             }
+            KeyEvent.KEYCODE_P -> {
+                if (event.isShiftPressed && event.isCtrlPressed) {
+                    Timber.i("Ctrl+Shift+P - Preview")
+                    onPreview()
+                    return true
+                }
+            }
         }
         return super.onKeyDown(keyCode, event)
     }
@@ -658,8 +666,10 @@ open class CardBrowser :
      * If one or more card is unmarked, all will be marked,
      * otherwise, they will be unmarked  */
     @NeedsTest("Test that the mark get toggled as expected for a list of selected cards")
-    private fun toggleMark() {
-        launchCatchingTask { withProgress { viewModel.toggleMark(selectedCardIds) } }
+    @VisibleForTesting
+    fun toggleMark() = launchCatchingTask {
+        withProgress { viewModel.toggleMark(selectedCardIds) }
+        cardsAdapter.notifyDataSetChanged()
     }
 
     @VisibleForTesting
@@ -858,7 +868,7 @@ open class CardBrowser :
         if (viewModel.hasSelectedAnyRows()) {
             mActionBarMenu!!.findItem(R.id.action_suspend_card).apply {
                 title = TR.browsingToggleSuspend()
-                setIcon(R.drawable.ic_pause_circle_outline)
+                setIcon(R.drawable.ic_suspend)
             }
             mActionBarMenu!!.findItem(R.id.action_mark_card).apply {
                 title = TR.browsingToggleMark()
@@ -1156,7 +1166,7 @@ open class CardBrowser :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun exportDialogsFactory(): ExportDialogsFactory = mExportingDelegate.mDialogsFactory
+    override fun exportDialogsFactory(): ExportDialogsFactory = mExportingDelegate.dialogsFactory
 
     private fun exportSelected() = launchCatchingTask {
         val (type, selectedIds) = viewModel.getSelectionExportData() ?: return@launchCatchingTask
@@ -1300,7 +1310,7 @@ open class CardBrowser :
         }
         val allTags = getColUnsafe.tags.all()
         val selectedNotes = selectedCardIds
-            .map { cardId: CardId? -> getColUnsafe.getCard(cardId!!).note() }
+            .map { cardId: CardId? -> getColUnsafe.getCard(cardId!!).note(getColUnsafe) }
             .distinct()
         val checkedTags = selectedNotes
             .flatMap { note: Note -> note.tags }
@@ -1379,6 +1389,10 @@ open class CardBrowser :
     @RustCleanup("remove card cache; switch to RecyclerView and browserRowForId (#11889)")
     @VisibleForTesting
     fun searchCards() {
+        if (!viewModel.initCompleted) {
+            Timber.d("!initCompleted, not searching")
+            return
+        }
         // cancel the previous search & render tasks if still running
         invalidate()
         if ("" != mSearchTerms && mSearchView != null) {
@@ -1564,7 +1578,7 @@ open class CardBrowser :
      * Removes cards from view. Doesn't delete them in model (database).
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
-    private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
+    private fun removeNotesView(cardsIds: List<Long>, reorderCards: Boolean) {
         val idToPos = viewModel.cardIdToPositionMap
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
         mReloadRequired = mReloadRequired || cardsIds.contains(reviewerCardId)
@@ -1773,9 +1787,9 @@ open class CardBrowser :
             // Draw the content in the columns
             val card = getItem(position)
             (v.tag as Array<*>)
-                .forEachIndexed { i, col ->
-                    setFont(col as TextView) // set font for column
-                    col.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
+                .forEachIndexed { i, column ->
+                    setFont(column as TextView) // set font for column
+                    column.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
                 }
             // set card's background color
             val backgroundColor: Int = MaterialColors.getColor(this@CardBrowser, card.color, 0)
@@ -1931,7 +1945,7 @@ open class CardBrowser :
         override var position: Int
 
         private val inCardMode: Boolean
-        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
+        constructor(id: Long, col: Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
             this.position = position
             this.inCardMode = cardsOrNotes == CARDS
         }
@@ -1965,7 +1979,7 @@ open class CardBrowser :
                     6 -> R.attr.flagTurquoise
                     7 -> R.attr.flagPurple
                     else -> {
-                        if (isMarked(card.note())) {
+                        if (isMarked(card.note(col))) {
                             R.attr.markedColor
                         } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
                             R.attr.suspendedColor
@@ -1980,20 +1994,20 @@ open class CardBrowser :
             return when (key) {
                 CardBrowserColumn.FLAGS -> Integer.valueOf(card.userFlag()).toString()
                 CardBrowserColumn.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
-                CardBrowserColumn.MARKED -> if (isMarked(card.note())) "marked" else null
-                CardBrowserColumn.SFLD -> card.note().sFld
+                CardBrowserColumn.MARKED -> if (isMarked(card.note(col))) "marked" else null
+                CardBrowserColumn.SFLD -> card.note(col).sFld()
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
-                CardBrowserColumn.TAGS -> card.note().stringTags()
-                CardBrowserColumn.CARD -> if (inCardMode) card.template().optString("name") else "${card.note().numberOfCards()}"
-                CardBrowserColumn.DUE -> card.dueString
+                CardBrowserColumn.TAGS -> card.note(col).stringTags()
+                CardBrowserColumn.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards()}"
+                CardBrowserColumn.DUE -> card.dueString(col)
                 CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
-                CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note().mod.toLong())
-                CardBrowserColumn.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.note().id)
-                CardBrowserColumn.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note().mod)
+                CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note(col).mod.toLong())
+                CardBrowserColumn.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
+                CardBrowserColumn.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note(col).mod)
                 CardBrowserColumn.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
-                CardBrowserColumn.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote()).toString()
-                CardBrowserColumn.NOTE_TYPE -> card.model().optString("name")
-                CardBrowserColumn.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote().toString()
+                CardBrowserColumn.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote(col)).toString()
+                CardBrowserColumn.NOTE_TYPE -> card.model(col).optString("name")
+                CardBrowserColumn.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote(col).toString()
                 CardBrowserColumn.QUESTION -> {
                     updateSearchItemQA()
                     mQa!!.first
@@ -2015,7 +2029,7 @@ open class CardBrowser :
         }
 
         private fun getAvgEaseForNotes(): String {
-            val avgEase = card.avgEaseOfNote()
+            val avgEase = card.avgEaseOfNote(col)
 
             return if (avgEase == null) {
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
@@ -2033,7 +2047,7 @@ open class CardBrowser :
         }
 
         private fun queryAvgIntervalForNotes(): String {
-            val avgInterval = card.avgIntervalOfNote()
+            val avgInterval = card.avgIntervalOfNote(col)
 
             return if (avgInterval == null) {
                 "" // upstream does not display interval for notes with new or learning cards
@@ -2048,7 +2062,7 @@ open class CardBrowser :
             if (reload) {
                 reload()
             }
-            card.note()
+            card.note(col)
             // First column can not be the answer. If it were to change, this code should also be changed.
             if (COLUMN1_KEYS[column1Index] == CardBrowserColumn.QUESTION || arrayOf(CardBrowserColumn.QUESTION, CardBrowserColumn.ANSWER).contains(COLUMN2_KEYS[column2Index])) {
                 updateSearchItemQA()
@@ -2066,10 +2080,11 @@ open class CardBrowser :
                 return
             }
             // render question and answer
-            val qa = card.renderOutput(reload = true, browser = true)
+            val qa = card.renderOutput(col, reload = true, browser = true)
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
             if (qa.questionText.isEmpty() || qa.answerText.isEmpty()) {
                 val (questionText, answerText) = card.renderOutput(
+                    col,
                     reload = true,
                     browser = false
                 )
@@ -2087,8 +2102,8 @@ open class CardBrowser :
             if (a.startsWith(q)) {
                 a = a.substring(q.length)
             }
-            a = formatQA(a, AnkiDroidApp.instance)
-            q = formatQA(q, AnkiDroidApp.instance)
+            a = formatQA(a, qa, AnkiDroidApp.instance)
+            q = formatQA(q, qa, AnkiDroidApp.instance)
             mQa = Pair(q, a)
         }
 
@@ -2176,12 +2191,16 @@ open class CardBrowser :
     }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
+        if (handler === this || handler === viewModel) {
+            return
+        }
+
         if ((
             changes.browserSidebar ||
                 changes.browserTable ||
                 changes.noteText ||
                 changes.card
-            ) && handler !== this
+            )
         ) {
             refreshAfterUndo()
         }
@@ -2208,10 +2227,14 @@ open class CardBrowser :
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
         @CheckResult
-        private fun formatQA(text: String, context: Context): String {
+        private fun formatQA(
+            text: String,
+            qa: TemplateManager.TemplateRenderContext.TemplateRenderOutput,
+            context: Context
+        ): String {
             val showFilenames =
                 context.sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
-            return formatQAInternal(text, showFilenames)
+            return formatQAInternal(text, qa, showFilenames)
         }
 
         /**
@@ -2221,7 +2244,11 @@ open class CardBrowser :
          */
         @VisibleForTesting
         @CheckResult
-        fun formatQAInternal(txt: String, showFileNames: Boolean): String {
+        fun formatQAInternal(
+            txt: String,
+            qa: TemplateManager.TemplateRenderContext.TemplateRenderOutput,
+            showFileNames: Boolean
+        ): String {
             /* Strips all formatting from the string txt for use in displaying question/answer in browser */
             var s = txt
             s = s.replace("<!--.*?-->".toRegex(), "")
@@ -2229,7 +2256,9 @@ open class CardBrowser :
             s = s.replace("<br />", " ")
             s = s.replace("<div>", " ")
             s = s.replace("\n", " ")
-            s = if (showFileNames) Utils.stripSoundMedia(s) else Utils.stripSoundMedia(s, " ")
+            // we use " " as often users won't leave a space between the '[sound:] tag
+            // and continuation of the content
+            s = if (showFileNames) Sound.replaceWithFileNames(s, qa) else stripAvRefs(s, " ")
             s = s.replace("\\[\\[type:[^]]+]]".toRegex(), "")
             s = if (showFileNames) Utils.stripHTMLMedia(s) else Utils.stripHTMLMedia(s, " ")
             s = s.trim { it <= ' ' }
@@ -2245,13 +2274,14 @@ suspend fun searchForCards(
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
         (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query, order)).asSequence()
-            .toCardCache(this, cardsOrNotes)
+            .toCardCache(cardsOrNotes)
             .toMutableList()
     }
 }
 
-private fun Sequence<CardId>.toCardCache(col: com.ichi2.libanki.Collection, isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
-    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
+context (Collection)
+private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
+    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
 
 class Previewer2Destination(val currentIndex: Int, val selectedCardIds: LongArray)

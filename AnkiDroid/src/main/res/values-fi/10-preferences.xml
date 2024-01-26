@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Ei käytössä</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d min</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Värinä</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Vilkkuvalo</string>
     <string name="timeout_answer_text" maxLength="41">Näytä vastaukset automaattisesti</string>
-    <string name="timeout_answer" maxLength="41">Vastauksen aikakatkaisu</string>
-    <string name="timeout_answer_summ">Näytä vastaus automaattisesti ilman käyttäjän komentoa. Viive sisältää ajan automaattisesti toistetaville äänitiedostoille.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Aika ennen vastauksen näyttämistä</string>
-    <string name="timeout_question_seconds" maxLength="41">Aika ennen seuraavan kysymyksen näyttämistä</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Valitse kieli</string>
     <string name="software_render" maxLength="41">Poista korttien laitteistokiihdytetty renderöinti käytöstä</string>
     <string name="software_render_summ">Laitteistokiihdytetty renderöinti on nopeampaa, mutta siinä voi esiintyä ongelmia, erityisesti Android 8/8.1 -käyttöjärjestelmässä. Jos et näe korttien kertauskäyttöliittymää kokonaan, kokeile tätä asetusta.</string>
@@ -245,8 +241,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Aikatauluta uudelleen</string>
     <string name="deck_conf_cram_reschedule_summ">Aikatauluta kortit tämän pakan vastausten perusteella</string>
     <string name="deck_conf_cram_filter_2_check">Ota käyttöön toinen suodatin</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Muokatut oppimisaskeleet (minuuteissa)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Määritä mukautetut oppimisaskeleet</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Auta parantamaan AnkiDroidia!</string>
     <string name="analytics_title" maxLength="41">Jaa tietoja käyttämistäsi ominaisuuksista</string>

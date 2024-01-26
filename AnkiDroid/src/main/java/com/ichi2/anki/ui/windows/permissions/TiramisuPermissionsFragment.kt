@@ -17,9 +17,7 @@ package com.ichi2.anki.ui.windows.permissions
 
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import com.ichi2.anki.R
@@ -37,21 +35,12 @@ import com.ichi2.utils.Permissions.canManageExternalStorage
  * 2. TODO notifications permission
  */
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class TiramisuPermissionsFragment : PermissionsFragment() {
+class TiramisuPermissionsFragment : PermissionsFragment(R.layout.permissions_tiramisu) {
     private val accessAllFilesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val view = inflater.inflate(R.layout.permissions_tiramisu, container, false)
-
-        val allFilesPermission = view.findViewById<PermissionItem>(R.id.all_files_permission)
-        allFilesPermission.setOnSwitchClickListener {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.findViewById<PermissionItem>(R.id.all_files_permission).setOnSwitchClickListener {
             accessAllFilesLauncher.showManageAllFilesScreen()
         }
-
-        return view
     }
 }

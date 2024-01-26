@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Μια νέα κάρτα επαναπρογραμματίζεται.Η αναδιάταξη μετατρέπει επίσης τις νέες κάρτες σε κάρτες προς επανάληψη. Χρησιμοποιήστε την επιλογή \'reposition card\' για να αλλάξετε τη θέση μιας νέας κάρτας στη νέα ουρά</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Επιλέξτε την τράπουλα στον διαχειριστή αρχείων σας ή επισκεφθείτε την σελίδα about:downloads για να την εισάγετε</string>
     <string name="answering_error_title">Σφάλμα βάσης δεδομένων</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Αναφορά σφάλματος</string>
@@ -98,7 +97,7 @@
     <string name="custom_study_ahead">Επανάληψη μπροστά κατά x μέρες:</string>
     <string name="custom_study_random">Τυχαία επιλογή x καρτών από την τράπουλα:</string>
     <string name="custom_study_preview">Προεπισκόπηση νέων καρτών του προστέθηκαν στις τελευταίες x μέρες:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_rebuild_deck_corrupt">Αδυναμία ανακατασκευής προσαρμοσμένης τράπουλας μελέτης</string>
     <string name="storage_full_title">Γεμάτος χώρος αποθήκευσης</string>
     <string name="storage_almost_full_title">Χώρος αποθήκευσης σχεδόν πλήρης</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Χωρίς αποθηκευτικό χώρο</string>
@@ -167,7 +166,7 @@
     <string name="database_locked_title">Βάση Δεδομένων Κλειδωμένη</string>
     <string name="database_locked_summary">Η βάση δεδομένων του AnkiDroid είναι σε χρήση από μια άλλη εφαρμογή. Παρακαλώ κλείστε την άλλη εφαρμογή και στη συνέχεια ανοίξτε ξανά το AnkiDroid.</string>
     <string name="incompatible_database_version_title">Ασύμβατη έκδοση βάσης δεδομένων.</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_summary">Η βάση δεδομένων είναι μια πιο προηγμένη έκδοση από αυτή με την οποία το AnkiDroid μπορεί να λειτουργήσει. Αναβάθμιση του AnkiDroid ή υποβάθμιση της βάσης δεδομένων για να την ανοίξετε\n\nΥποστηριζόμενη έκδοση: %1$d\nΈκδοση Βάσης Δεδομένων: %2$d\n\nΟι παρακάτω επιλογές επαναφοράς θα αντικαταστήσουν την τρέχουσα συλλογή σας, ενδεχομένως με συμβατή έκδοση βάσης δεδομένων:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Η εικόνα φόντου εφαρμόστηκε</string>
     <string name="background_image_removed">Η εικόνα φόντου αφαιρέθηκε</string>
@@ -186,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Αποτυχία προγραμματισμού υπενθυμίσεων</string>
     <string name="boot_service_too_many_notifications">Έχουν προγραμματιστεί πάρα πολλές υπενθυμίσεις. Μερικές δεν θα εμφανιστούν</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Επιλογή Γλώσσας Πληκτρολογίου</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Χρήση του AnkiDroid</string>

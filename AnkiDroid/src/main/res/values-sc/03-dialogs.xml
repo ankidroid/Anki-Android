@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Una carta noes est in fase de ripranificatzione. Su de torrare a pranificare una carta trasformat fintzas sas cartas noas in cartas de revisione. also turns new cards into review cards. Imprea s\'optzione ‘torra a positzionare sa carta’ pro mudare sa positzione de una carta noa in sa lista noa</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Sa ripranificatzione resetat fintzas sa manera de tratare sas cartas chi su pranificadore at a impreare in su benidore (sa fatzilidade s\'at a impostare %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Ischerta su matzu in su navigadore de documentos tuo o bìsita sa pàgina about:downloads pro l\'importare</string>
     <string name="answering_error_title">Faddina de sa base de datos</string>
     <string name="answering_error_message">Iscritura in sa colletzione fallida. Sa base de datos diat pòdere èssere corrùmpida o bi diat pòdere no èssere logu bastante in su discu.\n
                                              \n
@@ -198,7 +197,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Pranificatzione de sos avisos fallida</string>
     <string name="boot_service_too_many_notifications">Tropu avisos pranificados. Unos cantos no ant a apàrrere</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Issèberu de sa limba de su tecladu</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Unos cantos teclados a prus limbas, a esèmpiu GBoard, suportant su càmbiu de limba durante sa modìfica de su testu\'\n
                             \n
                             Pro praghere pedi sa funtzionalidade “setImeHintLocales” a su produtore de su tecladu tuo si cussu tecladu non mudat de limba.</string>

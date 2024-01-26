@@ -39,7 +39,7 @@ import timber.log.Timber
 
 @KotlinCleanup("see if we can make variables lazy, or properties without the `s` prefix")
 object UsageAnalytics {
-    const val ANALYTICS_OPTIN_KEY = "analyticsOptIn"
+    const val ANALYTICS_OPTIN_KEY = "analytics_opt_in"
 
     @KotlinCleanup("lateinit")
     private var sAnalytics: GoogleAnalytics? = null
@@ -458,9 +458,6 @@ object UsageAnalytics {
         "learnCutoff", // Learn ahead limit
         "timeLimit", // Timebox time limit
         "timeoutAnswer", // Automatic display answer
-        "automaticAnswerAction", // Timeout answer
-        "timeoutAnswerSeconds", // Time to show answer
-        "timeoutQuestionSeconds", // Time to show next question
         "keepScreenOn", // Disable screen timeout
         "newTimezoneHandling", // New timezone handling
         "doubleTapTimeInterval", // Double tap time interval (milliseconds)

@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Uutta korttia ollaan aikatauluttamassa uudelleen. Uusi aikataulutus muuttaa myös uudet kortit kerrattaviksi korteiksi. Voit muuttaa uuden kortin sijaintia uudessa jonossa käyttämällä \"Kortin uudelleensijoitus\" -toimintoa.</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Uusi aikataulutus nollaa myös sen, miten aikataulutusohjelma käsittelee korttia tulevaisuudessa (helppous asetetaan arvoon %d %%).</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Valitse pakka tiedostonhallinnan avulla tai käy about:downloads-sivulla tuodaksesi sen</string>
     <string name="answering_error_title">Tietokantavirhe</string>
     <string name="answering_error_message">Kirjoittaminen kokoelmaan epäonnistui. Tietokanta voi olla vioittunut tai levyllä ei ole tarpeeksi tyhjää tilaa.\n\nJos näin tapahtuu useammin, tarkista tietokanta, korjaa kokoelma tai palauta se varmuuskopiosta. Löydät tämän asetuksista.\n\Mahdollisesti kyseessä voi olla myös AnkiDroidin virhe; ilmoita virheestä, jotta voimme tarkistaa sen.</string>
     <string name="answering_error_report">Ilmoita viasta</string>
@@ -186,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Muistutusten asettaminen ei onnistunut</string>
     <string name="boot_service_too_many_notifications">Liian monta muistutusta asetettu. Jotkin niistä eivät näy</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Näppäimistön kielen valinta</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Jotkin monikieliset näppäimistöt, kuten Gboard, tukevat kielen vaihtamista tekstiä muokattaessa\n\nPyydä käyttämäsi näppäimistön tekijältä tukea \"setImeHintLocales\"-ominaisuudelle, jos näppäimistösi ei vaihda kieltä.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroidin käyttäminen</string>

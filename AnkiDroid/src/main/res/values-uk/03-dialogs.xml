@@ -92,7 +92,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Переплановується нова картка. Перепланування перетворює нові картки на повторені. Скористайтеся опцією «перемістити картку», щоб змінити місце картки в новій черзі</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Планування також скидає, як планувальник відноситься до карти в майбутньому (легкість картки буде встановлено на %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Виберіть колоду в вашому файловому менеджері або перейдіть на сторінку about:downloads (про:завантаження), аби її імпортувати</string>
     <string name="answering_error_title">Помилка бази даних</string>
     <string name="answering_error_message">Під час запису в колекцію сталася помилка. Причиною може бути пошкоджена база даних або відсутність місця на диску.\n\nЯкщо це трапляється частіше, будь ласка, спробуйте перевірити базу даних, полагодити колекцію, або відновити її з резервної копії. Для цього натисніть на «налаштування».\n\nОднак, це також може бути недолік AnkiDroid; будь ласка, надішліть звіт для перевірки цього.</string>
     <string name="answering_error_report">Повідомити про помилку</string>
@@ -198,7 +197,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Не вдалося запланувати нагадування</string>
     <string name="boot_service_too_many_notifications">Забагато нагадувань заплановано. Деякі з них не з’являться</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Вибір підказок клавіатури</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Деякі багатомовні клавіатури, такі як GBoard, підтримують зміну мови під час редагування тексту\n\nБудь ласка, попросіть функцію \"setImeHintLocals\" від виробника клавіатури, якщо ваша клавіатура не змінює мову.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Використання AnkiDroid</string>

@@ -232,7 +232,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Debug bilgisi not panosuna kopyalanırken hata</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kart İçeriği Hatası: \"%s\" yüklenemedi</string>
-    <string name="card_viewer_media_relative_protocol">Kart İçeriği Hatası: Medya güncellemesi gerekli</string>
     <!-- Deck Picker -->
     <string name="search_decks">Deste ara</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Taşıma ilerlemesini göster</string>
@@ -266,7 +265,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">E-posta adresi gereklidir</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Parola gereklidir</string>
     <string name="back_pressed_once">Çıkmak için tekrar geriye basın</string>
     <string name="back_pressed_once_reviewer">Dönmek için tekrar geriye basın</string>

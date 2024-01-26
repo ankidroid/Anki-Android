@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Una nuova carta è in fase di riprogrammazione. La riprogrammazione trasforma anche nuove carte in carte di revisione. Utilizzare l\'opzione \'riposiziona carta\' per cambiare la posizione di una nuova carta all\'interno della nuova coda</string>
     <string name="reschedule_card_dialog_warning_ease_reset">La riprogrammazione ripristina anche il modo in cui lo scheduler tratta la carta in futuro (la facilità sarà impostata a %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Seleziona il mazzo nel gestitore di file o visita la pagina about:download per importarlo</string>
     <string name="answering_error_title">Errore database</string>
     <string name="answering_error_message">Scrittura della raccolta non riuscita. La banca dati potrebbe essere danneggiata o potrebbe non esserci abbastanza spazio vuoto sul disco.\n\nSe questo accade più spesso, prova a controllare la banca dati, a riparare la collezione o a ripristinarla da un backup. Tocca «opzioni» per quello.\n\O potrebbe essere anche un errore di AnkiDroid, per favore segnala l\'errore in modo da poterlo controllare.</string>
     <string name="answering_error_report">Segnala errori</string>
@@ -186,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Pianificazione dei promemoria fallita</string>
     <string name="boot_service_too_many_notifications">Troppi promemoria pianificati. Alcuni non appariranno.</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Selezione Suggerimento Tastiera</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Alcune tastiere multilingue, come GBoard, supportano il cambio di lingua durante la modifica del testo\n\nSi prega di richiedere la funzione “setImeHintLocales” dal produttore della tastiera se la tastiera non cambia lingua.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Usare AnkiDroid</string>

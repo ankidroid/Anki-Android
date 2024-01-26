@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">معطل</string>
-    <string name="pref_summary_seconds">%s ث</string>
     <plurals name="pref_summ_minutes">
         <item quantity="zero">%d دقيقة</item>
         <item quantity="one">%d دقيقة</item>
@@ -120,7 +119,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">النقر في الوسط</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">النقر في أسفل اليسار</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">النقر في أسفل اليمين</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">رج الجهاز</string>
     <string name="card_browser_enable_external_context_menu">قائمة \'%s\'</string>
     <string name="card_browser_enable_external_context_menu_summary">يفعل قائمة سياق \'%s\' عمومًا</string>
     <string name="double_scrolling_gap" maxLength="41">مضاعفة فجوة التمرير</string>
@@ -156,10 +155,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">اهتزاز</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">وميض الضوء</string>
     <string name="timeout_answer_text" maxLength="41">عرض الجواب تلقائيًا</string>
-    <string name="timeout_answer" maxLength="41">الإجابة بعد انتهاء المهلة</string>
-    <string name="timeout_answer_summ">إظهار الجواب تلقائيًا بدون تدخل المستخدم. تتضمن المهلة وقت تشغيل الملفات الصوتية تلقائيًا.</string>
-    <string name="timeout_answer_seconds" maxLength="41">مهلة إظهار الجواب</string>
-    <string name="timeout_question_seconds" maxLength="41">مهلة إظهار السؤال التالي</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">حدد اللغة</string>
     <string name="software_render" maxLength="41">تعطيل عارض العتاد للبطاقات</string>
     <string name="software_render_summ">عرض العتاد أسرع لكنه قد يسبب مشاكل، خصوصًا على أندرويد 8/8.1. إذا لم تكن قادرًا على رؤية أقسام من واجهة مراجعة البطاقة، جرب هذا الخيار.</string>
@@ -191,9 +187,9 @@
         <item quantity="zero">%d ساعة بعد منتصف الليل</item>
         <item quantity="one">%d ساعة بعد منتصف الليل</item>
         <item quantity="two">%d ساعة بعد منتصف الليل</item>
-        <item quantity="few">%d hours past midnight</item>
-        <item quantity="many">%d hours past midnight</item>
-        <item quantity="other">%d ساعات بعد منتصف الليل</item>
+        <item quantity="few">%d ساعت بعد منتصف الليل</item>
+        <item quantity="many">%d ساعت بعد منتصف الليل</item>
+        <item quantity="other">%d ساعة بعد منتصف الليل</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">إبقاء الشاشة مضيئة</string>
     <string name="pref_keep_screen_on_summ">تعطيل مهلة الشاشة</string>
@@ -213,7 +209,7 @@
     <string name="html_javascript_debugging_summ">تمكين اتصالات عارض الويب البعيدة، وحفظ HTML البطاقة إلى مجلد أنكيدرويد</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">شاشة المراجعة</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">إظهار عنوان المجموعة</string>
     <string name="accessibility" maxLength="41">إمكانية الوصول</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">لصق صور الحافظة كـ PNG</string>
@@ -253,8 +249,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">إعادة جدولة</string>
     <string name="deck_conf_cram_reschedule_summ">إعادة جدولة البطاقات بناءً على أجوبتي في هذه الرزمة</string>
     <string name="deck_conf_cram_filter_2_check">تفعيل الفلتر الثاني</string>
-    <string name="deck_conf_cram_steps" maxLength="41">خطوات مخصصة (بالدقيقة)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">ضبط خطوات مخصصة</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">ساعد في تحسين أنكيدرويد!</string>
     <string name="analytics_title" maxLength="41">مشاركة بيانات استخدام الميزات</string>
@@ -279,8 +276,8 @@
     <string name="binding_add_key">إضافة مفتاح</string>
     <string name="binding_replace_key">استبدال المفتاح</string>
     <string name="key_picker_default_press_key">ضغط مفتاح</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">إضافة وحدة عصا التحكم أو جهاز التحرك/حركة</string>
+    <string name="axis_picker_move_joystick">نقل وحدة عصا التحكم أو جهاز التحرك/حركة</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">حدد جانب بطاقة</string>
     <string name="card_side_question">سؤال</string>

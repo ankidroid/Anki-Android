@@ -727,7 +727,7 @@ public object FlashCardsContract {
      *      ContentResolver cr = getContentResolver();
      *      Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
      *      ContentValues values = new ContentValues();
-     *      long noteId = card.note().getId();
+     *      long noteId = card.note(col).getId();
      *      int cardOrd = card.getOrd();
      *
      *      values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);

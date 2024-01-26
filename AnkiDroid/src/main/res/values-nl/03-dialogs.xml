@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Een nieuwe kaart wordt herpland. Herplannen verandert nieuwe kaarten ook in overhoringskaarten. Gebruik de optie \'kaart verplaatsen\' om de positie van een nieuwe kaart in de nieuwe wachtrij te wijzigen</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Herplannen stelt ook opnieuw in hoe de planner de kaart in de toekomst zal behandelen (gemakkelijkheid wordt ingesteld op %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Selecteer de set in uw bestandsmanager of ga naar de pagina over:downloads om het te importeren.</string>
     <string name="answering_error_title">Fout in database</string>
     <string name="answering_error_message">Het schrijven naar de collectie is mislukt. De database kan corrupt zijn of er is onvoldoende opslagruimte op de schijf.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn. Gelieve de fout te melden zodat we dit kunnen controleren.</string>
     <string name="answering_error_report">Fout melden</string>
@@ -186,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Herinneringen plannen mislukt</string>
     <string name="boot_service_too_many_notifications">Te veel herinneringen gepland. Sommige zullen niet verschijnen</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Selectie van toetsenbordtaal</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Sommige meertalige toetsenborden, zoals GBoard, ondersteunen het veranderen van taal bij het bewerken van tekst\n\nVraag de \"setImeHintLocales\"-functie aan bij uw toetsenbordfabrikant als uw toetsenbord niet van taal verandert.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Gebruik van AnkiDroid</string>

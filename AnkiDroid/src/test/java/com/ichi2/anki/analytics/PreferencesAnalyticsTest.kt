@@ -38,7 +38,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
 
     /** Keys of preferences that shouldn't be reported */
     private val excludedPrefs = setOf(
-        "analyticsOptIn", // Share feature usage: analytics are only reported if this is enabled :)
+        "analytics_opt_in", // Share feature usage: analytics are only reported if this is enabled :)
         // Screens: don't have a value
         "generalScreen",
         "reviewingScreen",

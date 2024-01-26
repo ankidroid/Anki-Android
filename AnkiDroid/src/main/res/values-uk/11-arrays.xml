@@ -101,7 +101,5 @@
     <string name="gesture_show_all_hints">Показати всі підказки</string>
     <string name="record_voice">Записати голос</string>
     <string name="replay_voice">Відтворити запис голосу</string>
-    <string name="automatic_answer_option_2">Важко (Добре, якщо недоступно)</string>
-    <string name="automatic_answer_option_4">Легко (Добре, якщо недоступно)</string>
     <string name="save_voice">Save Recording</string>
 </resources>

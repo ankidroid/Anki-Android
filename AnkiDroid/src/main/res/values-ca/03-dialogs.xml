@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">S’està replanificant una nova targeta. La replanificació també converteix les targetes noves en targetes de revisió. Utilitzeu l\'opció \"reposiciona la targeta\" per canviar la posició d\'una nova targeta dins de la nova cua</string>
     <string name="reschedule_card_dialog_warning_ease_reset">La replanificació també restableix la forma en què el planificador tractarà la targeta més endavant (la dificultat es posarà a %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Sel·lecciona el paquet amb el teu gestor d\'arxius o visita la pàgina about:downloads per importar-lo</string>
     <string name="answering_error_title">Error de la base de dades</string>
     <string name="answering_error_message">No s\'ha pogut escriure a la col·lecció. La base de dades podria estar malmesa o potser no hi ha prou espai buit al disc. \n\nSi això passa més sovint, proveu de comprovar la base de dades, reparar la col·lecció o restaurar-la des d\'una còpia de seguretat. Toqueu \"opcions\" per fer-ho.\n\nTambé podria ser un error d\'AnkiDroid; Informeu de l’error perquè puguem comprovar-ho.</string>
     <string name="answering_error_report">Informa dels errors</string>
@@ -186,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">No s\'han pogut planificar els recordatoris</string>
     <string name="boot_service_too_many_notifications">Hi ha massa recordatoris planificats. Alguns no apareixeran</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Selecció d\'idioma del teclat</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Alguns teclats multilingües, com GBoard, admeten canviar d\'idioma mentre s\'edita text\n\nSol·liciteu al fabricant del teclat la funció \"setImeHintLocales\" si el teclat no canvia d\'idioma.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Com usar AnkiDroid</string>

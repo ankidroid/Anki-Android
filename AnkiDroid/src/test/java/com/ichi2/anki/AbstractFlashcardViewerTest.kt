@@ -281,7 +281,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         controller.pause()
         assertThat("disabled after pause", viewer.automaticAnswer.isDisabled, equalTo(true))
         assertThat("no auto answer after pause", viewer.hasAutomaticAnswerQueued(), equalTo(false))
-        viewer.mOnRenderProcessGoneDelegate.onRenderProcessGone(viewer.webView!!, mock(RenderProcessGoneDetail::class.java))
+        viewer.onRenderProcessGoneDelegate.onRenderProcessGone(viewer.webView!!, mock(RenderProcessGoneDetail::class.java))
         assertThat("no auto answer after onRenderProcessGone when paused", viewer.hasAutomaticAnswerQueued(), equalTo(false))
     }
 

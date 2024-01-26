@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Vypnuté</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="few">%d mins</item>
@@ -155,10 +154,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrovať</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blikajúce svetlo</string>
     <string name="timeout_answer_text" maxLength="41">Automatické zobrazenie odpovede</string>
-    <string name="timeout_answer" maxLength="41">Odpoveď po uplynutí času</string>
-    <string name="timeout_answer_summ">Ukázať odpoveď automaticky bez podnetu používateľa. Oneskorenie zahŕňa čas na automatické prehranie audio súborov.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Čas do zobrazenia odpovede</string>
-    <string name="timeout_question_seconds" maxLength="41">Čas do zobrazenia ďalšej otázky</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Zvoliť jazyk</string>
     <string name="software_render" maxLength="41">Vypnúť hardvérové renderovanie kartičky</string>
     <string name="software_render_summ">Hardvérové renderovanie je rýchlejšie, ale môže spôsobiť problémy, najmä na Android 8/8.1. Ak nemôžete vidieť časti užívateľského rozhrania pri opakovaní kartičiek, skúste toto nastavenie.</string>
@@ -250,8 +246,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Preplánovať</string>
     <string name="deck_conf_cram_reschedule_summ">Preplánovať kartičky podľa mojich odpovedí v tomto balíčku</string>
     <string name="deck_conf_cram_filter_2_check">Povoliť druhý filter</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Vlastný postup (v minútach)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definovať vlastný postup</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Pomôžte spraviť AnkiDroid lepším!</string>
     <string name="analytics_title" maxLength="41">Zdieľať používanie prvkov</string>

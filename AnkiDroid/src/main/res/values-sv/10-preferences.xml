@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Inaktiverad</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrera</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blinka</string>
     <string name="timeout_answer_text" maxLength="41">Visa svar automatiskt</string>
-    <string name="timeout_answer" maxLength="41">Tidsgräns för svar</string>
-    <string name="timeout_answer_summ">Visa svar automatiskt utan att användaren gör något. Fördröjningen inkluderar tiden som det tar för automatisk uppspelning av ljudfiler.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Tid för att visa svar</string>
-    <string name="timeout_question_seconds" maxLength="41">Tid för att visa nästa fråga</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Välj språk</string>
     <string name="software_render" maxLength="41">Inaktivera kort hårdvarurendering</string>
     <string name="software_render_summ">Hårdvarurendering är snabbare men kan få problem, särskilt på Android 8/8.1. Om du inte kan se delar av kortgranskningsgränssnittet, prova den här inställningen.</string>
@@ -245,8 +241,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Omplanera</string>
     <string name="deck_conf_cram_reschedule_summ">Omplanera kort baserat på mina svar i denna kortlek</string>
     <string name="deck_conf_cram_filter_2_check">Aktivera sekundär filter</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Anpassade steg (i minuter)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definiera anpassade steg</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Hjälp till att förbättra AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Dela funktionsanvändning</string>

@@ -36,7 +36,6 @@ class LaTeXTest : JvmTest() {
 
     @Test
     fun imgLinkTest() {
-        val col = col
         val m: Media = MockMedia(col)
         // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
         // Test with media access
@@ -54,7 +53,6 @@ class LaTeXTest : JvmTest() {
 
     @Test
     fun htmlMatchTest() {
-        val col = col
         val media: Media = MockMedia(col)
         // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
         // Test with media access
@@ -72,7 +70,6 @@ class LaTeXTest : JvmTest() {
 
     @Test
     fun mathMatchTest() {
-        val col = col
         val media: Media = MockMedia(col)
         // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
         // Test with media access
@@ -90,7 +87,6 @@ class LaTeXTest : JvmTest() {
 
     @Test
     fun mungeQATest() {
-        val col = col
         val m: Media = MockMedia(col)
 
         // Test with media access

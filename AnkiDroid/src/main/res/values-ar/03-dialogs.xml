@@ -102,7 +102,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">تجري إعادة جدولة بطاقة جديدة. تحول إعادة الجدولة البطاقات الجديدة إلى بطاقات مراجعة. استخدم خيار «تغيير الموضع» لتغيير موضع بطاقة جديدة في صف البطاقات الجديدة</string>
     <string name="reschedule_card_dialog_warning_ease_reset">ستغير إعادة الجدولة طريقة المجدول في التعامل مع البطاقة في المستقبل (سيتم ضبط السهولة إلى %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">اختر الرزمة في مدير الملفات أو زر صفحة حول:تنزيلات لاستيرادها</string>
     <string name="answering_error_title">خطأ في قاعدة البيانات</string>
     <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا كان هذا يحدث غالبًا، جرب فحص قاعدة البيانات، أو إصلاح المجموعة، أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في أنكي درويد ربما؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
     <string name="answering_error_report">إبلاغ عن الخطأ</string>
@@ -210,7 +209,7 @@
     <string name="boot_service_failed_to_schedule_notifications">تعذرت جدولة التنبيهات</string>
     <string name="boot_service_too_many_notifications">تمت جدولة كثير من التنبيهات. لن يظهر بعضها</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">تحديد تلميح لوحة المفاتيح</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">بعض لوحات المفاتيح متعددة اللغات، مثل GBoard، تدعم تغيير اللغة عند تحرير النص\n\nيرجى طلب ميزة “setImeHintLocales” من مصنّع لوحة المفاتيح الخاصة بك إذا كانت لوحة المفاتيح لا تغيّر اللغة.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">استخدام أنكيدرويد</string>

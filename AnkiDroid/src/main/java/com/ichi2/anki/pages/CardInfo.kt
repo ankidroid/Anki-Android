@@ -29,14 +29,11 @@ class CardInfo : PageFragment() {
         get() = resources.getString(R.string.card_info_title)
 
     override val pageName = "card-info"
-    override lateinit var webViewClient: PageWebViewClient
-    override var webChromeClient = PageChromeClient()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         val cardId = arguments?.getLong(ARG_CARD_ID)
             ?: throw Exception("missing card ID argument")
-        webViewClient = CardInfoWebClient(cardId)
-        super.onCreate(savedInstanceState)
+        return CardInfoWebClient(cardId)
     }
 
     class CardInfoWebClient(val cardId: Long) : PageWebViewClient() {

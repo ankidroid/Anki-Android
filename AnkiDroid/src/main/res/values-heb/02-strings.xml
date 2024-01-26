@@ -238,7 +238,6 @@
     <string name="about_ankidroid_error_copy_debug_info">תקלה בהעתקת הודעת השגיאה</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">תקלה בתוכן הקלף: נכשל בטעינת %s</string>
-    <string name="card_viewer_media_relative_protocol">תקלה בתוכן הקלף: נדרש עדכון מדיה</string>
     <!-- Deck Picker -->
     <string name="search_decks">חיפוש בחפיסות</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">הצג התקדמות ההמרה</string>
@@ -272,7 +271,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">נדרשת כתובת אימייל.</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">דרושה סיסמא</string>
     <string name="back_pressed_once">לחץ \'חזור\' פעם נוספת כדי לצאת</string>
     <string name="back_pressed_once_reviewer">לחץ שוב כדי לחזור</string>

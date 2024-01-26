@@ -30,12 +30,16 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.audio.AudioRecordingController
+import com.ichi2.audio.AudioRecordingController.Companion.isAudioRecordingSaved
+import com.ichi2.audio.AudioRecordingController.Companion.isRecording
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
@@ -44,10 +48,16 @@ import java.io.File
 import java.text.DecimalFormat
 
 @KotlinCleanup("lateinit")
-class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCallback {
-    private lateinit var mField: IField
-    private lateinit var mNote: IMultimediaEditableNote
-    private var mFieldIndex = 0
+class MultimediaEditFieldActivity :
+    AnkiActivity(),
+    OnRequestPermissionsResultCallback,
+    DefaultLifecycleObserver {
+    private lateinit var field: IField
+    private lateinit var note: IMultimediaEditableNote
+    private var fieldIndex = 0
+
+    private var audioRecordingController = AudioRecordingController()
+    private var isAudioUIInitialized = false
 
     @get:VisibleForTesting
     var fieldController: IFieldController? = null
@@ -57,12 +67,12 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
      * Cached copy of the current request to change a field
      * Used to access past state from OnRequestPermissionsResultCallback
      */
-    private var mCurrentChangeRequest: ChangeUIRequest? = null
+    private var currentChangeRequest: ChangeUIRequest? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        super.onCreate(savedInstanceState)
+        super<AnkiActivity>.onCreate(savedInstanceState)
         var controllerBundle: Bundle? = null
         if (savedInstanceState != null) {
             Timber.i("onCreate - saved bundle exists")
@@ -85,17 +95,21 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
             finishCancel()
             return
         }
-        mFieldIndex = extras.first
-        mField = extras.second
-        mNote = extras.third
+        fieldIndex = extras.first
+        field = extras.second
+        note = extras.third
         onBack()
-        recreateEditingUi(ChangeUIRequest.init(mField), controllerBundle)
+        recreateEditingUi(ChangeUIRequest.init(field), controllerBundle)
     }
 
     // in case media is saved by view button then allows it to be inserted into the filed
     private fun onBack() {
         findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener {
-            done()
+            if (isAudioUIInitialized) {
+                done()
+            } else {
+                saveAndExit()
+            }
         }
     }
 
@@ -122,19 +136,25 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
     private fun setupUIController(fieldController: IFieldController, savedInstanceState: Bundle?) {
         fieldController.apply {
-            setField(mField)
-            setFieldIndex(mFieldIndex)
-            setNote(mNote)
+            setField(field)
+            setFieldIndex(fieldIndex)
+            setNote(note)
             setEditingActivity(this@MultimediaEditFieldActivity)
             loadInstanceState(savedInstanceState)
         }
+    }
+
+    override fun onPause(owner: LifecycleOwner) {
+        if (isAudioUIInitialized) audioRecordingController.onViewFocusChanged()
     }
 
     private fun recreateEditingUi(newUI: ChangeUIRequest, savedInstanceState: Bundle? = null) {
         Timber.d("recreateEditingUi()")
 
         // Permissions are checked async, save our current state to allow continuation
-        mCurrentChangeRequest = newUI
+        currentChangeRequest = newUI
+
+        if (isAudioUIInitialized) audioRecordingController.onViewFocusChanged()
 
         // If we went through the permission check once, we don't need to do it again.
         // As we only get here a second time if we have the required permissions
@@ -145,7 +165,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         val fieldController = createControllerForField(newUI.field)
         UIRecreationHandler.onPreFieldControllerReplacement(this.fieldController)
         this.fieldController = fieldController
-        mField = newUI.field
+        field = newUI.field
         setupUIController(this.fieldController!!, savedInstanceState)
         val linearLayout = findViewById<LinearLayout>(R.id.LinearLayoutInScrollViewFieldEdit)
         linearLayout.removeAllViews()
@@ -154,13 +174,13 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        Timber.d("onCreateOptionsMenu() - mField.getType() = %s", mField.type)
+        Timber.d("onCreateOptionsMenu() - mField.getType() = %s", field.type)
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.activity_edit_text, menu)
-        menu.findItem(R.id.multimedia_edit_field_to_text).isVisible = mField.type !== EFieldType.TEXT
-        menu.findItem(R.id.multimedia_edit_field_to_audio).isVisible = mField.type !== EFieldType.AUDIO_RECORDING
-        menu.findItem(R.id.multimedia_edit_field_to_audio_clip).isVisible = mField.type !== EFieldType.MEDIA_CLIP
-        menu.findItem(R.id.multimedia_edit_field_to_image).isVisible = mField.type !== EFieldType.IMAGE
+        menu.findItem(R.id.multimedia_edit_field_to_text).isVisible = field.type !== EFieldType.TEXT
+        menu.findItem(R.id.multimedia_edit_field_to_audio).isVisible = field.type !== EFieldType.AUDIO_RECORDING
+        menu.findItem(R.id.multimedia_edit_field_to_audio_clip).isVisible = field.type !== EFieldType.MEDIA_CLIP
+        menu.findItem(R.id.multimedia_edit_field_to_image).isVisible = field.type !== EFieldType.IMAGE
         return true
     }
 
@@ -188,6 +208,9 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
             }
             R.id.multimedia_edit_field_done -> {
                 Timber.i("Save button pressed")
+                if (isAudioUIInitialized && isRecording) {
+                    audioRecordingController.stopAndSaveRecording()
+                }
                 done()
                 return true
             }
@@ -198,12 +221,12 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     @KotlinCleanup("rename: bChangeToText")
     private fun done() {
         var bChangeToText = false
-        if (mField.type === EFieldType.IMAGE) {
-            if (mField.imagePath == null) {
+        if (field.type === EFieldType.IMAGE) {
+            if (field.imagePath == null) {
                 bChangeToText = true
             }
             if (!bChangeToText) {
-                val f = File(mField.imagePath!!)
+                val f = File(field.imagePath!!)
                 if (!f.exists()) {
                     bChangeToText = true
                 } else {
@@ -214,12 +237,12 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                     }
                 }
             }
-        } else if (mField.type === EFieldType.AUDIO_RECORDING) {
-            if (mField.audioPath == null) {
+        } else if (field.type === EFieldType.AUDIO_RECORDING && isAudioRecordingSaved) {
+            if (field.audioPath == null) {
                 bChangeToText = true
             }
             if (!bChangeToText) {
-                val f = File(mField.audioPath!!)
+                val f = File(field.audioPath!!)
                 if (!f.exists()) {
                     bChangeToText = true
                 }
@@ -230,28 +253,28 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     }
 
     private fun toAudioRecordingField() {
-        if (mField.type !== EFieldType.AUDIO_RECORDING) {
+        if (field.type !== EFieldType.AUDIO_RECORDING) {
             val request = ChangeUIRequest.uiChange(AudioRecordingField())
             recreateEditingUi(request)
         }
     }
 
     private fun toAudioClipField() {
-        if (mField.type !== EFieldType.MEDIA_CLIP) {
+        if (field.type !== EFieldType.MEDIA_CLIP) {
             val request = ChangeUIRequest.uiChange(MediaClipField())
             recreateEditingUi(request)
         }
     }
 
     private fun toImageField() {
-        if (mField.type !== EFieldType.IMAGE) {
+        if (field.type !== EFieldType.IMAGE) {
             val request = ChangeUIRequest.uiChange(ImageField())
             recreateEditingUi(request)
         }
     }
 
     private fun toTextField() {
-        if (mField.type !== EFieldType.TEXT) {
+        if (field.type !== EFieldType.TEXT) {
             val request = ChangeUIRequest.uiChange(TextField())
             recreateEditingUi(request)
         }
@@ -259,15 +282,15 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
     private fun recreateEditingUIUsingCachedRequest() {
         Timber.d("recreateEditingUIUsingCachedRequest()")
-        if (mCurrentChangeRequest == null) {
+        if (currentChangeRequest == null) {
             cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before using cached request")
             return
         }
-        recreateEditingUi(mCurrentChangeRequest!!)
+        recreateEditingUi(currentChangeRequest!!)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (mCurrentChangeRequest == null) {
+        if (currentChangeRequest == null) {
             cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before requesting permissions")
             return
         }
@@ -283,7 +306,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                 resources.getString(R.string.multimedia_editor_audio_permission_refused),
                 true
             )
-            UIRecreationHandler.onRequiredPermissionDenied(mCurrentChangeRequest!!, this)
+            UIRecreationHandler.onRequiredPermissionDenied(currentChangeRequest!!, this)
         }
         if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.size == 1) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
@@ -319,8 +342,8 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
     private fun saveAndExit(ignoreField: Boolean = false) {
         val resultData = Intent().apply {
-            putExtra(EXTRA_RESULT_FIELD, if (ignoreField) null else mField)
-            putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex)
+            putExtra(EXTRA_RESULT_FIELD, if (ignoreField) null else field)
+            putExtra(EXTRA_RESULT_FIELD_INDEX, fieldIndex)
         }
         setResult(RESULT_OK, resultData)
         finish()
@@ -330,7 +353,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         if (fieldController != null) {
             fieldController!!.onDestroy()
         }
-        super.onDestroy()
+        super<AnkiActivity>.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -426,7 +449,10 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         return when (field.type) {
             EFieldType.TEXT -> BasicTextFieldController()
             EFieldType.IMAGE -> BasicImageFieldController()
-            EFieldType.AUDIO_RECORDING -> AudioRecordingController()
+            EFieldType.AUDIO_RECORDING -> {
+                isAudioUIInitialized = true
+                audioRecordingController
+            }
             EFieldType.MEDIA_CLIP -> BasicMediaClipFieldController()
         }
     }

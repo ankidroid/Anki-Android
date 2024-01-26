@@ -16,9 +16,7 @@
 package com.ichi2.anki.ui.windows.permissions
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import com.ichi2.anki.R
 import com.ichi2.utils.Permissions
@@ -32,18 +30,12 @@ import com.ichi2.utils.hasAnyOfPermissionsBeenDenied
  *   Used for saving the collection in a public directory
  *   which isn't deleted when the app is uninstalled
  */
-class PermissionsUntil29Fragment : PermissionsFragment() {
+class PermissionsUntil29Fragment : PermissionsFragment(R.layout.permissions_until_29) {
     private val storageLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {}
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val view = inflater.inflate(R.layout.permissions_until_29, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val storagePermission = view.findViewById<PermissionItem>(R.id.storage_permission)
         storagePermission.setOnSwitchClickListener {
             if (!hasAnyOfPermissionsBeenDenied(storagePermission.permissions)) {
@@ -52,7 +44,5 @@ class PermissionsUntil29Fragment : PermissionsFragment() {
                 showToastAndOpenAppSettingsScreen(R.string.startup_no_storage_permission)
             }
         }
-
-        return view
     }
 }

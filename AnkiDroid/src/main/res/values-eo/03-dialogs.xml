@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Nova karto estas replanata. Replanado ankaŭ igas novajn kartojn esti ripetataj kartoj. Uzu la eblaĵon “repozicii karton” por ŝanĝi pozicion de nova karto ene la nova vico</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Replanado ankaŭ nuligas kiel la planilo traktos la karton estontece (facileco estos agordita al %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Elektu kartaron per dosier‑administrilo aŭ malfermu la paĝon about:downloads por malfermi ĝin</string>
     <string name="answering_error_title">Eraro pri datumbazo</string>
     <string name="answering_error_message">Fiaskis skribi al la kolekto. La datumbazo povas esti difektita aŭ eble mankas spaco en la konservejo.\n\nSe tio ĉi okazos pli ofte, provu kontroli la datumbazon, ripari la kolekton aŭ restarigi ĝin el sekurkopio. Frapetu “agordojn” por fari tion.\nAŭ tio ĉi povas esti eraro en AnkiDroid, do bonvolu raporti ĝin por ke ni povu ĝin ripari.</string>
     <string name="answering_error_report">Raporti eraron</string>
@@ -186,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Fiaskis plani memorigaĵojn</string>
     <string name="boot_service_too_many_notifications">Tro multe da memorigaĵoj planitaj. Iuj ne aperos</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Elekti klavarajn sugestojn</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Iuj plurlingvaj klavaroj – ekzemple GBoard – ebligas ŝanĝi lingvon dum enigi tekston\n\nSe via klavaro aŭtomate ne ŝanĝas lingvon, provu peti ĝiajn programistojn pri aldoni la eblaĵon “setImeHintLocales”.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Uzado de AnkiDroid</string>

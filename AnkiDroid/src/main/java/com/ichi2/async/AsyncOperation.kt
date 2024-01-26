@@ -41,7 +41,7 @@ fun DeckPicker.performAsyncOperation(
     operation: AsyncOperation,
     channel: Channel
 ) {
-    if (mActivityPaused) {
+    if (activityPaused) {
         sendNotificationForAsyncOperation(operation, channel)
         return
     }

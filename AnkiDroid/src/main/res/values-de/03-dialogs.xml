@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Eine neue Karte wird neu geplant. Umplanen macht auch neue Karten zu Review-Karten. Benutzen Sie die Option \'Nachpositionieren\' um die Position einer neuen Karte in der neuen Warteschlange zu ändern</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Die Neuplanung setzt auch zurück wie der Scheduler die Karte in Zukunft behandelt (Einfachheit wird auf %d%% gesetzt)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Wählen Sie den Stapel in Ihrem Dateimanager aus oder besuchen Sie zum Importieren die Seite about:downloads</string>
     <string name="answering_error_title">Datenbankfehler</string>
     <string name="answering_error_message">Es konnte nicht in die Sammlung geschrieben werden. Dies kann an einer beschädigten Datenbank oder an unzureichendem Speicherplatz liegen.\n\nFalls dies häufiger vorkommt, versuchen Sie bitte, die Datenbank zu überprüfen, die Sammlung zu reparieren oder sie von einer Sicherung wiederherzustellen. Tippen Sie hierfür auf »Optionen«.\n\nEs könnte aber auch ein Fehler in AnkiDroid vorliegen. Damit wird dies überprüfen können, bitten wir Sie, den Fehler zu melden.</string>
     <string name="answering_error_report">Fehler melden</string>
@@ -186,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Erinnerungen konnten nicht eingeplant werden</string>
     <string name="boot_service_too_many_notifications">Zu viele Erinnerungen eingeplant. Einige werden nicht erscheinen.</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Tastatur-Sprachauswahl</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Einige mehrsprachige Tastaturen, wie zum Beispiel GBoard unterstützten das Ändern der Sprache beim Bearbeiten von Text\n\nBitte fordern Sie die „setImeHintLocales“-Funktion Ihres Tastatur-Herstellers an, falls Ihre Tastatur keine Sprache ändert.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Verwendung von AnkiDroid</string>

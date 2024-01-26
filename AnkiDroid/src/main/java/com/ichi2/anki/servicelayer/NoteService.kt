@@ -28,6 +28,7 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
@@ -156,7 +157,7 @@ object NoteService {
      */
     @VisibleForTesting
     @CheckResult
-    fun getFieldsAsBundleForPreview(editFields: Collection<NoteField?>?, replaceNewlines: Boolean): Bundle {
+    fun getFieldsAsBundleForPreview(editFields: List<NoteField?>?, replaceNewlines: Boolean): Bundle {
         val fields = Bundle()
         // Save the content of all the note fields. We use the field's ord as the key to
         // easily map the fields correctly later.
@@ -233,8 +234,8 @@ object NoteService {
 
 const val MARKED_TAG = "marked"
 
-fun Card.totalLapsesOfNote() = NoteService.totalLapses(note())
+fun Card.totalLapsesOfNote(col: Collection) = NoteService.totalLapses(note(col))
 
-fun Card.totalReviewsForNote() = NoteService.totalReviews(note())
+fun Card.totalReviewsForNote(col: Collection) = NoteService.totalReviews(note(col))
 
-fun Card.avgIntervalOfNote() = NoteService.avgInterval(note())
+fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(note(col))

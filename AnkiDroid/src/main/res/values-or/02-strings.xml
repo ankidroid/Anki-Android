@@ -52,7 +52,7 @@
     <string name="CardEditorModel">ପ୍ରକାର:</string>
     <string name="CardEditorTags">ଟ୍ୟାଗ୍: %1$s</string>
     <string name="CardEditorCards">ପତ୍ର: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">ଅନ୍ତର୍ଦ୍ଧାନ ସମ୍ପାଦନା</string>
     <string name="tag_name">ଟ୍ୟାଗ୍ ନାମ</string>
     <string name="add_new_filter_tags">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ ଅବା ଶୋଧନ କରନ୍ତୁ</string>
     <string name="add_tag">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ</string>
@@ -154,14 +154,14 @@
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି ଚାଲିଛି</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ଵିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ଵିଲୋପ କରିଦେଇ ଏହାକୁ %s ଫାଇଲର ତଥ୍ୟ ସହିତ ପ୍ରତିସ୍ଥାପିତ କରିବ</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିଦେଇ ଏହାକୁ %s ଫାଇଲ୍‌ର ତଥ୍ୟ ସହିତ ପ୍ରତିସ୍ଥାପିତ କରିବ</string>
+    <string name="import_dialog_message_add">ସଂଗ୍ରହରେ “%s”କୁ ଯୋଡ଼ିବେ ତ? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="import_log_no_apkg">ଏହା ଏକ ବୈଧ Anki package ଫାଇଲ୍ ନୁହେଁ</string>
     <string name="import_title_error" comment="Title of error dialog">ତ୍ରୁଟି</string>
     <string name="import_error_handle_exception">ଫାଇଲ୍ ଆମଦାନି କରିବାରେ ବିଫଳ\n\n%s</string>
     <string name="import_error_not_apkg_extension">ଫାଇଲ୍ ନାମ “%s” ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
     <string name="import_error_load_imported_database">Anki ଡାଟାବେସ୍ (.anki2) ପ୍ରତିସ୍ଥାପନ ଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ। ପ୍ରତିସ୍ଥାପନ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
-    <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱଚାଳିତ ଭାଵେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ହସ୍ତକୃତ ଭାଵେ ଆମଦାନୀ କରିବେ ଜାଣିବା ପାଇଁ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
+    <string name="import_error_content_provider">ବଚ୍ଛିତ ଫାଇଲ୍‌ଟି AnkiDroid ଦ୍ୱାରା ସ୍ୱଚାଳିତ ଭାବେ ଆମଦାନୀ ହୋଇପାରିଲା ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ହସ୍ତକୃତ ଭାବେ ଆମଦାନୀ କରିବେ ଜାଣିବା ପାଇଁ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
     <string name="import_error_copy_to_cache">ଫାଇଲ୍ ଦ୍ରୁତିକା କରି ସାଇତିବାରେ ବିଫଳ (ସମ୍ଭବତଃ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଯାଇଥିଲା</string>
     <string name="export_preparation_in_progress">ରପ୍ତାନି ପ୍ରସ୍ତୁତି ଚାଲିଛି&#8230;</string>
@@ -232,7 +232,6 @@
     <string name="about_ankidroid_error_copy_debug_info">କ୍ଲିପବୋର୍ଡରେ ଡିବଗ୍ ସୂଚନା କପି କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ‘%s’ ଲୋଡ୍ କରିବାରେ ବିଫଳ ହେଲା</string>
-    <string name="card_viewer_media_relative_protocol">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡ଼ିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକୀୟ</string>
     <!-- Deck Picker -->
     <string name="search_decks">ତାସଖଣ୍ଡ ଖୋଜନ୍ତୁ</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">ସ୍ଥାନାନ୍ତରଣ ପ୍ରଗତି ଦର୍ଶାଇବା</string>
@@ -250,7 +249,7 @@
     <string name="insert_mathjax">MathJax ସମୀକରଣ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="note_editor_toolbar_icon">ବଟନ୍ ର ନା‍ଁ</string>
     <string name="before_text">ଚୟନ ପୂର୍ବର HTML</string>
-    <string name="after_text">ଚୟନ ପରେ HTML</string>
+    <string name="after_text">ଚୟନ ପରର HTML</string>
     <string name="add_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ସୃଷ୍ଟି କରିବା</string>
     <string name="edit_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକା ସମ୍ପାଦନା</string>
     <string name="toolbar_item_explain_edit_or_remove">ମନୋନୀତ ପାଠ୍ୟ ପୂର୍ବରୁ ଏବଂ ପରେ ସନ୍ନିବେଶ କରିବା ଲାଗି HTML ପ୍ରବେଶ କରନ୍ତୁ\n\nଗୋଟିଏ ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ କୁ ସମ୍ପାଦନ ବା ହଟାଇବା ପାଇଁ ତା\' ଉପରେ ଲମ୍ବା ସ୍ପର୍ଶ କରନ୍ତୁ</string>
@@ -266,7 +265,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆଵଶ୍ୟକ ଅଟେ</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">ପାସ୍‌ୱର୍ଡ଼ ଆଵଶ୍ୟକ ଅଟେ</string>
     <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <string name="back_pressed_once_reviewer">ଫେରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
@@ -283,7 +282,7 @@
     <string name="deck_download_progress_message">ଡାଉନଲୋଡ୍ ଚାଲୁଥିବା ସମୟରେ ଆପଣ ଅନ୍ୟ ଆପସ୍ ବ୍ୟବହାର କରିପାରିବେ</string>
     <string name="check_network">ଦୟାକରି ଆପଣଙ୍କ ନେଟୱର୍କ ସଂଯୋଜନା ଯାଞ୍ଚ କରନ୍ତୁ</string>
     <string name="search_using_deck_name">ତାସଖଣ୍ଡ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରନ୍ତୁ</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">ଡାଉନଲୋଡ୍ ପରିତ୍ୟାଗ ହୋଇଛି, ବହିଃ-ଷ୍ଟୋରେଜ୍ ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="home">ଗୃହ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -331,22 +330,22 @@
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ନୋଟ୍</string>
     <string name="toggle_cards_notes">ପତ୍ର/ନୋଟ୍ ଦେଖାଇବା ଟୋଗଲ୍ କରିବା</string>
     <string name="toggle_browser_mode_help">ବ୍ରାଉଜର୍ ରେ ପତ୍ର କିମ୍ବା ନୋଟ୍ ଦେଖାଇବା ଟୋଗଲ୍ କରିବା</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">ବିଷୟବସ୍ତୁର କେବଳ ପ୍ରଥମ ୩ଟି ଧାଡ଼ି ଦେଖାଇବାକୁ ବ୍ରାଉଜର୍‌ର ପ୍ରତ୍ୟେକ ଧାଉଡ଼ିର ଉଚ୍ଚତାକୁ କମେଇ ଦେବା</string>
     <string name="browser_options_dialog_heading">ବ୍ରାଉଜର ଵିକଳ୍ପ</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        ଏକ ଷ୍ଟୋରେଜ୍ ସ୍ଥାନାନ୍ତରଣ ସମୟରେ ଏହି କାର୍ଯ୍ୟକାରିତା ଉପଲବ୍ଧ ନାହିଁ
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">ଷ୍ଟୋରେଜ୍ ସ୍ଥାନାନ୍ତରଣ ଆରମ୍ଭ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
     <string name="media_sync_required_title">ମିଡ଼ିଆ ସୀଙ୍କ୍ ଆଵଶ୍ୟକ</string>
     <string name="media_sync_unavailable_message">ସେଟିଂରେ ମିଡ଼ିଆ ସିଙ୍କ୍ ଅକ୍ଷମ ହୋଇଅଛି। ଜାରି ରଖିବା ପୂର୍ବରୁ ଦୟାକରି ସମସ୍ତ ସୀଙ୍କ୍ ହୋଇନଥିବା ମିଡ଼ିଆ ସୀଙ୍କ୍ କରି ବ୍ୟାକ୍‌ଅପ୍ ନିଅନ୍ତୁ</string>
-    <string name="audio_saved">Recording saved</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
+    <string name="audio_saved">ରେକର୍ଡିଂ ସଞ୍ଚୟ ହୋଇଛି</string>
+    <string name="deleting_selected_notes">ବଚ୍ଛିତ ନୋଟଗୁଡ଼ିକ ବିଲୋପ କରାଯାଉଛି</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        ଶୁଣିବା ପାଇଁ ଏକ ସ୍ୱର ଉପରେ ସ୍ପର୍ଶ କରିବା
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">ବ୍ୟବହାର ପୂର୍ବରୁ ସ୍ୱର ଅଧିସ୍ଥାପିତ ହେବା ଉଚିତ୍
     </string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">ଯେକୌଣସି ମତେ ବ୍ୟବହାର କରନ୍ତୁ
     </string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">ପାଠ୍ୟ-ରୁ-କଥନ ତ୍ରୁଟି (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        ଇଣ୍ଟରନେଟ୍
     </string>
@@ -354,5 +353,5 @@
     </string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        ପାଠ୍ୟ ରୁ କଥନ ସେଟିଂ ଖୋଲିବାରେ ବିଫଳ
     </string>
-    <string name="shared_decks_login_required">Please log in to download more decks</string>
+    <string name="shared_decks_login_required">ଆହୁରି ତାସଖଣ୍ଡ ଡାଉନଲୋଡ୍ କରିବାକୁ ଦୟାକରି ଲଗ୍ ଇନ୍ କରନ୍ତୁ</string>
 </resources>

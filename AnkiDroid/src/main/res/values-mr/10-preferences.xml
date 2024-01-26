@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">डिसेबल केले</string>
-    <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -153,10 +152,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">कंपन होणे</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ब्लिंक लाइट</string>
     <string name="timeout_answer_text" maxLength="41">स्वयंचलित प्रदर्शन उत्तर</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
-    <string name="timeout_answer_summ">वापरकर्त्याच्या इनपुटशिवाय उत्तर स्वयंचलितपणे दर्शवा. विलंबात स्वयंचलितपणे प्ले केलेल्या ऑडिओ फायलींसाठी वेळ समाविष्ट आहे.</string>
-    <string name="timeout_answer_seconds" maxLength="41">उत्तर दर्शविण्याची वेळ</string>
-    <string name="timeout_question_seconds" maxLength="41">पुढील प्रश्न दर्शविण्याची वेळ</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">भाषा निवडा</string>
     <string name="software_render" maxLength="41">कार्ड हार्डवेअर प्रस्तुत अक्षम करा</string>
     <string name="software_render_summ">हार्डवेअर प्रस्तुत करणे वेगवान आहे परंतु विशेषत: Android 8 / 8.1 वर समस्या असू शकतात. आपण कार्ड पुनरावलोकन वापरकर्ता इंटरफेसचे काही भाग पाहू शकत नसल्यास, हे सेटिंग वापरून पहा.</string>
@@ -246,8 +242,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">रीशेड्यूल</string>
     <string name="deck_conf_cram_reschedule_summ">या डेकमधील माझ्या उत्तरावर आधारित कार्ड रीशेड्यूल करा</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
-    <string name="deck_conf_cram_steps" maxLength="41">सानुकूल चरण (मिनिटात)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">सानुकूल चरण परिभाषित करा</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid अधिक चांगले करण्यात मदत करा!</string>
     <string name="analytics_title" maxLength="41">वैशिष्ट्याचा वापर सामायिक करा</string>

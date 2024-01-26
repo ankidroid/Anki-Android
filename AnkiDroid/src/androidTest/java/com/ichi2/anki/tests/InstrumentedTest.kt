@@ -149,7 +149,7 @@ abstract class InstrumentedTest {
         this.queue = Consts.QUEUE_TYPE_REV
         this.type = Consts.CARD_TYPE_REV
         this.due = 0
-        this.col.updateCard(this, true)
+        col.updateCard(this, true)
     }
 
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")

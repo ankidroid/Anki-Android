@@ -232,7 +232,6 @@ Context | Request Context    [1]</string>
     <string name="about_ankidroid_error_copy_debug_info">디버그 정보를 클립보드에 복사하는 도중 오류가 발생했습니다.</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">카드 내용 오류: \'%s\' 읽기 실패</string>
-    <string name="card_viewer_media_relative_protocol">카드 내용 오류: 미디어 업데이트 요청</string>
     <!-- Deck Picker -->
     <string name="search_decks">덱 검색</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
@@ -266,7 +265,7 @@ Context | Request Context    [1]</string>
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">이메일은 반드시 입력해야 합니다.</string>
+    <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">비밀번호를 입력하십시오</string>
     <string name="back_pressed_once">뒤로 가기 버튼을 한 번 더 눌러 종료합니다</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>

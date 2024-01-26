@@ -108,7 +108,6 @@ class FinderTest : JvmTest() {
     @Test
     fun test_findCards() {
         TimeManager.reset()
-        val col = col
         var note = col.newNote()
         note.setItem("Front", "dog")
         note.setItem("Back", "cat")
@@ -177,7 +176,7 @@ class FinderTest : JvmTest() {
             type = CARD_TYPE_REV
         }
         assertEquals(0, col.findCards("is:review").size)
-        c.col.updateCard(c, skipUndoEntry = true)
+        col.updateCard(c, skipUndoEntry = true)
         AnkiAssert.assertEqualsArrayList(arrayOf(c.id), col.findCards("is:review"))
         assertEquals(0, col.findCards("is:due").size)
         c.update {
@@ -358,7 +357,6 @@ class FinderTest : JvmTest() {
 
     @Test
     fun test_findCardsHierarchyTag() {
-        val col = col
         var note = col.newNote()
         note.setItem("Front", "foo")
         note.setItem("Back", "bar")
@@ -396,7 +394,6 @@ class FinderTest : JvmTest() {
 
     @Test
     fun test_findReplace() {
-        val col = col
         val note = col.newNote()
         note.setItem("Front", "foo")
         note.setItem("Back", "bar")

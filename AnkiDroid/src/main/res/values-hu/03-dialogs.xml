@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Új kártya ütemezése. Az ütemezés az új kártyákat felülvizsgálja. A \"kártya átrendezése\" opcióval módosíthatod az új kártya helyzetét az új sorban</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Az ütemezés visszaállítja azt is, ahogyan az ütemező a jövőben kezeli a kártyát (az egyszerűséget %d%% -ra állítja)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Válassza ki a kártyát a fájlkezelőjéből vagy látogassa meg az about:downloads oldalt és importálja azt</string>
     <string name="answering_error_title">Adatbázis hiba</string>
     <string name="answering_error_message">A gyűjteménybe írás sikertelen. Az adatbázis lehet, hogy korrupt vagy nincs elég hely a lemezen.\n\n. Ha gyakrabban történik ilyen, akkor próbálja ellenőrizni az adatbázist, javítsa meg a gyűjteményt vagy állítsa azt vissza egy biztonsági másolatból. Ehhez nyomjon rá a \"beállításokra\".\n. Vagy lehet, hogy ez egy AnkiDroid bug; kérjük jelentse a hibát, hogy le tudjuk ellenőrizni.</string>
     <string name="answering_error_report">Hibák jelentése</string>
@@ -186,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Az emlékeztetők ütemezése sikertelen</string>
     <string name="boot_service_too_many_notifications">Túl sok emlékeztető van beütemezve. Néhány nem fog megjelenni</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Billentyűzet nyelvének kiválasztása</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Néhány többnyelvű billentyűzet, mint a GBoard, támogatja a nyelv váltás szöveg bevitel közben\n\nKérd meg  a billentyűzet gyártóját, hogy engedélyezze a “setImeHintLocales” tulajdonságot, ha a billentyűzete nem vált nyelvet.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid használata</string>

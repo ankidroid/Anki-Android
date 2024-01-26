@@ -23,19 +23,18 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.hideShowButtonCss
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class AnkiPackageImporterFragment : PageFragment() {
     override val title: String
         get() = resources.getString(R.string.menu_import)
     override val pageName: String
-        get() = "import-page"
-    override lateinit var webViewClient: PageWebViewClient
-    override var webChromeClient: PageChromeClient = PageChromeClient()
-    private lateinit var backCallback: OnBackPressedCallback
+        get() = "import-anki-package"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         // the back callback is only enabled when import is running and showing progress
-        backCallback = object : OnBackPressedCallback(false) {
+        val backCallback = object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 CollectionManager.getBackend().setWantsAbort()
                 // once triggered the callback is not needed as the import process can't be resumed
@@ -44,9 +43,8 @@ class AnkiPackageImporterFragment : PageFragment() {
         }
         val path = arguments?.getString(ARG_FILE_PATH)
             ?: throw IllegalStateException("No path provided for apkg package to import")
-        webViewClient = AnkiPackageImporterWebViewClient(path, backCallback)
-        super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this, backCallback)
+        return AnkiPackageImporterWebViewClient(path, backCallback)
     }
 
     class AnkiPackageImporterWebViewClient(
@@ -61,9 +59,9 @@ class AnkiPackageImporterFragment : PageFragment() {
         private var isDone = false
 
         override fun onPageFinished(view: WebView?, url: String?) {
-            val params = """{ type: "json_file", path: "$path"}"""
+            val params = Json.encodeToString(path)
             // https://github.com/ankitects/anki/blob/main/ts/import-page/index.ts
-            view!!.evaluateJavascript("anki.setupImportPage($params);$hideShowButtonCss;") {
+            view!!.evaluateJavascript("anki.setupImportAnkiPackagePage($params);$hideShowButtonCss;") {
                 super.onPageFinished(view, url)
             }
         }

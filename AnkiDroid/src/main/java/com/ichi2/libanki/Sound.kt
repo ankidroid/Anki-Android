@@ -27,6 +27,7 @@ package com.ichi2.libanki
 
 import anki.config.ConfigKey
 import com.ichi2.anki.CollectionManager
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import java.util.regex.Pattern
 
 /**
@@ -57,7 +58,7 @@ open class AvTag
  */
 val SOUND_RE = Pattern.compile("\\[sound:([^\\[\\]]*)]").toRegex()
 
-fun stripAvRefs(text: String) = Sound.AV_REF_RE.replace(text, "")
+fun stripAvRefs(text: String, replacement: String = "") = Sound.AV_REF_RE.replace(text, replacement)
 
 // not in libAnki
 object Sound {
@@ -109,7 +110,21 @@ object Sound {
      */
     fun replaceWithSoundTags(
         content: String,
-        renderOutput: TemplateManager.TemplateRenderContext.TemplateRenderOutput
+        renderOutput: TemplateRenderOutput
+    ): String = replaceAvRefsWith(content, renderOutput) { tag -> "[sound:${tag.filename}]" }
+
+    /**
+     * Replaces [anki:play:q:0] with ` example.mp3 `
+     */
+    fun replaceWithFileNames(
+        content: String,
+        renderOutput: TemplateRenderOutput
+    ): String = replaceAvRefsWith(content, renderOutput) { tag -> " ${tag.filename} " }
+
+    private fun replaceAvRefsWith(
+        content: String,
+        renderOutput: TemplateRenderOutput,
+        processTag: (SoundOrVideoTag) -> String
     ): String {
         return AV_REF_RE.replace(content) { match ->
             val groups = match.groupValues
@@ -124,7 +139,7 @@ object Sound {
             if (tag !is SoundOrVideoTag) {
                 return@replace match.value
             } else {
-                return@replace "[sound:${tag.filename}]"
+                return@replace processTag(tag)
             }
         }
     }
@@ -137,9 +152,9 @@ object Sound {
             val index = values[2].toInt()
             val tags = CollectionManager.withCol {
                 if (questionSide) {
-                    card.questionAvTags()
+                    card.questionAvTags(this)
                 } else {
-                    card.answerAvTags()
+                    card.answerAvTags(this)
                 }
             }
             if (index < tags.size) {

@@ -46,7 +46,9 @@ class ActionButtonStatus {
         setupButton(preferences, R.id.action_select_tts, "customButtonSelectTts", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_open_deck_options, "customButtonDeckOptions", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_bury, "customButtonBury", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_bury_card, "customButtonBury", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_suspend, "customButtonSuspend", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_suspend_card, "customButtonSuspend", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_mark_card, "customButtonMarkCard", SHOW_AS_ACTION_IF_ROOM)
         setupButton(preferences, R.id.action_delete, "customButtonDelete", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_toggle_mic_tool_bar, "customButtonToggleMicToolBar", SHOW_AS_ACTION_NEVER)
@@ -97,6 +99,10 @@ class ActionButtonStatus {
     fun whiteboardPenColorIsDisabled(): Boolean {
         return customButtons[R.id.action_change_whiteboard_pen_color] == MENU_DISABLED
     }
+
+    fun suspendIsDisabled(): Boolean = customButtons[R.id.action_suspend] == MENU_DISABLED
+
+    fun buryIsDisabled(): Boolean = customButtons[R.id.action_bury] == MENU_DISABLED
 
     companion object {
         const val SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER

@@ -79,8 +79,6 @@ class ContentProviderTest : InstrumentedTest() {
     fun setUp() {
         Timber.i("setUp()")
         createdNotes = ArrayList()
-        val col = col
-
         tearDown = true
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         val model = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
@@ -121,7 +119,6 @@ class ContentProviderTest : InstrumentedTest() {
         if (!tearDown) {
             return
         }
-        val col = col
         // Delete all notes
         val remnantNotes = col.findNotes("tag:$TEST_TAG")
         if (remnantNotes.isNotEmpty()) {
@@ -851,7 +848,6 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     fun testQueryAllDecks() {
-        val col = col
         val decks = col.decks
         val decksCursor = contentResolver
             .query(
@@ -889,7 +885,6 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     fun testQueryCertainDeck() {
-        val col = col
         val deckId = testDeckIds[0]
         val deckUri = Uri.withAppendedPath(
             FlashCardsContract.Deck.CONTENT_ALL_URI,
@@ -923,7 +918,6 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     fun testQueryNextCard() {
-        val col = col
         val sched = col.sched
         val reviewInfoCursor = contentResolver.query(
             FlashCardsContract.ReviewInfo.CONTENT_URI,
@@ -942,12 +936,12 @@ class ContentProviderTest : InstrumentedTest() {
         var nextCard: Card? = null
         for (i in 0..9) { // minimizing fails, when sched.reset() randomly chooses between multiple cards
             nextCard = sched.card
-            if (nextCard != null && nextCard.note().id == noteID && nextCard.ord == cardOrd) break
+            if (nextCard != null && nextCard.nid == noteID && nextCard.ord == cardOrd) break
         }
         assertNotNull("Check that there actually is a next scheduled card", nextCard)
         assertEquals(
             "Check that received card and actual card have same note id",
-            nextCard!!.note().id,
+            nextCard!!.nid,
             noteID
         )
         assertEquals(
@@ -966,7 +960,6 @@ class ContentProviderTest : InstrumentedTest() {
         val deckToTest = testDeckIds[0]
         val deckSelector = "deckID=?"
         val deckArguments = arrayOf(deckToTest.toString())
-        val col = col
         val sched = col.sched
         val selectedDeckBeforeTest = col.decks.selected()
         col.decks.select(1) // select Default deck
@@ -994,7 +987,7 @@ class ContentProviderTest : InstrumentedTest() {
             var nextCard: Card? = null
             for (i in 0..9) { // minimizing fails, when sched.reset() randomly chooses between multiple cards
                 nextCard = sched.card
-                if (nextCard != null && nextCard.note().id == noteID && nextCard.ord == cardOrd) break
+                if (nextCard != null && nextCard.nid == noteID && nextCard.ord == cardOrd) break
                 try {
                     Thread.sleep(500)
                 } catch (e: Exception) {
@@ -1004,7 +997,7 @@ class ContentProviderTest : InstrumentedTest() {
             assertNotNull("Check that there actually is a next scheduled card", nextCard)
             assertEquals(
                 "Check that received card and actual card have same note id",
-                nextCard!!.note().id,
+                nextCard!!.nid,
                 noteID
             )
             assertEquals(
@@ -1046,7 +1039,6 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     fun testAnswerCard() {
-        val col = col
         val card = getFirstCardFromScheduler(col)
         val cardId = card!!.id
 
@@ -1054,7 +1046,7 @@ class ContentProviderTest : InstrumentedTest() {
         assertEquals("card is initial new", Consts.CARD_TYPE_NEW, card.queue)
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val noteId = card.note().id
+        val noteId = card.nid
         val cardOrd = card.ord
         val earlyGraduatingEase = AbstractFlashcardViewer.EASE_4
         val values = ContentValues().apply {
@@ -1072,7 +1064,7 @@ class ContentProviderTest : InstrumentedTest() {
         }
         val newCard = col.sched.card
         if (newCard != null) {
-            if (newCard.note().id == card.note().id && newCard.ord == card.ord) {
+            if (newCard.nid == card.nid && newCard.ord == card.ord) {
                 fail("Next scheduled card has not changed")
             }
         }
@@ -1089,7 +1081,6 @@ class ContentProviderTest : InstrumentedTest() {
     fun testBuryCard() {
         // get the first card due
         // ----------------------
-        val col = col
         val card = getFirstCardFromScheduler(col)
 
         // verify that the card is not already user-buried
@@ -1106,7 +1097,7 @@ class ContentProviderTest : InstrumentedTest() {
         // -----------------------
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val noteId = card.note().id
+        val noteId = card.nid
         val cardOrd = card.ord
         val bury = 1
         val values = ContentValues().apply {
@@ -1139,7 +1130,6 @@ class ContentProviderTest : InstrumentedTest() {
     fun testSuspendCard() {
         // get the first card due
         // ----------------------
-        val col = col
         val card = getFirstCardFromScheduler(col)
 
         // verify that the card is not already suspended
@@ -1156,7 +1146,7 @@ class ContentProviderTest : InstrumentedTest() {
         // --------------------------
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val noteId = card.note().id
+        val noteId = card.nid
         val cardOrd = card.ord
 
         @KotlinCleanup("rename, while valid suspend is a kotlin soft keyword")
@@ -1186,9 +1176,8 @@ class ContentProviderTest : InstrumentedTest() {
     fun testUpdateTags() {
         // get the first card due
         // ----------------------
-        val col = col
         val card = getFirstCardFromScheduler(col)
-        val note = card!!.note()
+        val note = card!!.note(col)
         val noteId = note.id
 
         // make sure the tag is what we expect initially
@@ -1226,7 +1215,6 @@ class ContentProviderTest : InstrumentedTest() {
             "This causes mild data corruption - should not be run on a collection you care about",
             isEmulator()
         )
-        val col = col
         col.notetypes.all()[0].put("did", JSONObject.NULL)
 
         val cr = contentResolver
@@ -1324,7 +1312,7 @@ class ContentProviderTest : InstrumentedTest() {
             )
             for (c in newNote.cards()) {
                 c.did = did
-                c.col.updateCard(c, skipUndoEntry = true)
+                col.updateCard(c, skipUndoEntry = true)
             }
             return Uri.withAppendedPath(
                 FlashCardsContract.Note.CONTENT_URI,
@@ -1339,6 +1327,6 @@ class ContentProviderTest : InstrumentedTest() {
  */
 fun Scheduler.unburyCards() {
     for (did in col.decks.allNamesAndIds().map { it.id }) {
-        unburyCardsForDeck(did)
+        unburyDeck(did)
     }
 }

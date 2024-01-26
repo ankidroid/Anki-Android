@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">ଅକ୍ଷମ</string>
-    <string name="pref_summary_seconds">%s ସେ</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d ମି</item>
         <item quantity="other">%d ମି</item>
@@ -116,7 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">ମଝି କେନ୍ଦ୍ରକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ତଳ ବାମକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ତଳ ଡାହାଣକୁ ସ୍ପର୍ଶ କଲେ</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">ଡିଵାଇସ୍ ଝାଙ୍କିଲେ</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ ମେନୁ</string>
     <string name="card_browser_enable_external_context_menu_summary">ସବୁ ଜାଗାରେ ‘%s’ ପ୍ରସଙ୍ଗ ମେନୁକୁ ସକ୍ଷମ କରିଥାଏ</string>
     <string name="double_scrolling_gap" maxLength="41">ଦ୍ୱିଗୁଣ ସ୍କ୍ରୋଲିଂ</string>
@@ -125,7 +124,7 @@
     <string name="tts" maxLength="41">ପାଠ୍ୟ ରୁ କଥନ</string>
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
     <!-- Sync -->
-    <string name="sync_fetch_missing_media" maxLength="41">ସୀଙ୍କ୍‌ରେ ମିଡ଼ିଆ ଆଣ</string>
+    <string name="sync_fetch_missing_media" maxLength="41">ସୀଙ୍କ୍‌ରେ ମିଡ଼ିଆ ଆନୟନ</string>
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
     <string name="automatic_sync_choice" maxLength="41">ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
@@ -152,10 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">କମ୍ପନ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED ସୂଚକ</string>
     <string name="timeout_answer_text" maxLength="41">ସ୍ୱଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ</string>
-    <string name="timeout_answer" maxLength="41">ସମୟ-ସମାପ୍ତି ଉତ୍ତର</string>
-    <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱଚାଳିତ ଭାଵେ ଉତ୍ତର ଦେଖାଅ। ଵିଳମ୍ବରେ ସ୍ୱଚାଳିତ ଭାଵେ ଚାଳନ ହୋଇଥିବା ଅଡ଼ିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ</string>
-    <string name="timeout_answer_seconds" maxLength="41">ଉତ୍ତର ଦେଖାଇବା ସମୟ</string>
-    <string name="timeout_question_seconds" maxLength="41">ପରଵର୍ତ୍ତୀ ପ୍ରଶ୍ନ ଦେଖାଇବା ସମୟ</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">ଭାଷା ବାଛନ୍ତୁ</string>
     <string name="software_render" maxLength="41">କାର୍ଡ ହାର୍ଡୱେର ପ୍ରସ୍ତୁତକର୍ତ୍ତା କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="software_render_summ">ହାର୍ଡୱେୟାର୍ ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦ୍ରୁତ ଅଟେ କିନ୍ତୁ ବିଶେଷ କରି ଆଣ୍ଡ୍ରଏଡ୍ 8/8.1 ରେ ସମସ୍ୟା ହୋଇପାରେ। ଯଦି ଆପଣ ପତ୍ର ସମୀକ୍ଷା ଇଣ୍ଟରଫେସର କିଛି ଅଂଶ ଦେଖିପାରୁ ନାହାନ୍ତି, ତେବେ ଏହି ସେଟିଂ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
@@ -205,7 +201,7 @@
     <string name="html_javascript_debugging_summ">ସୁଦୂର WebView ସଂଯୋଗଗୁଡ଼ିକ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରିବା</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">ସମୀକ୍ଷକ</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">ତାସଖଣ୍ଡ ଆଖ୍ୟା ଦେଖାଇବା</string>
     <string name="accessibility" maxLength="41">ଅଭିଗମ୍ୟତା</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିଗୁଡ଼ିକୁ PNG ଭାବରେ ଲେପନ</string>
@@ -245,8 +241,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ପୁନଃନିର୍ଦ୍ଧାରଣ</string>
     <string name="deck_conf_cram_reschedule_summ">ଏହି ତାସଖଣ୍ଡରେ ମୋର ଉତ୍ତର ଉପରେ ଆଧାର କରି ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_filter_2_check">ଦ୍ୱିତୀୟ ଶୋଧକ ସକ୍ଷମ କରନ୍ତୁ</string>
-    <string name="deck_conf_cram_steps" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ (ମିନିଟ୍ ରେ)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid କୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ!</string>
     <string name="analytics_title" maxLength="41">ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟବହାର ଅଂଶୀଦାର କରନ୍ତୁ</string>
@@ -350,7 +347,7 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">କୌଣସି ସଂଗ୍ରହ ନାହିଁ</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">ତ୍ରୁଟି</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">ପ୍ରାପ୍ତ ହେଉଛି&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">ଆନୟନ ଚାଲିଛି&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">ଗଣନା ଚାଲିଛି&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">ସଂଗ୍ରହ ଵିଦ୍ୟମାନ ନାହିଁ</string>
 </resources>

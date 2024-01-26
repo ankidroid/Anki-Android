@@ -82,7 +82,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Yeni bir kart yeniden planlanıyor. Yeniden planlamak aynı zamanda yeni kartları gözden geçirme kartlara dönüştürür. Yeni bir kartın yeni kuyruktaki konumunu değiştirmek için \"kartı yeniden yerleştir\" seçeneğini kullanın.</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Zamanını değiştirmek aynı zamanda gelecekte zamanlayıcının karta muamelesini değiştirecek (kolaylık %d%% yapılacak)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Dosya yöneticinizden desteyi seçin veya içeri aktarmak için about:downloads sayfasını ziyaret edin </string>
     <string name="answering_error_title">Veritabanı hatası</string>
     <string name="answering_error_message">Koleksiyona yazılamadı. Veritabanı bozuk olabilir veya diskte yeterli boş alan olmayabilir.\n\nBu daha sık oluyorsa, veritabanını kontrol etmeyi, koleksiyonu onarmayı veya bir yedekten geri yüklemeyi deneyin. Bunun için \"seçenekler\"e dokunun.\n\Veya bu bir AnkiDroid hatası da olabilir; Bunu kontrol edebilmemiz için lütfen hatayı bildirin.</string>
     <string name="answering_error_report">Hatayı bildir</string>
@@ -186,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Hatırlatıcılar planlanamadı</string>
     <string name="boot_service_too_many_notifications">Çok fazla hatırlatıcı planlandı. Bazıları görünmeyecek</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Klavye dili seçimi</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">GBoard gibi bazı çok dilli klavyeler, metin düzenlerken dil değiştirmeyi destekler\n\nKlavyeniz dili değiştirmiyorsa lütfen klavye üreticinizden “setImeHintLocales” özelliğini isteyin.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid kullanımı</string>

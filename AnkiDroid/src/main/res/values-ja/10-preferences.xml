@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">無効</string>
-    <string name="pref_summary_seconds">%s秒</string>
     <plurals name="pref_summ_minutes">
         <item quantity="other">%d分</item>
     </plurals>
@@ -151,10 +150,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">振動でも通知</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LEDランプ点滅でも通知</string>
     <string name="timeout_answer_text" maxLength="41">解答の自動表示</string>
-    <string name="timeout_answer" maxLength="41">表示時間経過後の自動回答</string>
-    <string name="timeout_answer_summ">操作しなくても、一定時間経過後に自動的に解答を表示します。音声ファイルを自動的に再生する場合は、その再生時間と下記の「解答を表示するまでの時間」が経過した後に解答を表示します</string>
-    <string name="timeout_answer_seconds" maxLength="41">解答を表示するまでの時間</string>
-    <string name="timeout_question_seconds" maxLength="41">解答を表示し続ける時間</string>
+    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">言語を選択</string>
     <string name="software_render" maxLength="41">カードのハードウェアレンダリングを無効にする</string>
     <string name="software_render_summ">ハードウェアによるレンダリングは高速ですが、問題が発生する可能性があります（特にAndroid 8/8.1において）。 カード学習画面のユーザーインターフェースの一部が表示されない場合は、この設定を試してみてください</string>
@@ -203,7 +199,7 @@
     <string name="html_javascript_debugging_summ">リモートのWebView接続を有効にし、カードのHTMLをAnkiDroidディレクトリに保存します</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">学習画面</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">デッキのタイトルを表示</string>
     <string name="accessibility" maxLength="41">アクセシビリティ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">クリップボード画像をPNG形式で貼り付け</string>
@@ -243,8 +239,9 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">スケジュールを変更</string>
     <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
     <string name="deck_conf_cram_filter_2_check">２番目のフィルターを有効にする</string>
-    <string name="deck_conf_cram_steps" maxLength="41">カスタム学習ステップ（分）</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">独自の習得ステップを設定</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title" maxLength="41">設定の情報提供を許可する</string>

@@ -17,6 +17,7 @@
 package com.ichi2.libanki
 
 import anki.import_export.ExportLimit
+import anki.import_export.exportAnkiPackageOptions
 import anki.search.SearchNode
 import net.ankiweb.rsdroid.Backend
 
@@ -95,6 +96,10 @@ fun Collection.importAnkiPackageRaw(input: ByteArray): ByteArray {
     return backend.importAnkiPackageRaw(input)
 }
 
+fun Collection.getImportAnkiPackagePresetsRaw(input: ByteArray): ByteArray {
+    return backend.getImportAnkiPackagePresetsRaw(input)
+}
+
 /**
  * Export the specified deck to an .apkg file.
  * * If legacy is false, an apkg will be created that can only
@@ -103,11 +108,18 @@ fun Collection.importAnkiPackageRaw(input: ByteArray): ByteArray {
 fun Collection.exportAnkiPackage(
     outPath: String,
     withScheduling: Boolean,
+    withDeckConfigs: Boolean,
     withMedia: Boolean,
     limit: ExportLimit,
     legacy: Boolean = true
 ) {
-    backend.exportAnkiPackage(outPath, withScheduling, withMedia, legacy, limit)
+    val options = exportAnkiPackageOptions {
+        this.withScheduling = withScheduling
+        this.withMedia = withMedia
+        this.legacy = legacy
+        this.withDeckConfigs = withDeckConfigs
+    }
+    backend.exportAnkiPackage(outPath, options, limit)
 }
 
 fun Collection.exportNotesCsv(

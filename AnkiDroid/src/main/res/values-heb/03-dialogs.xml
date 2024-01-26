@@ -92,7 +92,6 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">כרטיס חדש מתוזמן מחדש. תזמון מחדש הופך גם כרטיסים חדשים לכרטיסי ביקורת. השתמש באפשרות \'מיקום כרטיס מחדש\' כדי לשנות את מיקומו של כרטיס חדש בתור החדש</string>
     <string name="reschedule_card_dialog_warning_ease_reset">תזמון מחדש מאפס גם את האופן שבו מתזמן מתייחס לכרטיס בעתיד (הקלות תוגדר ל-%d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">בחר חפיסה בסייר הקבצים או בקר ב about:download כדי לייבא אותו</string>
     <string name="answering_error_title">שגיאת מסד נתונים</string>
     <string name="answering_error_message">כתיבה לאוסף נכשלה. מאגר המידע אולי שבור או שאין מספיק מקום בדיסק.\n\n אם זה קורה שוב ושוב, אפשר לבדוק את מאגר המידע, לתקן את האוסף או לשחזר אותו מגיבוי. לחץ \'אפשרויות\' עבור כך. \n כמו כן ייתכן שזוהי תקלה בAnkiDroid. נא לדווח את השגיאה כדי שנוכל לבדוק זאת.</string>
     <string name="answering_error_report">דיווח על שגיאה</string>
@@ -199,7 +198,7 @@
     <string name="boot_service_failed_to_schedule_notifications">לא ניתן היה לתזמן תזכורות</string>
     <string name="boot_service_too_many_notifications">תזמנו יותר מדי תזכורות. חלקם לא יופיעו</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">בחירת שפת מקלדת</string>
+    <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">חלק מהמקלדות הרב-לשוניות, כגון GBoard תומכות בשינוי שפה בעת עריכת טקסט\n\nאנא בקש את התכונה \"setImeHintLocales\" מיצרן המקלדת שלך אם המקלדת שלך לא משנה שפה.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">שימוש ב־AnkiDroid</string>
