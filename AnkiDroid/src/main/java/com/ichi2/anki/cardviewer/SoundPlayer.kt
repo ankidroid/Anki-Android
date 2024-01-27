@@ -271,17 +271,17 @@ class SoundPlayer(
     /**
      * Plays all sounds for the current side, calling [onSoundGroupCompleted] when completed
      */
-    suspend fun playAllSounds(side: Side) = when (side) {
-        Side.FRONT -> playAllSoundsForSide(QUESTION)
-        Side.BACK -> playAllSoundsForSide(ANSWER)
+    suspend fun playAllSounds(side: SingleCardSide) = when (side) {
+        SingleCardSide.FRONT -> playAllSoundsForSide(QUESTION)
+        SingleCardSide.BACK -> playAllSoundsForSide(ANSWER)
     }
 
     /**
      * Replays all sounds for the current side, calling [onSoundGroupCompleted] when completed
      */
-    suspend fun replayAllSounds(side: Side) = when (side) {
-        Side.BACK -> if (config.replayQuestion) playAllSoundsForSide(QUESTION_AND_ANSWER) else playAllSoundsForSide(ANSWER)
-        Side.FRONT -> playAllSoundsForSide(QUESTION)
+    suspend fun replayAllSounds(side: SingleCardSide) = when (side) {
+        SingleCardSide.BACK -> if (config.replayQuestion) playAllSoundsForSide(QUESTION_AND_ANSWER) else playAllSoundsForSide(ANSWER)
+        SingleCardSide.FRONT -> playAllSoundsForSide(QUESTION)
     }
 
     private suspend fun awaitTtsPlayer(isAutomaticPlayback: Boolean): TtsPlayer? {

@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.cardviewer
 
-enum class Side {
+enum class SingleCardSide {
     FRONT,
     BACK
 }
