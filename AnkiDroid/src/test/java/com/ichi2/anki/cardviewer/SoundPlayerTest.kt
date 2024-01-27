@@ -18,7 +18,7 @@ package com.ichi2.anki.cardviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardUtils
-import com.ichi2.anki.cardviewer.Side.BACK
+import com.ichi2.anki.cardviewer.SingleCardSide.BACK
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.*
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.SoundOrVideoTag
@@ -196,11 +196,11 @@ class SoundPlayerTest : JvmTest() {
         verify(exactly = 1) { onSoundGroupCompleted.invoke() }
     }
 
-    private suspend fun SoundPlayer.playAllSoundsAndWait(side: Side = Side.FRONT) {
+    private suspend fun SoundPlayer.playAllSoundsAndWait(side: SingleCardSide = SingleCardSide.FRONT) {
         this.playAllSounds(side)?.join()
     }
 
-    private suspend fun SoundPlayer.replayAllSoundsAndWait(side: Side) {
+    private suspend fun SoundPlayer.replayAllSoundsAndWait(side: SingleCardSide) {
         this.replayAllSounds(side)?.join()
     }
 

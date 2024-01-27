@@ -1318,7 +1318,7 @@ abstract class AbstractFlashcardViewer :
         } else {
             answerField?.visibility = View.GONE
         }
-        val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.FRONT)
+        val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
         automaticAnswer.onDisplayQuestion()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForAudio()) {
@@ -1364,7 +1364,7 @@ abstract class AbstractFlashcardViewer :
             typeAnswer!!.input = answerField!!.text.toString()
         }
         isSelecting = false
-        val answerContent = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.BACK)
+        val answerContent = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.BACK)
         automaticAnswer.onDisplayAnswer()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForAudio()) {
@@ -1451,7 +1451,7 @@ abstract class AbstractFlashcardViewer :
         // We need to play the sounds from the proper side of the card
         if (!useTTS) {
             launchCatchingTask {
-                val side = if (displayAnswer) Side.BACK else Side.FRONT
+                val side = if (displayAnswer) SingleCardSide.BACK else SingleCardSide.FRONT
                 when (doAudioReplay) {
                     true -> soundPlayer.replayAllSounds(side)
                     false -> soundPlayer.playAllSounds(side)
@@ -1889,7 +1889,7 @@ abstract class AbstractFlashcardViewer :
             } else {
                 answerField?.visibility = View.GONE
             }
-            val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.FRONT)
+            val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
             automaticAnswer.onDisplayQuestion()
             updateCard(content)
             hideEaseButtons()
