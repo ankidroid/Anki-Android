@@ -25,7 +25,7 @@ import android.view.WindowManager.BadTokenException
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.cardviewer.SoundSide
+import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
@@ -49,7 +49,7 @@ object ReadText {
     private lateinit var flashCardViewer: WeakReference<Context>
     private var mDid: DeckId = 0
     private var mOrd = 0
-    var questionAnswer: SoundSide? = null
+    var questionAnswer: CardSide? = null
         private set
     const val NO_TTS = "0"
     private val mTtsParams = Bundle()
@@ -75,7 +75,7 @@ object ReadText {
         }
     }
 
-    private fun getLanguage(did: DeckId, ord: Int, qa: SoundSide): String {
+    private fun getLanguage(did: DeckId, ord: Int, qa: CardSide): String {
         return MetaDB.getLanguage(flashCardViewer.get()!!, did, ord, qa)
     }
 
@@ -89,7 +89,7 @@ object ReadText {
      */
     @SuppressLint("CheckResult")
     @NeedsTest("ensure languages are sorted alphabetically in the dialog")
-    fun selectTts(text: String?, did: DeckId, ord: Int, qa: SoundSide?) {
+    fun selectTts(text: String?, did: DeckId, ord: Int, qa: CardSide?) {
         // TODO: Consolidate with ReadText.readCardSide
         textToSpeak = text
         questionAnswer = qa
@@ -146,7 +146,7 @@ object ReadText {
      * @param did              Index of the deck containing the card.
      * @param ord              The card template ordinal.
      */
-    fun readCardSide(textsToRead: List<TTSTag>, cardSide: SoundSide, did: DeckId, ord: Int) {
+    fun readCardSide(textsToRead: List<TTSTag>, cardSide: CardSide, did: DeckId, ord: Int) {
         var isFirstText = true
         var playedSound = false
         for (textToRead in textsToRead) {
@@ -188,7 +188,7 @@ object ReadText {
      * @param queueMode TextToSpeech.QUEUE_ADD or TextToSpeech.QUEUE_FLUSH.
      * @return false if a sound was not played
      */
-    private fun textToSpeech(tag: TTSTag, did: DeckId, ord: Int, qa: SoundSide, queueMode: Int): Boolean {
+    private fun textToSpeech(tag: TTSTag, did: DeckId, ord: Int, qa: CardSide, queueMode: Int): Boolean {
         textToSpeak = tag.fieldText
         questionAnswer = qa
         mDid = did
@@ -345,6 +345,6 @@ object ReadText {
     private fun availableLocales() = TtsVoices.availableLocalesBlocking()
 
     interface ReadTextListener {
-        fun onDone(playedSide: SoundSide?)
+        fun onDone(playedSide: CardSide?)
     }
 }
