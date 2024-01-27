@@ -29,9 +29,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
-import com.ichi2.anki.cardviewer.SoundSide.ANSWER
-import com.ichi2.anki.cardviewer.SoundSide.QUESTION
-import com.ichi2.anki.cardviewer.SoundSide.QUESTION_AND_ANSWER
+import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.Card
@@ -123,11 +121,11 @@ class SoundPlayer(
         }
     }
 
-    private suspend fun playAllSoundsForSide(soundSide: SoundSide): Job? {
+    private suspend fun playAllSoundsForSide(cardSide: CardSide): Job? {
         if (!isEnabled) return null
         playSoundsJob {
-            Timber.i("playing sounds for %s", soundSide)
-            playAllSoundsInternal(soundSide, isAutomaticPlayback = true)
+            Timber.i("playing sounds for %s", cardSide)
+            playAllSoundsInternal(cardSide, isAutomaticPlayback = true)
         }
         return this.playSoundsJob
     }
@@ -196,14 +194,14 @@ class SoundPlayer(
     }
 
     /**
-     * Obtains all the sounds for the [soundSide] and plays them sequentially
+     * Obtains all the sounds for the [cardSide] and plays them sequentially
      */
-    private suspend fun playAllSoundsInternal(soundSide: SoundSide, isAutomaticPlayback: Boolean) {
+    private suspend fun playAllSoundsInternal(cardSide: CardSide, isAutomaticPlayback: Boolean) {
         if (!isEnabled) return
-        val soundList = when (soundSide) {
-            QUESTION -> questions
-            ANSWER -> answers
-            QUESTION_AND_ANSWER -> questions + answers
+        val soundList = when (cardSide) {
+            CardSide.QUESTION -> questions
+            CardSide.ANSWER -> answers
+            CardSide.BOTH -> questions + answers
         }
 
         try {
@@ -272,16 +270,16 @@ class SoundPlayer(
      * Plays all sounds for the current side, calling [onSoundGroupCompleted] when completed
      */
     suspend fun playAllSounds(side: SingleCardSide) = when (side) {
-        SingleCardSide.FRONT -> playAllSoundsForSide(QUESTION)
-        SingleCardSide.BACK -> playAllSoundsForSide(ANSWER)
+        SingleCardSide.FRONT -> playAllSoundsForSide(CardSide.QUESTION)
+        SingleCardSide.BACK -> playAllSoundsForSide(CardSide.ANSWER)
     }
 
     /**
      * Replays all sounds for the current side, calling [onSoundGroupCompleted] when completed
      */
     suspend fun replayAllSounds(side: SingleCardSide) = when (side) {
-        SingleCardSide.BACK -> if (config.replayQuestion) playAllSoundsForSide(QUESTION_AND_ANSWER) else playAllSoundsForSide(ANSWER)
-        SingleCardSide.FRONT -> playAllSoundsForSide(QUESTION)
+        SingleCardSide.BACK -> if (config.replayQuestion) playAllSoundsForSide(CardSide.BOTH) else playAllSoundsForSide(CardSide.ANSWER)
+        SingleCardSide.FRONT -> playAllSoundsForSide(CardSide.QUESTION)
     }
 
     private suspend fun awaitTtsPlayer(isAutomaticPlayback: Boolean): TtsPlayer? {

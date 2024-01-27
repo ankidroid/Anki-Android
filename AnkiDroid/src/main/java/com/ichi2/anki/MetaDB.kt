@@ -6,9 +6,9 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import androidx.annotation.WorkerThread
-import com.ichi2.anki.cardviewer.SoundSide
 import com.ichi2.anki.model.WhiteboardPenColor
 import com.ichi2.anki.model.WhiteboardPenColor.Companion.default
+import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.widget.SmallWidgetStatus
@@ -203,7 +203,7 @@ object MetaDB {
      * [.LANGUAGES_QA_ANSWER], or [.LANGUAGES_QA_UNDEFINED]
      * @param language the language to associate, as a two-characters, lowercase string
      */
-    fun storeLanguage(context: Context, did: DeckId, ord: Int, qa: SoundSide, language: String) {
+    fun storeLanguage(context: Context, did: DeckId, ord: Int, qa: CardSide, language: String) {
         openDBIfClosed(context)
         try {
             if ("" == getLanguage(context, did, ord, qa)) {
@@ -241,7 +241,7 @@ object MetaDB {
      * [.LANGUAGES_QA_ANSWER], or [.LANGUAGES_QA_UNDEFINED] return the language associate with
      * the type, as a two-characters, lowercase string, or the empty string if no association is defined
      */
-    fun getLanguage(context: Context, did: DeckId, ord: Int, qa: SoundSide): String {
+    fun getLanguage(context: Context, did: DeckId, ord: Int, qa: CardSide): String {
         openDBIfClosed(context)
         var language = ""
         val query = "SELECT language FROM languages WHERE did = ? AND ord = ? AND qa = ? LIMIT 1"

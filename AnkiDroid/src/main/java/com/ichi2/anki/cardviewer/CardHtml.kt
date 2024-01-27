@@ -19,8 +19,6 @@ package com.ichi2.anki.cardviewer
 import android.content.Context
 import com.ichi2.anki.R
 import com.ichi2.anki.TtsParser
-import com.ichi2.anki.cardviewer.SingleSoundSide.ANSWER
-import com.ichi2.anki.cardviewer.SingleSoundSide.QUESTION
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -118,10 +116,10 @@ class CardHtml(
             return sb.toString()
         }
 
-        fun legacyGetTtsTags(col: Collection, card: Card, cardSide: SingleSoundSide, context: Context): List<TTSTag> {
+        fun legacyGetTtsTags(col: Collection, card: Card, cardSide: SingleCardSide, context: Context): List<TTSTag> {
             val cardSideContent: String = when (cardSide) {
-                QUESTION -> card.question(col, true)
-                ANSWER -> card.pureAnswer(col)
+                SingleCardSide.FRONT -> card.question(col, true)
+                SingleCardSide.BACK -> card.pureAnswer(col)
             }
             return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
         }

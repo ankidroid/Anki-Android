@@ -1298,7 +1298,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal inner class ReadTextListener : ReadText.ReadTextListener {
-        override fun onDone(playedSide: SoundSide?) {
+        override fun onDone(playedSide: CardSide?) {
             Timber.d("done reading text")
             this@AbstractFlashcardViewer.onSoundGroupCompleted()
         }
@@ -1465,10 +1465,10 @@ abstract class AbstractFlashcardViewer :
         // If the question is displayed or if the question should be replayed, read the question
         if (ttsInitialized) {
             if (!displayAnswer || doAudioReplay && replayQuestion) {
-                readCardTts(SingleSoundSide.QUESTION)
+                readCardTts(SingleCardSide.FRONT)
             }
             if (displayAnswer) {
-                readCardTts(SingleSoundSide.ANSWER)
+                readCardTts(SingleCardSide.BACK)
             }
         } else {
             replayOnTtsInit = true
@@ -1476,9 +1476,9 @@ abstract class AbstractFlashcardViewer :
     }
 
     @VisibleForTesting
-    fun readCardTts(side: SingleSoundSide) {
+    fun readCardTts(side: SingleCardSide) {
         val tags = legacyGetTtsTags(getColUnsafe, currentCard!!, side, this)
-        tts.readCardText(getColUnsafe, tags, currentCard!!, side.toSoundSide())
+        tts.readCardText(getColUnsafe, tags, currentCard!!, side.toCardSide())
     }
 
     /**
@@ -1506,7 +1506,7 @@ abstract class AbstractFlashcardViewer :
                 getColUnsafe,
                 this,
                 currentCard!!,
-                if (displayAnswer) SoundSide.ANSWER else SoundSide.QUESTION
+                if (displayAnswer) CardSide.ANSWER else CardSide.QUESTION
             )
         }
     }

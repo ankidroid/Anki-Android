@@ -22,6 +22,7 @@ import android.content.Context
 import com.ichi2.anki.CardUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
+import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.TTSTag
@@ -56,7 +57,7 @@ class TTS {
      * @param card     The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
-    fun readCardText(col: Collection, ttsTags: List<TTSTag>, card: Card, cardSide: SoundSide) {
+    fun readCardText(col: Collection, ttsTags: List<TTSTag>, card: Card, cardSide: CardSide) {
         ReadText.readCardSide(ttsTags, cardSide, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card, col))
     }
 
@@ -66,8 +67,8 @@ class TTS {
      * @param card The card to read text from
      * @param qa   The card question or card answer
      */
-    fun selectTts(col: Collection, context: Context, card: Card, qa: SoundSide) {
-        val textToRead = if (qa == SoundSide.QUESTION) card.question(col, true) else card.pureAnswer(col)
+    fun selectTts(col: Collection, context: Context, card: Card, qa: CardSide) {
+        val textToRead = if (qa == CardSide.QUESTION) card.question(col, true) else card.pureAnswer(col)
         // get the text from the card
         ReadText.selectTts(
             getTextForTts(context, textToRead),

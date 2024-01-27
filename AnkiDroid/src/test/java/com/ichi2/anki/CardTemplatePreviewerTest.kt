@@ -19,7 +19,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import com.ichi2.anki.cardviewer.SingleSoundSide
+import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.getFieldsAsBundleForPreview
 import com.ichi2.libanki.Card
@@ -333,7 +333,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         // TTS doesn't get initialized in Robolectric, but we've passed through rendering the card
         // so treat the UninitializedPropertyAccessException as a success
         assertThrows<UninitializedPropertyAccessException> {
-            testCardTemplatePreviewer.readCardTts(SingleSoundSide.QUESTION)
+            testCardTemplatePreviewer.readCardTts(SingleCardSide.FRONT)
         }
     }
 
