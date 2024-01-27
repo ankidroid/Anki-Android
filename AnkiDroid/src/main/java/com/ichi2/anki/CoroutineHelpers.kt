@@ -56,6 +56,8 @@ import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -65,11 +67,11 @@ import kotlin.coroutines.suspendCoroutine
  * Other errors should ideally be handled in the block.
  */
 fun CoroutineScope.launchCatching(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    context: CoroutineContext = EmptyCoroutineContext,
     errorMessageHandler: suspend (String) -> Unit,
     block: suspend () -> Unit
 ): Job {
-    return launch(dispatcher) {
+    return launch(context) {
         try {
             block()
         } catch (cancellationException: CancellationException) {
