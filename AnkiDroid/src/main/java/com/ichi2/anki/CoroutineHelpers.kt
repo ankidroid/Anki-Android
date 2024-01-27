@@ -109,7 +109,7 @@ fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel
  *   If not, add a comment explaining why, or refactor to have a method that returns
  *   a non-null localized message.
  */
-suspend fun <T> FragmentActivity.runCatchingTask(
+suspend fun <T> FragmentActivity.runCatching(
     errorMessage: String? = null,
     block: suspend () -> T?
 ): T? {
@@ -196,7 +196,7 @@ fun FragmentActivity.launchCatchingTask(
     block: suspend CoroutineScope.() -> Unit
 ): Job {
     return lifecycle.coroutineScope.launch {
-        runCatchingTask(errorMessage) { block() }
+        runCatching(errorMessage) { block() }
     }
 }
 
@@ -206,7 +206,7 @@ fun Fragment.launchCatchingTask(
     block: suspend CoroutineScope.() -> Unit
 ): Job {
     return lifecycle.coroutineScope.launch {
-        requireActivity().runCatchingTask(errorMessage) { block() }
+        requireActivity().runCatching(errorMessage) { block() }
     }
 }
 
