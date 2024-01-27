@@ -52,15 +52,14 @@ class SoundPlayerTest : JvmTest() {
         answers = emptyList(),
         questions = emptyList()
     ) {
-        playAllSoundsAndWait()
+        playAllSoundsAndWait(BACK)
 
         verifyNoSoundsPlayed()
     }
 
     @Test
     fun singleSoundSuccess() = runSoundPlayerTest(
-        questions = listOf(SoundOrVideoTag("abc.mp3")),
-        side = Side.FRONT
+        questions = listOf(SoundOrVideoTag("abc.mp3"))
     ) {
         playAllSoundsAndWait()
 
@@ -71,8 +70,7 @@ class SoundPlayerTest : JvmTest() {
 
     @Test
     fun `back is not played on front`() = runSoundPlayerTest(
-        answers = listOf(SoundOrVideoTag("abc.mp3")),
-        side = Side.FRONT
+        answers = listOf(SoundOrVideoTag("abc.mp3"))
     ) {
         playAllSoundsAndWait()
 
@@ -81,10 +79,9 @@ class SoundPlayerTest : JvmTest() {
 
     @Test
     fun `front is not played on back`() = runSoundPlayerTest(
-        questions = listOf(SoundOrVideoTag("abc.mp3")),
-        side = BACK
+        questions = listOf(SoundOrVideoTag("abc.mp3"))
     ) {
-        playAllSoundsAndWait()
+        playAllSoundsAndWait(BACK)
 
         verifyNoSoundsPlayed()
     }
@@ -93,10 +90,9 @@ class SoundPlayerTest : JvmTest() {
     fun `replay - front may be played on back`() = runSoundPlayerTest(
         questions = listOf(SoundOrVideoTag("front.mp3")),
         answers = listOf(SoundOrVideoTag("back.mp3")),
-        replayQuestion = true,
-        side = BACK
+        replayQuestion = true
     ) {
-        replayAllSoundsAndWait()
+        replayAllSoundsAndWait(BACK)
 
         coVerifyOrder {
             tagPlayer.play(SoundOrVideoTag("front.mp3"), any())
@@ -108,10 +104,9 @@ class SoundPlayerTest : JvmTest() {
     fun `replay when replayQuestion is false`() = runSoundPlayerTest(
         questions = listOf(SoundOrVideoTag("front.mp3")),
         answers = listOf(SoundOrVideoTag("back.mp3")),
-        replayQuestion = false,
-        side = BACK
+        replayQuestion = false
     ) {
-        replayAllSoundsAndWait()
+        replayAllSoundsAndWait(BACK)
 
         coVerifyOrder {
             tagPlayer.play(SoundOrVideoTag("back.mp3"), any())
@@ -201,12 +196,12 @@ class SoundPlayerTest : JvmTest() {
         verify(exactly = 1) { onSoundGroupCompleted.invoke() }
     }
 
-    private suspend fun SoundPlayer.playAllSoundsAndWait() {
-        this.playAllSounds()?.join()
+    private suspend fun SoundPlayer.playAllSoundsAndWait(side: Side = Side.FRONT) {
+        this.playAllSounds(side)?.join()
     }
 
-    private suspend fun SoundPlayer.replayAllSoundsAndWait() {
-        this.replayAllSounds()?.join()
+    private suspend fun SoundPlayer.replayAllSoundsAndWait(side: Side) {
+        this.replayAllSounds(side)?.join()
     }
 
     private suspend fun SoundPlayer.playOneSoundAndWait(tag: AvTag) {
@@ -216,7 +211,6 @@ class SoundPlayerTest : JvmTest() {
     suspend fun SoundPlayer.setup(
         questions: List<AvTag>,
         answers: List<AvTag>,
-        side: Side,
         replayQuestion: Boolean?,
         autoplay: Boolean?
     ) {
@@ -244,7 +238,7 @@ class SoundPlayerTest : JvmTest() {
             }
         }
 
-        this.loadCardSounds(card, side)
+        this.loadCardSounds(card)
     }
 }
 
@@ -256,7 +250,6 @@ class SoundPlayerTest : JvmTest() {
 fun SoundPlayerTest.runSoundPlayerTest(
     questions: List<AvTag> = emptyList(),
     answers: List<AvTag> = emptyList(),
-    side: Side = Side.FRONT,
     replayQuestion: Boolean? = null,
     autoplay: Boolean? = null,
     testBody: suspend SoundPlayer.() -> Unit
@@ -269,6 +262,6 @@ fun SoundPlayerTest.runSoundPlayerTest(
         )
         soundPlayer.setOnSoundGroupCompletedListener(onSoundGroupCompleted)
         assertThat("can play sounds", soundPlayer.isEnabled)
-        soundPlayer.setup(questions, answers, side, replayQuestion, autoplay)
+        soundPlayer.setup(questions, answers, replayQuestion, autoplay)
         testBody(soundPlayer)
     }
