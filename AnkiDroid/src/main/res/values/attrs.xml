@@ -165,4 +165,6 @@
 
     <attr name="checkMediaListBackground" format="color" />
     <attr name="checkMediaListForeground" format="color" />
+
+    <attr name="progressDialogButtonTextColor" format="color"/>
 </resources>

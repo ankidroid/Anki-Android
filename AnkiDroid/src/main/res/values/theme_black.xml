@@ -87,6 +87,7 @@
         <item name="navDrawerImage">@drawable/nav_drawer_logo_black_theme</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
+        <!--        TODO: Remove it once we migrate to Alert Dialog-->
         <item name="md_background_color">@color/theme_black_primary_light</item>
         <item name="md_color_button_text">@color/white</item>
         <!--Custom Tabs colors-->
@@ -109,7 +110,8 @@
         <item name="colorSurface">@color/theme_black_primary</item>
 
         <!-- ProgressDialog-->
-        <item name="dialogBackground">#ff303030</item>
+        <item name="dialogBackground">@color/theme_black_primary_light</item>
+        <item name="progressDialogButtonTextColor">@color/material_light_blue_400</item>
 
         <!-- AlertDialogTheme-->
         <item name="alertDialogTheme">@style/AlertDialogStyle</item>
