@@ -1425,7 +1425,7 @@ abstract class AbstractFlashcardViewer :
         Timber.d("updateCard()")
         // TODO: This doesn't need to be blocking
         runBlocking {
-            soundPlayer.loadCardSounds(currentCard!!, if (displayAnswer) Side.BACK else Side.FRONT)
+            soundPlayer.loadCardSounds(currentCard!!)
         }
         cardContent = content.getTemplateHtml()
         fillFlashcard()
@@ -1451,9 +1451,10 @@ abstract class AbstractFlashcardViewer :
         // We need to play the sounds from the proper side of the card
         if (!useTTS) {
             launchCatchingTask {
+                val side = if (displayAnswer) Side.BACK else Side.FRONT
                 when (doAudioReplay) {
-                    true -> soundPlayer.replayAllSounds()
-                    false -> soundPlayer.playAllSounds()
+                    true -> soundPlayer.replayAllSounds(side)
+                    false -> soundPlayer.playAllSounds(side)
                 }
             }
             return

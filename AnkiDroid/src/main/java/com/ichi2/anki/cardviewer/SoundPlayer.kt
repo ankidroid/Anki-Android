@@ -94,7 +94,6 @@ class SoundPlayer(
 
     private lateinit var questions: List<AvTag>
     private lateinit var answers: List<AvTag>
-    private lateinit var side: Side
 
     lateinit var config: CardSoundConfig
     var isEnabled = true
@@ -113,12 +112,11 @@ class SoundPlayer(
         onSoundGroupCompleted = listener
     }
 
-    suspend fun loadCardSounds(card: Card, side: Side) {
-        Timber.i("loading sounds for card %s (%s)", card.id, side)
+    suspend fun loadCardSounds(card: Card) {
+        Timber.i("loading sounds for card %d", card.id)
         stopSounds()
         this.questions = withCol { card.renderOutput(this).questionAvTags }
         this.answers = withCol { card.renderOutput(this).answerAvTags }
-        this.side = side
 
         if (!this::config.isInitialized || !config.appliesTo(card)) {
             config = withCol { CardSoundConfig.create(card) }
@@ -273,7 +271,7 @@ class SoundPlayer(
     /**
      * Plays all sounds for the current side, calling [onSoundGroupCompleted] when completed
      */
-    suspend fun playAllSounds() = when (side) {
+    suspend fun playAllSounds(side: Side) = when (side) {
         Side.FRONT -> playAllSoundsForSide(QUESTION)
         Side.BACK -> playAllSoundsForSide(ANSWER)
     }
@@ -281,7 +279,7 @@ class SoundPlayer(
     /**
      * Replays all sounds for the current side, calling [onSoundGroupCompleted] when completed
      */
-    suspend fun replayAllSounds() = when (side) {
+    suspend fun replayAllSounds(side: Side) = when (side) {
         Side.BACK -> if (config.replayQuestion) playAllSoundsForSide(QUESTION_AND_ANSWER) else playAllSoundsForSide(ANSWER)
         Side.FRONT -> playAllSoundsForSide(QUESTION)
     }
