@@ -185,19 +185,18 @@
         <item name="singleLineTitle">false</item>
     </style>
 
-    <style name="AppCompatProgressDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/material_light_blue_500</item>
+    <style name="AppCompatProgressDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">?attr/progressDialogButtonTextColor</item>
         <item name="android:textColorPrimary">?android:attr/textColor</item>
         <item name="android:background">?attr/dialogBackground</item>
         <item name="android:buttonBarButtonStyle">@style/CustomButtonBarButtonStyle</item>
     </style>
 
-    <style name="AlertDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-        <item name="android:textColorAlertDialogListItem">?android:attr/textColor</item>
-        <item name="android:background">?attr/md_background_color</item>
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">?attr/dialogBackground</item>
     </style>
 
     <style name="CustomButtonBarButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/progressDialogButtonTextColor</item>
     </style>
 </resources>

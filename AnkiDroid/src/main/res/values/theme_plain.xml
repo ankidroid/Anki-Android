@@ -69,9 +69,7 @@
 
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/white</item>
-
-        <!-- AlertDialogTheme-->
-        <item name="alertDialogTheme">@style/AlertDialogStyle</item>
+        <item name="progressDialogButtonTextColor">@color/theme_plain_primary</item>
 
     </style>
 </resources>
