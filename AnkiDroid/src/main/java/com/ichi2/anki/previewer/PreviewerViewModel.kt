@@ -190,6 +190,8 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         isMarked.emit(isMarkedValue)
     }
 
+    private fun bodyClass(): String = bodyClassForCardOrd(currentCard.ord)
+
     private suspend fun showQuestion() {
         Timber.v("showQuestion()")
         showingAnswer.emit(false)
@@ -197,9 +199,8 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         val questionData = withCol { currentCard.question(this) }
         val question = mungeQA(questionData)
         val answer = withCol { media.escapeMediaFilenames(currentCard.answer(this)) }
-        val bodyClass = bodyClassForCardOrd(currentCard.ord)
 
-        eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '$bodyClass');")
+        eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '${bodyClass()}');")
 
         updateFlagIcon()
         updateMarkIcon()
