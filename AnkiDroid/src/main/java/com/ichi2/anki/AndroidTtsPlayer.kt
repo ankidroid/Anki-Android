@@ -21,9 +21,6 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
 import androidx.annotation.CheckResult
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AndroidTtsError.TtsErrorCode
 import com.ichi2.compat.UtteranceProgressListenerCompat
 import com.ichi2.libanki.AvTag
@@ -40,8 +37,7 @@ import timber.log.Timber
 import kotlin.coroutines.resume
 
 class AndroidTtsPlayer(private val context: Context, private val voices: List<TtsVoice>) :
-    TtsPlayer(),
-    DefaultLifecycleObserver {
+    TtsPlayer() {
 
     private lateinit var scope: CoroutineScope
 
@@ -81,16 +77,6 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
                 }
             })
         }
-    }
-
-    override fun onCreate(owner: LifecycleOwner) {
-        owner.lifecycleScope.launch { init(this) }
-        super.onCreate(owner)
-    }
-
-    override fun onDestroy(owner: LifecycleOwner) {
-        super.onDestroy(owner)
-        close()
     }
 
     override fun get_available_voices(): List<TtsVoice> {
