@@ -79,7 +79,7 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
         }
     }
 
-    override fun get_available_voices(): List<TtsVoice> {
+    override fun getAvailableVoices(): List<TtsVoice> {
         return this.voices
     }
 
@@ -88,7 +88,7 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
             Timber.w("Expected TTS Tag, got %s", tag)
             return AndroidTtsError.failure(TtsErrorCode.APP_UNEXPECTED_TAG)
         }
-        val match = voice_for_tag(tag)
+        val match = voiceForTag(tag)
         if (match == null) {
             Timber.w("could not find voice for %s", tag)
             return AndroidTtsError.failure(TtsErrorCode.APP_MISSING_VOICE)

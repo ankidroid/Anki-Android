@@ -43,12 +43,11 @@ open class TtsVoice(
 data class TtsVoiceMatch(val voice: TtsVoice, val rank: Int)
 
 abstract class TtsPlayer : Closeable {
-    open val default_rank = 0
+    open val defaultRank = 0
 
-    @JvmField // stops a name conflict
-    var _available_voices: List<TtsVoice>? = null
+    private var availableVoices: List<TtsVoice>? = null
 
-    abstract fun get_available_voices(): List<TtsVoice>
+    abstract fun getAvailableVoices(): List<TtsVoice>
 
     abstract class TtsError
 
@@ -63,21 +62,21 @@ abstract class TtsPlayer : Closeable {
     abstract suspend fun play(tag: AvTag): TtsCompletionStatus
 
     fun voices(): List<TtsVoice> {
-        if (_available_voices == null) {
-            _available_voices = get_available_voices()
+        if (availableVoices == null) {
+            availableVoices = getAvailableVoices()
         }
-        return _available_voices!!
+        return availableVoices!!
     }
 
-    fun voice_for_tag(tag: TTSTag): TtsVoiceMatch? {
-        val avail_voices = voices()
+    fun voiceForTag(tag: TTSTag): TtsVoiceMatch? {
+        val availVoices = voices()
 
-        var rank = default_rank
+        var rank = defaultRank
 
         // any requested voices match?
-        for (requested_voice in tag.voices) {
-            for (avail in avail_voices) {
-                if (avail.name == requested_voice && avail.lang == tag.lang) {
+        for (requestedVoice in tag.voices) {
+            for (avail in availVoices) {
+                if (avail.name == requestedVoice && avail.lang == tag.lang) {
                     return TtsVoiceMatch(voice = avail, rank = rank)
                 }
             }
@@ -86,7 +85,7 @@ abstract class TtsPlayer : Closeable {
 
         // if no preferred voices match, we fall back on language
         // with a rank of -100
-        for (avail in avail_voices) {
+        for (avail in availVoices) {
             if (avail.lang == tag.lang) {
                 return TtsVoiceMatch(voice = avail, rank = -100)
             }
