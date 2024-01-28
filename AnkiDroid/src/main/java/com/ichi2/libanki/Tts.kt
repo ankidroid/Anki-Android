@@ -81,9 +81,8 @@ abstract class TtsPlayer : Closeable {
                     return TtsVoiceMatch(voice = avail, rank = rank)
                 }
             }
+            rank -= 1
         }
-
-        rank -= 1
 
         // if no preferred voices match, we fall back on language
         // with a rank of -100
