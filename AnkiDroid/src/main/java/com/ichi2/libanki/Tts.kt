@@ -59,7 +59,9 @@ abstract class TtsPlayer : Closeable {
         }
     }
 
-    abstract suspend fun play(tag: AvTag): TtsCompletionStatus
+    // libanki uses `AvTag` as `tag`'s parameter type, but it requires `TTSTag` anyway
+    // changed here to get advantage of static typing
+    abstract suspend fun play(tag: TTSTag): TtsCompletionStatus
 
     fun voices(): List<TtsVoice> {
         if (availableVoices == null) {
