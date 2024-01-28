@@ -215,8 +215,7 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                viewModel.loadCurrentCard()
+                viewModel.onPageFinished()
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {

@@ -73,22 +73,26 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
 
     private lateinit var currentCard: Card
 
-    init {
-        launchCatching {
-            currentIndex.collectLatest { index ->
-                currentCard = withCol { getCard(selectedCardIds[index]) }
-                if (backsideOnly.value) {
-                    showAnswer()
-                } else {
-                    showQuestion()
-                }
-            }
-        }
-    }
+    private val showAnswerOnReload get() = showingAnswer.value || backsideOnly.value
 
     /* *********************************************************************************************
     ************************ Public methods: meant to be used by the View **************************
     ********************************************************************************************* */
+
+    /** Call this after the webView has finished loading the page */
+    fun onPageFinished() {
+        /* if currentCard has already been initialized, it means that this method was already called
+        once and the fragment is being recreated, which happens in configuration changes. */
+        if (this::currentCard.isInitialized) {
+            launchCatching { showCard(showAnswerOnReload) }
+            return
+        }
+        launchCatching {
+            currentIndex.collectLatest {
+                showCard(showAnswer = backsideOnly.value)
+            }
+        }
+    }
 
     fun toggleBacksideOnly() {
         Timber.v("toggleBacksideOnly() %b", !backsideOnly.value)
@@ -153,34 +157,22 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
             result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
         ) {
-            loadCurrentCard(reload = true)
+            launchCatching {
+                showCard(showAnswerOnReload)
+            }
         }
     }
 
     fun cardsCount() = selectedCardIds.count()
 
-    /**
-     * MUST be called once before accessing [currentCard] for the first time
-     *
-     * @param reload useful if the note has been edited
-     */
-    fun loadCurrentCard(reload: Boolean = false) {
-        Timber.v("loadCurrentCard()")
-        launchCatching {
-            if (!this::currentCard.isInitialized || reload) {
-                currentCard = withCol { getCard(selectedCardIds[currentIndex.value]) }
-            }
-            if (showingAnswer.value || backsideOnly.value) {
-                showAnswer()
-            } else {
-                showQuestion()
-            }
-        }
-    }
-
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
     ********************************************************************************************* */
+
+    private suspend fun showCard(showAnswer: Boolean) {
+        currentCard = withCol { getCard(selectedCardIds[currentIndex.value]) }
+        if (showAnswer) showAnswer() else showQuestion()
+    }
 
     private suspend fun updateFlagIcon() {
         flagCode.emit(currentCard.userFlag())
