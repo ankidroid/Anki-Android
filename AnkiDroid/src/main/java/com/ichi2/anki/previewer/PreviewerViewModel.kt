@@ -77,9 +77,10 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         launchCatching {
             currentIndex.collectLatest { index ->
                 currentCard = withCol { getCard(selectedCardIds[index]) }
-                showQuestion()
                 if (backsideOnly.value) {
                     showAnswer()
+                } else {
+                    showQuestion()
                 }
             }
         }
@@ -169,10 +170,10 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
             if (!this::currentCard.isInitialized || reload) {
                 currentCard = withCol { getCard(selectedCardIds[currentIndex.value]) }
             }
-            val answerShouldBeShown = showingAnswer.value || backsideOnly.value
-            showQuestion()
-            if (answerShouldBeShown) {
+            if (showingAnswer.value || backsideOnly.value) {
                 showAnswer()
+            } else {
+                showQuestion()
             }
         }
     }
@@ -206,14 +207,12 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         updateMarkIcon()
     }
 
-    /** Needs the question already being displayed to work (i.e. [showQuestion]),
-     * because of how the `_showAnswer()` javascript method works */
     private suspend fun showAnswer() {
         Timber.v("showAnswer()")
         showingAnswer.emit(true)
         val answerData = withCol { currentCard.answer(this) }
         val answer = mungeQA(answerData)
-        eval.emit("_showAnswer(${Json.encodeToString(answer)});")
+        eval.emit("_showAnswer(${Json.encodeToString(answer)}, '${bodyClass()}');")
     }
 
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L358) */
