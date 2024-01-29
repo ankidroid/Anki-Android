@@ -1008,11 +1008,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.note_editor, menu)
+        val iconVisible = allowSaveAndPreview()
+        menu.findItem(R.id.action_preview).isVisible = iconVisible
+        menu.findItem(R.id.action_save).isVisible = iconVisible
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
-            val iconVisible = allowSaveAndPreview()
-            menu.findItem(R.id.action_save).isVisible = iconVisible
-            menu.findItem(R.id.action_preview).isVisible = iconVisible
         } else {
             menu.findItem(R.id.action_add_note_from_note_editor).isVisible = true
         }
@@ -1042,7 +1042,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      * when the card is saved successfully
      */
     private fun allowSaveAndPreview(): Boolean = when {
-        addNote && currentNotetypeIsImageOcclusion() -> false
+        currentNotetypeIsImageOcclusion() -> false
         else -> true
     }
 
