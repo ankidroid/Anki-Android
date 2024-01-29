@@ -138,7 +138,7 @@ class SoundPlayer : Closeable {
         }
     }
 
-    private suspend fun playAllSoundsForSide(cardSide: CardSide): Job? {
+    suspend fun playAllSoundsForSide(cardSide: CardSide): Job? {
         if (!isEnabled) return null
         playSoundsJob {
             Timber.i("playing sounds for %s", cardSide)
