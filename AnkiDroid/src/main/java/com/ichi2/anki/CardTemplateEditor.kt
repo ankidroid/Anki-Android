@@ -124,6 +124,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         slidingTabLayout = findViewById(R.id.sliding_tabs)
+        setNavigationBarColor(R.attr.appBarColor)
 
         // Disable the home icon
         enableToolbar()
@@ -596,7 +597,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             // If we have a card for this position, send it, otherwise an empty card list signals to show a blank
             if (noteId != -1L) {
-                val cids = col.getNote(noteId).cids()
+                val cids = col.getNote(noteId).cids(col)
                 if (ordinal < cids.size) {
                     i.putExtra("cardList", longArrayOf(cids[ordinal]))
                 }

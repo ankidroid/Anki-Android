@@ -238,7 +238,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 activity.launchCatchingTask { activity.resetCards(cardIds) }
                 convertToByteArray(apiContract, true)
             }
-            "cardMark" -> convertToByteArray(apiContract, currentCard.note(getColUnsafe).hasTag("marked"))
+            "cardMark" -> convertToByteArray(apiContract, currentCard.note(getColUnsafe).hasTag(getColUnsafe, "marked"))
             "cardFlag" -> convertToByteArray(apiContract, currentCard.userFlag())
             "cardReps" -> convertToByteArray(apiContract, currentCard.reps)
             "cardInterval" -> convertToByteArray(apiContract, currentCard.ivl)

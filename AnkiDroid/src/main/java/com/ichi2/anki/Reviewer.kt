@@ -37,7 +37,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -75,8 +74,8 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.audio.AudioRecordingController
 import com.ichi2.audio.AudioRecordingController.Companion.generateTempAudioFile
+import com.ichi2.audio.AudioRecordingController.Companion.isAudioRecordingSaved
 import com.ichi2.audio.AudioRecordingController.Companion.isRecording
-import com.ichi2.audio.AudioRecordingController.Companion.isSaved
 import com.ichi2.audio.AudioRecordingController.Companion.setReviewerStatus
 import com.ichi2.audio.AudioRecordingController.Companion.tempAudioPath
 import com.ichi2.libanki.*
@@ -191,10 +190,7 @@ open class Reviewer :
         textBarReview = findViewById(R.id.review_number)
         toolbar = findViewById(R.id.toolbar)
         micToolBarLayer = findViewById(R.id.mic_tool_bar_layer)
-        window.navigationBarColor = ThemeUtils.getThemeAttrColor(
-            this,
-            R.attr.showAnswerColor
-        )
+        setNavigationBarColor(R.attr.showAnswerColor)
 
         startLoadingCollection()
     }
@@ -207,7 +203,7 @@ open class Reviewer :
     override fun onResume() {
         when {
             stopTimerOnAnswer && isDisplayingAnswer -> {}
-            else -> launchCatchingTask { withCol { answerTimer.resume() } }
+            else -> launchCatchingTask { answerTimer.resume() }
         }
         super.onResume()
         if (typeAnswer?.autoFocusEditText() == true) {
@@ -532,7 +528,7 @@ open class Reviewer :
         if (!openMicToolbar()) {
             return
         }
-        if (isSaved) {
+        if (isAudioRecordingSaved) {
             audioRecordingController?.playPausePlayer()
         } else {
             return
@@ -562,6 +558,7 @@ open class Reviewer :
         if (prefWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
         }
+        audioRecordingController?.updateUIForNewCard()
     }
 
     override fun unblockControls() {
@@ -706,7 +703,7 @@ open class Reviewer :
         actionButtons.setCustomButtonsStatus(menu)
         val alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
-        if (currentCard != null && isMarked(currentCard!!.note(getColUnsafe))) {
+        if (currentCard != null && isMarked(getColUnsafe, currentCard!!.note(getColUnsafe))) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
         } else {
             markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)

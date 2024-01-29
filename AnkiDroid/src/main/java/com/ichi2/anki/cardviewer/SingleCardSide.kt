@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -16,10 +16,16 @@
 
 package com.ichi2.anki.cardviewer
 
-/**
- * The subset of sounds to involve
- * @param int Used for serialisation
- */
-enum class SoundSide(val int: Int) {
-    QUESTION(0), ANSWER(1), QUESTION_AND_ANSWER(2);
+import com.ichi2.anki.reviewer.CardSide
+
+enum class SingleCardSide {
+    FRONT,
+    BACK;
+
+    fun toCardSide(): CardSide {
+        return when (this) {
+            FRONT -> CardSide.QUESTION
+            BACK -> CardSide.ANSWER
+        }
+    }
 }

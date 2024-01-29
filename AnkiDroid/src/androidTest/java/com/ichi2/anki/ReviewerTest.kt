@@ -63,7 +63,7 @@ class ReviewerTest : InstrumentedTest() {
             customData.good.c += 1;
             """
         val note = addNoteUsingBasicModel("foo", "bar")
-        val card = note.firstCard()
+        val card = note.firstCard(col)
         val deck = col.decks.get(note.notetype.did)!!
         card.moveToReviewQueue()
         col.backend.updateCards(

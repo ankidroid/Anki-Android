@@ -149,5 +149,9 @@
 
         <item name="checkMediaListBackground">@color/material_grey_700</item>
         <item name="checkMediaListForeground">@color/white</item>
+
+        <!-- AlertDialogTheme-->
+        <item name="alertDialogTheme">@style/AlertDialogStyle</item>
+
     </style>
 </resources>

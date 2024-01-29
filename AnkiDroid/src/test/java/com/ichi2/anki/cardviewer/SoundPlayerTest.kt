@@ -18,14 +18,13 @@ package com.ichi2.anki.cardviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardUtils
-import com.ichi2.anki.IntroductionActivity
-import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.cardviewer.Side.BACK
+import com.ichi2.anki.cardviewer.SingleCardSide.BACK
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.*
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TtsPlayer
+import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.TestException
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -41,7 +40,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class SoundPlayerTest : RobolectricTest() {
+class SoundPlayerTest : JvmTest() {
     internal val tagPlayer: SoundTagPlayer = mockk<SoundTagPlayer>()
     internal val ttsPlayer: TtsPlayer = mockk<TtsPlayer>()
     internal val onSoundGroupCompleted: () -> Unit = mockk<() -> Unit>().also {
@@ -53,15 +52,14 @@ class SoundPlayerTest : RobolectricTest() {
         answers = emptyList(),
         questions = emptyList()
     ) {
-        playAllSoundsAndWait()
+        playAllSoundsAndWait(BACK)
 
         verifyNoSoundsPlayed()
     }
 
     @Test
     fun singleSoundSuccess() = runSoundPlayerTest(
-        questions = listOf(SoundOrVideoTag("abc.mp3")),
-        side = Side.FRONT
+        questions = listOf(SoundOrVideoTag("abc.mp3"))
     ) {
         playAllSoundsAndWait()
 
@@ -72,8 +70,7 @@ class SoundPlayerTest : RobolectricTest() {
 
     @Test
     fun `back is not played on front`() = runSoundPlayerTest(
-        answers = listOf(SoundOrVideoTag("abc.mp3")),
-        side = Side.FRONT
+        answers = listOf(SoundOrVideoTag("abc.mp3"))
     ) {
         playAllSoundsAndWait()
 
@@ -82,10 +79,9 @@ class SoundPlayerTest : RobolectricTest() {
 
     @Test
     fun `front is not played on back`() = runSoundPlayerTest(
-        questions = listOf(SoundOrVideoTag("abc.mp3")),
-        side = BACK
+        questions = listOf(SoundOrVideoTag("abc.mp3"))
     ) {
-        playAllSoundsAndWait()
+        playAllSoundsAndWait(BACK)
 
         verifyNoSoundsPlayed()
     }
@@ -94,10 +90,9 @@ class SoundPlayerTest : RobolectricTest() {
     fun `replay - front may be played on back`() = runSoundPlayerTest(
         questions = listOf(SoundOrVideoTag("front.mp3")),
         answers = listOf(SoundOrVideoTag("back.mp3")),
-        replayQuestion = true,
-        side = BACK
+        replayQuestion = true
     ) {
-        replayAllSoundsAndWait()
+        replayAllSoundsAndWait(BACK)
 
         coVerifyOrder {
             tagPlayer.play(SoundOrVideoTag("front.mp3"), any())
@@ -109,10 +104,9 @@ class SoundPlayerTest : RobolectricTest() {
     fun `replay when replayQuestion is false`() = runSoundPlayerTest(
         questions = listOf(SoundOrVideoTag("front.mp3")),
         answers = listOf(SoundOrVideoTag("back.mp3")),
-        replayQuestion = false,
-        side = BACK
+        replayQuestion = false
     ) {
-        replayAllSoundsAndWait()
+        replayAllSoundsAndWait(BACK)
 
         coVerifyOrder {
             tagPlayer.play(SoundOrVideoTag("back.mp3"), any())
@@ -202,12 +196,12 @@ class SoundPlayerTest : RobolectricTest() {
         verify(exactly = 1) { onSoundGroupCompleted.invoke() }
     }
 
-    private suspend fun SoundPlayer.playAllSoundsAndWait() {
-        this.playAllSounds()?.join()
+    private suspend fun SoundPlayer.playAllSoundsAndWait(side: SingleCardSide = SingleCardSide.FRONT) {
+        this.playAllSounds(side)?.join()
     }
 
-    private suspend fun SoundPlayer.replayAllSoundsAndWait() {
-        this.replayAllSounds()?.join()
+    private suspend fun SoundPlayer.replayAllSoundsAndWait(side: SingleCardSide) {
+        this.replayAllSounds(side)?.join()
     }
 
     private suspend fun SoundPlayer.playOneSoundAndWait(tag: AvTag) {
@@ -217,7 +211,6 @@ class SoundPlayerTest : RobolectricTest() {
     suspend fun SoundPlayer.setup(
         questions: List<AvTag>,
         answers: List<AvTag>,
-        side: Side,
         replayQuestion: Boolean?,
         autoplay: Boolean?
     ) {
@@ -245,7 +238,7 @@ class SoundPlayerTest : RobolectricTest() {
             }
         }
 
-        this.loadCardSounds(col, card, side)
+        this.loadCardSounds(card)
     }
 }
 
@@ -257,25 +250,18 @@ class SoundPlayerTest : RobolectricTest() {
 fun SoundPlayerTest.runSoundPlayerTest(
     questions: List<AvTag> = emptyList(),
     answers: List<AvTag> = emptyList(),
-    side: Side = Side.FRONT,
     replayQuestion: Boolean? = null,
     autoplay: Boolean? = null,
     testBody: suspend SoundPlayer.() -> Unit
 ) =
     runTest {
-        // PERF: See if we can make this faster
-        val lifecycle = startRegularActivity<IntroductionActivity>().lifecycle
-        // val lifecycle = mockk<Lifecycle>()
-        // every { lifecycle.currentState } answers { Lifecycle.State.RESUMED }
-
         val soundPlayer = SoundPlayer(
             soundTagPlayer = tagPlayer,
             ttsPlayer = CompletableDeferred(ttsPlayer),
-            lifecycle = lifecycle,
-            onSoundGroupCompleted = onSoundGroupCompleted,
             soundErrorListener = mockk()
         )
-        assertThat("can play sounds", soundPlayer.canPlaySounds())
-        soundPlayer.setup(questions, answers, side, replayQuestion, autoplay)
+        soundPlayer.setOnSoundGroupCompletedListener(onSoundGroupCompleted)
+        assertThat("can play sounds", soundPlayer.isEnabled)
+        soundPlayer.setup(questions, answers, replayQuestion, autoplay)
         testBody(soundPlayer)
     }

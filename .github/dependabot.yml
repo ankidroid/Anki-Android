@@ -23,5 +23,10 @@ updates:
     time: "10:00"
   open-pull-requests-limit: 10
   target-branch: dependency-updates
+  groups:
+    non-breaking:
+      update-types:
+        - "minor"
+        - "patch"
   labels:
   - "dependencies"

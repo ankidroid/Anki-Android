@@ -81,6 +81,8 @@ import com.ichi2.anki.services.migrationServiceWhileStartedOrNull
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
+import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
@@ -567,26 +569,14 @@ abstract class AbstractFlashcardViewer :
         invalidateOptionsMenu()
     }
 
-    /**
-     * @param mediaDir media directory path on SD card
-     * @return path converted to file URL, properly UTF-8 URL encoded
-     */
-    private fun getMediaBaseUrl(mediaDir: String): String {
-        // Use android.net.Uri class to ensure whole path is properly encoded
-        // File.toURL() does not work here, and URLEncoder class is not directly usable
-        // with existing slashes
-        if (mediaDir.isNotEmpty() && !"null".equals(mediaDir, ignoreCase = true)) {
-            val mediaDirUri = Uri.fromFile(File(mediaDir))
-            return "$mediaDirUri/"
-        }
-        return ""
-    }
-
     // Saves deck each time Reviewer activity loses focus
     override fun onPause() {
         super.onPause()
         automaticAnswer.disable()
         gestureDetectorImpl.stopShakeDetector()
+        if (this::soundPlayer.isInitialized) {
+            soundPlayer.isEnabled = false
+        }
         longClickHandler.removeCallbacks(startLongClickAction)
         // Prevent loss of data in Cookies
         CookieManager.getInstance().flush()
@@ -596,6 +586,9 @@ abstract class AbstractFlashcardViewer :
         super.onResume()
         automaticAnswer.enable()
         gestureDetectorImpl.startShakeDetector()
+        if (this::soundPlayer.isInitialized) {
+            soundPlayer.isEnabled = true
+        }
         // Reset the activity title
         updateActionBar()
         selectNavigationItem(-1)
@@ -637,6 +630,9 @@ abstract class AbstractFlashcardViewer :
             cardFrame!!.removeAllViews()
         }
         destroyWebView(webView) // OK to do without a lock
+        if (this::soundPlayer.isInitialized) {
+            soundPlayer.close()
+        }
     }
 
     override fun onBackPressed() {
@@ -859,7 +855,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    open fun answerCard(@BUTTON_TYPE ease: Int) {
+    open fun answerCard(@BUTTON_TYPE ease: Int) = preventSimultaneousExecutions(ANSWER_CARD) {
         launchCatchingTask {
             if (inAnswer) {
                 return@launchCatchingTask
@@ -1302,7 +1298,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal inner class ReadTextListener : ReadText.ReadTextListener {
-        override fun onDone(playedSide: SoundSide?) {
+        override fun onDone(playedSide: CardSide?) {
             Timber.d("done reading text")
             this@AbstractFlashcardViewer.onSoundGroupCompleted()
         }
@@ -1322,7 +1318,7 @@ abstract class AbstractFlashcardViewer :
         } else {
             answerField?.visibility = View.GONE
         }
-        val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.FRONT)
+        val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
         automaticAnswer.onDisplayQuestion()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForAudio()) {
@@ -1368,7 +1364,7 @@ abstract class AbstractFlashcardViewer :
             typeAnswer!!.input = answerField!!.text.toString()
         }
         isSelecting = false
-        val answerContent = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.BACK)
+        val answerContent = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.BACK)
         automaticAnswer.onDisplayAnswer()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForAudio()) {
@@ -1429,7 +1425,7 @@ abstract class AbstractFlashcardViewer :
         Timber.d("updateCard()")
         // TODO: This doesn't need to be blocking
         runBlocking {
-            soundPlayer.loadCardSounds(getColUnsafe, currentCard!!, if (displayAnswer) Side.BACK else Side.FRONT)
+            soundPlayer.loadCardSounds(currentCard!!)
         }
         cardContent = content.getTemplateHtml()
         fillFlashcard()
@@ -1455,9 +1451,10 @@ abstract class AbstractFlashcardViewer :
         // We need to play the sounds from the proper side of the card
         if (!useTTS) {
             launchCatchingTask {
+                val side = if (displayAnswer) SingleCardSide.BACK else SingleCardSide.FRONT
                 when (doAudioReplay) {
-                    true -> soundPlayer.replayAllSounds()
-                    false -> soundPlayer.playAllSounds()
+                    true -> soundPlayer.replayAllSounds(side)
+                    false -> soundPlayer.playAllSounds(side)
                 }
             }
             return
@@ -1468,10 +1465,10 @@ abstract class AbstractFlashcardViewer :
         // If the question is displayed or if the question should be replayed, read the question
         if (ttsInitialized) {
             if (!displayAnswer || doAudioReplay && replayQuestion) {
-                readCardTts(SingleSoundSide.QUESTION)
+                readCardTts(SingleCardSide.FRONT)
             }
             if (displayAnswer) {
-                readCardTts(SingleSoundSide.ANSWER)
+                readCardTts(SingleCardSide.BACK)
             }
         } else {
             replayOnTtsInit = true
@@ -1479,9 +1476,9 @@ abstract class AbstractFlashcardViewer :
     }
 
     @VisibleForTesting
-    fun readCardTts(side: SingleSoundSide) {
+    fun readCardTts(side: SingleCardSide) {
         val tags = legacyGetTtsTags(getColUnsafe, currentCard!!, side, this)
-        tts.readCardText(getColUnsafe, tags, currentCard!!, side.toSoundSide())
+        tts.readCardText(getColUnsafe, tags, currentCard!!, side.toCardSide())
     }
 
     /**
@@ -1509,7 +1506,7 @@ abstract class AbstractFlashcardViewer :
                 getColUnsafe,
                 this,
                 currentCard!!,
-                if (displayAnswer) SoundSide.ANSWER else SoundSide.QUESTION
+                if (displayAnswer) CardSide.ANSWER else CardSide.QUESTION
             )
         }
     }
@@ -1892,7 +1889,7 @@ abstract class AbstractFlashcardViewer :
             } else {
                 answerField?.visibility = View.GONE
             }
-            val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, Side.FRONT)
+            val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
             automaticAnswer.onDisplayQuestion()
             updateCard(content)
             hideEaseButtons()
@@ -2197,7 +2194,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun shouldDisplayMark(): Boolean {
-        return isMarked(currentCard!!.note(getColUnsafe))
+        return isMarked(getColUnsafe, currentCard!!.note(getColUnsafe))
     }
 
     val writeLock: Lock
@@ -2481,7 +2478,7 @@ abstract class AbstractFlashcardViewer :
         @NeedsTest("14221: 'playsound' should play the sound from the start")
         @BlocksSchemaUpgrade("handle TTS tags")
         private suspend fun controlSound(url: String) {
-            val avTag = when (val tag = currentCard?.let { getAvTag(getColUnsafe, it, url) }) {
+            val avTag = when (val tag = currentCard?.let { getAvTag(it, url) }) {
                 is SoundOrVideoTag -> tag
                 is TTSTag -> tag
                 // not currently supported
@@ -2568,8 +2565,8 @@ abstract class AbstractFlashcardViewer :
         if (currentCard!!.note(getColUnsafe).tags != selectedTags) {
             val tagString = selectedTags.joinToString(" ")
             val note = currentCard!!.note(getColUnsafe)
-            note.setTagsFromStr(tagString)
-            note.flush()
+            note.setTagsFromStr(getColUnsafe, tagString)
+            note.flush(getColUnsafe)
             // Reload current card to reflect tag changes
             reloadWebViewContent()
         }
@@ -2639,6 +2636,21 @@ abstract class AbstractFlashcardViewer :
                 Gesture.SWIPE_LEFT -> ActivityTransitionAnimation.Direction.LEFT
                 else -> ActivityTransitionAnimation.Direction.FADE
             }
+        }
+
+        /**
+         * @param mediaDir media directory path on SD card
+         * @return path converted to file URL, properly UTF-8 URL encoded
+         */
+        fun getMediaBaseUrl(mediaDir: String): String {
+            // Use android.net.Uri class to ensure whole path is properly encoded
+            // File.toURL() does not work here, and URLEncoder class is not directly usable
+            // with existing slashes
+            if (mediaDir.isNotEmpty()) {
+                val mediaDirUri = Uri.fromFile(File(mediaDir))
+                return "$mediaDirUri/"
+            }
+            return ""
         }
     }
 }

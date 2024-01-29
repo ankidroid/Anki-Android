@@ -16,9 +16,11 @@
 package com.ichi2.audio
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
 import android.media.MediaPlayer
+import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.OrientationEventListener
@@ -72,8 +74,8 @@ class AudioRecordingController :
     private lateinit var audioWaveform: AudioWaveform
     private lateinit var audioProgressBar: LinearProgressIndicator
     lateinit var context: Context
-    private var isPaused = false
     private var isCleared = false
+    private var isPaused = false
     private var isPlaying = false
     private lateinit var cancelAudioRecordingButton: MaterialButton
     private lateinit var playAudioButtonLayout: LinearLayout
@@ -150,13 +152,9 @@ class AudioRecordingController :
         cancelAudioRecordingButton.isEnabled = false
         saveButton.isEnabled = false
 
-        if (audioPlayer == null) {
-            Timber.d("Creating media player for playback")
-            audioPlayer = MediaPlayer()
-        } else {
-            Timber.d("Resetting media for playback")
-            audioPlayer!!.reset()
-        }
+        saveButton.setIconResource(if (!inEditField) R.drawable.ic_done_white else R.drawable.ic_save_white)
+
+        setUpMediaPlayer()
 
         audioTimer = AudioTimer(this, this)
         recordButton.setOnClickListener {
@@ -164,7 +162,7 @@ class AudioRecordingController :
         }
 
         saveButton.setOnClickListener {
-            isSaved = false
+            isAudioRecordingSaved = false
             toggleSave()
         }
 
@@ -173,37 +171,11 @@ class AudioRecordingController :
         }
 
         cancelAudioRecordingButton.setOnClickListener {
-            CompatHelper.compat.vibrate(context, 20)
-            isCleared = true
             clearRecording()
         }
 
         discardRecordingButton.setOnClickListener {
-            CompatHelper.compat.vibrate(context, 20)
-            recordButton.apply {
-                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                setIconResource(R.drawable.ic_record)
-            }
-            playAudioButton.apply {
-                setIconResource(R.drawable.round_play_arrow_24)
-                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-            }
-            cancelAudioRecordingButton.isEnabled = false
-            tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
-            audioTimeView.text = DEFAULT_TIME
-            audioWaveform.clear()
-            isPaused = false
-            isCleared = true
-            isRecording = false
-            audioTimer.stop()
-            audioPlayer?.stop()
-            audioPlayer?.release()
-            audioTimer = AudioTimer(this, this)
-            saveButton.isEnabled = false
-            playAudioButtonLayout.visibility = View.GONE
-            recordAudioButtonLayout.visibility = View.VISIBLE
+            discardAudio()
         }
         orientationEventListener = object : OrientationEventListener(context) {
             override fun onOrientationChanged(orientation: Int) {
@@ -220,6 +192,99 @@ class AudioRecordingController :
             }
         }
         orientationEventListener?.enable()
+
+        (context as? Activity)?.let { activity ->
+            activity.application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
+                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                    // Not needed
+                }
+
+                override fun onActivityStarted(activity: Activity) {
+                    // Not needed
+                }
+
+                override fun onActivityResumed(activity: Activity) {
+                    // not needed
+                }
+
+                override fun onActivityPaused(activity: Activity) {
+                    if (activity == context) {
+                        onViewFocusChanged()
+                    }
+                }
+
+                override fun onActivityStopped(activity: Activity) {
+                    // Not needed
+                }
+
+                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+                    // Not needed
+                }
+
+                override fun onActivityDestroyed(activity: Activity) {
+                    // not needed
+                }
+            })
+        }
+    }
+
+    private fun setUpMediaPlayer() {
+        try {
+            if (audioPlayer == null) {
+                Timber.d("Creating media player for playback")
+                audioPlayer = MediaPlayer()
+            } else {
+                Timber.d("Resetting media for playback")
+                audioPlayer!!.reset()
+            }
+        } catch (e: IllegalStateException) {
+            Timber.w("Media Player couldn't be reset or already reset", e)
+        }
+    }
+
+    fun onViewFocusChanged() {
+        if (isRecording || isPaused) {
+            clearRecording()
+        }
+        if (isPlaying) {
+            stopAudioPlayer()
+        }
+    }
+
+    private fun discardAudio() {
+        CompatHelper.compat.vibrate(context, 20)
+        recordButton.apply {
+            iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+            strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+            setIconResource(R.drawable.ic_record)
+        }
+        playAudioButton.apply {
+            setIconResource(R.drawable.round_play_arrow_24)
+            iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+            strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+        }
+        cancelAudioRecordingButton.isEnabled = false
+        tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
+        audioTimeView.text = DEFAULT_TIME
+        stopAudioPlayer()
+    }
+
+    private fun stopAudioPlayer() {
+        audioWaveform.clear()
+        isPaused = false
+        isCleared = true
+        isRecording = false
+        try {
+            audioTimer.stop()
+            audioPlayer?.stop()
+            audioPlayer?.release()
+        } catch (e: Exception) {
+            Timber.w(e)
+        }
+        audioTimer = AudioTimer(this, this)
+        saveButton.isEnabled = false
+        playAudioButtonLayout.visibility = View.GONE
+        recordAudioButtonLayout.visibility = View.VISIBLE
     }
 
     private fun prepareAudioPlayer() {
@@ -373,7 +438,7 @@ class AudioRecordingController :
         cancelAudioRecordingButton.isEnabled = false
         audioTimeView.text = DEFAULT_TIME
         audioWaveform.clear()
-        isSaved = true
+        isAudioRecordingSaved = true
         // save recording only in the edit field not in the reviewer but save it temporarily
         if (inEditField) saveRecording()
     }
@@ -393,6 +458,8 @@ class AudioRecordingController :
     }
 
     private fun clearRecording() {
+        CompatHelper.compat.vibrate(context, 20)
+        isCleared = true
         audioTimer.stop()
         recordButton.setIconResource(R.drawable.ic_record)
         cancelAudioRecordingButton.isEnabled = false
@@ -416,6 +483,20 @@ class AudioRecordingController :
 
     override fun onDestroy() {
         audioRecorder.release()
+    }
+
+    // when answer button is clicked in reviewer
+    fun updateUIForNewCard() {
+        try {
+            if (isPlaying) {
+                discardAudio()
+            }
+            if (isRecording || isPaused) {
+                clearRecording()
+            }
+        } catch (e: Exception) {
+            Timber.d("Unable to reset the audio recorder", e)
+        }
     }
 
     override fun onTimerTick(duration: Duration) {
@@ -443,7 +524,7 @@ class AudioRecordingController :
 
     companion object {
         var isRecording = false
-        var isSaved = false
+        var isAudioRecordingSaved = false
         private var inEditField: Boolean = true
         const val DEFAULT_TIME = "00:00.00"
         const val JUMP_VALUE = 500

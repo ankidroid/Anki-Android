@@ -41,14 +41,14 @@ class HtmlGenerator(
 ) {
 
     @CheckResult
-    fun generateHtml(col: Collection, card: Card, side: Side): CardHtml {
+    fun generateHtml(col: Collection, card: Card, side: SingleCardSide): CardHtml {
         return CardHtml.createInstance(col, card, side, this)
     }
 
-    fun filterTypeAnswer(content: String, side: Side): String {
+    fun filterTypeAnswer(content: String, side: SingleCardSide): String {
         return when (side) {
-            Side.FRONT -> typeAnswer.filterQuestion(content)
-            Side.BACK -> typeAnswer.filterAnswer(content)
+            SingleCardSide.FRONT -> typeAnswer.filterQuestion(content)
+            SingleCardSide.BACK -> typeAnswer.filterAnswer(content)
         }
     }
 

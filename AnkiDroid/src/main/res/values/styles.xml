@@ -192,6 +192,11 @@
         <item name="android:buttonBarButtonStyle">@style/CustomButtonBarButtonStyle</item>
     </style>
 
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:textColorAlertDialogListItem">?android:attr/textColor</item>
+        <item name="android:background">?attr/md_background_color</item>
+    </style>
+
     <style name="CustomButtonBarButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>

@@ -21,7 +21,7 @@ import com.ichi2.anki.ReadText.closeForTests
 import com.ichi2.anki.ReadText.initializeTts
 import com.ichi2.anki.ReadText.releaseTts
 import com.ichi2.anki.ReadText.textToSpeech
-import com.ichi2.anki.cardviewer.SoundSide.*
+import com.ichi2.anki.reviewer.CardSide
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.junit.Before
@@ -64,13 +64,13 @@ class ReadTextTest : RobolectricTest() {
 
     @Test
     fun saveValue() {
-        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), equalTo(""))
+        assertThat(MetaDB.getLanguage(targetContext, 1, 1, CardSide.QUESTION), equalTo(""))
         storeLanguage(1, "French")
-        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), equalTo("French"))
+        assertThat(MetaDB.getLanguage(targetContext, 1, 1, CardSide.QUESTION), equalTo("French"))
         storeLanguage(1, "German")
-        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), equalTo("German"))
+        assertThat(MetaDB.getLanguage(targetContext, 1, 1, CardSide.QUESTION), equalTo("German"))
         storeLanguage(2, "English")
-        assertThat(MetaDB.getLanguage(targetContext, 2, 1, QUESTION), equalTo("English"))
+        assertThat(MetaDB.getLanguage(targetContext, 2, 1, CardSide.QUESTION), equalTo("English"))
     }
 
     @Test
@@ -96,7 +96,7 @@ class ReadTextTest : RobolectricTest() {
     }
 
     private fun storeLanguage(i: Int, french: String) {
-        MetaDB.storeLanguage(targetContext, i.toLong(), 1, QUESTION, french)
+        MetaDB.storeLanguage(targetContext, i.toLong(), 1, CardSide.QUESTION, french)
         advanceRobolectricLooperWithSleep()
         advanceRobolectricLooperWithSleep()
     }

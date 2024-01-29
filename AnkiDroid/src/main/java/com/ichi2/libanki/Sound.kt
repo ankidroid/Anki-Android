@@ -145,16 +145,16 @@ object Sound {
     }
 
     /** Extract av tag from playsound:q:x link */
-    suspend fun getAvTag(col: Collection, card: Card, url: String): AvTag? {
+    suspend fun getAvTag(card: Card, url: String): AvTag? {
         return AV_PLAYLINK_RE.matchEntire(url)?.let {
             val values = it.groupValues
             val questionSide = values[1] == "q"
             val index = values[2].toInt()
             val tags = CollectionManager.withCol {
                 if (questionSide) {
-                    card.questionAvTags(col)
+                    card.questionAvTags(this)
                 } else {
-                    card.answerAvTags(col)
+                    card.answerAvTags(this)
                 }
             }
             if (index < tags.size) {

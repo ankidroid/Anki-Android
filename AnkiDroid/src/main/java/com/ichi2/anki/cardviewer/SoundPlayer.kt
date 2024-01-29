@@ -19,12 +19,7 @@ package com.ichi2.anki.cardviewer
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.annotation.CheckResult
-import androidx.annotation.VisibleForTesting
 import androidx.core.net.toFile
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AndroidTtsError
@@ -34,13 +29,10 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
-import com.ichi2.anki.cardviewer.SoundSide.ANSWER
-import com.ichi2.anki.cardviewer.SoundSide.QUESTION
-import com.ichi2.anki.cardviewer.SoundSide.QUESTION_AND_ANSWER
+import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.TtsPlayer
@@ -49,7 +41,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
@@ -80,7 +74,8 @@ import java.io.File
  *
  * @see AvTag
  *
- * @param onSoundGroupCompleted Function to be called when [playAllSounds] or [replayAllSounds] completes
+ * [setOnSoundGroupCompletedListener] can be used to call
+ * something when [playAllSounds] or [replayAllSounds] completes
  *
  * **Out of scope**
  * [com.ichi2.anki.ReadText]: AnkiDroid has a legacy "tts" setting, before Anki Desktop TTS.
@@ -90,58 +85,53 @@ import java.io.File
 class SoundPlayer(
     private val soundTagPlayer: SoundTagPlayer,
     private val ttsPlayer: Deferred<TtsPlayer>,
-    private val lifecycle: Lifecycle,
-    private val onSoundGroupCompleted: () -> Unit,
     private val soundErrorListener: SoundErrorListener
-) : DefaultLifecycleObserver, Closeable {
+) : Closeable {
+
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     private lateinit var questions: List<AvTag>
     private lateinit var answers: List<AvTag>
-    private lateinit var side: Side
 
     lateinit var config: CardSoundConfig
+    var isEnabled = true
+        set(value) {
+            if (!value) {
+                scope.launch { stopSounds() }
+            }
+            field = value
+        }
 
     private var playSoundsJob: Job? = null
 
-    val scope get() = lifecycle.coroutineScope
+    private var onSoundGroupCompleted: (() -> Unit)? = null
 
-    override fun onPause(owner: LifecycleOwner) {
-        super.onPause(owner)
-        scope.launch { stopSounds() }
+    fun setOnSoundGroupCompletedListener(listener: (() -> Unit)?) {
+        onSoundGroupCompleted = listener
     }
 
-    override fun onDestroy(owner: LifecycleOwner) {
-        super.onDestroy(owner)
-        close()
-    }
-
-    suspend fun loadCardSounds(col: Collection, card: Card, side: Side) {
-        Timber.i("loading sounds for card %s (%s)", card.id, side)
+    suspend fun loadCardSounds(card: Card) {
+        Timber.i("loading sounds for card %d", card.id)
         stopSounds()
-        this.questions = card.renderOutput(col).questionAvTags
-        this.answers = card.renderOutput(col).answerAvTags
-        this.side = side
+        this.questions = withCol { card.renderOutput(this).questionAvTags }
+        this.answers = withCol { card.renderOutput(this).answerAvTags }
 
         if (!this::config.isInitialized || !config.appliesTo(card)) {
             config = withCol { CardSoundConfig.create(card) }
         }
     }
 
-    private suspend fun playAllSoundsForSide(soundSide: SoundSide): Job? {
-        if (!canPlaySounds()) {
-            return null
-        }
+    private suspend fun playAllSoundsForSide(cardSide: CardSide): Job? {
+        if (!isEnabled) return null
         playSoundsJob {
-            Timber.i("playing sounds for %s", soundSide)
-            playAllSoundsInternal(soundSide, isAutomaticPlayback = true)
+            Timber.i("playing sounds for %s", cardSide)
+            playAllSoundsInternal(cardSide, isAutomaticPlayback = true)
         }
         return this.playSoundsJob
     }
 
     suspend fun playOneSound(tag: AvTag): Job? {
-        if (!canPlaySounds()) {
-            return null
-        }
+        if (!isEnabled) return null
         cancelPlaySoundsJob()
         Timber.i("playing one sound")
 
@@ -157,7 +147,7 @@ class SoundPlayer(
             }
         }
 
-        playSoundsJob = scope.launch(Dispatchers.IO) {
+        playSoundsJob = scope.launch {
             try {
                 play(tag)
             } catch (e: SoundException) {
@@ -188,6 +178,7 @@ class SoundPlayer(
         } catch (e: Exception) {
             Timber.i(e, "ttsPlayer close()")
         }
+        scope.cancel()
     }
 
     private suspend fun cancelPlaySoundsJob(job: Job? = playSoundsJob) {
@@ -203,16 +194,14 @@ class SoundPlayer(
     }
 
     /**
-     * Obtains all the sounds for the [soundSide] and plays them sequentially
+     * Obtains all the sounds for the [cardSide] and plays them sequentially
      */
-    private suspend fun playAllSoundsInternal(soundSide: SoundSide, isAutomaticPlayback: Boolean) {
-        if (!canPlaySounds()) {
-            return
-        }
-        val soundList = when (soundSide) {
-            QUESTION -> questions
-            ANSWER -> answers
-            QUESTION_AND_ANSWER -> questions + answers
+    private suspend fun playAllSoundsInternal(cardSide: CardSide, isAutomaticPlayback: Boolean) {
+        if (!isEnabled) return
+        val soundList = when (cardSide) {
+            CardSide.QUESTION -> questions
+            CardSide.ANSWER -> answers
+            CardSide.BOTH -> questions + answers
         }
 
         try {
@@ -225,7 +214,7 @@ class SoundPlayer(
             }
         } finally {
             // call the completion listener, even if a CancellationException was thrown
-            onSoundGroupCompleted()
+            onSoundGroupCompleted?.invoke()
         }
     }
 
@@ -280,17 +269,17 @@ class SoundPlayer(
     /**
      * Plays all sounds for the current side, calling [onSoundGroupCompleted] when completed
      */
-    suspend fun playAllSounds() = when (side) {
-        Side.FRONT -> playAllSoundsForSide(QUESTION)
-        Side.BACK -> playAllSoundsForSide(ANSWER)
+    suspend fun playAllSounds(side: SingleCardSide) = when (side) {
+        SingleCardSide.FRONT -> playAllSoundsForSide(CardSide.QUESTION)
+        SingleCardSide.BACK -> playAllSoundsForSide(CardSide.ANSWER)
     }
 
     /**
      * Replays all sounds for the current side, calling [onSoundGroupCompleted] when completed
      */
-    suspend fun replayAllSounds() = when (side) {
-        Side.BACK -> if (config.replayQuestion) playAllSoundsForSide(QUESTION_AND_ANSWER) else playAllSoundsForSide(ANSWER)
-        Side.FRONT -> playAllSoundsForSide(QUESTION)
+    suspend fun replayAllSounds(side: SingleCardSide) = when (side) {
+        SingleCardSide.BACK -> if (config.replayQuestion) playAllSoundsForSide(CardSide.BOTH) else playAllSoundsForSide(CardSide.ANSWER)
+        SingleCardSide.FRONT -> playAllSoundsForSide(CardSide.QUESTION)
     }
 
     private suspend fun awaitTtsPlayer(isAutomaticPlayback: Boolean): TtsPlayer? {
@@ -308,21 +297,13 @@ class SoundPlayer(
     /** Ensures that only one [playSoundsJob] is running at once */
     private suspend fun playSoundsJob(block: suspend CoroutineScope.() -> Unit) {
         val oldJob = playSoundsJob
-        this.playSoundsJob = scope.launch(Dispatchers.IO) {
+        this.playSoundsJob = scope.launch {
             cancelPlaySoundsJob(oldJob)
             block()
             playSoundsJob = null
         }
     }
 
-    @VisibleForTesting
-    internal fun canPlaySounds(): Boolean {
-        if (!lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            Timber.w("sounds are not played as the activity is inactive")
-            return false
-        }
-        return true
-    }
     companion object {
         const val TTS_PLAYER_TIMEOUT_MS = 2_500L
 
@@ -341,11 +322,9 @@ class SoundPlayer(
             return SoundPlayer(
                 soundTagPlayer = soundPlayer,
                 ttsPlayer = tts,
-                lifecycle = viewer.lifecycle,
-                onSoundGroupCompleted = viewer::onSoundGroupCompleted,
                 soundErrorListener = soundErrorListener
             ).apply {
-                viewer.lifecycle.addObserver(this)
+                setOnSoundGroupCompletedListener(viewer::onSoundGroupCompleted)
             }
         }
     }
