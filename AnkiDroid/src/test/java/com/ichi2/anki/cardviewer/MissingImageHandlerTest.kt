@@ -47,7 +47,7 @@ class MissingImageHandlerTest {
         sut = MissingImageHandler()
     }
 
-    private fun defaultHandler(): Consumer<String?> {
+    private fun defaultHandler(): Consumer<String> {
         return Consumer { f: String? ->
             timesCalled++
             fileNames.add(f)
@@ -96,11 +96,11 @@ class MissingImageHandlerTest {
         assertThat(timesCalled, equalTo(0))
     }
 
-    private fun processFailure(invalidRequest: WebResourceRequest, consumer: Consumer<String?> = defaultHandler()) {
+    private fun processFailure(invalidRequest: WebResourceRequest, consumer: Consumer<String> = defaultHandler()) {
         sut.processFailure(invalidRequest, consumer)
     }
 
-    private fun processMissingSound(file: File?, onFailure: Consumer<String?>) {
+    private fun processMissingSound(file: File, onFailure: Consumer<String>) {
         sut.processMissingSound(file, onFailure)
     }
 
@@ -108,12 +108,6 @@ class MissingImageHandlerTest {
     fun uiFailureDoesNotCrash() {
         processFailure(getValidRequest("example.jpg")) { throw RuntimeException("expected") }
         assertThat("Irrelevant assert to stop lint warnings", timesCalled, equalTo(0))
-    }
-
-    @Test
-    fun testMissingSound_NullFile() {
-        processMissingSound(null, defaultHandler())
-        assertThat(timesCalled, equalTo(0))
     }
 
     @Test

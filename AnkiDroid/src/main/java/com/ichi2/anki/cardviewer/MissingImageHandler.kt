@@ -34,9 +34,9 @@ class MissingImageHandler {
     private var hasExecuted = false
 
     private var automaticTtsFailureCount = 0
-    fun processFailure(request: WebResourceRequest?, onFailure: Consumer<String?>) {
+    fun processFailure(request: WebResourceRequest, onFailure: Consumer<String>) {
         // We do not want this to trigger more than once on the same side of the card as the UI will flicker.
-        if (request == null || hasExecuted) return
+        if (hasExecuted) return
 
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
         if (missingMediaCount >= MAX_DISPLAY_TIMES) return
@@ -58,11 +58,9 @@ class MissingImageHandler {
         }
     }
 
-    fun processMissingSound(file: File?, onFailure: Consumer<String?>) {
+    fun processMissingSound(file: File, onFailure: Consumer<String>) {
         // We want this to trigger more than once on the same side - as the user is in control of pressing "play"
         // and we want to provide feedback
-        if (file == null) return
-
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
         if (missingMediaCount >= MAX_DISPLAY_TIMES) return
 

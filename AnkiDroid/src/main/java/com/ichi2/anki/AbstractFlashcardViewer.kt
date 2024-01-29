@@ -2299,7 +2299,7 @@ abstract class AbstractFlashcardViewer :
             error: WebResourceError
         ) {
             super.onReceivedError(view, request, error)
-            mMissingImageHandler.processFailure(request) { filename: String? ->
+            mMissingImageHandler.processFailure(request) { filename: String ->
                 displayCouldNotFindMediaSnackbar(
                     filename
                 )
@@ -2312,7 +2312,7 @@ abstract class AbstractFlashcardViewer :
             errorResponse: WebResourceResponse
         ) {
             super.onReceivedHttpError(view, request, errorResponse)
-            mMissingImageHandler.processFailure(request) { filename: String? ->
+            mMissingImageHandler.processFailure(request) { filename: String ->
                 displayCouldNotFindMediaSnackbar(
                     filename
                 )
