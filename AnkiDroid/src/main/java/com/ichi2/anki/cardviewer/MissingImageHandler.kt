@@ -17,6 +17,7 @@ package com.ichi2.anki.cardviewer
 
 import android.webkit.URLUtil
 import android.webkit.WebResourceRequest
+import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.libanki.TtsPlayer
 import timber.log.Timber
 import java.io.File
@@ -41,14 +42,14 @@ class MissingImageHandler {
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
         if (missingMediaCount >= MAX_DISPLAY_TIMES) return
 
-        val url = request.url.toString()
+        val url = request.url
         // We could do better here (external images failing due to no HTTPS), but failures can occur due to no network.
         // As we don't yet check the error data, we don't know.
         // Therefore limit this feature to the common case of local files, which should always work.
-        if (!url.contains("collection.media")) return
+        if (url.host != LOCALHOST) return
 
         try {
-            val filename = URLUtil.guessFileName(url, null, null)
+            val filename = URLUtil.guessFileName(url.toString(), null, null)
             onFailure.accept(filename)
             missingMediaCount++
         } catch (e: Exception) {

@@ -130,7 +130,7 @@ class MissingImageHandlerTest {
 
     private fun getValidRequest(fileName: String): WebResourceRequest {
         // actual URL on Android 9
-        val url = "file:///storage/emulated/0/AnkiDroid/collection.media/$fileName"
+        val url = "http://127.0.0.1:40001/$fileName"
         return getWebResourceRequest(url)
     }
 
