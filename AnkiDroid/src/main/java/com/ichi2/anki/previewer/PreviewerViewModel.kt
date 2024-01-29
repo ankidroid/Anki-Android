@@ -15,9 +15,13 @@
  */
 package com.ichi2.anki.previewer
 
+import android.media.MediaPlayer
+import android.net.Uri
 import androidx.activity.result.ActivityResult
+import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ichi2.anki.CollectionManager.withCol
@@ -25,11 +29,17 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.cardviewer.MediaErrorHandler
+import com.ichi2.anki.cardviewer.SoundErrorBehavior
+import com.ichi2.anki.cardviewer.SoundErrorListener
+import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Sound
 import com.ichi2.libanki.Sound.addPlayButtons
+import com.ichi2.libanki.TtsPlayer
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.note
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -37,6 +47,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.intellij.lang.annotations.Language
@@ -49,6 +60,10 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
     OnErrorListener {
 
     override val onError = MutableSharedFlow<String>()
+    val onMediaError = MutableSharedFlow<String>()
+    val onTtsError = MutableSharedFlow<TtsPlayer.TtsError>()
+    val mediaErrorHandler = MediaErrorHandler()
+
     val eval = MutableSharedFlow<String>()
     val currentIndex = MutableStateFlow(firstIndex)
     val backSideOnly = MutableStateFlow(false)
@@ -67,6 +82,13 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
     private lateinit var currentCard: Card
 
     private val showAnswerOnReload get() = showingAnswer.value || backSideOnly.value
+
+    private val soundPlayer = SoundPlayer(createSoundErrorListener())
+
+    override fun onCleared() {
+        super.onCleared()
+        soundPlayer.close()
+    }
 
     /* *********************************************************************************************
     ************************ Public methods: meant to be used by the View **************************
@@ -159,6 +181,18 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
 
     fun cardsCount() = selectedCardIds.count()
 
+    fun playSoundFromUrl(url: String) {
+        launchCatchingIO {
+            Sound.getAvTag(currentCard, url)?.let {
+                soundPlayer.playOneSound(it)
+            }
+        }
+    }
+
+    fun setSoundPlayerEnabled(isEnabled: Boolean) {
+        soundPlayer.isEnabled = isEnabled
+    }
+
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
     ********************************************************************************************* */
@@ -215,6 +249,37 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
             typeAnsAnswerFilter(currentCard, text)
         } else {
             typeAnsQuestionFilter(text)
+        }
+    }
+
+    private fun createSoundErrorListener(): SoundErrorListener {
+        return object : SoundErrorListener {
+            override fun onError(uri: Uri): SoundErrorBehavior {
+                val file = uri.toFile()
+                // There is a multitude of transient issues with the MediaPlayer.
+                // Retrying fixes most of these
+                if (file.exists()) return SoundErrorBehavior.RETRY_AUDIO
+                mediaErrorHandler.processMissingSound(file) { fileName ->
+                    viewModelScope.launch { onMediaError.emit(fileName) }
+                }
+                return SoundErrorBehavior.CONTINUE_AUDIO
+            }
+
+            override fun onMediaPlayerError(
+                mp: MediaPlayer?,
+                which: Int,
+                extra: Int,
+                uri: Uri
+            ): SoundErrorBehavior {
+                Timber.w("Media Error: (%d, %d)", which, extra)
+                return onError(uri)
+            }
+
+            override fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean) {
+                mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
+                    viewModelScope.launch { onTtsError.emit(error) }
+                }
+            }
         }
     }
 
