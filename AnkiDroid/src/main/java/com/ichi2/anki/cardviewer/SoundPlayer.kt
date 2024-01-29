@@ -29,7 +29,9 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
+import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.Card
@@ -381,7 +383,9 @@ fun AbstractFlashcardViewer.createSoundErrorListener(baseUri: String): SoundErro
         }
 
         override fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean) {
-            AbstractFlashcardViewer.mMissingImageHandler.processTtsFailure(activity, error, isAutomaticPlayback)
+            AbstractFlashcardViewer.mMissingImageHandler.processTtsFailure(error, isAutomaticPlayback) {
+                activity.showSnackbar(error.localizedErrorMessage(activity))
+            }
         }
 
         override fun onError(uri: Uri): SoundErrorBehavior {

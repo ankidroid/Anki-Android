@@ -17,9 +17,6 @@ package com.ichi2.anki.cardviewer
 
 import android.webkit.URLUtil
 import android.webkit.WebResourceRequest
-import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.localizedErrorMessage
-import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.TtsPlayer
 import timber.log.Timber
 import java.io.File
@@ -86,7 +83,7 @@ class MissingImageHandler {
         hasExecuted = false
     }
 
-    fun processTtsFailure(activity: AnkiActivity, error: TtsPlayer.TtsError, playingAutomatically: Boolean) {
+    fun processTtsFailure(error: TtsPlayer.TtsError, playingAutomatically: Boolean, errorHandler: (TtsPlayer.TtsError) -> Unit) {
         // if the user is playing a single sound explicitly, we want to provide feedback
         if (playingAutomatically && automaticTtsFailureCount++ >= 3) {
             Timber.v("Ignoring TTS Error: %s. failure limit exceeded", error)
@@ -96,6 +93,6 @@ class MissingImageHandler {
         Timber.w("displaying error for %s", error)
         // Maybe specifically check for APP_TTS_INIT_TIMEOUT
 
-        activity.showSnackbar(error.localizedErrorMessage(activity))
+        errorHandler.invoke(error)
     }
 }
