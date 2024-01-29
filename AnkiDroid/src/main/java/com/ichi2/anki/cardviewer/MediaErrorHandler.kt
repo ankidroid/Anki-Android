@@ -24,7 +24,7 @@ import java.io.File
 import java.util.function.Consumer
 
 /** Handles logic for displaying help for missing media files  */
-class MissingImageHandler {
+class MediaErrorHandler {
 
     companion object {
         /** Specify a maximum number of times to display, as it's somewhat annoying  */

@@ -36,15 +36,15 @@ import java.util.function.Consumer
 // and URLUtil.guessFileName (static - likely harder)
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-class MissingImageHandlerTest {
-    private lateinit var sut: MissingImageHandler
+class MediaErrorHandlerTest {
+    private lateinit var sut: MediaErrorHandler
     private var timesCalled = 0
     private lateinit var fileNames: MutableList<String?>
 
     @Before
     fun before() {
         fileNames = ArrayList()
-        sut = MissingImageHandler()
+        sut = MediaErrorHandler()
     }
 
     private fun defaultHandler(): Consumer<String> {

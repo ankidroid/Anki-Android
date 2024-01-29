@@ -383,7 +383,7 @@ fun AbstractFlashcardViewer.createSoundErrorListener(baseUri: String): SoundErro
         }
 
         override fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean) {
-            AbstractFlashcardViewer.mMissingImageHandler.processTtsFailure(error, isAutomaticPlayback) {
+            AbstractFlashcardViewer.mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
                 activity.showSnackbar(error.localizedErrorMessage(activity))
             }
         }
@@ -399,7 +399,7 @@ fun AbstractFlashcardViewer.createSoundErrorListener(baseUri: String): SoundErro
                     return RETRY_AUDIO
                 }
                 // just doesn't exist - process the error
-                AbstractFlashcardViewer.mMissingImageHandler.processMissingSound(file) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
+                AbstractFlashcardViewer.mediaErrorHandler.processMissingSound(file) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
                 return CONTINUE_AUDIO
             } catch (e: Exception) {
                 Timber.w(e)
