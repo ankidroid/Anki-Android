@@ -34,6 +34,7 @@ import com.ichi2.anki.cardviewer.SoundErrorBehavior
 import com.ichi2.anki.cardviewer.SoundErrorListener
 import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Card
@@ -105,6 +106,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         launchCatchingIO {
             currentIndex.collectLatest {
                 showCard(showAnswer = backSideOnly.value)
+                loadAndPlaySounds()
             }
         }
     }
@@ -113,10 +115,12 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         Timber.v("toggleBackSideOnly() %b", !backSideOnly.value)
         launchCatchingIO {
             backSideOnly.emit(!backSideOnly.value)
-            if (backSideOnly.value) {
-                showAnswer()
-            } else {
+            if (!backSideOnly.value && showingAnswer.value) {
                 showQuestion()
+                soundPlayer.playAllSoundsForSide(CardSide.QUESTION)
+            } else if (backSideOnly.value && !showingAnswer.value) {
+                showAnswer()
+                soundPlayer.playAllSoundsForSide(CardSide.ANSWER)
             }
         }
     }
@@ -146,6 +150,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         launchCatchingIO {
             if (!showingAnswer.value && !backSideOnly.value) {
                 showAnswer()
+                soundPlayer.playAllSoundsForSide(CardSide.ANSWER)
             } else {
                 currentIndex.update { it + 1 }
             }
@@ -175,6 +180,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
             Timber.v("handleEditCardResult()")
             launchCatchingIO {
                 showCard(showAnswerOnReload)
+                loadAndPlaySounds()
             }
         }
     }
@@ -233,6 +239,16 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         val answerData = withCol { currentCard.answer(this) }
         val answer = mungeQA(answerData)
         eval.emit("_showAnswer(${Json.encodeToString(answer)}, '${bodyClass()}');")
+    }
+
+    private suspend fun loadAndPlaySounds() {
+        val side: CardSide = when {
+            backSideOnly.value -> CardSide.BOTH
+            showingAnswer.value -> CardSide.ANSWER
+            else -> CardSide.QUESTION
+        }
+        soundPlayer.loadCardSounds(currentCard)
+        soundPlayer.playAllSoundsForSide(side)
     }
 
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L358) */
