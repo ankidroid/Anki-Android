@@ -29,7 +29,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
-import java.util.function.Consumer
 
 // PERF:
 // Theoretically should be able to get away with not using this, but it requires WebResourceRequest (easy to mock)
@@ -47,8 +46,8 @@ class MediaErrorHandlerTest {
         sut = MediaErrorHandler()
     }
 
-    private fun defaultHandler(): Consumer<String> {
-        return Consumer { f: String? ->
+    private fun defaultHandler(): (String) -> Unit {
+        return { f: String? ->
             timesCalled++
             fileNames.add(f)
         }
@@ -96,11 +95,11 @@ class MediaErrorHandlerTest {
         assertThat(timesCalled, equalTo(0))
     }
 
-    private fun processFailure(invalidRequest: WebResourceRequest, consumer: Consumer<String> = defaultHandler()) {
+    private fun processFailure(invalidRequest: WebResourceRequest, consumer: (String) -> Unit = defaultHandler()) {
         sut.processFailure(invalidRequest, consumer)
     }
 
-    private fun processMissingSound(file: File, onFailure: Consumer<String>) {
+    private fun processMissingSound(file: File, onFailure: (String) -> Unit) {
         sut.processMissingSound(file, onFailure)
     }
 
