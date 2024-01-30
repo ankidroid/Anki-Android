@@ -27,7 +27,6 @@ import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.DialogHandlerMessage
