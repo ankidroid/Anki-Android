@@ -149,6 +149,7 @@ object TtsVoices {
         val tts = createTts()
         if (tts == null) {
             Timber.e("Unable to build list of TTS Voices")
+            availableVoices = emptySet()
             availableLocaleData = emptyList()
             return
         }
@@ -162,6 +163,7 @@ object TtsVoices {
             availableVoices = tts.voices.map { it.toTtsVoice(ttsEngine) }.toSet()
             availableLocaleData = tts.availableLanguages.map { CompatHelper.compat.normalize(it) }
         } catch (e: Exception) {
+            availableVoices = emptySet()
             availableLocaleData = emptyList()
         } finally {
             tts.shutdown()
