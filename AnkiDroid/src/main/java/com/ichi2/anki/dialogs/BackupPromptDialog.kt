@@ -109,8 +109,8 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     }
 
     private fun build(isLoggedIn: Boolean, performBackup: () -> Unit) {
-        val builder = AlertDialog.Builder(windowContext).apply {
-            iconAttr(if (isLoggedIn) R.drawable.ic_baseline_backup_24 else R.drawable.ic_backup_restore)
+        this.alertDialog = AlertDialog.Builder(windowContext).apply {
+            setIcon(if (isLoggedIn) R.drawable.ic_baseline_backup_24 else R.drawable.ic_backup_restore)
             title(R.string.backup_your_collection)
             message(R.string.backup_collection_message)
             positiveButton(if (isLoggedIn) R.string.button_sync else R.string.button_backup) {
@@ -122,14 +122,12 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
                 checkBoxPrompt(R.string.button_do_not_show_again, isCheckedDefault = false) { checked ->
                     Timber.d("Don't show again checked: %b", checked)
                     userCheckedDoNotShowAgain = checked
-                    Timber.tag("Checking").d("Checkbox")
                     alertDialog.positiveButton.isEnabled = !checked
                 }
             }
             negativeButton(R.string.button_backup_later) { onDismiss() }
             cancelable(false)
-        }
-        alertDialog = builder.create()
+        }.create()
     }
 
     companion object {
