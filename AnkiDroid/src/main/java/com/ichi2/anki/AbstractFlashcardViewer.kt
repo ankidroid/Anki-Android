@@ -434,7 +434,7 @@ abstract class AbstractFlashcardViewer :
         val card = editorCard!!
         withProgress {
             undoableOp {
-                updateNote(card.note())
+                updateNote(card.note(this))
             }
         }
         onCardUpdated(card)
@@ -479,7 +479,7 @@ abstract class AbstractFlashcardViewer :
         // despite that making no sense outside of Reviewer.kt
         currentCard = withCol {
             sched.card?.apply {
-                renderOutput()
+                renderOutput
             }
         }
     }
