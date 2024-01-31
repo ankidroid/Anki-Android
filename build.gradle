@@ -140,13 +140,6 @@ ext {
         // Which is 1:1 https://docs.microsoft.com/en-gb/azure/virtual-machines/acu : DS1_v2 - DS15_v2 | 1:1
         gradleTestMaxParallelForks = 2
 
-        // separate gradle compile process is a major speed improvement, but consumes 2x RAM
-        // the CI machines don't have enough RAM to do that without going in to swap quite a bit
-        // so for CI machines only - to improve reliability despite compilation speed hit, compile kotlin in process
-        println "CI build detected: setting compiler execution strategy to IN_PROCESS"
-        tasks.withType(KotlinCompile).configureEach {
-            compilerExecutionStrategy.set(KotlinCompilerExecutionStrategy.IN_PROCESS)
-        }
     } else {
         // Use 50% of cores to account for SMT which doesn't help this workload
         gradleTestMaxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
