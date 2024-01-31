@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   unit:
-    name: JUnit Tests (${{ matrix.os}})
+    name: JUnit Tests (${{ matrix.name }})
     timeout-minutes: 40
     strategy:
       fail-fast: false
@@ -28,6 +28,14 @@ jobs:
         # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
         # macOS 14 is in beta and runs on Apple Silicon [M1]
         os: [ubuntu-latest, macos-14, windows-latest]
+        # define 'name' so we don't need to update branch protection rules if the os changes
+        include:
+          - os: ubuntu-latest
+            name: ubuntu
+          - os: macos-14
+            name: macos
+          - os: windows-latest
+            name: windows
     runs-on: ${{ matrix.os }}
     #env:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
