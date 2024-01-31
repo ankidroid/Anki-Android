@@ -118,6 +118,7 @@ class ReviewerTest : RobolectricTest() {
     @Test
     @Synchronized
     @Throws(ConfirmModSchemaException::class)
+    @Flaky(OS.ALL, "java.lang.AssertionError: Unexpected card ord Expected: <2> but: was <1>")
     fun testMultipleCards() = runTest {
         addNoteWithThreeCards()
         val nw = col.decks.confForDid(1).getJSONObject("new")
@@ -147,6 +148,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.ALL, "java.lang.AssertionError: Expected: \"2\" but: was \"1\"")
     fun testLrnQueueAfterUndo() = runTest {
         val nw = col.decks.confForDid(1).getJSONObject("new")
         val time = TimeManager.time as MockTime
