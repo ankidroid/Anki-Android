@@ -100,6 +100,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
@@ -425,7 +426,7 @@ open class CardBrowser :
 
         viewModel.cardsOrNotesFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { runOnUiThread { searchCards() } }
+            .onEach { searchCards() }
             .launchIn(lifecycleScope)
 
         viewModel.searchQueryExpandedFlow
@@ -433,9 +434,9 @@ open class CardBrowser :
             .onEach { searchQueryExpanded ->
                 Timber.d("query expansion changed: %b", searchQueryExpanded)
                 if (searchQueryExpanded) {
-                    runOnUiThread { mSearchItem?.expandActionView() }
+                    mSearchItem?.expandActionView()
                 } else {
-                    runOnUiThread { mSearchItem?.collapseActionView() }
+                    mSearchItem?.collapseActionView()
                     // invalidate options menu so that disappeared icons would appear again
                     invalidateOptionsMenu()
                 }
@@ -444,7 +445,7 @@ open class CardBrowser :
 
         viewModel.selectedRowsFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { runOnUiThread { onSelectionChanged() } }
+            .onEach { onSelectionChanged() }
             .launchIn(lifecycleScope)
 
         viewModel.column1IndexFlow
