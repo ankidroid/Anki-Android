@@ -21,6 +21,7 @@ concurrency:
 jobs:
   emulator_test:
     name: Android Emulator Test
+    # macos-14 is blocked on https://github.com/ReactiveCircus/android-emulator-runner/issues/350
     runs-on: macos-latest
     timeout-minutes: 75
     strategy:
