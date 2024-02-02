@@ -1891,7 +1891,7 @@ open class CardBrowser :
      */
     private fun createViewModel() = ViewModelProvider(
         viewModelStore,
-        CardBrowserViewModel.factory(SharedPreferencesLastDeckIdRepository()),
+        CardBrowserViewModel.factory(AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository),
         defaultViewModelCreationExtras
     )[CardBrowserViewModel::class.java]
 

@@ -567,6 +567,7 @@ open class DeckPicker :
             DeckPickerContextMenuOption.BROWSE_CARDS -> {
                 Timber.i("ContextMenu: Browse cards")
                 getColUnsafe.decks.select(deckId)
+                AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository.lastDeckId = deckId
                 val intent = Intent(this, CardBrowser::class.java)
                 startActivity(intent)
                 dismissAllDialogFragments()
