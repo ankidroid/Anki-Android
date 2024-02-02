@@ -125,10 +125,10 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         val menu = view.findViewById<Toolbar>(R.id.toolbar).menu
 
         lifecycleScope.launch {
-            viewModel.backsideOnly
+            viewModel.backSideOnly
                 .flowWithLifecycle(lifecycle)
-                .collectLatest { isBacksideOnly ->
-                    setBacksideOnlyButtonIcon(menu, isBacksideOnly)
+                .collectLatest { isBackSideOnly ->
+                    setBackSideOnlyButtonIcon(menu, isBackSideOnly)
                 }
         }
 
@@ -232,7 +232,7 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         when (item.itemId) {
             R.id.action_edit -> editCard()
             R.id.action_mark -> viewModel.toggleMark()
-            R.id.action_back_side_only -> viewModel.toggleBacksideOnly()
+            R.id.action_back_side_only -> viewModel.toggleBackSideOnly()
             R.id.action_flag_zero -> viewModel.setFlag(Flag.NONE)
             R.id.action_flag_one -> viewModel.setFlag(Flag.RED)
             R.id.action_flag_two -> viewModel.setFlag(Flag.ORANGE)
@@ -245,9 +245,9 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         return true
     }
 
-    private fun setBacksideOnlyButtonIcon(menu: Menu, isBacksideOnly: Boolean) {
+    private fun setBackSideOnlyButtonIcon(menu: Menu, isBackSideOnly: Boolean) {
         menu.findItem(R.id.action_back_side_only).apply {
-            if (isBacksideOnly) {
+            if (isBackSideOnly) {
                 setIcon(R.drawable.ic_card_answer)
                 setTitle(R.string.card_side_answer)
             } else {

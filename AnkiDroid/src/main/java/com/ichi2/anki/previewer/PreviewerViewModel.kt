@@ -51,13 +51,13 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
     override val onError = MutableSharedFlow<String>()
     val eval = MutableSharedFlow<String>()
     val currentIndex = MutableStateFlow(firstIndex)
-    val backsideOnly = MutableStateFlow(false)
+    val backSideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
     val flagCode: MutableStateFlow<Int> = MutableStateFlow(Flag.NONE.code)
     private val showingAnswer = MutableStateFlow(false)
     private val selectedCardIds: List<Long> = previewerIdsFile.getCardIds()
     val isBackButtonEnabled =
-        combine(currentIndex, showingAnswer, backsideOnly) { index, showingAnswer, isBackSideOnly ->
+        combine(currentIndex, showingAnswer, backSideOnly) { index, showingAnswer, isBackSideOnly ->
             index != 0 || (showingAnswer && !isBackSideOnly)
         }
     val isNextButtonEnabled = combine(currentIndex, showingAnswer) { index, showingAnswer ->
@@ -66,7 +66,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
 
     private lateinit var currentCard: Card
 
-    private val showAnswerOnReload get() = showingAnswer.value || backsideOnly.value
+    private val showAnswerOnReload get() = showingAnswer.value || backSideOnly.value
 
     /* *********************************************************************************************
     ************************ Public methods: meant to be used by the View **************************
@@ -82,16 +82,16 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         }
         launchCatchingIO {
             currentIndex.collectLatest {
-                showCard(showAnswer = backsideOnly.value)
+                showCard(showAnswer = backSideOnly.value)
             }
         }
     }
 
-    fun toggleBacksideOnly() {
-        Timber.v("toggleBacksideOnly() %b", !backsideOnly.value)
+    fun toggleBackSideOnly() {
+        Timber.v("toggleBackSideOnly() %b", !backSideOnly.value)
         launchCatchingIO {
-            backsideOnly.emit(!backsideOnly.value)
-            if (backsideOnly.value) {
+            backSideOnly.emit(!backSideOnly.value)
+            if (backSideOnly.value) {
                 showAnswer()
             } else {
                 showQuestion()
@@ -122,7 +122,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
      */
     fun onNextButtonClick() {
         launchCatchingIO {
-            if (!showingAnswer.value && !backsideOnly.value) {
+            if (!showingAnswer.value && !backSideOnly.value) {
                 showAnswer()
             } else {
                 currentIndex.update { it + 1 }
@@ -138,7 +138,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         launchCatchingIO {
             if (currentIndex.value > 0) {
                 currentIndex.update { it - 1 }
-            } else if (showingAnswer.value && !backsideOnly.value) {
+            } else if (showingAnswer.value && !backSideOnly.value) {
                 showQuestion()
             }
         }
