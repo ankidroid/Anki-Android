@@ -36,6 +36,7 @@ import androidx.lifecycle.MutableLiveData
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
@@ -73,6 +74,7 @@ open class AnkiDroidApp : Application() {
     private val notifications = MutableLiveData<Void?>()
 
     lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
+    val sharedPrefsLastDeckIdRepository = SharedPreferencesLastDeckIdRepository()
 
     /** Used to avoid showing extra progress dialogs when one already shown. */
     var progressDialogShown = false
