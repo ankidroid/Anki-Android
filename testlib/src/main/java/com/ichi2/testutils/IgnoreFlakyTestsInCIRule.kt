@@ -30,6 +30,16 @@ import java.util.*
 
 /**
  * An annotation which marks a test as flaky so it will be skipped if run under CI
+ *
+ * The test class or a subclass must contain the code:
+ *
+ * ```kotlin
+ *     @get:Rule
+ *     val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
+ * ```
+ *
+ * @see IgnoreFlakyTestsInCIRule
+ *
  * @param os The OS The test fails under (required)
  * @param message The message to display when the test is skipped
  */
