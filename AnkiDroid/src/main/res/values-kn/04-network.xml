@@ -50,8 +50,8 @@
     <string name="vague_error" comment="Network error dialog title">ದೋಷ</string>
     <string name="retry">ಮರುಪ್ರಯತ್ನಿಸಿ</string>
     <string name="menu_get_shared_decks">Get shared decks</string>
-    <string name="connection_error_message">A network error has occurred</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
+    <string name="connection_error_message">ನೆಟ್‌ವರ್ಕ್ ದೋಷ ಸಂಭವಿಸಿದೆ</string>
+    <string name="not_logged_in_title">ಅಂಕಿವೆಬ್‌ಗೆ ಲಾಗ್ ಇನ್ ಮಾಡಿ</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.kt -->
     <string name="username">ಇಮೇಲ್ ವಿಳಾಸ</string>
@@ -64,7 +64,7 @@
     <string name="log_out">ಲಾಗ್ ಔಟ್</string>
     <string name="reset_password">ಪಾಸ್ವರ್ಡ್ ಮರುಹೊಂದಿಸಿ</string>
     <string name="lost_mail_instructions">ಇಮೇಲ್ ಮರೆತಿರುವಿರಾ?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">ಸೈನ್ ಇನ್ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Options for XXX</string>
     <string name="sync_title">Synchronization</string>
@@ -81,5 +81,5 @@
     <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_no_account">ಸಿಂಕ್ (ಲಾಗ್ ಇನ್)</string>
 </resources>

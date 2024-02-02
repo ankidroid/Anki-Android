@@ -347,7 +347,7 @@
     <string name="media_sync_unavailable_message">Synchronizace multimédií je zakázána v nastavení. Před pokračováním prosím synchronizujte a zazálohujte multimédia, která nebyla synchronizována</string>
     <string name="audio_saved">Nahrávka uložena</string>
     <string name="deleting_selected_notes">Mažou se vybrané poznámky</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Klepnutím na hlas poslechnout
     </string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Hlas by měl být před použitím nainstalován
     </string>

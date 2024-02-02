@@ -101,5 +101,5 @@
     <string name="gesture_show_all_hints">Показати всі підказки</string>
     <string name="record_voice">Записати голос</string>
     <string name="replay_voice">Відтворити запис голосу</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="save_voice">Зберегти запис</string>
 </resources>
