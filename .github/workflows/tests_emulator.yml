@@ -21,8 +21,7 @@ concurrency:
 jobs:
   emulator_test:
     name: Android Emulator Test
-    # macos-14 is blocked on https://github.com/ReactiveCircus/android-emulator-runner/issues/350
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 75
     strategy:
       fail-fast: false
@@ -40,6 +39,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 50
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
 
       - name: Configure JDK
         uses: actions/setup-java@v4
