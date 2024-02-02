@@ -16,6 +16,7 @@
 
 package com.ichi2.testutils
 
+import com.ichi2.anki.BuildConfig
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -52,7 +53,7 @@ class IgnoreFlakyTestsInCIRule : TestRule {
     }
 
     companion object {
-        val isRunningUnderCI = System.getenv("CI") == "true"
+        val isRunningUnderCI: Boolean = BuildConfig.CI
     }
 }
 
@@ -83,6 +84,6 @@ class IgnoreFlakyTestsTest {
     @Test
     @Flaky(os = OS.ALL)
     fun ensureFlakyTestsAreOnlyRunLocally() {
-        assertThat("Not running under CI", System.getenv("CI"), not(equalTo("true")))
+        assertThat("Not running under CI", BuildConfig.CI, not(equalTo("true")))
     }
 }
