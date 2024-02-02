@@ -14,14 +14,14 @@ Create your own flashcard decks or download free decks compiled for many languag
 • text-to-speech integration
 • 6000-ից ավել պատրաստի կապուկ
 • առաջընթացի վիջեթ
-• detailed statistics
+• մանրամասն վիճակագրություն
 • syncing with AnkiWeb
-• open source
+• սկզբնական կոդը հասանելի է
 
 Ավելին`
 • գրել պատասխանները
 • գրատախտակ
-• card editor/adder
+• քարտերի խմբագրում/ավելացում
 • card browser
 • tablet layout
 • import existing collection files (via Anki Desktop)

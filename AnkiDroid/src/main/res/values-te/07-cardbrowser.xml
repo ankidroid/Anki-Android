@@ -55,19 +55,19 @@
     </plurals>
     <string name="card_browser_all_decks">అన్ని డెక్స్</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
+        <item quantity="one">కార్డును తీసివేయండి</item>
         <item quantity="other">Delete cards</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="other">గమనికలను తొలగించండి</item>
     </plurals>
     <string name="card_browser_change_deck">Change deck</string>
     <string name="delete_card_title">గమనికను తొలగించాలా?</string>
     <string name="card_browser_show_marked">ఫిల్టర్ మార్క్ చేయబడింది</string>
     <string name="card_browser_show_suspended">ఫిల్టర్ సస్పెండ్ చేయబడింది</string>
     <string name="card_browser_search_by_tag">ట్యాగ్ ద్వారా ఫిల్టర్ చేయండి</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
+    <string name="card_browser_search_by_flag">ఫ్లాగ్ ద్వారా ఫిల్టర్ చేయండి</string>
     <string name="card_browser_list_my_searches">నా శోధనలు</string>
     <string name="card_browser_list_my_searches_save">శోధనను సేవ్ చేయండి</string>
     <string name="card_browser_list_my_searches_title">సేవ్ చేసిన శోధనను ఎంచుకోండి</string>
@@ -82,33 +82,33 @@
         <item>క్రమబద్ధీకరించడం లేదు(వేగంగా)</item>
         <item>ఫీల్డ్ ద్వారా క్రమబద్ధీకరించు</item>
         <item>సృష్టించిన సమయానికి</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>సవరణ సమయం ద్వారా గమనించండి</item>
+        <item>కార్డ్ సవరణ సమయం ద్వారా</item>
         <item>తగిన సమయంలో</item>
         <item>విరామం ద్వారా</item>
         <item>సులభంగా</item>
         <item>సమీక్షల ద్వారా</item>
         <item>లోపాల ద్వారా</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
+    <string name="card_browser_select_all">అన్ని ఎంచుకోండి</string>
     <string name="card_browser_select_none">Select none</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(కొత్త)</string>
+    <string name="card_browser_due_filtered_card">(ఫిల్టర్ చేయబడింది)</string>
+    <string name="card_browser_interval_learning_card">(నేర్చుకోవడం)</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_search_all_decks">అన్ని డెక్‌లను శోధించండి</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">ఎగుమతి కార్డు</item>
+        <item quantity="other">ఎగుమతి కార్డులు</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">ఎగుమతి గమనిక</item>
+        <item quantity="other">నోట్లను ఎగుమతి చేయండి</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d కార్డ్ తొలగించబడింది</item>
+        <item quantity="other">%d కార్డ్‌లు తొలగించబడ్డాయి</item>
     </plurals>
 </resources>

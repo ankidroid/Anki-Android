@@ -71,7 +71,7 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">ఎక్కడో పొరపాటయింది</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
+    <string name="multimedia_editor_svg_preview">ప్రివ్యూ కోసం SVGలు అందుబాటులో లేవు</string>
     <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s క్షేత్రానికి మల్టీమీడియా విషయాన్ని అటాచ్ చేయండి</string>
     <string name="multimedia_editor_attach_media">మీడియాను జోడించండి</string>
@@ -84,9 +84,9 @@
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">ఎడిటింగ్ ఫీల్డ్</string>
     <!-- Crop function-->
     <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
+    <string name="crop_button">చిత్రాన్ని కత్తిరించండి</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
+    <string name="select_image_failed">"చిత్రాన్ని ఎంచుకోవడంలో విఫలమైంది, దయచేసి మళ్లీ ప్రయత్నించండి"</string>
     <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ఫీల్డ్ విషయాలు</string>
 </resources>

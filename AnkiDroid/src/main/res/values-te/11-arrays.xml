@@ -63,7 +63,7 @@
     <string name="add_to_deck_use_current_deck">ప్రస్తుత డెక్ ఉపయోగించండి</string>
     <string name="add_to_deck_decide_by_note_type">గమనిక రకం ద్వారా నిర్ణయిస్తారు</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">వ్యవస్థను అనుసరించండి</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">లైట్</string>
     <string name="day_theme_plain">సాదా</string>
@@ -71,35 +71,35 @@
     <string name="night_theme_black">నలుపు</string>
     <string name="night_theme_dark">ముదురు రంగు</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_xx_small">xx-చిన్న</string>
+    <string name="html_size_code_x_small">x-చిన్న</string>
+    <string name="html_size_code_small">చిన్నది</string>
+    <string name="html_size_code_medium">మధ్యస్థ</string>
     <string name="html_size_code_large">large</string>
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
+    <string name="answer_again">మళ్లీ సమాధానం చెప్పండి</string>
     <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
-    <string name="gesture_play">Play media</string>
+    <string name="answer_good">సమాధానం బాగుంది</string>
+    <string name="answer_easy">సులభంగా సమాధానం ఇవ్వండి</string>
+    <string name="gesture_play">మీడియాను ప్లే చేయండి</string>
     <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
+    <string name="gesture_flag_red">ఎరుపు జెండాను టోగుల్ చేయండి</string>
+    <string name="gesture_flag_orange">నారింజ జెండాను టోగుల్ చేయండి</string>
+    <string name="gesture_flag_green">ఆకుపచ్చ జెండాను టోగుల్ చేయండి</string>
+    <string name="gesture_flag_blue">నీలి జెండాను టోగుల్ చేయండి</string>
+    <string name="gesture_flag_pink">గులాబీ జెండాను టోగుల్ చేయండి</string>
+    <string name="gesture_flag_turquoise">మణి జెండాను టోగుల్ చేయండి</string>
+    <string name="gesture_flag_purple">ఊదా జెండాను టోగుల్ చేయండి</string>
+    <string name="gesture_flag_remove">జెండాను తీసివేయండి</string>
+    <string name="gesture_page_up">పేజీ పైకి</string>
     <string name="gesture_page_down">Page Down</string>
     <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
+    <string name="gesture_toggle_whiteboard">వైట్‌బోర్డ్‌ని టోగుల్ చేయండి</string>
+    <string name="gesture_show_hint">సూచనను చూపించు</string>
     <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="record_voice">వాయిస్ రికార్డ్ చేయండి</string>
+    <string name="replay_voice">రీప్లే వాయిస్</string>
+    <string name="save_voice">రికార్డింగ్‌ను సేవ్ చేయండి</string>
 </resources>

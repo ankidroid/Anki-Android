@@ -240,8 +240,8 @@
     <string name="deck_conf_cram_reschedule_summ">按当前牌组的回答重排卡牌</string>
     <string name="deck_conf_cram_filter_2_check">启用第二筛选器</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">自定义学习间隔</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">预览延迟</string>
+    <string name="deck_conf_cram_preview_delays_summ">延迟时间以秒为单位。0返回卡牌到原始牌组。</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">让 AnkiDroid 更好！</string>
     <string name="analytics_title" maxLength="41">分享功能使用</string>

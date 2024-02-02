@@ -142,8 +142,8 @@
     <string name="card_template_editor_styling">స్టైలింగ్</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">డెక్ ఓవర్‌రైడ్</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">ఫీల్డ్‌ను చొప్పించండి</string>
+    <string name="card_template_editor_select_field">ఫీల్డ్‌ను ఎంచుకోండి</string>
     <string name="card_template_editor_cant_delete">కనీసం ఒక కార్డు రకం అవసరం</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">This will create %1$d card. Proceed?</item>
@@ -156,7 +156,7 @@
     <string name="invalid_template">ఒక కార్డు సృష్టించబడలేదు</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">ప్రస్తుత కార్డ్ కోసం కార్డ్ రకం తొలగించబడింది.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- card Info -->

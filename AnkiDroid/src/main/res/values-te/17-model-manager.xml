@@ -48,9 +48,9 @@
     <string name="model_browser_rename" comment="Rename a note type">పేరుమార్చు</string>
     <string name="model_browser_template">కార్డ్లను సవరించండి</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">గమనిక రకం పేరు మార్చండి</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">భాష సూచనను %sకి సెట్ చేయండి</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">ఫీల్డ్లను సవరించండి</string>
     <string name="model_field_editor_add">ఫీల్డ్ను జోడించండి</string>
@@ -59,7 +59,7 @@
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">రీపోషన్ ఫీల్డ్</string>
     <string name="model_field_editor_reposition">ప్రత్యామ్నాయ క్షేత్రం (%1$d-%2$d విలువను నమోదు చేయండి)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_toggle_sticky">జోడించేటప్పుడు చివరి ఇన్‌పుట్‌ను గుర్తుంచుకోండి</string>
     <string name="model_field_editor_changing">ఖాళీలను నవీకరిస్తోంది</string>
     <string name="model_field_editor_sort_field">ఈ ఫీల్డ్ ద్వారా క్రమబద్ధీకరించు</string>
     <!--Warnings-->
@@ -71,10 +71,10 @@
     <string name="model_browser_add_clone">ఒకే రీతి: %1$s </string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question Format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
-    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
+    <string name="card_template_browser_appearance_question_format">ప్రశ్న ఫార్మాట్</string>
+    <string name="card_template_browser_appearance_answer_format">జవాబు ఫార్మాట్</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">డిఫాల్ట్ విలువలను పునరుద్ధరించాలా?</string>
+    <string name="card_template_browser_appearance_saving_note">కార్డ్ టెంప్లేట్ సేవ్ చేయబడినప్పుడు ఈ మార్పులు వర్తిస్తాయి</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Deck override (on)</string>
     <string name="card_template_editor_deck_override_off">Deck override (off)</string>
