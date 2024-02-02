@@ -423,4 +423,6 @@ this formatter is used if the bind only applies to both the question and the ans
     <string name="pref__etc__snackbar__no_collection"
         comment="Generic snackbar message to be shown when user taps on a preference
         that is not usable because the collection does not exist">Collection does not exist</string>
+
+    <string name="s_pen_button_click">Customizable in Controls</string>
 </resources>

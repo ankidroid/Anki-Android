@@ -317,6 +317,14 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="com.samsung.android.support.REMOTE_ACTION" />
+            </intent-filter>
+            <meta-data
+                android:name="com.samsung.android.support.REMOTE_ACTION"
+                android:resource="@xml/samsung_remote_actions" />
+
         </activity>
         <activity
             android:name="com.ichi2.anki.MyAccount"
@@ -332,6 +340,13 @@
             <intent-filter>
                 <category android:name="android.intent.category.MONKEY" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="com.samsung.android.support.REMOTE_ACTION" />
+            </intent-filter>
+            <meta-data
+                android:name="com.samsung.android.support.REMOTE_ACTION"
+                android:resource="@xml/samsung_remote_actions" />
         </activity>
         <activity
             android:name=".FilteredDeckOptions"
