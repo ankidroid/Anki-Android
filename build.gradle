@@ -134,12 +134,13 @@ ext {
         // macOS reports hardware cores. This is accurate for CI, Intel (halved due to SMT) and Apple Silicon
         gradleTestMaxParallelForks = "sysctl -n hw.physicalcpu".execute().text.toInteger()
     } else if (ciBuild) {
-        // GitHub Actions run on Standard_DS2_v2 Azure Compute Units. They are 1:1 vCPU to CPU on Linux/Windows with two vCPU cores
+        // GitHub Actions run on Standard_D4ads_v5 Azure Compute Units with 4 vCPUs
+        // They appear to be 2:1 vCPU to CPU on Linux/Windows with two vCPU cores but with performance 1:1-similar
         // Sources to determine the correct Azure Compute Unit (and get CPU count) to tune this:
-        // Standard_DS2_v2 https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
-        // Which is 1:1 https://docs.microsoft.com/en-gb/azure/virtual-machines/acu : DS1_v2 - DS15_v2 | 1:1
-        gradleTestMaxParallelForks = 2
-
+        // Which Azure compute unit in use? https://github.com/github/docs/blob/a25a33bb6cbf86a629d0a0c7bef624743991f97e/content/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners.md?plain=1#L176
+        // What is that compute unit? https://learn.microsoft.com/en-us/azure/virtual-machines/dasv5-dadsv5-series#dadsv5-series
+        // How does it perform? https://learn.microsoft.com/en-gb/azure/virtual-machines/linux/compute-benchmark-scores#dadsv5 (vs previous Standard_DS2_v2 https://learn.microsoft.com/en-gb/azure/virtual-machines/linux/compute-benchmark-scores#dv2---general-compute)
+        gradleTestMaxParallelForks = 4
     } else {
         // Use 50% of cores to account for SMT which doesn't help this workload
         gradleTestMaxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
