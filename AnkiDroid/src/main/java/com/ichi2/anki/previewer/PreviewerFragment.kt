@@ -44,7 +44,6 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.getViewerAssetLoader
 import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
-import com.ichi2.anki.previewer.PreviewerViewModel.Companion.stdHtml
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.themes.Themes

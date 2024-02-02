@@ -15,18 +15,13 @@
  */
 package com.ichi2.anki.previewer
 
-import android.content.Context
-import android.content.Intent
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.google.android.material.color.MaterialColors.getColor
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
-import com.ichi2.anki.LanguageUtils
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.browser.PreviewerIdsFile
@@ -37,8 +32,6 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound.addPlayButtons
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.note
-import com.ichi2.themes.Themes
-import com.ichi2.utils.toRGBHex
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -234,89 +227,6 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
             }
         }
 
-        /* *********************************** Card's HTML ************************************** */
-
-        /**
-         * Not exactly equal to anki's stdHtml.
-         *
-         * Aimed to be used only for reviewing/previewing cards
-         */
-        fun stdHtml(
-            context: Context = AnkiDroidApp.instance,
-            nightMode: Boolean = false
-        ): String {
-            val languageDirectionality = if (LanguageUtils.appLanguageIsRTL()) "rtl" else "ltr"
-
-            val baseTheme: String
-            val docClass: String
-            if (nightMode) {
-                docClass = "night-mode"
-                baseTheme = "dark"
-            } else {
-                docClass = ""
-                baseTheme = "light"
-            }
-
-            val colors = if (!nightMode) {
-                val canvasColor = getColor(
-                    context,
-                    android.R.attr.colorBackground,
-                    android.R.color.white
-                ).toRGBHex()
-                val fgColor =
-                    getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
-                ":root { --canvas: $canvasColor ; --fg: $fgColor; }"
-            } else {
-                val canvasColor = getColor(
-                    context,
-                    android.R.attr.colorBackground,
-                    android.R.color.black
-                ).toRGBHex()
-                val fgColor =
-                    getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
-                ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
-            }
-
-            @Suppress("UnnecessaryVariable") // necessary for the HTML notation
-            @Language("HTML")
-            val html = """
-                <!DOCTYPE html>
-                <html class="$docClass" dir="$languageDirectionality" data-bs-theme="$baseTheme">
-                <head>
-                    <title>AnkiDroid</title>
-                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/root-vars.css">
-                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/reviewer.css">
-                    <style type="text/css">
-                        .night-mode button { --canvas: #606060; --fg: #eee; }
-                        $colors
-                    </style>
-                </head>
-                <body class="${bodyClass()}">
-                    <div id="_mark" hidden>&#x2605;</div>
-                    <div id="_flag" hidden>&#x2691;</div>
-                    <div id="qa"></div>
-                    <script src="file:///android_asset/jquery.min.js"></script>
-                    <script src="file:///android_asset/mathjax/tex-chtml.js"></script>
-                    <script src="file:///android_asset/backend/web/reviewer.js"></script>
-                    <script>bridgeCommand = function(){};</script>
-                </body>
-                </html>
-            """.trimIndent()
-            return html
-        }
-
-        /** @return body classes used when showing a card */
-        fun bodyClassForCardOrd(
-            cardOrd: Int,
-            nightMode: Boolean = Themes.currentTheme.isNightMode
-        ): String {
-            return "card card${cardOrd + 1} ${bodyClass(nightMode)}"
-        }
-
-        private fun bodyClass(nightMode: Boolean = Themes.currentTheme.isNightMode): String {
-            return if (nightMode) "nightMode night_mode" else ""
-        }
-
         /* ********************************** Type-in answer ************************************ */
 
         /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L669] */
@@ -379,12 +289,4 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
             }
         }
     }
-}
-
-class NoteEditorDestination(val cardId: Long) {
-    fun toIntent(context: Context): Intent =
-        Intent(context, NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
-            putExtra(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, cardId)
-        }
 }
