@@ -35,7 +35,7 @@ import kotlin.reflect.jvm.jvmName
  *
  * [getIntent] can be used as an easy way to build a [SingleFragmentActivity]
  */
-class SingleFragmentActivity : AnkiActivity() {
+open class SingleFragmentActivity : AnkiActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -60,8 +60,8 @@ class SingleFragmentActivity : AnkiActivity() {
         }
     }
     companion object {
-        private const val FRAGMENT_NAME_EXTRA = "fragmentName"
-        private const val FRAGMENT_ARGS_EXTRA = "fragmentArgs"
+        const val FRAGMENT_NAME_EXTRA = "fragmentName"
+        const val FRAGMENT_ARGS_EXTRA = "fragmentArgs"
 
         fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null): Intent {
             return Intent(context, SingleFragmentActivity::class.java).apply {
