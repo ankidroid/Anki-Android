@@ -73,7 +73,8 @@ object ActivityList {
             get(ManageNotetypes::class.java),
             get(ManageSpaceActivity::class.java),
             get(PermissionsActivity::class.java),
-            get(SingleFragmentActivity::class.java)
+            get(SingleFragmentActivity::class.java),
+            get(ImageOcclusionActivity::class.java)
         )
     }
 
