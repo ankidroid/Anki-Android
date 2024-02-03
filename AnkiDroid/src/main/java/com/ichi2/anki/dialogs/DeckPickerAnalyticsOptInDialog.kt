@@ -28,12 +28,14 @@ class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreateDialog(savedInstanceState)
         return AlertDialog.Builder(requireActivity()).apply {
+            var isChecked = true
             title(R.string.analytics_dialog_title)
             message(R.string.analytics_summ)
             checkBoxPrompt(R.string.analytics_title, isCheckedDefault = true) { checked ->
-                UsageAnalytics.isEnabled = checked
+                isChecked = checked
             }
             positiveButton(R.string.dialog_continue) {
+                UsageAnalytics.isEnabled = isChecked
                 (activity as DeckPicker).dismissAllDialogFragments()
             }
             cancelable(true)
