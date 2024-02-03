@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
@@ -54,9 +55,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
     @Suppress("Deprecation") // Material dialog neutral button deprecation
     @SuppressLint("CheckResult")
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
         val res = res()
+        val alertDialog = AlertDialog.Builder(requireActivity())
         val dialog = MaterialDialog(requireActivity())
         val isLoggedIn = isLoggedIn()
         dialog.cancelable(true)
@@ -279,14 +281,15 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_CONFIRM_RESTORE_BACKUP -> {
                 // Confirmation dialog for backup restore
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.apply {
+                    title(R.string.restore_backup_title)
+                    message(text = message)
                     positiveButton(R.string.dialog_continue) {
                         (activity as DeckPicker?)
                             ?.showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
                     }
                     negativeButton(R.string.dialog_cancel)
-                }
+                }.show()
             }
             DIALOG_FULL_SYNC_FROM_SERVER -> {
                 // Allow user to do a full-sync from the server
