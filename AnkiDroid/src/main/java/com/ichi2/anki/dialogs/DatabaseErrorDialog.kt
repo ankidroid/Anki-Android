@@ -270,8 +270,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_CONFIRM_DATABASE_CHECK -> {
                 // Confirmation dialog for database check
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.show {
+                    title(R.string.check_db_title)
+                    message(text = message)
                     positiveButton(R.string.dialog_ok) {
                         (activity as DeckPicker).integrityCheck()
                         dismissAllDialogFragments()
@@ -281,7 +282,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_CONFIRM_RESTORE_BACKUP -> {
                 // Confirmation dialog for backup restore
-                alertDialog.apply {
+                alertDialog.show {
                     title(R.string.restore_backup_title)
                     message(text = message)
                     positiveButton(R.string.dialog_continue) {
@@ -289,7 +290,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             ?.showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
                     }
                     negativeButton(R.string.dialog_cancel)
-                }.show()
+                }
             }
             DIALOG_FULL_SYNC_FROM_SERVER -> {
                 // Allow user to do a full-sync from the server
