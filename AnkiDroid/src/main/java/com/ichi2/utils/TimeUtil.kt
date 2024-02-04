@@ -41,6 +41,28 @@ fun <T> measureTime(functionName: String? = "", function: () -> T): T {
 }
 
 /**
+ * Measures the time to execute a `suspend` function
+ *
+ * Usage:
+ *
+ * ```kotlin
+ * val result = coMeasureTime("operation") { operation() }
+ * ```
+ * -> `D/TimeUtilKt executed mHtmlGenerator in 23ms`
+ */
+suspend fun <T> coMeasureTime(functionName: String? = "", function: suspend () -> T): T {
+    val startTime = TimeManager.time.intTimeMS()
+    val result = function()
+    val endTime = TimeManager.time.intTimeMS()
+    Timber.d(
+        "executed %sin %dms",
+        if (functionName.isNullOrEmpty()) "" else "$functionName ",
+        endTime - startTime
+    )
+    return result
+}
+
+/**
  * Used to time an operation across two function calls
  *
  * ```kotlin
