@@ -12,7 +12,7 @@
         tools:ignore="HardcodedText" />
 
     <Spinner
-        android:id="@+id/notetype_new_type"
+        android:id="@+id/noteTypeNewType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -23,7 +23,7 @@
         tools:ignore="HardcodedText" />
 
     <EditText
-        android:id="@+id/notetype_new_name"
+        android:id="@+id/noteTypeNewName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text" />

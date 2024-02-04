@@ -33,6 +33,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
@@ -517,6 +518,19 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
             ?: // likely missing "<include layout="@layout/toolbar" />"
             throw IllegalStateException("Unable to find toolbar")
+        setSupportActionBar(toolbar)
+        return supportActionBar!!
+    }
+
+    /**
+     * sets [.getSupportActionBar] and returns the action bar
+     * @param binding the view which contains a toolbar element:
+     * @return The action bar which was created
+     * @throws IllegalStateException if the bar could not be enabled
+     */
+    protected fun enableToolbar(binding: ViewBinding): ActionBar {
+        val toolbar = binding.root.findViewById<Toolbar>(R.id.toolbar)
+            ?: throw IllegalStateException("Unable to find toolbar")
         setSupportActionBar(toolbar)
         return supportActionBar!!
     }
