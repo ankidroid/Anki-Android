@@ -42,15 +42,18 @@ open class AnkiServer(
     override fun useGzipWhenAccepted(r: Response?) = false
 
     override fun serve(session: IHTTPSession): Response {
-        if (session.method == Method.POST) {
-            val uri = session.uri
-            Timber.d("POST: Requested %s", uri)
-            val inputBytes = getSessionBytes(session)
-            return buildResponse {
-                postHandler.handlePostRequest(uri, inputBytes)
+        return when (session.method) {
+            Method.POST -> {
+                val uri = session.uri
+                Timber.d("POST: Requested %s", uri)
+                val inputBytes = getSessionBytes(session)
+                buildResponse {
+                    postHandler.handlePostRequest(uri, inputBytes)
+                }
             }
+            Method.GET -> newFixedLengthResponse(Response.Status.NOT_FOUND, null, null)
+            else -> newFixedLengthResponse(null)
         }
-        return newFixedLengthResponse(null)
     }
 
     private fun buildResponse(
