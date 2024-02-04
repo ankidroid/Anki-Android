@@ -40,7 +40,7 @@ class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
             }
             cancelable(true)
             setOnCancelListener { (activity as DeckPicker).dismissAllDialogFragments() }
-        }.show()
+        }.create()
     }
 
     companion object {
