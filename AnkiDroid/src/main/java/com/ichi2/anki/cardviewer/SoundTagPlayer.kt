@@ -150,7 +150,11 @@ class SoundTagPlayer(private val soundUriBase: String) {
      * @throws java.io.IOException: Prepare failed.: status=0x1
      */
     private fun MediaPlayer.awaitSetDataSource(uri: Uri) {
-        setDataSource(AnkiDroidApp.instance.applicationContext, uri)
+        val path = uri.encodedFragment?.let { fragment ->
+            "${uri.encodedPath}#$fragment"
+        } ?: uri.encodedPath
+
+        setDataSource(path)
         prepare()
     }
 
