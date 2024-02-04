@@ -984,15 +984,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /**
      * Change the note type from oldModel to newModel, handling the case where a full sync will be required
      */
+    @NeedsTest("test changing note type")
     private fun changeNoteType(oldNotetype: NotetypeJson, newNotetype: NotetypeJson) = launchCatchingTask {
         if (!userAcceptsSchemaChange()) return@launchCatchingTask
 
         val noteId = mEditorNote!!.id
         undoableOp {
             notetypes.change(oldNotetype, noteId, newNotetype, mModelChangeFieldMap!!, mModelChangeCardMap!!)
-            // refresh the note object to reflect the database changes
-            mEditorNote!!.load()
         }
+        // refresh the note object to reflect the database changes
+        withCol { mEditorNote!!.load() }
         // close note editor
         closeNoteEditor()
     }
