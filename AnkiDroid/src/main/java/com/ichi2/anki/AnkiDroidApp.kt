@@ -190,6 +190,9 @@ open class AnkiDroidApp : Application() {
         // Register for notifications
         notifications.observeForever { NotificationService.triggerNotificationFor(this) }
 
+        // listen for day rollover: time + timezone changes
+        DayRolloverHandler.listenForRolloverEvents(this)
+
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 Timber.i("${activity::class.simpleName}::onCreate")
