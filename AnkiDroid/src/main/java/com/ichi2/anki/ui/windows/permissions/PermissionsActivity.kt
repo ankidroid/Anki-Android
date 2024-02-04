@@ -20,12 +20,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.activity.addCallback
-import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.PermissionsActivityBinding
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.themes.setTransparentStatusBar
 
@@ -42,15 +42,17 @@ import com.ichi2.themes.setTransparentStatusBar
  * * TODO Show which permissions are mandatory and which are optional
  */
 class PermissionsActivity : AnkiActivity() {
+    private lateinit var binding: PermissionsActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.permissions_activity)
+        binding = PermissionsActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setTransparentStatusBar()
 
-        findViewById<AppCompatButton>(R.id.continue_button).setOnClickListener {
+        binding.continueButton.setOnClickListener {
             finish()
         }
 
@@ -65,7 +67,7 @@ class PermissionsActivity : AnkiActivity() {
     }
 
     fun setContinueButtonEnabled(isEnabled: Boolean) {
-        findViewById<AppCompatButton>(R.id.continue_button).isEnabled = isEnabled
+        binding.continueButton.isEnabled = isEnabled
     }
 
     companion object {
