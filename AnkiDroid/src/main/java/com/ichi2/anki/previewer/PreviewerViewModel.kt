@@ -26,6 +26,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.LanguageUtils
 import com.ichi2.anki.OnErrorListener
+import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.launchCatching
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
@@ -47,7 +48,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import org.json.JSONObject
 import timber.log.Timber
 
-class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int) :
+class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
     ViewModel(),
     OnErrorListener {
 
@@ -58,6 +59,7 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     val isMarked = MutableStateFlow(false)
     val flagCode: MutableStateFlow<Int> = MutableStateFlow(Flag.NONE.code)
     private val showingAnswer = MutableStateFlow(false)
+    private val selectedCardIds: List<Long> = previewerIdsFile.getCardIds()
     val isBackButtonEnabled =
         combine(currentIndex, showingAnswer, backsideOnly) { index, showingAnswer, isBackSideOnly ->
             index != 0 || (showingAnswer && !isBackSideOnly)
@@ -108,6 +110,8 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     }
 
     fun cardId() = currentCard.id
+
+    fun cardsCount() = selectedCardIds.count()
 
     /**
      * MUST be called once before accessing [currentCard] for the first time
@@ -208,10 +212,10 @@ class PreviewerViewModel(private val selectedCardIds: LongArray, firstIndex: Int
     }
 
     companion object {
-        fun factory(selectedCardIds: LongArray, currentIndex: Int): ViewModelProvider.Factory {
+        fun factory(previewerIdsFile: PreviewerIdsFile, currentIndex: Int): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
-                    PreviewerViewModel(selectedCardIds, currentIndex)
+                    PreviewerViewModel(previewerIdsFile, currentIndex)
                 }
             }
         }

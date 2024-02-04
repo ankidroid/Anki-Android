@@ -19,6 +19,7 @@ package com.ichi2.anki.browser
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -40,6 +41,7 @@ class CardBrowserViewModelTest : JvmTest() {
     private fun runViewModelTest(testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
         val viewModel = CardBrowserViewModel(
             lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+            cacheDir = createTransientDirectory(),
             preferences = AnkiDroidApp.sharedPreferencesProvider
         )
         testBody(viewModel)

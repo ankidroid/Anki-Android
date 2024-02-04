@@ -42,10 +42,12 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.getViewerAssetLoader
 import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.previewer.PreviewerViewModel.Companion.stdHtml
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.themes.Themes
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
@@ -68,12 +70,14 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         get() = menu.findItem(R.id.action_flag)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val selectedCardIds = requireArguments().getLongArray(CARD_IDS_EXTRA)!!
+        val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(IDS_FILE_EXTRA)) {
+            "$IDS_FILE_EXTRA is required"
+        } as PreviewerIdsFile
         val currentIndex = requireArguments().getInt(CURRENT_INDEX_EXTRA, 0)
 
         viewModel = ViewModelProvider(
             requireActivity(),
-            PreviewerViewModel.factory(selectedCardIds, currentIndex)
+            PreviewerViewModel.factory(previewerIdsFile, currentIndex)
         )[PreviewerViewModel::class.java]
 
         val assetLoader = requireContext().getViewerAssetLoader(LOCALHOST)
@@ -139,7 +143,7 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
                 }
         }
 
-        val cardsCount = selectedCardIds.count()
+        val cardsCount = viewModel.cardsCount()
         lifecycleScope.launch {
             viewModel.currentIndex
                 .flowWithLifecycle(lifecycle)
@@ -265,10 +269,10 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
 
     companion object {
         const val CURRENT_INDEX_EXTRA = "currentIndex"
-        const val CARD_IDS_EXTRA = "cardIds"
+        const val IDS_FILE_EXTRA = "idsFile"
 
-        fun getIntent(context: Context, selectedCardIds: LongArray, currentIndex: Int): Intent {
-            val args = bundleOf(CURRENT_INDEX_EXTRA to currentIndex, CARD_IDS_EXTRA to selectedCardIds)
+        fun getIntent(context: Context, previewerIdsFile: PreviewerIdsFile, currentIndex: Int): Intent {
+            val args = bundleOf(CURRENT_INDEX_EXTRA to currentIndex, IDS_FILE_EXTRA to previewerIdsFile)
             return SingleFragmentActivity.getIntent(context, PreviewerFragment::class, args)
         }
     }
