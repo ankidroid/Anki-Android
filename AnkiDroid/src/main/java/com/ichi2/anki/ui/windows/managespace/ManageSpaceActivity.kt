@@ -19,17 +19,21 @@ package com.ichi2.anki.ui.windows.managespace
 
 import android.os.Bundle
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ActivityManageSpaceBinding
 import com.ichi2.themes.setTransparentStatusBar
 
 class ManageSpaceActivity : AnkiActivity() {
+
+    private lateinit var binding: ActivityManageSpaceBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_manage_space)
+        binding = ActivityManageSpaceBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setTransparentStatusBar()
 
         enableToolbar().setDisplayHomeAsUpEnabled(true)
