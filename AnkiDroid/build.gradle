@@ -41,6 +41,9 @@ android {
         buildConfig = true
         aidl = true
     }
+    viewBinding {
+        enabled = true
+    }
 
     defaultConfig {
         applicationId "com.ichi2.anki"
