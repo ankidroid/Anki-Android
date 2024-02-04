@@ -15,6 +15,6 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="wrap_content"
-            android:id="@+id/note_type_editor_fields"/>
+            android:id="@+id/noteTypeEditorFields"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

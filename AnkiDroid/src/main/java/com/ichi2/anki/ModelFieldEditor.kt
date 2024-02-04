@@ -24,7 +24,6 @@ import android.view.MenuItem
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -33,6 +32,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.databinding.ModelFieldEditorBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleSelectionDialogHandler
@@ -59,11 +59,11 @@ import java.util.*
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected
     private var currentPos = 0
-    private lateinit var fieldsListView: ListView
     private var fieldNameInput: EditText? = null
     private lateinit var notetype: NotetypeJson
     private lateinit var noteFields: JSONArray
     private lateinit var fieldsLabels: List<String>
+    private lateinit var binding: ModelFieldEditorBinding
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -73,9 +73,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.model_field_editor)
-        fieldsListView = findViewById(R.id.note_type_editor_fields)
-        enableToolbar().apply {
+        binding = ModelFieldEditorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        enableToolbar(binding.root).apply {
             setTitle(R.string.model_field_editor_title)
             subtitle = intent.getStringExtra("title")
         }
@@ -122,8 +122,8 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         notetype = collectionModel
         noteFields = notetype.getJSONArray("flds")
         fieldsLabels = noteFields.toStringList("name")
-        fieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldsLabels)
-        fieldsListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position: Int, _ ->
+        binding.noteTypeEditorFields.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldsLabels)
+        binding.noteTypeEditorFields.onItemClickListener = AdapterView.OnItemClickListener { _, _, position: Int, _ ->
             showDialogFragment(newInstance(fieldsLabels[position]))
             currentPos = position
         }
