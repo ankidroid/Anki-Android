@@ -26,6 +26,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import anki.collection.OpChanges
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
@@ -37,6 +38,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -44,11 +46,26 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
-class CongratsPage : PageFragment(), CustomStudyDialog.CustomStudyListener {
+class CongratsPage :
+    PageFragment(),
+    CustomStudyDialog.CustomStudyListener,
+    ChangeManager.Subscriber {
     override val title: String = ""
     override val pageName = "congrats"
 
     private val viewModel by viewModels<CongratsViewModel>()
+
+    init {
+        ChangeManager.subscribe(this)
+    }
+
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        // typically due to 'day rollover'
+        if (changes.studyQueues) {
+            Timber.i("refreshing: study queues updated")
+            webView.reload()
+        }
+    }
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         return super.onCreateWebViewClient(savedInstanceState).also { client ->
