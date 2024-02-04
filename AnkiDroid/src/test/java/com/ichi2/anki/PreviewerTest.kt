@@ -19,6 +19,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Previewer.Companion.toIntent
+import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.libanki.Card
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.not
@@ -160,15 +161,13 @@ class PreviewerTest : RobolectricTest() {
         val front = arrayOf("1", "2", "3", "4", "5", "6")
         val back = arrayOf("7", "8", "9", "10", "11", "12")
         val c = arrayOfNulls<Card>(front.size)
-        val arrayList = LongArray(front.size)
-        for (i in front.indices) {
-            val cardToPreview = addNoteUsingBasicModel(front[i], back[i]).firstCard()
+        val longList = front.indices.map {
+            val cardToPreview = addNoteUsingBasicModel(front[it], back[it]).firstCard()
             setDeck("Deck", cardToPreview)
-            val h = cardToPreview.id
-            arrayList[i] = h
-            c[i] = cardToPreview
+            c[it] = cardToPreview
+            cardToPreview.id
         }
-        return getPreviewerPreviewingList(arrayList, c)
+        return getPreviewerPreviewingList(longList, c)
     }
 
     @KotlinCleanup("extension function")
@@ -176,8 +175,8 @@ class PreviewerTest : RobolectricTest() {
         card.update { did = addDeck(name) }
     }
 
-    private fun getPreviewerPreviewingList(cardIds: LongArray, c: Array<Card?>): Previewer {
-        val previewIntent = PreviewDestination(index = 0, cardIds).toIntent(targetContext)
+    private fun getPreviewerPreviewingList(cardIds: List<Long>, c: Array<Card?>): Previewer {
+        val previewIntent = PreviewDestination(index = 0, PreviewerIdsFile(targetContext.cacheDir, cardIds)).toIntent(targetContext)
         val previewer = super.startActivityNormallyOpenCollectionWithIntent(
             Previewer::class.java,
             previewIntent
@@ -189,7 +188,7 @@ class PreviewerTest : RobolectricTest() {
     }
 
     private fun getPreviewerPreviewing(usableCard: Card): Previewer {
-        val previewIntent = PreviewDestination(index = 0, longArrayOf(usableCard.id)).toIntent(targetContext)
+        val previewIntent = PreviewDestination(index = 0, PreviewerIdsFile(targetContext.cacheDir, listOf(usableCard.id))).toIntent(targetContext)
         val previewer = super.startActivityNormallyOpenCollectionWithIntent(
             Previewer::class.java,
             previewIntent

@@ -48,6 +48,7 @@ import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN2_KEYS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.*
+import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
@@ -1224,14 +1225,14 @@ open class CardBrowser :
 
     private fun onPreview() {
         val intentData = viewModel.previewIntentData
-        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.index, intentData.cardList))
+        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.index, intentData.previewerIdsFile))
     }
 
-    private fun getPreviewIntent(index: Int, selectedCardIds: LongArray): Intent {
+    private fun getPreviewIntent(index: Int, previewerIdsFile: PreviewerIdsFile): Intent {
         return if (sharedPrefs().getBoolean("new_previewer", false)) {
-            Previewer2Destination(index, selectedCardIds).toIntent(this)
+            Previewer2Destination(index, previewerIdsFile).toIntent(this)
         } else {
-            PreviewDestination(index, selectedCardIds).toIntent(this)
+            PreviewDestination(index, previewerIdsFile).toIntent(this)
         }
     }
 
@@ -1891,7 +1892,7 @@ open class CardBrowser :
      */
     private fun createViewModel() = ViewModelProvider(
         viewModelStore,
-        CardBrowserViewModel.factory(AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository),
+        CardBrowserViewModel.factory(AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository, cacheDir),
         defaultViewModelCreationExtras
     )[CardBrowserViewModel::class.java]
 
@@ -2282,8 +2283,8 @@ private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<C
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
 
-class Previewer2Destination(val currentIndex: Int, val selectedCardIds: LongArray)
+class Previewer2Destination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
 
 @CheckResult
 fun Previewer2Destination.toIntent(context: Context) =
-    PreviewerFragment.getIntent(context, selectedCardIds, currentIndex)
+    PreviewerFragment.getIntent(context, previewerIdsFile, currentIndex)

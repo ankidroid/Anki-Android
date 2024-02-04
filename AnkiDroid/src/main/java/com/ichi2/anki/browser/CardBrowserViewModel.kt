@@ -58,6 +58,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
+import java.io.DataInputStream
+import java.io.DataOutputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.util.Collections
 import java.util.HashMap
 import kotlin.math.max
@@ -68,12 +73,13 @@ import kotlin.math.min
 @NeedsTest("search is called after launch()")
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
+    private val cacheDir: File,
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
 
     /** The CardIds of all the cards in the results */
-    val allCardIds get() = cards.map { c -> c.id }.toLongArray()
+    val allCardIds get() = cards.map { c -> c.id }
 
     var searchTerms: String = ""
     var restrictOnDeck: String = ""
@@ -469,13 +475,14 @@ class CardBrowserViewModel(
     /** Previewing */
 
     val previewIntentData: PreviewDestination
-        get() = if (selectedRowCount() > 1) {
-            // Multiple cards have been explicitly selected, so preview only those cards
-            PreviewDestination(index = 0, cardList = selectedCardIds.toLongArray())
-        } else {
-            // Preview all cards, starting from the one that is currently selected
-            val startIndex = indexOfFirstCheckedCard() ?: 0
-            PreviewDestination(startIndex, allCardIds)
+        get() {
+            return if (selectedRowCount() > 1) {
+                PreviewDestination(index = 0, PreviewerIdsFile(cacheDir, selectedCardIds))
+            } else {
+                // Preview all cards, starting from the one that is currently selected
+                val startIndex = indexOfFirstCheckedCard() ?: 0
+                PreviewDestination(startIndex, PreviewerIdsFile(cacheDir, allCardIds))
+            }
         }
 
     /** @return the index of the first checked card in [cards], or `null` if no cards are checked */
@@ -526,10 +533,11 @@ class CardBrowserViewModel(
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
-        fun factory(lastDeckIdRepository: LastDeckIdRepository, preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
+        fun factory(lastDeckIdRepository: LastDeckIdRepository, cacheDir: File, preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
             initializer {
                 CardBrowserViewModel(
                     lastDeckIdRepository,
+                    cacheDir,
                     preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider
                 )
             }
@@ -546,4 +554,21 @@ class CardBrowserViewModel(
 enum class SaveSearchResult {
     ALREADY_EXISTS,
     SUCCESS
+}
+
+class PreviewerIdsFile(directory: File, cardIds: List<Long>) :
+    File(createTempFile("previewerIds", ".tmp", directory).absolutePath) {
+    init {
+        DataOutputStream(FileOutputStream(this)).use { outputStream ->
+            outputStream.writeInt(cardIds.size)
+            for (id in cardIds) {
+                outputStream.writeLong(id)
+            }
+        }
+    }
+
+    fun getCardIds(): List<Long> = DataInputStream(FileInputStream(this)).use { inputStream ->
+        val size = inputStream.readInt()
+        List(size) { inputStream.readLong() }
+    }
 }

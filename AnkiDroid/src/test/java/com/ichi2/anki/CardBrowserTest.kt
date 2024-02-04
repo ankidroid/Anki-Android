@@ -440,8 +440,8 @@ class CardBrowserTest : RobolectricTest() {
         assertThat("before: index", previewIntent.index, equalTo(0))
         assertThat(
             "before: cards",
-            previewIntent.cardList,
-            equalTo(longArrayOf(cid1, cid2))
+            previewIntent.previewerIdsFile.getCardIds(),
+            equalTo(listOf(cid1, cid2))
         )
 
         // reverse
@@ -455,8 +455,8 @@ class CardBrowserTest : RobolectricTest() {
         assertThat("after: index", intentAfterReverse.index, equalTo(0))
         assertThat(
             "after: cards",
-            intentAfterReverse.cardList,
-            equalTo(longArrayOf(cid2, cid1))
+            intentAfterReverse.previewerIdsFile.getCardIds(),
+            equalTo(listOf(cid2, cid1))
         )
     }
 
