@@ -24,11 +24,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.webkit.*
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
+import com.ichi2.anki.databinding.ActivitySharedDecksBinding
 import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
 import java.io.Serializable
@@ -44,6 +44,8 @@ class SharedDecksActivity : AnkiActivity() {
     lateinit var downloadManager: DownloadManager
 
     private var shouldHistoryBeCleared = false
+
+    private lateinit var binding: ActivitySharedDecksBinding
 
     /**
      * Handle condition when page finishes loading and history needs to be cleared.
@@ -111,10 +113,12 @@ class SharedDecksActivity : AnkiActivity() {
         }
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_shared_decks)
+        binding = ActivitySharedDecksBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
         setTitle(R.string.download_deck)
 
-        val webviewToolbar: Toolbar = findViewById(R.id.webview_toolbar)
+        val webviewToolbar = binding.webviewToolbar
         webviewToolbar.setTitleTextColor(getColor(R.color.white))
 
         setSupportActionBar(webviewToolbar)
@@ -124,7 +128,7 @@ class SharedDecksActivity : AnkiActivity() {
 
         webviewToolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.close_icon)
 
-        webView = findViewById(R.id.web_view)
+        webView = binding.webView
 
         downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
