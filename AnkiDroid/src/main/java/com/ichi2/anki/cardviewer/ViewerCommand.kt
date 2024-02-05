@@ -192,8 +192,7 @@ enum class ViewerCommand(val resourceId: Int) {
 
     fun interface CommandProcessor {
         /**
-         *
-         * example failure: answering an ease on the front of the card
+         * @return whether the command was executed
          */
         fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean
     }
