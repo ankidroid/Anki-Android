@@ -52,7 +52,7 @@
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">Petit widget AnkiDroid</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d carte à faire</item>
+        <item quantity="one">%d carte à étudier</item>
         <item quantity="other">%d cartes à faire</item>
     </plurals>
     <plurals name="widget_eta">
