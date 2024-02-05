@@ -19,8 +19,10 @@ package com.ichi2.anki
 import android.os.Bundle
 import android.view.View
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.PreviewLayout.Companion.createAndDisplay
+import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
@@ -269,6 +271,13 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             displayCardAnswer()
         }
         showBackIcon()
+    }
+
+    override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
+        if (which == ViewerCommand.SHOW_ANSWER) {
+            return super.executeCommand(which, fromGesture)
+        }
+        return false
     }
 
     protected fun getCard(col: Collection, cardListIndex: Long): Card {
