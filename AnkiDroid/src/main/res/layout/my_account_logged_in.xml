@@ -12,7 +12,9 @@
         android:layout_height="match_parent"
         android:foregroundGravity="center">
 
-        <include layout="@layout/toolbar" />
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
 
         <LinearLayout
             android:id="@+id/logged_text"

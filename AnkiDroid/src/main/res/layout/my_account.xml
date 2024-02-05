@@ -7,10 +7,13 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
     <LinearLayout
+        android:id="@+id/logoutView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/toolbar"/>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"/>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -152,4 +155,8 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+    <include
+        android:visibility="gone"
+        android:id="@+id/myAccountLoggedInLayout"
+        layout="@layout/my_account_logged_in"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

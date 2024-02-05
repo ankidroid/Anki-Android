@@ -22,55 +22,18 @@ import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import com.ichi2.anki.databinding.MyAccountBinding
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
 /**
  * Note: [LoginActivity] extends this and should not handle account creation
  */
 open class MyAccount : AnkiActivity() {
-    private lateinit var loginToMyAccountView: View
-    private lateinit var loggedIntoMyAccountView: View
-    private lateinit var username: TextInputEditText
-    private lateinit var userNameLayout: TextInputLayout
-    private lateinit var password: TextInputEditField
-    private lateinit var usernameLoggedIn: TextView
 
-    var toolbar: Toolbar? = null
-    private lateinit var passwordLayout: TextInputLayout
-    private lateinit var ankidroidLogo: ImageView
-    open fun switchToState(newState: Int) {
-        when (newState) {
-            STATE_LOGGED_IN -> {
-                val username = baseContext.sharedPrefs().getString("username", "")
-                usernameLoggedIn.text = username
-                toolbar = loggedIntoMyAccountView.findViewById(R.id.toolbar)
-                if (toolbar != null) {
-                    toolbar!!.title =
-                        getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
-                    setSupportActionBar(toolbar)
-                }
-                setContentView(loggedIntoMyAccountView)
-            }
-            STATE_LOG_IN -> {
-                toolbar = loginToMyAccountView.findViewById(R.id.toolbar)
-                if (toolbar != null) {
-                    toolbar!!.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
-                    setSupportActionBar(toolbar)
-                }
-                setContentView(loginToMyAccountView)
-            }
-        }
-    }
+    lateinit var binding: MyAccountBinding
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -82,22 +45,55 @@ open class MyAccount : AnkiActivity() {
             return
         }
         mayOpenUrl(Uri.parse(resources.getString(R.string.register_url)))
+        binding = MyAccountBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         initAllContentViews()
+
         if (isLoggedIn()) {
-            switchToState(STATE_LOGGED_IN)
+            switchState(LoginState.LOGGED_IN)
         } else {
-            switchToState(STATE_LOG_IN)
+            switchState(LoginState.LOGGED_OUT)
         }
         if (isScreenSmall && this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            ankidroidLogo.visibility = View.GONE
+            binding.ankidroidLogo.visibility = View.GONE
+            binding.myAccountLoggedInLayout.ankidroidLogo.visibility = View.GONE
         } else {
-            ankidroidLogo.visibility = View.VISIBLE
+            binding.ankidroidLogo.visibility = View.VISIBLE
+            binding.myAccountLoggedInLayout.ankidroidLogo.visibility = View.VISIBLE
+        }
+    }
+
+    private fun switchState(state: LoginState) {
+        when (state) {
+            LoginState.LOGGED_IN -> {
+                val toolbar = binding.myAccountLoggedInLayout.toolbar.toolbar
+                toolbar.title = getString(R.string.sync_account)
+                setSupportActionBar(toolbar)
+
+                binding.myAccountLoggedInLayout.root.visibility = View.VISIBLE
+                binding.logoutView.visibility = View.GONE
+
+                setLoginState(LoginState.LOGGED_IN)
+                val username = baseContext.sharedPrefs().getString("username", "")
+                binding.myAccountLoggedInLayout.usernameLoggedIn.text = username
+            }
+            LoginState.LOGGED_OUT -> {
+                val toolbar = binding.toolbar.toolbar
+                toolbar.title = getString(R.string.sync_account)
+                setSupportActionBar(toolbar)
+
+                binding.logoutView.visibility = View.VISIBLE
+                binding.myAccountLoggedInLayout.root.visibility = View.GONE
+
+                setLoginState(LoginState.LOGGED_OUT)
+            }
         }
     }
 
     private fun attemptLogin() {
-        val username = username.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
-        val password = password.text.toString()
+        val username = binding.username.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
+        val password = binding.password.text.toString()
         if (username.isEmpty() || password.isEmpty()) {
             Timber.i("Auto-login cancelled - username/password missing")
             return
@@ -109,16 +105,18 @@ open class MyAccount : AnkiActivity() {
     private fun login() {
         // Hide soft keyboard
         val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(username.windowToken, 0)
-        val username = username.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
-        val password = password.text.toString()
+        inputMethodManager.hideSoftInputFromWindow(binding.username.windowToken, 0)
+        val username = binding.username.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
+        val password = binding.password.text.toString()
         handleNewLogin(username, password)
     }
 
     private fun logout() {
         launchCatchingTask {
+            switchState(LoginState.LOGGED_OUT)
             syncLogout(baseContext)
-            switchToState(STATE_LOG_IN)
+            binding.logoutView.visibility = View.VISIBLE
+            binding.myAccountLoggedInLayout.root.visibility = View.GONE
         }
     }
 
@@ -127,41 +125,33 @@ open class MyAccount : AnkiActivity() {
     }
 
     private fun initAllContentViews() {
-        loginToMyAccountView = layoutInflater.inflate(R.layout.my_account, null)
-        loginToMyAccountView.let {
-            username = it.findViewById(R.id.username)
-            userNameLayout = it.findViewById(R.id.username_layout)
-            password = it.findViewById(R.id.password)
-            passwordLayout = it.findViewById(R.id.password_layout)
-            ankidroidLogo = it.findViewById(R.id.ankidroid_logo)
-        }
-        val loginButton = loginToMyAccountView.findViewById<Button>(R.id.login_button)
+        val loginButton = binding.loginButton
 
-        username.setOnFocusChangeListener { _, hasFocus ->
+        binding.username.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                val email = username.text.toString().trim()
-                userNameLayout.apply {
+                val email = binding.username.text.toString().trim()
+                binding.usernameLayout.apply {
                     isErrorEnabled = email.isNotEmpty()
                     error = if (email.isEmpty()) getString(R.string.invalid_email) else null
                 }
             } else {
-                userNameLayout.isErrorEnabled = false
+                binding.usernameLayout.isErrorEnabled = false
             }
         }
 
-        password.setOnFocusChangeListener { _, hasFocus ->
+        binding.password.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                val password = password.text.toString()
+                val password = binding.password.text.toString()
                 if (password.isEmpty()) {
-                    passwordLayout.isErrorEnabled = true
-                    passwordLayout.error = getString(R.string.password_empty)
+                    binding.passwordLayout.isErrorEnabled = true
+                    binding.passwordLayout.error = getString(R.string.password_empty)
                 }
             } else {
-                passwordLayout.isErrorEnabled = false
+                binding.passwordLayout.isErrorEnabled = false
             }
         }
 
-        password.setOnKeyListener(
+        binding.password.setOnKeyListener(
             View.OnKeyListener { _: View?, keyCode: Int, event: KeyEvent ->
                 if (event.action == KeyEvent.ACTION_DOWN) {
                     when (keyCode) {
@@ -182,8 +172,8 @@ open class MyAccount : AnkiActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val email = username.text.toString().trim()
-                val password = password.text.toString()
+                val email = binding.username.text.toString().trim()
+                val password = binding.password.text.toString()
                 val isFilled = email.isNotEmpty() && password.isNotEmpty()
                 loginButton.isEnabled = isFilled
             }
@@ -192,30 +182,25 @@ open class MyAccount : AnkiActivity() {
                 // Not needed here
             }
         }
-        username.addTextChangedListener(textWatcher)
-        password.addTextChangedListener(textWatcher)
+        binding.username.addTextChangedListener(textWatcher)
+        binding.password.addTextChangedListener(textWatcher)
         loginButton.setOnClickListener { login() }
-        val resetPWButton = loginToMyAccountView.findViewById<Button>(R.id.reset_password_button)
+        val resetPWButton = binding.resetPasswordButton
         resetPWButton.setOnClickListener { resetPassword() }
-        val signUpButton = loginToMyAccountView.findViewById<Button>(R.id.sign_up_button)
+        val signUpButton = binding.signUpButton
         val url = Uri.parse(resources.getString(R.string.register_url))
         signUpButton.setOnClickListener { openUrl(url) }
 
         // Add button to link to instructions on how to find AnkiWeb email
-        val lostEmail = loginToMyAccountView.findViewById<Button>(R.id.lost_mail_instructions)
+        val lostEmail = binding.lostMailInstructions
         val lostMailUrl = Uri.parse(resources.getString(R.string.link_ankiweb_lost_email_instructions))
         lostEmail.setOnClickListener { openUrl(lostMailUrl) }
-        loggedIntoMyAccountView = layoutInflater.inflate(R.layout.my_account_logged_in, null)
-        usernameLoggedIn = loggedIntoMyAccountView.findViewById(R.id.username_logged_in)
-        val logoutButton = loggedIntoMyAccountView.findViewById<Button>(R.id.logout_button)
-        loggedIntoMyAccountView.let {
-            ankidroidLogo = it.findViewById(R.id.ankidroid_logo)
-        }
-        logoutButton.setOnClickListener { logout() }
+        binding.myAccountLoggedInLayout.logoutButton
+            .setOnClickListener { logout() }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            password.setAutoFillListener {
+            binding.password.setAutoFillListener {
                 // disable "show password".
-                passwordLayout.isEndIconVisible = false
+                binding.passwordLayout.isEndIconVisible = false
                 Timber.i("Attempting login from autofill")
                 attemptLogin()
             }
@@ -234,9 +219,11 @@ open class MyAccount : AnkiActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         if (isScreenSmall && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            ankidroidLogo.visibility = View.GONE
+            binding.ankidroidLogo.visibility = View.GONE
+            binding.myAccountLoggedInLayout.ankidroidLogo.visibility = View.GONE
         } else {
-            ankidroidLogo.visibility = View.VISIBLE
+            binding.ankidroidLogo.visibility = View.VISIBLE
+            binding.myAccountLoggedInLayout.ankidroidLogo.visibility = View.VISIBLE
         }
     }
 
@@ -249,9 +236,16 @@ open class MyAccount : AnkiActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
-    companion object {
-        @KotlinCleanup("change to enum")
-        internal const val STATE_LOG_IN = 1
-        internal const val STATE_LOGGED_IN = 2
+    open fun setLoginState(state: LoginState) {
+        loginState = state
     }
+
+    companion object {
+        var loginState: LoginState = LoginState.LOGGED_OUT
+    }
+}
+
+enum class LoginState {
+    LOGGED_IN,
+    LOGGED_OUT
 }

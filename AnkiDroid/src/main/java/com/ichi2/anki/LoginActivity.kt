@@ -19,7 +19,6 @@ package com.ichi2.anki
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.os.Bundle
-import android.view.View
 import android.view.View.GONE
 import androidx.lifecycle.Lifecycle
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -50,31 +49,29 @@ class LoginActivity : MyAccount(), CollectionPermissionScreenLauncher {
     override val permissionScreenLauncher = recreateActivityResultLauncher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return
+        }
         super.onCreate(savedInstanceState)
-
         // LoginActivity can be opened from IntroductionActivity, so we need permissions
         if (collectionPermissionScreenWasOpened()) {
             return
         }
-
-        findViewById<View>(R.id.sign_up_button)?.visibility = GONE
-        findViewById<View>(R.id.no_account_text)?.visibility = GONE
-    }
-
-    /**
-     * Handles closing the activity and setting the result when the user is logged in
-     */
-    override fun switchToState(newState: Int) {
-        if (newState == STATE_LOGGED_IN) {
-            // This was intended to be shown from the 'app intro' where a user should not be logged in
-            if (!lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                showThemedToast(this, R.string.already_logged_in, true)
-                Timber.w("LoginActivity shown when user was logged in")
+        // Handles closing the activity and setting the result when the user is logged in
+        when (loginState) {
+            LoginState.LOGGED_IN -> {
+                if (!lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                    showThemedToast(this, R.string.already_logged_in, false)
+                    Timber.w("LoginActivity shown when user was logged in")
+                }
+                setResult(RESULT_OK)
+                finish()
+                return
             }
-            setResult(RESULT_OK)
-            finish()
-            return
+            else -> {
+                binding.signUpButton.visibility = GONE
+                binding.noAccountText.visibility = GONE
+            }
         }
-        super.switchToState(newState)
     }
 }
