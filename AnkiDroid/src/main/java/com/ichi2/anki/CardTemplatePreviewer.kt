@@ -100,6 +100,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                 closeCardTemplatePreviewer()
             }
         }
+        setNavigationBarColor(R.attr.showAnswerColor)
         showBackIcon()
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe()
