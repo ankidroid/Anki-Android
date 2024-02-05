@@ -118,11 +118,19 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
         }
         return when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                drawStart(x, y)
-                invalidate()
+                if (event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY) {
+                    stylusErase(event)
+                } else {
+                    drawStart(x, y)
+                    invalidate()
+                }
                 true
             }
             MotionEvent.ACTION_MOVE -> {
+                if (event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY) {
+                    stylusErase(event)
+                    return true
+                }
                 if (isCurrentlyDrawing) {
                     for (i in 0 until event.historySize) {
                         drawAlong(event.getHistoricalX(i), event.getHistoricalY(i))
