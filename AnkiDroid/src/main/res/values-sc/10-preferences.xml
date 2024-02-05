@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Lavagna</string>
     <string name="pref_cat_appearance" maxLength="41">Aparèntzia</string>
     <string name="pref_cat_themes" maxLength="41">Temas</string>
-    <string name="pref_cat_fonts" maxLength="41">Caràtere</string>
     <string name="pref_cat_gestures" maxLength="41">Gestos</string>
     <string name="pref_cat_controls" maxLength="41">Controllos</string>
     <string name="pref_cat_advanced" maxLength="41">Avantzadas</string>

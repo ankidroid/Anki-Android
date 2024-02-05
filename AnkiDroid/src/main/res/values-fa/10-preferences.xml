@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">تخته سفید</string>
     <string name="pref_cat_appearance" maxLength="41">ظاهر</string>
     <string name="pref_cat_themes" maxLength="41">پوسته ها</string>
-    <string name="pref_cat_fonts" maxLength="41">نوع خط</string>
     <string name="pref_cat_gestures" maxLength="41">حرکات دست</string>
     <string name="pref_cat_controls" maxLength="41">کنترل ها</string>
     <string name="pref_cat_advanced" maxLength="41">پیشرفته</string>

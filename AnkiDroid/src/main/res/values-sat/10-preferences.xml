@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">ᱯᱩᱸᱰᱯᱟᱴᱟ</string>
     <string name="pref_cat_appearance" maxLength="41">ᱧᱮᱞᱚᱜ ᱠᱚ </string>
     <string name="pref_cat_themes" maxLength="41">ᱛᱷᱤᱢᱥ</string>
-    <string name="pref_cat_fonts" maxLength="41">ᱪᱤᱠᱤ</string>
     <string name="pref_cat_gestures" maxLength="41">ᱪᱤᱱᱦᱟᱹ</string>
     <string name="pref_cat_controls" maxLength="41">ᱠᱳᱸᱴᱨᱳᱞ</string>
     <string name="pref_cat_advanced" maxLength="41">ᱞᱟᱦᱟ ᱦᱚᱪᱚ</string>

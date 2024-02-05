@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">سفید تختہ</string>
     <string name="pref_cat_appearance" maxLength="41">ظہور</string>
     <string name="pref_cat_themes" maxLength="41">تھیمز</string>
-    <string name="pref_cat_fonts" maxLength="41">فونٹس</string>
     <string name="pref_cat_gestures" maxLength="41">اشارے</string>
     <string name="pref_cat_controls" maxLength="41">اختیار</string>
     <string name="pref_cat_advanced" maxLength="41">ترقی یافتہ</string>

@@ -61,7 +61,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Bảng viết</string>
     <string name="pref_cat_appearance" maxLength="41">Giao diện</string>
     <string name="pref_cat_themes" maxLength="41">Chủ đề</string>
-    <string name="pref_cat_fonts" maxLength="41">Phông chữ</string>
     <string name="pref_cat_gestures" maxLength="41">Cử Chỉ/ Điều Hướng</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">Tuỳ chọn nâng cao</string>

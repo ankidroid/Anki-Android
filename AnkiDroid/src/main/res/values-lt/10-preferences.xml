@@ -64,7 +64,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Lenta</string>
     <string name="pref_cat_appearance" maxLength="41">Išvaizda</string>
     <string name="pref_cat_themes" maxLength="41">Apipavidalinimas</string>
-    <string name="pref_cat_fonts" maxLength="41">Šriftai</string>
     <string name="pref_cat_gestures" maxLength="41">Gestai</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">Sudėtingiau</string>

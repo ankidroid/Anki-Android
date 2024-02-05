@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
     <string name="pref_cat_appearance" maxLength="41">Appearance</string>
     <string name="pref_cat_themes" maxLength="41">Themes</string>
-    <string name="pref_cat_fonts" maxLength="41">Fonts</string>
     <string name="pref_cat_gestures" maxLength="41">Jest</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">Pêşketî</string>

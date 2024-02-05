@@ -61,7 +61,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">ホワイトボード機能</string>
     <string name="pref_cat_appearance" maxLength="41">外観</string>
     <string name="pref_cat_themes" maxLength="41">テーマ</string>
-    <string name="pref_cat_fonts" maxLength="41">フォント</string>
     <string name="pref_cat_gestures" maxLength="41">ジェスチャー</string>
     <string name="pref_cat_controls" maxLength="41">操作</string>
     <string name="pref_cat_advanced" maxLength="41">高度な設定</string>

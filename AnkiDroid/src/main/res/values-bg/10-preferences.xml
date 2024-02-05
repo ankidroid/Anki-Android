@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Бяла дъска</string>
     <string name="pref_cat_appearance" maxLength="41">Външен вид</string>
     <string name="pref_cat_themes" maxLength="41">Теми</string>
-    <string name="pref_cat_fonts" maxLength="41">Шрифтове</string>
     <string name="pref_cat_gestures" maxLength="41">Жестове</string>
     <string name="pref_cat_controls" maxLength="41">Контроли</string>
     <string name="pref_cat_advanced" maxLength="41">Разширени</string>

@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
     <string name="pref_cat_appearance" maxLength="41">Utseende</string>
     <string name="pref_cat_themes" maxLength="41">Teman</string>
-    <string name="pref_cat_fonts" maxLength="41">Teckensnitt</string>
     <string name="pref_cat_gestures" maxLength="41">Gester</string>
     <string name="pref_cat_controls" maxLength="41">Kontroller</string>
     <string name="pref_cat_advanced" maxLength="41">Avancerat</string>

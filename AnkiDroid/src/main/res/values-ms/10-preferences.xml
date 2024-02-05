@@ -61,7 +61,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Papan putih</string>
     <string name="pref_cat_appearance" maxLength="41">Penampilan</string>
     <string name="pref_cat_themes" maxLength="41">Tema</string>
-    <string name="pref_cat_fonts" maxLength="41">Tulisan</string>
     <string name="pref_cat_gestures" maxLength="41">Gerak isyarat</string>
     <string name="pref_cat_controls" maxLength="41">Kawalan</string>
     <string name="pref_cat_advanced" maxLength="41">Lanjutan</string>

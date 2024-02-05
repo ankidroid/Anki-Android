@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Skribtabulo</string>
     <string name="pref_cat_appearance" maxLength="41">Aspekto</string>
     <string name="pref_cat_themes" maxLength="41">Etoso</string>
-    <string name="pref_cat_fonts" maxLength="41">Tiparoj</string>
     <string name="pref_cat_gestures" maxLength="41">Gestoj</string>
     <string name="pref_cat_controls" maxLength="41">Stiriloj</string>
     <string name="pref_cat_advanced" maxLength="41">Altnivelaj</string>

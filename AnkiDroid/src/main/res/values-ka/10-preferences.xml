@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">დაფა</string>
     <string name="pref_cat_appearance" maxLength="41">იერსახე</string>
     <string name="pref_cat_themes" maxLength="41">იერსახეები</string>
-    <string name="pref_cat_fonts" maxLength="41">შრიფტები</string>
     <string name="pref_cat_gestures" maxLength="41">ჟესტები</string>
     <string name="pref_cat_controls" maxLength="41">მართვა</string>
     <string name="pref_cat_advanced" maxLength="41">დამატებითი</string>

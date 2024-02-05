@@ -61,7 +61,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">白板</string>
     <string name="pref_cat_appearance" maxLength="41">外观</string>
     <string name="pref_cat_themes" maxLength="41">主题</string>
-    <string name="pref_cat_fonts" maxLength="41">字体</string>
     <string name="pref_cat_gestures" maxLength="41">手势操作</string>
     <string name="pref_cat_controls" maxLength="41">控制</string>
     <string name="pref_cat_advanced" maxLength="41">高级设置</string>

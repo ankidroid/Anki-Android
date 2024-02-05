@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Quadro</string>
     <string name="pref_cat_appearance" maxLength="41">Aparência</string>
     <string name="pref_cat_themes" maxLength="41">Temas</string>
-    <string name="pref_cat_fonts" maxLength="41">Fontes</string>
     <string name="pref_cat_gestures" maxLength="41">Gestos</string>
     <string name="pref_cat_controls" maxLength="41">Controles</string>
     <string name="pref_cat_advanced" maxLength="41">Avançado</string>
