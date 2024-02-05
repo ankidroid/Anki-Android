@@ -28,19 +28,17 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.PreferencesBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.libanki.utils.TimeManager
@@ -55,18 +53,21 @@ class Preferences :
     SearchPreferenceResultListener {
 
     private fun hasLateralNavigation(): Boolean {
-        return findViewById<FragmentContainerView>(R.id.lateral_nav_container) != null
+        return binding.lateralNavContainer != null
     }
+
+    private lateinit var binding: PreferencesBinding
 
     override fun onTitleChanged(title: CharSequence?, color: Int) {
         super.onTitleChanged(title, color)
-        findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout)?.title = title
+        binding.collapsingToolbarLayout?.title = title
         supportActionBar?.title = title
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.preferences)
+        binding = PreferencesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setTransparentStatusBar()
 
         enableToolbar().setDisplayHomeAsUpEnabled(true)
@@ -82,7 +83,7 @@ class Preferences :
             fragment.listView.post {
                 val viewHolder = fragment.listView?.findViewHolderForAdapterPosition(0)
                 val isAtTop = viewHolder != null && viewHolder.itemView.top >= 0
-                findViewById<AppBarLayout>(R.id.appbar).setExpanded(isAtTop, false)
+                binding.appbar.setExpanded(isAtTop, false)
             }
         }
     }
