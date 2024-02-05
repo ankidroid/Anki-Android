@@ -247,7 +247,6 @@
 
     <string-array name="appearance_summary_entries">
         <item>@string/pref_cat_themes</item>
-        <item>@string/pref_cat_fonts</item>
         <item>@string/pref_cat_reviewer</item>
     </string-array>
 
