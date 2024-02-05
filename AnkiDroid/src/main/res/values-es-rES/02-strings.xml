@@ -155,7 +155,7 @@
     <string name="import_title">Importando</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Añadir</string>
     <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">¿Añadir \"%s\" a la colección? Esto puede llevar mucho tiempo</string>
     <string name="import_log_no_apkg">Este no es un archivo de paquete Anki válido</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_error_handle_exception">Error al importar el archivo\n\n%s</string>
@@ -265,7 +265,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">Introduce un correo electrónico válido</string>
     <string name="password_empty">La contraseña es requerida</string>
     <string name="back_pressed_once">Presione atrás de nuevo para salir</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
@@ -338,20 +338,19 @@
     <string name="media_sync_required_title">Sincronización multimedia requerida</string>
     <string name="media_sync_unavailable_message">La sincronización multimedia está desactivada en la configuración. Por favor, antes de continuar, sincroniza y elabora una copia de seguridad de cualquier contenido que no haya sido sincronizado todavía</string>
     <string name="audio_saved">Grabación guardada</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    <string name="deleting_selected_notes">Eliminando notas seleccionadas</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Toca una voz para escucharla
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">La voz debe instalarse antes de usarla</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Utilizar de todos modos
     </string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
-    </string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Error de conversión de texto a voz (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
     </string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Instalar
     </string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Error al abrir la configuración de texto a voz
     </string>
-    <string name="shared_decks_login_required">Please log in to download more decks</string>
+    <string name="shared_decks_login_required">Por favor, inicia sesión para descargar más mazos</string>
 </resources>

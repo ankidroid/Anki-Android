@@ -176,7 +176,7 @@
     <string name="sync_conflict_title_new">Sélectionnez la collection à garder</string>
     <string name="sync_conflict_replace_title">Remplacer la collection</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d carte (0 à faire)</item>
+        <item quantity="one">%1$d carte (0 à étudier)</item>
         <item quantity="other">%1$d cartes (0 à étudier)</item>
     </plurals>
     <!-- Generic errors -->
