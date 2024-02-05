@@ -24,10 +24,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -35,6 +32,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
+import com.ichi2.anki.databinding.MultimediaEditFieldActivityBinding
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.audio.AudioRecordingController
@@ -59,6 +57,8 @@ class MultimediaEditFieldActivity :
     private var audioRecordingController = AudioRecordingController()
     private var isAudioUIInitialized = false
 
+    private lateinit var binding: MultimediaEditFieldActivityBinding
+
     @get:VisibleForTesting
     var fieldController: IFieldController? = null
         private set
@@ -73,6 +73,7 @@ class MultimediaEditFieldActivity :
             return
         }
         super<AnkiActivity>.onCreate(savedInstanceState)
+        binding = MultimediaEditFieldActivityBinding.inflate(layoutInflater)
         var controllerBundle: Bundle? = null
         if (savedInstanceState != null) {
             Timber.i("onCreate - saved bundle exists")
@@ -85,9 +86,8 @@ class MultimediaEditFieldActivity :
             }
         }
         setTitle(R.string.title_activity_edit_text)
-        setContentView(R.layout.multimedia_edit_field_activity)
-        val mainView = findViewById<View>(android.R.id.content)
-        enableToolbar(mainView)
+        setContentView(binding.root)
+        enableToolbar(binding)
         val intent = this.intent
         val extras = getFieldFromIntent(intent)
         if (extras == null) {
@@ -104,7 +104,7 @@ class MultimediaEditFieldActivity :
 
     // in case media is saved by view button then allows it to be inserted into the filed
     private fun onBack() {
-        findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener {
+        binding.toolbar.toolbar.setNavigationOnClickListener {
             if (isAudioUIInitialized) {
                 done()
             } else {
@@ -167,7 +167,7 @@ class MultimediaEditFieldActivity :
         this.fieldController = fieldController
         field = newUI.field
         setupUIController(this.fieldController!!, savedInstanceState)
-        val linearLayout = findViewById<LinearLayout>(R.id.LinearLayoutInScrollViewFieldEdit)
+        val linearLayout = binding.LinearLayoutInScrollViewFieldEdit
         linearLayout.removeAllViews()
         fieldController.createUI(this, linearLayout)
         UIRecreationHandler.onPostUICreation(newUI, this)
