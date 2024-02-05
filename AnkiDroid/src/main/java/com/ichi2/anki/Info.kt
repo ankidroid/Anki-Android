@@ -29,7 +29,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.ThemeUtils
-import com.google.android.material.button.MaterialButton
+import com.ichi2.anki.databinding.InfoBinding
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.IntentUtil.canOpenIntent
@@ -47,6 +47,7 @@ private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
  */
 class Info : AnkiActivity() {
     private lateinit var webView: WebView
+    private lateinit var binding: InfoBinding
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +55,7 @@ class Info : AnkiActivity() {
             return
         }
         super.onCreate(savedInstanceState)
+        binding = InfoBinding.inflate(layoutInflater)
         val res = resources
         val type = intent.getIntExtra(TYPE_EXTRA, TYPE_NEW_VERSION)
         // If the page crashes, we do not want to display it again (#7135 maybe)
@@ -61,21 +63,21 @@ class Info : AnkiActivity() {
             val prefs = this.baseContext.sharedPrefs()
             InitialActivity.setUpgradedToLatestVersion(prefs)
         }
-        setContentView(R.layout.info)
-        val mainView = findViewById<View>(android.R.id.content)
-        enableToolbar(mainView)
-        findViewById<MaterialButton>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
+        setContentView(binding.root)
+        enableToolbar(binding)
+        binding.infoDonate.setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
         title = "$appName v$pkgVersionName"
-        webView = findViewById(R.id.info)
+        webView = binding.info
         webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
                 // Hide the progress indicator when the page has finished loaded
                 if (progress == 100) {
-                    mainView.findViewById<View>(R.id.progress_bar).visibility = View.GONE
+                    // TODO: this view is not part of this layout handle it
+                    binding.root.findViewById<View>(R.id.progress_bar).visibility = View.GONE
                 }
             }
         }
-        findViewById<MaterialButton>(R.id.left_button).run {
+        binding.leftButton.run {
             if (canOpenMarketUri()) {
                 setText(R.string.info_rate)
                 setOnClickListener {
@@ -107,7 +109,7 @@ class Info : AnkiActivity() {
         setRenderWorkaround(this)
         when (type) {
             TYPE_NEW_VERSION -> {
-                findViewById<MaterialButton>(R.id.right_button).run {
+                binding.rightButton.run {
                     text = res.getString(R.string.dialog_continue)
                     setOnClickListener { close() }
                 }
