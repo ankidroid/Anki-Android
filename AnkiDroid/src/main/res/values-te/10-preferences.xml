@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">వైట్‌బోర్డ్</string>
     <string name="pref_cat_appearance" maxLength="41">స్వరూపం</string>
     <string name="pref_cat_themes" maxLength="41">థీమ్లు</string>
-    <string name="pref_cat_fonts" maxLength="41">ఫాంట్లు</string>
     <string name="pref_cat_gestures" maxLength="41">సైగలు</string>
     <string name="pref_cat_controls" maxLength="41">నియంత్రణలు</string>
     <string name="pref_cat_advanced" maxLength="41">ఉన్నతస్థాయి</string>

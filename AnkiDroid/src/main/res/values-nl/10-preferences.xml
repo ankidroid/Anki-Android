@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Schrijfbord</string>
     <string name="pref_cat_appearance" maxLength="41">Opmaak</string>
     <string name="pref_cat_themes" maxLength="41">Thema\'s</string>
-    <string name="pref_cat_fonts" maxLength="41">Lettertypes</string>
     <string name="pref_cat_gestures" maxLength="41">Gebaren</string>
     <string name="pref_cat_controls" maxLength="41">Besturing</string>
     <string name="pref_cat_advanced" maxLength="41">Geavanceerd</string>

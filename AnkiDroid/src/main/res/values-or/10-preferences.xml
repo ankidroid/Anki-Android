@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">ଧଳାପଟା</string>
     <string name="pref_cat_appearance" maxLength="41">ରୂପ</string>
     <string name="pref_cat_themes" maxLength="41">ଥିମ୍</string>
-    <string name="pref_cat_fonts" maxLength="41">ଫଣ୍ଟ</string>
     <string name="pref_cat_gestures" maxLength="41">ଅଙ୍ଗଭଙ୍ଗୀ</string>
     <string name="pref_cat_controls" maxLength="41">ନିୟନ୍ତ୍ରଣ</string>
     <string name="pref_cat_advanced" maxLength="41">ଵିକଶିତ</string>

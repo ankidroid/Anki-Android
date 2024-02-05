@@ -66,7 +66,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">السبورة</string>
     <string name="pref_cat_appearance" maxLength="41">المظهر</string>
     <string name="pref_cat_themes" maxLength="41">المظاهر</string>
-    <string name="pref_cat_fonts" maxLength="41">الخطوط</string>
     <string name="pref_cat_gestures" maxLength="41">الإيماءات</string>
     <string name="pref_cat_controls" maxLength="41">عناصر التحكم</string>
     <string name="pref_cat_advanced" maxLength="41">خيارات متقدمة</string>

@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">ವೈಟ್‌ಬೋರ್ಡ್</string>
     <string name="pref_cat_appearance" maxLength="41">ಗೋಚರತೆ</string>
     <string name="pref_cat_themes" maxLength="41">ಥೀಮ್ಗಳು</string>
-    <string name="pref_cat_fonts" maxLength="41">ಫಾಂಟ್‌ಗಳು</string>
     <string name="pref_cat_gestures" maxLength="41">ಸನ್ನೆಗಳು</string>
     <string name="pref_cat_controls" maxLength="41">ನಿಯಂತ್ರಣಗಳು</string>
     <string name="pref_cat_advanced" maxLength="41">ಸುಧಾರಿತ</string>

@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Tableau blanc</string>
     <string name="pref_cat_appearance" maxLength="41">Affichage</string>
     <string name="pref_cat_themes" maxLength="41">Thèmes</string>
-    <string name="pref_cat_fonts" maxLength="41">Polices</string>
     <string name="pref_cat_gestures" maxLength="41">Gestes</string>
     <string name="pref_cat_controls" maxLength="41">Contrôles</string>
     <string name="pref_cat_advanced" maxLength="41">Avancé</string>

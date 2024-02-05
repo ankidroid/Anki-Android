@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Arbela zuria</string>
     <string name="pref_cat_appearance" maxLength="41">Itxura</string>
     <string name="pref_cat_themes" maxLength="41">Gaiak</string>
-    <string name="pref_cat_fonts" maxLength="41">Tipografiak</string>
     <string name="pref_cat_gestures" maxLength="41">Keinuak</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">Aurreratua</string>

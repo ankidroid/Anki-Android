@@ -64,7 +64,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Bela tabla</string>
     <string name="pref_cat_appearance" maxLength="41">Videz</string>
     <string name="pref_cat_themes" maxLength="41">Teme</string>
-    <string name="pref_cat_fonts" maxLength="41">Pisave</string>
     <string name="pref_cat_gestures" maxLength="41">Poteze</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">Napredno</string>
