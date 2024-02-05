@@ -40,6 +40,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.databinding.CardTemplateEditorActivityBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -73,12 +74,13 @@ import kotlin.math.min
 open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     @VisibleForTesting
     lateinit var viewPager: ViewPager2
-    private var slidingTabLayout: TabLayout? = null
     var tempModel: CardTemplateNotetype? = null
         private set
     private var fieldNames: List<String>? = null
     private var modelId: NoteTypeId = 0
     private var noteId: NoteId = 0
+
+    private lateinit var binding: CardTemplateEditorActivityBinding
 
     // the position of the cursor in the editor view
     private var tabToCursorPosition: HashMap<Int, Int?> = HashMap()
@@ -98,7 +100,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.card_template_editor_activity)
+        binding = CardTemplateEditorActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         // Load the args either from the intent or savedInstanceState bundle
         if (savedInstanceState == null) {
             // get model id
@@ -123,7 +126,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             tempModel = CardTemplateNotetype.fromBundle(savedInstanceState)
         }
 
-        slidingTabLayout = findViewById(R.id.sliding_tabs)
         setNavigationBarColor(R.attr.appBarColor)
 
         // Disable the home icon
@@ -174,7 +176,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
         fieldNames = tempModel!!.notetype.fieldsNames
         // Set up the ViewPager with the sections adapter.
-        viewPager = findViewById<ViewPager2?>(R.id.pager).apply {
+        viewPager = binding.pager.apply {
             adapter = TemplatePagerAdapter(this@CardTemplateEditor)
         }
         // Set activity title
@@ -444,7 +446,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             if (tabLayoutMediator != null) {
                 tabLayoutMediator!!.detach()
             }
-            tabLayoutMediator = TabLayoutMediator(templateEditor.slidingTabLayout!!, templateEditor.viewPager) { tab: TabLayout.Tab, position: Int ->
+            tabLayoutMediator = TabLayoutMediator(templateEditor.binding.slidingTabs, templateEditor.viewPager) { tab: TabLayout.Tab, position: Int ->
                 tab.text = templateEditor.tempModel!!.getTemplate(position).getString("name")
             }
             tabLayoutMediator!!.attach()
