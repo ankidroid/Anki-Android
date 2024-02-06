@@ -24,17 +24,16 @@ import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.core.os.ParcelCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.customListAdapter
-import com.afollestad.materialdialogs.list.getRecyclerView
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.utils.customListAdapter
+import com.ichi2.utils.title
 import java.util.*
 
 /** A Dialog displaying The various options for "Help" in a nested structure  */
@@ -61,10 +60,11 @@ class RecursivePictureMenu : DialogFragment() {
                 return items.size
             }
         }
-        return MaterialDialog(requireContext()).show {
-            customListAdapter(adapter, null)
+        val dialog = AlertDialog.Builder(requireContext()).apply {
+            customListAdapter(adapter)
             title(text = title)
-        }.apply { getRecyclerView().updatePadding(bottom = 0) }
+        }.create()
+        return dialog
     }
 
     abstract class Item : Parcelable {
