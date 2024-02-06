@@ -393,7 +393,7 @@ dependencies {
     testImplementation 'org.apache.commons:commons-exec:1.4.0' // obtaining the OS
     testImplementation("androidx.fragment:fragment-testing:$fragments_version")
     // in a JvmTest we need org.json.JSONObject to not be mocked
-    testImplementation 'org.json:json:20231013'
+    testImplementation 'org.json:json:20240205'
     testImplementation 'io.github.ivanshafran:shared-preferences-mock:1.2.4'
 
     androidTestImplementation project(':testlib')
