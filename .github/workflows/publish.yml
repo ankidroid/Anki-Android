@@ -47,7 +47,7 @@ jobs:
           git remote set-url origin git@github.com:$GITHUB_REPOSITORY
         shell: bash
 
-      - uses: webfactory/ssh-agent@v0.8.0
+      - uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
