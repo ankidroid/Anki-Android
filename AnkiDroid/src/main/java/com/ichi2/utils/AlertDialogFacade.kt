@@ -145,6 +145,14 @@ fun AlertDialog.Builder.createAndApply(block: AlertDialog.() -> Unit): AlertDial
 }
 
 /**
+ * Executes [block] on the [AlertDialog.Builder] instance and returns the initialized [AlertDialog].
+ */
+fun AlertDialog.Builder.create(block: AlertDialog.Builder.() -> Unit): AlertDialog {
+    block()
+    return create()
+}
+
+/**
  * Adds a checkbox to the dialog, whilst continuing to display the value of [message]
  * @param stringRes The string resource to display for the checkbox label.
  * @param text The literal string to display for the checkbox label.
