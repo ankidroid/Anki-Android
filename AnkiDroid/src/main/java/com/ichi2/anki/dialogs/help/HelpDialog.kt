@@ -43,7 +43,7 @@ import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrl
 import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrlResource
 import com.ichi2.anki.dialogs.help.HelpItem.Action.Rate
 import com.ichi2.anki.dialogs.help.HelpItem.Action.SendReport
-import com.ichi2.utils.create
+import com.ichi2.utils.createAndApply
 import com.ichi2.utils.customView
 import com.ichi2.utils.title
 
@@ -67,7 +67,7 @@ class HelpDialog : DialogFragment() {
         return AlertDialog.Builder(requireContext())
             .title(requireArguments().getInt(ARG_MENU_TITLE))
             .customView(customView)
-            .create {
+            .createAndApply {
                 // the dialog captures the BACK call so we manually pop the inner FragmentManager
                 // if there's a second page
                 onBackPressedDispatcher.addCallback(this@HelpDialog, true) {

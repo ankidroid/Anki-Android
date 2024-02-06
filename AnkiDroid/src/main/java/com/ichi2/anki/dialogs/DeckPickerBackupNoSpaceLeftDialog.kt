@@ -23,7 +23,7 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.utils.create
+import com.ichi2.utils.createAndApply
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
@@ -39,7 +39,7 @@ class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
             positiveButton(R.string.dialog_ok) {
                 (activity as DeckPicker).finish()
             }
-        }.create {
+        }.createAndApply {
             setCanceledOnTouchOutside(false)
         }
     }
