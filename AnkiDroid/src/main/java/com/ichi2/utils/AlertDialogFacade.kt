@@ -138,9 +138,9 @@ inline fun AlertDialog.Builder.show(block: AlertDialog.Builder.() -> Unit): Aler
 }
 
 /**
- * Creates an [AlertDialog], then executes [block] with it
+ * Creates an [AlertDialog] from the [AlertDialog.Builder] instance, then executes [block] with it.
  */
-fun AlertDialog.Builder.create(block: AlertDialog.() -> Unit): AlertDialog = create().apply {
+fun AlertDialog.Builder.createAndApply(block: AlertDialog.() -> Unit): AlertDialog = create().apply {
     block()
 }
 
