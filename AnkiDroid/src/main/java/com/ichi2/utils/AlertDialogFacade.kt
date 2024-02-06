@@ -182,6 +182,11 @@ fun AlertDialog.Builder.checkBoxPrompt(
     return this.setView(checkBoxView)
 }
 
+fun AlertDialog.getCheckBoxPrompt(): CheckBox =
+    requireNotNull(findViewById(R.id.checkbox)) {
+        "CheckBox prompt is not available. Forgot to call AlertDialog.Builder.checkBoxPrompt()?"
+    }
+
 fun AlertDialog.Builder.customView(
     view: View,
     paddingTop: Int = 0,
