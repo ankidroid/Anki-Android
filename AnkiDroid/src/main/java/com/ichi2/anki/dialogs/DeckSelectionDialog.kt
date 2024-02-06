@@ -105,7 +105,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 positiveButton(R.string.restore_default) {
                     onDeckSelected(null)
                 }
-            } 
+            }
         }.create()
         return dialog as AlertDialog
     }
