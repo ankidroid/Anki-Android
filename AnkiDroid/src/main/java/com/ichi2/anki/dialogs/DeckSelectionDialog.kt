@@ -66,7 +66,6 @@ import kotlin.collections.ArrayList
  */
 @NeedsTest("simulate 'don't keep activities'")
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
-    private var dialog: AlertDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCancelable = true
@@ -98,7 +97,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val did = args.getLong("currentDeckId")
             recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
         }
-        dialog = AlertDialog.Builder(requireActivity()).apply {
+
+        return AlertDialog.Builder(requireActivity()).apply {
             negativeButton(R.string.dialog_cancel)
             customView(view = dialogView)
             if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
@@ -107,7 +107,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 }
             }
         }.create()
-        return dialog as AlertDialog
     }
 
     private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>) =
@@ -221,11 +220,11 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
      */
     protected fun selectDeckAndClose(deck: SelectableDeck) {
         onDeckSelected(deck)
-        dialog!!.dismiss()
+        dismiss()
     }
 
     protected fun displayErrorAndCancel() {
-        dialog!!.dismiss()
+        dismiss()
     }
 
     open inner class DecksArrayAdapter(deckNames: List<SelectableDeck>) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(), Filterable {
