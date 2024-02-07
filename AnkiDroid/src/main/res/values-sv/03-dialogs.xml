@@ -213,6 +213,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">AnikWeb Användarvillkor</string>
     <string name="help_title_send_exception">Skicka felsökningsrapport</string>
     <string name="help_dialog_exception_report_debounce">Rapporten har redan skickats</string>
+    <string name="help_dialog_exception_report_sent">Report was sent!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">En automatisk synkronisering kan utlösas om %d sekund</item>
