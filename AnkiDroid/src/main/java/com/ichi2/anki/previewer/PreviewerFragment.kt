@@ -17,6 +17,7 @@ package com.ichi2.anki.previewer
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -219,7 +220,7 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
 
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                 try {
-                    startActivity(Intent(Intent.ACTION_VIEW, request.url))
+                    openUrl(request.url)
                 } catch (_: Exception) {
                     Timber.w("Could not open url")
                 }
@@ -265,6 +266,8 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
         editCardLauncher.launch(intent)
     }
+
+    private fun openUrl(uri: Uri) = startActivity(Intent(Intent.ACTION_VIEW, uri))
 
     companion object {
         const val CURRENT_INDEX_EXTRA = "currentIndex"
