@@ -26,3 +26,13 @@ internal typealias CardId = Long
 internal typealias DeckConfigId = Long
 internal typealias NoteId = Long
 internal typealias NoteTypeId = Long
+
+/**
+ * The number of non-leap seconds which have elapsed since the
+ * [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time) (00:00:00 UTC on 1 January 1970)
+ *
+ * See: [https://www.epochconverter.com/](https://www.epochconverter.com/)
+ *
+ * example: 6 February 2024 19:15:49 -> `1707246949`
+ */
+typealias EpochSeconds = Long

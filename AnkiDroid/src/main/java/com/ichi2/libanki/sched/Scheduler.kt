@@ -36,6 +36,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.EpochSeconds
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager.time
@@ -417,7 +418,7 @@ open class Scheduler(val col: Collection) {
     /**
      * @return Timestamp of when the day ends. Takes into account hour at which day change for anki and timezone
      */
-    open val dayCutoff: Long
+    open val dayCutoff: EpochSeconds
         get() = timingToday().nextDayAt
 
     /* internal */
