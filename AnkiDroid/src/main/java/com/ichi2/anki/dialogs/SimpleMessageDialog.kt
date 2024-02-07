@@ -20,6 +20,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.utils.create
 
 class SimpleMessageDialog : AsyncDialogFragment() {
     interface SimpleMessageDialogListener {
@@ -28,7 +29,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreateDialog(savedInstanceState)
-        return AlertDialog.Builder(requireContext()).apply {
+        return AlertDialog.Builder(requireContext()).create {
             setTitle(notificationTitle)
             setMessage(notificationMessage)
             setPositiveButton(R.string.dialog_ok) { _, _ ->
@@ -39,7 +40,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
                         )
                     )
             }
-        }.create()
+        }
     }
 
     override val notificationTitle: String

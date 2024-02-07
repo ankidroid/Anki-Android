@@ -36,6 +36,7 @@ import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.ImportUtils
+import com.ichi2.utils.create
 import timber.log.Timber
 import java.io.File
 import java.net.URLConnection
@@ -458,7 +459,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
     @Suppress("deprecation") // onBackPressed
     fun showCancelConfirmationDialog() {
-        downloadCancelConfirmationDialog = AlertDialog.Builder(requireContext()).apply {
+        downloadCancelConfirmationDialog = AlertDialog.Builder(requireContext()).create {
             setTitle(R.string.cancel_download_question_title)
             setPositiveButton(R.string.dialog_yes) { _, _ ->
                 downloadManager.remove(downloadId)
@@ -469,7 +470,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             setNegativeButton(R.string.dialog_no) { _, _ ->
                 downloadCancelConfirmationDialog?.dismiss()
             }
-        }.create()
+        }
         downloadCancelConfirmationDialog?.show()
     }
 
