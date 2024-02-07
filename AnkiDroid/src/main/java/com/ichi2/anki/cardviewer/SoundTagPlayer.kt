@@ -74,7 +74,7 @@ class SoundTagPlayer(private val soundUriBase: String) {
                     continuation.resume(Unit)
                 }
             }
-            val soundUri = Uri.parse(soundUriBase + tag.filename)
+            val soundUri = Uri.parse(soundUriBase + Uri.encode(tag.filename))
             setAudioAttributes(music)
             setOnErrorListener { mp, what, extra ->
                 Timber.w("Media error %d", what)
@@ -150,11 +150,7 @@ class SoundTagPlayer(private val soundUriBase: String) {
      * @throws java.io.IOException: Prepare failed.: status=0x1
      */
     private fun MediaPlayer.awaitSetDataSource(uri: Uri) {
-        val path = uri.encodedFragment?.let { fragment ->
-            "${uri.encodedPath}#$fragment"
-        } ?: uri.encodedPath
-
-        setDataSource(path)
+        setDataSource(uri.path)
         prepare()
     }
 
