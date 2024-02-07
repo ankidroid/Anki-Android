@@ -14,6 +14,7 @@ import com.ichi2.anki.ModelFieldEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction.AddLanguageHint
+import com.ichi2.utils.create
 import timber.log.Timber
 
 /**
@@ -32,13 +33,13 @@ open class ModelEditorContextMenu : AnalyticsDialogFragment() {
         }
         availableItems = availableItems.sortedBy { it.order }
 
-        return AlertDialog.Builder(requireActivity()).apply {
+        return AlertDialog.Builder(requireActivity()).create {
             setTitle(requireArguments().getString(KEY_LABEL))
             setItems(availableItems.map { resources.getString(it.actionTextId) }.toTypedArray()) { _, index ->
                 (activity as? ModelFieldEditor)?.run { handleAction(availableItems[index]) }
                     ?: Timber.e("ContextMenu used from outside of its target activity!")
             }
-        }.create()
+        }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

@@ -23,7 +23,7 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.utils.createAndApply
+import com.ichi2.utils.create
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
@@ -33,13 +33,13 @@ class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
         super.onCreate(savedInstanceState)
         val res = resources
         val space = BackupManager.getFreeDiscSpace(CollectionHelper.getCollectionPath(requireActivity()))
-        return AlertDialog.Builder(requireContext()).apply {
+        return AlertDialog.Builder(requireContext()).create {
             title(R.string.storage_almost_full_title)
             message(text = res.getString(R.string.storage_warning, space / 1024 / 1024))
             positiveButton(R.string.dialog_ok) {
                 (activity as DeckPicker).finish()
             }
-        }.createAndApply {
+        }.apply {
             setCanceledOnTouchOutside(false)
         }
     }

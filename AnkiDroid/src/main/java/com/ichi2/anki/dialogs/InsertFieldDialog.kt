@@ -25,6 +25,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.R
+import com.ichi2.utils.create
 import com.ichi2.utils.customListAdapter
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.title
@@ -60,11 +61,11 @@ class InsertFieldDialog : DialogFragment() {
                 return fieldList.size
             }
         }
-        return AlertDialog.Builder(requireContext()).apply {
+        return AlertDialog.Builder(requireContext()).create {
             title(R.string.card_template_editor_select_field)
             negativeButton(R.string.dialog_cancel)
             customListAdapter(adapter)
-        }.create()
+        }
     }
 
     private fun selectFieldAndClose(textView: TextView) {
