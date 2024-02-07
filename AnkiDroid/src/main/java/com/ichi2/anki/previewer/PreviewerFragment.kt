@@ -39,13 +39,11 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.Flag
-import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.getViewerAssetLoader
 import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
-import com.ichi2.anki.previewer.PreviewerViewModel.Companion.stdHtml
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.themes.Themes
@@ -53,21 +51,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickListener {
     private lateinit var viewModel: PreviewerViewModel
-
-    private val menu: Menu
-        get() = requireView().findViewById<Toolbar>(R.id.toolbar).menu
-
-    private val backsideOnlyOption: MenuItem
-        get() = menu.findItem(R.id.action_back_side_only)
-
-    private val markOption: MenuItem
-        get() = menu.findItem(R.id.action_mark)
-
-    private val flagOption: MenuItem
-        get() = menu.findItem(R.id.action_flag)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(IDS_FILE_EXTRA)) {
@@ -80,23 +67,10 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
             PreviewerViewModel.factory(previewerIdsFile, currentIndex)
         )[PreviewerViewModel::class.java]
 
-        val assetLoader = requireContext().getViewerAssetLoader(LOCALHOST)
         val webView = view.findViewById<WebView>(R.id.webview)
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         with(webView) {
-            webViewClient = object : WebViewClient() {
-                override fun shouldInterceptRequest(
-                    view: WebView?,
-                    request: WebResourceRequest
-                ): WebResourceResponse? {
-                    return assetLoader.shouldInterceptRequest(request.url)
-                }
-
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    super.onPageFinished(view, url)
-                    viewModel.loadCurrentCard()
-                }
-            }
+            webViewClient = onCreateWebViewClient()
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
                 javaScriptEnabled = true
@@ -135,13 +109,6 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
                 webView.evaluateJavascript(eval, null)
             }
             .launchIn(lifecycleScope)
-        lifecycleScope.launch {
-            viewModel.backsideOnly
-                .flowWithLifecycle(lifecycle)
-                .collectLatest { isBacksideOnly ->
-                    setBacksideOnlyButtonIcon(isBacksideOnly)
-                }
-        }
 
         val cardsCount = viewModel.cardsCount()
         lifecycleScope.launch {
@@ -154,24 +121,38 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
                         getString(R.string.preview_progress_bar_text, displayIndex, cardsCount)
                 }
         }
+        /* ************************************* Menu items ************************************* */
+        val menu = view.findViewById<Toolbar>(R.id.toolbar).menu
+
+        lifecycleScope.launch {
+            viewModel.backSideOnly
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { isBackSideOnly ->
+                    setBackSideOnlyButtonIcon(menu, isBackSideOnly)
+                }
+        }
+
         lifecycleScope.launch {
             viewModel.isMarked
                 .flowWithLifecycle(lifecycle)
                 .collectLatest { isMarked ->
-                    if (isMarked) {
-                        markOption.setIcon(R.drawable.ic_star)
-                        markOption.setTitle(R.string.menu_unmark_note)
-                    } else {
-                        markOption.setIcon(R.drawable.ic_star_border_white)
-                        markOption.setTitle(R.string.menu_mark_note)
+                    with(menu.findItem(R.id.action_mark)) {
+                        if (isMarked) {
+                            setIcon(R.drawable.ic_star)
+                            setTitle(R.string.menu_unmark_note)
+                        } else {
+                            setIcon(R.drawable.ic_star_border_white)
+                            setTitle(R.string.menu_mark_note)
+                        }
                     }
                 }
         }
+
         lifecycleScope.launch {
             viewModel.flagCode
                 .flowWithLifecycle(lifecycle)
                 .collectLatest { flagCode ->
-                    flagOption.setIcon(Flag.fromCode(flagCode).drawableRes)
+                    menu.findItem(R.id.action_flag).setIcon(Flag.fromCode(flagCode).drawableRes)
                 }
         }
 
@@ -222,11 +203,36 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         super.onViewCreated(view, savedInstanceState)
     }
 
+    private fun onCreateWebViewClient(): WebViewClient {
+        val assetLoader = requireContext().getViewerAssetLoader(LOCALHOST)
+        return object : WebViewClient() {
+            override fun shouldInterceptRequest(
+                view: WebView?,
+                request: WebResourceRequest
+            ): WebResourceResponse? {
+                return assetLoader.shouldInterceptRequest(request.url)
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                viewModel.onPageFinished()
+            }
+
+            override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+                try {
+                    startActivity(Intent(Intent.ACTION_VIEW, request.url))
+                } catch (_: Exception) {
+                    Timber.w("Could not open url")
+                }
+                return true
+            }
+        }
+    }
+
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_edit -> editCard()
             R.id.action_mark -> viewModel.toggleMark()
-            R.id.action_back_side_only -> viewModel.toggleBacksideOnly()
+            R.id.action_back_side_only -> viewModel.toggleBackSideOnly()
             R.id.action_flag_zero -> viewModel.setFlag(Flag.NONE)
             R.id.action_flag_one -> viewModel.setFlag(Flag.RED)
             R.id.action_flag_two -> viewModel.setFlag(Flag.ORANGE)
@@ -239,9 +245,9 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         return true
     }
 
-    private fun setBacksideOnlyButtonIcon(isBacksideOnly: Boolean) {
-        backsideOnlyOption.apply {
-            if (isBacksideOnly) {
+    private fun setBackSideOnlyButtonIcon(menu: Menu, isBackSideOnly: Boolean) {
+        menu.findItem(R.id.action_back_side_only).apply {
+            if (isBackSideOnly) {
                 setIcon(R.drawable.ic_card_answer)
                 setTitle(R.string.card_side_answer)
             } else {
@@ -252,18 +258,11 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
     }
 
     private val editCardLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
-            result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
-        ) {
-            viewModel.loadCurrentCard(reload = true)
-        }
+        viewModel.handleEditCardResult(result)
     }
 
     private fun editCard() {
-        val intent = Intent(requireContext(), NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
-            putExtra(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, viewModel.cardId())
-        }
+        val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
         editCardLauncher.launch(intent)
     }
 

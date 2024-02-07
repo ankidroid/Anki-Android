@@ -36,7 +36,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
-import com.ichi2.anki.launchCatching
+import com.ichi2.anki.launchCatchingIO
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -166,7 +166,7 @@ class CongratsViewModel : ViewModel(), OnErrorListener {
     val deckOptionsDestination = MutableSharedFlow<DeckOptionsDestination>()
 
     fun onUnbury() {
-        launchCatching {
+        launchCatchingIO {
             undoableOp {
                 sched.unburyDeck(decks.getCurrentId())
             }
@@ -175,7 +175,7 @@ class CongratsViewModel : ViewModel(), OnErrorListener {
     }
 
     fun onDeckOptions() {
-        launchCatching {
+        launchCatchingIO {
             val deckId = withCol { decks.getCurrentId() }
             val isFiltered = withCol { decks.isDyn(deckId) }
             deckOptionsDestination.emit(DeckOptionsDestination(deckId, isFiltered))
