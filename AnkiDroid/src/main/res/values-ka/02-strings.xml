@@ -52,7 +52,7 @@
     <string name="CardEditorModel">ტიპი:</string>
     <string name="CardEditorTags">იარლიყები: %1$s</string>
     <string name="CardEditorCards">ბარათები: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">საფარველების რედაქტირება</string>
     <string name="tag_name">იარლიყის სახელი</string>
     <string name="add_new_filter_tags">იარლიყების დამატება/გაფილტვრა</string>
     <string name="add_tag">იარლიყის დამატება</string>
@@ -144,7 +144,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">წინასწარ ნახვა</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ბარათი %2$d-დან</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">გადარქმევა</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">შემოწმება</string>
     <string name="check_db">მონაცემთა ბაზის შემოწმება</string>
     <string name="check_media">მედიაფაილების შემოწმება</string>
     <string name="empty_cards">ცარიელი ბარათები</string>
@@ -162,7 +162,7 @@
     <string name="import_error_not_apkg_extension">ფაილის სახელს „%s“ არ აქვს .apkg ან .colpkg დაბოლოება</string>
     <string name="import_error_load_imported_database">Anki მონაცემთა ბაზის შემცვლელი ფაილები (.anki2)  ჯერ არ არის მხარდაჭერილი. იხილეთ ინსტრუქცია შესაბამისი მითითებებისთვის</string>
     <string name="import_error_content_provider">მონიშნული ფაილის ავტომატური იმპორტირება ვერ მოხერხდა. იხილეთ ინსტრუქცია Anki-ფაილების არაავტომატური იმპორტირების მეთოდისთვის: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">ფაილის ვერ ჩაიწერა ქეშში (შესაძლოა, მეხსიერების სივრცეში არასაკმარისი ადგილის არსებობის გამო)</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
     <string name="export_preparation_in_progress">ექსპორტის გამზადება&#8230;</string>
     <string name="export_ready_title">ექსპორტი მზადაა</string>
@@ -265,7 +265,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">მოქმედი ელ-ფოსტა შეიყვანეთ</string>
     <string name="password_empty">პაროლი საჭიროა</string>
     <string name="back_pressed_once">გამოსასვლელად ხელახლა დააჭირეთ</string>
     <string name="back_pressed_once_reviewer">დასაბრუნებლად ხელახლა დააჭირეთ</string>
@@ -338,20 +338,19 @@
     <string name="media_sync_required_title">საჭიროა მედიაფაილების სინქრონიზაცია</string>
     <string name="media_sync_unavailable_message">მედიაფაილების სინქრონიზაცია გამორთულია პარამეტრებში. გთხოვთ დაასინქრონოთ და სარეზერვო ფაილად შეინახოთ ყველა მედიაფაილი, რომელიც ჯერ არაა სინქრონიზებული</string>
     <string name="audio_saved">ჩანაწერი შენახულია</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
+    <string name="deleting_selected_notes">მონიშნული შენიშვნების წაშლა</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        მოსასმენად შეეხეთ ხმას
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">უმჯობესია, ხმა გამოყენებამდე გადმოიწეროთ
     </string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
-    </string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">მაინც გამოყენება</string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">ხმოვანი წამკითხველის შეცდომა (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        ინტერნეტი
     </string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        დაყენება
     </string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        ხმოვანი წამკითხველის პარამეტრები ვერ გაიხსნა
     </string>
-    <string name="shared_decks_login_required">Please log in to download more decks</string>
+    <string name="shared_decks_login_required">მეტი დასტის გადმოსაწერად, გთხოვთ, გაიაროთ ავტორიზაცია</string>
 </resources>

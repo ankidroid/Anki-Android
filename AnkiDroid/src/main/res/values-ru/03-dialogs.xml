@@ -198,7 +198,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Не удалось установить напоминания</string>
     <string name="boot_service_too_many_notifications">Запланировано слишком много напоминаний. Некоторые из них не будут показаны</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">Установить язык</string>
     <string name="locale_selection_dialog_summary">Некоторые многоязычные клавиатуры, например GBoard, могут переключать язык при редактировании текста\n\nПожалуйста, запросите функцию «setImeHintLocales» у разработчика клавиатуры, если клавиатура не переключает язык.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Использование AnkiDroid</string>
