@@ -16,6 +16,7 @@
 
 package com.ichi2.utils
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.AnkiActivity
@@ -30,4 +31,4 @@ fun interface FragmentManagerSupplier {
     fun getFragmentManager(): FragmentManager
 }
 
-fun AnkiActivity.asFragmentManagerSupplier() = FragmentManagerSupplier { this.supportFragmentManager }
+fun AppCompatActivity.asFragmentManagerSupplier() = FragmentManagerSupplier { this.supportFragmentManager }

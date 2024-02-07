@@ -64,7 +64,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Tabule</string>
     <string name="pref_cat_appearance" maxLength="41">Vzhled</string>
     <string name="pref_cat_themes" maxLength="41">Motivy vzhledu</string>
-    <string name="pref_cat_fonts" maxLength="41">Písmo</string>
     <string name="pref_cat_gestures" maxLength="41">Gesta</string>
     <string name="pref_cat_controls" maxLength="41">Ovládání</string>
     <string name="pref_cat_advanced" maxLength="41">Pokročilé</string>

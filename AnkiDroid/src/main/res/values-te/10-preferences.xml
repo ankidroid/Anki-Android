@@ -55,14 +55,13 @@
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">జనరల్</string>
     <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_system_wide" maxLength="41">వ్యవస్థ వ్యాప్తంగా</string>
     <string name="pref_cat_reviewing" maxLength="41">సమీక్షిస్తోంది</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">వైట్‌బోర్డ్</string>
     <string name="pref_cat_appearance" maxLength="41">స్వరూపం</string>
     <string name="pref_cat_themes" maxLength="41">థీమ్లు</string>
-    <string name="pref_cat_fonts" maxLength="41">ఫాంట్లు</string>
     <string name="pref_cat_gestures" maxLength="41">సైగలు</string>
     <string name="pref_cat_controls" maxLength="41">నియంత్రణలు</string>
     <string name="pref_cat_advanced" maxLength="41">ఉన్నతస్థాయి</string>
@@ -95,9 +94,9 @@
     </string-array>
     <string name="gestures" maxLength="41">సంజ్ఞలను ప్రారంభించండి</string>
     <string name="gestures_summ">కార్డులకు సమాధానం ఇవ్వడం మరియు సవరించడం వంటి చర్యలకు సంజ్ఞలను కేటాయించండి.</string>
-    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_corner_touch" maxLength="41">9-పాయింట్ టచ్</string>
+    <string name="gestures_corner_touch_summary">స్క్రీన్ మూలల్లో టచ్ సంజ్ఞలను అనుమతించండి</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">పూర్తి స్క్రీన్ నావిగేషన్ డ్రాయర్</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">పైకి స్వైప్ చేయండి</string>
@@ -138,7 +137,7 @@
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="backup_limits_frequency">Frequency</string>
     <string name="backup_limits_lifetime">Lifetime</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="app_theme" maxLength="41">థీమ్</string>
     <string name="day_theme" maxLength="41">డే థీమ్</string>
     <string name="night_theme" maxLength="41">నైట్ థీమ్</string>
     <string name="language" maxLength="41">భాష</string>
@@ -151,13 +150,13 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">కదలుట</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">బ్లింక్ కాంతి</string>
     <string name="timeout_answer_text" maxLength="41">స్వయంచాలక ప్రదర్శన సమాధానం</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">వినియోగదారు ఇన్‌పుట్ లేకుండా స్వయంచాలకంగా సమాధానాన్ని చూపుతుంది. డెక్ ఎంపికల నుండి కాన్ఫిగర్ చేయండి.</string>
     <string name="select_locale_title">భాషను ఎంచుకోండి</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
+    <string name="software_render" maxLength="41">హార్డ్‌వేర్ రెండర్ కార్డ్‌ను నిలిపివేయండి</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display" maxLength="41">సురక్షిత ప్రదర్శన మోడ్</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">సింగిల్-ఫీల్డ్ సవరణ మోడ్‌ను నిలిపివేయండి</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">సెంటర్ సమలేఖనం</string>
@@ -168,7 +167,7 @@
     <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">బటన్ సమయం చూపించు</string>
     <string name="show_estimates_summ">సమాధానం బటన్లపై తదుపరి సమీక్ష సమయం చూపించు</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons" maxLength="41">పెద్ద జవాబు బటన్‌లను చూపండి</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">ఎగువ పట్టీని చూపు</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
@@ -177,8 +176,8 @@
     <string name="use_current" maxLength="41">కొత్త కార్డుల కోసం డెక్</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">టైమ్బాక్స్ సమయం పరిమితి</string>
-    <string name="new_timezone" maxLength="41">New timezone handling</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
+    <string name="new_timezone" maxLength="41">కొత్త టైమ్‌జోన్ హ్యాండ్లింగ్</string>
+    <string name="day_offset_with_description" maxLength="41">మరుసటి రోజు ప్రారంభించండి</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">%d hour past midnight</item>
         <item quantity="other">%d hours past midnight</item>
@@ -193,27 +192,27 @@
     <string name="custom_buttons_setting_if_room">గది ఉంటే చూపించు</string>
     <string name="custom_buttons_setting_menu_only">మెనూ మాత్రమే</string>
     <string name="reset_custom_buttons" maxLength="41">డిఫాల్ట్ కి రీసెట్</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
-    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
+    <string name="reset_settings_to_default">సెట్టింగులను డిఫాల్ట్‌గా రీసెట్ చేయండి</string>
+    <string name="reset">రీసెట్ చేయండి</string>
+    <string name="thirdparty_apps_title" maxLength="41">మూడవ పక్షం API యాప్‌లు</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">డెక్ శీర్షికను చూపించు</string>
     <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
+    <string name="paste_as_png" maxLength="41">క్లిప్‌బోర్డ్ చిత్రాలను PNGగా అతికించండి</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back" maxLength="41">వెనుకకు వెళ్లడానికి/నిష్క్రమించడానికి రెండుసార్లు వెనుకకు నొక్కండి</string>
+    <string name="exit_via_double_tap_back_summ">ప్రమాదవశాత్తూ సమీక్షకుడు లేదా యాప్ నుండి నిష్క్రమించడాన్ని నివారించడానికి</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files" maxLength="41">మీడియా దిగుమతులలో అన్ని ఫైల్‌లను అనుమతించండి</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">అనుకూల సమకాలీకరణ సర్వర్</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ఉపయోగం లో లేదు</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
@@ -221,12 +220,12 @@
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Url ని సమకాలీకరించండి</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">కీబోర్డ్</string>
     <string name="bluetooth">బ్లూటూత్</string>
     <string name="answer_buttons" maxLength="41">జవాబు బటన్లు</string>
     <string name="card" maxLength="41">కార్డ్</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="note" maxLength="41">గమనిక</string>
+    <string name="navigation" maxLength="41">నావిగేషన్</string>
     <string name="media" maxLength="41">Media</string>
     <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
@@ -242,7 +241,7 @@
     <string name="deck_conf_cram_reschedule_summ">ఈ డెక్లో నా సమాధానాల ఆధారంగా కార్డులను రిచెస్ చేయండి</string>
     <string name="deck_conf_cram_filter_2_check">రెండవ ఫిల్టర్‌ని ప్రారంభించండి</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">అనుకూల దశలను నిర్వచించండి</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">ప్రివ్యూ ఆలస్యం</string>
     <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroidని మెరుగుపరచడంలో సహాయపడండి!</string>
@@ -259,19 +258,19 @@
     <string name="pref_cat_about_title" maxLength="41">About</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
+    <string name="license">లైసెన్స్</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="binding_replace_key">Replace key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_gesture">సంజ్ఞను జోడించండి</string>
+    <string name="binding_replace_gesture">సంజ్ఞను భర్తీ చేయండి</string>
+    <string name="binding_add_key">ఒక కీని జోడించండి</string>
+    <string name="binding_replace_key">కీని భర్తీ చేయండి</string>
+    <string name="key_picker_default_press_key">ఒక కీని నొక్కండి</string>
+    <string name="binding_add_axis">జాయ్‌స్టిక్/మోషన్ కంట్రోలర్‌ను జోడించండి</string>
+    <string name="axis_picker_move_joystick">జాయ్‌స్టిక్/మోషన్ కంట్రోలర్‌ను తరలించండి</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_selection_title">కార్డ్ వైపు ఎంచుకోండి</string>
     <string name="card_side_question">ప్రశ్న</string>
     <string name="card_side_answer">సమాధానం</string>
     <string name="card_side_both">Question &amp; Answer</string>
@@ -284,9 +283,9 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
+    <string name="pref_cat_dev_options" maxLength="41">డెవలపర్ ఎంపికలు</string>
+    <string name="dev_options_enabled_pref" maxLength="41">డెవలపర్ ఎంపికలను ప్రారంభించండి</string>
+    <string name="disable_dev_options">డెవలపర్ ఎంపికలను నిలిపివేయండి</string>
     <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
     </string>
     <!-- #######################################################################################
@@ -302,9 +301,9 @@
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">ఉంచడానికి రోజువారీ బ్యాకప్‌లు</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">ఉంచడానికి వీక్లీ బ్యాకప్‌లు</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">ఉంచడానికి నెలవారీ బ్యాకప్‌లు</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
@@ -317,23 +316,23 @@
         <item quantity="other">%1$d files\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">ఉపయోగించని మీడియా ఫైల్‌లను తొలగించండి</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">ఉపయోగించని మీడియా ఫైల్‌లను తొలగించండి</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">బ్యాకప్‌లను తొలగించండి</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">బ్యాకప్‌లను తొలగించండి</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="progress__deleting_backups">బ్యాకప్‌లను తొలగిస్తోంది&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">సేకరణను తొలగించండి</string>
     <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">సేకరణను తొలగించండి</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
     <string name="progress__deleting_collection">Deleting collection&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">అన్నింటినీ తొలగించండి</string>
     <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">అన్నింటినీ తొలగించండి</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">యాప్ డేటాను తొలగించండి</string>
@@ -344,8 +343,8 @@
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">సేకరణ లేదు</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">లోపం</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>

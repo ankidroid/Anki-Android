@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Tavle</string>
     <string name="pref_cat_appearance" maxLength="41">Utseende</string>
     <string name="pref_cat_themes" maxLength="41">Tema</string>
-    <string name="pref_cat_fonts" maxLength="41">Skrifttyper</string>
     <string name="pref_cat_gestures" maxLength="41">Rørsler</string>
     <string name="pref_cat_controls" maxLength="41">Styring</string>
     <string name="pref_cat_advanced" maxLength="41">Avansert</string>

@@ -182,6 +182,14 @@ interface TestClass {
     fun Card.dueString() = this.dueString(col)
     fun Card.pureAnswer() = this.pureAnswer(col)
 
+    fun Note.load() = this.load(col)
+    fun Note.cards() = this.cards(col)
+    fun Note.firstCard() = this.firstCard(col)
+    fun Note.cids() = this.cids(col)
+    fun Note.numberOfCards() = this.numberOfCards(col)
+    fun Note.dupeOrEmpty() = this.dupeOrEmpty(col)
+    fun Note.flush() = this.flush(col)
+
     /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
      * takes care of updating the dispatcher used by CollectionManager as well.
      * * An argument could be made for using [StandardTestDispatcher] and

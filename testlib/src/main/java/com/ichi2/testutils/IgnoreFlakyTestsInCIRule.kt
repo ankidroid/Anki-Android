@@ -16,6 +16,7 @@
 
 package com.ichi2.testutils
 
+import com.ichi2.anki.BuildConfig
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -29,6 +30,16 @@ import java.util.*
 
 /**
  * An annotation which marks a test as flaky so it will be skipped if run under CI
+ *
+ * The test class or a subclass must contain the code:
+ *
+ * ```kotlin
+ *     @get:Rule
+ *     val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
+ * ```
+ *
+ * @see IgnoreFlakyTestsInCIRule
+ *
  * @param os The OS The test fails under (required)
  * @param message The message to display when the test is skipped
  */
@@ -52,7 +63,7 @@ class IgnoreFlakyTestsInCIRule : TestRule {
     }
 
     companion object {
-        val isRunningUnderCI = System.getenv("CI") == "true"
+        val isRunningUnderCI: Boolean = BuildConfig.CI
     }
 }
 
@@ -83,6 +94,6 @@ class IgnoreFlakyTestsTest {
     @Test
     @Flaky(os = OS.ALL)
     fun ensureFlakyTestsAreOnlyRunLocally() {
-        assertThat("Not running under CI", System.getenv("CI"), not(equalTo("true")))
+        assertThat("Not running under CI", BuildConfig.CI, not(equalTo("true")))
     }
 }

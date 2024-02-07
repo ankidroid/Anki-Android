@@ -55,7 +55,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     @Suppress("Deprecation") // Material dialog neutral button deprecation
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
-        super.onCreate(savedInstanceState)
+        super.onCreateDialog(savedInstanceState)
         val res = res()
         val dialog = MaterialDialog(requireActivity())
         val isLoggedIn = isLoggedIn()

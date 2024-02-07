@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">വൈറ്റ്ബോർഡ്</string>
     <string name="pref_cat_appearance" maxLength="41">രൂപം</string>
     <string name="pref_cat_themes" maxLength="41">തീമുകൾ</string>
-    <string name="pref_cat_fonts" maxLength="41">ഫോണ്ട്</string>
     <string name="pref_cat_gestures" maxLength="41">ആംഗ്യങ്ങൾ</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">സംഗീർണതയുള്ളവ</string>

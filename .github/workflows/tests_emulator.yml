@@ -21,7 +21,7 @@ concurrency:
 jobs:
   emulator_test:
     name: Android Emulator Test
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 75
     strategy:
       fail-fast: false
@@ -40,6 +40,12 @@ jobs:
         with:
           fetch-depth: 50
 
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
       - name: Configure JDK
         uses: actions/setup-java@v4
         with:
@@ -47,7 +53,7 @@ jobs:
           java-version: "21"
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
         timeout-minutes: 5
         with:
           # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
@@ -83,7 +89,7 @@ jobs:
 
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@v3
         with:
           timeout_minutes: 15
           retry_wait_seconds: 60

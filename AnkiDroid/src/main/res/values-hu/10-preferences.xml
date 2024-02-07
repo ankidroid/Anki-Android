@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Tábla</string>
     <string name="pref_cat_appearance" maxLength="41">Kinézet</string>
     <string name="pref_cat_themes" maxLength="41">Témák</string>
-    <string name="pref_cat_fonts" maxLength="41">Betűtípusok</string>
     <string name="pref_cat_gestures" maxLength="41">Gesztusok</string>
     <string name="pref_cat_controls" maxLength="41">Kezelőszervek</string>
     <string name="pref_cat_advanced" maxLength="41">Haladó</string>

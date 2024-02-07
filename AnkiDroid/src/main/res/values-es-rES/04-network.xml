@@ -64,7 +64,7 @@
     <string name="log_out">Cerrar sesión</string>
     <string name="reset_password">Restablecer contraseña</string>
     <string name="lost_mail_instructions">¿Olvidaste el correo electrónico?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">Iniciando sesión</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opciones para XXX</string>
     <string name="sync_title">Sincronización</string>

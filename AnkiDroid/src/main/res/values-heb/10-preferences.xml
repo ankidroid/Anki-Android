@@ -64,7 +64,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">לוח</string>
     <string name="pref_cat_appearance" maxLength="41">מראה</string>
     <string name="pref_cat_themes" maxLength="41">ערכות עיצוב</string>
-    <string name="pref_cat_fonts" maxLength="41">גופנים</string>
     <string name="pref_cat_gestures" maxLength="41">מחוות</string>
     <string name="pref_cat_controls" maxLength="41">פקדים</string>
     <string name="pref_cat_advanced" maxLength="41">מתקדם</string>

@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Tableau blanc</string>
     <string name="pref_cat_appearance" maxLength="41">Affichage</string>
     <string name="pref_cat_themes" maxLength="41">Thèmes</string>
-    <string name="pref_cat_fonts" maxLength="41">Polices</string>
     <string name="pref_cat_gestures" maxLength="41">Gestes</string>
     <string name="pref_cat_controls" maxLength="41">Contrôles</string>
     <string name="pref_cat_advanced" maxLength="41">Avancé</string>
@@ -151,7 +150,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrer</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lumière de notification</string>
     <string name="timeout_answer_text" maxLength="41">Affichage automatique de la réponse</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Afficher la réponse automatiquement sans intervention de l\'utilisateur. Configurer à partir des options du deck.</string>
     <string name="select_locale_title">Sélectionnez la langue</string>
     <string name="software_render" maxLength="41">Désactiver le rendu matériel de carte</string>
     <string name="software_render_summ">Le rendu matériel est plus rapide mais peut rencontrer des problèmes, en particulier sur Android 8/8.1. Si vous ne pouvez pas visualiser certaines parties de l\'interface de révision des cartes, essayez d\'activer cette option.</string>
@@ -242,8 +241,8 @@
     <string name="deck_conf_cram_reschedule_summ">Replanifier les cartes selon mes réponses dans ce paquet</string>
     <string name="deck_conf_cram_filter_2_check">Activer le second filtrage</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Définir le pas personnalisé</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Retards dans la prévisualisation</string>
+    <string name="deck_conf_cram_preview_delays_summ">Les délais sont exprimés en secondes. 0 remet la carte dans le paquet d\'origine.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Aidez à améliorer AnkiDroid !</string>
     <string name="analytics_title" maxLength="41">Partager l\'utilisation de la fonctionnalité</string>

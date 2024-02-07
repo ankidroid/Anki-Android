@@ -228,8 +228,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         NoteEditorActivityResultCallback {
             // Model can change regardless of exit type - update ourselves and CardBrowser
             mReloadRequired = true
-            mEditorNote!!.reloadModel()
-            if (mCurrentEditedCard == null || !mEditorNote!!.cids()
+            mEditorNote!!.reloadModel(getColUnsafe)
+            if (mCurrentEditedCard == null || !mEditorNote!!.cids(getColUnsafe)
                 .contains(mCurrentEditedCard!!.id)
             ) {
                 if (!addNote) {
@@ -290,8 +290,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return
         }
         deckId = deck.deckId
-        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner()
-        mDeckSpinnerSelection!!.selectDeckById(deck.deckId, false)
+        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner(getColUnsafe)
+        launchCatchingTask {
+            mDeckSpinnerSelection!!.selectDeckById(deckId, false)
+        }
     }
 
     override val subtitleText: String
@@ -552,13 +554,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         mDeckSpinnerSelection =
             DeckSpinnerSelection(
                 this,
-                col,
                 findViewById(R.id.note_deck_spinner),
                 showAllDecks = false,
                 alwaysShowDefault = true,
                 showFilteredDecks = false
             )
-        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner()
+        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner(col)
         deckId = intent.getLongExtra(EXTRA_DID, deckId)
         val getTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW)
         setDid(mEditorNote)
@@ -666,7 +667,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
-                    mDeckSpinnerSelection!!.displayDeckSelectionDialog(getColUnsafe)
+                    launchCatchingTask { mDeckSpinnerSelection!!.displayDeckSelectionDialog() }
                 }
             KeyEvent.KEYCODE_L -> if (event.isCtrlPressed) {
                 showCardTemplateEditor()
@@ -887,7 +888,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Save deck to model
             mEditorNote!!.notetype.put("did", deckId)
             // Save tags to model
-            mEditorNote!!.setTagsFromStr(tagsAsString(mSelectedTags!!))
+            mEditorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(mSelectedTags!!))
             val tags = JSONArray()
             for (t in mSelectedTags!!) {
                 tags.put(t)
@@ -910,7 +911,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             val oldModel = if (mCurrentEditedCard == null) null else mCurrentEditedCard!!.model(getColUnsafe)
             if (newModel != oldModel) {
                 mReloadRequired = true
-                if (mModelChangeCardMap!!.size < mEditorNote!!.numberOfCards() || mModelChangeCardMap!!.containsValue(
+                if (mModelChangeCardMap!!.size < mEditorNote!!.numberOfCards(getColUnsafe) || mModelChangeCardMap!!.containsValue(
                         null
                     )
                 ) {
@@ -953,7 +954,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             // added tag?
             for (t in mSelectedTags!!) {
-                modified = modified || !mEditorNote!!.hasTag(t)
+                modified = modified || !mEditorNote!!.hasTag(getColUnsafe, tag = t)
             }
             // removed tag?
             modified = modified || mEditorNote!!.tags.size > mSelectedTags!!.size
@@ -963,7 +964,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 return
             }
 
-            mEditorNote!!.setTagsFromStr(tagsAsString(mSelectedTags!!))
+            mEditorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(mSelectedTags!!))
             changed = true
 
             if (caller != CALLER_PREVIEWER_EDIT) {
@@ -973,7 +974,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
             withProgress {
                 undoableOp {
-                    updateNote(mCurrentEditedCard!!.note(this))
+                    updateNote(mCurrentEditedCard!!.note())
                 }
                 closeNoteEditor()
             }
@@ -983,6 +984,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /**
      * Change the note type from oldModel to newModel, handling the case where a full sync will be required
      */
+    @NeedsTest("test changing note type")
     private fun changeNoteType(oldNotetype: NotetypeJson, newNotetype: NotetypeJson) = launchCatchingTask {
         if (!userAcceptsSchemaChange()) return@launchCatchingTask
 
@@ -991,7 +993,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             notetypes.change(oldNotetype, noteId, newNotetype, mModelChangeFieldMap!!, mModelChangeCardMap!!)
         }
         // refresh the note object to reflect the database changes
-        mEditorNote!!.load()
+        withCol { mEditorNote!!.load() }
         // close note editor
         closeNoteEditor()
     }
@@ -1683,7 +1685,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Update the field in the Note so we can run a dupe check on it.
         updateField(field)
         // 1 is empty, 2 is dupe, null is neither.
-        val dupeCode = mEditorNote!!.dupeOrEmpty()
+        val dupeCode = mEditorNote!!.dupeOrEmpty(getColUnsafe)
         // Change bottom line color of text field
         if (dupeCode == DupeOrEmpty.DUPE) {
             field!!.setDupeStyle()
@@ -1711,32 +1713,31 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun setDid(note: Note?) {
-        // If the target deck ID has already been set, we use that value and avoid trying to
-        // determine what it should be again. An existing value means we are resuming the activity
-        // where the target deck was already decided by the user.
-        if (deckId != 0L) {
-            mDeckSpinnerSelection!!.selectDeckById(deckId, false)
-            return
-        }
-        if (note == null || addNote || mCurrentEditedCard == null) {
-            val model = getColUnsafe.notetypes.current()
-            if (getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-                deckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1
-                if (getColUnsafe.decks.isDyn(deckId)) {
-                    /*
-                     * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
-                     * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been
-                     * selected previously in the activity.
-                     */
-                    deckId = 1
-                }
-            } else {
-                deckId = model.did
+        fun calculateDeckId(): DeckId {
+            if (deckId != 0L) return deckId
+            if (note != null && !addNote && mCurrentEditedCard != null) {
+                return mCurrentEditedCard!!.did
             }
-        } else {
-            deckId = mCurrentEditedCard!!.did
+
+            if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
+                return getColUnsafe.notetypes.current().did
+            }
+
+            val currentDeckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1L
+            return if (getColUnsafe.decks.isDyn(currentDeckId)) {
+                /*
+                 * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
+                 * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been
+                 * selected previously in the activity.
+                 */
+                1
+            } else {
+                currentDeckId
+            }
         }
-        mDeckSpinnerSelection!!.selectDeckById(deckId, false)
+
+        deckId = calculateDeckId()
+        launchCatchingTask { mDeckSpinnerSelection!!.selectDeckById(deckId, false) }
     }
 
     /** Refreshes the UI using the currently selected model as a template  */
@@ -1748,7 +1749,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun setNote(note: Note?, changeType: FieldChangeType) {
         mEditorNote = if (note == null || addNote) {
             val model = getColUnsafe.notetypes.current()
-            Note(getColUnsafe, model)
+            Note(model)
         } else {
             note
         }
@@ -2009,7 +2010,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private val currentlySelectedNotetype: NotetypeJson?
-        get() = getColUnsafe.notetypes.get(mAllModelIds!![mNoteTypeSpinner!!.selectedItemPosition])
+        get() = mNoteTypeSpinner?.selectedItemPosition?.let { position ->
+            mAllModelIds?.get(position)?.let { modelId ->
+                getColUnsafe.notetypes.get(modelId)
+            }
+        }
 
     /**
      * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
@@ -2126,7 +2131,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 val templatesLength = tmpls.length()
                 mModelChangeCardMap = HashUtil.hashMapInit(templatesLength)
                 for (i in 0 until templatesLength) {
-                    if (i < mEditorNote!!.numberOfCards()) {
+                    if (i < mEditorNote!!.numberOfCards(getColUnsafe)) {
                         mModelChangeCardMap!![i] = i
                     } else {
                         mModelChangeCardMap!![i] = null

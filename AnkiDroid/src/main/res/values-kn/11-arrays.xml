@@ -96,10 +96,10 @@
     <string name="gesture_page_up">ಪುಟ ಮೇಲಕ್ಕೆ</string>
     <string name="gesture_page_down">ಪುಟ ಕೆಳಗೆ</string>
     <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
+    <string name="gesture_toggle_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ಅನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
     <string name="gesture_show_hint">ಸುಳಿವು ತೋರಿಸಿ</string>
     <string name="gesture_show_all_hints">ಎಲ್ಲಾ ಸುಳಿವುಗಳನ್ನು ತೋರಿಸಿ</string>
     <string name="record_voice">ಧ್ವನಿಯನ್ನು ರೆಕಾರ್ಡ್ ಮಾಡಿ</string>
     <string name="replay_voice">ರಿಪ್ಲೇ ವಾಯ್ಸ್</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="save_voice">ರೆಕಾರ್ಡಿಂಗ್ ಉಳಿಸಿ</string>
 </resources>

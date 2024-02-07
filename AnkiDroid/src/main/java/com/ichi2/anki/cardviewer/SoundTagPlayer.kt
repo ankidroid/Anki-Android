@@ -74,13 +74,13 @@ class SoundTagPlayer(private val soundUriBase: String) {
                     continuation.resume(Unit)
                 }
             }
-
+            val soundUri = Uri.parse(soundUriBase + tag.filename)
             setAudioAttributes(music)
             setOnErrorListener { mp, what, extra ->
                 Timber.w("Media error %d", what)
                 abandonAudioFocus()
                 val continuationBehavior =
-                    soundErrorListener.onMediaPlayerError(mp, what, extra, tag)
+                    soundErrorListener.onMediaPlayerError(mp, what, extra, soundUri)
                 // 15103: setOnErrorListener can be invoked after task cancellation
                 if (!continuation.isCompleted) {
                     continuation.resumeWithException(SoundException(continuationBehavior))
@@ -88,7 +88,6 @@ class SoundTagPlayer(private val soundUriBase: String) {
                 true // do not call onCompletionListen
             }
 
-            val soundUri = Uri.parse(soundUriBase + tag.filename)
             try {
                 awaitSetDataSource(soundUri)
             } catch (e: Exception) {
@@ -151,7 +150,11 @@ class SoundTagPlayer(private val soundUriBase: String) {
      * @throws java.io.IOException: Prepare failed.: status=0x1
      */
     private fun MediaPlayer.awaitSetDataSource(uri: Uri) {
-        setDataSource(AnkiDroidApp.instance.applicationContext, uri)
+        val path = uri.encodedFragment?.let { fragment ->
+            "${uri.encodedPath}#$fragment"
+        } ?: uri.encodedPath
+
+        setDataSource(path)
         prepare()
     }
 

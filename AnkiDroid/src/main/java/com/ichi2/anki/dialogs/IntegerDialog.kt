@@ -16,17 +16,16 @@
 
 package com.ichi2.anki.dialogs
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.InputType
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.callbacks.onShow
-import com.afollestad.materialdialogs.input.getInputField
-import com.afollestad.materialdialogs.input.input
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.utils.contentNullable
-import com.ichi2.utils.displayKeyboard
+import com.ichi2.utils.input
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import java.util.function.Consumer
 
 open class IntegerDialog : AnalyticsDialogFragment() {
@@ -45,24 +44,22 @@ open class IntegerDialog : AnalyticsDialogFragment() {
         arguments = args
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
-        super.onCreate(savedInstanceState)
-        @SuppressLint("CheckResult")
-        val show = MaterialDialog(requireActivity()).show {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
+        super.onCreateDialog(savedInstanceState)
+        return AlertDialog.Builder(requireActivity()).show {
             title(text = requireArguments().getString("title")!!)
             positiveButton(R.string.dialog_ok)
             negativeButton(R.string.dialog_cancel)
-            input(
-                hint = requireArguments().getString("prompt"),
-                inputType = InputType.TYPE_CLASS_NUMBER,
-                maxLength = requireArguments().getInt("digits")
-            ) { _: MaterialDialog?, text: CharSequence -> consumer!!.accept(text.toString().toInt()) }
-            contentNullable(requireArguments().getString("content"))
-            onShow {
-                displayKeyboard(getInputField())
-            }
+            setMessage(requireArguments().getString("content"))
+            setView(R.layout.dialog_generic_text_input)
+        }.input(
+            hint = requireArguments().getString("prompt"),
+            inputType = InputType.TYPE_CLASS_NUMBER,
+            maxLength = requireArguments().getInt("digits"),
+            displayKeyboard = true
+        ) { _, text: CharSequence ->
+            consumer!!.accept(text.toString().toInt())
+            dismiss()
         }
-
-        return show
     }
 }

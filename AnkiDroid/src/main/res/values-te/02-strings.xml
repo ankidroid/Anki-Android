@@ -61,7 +61,7 @@
     <string name="no_tags">మీరు ఇంకా ఏ ట్యాగ్లను జోడించలేదు</string>
     <string name="updated_version">సంస్కరణకు నవీకరించబడింది %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">వైట్‌బోర్డ్‌ను సేవ్ చేయండి</string>
     <string name="enable_stylus">Enable stylus writing</string>
     <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">వైట్బోర్డ్ ప్రారంభించండి</string>
@@ -97,11 +97,11 @@
         <item>Interval</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Card Modified</item>
+        <item>కార్డ్ సవరించబడింది</item>
         <item>Created</item>
         <item>Note Modified</item>
     </string-array>
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags">జెండాలు</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
     <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
@@ -114,12 +114,12 @@
     <string name="cardeditor_title_edit_card">గమనికను సవరించండి</string>
     <string name="discard_unsaved_changes">ప్రస్తుత ఇన్పుట్ను మూసివేయవద్దు మరియు దానిని కోల్పోదామా?</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_first_field">మొదటి ఫీల్డ్ ఖాళీగా ఉంది</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">గమనికను సేవ్ చేస్తోంది</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">నోట్ రకాన్ని సేవ్ చేస్తోంది</string>
     <string name="save">సేవ్</string>
     <string name="close">మూయుట</string>
     <string name="select">ఎంచుకోండి</string>
@@ -137,7 +137,7 @@
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid కార్డు</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_copy_note">నోట్ కాపీ</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">పురోగతిని రీసెట్ చేయండి</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
@@ -157,7 +157,7 @@
     <string name="import_message_replace_confirm">ఇది మీ ప్రస్తుత సేకరణను తొలగిస్తుంది మరియు ఫైల్ యొక్క డేటాను భర్తీ చేస్తుంది %s</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">లోపం</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
@@ -179,10 +179,10 @@
         [2] %2$s
         ]]></string>
     <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="export_choice_save_to">కు సేవ్ చేయండి</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ఎంపికలు</string>
+    <string name="menu__deck_options">డెక్ ఎంపికలు</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">అధ్యయన ఎంపికలు</string>
     <string name="select_tts">TTS భాషను సెట్ చేయండి</string>
     <string name="custom_study">అనుకూల అధ్యయనం</string>
     <string name="more_options">ఎక్కువ</string>
@@ -206,19 +206,19 @@
     <string name="web_page_error">Error loading page: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Select image</string>
+    <string name="background_image_title">నేపథ్య</string>
+    <string name="choose_an_image">చిత్రాన్ని ఎంచుకోండి</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
+    <string name="restore_default">డిఫాల్ట్‌ని పునరుద్ధరించండి</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
     <string name="basic_answer_sample_text">an example</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">ఖాళీ</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
+    <string name="white_board_image_save_failed">వైట్‌బోర్డ్ చిత్రాన్ని సేవ్ చేయడంలో విఫలమైంది. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_pen_color">వైట్‌బోర్డ్ పెన్ రంగు</string>
+    <string name="title_whiteboard_editor">వైట్‌బోర్డ్ ఎడిటర్</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
@@ -233,27 +233,27 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Search decks</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="search_decks">సెర్చ్ డెక్స్</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">వలస పురోగతిని చూపు</string>
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
+    <string name="menu_font_size">ఫాంట్ పరిమాణం</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">టూల్ బార్ చూపించు</string>
+    <string name="format_insert_bold">బోల్డ్‌గా ఫార్మాట్ చేయండి</string>
+    <string name="format_insert_italic">ఇటాలిక్‌గా ఫార్మాట్ చేయండి</string>
+    <string name="format_insert_underline">అండర్‌లైన్‌గా ఫార్మాట్ చేయండి</string>
+    <string name="insert_horizontal_line">క్షితిజ సమాంతర రేఖను చొప్పించండి</string>
+    <string name="insert_heading">శీర్షికను చొప్పించండి</string>
+    <string name="format_font_size">ఫాంట్ పరిమాణాన్ని మార్చండి</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="add_toolbar_item">టూల్‌బార్ అంశాన్ని సృష్టించండి</string>
+    <string name="edit_toolbar_item">టూల్‌బార్ అంశాన్ని సవరించండి</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
+    <string name="remove_toolbar_item">టూల్‌బార్ అంశాన్ని తీసివేయాలా?</string>
     <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
@@ -265,25 +265,25 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="invalid_email">చెల్లుబాటు అయ్యే ఇమెయిల్ను నమోదు చేయండి</string>
+    <string name="password_empty">పాస్‌వర్డ్ అవసరం</string>
+    <string name="back_pressed_once">నిష్క్రమించడానికి మళ్లీ వెనుకకు నొక్కండి</string>
+    <string name="back_pressed_once_reviewer">తిరిగి రావడానికి మళ్లీ వెనుకకు నొక్కండి</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
+    <string name="download_deck">డౌన్‌లోడ్ డెక్</string>
+    <string name="try_again">మళ్లీ ప్రయత్నించండి</string>
+    <string name="cancel_download">డౌన్‌లోడ్ రద్దు చేయండి</string>
+    <string name="cancel_download_question_title">డౌన్‌లోడ్ రద్దు చేయండి?</string>
+    <string name="downloading_file">%sని డౌన్‌లోడ్ చేస్తోంది</string>
+    <string name="import_deck">దిగుమతి డెక్</string>
+    <string name="something_wrong">ఏదో తప్పు జరిగింది, దయచేసి మళ్లీ ప్రయత్నించండి</string>
+    <string name="download_failed">డౌన్ లోడ్ విఫలం</string>
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="search_using_deck_name">డెక్ పేరును ఉపయోగించి శోధించండి</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home">Home</string>
+    <string name="home">హోమ్</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
@@ -295,8 +295,8 @@
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
+    <string name="scoped_storage_learn_more">ఇంకా నేర్చుకో</string>
+    <string name="scoped_storage_postpone">వాయిదా వేయండి</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
@@ -326,8 +326,8 @@
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">కార్డులు</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">గమనికలు</string>
     <string name="toggle_cards_notes">Toggle Cards/Notes</string>
     <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
@@ -337,7 +337,7 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="audio_saved">Recording saved</string>
+    <string name="audio_saved">రికార్డింగ్ సేవ్ చేయబడింది</string>
     <string name="deleting_selected_notes">Deleting selected notes</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
     </string>

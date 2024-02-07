@@ -64,7 +64,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Tablica</string>
     <string name="pref_cat_appearance" maxLength="41">Wygląd</string>
     <string name="pref_cat_themes" maxLength="41">Motywy</string>
-    <string name="pref_cat_fonts" maxLength="41">Czcionki</string>
     <string name="pref_cat_gestures" maxLength="41">Gesty</string>
     <string name="pref_cat_controls" maxLength="41">Sterowanie</string>
     <string name="pref_cat_advanced" maxLength="41">Zaawansowane</string>

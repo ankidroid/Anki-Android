@@ -35,7 +35,7 @@ jobs:
           java-version: "21"
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
         timeout-minutes: 5
         with:
           # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
@@ -54,7 +54,7 @@ jobs:
 
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@v3
         with:
           timeout_minutes: 10
           retry_wait_seconds: 60
@@ -62,7 +62,7 @@ jobs:
           command: ./gradlew :AnkiDroid:compilePlayDebugJavaWithJavac compileLint lint-rules:compileTestJava --daemon
 
       - name: Run Lint Debug
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           # "lint" is run under the 'Amazon' flavor, so slow in CI
           # "lintPlayRelease" doesn't test androidTest

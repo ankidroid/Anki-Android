@@ -64,7 +64,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Дошка</string>
     <string name="pref_cat_appearance" maxLength="41">Зовнішній вигляд</string>
     <string name="pref_cat_themes" maxLength="41">Теми</string>
-    <string name="pref_cat_fonts" maxLength="41">Шрифти</string>
     <string name="pref_cat_gestures" maxLength="41">Жести</string>
     <string name="pref_cat_controls" maxLength="41">Керування</string>
     <string name="pref_cat_advanced" maxLength="41">Розширені налаштування</string>

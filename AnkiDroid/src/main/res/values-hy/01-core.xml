@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Կապուկներ</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Չննիչ</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Զննիչ</string>
     <string name="statistics">Վիճակագրություն</string>
     <string name="settings">Կարգավորումներ</string>
     <string name="help">Օգնություն</string>
@@ -122,8 +122,8 @@
     <string name="custom_study_deck_name">Ուսուցման լրացուցիչ աշխատաշրջան</string>
     <string name="custom_study_deck_exists">Սկզբում վերանվանել լրացուցիչ ուսուցման առկա կապուկը</string>
     <string name="empty_deck">Այս կապուկը դատարկ է</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Կապուկների որոնում</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Կապուկների որոնում</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_no_cards_due">Կրկնելիք քարտեր դեռ չկան</string>
     <string name="sd_card_not_mounted">Սարքի պահեստը տեղադրված չէ</string>
@@ -146,15 +146,15 @@
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Անհրաժեշտ է քարտի առնվազն մեկ տեսակ</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">Սա կստեղծի %1$d քարտ: Շարունակե՞լ:</item>
+        <item quantity="other">Սա կստեղծի %1$d քարտ: Շարունակե՞լ:</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Ջնջե՞լ «%2$s» քարտերի տեսակը և նրա «%1$d» քարտը:</item>
         <item quantity="other">Ջնջե՞լ «%2$s» քարտերի տեսակը և նրա «%1$d» քարտը:</item>
     </plurals>
     <string name="invalid_template">Չստացվեց արարել քարտը</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_would_delete_note">Քարտի այս տեսակի հեռացումը կբերի մեկ կամ մի քանի գրառումների ջնջմանը: Սկզբում քարտի նոր տեսակ ստեղծեք ու պահպանեք այն:</string>
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->

@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">श्वेतपट्ट</string>
     <string name="pref_cat_appearance" maxLength="41">दिखावट</string>
     <string name="pref_cat_themes" maxLength="41">थीम</string>
-    <string name="pref_cat_fonts" maxLength="41">फ़ॉन्ट</string>
     <string name="pref_cat_gestures" maxLength="41">इशारे</string>
     <string name="pref_cat_controls" maxLength="41">नियंत्रणे </string>
     <string name="pref_cat_advanced" maxLength="41">उन्नत</string>

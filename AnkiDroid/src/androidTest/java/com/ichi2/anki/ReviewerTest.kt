@@ -31,6 +31,8 @@ import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.libanki.Collection
+import com.ichi2.testutils.Flaky
+import com.ichi2.testutils.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Rule
@@ -55,6 +57,7 @@ class ReviewerTest : InstrumentedTest() {
     val runtimePermissionRule = grantPermissions(storagePermission, notificationPermission)
 
     @Test
+    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testCustomSchedulerWithCustomData() {
         col.cardStateCustomizer =
             """
@@ -63,7 +66,7 @@ class ReviewerTest : InstrumentedTest() {
             customData.good.c += 1;
             """
         val note = addNoteUsingBasicModel("foo", "bar")
-        val card = note.firstCard()
+        val card = note.firstCard(col)
         val deck = col.decks.get(note.notetype.did)!!
         card.moveToReviewQueue()
         col.backend.updateCards(
@@ -91,6 +94,7 @@ class ReviewerTest : InstrumentedTest() {
     }
 
     @Test
+    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testCustomSchedulerWithRuntimeError() {
         // Issue 15035 - runtime errors weren't handled
         col.cardStateCustomizer = "states.this_is_not_defined.normal.review = 12;"

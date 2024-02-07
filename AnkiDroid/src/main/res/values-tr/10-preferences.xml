@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Yazı tahtası</string>
     <string name="pref_cat_appearance" maxLength="41">Görünüş</string>
     <string name="pref_cat_themes" maxLength="41">Temalar</string>
-    <string name="pref_cat_fonts" maxLength="41">Fontlar</string>
     <string name="pref_cat_gestures" maxLength="41">Jestler</string>
     <string name="pref_cat_controls" maxLength="41">Kontroller</string>
     <string name="pref_cat_advanced" maxLength="41">Gelişmiş</string>

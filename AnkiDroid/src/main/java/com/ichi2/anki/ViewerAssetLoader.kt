@@ -20,6 +20,7 @@ import android.webkit.WebResourceResponse
 import androidx.webkit.WebViewAssetLoader
 import com.ichi2.utils.AssetHelper.guessMimeType
 import timber.log.Timber
+import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
 
@@ -29,6 +30,9 @@ fun Context.getViewerAssetLoader(domain: String): WebViewAssetLoader {
         .setHttpAllowed(true)
         .setDomain(domain)
         .addPathHandler("/") { path: String ->
+            if (path == "favicon.ico") {
+                return@addPathHandler WebResourceResponse(null, null, ByteArrayInputStream(ByteArray(0)))
+            }
             try {
                 val file = File(mediaDir, path)
                 val inputStream = FileInputStream(file)

@@ -61,7 +61,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">ホワイトボード機能</string>
     <string name="pref_cat_appearance" maxLength="41">外観</string>
     <string name="pref_cat_themes" maxLength="41">テーマ</string>
-    <string name="pref_cat_fonts" maxLength="41">フォント</string>
     <string name="pref_cat_gestures" maxLength="41">ジェスチャー</string>
     <string name="pref_cat_controls" maxLength="41">操作</string>
     <string name="pref_cat_advanced" maxLength="41">高度な設定</string>
@@ -149,8 +148,8 @@
     <string name="notification_minimum_cards_due">待機状態の時と、 課題のカードが%d枚を超えている時</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">振動でも通知</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LEDランプ点滅でも通知</string>
-    <string name="timeout_answer_text" maxLength="41">解答の自動表示</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_text" maxLength="41">カードの自動送りを許可</string>
+    <string name="timeout_answer_summ2">解答の表示や回答などのアクションをユーザーの操作なしで自動的に実行する機能を使用可能にします。待ち時間など自動送り機能の具体的な設定については、各デッキの「デッキオプション」→「カードの自動送り」カテゴリの各オプションで調整してください</string>
     <string name="select_locale_title">言語を選択</string>
     <string name="software_render" maxLength="41">カードのハードウェアレンダリングを無効にする</string>
     <string name="software_render_summ">ハードウェアによるレンダリングは高速ですが、問題が発生する可能性があります（特にAndroid 8/8.1において）。 カード学習画面のユーザーインターフェースの一部が表示されない場合は、この設定を試してみてください</string>
@@ -161,9 +160,9 @@
     <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め問題箇所」のコンテキストメニューを許可します</string>
     <string name="vertical_centering" maxLength="41">上下中央揃え</string>
     <string name="vertical_centering_summ">コンテンツを上下方向の中央に配置します</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔 (ミリ秒)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔（ミリ秒）</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、意図せずに回答してしまう操作ミスを防ぎます</string>
-    <string name="pref_show_answer_long_press" maxLength="41">「解答を表示」するための長押し時間 (ミリ秒)</string>
+    <string name="pref_show_answer_long_press" maxLength="41">「解答を表示」ボタンが必要とする長押し時間（ミリ秒）</string>
     <string name="pref_show_answer_long_press_summary">〈「解答を表示」ボタンが押された〉と判定するために必要とする、ボタンを押し続ける時間。この時間より短い（＝素早い）接触を無視します。揺れのある環境や手の震えなどで意図せず「解答を表示」ボタンを押してしまいがちな場合に調整すると効果的です。デフォルトでは0ミリ秒（つまり、長押し不要）です</string>
     <string name="show_estimates" maxLength="41">回答ボタンに学習間隔を表示</string>
     <string name="show_estimates_summ">次の学習までの時間の間隔を回答ボタンの中に表示します</string>
@@ -240,8 +239,8 @@
     <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
     <string name="deck_conf_cram_filter_2_check">２番目のフィルターを有効にする</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">独自の習得ステップを設定</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">再表示までの間隔</string>
+    <string name="deck_conf_cram_preview_delays_summ">「回答後にそのカードを再表示するまでの時間の間隔」を秒単位で指定します。0とした場合、再表示を希望していないと解釈し、回答後にそのカードを元のデッキに戻します</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title" maxLength="41">設定の情報提供を許可する</string>

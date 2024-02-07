@@ -29,7 +29,9 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
+import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.Card
@@ -313,7 +315,7 @@ class SoundPlayer(
         @NeedsTest("ensure the lifecycle is subscribed to in a Reviewer")
         fun newInstance(viewer: AbstractFlashcardViewer, soundUriBase: String): SoundPlayer {
             val scope = viewer.lifecycleScope
-            val soundErrorListener = viewer.createSoundErrorListener(soundUriBase)
+            val soundErrorListener = viewer.createSoundErrorListener()
             // tts can take a long time to init, this defers the operation until it's needed
             val tts = scope.async(Dispatchers.IO) { AndroidTtsPlayer.createInstance(viewer, viewer.lifecycleScope) }
 
@@ -335,7 +337,7 @@ interface SoundErrorListener {
     fun onError(uri: Uri): SoundErrorBehavior
 
     @CheckResult
-    fun onMediaPlayerError(mp: MediaPlayer?, which: Int, extra: Int, tag: SoundOrVideoTag): SoundErrorBehavior
+    fun onMediaPlayerError(mp: MediaPlayer?, which: Int, extra: Int, uri: Uri): SoundErrorBehavior
     fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean)
 }
 
@@ -350,7 +352,7 @@ enum class SoundErrorBehavior {
     RETRY_AUDIO
 }
 
-fun AbstractFlashcardViewer.createSoundErrorListener(baseUri: String): SoundErrorListener {
+fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
     val activity = this
     return object : SoundErrorListener {
         private var handledError: HashSet<String> = hashSetOf()
@@ -368,20 +370,16 @@ fun AbstractFlashcardViewer.createSoundErrorListener(baseUri: String): SoundErro
             mp: MediaPlayer?,
             which: Int,
             extra: Int,
-            tag: SoundOrVideoTag
+            uri: Uri
         ): SoundErrorBehavior {
             Timber.w("Media Error: (%d, %d)", which, extra)
-            val uri = try {
-                Uri.parse(baseUri + tag.filename)
-            } catch (e: Exception) {
-                Timber.w(e)
-                return CONTINUE_AUDIO
-            }
             return onError(uri)
         }
 
         override fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean) {
-            AbstractFlashcardViewer.mMissingImageHandler.processTtsFailure(activity, error, isAutomaticPlayback)
+            AbstractFlashcardViewer.mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
+                activity.showSnackbar(error.localizedErrorMessage(activity))
+            }
         }
 
         override fun onError(uri: Uri): SoundErrorBehavior {
@@ -395,7 +393,7 @@ fun AbstractFlashcardViewer.createSoundErrorListener(baseUri: String): SoundErro
                     return RETRY_AUDIO
                 }
                 // just doesn't exist - process the error
-                AbstractFlashcardViewer.mMissingImageHandler.processMissingSound(file) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
+                AbstractFlashcardViewer.mediaErrorHandler.processMissingSound(file) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
                 return CONTINUE_AUDIO
             } catch (e: Exception) {
                 Timber.w(e)

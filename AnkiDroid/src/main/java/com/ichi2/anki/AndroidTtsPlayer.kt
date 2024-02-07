@@ -21,12 +21,8 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
 import androidx.annotation.CheckResult
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AndroidTtsError.TtsErrorCode
 import com.ichi2.compat.UtteranceProgressListenerCompat
-import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.TtsPlayer
 import com.ichi2.libanki.TtsPlayer.TtsCompletionStatus
@@ -40,8 +36,7 @@ import timber.log.Timber
 import kotlin.coroutines.resume
 
 class AndroidTtsPlayer(private val context: Context, private val voices: List<TtsVoice>) :
-    TtsPlayer(),
-    DefaultLifecycleObserver {
+    TtsPlayer() {
 
     private lateinit var scope: CoroutineScope
 
@@ -83,26 +78,12 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
         }
     }
 
-    override fun onCreate(owner: LifecycleOwner) {
-        owner.lifecycleScope.launch { init(this) }
-        super.onCreate(owner)
-    }
-
-    override fun onDestroy(owner: LifecycleOwner) {
-        super.onDestroy(owner)
-        close()
-    }
-
-    override fun get_available_voices(): List<TtsVoice> {
+    override fun getAvailableVoices(): List<TtsVoice> {
         return this.voices
     }
 
-    override suspend fun play(tag: AvTag): TtsCompletionStatus {
-        if (tag !is TTSTag) {
-            Timber.w("Expected TTS Tag, got %s", tag)
-            return AndroidTtsError.failure(TtsErrorCode.APP_UNEXPECTED_TAG)
-        }
-        val match = voice_for_tag(tag)
+    override suspend fun play(tag: TTSTag): TtsCompletionStatus {
+        val match = voiceForTag(tag)
         if (match == null) {
             Timber.w("could not find voice for %s", tag)
             return AndroidTtsError.failure(TtsErrorCode.APP_MISSING_VOICE)
@@ -191,7 +172,6 @@ class AndroidTtsError(@Suppress("unused") val errorCode: TtsErrorCode) : TtsPlay
         ERROR_OUTPUT(TextToSpeech.ERROR_OUTPUT),
         ERROR_SERVICE(TextToSpeech.ERROR_SERVICE),
         APP_UNKNOWN(0),
-        APP_UNEXPECTED_TAG(1),
         APP_MISSING_VOICE(2),
         APP_INVALID_VOICE(3),
         APP_SPEECH_RATE_FAILED(4),
@@ -211,7 +191,6 @@ class AndroidTtsError(@Suppress("unused") val errorCode: TtsErrorCode) : TtsPlay
                     ERROR_NOT_INSTALLED_YET -> "ERROR_NOT_INSTALLED_YET"
                     ERROR_OUTPUT -> "ERROR_OUTPUT"
                     ERROR_SERVICE -> "ERROR_SERVICE"
-                    APP_UNEXPECTED_TAG -> "APP_UNEXPECTED_TAG"
                     APP_MISSING_VOICE -> "APP_MISSING_VOICE"
                     APP_INVALID_VOICE -> "APP_INVALID_VOICE"
                     APP_SPEECH_RATE_FAILED -> "APP_SPEECH_RATE_FAILED"

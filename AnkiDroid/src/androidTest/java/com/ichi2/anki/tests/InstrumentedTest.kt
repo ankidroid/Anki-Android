@@ -33,6 +33,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.testutils.IgnoreFlakyTestsInCIRule
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendException
 import org.junit.After
@@ -54,6 +55,10 @@ abstract class InstrumentedTest {
 
     @get:Rule
     val ensureAllFilesAccessRule = EnsureAllFilesAccessRule()
+
+    /** Allows [com.ichi2.testutils.Flaky] to annotate tests in subclasses */
+    @get:Rule
+    val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
 
     /**
      * @return A File object pointing to a directory in which temporary test files can be placed. The directory is

@@ -227,7 +227,7 @@ class CardContentProvider : ContentProvider() {
                 val currentNote = getNoteFromUri(uri, col)
                 val columns = projection ?: FlashCardsContract.Card.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                for (currentCard: Card in currentNote.cards()) {
+                for (currentCard: Card in currentNote.cards(col)) {
                     addCardToCursor(currentCard, rv, col, columns)
                 }
                 rv
@@ -427,7 +427,7 @@ class CardContentProvider : ContentProvider() {
                             // Update tags
                             Timber.d("CardContentProvider: tags update...")
                             if (tags != null) {
-                                currentNote.setTagsFromStr(tags.toString())
+                                currentNote.setTagsFromStr(col, tags.toString())
                             }
                             updated++
                         }
@@ -438,7 +438,7 @@ class CardContentProvider : ContentProvider() {
                     }
                 }
                 Timber.d("CardContentProvider: Saving note...")
-                currentNote.flush()
+                currentNote.flush(col)
             }
             NOTES_ID_CARDS -> throw UnsupportedOperationException("Not yet implemented")
             NOTES_ID_CARDS_ORD -> {
@@ -718,7 +718,7 @@ class CardContentProvider : ContentProvider() {
             }
 
             // Create empty note
-            val newNote = Note(col, model!!) // for some reason we cannot pass modelId in here
+            val newNote = Note(model!!) // for some reason we cannot pass modelId in here
             // Set fields
             // Check that correct number of flds specified
             if (fldsArray.size != newNote.fields.size) {
@@ -730,11 +730,11 @@ class CardContentProvider : ContentProvider() {
             // Set tags
             val tags = values.getAsString(FlashCardsContract.Note.TAGS)
             if (tags != null) {
-                newNote.setTagsFromStr(tags)
+                newNote.setTagsFromStr(col, tags)
             }
             // Add to collection
             col.addNote(newNote, deckId)
-            for (card: Card in newNote.cards()) {
+            for (card: Card in newNote.cards(col)) {
                 card.did = deckId
                 col.updateCard(card)
             }
@@ -763,7 +763,7 @@ class CardContentProvider : ContentProvider() {
 //                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
                 // Create empty note
                 val model = requireNotNull(col.notetypes.get(modelId)) { "Invalid modelId: $modelId" }
-                val newNote = Note(col, model)
+                val newNote = Note(model)
                 // Set fields
                 val fldsArray = Utils.splitFields(flds)
                 // Check that correct number of flds specified
@@ -777,7 +777,7 @@ class CardContentProvider : ContentProvider() {
                 }
                 // Set tags
                 if (tags != null) {
-                    newNote.setTagsFromStr(tags)
+                    newNote.setTagsFromStr(col, tags)
                 }
                 // Add to collection
                 col.addNote(newNote)
@@ -1176,7 +1176,7 @@ class CardContentProvider : ContentProvider() {
     private fun getCard(noteId: NoteId, ord: Int, col: Collection): Card {
         val currentNote = col.getNote(noteId)
         var currentCard: Card? = null
-        for (card in currentNote.cards()) {
+        for (card in currentNote.cards(col)) {
             if (card.ord == ord) {
                 currentCard = card
             }

@@ -20,23 +20,33 @@ concurrency:
 
 jobs:
   unit:
-    name: JUnit Tests (${{ matrix.os}}
+    name: JUnit Tests (${{ matrix.name }})
     timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+        # macOS 14 is in beta and runs on Apple Silicon [M1]
+        os: [ubuntu-latest, macos-14, windows-latest]
+        # define 'name' so we don't need to update branch protection rules if the os changes
+        include:
+          - os: ubuntu-latest
+            name: ubuntu
+          - os: macos-14
+            name: macos
+          - os: windows-latest
+            name: windows
     runs-on: ${{ matrix.os }}
     #env:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
     steps:
       - name: Configure Windows Pagefile
-        uses: al-cheb/configure-pagefile-action@v1.3
+        uses: al-cheb/configure-pagefile-action@v1.4
         if: matrix.os == 'windows-latest'
         with:
           minimum-size: 8GB
           maximum-size: 12GB
-          disk-root: "D:"
+          disk-root: "C:"
 
       - uses: actions/checkout@v4
         with:
@@ -49,7 +59,7 @@ jobs:
           java-version: "21"
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
         timeout-minutes: 5
         with:
           # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
@@ -67,7 +77,7 @@ jobs:
           du -sk ~/.gradle || echo ~/.gradle is gone
 
       - name: Gradle Dependency Download
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@v3
         with:
           timeout_minutes: 10
           retry_wait_seconds: 60
@@ -75,13 +85,13 @@ jobs:
           command: ./gradlew robolectricSdkDownload --daemon
 
       - name: Run Unit Tests
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: jacocoUnitTestReport --daemon
 
       - name: Stop Gradle
         if: matrix.os == 'windows-latest'
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: --stop
 

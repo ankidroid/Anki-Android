@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Πίνακας</string>
     <string name="pref_cat_appearance" maxLength="41">Εμφάνιση</string>
     <string name="pref_cat_themes" maxLength="41">Θέματα</string>
-    <string name="pref_cat_fonts" maxLength="41">Γραμματοσειρές</string>
     <string name="pref_cat_gestures" maxLength="41">Χειρονομίες</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">Σύνθετα</string>

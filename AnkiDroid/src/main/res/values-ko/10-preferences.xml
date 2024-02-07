@@ -61,7 +61,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">화이트보드</string>
     <string name="pref_cat_appearance" maxLength="41">외관</string>
     <string name="pref_cat_themes" maxLength="41">테마</string>
-    <string name="pref_cat_fonts" maxLength="41">글꼴</string>
     <string name="pref_cat_gestures" maxLength="41">제스쳐</string>
     <string name="pref_cat_controls" maxLength="41">컨트롤</string>
     <string name="pref_cat_advanced" maxLength="41">고급 설정</string>

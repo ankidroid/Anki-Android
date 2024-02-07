@@ -30,10 +30,12 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.performClickIfEnabled
 import timber.log.Timber
@@ -45,7 +47,7 @@ import timber.log.Timber
  */
 
 class Previewer : AbstractFlashcardViewer() {
-    private lateinit var cardList: LongArray
+    private lateinit var cardList: List<Long>
     private var index = 0
     private var showingAnswer = false
     private lateinit var progressSeekBar: SeekBar
@@ -60,7 +62,8 @@ class Previewer : AbstractFlashcardViewer() {
             return
         }
         super.onCreate(savedInstanceState)
-        cardList = requireNotNull(intent.getLongArrayExtra("cardList")) { "'cardList' required" }
+        val previewerIdsFile = requireNotNull(intent.getSerializableExtraCompat("idsFile")) { "'idsFile' required" } as PreviewerIdsFile
+        cardList = previewerIdsFile.getCardIds()
         index = intent.getIntExtra("index", -1)
         if (savedInstanceState != null) {
             index = savedInstanceState.getInt("index", index)
@@ -73,6 +76,7 @@ class Previewer : AbstractFlashcardViewer() {
             finish()
             return
         }
+        setNavigationBarColor(R.attr.showAnswerColor)
         showBackIcon()
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe()
@@ -193,7 +197,7 @@ class Previewer : AbstractFlashcardViewer() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putLongArray("cardList", cardList)
+        outState.putLongArray("cardList", cardList.toLongArray())
         outState.putInt("index", index)
         outState.putBoolean("showingAnswer", showingAnswer)
         outState.putBoolean("reloadRequired", reloadRequired)
@@ -231,13 +235,13 @@ class Previewer : AbstractFlashcardViewer() {
     override fun performReload() {
         reloadRequired = true
         setOkResult()
-        val newCardList = getColUnsafe.filterToValidCards(cardList)
+        val newCardList = getColUnsafe.filterToValidCards(cardList.toLongArray())
         if (newCardList.isEmpty()) {
             finish()
             return
         }
         index = getNextIndex(newCardList)
-        cardList = newCardList.toLongArray()
+        cardList = newCardList
         currentCard = getColUnsafe.getCard(cardList[index])
         displayCardQuestion()
     }
@@ -300,9 +304,9 @@ class Previewer : AbstractFlashcardViewer() {
         fun PreviewDestination.toIntent(context: Context) =
             Intent(context, Previewer::class.java).apply {
                 putExtra("index", index)
-                putExtra("cardList", cardList)
+                putExtra("idsFile", previewerIdsFile)
             }
     }
 }
 
-class PreviewDestination(val index: Int, val cardList: LongArray)
+class PreviewDestination(val index: Int, val previewerIdsFile: PreviewerIdsFile)

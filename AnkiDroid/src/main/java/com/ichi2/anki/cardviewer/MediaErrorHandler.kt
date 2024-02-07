@@ -17,16 +17,13 @@ package com.ichi2.anki.cardviewer
 
 import android.webkit.URLUtil
 import android.webkit.WebResourceRequest
-import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.localizedErrorMessage
-import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.libanki.TtsPlayer
 import timber.log.Timber
 import java.io.File
-import java.util.function.Consumer
 
 /** Handles logic for displaying help for missing media files  */
-class MissingImageHandler {
+class MediaErrorHandler {
 
     companion object {
         /** Specify a maximum number of times to display, as it's somewhat annoying  */
@@ -37,22 +34,22 @@ class MissingImageHandler {
     private var hasExecuted = false
 
     private var automaticTtsFailureCount = 0
-    fun processFailure(request: WebResourceRequest?, onFailure: Consumer<String?>) {
+    fun processFailure(request: WebResourceRequest, onFailure: (String) -> Unit) {
         // We do not want this to trigger more than once on the same side of the card as the UI will flicker.
-        if (request == null || hasExecuted) return
+        if (hasExecuted) return
 
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
         if (missingMediaCount >= MAX_DISPLAY_TIMES) return
 
-        val url = request.url.toString()
+        val url = request.url
         // We could do better here (external images failing due to no HTTPS), but failures can occur due to no network.
         // As we don't yet check the error data, we don't know.
         // Therefore limit this feature to the common case of local files, which should always work.
-        if (!url.contains("collection.media")) return
+        if (url.host != LOCALHOST) return
 
         try {
-            val filename = URLUtil.guessFileName(url, null, null)
-            onFailure.accept(filename)
+            val filename = URLUtil.guessFileName(url.toString(), null, null)
+            onFailure.invoke(filename)
             missingMediaCount++
         } catch (e: Exception) {
             Timber.w(e, "Failed to notify UI of media failure")
@@ -61,17 +58,15 @@ class MissingImageHandler {
         }
     }
 
-    fun processMissingSound(file: File?, onFailure: Consumer<String?>) {
+    fun processMissingSound(file: File, onFailure: (String) -> Unit) {
         // We want this to trigger more than once on the same side - as the user is in control of pressing "play"
         // and we want to provide feedback
-        if (file == null) return
-
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
         if (missingMediaCount >= MAX_DISPLAY_TIMES) return
 
         try {
             val fileName = file.name
-            onFailure.accept(fileName)
+            onFailure.invoke(fileName)
             if (!hasExecuted) {
                 missingMediaCount++
             }
@@ -86,7 +81,7 @@ class MissingImageHandler {
         hasExecuted = false
     }
 
-    fun processTtsFailure(activity: AnkiActivity, error: TtsPlayer.TtsError, playingAutomatically: Boolean) {
+    fun processTtsFailure(error: TtsPlayer.TtsError, playingAutomatically: Boolean, errorHandler: (TtsPlayer.TtsError) -> Unit) {
         // if the user is playing a single sound explicitly, we want to provide feedback
         if (playingAutomatically && automaticTtsFailureCount++ >= 3) {
             Timber.v("Ignoring TTS Error: %s. failure limit exceeded", error)
@@ -96,6 +91,6 @@ class MissingImageHandler {
         Timber.w("displaying error for %s", error)
         // Maybe specifically check for APP_TTS_INIT_TIMEOUT
 
-        activity.showSnackbar(error.localizedErrorMessage(activity))
+        errorHandler.invoke(error)
     }
 }

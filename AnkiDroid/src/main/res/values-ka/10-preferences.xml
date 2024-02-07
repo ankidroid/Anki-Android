@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">დაფა</string>
     <string name="pref_cat_appearance" maxLength="41">იერსახე</string>
     <string name="pref_cat_themes" maxLength="41">იერსახეები</string>
-    <string name="pref_cat_fonts" maxLength="41">შრიფტები</string>
     <string name="pref_cat_gestures" maxLength="41">ჟესტები</string>
     <string name="pref_cat_controls" maxLength="41">მართვა</string>
     <string name="pref_cat_advanced" maxLength="41">დამატებითი</string>
@@ -133,7 +132,7 @@
     <string name="sync_media_only_unmetered">მხოლოდ ულიმიტო ინტერნეტ-კავშირის ქონისას</string>
     <string name="sync_media_never">არასდროს</string>
     <string name="sync_status_badge" maxLength="41">სინქრონიზაციის სტატუსის ჩვენება</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge_summ">სინქრონიზაციის ხატულის შეცვლა როცა შესაძლოა ცვლილებების ატვირთვა</string>
     <string name="metered_sync_title" maxLength="41">სინქრონიზაციის დაშვება ლიმიტირებული ტარიფის მქონე კავშირებით</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="backup_limits_frequency">სიხშირე</string>
@@ -201,7 +200,7 @@
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">გადამხედველი</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">დასტის სათაურის ჩვენება</string>
     <string name="accessibility" maxLength="41">მარტივი წვდომა</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">გაცვლითი ბუფერის სურათების PNG-ფაილებად ჩასმა</string>
@@ -242,7 +241,7 @@
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">მეორე ფილტრის გააქტიურება</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">ინდივიდუალური ნაბიჯების განსაზღვრა</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">გადადებულების წინასწარ ნახვა</string>
     <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">მოგვეხმარეთ AnkiDroid-ის გაუმჯობესებაში!</string>
@@ -268,7 +267,7 @@
     <string name="binding_add_key">კლავიშის დამატება</string>
     <string name="binding_replace_key">კლავიშის შეცვლა</string>
     <string name="key_picker_default_press_key">დააჭირეთ ნებისმიერ კლავიშს</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="binding_add_axis">ჯოისტიკის/მოძრაობით მართული კონტროლერის დამატება</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">ბარათის გვერდის არჩევა</string>

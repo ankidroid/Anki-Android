@@ -74,11 +74,11 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21700117
-        versionName="2.17alpha17"
-        minSdk 23
+        versionCode=21700202
+        versionName="2.17beta2"
+        minSdk 23 // also in testlib/build.gradle.kts
         // After #13695: change .tests_emulator.yml
-        targetSdk 33 // change api/build.gradle.kts and update ../robolectricDownloader.gradle at same time
+        targetSdk 33 // also in [api|testlib]/build.gradle.kts and ../robolectricDownloader.gradle
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'
@@ -155,6 +155,8 @@ android {
      * Product Flavors are used for Amazon App Store and Google Play Store.
      * This is because we cannot use Camera Permissions in Amazon App Store (for FireTv etc...)
      * Therefore, different AndroidManifest for Camera Permissions is used in Amazon flavor.
+     *
+     * This flavor block must stay in sync with the same block in testlib/build.gradle.kts
      */
     flavorDimensions += "appStore"
     productFlavors {
@@ -369,6 +371,8 @@ dependencies {
     // build via AnkiDroidApp.
     implementation 'com.squareup.leakcanary:leakcanary-android:2.13'
 
+    testImplementation project(':testlib')
+
     // A path for a testing library which provide Parameterized Test
     testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
@@ -389,8 +393,17 @@ dependencies {
     testImplementation 'org.apache.commons:commons-exec:1.4.0' // obtaining the OS
     testImplementation("androidx.fragment:fragment-testing:$fragments_version")
     // in a JvmTest we need org.json.JSONObject to not be mocked
-    testImplementation 'org.json:json:20231013'
+    testImplementation 'org.json:json:20240205'
     testImplementation 'io.github.ivanshafran:shared-preferences-mock:1.2.4'
+    testImplementation "androidx.test:runner:$androidx_test_version"
+    testImplementation "androidx.test:rules:$androidx_test_version"
+    testImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    testImplementation("androidx.test.espresso:espresso-contrib:$espresso_version") {
+        exclude module: "protobuf-lite"
+    }
+
+    androidTestImplementation project(':testlib')
+
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation("androidx.test.espresso:espresso-contrib:$espresso_version") {

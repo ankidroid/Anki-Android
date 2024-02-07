@@ -62,7 +62,6 @@
     <string name="pref_cat_whiteboard" maxLength="41">Pizarra</string>
     <string name="pref_cat_appearance" maxLength="41">Apariencia</string>
     <string name="pref_cat_themes" maxLength="41">Temas</string>
-    <string name="pref_cat_fonts" maxLength="41">Fuentes</string>
     <string name="pref_cat_gestures" maxLength="41">Gestos</string>
     <string name="pref_cat_controls" maxLength="41">Controles</string>
     <string name="pref_cat_advanced" maxLength="41">Avanzado</string>
@@ -115,7 +114,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tocar el centro</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar abajo a la izquierda</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar abajo a la derecha</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Agitar el dispositivo</string>
     <string name="card_browser_enable_external_context_menu">Menú ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Habilita globalmente el menú contextual ‘%s</string>
     <string name="double_scrolling_gap" maxLength="41">Doble desplazamiento</string>
@@ -151,7 +150,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz parpadeante</string>
     <string name="timeout_answer_text" maxLength="41">Mostrar automáticamente la respuesta</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Mostrar respuesta automáticamente sin que el usuario la introduzca. Configurar desde las opciones del mazo.</string>
     <string name="select_locale_title">Seleccionar idioma</string>
     <string name="software_render" maxLength="41">Deshabilitar el procesamiento de hardware de la tarjeta</string>
     <string name="software_render_summ">El procesamiento de hardware es más rápido, pero puede tener problemas, específicamente en Android 8/8.1. Si no puede ver partes de la interfaz de usuario de la tarjeta, prueba esta opción.</string>
@@ -201,7 +200,7 @@
     <string name="html_javascript_debugging_summ">Habilitar conexiones remotas de WebView y guardar el HTML de la tarjeta en el directorio AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Revisor</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Mostrar el título del mazo</string>
     <string name="accessibility" maxLength="41">Accesibilidad</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Pegar imágenes del portapapeles como PNG</string>
@@ -242,8 +241,8 @@
     <string name="deck_conf_cram_reschedule_summ">Reprogramar las tarjetas basándose en mis respuestas en este mazo</string>
     <string name="deck_conf_cram_filter_2_check">Activar segundo filtro</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definir pasos personalizados</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Previsualizar los retrasos</string>
+    <string name="deck_conf_cram_preview_delays_summ">Los retrasos se expresan en segundos. 0 devuelve la tarjeta al mazo original.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">¡Ayuda a mejorar AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Compartir uso de funciones</string>
@@ -268,8 +267,8 @@
     <string name="binding_add_key">Añadir botón</string>
     <string name="binding_replace_key">Reemplazar clave</string>
     <string name="key_picker_default_press_key">Presione una tecla</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">Añadir joystick/controlador de movimiento</string>
+    <string name="axis_picker_move_joystick">Mueve un joystick/controlador de movimiento</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecciona el lado de la tarjeta</string>
     <string name="card_side_question">Pregunta</string>

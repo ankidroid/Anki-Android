@@ -29,26 +29,25 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
-import java.util.function.Consumer
 
 // PERF:
 // Theoretically should be able to get away with not using this, but it requires WebResourceRequest (easy to mock)
 // and URLUtil.guessFileName (static - likely harder)
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-class MissingImageHandlerTest {
-    private lateinit var sut: MissingImageHandler
+class MediaErrorHandlerTest {
+    private lateinit var sut: MediaErrorHandler
     private var timesCalled = 0
     private lateinit var fileNames: MutableList<String?>
 
     @Before
     fun before() {
         fileNames = ArrayList()
-        sut = MissingImageHandler()
+        sut = MediaErrorHandler()
     }
 
-    private fun defaultHandler(): Consumer<String?> {
-        return Consumer { f: String? ->
+    private fun defaultHandler(): (String) -> Unit {
+        return { f: String? ->
             timesCalled++
             fileNames.add(f)
         }
@@ -96,11 +95,11 @@ class MissingImageHandlerTest {
         assertThat(timesCalled, equalTo(0))
     }
 
-    private fun processFailure(invalidRequest: WebResourceRequest, consumer: Consumer<String?> = defaultHandler()) {
+    private fun processFailure(invalidRequest: WebResourceRequest, consumer: (String) -> Unit = defaultHandler()) {
         sut.processFailure(invalidRequest, consumer)
     }
 
-    private fun processMissingSound(file: File?, onFailure: Consumer<String?>) {
+    private fun processMissingSound(file: File, onFailure: (String) -> Unit) {
         sut.processMissingSound(file, onFailure)
     }
 
@@ -108,12 +107,6 @@ class MissingImageHandlerTest {
     fun uiFailureDoesNotCrash() {
         processFailure(getValidRequest("example.jpg")) { throw RuntimeException("expected") }
         assertThat("Irrelevant assert to stop lint warnings", timesCalled, equalTo(0))
-    }
-
-    @Test
-    fun testMissingSound_NullFile() {
-        processMissingSound(null, defaultHandler())
-        assertThat(timesCalled, equalTo(0))
     }
 
     @Test
@@ -136,7 +129,7 @@ class MissingImageHandlerTest {
 
     private fun getValidRequest(fileName: String): WebResourceRequest {
         // actual URL on Android 9
-        val url = "file:///storage/emulated/0/AnkiDroid/collection.media/$fileName"
+        val url = "http://127.0.0.1:40001/$fileName"
         return getWebResourceRequest(url)
     }
 

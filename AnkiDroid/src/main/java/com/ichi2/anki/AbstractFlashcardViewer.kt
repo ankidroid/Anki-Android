@@ -1339,7 +1339,7 @@ abstract class AbstractFlashcardViewer :
         // #7294 Required in case the animation end action does not fire:
         actualHideEaseButtons()
         Timber.d("displayCardAnswer()")
-        mMissingImageHandler.onCardSideChange()
+        mediaErrorHandler.onCardSideChange()
         backButtonPressedToReturn = false
 
         // prevent answering (by e.g. gestures) before card is loaded
@@ -2194,7 +2194,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun shouldDisplayMark(): Boolean {
-        return isMarked(currentCard!!.note(getColUnsafe))
+        return isMarked(getColUnsafe, currentCard!!.note(getColUnsafe))
     }
 
     val writeLock: Lock
@@ -2299,7 +2299,7 @@ abstract class AbstractFlashcardViewer :
             error: WebResourceError
         ) {
             super.onReceivedError(view, request, error)
-            mMissingImageHandler.processFailure(request) { filename: String? ->
+            mediaErrorHandler.processFailure(request) { filename: String ->
                 displayCouldNotFindMediaSnackbar(
                     filename
                 )
@@ -2312,7 +2312,7 @@ abstract class AbstractFlashcardViewer :
             errorResponse: WebResourceResponse
         ) {
             super.onReceivedHttpError(view, request, errorResponse)
-            mMissingImageHandler.processFailure(request) { filename: String? ->
+            mediaErrorHandler.processFailure(request) { filename: String ->
                 displayCouldNotFindMediaSnackbar(
                     filename
                 )
@@ -2565,8 +2565,8 @@ abstract class AbstractFlashcardViewer :
         if (currentCard!!.note(getColUnsafe).tags != selectedTags) {
             val tagString = selectedTags.joinToString(" ")
             val note = currentCard!!.note(getColUnsafe)
-            note.setTagsFromStr(tagString)
-            note.flush()
+            note.setTagsFromStr(getColUnsafe, tagString)
+            note.flush(getColUnsafe)
             // Reload current card to reflect tag changes
             reloadWebViewContent()
         }
@@ -2614,7 +2614,7 @@ abstract class AbstractFlashcardViewer :
         const val DEFAULT_DOUBLE_TAP_TIME_INTERVAL = 200
 
         /** Handle providing help for "Image Not Found"  */
-        internal val mMissingImageHandler = MissingImageHandler()
+        internal val mediaErrorHandler = MediaErrorHandler()
 
         @KotlinCleanup("moved from MyGestureDetector")
         // Android design spec for the size of the status bar.

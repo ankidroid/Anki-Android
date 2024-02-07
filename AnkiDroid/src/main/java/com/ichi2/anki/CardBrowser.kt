@@ -48,6 +48,7 @@ import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN2_KEYS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.*
+import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
@@ -120,7 +121,7 @@ open class CardBrowser :
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
             val deckId = deck.deckId
-            deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
+            deckSpinnerSelection!!.initializeActionBarDeckSpinner(getColUnsafe, this.supportActionBar!!)
             launchCatchingTask { selectDeckAndSave(deckId) }
         }
     }
@@ -585,14 +586,13 @@ open class CardBrowser :
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         deckSpinnerSelection = DeckSpinnerSelection(
             this,
-            col,
             findViewById(R.id.toolbar_spinner),
             showAllDecks = true,
             alwaysShowDefault = false,
             showFilteredDecks = true
         ).apply {
-            initializeActionBarDeckSpinner(supportActionBar!!)
-            selectDeckById(viewModel.deckId ?: ALL_DECKS_ID, false)
+            initializeActionBarDeckSpinner(col, supportActionBar!!)
+            launchCatchingTask { selectDeckById(viewModel.deckId ?: ALL_DECKS_ID, false) }
         }
     }
 
@@ -1225,14 +1225,14 @@ open class CardBrowser :
 
     private fun onPreview() {
         val intentData = viewModel.previewIntentData
-        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.index, intentData.cardList))
+        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.index, intentData.previewerIdsFile))
     }
 
-    private fun getPreviewIntent(index: Int, selectedCardIds: LongArray): Intent {
+    private fun getPreviewIntent(index: Int, previewerIdsFile: PreviewerIdsFile): Intent {
         return if (sharedPrefs().getBoolean("new_previewer", false)) {
-            Previewer2Destination(index, selectedCardIds).toIntent(this)
+            Previewer2Destination(index, previewerIdsFile).toIntent(this)
         } else {
-            PreviewDestination(index, selectedCardIds).toIntent(this)
+            PreviewDestination(index, previewerIdsFile).toIntent(this)
         }
     }
 
@@ -1274,12 +1274,12 @@ open class CardBrowser :
         return dialog
     }
 
-    private fun showChangeDeckDialog() {
+    private fun showChangeDeckDialog() = launchCatchingTask {
         if (!viewModel.hasSelectedAnyRows()) {
             Timber.i("Not showing Change Deck - No Cards")
-            return
+            return@launchCatchingTask
         }
-        val selectableDecks = validDecksForChangeDeck
+        val selectableDecks = getValidDecksForChangeDeck()
             .map { d -> SelectableDeck(d) }
         val dialog = getChangeDeckDialog(selectableDecks)
         showDialogFragment(dialog)
@@ -1504,9 +1504,8 @@ open class CardBrowser :
     }
 
     /** Returns the decks which are valid targets for "Change Deck"  */
-    @get:VisibleForTesting
-    val validDecksForChangeDeck: List<DeckNameId>
-        get() = deckSpinnerSelection!!.computeDropDownDecks(includeFiltered = false)
+    suspend fun getValidDecksForChangeDeck(): List<DeckNameId> =
+        deckSpinnerSelection!!.computeDropDownDecks(includeFiltered = false)
 
     @RustCleanup("this isn't how Desktop Anki does it")
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
@@ -1893,7 +1892,7 @@ open class CardBrowser :
      */
     private fun createViewModel() = ViewModelProvider(
         viewModelStore,
-        CardBrowserViewModel.factory(SharedPreferencesLastDeckIdRepository()),
+        CardBrowserViewModel.factory(AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository, cacheDir),
         defaultViewModelCreationExtras
     )[CardBrowserViewModel::class.java]
 
@@ -1979,7 +1978,7 @@ open class CardBrowser :
                     6 -> R.attr.flagTurquoise
                     7 -> R.attr.flagPurple
                     else -> {
-                        if (isMarked(card.note(col))) {
+                        if (isMarked(col, card.note(col))) {
                             R.attr.markedColor
                         } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
                             R.attr.suspendedColor
@@ -1994,11 +1993,11 @@ open class CardBrowser :
             return when (key) {
                 CardBrowserColumn.FLAGS -> Integer.valueOf(card.userFlag()).toString()
                 CardBrowserColumn.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
-                CardBrowserColumn.MARKED -> if (isMarked(card.note(col))) "marked" else null
-                CardBrowserColumn.SFLD -> card.note(col).sFld()
+                CardBrowserColumn.MARKED -> if (isMarked(col, card.note(col))) "marked" else null
+                CardBrowserColumn.SFLD -> card.note(col).sFld(col)
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
-                CardBrowserColumn.TAGS -> card.note(col).stringTags()
-                CardBrowserColumn.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards()}"
+                CardBrowserColumn.TAGS -> card.note(col).stringTags(col)
+                CardBrowserColumn.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards(col)}"
                 CardBrowserColumn.DUE -> card.dueString(col)
                 CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note(col).mod.toLong())
@@ -2284,8 +2283,8 @@ private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<C
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
 
-class Previewer2Destination(val currentIndex: Int, val selectedCardIds: LongArray)
+class Previewer2Destination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
 
 @CheckResult
 fun Previewer2Destination.toIntent(context: Context) =
-    PreviewerFragment.getIntent(context, selectedCardIds, currentIndex)
+    PreviewerFragment.getIntent(context, previewerIdsFile, currentIndex)

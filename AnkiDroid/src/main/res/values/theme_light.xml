@@ -140,9 +140,7 @@
 
         <item name="checkMediaListBackground">@color/material_blue_grey_050</item>
         <item name="checkMediaListForeground">@color/material_grey_700</item>
-
-        <!-- AlertDialogTheme-->
-        <item name="alertDialogTheme">@style/AlertDialogStyle</item>
+        <item name="progressDialogButtonTextColor">@color/material_light_blue_500</item>
 
     </style>
 </resources>

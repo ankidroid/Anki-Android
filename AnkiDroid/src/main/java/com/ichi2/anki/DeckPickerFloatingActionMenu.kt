@@ -61,6 +61,7 @@ class DeckPickerFloatingActionMenu(
         get() = studyOptionsFrame != null
 
     private fun showFloatingActionMenu() {
+        deckPicker.activeSnackBar?.dismiss()
         linearLayout.alpha = 0.5f
         studyOptionsFrame?.let { it.alpha = 0.5f }
         isFABOpen = true
