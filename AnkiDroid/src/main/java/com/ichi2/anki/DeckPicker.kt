@@ -1121,9 +1121,6 @@ open class DeckPicker :
         val message = dialogHandler.popMessage()
         super.onResume()
 
-        // Show the floating action button if it is hidden
-        floatingActionMenu.showFloatingActionButton()
-
         if (navDrawerIsReady() && hasCollectionStoragePermissions()) {
             refreshState()
         }
@@ -1156,6 +1153,9 @@ open class DeckPicker :
         }
         exportingDelegate.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
+
+        // Show the floating action button if it is hidden
+        floatingActionMenu.showFloatingActionButton()
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
