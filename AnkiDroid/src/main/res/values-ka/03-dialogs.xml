@@ -85,7 +85,7 @@
     <string name="answering_error_title">მონაცემთა ბაზის შეცდომა</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">შეცდომის შეტყობინება</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">არ არის საკმარისი თავისუფალი მეხსიერების სივრცე, რომ AnkiDroid-ის გახსნა მოხერხდეს. გთხოვთ, მეხსიერების სივრცეში ადგილი გაანთავისუფლოთ.</string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
     <string name="intent_aedict_empty">კატეგორია „ნაგულისხმევი“ ცარიელია</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
@@ -174,18 +174,18 @@
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">შეცდომა სურათის წაშლისას</string>
     <string name="failed_to_apply_background_image">სურათის ფონზე დაყენება ვერ მოხერხდა %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
+    <string name="background_image_too_large">დასტის მომნიშვნელის ფონი ზედმეტად დიდია</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">ბარათების საძიებოს გარეგნობის ჩატვირთვა ვერ მოხერხდა</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
+    <string name="boot_service_failed_to_schedule_notifications">შემახსენებელი შეტყობინებების დაგეგმვა ვერ მოხერხდა</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">ენის დაყენება</string>
     <string name="locale_selection_dialog_summary">ზოგ მრავალენოვან კლავიატურას, როგორც მაგალითად Gboard-ს, ტექსტის რედაქტირებისას ენის შეცვლის ფუნქცია აქვს\n\nთუკი თქვენი კლავიატურა ენას ვერ ცვლის, გთხოვთ კლავიატურის მწარმოებელს მიმართოთ და \"setImeHintLocales\" ფუნქციის დამატება მოსთხოვოთ</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid-ის გამოყენება</string>
@@ -230,7 +230,7 @@
     <string name="import_collection_package">კოლექციის პაკეტი (.colpkg)</string>
     <string name="import_csv">ტექსტური ფაილი (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">ყველა დასტისთვის ვერ შექმნით ქვედასტას</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">კოლექციის სარეზერვო ასლი</string>
     <string name="backup_collection_message">კარგი ხანია არ შეგიქმნიათ კოლექციის სარეზერვო ასლი. უმჯობესია ეს გააკეთოთ, რათა მონაცემები არ დაგეკარგოთ.</string>

@@ -59,16 +59,16 @@
     </plurals>
     <string name="card_browser_all_decks">Все колоды</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="few">Delete cards</item>
-        <item quantity="many">Delete cards</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">Удалить карту</item>
+        <item quantity="few">Удалить карты</item>
+        <item quantity="many">Удалить карты</item>
+        <item quantity="other">Удалить карты</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="few">Delete notes</item>
-        <item quantity="many">Delete notes</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Удалить заметку</item>
+        <item quantity="few">Удалить заметки</item>
+        <item quantity="many">Удалить заметки</item>
+        <item quantity="other">Удалить заметки</item>
     </plurals>
     <string name="card_browser_change_deck">Сменить колоду</string>
     <string name="delete_card_title">Удалить запись?</string>

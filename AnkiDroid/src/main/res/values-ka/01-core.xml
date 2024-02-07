@@ -197,31 +197,31 @@
         თქვენი მონაცემების დაცვის მიზნით გთხოვთ, რეგულარულად დაასინქრონოთ ან სარეზერვო ასლები დააექსპორტოთ.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">მიგრაცია ვერ მოხერხდა</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        მედიაფაილების გადატანა შეჩერდა შეცდომის შემდგომ: %1$s.
         <br><br>
-        The changes were reverted.
+        ცვლილებები გაუქმდა.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        გთხოვთ, ხელახლა სცადოთ მიგრაცია.
+        პრობლემის გამოსასწორებლად, შესაძლოა დაგჭირდეთ მეხსიერების სივრცეში ადგილის განთავისუფლება,
+        ან მოხსნადი მეხსიერების, რომელიც თქვენს კოლექციას შეიცავს, ხელახლა დაკავშირება.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">მეტის შეცნობა და დახმარების მიღება</a>
     ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        მედიაფაილების გადატანა შეჩერდა შეცდომის შემდგომ: %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+         ცვლილებები <i>არ</i> გაუქმდა.
+        წესით და რიგით მონაცემები შენარჩუნდებოდა,
+        თუმცა შესაძლოა, რომ მედიაფაილები გადანაწილებული იყოს ძველსა და ახალი საქაღალდის შორის.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+         გთხოვთ, ხელახლა სცადოთ მიგრაცია.
+        პრობლემის გამოსასწორებლად, შესაძლოა დაგჭირდეთ მეხსიერების სივრცეში ადგილის განთავისუფლება,
+        ან მოხსნადი მეხსიერების, რომელიც თქვენს კოლექციას შეიცავს, ხელახლა დაკავშირება.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">მეტის შეცნობა და დახმარების მიღება</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        საცავის მიგრაცია შეჩერდა შეცდომის შემდგომ: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">მეტის შეცნობა და დახმარების მიღება</a>
     ]]></string>
     <string name="migration__resume_after_failed_dialog__button_positive">მიგრაციის გაგრძელება</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">მიუწვდომელი კოლექცია</string>
@@ -233,8 +233,8 @@
     <string name="create_new_collection">ახალი კოლექციის შექმნა</string>
     <string name="new_unsafe_collection">ახალი კოლექცია წაიშლება თქვენი მოწყობილობიდან თუკი მოახდენთ AnkiDroid-ის დეინსტალაციას</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
+    <string name="permissions_screen_headline">AnkiDroid-ს რამდენიმე ნებართვა სჭრიდება, რათა იფუნქციონიროს</string>
     <string name="storage_access_title">წვდომა მეხსიერებაზე</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
+    <string name="storage_access_summary">თქვენი კოლექცია შეინახება უსაფრთხო ადგილას, რომელიც აპლიკაციის დეინსტალაციის შემთხვევაში არ წაიშლება</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">წვდომა ყველა ფაილზე</string>
 </resources>
