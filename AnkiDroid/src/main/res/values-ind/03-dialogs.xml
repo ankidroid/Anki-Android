@@ -207,6 +207,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">Syarat dan Ketentuan AnkiWeb</string>
     <string name="help_title_send_exception">Kirim laporan hasil troubleshooting</string>
     <string name="help_dialog_exception_report_debounce">Laporan telah dikirim</string>
+    <string name="help_dialog_exception_report_sent">Report was sent!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Sinkronisasi otomatis dapat terjadi dalam %d detik</item>
