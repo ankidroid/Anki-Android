@@ -24,6 +24,7 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.CookieManager
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -274,6 +275,16 @@ class PreviewerFragment :
                     Timber.w("Could not open url")
                 }
                 return false
+            }
+
+            override fun onReceivedError(
+                view: WebView,
+                request: WebResourceRequest,
+                error: WebResourceError
+            ) {
+                viewModel.mediaErrorHandler.processFailure(request) { filename: String ->
+                    showMediaErrorSnackbar(filename)
+                }
             }
         }
     }
