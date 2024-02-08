@@ -245,8 +245,8 @@
     <string name="deck_conf_cram_reschedule_summ">Přeplánovat karty podle mých odpovědí v tomto balíčku</string>
     <string name="deck_conf_cram_filter_2_check">Povolit druhý filtr</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definovat vlastní kroky</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Prodlevy náhledu</string>
+    <string name="deck_conf_cram_preview_delays_summ">Prodlevy jsou v sekundách. 0 vrátí kartu do původního balíčku.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Pomozte udělat AnkiDroid lepší!</string>
     <string name="analytics_title" maxLength="41">Sdílet používání funkcí</string>
