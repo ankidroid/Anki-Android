@@ -155,40 +155,40 @@ class AppearanceSettingsFragment : SettingsFragment() {
     }
 
     private val backgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
-        if (selectedImage != null) {
-            // handling file may result in exception
-            try {
-                val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE)
-                requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
-                    cursor!!.moveToFirst()
-                    // file size in MB
-                    val fileLength = cursor.getLong(0) / (1024 * 1024)
-                    val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
-                    val imageName = "DeckPickerBackground.png"
-                    val destFile = File(currentAnkiDroidDirectory, imageName)
-                    // Image size less than 10 MB copied to AnkiDroid directory
-                    if (fileLength < 10) {
-                        (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream).channel.use { sourceChannel ->
-                            FileOutputStream(destFile).channel.use { destChannel ->
-                                destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
-                                showSnackbar(R.string.background_image_applied)
-                            }
-                        }
-                    } else {
-                        backgroundImage!!.isChecked = false
-                        UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, 10), false)
-                    }
-                }
-            } catch (e: OutOfMemoryError) {
-                Timber.w(e)
-                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
-            } catch (e: Exception) {
-                Timber.w(e)
-                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
-            }
-        } else {
+        if (selectedImage == null) {
             backgroundImage!!.isChecked = false
             showSnackbar(R.string.no_image_selected)
+            return@registerForActivityResult
+        }
+        // handling file may result in exception
+        try {
+            val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE)
+            requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
+                cursor!!.moveToFirst()
+                // file size in MB
+                val fileLength = cursor.getLong(0) / (1024 * 1024)
+                val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
+                val imageName = "DeckPickerBackground.png"
+                val destFile = File(currentAnkiDroidDirectory, imageName)
+                // Image size less than 10 MB copied to AnkiDroid directory
+                if (fileLength < 10) {
+                    (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream).channel.use { sourceChannel ->
+                        FileOutputStream(destFile).channel.use { destChannel ->
+                            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
+                            showSnackbar(R.string.background_image_applied)
+                        }
+                    }
+                } else {
+                    backgroundImage!!.isChecked = false
+                    UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, 10), false)
+                }
+            }
+        } catch (e: OutOfMemoryError) {
+            Timber.w(e)
+            showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
+        } catch (e: Exception) {
+            Timber.w(e)
+            showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
         }
     }
 }
