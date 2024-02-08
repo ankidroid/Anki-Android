@@ -16,7 +16,6 @@
 package com.ichi2.anki.preferences
 
 import android.os.Build
-import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.preference.ListPreference
@@ -25,6 +24,8 @@ import androidx.preference.SwitchPreferenceCompat
 import anki.config.ConfigKey
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.deckpicker.BackgroundImage
+import com.ichi2.anki.deckpicker.BackgroundImage.FileSizeResult
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
@@ -32,8 +33,6 @@ import com.ichi2.themes.Themes.systemIsInNightMode
 import com.ichi2.themes.Themes.updateCurrentTheme
 import timber.log.Timber
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 
 class AppearanceSettingsFragment : SettingsFragment() {
     private var backgroundImage: SwitchPreferenceCompat? = null
@@ -155,40 +154,32 @@ class AppearanceSettingsFragment : SettingsFragment() {
     }
 
     private val backgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
-        if (selectedImage != null) {
-            // handling file may result in exception
-            try {
-                val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE)
-                requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
-                    cursor!!.moveToFirst()
-                    // file size in MB
-                    val fileLength = cursor.getLong(0) / (1024 * 1024)
-                    val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
-                    val imageName = "DeckPickerBackground.png"
-                    val destFile = File(currentAnkiDroidDirectory, imageName)
-                    // Image size less than 10 MB copied to AnkiDroid directory
-                    if (fileLength < 10) {
-                        (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream).channel.use { sourceChannel ->
-                            FileOutputStream(destFile).channel.use { destChannel ->
-                                destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
-                                showSnackbar(R.string.background_image_applied)
-                            }
-                        }
-                    } else {
-                        backgroundImage!!.isChecked = false
-                        UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, 10), false)
-                    }
-                }
-            } catch (e: OutOfMemoryError) {
-                Timber.w(e)
-                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
-            } catch (e: Exception) {
-                Timber.w(e)
-                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
-            }
-        } else {
+        if (selectedImage == null) {
             backgroundImage!!.isChecked = false
             showSnackbar(R.string.no_image_selected)
+            return@registerForActivityResult
+        }
+        // handling file may result in exception
+        try {
+            when (val sizeResult = BackgroundImage.validateBackgroundImageFileSize(selectedImage)) {
+                is FileSizeResult.FileTooLarge -> {
+                    backgroundImage!!.isChecked = false
+                    UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, sizeResult.maxMB), false)
+                }
+                is FileSizeResult.UncompressedBitmapTooLarge -> {
+                    backgroundImage!!.isChecked = false
+                    UIUtils.showThemedToast(requireContext(), getString(R.string.image_dimensions_too_large, sizeResult.width, sizeResult.height), false)
+                }
+                is FileSizeResult.OK -> {
+                    BackgroundImage.import(selectedImage)
+                }
+            }
+        } catch (e: OutOfMemoryError) {
+            Timber.w(e)
+            showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
+        } catch (e: Exception) {
+            Timber.w(e)
+            showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
         }
     }
 }
