@@ -72,7 +72,6 @@ class HeaderFragment : PreferenceFragmentCompat() {
                 setBreadcrumbsEnabled(true)
                 setFuzzySearchEnabled(false)
                 setHistoryEnabled(true)
-                textNoResults = activity.getString(R.string.pref_search_no_results)
 
                 index(R.xml.preferences_general)
                 index(R.xml.preferences_reviewing)

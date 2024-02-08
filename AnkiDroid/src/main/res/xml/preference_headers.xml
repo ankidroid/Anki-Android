@@ -21,7 +21,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.bytehamster.lib.preferencesearch.SearchPreference
-        android:key="@string/search_preference_key"/>
+        android:key="@string/search_preference_key"
+        app:textNoResults="@string/pref_search_no_results"/>
 
     <!--  General Preferences -->
     <com.ichi2.preferences.HeaderPreference

@@ -67,6 +67,7 @@ export const I18N_FILES = [
     "16-multimedia-editor",
     "17-model-manager",
     "18-standard-models",
+    "20-search-preference",
 ];
 
 // Below is the list of official AnkiDroid localizations.
