@@ -16,6 +16,8 @@
 
 package com.ichi2.anki.deckpicker
 
+import android.content.Context
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import com.ichi2.anki.CollectionHelper
@@ -36,7 +38,7 @@ object BackgroundImage {
      * WARN: This skips a test for "ro.hwui.max_texture_allocation_size"
      * The actual size may be larger, this is a minimum
      */
-    private const val MAX_BITMAP_SIZE: Long = 100 * 1024 * 1024
+    const val MAX_BITMAP_SIZE: Long = 100 * 1024 * 1024
 
     sealed interface FileSizeResult {
         data object OK : FileSizeResult
@@ -81,5 +83,17 @@ object BackgroundImage {
                 showSnackbar(R.string.background_image_applied)
             }
         }
+    }
+
+    data class Size(val width: Int, val height: Int)
+    fun getBackgroundImageDimensions(context: Context): Size {
+        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
+        val imageName = "DeckPickerBackground.png"
+        val destFile = File(currentAnkiDroidDirectory, imageName)
+        val bmp = BitmapFactory.decodeFile(destFile.absolutePath)
+        val w = bmp.width
+        val h = bmp.height
+        bmp.recycle()
+        return Size(width = w, height = h)
     }
 }

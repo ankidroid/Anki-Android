@@ -77,6 +77,8 @@ import com.ichi2.anki.InitialActivity.StartupFailure.*
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
+import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
@@ -757,16 +759,26 @@ open class DeckPicker :
         }
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
         val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
-        return if (!imgFile.exists()) {
+        if (!imgFile.exists()) {
             Timber.d("No DeckPicker background image")
             backgroundView.setBackgroundResource(0)
-            false
-        } else {
-            Timber.i("Applying background")
-            val drawable = Drawable.createFromPath(imgFile.absolutePath)
-            backgroundView.setImageDrawable(drawable)
-            true
+            return false
         }
+
+        // TODO: Temporary fix to stop a crash on startup [15450], it can be removed either:
+        // * by moving this check to an upgrade path
+        // * once enough time has passed
+        val size = BackgroundImage.getBackgroundImageDimensions(this)
+        if (size.width * size.height * BITMAP_BYTES_PER_PIXEL > BackgroundImage.MAX_BITMAP_SIZE) {
+            Timber.w("DeckPicker background image dimensions too large")
+            backgroundView.setBackgroundResource(0)
+            return false
+        }
+
+        Timber.i("Applying background")
+        val drawable = Drawable.createFromPath(imgFile.absolutePath)
+        backgroundView.setImageDrawable(drawable)
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
