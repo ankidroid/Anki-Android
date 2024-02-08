@@ -27,6 +27,7 @@
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)"
         name="pref_summary_percentage">%s\%%</string>
+    <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">No results</string>
 
     <!-- preferences.xml categories-->
