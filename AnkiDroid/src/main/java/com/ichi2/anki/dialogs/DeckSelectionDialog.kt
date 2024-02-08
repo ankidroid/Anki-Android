@@ -45,6 +45,7 @@ import com.ichi2.libanki.*
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
+import com.ichi2.utils.create
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -98,7 +99,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
         }
 
-        return AlertDialog.Builder(requireActivity()).apply {
+        return AlertDialog.Builder(requireActivity()).create {
             negativeButton(R.string.dialog_cancel)
             customView(view = dialogView)
             if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
@@ -106,7 +107,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                     onDeckSelected(null)
                 }
             }
-        }.create()
+        }
     }
 
     private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>) =
