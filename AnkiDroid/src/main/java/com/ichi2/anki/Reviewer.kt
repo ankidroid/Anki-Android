@@ -754,6 +754,7 @@ open class Reviewer :
                 // so in some languages such as Japanese, which have pre/post-positional particle with the object,
                 // we need to use the string for just "Undo" instead of the string for "Undo %s".
                 undoIcon.title = resources.getString(R.string.undo)
+                undoIcon.iconAlpha = Themes.ALPHA_ICON_DISABLED_LIGHT
             }
             menu.findItem(R.id.action_redo)?.apply {
                 if (getColUnsafe.redoAvailable()) {
