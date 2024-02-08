@@ -23,14 +23,18 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.CookieManager
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -93,6 +97,7 @@ class PreviewerFragment :
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         with(webView) {
             webViewClient = onCreateWebViewClient()
+            webChromeClient = onCreateWebChromeClient()
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
                 javaScriptEnabled = true
@@ -269,6 +274,45 @@ class PreviewerFragment :
                     Timber.w("Could not open url")
                 }
                 return false
+            }
+        }
+    }
+
+    private fun onCreateWebChromeClient(): WebChromeClient {
+        return object : WebChromeClient() {
+            private lateinit var customView: View
+
+            // used for displaying `<video>` in fullscreen.
+            // This implementation requires configChanges="orientation" in the manifest
+            // to avoid destroying the View if the device is rotated
+            override fun onShowCustomView(
+                paramView: View,
+                paramCustomViewCallback: CustomViewCallback?
+            ) {
+                customView = paramView
+                val window = requireActivity().window
+                (window.decorView as FrameLayout).addView(
+                    customView,
+                    FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT
+                    )
+                )
+                // hide system bars
+                with(WindowInsetsControllerCompat(window, window.decorView)) {
+                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                    hide(WindowInsetsCompat.Type.systemBars())
+                }
+            }
+
+            override fun onHideCustomView() {
+                val window = requireActivity().window
+                (window.decorView as FrameLayout).removeView(customView)
+                // show system bars back
+                with(WindowInsetsControllerCompat(window, window.decorView)) {
+                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+                    show(WindowInsetsCompat.Type.systemBars())
+                }
             }
         }
     }
