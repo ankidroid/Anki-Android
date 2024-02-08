@@ -26,23 +26,47 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
+const val BITMAP_BYTES_PER_PIXEL = 4
+
 object BackgroundImage {
+    /*
+     * RecordingCanvas.MAX_BITMAP_SIZE is @hide
+     * https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/graphics/java/android/graphics/RecordingCanvas.java;l=49;drc=ed769e0aede2a840ea8cdff87ce593eb6ea8a7c6;bpv=1;bpt=1?q=%22trying%20to%20draw%20too%20large%22
+     *
+     * WARN: This skips a test for "ro.hwui.max_texture_allocation_size"
+     * The actual size may be larger, this is a minimum
+     */
+    private const val MAX_BITMAP_SIZE: Long = 100 * 1024 * 1024
+
     sealed interface FileSizeResult {
         data object OK : FileSizeResult
+
+        /** Large files can cause OutOfMemoryError */
         data class FileTooLarge(val currentMB: Long, val maxMB: Long) : FileSizeResult
+
+        /** Large bitmaps cause uncatchable: RuntimeException("Canvas: trying to draw too large(Xbytes) bitmap.") */
+        data class UncompressedBitmapTooLarge(val width: Long, val height: Long) : FileSizeResult
     }
 
     context (AppearanceSettingsFragment)
     fun validateBackgroundImageFileSize(selectedImage: Uri): FileSizeResult {
-        val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE)
+        val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.WIDTH, MediaStore.MediaColumns.HEIGHT)
         requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
             cursor!!.moveToFirst()
             val fileSizeInMB = cursor.getLong(0) / (1024 * 1024)
             if (fileSizeInMB >= 10) {
                 return FileSizeResult.FileTooLarge(currentMB = fileSizeInMB, maxMB = 10)
-            } else {
-                return FileSizeResult.OK
             }
+
+            val width = cursor.getLong(1)
+            val height = cursor.getLong(2)
+
+            // Default MAX_IMAGE_SIZE on Android
+            if (width * height * BITMAP_BYTES_PER_PIXEL > MAX_BITMAP_SIZE) {
+                return FileSizeResult.UncompressedBitmapTooLarge(width = width, height = height)
+            }
+
+            return FileSizeResult.OK
         }
     }
 

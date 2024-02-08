@@ -160,13 +160,15 @@ class AppearanceSettingsFragment : SettingsFragment() {
             return@registerForActivityResult
         }
         // handling file may result in exception
-
         try {
             when (val sizeResult = BackgroundImage.validateBackgroundImageFileSize(selectedImage)) {
                 is FileSizeResult.FileTooLarge -> {
                     backgroundImage!!.isChecked = false
                     UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, sizeResult.maxMB), false)
-                    return@registerForActivityResult
+                }
+                is FileSizeResult.UncompressedBitmapTooLarge -> {
+                    backgroundImage!!.isChecked = false
+                    UIUtils.showThemedToast(requireContext(), getString(R.string.image_dimensions_too_large, sizeResult.width, sizeResult.height), false)
                 }
                 is FileSizeResult.OK -> {
                     BackgroundImage.import(selectedImage)
