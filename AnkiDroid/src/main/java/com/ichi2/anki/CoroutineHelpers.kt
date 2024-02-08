@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.WindowManager
@@ -352,11 +353,21 @@ suspend fun <T> withProgressDialog(
         op(dialog)
     } finally {
         dialogJob.cancel()
-        dialog.dismiss()
+        dismissDialogIfShowing(dialog)
         context.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         if (dialogIsOurs) {
             AnkiDroidApp.instance.progressDialogShown = false
         }
+    }
+}
+
+private fun dismissDialogIfShowing(dialog: Dialog) {
+    try {
+        if (dialog.isShowing) {
+            dialog.dismiss()
+        }
+    } catch (e: Exception) {
+        Timber.w(e)
     }
 }
 
