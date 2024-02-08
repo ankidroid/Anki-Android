@@ -17,6 +17,7 @@ package com.ichi2.anki.previewer
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -30,6 +31,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
@@ -39,13 +41,16 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.Flag
-import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.getViewerAssetLoader
+import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
-import com.ichi2.anki.previewer.PreviewerViewModel.Companion.stdHtml
+import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
+import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.themes.Themes
@@ -53,21 +58,23 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
-class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickListener {
+class PreviewerFragment :
+    Fragment(R.layout.previewer),
+    Toolbar.OnMenuItemClickListener,
+    BaseSnackbarBuilderProvider {
     private lateinit var viewModel: PreviewerViewModel
 
-    private val menu: Menu
-        get() = requireView().findViewById<Toolbar>(R.id.toolbar).menu
-
-    private val backsideOnlyOption: MenuItem
-        get() = menu.findItem(R.id.action_back_side_only)
-
-    private val markOption: MenuItem
-        get() = menu.findItem(R.id.action_mark)
-
-    private val flagOption: MenuItem
-        get() = menu.findItem(R.id.action_flag)
+    override val baseSnackbarBuilder: SnackbarBuilder
+        get() = {
+            val slider = this@PreviewerFragment.view?.findViewById<Slider>(R.id.slider)
+            anchorView = if (slider?.isVisible == true) {
+                slider
+            } else {
+                this@PreviewerFragment.view?.findViewById<MaterialButton>(R.id.show_next)
+            }
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(IDS_FILE_EXTRA)) {
@@ -80,23 +87,10 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
             PreviewerViewModel.factory(previewerIdsFile, currentIndex)
         )[PreviewerViewModel::class.java]
 
-        val assetLoader = requireContext().getViewerAssetLoader(LOCALHOST)
         val webView = view.findViewById<WebView>(R.id.webview)
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         with(webView) {
-            webViewClient = object : WebViewClient() {
-                override fun shouldInterceptRequest(
-                    view: WebView?,
-                    request: WebResourceRequest
-                ): WebResourceResponse? {
-                    return assetLoader.shouldInterceptRequest(request.url)
-                }
-
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    super.onPageFinished(view, url)
-                    viewModel.loadCurrentCard()
-                }
-            }
+            webViewClient = onCreateWebViewClient()
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
                 javaScriptEnabled = true
@@ -115,33 +109,19 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
             )
         }
 
+        setupErrorListeners()
+
         val slider = view.findViewById<Slider>(R.id.slider)
         val nextButton = view.findViewById<MaterialButton>(R.id.show_next)
         val previousButton = view.findViewById<MaterialButton>(R.id.show_previous)
         val progressIndicator = view.findViewById<MaterialTextView>(R.id.progress_indicator)
 
-        viewModel.onError
-            .flowWithLifecycle(lifecycle)
-            .onEach { errorMessage ->
-                AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.vague_error)
-                    .setMessage(errorMessage)
-                    .show()
-            }
-            .launchIn(lifecycleScope)
         viewModel.eval
             .flowWithLifecycle(lifecycle)
             .onEach { eval ->
                 webView.evaluateJavascript(eval, null)
             }
             .launchIn(lifecycleScope)
-        lifecycleScope.launch {
-            viewModel.backsideOnly
-                .flowWithLifecycle(lifecycle)
-                .collectLatest { isBacksideOnly ->
-                    setBacksideOnlyButtonIcon(isBacksideOnly)
-                }
-        }
 
         val cardsCount = viewModel.cardsCount()
         lifecycleScope.launch {
@@ -154,24 +134,38 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
                         getString(R.string.preview_progress_bar_text, displayIndex, cardsCount)
                 }
         }
+        /* ************************************* Menu items ************************************* */
+        val menu = view.findViewById<Toolbar>(R.id.toolbar).menu
+
+        lifecycleScope.launch {
+            viewModel.backSideOnly
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { isBackSideOnly ->
+                    setBackSideOnlyButtonIcon(menu, isBackSideOnly)
+                }
+        }
+
         lifecycleScope.launch {
             viewModel.isMarked
                 .flowWithLifecycle(lifecycle)
                 .collectLatest { isMarked ->
-                    if (isMarked) {
-                        markOption.setIcon(R.drawable.ic_star)
-                        markOption.setTitle(R.string.menu_unmark_note)
-                    } else {
-                        markOption.setIcon(R.drawable.ic_star_border_white)
-                        markOption.setTitle(R.string.menu_mark_note)
+                    with(menu.findItem(R.id.action_mark)) {
+                        if (isMarked) {
+                            setIcon(R.drawable.ic_star)
+                            setTitle(R.string.menu_unmark_note)
+                        } else {
+                            setIcon(R.drawable.ic_star_border_white)
+                            setTitle(R.string.menu_mark_note)
+                        }
                     }
                 }
         }
+
         lifecycleScope.launch {
             viewModel.flagCode
                 .flowWithLifecycle(lifecycle)
                 .collectLatest { flagCode ->
-                    flagOption.setIcon(Flag.fromCode(flagCode).drawableRes)
+                    menu.findItem(R.id.action_flag).setIcon(Flag.fromCode(flagCode).drawableRes)
                 }
         }
 
@@ -222,11 +216,78 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         super.onViewCreated(view, savedInstanceState)
     }
 
+    private fun setupErrorListeners() {
+        viewModel.onError
+            .flowWithLifecycle(lifecycle)
+            .onEach { errorMessage ->
+                AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.vague_error)
+                    .setMessage(errorMessage)
+                    .show()
+            }
+            .launchIn(lifecycleScope)
+
+        viewModel.onMediaError
+            .onEach { showMediaErrorSnackbar(it) }
+            .launchIn(lifecycleScope)
+
+        viewModel.onTtsError
+            .onEach { showSnackbar(it.localizedErrorMessage(requireContext())) }
+            .launchIn(lifecycleScope)
+    }
+
+    private fun onCreateWebViewClient(): WebViewClient {
+        val assetLoader = requireContext().getViewerAssetLoader(LOCALHOST)
+        return object : WebViewClient() {
+            override fun shouldInterceptRequest(
+                view: WebView?,
+                request: WebResourceRequest
+            ): WebResourceResponse? {
+                return assetLoader.shouldInterceptRequest(request.url)
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                viewModel.onPageFinished()
+            }
+
+            override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+                val urlString = request.url.toString()
+                if (urlString.startsWith("playsound:")) {
+                    viewModel.playSoundFromUrl(urlString)
+                    return true
+                }
+                if (urlString.startsWith("tts-voices:")) {
+                    TtsVoicesDialogFragment().show(childFragmentManager, null)
+                    return true
+                }
+                try {
+                    openUrl(request.url)
+                    return true
+                } catch (_: Exception) {
+                    Timber.w("Could not open url")
+                }
+                return false
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.setSoundPlayerEnabled(true)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (!requireActivity().isChangingConfigurations) {
+            viewModel.setSoundPlayerEnabled(false)
+        }
+    }
+
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_edit -> editCard()
             R.id.action_mark -> viewModel.toggleMark()
-            R.id.action_back_side_only -> viewModel.toggleBacksideOnly()
+            R.id.action_back_side_only -> viewModel.toggleBackSideOnly()
             R.id.action_flag_zero -> viewModel.setFlag(Flag.NONE)
             R.id.action_flag_one -> viewModel.setFlag(Flag.RED)
             R.id.action_flag_two -> viewModel.setFlag(Flag.ORANGE)
@@ -239,9 +300,9 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
         return true
     }
 
-    private fun setBacksideOnlyButtonIcon(isBacksideOnly: Boolean) {
-        backsideOnlyOption.apply {
-            if (isBacksideOnly) {
+    private fun setBackSideOnlyButtonIcon(menu: Menu, isBackSideOnly: Boolean) {
+        menu.findItem(R.id.action_back_side_only).apply {
+            if (isBackSideOnly) {
                 setIcon(R.drawable.ic_card_answer)
                 setTitle(R.string.card_side_answer)
             } else {
@@ -252,20 +313,21 @@ class PreviewerFragment : Fragment(R.layout.previewer), Toolbar.OnMenuItemClickL
     }
 
     private val editCardLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
-            result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
-        ) {
-            viewModel.loadCurrentCard(reload = true)
-        }
+        viewModel.handleEditCardResult(result)
     }
 
     private fun editCard() {
-        val intent = Intent(requireContext(), NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
-            putExtra(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, viewModel.cardId())
-        }
+        val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
         editCardLauncher.launch(intent)
     }
+
+    private fun showMediaErrorSnackbar(filename: String) {
+        showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
+            setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
+        }
+    }
+
+    private fun openUrl(uri: Uri) = startActivity(Intent(Intent.ACTION_VIEW, uri))
 
     companion object {
         const val CURRENT_INDEX_EXTRA = "currentIndex"

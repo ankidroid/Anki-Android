@@ -40,7 +40,6 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -56,6 +55,8 @@ import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -65,11 +66,11 @@ import kotlin.coroutines.suspendCoroutine
  * Other errors should ideally be handled in the block.
  */
 fun CoroutineScope.launchCatching(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    context: CoroutineContext = EmptyCoroutineContext,
     errorMessageHandler: suspend (String) -> Unit,
     block: suspend () -> Unit
 ): Job {
-    return launch(dispatcher) {
+    return launch(context) {
         try {
             block()
         } catch (cancellationException: CancellationException) {
@@ -90,12 +91,9 @@ interface OnErrorListener {
     val onError: MutableSharedFlow<String>
 }
 
-fun <T> T.launchCatching(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    block: suspend T.() -> Unit
-): Job where T : ViewModel, T : OnErrorListener {
+fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel, T : OnErrorListener {
     return viewModelScope.launchCatching(
-        dispatcher,
+        Dispatchers.IO,
         { onError.emit(it) },
         { block() }
     )
@@ -111,7 +109,7 @@ fun <T> T.launchCatching(
  *   If not, add a comment explaining why, or refactor to have a method that returns
  *   a non-null localized message.
  */
-suspend fun <T> FragmentActivity.runCatchingTask(
+suspend fun <T> FragmentActivity.runCatching(
     errorMessage: String? = null,
     block: suspend () -> T?
 ): T? {
@@ -198,7 +196,7 @@ fun FragmentActivity.launchCatchingTask(
     block: suspend CoroutineScope.() -> Unit
 ): Job {
     return lifecycle.coroutineScope.launch {
-        runCatchingTask(errorMessage) { block() }
+        runCatching(errorMessage) { block() }
     }
 }
 
@@ -208,7 +206,7 @@ fun Fragment.launchCatchingTask(
     block: suspend CoroutineScope.() -> Unit
 ): Job {
     return lifecycle.coroutineScope.launch {
-        requireActivity().runCatchingTask(errorMessage) { block() }
+        requireActivity().runCatching(errorMessage) { block() }
     }
 }
 

@@ -220,6 +220,7 @@
 
     <string name="help_title_send_exception">Send troubleshooting report</string>
     <string name="help_dialog_exception_report_debounce">Report already submitted</string>
+    <string name="help_dialog_exception_report_sent">Report was sent!</string>
 
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">

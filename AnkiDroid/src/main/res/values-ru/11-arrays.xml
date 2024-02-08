@@ -101,5 +101,5 @@
     <string name="gesture_show_all_hints">Показать все подсказки</string>
     <string name="record_voice">Записать голос</string>
     <string name="replay_voice">Воспроизвести голос</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="save_voice">Сохранить запись</string>
 </resources>

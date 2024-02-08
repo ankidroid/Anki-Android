@@ -22,9 +22,12 @@ import androidx.annotation.CheckResult
 import androidx.core.net.toFile
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AbstractFlashcardViewer
+import com.ichi2.anki.AbstractFlashcardViewer.Companion.getMediaBaseUrl
 import com.ichi2.anki.AndroidTtsError
 import com.ichi2.anki.AndroidTtsError.TtsErrorCode
 import com.ichi2.anki.AndroidTtsPlayer
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper.Companion.getMediaDirectory
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
@@ -84,11 +87,23 @@ import java.io.File
  * This uses [com.ichi2.anki.MetaDB], and may either read `<tts>` or all text on a card
  *
  */
-class SoundPlayer(
-    private val soundTagPlayer: SoundTagPlayer,
-    private val ttsPlayer: Deferred<TtsPlayer>,
+class SoundPlayer : Closeable {
+
+    private val soundTagPlayer: SoundTagPlayer
+    private val ttsPlayer: Deferred<TtsPlayer>
     private val soundErrorListener: SoundErrorListener
-) : Closeable {
+
+    constructor(soundTagPlayer: SoundTagPlayer, ttsPlayer: Deferred<TtsPlayer>, soundErrorListener: SoundErrorListener) {
+        this.soundTagPlayer = soundTagPlayer
+        this.ttsPlayer = ttsPlayer
+        this.soundErrorListener = soundErrorListener
+    }
+
+    constructor(soundErrorListener: SoundErrorListener) {
+        this.soundTagPlayer = SoundTagPlayer(getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance).path))
+        this.ttsPlayer = scope.async { AndroidTtsPlayer.createInstance(AnkiDroidApp.instance, scope) }
+        this.soundErrorListener = soundErrorListener
+    }
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
@@ -123,7 +138,7 @@ class SoundPlayer(
         }
     }
 
-    private suspend fun playAllSoundsForSide(cardSide: CardSide): Job? {
+    suspend fun playAllSoundsForSide(cardSide: CardSide): Job? {
         if (!isEnabled) return null
         playSoundsJob {
             Timber.i("playing sounds for %s", cardSide)

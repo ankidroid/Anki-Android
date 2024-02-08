@@ -65,6 +65,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck
@@ -198,7 +199,6 @@ open class DeckPicker :
     lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
-    private val snackbarShowHideCallback = Snackbar.Callback()
     lateinit var exportingDelegate: ActivityExportingDelegate
     private lateinit var noDecksPlaceholder: LinearLayout
     lateinit var pullToSyncWrapper: SwipeRefreshLayout
@@ -213,8 +213,19 @@ open class DeckPicker :
     // flag asking user to do a full sync which is used in upgrade path
     private var recommendFullSync = false
 
+    var activeSnackBar: Snackbar? = null
+    private val activeSnackbarCallback = object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+        override fun onShown(transientBottomBar: Snackbar?) {
+            activeSnackBar = transientBottomBar
+        }
+
+        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+            activeSnackBar = null
+        }
+    }
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
+        addCallback(activeSnackbarCallback)
     }
 
     // flag keeping track of when the app has been paused
@@ -1841,7 +1852,6 @@ open class DeckPicker :
     @NeedsTest("14608: Ensure that the deck options refer to the selected deck")
     private suspend fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
         fun showEmptyDeckSnackbar() = showSnackbar(R.string.empty_deck) {
-            addCallback(snackbarShowHideCallback)
             setAction(R.string.menu_add) { addNote() }
         }
 

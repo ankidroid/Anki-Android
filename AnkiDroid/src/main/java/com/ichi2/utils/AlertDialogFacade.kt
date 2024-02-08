@@ -138,10 +138,18 @@ inline fun AlertDialog.Builder.show(block: AlertDialog.Builder.() -> Unit): Aler
 }
 
 /**
- * Creates an [AlertDialog], then executes [block] with it
+ * Creates an [AlertDialog] from the [AlertDialog.Builder] instance, then executes [block] with it.
  */
-fun AlertDialog.Builder.create(block: AlertDialog.() -> Unit): AlertDialog = create().apply {
+fun AlertDialog.Builder.createAndApply(block: AlertDialog.() -> Unit): AlertDialog = create().apply {
     block()
+}
+
+/**
+ * Executes [block] on the [AlertDialog.Builder] instance and returns the initialized [AlertDialog].
+ */
+fun AlertDialog.Builder.create(block: AlertDialog.Builder.() -> Unit): AlertDialog {
+    block()
+    return create()
 }
 
 /**
@@ -173,6 +181,11 @@ fun AlertDialog.Builder.checkBoxPrompt(
 
     return this.setView(checkBoxView)
 }
+
+fun AlertDialog.getCheckBoxPrompt(): CheckBox =
+    requireNotNull(findViewById(R.id.checkbox)) {
+        "CheckBox prompt is not available. Forgot to call AlertDialog.Builder.checkBoxPrompt()?"
+    }
 
 fun AlertDialog.Builder.customView(
     view: View,

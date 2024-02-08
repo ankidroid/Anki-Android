@@ -47,10 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Выкл.</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
-        <item quantity="few">%d mins</item>
-        <item quantity="many">%d mins</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="one">%d мин.</item>
+        <item quantity="few">%d мин</item>
+        <item quantity="many">%d мин</item>
+        <item quantity="other">%d мин</item>
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">Не найдено</string>
@@ -116,7 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Касание в центре экрана</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Касание внизу в левом углу</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Касание внизу в правом углу</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Потрясти устройство </string>
     <string name="card_browser_enable_external_context_menu">Пункт «%s» в меню</string>
     <string name="card_browser_enable_external_context_menu_summary">Добавляет пункт «%s» в контекстное меню системы</string>
     <string name="double_scrolling_gap" maxLength="41">Двойная прокрутка</string>
@@ -137,7 +137,7 @@
     <string name="sync_status_badge_summ">Добавляет точку на значок синхронизации, когда можно выгрузить изменения</string>
     <string name="metered_sync_title" maxLength="41">Разрешить синхронизацию в тарифицируемых сетях</string>
     <string name="metered_sync_summary">Если отключено, предупреждает, если вы синхронизируетесь через тарифицированную сеть</string>
-    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_frequency">Частота</string>
     <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Дневная тема</string>
@@ -152,7 +152,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибросигнал</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мерцание светодиода</string>
     <string name="timeout_answer_text" maxLength="41">Автоматически показывать ответ</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Показывать ответ автоматически без пользовательского ввода. Настройте параметры колоды.</string>
     <string name="select_locale_title">Выберите язык</string>
     <string name="software_render" maxLength="41">Отключить аппаратную отрисовку</string>
     <string name="software_render_summ">Аппаратная отрисовка быстрее, но может вызывать проблемы (особенно на Android 8/8.1). Попробуйте отключить её если при повторении пропадают элементы интерфейса.</string>
@@ -166,7 +166,7 @@
     <string name="pref_double_tap_time_interval" maxLength="41">Интервал двойного нажатия (в мс)</string>
     <string name="pref_double_tap_time_interval_summary">Второе нажатие на ответ будет проигнорировано, если это время не истекло. Предотвращает случайное двойное нажатие</string>
     <string name="pref_show_answer_long_press" maxLength="41">Длительность нажатия для ответа</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press_summary">Минимальное время зажатия до регистрации нажатия кнопкой ответа. Может уменьшить вероятность случайных нажатий. По умолчанию 0ms</string>
     <string name="show_estimates" maxLength="41">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
     <string name="show_large_answer_buttons" maxLength="41">Большие кнопки ответа</string>
@@ -181,10 +181,10 @@
     <string name="new_timezone" maxLength="41">Новая обработка часовых поясов</string>
     <string name="day_offset_with_description" maxLength="41">Начало нового дня</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="few">%d hours past midnight</item>
-        <item quantity="many">%d hours past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d час после полуночи</item>
+        <item quantity="few">%d часов после полуночи</item>
+        <item quantity="many">%d часов после полуночи</item>
+        <item quantity="other">%d часов после полуночи</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Не выключать экран</string>
     <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>
@@ -204,7 +204,7 @@
     <string name="html_javascript_debugging_summ">Включает удалённые соединения WebView и сохраняет HTML карточек в директорию AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Повторение</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Показать название колоды</string>
     <string name="accessibility" maxLength="41">Специальные возможности</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставлять изображения буфера как PNG</string>
@@ -245,7 +245,7 @@
     <string name="deck_conf_cram_filter_2_check">Включить второй фильтр</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Задать свои шаги</string>
     <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays_summ">Задержки в секундах. 0 возвращает карту в исходную колоду.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Помогите сделать AnkiDroid лучше!</string>
     <string name="analytics_title" maxLength="41">Делиться статистикой использования</string>

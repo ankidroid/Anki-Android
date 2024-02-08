@@ -213,6 +213,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWebs Nutzungsbedingungen</string>
     <string name="help_title_send_exception">Fehlerbehebungsbericht senden</string>
     <string name="help_dialog_exception_report_debounce">Bericht bereits eingereicht</string>
+    <string name="help_dialog_exception_report_sent">Report was sent!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Ein automatische Synchronisierung kann in %d Sekunden ausgelöst werden</item>
