@@ -35,7 +35,9 @@ class NoteEditorDestination(val cardId: Long) {
 }
 
 /**
- * Not exactly equal to anki's stdHtml.
+ * Not exactly equal to anki's stdHtml. Some differences:
+ * * `ankidroid.css` is added
+ * * `bridgeCommand()` is ignored
  *
  * Aimed to be used only for reviewing/previewing cards
  */
@@ -84,7 +86,8 @@ fun stdHtml(
                     <title>AnkiDroid</title>
                         <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/root-vars.css">
                         <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/reviewer.css">
-                    <style type="text/css">
+                        <link rel="stylesheet" type="text/css" href="file:///android_asset/ankidroid.css">
+                    <style>
                         .night-mode button { --canvas: #606060; --fg: #eee; }
                         $colors
                     </style>
