@@ -556,7 +556,13 @@ enum class SaveSearchResult {
     SUCCESS
 }
 
-class PreviewerIdsFile(directory: File, cardIds: List<Long>) :
+/**
+ * Temporary file containing the IDs of the cards to be displayed at the previewer
+ *
+ * @param directory parent directory of the file. Generally it should be the cache directory
+ * @param cardIds ids of the cards to be displayed
+ */
+class PreviewerIdsFile(directory: File, cardIds: List<CardId>) :
     File(createTempFile("previewerIds", ".tmp", directory).absolutePath) {
     init {
         DataOutputStream(FileOutputStream(this)).use { outputStream ->
