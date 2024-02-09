@@ -42,7 +42,8 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
-import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.SingleFragmentActivity.Companion.FRAGMENT_ARGS_EXTRA
+import com.ichi2.anki.SingleFragmentActivity.Companion.FRAGMENT_NAME_EXTRA
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.getViewerAssetLoader
@@ -59,6 +60,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import kotlin.reflect.jvm.jvmName
 
 class PreviewerFragment :
     Fragment(R.layout.previewer),
@@ -341,7 +343,10 @@ class PreviewerFragment :
                 CURRENT_INDEX_ARG to currentIndex,
                 CARD_IDS_FILE_ARG to previewerIdsFile
             )
-            return SingleFragmentActivity.getIntent(context, PreviewerFragment::class, arguments)
+            return Intent(context, PreviewerActivity::class.java).apply {
+                putExtra(FRAGMENT_NAME_EXTRA, PreviewerFragment::class.jvmName)
+                putExtra(FRAGMENT_ARGS_EXTRA, arguments)
+            }
         }
     }
 }

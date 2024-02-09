@@ -403,6 +403,11 @@
             android:configChanges="orientation|screenSize"
             />
         <activity
+            android:name="com.ichi2.anki.previewer.PreviewerActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize"
+            />
+        <activity
             android:name="com.ichi2.anki.CardTemplatePreviewer"
             android:label="@string/preview_title"
             android:exported="false"
