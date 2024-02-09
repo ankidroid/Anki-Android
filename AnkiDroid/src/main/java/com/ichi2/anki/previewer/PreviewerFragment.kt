@@ -77,10 +77,10 @@ class PreviewerFragment :
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(IDS_FILE_EXTRA)) {
-            "$IDS_FILE_EXTRA is required"
+        val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(CARD_IDS_FILE_ARG)) {
+            "$CARD_IDS_FILE_ARG is required"
         } as PreviewerIdsFile
-        val currentIndex = requireArguments().getInt(CURRENT_INDEX_EXTRA, 0)
+        val currentIndex = requireArguments().getInt(CURRENT_INDEX_ARG, 0)
 
         viewModel = ViewModelProvider(
             requireActivity(),
@@ -330,12 +330,18 @@ class PreviewerFragment :
     private fun openUrl(uri: Uri) = startActivity(Intent(Intent.ACTION_VIEW, uri))
 
     companion object {
-        const val CURRENT_INDEX_EXTRA = "currentIndex"
-        const val IDS_FILE_EXTRA = "idsFile"
+        /** Index of the card to be first displayed among the IDs provided by [CARD_IDS_FILE_ARG] */
+        const val CURRENT_INDEX_ARG = "currentIndex"
+
+        /** Argument key to a [PreviewerIdsFile] with the IDs of the cards to be displayed */
+        const val CARD_IDS_FILE_ARG = "cardIdsFile"
 
         fun getIntent(context: Context, previewerIdsFile: PreviewerIdsFile, currentIndex: Int): Intent {
-            val args = bundleOf(CURRENT_INDEX_EXTRA to currentIndex, IDS_FILE_EXTRA to previewerIdsFile)
-            return SingleFragmentActivity.getIntent(context, PreviewerFragment::class, args)
+            val arguments = bundleOf(
+                CURRENT_INDEX_ARG to currentIndex,
+                CARD_IDS_FILE_ARG to previewerIdsFile
+            )
+            return SingleFragmentActivity.getIntent(context, PreviewerFragment::class, arguments)
         }
     }
 }
