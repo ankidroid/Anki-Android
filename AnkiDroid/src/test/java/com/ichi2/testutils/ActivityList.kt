@@ -26,6 +26,7 @@ import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUEST
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.previewer.PreviewerActivity
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
@@ -74,7 +75,8 @@ object ActivityList {
             get(ManageSpaceActivity::class.java),
             get(PermissionsActivity::class.java),
             get(SingleFragmentActivity::class.java),
-            get(ImageOcclusionActivity::class.java)
+            get(ImageOcclusionActivity::class.java),
+            get(PreviewerActivity::class.java)
         )
     }
 
