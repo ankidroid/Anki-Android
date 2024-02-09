@@ -1120,7 +1120,6 @@ open class DeckPicker :
         // As `loadDeckCounts` is cancelled in `migrate()`
         val message = dialogHandler.popMessage()
         super.onResume()
-
         if (navDrawerIsReady() && hasCollectionStoragePermissions()) {
             refreshState()
         }
@@ -1153,8 +1152,6 @@ open class DeckPicker :
         }
         exportingDelegate.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
-
-        // Show the floating action button if it is hidden
         floatingActionMenu.showFloatingActionButton()
     }
 
