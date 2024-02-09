@@ -214,7 +214,7 @@ class TypeAnswer(
             return TypeAnswer(
                 useInputTag = preferences.getBoolean("useInputTag", false),
                 doNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false),
-                autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", false)
+                autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", true)
             )
         }
 
