@@ -107,7 +107,7 @@
             android:title="@string/show_progress" />
         <SwitchPreferenceCompat
             android:key="@string/show_eta_preference"
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:summary="@string/show_eta_summ"
             android:title="@string/show_eta" />
         <SwitchPreferenceCompat
