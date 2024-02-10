@@ -170,6 +170,7 @@
     <string name="failed_to_apply_background_image">Gagal menerapkan gambar latar belakang %s</string>
     <string name="background_image_too_large">Latar Pemilih Dek terlalu besar</string>
     <string name="image_max_size_allowed">Ukuran gambar maksimal %d MB</string>
+    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Izin penyimpanan diperlukan. Harap izinkan akses penyimpanan lalu coba lagi.</string>

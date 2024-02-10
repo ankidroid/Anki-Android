@@ -176,6 +176,7 @@
     <string name="failed_to_apply_background_image">പശ്ചാത്തല ചിത്രം %s പ്രയോഗിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="background_image_too_large">ഡെക്ക് പിക്കർ പശ്ചാത്തലം വളരെ വലുതാണ്</string>
     <string name="image_max_size_allowed">പരമാവധി ഇമേജ് വലുപ്പം %d MB അനുവദനീയമാണ്</string>
+    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">ആവശ്യമായ സംഭരണ ​​അനുമതി നഷ്‌ടമായി. സംഭരണ ​​അനുമതി നൽകി നിങ്ങളുടെ പ്രവർത്തനം വീണ്ടും ശ്രമിക്കുക.</string>

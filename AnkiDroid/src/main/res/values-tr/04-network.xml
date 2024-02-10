@@ -64,7 +64,7 @@
     <string name="log_out">Çıkış yap</string>
     <string name="reset_password">Parolayı Sıfırla</string>
     <string name="lost_mail_instructions">E-postanızı mı unuttunuz?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">Giriş yapılıyor</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX Seçenekleri</string>
     <string name="sync_title">Senkronizasyon</string>

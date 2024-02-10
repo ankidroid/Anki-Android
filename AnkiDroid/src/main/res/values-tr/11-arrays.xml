@@ -101,5 +101,5 @@
     <string name="gesture_show_all_hints">Tüm İpuçlarını Göster</string>
     <string name="record_voice">Ses kaydet</string>
     <string name="replay_voice">Sesi tekrar oynat</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="save_voice">Kaydı Kaydet</string>
 </resources>
