@@ -91,12 +91,12 @@ class CardTest : JvmTest() {
         t.put("qfmt", "{{Front}}1")
         t.put("afmt", "")
         mm.addTemplateModChanged(m, t)
-        mm.save(m, true)
+        mm.save(m)
         assertEquals(2, note.numberOfCards())
         // if the template is changed to remove cards, they'll be removed
         t = m.getJSONArray("tmpls").getJSONObject(1)
         t.put("qfmt", "{{Back}}")
-        mm.save(m, true)
+        mm.save(m)
         val rep = col.emptyCids()
         col.removeCardsAndOrphanedNotes(rep)
         assertEquals(1, note.numberOfCards())
@@ -119,7 +119,7 @@ class CardTest : JvmTest() {
         // set the model to a new default col
         val newId = addDeck("new")
         cloze.put("did", newId)
-        col.notetypes.save(cloze, false)
+        col.notetypes.save(cloze)
         // a newly generated card should share the first card's col
         note.setItem("Text", "{{c2::two}}")
         note.flush()

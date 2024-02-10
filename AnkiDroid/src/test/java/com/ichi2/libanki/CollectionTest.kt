@@ -107,7 +107,7 @@ class CollectionTest : JvmTest() {
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
         mm.addTemplateModChanged(m, t)
-        mm.save(m, true) // todo: remove true which is not upstream
+        mm.save(m)
         assertEquals(2, col.cardCount())
         // creating new notes should use both cards
         note = col.newNote()

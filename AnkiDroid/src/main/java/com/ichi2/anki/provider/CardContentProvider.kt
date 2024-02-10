@@ -516,7 +516,7 @@ class CardContentProvider : ContentProvider() {
                         model!!.put("latexPre", newLatexPre)
                         updated++
                     }
-                    col.notetypes.save(model)
+                    col.notetypes.save(model!!)
                 } catch (e: JSONException) {
                     Timber.e(e, "JSONException updating model")
                 }
@@ -563,7 +563,7 @@ class CardContentProvider : ContentProvider() {
                     // Save the model
                     templates.put(templateOrd, template)
                     existingModel.put("tmpls", templates)
-                    col.notetypes.save(existingModel, true)
+                    col.notetypes.save(existingModel)
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Model is malformed", e)
                 }

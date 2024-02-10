@@ -76,12 +76,7 @@ class Notetypes(val col: Collection) {
     }
 
     /** Save changes made to provided note type. */
-    @RustCleanup("templates is not needed, m should be non-null")
-    fun save(m: NotetypeJson?, @Suppress("UNUSED_PARAMETER") templates: Boolean = true) {
-        if (m == null) {
-            Timber.w("a null model is no longer supported - data is automatically flushed")
-            return
-        }
+    fun save(m: NotetypeJson) {
         // legacy code expects preserve_usn=false behaviour, but that
         // causes a backup entry to be created, which invalidates the
         // v2 review history. So we manually update the usn/mtime here
