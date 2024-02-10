@@ -61,7 +61,7 @@ private typealias int = Long
 
 // # types
 private typealias Field = JSONObject // Dict<str, Any>
-private typealias Template = JSONObject // Dict<str, Union3<str, int, Unit>>
+typealias Template = JSONObject // Dict<str, Union3<str, int, Unit>>
 
 class Notetypes(val col: Collection) {
     /*

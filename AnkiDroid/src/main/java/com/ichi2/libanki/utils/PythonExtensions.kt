@@ -97,6 +97,10 @@ operator fun JSONObject.set(s: String, value: String) {
     this.put(s, value)
 }
 
+operator fun JSONObject.set(s: String, value: Int) {
+    this.put(s, value)
+}
+
 fun JSONArray.append(jsonObject: JSONObject) {
     this.put(jsonObject)
 }
