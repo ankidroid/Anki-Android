@@ -18,6 +18,7 @@ package com.ichi2.anki.notetype
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -31,12 +32,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.StockNotetype
 import anki.notetypes.copy
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.getActionButton
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.input.getInputField
-import com.afollestad.materialdialogs.input.input
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
@@ -51,6 +46,7 @@ import com.ichi2.utils.*
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
+    private lateinit var view: View
     private val notetypesAdapter: NotetypesAdapter by lazy {
         NotetypesAdapter(
             this@ManageNotetypes,
@@ -89,6 +85,7 @@ class ManageNotetypes : AnkiActivity() {
             launchCatchingTask { addNewNotetype() }
         }
         launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
+        view = LayoutInflater.from(this).inflate(R.layout.dialog_new_note_type, null)
     }
 
     @SuppressLint("CheckResult")
@@ -100,32 +97,32 @@ class ManageNotetypes : AnkiActivity() {
                     withCol { getNotetypeNames().map { it.toUiModel() } }
                 }
             )
-            val dialog = MaterialDialog(this@ManageNotetypes).show {
+            val dialog = AlertDialog.Builder(this@ManageNotetypes).show {
                 title(R.string.rename_model)
-                input(
-                    prefill = noteTypeUiModel.name,
-                    waitForPositiveButton = false,
-                    callback = { dialog, text ->
-                        dialog.getActionButton(WhichButton.POSITIVE).isEnabled =
-                            text.isNotEmpty() && !allNotetypes.map { it.name }
-                            .contains(text.toString())
-                    }
-                )
                 positiveButton(R.string.rename) {
                     launchCatchingTask {
                         runAndRefreshAfter {
                             val initialNotetype = getNotetype(noteTypeUiModel.id)
                             val renamedNotetype = initialNotetype.copy {
-                                this.name = it.getInputField().text.toString()
+                                this.name = (it as AlertDialog).getInputField().text.toString()
                             }
                             updateNotetype(renamedNotetype)
                         }
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
-            }
+                setView(R.layout.dialog_generic_text_input)
+            }.input(
+                prefill = noteTypeUiModel.name,
+                waitForPositiveButton = false,
+                callback = { dialog, text ->
+                    dialog.positiveButton.isEnabled =
+                        text.isNotEmpty() && !allNotetypes.map { it.name }
+                        .contains(text.toString())
+                }
+            )
             // start with the button disabled as dialog shows the initial name
-            dialog.getActionButton(WhichButton.POSITIVE).isEnabled = false
+            dialog.positiveButton.isEnabled = false
         }
     }
 
@@ -179,13 +176,13 @@ class ManageNotetypes : AnkiActivity() {
                 }
             }
         }
-        val dialog = MaterialDialog(this).show {
-            customView(R.layout.dialog_new_note_type, horizontalPadding = true)
-            positiveButton(R.string.dialog_ok) { dialog ->
+        val dialog = AlertDialog.Builder(this).show {
+            customView(view, paddingLeft = 32, paddingRight = 32, paddingTop = 64, paddingBottom = 64)
+            positiveButton(R.string.dialog_ok) { _ ->
                 val newName =
-                    dialog.view.findViewById<EditText>(R.id.notetype_new_name).text.toString()
+                    view.findViewById<EditText>(R.id.notetype_new_name).text.toString()
                 val selectedPosition =
-                    dialog.view.findViewById<Spinner>(R.id.notetype_new_type).selectedItemPosition
+                    view.findViewById<Spinner>(R.id.notetype_new_type).selectedItemPosition
                 if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
                 val selectedOption = optionsToDisplay[selectedPosition]
                 if (selectedOption.isStandard) {
@@ -199,13 +196,13 @@ class ManageNotetypes : AnkiActivity() {
         dialog.initializeViewsWith(optionsToDisplay)
     }
 
-    private fun MaterialDialog.initializeViewsWith(optionsToDisplay: List<NotetypeBasicUiModel>) {
+    private fun AlertDialog.initializeViewsWith(optionsToDisplay: List<NotetypeBasicUiModel>) {
         val addPrefixStr = resources.getString(R.string.model_browser_add_add)
         val clonePrefixStr = resources.getString(R.string.model_browser_add_clone)
         val nameInput = view.findViewById<EditText>(R.id.notetype_new_name)
         nameInput.addTextChangedListener { editableText ->
             val currentName = editableText?.toString() ?: ""
-            getActionButton(WhichButton.POSITIVE).isEnabled =
+            positiveButton.isEnabled =
                 currentName.isNotEmpty() && !optionsToDisplay.map { it.name }.contains(currentName)
         }
         view.findViewById<Spinner>(R.id.notetype_new_type).apply {
