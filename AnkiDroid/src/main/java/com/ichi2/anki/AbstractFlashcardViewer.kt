@@ -534,9 +534,6 @@ abstract class AbstractFlashcardViewer :
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         gestureDetectorImpl = LinkDetectingGestureDetector()
         TtsVoicesFieldFilter.ensureApplied()
-        if (!sharedPrefs().getBoolean("showDeckTitle", false)) {
-            supportActionBar?.setDisplayShowTitleEnabled(false)
-        }
     }
 
     protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
