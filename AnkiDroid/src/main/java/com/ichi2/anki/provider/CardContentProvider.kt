@@ -438,7 +438,7 @@ class CardContentProvider : ContentProvider() {
                     }
                 }
                 Timber.d("CardContentProvider: Saving note...")
-                currentNote.flush(col)
+                col.updateNote(currentNote)
             }
             NOTES_ID_CARDS -> throw UnsupportedOperationException("Not yet implemented")
             NOTES_ID_CARDS_ORD -> {

@@ -22,7 +22,6 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
 import com.ichi2.utils.emptyStringMutableList
-import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import java.util.*
 import java.util.regex.Pattern
@@ -87,14 +86,6 @@ class Note : Cloneable {
 
     fun reloadModel(col: Collection) {
         notetype = col.notetypes.get(mid)!!
-    }
-
-    /*
-     * If fields or tags have changed, write changes to disk.
-     */
-    @RustCleanup("code should call col.updateNote() instead, in undoableOp {}")
-    fun flush(col: Collection) {
-        col.updateNote(this)
     }
 
     fun numberOfCards(col: Collection): Int {

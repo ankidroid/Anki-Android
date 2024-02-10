@@ -188,7 +188,9 @@ interface TestClass {
     fun Note.cids() = this.cids(col)
     fun Note.numberOfCards() = this.numberOfCards(col)
     fun Note.dupeOrEmpty() = this.dupeOrEmpty(col)
-    fun Note.flush() = this.flush(col)
+
+    // TODO remove this. not in libanki
+    fun Note.flush() { col.updateNote(this) }
 
     /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
      * takes care of updating the dispatcher used by CollectionManager as well.

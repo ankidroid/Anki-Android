@@ -2566,7 +2566,8 @@ abstract class AbstractFlashcardViewer :
             val tagString = selectedTags.joinToString(" ")
             val note = currentCard!!.note(getColUnsafe)
             note.setTagsFromStr(getColUnsafe, tagString)
-            note.flush(getColUnsafe)
+            // TODO move to a coroutine instead of using runBlocking
+            runBlocking { undoableOp { updateNote(note) } }
             // Reload current card to reflect tag changes
             reloadWebViewContent()
         }
