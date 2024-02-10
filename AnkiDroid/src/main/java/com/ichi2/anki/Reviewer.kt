@@ -71,6 +71,7 @@ import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.remainingTime
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.audio.AudioRecordingController
 import com.ichi2.audio.AudioRecordingController.Companion.generateTempAudioFile
@@ -158,6 +159,7 @@ open class Reviewer :
 
     // ETA
     private var eta = 0
+    private var prefShowETA = false
 
     /** Handle Mark/Flag state of cards  */
     @VisibleForTesting
@@ -943,6 +945,7 @@ open class Reviewer :
     override fun restorePreferences(): SharedPreferences {
         val preferences = super.restorePreferences()
         prefHideDueCount = preferences.getBoolean("hideDueCount", false)
+        prefShowETA = preferences.getBoolean("showETA", true)
         processor.setup()
         prefFullscreenReview = isFullScreenReview(preferences)
         actionButtons.setup(preferences)
@@ -978,7 +981,16 @@ open class Reviewer :
     private fun updateScreenCounts() {
         val queue = queueState ?: return
         super.updateActionBar()
+        val actionBar = supportActionBar
         val counts = queue.counts
+        if (actionBar != null) {
+            if (prefShowETA) {
+                launchCatchingTask {
+                    eta = withCol { sched.eta(counts, false) }
+                    actionBar.subtitle = remainingTime(this@Reviewer, (eta * 60).toLong())
+                }
+            }
+        }
         newCount = SpannableString(counts.new.toString())
         lrnCount = SpannableString(counts.lrn.toString())
         revCount = SpannableString(counts.rev.toString())
