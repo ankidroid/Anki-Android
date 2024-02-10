@@ -28,7 +28,6 @@ import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOut
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
 import com.ichi2.utils.LanguageUtil
-import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import java.util.*
 
@@ -199,11 +198,6 @@ open class Card : Cloneable {
 
     fun answer(col: Collection): String {
         return renderOutput(col).answerAndStyle()
-    }
-
-    @RustCleanup("legacy")
-    fun css(col: Collection): String {
-        return "<style>${renderOutput(col).css}</style>"
     }
 
     fun questionAvTags(col: Collection): List<AvTag> {
