@@ -948,7 +948,7 @@ open class Reviewer :
     override fun restorePreferences(): SharedPreferences {
         val preferences = super.restorePreferences()
         prefHideDueCount = preferences.getBoolean("hideDueCount", false)
-        prefShowETA = preferences.getBoolean("showETA", true)
+        prefShowETA = preferences.getBoolean("showETA", false)
         processor.setup()
         prefFullscreenReview = isFullScreenReview(preferences)
         actionButtons.setup(preferences)
