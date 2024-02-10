@@ -348,10 +348,6 @@ class Notetypes(val col: Collection) {
         field["name"] = new_name
     }
 
-    /** name exists for compat with java */
-    @RustCleanup("remove - use set_sort_index")
-    fun setSortIdx(m: NotetypeJson, idx: Int) = set_sort_index(m, idx)
-
     /** Modifies schema. */
     fun set_sort_index(nt: NotetypeJson, idx: Int) {
         assert(0 <= idx && idx < len(nt.flds))
