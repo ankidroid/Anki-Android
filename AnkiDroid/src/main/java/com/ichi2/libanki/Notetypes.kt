@@ -269,8 +269,8 @@ class Notetypes(val col: Collection) {
     ##################################################
      */
 
-    @RustCleanup("use nids(int)")
-    fun nids(m: com.ichi2.libanki.NotetypeJson): List<int> = nids(m.getLong("id"))
+    // not in libanki
+    fun nids(model: NotetypeJson): List<int> = nids(model.getLong("id"))
 
     /** Note ids for M. */
     fun nids(ntid: int): List<int> {
