@@ -19,7 +19,11 @@ package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
+import com.ichi2.libanki.Consts.MODEL_STD
+import com.ichi2.libanki.utils.set
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.deepClone
 import com.ichi2.utils.emptyStringArray
 import com.ichi2.utils.emptyStringMutableList
 import org.json.JSONObject
@@ -94,6 +98,40 @@ class Note : Cloneable {
 
     fun cids(col: Collection): List<Long> {
         return col.db.queryLongList("SELECT id FROM cards WHERE nid = ? ORDER BY ord", this.id)
+    }
+
+    fun ephemeralCard(
+        col: Collection,
+        ord: Int = 0,
+        customNoteType: NotetypeJson? = null,
+        customTemplate: Template? = null,
+        fillEmpty: Boolean = false
+    ): Card {
+        val card = Card(col, id = null)
+        card.ord = ord
+        card.did = DEFAULT_DECK_ID
+
+        val model = customNoteType ?: notetype
+        val template = if (customTemplate != null) {
+            customTemplate.deepClone()
+        } else {
+            val index = if (model.type == MODEL_STD) ord else 0
+            model.tmpls.getJSONObject(index)
+        }
+        // may differ in cloze case
+        template["ord"] = card.ord
+
+        val output = TemplateManager.TemplateRenderContext.fromCardLayout(
+            col = col,
+            note = this,
+            card = card,
+            notetype = model,
+            template = template,
+            fillEmpty = fillEmpty
+        ).render()
+        card.renderOutput = output
+        card.setNote(this)
+        return card
     }
 
     fun cards(col: Collection): ArrayList<Card> {
