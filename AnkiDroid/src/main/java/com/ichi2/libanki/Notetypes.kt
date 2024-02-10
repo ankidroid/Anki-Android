@@ -85,10 +85,6 @@ class Notetypes(val col: Collection) {
         update(m, preserve_usn_and_mtime = true)
     }
 
-    @RustCleanup("not required - java only")
-    fun load(@Suppress("UNUSED_PARAMETER") json: String) {
-    }
-
     /*
     # Caching
     #############################################################
