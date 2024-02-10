@@ -150,7 +150,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Titreş</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Işığı yanıp söndür</string>
     <string name="timeout_answer_text" maxLength="41">Cevabı otomatik göster</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Cevabı kullanıcı adı olmadan otomatik olarak göster. Deste seçeneklerinden yapılandırın.</string>
     <string name="select_locale_title">Dil Seç</string>
     <string name="software_render" maxLength="41">Kart donanım renderını devredışı bırak</string>
     <string name="software_render_summ">Donanım renderı daha hızlıdır ama sorunları olabilir, özellikle de Android 8/8.1\'de. Kart çalışma kullanıcı arayüzünün bazı kısımlarını göremiyorsanız, bunu ayarı deneyin.</string>
@@ -200,7 +200,7 @@
     <string name="html_javascript_debugging_summ">WebView bağlantılarını etkinleştir, ve kart HTML\'ini AnkiDroid dizinine kaydet</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Çalışıcı</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Deste başlığını göster</string>
     <string name="accessibility" maxLength="41">Erişilebilirlik</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Panodaki resimleri PNG olarak yapıştırın</string>
@@ -241,8 +241,8 @@
     <string name="deck_conf_cram_reschedule_summ">Bu destedeki cevaplarıma göre kartları yeniden planlama</string>
     <string name="deck_conf_cram_filter_2_check">İkinci filtreyi etkinleştir</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Kendi adımlarınızı tanımlayın</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Gecikmeleri önizle</string>
+    <string name="deck_conf_cram_preview_delays_summ">Gecikmeler saniye cinsindendir. 0, kartı orijinal destesine döndürür.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid\'in iyileştirilmesine yardım et!</string>
     <string name="analytics_title" maxLength="41">Özellik kullanımını paylaş</string>

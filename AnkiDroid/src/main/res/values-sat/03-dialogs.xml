@@ -176,6 +176,7 @@
     <string name="failed_to_apply_background_image">ᱚᱱᱚᱰ ᱪᱤᱛᱟᱨ ᱵᱟᱦᱟᱞ ᱰᱤᱜᱟᱹᱣ %s</string>
     <string name="background_image_too_large">ᱰᱠᱮ ᱦᱟᱛᱟᱣ ᱵᱮᱠᱜᱟᱨᱩᱸᱰ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ</string>
     <string name="image_max_size_allowed">ᱰᱷᱮᱨ ᱢᱚᱦᱰᱟ %d MB ᱜᱟᱱᱚᱜ ᱟ</string>
+    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">ᱫᱚᱦᱚ ᱪᱷᱟᱰ ᱵᱟᱱᱩᱜᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱚᱦᱚ ᱪᱷᱟᱰ ᱮᱢᱚᱜ ᱢᱮ ᱟᱨ ᱯᱷᱮᱨ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>

@@ -188,6 +188,7 @@
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>

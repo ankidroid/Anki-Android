@@ -176,6 +176,7 @@
     <string name="failed_to_apply_background_image">पृष्ठभूमि छवि लागू करने में विफल %s</string>
     <string name="background_image_too_large">डेक पिकर पृष्ठभूमि बहुत बड़ी है</string>
     <string name="image_max_size_allowed">अधिकतम छवि आकार %d MB की अनुमति है</string>
+    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">भंडारण की अनुमति की आवश्यकता नहीं है। कृपया भंडारण अनुमति प्रदान करें और फिर अपनी कार्रवाई पुनः करें।</string>

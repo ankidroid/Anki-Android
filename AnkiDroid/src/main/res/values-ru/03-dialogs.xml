@@ -189,6 +189,7 @@
     <string name="failed_to_apply_background_image">Не удалось установить фоновое изображение %s</string>
     <string name="background_image_too_large">Фоновое изображение слишком большое</string>
     <string name="image_max_size_allowed">Максимальный размер изображения – %d МБ</string>
+    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Нет разрешения на доступ к хранилищу. Предоставьте разрешение «Хранилище» и попробуйте снова.</string>

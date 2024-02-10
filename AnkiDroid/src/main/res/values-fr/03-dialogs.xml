@@ -176,6 +176,7 @@
     <string name="failed_to_apply_background_image">Impossible d\'appliquer l\'image d\'arrière-plan %s</string>
     <string name="background_image_too_large">L\'arrière-plan du sélecteur de paquets est trop grand</string>
     <string name="image_max_size_allowed">Taille maximale de l’image de %d Mo autorisée</string>
+    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Autorisation de stockage requise manquante. Veuillez accorder l’autorisation de stockage puis réessayez.</string>
