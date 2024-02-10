@@ -806,7 +806,7 @@ class CardContentProvider : ContentProvider() {
                 }
                 // Create a new model
                 val mm = col.notetypes
-                val newModel = mm.newModel(modelName)
+                val newModel = mm.new(modelName)
                 return try {
                     // Add the fields
                     val allFields = Utils.splitFields(fieldNames)

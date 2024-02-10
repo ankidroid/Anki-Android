@@ -201,9 +201,6 @@ class Notetypes(val col: Collection) {
         return id?.let { get(it) }
     }
 
-    @RustCleanup("When we're kotlin only, rename to 'new', name existed due to Java compat")
-    fun newModel(name: String): NotetypeJson = new(name)
-
     /** Create a new non-cloze model, and return it. */
     fun new(name: String): NotetypeJson {
         // caller should call save() after modifying

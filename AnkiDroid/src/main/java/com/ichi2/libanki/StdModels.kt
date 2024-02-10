@@ -65,7 +65,7 @@ class StdModels(
         // / create the standard models
         val BASIC_MODEL = StdModels(
             { mm: Notetypes, name: String ->
-                val m = mm.newModel(name)
+                val m = mm.new(name)
                 val frontName = AnkiDroidApp.appResources.getString(R.string.front_field_name)
                 var fm = mm.newField(frontName)
                 mm.addFieldInNewModel(m, fm)
@@ -121,7 +121,7 @@ class StdModels(
         )
         private val CLOZE_MODEL = StdModels(
             { mm: Notetypes, name: String? ->
-                val m = mm.newModel(
+                val m = mm.new(
                     name!!
                 )
                 m.put("type", Consts.MODEL_CLOZE)

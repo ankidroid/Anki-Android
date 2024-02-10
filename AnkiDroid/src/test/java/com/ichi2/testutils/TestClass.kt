@@ -85,7 +85,7 @@ interface TestClass {
     }
 
     fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
-        val model = col.notetypes.newModel(name)
+        val model = col.notetypes.new(name)
         for (field in fields) {
             col.notetypes.addFieldInNewModel(model, col.notetypes.newField(field))
         }
