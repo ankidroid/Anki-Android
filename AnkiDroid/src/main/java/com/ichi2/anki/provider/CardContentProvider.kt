@@ -638,7 +638,7 @@ class CardContentProvider : ContentProvider() {
         col.log(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
             NOTES_ID -> {
-                col.remNotes(longArrayOf(uri.pathSegments[1].toLong()))
+                col.removeNotes(nids = listOf(uri.pathSegments[1].toLong()))
                 1
             }
 //            MODELS_ID_EMPTY_CARDS -> {

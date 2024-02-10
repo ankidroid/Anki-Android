@@ -507,11 +507,6 @@ open class Collection(
         return undoStatus().redo != null
     }
 
-    @RustCleanup("switch to removeNotes")
-    fun remNotes(ids: LongArray) {
-        removeNotes(nids = ids.asIterable())
-    }
-
     fun removeNotes(nids: Iterable<NoteId> = listOf(), cids: Iterable<CardId> = listOf()): OpChangesWithCount {
         return backend.removeNotes(noteIds = nids, cardIds = cids)
     }
