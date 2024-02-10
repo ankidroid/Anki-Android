@@ -76,10 +76,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_LOAD_FAILED -> {
                 // Collection failed to load; give user the option of either choosing from repair options, or closing
                 // the activity
-                dialog.show {
+                alertDialog.show {
+                    title(R.string.open_collection_failed_title)
                     cancelable(false)
-                    contentNullable(message)
-                    icon(R.drawable.ic_warning)
+                    message(text = message)
+                    setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
                             ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
@@ -184,9 +185,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_REPAIR_COLLECTION -> {
                 // Allow user to run BackupManager.repairCollection()
-                dialog.show {
-                    contentNullable(message)
-                    icon(R.drawable.ic_warning)
+                alertDialog.show {
+                    title(R.string.dialog_positive_repair)
+                    message(text = message)
+                    setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.dialog_positive_repair) {
                         (activity as DeckPicker).repairCollection()
                         dismissAllDialogFragments()
@@ -252,8 +254,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_NEW_COLLECTION -> {
                 // Allow user to create a new empty collection
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.show {
+                    title(R.string.backup_new_collection)
+                    message(text = message)
                     positiveButton(R.string.dialog_positive_create) {
                         val ch = CollectionHelper.instance
                         val time = TimeManager.time
