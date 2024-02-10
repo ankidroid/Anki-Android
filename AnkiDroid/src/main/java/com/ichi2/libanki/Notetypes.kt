@@ -360,9 +360,6 @@ class Notetypes(val col: Collection) {
 
     fun newField(name: String) = new_field(name)
 
-    @RustCleanup("Only exists for interface compatibility")
-    fun getModels(): Map<Long, NotetypeJson> = all().map { Pair(it.id, it) }.toMap()
-
     fun addField(m: NotetypeJson, field: Field) {
         add_field(m, field)
         if (m.id != 0L) {

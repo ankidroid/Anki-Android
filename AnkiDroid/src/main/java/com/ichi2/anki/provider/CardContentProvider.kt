@@ -243,7 +243,7 @@ class CardContentProvider : ContentProvider() {
                 val models = col.notetypes
                 val columns = projection ?: FlashCardsContract.Model.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                for (modelId: NoteTypeId in models.getModels().keys) {
+                for (modelId: NoteTypeId in models.ids()) {
                     addModelToCursor(modelId, models, rv, columns)
                 }
                 rv
