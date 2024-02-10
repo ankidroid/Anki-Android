@@ -27,20 +27,17 @@ import com.ichi2.utils.*
 class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreateDialog(savedInstanceState)
-        return AlertDialog.Builder(requireActivity()).apply {
-            var isChecked = true
+        return AlertDialog.Builder(requireActivity()).create {
             title(R.string.analytics_dialog_title)
             message(R.string.analytics_summ)
-            checkBoxPrompt(R.string.analytics_title, isCheckedDefault = true) { checked ->
-                isChecked = checked
-            }
+            checkBoxPrompt(R.string.analytics_title, isCheckedDefault = true) {}
             positiveButton(R.string.dialog_continue) {
-                UsageAnalytics.isEnabled = isChecked
+                UsageAnalytics.isEnabled = (it as AlertDialog).getCheckBoxPrompt().isChecked
                 (activity as DeckPicker).dismissAllDialogFragments()
             }
             cancelable(true)
             setOnCancelListener { (activity as DeckPicker).dismissAllDialogFragments() }
-        }.create()
+        }
     }
 
     companion object {
