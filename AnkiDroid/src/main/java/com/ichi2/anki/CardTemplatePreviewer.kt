@@ -26,7 +26,6 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.TemplateManager
@@ -447,41 +446,6 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                     context.render()
             }
             return renderOutput!!
-        }
-    }
-}
-
-private class EphemeralCard(col: Collection, id: Long?) : Card(col, id) {
-    override fun renderOutput(col: Collection, reload: Boolean, browser: Boolean): TemplateRenderOutput {
-        return this.renderOutput!!
-    }
-    companion object {
-        fun fromNote(n: Note, col: Collection, cardIndex: Int = 0): EphemeralCard {
-            val card = EphemeralCard(col, null)
-            card.did = 1
-            card.ord = n.cardIndexToOrd(col, cardIndex)
-            Timber.v("Generating ephemeral note, idx %d ord %d", cardIndex, card.ord)
-
-            val nt = n.notetype
-            val templateIdx = if (nt.type == Consts.MODEL_CLOZE) {
-                0
-            } else {
-                cardIndex
-            }
-            val template = nt.tmpls[templateIdx] as JSONObject
-            template.put("ord", card.ord)
-
-            val output = TemplateManager.TemplateRenderContext.fromCardLayout(
-                col,
-                n,
-                card,
-                notetype = nt,
-                template = template,
-                fillEmpty = false
-            ).render()
-            card.renderOutput = output
-            card.setNote(n)
-            return card
         }
     }
 }
