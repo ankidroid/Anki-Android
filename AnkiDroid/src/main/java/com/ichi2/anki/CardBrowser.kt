@@ -161,7 +161,7 @@ open class CardBrowser :
     private lateinit var mExportingDelegate: ActivityExportingDelegate
 
     // card that was clicked (not marked)
-    private var mCurrentCardId
+    override var currentCardId
         get() = viewModel.currentCardId
         set(value) { viewModel.currentCardId = value }
 
@@ -186,7 +186,7 @@ open class CardBrowser :
             mShouldRestoreScroll = true
             forceRefreshSearch()
             // in use by reviewer?
-            if (reviewerCardId == mCurrentCardId) {
+            if (reviewerCardId == currentCardId) {
                 mReloadRequired = true
             }
         }
@@ -213,7 +213,7 @@ open class CardBrowser :
             (data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) || data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false))
         ) {
             forceRefreshSearch()
-            if (reviewerCardId == mCurrentCardId) {
+            if (reviewerCardId == currentCardId) {
                 mReloadRequired = true
             }
         }
@@ -680,8 +680,8 @@ open class CardBrowser :
     /** Opens the note editor for a card.
      * We use the Card ID to specify the preview target  */
     private fun openNoteEditorForCard(cardId: CardId) {
-        mCurrentCardId = cardId
-        cardBrowserCard = getColUnsafe.getCard(mCurrentCardId)
+        currentCardId = cardId
+        cardBrowserCard = getColUnsafe.getCard(currentCardId)
         // start note editor using the card we just loaded
         val editCard = Intent(this, NoteEditor::class.java)
             .putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT)
