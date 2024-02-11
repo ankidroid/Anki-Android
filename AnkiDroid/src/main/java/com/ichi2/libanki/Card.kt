@@ -22,13 +22,13 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.NoteService.avgEase
 import com.ichi2.anki.utils.SECONDS_PER_DAY
+import com.ichi2.anki.utils.ext.ifZero
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
 import com.ichi2.utils.LanguageUtil
-import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import java.util.*
 
@@ -201,11 +201,6 @@ open class Card : Cloneable {
         return renderOutput(col).answerAndStyle()
     }
 
-    @RustCleanup("legacy")
-    fun css(col: Collection): String {
-        return "<style>${renderOutput(col).css}</style>"
-    }
-
     fun questionAvTags(col: Collection): List<AvTag> {
         return renderOutput(col).questionAvTags
     }
@@ -251,6 +246,12 @@ open class Card : Cloneable {
 
     fun startTimer() {
         timerStarted = TimeManager.time.intTimeMS()
+    }
+
+    fun currentDeckId(): anki.decks.DeckId {
+        return anki.decks.DeckId.newBuilder()
+            .setDid(oDid.ifZero { did })
+            .build()
     }
 
     /**

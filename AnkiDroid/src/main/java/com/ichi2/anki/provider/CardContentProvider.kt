@@ -243,7 +243,7 @@ class CardContentProvider : ContentProvider() {
                 val models = col.notetypes
                 val columns = projection ?: FlashCardsContract.Model.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                for (modelId: NoteTypeId in models.getModels().keys) {
+                for (modelId: NoteTypeId in models.ids()) {
                     addModelToCursor(modelId, models, rv, columns)
                 }
                 rv
@@ -438,7 +438,7 @@ class CardContentProvider : ContentProvider() {
                     }
                 }
                 Timber.d("CardContentProvider: Saving note...")
-                currentNote.flush(col)
+                col.updateNote(currentNote)
             }
             NOTES_ID_CARDS -> throw UnsupportedOperationException("Not yet implemented")
             NOTES_ID_CARDS_ORD -> {
@@ -516,7 +516,7 @@ class CardContentProvider : ContentProvider() {
                         model!!.put("latexPre", newLatexPre)
                         updated++
                     }
-                    col.notetypes.save(model)
+                    col.notetypes.save(model!!)
                 } catch (e: JSONException) {
                     Timber.e(e, "JSONException updating model")
                 }
@@ -563,7 +563,7 @@ class CardContentProvider : ContentProvider() {
                     // Save the model
                     templates.put(templateOrd, template)
                     existingModel.put("tmpls", templates)
-                    col.notetypes.save(existingModel, true)
+                    col.notetypes.save(existingModel)
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Model is malformed", e)
                 }
@@ -638,7 +638,7 @@ class CardContentProvider : ContentProvider() {
         col.log(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
             NOTES_ID -> {
-                col.remNotes(longArrayOf(uri.pathSegments[1].toLong()))
+                col.removeNotes(nids = listOf(uri.pathSegments[1].toLong()))
                 1
             }
 //            MODELS_ID_EMPTY_CARDS -> {
@@ -806,7 +806,7 @@ class CardContentProvider : ContentProvider() {
                 }
                 // Create a new model
                 val mm = col.notetypes
-                val newModel = mm.newModel(modelName)
+                val newModel = mm.new(modelName)
                 return try {
                     // Add the fields
                     val allFields = Utils.splitFields(fieldNames)

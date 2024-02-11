@@ -507,11 +507,6 @@ open class Collection(
         return undoStatus().redo != null
     }
 
-    @RustCleanup("switch to removeNotes")
-    fun remNotes(ids: LongArray) {
-        removeNotes(nids = ids.asIterable())
-    }
-
     fun removeNotes(nids: Iterable<NoteId> = listOf(), cids: Iterable<CardId> = listOf()): OpChangesWithCount {
         return backend.removeNotes(noteIds = nids, cardIds = cids)
     }
@@ -747,5 +742,10 @@ open class Collection(
 
     fun extractClozeForTyping(text: String, ordinal: Int): String {
         return backend.extractClozeForTyping(text = text, ordinal = ordinal)
+    }
+
+    fun defaultsForAdding(currentReviewCard: Card? = null): anki.notes.DeckAndNotetype {
+        val homeDeck = currentReviewCard?.currentDeckId()?.did ?: 0L
+        return backend.defaultsForAdding(homeDeckOfCurrentReviewCard = homeDeck)
     }
 }

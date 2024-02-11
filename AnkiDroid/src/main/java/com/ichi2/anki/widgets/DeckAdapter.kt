@@ -233,7 +233,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         return filteredDeckList.size
     }
 
-    @RustCleanup("non suspend")
     private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: DeckNode) {
         // Apply the correct expand/collapse drawable
         if (node.children.isNotEmpty()) {

@@ -76,22 +76,13 @@ class Notetypes(val col: Collection) {
     }
 
     /** Save changes made to provided note type. */
-    @RustCleanup("templates is not needed, m should be non-null")
-    fun save(m: NotetypeJson?, @Suppress("UNUSED_PARAMETER") templates: Boolean = true) {
-        if (m == null) {
-            Timber.w("a null model is no longer supported - data is automatically flushed")
-            return
-        }
+    fun save(m: NotetypeJson) {
         // legacy code expects preserve_usn=false behaviour, but that
         // causes a backup entry to be created, which invalidates the
         // v2 review history. So we manually update the usn/mtime here
         m.put("mod", TimeManager.time.intTime())
         m.put("usn", col.usn())
         update(m, preserve_usn_and_mtime = true)
-    }
-
-    @RustCleanup("not required - java only")
-    fun load(@Suppress("UNUSED_PARAMETER") json: String) {
     }
 
     /*
@@ -210,9 +201,6 @@ class Notetypes(val col: Collection) {
         return id?.let { get(it) }
     }
 
-    @RustCleanup("When we're kotlin only, rename to 'new', name existed due to Java compat")
-    fun newModel(name: String): NotetypeJson = new(name)
-
     /** Create a new non-cloze model, and return it. */
     fun new(name: String): NotetypeJson {
         // caller should call save() after modifying
@@ -281,8 +269,8 @@ class Notetypes(val col: Collection) {
     ##################################################
      */
 
-    @RustCleanup("use nids(int)")
-    fun nids(m: com.ichi2.libanki.NotetypeJson): List<int> = nids(m.getLong("id"))
+    // not in libanki
+    fun nids(model: NotetypeJson): List<int> = nids(model.getLong("id"))
 
     /** Note ids for M. */
     fun nids(ntid: int): List<int> {
@@ -360,10 +348,6 @@ class Notetypes(val col: Collection) {
         field["name"] = new_name
     }
 
-    /** name exists for compat with java */
-    @RustCleanup("remove - use set_sort_index")
-    fun setSortIdx(m: NotetypeJson, idx: Int) = set_sort_index(m, idx)
-
     /** Modifies schema. */
     fun set_sort_index(nt: NotetypeJson, idx: Int) {
         assert(0 <= idx && idx < len(nt.flds))
@@ -375,9 +359,6 @@ class Notetypes(val col: Collection) {
      */
 
     fun newField(name: String) = new_field(name)
-
-    @RustCleanup("Only exists for interface compatibility")
-    fun getModels(): Map<Long, NotetypeJson> = all().map { Pair(it.id, it) }.toMap()
 
     fun addField(m: NotetypeJson, field: Field) {
         add_field(m, field)

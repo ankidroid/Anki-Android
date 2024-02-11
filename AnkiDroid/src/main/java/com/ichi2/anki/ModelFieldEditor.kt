@@ -434,7 +434,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         withProgress(resources.getString(R.string.model_field_editor_changing)) {
             CollectionManager.withCol {
                 Timber.d("doInBackgroundChangeSortField")
-                notetypes.setSortIdx(notetype, idx)
+                notetypes.set_sort_index(notetype, idx)
             }
         }
         initialize()
