@@ -202,19 +202,19 @@ class Note : Cloneable {
      * Tags
      * ***********************************************************
      */
-    fun hasTag(col: Collection, tag: String?): Boolean {
-        return col.tags.inList(tag!!, tags)
+    fun hasTag(col: Collection, tag: String): Boolean {
+        return col.tags.inList(tag, tags)
     }
 
     fun stringTags(col: Collection): String {
         return col.tags.join(col.tags.canonify(tags))
     }
 
-    fun setTagsFromStr(col: Collection, str: String?) {
-        tags = col.tags.split(str!!)
+    fun setTagsFromStr(col: Collection, str: String) {
+        tags = col.tags.split(str)
     }
 
-    fun removeTag(tag: String?) {
+    fun removeTag(tag: String) {
         val rem: MutableList<String> = ArrayList(
             tags.size
         )
@@ -235,8 +235,8 @@ class Note : Cloneable {
         tags.add(tag)
     }
 
-    fun addTags(tags: AbstractSet<String>?) {
-        tags!!.addAll(tags)
+    fun addTags(tags: AbstractSet<String>) {
+        tags.addAll(tags)
     }
 
     /**
@@ -308,7 +308,7 @@ fun Note.hasTag(tag: String) = this.hasTag(this@Collection, tag)
 
 /** @see Note.setTagsFromStr */
 context (Collection)
-fun Note.setTagsFromStr(str: String?) = this.setTagsFromStr(this@Collection, str)
+fun Note.setTagsFromStr(str: String) = this.setTagsFromStr(this@Collection, str)
 
 /** @see Note.load */
 context (Collection)
