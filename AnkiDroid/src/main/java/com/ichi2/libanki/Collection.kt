@@ -301,7 +301,7 @@ open class Collection(
      * @return The new note
      */
     fun newNote(m: NotetypeJson): Note {
-        return Note(m)
+        return Note.fromNotetypeId(this, m.id)
     }
 
     /**

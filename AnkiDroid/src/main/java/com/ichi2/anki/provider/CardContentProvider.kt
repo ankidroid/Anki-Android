@@ -697,9 +697,6 @@ class CardContentProvider : ContentProvider() {
         }
         col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null)))
 
-        // for caching model information (so we don't have to query for each note)
-        var modelId = Notetypes.NOT_FOUND_NOTE_TYPE
-        var model: NotetypeJson? = null
         var result = 0
         for (i in valuesArr.indices) {
             val values: ContentValues = valuesArr[i]
@@ -711,14 +708,8 @@ class CardContentProvider : ContentProvider() {
                 continue
             }
             val fldsArray = Utils.splitFields(flds)
-            if (model == null || thisModelId != modelId) {
-                // new modelId so need to recalculate model, modelId and invalidate duplicateChecker (which is based on previous model)
-                model = col.notetypes.get(thisModelId)
-                modelId = thisModelId
-            }
-
             // Create empty note
-            val newNote = Note(model!!) // for some reason we cannot pass modelId in here
+            val newNote = Note.fromNotetypeId(col, thisModelId)
             // Set fields
             // Check that correct number of flds specified
             if (fldsArray.size != newNote.fields.size) {
@@ -762,8 +753,7 @@ class CardContentProvider : ContentProvider() {
                 val tags = values.getAsString(FlashCardsContract.Note.TAGS)
 //                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
                 // Create empty note
-                val model = requireNotNull(col.notetypes.get(modelId)) { "Invalid modelId: $modelId" }
-                val newNote = Note(model)
+                val newNote = Note.fromNotetypeId(col, modelId) // ué
                 // Set fields
                 val fldsArray = Utils.splitFields(flds)
                 // Check that correct number of flds specified

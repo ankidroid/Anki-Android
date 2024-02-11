@@ -24,6 +24,7 @@ import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
+import com.ichi2.libanki.utils.set
 import com.ichi2.testutils.createTransientFile
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -57,7 +58,7 @@ class NoteServiceTest : RobolectricTest() {
         multiMediaNote!!.getField(0)!!.text = "foo"
         multiMediaNote.getField(1)!!.text = "bar"
 
-        val basicNote = Note(testModel).apply {
+        val basicNote = Note.fromNotetypeId(col, testModel.id).apply {
             setField(0, "this should be changed to foo")
             setField(1, "this should be changed to bar")
         }
@@ -75,8 +76,10 @@ class NoteServiceTest : RobolectricTest() {
         val multiMediaNoteWithID42: IMultimediaEditableNote? = NoteService.createEmptyNote(testNotetype)
 
         // model with ID 45
-        testNotetype = NotetypeJson("""{"flds": [{"name": "foo bar", "ord": "1"}], "id": "45"}""")
-        val noteWithID45 = Note(testNotetype)
+        testNotetype = col.notetypes.newBasicNotetype()
+        testNotetype.id = 45
+        col.notetypes.add(testNotetype)
+        val noteWithID45 = Note.fromNotetypeId(col, testNotetype.id)
         val expectedException: Throwable = assertThrows(RuntimeException::class.java) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
         assertEquals(expectedException.message, "Source and Destination Note ID do not match.")
     }
