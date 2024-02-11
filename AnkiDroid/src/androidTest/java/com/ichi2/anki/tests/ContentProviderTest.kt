@@ -34,12 +34,14 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
+import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.json.JSONObject
 import org.junit.*
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Assume.*
@@ -225,7 +227,6 @@ class ContentProviderTest : InstrumentedTest() {
      * Check that inserting a note with an invalid modelId returns a reasonable exception
      */
     @Test
-    @KotlinCleanup("assertThrows")
     fun testInsertNoteWithBadModelId() {
         val invalidModelId = 12
         val values = ContentValues().apply {
@@ -233,11 +234,8 @@ class ContentProviderTest : InstrumentedTest() {
             put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS))
             put(FlashCardsContract.Note.TAGS, TEST_TAG)
         }
-        try {
+        assertThrows(BackendNotFoundException::class.java) {
             contentResolver.insert(FlashCardsContract.Note.CONTENT_URI, values)
-            fail()
-        } catch (e: IllegalArgumentException) {
-            assertThat(e.message, equalTo("Invalid modelId: 12"))
         }
     }
 
@@ -1299,7 +1297,7 @@ class ContentProviderTest : InstrumentedTest() {
             fields: Array<String>,
             tag: String
         ): Uri {
-            val newNote = Note(col.notetypes.get(mid)!!)
+            val newNote = Note.fromNotetypeId(col, mid)
             for (idx in fields.indices) {
                 newNote.setField(idx, fields[idx])
             }

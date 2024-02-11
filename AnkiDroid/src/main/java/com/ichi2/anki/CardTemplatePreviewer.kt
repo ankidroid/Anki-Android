@@ -393,7 +393,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             i++
         }
         try {
-            return EphemeralCard.fromNote(n, getColUnsafe, cardIndex)
+            val ord = n.cardIndexToOrd(getColUnsafe, cardIndex)
+            return n.ephemeralCard(getColUnsafe, ord = ord, customNoteType = notetype)
         } catch (e: Exception) {
             // Calling code handles null return, so we can log this for developer's interest but move on
             Timber.d(e, "getDummyCard() unable to create card")

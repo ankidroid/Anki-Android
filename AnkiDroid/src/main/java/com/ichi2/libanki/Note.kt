@@ -25,7 +25,6 @@ import com.ichi2.libanki.utils.set
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import com.ichi2.utils.emptyStringArray
-import com.ichi2.utils.emptyStringMutableList
 import org.json.JSONObject
 import java.util.*
 import java.util.regex.Pattern
@@ -36,7 +35,7 @@ class Note : Cloneable {
     /**
      * Should only be mutated by addNote()
      */
-    var id: Long
+    var id: Long = 0
 
     @get:VisibleForTesting
     var guId: String? = null
@@ -60,14 +59,15 @@ class Note : Cloneable {
         load(col)
     }
 
-    constructor(notetype: NotetypeJson) {
-        this.id = 0
-        guId = Utils.guid64()
-        this.notetype = notetype
-        mid = notetype.getLong("id")
-        tags = mutableListOf()
-        fields = emptyStringMutableList(notetype.getJSONArray("flds").length())
-        fMap = Notetypes.fieldMap(this.notetype)
+    constructor(col: Collection, backendNote: anki.notes.Note) {
+        loadFromBackendNote(col, backendNote)
+    }
+
+    companion object {
+        fun fromNotetypeId(col: Collection, ntid: NoteTypeId): Note {
+            val backendNote = col.backend.newNote(ntid)
+            return Note(col, backendNote)
+        }
     }
 
     fun load(col: Collection) {

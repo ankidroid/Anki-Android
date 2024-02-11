@@ -211,7 +211,7 @@ class Notetypes(val col: Collection) {
         return nt
     }
 
-    private fun newBasicNotetype(): NotetypeJson {
+    fun newBasicNotetype(): NotetypeJson {
         return NotetypeJson(
             BackendUtils.from_json_bytes(
                 col.backend.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC)
