@@ -254,7 +254,7 @@
     <string name="edit_toolbar_item">Araç Çubuğu Öğesini düzenle</string>
     <string name="toolbar_item_explain_edit_or_remove">Seçili yazıdan önce ve sonra eklenecek HTML girin\n\nBir araç çubuğu öğesini değiştirmek ya da kaldırmak için basılı tutun</string>
     <string name="remove_toolbar_item">Araç Çubuğu Öğesini sil?</string>
-    <string name="note_editor_paste_too_large">Görsel yapıştırılamayacak kadar büyük, lütfen görseli manuel olarak ekleyiniz</string>
+    <string name="note_editor_paste_too_large">Görüntü yapıştırılamayacak kadar büyük, lütfen görüntüyü manuel olarak ekleyin</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android yedeklemesi gerçekleştiriliyor. Lütfen tekrar deneyin</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid\'in kısayol eklemesine izin vermek için iManager kullanmanız gerekebilir</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ana ekranın, kısayol ekleyebilmesi için AnkiDroid\'e izin vermiyor</string>

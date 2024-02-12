@@ -51,6 +51,7 @@
         <item quantity="other">%d ମି</item>
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">କିଛି ପରିଣାମ ନାହିଁ</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">ସାଧାରଣ</string>

@@ -53,6 +53,7 @@
         <item quantity="other">%d хв.</item>
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Немає результатів</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Загальні</string>
@@ -116,7 +117,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Дотик посередині</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Дотик лівого нижнього кута</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Дотик правого нижнього кута</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Потрясти пристроєм</string>
     <string name="card_browser_enable_external_context_menu">\'%s\' Меню</string>
     <string name="card_browser_enable_external_context_menu_summary">Включає \'%s\' в загальне контекстне меню</string>
     <string name="double_scrolling_gap" maxLength="41">Подвійне прокручування</string>
@@ -153,7 +154,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вібрація</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Миготіння світлодіоду</string>
     <string name="timeout_answer_text" maxLength="41">Автоматично відображати відповідь</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Показувати відповідь автоматично без введення даних користувачем. Налаштуйте в параметрах колоди.</string>
     <string name="select_locale_title">Виберіть мову</string>
     <string name="software_render" maxLength="41">Вимкнути апаратне відображення карт</string>
     <string name="software_render_summ">Апаратне відображення швидше, але має проблеми, зокрема на Android 8/8.1. Якщо Ви не бачите частини інтерфейсу, спробуйте це налаштування.</string>
@@ -205,7 +206,7 @@
     <string name="html_javascript_debugging_summ">Увімкнути віддалені з\'єднання WebView і зберегти HTML-карту в каталозі AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Повторення</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Показувати назву колоди</string>
     <string name="accessibility" maxLength="41">Доступність</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставити зображення у форматі PNG</string>
@@ -246,8 +247,8 @@
     <string name="deck_conf_cram_reschedule_summ">Перепланувати картки на основі моїх відповідей в цій колоді</string>
     <string name="deck_conf_cram_filter_2_check">Увімкнути другий фільтр</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Задати власні кроки</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41"> Затримка попереднього перегляду</string>
+    <string name="deck_conf_cram_preview_delays_summ">Затримка в секундах. 0 повертає картку до початкової колоди.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Допоможіть зробити AnkiDroid кращим!</string>
     <string name="analytics_title" maxLength="41">Поділитися інформацією про використання функцій</string>
@@ -272,8 +273,8 @@
     <string name="binding_add_key">Додати ключ</string>
     <string name="binding_replace_key">Замінити клавішу</string>
     <string name="key_picker_default_press_key">Натисніть клавішу</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">Додати джойстик/контролер руху</string>
+    <string name="axis_picker_move_joystick">Рухайте джойстиком/контролером руху</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Вибрати сторону карти</string>
     <string name="card_side_question">Питання</string>

@@ -49,7 +49,7 @@
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Yazı</string>
-    <string name="multimedia_editor_field_editing_image">Görsel</string>
+    <string name="multimedia_editor_field_editing_image">Görüntü</string>
     <string name="multimedia_editor_field_editing_audio">Ses kaydı</string>
     <string name="multimedia_editor_field_editing_audio_clip">Ses Klibi</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Bitti</string>

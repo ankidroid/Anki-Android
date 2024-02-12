@@ -188,7 +188,7 @@
     <string name="failed_to_apply_background_image">Не вдалося застосувати фонове зображення %s</string>
     <string name="background_image_too_large">Фонове зображення занадто велике</string>
     <string name="image_max_size_allowed">Максимально допустимий розмір зображення %d МБ</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">Розміри зображення занадто великі (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Немає доступу до сховища. Надайте дозвіл на доступ до сховища і спробуйте знову.</string>
@@ -198,7 +198,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Не вдалося запланувати нагадування</string>
     <string name="boot_service_too_many_notifications">Забагато нагадувань заплановано. Деякі з них не з’являться</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">Вибрати мову</string>
     <string name="locale_selection_dialog_summary">Деякі багатомовні клавіатури, такі як GBoard, підтримують зміну мови під час редагування тексту\n\nБудь ласка, попросіть функцію \"setImeHintLocals\" від виробника клавіатури, якщо ваша клавіатура не змінює мову.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Використання AnkiDroid</string>
@@ -226,7 +226,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">Умови використання AnkiWeb</string>
     <string name="help_title_send_exception">Надіслати звіт про несправності</string>
     <string name="help_dialog_exception_report_debounce">Звіт вже надіслано</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Звіт надіслано!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Автоматична синхронізація може запуститися через %d секунду.</item>
