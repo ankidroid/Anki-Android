@@ -16,6 +16,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.notes.NoteFieldsCheckResponse
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
@@ -120,15 +121,15 @@ class CollectionTest : JvmTest() {
         val c0 = note.cards()[0]
         assertThat(c0.question(), Matchers.containsString("three"))
         // it should not be a duplicate
-        assertEquals(note.dupeOrEmpty(), Note.DupeOrEmpty.CORRECT)
+        assertEquals(note.fieldsCheck(col), NoteFieldsCheckResponse.State.NORMAL)
         // now let's make a duplicate
         val note2 = col.newNote()
         note2.setItem("Front", "one")
         note2.setItem("Back", "")
-        assertNotEquals(note2.dupeOrEmpty(), Note.DupeOrEmpty.CORRECT)
+        assertNotEquals(note2.fieldsCheck(col), NoteFieldsCheckResponse.State.NORMAL)
         // empty first field should not be permitted either
         note2.setItem("Front", " ")
-        assertNotEquals(note2.dupeOrEmpty(), Note.DupeOrEmpty.CORRECT)
+        assertNotEquals(note2.fieldsCheck(col), NoteFieldsCheckResponse.State.NORMAL)
     }
 
     @Test

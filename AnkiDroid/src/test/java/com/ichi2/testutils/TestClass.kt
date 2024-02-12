@@ -187,7 +187,6 @@ interface TestClass {
     fun Note.firstCard() = this.firstCard(col)
     fun Note.cids() = this.cardIds(col)
     fun Note.numberOfCards() = this.numberOfCards(col)
-    fun Note.dupeOrEmpty() = this.dupeOrEmpty(col)
 
     // TODO remove this. not in libanki
     fun Note.flush() { col.updateNote(this) }
