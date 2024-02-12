@@ -199,6 +199,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
     <string name="choose_an_image">Select image</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
