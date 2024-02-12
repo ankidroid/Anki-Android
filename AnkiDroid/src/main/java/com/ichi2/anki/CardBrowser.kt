@@ -30,9 +30,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
@@ -98,9 +96,8 @@ import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
@@ -419,19 +416,13 @@ open class CardBrowser :
         }
         onboarding.onCreate()
 
-        viewModel.flowOfIsTruncated
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { cardsAdapter.notifyDataSetChanged() }
-            .launchIn(lifecycleScope)
+        viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope { cardsAdapter.notifyDataSetChanged() }
 
         viewModel.flowOfCardsOrNotes
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { runOnUiThread { searchCards() } }
-            .launchIn(lifecycleScope)
+            .launchCollectionInLifecycleScope { runOnUiThread { searchCards() } }
 
         viewModel.flowOfSearchQueryExpanded
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { searchQueryExpanded ->
+            .launchCollectionInLifecycleScope { searchQueryExpanded ->
                 Timber.d("query expansion changed: %b", searchQueryExpanded)
                 if (searchQueryExpanded) {
                     runOnUiThread { searchItem?.expandActionView() }
@@ -441,50 +432,39 @@ open class CardBrowser :
                     invalidateOptionsMenu()
                 }
             }
-            .launchIn(lifecycleScope)
 
         viewModel.flowOfSelectedRows
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { runOnUiThread { onSelectionChanged() } }
-            .launchIn(lifecycleScope)
+            .launchCollectionInLifecycleScope { runOnUiThread { onSelectionChanged() } }
 
         viewModel.flowOfColumnIndex1
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { index -> cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] } }
-            .launchIn(lifecycleScope)
+            .launchCollectionInLifecycleScope { index -> cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] } }
 
         viewModel.flowOfColumnIndex2
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
-            .launchIn(lifecycleScope)
+            .launchCollectionInLifecycleScope { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
 
         viewModel.flowOfFilterQuery
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { filterQuery ->
+            .launchCollectionInLifecycleScope { filterQuery ->
                 searchView!!.setQuery("", false)
                 searchTerms = filterQuery
                 searchView!!.setQuery(searchTerms, true)
                 searchCards()
             }
-            .launchIn(lifecycleScope)
 
         viewModel.flowOfDeckId
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .filterNotNull()
-            .onEach { deckId ->
+            .launchCollectionInLifecycleScope { deckId ->
+                if (deckId == null) return@launchCollectionInLifecycleScope
                 // this handles ALL_DECKS_ID
                 deckSpinnerSelection!!.selectDeckById(deckId, false)
                 searchCards()
             }
-            .launchIn(lifecycleScope)
 
         viewModel.flowOfCanSearch
-            .onEach { canSave -> runOnUiThread { saveSearchItem?.isVisible = canSave } }
-            .launchIn(lifecycleScope)
+            .launchCollectionInLifecycleScope { canSave ->
+                runOnUiThread { saveSearchItem?.isVisible = canSave }
+            }
 
         viewModel.flowOfIsInMultiSelectMode
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { inMultiSelect ->
+            .launchCollectionInLifecycleScope { inMultiSelect ->
                 if (inMultiSelect) {
                     // Turn on Multi-Select Mode so that the user can select multiple cards at once.
                     Timber.d("load multiselect mode")
@@ -504,12 +484,9 @@ open class CardBrowser :
                 // reload the actionbar using the multi-select mode actionbar
                 invalidateOptionsMenu()
             }
-            .launchIn(lifecycleScope)
 
         viewModel.flowOfInitCompleted
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { completed -> if (completed) searchCards() }
-            .launchIn(lifecycleScope)
+            .launchCollectionInLifecycleScope { completed -> if (completed) searchCards() }
     }
 
     fun searchWithFilterQuery(filterQuery: String) = launchCatchingTask {
@@ -2263,6 +2240,12 @@ open class CardBrowser :
             s = if (showFileNames) Utils.stripHTMLMedia(s) else Utils.stripHTMLMedia(s, " ")
             s = s.trim { it <= ' ' }
             return s
+        }
+    }
+
+    private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
+        lifecycleScope.launch {
+            this@launchCollectionInLifecycleScope.collect { block(it) }
         }
     }
 }
