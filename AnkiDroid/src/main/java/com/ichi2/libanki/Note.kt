@@ -21,6 +21,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.libanki.Consts.MODEL_STD
+import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.set
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
@@ -88,8 +89,9 @@ class Note : Cloneable {
         this.fMap = Notetypes.fieldMap(notetype)
     }
 
+    @NotInLibAnki
     fun numberOfCards(col: Collection): Int {
-        return col.db.queryLongScalar("SELECT count() FROM cards WHERE nid = ?", this.id).toInt()
+        return cardIds(col).size
     }
 
     fun cardIds(col: Collection): List<Long> {
