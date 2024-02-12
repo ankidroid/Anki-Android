@@ -229,7 +229,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Model can change regardless of exit type - update ourselves and CardBrowser
             mReloadRequired = true
             mEditorNote!!.reloadModel(getColUnsafe)
-            if (mCurrentEditedCard == null || !mEditorNote!!.cids(getColUnsafe)
+            if (mCurrentEditedCard == null || !mEditorNote!!.cardIds(getColUnsafe)
                 .contains(mCurrentEditedCard!!.id)
             ) {
                 if (!addNote) {

@@ -96,8 +96,8 @@ class Note : Cloneable {
         return col.db.queryLongScalar("SELECT count() FROM cards WHERE nid = ?", this.id).toInt()
     }
 
-    fun cids(col: Collection): List<Long> {
-        return col.db.queryLongList("SELECT id FROM cards WHERE nid = ? ORDER BY ord", this.id)
+    fun cardIds(col: Collection): List<Long> {
+        return col.cardIdsOfNote(nid = this.id)
     }
 
     fun ephemeralCard(
@@ -135,8 +135,8 @@ class Note : Cloneable {
     }
 
     fun cards(col: Collection): ArrayList<Card> {
-        val cards = ArrayList<Card>(cids(col).size)
-        for (cid in cids(col)) {
+        val cards = ArrayList<Card>(cardIds(col).size)
+        for (cid in cardIds(col)) {
             // each getCard access database. This is inefficient.
             // Seems impossible to solve without creating a constructor of a list of card.
             // Not a big trouble since most note have a small number of cards.

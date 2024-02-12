@@ -185,7 +185,7 @@ interface TestClass {
     fun Note.load() = this.load(col)
     fun Note.cards() = this.cards(col)
     fun Note.firstCard() = this.firstCard(col)
-    fun Note.cids() = this.cids(col)
+    fun Note.cids() = this.cardIds(col)
     fun Note.numberOfCards() = this.numberOfCards(col)
     fun Note.dupeOrEmpty() = this.dupeOrEmpty(col)
 

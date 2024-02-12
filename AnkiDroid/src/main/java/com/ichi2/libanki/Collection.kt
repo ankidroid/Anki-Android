@@ -700,6 +700,10 @@ open class Collection(
         return db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
     }
 
+    fun cardIdsOfNote(nid: NoteId): List<CardId> {
+        return backend.cardsOfNote(nid = nid)
+    }
+
     /**
      * returns the list of cloze ordinals in a note
      *
