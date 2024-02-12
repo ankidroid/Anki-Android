@@ -37,6 +37,7 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.sched.DummyScheduler
 import com.ichi2.libanki.sched.Scheduler
+import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.VersionUtils
@@ -666,6 +667,7 @@ open class Collection(
         return backend.updateNotes(notes = notes.map { it.toBackendNote() }, skipUndoEntry = false)
     }
 
+    @NotInLibAnki
     fun emptyCids(): List<CardId> {
         return getEmptyCards().notesList.flatMap { it.cardIdsList }
     }
