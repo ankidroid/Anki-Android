@@ -17,25 +17,32 @@ package com.ichi2.anki.preferences
 
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import anki.config.ConfigKey
-import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.BackgroundImage.FileSizeResult
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.systemIsInNightMode
 import com.ichi2.themes.Themes.updateCurrentTheme
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import timber.log.Timber
-import java.io.File
 
 class AppearanceSettingsFragment : SettingsFragment() {
-    private var backgroundImage: SwitchPreferenceCompat? = null
+    private var backgroundImage: Preference? = null
     override val preferenceResource: Int
         get() = R.xml.preferences_appearance
     override val analyticsScreenNameConstant: String
@@ -43,28 +50,12 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         // Configure background
-        backgroundImage = requirePreference<SwitchPreferenceCompat>("deckPickerBackground")
+        backgroundImage = requirePreference<Preference>("deckPickerBackground")
         backgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            if (backgroundImage!!.isChecked) {
-                try {
-                    backgroundImageResultLauncher.launch("image/*")
-                    backgroundImage!!.isChecked = true
-                } catch (ex: Exception) {
-                    Timber.e("%s", ex.localizedMessage)
-                }
-            } else {
-                backgroundImage!!.isChecked = false
-                val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
-                val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
-                if (imgFile.exists()) {
-                    if (imgFile.delete()) {
-                        showSnackbar(R.string.background_image_removed)
-                    } else {
-                        showSnackbar(R.string.error_deleting_image)
-                    }
-                } else {
-                    showSnackbar(R.string.background_image_removed)
-                }
+            try {
+                backgroundImageResultLauncher.launch("image/*")
+            } catch (ex: Exception) {
+                Timber.w(ex)
             }
             true
         }
@@ -153,21 +144,36 @@ class AppearanceSettingsFragment : SettingsFragment() {
         }
     }
 
+    private fun showRemoveBackgroundImageDialog() {
+        AlertDialog.Builder(requireContext()).show {
+            title(R.string.remove_background_image)
+            positiveButton(R.string.dialog_remove) {
+                if (BackgroundImage.remove(requireContext())) {
+                    showSnackbar(R.string.background_image_removed)
+                } else {
+                    showSnackbar(R.string.error_deleting_image)
+                }
+            }
+            negativeButton(R.string.dialog_keep)
+        }
+    }
+
     private val backgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
         if (selectedImage == null) {
-            backgroundImage!!.isChecked = false
-            showSnackbar(R.string.no_image_selected)
+            if (BackgroundImage.shouldBeShown(requireContext())) {
+                showRemoveBackgroundImageDialog()
+            } else {
+                showSnackbar(R.string.no_image_selected)
+            }
             return@registerForActivityResult
         }
         // handling file may result in exception
         try {
             when (val sizeResult = BackgroundImage.validateBackgroundImageFileSize(selectedImage)) {
                 is FileSizeResult.FileTooLarge -> {
-                    backgroundImage!!.isChecked = false
                     UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, sizeResult.maxMB), false)
                 }
                 is FileSizeResult.UncompressedBitmapTooLarge -> {
-                    backgroundImage!!.isChecked = false
                     UIUtils.showThemedToast(requireContext(), getString(R.string.image_dimensions_too_large, sizeResult.width, sizeResult.height), false)
                 }
                 is FileSizeResult.OK -> {

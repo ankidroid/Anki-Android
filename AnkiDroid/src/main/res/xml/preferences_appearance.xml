@@ -58,11 +58,11 @@
             search:ignore="true"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/background_image_title" >
-        <SwitchPreferenceCompat
-            android:checked="false"
+        <Preference
             android:defaultValue="0"
             android:key="@string/pref_deck_picker_background_key"
             android:shouldDisableView="true"
+            android:icon="@drawable/wallpaper_icon"
             android:title="@string/choose_an_image" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_reviewer" >

@@ -20,9 +20,12 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.core.content.edit
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.AppearanceSettingsFragment
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import java.io.File
 import java.io.FileInputStream
@@ -39,6 +42,19 @@ object BackgroundImage {
      * The actual size may be larger, this is a minimum
      */
     const val MAX_BITMAP_SIZE: Long = 100 * 1024 * 1024
+
+    /**
+     * @see shouldBeShown
+     */
+    var enabled: Boolean
+        get() = AnkiDroidApp.instance.sharedPrefs().getBoolean("deckPickerBackground", false)
+        set(value) {
+            AnkiDroidApp.instance.sharedPrefs().edit {
+                putBoolean("deckPickerBackground", value)
+            }
+        }
+
+    fun shouldBeShown(context: Context) = enabled && getImageFile(context) != null
 
     sealed interface FileSizeResult {
         data object OK : FileSizeResult
@@ -83,6 +99,7 @@ object BackgroundImage {
                 showSnackbar(R.string.background_image_applied)
             }
         }
+        this.enabled = true
     }
 
     data class Size(val width: Int, val height: Int)
@@ -95,5 +112,27 @@ object BackgroundImage {
         val h = bmp.height
         bmp.recycle()
         return Size(width = w, height = h)
+    }
+
+    /**
+     * @return `true` if the image no longer exists. `false` if an error occurred
+     */
+    fun remove(context: Context): Boolean {
+        val imgFile = getImageFile(context)
+        enabled = false
+        if (imgFile == null) {
+            return true
+        }
+        return imgFile.delete()
+    }
+
+    /** @return a [File] referencing the image, or `null` if the file does not exist */
+    private fun getImageFile(context: Context): File? {
+        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
+        val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
+        if (!imgFile.exists()) {
+            return null
+        }
+        return imgFile
     }
 }
