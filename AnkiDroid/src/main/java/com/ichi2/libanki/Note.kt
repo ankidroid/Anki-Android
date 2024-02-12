@@ -19,8 +19,10 @@ package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import anki.notes.NoteFieldsCheckResponse
 import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.libanki.Consts.MODEL_STD
+import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.set
 import com.ichi2.utils.KotlinCleanup
@@ -242,40 +244,8 @@ class Note : Cloneable {
      * Unique/duplicate check
      * ***********************************************************
      */
-    enum class DupeOrEmpty {
-        CORRECT, EMPTY, DUPE
-    }
-
-    /**
-     *
-     * @return whether it has no content, dupe first field, or nothing remarkable.
-     */
-    fun dupeOrEmpty(col: Collection): DupeOrEmpty {
-        if (fields[0].trim { it <= ' ' }.isEmpty()) {
-            return DupeOrEmpty.EMPTY
-        }
-        val csumAndStrippedFieldField = Utils.sfieldAndCsum(
-            fields,
-            0
-        )
-        val csum = csumAndStrippedFieldField.second
-        // find any matching csums and compare
-        val strippedFirstField = csumAndStrippedFieldField.first
-        val fields = col.db.queryStringList(
-            "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
-            csum,
-            this.id,
-            mid
-        )
-        for (flds in fields) {
-            if (Utils.stripHTMLMedia(
-                    Utils.splitFields(flds)[0]
-                ) == strippedFirstField
-            ) {
-                return DupeOrEmpty.DUPE
-            }
-        }
-        return DupeOrEmpty.CORRECT
+    fun fieldsCheck(col: Collection): NoteFieldsCheckResponse.State {
+        return col.backend.noteFieldsCheck(this.toBackendNote()).state
     }
 
     fun sFld(col: Collection): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)

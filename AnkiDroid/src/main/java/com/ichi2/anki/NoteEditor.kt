@@ -51,6 +51,7 @@ import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import anki.config.ConfigKey
+import anki.notes.NoteFieldsCheckResponse
 import anki.notetypes.StockNotetype
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
@@ -94,7 +95,6 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note.ClozeUtils
-import com.ichi2.libanki.Note.DupeOrEmpty
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
@@ -1685,9 +1685,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Update the field in the Note so we can run a dupe check on it.
         updateField(field)
         // 1 is empty, 2 is dupe, null is neither.
-        val dupeCode = mEditorNote!!.dupeOrEmpty(getColUnsafe)
+        val dupeCode = mEditorNote!!.fieldsCheck(getColUnsafe)
         // Change bottom line color of text field
-        if (dupeCode == DupeOrEmpty.DUPE) {
+        if (dupeCode == NoteFieldsCheckResponse.State.DUPLICATE) {
             field!!.setDupeStyle()
         } else {
             field!!.setDefaultStyle()
