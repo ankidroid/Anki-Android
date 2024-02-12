@@ -1867,8 +1867,6 @@ open class CardBrowser :
     fun onSelectionChanged() {
         Timber.d("onSelectionChanged()")
         try {
-            actionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
-
             // If we're not in mutliselect, we can select cards if there are cards to select
             if (!viewModel.isInMultiSelectMode) {
                 actionBarMenu?.findItem(R.id.action_select_all)?.apply {
@@ -1876,6 +1874,9 @@ open class CardBrowser :
                 }
                 return
             }
+
+            // set the number of selected rows (only in multiselect)
+            actionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
             updateMultiselectMenu()
         } finally {
             if (colIsOpenUnsafe()) {
