@@ -170,13 +170,13 @@
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Arka plan görüntüsü uygulandı</string>
     <string name="background_image_removed">Arka plan görüntüsü kaldırıldı</string>
-    <string name="no_image_selected">Görsel seçilmedi</string>
+    <string name="no_image_selected">Görüntü seçilmedi</string>
     <string name="error_selecting_image">Resim seçilirken hata oluştu. Lütfen kılavuza bakın. %s</string>
-    <string name="error_deleting_image">Görsel silinirken hata</string>
+    <string name="error_deleting_image">Görüntü silinirken hata oluştu</string>
     <string name="failed_to_apply_background_image">Arka plan görüntüsü kaydetme başarısız oldu %s</string>
     <string name="background_image_too_large">Deste Seçici arka planı çok büyük</string>
     <string name="image_max_size_allowed">İzin verilen en fazla görüntü boyutu %d MB</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">Görüntünün boyutları çok büyük (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Gerekli depolama izni eksik. Lütfen depolama izni verin ve ardından işleminizi yeniden deneyin.</string>

@@ -101,5 +101,5 @@
     <string name="gesture_show_all_hints">Zobrazit všechny nápovědy</string>
     <string name="record_voice">Nahrát hlas</string>
     <string name="replay_voice">Přehrát hlas</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="save_voice">Uložit nahrávku</string>
 </resources>

@@ -50,6 +50,7 @@
         <item quantity="other">%d分</item>
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">該当なし</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">全般</string>
@@ -289,12 +290,12 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroidは一定時間ごとにコレクションのバックアップを作成しています。
-        各期間の代表として保管するバックアップ以外のバックアップは、
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroidは一定時間（分）ごとにコレクションのバックアップを作成しています。
+        各期間（日／週／月）の代表として保管するバックアップ以外のバックアップは、
         ディスク領域を空けるために、作成から2日以上経過した後に削除していきます。
         <br><br>
-        注意：メディアファイルはこの自動バックアップの対象外です。
-        万一に備え、コレクションのAnkiWebとの同期や、AnkiWeb以外のアプリ外部の場所へのコレクションのエクスポートを、メディアを含めた状態で定期的に行うことを強くおすすめします。
+        注意：メディアファイル（画像／音声／動画）はこの自動バックアップの対象外です。
+        アプリ内のデータを失う不測の事態に備えて、コレクションのAnkiWebとの同期や、AnkiWeb以外のアプリ外部の場所へのコレクションのエクスポートを、メディアファイルを含めた状態で定期的に行うことを強くおすすめします。
         <br><br>
         バックアップからのコレクションの復元や、コレクションのエクスポートは、デッキリスト画面右上のメニューから行えます。
     ]]></string>
