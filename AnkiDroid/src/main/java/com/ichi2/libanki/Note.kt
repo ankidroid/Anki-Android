@@ -100,6 +100,10 @@ class Note : Cloneable {
         return col.cardIdsOfNote(nid = this.id)
     }
 
+    fun cards(col: Collection): List<Card> {
+        return cardIds(col).map { col.getCard(it) }
+    }
+
     fun ephemeralCard(
         col: Collection,
         ord: Int = 0,
@@ -132,17 +136,6 @@ class Note : Cloneable {
         card.renderOutput = output
         card.setNote(this)
         return card
-    }
-
-    fun cards(col: Collection): ArrayList<Card> {
-        val cards = ArrayList<Card>(cardIds(col).size)
-        for (cid in cardIds(col)) {
-            // each getCard access database. This is inefficient.
-            // Seems impossible to solve without creating a constructor of a list of card.
-            // Not a big trouble since most note have a small number of cards.
-            cards.add(col.getCard(cid))
-        }
-        return cards
     }
 
     /** The first card, assuming it exists. */
