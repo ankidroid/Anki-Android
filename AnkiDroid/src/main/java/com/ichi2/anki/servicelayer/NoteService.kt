@@ -34,7 +34,6 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.exception.EmptyMediaException
-import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.CollectionUtils.average
 import org.json.JSONException
@@ -186,7 +185,7 @@ object NoteService {
 
     suspend fun toggleMark(note: Note, handler: Any? = null) {
         if (isMarked(note)) {
-            note.delTag("marked")
+            note.removeTag("marked")
         } else {
             note.addTag("marked")
         }

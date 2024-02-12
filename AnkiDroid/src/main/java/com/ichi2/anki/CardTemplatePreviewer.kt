@@ -310,7 +310,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     private fun setTags(currentNote: Note, tagsList: List<String>?) {
         val currentTags = currentNote.tags.toTypedArray()
         for (tag in currentTags) {
-            currentNote.delTag(tag)
+            currentNote.removeTag(tag)
         }
         if (tagsList != null) {
             val tagsSet = getColUnsafe.tags.canonify(tagsList)
