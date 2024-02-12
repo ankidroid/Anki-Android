@@ -118,11 +118,11 @@ open class CardBrowser :
     TagsDialogListener,
     ChangeManager.Subscriber,
     ExportDialogsFactoryProvider {
+
+    @NeedsTest("15448: double-selecting deck does nothing")
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
-            val deckId = deck.deckId
-            deckSpinnerSelection!!.initializeActionBarDeckSpinner(getColUnsafe, this.supportActionBar!!)
-            launchCatchingTask { selectDeckAndSave(deckId) }
+            launchCatchingTask { selectDeckAndSave(deck.deckId) }
         }
     }
 
