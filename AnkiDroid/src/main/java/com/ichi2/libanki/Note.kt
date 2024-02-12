@@ -88,10 +88,6 @@ class Note : Cloneable {
         this.fMap = Notetypes.fieldMap(notetype)
     }
 
-    fun reloadModel(col: Collection) {
-        notetype = col.notetypes.get(mid)!!
-    }
-
     fun numberOfCards(col: Collection): Int {
         return col.db.queryLongScalar("SELECT count() FROM cards WHERE nid = ?", this.id).toInt()
     }

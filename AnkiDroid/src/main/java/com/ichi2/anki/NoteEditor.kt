@@ -228,12 +228,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         NoteEditorActivityResultCallback {
             // Model can change regardless of exit type - update ourselves and CardBrowser
             mReloadRequired = true
-            mEditorNote!!.reloadModel(getColUnsafe)
+            mEditorNote!!.notetype = getColUnsafe.notetypes.get(mEditorNote!!.mid)!!
             if (mCurrentEditedCard == null || !mEditorNote!!.cardIds(getColUnsafe)
                 .contains(mCurrentEditedCard!!.id)
             ) {
                 if (!addNote) {
-                /* This can occur, for example, if the
+                    /* This can occur, for example, if the
                      * card type was deleted or if the note
                      * type was changed without moving this
                      * card to another type. */
