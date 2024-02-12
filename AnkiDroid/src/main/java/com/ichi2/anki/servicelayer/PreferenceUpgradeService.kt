@@ -462,8 +462,10 @@ object PreferenceUpgradeService {
         }
 
         internal class RemoveReviewerETA : PreferenceUpgrade(15) {
-            override fun upgrade(preferences: SharedPreferences) =
-                preferences.edit { remove("showETA") }
+            override fun upgrade(preferences: SharedPreferences) {
+                // reverted: #15405
+                // preferences.edit { remove("showETA") }
+            }
         }
 
         /** default to true for existing users  */
