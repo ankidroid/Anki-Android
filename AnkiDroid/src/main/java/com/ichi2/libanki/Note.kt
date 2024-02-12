@@ -213,7 +213,7 @@ class Note : Cloneable {
         tags = col.tags.split(str!!)
     }
 
-    fun delTag(tag: String?) {
+    fun removeTag(tag: String?) {
         val rem: MutableList<String> = ArrayList(
             tags.size
         )
