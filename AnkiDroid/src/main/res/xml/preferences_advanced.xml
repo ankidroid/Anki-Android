@@ -22,9 +22,7 @@
 
 <!-- Advanced Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
-    xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
     android:title="@string/pref_cat_advanced"
     android:key="@string/pref_advanced_screen_key">
         <EditTextPreference
@@ -32,11 +30,6 @@
             android:key="@string/pref_ankidroid_directory_key"
             android:title="@string/col_path"
             app1:useSimpleSummaryProvider="true"/>
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="@string/tts_key"
-            android:summary="@string/tts_summ"
-            android:title="@string/tts" />
         <Preference
             android:summary="@string/reset_languages_summ"
             android:title="@string/reset_languages"
@@ -118,4 +111,10 @@
                 android:title="@string/thirdparty_apps_title">
             </Preference>
         </PreferenceCategory>
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_warning"
+        android:key="@string/tts_key"
+        android:summary="@string/tts_summ"
+        android:title="@string/tts" />
 </PreferenceScreen>

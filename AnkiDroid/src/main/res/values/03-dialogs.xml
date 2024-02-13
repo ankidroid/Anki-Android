@@ -23,7 +23,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
     <string name="delete_deck_title">Delete deck?</string>
     <string name="no_tts_available_message">No text-to-speech language available</string>
-    <string name="initializing_tts">Initializing TTS…</string>
     <string name="tts_no_tts">Don’t speak</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
 

@@ -64,6 +64,23 @@ class AdvancedSettingsFragment : SettingsFragment() {
             }
         }
 
+        val ttsPref = requirePreference<SwitchPreferenceCompat>(R.string.tts_key)
+        ttsPref.setOnPreferenceChangeListener { _, isChecked ->
+            if (!(isChecked as Boolean)) return@setOnPreferenceChangeListener true
+            AlertDialog.Builder(requireContext()).show {
+                setIcon(R.drawable.ic_warning)
+                setMessage(R.string.readtext_deprecation_warn)
+                setNegativeButton(R.string.dialog_cancel) { _, _ -> ttsPref.isChecked = false }
+                setNeutralButton(R.string.scoped_storage_learn_more) { _, _ ->
+                    ttsPref.isChecked = false
+                    (requireActivity() as AnkiActivity).openUrl(R.string.link_tts)
+                }
+                setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                setOnCancelListener { ttsPref.isChecked = false }
+            }
+            return@setOnPreferenceChangeListener true
+        }
+
         // Configure "Reset languages" preference
         requirePreference<Preference>(R.string.pref_reset_languages_key).setOnPreferenceClickListener {
             AlertDialog.Builder(requireContext()).show {

@@ -115,6 +115,7 @@
     <string name="link_contribution">https://github.com/ankidroid/Anki-Android/wiki/Contributing</string>
     <string name="link_contributors">https://github.com/ankidroid/Anki-Android#credits</string>
     <string name="link_help">https://docs.ankidroid.org/help.html</string>
+    <string name="link_tts">https://docs.ankiweb.net/templates/fields.html#text-to-speech-for-individual-fields</string>
     <string name="link_manual">https://docs.ankidroid.org/manual.html</string>
     <string name="link_help_ja">https://docs.ankidroid.org/help-ja.html</string>
     <string name="link_manual_ja">https://docs.ankidroid.org/manual-ja.html</string>
