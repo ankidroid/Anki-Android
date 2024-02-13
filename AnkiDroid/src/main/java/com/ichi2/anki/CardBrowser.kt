@@ -419,17 +419,17 @@ open class CardBrowser :
         }
         onboarding.onCreate()
 
-        viewModel.isTruncatedFlow
+        viewModel.flowOfIsTruncated
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { cardsAdapter.notifyDataSetChanged() }
             .launchIn(lifecycleScope)
 
-        viewModel.cardsOrNotesFlow
+        viewModel.flowOfCardsOrNotes
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { runOnUiThread { searchCards() } }
             .launchIn(lifecycleScope)
 
-        viewModel.searchQueryExpandedFlow
+        viewModel.flowOfSearchQueryExpanded
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { searchQueryExpanded ->
                 Timber.d("query expansion changed: %b", searchQueryExpanded)
@@ -443,22 +443,22 @@ open class CardBrowser :
             }
             .launchIn(lifecycleScope)
 
-        viewModel.selectedRowsFlow
+        viewModel.flowOfSelectedRows
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { runOnUiThread { onSelectionChanged() } }
             .launchIn(lifecycleScope)
 
-        viewModel.column1IndexFlow
+        viewModel.flowOfColumnIndex1
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { index -> cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] } }
             .launchIn(lifecycleScope)
 
-        viewModel.column2IndexFlow
+        viewModel.flowOfColumnIndex2
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
             .launchIn(lifecycleScope)
 
-        viewModel.filterQueryFlow
+        viewModel.flowOfFilterQuery
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { filterQuery ->
                 searchView!!.setQuery("", false)
@@ -468,7 +468,7 @@ open class CardBrowser :
             }
             .launchIn(lifecycleScope)
 
-        viewModel.deckIdFlow
+        viewModel.flowOfDeckId
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .filterNotNull()
             .onEach { deckId ->
@@ -478,11 +478,11 @@ open class CardBrowser :
             }
             .launchIn(lifecycleScope)
 
-        viewModel.canSaveSearchFlow
+        viewModel.flowOfCanSearch
             .onEach { canSave -> runOnUiThread { saveSearchItem?.isVisible = canSave } }
             .launchIn(lifecycleScope)
 
-        viewModel.isInMultiSelectModeFlow
+        viewModel.flowOfIsInMultiSelectMode
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { inMultiSelect ->
                 if (inMultiSelect) {
@@ -506,7 +506,7 @@ open class CardBrowser :
             }
             .launchIn(lifecycleScope)
 
-        viewModel.initCompletedFlow
+        viewModel.flowOfInitCompleted
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { completed -> if (completed) searchCards() }
             .launchIn(lifecycleScope)
