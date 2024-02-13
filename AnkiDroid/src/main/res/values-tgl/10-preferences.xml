@@ -175,6 +175,8 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Ipakita ang natitira</string>
     <string name="show_progress_summ">Ipakita ang natitirang bilang ng card</string>
+    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">Deck para sa mga bagong card</string>
     <string name="learn_cutoff" maxLength="41">Matuto nang higit na limitasyon</string>
     <string name="time_limit" maxLength="41">Limitasyon ng oras ng Timebox</string>

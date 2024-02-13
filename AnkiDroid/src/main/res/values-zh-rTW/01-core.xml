@@ -59,6 +59,15 @@
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">收回</string>
+    <plurals name="reviewer_window_title">
+        <item quantity="other">%d minutes left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="other">%1$d hours %2$d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="other">%1$d days %2$d left</item>
+    </plurals>
     <string name="no_cards_placeholder_title">牌組是空的</string>
     <string name="no_cards_placeholder_description">使用「+」符號\n
 開始新增卡片</string>

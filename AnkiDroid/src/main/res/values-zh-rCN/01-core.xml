@@ -59,6 +59,15 @@
     <!-- DeckPicker.kt -->
     <string name="expand">展开</string>
     <string name="collapse">折叠</string>
+    <plurals name="reviewer_window_title">
+        <item quantity="other">%d minutes left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="other">%1$d hours %2$d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="other">%1$d days %2$d left</item>
+    </plurals>
     <string name="no_cards_placeholder_title">收藏夹为空</string>
     <string name="no_cards_placeholder_description">开始添加卡牌\n使用 + 图标。</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
