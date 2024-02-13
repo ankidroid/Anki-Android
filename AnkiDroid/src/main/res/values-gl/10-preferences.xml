@@ -175,6 +175,8 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Amosar restantes</string>
     <string name="show_progress_summ">Amosar o contador de cartóns restantes</string>
+    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">Baralla para os novos cartóns</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>

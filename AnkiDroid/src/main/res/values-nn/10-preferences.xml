@@ -175,6 +175,8 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Vis gjenværende</string>
     <string name="show_progress_summ">Show remaining card count</string>
+    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">Stokk for nye kort</string>
     <string name="learn_cutoff" maxLength="41">Grense for forhåndsøving</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>

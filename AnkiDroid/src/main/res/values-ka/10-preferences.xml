@@ -174,6 +174,8 @@
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">დარჩენილის ჩვენება</string>
     <string name="show_progress_summ">ბარათების დარჩენილი რაოდენობის ჩვენება</string>
+    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">დასტა ახალი ბარათებისთვის</string>
     <string name="learn_cutoff" maxLength="41">წინასწარი სწავლის ლიმიტი</string>
     <string name="time_limit" maxLength="41">განკუთვნილი დროის ლიმიტი</string>

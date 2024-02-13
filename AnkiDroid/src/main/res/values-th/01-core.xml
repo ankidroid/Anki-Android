@@ -59,6 +59,15 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ขยาย</string>
     <string name="collapse">ซ่อน</string>
+    <plurals name="reviewer_window_title">
+        <item quantity="other">%d minutes left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="other">%1$d hours %2$d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="other">%1$d days %2$d left</item>
+    </plurals>
     <string name="no_cards_placeholder_title">ไม่มีคอเล็คชั่น</string>
     <string name="no_cards_placeholder_description">เริ่มต้นเพิ่มการ์ดได้\nโดยการกดที่ไอคอน +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->

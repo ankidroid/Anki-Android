@@ -175,6 +175,8 @@
     <string name="show_top_bar_summ">शीर्ष पट्टीमध्ये कार्डची संख्या, ध्वजांकन आणि चिन्ह दर्शवा</string>
     <string name="show_progress" maxLength="41">उर्वरित दर्शवा</string>
     <string name="show_progress_summ">उर्वरित कार्ड संख्या दर्शवा</string>
+    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">नवीन कार्डांसाठी डेक</string>
     <string name="learn_cutoff" maxLength="41">पुढे मर्यादा जाणून घ्या</string>
     <string name="time_limit" maxLength="41">टाइमबॉक्स वेळ मर्यादा</string>

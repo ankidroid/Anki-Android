@@ -174,6 +174,8 @@
     <string name="show_top_bar_summ">Toon aantal kaarten, vlag en markering in de bovenste balk</string>
     <string name="show_progress" maxLength="41">Resterende weergeven</string>
     <string name="show_progress_summ">Toon resterend aantal kaarten</string>
+    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">Set voor nieuwe kaarten</string>
     <string name="learn_cutoff" maxLength="41">Max vooruit leren</string>
     <string name="time_limit" maxLength="41">Stel een tijdslimiet in</string>

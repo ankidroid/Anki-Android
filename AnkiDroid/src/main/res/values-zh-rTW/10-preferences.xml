@@ -173,6 +173,8 @@
     <string name="show_top_bar_summ">顯示卡片計數，標記和頂部列標識</string>
     <string name="show_progress" maxLength="41">顯示剩餘數量</string>
     <string name="show_progress_summ">顯示剩餘卡片數量</string>
+    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">存放新卡片的牌組</string>
     <string name="learn_cutoff" maxLength="41">提早學習上限</string>
     <string name="time_limit" maxLength="41">時間盒的時間上限</string>

@@ -173,6 +173,8 @@
     <string name="show_top_bar_summ">在顶部栏中显示卡片数量、旗标和标记</string>
     <string name="show_progress" maxLength="41">显示剩余数量</string>
     <string name="show_progress_summ">显示剩余卡片数量</string>
+    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">新牌组</string>
     <string name="learn_cutoff" maxLength="41">提前学习的限制</string>
     <string name="time_limit" maxLength="41">指定时间内的学习卡片数</string>
