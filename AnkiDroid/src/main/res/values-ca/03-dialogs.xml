@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Suprimeix el paquet</string>
     <string name="delete_deck_title">Suprimeix el paquet</string>
     <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
-    <string name="initializing_tts">S\'està inicialitzant el TTS&#8230;</string>
     <string name="tts_no_tts">No parlis</string>
     <string name="unused_strings">\n\Fitxers no usats:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Previsualització</string>

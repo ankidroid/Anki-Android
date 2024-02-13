@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Pakli törlése</string>
     <string name="delete_deck_title">Pakli törlése</string>
     <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
-    <string name="initializing_tts">TTS indítása&#8230;</string>
     <string name="tts_no_tts">Ne beszélj</string>
     <string name="unused_strings">\n\bNem használt fájlok:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Előnézet</string>

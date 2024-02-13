@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Vymazať balíček</string>
     <string name="delete_deck_title">Vymazať balíček?</string>
     <string name="no_tts_available_message">Žiaden TTS jazyk nie je k dispozícii</string>
-    <string name="initializing_tts">Inicializuje sa TTS&#8230;</string>
     <string name="tts_no_tts">Nehovoriť</string>
     <string name="unused_strings">\n\nNepoužívaných súborov:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Náhľad</string>

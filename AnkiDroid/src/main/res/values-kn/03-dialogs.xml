@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">ಸ್ಪಷ್ಟ ಡೆಕ್</string>
     <string name="delete_deck_title">ಸ್ಪಷ್ಟ ಡೆಕ್?</string>
     <string name="no_tts_available_message">ಯಾವುದೇ ಪಠ್ಯದಿಂದ ಭಾಷಣಕ್ಕೆ ಭಾಷೆ ಲಭ್ಯವಿಲ್ಲ</string>
-    <string name="initializing_tts">Initializing TTS&#8230;</string>
     <string name="tts_no_tts">ಮಾತನಾಡಬೇಡ</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ಮುನ್ನೋಟ</string>

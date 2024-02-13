@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">카드 묶음 삭제</string>
     <string name="delete_deck_title">카드 묶음을 삭제할까요?</string>
     <string name="no_tts_available_message">문장 읽어주기 기능(TTS)을 사용할 수 없음</string>
-    <string name="initializing_tts">TTS 초기화 중...</string>
     <string name="tts_no_tts">말하지 마십시오</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">미리보기</string>

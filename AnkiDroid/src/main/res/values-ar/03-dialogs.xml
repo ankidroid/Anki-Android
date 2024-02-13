@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">حذف الرزمة</string>
     <string name="delete_deck_title">هل تريد حذف الرزمة؟</string>
     <string name="no_tts_available_message">لا يتوفر دعم تحويل النص إلى كلام لأي لغة</string>
-    <string name="initializing_tts">تهيئة نظام تحويل النص إلى كلام&#8230;</string>
     <string name="tts_no_tts">لا تنطق</string>
     <string name="unused_strings">\n\nملفات عير مستخدمة:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">معاينة</string>

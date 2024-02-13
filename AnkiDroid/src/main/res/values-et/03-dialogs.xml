@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Kustuta kaardipakk</string>
     <string name="delete_deck_title">Kustuta kaardipakk?</string>
     <string name="no_tts_available_message">No text-to-speech language available</string>
-    <string name="initializing_tts">Käivitan TTS-i&#8230;</string>
     <string name="tts_no_tts">Ära räägi</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Eelvaade</string>

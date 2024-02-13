@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">ഡെക്ക് ഇല്ലാതാക്കുക</string>
     <string name="delete_deck_title">ഡെക്ക് ഇല്ലാതാക്കുക?</string>
     <string name="no_tts_available_message">ടെക്സ്റ്റ്-ടു-സ്പീച്ച് ഭാഷ ലഭ്യമല്ല</string>
-    <string name="initializing_tts">Initializing TTS&#8230;</string>
     <string name="tts_no_tts">സംസാരിക്കരുത്</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">പ്രിവ്യൂ</string>

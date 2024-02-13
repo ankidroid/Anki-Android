@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Izbriši komplet</string>
     <string name="delete_deck_title">Izbriši komplet?</string>
     <string name="no_tts_available_message">Noben jezik pretvorbe besedila v govor ni na voljo</string>
-    <string name="initializing_tts">Začenjanje TTS-a &#8230;</string>
     <string name="tts_no_tts">Bodite tiho</string>
     <string name="unused_strings">\n\nNeuporabljene datoteke:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Predogled</string>

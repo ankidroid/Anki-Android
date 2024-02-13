@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">დასტის წაშლა</string>
     <string name="delete_deck_title">წაიშალოს დასტა?</string>
     <string name="no_tts_available_message">მიუწვდომელია ხმოვანი წამკითხველის ენა</string>
-    <string name="initializing_tts">ხმოვანი წამკითხველის ინიციალიზაცია&#8230;</string>
     <string name="tts_no_tts">არ წაიკითხოს</string>
     <string name="unused_strings">\n\nგამოუყენებელი ფაილები:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">წინასწარ ნახვა</string>

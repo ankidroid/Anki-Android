@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Eliminar baralla</string>
     <string name="delete_deck_title">Eliminar baralla?</string>
     <string name="no_tts_available_message">Ningún idioma de síntese de voz dispoñible</string>
-    <string name="initializing_tts">Iniciando TTS&#8230;</string>
     <string name="tts_no_tts">Non fales</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Vista previa</string>

@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">מחיקת חפיסה</string>
     <string name="delete_deck_title">למחוק את החפיסה?‏</string>
     <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
-    <string name="initializing_tts">מאתחל מנוע כתוב-אל-דיבור...‏</string>
     <string name="tts_no_tts">אל תדבר.‏</string>
     <string name="unused_strings">\n\nקבצים שאינם בשימוש:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">תצוגה מקדימה</string>

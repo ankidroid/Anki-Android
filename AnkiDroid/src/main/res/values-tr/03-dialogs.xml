@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Desteyi sil</string>
     <string name="delete_deck_title">Deste silinsin mi?</string>
     <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
-    <string name="initializing_tts">Metin okuma başlatılıyor&#8230;</string>
     <string name="tts_no_tts">Konuşma</string>
     <string name="unused_strings">\n\nKullanılmayan dosyalar:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Önizleme</string>

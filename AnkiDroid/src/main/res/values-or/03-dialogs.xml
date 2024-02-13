@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">ତାସଖଣ୍ଡ ଵିଲୋପ କରିବା</string>
     <string name="delete_deck_title">ତାସଖଣ୍ଡ ଵିଲୋପ କରିବେ ତ?</string>
     <string name="no_tts_available_message">କୌଣସି ପାଠ୍ୟ-ରୁ-କଥନ ଭାଷା ଉପଲବ୍ଧ ନାହିଁ</string>
-    <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି&#8230;</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ଵାଵଲୋକନ</string>

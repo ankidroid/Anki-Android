@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">刪除牌組</string>
     <string name="delete_deck_title">刪除牌組？</string>
     <string name="no_tts_available_message">沒有可用的朗讀語言</string>
-    <string name="initializing_tts">正在初始化 TTS&#8230;</string>
     <string name="tts_no_tts">不要發音</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">預覽</string>

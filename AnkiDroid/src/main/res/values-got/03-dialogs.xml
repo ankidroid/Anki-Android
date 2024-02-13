@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Usnim wikon</string>
     <string name="delete_deck_title">Usnim wikon?</string>
     <string name="no_tts_available_message">Bokos-du-gwaurdja razda nist</string>
-    <string name="initializing_tts">Initializing TTS&#8230;</string>
     <string name="tts_no_tts">Ni rodei</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Preview</string>

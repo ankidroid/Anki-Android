@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Διαγραφή τράπουλας</string>
     <string name="delete_deck_title">Διαγραφή τράπουλας;</string>
     <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
-    <string name="initializing_tts">Προετοιμασία TTS&#8230;</string>
     <string name="tts_no_tts">Σίγαση</string>
     <string name="unused_strings">\n\nΑχρησιμοποίητα αρχεία:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Προεπισκόπηση</string>

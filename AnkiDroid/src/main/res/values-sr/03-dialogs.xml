@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Избриши шпил</string>
     <string name="delete_deck_title">Избриши шпил?</string>
     <string name="no_tts_available_message">Функција претварања текста у говор није доступна</string>
-    <string name="initializing_tts">Иницијализација синтезе говора&#8230;</string>
     <string name="tts_no_tts">Не изговарај</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Преглед</string>

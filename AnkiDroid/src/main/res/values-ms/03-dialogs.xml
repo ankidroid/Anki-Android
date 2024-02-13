@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Padam dek</string>
     <string name="delete_deck_title">Padam dek?</string>
     <string name="no_tts_available_message">Teks-ke-ucapan bahasa tiada</string>
-    <string name="initializing_tts">Memulakan TTS&#8230;</string>
     <string name="tts_no_tts">Jangan bercakap</string>
     <string name="unused_strings">\n\nFail tidak digunakan:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Pratonton</string>

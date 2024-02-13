@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">డెక్ను త్వలిగించు</string>
     <string name="delete_deck_title">డెక్ను త్వలిగించాల?</string>
     <string name="no_tts_available_message">టెక్స్ట్-టు-స్పీచ్ లాంగ్వేజ్ అందుబాటులో లేదు</string>
-    <string name="initializing_tts">TTS ను ప్రారంభిస్తోంది&#8230;</string>
     <string name="tts_no_tts">మాట్లాడకండి</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ప్రత్యేక ప్రదర్శన</string>
