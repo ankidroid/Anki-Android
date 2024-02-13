@@ -24,6 +24,7 @@ import android.speech.tts.UtteranceProgressListener
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
@@ -288,9 +289,11 @@ object ReadText {
                 Timber.w("TTS not successfully initialized")
             }
         }
-        // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
-        if (ankiActivityContext != null) {
-            ankiActivityContext.showSnackbar(R.string.initializing_tts)
+        // Remember the user to upgrade to the new TTS system #15475
+        ankiActivityContext?.showSnackbar(R.string.readtext_reviewer_warn, LENGTH_INDEFINITE) {
+            setAction(R.string.scoped_storage_learn_more) {
+                ankiActivityContext.openUrl(R.string.link_tts)
+            }
         }
     }
 
