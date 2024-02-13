@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">डेक मिटाएँ</string>
     <string name="delete_deck_title">डेक मिटाएँ?</string>
     <string name="no_tts_available_message">कोई लेख-से-बोली भाषा उपलब्ध नहीं</string>
-    <string name="initializing_tts">लेख-से-बोली सेवा शुरू की जा रही है...</string>
     <string name="tts_no_tts">बात न करें</string>
     <string name="unused_strings">\n\nअप्रयुक्त फाइलें:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">पूर्वावलोकन</string>

@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Iscantzella su matzu</string>
     <string name="delete_deck_title">Iscantzellare su matzu?</string>
     <string name="no_tts_available_message">Non b\'est a disponimentu peruna limba de sìntesi vocale</string>
-    <string name="initializing_tts">Initzializende sa sìntesi vocale TTS&#8230;</string>
     <string name="tts_no_tts">Non chistiones</string>
     <string name="unused_strings">\n\nDocumentos no impreados:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Antiprima</string>

@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">डेक हटवा</string>
     <string name="delete_deck_title">डेक हटवायचा?</string>
     <string name="no_tts_available_message">मजकूर-ते-भाषणाची भाषा उपलब्ध नाही</string>
-    <string name="initializing_tts">टीटीएस प्रारंभ करीत आहे&#8230;</string>
     <string name="tts_no_tts">बोलू नका</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">पूर्वावलोकन</string>

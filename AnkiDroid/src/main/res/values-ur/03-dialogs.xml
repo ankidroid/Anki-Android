@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">ڈیک کو حذف کریں</string>
     <string name="delete_deck_title">ڈیک کو حذف کریں؟</string>
     <string name="no_tts_available_message">متن سے تقریر کی کوئی زبان دستیاب نہیں ہے۔</string>
-    <string name="initializing_tts">ٹی ٹی ایس کو شروع کرنا&#8230;</string>
     <string name="tts_no_tts">مت بولو</string>
     <string name="unused_strings">\n\nغیر استعمال شدہ فائلیں:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">پیش نظارہ</string>

@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
     <string name="delete_deck_title">Skasuj talię</string>
     <string name="no_tts_available_message">Brak dostępnego języka zamiany tekstu na mowę</string>
-    <string name="initializing_tts">Inicjowanie TTS&#8230;</string>
     <string name="tts_no_tts">Nie mów</string>
     <string name="unused_strings">\n\nNieużywane pliki:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Podgląd</string>

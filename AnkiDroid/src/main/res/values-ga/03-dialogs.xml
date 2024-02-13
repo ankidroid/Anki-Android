@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Scrios deic</string>
     <string name="delete_deck_title">Scrios an deic seo?</string>
     <string name="no_tts_available_message">Níl TTS ar fáil sa teanga seo </string>
-    <string name="initializing_tts">TTS á thosú&#8230;</string>
     <string name="tts_no_tts">Teanga ar bith</string>
     <string name="unused_strings">\n\nComhaid gan úsáid:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Réamhamharc</string>

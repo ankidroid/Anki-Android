@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">デッキを削除</string>
     <string name="delete_deck_title">デッキを削除しますか？</string>
     <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
-    <string name="initializing_tts">テキスト読み上げ（TTS）機能を初期化しています...</string>
     <string name="tts_no_tts">発声なし</string>
     <string name="unused_strings">\n\n(*) のファイルのリスト:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">プレビュー</string>

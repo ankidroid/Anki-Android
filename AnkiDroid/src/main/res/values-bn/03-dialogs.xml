@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">ডেক মুছে ফেলো</string>
     <string name="delete_deck_title">ডেক মুছে ফেলবেন?</string>
     <string name="no_tts_available_message">কোনও টেক্সট টু স্পিচ ভাষা উপলব্ধ নেই</string>
-    <string name="initializing_tts">টিটিএস শুরু করা হচ্ছে&#8230;</string>
     <string name="tts_no_tts">নিশ্চুপ</string>
     <string name="unused_strings">\n\nঅব্যবহৃত ফাইলসমূহ:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">আগাম প্রদর্শন</string>

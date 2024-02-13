@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Poista korttipakka</string>
     <string name="delete_deck_title">Poista korttipakka?</string>
     <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
-    <string name="initializing_tts">Valmistellaan teksti puheeksi -toimintoa&#8230;</string>
     <string name="tts_no_tts">Ei puhetta</string>
     <string name="unused_strings">\n\nKäyttämättömät tiedostot:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Esikatselu</string>

@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Изтрий колода</string>
     <string name="delete_deck_title">Изтрий колода</string>
     <string name="no_tts_available_message">Няма наличен синтез за език</string>
-    <string name="initializing_tts">Зареждане на ситезиран говор&#8230;</string>
     <string name="tts_no_tts">Не говори</string>
     <string name="unused_strings">\n\nНеизползвани файли:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Преглед</string>

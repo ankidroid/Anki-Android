@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Burahin ang deck</string>
     <string name="delete_deck_title">Burahin ang deck?</string>
     <string name="no_tts_available_message">Walang available na wika sa text-to-speech</string>
-    <string name="initializing_tts">Initializing TTS&#8230;</string>
     <string name="tts_no_tts">Huwag magsalita</string>
     <string name="unused_strings">\n\nHindi nagamit na mga file:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">I-preview</string>

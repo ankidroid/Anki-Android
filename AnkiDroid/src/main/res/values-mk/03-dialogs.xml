@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Бришење на deck</string>
     <string name="delete_deck_title">Бришење на deck?</string>
     <string name="no_tts_available_message">Нема достапен јазик за текст-во-говор</string>
-    <string name="initializing_tts">Иницијализирање на TTS&#8230;</string>
     <string name="tts_no_tts">Не зборувај</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Преглед</string>

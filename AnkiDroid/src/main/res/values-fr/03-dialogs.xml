@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Supprimer le jeu de cartes</string>
     <string name="delete_deck_title">Supprimer le paquet ?</string>
     <string name="no_tts_available_message">Aucun langage de synthèse vocale disponible</string>
-    <string name="initializing_tts">Initialisation de la synthèse vocale&#8230;</string>
     <string name="tts_no_tts">Ne pas parler</string>
     <string name="unused_strings">\n\nFichiers inutilisés :\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Aperçu</string>

@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ</string>
     <string name="delete_deck_title">ᱰᱮᱠ ᱴᱚᱭᱴᱚᱞ ᱢᱮᱴᱟᱣᱟ  ᱥᱮ?</string>
     <string name="no_tts_available_message">text-to-speech ᱯᱟᱹᱨᱥᱤ ᱵᱟᱱᱩᱜᱼᱟ ᱾</string>
-    <string name="initializing_tts">TTS ᱮᱛᱚᱷᱚᱵᱽᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
     <string name="unused_strings">\n\nUnused ᱯᱟᱹᱤᱞ:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>

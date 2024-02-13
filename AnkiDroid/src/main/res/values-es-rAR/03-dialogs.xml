@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Eliminar mazo</string>
     <string name="delete_deck_title">¿Eliminar mazo?</string>
     <string name="no_tts_available_message">No hay un idioma de texto-a-voz disponible</string>
-    <string name="initializing_tts">Inicializando TTS&#8230;</string>
     <string name="tts_no_tts">No hable</string>
     <string name="unused_strings">\n\nArchivos sin utilizar:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Vista previa</string>

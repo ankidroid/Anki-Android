@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">حذف دسته</string>
     <string name="delete_deck_title">حذف دسته؟</string>
     <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
-    <string name="initializing_tts">در حال راه‌اندازی تبدیل متن به گفتار&#8230;</string>
     <string name="tts_no_tts">حرف نزن</string>
     <string name="unused_strings">\n\nفایل های استفاده نشده:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">پیش نمایش</string>

@@ -49,7 +49,6 @@
     <string name="contextmenu_deckpicker_delete_deck">Видалити колоду</string>
     <string name="delete_deck_title">Видалити колоду?</string>
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
-    <string name="initializing_tts">Запуск синтезу мовлення&#8230;</string>
     <string name="tts_no_tts">Не говорити</string>
     <string name="unused_strings">\n\nНевикористані файли:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Попередній перегляд</string>
