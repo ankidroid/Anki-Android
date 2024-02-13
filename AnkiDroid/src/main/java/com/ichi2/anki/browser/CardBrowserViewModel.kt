@@ -86,14 +86,14 @@ class CardBrowserViewModel(
         private set
     var currentFlag = Flag.NONE
 
-    val filterQueryFlow = MutableSharedFlow<String>()
+    val flowOfFilterQuery = MutableSharedFlow<String>()
 
     /**
      * Whether the browser is working in Cards mode or Notes mode.
      * default: [CARDS]
      * */
-    val cardsOrNotesFlow = MutableStateFlow(CARDS)
-    val cardsOrNotes get() = cardsOrNotesFlow.value
+    val flowOfCardsOrNotes = MutableStateFlow(CARDS)
+    val cardsOrNotes get() = flowOfCardsOrNotes.value
 
     // card that was clicked (not marked)
     var currentCardId: CardId = 0
@@ -104,12 +104,12 @@ class CardBrowserViewModel(
     private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
     val orderAsc get() = reverseDirectionFlow.value.orderAsc
 
-    val column1IndexFlow = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_1_KEY, 0))
-    val column2IndexFlow = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_2_KEY, 0))
-    val column1Index get() = column1IndexFlow.value
-    val column2Index get() = column2IndexFlow.value
+    val flowOfColumnIndex1 = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_1_KEY, 0))
+    val flowOfColumnIndex2 = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_2_KEY, 0))
+    val column1Index get() = flowOfColumnIndex1.value
+    val column2Index get() = flowOfColumnIndex2.value
 
-    val searchQueryExpandedFlow = MutableStateFlow(false)
+    val flowOfSearchQueryExpanded = MutableStateFlow(false)
 
     private val searchQueryInputFlow = MutableStateFlow<String?>(null)
 
@@ -117,13 +117,13 @@ class CardBrowserViewModel(
     val tempSearchQuery get() = searchQueryInputFlow.value
 
     /** Whether the current element in the search bar can be saved */
-    val canSaveSearchFlow = searchQueryInputFlow
+    val flowOfCanSearch = searchQueryInputFlow
         .map { it?.isNotEmpty() == true }
         .stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = false)
 
-    val isTruncatedFlow: MutableStateFlow<Boolean> =
+    val flowOfIsTruncated: MutableStateFlow<Boolean> =
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
-    val isTruncated get() = isTruncatedFlow.value
+    val isTruncated get() = flowOfIsTruncated.value
 
     private val _selectedRows: MutableSet<CardBrowser.CardCache> = Collections.synchronizedSet(LinkedHashSet())
 
@@ -131,19 +131,19 @@ class CardBrowserViewModel(
     val selectedRows: Set<CardBrowser.CardCache> get() = _selectedRows
 
     private val refreshSelectedRowsFlow = MutableSharedFlow<Unit>()
-    val selectedRowsFlow: Flow<Set<CardBrowser.CardCache>> =
+    val flowOfSelectedRows: Flow<Set<CardBrowser.CardCache>> =
         flowOf(selectedRows).combine(refreshSelectedRowsFlow) { row, _ -> row }
 
     val selectedCardIds: List<Long>
         get() = selectedRows.map { c -> c.id }
     var lastSelectedPosition = 0
 
-    val isInMultiSelectModeFlow = selectedRowsFlow
+    val flowOfIsInMultiSelectMode = flowOfSelectedRows
         .map { it.isNotEmpty() }
         .stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = false)
 
     val isInMultiSelectMode
-        get() = isInMultiSelectModeFlow.value
+        get() = flowOfIsInMultiSelectMode.value
 
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
@@ -157,11 +157,11 @@ class CardBrowserViewModel(
             val deckName = withCol { decks.name(deckId) }
             "deck:\"$deckName\" "
         }
-        deckIdFlow.update { deckId }
+        flowOfDeckId.update { deckId }
     }
 
-    val deckIdFlow = MutableStateFlow(lastDeckId)
-    val deckId get() = deckIdFlow.value
+    val flowOfDeckId = MutableStateFlow(lastDeckId)
+    val deckId get() = flowOfDeckId.value
 
     val cardInfoDestination: CardInfoDestination?
         get() {
@@ -184,7 +184,7 @@ class CardBrowserViewModel(
         }
     }
 
-    val initCompletedFlow = MutableStateFlow(false)
+    val flowOfInitCompleted = MutableStateFlow(false)
 
     /**
      * Whether the task launched from CardBrowserViewModel.init has completed.
@@ -192,14 +192,14 @@ class CardBrowserViewModel(
      * If `false`, we don't have the initial values to perform the first search
      */
     @get:VisibleForTesting
-    val initCompleted get() = initCompletedFlow.value
+    val initCompleted get() = flowOfInitCompleted.value
 
     init {
-        column1IndexFlow
+        flowOfColumnIndex1
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
             .launchIn(viewModelScope)
 
-        column2IndexFlow
+        flowOfColumnIndex2
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) } }
             .launchIn(viewModelScope)
 
@@ -217,14 +217,14 @@ class CardBrowserViewModel(
             // PERF: slightly inefficient if the source was lastDeckId
             setDeckId(getInitialDeck())
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection() }
-            cardsOrNotesFlow.update { cardsOrNotes }
+            flowOfCardsOrNotes.update { cardsOrNotes }
 
             withCol {
                 sortTypeFlow.update { SortType.fromCol(config, sharedPrefs()) }
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
             }
             Timber.i("initCompleted")
-            initCompletedFlow.update { true }
+            flowOfInitCompleted.update { true }
         }
     }
 
@@ -269,12 +269,12 @@ class CardBrowserViewModel(
             // Change this to only change the preference on a state change
             newValue.saveToCollection()
         }
-        cardsOrNotesFlow.update { newValue }
+        flowOfCardsOrNotes.update { newValue }
     }
 
     fun setTruncated(value: Boolean) {
         viewModelScope.launch {
-            isTruncatedFlow.emit(value)
+            flowOfIsTruncated.emit(value)
         }
         sharedPrefs().edit {
             putBoolean("isTruncated", value)
@@ -320,7 +320,7 @@ class CardBrowserViewModel(
         }
     }
 
-    /** emits a new value in [selectedRowsFlow] */
+    /** emits a new value in [flowOfSelectedRows] */
     private fun refreshSelectedRowsFlow() = viewModelScope.launch {
         refreshSelectedRowsFlow.emit(Unit)
     }
@@ -342,9 +342,9 @@ class CardBrowserViewModel(
         return null
     }
 
-    fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
+    fun setColumn1Index(value: Int) = flowOfColumnIndex1.update { value }
 
-    fun setColumn2Index(value: Int) = column2IndexFlow.update { value }
+    fun setColumn2Index(value: Int) = flowOfColumnIndex2.update { value }
     suspend fun suspendCards() {
         val cardIds = selectedCardIds
         if (cardIds.isEmpty()) {
@@ -445,7 +445,7 @@ class CardBrowserViewModel(
         this.filter { initCompleted }
 
     suspend fun setFilterQuery(filterQuery: String) {
-        this.filterQueryFlow.emit(filterQuery)
+        this.flowOfFilterQuery.emit(filterQuery)
     }
 
     suspend fun searchForMarkedNotes() = setFilterQuery("tag:marked")
@@ -501,11 +501,11 @@ class CardBrowserViewModel(
 
     private fun collapseSearchQuery() {
         searchQueryInputFlow.update { null }
-        searchQueryExpandedFlow.update { false }
+        flowOfSearchQueryExpanded.update { false }
     }
 
     private fun expandSearchQuery() {
-        searchQueryExpandedFlow.update { true }
+        flowOfSearchQueryExpanded.update { true }
     }
 
     fun updateQueryText(newText: String) {
