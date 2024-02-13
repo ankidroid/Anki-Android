@@ -333,9 +333,37 @@ open class CardBrowser :
     @VisibleForTesting
     fun moveSelectedCardsToDeck(did: DeckId): Job {
         return launchCatchingTask {
+            var newselectedCardIds = selectedCardIds
+            if (viewModel.cardsOrNotes === NOTES) {
+                var listnid = mutableListOf<NoteId>()
+                for (element in newselectedCardIds) {
+                    listnid.add(getColUnsafe.getCard(element).nid)
+                }
+                val newCardList = mutableListOf<CardId>()
+                var getcards = listOf<CardId>()
+                if ("" != mSearchTerms && mSearchView != null) {
+                    mSearchView!!.setQuery(mSearchTerms, false)
+                    mSearchItem!!.expandActionView()
+                }
+                val searchText: String? = if (mSearchTerms.contains("deck:")) {
+                    "($mSearchTerms)"
+                } else {
+                    if ("" != mSearchTerms) "${viewModel.restrictOnDeck}($mSearchTerms)" else viewModel.restrictOnDeck
+                }
+                val query = searchText!!
+                val order = viewModel.order.toSortOrder()
+                withCol { getcards = findCards(query, order) }
+                for (i in getcards.indices) {
+                    val nid = getColUnsafe.getCard(getcards[i]).nid
+                    if (listnid.contains(nid)) {
+                        newCardList.add(getcards[i])
+                    }
+                    newselectedCardIds = newCardList
+                }
+            }
             val changed = withProgress {
                 undoableOp {
-                    setDeck(selectedCardIds, did)
+                    setDeck(newselectedCardIds, did)
                 }
             }
             showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
