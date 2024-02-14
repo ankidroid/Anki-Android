@@ -935,7 +935,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
             if (mCurrentEditedCard != null && mCurrentEditedCard!!.did != deckId) {
                 mReloadRequired = true
-                getColUnsafe.setDeck(listOf(mCurrentEditedCard!!.id), deckId)
+                undoableOp { setDeck(listOf(mCurrentEditedCard!!.id), deckId) }
                 // refresh the card object to reflect the database changes from above
                 mCurrentEditedCard!!.load(getColUnsafe)
                 // also reload the note object
