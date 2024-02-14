@@ -51,6 +51,7 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -220,6 +221,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
      * Same action as pressing on the deck in the list. I.e. send the deck to listener and close the dialog.
      */
     protected fun selectDeckAndClose(deck: SelectableDeck) {
+        Timber.d("selected deck '%s'", deck.name)
         onDeckSelected(deck)
         dismiss()
     }
