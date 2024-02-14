@@ -59,7 +59,10 @@ object ActivityTransitionAnimation {
 
     @Parcelize
     enum class Direction : Parcelable {
-        START, END, FADE, UP, DOWN, RIGHT, LEFT, DEFAULT, NONE
+        START, END, FADE, UP, DOWN, RIGHT, LEFT, DEFAULT, NONE;
+
+        /** @see getInverseTransition */
+        fun invert(): Direction = getInverseTransition(this)
     }
 
     /**

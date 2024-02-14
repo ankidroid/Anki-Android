@@ -54,7 +54,6 @@ import anki.collection.OpChanges
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -67,6 +66,8 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.noteeditor.EditCardDestination
+import com.ichi2.anki.noteeditor.toIntent
 import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.preferences.sharedPrefs
@@ -802,12 +803,9 @@ abstract class AbstractFlashcardViewer :
             // This should never occurs. It means the review button was pressed while there is no more card in the reviewer.
             return
         }
-        val editCard = Intent(this@AbstractFlashcardViewer, NoteEditor::class.java)
-        val animation = getAnimationTransitionFromGesture(fromGesture)
-        editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
-        editCard.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
-        editorCard = currentCard
-        editCurrentCardLauncher.launch(editCard)
+        val animation = fromGesture.toAnimationTransition().invert()
+        val editCardIntent = EditCardDestination(currentCard!!).toIntent(this, animation)
+        editCurrentCardLauncher.launch(editCardIntent)
     }
 
     protected fun showDeleteNoteDialog() {
@@ -2635,6 +2633,8 @@ abstract class AbstractFlashcardViewer :
                 else -> ActivityTransitionAnimation.Direction.FADE
             }
         }
+
+        fun Gesture?.toAnimationTransition() = getAnimationTransitionFromGesture(this)
 
         /**
          * @param mediaDir media directory path on SD card
