@@ -36,6 +36,7 @@ import androidx.fragment.app.Fragment
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.description
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.updateValuesFromDeck
 import com.ichi2.libanki.Collection
@@ -582,7 +583,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             val desc: String = if (isDynamic) {
                 resources.getString(R.string.dyn_deck_desc)
             } else {
-                col.decks.getActualDescription()
+                col.decks.current().description
             }
             if (desc.isNotEmpty()) {
                 textDeckDescription.text = formatDescription(desc)
