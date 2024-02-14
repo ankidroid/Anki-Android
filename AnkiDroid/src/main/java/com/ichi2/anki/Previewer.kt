@@ -30,6 +30,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.PreviewLayout
@@ -225,6 +226,10 @@ class Previewer : AbstractFlashcardViewer() {
 
     override fun displayAnswerBottomBar() {
         /* do nothing */
+    }
+
+    override suspend fun updateCurrentCard() {
+        currentCard = withCol { getCard(currentCardId!!) }
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {

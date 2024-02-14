@@ -17,9 +17,11 @@ package com.ichi2.anki
 
 import android.content.Intent
 import android.view.Menu
+import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_3
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.formatApiResult
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.getDataFromRequest
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
@@ -33,6 +35,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.MockTime
@@ -262,6 +265,24 @@ class ReviewerTest : RobolectricTest() {
         }
     }
 
+    @Test
+    @Flaky(OS.ALL) // had a flake on Windows due to flipOrAnswerCard, let's not block the release
+    fun `changing deck refreshes card`() = runReviewer(cards = listOf("One", "Two")) {
+        val nonDefaultDeck = addDeck("Hello")
+        assertThat("first card is shown", this.cardContent, containsString("One"))
+        flipOrAnswerCard(EASE_3)
+        // answer good, 'EASE_3' should now be < 10m
+        assertThat("initial time is 10m", this.getCardDataForJsApi().nextTime3, equalTo("<\u206810\u2069m"))
+        flipOrAnswerCard(EASE_3)
+        assertThat("next card is shown", this.cardContent, containsString("Two"))
+
+        undoableOp { col.setDeck(listOf(currentCard!!.id), nonDefaultDeck) }
+
+        flipOrAnswerCard(EASE_3)
+        assertThat("buttons should be updated", this.getCardDataForJsApi().nextTime3, equalTo("\u20681\u2069d"))
+        assertThat("content should be updated", this.cardContent, containsString("One"))
+    }
+
     private fun toggleWhiteboard(reviewer: ReviewerForMenuItems) {
         reviewer.toggleWhiteboard()
 
@@ -360,6 +381,7 @@ class ReviewerTest : RobolectricTest() {
         notetypes.addTemplate(m, newTemplate)
     }
 
+    @CheckResult
     private fun startReviewer(withCards: Int = 0): Reviewer {
         for (i in 0 until withCards) {
             addNoteUsingBasicModel()
@@ -367,8 +389,17 @@ class ReviewerTest : RobolectricTest() {
         return startReviewer(this)
     }
 
+    @CheckResult
     private fun <T : Reviewer?> startReviewer(clazz: Class<T>): T {
         return startReviewer(this, clazz)
+    }
+
+    private fun runReviewer(cards: List<String>, block: suspend Reviewer.() -> Unit) = runTest {
+        for (frontSide in cards) {
+            addNoteUsingBasicModel(front = frontSide)
+        }
+        val reviewer = startReviewer(this@ReviewerTest)
+        block(reviewer)
     }
 
     @KotlinCleanup("use extension function")
