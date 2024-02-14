@@ -29,6 +29,7 @@ import com.ichi2.anki.AndroidTtsPlayer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper.Companion.getMediaDirectory
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.ReadText
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
@@ -186,6 +187,7 @@ class SoundPlayer : Closeable {
     suspend fun stopSounds() {
         if (playSoundsJob != null) Timber.i("stopping sounds")
         cancelPlaySoundsJob(playSoundsJob)
+        ReadText.stopTts() // TODO: Reconsider design
     }
 
     override fun close() {
