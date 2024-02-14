@@ -21,6 +21,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
@@ -48,7 +49,12 @@ class PreviewerTest : RobolectricTest() {
             equalTo(cardToPreview.id)
         )
 
-        previewer.saveEditedCard()
+        // val initialContent = previewer.cardContent
+
+        val note = cardToPreview.note().apply {
+            setField(0, "Hi")
+        }
+        undoableOp { updateNote(note) }
 
         assertThat(
             "Should be previewing selected card after edit",
@@ -69,9 +75,10 @@ class PreviewerTest : RobolectricTest() {
 
         assertThat("Initial content assumption", previewer.cardContent, not(containsString("Hi")))
 
-        cardToPreview.note().setField(0, "Hi")
-
-        previewer.saveEditedCard()
+        val note = cardToPreview.note().apply {
+            setField(0, "Hi")
+        }
+        undoableOp { updateNote(note) }
 
         assertThat(
             "Card content should be updated after editing",
@@ -167,7 +174,7 @@ class PreviewerTest : RobolectricTest() {
             c[it] = cardToPreview
             cardToPreview.id
         }
-        return getPreviewerPreviewingList(longList, c)
+        return getPreviewerPreviewingList(longList)
     }
 
     @KotlinCleanup("extension function")
@@ -175,25 +182,19 @@ class PreviewerTest : RobolectricTest() {
         card.update { did = addDeck(name) }
     }
 
-    private fun getPreviewerPreviewingList(cardIds: List<Long>, c: Array<Card?>): Previewer {
+    private fun getPreviewerPreviewingList(cardIds: List<Long>): Previewer {
         val previewIntent = PreviewDestination(index = 0, PreviewerIdsFile(targetContext.cacheDir, cardIds)).toIntent(targetContext)
-        val previewer = super.startActivityNormallyOpenCollectionWithIntent(
+        return super.startActivityNormallyOpenCollectionWithIntent(
             Previewer::class.java,
             previewIntent
         )
-        for (i in cardIds.indices) {
-            AbstractFlashcardViewer.editorCard = c[i]
-        }
-        return previewer
     }
 
     private fun getPreviewerPreviewing(usableCard: Card): Previewer {
         val previewIntent = PreviewDestination(index = 0, PreviewerIdsFile(targetContext.cacheDir, listOf(usableCard.id))).toIntent(targetContext)
-        val previewer = super.startActivityNormallyOpenCollectionWithIntent(
+        return super.startActivityNormallyOpenCollectionWithIntent(
             Previewer::class.java,
             previewIntent
         )
-        AbstractFlashcardViewer.editorCard = usableCard
-        return previewer
     }
 }

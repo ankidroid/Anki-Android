@@ -24,11 +24,13 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.AbstractFlashcardViewer.Companion.editorCard
+import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.noteeditor.EditCardDestination
+import com.ichi2.anki.noteeditor.toIntent
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note
@@ -407,11 +409,10 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     private fun <T : NoteEditor?> getNoteEditorEditingExistingBasicNote(n: Note, from: FromScreen, clazz: Class<T>): T {
-        val i = Intent()
+        var i = Intent()
         when (from) {
             REVIEWER -> {
-                i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
-                editorCard = n.firstCard()
+                i = EditCardDestination(n.firstCard().id).toIntent(targetContext, ActivityTransitionAnimation.Direction.DEFAULT)
             }
             DECK_LIST -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
         }

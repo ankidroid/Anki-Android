@@ -278,9 +278,7 @@ abstract class AbstractFlashcardViewer :
         ActivityResultContracts.StartActivityForResult(),
         FlashCardViewerResultCallback { result, reloadRequired ->
             if (result.resultCode == RESULT_OK) {
-                // content of note was changed so update the note and current card
-                Timber.i("AbstractFlashcardViewer:: Saving card...")
-                launchCatchingTask { saveEditedCard() }
+                Timber.i("AbstractFlashcardViewer:: card edited...")
                 onEditedNoteChanged()
             } else if (result.resultCode == RESULT_CANCELED && !reloadRequired) {
                 // nothing was changed by the note editor so just redraw the card
@@ -431,39 +429,6 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    suspend fun saveEditedCard() {
-        val card = editorCard!!
-        withProgress {
-            undoableOp {
-                updateNote(card.note())
-            }
-        }
-        onCardUpdated(card)
-    }
-
-    private fun onCardUpdated(result: Card) {
-        if (currentCard !== result) {
-            /*
-             * Before updating currentCard, we check whether it is changing or not. If the current card changes,
-             * then we need to display it as a new card, without showing the answer.
-             */
-            displayAnswer = false
-        }
-        currentCard = result
-        if (currentCard == null) {
-            // If the card is null means that there are no more cards scheduled for review.
-            showProgressBar()
-            closeReviewer(RESULT_NO_MORE_CARDS)
-        }
-        onCardEdited(currentCard!!)
-        if (displayAnswer) {
-            displayCardAnswer()
-        } else {
-            displayCardQuestion()
-        }
-        hideProgressBar()
-    }
-
     /** Operation after a card has been updated due to being edited. Called before display[Question/Answer]  */
     protected open fun onCardEdited(card: Card) {
         // intentionally blank
@@ -486,6 +451,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal suspend fun updateCardAndRedraw() {
+        Timber.d("updateCardAndRedraw")
         refreshRequired = null // this method is called on refresh
 
         updateCurrentCard()
@@ -804,7 +770,7 @@ abstract class AbstractFlashcardViewer :
             return
         }
         val animation = fromGesture.toAnimationTransition().invert()
-        val editCardIntent = EditCardDestination(currentCard!!).toIntent(this, animation)
+        val editCardIntent = EditCardDestination(currentCard!!.id).toIntent(this, animation)
         editCurrentCardLauncher.launch(editCardIntent)
     }
 
@@ -2600,11 +2566,6 @@ abstract class AbstractFlashcardViewer :
          * Should be protected, using non-JVM static members protected in the superclass companion is unsupported yet
          */
         const val INITIAL_HIDE_DELAY = 200
-
-        // I don't see why we don't do this by intent.
-        /** to be sent to and from the card editor  */
-        @set:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-        var editorCard: Card? = null
         internal var displayAnswer = false
         const val DOUBLE_TAP_TIME_INTERVAL = "doubleTapTimeInterval"
         const val DEFAULT_DOUBLE_TAP_TIME_INTERVAL = 200

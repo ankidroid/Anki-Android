@@ -32,6 +32,7 @@ import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.libanki.StdModels
+import com.ichi2.libanki.undoableOp
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.OS
@@ -152,12 +153,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        AbstractFlashcardViewer.editorCard = viewer.currentCard
-
         val note = viewer.currentCard!!.note()
         note.setField(1, "David")
-
-        viewer.saveEditedCard()
+        undoableOp { updateNote(note) }
 
         waitForAsyncTasksToComplete()
 
@@ -179,12 +177,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        AbstractFlashcardViewer.editorCard = viewer.currentCard
-
         val note = viewer.currentCard!!.note()
         note.setField(1, "David")
-
-        viewer.saveEditedCard()
+        undoableOp { updateNote(note) }
 
         waitForAsyncTasksToComplete()
 

@@ -462,11 +462,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 return
             }
             CALLER_REVIEWER_EDIT -> {
-                mCurrentEditedCard = AbstractFlashcardViewer.editorCard
-                if (mCurrentEditedCard == null) {
-                    finish()
-                    return
-                }
+                val cardId = requireNotNull(intent.extras?.getLong(EXTRA_CARD_ID)) { "EXTRA_CARD_ID" }
+                mCurrentEditedCard = col.getCard(cardId)
                 mEditorNote = mCurrentEditedCard!!.note(col)
                 addNote = false
             }

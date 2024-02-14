@@ -21,23 +21,22 @@ import android.content.Intent
 import android.os.Parcelable
 import androidx.annotation.CheckResult
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.NoteEditor
-import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardId
 
 /**
  * Opens the [Note Editor][NoteEditor] to the note of a selected card
  *
  * As the card of the note is known, additional context is provided to the UI
  */
-data class EditCardDestination(val card: Card)
+data class EditCardDestination(val cardId: CardId)
 
 @CheckResult
 fun EditCardDestination.toIntent(context: Context, animation: ActivityTransitionAnimation.Direction): Intent {
-    AbstractFlashcardViewer.editorCard = card
     return Intent(context, NoteEditor::class.java).apply {
         putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
+        putExtra(NoteEditor.EXTRA_CARD_ID, cardId)
         putExtra(AnkiActivity.FINISH_ANIMATION_EXTRA, animation as Parcelable)
     }
 }
