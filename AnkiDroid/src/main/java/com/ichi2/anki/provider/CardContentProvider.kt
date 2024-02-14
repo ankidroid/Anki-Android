@@ -26,6 +26,7 @@ import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import com.ichi2.anki.*
+import com.ichi2.anki.utils.ext.description
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
@@ -1136,7 +1137,7 @@ class CardContentProvider : ContentProvider() {
                 }
                 FlashCardsContract.Deck.DECK_DYN -> rb.add(col.decks.isDyn(id))
                 FlashCardsContract.Deck.DECK_DESC -> {
-                    val desc = col.decks.getActualDescription()
+                    val desc = col.decks.current().description
                     rb.add(desc)
                 }
             }
