@@ -282,7 +282,6 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("15444")
     fun `change deck in notes mode 15444`() = runTest {
         val newDeck = addDeck("World")
         selectDefaultDeck()

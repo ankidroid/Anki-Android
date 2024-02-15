@@ -358,10 +358,10 @@ class CardBrowserViewModel(
 
     fun setColumn2Index(value: Int) = flowOfColumnIndex2.update { value }
     suspend fun suspendCards() {
-        val cardIds = selectedRowIds
-        if (cardIds.isEmpty()) {
+        if (!hasSelectedAnyRows()) {
             return
         }
+        val cardIds = queryAllSelectedCardIds()
 
         undoableOp {
             // if all cards are suspended, unsuspend all
@@ -529,8 +529,9 @@ class CardBrowserViewModel(
     }
 
     suspend fun updateSelectedCardsFlag(flag: Flag): List<Card> {
+        val idsToChange = queryAllSelectedCardIds()
         return withCol {
-            setUserFlag(flag, selectedRowIds)
+            setUserFlag(flag, cids = idsToChange)
             selectedRowIds
                 .map { getCard(it) }
                 .onEach { load() }
