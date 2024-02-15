@@ -67,6 +67,9 @@ jobs:
           # Comment this and the with: above out for performance testing on a branch
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
           gradle-home-cache-cleanup: true
+          # Windows runner currently having cache pollution issues, disable cache for the platform
+          # https://github.com/ankidroid/Anki-Android/issues/16161
+          cache-disabled: ${{ contains(matrix.os, 'windows') }}
 
       - name: Clear Caches Optionally
         if: "${{ github.event.inputs.clearCaches != '' }}"
