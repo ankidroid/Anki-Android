@@ -915,6 +915,15 @@ open class CardBrowser :
         }
     }
 
+    /**
+     * @return `false` if the user may proceed; `true` if a warning is shown due to being in [NOTES]
+     */
+    private fun warnUserIfInNotesOnlyMode(): Boolean {
+        if (viewModel.cardsOrNotes != NOTES) return false
+        showSnackbar(R.string.card_browser_unavailable_when_notes_only)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when {
             drawerToggle.onOptionsItemSelected(item) -> return true
@@ -1095,7 +1104,7 @@ open class CardBrowser :
             }
             R.id.action_reposition_cards -> {
                 Timber.i("CardBrowser:: Reposition button pressed")
-
+                if (warnUserIfInNotesOnlyMode()) return true
                 // `selectedRowIds` getter does a lot of work so save it in a val beforehand
                 val selectedCardIds = selectedRowIds
                 // Only new cards may be repositioned (If any non-new found show error dialog and return false)
@@ -1168,6 +1177,7 @@ open class CardBrowser :
     }
 
     private fun onResetProgress() {
+        if (warnUserIfInNotesOnlyMode()) return
         // Show confirmation dialog before resetting card progress
         val dialog = ConfirmationDialog()
         val title = getString(R.string.reset_card_dialog_title)
@@ -1219,6 +1229,7 @@ open class CardBrowser :
             Timber.i("Attempted reschedule - no cards selected")
             return
         }
+        if (warnUserIfInNotesOnlyMode()) return
         val rescheduleDialog: RescheduleDialog = selectedRowIds.run {
             val consumer = Consumer { newDays: Int -> rescheduleWithoutValidation(this, newDays) }
             if (size == 1) {
