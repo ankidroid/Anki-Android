@@ -18,14 +18,14 @@
     "dependencies": {
         "@crowdin/crowdin-api-client": "^1.29.5",
         "axios": "^1.6.7",
-        "dotenv": "^16.4.1",
+        "dotenv": "^16.4.4",
         "extract-zip": "^2.0.1",
         "typescript": "^5.3.3"
     },
     "devDependencies": {
         "@types/jest": "^29.5.12",
-        "@types/node": "^20.11.16",
-        "@typescript-eslint/eslint-plugin": "^6.21.0",
+        "@types/node": "^20.11.18",
+        "@typescript-eslint/eslint-plugin": "^7.0.0",
         "@typescript-eslint/parser": "^6.21.0",
         "eslint": "^8.56.0",
         "eslint-config-prettier": "^9.1.0",
