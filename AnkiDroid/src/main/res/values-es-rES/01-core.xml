@@ -60,16 +60,16 @@
     <string name="expand">Desplegar</string>
     <string name="collapse">Ocultar</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">Queda %d minuto</item>
+        <item quantity="other">Quedan %d minutos</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d hora %2$d restante</item>
+        <item quantity="other">%1$d horas %2$d restante</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d día %2$d restante</item>
+        <item quantity="other">%1$d días %2$d restante</item>
     </plurals>
     <string name="no_cards_placeholder_title">La colección está vacía</string>
     <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>

@@ -40,7 +40,7 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">Lisää kuva</string>
+    <string name="multimedia_editor_popup_image">Lisää kuvia</string>
     <string name="multimedia_editor_popup_audio_clip">Lisää äänileike</string>
     <string name="multimedia_editor_popup_video_clip">Lisää videoleike</string>
     <string name="multimedia_editor_popup_audio">Tallenna ääntä</string>
