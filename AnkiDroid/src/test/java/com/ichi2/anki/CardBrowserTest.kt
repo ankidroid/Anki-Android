@@ -237,7 +237,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun moveToNonDynamicDeckWorks() {
+    fun moveToNonDynamicDeckWorks() = runTest {
         addDeck("Foo")
         addDynamicDeck("Bar")
         val deckIdToChangeTo = addDeck("Hello")
@@ -246,7 +246,7 @@ class CardBrowserTest : RobolectricTest() {
         val b = getBrowserWithNotes(5)
         b.selectRowsWithPositions(0, 2)
 
-        val cardIds = b.viewModel.selectedRowIds
+        val cardIds = b.viewModel.queryAllSelectedCardIds()
 
         for (cardId in cardIds) {
             assertThat(
@@ -266,19 +266,42 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun changeDeckViaTaskIsHandledCorrectly() = runTest {
+    fun `change deck does not work for dynamic decks`() = runTest {
         val dynId = addDynamicDeck("World")
         selectDefaultDeck()
         val b = getBrowserWithNotes(5)
         b.selectRowsWithPositions(0, 2)
 
-        val cardIds = b.viewModel.selectedRowIds
+        val cardIds = b.viewModel.queryAllSelectedCardIds()
 
         b.moveSelectedCardsToDeck(dynId).join()
 
         for (cardId in cardIds) {
             assertThat("Deck should not be changed", col.getCard(cardId).did, not(dynId))
         }
+    }
+
+    @Test
+    @Ignore("15444")
+    fun `change deck in notes mode 15444`() = runTest {
+        val newDeck = addDeck("World")
+        selectDefaultDeck()
+        val b = getBrowserWithNotes(5, reversed = true)
+        b.viewModel.setCardsOrNotes(NOTES)
+
+        b.selectRowsWithPositions(0, 2)
+
+        val allCardIds = b.viewModel.queryAllSelectedCardIds()
+        assertThat(allCardIds.size, equalTo(4))
+
+        b.moveSelectedCardsToDeck(newDeck).join()
+
+        for (cardId in allCardIds) {
+            assertThat("Deck should be changed", col.getCard(cardId).did, equalTo(newDeck))
+        }
+
+        val hasSomeDecksUnchanged = b.viewModel.cards.any { row -> row.card.did != newDeck }
+        assertThat("some decks are unchanged", hasSomeDecksUnchanged)
     }
 
     @Test // see #13391

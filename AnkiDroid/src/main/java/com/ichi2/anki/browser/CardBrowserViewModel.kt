@@ -140,6 +140,14 @@ class CardBrowserViewModel(
      */
     val selectedRowIds: List<Long>
         get() = selectedRows.map { c -> c.id }
+
+    suspend fun queryAllSelectedCardIds(): List<CardId> = when (cardsOrNotes) {
+        CARDS -> selectedRowIds
+        NOTES ->
+            selectedRows
+                .flatMap { row -> withCol { cardIdsOfNote(nid = row.card.nid) } }
+    }
+
     var lastSelectedPosition = 0
 
     val flowOfIsInMultiSelectMode = flowOfSelectedRows
