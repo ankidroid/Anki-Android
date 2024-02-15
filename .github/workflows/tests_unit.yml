@@ -42,7 +42,7 @@ jobs:
     steps:
       - name: Configure Windows Pagefile
         uses: al-cheb/configure-pagefile-action@v1.4
-        if: matrix.os == 'windows-latest'
+        if: contains(matrix.os, 'windows')
         with:
           minimum-size: 8GB
           maximum-size: 12GB
@@ -90,7 +90,7 @@ jobs:
           arguments: jacocoUnitTestReport --daemon
 
       - name: Stop Gradle
-        if: matrix.os == 'windows-latest'
+        if: contains(matrix.os, 'windows')
         uses: gradle/gradle-build-action@v3
         with:
           arguments: --stop
