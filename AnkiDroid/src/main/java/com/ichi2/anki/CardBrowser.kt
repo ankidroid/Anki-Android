@@ -1675,7 +1675,8 @@ open class CardBrowser :
                 // can delete some elements from the cache for example, since nothing is displayed.
 
                 // It would be interesting to know how often it occurs, but it is not a bug.
-                CrashReportService.sendExceptionReport("CardBrowser Scroll Issue 8821", "In a search result of $size cards, with totalItemCount = $totalItemCount, somehow we got $visibleItemCount elements to display.")
+                // CrashReportService.sendExceptionReport("CardBrowser Scroll Issue 8821", "In a search result of $size cards, with totalItemCount = $totalItemCount, somehow we got $visibleItemCount elements to display.")
+                Timber.w("CardBrowser Scroll Issue 15441/8821: In a search result of $size cards, with totalItemCount = $totalItemCount, somehow we got $visibleItemCount elements to display.")
             }
             // In all of those cases, there is nothing to do:
             if (size <= 0 || firstVisibleItem >= size || lastVisibleItem >= size || visibleItemCount <= 0) {
