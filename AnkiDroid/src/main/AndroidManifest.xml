@@ -229,13 +229,13 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.SEND"/>
                 <data android:mimeType="application/apkg"/>
                 <data android:mimeType="application/colpkg"/>
                 <data android:mimeType="application/vnd.anki"/>
                 <data android:mimeType="application/x-apkg"/>
                 <data android:mimeType="application/x-colpkg"/>
                 <data android:mimeType="application/octet-stream"/>
-                <data android:mimeType="application/zip"/>
                 <data android:mimeType="text/tab-separated-values"/>
                 <data android:mimeType="text/comma-separated-values"/>
             </intent-filter>

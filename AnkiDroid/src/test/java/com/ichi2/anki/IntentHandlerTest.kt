@@ -94,17 +94,19 @@ class IntentHandlerTest {
 
     @Test
     fun textImportIntentReturnsTextImport() {
-        // TSV import
-        var intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(Uri.parse("content://valid"), "text/tab-separated-values")
-        var expected = getLaunchType(intent)
-        assertThat(expected, equalTo(LaunchType.TEXT_IMPORT))
+        testIntentType("content://valid", "text/tab-separated-values", LaunchType.TEXT_IMPORT)
+        testIntentType("content://valid", "text/comma-separated-values", LaunchType.TEXT_IMPORT)
 
-        // CSV import
-        intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(Uri.parse("content://valid"), "text/comma-separated-values")
-        expected = getLaunchType(intent)
-        assertThat(expected, equalTo(LaunchType.TEXT_IMPORT))
+        // Test for ACTION_SEND
+        testIntentType("content://valid", "text/tab-separated-values", LaunchType.TEXT_IMPORT, Intent.ACTION_SEND)
+        testIntentType("content://valid", "text/comma-separated-values", LaunchType.TEXT_IMPORT, Intent.ACTION_SEND)
+    }
+
+    private fun testIntentType(data: String, type: String, expected: LaunchType, action: String = Intent.ACTION_VIEW) {
+        val intent = Intent(action)
+        intent.setDataAndType(Uri.parse(data), type)
+        val actual = getLaunchType(intent)
+        assertThat(actual, equalTo(expected))
     }
 
     @Test
