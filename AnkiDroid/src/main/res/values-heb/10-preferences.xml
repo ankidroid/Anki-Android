@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">גע במרכז האמצע</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">נגיעה בצד שמאל למטה</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">נגיעה בצד ימין למטה</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">נער את המכשיר</string>
     <string name="card_browser_enable_external_context_menu">תפריט %s</string>
     <string name="card_browser_enable_external_context_menu_summary">מאפשר את תפריט ההקשר \'%s\' גלובלית במערכת</string>
     <string name="double_scrolling_gap" maxLength="41">גלילה כפולה</string>
@@ -154,7 +154,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">רטט</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">אור מהבהב</string>
     <string name="timeout_answer_text" maxLength="41">הצגת התשובה באופן אוטומטי</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">הצג תשובה אוטומטית ללא קלט משתמש.  הגדר מתוך אפשרויות החפיסה.</string>
     <string name="select_locale_title">בחר שפה</string>
     <string name="software_render" maxLength="41">השבת את עיבוד החומרה של הכרטיס</string>
     <string name="software_render_summ">עיבוד החומרה מהיר יותר אך עשוי ליצור בעיות, במיוחד באנדרואיד 8/8.1. אם אינך יכול לראות חלקים מממשק המשתמש של סקירת הכרטיסים, נסה את ההגדרה הזו.</string>
@@ -177,8 +177,8 @@
     <string name="show_top_bar_summ">הצג ספירת כרטיסים, דגל וסמן בסרגל העליון</string>
     <string name="show_progress" maxLength="41">הצג נותרים</string>
     <string name="show_progress_summ">הצג את מספר הכרטיסים שנותרו</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">הצג הערכת זמן לסיום</string>
+    <string name="show_eta_summ">הצג זמן שנותר</string>
     <string name="use_current" maxLength="41">חפיסה לכרטיסים חדשים</string>
     <string name="learn_cutoff" maxLength="41">לימוד מעבר למכסה</string>
     <string name="time_limit" maxLength="41">מגבלת זמן בתיבת-זמן</string>
@@ -208,7 +208,7 @@
     <string name="html_javascript_debugging_summ">אפשר חיבורי WebView מרוחקים ושמור HTML של כרטיס בספריית AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">סוקר</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">הצג את כותרת החפיסה</string>
     <string name="accessibility" maxLength="41">נגישות</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">הדבק תמונות לוח כ-PNG</string>
@@ -248,8 +248,8 @@
     <string name="deck_conf_cram_reschedule_summ">לתזמן את הקלפים מחדש בהתאם לתשובות שלי בחפיסה הזאת</string>
     <string name="deck_conf_cram_filter_2_check">אפשר סינון משני</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">הגדר שלבים מותאמים אישית</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">השהיית תצוגה מקדימה</string>
+    <string name="deck_conf_cram_preview_delays_summ">ההשהיה היא בשניות.  0 מחזיר את הקלף לחפיסה המקורית.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">סיוע בשיפור AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">שיתוף השימוש ביכולת</string>
@@ -289,8 +289,8 @@
     <string name="bindings_already_bound">כבר קשור ל\'%s\'</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">ניסיוני</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid הציגה מנגנון TTS טוב יותר התואם עם לקוחות אחרים של Anki וכולל יותר קולות ושיפורים להפעלת שפה!\n\nנא לשדרג בהקדם האפשרי, שכן הגדרה זו תוסר בקרוב</string>
+    <string name="readtext_reviewer_warn">שדרג לפורמט החדש של טקסט לדיבור</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">אפשרויות מפתח</string>
     <string name="dev_options_enabled_pref" maxLength="41">הפעלת מצב מפתח</string>

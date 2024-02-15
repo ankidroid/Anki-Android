@@ -91,6 +91,7 @@
     <string name="rename_deck">ତାସଖଣ୍ଡ ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="create_shortcut">ସର୍ଟ୍‌କଟ୍ ସୃଷ୍ଟି କରିବା</string>
     <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ଖେଳାଇବା</string>
+    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସୀଙ୍କ୍ ଖାତା</string>
@@ -249,4 +250,5 @@
     <string name="storage_access_title">ଷ୍ଟୋରେଜ୍ ପ୍ରବେଶାଧିକାର</string>
     <string name="storage_access_summary">ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ଏକ ସୁରକ୍ଷିତ ସ୍ଥାନରେ ସଂରକ୍ଷଣ କରେ ଯାହା ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ହେଲେ ବିଲୋପ ହେବ ନାହିଁ</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ସମସ୍ତ ଫାଇଲ୍ ପ୍ରବେଶାଧିକାର</string>
+    <string name="image_occlusion">Image Occlusion</string>
 </resources>

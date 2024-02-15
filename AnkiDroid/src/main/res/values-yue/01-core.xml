@@ -88,6 +88,7 @@
     <string name="rename_deck">重新命名卡組</string>
     <string name="create_shortcut">创建快捷方式</string>
     <string name="browse_cards">擸一眼卡片</string>
+    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">加入</string>
     <string name="menu_add_note">加入筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳號</string>
@@ -243,4 +244,5 @@
     <string name="storage_access_title">Storage access</string>
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="image_occlusion">Image Occlusion</string>
 </resources>
