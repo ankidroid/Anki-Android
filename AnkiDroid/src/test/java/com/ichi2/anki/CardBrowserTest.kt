@@ -246,7 +246,7 @@ class CardBrowserTest : RobolectricTest() {
         val b = getBrowserWithNotes(5)
         b.selectRowsWithPositions(0, 2)
 
-        val cardIds = b.viewModel.selectedCardIds
+        val cardIds = b.viewModel.selectedRowIds
 
         for (cardId in cardIds) {
             assertThat(
@@ -272,7 +272,7 @@ class CardBrowserTest : RobolectricTest() {
         val b = getBrowserWithNotes(5)
         b.selectRowsWithPositions(0, 2)
 
-        val cardIds = b.viewModel.selectedCardIds
+        val cardIds = b.viewModel.selectedRowIds
 
         b.moveSelectedCardsToDeck(dynId).join()
 
@@ -804,7 +804,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     private fun getCheckedCard(b: CardBrowser): CardCache {
-        val ids = b.viewModel.selectedCardIds
+        val ids = b.viewModel.selectedRowIds
         assertThat("only one card expected to be checked", ids, hasSize(1))
         return b.getPropertiesForCardId(ids[0])
     }

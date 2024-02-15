@@ -311,8 +311,8 @@ open class CardBrowser :
         searchCards()
     }
 
-    private val selectedCardIds: List<CardId>
-        get() = viewModel.selectedCardIds
+    private val selectedRowIds: List<CardId>
+        get() = viewModel.selectedRowIds
 
     private fun canPerformCardInfo(): Boolean {
         return viewModel.selectedRowCount() == 1
@@ -332,7 +332,7 @@ open class CardBrowser :
         return launchCatchingTask {
             val changed = withProgress {
                 undoableOp {
-                    setDeck(selectedCardIds, did)
+                    setDeck(selectedRowIds, did)
                 }
             }
             showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
@@ -645,7 +645,7 @@ open class CardBrowser :
     @NeedsTest("Test that the mark get toggled as expected for a list of selected cards")
     @VisibleForTesting
     fun toggleMark() = launchCatchingTask {
-        withProgress { viewModel.toggleMark(selectedCardIds) }
+        withProgress { viewModel.toggleMark(selectedRowIds) }
         cardsAdapter.notifyDataSetChanged()
     }
 
@@ -671,7 +671,7 @@ open class CardBrowser :
     private fun openNoteEditorForCurrentlySelectedNote() {
         try {
             // Just select the first one. It doesn't particularly matter if there's a multiselect occurring.
-            openNoteEditorForCard(selectedCardIds[0])
+            openNoteEditorForCard(selectedRowIds[0])
         } catch (e: Exception) {
             Timber.w(e, "Error Opening Note Editor")
             showSnackbar(
@@ -1095,8 +1095,8 @@ open class CardBrowser :
             R.id.action_reposition_cards -> {
                 Timber.i("CardBrowser:: Reposition button pressed")
 
-                // `selectedCardIds` getter does alot of work so save it in a val beforehand
-                val selectedCardIds = selectedCardIds
+                // `selectedRowIds` getter does a lot of work so save it in a val beforehand
+                val selectedCardIds = selectedRowIds
                 // Only new cards may be repositioned (If any non-new found show error dialog and return false)
                 if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
                     showDialogFragment(
@@ -1174,7 +1174,7 @@ open class CardBrowser :
         dialog.setArgs(title, message)
         val confirm = Runnable {
             Timber.i("CardBrowser:: ResetProgress button pressed")
-            resetProgressNoConfirm(selectedCardIds)
+            resetProgressNoConfirm(selectedRowIds)
         }
         dialog.setConfirm(confirm)
         showDialogFragment(dialog)
@@ -1218,7 +1218,7 @@ open class CardBrowser :
             Timber.i("Attempted reschedule - no cards selected")
             return
         }
-        val rescheduleDialog: RescheduleDialog = selectedCardIds.run {
+        val rescheduleDialog: RescheduleDialog = selectedRowIds.run {
             val consumer = Consumer { newDays: Int -> rescheduleWithoutValidation(this, newDays) }
             if (size == 1) {
                 rescheduleSingleCard(resources, getColUnsafe.getCard(this[0]), consumer)
@@ -1282,11 +1282,11 @@ open class CardBrowser :
         get() = intent.getLongExtra("currentCard", -1)
 
     private fun showEditTagsDialog() {
-        if (selectedCardIds.isEmpty()) {
+        if (selectedRowIds.isEmpty()) {
             Timber.d("showEditTagsDialog: called with empty selection")
         }
         val allTags = getColUnsafe.tags.all()
-        val selectedNotes = selectedCardIds
+        val selectedNotes = selectedRowIds
             .map { cardId: CardId? -> getColUnsafe.getCard(cardId!!).note(getColUnsafe) }
             .distinct()
         val checkedTags = selectedNotes
@@ -1503,7 +1503,7 @@ open class CardBrowser :
      */
     private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) = withProgress {
         undoableOp {
-            val selectedNotes = selectedCardIds
+            val selectedNotes = selectedRowIds
                 .map { cardId -> getCard(cardId).note() }
                 .distinct()
                 .onEach { note ->

@@ -134,7 +134,11 @@ class CardBrowserViewModel(
     val flowOfSelectedRows: Flow<Set<CardBrowser.CardCache>> =
         flowOf(selectedRows).combine(refreshSelectedRowsFlow) { row, _ -> row }
 
-    val selectedCardIds: List<Long>
+    /** A list of either:
+     * * [CardsOrNotes.CARDS] all selected card Ids
+     * * [CardsOrNotes.NOTES] one selected Id for every note
+     */
+    val selectedRowIds: List<Long>
         get() = selectedRows.map { c -> c.id }
     var lastSelectedPosition = 0
 
@@ -165,7 +169,7 @@ class CardBrowserViewModel(
 
     val cardInfoDestination: CardInfoDestination?
         get() {
-            val firstSelectedCard = selectedCardIds.firstOrNull() ?: return null
+            val firstSelectedCard = selectedRowIds.firstOrNull() ?: return null
             return CardInfoDestination(firstSelectedCard)
         }
 
@@ -262,7 +266,7 @@ class CardBrowserViewModel(
      * @return the number of deleted notes
      */
     suspend fun deleteSelectedNotes(): Int =
-        undoableOp { removeNotes(cids = selectedCardIds) }.count
+        undoableOp { removeNotes(cids = selectedRowIds) }.count
 
     fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch {
         withCol {
@@ -346,7 +350,7 @@ class CardBrowserViewModel(
 
     fun setColumn2Index(value: Int) = flowOfColumnIndex2.update { value }
     suspend fun suspendCards() {
-        val cardIds = selectedCardIds
+        val cardIds = selectedRowIds
         if (cardIds.isEmpty()) {
             return
         }
@@ -367,10 +371,10 @@ class CardBrowserViewModel(
     suspend fun getSelectionExportData(): Pair<ExportDialogFragment.ExportType, List<Long>>? {
         if (!isInMultiSelectMode) return null
         return when (cardsOrNotes) {
-            CARDS -> Pair(ExportDialogFragment.ExportType.Cards, selectedCardIds)
+            CARDS -> Pair(ExportDialogFragment.ExportType.Cards, selectedRowIds)
             NOTES -> Pair(
                 ExportDialogFragment.ExportType.Notes,
-                withCol { CardService.selectedNoteIds(selectedCardIds) }
+                withCol { CardService.selectedNoteIds(selectedRowIds) }
             )
         }
     }
@@ -380,7 +384,7 @@ class CardBrowserViewModel(
      * @return the number of cards which were repositioned
      */
     suspend fun repositionSelectedRows(position: Int) = undoableOp {
-        sched.sortCards(selectedCardIds, position, 1, shuffle = false, shift = true)
+        sched.sortCards(selectedRowIds, position, 1, shuffle = false, shift = true)
     }.count
 
     /** Returns the number of rows of the current result set  */
@@ -477,7 +481,7 @@ class CardBrowserViewModel(
     val previewIntentData: PreviewDestination
         get() {
             return if (selectedRowCount() > 1) {
-                PreviewDestination(index = 0, PreviewerIdsFile(cacheDir, selectedCardIds))
+                PreviewDestination(index = 0, PreviewerIdsFile(cacheDir, selectedRowIds))
             } else {
                 // Preview all cards, starting from the one that is currently selected
                 val startIndex = indexOfFirstCheckedCard() ?: 0
@@ -518,8 +522,8 @@ class CardBrowserViewModel(
 
     suspend fun updateSelectedCardsFlag(flag: Flag): List<Card> {
         return withCol {
-            setUserFlag(flag, selectedCardIds)
-            selectedCardIds
+            setUserFlag(flag, selectedRowIds)
+            selectedRowIds
                 .map { getCard(it) }
                 .onEach { load() }
         }
