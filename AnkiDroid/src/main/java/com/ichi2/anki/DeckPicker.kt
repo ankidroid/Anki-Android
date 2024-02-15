@@ -591,6 +591,10 @@ open class DeckPicker :
                 addNote()
                 dismissAllDialogFragments()
             }
+            DeckPickerContextMenuOption.EDIT_DESCRIPTION -> {
+                Timber.i("Editing deck description for deck '%d'", deckId)
+                showDialogFragment(EditDeckDescriptionDialog.newInstance(deckId))
+            }
         }
     }
 

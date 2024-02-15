@@ -73,6 +73,9 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
                 add(DeckPickerContextMenuOption.UNBURY)
             }
             add(DeckPickerContextMenuOption.CREATE_SHORTCUT)
+            if (!dyn) {
+                add(DeckPickerContextMenuOption.EDIT_DESCRIPTION)
+            }
             add(DeckPickerContextMenuOption.DELETE_DECK)
         }
 
@@ -88,6 +91,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         CREATE_SUBDECK(R.string.create_subdeck),
         CREATE_SHORTCUT(R.string.create_shortcut),
         BROWSE_CARDS(R.string.browse_cards),
+        EDIT_DESCRIPTION(R.string.edit_deck_description),
         ADD_CARD(R.string.menu_add);
     }
 

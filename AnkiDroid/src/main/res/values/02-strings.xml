@@ -423,4 +423,6 @@ opening the system text to speech settings fails">
     </string>
 
     <string name="shared_decks_login_required">Please log in to download more decks</string>
+
+    <string name="deck_description_field_hint">Description</string>
 </resources>
