@@ -29,6 +29,8 @@ import com.ichi2.anki.UIUtils
 
 /**
  * Base class for constructing a permissions screen
+ *
+ * @see PermissionsActivity
  */
 abstract class PermissionsFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
     /**
