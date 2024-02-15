@@ -26,6 +26,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.updateDeckConfigsRaw
@@ -48,10 +49,23 @@ class DeckOptions : PageFragment() {
         }
     }
 
+    // HACK: this is enabled unconditionally as we currently cannot get the 'changed' status
+    private val onBackSaveCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            Timber.v("DeckOptions: showing 'discard changes'")
+            DiscardChangesDialog.showDialog(requireContext()) {
+                Timber.i("OK button pressed to confirm discard changes")
+                this.isEnabled = false
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        }
+    }
+
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         val deckId = arguments?.getLong(ARG_DECK_ID)
             ?: throw Exception("missing deck ID")
 
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackSaveCallback)
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackCallback)
         return DeckOptionsWebClient(deckId).apply {
             onPageFinishedCallback = OnPageFinishedCallback { view ->
