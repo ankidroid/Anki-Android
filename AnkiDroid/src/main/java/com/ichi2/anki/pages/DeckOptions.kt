@@ -18,6 +18,7 @@ package com.ichi2.anki.pages
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentActivity
@@ -36,6 +37,7 @@ import timber.log.Timber
 
 @NeedsTest("pressing back: icon + button should go to the previous screen")
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
+@NeedsTest("saveAndExit closes screen")
 class DeckOptions : PageFragment() {
     override val title: String
         get() = resources.getString(R.string.menu__deck_options)
@@ -73,6 +75,15 @@ class DeckOptions : PageFragment() {
                 onBackCallback.isEnabled = view.canGoBack()
             }
         }
+    }
+
+    @Suppress("unused")
+    fun saveAndExit() {
+        // dispatch Ctrl+Enter
+        val downEvent = KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER, 0, KeyEvent.META_CTRL_ON)
+        val upEvent = KeyEvent(0, 0, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER, 0, KeyEvent.META_CTRL_ON)
+        webView.dispatchKeyEvent(downEvent)
+        webView.dispatchKeyEvent(upEvent)
     }
 
     class DeckOptionsWebClient(val deckId: Long) : PageWebViewClient() {
