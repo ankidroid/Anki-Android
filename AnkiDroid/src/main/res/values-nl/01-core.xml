@@ -60,8 +60,8 @@
     <string name="expand">Uitklappen</string>
     <string name="collapse">Inklappen</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">%d minuut over</item>
+        <item quantity="other">%d minuten resterend</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>

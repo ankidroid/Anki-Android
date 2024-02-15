@@ -176,8 +176,8 @@
     <string name="show_top_bar_summ">Zobrazit počty karet, příznak a označení v horní liště</string>
     <string name="show_progress" maxLength="41">Zobrazit zbývající</string>
     <string name="show_progress_summ">Zobrazit zbývající počet karet</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Zobrazit ETA</string>
+    <string name="show_eta_summ">Zobrazit zbývající čas</string>
     <string name="use_current" maxLength="41">Balíček pro nové karty</string>
     <string name="learn_cutoff" maxLength="41">Limit učení se napřed</string>
     <string name="time_limit" maxLength="41">Časové omezení</string>
@@ -289,8 +289,8 @@
     <string name="bindings_already_bound">Již přiřazeno k %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimentální</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid zavedl lepší TTS mechanismus, který je kompatibilní s ostatními klienty Anki a obsahuje více hlasů a vylepšení přehrávání!\n\nPřejděte prosím co nejdříve na nové TTS, protože toto nastavení bude brzy odstraněno</string>
+    <string name="readtext_reviewer_warn">Přejděte prosím na nový formát převodu textu na řeč</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Možnosti pro vývojáře</string>
     <string name="dev_options_enabled_pref" maxLength="41">Povolit možnosti pro vývojáře</string>

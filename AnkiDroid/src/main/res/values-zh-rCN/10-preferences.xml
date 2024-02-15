@@ -173,8 +173,8 @@
     <string name="show_top_bar_summ">在顶部栏中显示卡片数量、旗标和标记</string>
     <string name="show_progress" maxLength="41">显示剩余数量</string>
     <string name="show_progress_summ">显示剩余卡片数量</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">显示剩余时间</string>
+    <string name="show_eta_summ">显示剩余时间</string>
     <string name="use_current" maxLength="41">新牌组</string>
     <string name="learn_cutoff" maxLength="41">提前学习的限制</string>
     <string name="time_limit" maxLength="41">指定时间内的学习卡片数</string>
@@ -283,8 +283,8 @@
     <string name="bindings_already_bound">已绑定到「%s」</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">实验性功能</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid 引入了一个更好的 TTS 机制，它与其他 Anki 客户端兼容，并包含更多的声音和语言播放的改进！\n\n请尽快升级，因为此设置将很快被删除</string>
+    <string name="readtext_reviewer_warn">请升级到新文本到语音格式</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">开发者选项</string>
     <string name="dev_options_enabled_pref" maxLength="41">启用开发者选项</string>

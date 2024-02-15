@@ -174,8 +174,8 @@
     <string name="show_top_bar_summ">Mostrar recuento de tarjetas, banderas y marcas en la barra superior</string>
     <string name="show_progress" maxLength="41">Mostrar restante</string>
     <string name="show_progress_summ">Mostrar contador de tarjetas restantes</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Mostrar tiempo restante</string>
+    <string name="show_eta_summ">Mostrar tiempo restante</string>
     <string name="use_current" maxLength="41">Mazo para las nuevas tarjetas</string>
     <string name="learn_cutoff" maxLength="41">Aprender por delante del límite</string>
     <string name="time_limit" maxLength="41">Límite de tiempo del Timebox</string>
@@ -285,8 +285,8 @@
     <string name="bindings_already_bound">Ya vinculado a %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">¡AnkiDroid ha introducido un mecanismo texto a voz mejor que es compatible con otros clientes Anki y que incluye más voces y mejoras de reproducción de idioma!\n\nPor favor actualice lo antes posible, ya que pronto se quitará esta configuración.</string>
+    <string name="readtext_reviewer_warn">Por favor actualice al formato de texto a voz nuevo.</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opciones de desarrollador</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activar opciones de desarrollador</string>
