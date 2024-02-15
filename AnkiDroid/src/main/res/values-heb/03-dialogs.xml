@@ -188,7 +188,7 @@
     <string name="failed_to_apply_background_image">החלת תמונת הרקע %s נכשלה</string>
     <string name="background_image_too_large">רקע בוחר החפיסות גדול מדי</string>
     <string name="image_max_size_allowed">גודל תמונה מרבי %d MB מותר</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">ממדי התמונה גדולים מדי (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">חסרה הרשאת אחסון נדרשת. אנא הענק הרשאת אחסון ולאחר מכן נסה שוב להפעיל.</string>
@@ -198,7 +198,7 @@
     <string name="boot_service_failed_to_schedule_notifications">לא ניתן היה לתזמן תזכורות</string>
     <string name="boot_service_too_many_notifications">תזמנו יותר מדי תזכורות. חלקם לא יופיעו</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">הגדרת שפה</string>
     <string name="locale_selection_dialog_summary">חלק מהמקלדות הרב-לשוניות, כגון GBoard תומכות בשינוי שפה בעת עריכת טקסט\n\nאנא בקש את התכונה \"setImeHintLocales\" מיצרן המקלדת שלך אם המקלדת שלך לא משנה שפה.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">שימוש ב־AnkiDroid</string>
@@ -226,7 +226,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">תנאים והגבלות של AnkiWeb</string>
     <string name="help_title_send_exception">שלח דוח פתרון בעיות</string>
     <string name="help_dialog_exception_report_debounce">הדוח כבר הוגש</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">הדוח נשלח!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">סינכרון אוטומטי עשוי להיות מופעל בעוד %d שניה</item>

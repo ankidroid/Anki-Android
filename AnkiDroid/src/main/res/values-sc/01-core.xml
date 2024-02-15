@@ -92,6 +92,7 @@
     <string name="rename_deck">Càmbia nùmene a su matzu</string>
     <string name="create_shortcut">Crea un\'incurtzada</string>
     <string name="browse_cards">Esplora sas cartas</string>
+    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Annanghe</string>
     <string name="menu_add_note">Annanghe una nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincroniza unu contu</string>
@@ -253,4 +254,5 @@
     <string name="storage_access_title">Atzessu a sa memòria</string>
     <string name="storage_access_summary">Sarvat sa colletzione tua in unu logu seguru chi non s\'at a iscantzellare si as a disinstallare s\'aplicatzione</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Atzessu a totu sos archìvios</string>
+    <string name="image_occlusion">Image Occlusion</string>
 </resources>
