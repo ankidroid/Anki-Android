@@ -195,14 +195,14 @@ class TemplateManager {
 
             val mediaDir = col.media.dir
             val qtext = parseVideos(
-                text = applyCustomFilters(partial.qnodes, this, front_side = null),
+                text = applyCustomFilters(partial.qnodes, this, frontSide = null),
                 mediaDir = mediaDir
             )
             val qout = col.backend.extractAvTags(text = qtext, questionSide = true)
             var qoutText = qout.text
 
             val atext = parseVideos(
-                text = applyCustomFilters(partial.anodes, this, front_side = qout.text),
+                text = applyCustomFilters(partial.anodes, this, frontSide = qout.text),
                 mediaDir = mediaDir
             )
             val aout = col.backend.extractAvTags(text = atext, questionSide = false)
@@ -259,7 +259,7 @@ class TemplateManager {
         fun applyCustomFilters(
             rendered: TemplateReplacementList,
             ctx: TemplateRenderContext,
-            front_side: String?
+            frontSide: String?
         ): String {
             // template already fully rendered?
             if (len(rendered) == 1 && rendered[0].first != null) {
@@ -273,18 +273,18 @@ class TemplateManager {
                 } else {
                     val node = union.second!!
                     // do we need to inject in FrontSide?
-                    if (node.fieldName == "FrontSide" && front_side != null) {
-                        node.currentText = front_side
+                    if (node.fieldName == "FrontSide" && frontSide != null) {
+                        node.currentText = frontSide
                     }
 
-                    var field_text = node.currentText
-                    for (filter_name in node.filters) {
-                        fieldFilters[filter_name]?.let {
-                            field_text = it.apply(field_text, node.fieldName, filter_name, ctx)
+                    var fieldText = node.currentText
+                    for (filterName in node.filters) {
+                        fieldFilters[filterName]?.let {
+                            fieldText = it.apply(fieldText, node.fieldName, filterName, ctx)
                         }
                     }
 
-                    res += field_text
+                    res += fieldText
                 }
             }
             return res
