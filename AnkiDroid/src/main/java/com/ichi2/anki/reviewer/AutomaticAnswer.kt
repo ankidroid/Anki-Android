@@ -24,6 +24,7 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AnswerButtons.*
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.DeckId
@@ -145,7 +146,7 @@ class AutomaticAnswer(
     /** Stop any "Automatic show answer" tasks in order to avoid race conditions */
     fun onDisplayQuestion() {
         if (!settings.useTimer) return
-        if (!settings.autoAdvanceAnswer) return
+        if (!settings.autoAdvanceIfShowingQuestion) return
         hasPlayedSounds = false
 
         stopShowAnswerTask()
@@ -154,7 +155,7 @@ class AutomaticAnswer(
     /** Stop any "Automatic show question" tasks in order to avoid race conditions */
     fun onDisplayAnswer() {
         if (!settings.useTimer) return
-        if (!settings.autoAdvanceQuestion) return
+        if (!settings.autoAdvanceIfShowingAnswer) return
         hasPlayedSounds = false
 
         stopShowQuestionTask()
@@ -183,10 +184,10 @@ class AutomaticAnswer(
      */
     fun scheduleAutomaticDisplayAnswer(additionalDelay: Long = 0) {
         if (!settings.useTimer) return
-        if (!settings.autoAdvanceAnswer) return
+        if (!settings.autoAdvanceIfShowingQuestion) return
         if (hasPlayedSounds) return
         hasPlayedSounds = true
-        delayedShowAnswer(settings.answerDelayMilliseconds + additionalDelay)
+        delayedShowAnswer(settings.millisecondsToShowQuestionFor + additionalDelay)
     }
 
     /**
@@ -195,10 +196,10 @@ class AutomaticAnswer(
      */
     fun scheduleAutomaticDisplayQuestion(additionalMediaDelay: Long = 0) {
         if (!settings.useTimer) return
-        if (!settings.autoAdvanceQuestion) return
+        if (!settings.autoAdvanceIfShowingAnswer) return
         if (hasPlayedSounds) return
         hasPlayedSounds = true
-        delayedShowQuestion(settings.questionDelayMilliseconds + additionalMediaDelay)
+        delayedShowQuestion(settings.millisecondsToShowAnswerFor + additionalMediaDelay)
     }
 
     fun isEnabled(): Boolean {
@@ -249,21 +250,22 @@ class AutomaticAnswer(
 class AutomaticAnswerSettings(
     val answerAction: AutomaticAnswerAction = AutomaticAnswerAction.BURY_CARD,
     @get:JvmName("useTimer") val useTimer: Boolean = false,
-    private val questionDelaySeconds: Int = 60,
-    private val answerDelaySeconds: Int = 20
+    private val secondsToShowQuestionFor: Int = 60,
+    private val secondsToShowAnswerFor: Int = 20
 ) {
 
-    val questionDelayMilliseconds = questionDelaySeconds * 1000L
-    val answerDelayMilliseconds = answerDelaySeconds * 1000L
+    val millisecondsToShowQuestionFor = secondsToShowQuestionFor * 1000L
+    val millisecondsToShowAnswerFor = secondsToShowAnswerFor * 1000L
 
     // a wait of zero means auto-advance is disabled
-    val autoAdvanceAnswer; get() = answerDelaySeconds > 0
-    val autoAdvanceQuestion; get() = questionDelaySeconds > 0
+    val autoAdvanceIfShowingAnswer; get() = secondsToShowAnswerFor > 0
+    val autoAdvanceIfShowingQuestion; get() = secondsToShowQuestionFor > 0
 
     companion object {
         /**
          * Obtains the options for [AutomaticAnswer] in the deck config
          */
+        @NeedsTest("ensure question setting maps to question parameter")
         fun queryOptions(
             preferences: SharedPreferences,
             col: Collection,
@@ -275,7 +277,12 @@ class AutomaticAnswerSettings(
             val waitQuestionSecond = conf.optInt("secondsToShowQuestion", 0)
             val waitAnswerSecond = conf.optInt("secondsToShowAnswer", 0)
 
-            return AutomaticAnswerSettings(action, useTimer, waitQuestionSecond, waitAnswerSecond)
+            return AutomaticAnswerSettings(
+                answerAction = action,
+                useTimer = useTimer,
+                secondsToShowQuestionFor = waitQuestionSecond,
+                secondsToShowAnswerFor = waitAnswerSecond
+            )
         }
 
         fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
