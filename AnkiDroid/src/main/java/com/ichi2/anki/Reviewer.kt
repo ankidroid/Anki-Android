@@ -1358,7 +1358,11 @@ open class Reviewer :
                 else -> throw IllegalArgumentException("unhandled request: $methodName")
             }
         } else if (uri.startsWith(ANKIDROID_JS_PREFIX)) {
-            ankiDroidJsAPI.handleJsApiRequest(uri.substring(ANKIDROID_JS_PREFIX.length), bytes, true)
+            jsApi.handleJsApiRequest(
+                uri.substring(ANKIDROID_JS_PREFIX.length),
+                bytes,
+                returnDefaultValues = false
+            )
         } else {
             throw IllegalArgumentException("unhandled request: $uri")
         }

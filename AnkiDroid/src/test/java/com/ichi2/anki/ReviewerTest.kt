@@ -205,11 +205,11 @@ class ReviewerTest : RobolectricTest() {
         addDeck("A", setAsSelected = true)
 
         val reviewer = startReviewer()
-        val javaScriptFunction = reviewer.ankiDroidJsAPI
+        val jsApi = reviewer.jsApi
 
         waitForAsyncTasksToComplete()
         assertThat(
-            javaScriptFunction.handleJsApiRequest("deckName", jsApiContract(), true)
+            jsApi.handleJsApiRequest("deckName", jsApiContract(), false)
                 .decodeToString(),
             equalTo(formatApiResult("B"))
         )
@@ -316,7 +316,7 @@ class ReviewerTest : RobolectricTest() {
 
     @Suppress("SameParameterValue")
     private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) = runTest {
-        val jsApi = r.ankiDroidJsAPI
+        val jsApi = r.jsApi
         val countList = listOf(
             getDataFromRequest("newCardCount", jsApi),
             getDataFromRequest("lrnCardCount", jsApi),
