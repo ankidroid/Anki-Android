@@ -24,6 +24,8 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AnswerButtons.*
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.secondsToShowAnswer
+import com.ichi2.anki.utils.ext.secondsToShowQuestion
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckConfig
@@ -274,14 +276,12 @@ class AutomaticAnswerSettings(
             val conf = col.decks.confForDid(selectedDid)
             val action = getAction(conf)
             val useTimer = preferences.getBoolean("timeoutAnswer", false)
-            val waitQuestionSecond = conf.optInt("secondsToShowQuestion", 0)
-            val waitAnswerSecond = conf.optInt("secondsToShowAnswer", 0)
 
             return AutomaticAnswerSettings(
                 answerAction = action,
                 useTimer = useTimer,
-                secondsToShowQuestionFor = waitQuestionSecond,
-                secondsToShowAnswerFor = waitAnswerSecond
+                secondsToShowQuestionFor = conf.secondsToShowQuestion,
+                secondsToShowAnswerFor = conf.secondsToShowAnswer
             )
         }
 
