@@ -354,5 +354,5 @@
     <string name="shared_decks_login_required">لطفا وارد حساب کاربری خود شوید که دسته های بیشتری را دانلود کنید</string>
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_only">Unavailable in ‘Notes Only’ mode</string>
+    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
 </resources>
