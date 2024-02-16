@@ -174,8 +174,8 @@
     <string name="show_top_bar_summ">Üst çubukta kart sayılarını ve işaretlemeleri göster</string>
     <string name="show_progress" maxLength="41">Kalanı göster</string>
     <string name="show_progress_summ">Kalan kart sayısını göster</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Kalan zamanı göster</string>
+    <string name="show_eta_summ">Beklenen kalan zamanı göster</string>
     <string name="use_current" maxLength="41">Yeni kartlar için deste</string>
     <string name="learn_cutoff" maxLength="41">Önceden öğrenme sınırı</string>
     <string name="time_limit" maxLength="41">Zaman sınırı</string>
@@ -285,8 +285,8 @@
     <string name="bindings_already_bound">%s bileşenine bağlı zaten</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Deneysel</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid diğer Anki istemcileriyle uyumlu, daha fazla ses ve dil seslendirmesine geliştirmeler içeren daha iyi bir metin okuma mekanizması getirdi!\n\nLütfen mümkün olan en yakın zamanda yeni sisteme geçin, çünkü bu ayar yakında kaldırılacak.</string>
+    <string name="readtext_reviewer_warn">Lütfen yeni metin okuma formatına geçin</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Geliştirici seçenekleri</string>
     <string name="dev_options_enabled_pref" maxLength="41">Geliştirici seçeneklerini aç</string>

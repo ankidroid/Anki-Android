@@ -61,5 +61,5 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string tools:ignore="UnusedResources" name="searchpreference_search" comment="By submitting this string, you license it under the MIT License">検索...</string>
-    <string tools:ignore="UnusedResources" name="searchpreference_clear_history" comment="By submitting this string, you license it under the MIT License">検索履歴をすべて削除</string>
+    <string tools:ignore="UnusedResources" name="searchpreference_clear_history" comment="By submitting this string, you license it under the MIT License">検索した項目の履歴をすべて削除</string>
 </resources>

@@ -350,7 +350,7 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        テキスト読み上げの設定を開けませんでした
     </string>
     <string name="shared_decks_login_required">さらにデッキをダウンロードするにはログインしてください</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_only">Unavailable in ‘Notes Only’ mode</string>
+    <string name="deck_description_field_hint">デッキ説明文</string>
+    <string name="failed_to_copy">コピーに失敗しました</string>
+    <string name="card_browser_unavailable_when_notes_only">「ノート」モードでは使用できません</string>
 </resources>

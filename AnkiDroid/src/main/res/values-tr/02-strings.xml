@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Tür:</string>
     <string name="CardEditorTags">Etiketler: %1$s</string>
     <string name="CardEditorCards">Kartlar: %1$s</string>
-    <string name="edit_occlusions">Örtüleri Düzenle</string>
+    <string name="edit_occlusions">Örtüleri Değiştir</string>
     <string name="tag_name">Etiket adı</string>
     <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
     <string name="add_tag">Etiket ekle</string>
@@ -354,7 +354,7 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Metin okuma ayarları açılamadı
     </string>
     <string name="shared_decks_login_required">Daha fazla deste indirmek için lütfen giriş yapın</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_only">Unavailable in ‘Notes Only’ mode</string>
+    <string name="deck_description_field_hint">Açıklama</string>
+    <string name="failed_to_copy">Kopyalanamadı</string>
+    <string name="card_browser_unavailable_when_notes_only">\"Sadece Notlar\" modunda kullanılamıyor</string>
 </resources>
