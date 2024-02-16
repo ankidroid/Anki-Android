@@ -68,8 +68,10 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.noteeditor.EditCardDestination
 import com.ichi2.anki.noteeditor.toIntent
+import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.pages.CongratsPage
+import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.reviewer.*
@@ -123,10 +125,13 @@ abstract class AbstractFlashcardViewer :
     AutomaticallyAnswered,
     OnPageFinishedCallback,
     BaseSnackbarBuilderProvider,
-    ChangeManager.Subscriber {
+    ChangeManager.Subscriber,
+    PostRequestHandler {
     private var ttsInitialized = false
     private var replayOnTtsInit = false
-    private var ankiDroidJsAPI: AnkiDroidJsAPI? = null
+
+    @VisibleForTesting
+    val ankiDroidJsAPI by lazy { AnkiDroidJsAPI(this) }
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -222,11 +227,15 @@ abstract class AbstractFlashcardViewer :
     // needs to be lateinit due to a reliance on Context
     protected lateinit var motionEventHandler: MotionEventHandler
 
+    val server = AnkiServer(this).also { it.start() }
+
     @get:VisibleForTesting
     var cardContent: String? = null
         private set
-    open val baseUrl = "http://$LOCALHOST"
-    open val webviewDomain = LOCALHOST
+    private val baseUrl get() = server.baseUrl()
+    private val webviewDomain
+        get() = "$LOCALHOST:${server.listeningPort}"
+
     private var viewerUrl: String? = null
     private val fadeDuration = 300
 
@@ -2543,6 +2552,14 @@ abstract class AbstractFlashcardViewer :
 
     open fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
         return AnkiDroidJsAPI.CardDataForJsApi()
+    }
+
+    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
+        return if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
+            ankiDroidJsAPI.handleJsApiRequest(uri.substring(AnkiServer.ANKIDROID_JS_PREFIX.length), bytes, false)
+        } else {
+            throw IllegalArgumentException("unhandled request: $uri")
+        }
     }
 
     companion object {

@@ -53,13 +53,10 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
-import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKIDROID_JS_PREFIX
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKI_PREFIX
-import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.pages.CardInfoDestination
-import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.*
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
@@ -101,8 +98,7 @@ import java.util.function.Consumer
 @NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
 open class Reviewer :
     AbstractFlashcardViewer(),
-    ReviewerUi,
-    PostRequestHandler {
+    ReviewerUi {
     private var queueState: CurrentQueueState? = null
     private val customSchedulingKey = TimeManager.time.intTimeMS().toString()
     private var hasDrawerSwipeConflicts = false
@@ -110,14 +106,6 @@ open class Reviewer :
     private var prefFullscreenReview = false
     private lateinit var colorPalette: LinearLayout
     private var toggleStylus = false
-
-    private val server = AnkiServer(this).also { it.start() }
-    override val baseUrl get() = server.baseUrl()
-    override val webviewDomain
-        get() = "$LOCALHOST:${server.listeningPort}"
-
-    @VisibleForTesting
-    val jsApi by lazy { AnkiDroidJsAPI(this) }
 
     // A flag that determines if the SchedulingStates in CurrentQueueState are
     // safe to persist in the database when answering a card. This is used to
@@ -1370,7 +1358,7 @@ open class Reviewer :
                 else -> throw IllegalArgumentException("unhandled request: $methodName")
             }
         } else if (uri.startsWith(ANKIDROID_JS_PREFIX)) {
-            jsApi.handleJsApiRequest(uri.substring(ANKIDROID_JS_PREFIX.length), bytes, true)
+            ankiDroidJsAPI.handleJsApiRequest(uri.substring(ANKIDROID_JS_PREFIX.length), bytes, true)
         } else {
             throw IllegalArgumentException("unhandled request: $uri")
         }

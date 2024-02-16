@@ -42,7 +42,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         addNoteUsingBasicModel("foo", "bar")
 
         val reviewer: Reviewer = startReviewer()
-        val jsapi = reviewer.jsApi
+        val jsapi = reviewer.ankiDroidJsAPI
 
         reviewer.displayCardAnswer()
 
@@ -75,7 +75,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         addNoteUsingBasicModel("foo", "bar")
 
         val reviewer: Reviewer = startReviewer()
-        val jsapi = reviewer.jsApi
+        val jsapi = reviewer.ankiDroidJsAPI
         reviewer.displayCardAnswer()
 
         waitForAsyncTasksToComplete()
@@ -185,7 +185,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         addNoteUsingBasicModel("foo", "bar")
 
         val reviewer: Reviewer = startReviewer()
-        val jsapi = reviewer.jsApi
+        val jsapi = reviewer.ankiDroidJsAPI
 
         waitForAsyncTasksToComplete()
 
@@ -227,7 +227,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         addNoteUsingBasicModel("foo", "bar")
 
         val reviewer: Reviewer = startReviewer()
-        val jsapi = reviewer.jsApi
+        val jsapi = reviewer.ankiDroidJsAPI
 
         waitForAsyncTasksToComplete()
 
@@ -291,7 +291,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         addNoteUsingBasicModel("Test Note", "Bury and Suspend Note")
 
         val reviewer: Reviewer = startReviewer()
-        val jsapi = reviewer.jsApi
+        val jsapi = reviewer.ankiDroidJsAPI
 
         // ----------
         // Bury Card
@@ -360,7 +360,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val reviewer: Reviewer = startReviewer()
         waitForAsyncTasksToComplete()
 
-        val jsapi = reviewer.jsApi
+        val jsapi = reviewer.ankiDroidJsAPI
         // get card id for testing due
         val cardIdRes = getDataFromRequest("cardId", jsapi)
         val jsonObject = JSONObject(cardIdRes)
@@ -396,7 +396,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val reviewer: Reviewer = startReviewer()
         waitForAsyncTasksToComplete()
 
-        val jsapi = reviewer.jsApi
+        val jsapi = reviewer.ankiDroidJsAPI
 
         // test that card reset
         assertThat(getDataFromRequest("resetProgress", jsapi), equalTo(formatApiResult(true)))

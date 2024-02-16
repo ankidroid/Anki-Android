@@ -205,7 +205,7 @@ class ReviewerTest : RobolectricTest() {
         addDeck("A", setAsSelected = true)
 
         val reviewer = startReviewer()
-        val javaScriptFunction = reviewer.jsApi
+        val javaScriptFunction = reviewer.ankiDroidJsAPI
 
         waitForAsyncTasksToComplete()
         assertThat(
@@ -316,7 +316,7 @@ class ReviewerTest : RobolectricTest() {
 
     @Suppress("SameParameterValue")
     private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) = runTest {
-        val jsApi = r.jsApi
+        val jsApi = r.ankiDroidJsAPI
         val countList = listOf(
             getDataFromRequest("newCardCount", jsApi),
             getDataFromRequest("lrnCardCount", jsApi),
