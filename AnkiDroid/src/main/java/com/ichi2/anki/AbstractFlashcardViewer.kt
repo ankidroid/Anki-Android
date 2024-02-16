@@ -2518,17 +2518,18 @@ abstract class AbstractFlashcardViewer :
     }
 
     @NeedsTest("14656: adding tags does not flip the card")
+    @NeedsTest("does not hang and can be called twice")
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
         stateFilter: CardStateFilter
     ) {
-        if (currentCard!!.note(getColUnsafe).tags != selectedTags) {
-            val tagString = selectedTags.joinToString(" ")
-            val note = currentCard!!.note(getColUnsafe)
-            note.setTagsFromStr(getColUnsafe, tagString)
-            // TODO move to a coroutine instead of using runBlocking
-            runBlocking { undoableOp { updateNote(note) } }
+        launchCatchingTask {
+            val note = withCol { currentCard!!.note() }
+            if (note.tags == selectedTags) return@launchCatchingTask
+
+            withCol { note.setTagsFromStr(selectedTags.joinToString(" ")) }
+            undoableOp { updateNote(note) }
             // Reload current card to reflect tag changes
             reloadWebViewContent()
         }
