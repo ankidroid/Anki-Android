@@ -69,38 +69,16 @@ enum class AnswerButtons {
      */
     EASY;
 
-    fun toViewerCommand(numberOfButtons: Int): ViewerCommand {
-        return when (numberOfButtons) {
-            2 -> {
-                when (this) {
-                    AGAIN -> ViewerCommand.FLIP_OR_ANSWER_EASE1
-                    GOOD -> ViewerCommand.FLIP_OR_ANSWER_EASE2
-                    else -> throw IllegalStateException("$numberOfButtons buttons with answer $this")
-                }
-            }
-            3 -> {
-                when (this) {
-                    AGAIN -> ViewerCommand.FLIP_OR_ANSWER_EASE1
-                    GOOD -> ViewerCommand.FLIP_OR_ANSWER_EASE2
-                    EASY -> ViewerCommand.FLIP_OR_ANSWER_EASE3
-                    else -> throw IllegalStateException("$numberOfButtons buttons with answer $this")
-                }
-            }
-            4 -> {
-                when (this) {
-                    AGAIN -> ViewerCommand.FLIP_OR_ANSWER_EASE1
-                    HARD -> ViewerCommand.FLIP_OR_ANSWER_EASE2
-                    GOOD -> ViewerCommand.FLIP_OR_ANSWER_EASE3
-                    EASY -> ViewerCommand.FLIP_OR_ANSWER_EASE4
-                }
-            }
-            else -> throw IllegalStateException("unexpected button count: $numberOfButtons. answer: $this")
+    fun toViewerCommand(): ViewerCommand {
+        return when (this) {
+            AGAIN -> ViewerCommand.FLIP_OR_ANSWER_EASE1
+            HARD -> ViewerCommand.FLIP_OR_ANSWER_EASE2
+            GOOD -> ViewerCommand.FLIP_OR_ANSWER_EASE3
+            EASY -> ViewerCommand.FLIP_OR_ANSWER_EASE4
         }
     }
 
     companion object {
-        fun canAnswerHard(numberOfButtons: Int): Boolean = numberOfButtons == 4
-        fun canAnswerEasy(numberOfButtons: Int): Boolean = numberOfButtons >= 3
 
         fun getBackgroundColors(ctx: AnkiActivity): IntArray {
             val backgroundIds: IntArray =

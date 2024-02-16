@@ -313,9 +313,7 @@ enum class AutomaticAnswerAction(private val configValue: Int) {
     SHOW_REMINDER(4);
 
     fun execute(reviewer: Reviewer) {
-        val numberOfButtons = 4
-        val actualAction = handleInvalidButtons(numberOfButtons)
-        val action = actualAction.toCommand(numberOfButtons)
+        val action = this.toCommand()
         if (action != null) {
             Timber.i("Executing %s", action)
             reviewer.executeCommand(action)
@@ -324,22 +322,13 @@ enum class AutomaticAnswerAction(private val configValue: Int) {
         }
     }
 
-    /** Handle **Hard/Easy** uf they don't appear */
-    private fun handleInvalidButtons(numberOfButtons: Int): AutomaticAnswerAction {
-        return when (this) {
-            ANSWER_HARD -> if (AnswerButtons.canAnswerHard(numberOfButtons)) ANSWER_HARD else ANSWER_GOOD
-            // Again and Good always appear. So does Bury
-            else -> this
-        }
-    }
-
     /** Convert to a [ViewerCommand] */
-    private fun toCommand(numberOfButtons: Int): ViewerCommand? {
+    private fun toCommand(): ViewerCommand? {
         return when (this) {
             BURY_CARD -> ViewerCommand.BURY_CARD
-            ANSWER_AGAIN -> AGAIN.toViewerCommand(numberOfButtons)
-            ANSWER_HARD -> HARD.toViewerCommand(numberOfButtons)
-            ANSWER_GOOD -> GOOD.toViewerCommand(numberOfButtons)
+            ANSWER_AGAIN -> AGAIN.toViewerCommand()
+            ANSWER_HARD -> HARD.toViewerCommand()
+            ANSWER_GOOD -> GOOD.toViewerCommand()
             else -> null
         }
     }
@@ -354,7 +343,7 @@ enum class AutomaticAnswerAction(private val configValue: Int) {
 
         /** convert from [anki.deck_config.DeckConfig.Config.AnswerAction] to the enum */
         fun fromConfigValue(i: Int): AutomaticAnswerAction {
-            return values().firstOrNull { it.configValue == i } ?: BURY_CARD
+            return entries.firstOrNull { it.configValue == i } ?: BURY_CARD
         }
     }
 }
