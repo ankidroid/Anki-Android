@@ -30,6 +30,7 @@ import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.positiveButton
+import okhttp3.internal.closeQuietly
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.*
 import org.junit.Test
@@ -52,6 +53,11 @@ class CreateDeckDialogTest : RobolectricTest() {
         activityScenario = ActivityScenario.launch(DeckPicker::class.java).apply {
             moveToState(Lifecycle.State.STARTED)
         }
+    }
+
+    override fun tearDown() {
+        super.tearDown()
+        activityScenario.closeQuietly()
     }
 
     @Test
