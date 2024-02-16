@@ -29,7 +29,6 @@ import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
 import com.ichi2.utils.deepClone
-import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 import org.intellij.lang.annotations.Language
 import org.json.JSONObject
@@ -110,7 +109,6 @@ class TemplateManager {
      * using the _private fields directly.
      */
     class TemplateRenderContext(
-        col: Collection,
         card: Card,
         note: Note,
         browser: Boolean = false,
@@ -118,8 +116,6 @@ class TemplateManager {
         template: JSONObject? = null,
         private var fillEmpty: Boolean = false
     ) {
-        @RustCleanup("this was a WeakRef")
-        private val _col: Collection = col
         private var _card: Card = card
         private var _note: Note = note
         private var _browser: Boolean = browser
@@ -129,11 +125,10 @@ class TemplateManager {
 
         companion object {
             fun fromExistingCard(col: Collection, card: Card, browser: Boolean): TemplateRenderContext {
-                return TemplateRenderContext(col, card, card.note(col), browser)
+                return TemplateRenderContext(card, card.note(col), browser)
             }
 
             fun fromCardLayout(
-                col: Collection,
                 note: Note,
                 card: Card,
                 notetype: NotetypeJson,
@@ -141,7 +136,6 @@ class TemplateManager {
                 fillEmpty: Boolean
             ): TemplateRenderContext {
                 return TemplateRenderContext(
-                    col,
                     card,
                     note,
                     notetype = notetype,
@@ -150,8 +144,6 @@ class TemplateManager {
                 )
             }
         }
-
-        fun col() = _col
 
         /**
          * Returns the card being rendered.
@@ -163,10 +155,10 @@ class TemplateManager {
         fun note() = _note
         fun noteType() = noteType
 
-        fun render(): TemplateRenderOutput {
+        fun render(col: Collection): TemplateRenderOutput {
             val partial: PartiallyRenderedCard
             try {
-                partial = partiallyRender()
+                partial = partiallyRender(col)
             } catch (e: BackendTemplateException) {
                 return TemplateRenderOutput(
                     questionText = e.localizedMessage ?: e.toString(),
@@ -201,25 +193,25 @@ class TemplateManager {
                 }
             }
 
-            val mediaDir = col().media.dir
+            val mediaDir = col.media.dir
             val qtext = parseVideos(
                 text = applyCustomFilters(partial.qnodes, this, front_side = null),
                 mediaDir = mediaDir
             )
-            val qout = col().backend.extractAvTags(text = qtext, questionSide = true)
+            val qout = col.backend.extractAvTags(text = qtext, questionSide = true)
             var qoutText = qout.text
 
             val atext = parseVideos(
                 text = applyCustomFilters(partial.anodes, this, front_side = qout.text),
                 mediaDir = mediaDir
             )
-            val aout = col().backend.extractAvTags(text = atext, questionSide = false)
+            val aout = col.backend.extractAvTags(text = atext, questionSide = false)
             var aoutText = aout.text
 
             if (!_browser) {
                 val svg = noteType.optBoolean("latexsvg", false)
-                qoutText = LaTeX.mungeQA(qoutText, _col, svg)
-                aoutText = LaTeX.mungeQA(aoutText, _col, svg)
+                qoutText = LaTeX.mungeQA(qoutText, col, svg)
+                aoutText = LaTeX.mungeQA(aoutText, col, svg)
             }
 
             return TemplateRenderOutput(
@@ -231,8 +223,8 @@ class TemplateManager {
             )
         }
 
-        fun partiallyRender(): PartiallyRenderedCard {
-            val proto = col().run {
+        fun partiallyRender(col: Collection): PartiallyRenderedCard {
+            val proto = col.run {
                 if (_template != null) {
                     // card layout screen
                     backend.renderUncommittedCardLegacy(

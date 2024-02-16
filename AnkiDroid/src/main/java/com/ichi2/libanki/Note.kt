@@ -126,13 +126,12 @@ class Note : Cloneable {
         template["ord"] = card.ord
 
         val output = TemplateManager.TemplateRenderContext.fromCardLayout(
-            col = col,
             note = this,
             card = card,
             notetype = model,
             template = template,
             fillEmpty = fillEmpty
-        ).render()
+        ).render(col)
         card.renderOutput = output
         card.setNote(this)
         return card
