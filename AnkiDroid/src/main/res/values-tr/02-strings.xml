@@ -356,5 +356,5 @@
     <string name="shared_decks_login_required">Daha fazla deste indirmek için lütfen giriş yapın</string>
     <string name="deck_description_field_hint">Açıklama</string>
     <string name="failed_to_copy">Kopyalanamadı</string>
-    <string name="card_browser_unavailable_when_notes_only">\"Sadece Notlar\" modunda kullanılamıyor</string>
+    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
 </resources>
