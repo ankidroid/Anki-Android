@@ -131,7 +131,7 @@ abstract class AbstractFlashcardViewer :
     private var replayOnTtsInit = false
 
     @VisibleForTesting
-    val ankiDroidJsAPI by lazy { AnkiDroidJsAPI(this) }
+    val jsApi by lazy { AnkiDroidJsAPI(this) }
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -2556,7 +2556,11 @@ abstract class AbstractFlashcardViewer :
 
     override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
         return if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
-            ankiDroidJsAPI.handleJsApiRequest(uri.substring(AnkiServer.ANKIDROID_JS_PREFIX.length), bytes, false)
+            jsApi.handleJsApiRequest(
+                uri.substring(AnkiServer.ANKIDROID_JS_PREFIX.length),
+                bytes,
+                returnDefaultValues = true
+            )
         } else {
             throw IllegalArgumentException("unhandled request: $uri")
         }

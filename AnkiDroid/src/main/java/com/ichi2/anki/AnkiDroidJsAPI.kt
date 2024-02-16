@@ -177,18 +177,18 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     /**
      * Handle js api request,
-     * some of the methods are overriden in Reviewer.kt and default values are returned.
+     * some of the methods are overridden in Reviewer.kt and default values are returned.
      * @param methodName
      * @param bytes
-     * @param isReviewer
+     * @param returnDefaultValues `true` if default values should be returned (if non-[Reviewer])
      * @return
      */
-    open suspend fun handleJsApiRequest(methodName: String, bytes: ByteArray, isReviewer: Boolean) = withContext(Dispatchers.Main) {
+    open suspend fun handleJsApiRequest(methodName: String, bytes: ByteArray, returnDefaultValues: Boolean = true) = withContext(Dispatchers.Main) {
         // the method will call to set the card supplied data and is valid version for each api request
         val apiContract = parseJsApiContract(bytes)!!
         // if api not init or is api not called from reviewer then return default -1
         // also other action will not be modified
-        if (!apiContract.isValid or !isReviewer) {
+        if (!apiContract.isValid or returnDefaultValues) {
             return@withContext convertToByteArray(apiContract, -1)
         }
 
