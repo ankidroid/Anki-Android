@@ -116,7 +116,7 @@ class TemplateManager {
         browser: Boolean = false,
         notetype: NotetypeJson? = null,
         template: JSONObject? = null,
-        fill_empty: Boolean = false
+        private var fillEmpty: Boolean = false
     ) {
         @RustCleanup("this was a WeakRef")
         private val _col: Collection = col
@@ -124,9 +124,7 @@ class TemplateManager {
         private var _note: Note = note
         private var _browser: Boolean = browser
         private var _template: JSONObject? = template
-        private var fillEmpty: Boolean = fill_empty
 
-//      private var _fields: HashMap<String, String>? = null
         private var noteType: NotetypeJson = notetype ?: note.notetype
 
         companion object {
@@ -148,7 +146,7 @@ class TemplateManager {
                     note,
                     notetype = notetype,
                     template = template,
-                    fill_empty = fillEmpty
+                    fillEmpty = fillEmpty
                 )
             }
         }
