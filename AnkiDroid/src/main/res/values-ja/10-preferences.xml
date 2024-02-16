@@ -173,8 +173,8 @@
     <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>
     <string name="show_progress_summ">トップバーに、残りのカード枚数を表示します（青: 新規、赤: 習得中および再習得中、緑: 復習）</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">推定所要時間を表示</string>
+    <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの現在の課題すべてに回答するまでの推定所要時間を表示します</string>
     <string name="use_current" maxLength="41">新規カードの既定の追加先デッキ</string>
     <string name="learn_cutoff" maxLength="41">習得学習の前倒し許容時間</string>
     <string name="time_limit" maxLength="41">タイムボックス（学習時間の目標・区切り）</string>
@@ -283,8 +283,8 @@
     <string name="bindings_already_bound">すでに「%s」の操作に割り当て済みです</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">試験運用機能</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroidは、他のAnkiクライアント（デスクトップ版Anki、AnkiMobile）と互換性がある、より優れたTTS（テキスト読み上げ）システムを導入しました。新システムでは、より多くの音声や、品質の向上した再生機能が利用できます。\n\n従来のTTSシステムを対象とするこのオプションは近い将来に削除され、利用できなくなります。そうなる前に、できるだけ早く、ノートタイプ内のカードテンプレートを新しいTTSシステムに対応したものに変更することをおすすめします。</string>
+    <string name="readtext_reviewer_warn">テキスト読み上げ（TTS）の新しいフォーマットにアップグレードしてください</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
     <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>

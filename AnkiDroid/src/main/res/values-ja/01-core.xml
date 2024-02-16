@@ -60,13 +60,13 @@
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">残り約%d分</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">残り約%1$d時間%2$d分</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">残り約%1$d日と%2$d時間</item>
     </plurals>
     <string name="no_cards_placeholder_title">まだカードがありません</string>
     <string name="no_cards_placeholder_description">画面右下の「＋」ボタンから\nカードを追加してください</string>
@@ -88,7 +88,7 @@
     <string name="rename_deck">デッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
     <string name="browse_cards">カードをブラウザで表示</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">デッキ説明文を編集</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">追加</string>
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
@@ -244,5 +244,5 @@
     <string name="storage_access_title">ストレージへのアクセス</string>
     <string name="storage_access_summary">このアプリをアンインストールしても削除されない場所にコレクションを保存します</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">すべてのファイルへのアクセス</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">画像穴埋め問題</string>
 </resources>
