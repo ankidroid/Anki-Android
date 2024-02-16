@@ -1006,17 +1006,18 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             mEditorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(mSelectedTags!!))
             changed = true
 
-            if (caller != CALLER_PREVIEWER_EDIT) {
-                closeNoteEditor()
-                return
-            }
-
-            withProgress {
-                undoableOp {
-                    updateNote(mCurrentEditedCard!!.note())
+            // these activities are updated to handle `opChanges`
+            // and no longer using the legacy ActivityResultCallback/onActivityResult to
+            // accept & update the note in the activity
+            if (caller == CALLER_PREVIEWER_EDIT || caller == CALLER_REVIEWER_EDIT) {
+                withProgress {
+                    undoableOp {
+                        updateNote(mCurrentEditedCard!!.note())
+                    }
                 }
-                closeNoteEditor()
             }
+            closeNoteEditor()
+            return
         }
     }
 
