@@ -1216,8 +1216,49 @@ open class Reviewer :
                 showRescheduleCardDialog()
                 return true
             }
+            ViewerCommand.USER_ACTION_1 -> {
+                userAction(1)
+                return true
+            }
+            ViewerCommand.USER_ACTION_2 -> {
+                userAction(2)
+                return true
+            }
+            ViewerCommand.USER_ACTION_3 -> {
+                userAction(3)
+                return true
+            }
+            ViewerCommand.USER_ACTION_4 -> {
+                userAction(4)
+                return true
+            }
+            ViewerCommand.USER_ACTION_5 -> {
+                userAction(5)
+                return true
+            }
+            ViewerCommand.USER_ACTION_6 -> {
+                userAction(6)
+                return true
+            }
+            ViewerCommand.USER_ACTION_7 -> {
+                userAction(7)
+                return true
+            }
+            ViewerCommand.USER_ACTION_8 -> {
+                userAction(8)
+                return true
+            }
+            ViewerCommand.USER_ACTION_9 -> {
+                userAction(9)
+                return true
+            }
             else -> return super.executeCommand(which, fromGesture)
         }
+    }
+
+    private fun userAction(number: Int) {
+        Timber.v("userAction%d", number)
+        loadUrlInViewer("javascript: userAction($number);")
     }
 
     private fun toggleFlag(flag: Flag) {
