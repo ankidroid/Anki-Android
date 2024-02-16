@@ -488,6 +488,7 @@ class CardBrowserViewModel(
 
     val previewIntentData: PreviewDestination
         get() {
+            // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
             return if (selectedRowCount() > 1) {
                 PreviewDestination(index = 0, PreviewerIdsFile(cacheDir, selectedRowIds))
             } else {
