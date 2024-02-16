@@ -920,7 +920,9 @@ open class CardBrowser :
      */
     private fun warnUserIfInNotesOnlyMode(): Boolean {
         if (viewModel.cardsOrNotes != NOTES) return false
-        showSnackbar(R.string.card_browser_unavailable_when_notes_mode)
+        showSnackbar(R.string.card_browser_unavailable_when_notes_mode) {
+            setAction(R.string.error_handling_options) { showOptionsDialog() }
+        }
         return true
     }
 
