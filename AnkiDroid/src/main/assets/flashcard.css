@@ -41,8 +41,14 @@ body.ankidroid_dark_mode {
   background-color: #ccc;
 }
 
+@font-face {
+    font-family: "Free Mono";
+    src: url("file:///android_asset/fonts/freefont/FreeMono.ttf")
+}
+
 #typeans {
   width: 100%;
+  font-family: "Free Mono";
 }
 
 .typePrompt {
