@@ -2303,8 +2303,6 @@ abstract class AbstractFlashcardViewer :
             if (url.startsWith("typeblurtext:")) {
                 // Store the text the javascript has send us…
                 typeAnswer!!.input = decodeUrl(url.replaceFirst("typeblurtext:".toRegex(), ""))
-                // … and show the “SHOW ANSWER” button again.
-                flipCardLayout!!.visibility = View.VISIBLE
                 return true
             }
             if (url.startsWith("typeentertext:")) {
@@ -2324,12 +2322,7 @@ abstract class AbstractFlashcardViewer :
             when (val signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url)) {
                 WebViewSignalParserUtils.SIGNAL_UNHANDLED -> {}
                 WebViewSignalParserUtils.SIGNAL_NOOP -> return true
-                WebViewSignalParserUtils.TYPE_FOCUS -> {
-                    // Hide the “SHOW ANSWER” button when the input has focus. The soft keyboard takes up enough
-                    // space by itself.
-                    flipCardLayout!!.visibility = View.GONE
-                    return true
-                }
+                WebViewSignalParserUtils.TYPE_FOCUS -> return true
 
                 WebViewSignalParserUtils.RELINQUISH_FOCUS -> {
                     // #5811 - The WebView could be focused via mouse. Allow components to return focus to Android.
