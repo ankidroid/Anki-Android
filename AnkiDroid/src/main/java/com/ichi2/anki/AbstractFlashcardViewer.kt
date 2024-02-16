@@ -1031,7 +1031,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** Used to set the "javascript:" URIs for IPC  */
-    private fun loadUrlInViewer(url: String) {
+    fun loadUrlInViewer(url: String) {
         processCardAction { cardWebView: WebView? -> cardWebView!!.loadUrl(url) }
     }
 

@@ -239,3 +239,14 @@ function showAllHints() {
         el.click();
     });
 }
+
+function userAction(number) {
+    try {
+        let userJs = globalThis[`userJs${number}`];
+        if (userJs != null) {
+            userJs();
+        }
+    } catch (e) {
+        alert(e);
+    }
+}
