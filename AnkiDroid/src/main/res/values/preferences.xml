@@ -115,6 +115,15 @@
     <string name="show_all_hints_command_key">binding_SHOW_ALL_HINTS</string>
     <string name="add_note_command_key">binding_ADD_NOTE</string>
     <string name="reschedule_command_key">binding_RESCHEDULE_NOTE</string>
+    <string name="user_action_1_key">binding_USER_ACTION_1</string>
+    <string name="user_action_2_key">binding_USER_ACTION_2</string>
+    <string name="user_action_3_key">binding_USER_ACTION_3</string>
+    <string name="user_action_4_key">binding_USER_ACTION_4</string>
+    <string name="user_action_5_key">binding_USER_ACTION_5</string>
+    <string name="user_action_6_key">binding_USER_ACTION_6</string>
+    <string name="user_action_7_key">binding_USER_ACTION_7</string>
+    <string name="user_action_8_key">binding_USER_ACTION_8</string>
+    <string name="user_action_9_key">binding_USER_ACTION_9</string>
     <!-- Accessibility -->
     <string name="pref_accessibility_screen_key">accessibilityScreen</string>
     <string name="card_zoom_preference">cardZoom</string>

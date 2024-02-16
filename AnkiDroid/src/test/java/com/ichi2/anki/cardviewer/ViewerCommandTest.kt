@@ -67,7 +67,16 @@ class ViewerCommandTest {
             "binding_SHOW_HINT",
             "binding_SHOW_ALL_HINTS",
             "binding_ADD_NOTE",
-            "binding_RESCHEDULE_NOTE"
+            "binding_RESCHEDULE_NOTE",
+            "binding_USER_ACTION_1",
+            "binding_USER_ACTION_2",
+            "binding_USER_ACTION_3",
+            "binding_USER_ACTION_4",
+            "binding_USER_ACTION_5",
+            "binding_USER_ACTION_6",
+            "binding_USER_ACTION_7",
+            "binding_USER_ACTION_8",
+            "binding_USER_ACTION_9"
         )
 
         assertEquals(commandKeys, names)

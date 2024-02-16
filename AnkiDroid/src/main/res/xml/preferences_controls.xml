@@ -255,4 +255,43 @@
             android:title="@string/gesture_show_all_hints"
             />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/user_action">
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_1_key"
+            android:title="@string/user_action_1"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_2_key"
+            android:title="@string/user_action_2"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_3_key"
+            android:title="@string/user_action_3"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_4_key"
+            android:title="@string/user_action_4"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_5_key"
+            android:title="@string/user_action_5"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_6_key"
+            android:title="@string/user_action_6"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_7_key"
+            android:title="@string/user_action_7"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_8_key"
+            android:title="@string/user_action_8"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_9_key"
+            android:title="@string/user_action_9"
+            />
+    </PreferenceCategory>
 </PreferenceScreen>
