@@ -1268,7 +1268,11 @@ open class Reviewer :
         }
     }
 
-    private fun userAction(number: Int) {
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(1, 2, 3, 4, 5, 6, 7, 8, 9)
+    annotation class UserAction
+
+    private fun userAction(@UserAction number: Int) {
         Timber.v("userAction%d", number)
         loadUrlInViewer("javascript: userAction($number);")
     }
