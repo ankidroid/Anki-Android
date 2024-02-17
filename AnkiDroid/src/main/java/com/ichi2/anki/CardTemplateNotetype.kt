@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import com.ichi2.async.saveModel
@@ -440,6 +441,48 @@ class CardTemplateNotetype(val notetype: NotetypeJson) {
                 changesIndex
             )
             return -1
+        }
+    }
+}
+
+/**
+ * Temporary file containing a [NotetypeJson]
+ *
+ * Useful for adding a [NotetypeJson] into a [Bundle], like when using [Intent.putExtra]
+ * for sending an object to another activity.
+ *
+ * The notetype is written into a file because there is a
+ * [limit of 1MB](https://developer.android.com/reference/android/os/TransactionTooLargeException.html)
+ * for [Bundle] transactions, and notetypes can be bigger than that (#5600).
+ *
+ * @param directory parent directory of the file. Generally it should be the cache directory
+ * @param notetype to be stored
+ */
+class NotetypeFile(directory: File, notetype: NotetypeJson) :
+    File(createTempFile("notetype", ".tmp", directory).absolutePath) {
+
+    /** @param context for getting the cache directory */
+    constructor(context: Context, notetype: NotetypeJson) : this(context.cacheDir, notetype)
+
+    init {
+        try {
+            ByteArrayInputStream(notetype.toString().toByteArray()).use { source ->
+                compat.copyFile(source, this.absolutePath)
+            }
+        } catch (ioe: IOException) {
+            Timber.e(ioe, "Unable to create+write temp file for model")
+        }
+    }
+
+    fun getNotetype(): NotetypeJson {
+        return try {
+            ByteArrayOutputStream().use { target ->
+                compat.copyFile(absolutePath, target)
+                NotetypeJson(target.toString())
+            }
+        } catch (e: IOException) {
+            Timber.e(e, "Unable to read+parse tempModel from file %s", absolutePath)
+            throw e
         }
     }
 }
