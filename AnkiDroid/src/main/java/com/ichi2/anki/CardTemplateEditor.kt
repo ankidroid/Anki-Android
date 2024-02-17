@@ -584,6 +584,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             templateEditor.finish()
         }
 
+        private fun getNote(col: Collection): Note? {
+            val nid = requireArguments().getLong(EDITOR_NOTE_ID)
+            return if (nid != -1L) col.getNote(nid) else null
+        }
+
         fun performPreview() {
             val col = templateEditor.getColUnsafe
             val tempModel = templateEditor.tempModel
@@ -591,13 +596,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // Create intent for the previewer and add some arguments
             val i = Intent(templateEditor, CardTemplatePreviewer::class.java)
             val ordinal = templateEditor.viewPager.currentItem
-            val noteId = requireArguments().getLong("noteId")
             i.putExtra("ordinal", ordinal)
             i.putExtra("cardListIndex", 0)
 
             // If we have a card for this position, send it, otherwise an empty card list signals to show a blank
-            if (noteId != -1L) {
-                val cids = col.getNote(noteId).cardIds(col)
+            getNote(col)?.let {
+                val cids = it.cardIds(col)
                 if (ordinal < cids.size) {
                     i.putExtra("cardList", longArrayOf(cids[ordinal]))
                 }
