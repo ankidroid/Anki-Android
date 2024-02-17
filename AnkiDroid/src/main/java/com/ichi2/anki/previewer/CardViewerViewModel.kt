@@ -188,5 +188,7 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
                 expected
             }
         }
+
+        fun getFontSize(field: JSONObject): String = field.getString("size")
     }
 }
