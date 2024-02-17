@@ -27,7 +27,6 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.content.*
-import android.content.pm.PackageManager
 import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
@@ -608,18 +607,17 @@ open class DeckPicker :
      */
     private fun checkWebviewVersion() {
         // Doesn't need to be translated as it's debug only
-        // Specifically check for Android System WebView
-        try {
-            val androidSystemWebViewPackage = "com.google.android.webview"
-            val webviewPackageInfo = packageManager.getPackageInfo(androidSystemWebViewPackage, 0)
-            val versionCode = webviewPackageInfo.versionName.split(".")[0].toInt()
-            if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
-                val snackbarMessage =
-                    "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION)."
-                showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
-            }
-        } catch (_: PackageManager.NameNotFoundException) {
+        val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager)
+        if (webviewPackageInfo == null) {
             val snackbarMessage = "No Android System WebView found"
+            showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
+            return
+        }
+
+        val versionCode = webviewPackageInfo.versionName.split(".")[0].toInt()
+        if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
+            val snackbarMessage =
+                "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION)."
             showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
         }
     }
