@@ -79,6 +79,8 @@ import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.previewer.TemplatePreviewerArguments
+import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.NoteService
@@ -1213,8 +1215,27 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
+    private fun openNewPreviewer() {
+        val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toString() } ?: mutableListOf()
+        val tags = selectedTags ?: mutableListOf()
+        val args = TemplatePreviewerArguments(
+            notetypeFile = NotetypeFile(this, editorNote!!.notetype),
+            fields = fields,
+            tags = tags,
+            id = editorNote!!.id,
+            ord = currentEditedCard?.ord ?: 0,
+            fillEmpty = false
+        )
+        val intent = TemplatePreviewerFragment.getIntent(this, args)
+        startActivity(intent)
+    }
+
     @VisibleForTesting
     fun performPreview() {
+        if (sharedPrefs().getBoolean("new_previewer", false)) {
+            openNewPreviewer()
+            return
+        }
         val previewer = Intent(this@NoteEditor, CardTemplatePreviewer::class.java)
         if (currentEditedCard != null) {
             previewer.putExtra("ordinal", currentEditedCard!!.ord)

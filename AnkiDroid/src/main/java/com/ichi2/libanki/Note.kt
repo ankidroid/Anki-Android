@@ -48,9 +48,7 @@ class Note : Cloneable {
     var mid: Long = 0
         private set
     lateinit var tags: MutableList<String>
-        private set
     lateinit var fields: MutableList<String>
-        private set
     private var fMap: Map<String, Pair<Int, JSONObject>>? = null
     var usn = 0
         private set
