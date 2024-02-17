@@ -2291,6 +2291,7 @@ abstract class AbstractFlashcardViewer :
 
         // Filter any links using the custom "playsound" protocol defined in Sound.java.
         // We play sounds through these links when a user taps the sound icon.
+        @NeedsTest("integration test with typechangetext")
         fun filterUrl(url: String): Boolean {
             if (url.startsWith("playsound:")) {
                 launchCatchingTask {
@@ -2309,9 +2310,9 @@ abstract class AbstractFlashcardViewer :
             if (url.startsWith("file") || url.startsWith("data:")) {
                 return false // Let the webview load files, i.e. local images.
             }
-            if (url.startsWith("typeblurtext:")) {
-                // Store the text the javascript has send us…
-                typeAnswer!!.input = decodeUrl(url.replaceFirst("typeblurtext:".toRegex(), ""))
+            if (url.startsWith("typechangetext:")) {
+                // Store the text the javascript has sent us…
+                typeAnswer!!.input = decodeUrl(url.replaceFirst("typechangetext:".toRegex(), ""))
                 return true
             }
             if (url.startsWith("typeentertext:")) {

@@ -134,7 +134,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @Test
     fun validEncodingSetsAnswerCorrectly() {
         // 你好%
-        val url = "typeblurtext:%E4%BD%A0%E5%A5%BD%25"
+        val url = "typechangetext:%E4%BD%A0%E5%A5%BD%25"
         val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
         viewer.handleUrlFromJavascript(url)
