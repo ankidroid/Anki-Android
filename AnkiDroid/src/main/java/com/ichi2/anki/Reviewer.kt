@@ -180,7 +180,9 @@ open class Reviewer :
         textBarReview = findViewById(R.id.review_number)
         toolbar = findViewById(R.id.toolbar)
         micToolBarLayer = findViewById(R.id.mic_tool_bar_layer)
-        setNavigationBarColor(R.attr.showAnswerColor)
+        if (sharedPrefs().getString("answerButtonPosition", "bottom") == "bottom") {
+            setNavigationBarColor(R.attr.showAnswerColor)
+        }
         if (!sharedPrefs().getBoolean("showDeckTitle", false)) {
             // avoid showing "AnkiDroid"
             supportActionBar?.title = ""
