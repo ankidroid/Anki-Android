@@ -94,7 +94,7 @@ class PreviewerFragment :
         val webView = view.findViewById<WebView>(R.id.webview)
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         with(webView) {
-            webViewClient = onCreateWebViewClient()
+            webViewClient = onCreateWebViewClient(savedInstanceState)
             webChromeClient = onCreateWebChromeClient()
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
@@ -241,7 +241,7 @@ class PreviewerFragment :
             .launchIn(lifecycleScope)
     }
 
-    private fun onCreateWebViewClient(): WebViewClient {
+    private fun onCreateWebViewClient(savedInstanceState: Bundle?): WebViewClient {
         val assetLoader = requireContext().getViewerAssetLoader(LOCALHOST)
         return object : WebViewClient() {
             override fun shouldInterceptRequest(
@@ -252,7 +252,7 @@ class PreviewerFragment :
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                viewModel.onPageFinished()
+                viewModel.onPageFinished(isAfterRecreation = savedInstanceState != null)
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
