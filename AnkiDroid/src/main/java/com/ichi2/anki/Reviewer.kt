@@ -110,6 +110,7 @@ open class Reviewer :
     private var prefFullscreenReview = false
     private lateinit var colorPalette: LinearLayout
     private var toggleStylus = false
+    private var stopTimerWithTimebox = false
 
     private val server = AnkiServer(this).also { it.start() }
     override val baseUrl get() = server.baseUrl()
@@ -1070,12 +1071,20 @@ open class Reviewer :
         AlertDialog.Builder(this).show {
             title(R.string.timebox_reached_title)
             message(text = timeboxMessage)
-            positiveButton(R.string.dialog_continue) {}
+            positiveButton(R.string.dialog_continue) {
+                stopTimerWithTimebox = false
+                if (!stopTimerWithTimebox) launchCatchingTask { answerTimer.resume() }
+            }
             negativeButton(text = CollectionManager.TR.studyingFinish()) {
+                stopTimerWithTimebox = false
+                if (!stopTimerWithTimebox) launchCatchingTask { answerTimer.resume() }
                 finish()
             }
             cancelable(true)
-            setOnCancelListener { }
+            setOnCancelListener {
+                stopTimerWithTimebox = false
+                if (!stopTimerWithTimebox) launchCatchingTask { answerTimer.resume() }
+            }
         }
     }
 
@@ -1083,6 +1092,7 @@ open class Reviewer :
         statesMutated = false
         // show timer, if activated in the deck's preferences
         answerTimer.setupForCard(getColUnsafe, currentCard!!)
+        if (stopTimerWithTimebox)answerTimer.pause()
         delayedHide(100)
         super.displayCardQuestion()
     }
