@@ -213,7 +213,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
             val expectedAnswer = getExpectedTypeInAnswer(card, typeAnswerField)
                 ?: return typeAnsRe.replace(text, "")
             val typeFont = typeAnswerField.getString("font")
-            val typeSize = typeAnswerField.getString("size")
+            val typeSize = getFontSize(typeAnswerField)
             val answerComparison = withCol { compareAnswer(expectedAnswer, provided = "") }
 
             @Language("HTML")
