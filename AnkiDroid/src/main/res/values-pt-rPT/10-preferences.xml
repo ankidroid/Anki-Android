@@ -273,6 +273,16 @@
     <string name="key_picker_default_press_key">Pressione uma tecla</string>
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="user_action" maxLength="41">User action</string>
+    <string name="user_action_1" maxLength="41">User action 1</string>
+    <string name="user_action_2" maxLength="41">User action 2</string>
+    <string name="user_action_3" maxLength="41">User action 3</string>
+    <string name="user_action_4" maxLength="41">User action 4</string>
+    <string name="user_action_5" maxLength="41">User action 5</string>
+    <string name="user_action_6" maxLength="41">User action 6</string>
+    <string name="user_action_7" maxLength="41">User action 7</string>
+    <string name="user_action_8" maxLength="41">User action 8</string>
+    <string name="user_action_9" maxLength="41">User action 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecione o lado da ficha</string>
     <string name="card_side_question">Questão</string>
