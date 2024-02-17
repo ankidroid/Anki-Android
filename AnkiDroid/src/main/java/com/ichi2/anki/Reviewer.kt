@@ -1068,6 +1068,7 @@ open class Reviewer :
         val nMins = timebox.secs / 60
         val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
         val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
+        stopTimerWithTimebox = true
         AlertDialog.Builder(this).show {
             title(R.string.timebox_reached_title)
             message(text = timeboxMessage)
