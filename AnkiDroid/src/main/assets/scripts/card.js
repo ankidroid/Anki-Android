@@ -99,11 +99,11 @@ function reloadPage() {
     window.location.href = "signal:reload_card_html";
 }
 
-/* Tell the app the text in the input box when it loses focus */
-function taBlur(itag) {
+/* Inform the app of the current 'type in the answer' value */
+function taChange(itag) {
     //#5944 - percent wasn't encoded, but Mandarin was.
     var encodedVal = encodeURI(itag.value);
-    window.location.href = "typeblurtext:" + encodedVal;
+    window.location.href = "typechangetext:" + encodedVal;
 }
 
 /* Look at the text entered into the input box and send the text on a return */
