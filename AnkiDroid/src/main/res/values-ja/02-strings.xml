@@ -352,5 +352,5 @@
     <string name="shared_decks_login_required">さらにデッキをダウンロードするにはログインしてください</string>
     <string name="deck_description_field_hint">デッキ説明文</string>
     <string name="failed_to_copy">コピーに失敗しました</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="card_browser_unavailable_when_notes_mode">「ノート」モードでは使用できません</string>
 </resources>
