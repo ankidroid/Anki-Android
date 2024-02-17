@@ -134,7 +134,7 @@
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
     <string name="sync_status_badge_summ">変更を行い、その変更をまだアップロードしていない場合、同期ボタンに目印を付けます</string>
     <string name="metered_sync_title" maxLength="41">Wi-Fi接続時以外の同期を許可</string>
-    <string name="metered_sync_summary">この設定を無効にすると、Wi-Fi以外の方法でインターネットに接続しているときに同期しようとすると、確認メッセージが表示されます</string>
+    <string name="metered_sync_summary">このオプションがオフの場合、Wi-Fi以外の方法でインターネットに接続しているときに同期しようとすると、確認メッセージが表示されます</string>
     <string name="backup_limits_frequency">頻度</string>
     <string name="backup_limits_lifetime">保管期間</string>
     <string name="app_theme" maxLength="41">テーマ</string>
@@ -205,7 +205,7 @@
     <string name="accessibility" maxLength="41">アクセシビリティ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">クリップボード画像をPNG形式で貼り付け</string>
-    <string name="paste_as_png_summary">既定の設定ではAnkiDroidはディスク領域の節約のため、クリップボードにある画像をJPG画像として貼り付けます。 このオプションを有効にすると、JPG画像ではなくPNG画像として貼り付けます</string>
+    <string name="paste_as_png_summary">既定の設定ではAnkiDroidはディスク領域の節約のため、クリップボードにある画像をJPG画像として貼り付けます。このオプションをオンにすると、JPG画像ではなくPNG画像として貼り付けます</string>
     <string name="exit_via_double_tap_back" maxLength="41">学習終了・アプリ終了には「戻る」操作２回</string>
     <string name="exit_via_double_tap_back_summ">学習画面とデッキリスト画面でそれぞれ、意図せず画面を閉じてしまう操作ミスを起こりにくくします</string>
     <!-- Allow all files in media imports -->
