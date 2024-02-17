@@ -48,6 +48,9 @@ import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.notetype.RenameCardTemplateDialog
+import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.previewer.TemplatePreviewerArguments
+import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.annotations.NeedsTest
@@ -630,7 +633,29 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return if (nid != -1L) col.getNote(nid) else null
         }
 
+        private suspend fun openNewPreviewer() {
+            val notetype = templateEditor.tempModel!!.notetype
+            val notetypeFile = NotetypeFile(requireContext(), notetype)
+            val ord = templateEditor.viewPager.currentItem
+            val note = withCol { getNote(this) ?: Note.fromNotetypeId(this, notetype.id) }
+            val args = TemplatePreviewerArguments(
+                notetypeFile = notetypeFile,
+                id = note.id,
+                ord = ord,
+                fields = note.fields,
+                tags = note.tags,
+                fillEmpty = true
+            )
+            val intent = TemplatePreviewerFragment.getIntent(requireContext(), args)
+            startActivity(intent)
+            return
+        }
+
         fun performPreview() {
+            if (requireContext().sharedPrefs().getBoolean("new_previewer", false)) {
+                launchCatchingTask { openNewPreviewer() }
+                return
+            }
             val col = templateEditor.getColUnsafe
             val tempModel = templateEditor.tempModel
             Timber.i("CardTemplateEditor:: Preview on tab %s", templateEditor.viewPager.currentItem)
