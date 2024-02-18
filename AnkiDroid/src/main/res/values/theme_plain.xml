@@ -6,11 +6,12 @@
     <color name="theme_plain_accent">#607D8B</color>
     <color name="theme_plain_primary_text">#212121</color>
 
-    <style name="Theme_Light.Plain">
+    <style name="Base.Theme.Light.Plain">
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_plain_primary</item>
         <item name="colorPrimaryDark">@color/theme_plain_primary_dark</item>
         <item name="colorAccent">@color/theme_plain_accent</item>
+        <item name="colorSurfaceContainer">#0F9E9E9E</item>
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
@@ -72,4 +73,6 @@
         <item name="progressDialogButtonTextColor">@color/theme_plain_primary</item>
 
     </style>
+
+    <style name="Theme_Light.Plain" parent="Base.Theme.Light.Plain"/>
 </resources>
