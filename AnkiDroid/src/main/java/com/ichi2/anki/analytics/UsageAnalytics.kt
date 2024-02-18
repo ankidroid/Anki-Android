@@ -581,6 +581,15 @@ object UsageAnalytics {
         "customButtonSaveWhiteboard",
         "customButtonWhiteboardPenColor",
         "customButtonShowHideWhiteboard",
-        "customButtonClearWhiteboard"
+        "customButtonClearWhiteboard",
+        "customButtonUserAction1",
+        "customButtonUserAction2",
+        "customButtonUserAction3",
+        "customButtonUserAction4",
+        "customButtonUserAction5",
+        "customButtonUserAction6",
+        "customButtonUserAction7",
+        "customButtonUserAction8",
+        "customButtonUserAction9"
     )
 }

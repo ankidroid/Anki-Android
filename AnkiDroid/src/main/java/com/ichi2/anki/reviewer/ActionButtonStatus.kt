@@ -56,6 +56,15 @@ class ActionButtonStatus {
         setupButton(preferences, R.id.action_toggle_stylus, "customButtonToggleStylus", SHOW_AS_ACTION_IF_ROOM)
         setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM)
+        setupButton(preferences, R.id.user_action_1, "customButtonUserAction1", MENU_DISABLED)
+        setupButton(preferences, R.id.user_action_2, "customButtonUserAction2", MENU_DISABLED)
+        setupButton(preferences, R.id.user_action_3, "customButtonUserAction3", MENU_DISABLED)
+        setupButton(preferences, R.id.user_action_4, "customButtonUserAction4", MENU_DISABLED)
+        setupButton(preferences, R.id.user_action_5, "customButtonUserAction5", MENU_DISABLED)
+        setupButton(preferences, R.id.user_action_6, "customButtonUserAction6", MENU_DISABLED)
+        setupButton(preferences, R.id.user_action_7, "customButtonUserAction7", MENU_DISABLED)
+        setupButton(preferences, R.id.user_action_8, "customButtonUserAction8", MENU_DISABLED)
+        setupButton(preferences, R.id.user_action_9, "customButtonUserAction9", MENU_DISABLED)
     }
 
     private fun setupButton(preferences: SharedPreferences, @IdRes resourceId: Int, preferenceName: String, showAsActionType: Int) {

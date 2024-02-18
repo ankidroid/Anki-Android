@@ -484,6 +484,15 @@ open class Reviewer :
                 Timber.i("Card Viewer:: Card Info")
                 openCardInfo()
             }
+            R.id.user_action_1 -> userAction(1)
+            R.id.user_action_2 -> userAction(2)
+            R.id.user_action_3 -> userAction(3)
+            R.id.user_action_4 -> userAction(4)
+            R.id.user_action_5 -> userAction(5)
+            R.id.user_action_6 -> userAction(6)
+            R.id.user_action_7 -> userAction(7)
+            R.id.user_action_8 -> userAction(8)
+            R.id.user_action_9 -> userAction(9)
             else -> {
                 return super.onOptionsItemSelected(item)
             }
