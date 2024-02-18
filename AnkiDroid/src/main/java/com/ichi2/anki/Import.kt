@@ -49,7 +49,9 @@ fun interface ImportColpkgListener {
 fun DeckPicker.onSelectedPackageToImport(data: Intent) {
     val importResult = ImportUtils.handleFileImport(this, data)
     if (!importResult.isSuccess) {
-        ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, false)
+        runOnUiThread {
+            ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, false)
+        }
     }
 }
 
