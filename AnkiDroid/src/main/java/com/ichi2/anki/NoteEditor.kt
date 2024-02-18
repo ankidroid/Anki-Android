@@ -366,6 +366,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             changed = savedInstanceState.getBoolean(NOTE_CHANGED_EXTRA_KEY)
         } else {
             if (intentLaunchedWithImage(intent)) {
+                Timber.i("Intent contained an image")
                 intent.putExtra(EXTRA_CALLER, CALLER_ADD_IMAGE)
             }
             caller = intent.getIntExtra(EXTRA_CALLER, CALLER_NO_CALLER)
@@ -408,13 +409,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         setNavigationBarColor(R.attr.toolbarBackgroundColor)
     }
 
+    @NeedsTest("15566: sharing text should be processed as text")
     private fun intentLaunchedWithImage(intent: Intent): Boolean {
-        val action = intent.action
-        return action == Intent.ACTION_SEND || (
-            Intent.ACTION_VIEW == action &&
-                !ImportUtils.isInvalidViewIntent(intent) &&
-                intent.resolveMimeType()?.startsWith("image/") == true
-            )
+        if (intent.action != Intent.ACTION_SEND && intent.action != Intent.ACTION_VIEW) return false
+        if (ImportUtils.isInvalidViewIntent(intent)) return false
+        return intent.resolveMimeType()?.startsWith("image/") == true
     }
 
     @NeedsTest("Test when the user directly passes image to the edit note field")
