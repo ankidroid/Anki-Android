@@ -252,8 +252,6 @@
     <string name="analytics_summ">Podeu contribuir a AnkiDroid ajudant a l\'equip de desenvolupament a saber quines funcions utilitzen els usuaris</string>
     <string name="note_editor_replace_newlines" maxLength="41">Substitueix noves línies per HTML</string>
     <string name="note_editor_replace_newlines_summ">A l\'editor de notes, converteix les instàncies de &lt;br&gt; a línies noves quan s\'editi una carta.</string>
-    <string name="no_code_formatting" maxLength="41">Format de resposta escrita simple</string>
-    <string name="no_code_formatting_summ">Es corregeixen els ‘􏿾’ que apareixen als resultats de les respostes escrites</string>
     <string name="type_in_answer_focus" maxLength="41">Enfoca \'escriu resposta\'</string>
     <string name="type_in_answer_focus_summ">Enfoca automàticament el camp \'escriu resposta\' al revisor</string>
     <!-- About -->

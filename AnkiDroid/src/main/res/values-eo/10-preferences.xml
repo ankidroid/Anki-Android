@@ -252,8 +252,6 @@
     <string name="analytics_summ">Vi povas kontribui al AnkiDroid per helpi al la disvovla teamo scii kiujn funkciojn homoj uzas</string>
     <string name="note_editor_replace_newlines" maxLength="41">Anstataŭigi novajn liniojn en HTML</string>
     <string name="note_editor_replace_newlines_summ">En la kart‑redaktilo, konverti ĉiujn &lt;br&gt; al novaj linioj dum redakti karton.</string>
-    <string name="no_code_formatting" maxLength="41">Simpla aranĝo de enigita respondo</string>
-    <string name="no_code_formatting_summ">Ripari “􏿾” aperantan en enigita respondo</string>
     <string name="type_in_answer_focus" maxLength="41">Marki kampon “enigi respondon”</string>
     <string name="type_in_answer_focus_summ">Aŭtomate marki la kampon “enigi respondon” dum ripetado</string>
     <!-- About -->

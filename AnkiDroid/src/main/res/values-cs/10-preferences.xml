@@ -256,8 +256,6 @@
     <string name="analytics_summ">Můžete přispět do AnkiDroid tím, že pomůžete vývojovému týmu dozvědět se, které funkce lidé používají</string>
     <string name="note_editor_replace_newlines" maxLength="41">Nahradit nové řádky HTML</string>
     <string name="note_editor_replace_newlines_summ">V editoru poznámek převede při úpravě karty každý výskyt &lt;br&gt; na nový řádek</string>
-    <string name="no_code_formatting" maxLength="41">Jednoduché formátování napsané odpovědi</string>
-    <string name="no_code_formatting_summ">Opraví „􏿾“, které se vyskytuje ve výsledcích napsaných odpovědí</string>
     <string name="type_in_answer_focus" maxLength="41">Vybrat „napište odpověď“</string>
     <string name="type_in_answer_focus_summ">Automaticky vybrat pole „napište odpověď“ při opakování</string>
     <!-- About -->

@@ -260,8 +260,6 @@
     <string name="analytics_summ">تستطيع المساهمة في أنكيدرويد من خلال مساعدة فريق التطوير على معرفة الميزات التي يستخدمها الناس</string>
     <string name="note_editor_replace_newlines" maxLength="41">استبدال السطور الجديدة بـ HTML</string>
     <string name="note_editor_replace_newlines_summ">في محرر الملحوظات، حوّل أي ظهور لـ &lt;br&gt; إلى سطور جديدة عند تحرير بطاقة.</string>
-    <string name="no_code_formatting" maxLength="41">تنسيق الإجابة الكتابية البسيطة</string>
-    <string name="no_code_formatting_summ">يُصلِح وجود ‘􏿾’ في نتائِج الأجابة المكتوبة</string>
     <string name="type_in_answer_focus" maxLength="41">التركيز على «أدخل الإجابة»</string>
     <string name="type_in_answer_focus_summ">التركيز التلقائي على حقل «أدخل الإجابة» في شاشة المراجعة</string>
     <!-- About -->

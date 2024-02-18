@@ -251,8 +251,6 @@
     <string name="analytics_summ">Anda boleh sumbang kepada AnkiDroid dengan membantu para pembangun lihat ciri-ciri yang orang ramai guna</string>
     <string name="note_editor_replace_newlines" maxLength="41">Ganti baris baru dengan HTML</string>
     <string name="note_editor_replace_newlines_summ">Dalam Penyunting Nota, tukar mana-mana &lt;br&gt; kepada baris baru apabila sunting kad.</string>
-    <string name="no_code_formatting" maxLength="41">Format jawapan taip ringkas</string>
-    <string name="no_code_formatting_summ">Betulkan ‘􏿾’ yang muncul dalam keputusan jawapan taip</string>
     <string name="type_in_answer_focus" maxLength="41">Fokus ‘taip dalam jawapan’</string>
     <string name="type_in_answer_focus_summ">Fokus ‘taip dalam jawapan’ secara automatik dalam penyemak</string>
     <!-- About -->

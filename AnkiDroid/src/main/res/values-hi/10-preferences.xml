@@ -249,8 +249,6 @@
     <string name="analytics_summ">आप AnkiDroid में योगदान कर सकते हैं, आप AnkiDroid Team को यह देखने में मदद कर सकते हैं कि लोग किन सुविधाओं का उपयोग करते हैं</string>
     <string name="note_editor_replace_newlines" maxLength="41">न्यूलाइन को हटम्ल से बदलें</string>
     <string name="note_editor_replace_newlines_summ">नोट संपादक में, &lt;br&gt; के किसी भी उदाहरण को रूपांतरित करें। किसी कार्ड को संपादित करते समय नई पंक्तियों में।</string>
-    <string name="no_code_formatting" maxLength="41">टेक्स्ट इनपुट उत्तरों के लिए सरल फ़ॉन्ट का उपयोग करें</string>
-    <string name="no_code_formatting_summ">टाइप किए गए उत्तर परिणामों में प्रदर्शित होने वाले ‘􏿾’ को ठीक करता है</string>
     <string name="type_in_answer_focus" maxLength="41">\'उत्तर टाइप करें\' पर ध्यान दें</string>
     <string name="type_in_answer_focus_summ">यदि कार्ड में कोई फ़ील्ड है जहां आप कीबोर्ड का उपयोग करके उत्तर दर्ज कर सकते हैं, तो कर्सर स्वचालित रूप से रखा जाएगा ताकि आप तुरंत टेक्स्ट दर्ज कर सकें।</string>
     <!-- About -->

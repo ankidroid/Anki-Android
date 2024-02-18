@@ -249,8 +249,6 @@
     <string name="analytics_summ">Bạn có thể đóng góp cho AnkiDroid bằng cách giúp nhóm phát triển xem mọi người sử dụng những tính năng nào</string>
     <string name="note_editor_replace_newlines" maxLength="41">Thay thế dòng mới bằng HTML</string>
     <string name="note_editor_replace_newlines_summ">Trong Trình chỉnh sửa ghi chú, chuyển đổi thẻ &lt;br&gt; thành dòng mới khi chỉnh sửa thẻ.</string>
-    <string name="no_code_formatting" maxLength="41">Định dạng câu trả lời đã nhập đơn giản</string>
-    <string name="no_code_formatting_summ">Sửa lỗi ‘􏿾’ xuất hiện trong kết quả câu trả lời đã nhập</string>
     <string name="type_in_answer_focus" maxLength="41">Tập trung \'Nhập câu trả lời\'</string>
     <string name="type_in_answer_focus_summ">Tự động tập trung vào trường \"nhập câu trả lời\" trong trình đánh giá</string>
     <!-- About -->

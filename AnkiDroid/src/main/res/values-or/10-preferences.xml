@@ -252,8 +252,6 @@
     <string name="analytics_summ">ଲୋକମାନେ କେଉଁ ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟବହାର କରନ୍ତି ତାହା ଦେଖିବାରେ ଉନ୍ନୟନ ଦଳକୁ ସାହାଯ୍ୟ କରି ଆପଣ AnkiDroidରେ ଯୋଗଦାନ କରିପାରିବେ</string>
     <string name="note_editor_replace_newlines" maxLength="41">HTML ସହିତ ନୂତନ ଲାଇନ୍ ବଦଳାନ୍ତୁ</string>
     <string name="note_editor_replace_newlines_summ">ନୋଟ୍ ସମ୍ପାଦକରେ, ଏକ ପତ୍ର ସମ୍ପାଦନ କଲାବେଳେ ଯେଉଁଠି ବି &lt;br&gt; ଦେଖାଯାଏ ଏଇଟାକୁ ନୂଆ ଧାଡ଼ିରେ ପରିଣତ କରନ୍ତୁ।</string>
-    <string name="no_code_formatting" maxLength="41">ସରଳ ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫର୍ମାଟିଂ</string>
-    <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡ଼ିକରେ ଦେଖାଯାଉଥିବା ‘􏿾’ ଠିକ୍ କରେ</string>
     <string name="type_in_answer_focus" maxLength="41">‘ଉତ୍ତର ଟାଇପ୍ କର’ ଉପରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
     <string name="type_in_answer_focus_summ">ସମୀକ୍ଷକରେ ‘ଉତ୍ତର ଟାଇପ୍ କର’ କ୍ଷେତ୍ରକୁ ସ୍ୱଚାଳିତ ଭାଵେ କେନ୍ଦ୍ରୀଭୂତ କରିବା</string>
     <!-- About -->

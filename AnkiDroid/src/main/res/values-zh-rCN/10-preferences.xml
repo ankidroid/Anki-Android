@@ -250,8 +250,6 @@
     <string name="analytics_summ">您可以通过帮助开发团队了解用户使用哪些功能来帮助 AnkiDroid</string>
     <string name="note_editor_replace_newlines" maxLength="41">用 HTML 替换换行</string>
     <string name="note_editor_replace_newlines_summ">在笔记编辑器中，编辑卡片时将 &lt;br&gt; 的任何实例转换为换行。</string>
-    <string name="no_code_formatting" maxLength="41">简单输入的答案格式</string>
-    <string name="no_code_formatting_summ">修复在输入的答案结果中出现的「􏿾」</string>
     <string name="type_in_answer_focus" maxLength="41">聚焦「输入答案」</string>
     <string name="type_in_answer_focus_summ">自动聚焦在复习者的「输入答案」字段</string>
     <!-- About -->

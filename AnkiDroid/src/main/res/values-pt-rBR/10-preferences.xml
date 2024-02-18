@@ -252,8 +252,6 @@
     <string name="analytics_summ">Você pode contribuir para AnkiDroid ajudando a equipe de desenvolvimento a ver quais recursos as pessoas usam</string>
     <string name="note_editor_replace_newlines" maxLength="41">Substituir novas linhas por HTML</string>
     <string name="note_editor_replace_newlines_summ">No Editor de Notas, converta as ocorrências de &lt;br&gt; para uma quebra de linha ao editar um cartão.</string>
-    <string name="no_code_formatting" maxLength="41">Formatação de resposta a ser digitada</string>
-    <string name="no_code_formatting_summ">Corrige \'􏿾\' que aparecer nas respostas digitadas</string>
     <string name="type_in_answer_focus" maxLength="41">Focar em “tipo em resposta”</string>
     <string name="type_in_answer_focus_summ">Focar automaticamente no campo \"tipo de resposta\" no revisor</string>
     <!-- About -->

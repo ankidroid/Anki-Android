@@ -257,8 +257,6 @@
     <string name="analytics_summ">Вы можаце зрабіць свой унёсак у AnkiDroid дапамагаючы камандзе распрацоўшчыкаў зразумець, якія функцыі выкарыстоўваюць карыстальнікі праграмы.</string>
     <string name="note_editor_replace_newlines" maxLength="41">Замяняць новыя радкі на HTML</string>
     <string name="note_editor_replace_newlines_summ">Змяняць у рэдактары нататак любыя выпадкі &lt;br&gt; на новыя радкі падчас рэдагавання карткі.</string>
-    <string name="no_code_formatting" maxLength="41">Простае фарматаванне ўведзеных адказаў</string>
-    <string name="no_code_formatting_summ">Выпраўляе ‘􏿾’ падчас уводу адказу</string>
     <string name="type_in_answer_focus" maxLength="41">Пераключацца на поле \"Увесці адказ\"</string>
     <string name="type_in_answer_focus_summ">Падчас паўтарэння аўтаматычна пераключацца на поле \"Увесці адказ\"</string>
     <!-- About -->

@@ -252,8 +252,6 @@
     <string name="analytics_summ">Vous pouvez contribuer à AnkiDroid en aidant l\'équipe de développement à voir quelles fonctionnalités les gens utilisent</string>
     <string name="note_editor_replace_newlines" maxLength="41">Remplacer les nouvelles lignes par du HTML</string>
     <string name="note_editor_replace_newlines_summ">Dans l\'éditeur de notes, convertissez toutes les instances de &lt;br&gt; en nouvelles lignes lors de l\'édition d\'une carte.</string>
-    <string name="no_code_formatting" maxLength="41">Formatage simple des réponses saisies</string>
-    <string name="no_code_formatting_summ">Corrige ‘􏿾’ apparaissant dans les résultats de réponse saisie</string>
     <string name="type_in_answer_focus" maxLength="41">Mettre en évidence « Saisir la réponse »</string>
     <string name="type_in_answer_focus_summ">Mettre automatiquement en évidence le champ « Saisir la réponse » dans le vérificateur</string>
     <!-- About -->

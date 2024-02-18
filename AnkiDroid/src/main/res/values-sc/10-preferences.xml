@@ -252,8 +252,6 @@
     <string name="analytics_summ">Podes contribuire a AnkiDroid agiudende s\'iscuadra de isvilupu a bìdere ite funtzionalidades impreat sa gente</string>
     <string name="note_editor_replace_newlines" maxLength="41">Remplasa sas lìnias noas cun s\'HTML</string>
     <string name="note_editor_replace_newlines_summ">In s\'editore de notas cunverte cada istàntzia de &lt;br&gt; in lìnias noas cando ses modifichende una carta.</string>
-    <string name="no_code_formatting" maxLength="41">Formatatzione simpre de sa risposta</string>
-    <string name="no_code_formatting_summ">Acontzat su problema de ‘􏿾’ chi aparit in sos resurtados de sas rispostas iscritas</string>
     <string name="type_in_answer_focus" maxLength="41">Pone in evidèntzia ‘iscrie sa risposta’</string>
     <string name="type_in_answer_focus_summ">Pone in evidèntzia in automàticu su campu ‘iscrie sa risposta’ in su revisore</string>
     <!-- About -->

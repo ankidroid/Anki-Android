@@ -250,8 +250,6 @@
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます</string>
     <string name="note_editor_replace_newlines" maxLength="41">改行タグを改行に置き換えて表示</string>
     <string name="note_editor_replace_newlines_summ">「ノートを編集」画面のフィールドで、改行を表すHTMLタグ &lt;br&gt; を表示せず、実際に改行に置き換えた状態で表示します。新たに改行を行った場合も、その箇所に &lt;br&gt; タグを挿入しますが、そのタグは表示しません</string>
-    <string name="no_code_formatting" maxLength="41">文字入力回答でシンプルなフォントを使用</string>
-    <string name="no_code_formatting_summ">文字入力して解答する種類のカードで、解答結果に文字化け（‘􏿾’の表示）が起こる不具合を回避します</string>
     <string name="type_in_answer_focus" maxLength="41">文字入力欄にフォーカス</string>
     <string name="type_in_answer_focus_summ">答えをキーボード入力する欄がカード内にある場合、自動的にカーソルを入れて、すぐに文字を入力できる状態にします</string>
     <!-- About -->
@@ -270,16 +268,16 @@
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
     <string name="binding_add_axis">ジョイスティック/モーションコントローラーの動作を追加</string>
     <string name="axis_picker_move_joystick">ジョイスティック/モーションコントローラーを動かしてください</string>
-    <string name="user_action" maxLength="41">User action</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_action" maxLength="41">ユーザーアクション</string>
+    <string name="user_action_1" maxLength="41">ユーザーアクション 1</string>
+    <string name="user_action_2" maxLength="41">ユーザーアクション 2</string>
+    <string name="user_action_3" maxLength="41">ユーザーアクション 3</string>
+    <string name="user_action_4" maxLength="41">ユーザーアクション 4</string>
+    <string name="user_action_5" maxLength="41">ユーザーアクション 5</string>
+    <string name="user_action_6" maxLength="41">ユーザーアクション 6</string>
+    <string name="user_action_7" maxLength="41">ユーザーアクション 7</string>
+    <string name="user_action_8" maxLength="41">ユーザーアクション 8</string>
+    <string name="user_action_9" maxLength="41"></string>
     <!-- Select card side -->
     <string name="card_side_selection_title">カードの表面 (質問側) と裏面 (解答側) 、どちらでの操作ですか？</string>
     <string name="card_side_question">表面</string>

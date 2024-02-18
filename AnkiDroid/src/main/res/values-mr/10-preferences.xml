@@ -253,8 +253,6 @@
     <string name="analytics_summ">विकासकाला लोक कोणती वैशिष्ट्ये वापरतात हे पाहण्यात मदत करून आपण अंकीड्रोइडमध्ये योगदान देऊ शकता</string>
     <string name="note_editor_replace_newlines" maxLength="41">एचटीएमएलसह नवीनलाइन पुनर्स्थित करा</string>
     <string name="note_editor_replace_newlines_summ">टीप संपादकात, &lt; br &gt; ची कोणतीही घटना रूपांतरित करा. कार्ड संपादित करताना नवीन रेषांवर.</string>
-    <string name="no_code_formatting" maxLength="41">साधे टाइप केलेले उत्तर स्वरूपन</string>
-    <string name="no_code_formatting_summ">टाइप केलेल्या उत्तर निकालांमध्ये निराकरण ‘‘ ’</string>
     <string name="type_in_answer_focus" maxLength="41">लक्ष द्या ‘उत्तर टाइप करा’</string>
     <string name="type_in_answer_focus_summ">पुनरावलोकनकर्त्यामध्ये स्वयंचलितपणे ‘इनपुट टाईप’ फील्डवर लक्ष केंद्रित करा</string>
     <!-- About -->
