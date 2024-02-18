@@ -252,8 +252,6 @@
     <string name="analytics_summ">Je kunt bijdragen aan AnkiDroid door het ontwikkelteam te laten zien welke functies mensen gebruiken</string>
     <string name="note_editor_replace_newlines" maxLength="41">Nieuwe lijnen vervangen door HTML</string>
     <string name="note_editor_replace_newlines_summ">Zet in de memobewerker alle instanties van &lt;br&gt; om in nieuwe lijnen bij het bewerken van een kaart.</string>
-    <string name="no_code_formatting" maxLength="41">Eenvoudig getypte antwoordopmaak</string>
-    <string name="no_code_formatting_summ">Herstelt het verschijnen van \'􏿾\' in getypte antwoordresultaten</string>
     <string name="type_in_answer_focus" maxLength="41">Focus op ‘type in antwoord’</string>
     <string name="type_in_answer_focus_summ">Automatisch focussen op het ‘type in antwoord’ veld in de beoordelaar</string>
     <!-- About -->

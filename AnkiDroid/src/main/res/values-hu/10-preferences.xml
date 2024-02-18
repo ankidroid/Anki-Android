@@ -252,8 +252,6 @@
     <string name="analytics_summ">Hozzájárulhat az AnkiDroidhoz azáltal, hogy megmutatja a fejlesztői csapatnak, milyen funkciókat használnak az emberek</string>
     <string name="note_editor_replace_newlines" maxLength="41">Az újsor karakterek HTML helyettesítése</string>
     <string name="note_editor_replace_newlines_summ">A megjegyzés szerkesztőben kártya szerkesztéskor a &lt;br&gt; átcseréli újsor karakterre.</string>
-    <string name="no_code_formatting" maxLength="41">Begépelt válasz egyszerű formázása</string>
-    <string name="no_code_formatting_summ">Javítja a megjelenő ‘􏿾’-t a begépelt válaszban</string>
     <string name="type_in_answer_focus" maxLength="41">\'válasz begépelés\' kiválasztás</string>
     <string name="type_in_answer_focus_summ">Automatikusan a \'válasz begépelés\' mezőre ugrik a kártya ismétlésekor</string>
     <!-- About -->

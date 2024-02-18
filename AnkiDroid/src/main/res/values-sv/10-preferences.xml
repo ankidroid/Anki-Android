@@ -252,8 +252,6 @@
     <string name="analytics_summ">Du kan bidra till AnkiDroid genom att hjälpa utvecklingslaget se vilka funktioner som används</string>
     <string name="note_editor_replace_newlines" maxLength="41">Ersätt radbrytningar med HTML</string>
     <string name="note_editor_replace_newlines_summ">I anteckningsredigeraren, konvertera alla instanser av &lt;br&gt; till radbrytningar när du redigerar ett kort.</string>
-    <string name="no_code_formatting" maxLength="41">Enkel formattering för skrivet svar</string>
-    <string name="no_code_formatting_summ">Fixar ‘􏿾 ’ visas i skrivna svarsresultat</string>
     <string name="type_in_answer_focus" maxLength="41">Fokusera på ‘skriv in svar’</string>
     <string name="type_in_answer_focus_summ">Fokusera automatiskt på fältet ‘skriv in svar’ i granskaren</string>
     <!-- About -->

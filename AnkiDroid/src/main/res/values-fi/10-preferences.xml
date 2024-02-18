@@ -252,8 +252,6 @@
     <string name="analytics_summ">Voit auttaa AnkiDroidin kehitystiimiä ymmärtämään, mitä sovelluksen ominaisuuksia oikeasti käytetään</string>
     <string name="note_editor_replace_newlines" maxLength="41">Korvaa rivinvaihdot HTML:llä</string>
     <string name="note_editor_replace_newlines_summ">Muunna muistiinpanoeditorissa kaikki &lt;br&gt; -merkit rivinvaihdoiksi korttia muokattaessa.</string>
-    <string name="no_code_formatting" maxLength="41">Yksinkertainen kirjoitettavien vastausten muotoilu</string>
-    <string name="no_code_formatting_summ">Korjaa ongelman, jossa \"􏿾\" näkyy kirjoitettujen vastausten tuloksissa</string>
     <string name="type_in_answer_focus" maxLength="41">Kohdista \"kirjoita vastaus\" -kenttään</string>
     <string name="type_in_answer_focus_summ">Siirtää kohdistuksen automaattisesti \"kirjoita vastaus\" -kenttään kerrattaessa</string>
     <!-- About -->

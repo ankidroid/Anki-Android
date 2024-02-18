@@ -252,8 +252,6 @@
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
     <string name="note_editor_replace_newlines" maxLength="41">HTML ᱥᱟᱞᱟᱜ ᱱᱟᱣᱟᱞᱟᱹᱭᱤᱱ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="note_editor_replace_newlines_summ">ᱱᱳᱴ ᱮᱰᱤᱴᱚᱨ ᱨᱮ, ᱠᱟᱰ ᱮᱰᱤᱴ ᱡᱷᱚᱜ &lt;br&gt; ᱱᱟᱣᱟ ᱰᱟᱦᱟᱨ ᱛᱮ ᱤᱫᱤ ᱮᱢᱮ ।</string>
-    <string name="no_code_formatting" maxLength="41">ᱥᱚᱦᱚᱡᱽ ᱴᱟᱤᱯ ᱦᱩᱭᱟ ᱠᱟᱱ ᱞᱟᱹᱱᱟᱹᱭ ᱯᱷᱚᱨᱢᱟᱴᱤᱝ</string>
-    <string name="no_code_formatting_summ">ᱴᱟᱤᱯ ᱠᱟᱱ ᱞᱟᱹᱭ ᱨᱮᱡᱚᱞᱴᱨᱮ ᱧᱮᱞᱚᱜ ᱠᱟᱱ ‘􏿾’ ᱴᱷᱤᱠᱟᱭ</string>
     <string name="type_in_answer_focus" maxLength="41">ᱫᱷᱮᱭᱟᱱ ᱮᱢ ᱢᱮ \'ᱞᱟᱹᱱᱟᱹᱭ ᱴᱟᱤᱯ ᱨᱮ\'</string>
     <string name="type_in_answer_focus_summ">ᱧᱮᱧᱮᱞᱤᱭᱟᱹ ᱴᱷᱮᱱ \'ᱞᱟᱹᱱᱟᱹᱭ ᱴᱟᱤᱯ ᱢᱮ\' ᱴᱷᱟᱶ ᱨᱮ ᱟᱡᱟᱡ ᱛᱮ ᱫᱷᱮᱭᱟᱱ ᱮᱢ ᱢᱮ</string>
     <!-- About -->

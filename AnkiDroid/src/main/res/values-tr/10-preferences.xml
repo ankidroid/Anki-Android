@@ -252,8 +252,6 @@
     <string name="analytics_summ">Geliştirme ekibinin insanların hangi özellikleri kullandığını görmesine yardım ederek AnkiDroid\'e katkıda bulunabilirsiniz.</string>
     <string name="note_editor_replace_newlines" maxLength="41">Satırbaşlarını HTML\'le değiştir</string>
     <string name="note_editor_replace_newlines_summ">Not Düzenleyicide kart değiştirirken, bütün &lt;br&gt;leri satırbaşına çevir</string>
-    <string name="no_code_formatting" maxLength="41">Basit yazılı cevap formatı</string>
-    <string name="no_code_formatting_summ">Yazılı cevap sonuçlarında \"􏿾\" çıkmasını düzeltir</string>
     <string name="type_in_answer_focus" maxLength="41">\"Cevabı yaz\"a odaklan</string>
     <string name="type_in_answer_focus_summ">Çalışıcıda otomatik olarak \"Cevabı yaz\" alanına odaklan</string>
     <!-- About -->

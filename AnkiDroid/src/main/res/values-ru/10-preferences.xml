@@ -255,8 +255,6 @@
     <string name="analytics_summ">Отправляет информацию о функциях, которые предпочитают пользователи</string>
     <string name="note_editor_replace_newlines" maxLength="41">Заменять перенос строк на HTML</string>
     <string name="note_editor_replace_newlines_summ">Заменяет &lt;br&gt; в редакторе записей на перенос строки</string>
-    <string name="no_code_formatting" maxLength="41">Простое форматирование ответа</string>
-    <string name="no_code_formatting_summ">Исправляет «􏿾» при вводе ответа</string>
     <string name="type_in_answer_focus" maxLength="41">Переключать на «Ввести ответ»</string>
     <string name="type_in_answer_focus_summ">Во время учёбы автоматически переходит к полю «Ввести ответ»</string>
     <!-- About -->

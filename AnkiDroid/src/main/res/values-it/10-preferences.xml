@@ -252,8 +252,6 @@
     <string name="analytics_summ">Puoi contribuire ad AnkiDroid aiutando il team di sviluppo a vedere quali funzioni usano le persone</string>
     <string name="note_editor_replace_newlines" maxLength="41">Sostituisci le nuove righe con HTML</string>
     <string name="note_editor_replace_newlines_summ">Nell\'Editor delle Note, converti ogni istanza di &lt;br&gt; in newline quando modifichi una carta.</string>
-    <string name="no_code_formatting" maxLength="41">Formattazione semplice della risposta</string>
-    <string name="no_code_formatting_summ">Correzioni ‘􏿾’ che appaiono nei risultati delle risposte digitate</string>
     <string name="type_in_answer_focus" maxLength="41">Focalizza «digita la risposta»</string>
     <string name="type_in_answer_focus_summ">Focalizza automaticamente il campo «digita la risposta» nel revisore</string>
     <!-- About -->

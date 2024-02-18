@@ -251,8 +251,6 @@
     <string name="analytics_summ">Kamu bisa berkontribusi ke AnkiDroid dengan membantu tim pengembangan tahu fitur mana yang orang gunakan</string>
     <string name="note_editor_replace_newlines" maxLength="41">Ganti newlines dengan HTML</string>
     <string name="note_editor_replace_newlines_summ">Di Note Editor, konversikan bentuk apapun dari&lt;br&gt; menjadi neelones ketika mengedit sebuah kartu.</string>
-    <string name="no_code_formatting" maxLength="41">Format teks jawaban simpel</string>
-    <string name="no_code_formatting_summ">Membetulkan ‘􏿾’ yang muncul di hasil ketikan jawaban </string>
     <string name="type_in_answer_focus" maxLength="41">Fokus \'ketik di jawaban\'</string>
     <string name="type_in_answer_focus_summ">Fokuskan bagian \'ketik di jawaban\' secara otomatis di reviewer</string>
     <!-- About -->
