@@ -9,7 +9,7 @@
     <color name="theme_dark_drawer_row_current">#33999999</color>
     <color name="theme_dark_drawer_item">#DEFFFFFF</color>
 
-    <style name="Theme_Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
+    <style name="Base.Theme.Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
         <!-- Android colors -->
         <item name="colorPrimary">@color/material_blue_400</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -27,7 +27,7 @@
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">?android:attr/colorBackground</item>
-        <item name="colorSurfaceContainer">@color/faded_primary</item>
+        <item name="colorSurfaceContainer">#0F42A5F5</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
         <!-- Widget colors -->
         <item name="widgetColorActivated">?attr/colorAccent</item>
@@ -155,4 +155,6 @@
         <item name="alertDialogTheme">@style/AlertDialogStyle</item>
 
     </style>
+
+    <style name="Theme_Dark" parent="Base.Theme.Dark"/>
 </resources>

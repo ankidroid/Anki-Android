@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
-    <style name="Theme_Light" parent="@style/Theme.Material3.Light.NoActionBar">
+    <style name="Base.Theme.Light" parent="@style/Theme.Material3.Light.NoActionBar">
         <!-- Android colors -->
         <item name="colorPrimary">@color/material_light_blue_500</item>
         <item name="colorPrimaryDark">@color/material_light_blue_700</item>
@@ -13,7 +13,7 @@
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">?android:attr/colorBackground</item>
-        <item name="colorSurfaceContainer">@color/faded_primary</item>
+        <item name="colorSurfaceContainer">#0F03A9F4</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
 
         <item name="android:textColor">@color/text_color_light</item>
@@ -143,4 +143,6 @@
         <item name="progressDialogButtonTextColor">@color/material_light_blue_500</item>
 
     </style>
+
+    <style name="Theme_Light" parent="Base.Theme.Light"/>
 </resources>
