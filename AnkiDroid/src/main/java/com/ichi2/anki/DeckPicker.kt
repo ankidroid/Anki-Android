@@ -303,7 +303,9 @@ open class DeckPicker :
         ActivityResultContracts.StartActivityForResult(),
         DeckPickerActivityResultCallback {
             if (it.resultCode == RESULT_OK) {
-                onSelectedPackageToImport(it.data!!)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    onSelectedPackageToImport(it.data!!)
+                }
             }
         }
     )
