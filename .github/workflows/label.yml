@@ -97,6 +97,7 @@ jobs:
                 "16-multimedia-editor",
                 "17-model-manager",
                 "18-standard-models",
+                "20-search-preference",
                 "marketdescription",
                 "ankidroid-titles",
             ];
