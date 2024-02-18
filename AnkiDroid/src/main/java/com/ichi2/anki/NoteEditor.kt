@@ -409,13 +409,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         setNavigationBarColor(R.attr.toolbarBackgroundColor)
     }
 
-    @NeedsTest("15566: sharing text should be processed as text")
-    private fun intentLaunchedWithImage(intent: Intent): Boolean {
-        if (intent.action != Intent.ACTION_SEND && intent.action != Intent.ACTION_VIEW) return false
-        if (ImportUtils.isInvalidViewIntent(intent)) return false
-        return intent.resolveMimeType()?.startsWith("image/") == true
-    }
-
     @NeedsTest("Test when the user directly passes image to the edit note field")
     private fun handleImageIntent(data: Intent) {
         val imageUri = if (data.action == Intent.ACTION_SEND) {
@@ -2391,6 +2384,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         private fun shouldReplaceNewlines(): Boolean {
             return AnkiDroidApp.instance.sharedPrefs()
                 .getBoolean(PREF_NOTE_EDITOR_NEWLINE_REPLACE, true)
+        }
+
+        @VisibleForTesting
+        @CheckResult
+        fun intentLaunchedWithImage(intent: Intent): Boolean {
+            if (intent.action != Intent.ACTION_SEND && intent.action != Intent.ACTION_VIEW) return false
+            if (ImportUtils.isInvalidViewIntent(intent)) return false
+            return intent.resolveMimeType()?.startsWith("image/") == true
         }
 
         private fun shouldHideToolbar(): Boolean {
