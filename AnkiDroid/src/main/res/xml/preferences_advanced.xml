@@ -70,13 +70,6 @@
                 android:summary="@string/note_editor_replace_newlines_summ"
                 android:title="@string/note_editor_replace_newlines"
                 />
-            <!-- #7896 - Workaround for old webviews which could not render some characters in a <code> block
-            due to problems with the default monospace font handling -->
-            <SwitchPreferenceCompat
-                android:defaultValue="false"
-                android:key="@string/no_code_formatting_key"
-                android:summary="@string/no_code_formatting_summ"
-                android:title="@string/no_code_formatting" />
             <!-- #8424 - allow users to decide if they want to focus the EditText
                 Note: this functionality is already disabled if useInputTag is enabled
                 UseInputTag: has had `disableDependentsState` set, so this is disabled

@@ -38,7 +38,6 @@ import java.util.regex.Pattern
  */
 class TypeAnswer(
     val useInputTag: Boolean,
-    val doNotUseCodeFormatting: Boolean,
     val autoFocus: Boolean
 ) {
 
@@ -198,10 +197,7 @@ class TypeAnswer(
         val sb = StringBuilder()
         fun append(@Language("HTML") html: String) = sb.append(html)
 
-        var comparisonText = CollectionManager.compareAnswer(correctAnswer, userAnswer)
-        if (doNotUseCodeFormatting) {
-            comparisonText = "$comparisonText<style>code.typeans { font-family: sans-serif; }</style>"
-        }
+        val comparisonText = CollectionManager.compareAnswer(correctAnswer, userAnswer)
         append(Matcher.quoteReplacement(comparisonText))
         return m.replaceAll(sb.toString())
     }
@@ -213,7 +209,6 @@ class TypeAnswer(
         fun createInstance(preferences: SharedPreferences): TypeAnswer {
             return TypeAnswer(
                 useInputTag = preferences.getBoolean("useInputTag", false),
-                doNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false),
                 autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", true)
             )
         }

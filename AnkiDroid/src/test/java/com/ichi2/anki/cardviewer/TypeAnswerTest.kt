@@ -251,7 +251,6 @@ $!"""
 
     private fun typeAnsAnswerFilter(answer: String, correctAnswer: String, userAnswer: String): String =
         TypeAnswer(
-            doNotUseCodeFormatting = false,
             useInputTag = false,
             autoFocus = false
         ).filterAnswer(answer, correctAnswer, userAnswer)
