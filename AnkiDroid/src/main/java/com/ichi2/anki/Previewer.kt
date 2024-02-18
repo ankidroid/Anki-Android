@@ -198,7 +198,6 @@ class Previewer : AbstractFlashcardViewer() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putLongArray("cardList", cardList.toLongArray())
         outState.putInt("index", index)
         outState.putBoolean("showingAnswer", showingAnswer)
         outState.putBoolean("reloadRequired", reloadRequired)
