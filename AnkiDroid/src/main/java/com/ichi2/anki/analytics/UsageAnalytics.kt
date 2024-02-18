@@ -555,7 +555,6 @@ object UsageAnalytics {
         "useInputTag", // Type answer into the card
         "disableExtendedTextUi", // Disable Single-Field Edit Mode
         "noteEditorNewlineReplace", // Replace newlines with HTML
-        "noCodeFormatting", // Simple typed answer formatting
         "autoFocusTypeInAnswer", // Focus ‘type in answer’
         "mediaImportAllowAllFiles", // Allow all files in media imports
         "providerEnabled", // Enable AnkiDroid API

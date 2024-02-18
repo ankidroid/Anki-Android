@@ -98,6 +98,7 @@ object PreferenceUpgradeService {
                 yield(RemoveReviewerETA())
                 yield(SetShowDeckTitle())
                 yield(ResetAnalyticsOptIn())
+                yield(RemoveNoCodeFormatting())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -493,6 +494,11 @@ object PreferenceUpgradeService {
         internal class ResetAnalyticsOptIn : PreferenceUpgrade(17) {
             override fun upgrade(preferences: SharedPreferences) =
                 preferences.edit { remove("analyticsOptIn") }
+        }
+
+        internal class RemoveNoCodeFormatting : PreferenceUpgrade(18) {
+            override fun upgrade(preferences: SharedPreferences) =
+                preferences.edit { remove("noCodeFormatting") }
         }
     }
 }
