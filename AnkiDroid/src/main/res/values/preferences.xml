@@ -70,6 +70,15 @@
     <string name="custom_button_whiteboard_pen_color_key">customButtonWhiteboardPenColor</string>
     <string name="custom_button_show_hide_whiteboard_key">customButtonShowHideWhiteboard</string>
     <string name="custom_button_clear_whiteboard_key">customButtonClearWhiteboard</string>
+    <string name="custom_button_user_action_1_key">customButtonUserAction1</string>
+    <string name="custom_button_user_action_2_key">customButtonUserAction2</string>
+    <string name="custom_button_user_action_3_key">customButtonUserAction3</string>
+    <string name="custom_button_user_action_4_key">customButtonUserAction4</string>
+    <string name="custom_button_user_action_5_key">customButtonUserAction5</string>
+    <string name="custom_button_user_action_6_key">customButtonUserAction6</string>
+    <string name="custom_button_user_action_7_key">customButtonUserAction7</string>
+    <string name="custom_button_user_action_8_key">customButtonUserAction8</string>
+    <string name="custom_button_user_action_9_key">customButtonUserAction9</string>
     <!-- Controls -->
     <string name="pref_controls_screen_key">controlsScreen</string>
     <string name="gestures_preference">gestures</string>
