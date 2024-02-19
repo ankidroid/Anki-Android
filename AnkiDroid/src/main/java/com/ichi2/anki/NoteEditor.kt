@@ -1720,6 +1720,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun setDuplicateFieldStyles() {
+        // #15579 can be null if switching between two image occlusion types
+        if (mEditFields == null) return
         val field = mEditFields!![0]
         // Keep copy of current internal value for this field.
         val oldValue = mEditorNote!!.fields[0]

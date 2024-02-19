@@ -358,7 +358,6 @@ class NoteEditorTest : RobolectricTest() {
         }
     }
 
-    @Ignore("15579")
     @Test
     fun `can switch two image occlusion note types 15579`() {
         val otherOcclusion = getSecondImageOcclusionNoteType()
