@@ -37,9 +37,14 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import timber.log.Timber
-import java.util.function.Consumer
 
-// TODO: Use snackbars instead of toasts: https://github.com/ankidroid/Anki-Android/pull/12139#issuecomment-1224963182
+/**
+ * A dialog which manages the creation of decks, subdecks and filtered decks.
+ *
+ * Also used for deck renames: [DeckDialogType.RENAME_DECK]
+ *
+ * required property: [onNewDeckCreated]. Called on successful creation of a deck
+ */
 @NeedsTest("Ensure a toast is shown on a successful action")
 class CreateDeckDialog(
     private val context: Context,
@@ -48,7 +53,7 @@ class CreateDeckDialog(
     private val parentId: Long?
 ) {
     private var previousDeckName: String? = null
-    private var onNewDeckCreated: Consumer<Long>? = null
+    lateinit var onNewDeckCreated: ((DeckId) -> Unit)
     private var initialDeckName = ""
     private var shownDialog: AlertDialog? = null
 
@@ -56,7 +61,7 @@ class CreateDeckDialog(
         FILTERED_DECK, DECK, SUB_DECK, RENAME_DECK
     }
 
-    private val col
+    private val getColUnsafe
         get() = CollectionHelper.instance.getColUnsafe(context)!!
 
     suspend fun showFilteredDeckDialog() {
@@ -103,15 +108,11 @@ class CreateDeckDialog(
     private fun fullyQualifyDeckName(dialogText: CharSequence) =
         when (deckDialogType) {
             DeckDialogType.DECK, DeckDialogType.FILTERED_DECK, DeckDialogType.RENAME_DECK -> dialogText.toString()
-            DeckDialogType.SUB_DECK -> col.decks.getSubdeckName(parentId!!, dialogText.toString())
+            DeckDialogType.SUB_DECK -> getColUnsafe.decks.getSubdeckName(parentId!!, dialogText.toString())
         }
 
-    fun closeDialog() {
-        shownDialog?.dismiss()
-    }
-
     fun createSubDeck(did: DeckId, deckName: String?) {
-        val deckNameWithParentName = col.decks.getSubdeckName(did, deckName)
+        val deckNameWithParentName = getColUnsafe.decks.getSubdeckName(did, deckName)
         createDeck(deckNameWithParentName!!)
     }
 
@@ -124,15 +125,16 @@ class CreateDeckDialog(
             Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName)
             displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
         }
-        closeDialog()
+        shownDialog?.dismiss()
     }
 
     fun createFilteredDeck(deckName: String): Boolean {
         try {
             // create filtered deck
             Timber.i("CreateDeckDialog::createFilteredDeck...")
-            val newDeckId = col.decks.newDyn(deckName)
-            onNewDeckCreated!!.accept(newDeckId)
+            val newDeckId = getColUnsafe.decks.newDyn(deckName)
+            Timber.d("Created filtered deck '%s'; id: %d", deckName, newDeckId)
+            onNewDeckCreated(newDeckId)
         } catch (ex: BackendDeckIsFilteredException) {
             displayFeedback(ex.localizedMessage ?: ex.message ?: "", Snackbar.LENGTH_LONG)
             return false
@@ -144,8 +146,9 @@ class CreateDeckDialog(
         try {
             // create normal deck or sub deck
             Timber.i("CreateDeckDialog::createNewDeck")
-            val newDeckId = col.decks.id(deckName)
-            onNewDeckCreated!!.accept(newDeckId)
+            val newDeckId = getColUnsafe.decks.id(deckName)
+            Timber.d("Created deck '%s'; id: %d", deckName, newDeckId)
+            onNewDeckCreated(newDeckId)
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             Timber.w(filteredAncestor)
             return false
@@ -178,14 +181,15 @@ class CreateDeckDialog(
     fun renameDeck(newDeckName: String) {
         val newName = newDeckName.replace("\"".toRegex(), "")
         if (!Decks.isValidDeckName(newName)) {
-            Timber.i("CreateDeckDialog::renameDeck not renaming deck to invalid name '%s'", newName)
+            Timber.w("CreateDeckDialog::renameDeck not renaming deck to invalid name")
+            Timber.d("invalid deck name: %s", newName)
             displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
         } else if (newName != previousDeckName) {
             try {
-                val decks = col.decks
+                val decks = getColUnsafe.decks
                 val deckId = decks.id(previousDeckName!!)
                 decks.rename(decks.get(deckId)!!, newName)
-                onNewDeckCreated!!.accept(deckId)
+                onNewDeckCreated(deckId)
                 // 11668: Display feedback if a deck is renamed
                 displayFeedback(context.getString(R.string.deck_renamed))
             } catch (e: BackendDeckIsFilteredException) {
@@ -202,9 +206,5 @@ class CreateDeckDialog(
         } else {
             showThemedToast(context, message, duration == Snackbar.LENGTH_SHORT)
         }
-    }
-
-    fun setOnNewDeckCreated(c: Consumer<Long>?) {
-        onNewDeckCreated = c
     }
 }

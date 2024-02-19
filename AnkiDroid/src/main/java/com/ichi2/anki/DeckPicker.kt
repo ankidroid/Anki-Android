@@ -1097,7 +1097,7 @@ open class DeckPicker :
 
     fun createFilteredDialog() {
         val createFilteredDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
-        createFilteredDeckDialog.setOnNewDeckCreated {
+        createFilteredDeckDialog.onNewDeckCreated = {
             // a filtered deck was created
             openFilteredDeckOptions()
         }
@@ -2110,7 +2110,7 @@ open class DeckPicker :
         val currentName = getColUnsafe.decks.name(did)
         val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null)
         createDeckDialog.deckName = currentName
-        createDeckDialog.setOnNewDeckCreated {
+        createDeckDialog.onNewDeckCreated = {
             dismissAllDialogFragments()
             deckListAdapter.notifyDataSetChanged()
             updateDeckList()
@@ -2234,7 +2234,7 @@ open class DeckPicker :
 
     fun createSubDeckDialog(did: DeckId) {
         val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, did)
-        createDeckDialog.setOnNewDeckCreated {
+        createDeckDialog.onNewDeckCreated = {
             // a deck was created
             dismissAllDialogFragments()
             deckListAdapter.notifyDataSetChanged()

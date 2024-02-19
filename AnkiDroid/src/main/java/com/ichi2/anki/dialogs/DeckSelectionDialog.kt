@@ -154,12 +154,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         launchCatchingTask {
             val parentId = withCol { decks.id(parentDeckPath) }
             val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId)
-            createDeckDialog.setOnNewDeckCreated { id: Long? ->
+            createDeckDialog.onNewDeckCreated = { id: DeckId ->
                 // a sub deck was created
                 launchCatchingTask {
-                    val name = withCol {
-                        decks.name(id!!)
-                    }
+                    val name = withCol { decks.name(id) }
                     selectDeckWithDeckName(name)
                 }
             }
@@ -169,12 +167,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
     private fun showDeckDialog() {
         val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
-        // todo
-        // setOnNewDeckCreated parameter to be made non null
-        createDeckDialog.setOnNewDeckCreated { id: Long? ->
+        createDeckDialog.onNewDeckCreated = { id: DeckId ->
             // a deck was created
             launchCatchingTask {
-                val name = withCol { decks.name(id!!) }
+                val name = withCol { decks.name(id) }
                 selectDeckWithDeckName(name)
             }
         }
