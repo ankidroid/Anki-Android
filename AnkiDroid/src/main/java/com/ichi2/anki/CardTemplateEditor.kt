@@ -197,7 +197,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         return tempModel != null && tempModel!!.notetype.toString() != oldModel.toString()
     }
 
-    private fun showDiscardChangesDialog() = DiscardChangesDialog.showDialog(this) {
+    private fun showDiscardChangesDialog() = DiscardChangesDialog.showDialog(this, getString(R.string.discard), CollectionManager.TR.addingKeepEditing(), CollectionManager.TR.addingDiscardCurrentInput()) {
         Timber.i("TemplateEditor:: OK button pressed to confirm discard changes")
         // Clear the edited model from any cache files, and clear it from this objects memory to discard changes
         CardTemplateNotetype.clearTempModelFiles()

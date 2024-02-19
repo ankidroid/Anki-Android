@@ -55,7 +55,7 @@ class DeckOptions : PageFragment() {
     private val onBackSaveCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             Timber.v("DeckOptions: showing 'discard changes'")
-            DiscardChangesDialog.showDialog(requireContext()) {
+            DiscardChangesDialog.showDialog(requireContext(), getString(R.string.discard), CollectionManager.TR.addingKeepEditing(), CollectionManager.TR.addingDiscardCurrentInput()) {
                 Timber.i("OK button pressed to confirm discard changes")
                 this.isEnabled = false
                 requireActivity().onBackPressedDispatcher.onBackPressed()
