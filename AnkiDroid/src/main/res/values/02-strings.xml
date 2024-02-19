@@ -107,6 +107,7 @@
     <string name="select">Select</string>
     <string name="field_remapping">%1$s (from “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+    <string name="missing_note_type">No note type found</string>
 
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
