@@ -154,38 +154,24 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         launchCatchingTask {
             val parentId = withCol { decks.id(parentDeckPath) }
             val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId)
-            createDeckDialog.onNewDeckCreated = { id: DeckId ->
-                // a sub deck was created
-                launchCatchingTask {
-                    val name = withCol { decks.name(id) }
-                    selectDeckWithDeckName(name)
-                }
-            }
+            createDeckDialog.onNewDeckCreated = { did: DeckId -> onNewDeckCreated(did) }
             createDeckDialog.showDialog()
         }
     }
 
     private fun showDeckDialog() {
         val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
-        createDeckDialog.onNewDeckCreated = { id: DeckId ->
-            // a deck was created
-            launchCatchingTask {
-                val name = withCol { decks.name(id) }
-                selectDeckWithDeckName(name)
-            }
-        }
+        createDeckDialog.onNewDeckCreated = { did: DeckId -> onNewDeckCreated(did) }
         createDeckDialog.showDialog()
     }
 
-    /**
-     * Create the deck if it does not exists.
-     * If name is valid, send the deck with this name to listener and close the dialog.
-     */
-    private fun selectDeckWithDeckName(deckName: String) {
+    /** Updates the list and simulates a click on the newly created deck */
+    private fun onNewDeckCreated(id: DeckId) {
+        // a deck/subdeck was created
         launchCatchingTask {
-            val id = withCol { decks.id(deckName) }
-            val dec = SelectableDeck(id, deckName)
-            selectDeckAndClose(dec)
+            val name = withCol { decks.name(id) }
+            val deck = SelectableDeck(id, name)
+            selectDeckAndClose(deck)
         }
     }
 
@@ -255,13 +241,12 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         private val allDecksList = ArrayList<SelectableDeck>()
         private val currentlyDisplayedDecks = ArrayList<SelectableDeck>()
         protected fun selectDeckByNameAndClose(deckName: String) {
-            for (d in allDecksList) {
-                if (d.name == deckName) {
-                    selectDeckAndClose(d)
-                    return
-                }
+            val deck = allDecksList.firstOrNull { it.name == deckName }
+            if (deck == null) {
+                displayErrorAndCancel()
+                return
             }
-            displayErrorAndCancel()
+            selectDeckAndClose(deck)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
