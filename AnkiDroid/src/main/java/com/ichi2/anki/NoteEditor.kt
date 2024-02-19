@@ -522,19 +522,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 addNote = true
             }
-            CALLER_IMG_OCCLUSION -> {
-                addNote = true
-                // val saveImageUri = ImageIntentManager.getImageUri()
-                val saveImageUri = IntentCompat.getParcelableExtra(intent, EXTRA_IMG_OCCLUSION, Uri::class.java)
-                if (saveImageUri != null) {
-                    ImportUtils.getFileCachedCopy(this, saveImageUri)?.let { path ->
-                        setupImageOcclusionEditor(path)
-                    }
-                } else {
-                    Timber.w("Image uri is null")
-                }
-            }
-            CALLER_ADD_IMAGE -> {
+            // image occlusion is handled at the end of this method, grep: CALLER_IMG_OCCLUSION
+            // we need to have loaded the current note type
+            CALLER_IMG_OCCLUSION, CALLER_ADD_IMAGE -> {
                 addNote = true
             }
             else -> {}
@@ -657,6 +647,18 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 mEditFields!!.first!!.setText(getTextFromSearchView)
             }
             mEditFields!!.first!!.requestFocus()
+        }
+
+        if (caller == CALLER_IMG_OCCLUSION) {
+            // val saveImageUri = ImageIntentManager.getImageUri()
+            val saveImageUri = IntentCompat.getParcelableExtra(intent, EXTRA_IMG_OCCLUSION, Uri::class.java)
+            if (saveImageUri != null) {
+                ImportUtils.getFileCachedCopy(this, saveImageUri)?.let { path ->
+                    setupImageOcclusionEditor(path)
+                }
+            } else {
+                Timber.w("Image uri is null")
+            }
         }
     }
 
@@ -2097,7 +2099,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         val id: Long
         if (addNote) {
             kind = "add"
-            id = 0
+            // if opened from an intent, the selected note type may not be suitable for IO
+            id = if (currentNotetypeIsImageOcclusion()) { currentlySelectedNotetype!!.id } else 0
         } else {
             kind = "edit"
             id = mEditorNote?.id!!
