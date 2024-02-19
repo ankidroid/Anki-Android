@@ -26,6 +26,7 @@ import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.utils.set
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -169,6 +170,20 @@ interface TestClass {
         this@TestClass.col.updateCard(this, skipUndoEntry = true)
         return this
     }
+
+    fun NotetypeJson.createClone(): NotetypeJson {
+        val targetNotetype = requireNotNull(col.notetypes.byName(name)) { "could not find note type '$name'" }
+        val newNotetype = targetNotetype.deepClone().apply {
+            id = 0
+            set("name", "$name+")
+        }
+        col.notetypes.add(newNotetype)
+        return col.notetypes.byName("$name+")!!
+    }
+
+    /** Returns the note types matching [predicate] */
+    fun Notetypes.filter(predicate: (NotetypeJson) -> Boolean): List<NotetypeJson> =
+        all().filter { predicate(it) }
 
     fun Card.note() = this.note(col)
     fun Card.note(reload: Boolean) = this.note(col, reload)
