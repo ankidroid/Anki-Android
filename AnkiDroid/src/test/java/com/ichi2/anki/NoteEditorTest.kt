@@ -21,6 +21,7 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.Intent
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -31,6 +32,7 @@ import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.noteeditor.EditCardDestination
 import com.ichi2.anki.noteeditor.toIntent
+import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note
@@ -356,10 +358,37 @@ class NoteEditorTest : RobolectricTest() {
         }
     }
 
+    @Ignore("15579")
+    @Test
+    fun `can switch two image occlusion note types 15579`() {
+        val otherOcclusion = getSecondImageOcclusionNoteType()
+        getNoteEditorAdding(NoteType.IMAGE_OCCLUSION).build().apply {
+            val position = requireNotNull(mNoteTypeSpinner!!.getItemIndex(otherOcclusion.name)) { "could not find ${otherOcclusion.name}" }
+            mNoteTypeSpinner!!.setSelection(position)
+        }
+    }
+
+    private fun getSecondImageOcclusionNoteType(): NotetypeJson {
+        val imageOcclusionNotes = col.notetypes.filter { it.isImageOcclusion }
+        return if (imageOcclusionNotes.size >= 2) {
+            imageOcclusionNotes.first { it.name != "Image Occlusion" }
+        } else {
+            col.notetypes.byName("Image Occlusion")!!.createClone()
+        }
+    }
+
     private fun getCopyNoteIntent(editor: NoteEditor): Intent {
         val editorShadow = shadowOf(editor)
         editor.copyNote()
         return editorShadow.peekNextStartedActivityForResult().intent
+    }
+
+    private fun Spinner.getItemIndex(toFind: Any): Int? {
+        for (i in 0 until count) {
+            if (this.getItemAtPosition(i) != toFind) continue
+            return i
+        }
+        return null
     }
 
     private val cardCount: Int
@@ -382,6 +411,7 @@ class NoteEditorTest : RobolectricTest() {
                 val name = super.addNonClozeModel("Invalid", arrayOf("Front", "Back", "Side"), "", "")
                 col.notetypes.byName(name)
             }
+            NoteType.IMAGE_OCCLUSION -> col.notetypes.byName("Image Occlusion")
         }
     }
 
@@ -428,7 +458,9 @@ class NoteEditorTest : RobolectricTest() {
         BASIC, CLOZE,
 
         /**Basic, but Back is on the front  */
-        BACK_TO_FRONT, THREE_FIELD_INVALID_TEMPLATE
+        BACK_TO_FRONT, THREE_FIELD_INVALID_TEMPLATE,
+        IMAGE_OCCLUSION
+        ;
     }
 
     inner class NoteEditorTestBuilder(notetype: NotetypeJson?) {
@@ -449,9 +481,12 @@ class NoteEditorTest : RobolectricTest() {
 
         fun <T : NoteEditor?> build(clazz: Class<T>): T {
             col.notetypes.setCurrent(notetype)
-            val noteEditor = getNoteEditorAddingNote(REVIEWER, clazz)
+            val noteEditor = getNoteEditorAddingNote(REVIEWER, clazz)!!
             advanceRobolectricLooper()
-            noteEditor!!.setFieldValueFromUi(0, firstField)
+            // image occlusion does not need a first field
+            if (this.firstField != null) {
+                noteEditor.setFieldValueFromUi(0, firstField)
+            }
             if (secondField != null) {
                 noteEditor.setFieldValueFromUi(1, secondField)
             }

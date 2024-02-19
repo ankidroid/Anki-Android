@@ -52,7 +52,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
-import anki.notetypes.StockNotetype
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -87,6 +86,7 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
+import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -99,7 +99,6 @@ import com.ichi2.utils.*
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
@@ -138,7 +137,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private var mTagsDialogFactory: TagsDialogFactory? = null
     private var mTagsButton: AppCompatButton? = null
     private var mCardsButton: AppCompatButton? = null
-    private var mNoteTypeSpinner: Spinner? = null
+
+    @VisibleForTesting
+    internal var mNoteTypeSpinner: Spinner? = null
     private var mDeckSpinnerSelection: DeckSpinnerSelection? = null
     private var imageOcclusionButtonsContainer: LinearLayout? = null
     private var selectImageForOcclusionButton: Button? = null
@@ -2074,13 +2075,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     val fieldsFromSelectedNote: Array<Array<String>>
         get() = mEditorNote!!.items()
 
-    private fun currentNotetypeIsImageOcclusion(): Boolean {
-        try {
-            return currentlySelectedNotetype?.getInt("originalStockKind") == StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
-        } catch (j: JSONException) {
-            return false
-        }
-    }
+    private fun currentNotetypeIsImageOcclusion() =
+        currentlySelectedNotetype?.isImageOcclusion == true
 
     private fun setImageOcclusionButton() {
         imageOcclusionButtonsContainer?.visibility = View.VISIBLE
