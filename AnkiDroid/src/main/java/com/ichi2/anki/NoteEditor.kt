@@ -98,6 +98,7 @@ import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.utils.*
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -592,6 +593,23 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // set information transferred by intent
             var contents: String? = null
             val tags = intent.getStringArrayExtra(EXTRA_TAGS)
+
+            try {
+                // If content has been shared, we can't share to an image occlusion note type
+                if (currentNotetypeIsImageOcclusion() && (sourceText != null || caller == CALLER_ADD_IMAGE)) {
+                    val model = col.notetypes.all().first {
+                        !it.isImageOcclusion
+                    }
+                    changeNoteType(model.id)
+                }
+            } catch (e: NoSuchElementException) {
+                showSnackbar(R.string.missing_note_type)
+                // setting the text to null & caller to CALLER_NO_CALLER would skip adding text/image to edit field
+                sourceText = null
+                caller = CALLER_NO_CALLER
+                Timber.w(e)
+            }
+
             if (sourceText != null) {
                 if (aedictIntent && mEditFields!!.size == 3 && sourceText!![1]!!.contains("[")) {
                     contents = sourceText!![1]!!
@@ -2101,6 +2119,35 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         requestIOEditorCloser.launch(intent)
     }
 
+    private fun changeNoteType(newId: NoteTypeId) {
+        val oldModelId = getColUnsafe.notetypes.current().getLong("id")
+        Timber.i("Changing note type to '%d", newId)
+
+        if (oldModelId == newId) {
+            return
+        }
+
+        val model = getColUnsafe.notetypes.get(newId)
+        if (model == null) {
+            Timber.w("New model %s not found, not changing note type", newId)
+            return
+        }
+
+        getColUnsafe.notetypes.setCurrent(model)
+        val currentDeck = getColUnsafe.decks.current()
+        currentDeck.put("mid", newId)
+        getColUnsafe.decks.save(currentDeck)
+
+        // Update deck
+        if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
+            deckId = model.optLong("did", Consts.DEFAULT_DECK_ID)
+        }
+
+        refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
+        setDuplicateFieldStyles()
+        mDeckSpinnerSelection!!.updateDeckPosition(deckId)
+    }
+
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
@@ -2110,27 +2157,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
             // In case the type is changed while adding the card, the menu options need to be invalidated
             invalidateMenu()
-            val oldModelId = getColUnsafe.notetypes.current().getLong("id")
-            val newId = mAllModelIds!![pos]
-            Timber.i("Changing note type to '%d", newId)
-            if (oldModelId != newId) {
-                val model = getColUnsafe.notetypes.get(newId)
-                if (model == null) {
-                    Timber.w("New model %s not found, not changing note type", newId)
-                    return
-                }
-                getColUnsafe.notetypes.setCurrent(model)
-                val currentDeck = getColUnsafe.decks.current()
-                currentDeck.put("mid", newId)
-                getColUnsafe.decks.save(currentDeck)
-                // Update deck
-                if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-                    deckId = model.optLong("did", Consts.DEFAULT_DECK_ID)
-                }
-                refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
-                setDuplicateFieldStyles()
-                mDeckSpinnerSelection!!.updateDeckPosition(deckId)
-            }
+            changeNoteType(mAllModelIds!![pos])
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
