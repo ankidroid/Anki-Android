@@ -270,7 +270,7 @@
     <string name="key_picker_default_press_key">Premu klavon</string>
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_action" maxLength="41">User action</string>
+    <string name="user_actions" maxLength="41">User actions</string>
     <string name="user_action_1" maxLength="41">User action 1</string>
     <string name="user_action_2" maxLength="41">User action 2</string>
     <string name="user_action_3" maxLength="41">User action 3</string>
