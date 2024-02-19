@@ -291,6 +291,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return
         }
         deckId = deck.deckId
+        // this is called because DeckSpinnerSelection.onDeckAdded doesn't update the list
         mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner(getColUnsafe)
         launchCatchingTask {
             mDeckSpinnerSelection!!.selectDeckById(deckId, false)

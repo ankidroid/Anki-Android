@@ -171,6 +171,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         launchCatchingTask {
             val name = withCol { decks.name(id) }
             val deck = SelectableDeck(id, name)
+            deckCreationListener?.onDeckCreated(DeckNameId(name, id))
             selectDeckAndClose(deck)
         }
     }
@@ -198,6 +199,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             }
             throw IllegalStateException("Neither activity or parent fragment were a selection listener")
         }
+
+    var deckCreationListener: DeckCreationListener? = null
 
     /**
      * Same action as pressing on the deck in the list. I.e. send the deck to listener and close the dialog.
@@ -346,6 +349,9 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
     fun interface DeckSelectionListener {
         fun onDeckSelected(deck: SelectableDeck?)
+    }
+    fun interface DeckCreationListener {
+        fun onDeckCreated(deck: DeckNameId)
     }
 
     companion object {
