@@ -26,6 +26,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckCreationListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
 import com.ichi2.anki.widgets.DeckDropDownAdapter
@@ -205,7 +206,15 @@ class DeckSpinnerSelection(
             decks.add(SelectableDeck(ALL_DECKS_ID, context.resources.getString(R.string.card_browser_all_decks)))
         }
         val dialog = DeckSelectionDialog.newInstance(context.getString(R.string.search_deck), null, false, decks)
+        // TODO: retain state after onDestroy
+        dialog.deckCreationListener = DeckCreationListener { onDeckAdded(it) }
         AnkiActivity.showDialogFragment(fragmentManagerSupplier.getFragmentManager(), dialog)
+    }
+
+    private fun onDeckAdded(deck: DeckNameId) {
+        Timber.d("added deck %s to spinner", deck)
+        deckDropDownAdapter?.addDeck(deck)
+        dropDownDecks.add(deck)
     }
 
     companion object {

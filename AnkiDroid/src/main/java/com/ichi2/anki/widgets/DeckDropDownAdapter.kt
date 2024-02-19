@@ -25,7 +25,11 @@ import android.widget.TextView
 import com.ichi2.anki.R
 import com.ichi2.libanki.DeckNameId
 
-class DeckDropDownAdapter(private val context: Context, private val decks: List<DeckNameId>) : BaseAdapter() {
+class DeckDropDownAdapter(private val context: Context, decks: List<DeckNameId>) : BaseAdapter() {
+    private val deckList = decks.toMutableList()
+    val decks: List<DeckNameId>
+        get() = deckList.toList()
+
     interface SubtitleListener {
         val subtitleText: String?
     }
@@ -35,15 +39,20 @@ class DeckDropDownAdapter(private val context: Context, private val decks: List<
         var deckCountsView: TextView? = null
     }
 
+    fun addDeck(deck: DeckNameId) {
+        deckList.add(deck)
+        notifyDataSetChanged()
+    }
+
     override fun getCount(): Int {
-        return decks.size + 1
+        return deckList.size + 1
     }
 
     override fun getItem(position: Int): Any? {
         return if (position == 0) {
             null
         } else {
-            decks[position + 1]
+            deckList[position + 1]
         }
     }
 
@@ -72,7 +81,7 @@ class DeckDropDownAdapter(private val context: Context, private val decks: List<
         if (position == 0) {
             deckNameView!!.text = context.resources.getString(R.string.card_browser_all_decks)
         } else {
-            val deck = decks[position - 1]
+            val deck = deckList[position - 1]
             val deckName = deck.name
             deckNameView!!.text = deckName
         }
@@ -93,7 +102,7 @@ class DeckDropDownAdapter(private val context: Context, private val decks: List<
         if (position == 0) {
             deckNameView.text = context.resources.getString(R.string.card_browser_all_decks)
         } else {
-            val deck = decks[position - 1]
+            val deck = deckList[position - 1]
             val deckName = deck.name
             deckNameView.text = deckName
         }
