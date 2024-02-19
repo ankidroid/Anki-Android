@@ -256,7 +256,7 @@
             />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/user_action">
+    <PreferenceCategory android:title="@string/user_actions">
         <com.ichi2.preferences.ControlPreference
             android:key="@string/user_action_1_key"
             android:title="@string/user_action_1"

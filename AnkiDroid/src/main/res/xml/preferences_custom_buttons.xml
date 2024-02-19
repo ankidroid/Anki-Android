@@ -193,7 +193,7 @@ TODO: Add a unit test
             app:useSimpleSummaryProvider="true"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/user_action">
+    <PreferenceCategory android:title="@string/user_actions">
         <ListPreference
             android:defaultValue="3"
             android:entries="@array/custom_button_labels"
