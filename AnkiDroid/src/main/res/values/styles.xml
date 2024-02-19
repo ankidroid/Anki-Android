@@ -194,6 +194,7 @@
     </style>
 
     <style name="AlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorPrimary">?attr/progressDialogButtonTextColor</item>
         <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
         <item name="android:background">?attr/dialogBackground</item>
         <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
