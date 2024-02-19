@@ -57,6 +57,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Type answer</string>
     <string name="show_answer">Show answer</string>
+    <string name="toggle_auto_advance">Toggle auto advance</string>
     <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Again</string>
     <string name="ease_button_hard">Hard</string>

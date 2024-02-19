@@ -214,7 +214,7 @@ abstract class NavigationDrawerActivity :
         drawerToggle.syncState()
     }
 
-    private val preferences: SharedPreferences
+    val preferences: SharedPreferences
         get() = this@NavigationDrawerActivity.sharedPrefs()
 
     override fun onConfigurationChanged(newConfig: Configuration) {

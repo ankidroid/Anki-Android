@@ -139,6 +139,16 @@ class AutomaticAnswer(
         isDisabled = false
     }
 
+    fun toggle() {
+        if (isEnabled()) {
+            isDisabled = true
+            settings.useTimer = false
+        } else {
+            isDisabled = false
+            settings.useTimer = true
+        }
+    }
+
     fun disable() {
         isDisabled = true
         stopShowAnswerTask()
@@ -251,7 +261,7 @@ class AutomaticAnswer(
  */
 class AutomaticAnswerSettings(
     val answerAction: AutomaticAnswerAction = AutomaticAnswerAction.BURY_CARD,
-    @get:JvmName("useTimer") val useTimer: Boolean = false,
+    @get:JvmName("useTimer") var useTimer: Boolean = false,
     private val secondsToShowQuestionFor: Int = 60,
     private val secondsToShowAnswerFor: Int = 20
 ) {

@@ -40,7 +40,9 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import anki.config.preferences
 import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
@@ -511,6 +513,13 @@ open class Reviewer :
             colorPalette.visibility = View.GONE
         }
         refreshActionBar()
+    }
+
+    public override fun toggleAutoAdvance() {
+        preferences.edit {
+            putBoolean("timeoutAnswer", !automaticAnswer.isEnabled())
+        }
+        automaticAnswer.toggle()
     }
 
     public override fun clearWhiteboard() {

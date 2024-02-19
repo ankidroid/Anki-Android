@@ -51,6 +51,10 @@
 
     <PreferenceCategory android:title="@string/answer_buttons">
         <com.ichi2.preferences.ControlPreference
+            android:key="@string/toggle_auto_advance_command_key"
+            android:title="@string/toggle_auto_advance"
+            />
+        <com.ichi2.preferences.ControlPreference
             android:key="@string/show_answer_command_key"
             android:title="@string/show_answer"
             />

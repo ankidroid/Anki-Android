@@ -590,6 +590,7 @@ object UsageAnalytics {
         "customButtonUserAction6",
         "customButtonUserAction7",
         "customButtonUserAction8",
-        "customButtonUserAction9"
+        "customButtonUserAction9",
+        "binding_TOGGLE_AUTO_ADVANCE"
     )
 }
