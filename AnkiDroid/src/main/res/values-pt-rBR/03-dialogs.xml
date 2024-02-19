@@ -175,7 +175,7 @@
     <string name="failed_to_apply_background_image">Falha ao aplicar a imagem de fundo %s</string>
     <string name="background_image_too_large">Fundo do seletor de deck muito grande</string>
     <string name="image_max_size_allowed">Tamanho máximo de imagem %d MB permitido</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">As dimensões da imagem são muito grandes (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Falta a permissão de armazenamento necessário. Por favor, conceda permissão de armazenamento e tente novamente.</string>
@@ -185,7 +185,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Falha ao agendar lembretes</string>
     <string name="boot_service_too_many_notifications">Muitos lembretes programados. Alguns não aparecerão</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">Definir Idioma</string>
     <string name="locale_selection_dialog_summary">Alguns teclados multilíngues, como GBoard suportam alterar o idioma ao editar o texto\n\nPor favor, solicite o recurso \"setImeHintLocales\" do seu fabricante de teclado se o seu teclado não alterar o idioma. </string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Usando o AnkiDroid</string>
@@ -213,7 +213,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">Termos e Condições AnkiWeb</string>
     <string name="help_title_send_exception">Envie um relatório para a solução de problemas</string>
     <string name="help_dialog_exception_report_debounce">Relatório já enviado</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">O relatório foi enviado!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Uma sincronização automática pode ser executada em %d segundos.</item>

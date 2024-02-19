@@ -91,7 +91,7 @@
     <string name="rename_deck">Renombrar mazo</string>
     <string name="create_shortcut">Crear acceso directo</string>
     <string name="browse_cards">Buscar tarjetas</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Editar descripción</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Añadir</string>
     <string name="menu_add_note">Añadir nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Cuenta de sincronización</string>
@@ -247,5 +247,5 @@
     <string name="storage_access_title">Acceso al almacenamiento</string>
     <string name="storage_access_summary">Guarda tu colección en un lugar seguro que no será eliminado si la aplicación es desinstalada</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acceso a todos los archivos</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">Imagen oculta</string>
 </resources>
