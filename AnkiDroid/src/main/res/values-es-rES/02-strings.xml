@@ -353,7 +353,7 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Error al abrir la configuración de texto a voz
     </string>
     <string name="shared_decks_login_required">Por favor, inicia sesión para descargar más mazos</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
+    <string name="deck_description_field_hint">Descripción</string>
+    <string name="failed_to_copy">Error al copiar</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
 </resources>

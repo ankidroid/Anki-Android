@@ -47,8 +47,8 @@
     <!-- generic strings -->
     <string name="disabled">Desativado</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="one">%d minuto</item>
+        <item quantity="other">%d minutos</item>
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
@@ -115,7 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Toque Meio Centro</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toque Baixo Esquerda</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toque Baixo Direita</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Agitar o dispositivo</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu </string>
     <string name="card_browser_enable_external_context_menu_summary">Habilita o menu de contexto globalmente ‘%s\'</string>
     <string name="double_scrolling_gap" maxLength="41">Rolagem dupla</string>
@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz de piscamento</string>
     <string name="timeout_answer_text" maxLength="41">Exibir resposta automaticamente</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Mostrar resposta automaticamente sem a entrada do usuário. Configure a partir das opções do baralho.</string>
     <string name="select_locale_title">Selecionar Idioma</string>
     <string name="software_render" maxLength="41">Desativar render de hardware da placa</string>
     <string name="software_render_summ">Renderização de hardware é mais rápida, mas pode causar problemas, especificamente no Android 8/8.1. Se você não consegue ver partes da interface de revisão do cartão, tente essa configuração.</string>
@@ -174,16 +174,16 @@
     <string name="show_top_bar_summ">Mostrar contagem de cards, sinalização e marca na barra superior</string>
     <string name="show_progress" maxLength="41">Mostar restantes</string>
     <string name="show_progress_summ">Mostrar contagem de cards restantes</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Mostrar tempo restante estimado</string>
+    <string name="show_eta_summ">Mostrar o tempo restante</string>
     <string name="use_current" maxLength="41">Baralho para novos cards</string>
     <string name="learn_cutoff" maxLength="41">Aprender antes do limite</string>
     <string name="time_limit" maxLength="41">Limite de tempo de Timebox</string>
     <string name="new_timezone" maxLength="41">Processando novo fuso horário</string>
     <string name="day_offset_with_description" maxLength="41">Início do dia seguinte</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d hora depois da meia-noite</item>
+        <item quantity="other">%d horas depois da meia-noite</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Manter tela ligada</string>
     <string name="pref_keep_screen_on_summ">Desativar tempo limite da tela</string>
@@ -244,8 +244,8 @@
     <string name="deck_conf_cram_reschedule_summ">Reagendar cards baseado em minhas respostas no baralho</string>
     <string name="deck_conf_cram_filter_2_check">Ativar segundo filtro</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definir passos personalizados</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Pré-visualização de atrasos</string>
+    <string name="deck_conf_cram_preview_delays_summ">Atrasos estão em segundos. 0 retorna o cartão ao baralho original.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Ajude a tornar o AnkiDroid melhor!</string>
     <string name="analytics_title" maxLength="41">Compartilhar funções de uso</string>
@@ -268,18 +268,18 @@
     <string name="binding_add_key">Adicionar tecla</string>
     <string name="binding_replace_key">Substituir tecla</string>
     <string name="key_picker_default_press_key">Pressione uma tecla</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_action" maxLength="41">User action</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="binding_add_axis">Adicionar controle</string>
+    <string name="axis_picker_move_joystick">Movimente o controle</string>
+    <string name="user_action" maxLength="41">Ação do usuário</string>
+    <string name="user_action_1" maxLength="41">Ação do usuário 1</string>
+    <string name="user_action_2" maxLength="41">Ação do usuário 2</string>
+    <string name="user_action_3" maxLength="41">Ação do usuário 3</string>
+    <string name="user_action_4" maxLength="41">Ação do usuário 4</string>
+    <string name="user_action_5" maxLength="41">Ação do usuário 5</string>
+    <string name="user_action_6" maxLength="41">Ação do usuário 6</string>
+    <string name="user_action_7" maxLength="41">Ação do usuário 7</string>
+    <string name="user_action_8" maxLength="41">Ação do usuário 8</string>
+    <string name="user_action_9" maxLength="41">Ação do usuário 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecionar lado da carta</string>
     <string name="card_side_question">Pergunta</string>
@@ -293,8 +293,8 @@
     <string name="bindings_already_bound">Já vinculado a %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">O AnkiDroid introduziu um mecanismo TTS melhor, que é compatível com outros clientes Anki e inclui mais vozes e melhorias na reprodução de idiomas! Por favor, atualize o mais rapidamente possível, pois esta definição será removida em breve</string>
+    <string name="readtext_reviewer_warn">Por favor, atualize para o novo texto para o formato da fala</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opções do desenvolvedor</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ativar opções do desenvolvedor</string>

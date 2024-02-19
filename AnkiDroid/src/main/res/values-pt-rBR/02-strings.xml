@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Cartões: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">Editar Oclusões</string>
     <string name="tag_name">Nome da tag</string>
     <string name="add_new_filter_tags">Adicionar/filtrar tags</string>
     <string name="add_tag">Adicionar tag</string>
@@ -144,7 +144,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pré-visualizar</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renomear</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">Verificar</string>
     <string name="check_db">Verificar banco de dados</string>
     <string name="check_media">Verificar mídia</string>
     <string name="empty_cards">Cards vazios</string>
@@ -155,7 +155,7 @@
     <string name="import_title">Importando</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adicionar</string>
     <string name="import_message_replace_confirm">Isto irá excluir sua coleção atual e substituí-la pelo conteúdo do arquivo %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">Adicionar “%s” à coleção? Isso pode levar muito tempo</string>
     <string name="import_log_no_apkg">Este não é um arquivo válido para o Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Erro</string>
     <string name="import_error_handle_exception">Falha ao importar arquivo\n\n%s</string>
@@ -265,7 +265,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">Insira um e-mail válido</string>
     <string name="password_empty">Senha é necessária</string>
     <string name="back_pressed_once">Pressione voltar novamente para sair</string>
     <string name="back_pressed_once_reviewer">Pressione voltar novamente para sair</string>
@@ -337,24 +337,24 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toque para iniciar a migração de armazenamento.</string>
     <string name="media_sync_required_title">Sincronização de Mídia Necessária</string>
     <string name="media_sync_unavailable_message">A sincronização de mídia está desativada nas configurações. Por favor, sincronize e faça uma cópia de qualquer mídia que ainda não tenha sido sincronizada antes de continuar.</string>
-    <string name="audio_saved">Recording saved</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    <string name="audio_saved">Gravação salva</string>
+    <string name="deleting_selected_notes">Excluindo notas selecionadas</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Toque numa voz para ouvir
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voz deve ser instalada antes de usar
     </string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Usar mesmo assim
     </string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Erro de texto em fala (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
     </string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Instalar
     </string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Falha ao abrir configurações de texto para fala
     </string>
-    <string name="shared_decks_login_required">Please log in to download more decks</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="shared_decks_login_required">Faça login para baixar mais baralhos</string>
+    <string name="deck_description_field_hint">Descrição</string>
+    <string name="failed_to_copy">Falha ao copiar</string>
+    <string name="card_browser_unavailable_when_notes_mode">Indisponível no modo \'Notas\'</string>
 </resources>

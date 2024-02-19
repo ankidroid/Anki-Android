@@ -60,16 +60,16 @@
     <string name="expand">Expandir</string>
     <string name="collapse">Fechar</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">%d minuto restante</item>
+        <item quantity="other">%d minutos restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d hora %2$d restante</item>
+        <item quantity="other">%1$d horas %2$d restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d dia %2$d restante</item>
+        <item quantity="other">%1$d dias %2$d restantes</item>
     </plurals>
     <string name="no_cards_placeholder_title">Coleção vazia.</string>
     <string name="no_cards_placeholder_description">Comece a adicionar cartões\ntocando no ícone +.</string>
@@ -250,5 +250,5 @@
     <string name="storage_access_title">Acesso ao armazenamento</string>
     <string name="storage_access_summary">Salva sua coleção em um lugar seguro que não será excluído se o aplicativo for desinstalado</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acesso a todos os arquivos</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">Oclusão de imagem</string>
 </resources>

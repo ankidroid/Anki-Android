@@ -101,5 +101,5 @@
     <string name="gesture_show_all_hints">Exibir todas as dicas</string>
     <string name="record_voice">Gravar voz</string>
     <string name="replay_voice">Reproduzir voz</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="save_voice">Salvar gravação</string>
 </resources>
