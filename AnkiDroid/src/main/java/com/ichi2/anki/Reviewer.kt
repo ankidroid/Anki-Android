@@ -74,7 +74,7 @@ import com.ichi2.audio.AudioRecordingController
 import com.ichi2.audio.AudioRecordingController.Companion.generateTempAudioFile
 import com.ichi2.audio.AudioRecordingController.Companion.isAudioRecordingSaved
 import com.ichi2.audio.AudioRecordingController.Companion.isRecording
-import com.ichi2.audio.AudioRecordingController.Companion.setReviewerStatus
+import com.ichi2.audio.AudioRecordingController.Companion.setEditorStatus
 import com.ichi2.audio.AudioRecordingController.Companion.tempAudioPath
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -615,7 +615,7 @@ open class Reviewer :
         if (isMicToolBarVisible) {
             micToolBarLayer.visibility = View.GONE
         } else {
-            setReviewerStatus(false)
+            setEditorStatus(false)
             if (!isAudioUIInitialized) {
                 try {
                     audioRecordingController = AudioRecordingController()

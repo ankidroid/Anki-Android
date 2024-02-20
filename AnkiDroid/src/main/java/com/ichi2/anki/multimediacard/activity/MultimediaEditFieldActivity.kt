@@ -42,6 +42,7 @@ import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.audio.AudioRecordingController
 import com.ichi2.audio.AudioRecordingController.Companion.isAudioRecordingSaved
 import com.ichi2.audio.AudioRecordingController.Companion.isRecording
+import com.ichi2.audio.AudioRecordingController.Companion.setEditorStatus
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
@@ -469,6 +470,7 @@ class MultimediaEditFieldActivity :
             EFieldType.IMAGE -> BasicImageFieldController()
             EFieldType.AUDIO_RECORDING -> {
                 isAudioUIInitialized = true
+                setEditorStatus(true)
                 audioRecordingController
             }
             EFieldType.MEDIA_CLIP -> BasicMediaClipFieldController()
