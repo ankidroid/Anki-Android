@@ -109,6 +109,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">ନିଶ୍ଚିତ କରିବା</string>
     <string name="dialog_no">ନା</string>
     <string name="dialog_yes">ହଁ</string>
+    <string name="dialog_keep">Keep</string>
+    <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>
     <string name="dialog_processing">ପ୍ରକ୍ରିୟାରତ...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ସୃଷ୍ଟି କରନ୍ତୁ</string>

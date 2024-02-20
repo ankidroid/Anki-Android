@@ -113,7 +113,7 @@
     <string name="custom_study_limit_tags">Lìmita a etichetas particulares</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Modìfica sa nota</string>
-    <string name="discard_unsaved_changes">Serrare e pèrdere sos datos insertados?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Peruna carta creada. Compila prus campos</string>
     <string name="note_editor_no_first_field">Su primu campu est bòidu</string>
     <string name="note_editor_no_cloze_delations">Custa casta de nota depet cuntènnere iscantzellamentos cloze</string>
@@ -127,6 +127,7 @@
     <string name="select">Seletziona</string>
     <string name="field_remapping">%1$s (dae “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Sas cartas chene connessiones s\'ant a iscantzellare. Si una nota non tenet prus cartas s\'at a pèrdere. Ses seguru de chèrrere sighire?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Lìmite de tempus barigadu</string>
     <plurals name="timebox_reached">
@@ -211,6 +212,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Isfundu</string>
     <string name="choose_an_image">Issèbera un\'immàgine</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Torra a sos valores predefinidos</string>
     <string name="cloze_sample_text">Custu est un\'iscantzellamentu cloze {{%1$s::sample}}.</string>

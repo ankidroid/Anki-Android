@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Viśiṣṭa ṭĕgasāṭhī maryādā</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Ṭīpa sampādita karā</string>
-    <string name="discard_unsaved_changes">Vartamāna impuṭa banda karā āṇi haravū nakā?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">कोणतीही कार्ड तयार केली नाही. कृपया अधिक फील्ड भरा</string>
     <string name="note_editor_no_first_field">प्रथम फील्ड रिक्त आहे</string>
     <string name="note_editor_no_cloze_delations">या टीप प्रकारात क्लोझ डिलीटन्स असणे आवश्यक आहे</string>
@@ -125,6 +125,7 @@
     <string name="select">Nivaḍā</string>
     <string name="field_remapping">%1$s(Pāsūna \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Kāhīhī na kēlēlyā kōṇatyāhī kārḍānnā haṭavilē jā\'īla. Ṭīpakaḍē urvarita kārḍa nasalyāsa tō gamāvalā jā\'īla. Āpalyālā khātrī āhē kī āpaṇa surū ṭhēvū icchitā?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">टाइमबॉक्स गाठला</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
     <string name="choose_an_image">Select image</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>

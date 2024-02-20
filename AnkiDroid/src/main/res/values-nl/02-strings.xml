@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Beperken tot bepaalde tags</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Kaart bewerken</string>
-    <string name="discard_unsaved_changes">Afsluiten en huidige invoer verloren laten gaan?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Geen kaarten aangemaakt. Vul alstublieft meer velden in</string>
     <string name="note_editor_no_first_field">Het eerste veld is leeg</string>
     <string name="note_editor_no_cloze_delations">Dit type memo moet invuloefeningen bevatten.</string>
@@ -125,6 +125,7 @@
     <string name="select">Selecteren</string>
     <string name="field_remapping">%1$s (van “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">De kaarten toegewezen aan niets zullen worden verwijderd. Als een memo resterende kaarten heeft, zullen zij verloren gaan. Weet u zeker dat u wilt doorgaan?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox bereikt</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Achtergrond</string>
     <string name="choose_an_image">Kies een afbeelding</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Herstel Standaardinstellingen</string>
     <string name="cloze_sample_text">Dit is een {{%1$s::sample}} invuloefening.</string>

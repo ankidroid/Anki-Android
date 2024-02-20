@@ -109,6 +109,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Потвърждаване</string>
     <string name="dialog_no">Не</string>
     <string name="dialog_yes">Да</string>
+    <string name="dialog_keep">Keep</string>
+    <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Продължи</string>
     <string name="dialog_processing">Обработване...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Създай</string>

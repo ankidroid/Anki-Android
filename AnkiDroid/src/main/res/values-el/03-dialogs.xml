@@ -109,6 +109,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Επιβεβαίωση</string>
     <string name="dialog_no">Όχι</string>
     <string name="dialog_yes">Ναι</string>
+    <string name="dialog_keep">Keep</string>
+    <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Συνέχεια</string>
     <string name="dialog_processing">Επεξεργασία...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Δημιουργία</string>

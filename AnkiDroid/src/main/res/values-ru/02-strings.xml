@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Отфильтровать по меткам</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Править запись</string>
-    <string name="discard_unsaved_changes">Закрыть и отказаться от изменений?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Карточки не созданы. Заполните больше полей</string>
     <string name="note_editor_no_first_field">Первое поле пусто</string>
     <string name="note_editor_no_cloze_delations">Этот тип записи должен содержать задание с пропусками</string>
@@ -125,6 +125,7 @@
     <string name="select">Выбрать</string>
     <string name="field_remapping">%1$s (из «%2$s»)</string>
     <string name="confirm_map_cards_to_nothing">Несопоставленные карты будут удалены. Записи, оставшиеся без карт, будут утеряны. Продолжить?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Достигнут лимит учебного блока</string>
     <plurals name="timebox_reached">
@@ -214,6 +215,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>
     <string name="choose_an_image">Выбрать изображение</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Сбросить настройки</string>
     <string name="cloze_sample_text">Это {{%1$s::пример}} задания с пропусками</string>

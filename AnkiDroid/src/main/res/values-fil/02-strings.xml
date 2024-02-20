@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Limitahan ang partikular na mga tag</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">I-edit ang tala</string>
-    <string name="discard_unsaved_changes">Isara at iwala ang kasalukuyang input?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Walang nilikha na mga card. Mangyaring magpunan pa ng mga patlang.</string>
     <string name="note_editor_no_first_field">Walang laman ang unang patlang</string>
     <string name="note_editor_no_cloze_delations">Dapat maglaman ng cloze deletions ang uri ng tala na ito.</string>
@@ -125,6 +125,7 @@
     <string name="select">Piliin</string>
     <string name="field_remapping">%1$s (mula sa \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Ang anumang mga kard na nakabalangkas sa wala ay matatanggal. Kung ang isang tala ay walang natitirang mga kard, ito ay mawawala. Sigurado ka bang gusto mong magpatuloy?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Naabot ang Timebox</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Likuran</string>
     <string name="choose_an_image">Pumili ng Litrato</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Ibalik sa Default</string>
     <string name="cloze_sample_text">Ito ay isang {{%1$s::halimbawa ng}} cloze deletion.</string>

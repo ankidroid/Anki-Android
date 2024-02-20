@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">నిర్దిష్ట ట్యాగ్లకు పరిమితం చేయండి</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">గమనికను సవరించండి</string>
-    <string name="discard_unsaved_changes">ప్రస్తుత ఇన్పుట్ను మూసివేయవద్దు మరియు దానిని కోల్పోదామా?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
     <string name="note_editor_no_first_field">మొదటి ఫీల్డ్ ఖాళీగా ఉంది</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
@@ -125,6 +125,7 @@
     <string name="select">ఎంచుకోండి</string>
     <string name="field_remapping">%1$s (from “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">ఏదైనా మ్యాప్ చేసిన కార్డ్లు తొలగించబడతాయి. గమనికకు మిగిలిన కార్డులు లేకుంటే, అది కోల్పోతుంది. మీరు ఖచ్చితంగా కొనసాగించాలనుకుంటున్నారా?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">నేపథ్య</string>
     <string name="choose_an_image">చిత్రాన్ని ఎంచుకోండి</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">డిఫాల్ట్‌ని పునరుద్ధరించండి</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>

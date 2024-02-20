@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Giới hạn cho các đuôi cụ thể</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Sửa ghi chú</string>
-    <string name="discard_unsaved_changes">Đóng và mất thông tin đang nhập?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Không có thẻ nào được tạo. Vui lòng điền vào các trường khác</string>
     <string name="note_editor_no_first_field">Trường đầu tiên trống</string>
     <string name="note_editor_no_cloze_delations">Loại ghi chú này phải chứa đánh dấu cloze</string>
@@ -125,6 +125,7 @@
     <string name="select">Chọn</string>
     <string name="field_remapping">%1$s (từ \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ nào không được gán sẽ bị xoá. Nếu một ghi chú không có thẻ nào kèm theo, nó sẽ bị mất. Có chắc là bạn muốn tiếp tục?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Đã đạt đến giới hạn thời gian</string>
     <plurals name="timebox_reached">
@@ -205,6 +206,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Hình nền</string>
     <string name="choose_an_image">Chọn một hình ảnh</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Khôi phục mặc định</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>

@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">ನಿರ್ದಿಷ್ಟ ಟ್ಯಾಗ್‌ಗಳಿಗೆ ಮಿತಿಗೊಳಿಸಿ</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ಟಿಪ್ಪಣಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
-    <string name="discard_unsaved_changes">ಪ್ರಸ್ತುತ ಇನ್ಪುಟ್ ಅನ್ನು ಮುಚ್ಚಿ ಮತ್ತು ಕಳೆದುಕೊಳ್ಳುವುದೇ?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ರಚಿಸಲಾಗಿಲ್ಲ. ದಯವಿಟ್ಟು ಹೆಚ್ಚಿನ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ</string>
     <string name="note_editor_no_first_field">ಮೊದಲ ಕ್ಷೇತ್ರ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="note_editor_no_cloze_delations">ಈ ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವು ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆಗಳನ್ನು ಹೊಂದಿರಬೇಕು</string>
@@ -125,6 +125,7 @@
     <string name="select">ಆರಿಸಿ</string>
     <string name="field_remapping">%1$s (“%2$s” ನಿಂದ)</string>
     <string name="confirm_map_cards_to_nothing">ಯಾವುದಕ್ಕೂ ಮ್ಯಾಪ್ ಮಾಡದ ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತದೆ. ಟಿಪ್ಪಣಿಯಲ್ಲಿ ಉಳಿದ ಕಾರ್ಡ್‌ಗಳಿಲ್ಲದಿದ್ದರೆ, ಅದು ಕಳೆದುಹೋಗುತ್ತದೆ. ನೀವು ಮುಂದುವರಿಯಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">ಟೈಮ್‌ಬಾಕ್ಸ್ ತಲುಪಿದೆ</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">ಹಿನ್ನೆಲೆ</string>
     <string name="choose_an_image">ಚಿತ್ರವನ್ನು ಆರಿಸಿ</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ಡೀಫಾಲ್ಟ್ ಅನ್ನು ಮರುಸ್ಥಾಪಿಸಿ</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>

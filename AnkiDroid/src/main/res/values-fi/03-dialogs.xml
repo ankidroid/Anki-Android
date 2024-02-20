@@ -109,6 +109,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Vahvista</string>
     <string name="dialog_no">Ei</string>
     <string name="dialog_yes">Kyllä</string>
+    <string name="dialog_keep">Keep</string>
+    <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Jatka</string>
     <string name="dialog_processing">Käsitellään...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Luo</string>

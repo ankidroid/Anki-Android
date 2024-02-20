@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Had kepada tag tertentu</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Sunting nota</string>
-    <string name="discard_unsaved_changes">Tutup dan buang input ini?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Tiada kad dicipta. Sila isikan lebih banyak medan</string>
     <string name="note_editor_no_first_field">Medan pertama kosong</string>
     <string name="note_editor_no_cloze_delations">Jenis nota memerlukan penghapusan kloz</string>
@@ -125,6 +125,7 @@
     <string name="select">Pilih</string>
     <string name="field_remapping">%1$s (daripada “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Mana-mana kad yang dipetakan ke \"tiada\" akan dipadam. Jika suatu nota tiada baki kad, ia akan dipadam. Adakah anda mahu teruskan?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Kotak masa tercapai</string>
     <plurals name="timebox_reached">
@@ -205,6 +206,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Latar belakang</string>
     <string name="choose_an_image">Pilih gambar</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Pulih Lalai</string>
     <string name="cloze_sample_text">Ini merupakan {{%1$s::sampel}} penghapusan kloz.</string>

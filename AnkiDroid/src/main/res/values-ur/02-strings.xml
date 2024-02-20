@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">مخصوص ٹیگز تک محدود</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">نوٹ میں ترمیم کریں</string>
-    <string name="discard_unsaved_changes">بند کریں اور موجودہ ان پٹ کھو دیں؟</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">کوئی کارڈ نہیں بنایا۔ براہ کرم مزید فیلڈز پُر کریں۔</string>
     <string name="note_editor_no_first_field">پہلا میدان خالی ہے۔</string>
     <string name="note_editor_no_cloze_delations">اس نوٹ کی قسم میں بند حذف کرنا لازمی ہے۔</string>
@@ -125,6 +125,7 @@
     <string name="select">منتخب کریں</string>
     <string name="field_remapping">%1$s (\"%2$s\" سے)</string>
     <string name="confirm_map_cards_to_nothing">کسی بھی کارڈ کو کچھ بھی نہیں پر میپ کیا جائے گا حذف کر دیا جائے گا۔ اگر کسی نوٹ میں کوئی کارڈ باقی نہیں ہے، تو وہ کھو جائے گا۔ کیا آپ واقعی جاری رکھنا چاہتے ہیں؟</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">ٹائم باکس پہنچ گیا۔</string>
     <plurals name="timebox_reached">
@@ -209,6 +210,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">پس منظر</string>
     <string name="choose_an_image">تصویر منتخب کریں۔</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ڈیفالٹ بحال کریں۔</string>
     <string name="cloze_sample_text">یہ ایک {{%1$s::sample}} بند حذف ہے۔</string>

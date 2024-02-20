@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Limita a determinades etiquetes</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Edita la nota</string>
-    <string name="discard_unsaved_changes">Abandonar i perdre el procés sense guardar?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">No s\'ha creat cap carta. Omple més camps si us plau</string>
     <string name="note_editor_no_first_field">El primer camp és buit</string>
     <string name="note_editor_no_cloze_delations">Aquest tipus de nota ha de contenir supressions parcials</string>
@@ -125,6 +125,7 @@
     <string name="select">Seleccioneu</string>
     <string name="field_remapping">%1$s (de \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">S\'esborrarà qualsevol carta assignada a res. Si una anotació té cap carta restant, serà perduda. Esteu segur que voleu continuar?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Límit de temps assolit</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Fons</string>
     <string name="choose_an_image">Selecciona una imatge</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restaura els valors per defecte</string>
     <string name="cloze_sample_text">Aquí teniu un exemple {{%1$s::sample}} de blancs per omplir</string>
