@@ -24,7 +24,6 @@ import android.speech.tts.UtteranceProgressListener
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
@@ -287,12 +286,6 @@ object ReadText {
             } else {
                 showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
                 Timber.w("TTS not successfully initialized")
-            }
-        }
-        // Remember the user to upgrade to the new TTS system #15475
-        ankiActivityContext?.showSnackbar(R.string.readtext_reviewer_warn, LENGTH_INDEFINITE) {
-            setAction(R.string.scoped_storage_learn_more) {
-                ankiActivityContext.openUrl(R.string.link_tts)
             }
         }
     }
