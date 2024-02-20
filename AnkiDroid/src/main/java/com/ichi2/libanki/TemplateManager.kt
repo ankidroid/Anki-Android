@@ -93,7 +93,10 @@ class TemplateManager {
                         lang = tag.tts.lang,
                         voices = tag.tts.voicesList,
                         otherArgs = tag.tts.otherArgsList,
-                        speed = tag.tts.speed
+                        // The backend currently sends speed = 1, even when undefined.
+                        // We agreed that '1' should be classed as 'use system' and ignored
+                        // https://github.com/ankidroid/Anki-Android/issues/15598#issuecomment-1953653639
+                        speed = tag.tts.speed.let { if (it == 1f) null else it }
                     )
                 }
             }
