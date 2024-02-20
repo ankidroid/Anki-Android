@@ -78,14 +78,14 @@ class CardTemplateEditorTest : RobolectricTest() {
         // Make sure we get a confirmation dialog if we hit the back button
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(android.R.id.home))
         advanceRobolectricLooperWithSleep()
-        assertEquals("Wrong dialog shown?", getAlertDialogText(true), getResourceString(R.string.discard_unsaved_changes))
+        assertEquals("Wrong dialog shown?", getAlertDialogText(true), "Discard current input?")
         clickAlertDialogButton(DialogInterface.BUTTON_NEGATIVE, false)
         advanceRobolectricLooperWithSleep()
         assertTrue("model change not preserved despite canceling back button?", testEditor.modelHasChanged())
 
         // Make sure we things are cleared out after a cancel
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(android.R.id.home))
-        assertEquals("Wrong dialog shown?", getAlertDialogText(true), getResourceString(R.string.discard_unsaved_changes))
+        assertEquals("Wrong dialog shown?", getAlertDialogText(true), "Discard current input?")
         clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, false)
         advanceRobolectricLooperWithSleep()
         assertFalse("model change not cleared despite discarding changes?", testEditor.modelHasChanged())

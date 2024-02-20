@@ -94,7 +94,7 @@
 
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Edit note</string>
-    <string name="discard_unsaved_changes">Close and lose current input?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
     <string name="note_editor_no_first_field">The first field is empty</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
