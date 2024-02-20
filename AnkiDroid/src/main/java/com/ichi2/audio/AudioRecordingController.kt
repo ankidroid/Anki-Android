@@ -539,7 +539,7 @@ class AudioRecordingController :
             return tempAudioPath
         }
 
-        fun setReviewerStatus(isReviewer: Boolean) {
+        fun setEditorStatus(isReviewer: Boolean) {
             this.inEditField = isReviewer
         }
 
