@@ -12,7 +12,7 @@ buildscript {
     ext.ankidroid_backend_version = '0.1.34-anki23.12.1'
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.10.2'
-    ext.coroutines_version = '1.7.3'
+    ext.coroutines_version = '1.8.0'
     ext.fragments_version = "1.6.2"
     ext.espresso_version = '3.5.1'
     ext.androidx_test_version = '1.5.0'
@@ -20,7 +20,7 @@ buildscript {
     ext.robolectric_version = '4.11.1'
     ext.android_gradle_plugin = "8.2.2"
     ext.dokka_version = "1.9.10" // not the same with kotlin version!
-    ext.uiautomator_version = "2.3.0-beta01"
+    ext.uiautomator_version = "2.3.0-rc01"
 
     configurations.configureEach {
         resolutionStrategy.eachDependency { details ->

@@ -319,16 +319,16 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.webkit:webkit:1.9.0'
+    implementation 'androidx.webkit:webkit:1.10.0'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
     implementation 'com.squareup:seismic:1.0.3'
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin-lite:3.25.2' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin-lite:3.25.3' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
@@ -350,7 +350,7 @@ dependencies {
 
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.afollestad.material-dialogs:input:3.3.0'
-    implementation 'org.apache.commons:commons-compress:1.25.0'
+    implementation 'org.apache.commons:commons-compress:1.26.0'
     implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
     implementation 'commons-io:commons-io:2.15.1' // FileUtils.contentEquals
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
@@ -364,7 +364,7 @@ dependencies {
     implementation 'com.github.mrudultora:Colorpicker:1.2.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    implementation 'com.github.ByteHamster:SearchPreference:2.5.0'
+    implementation 'com.github.ByteHamster:SearchPreference:2.5.1'
 
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release
