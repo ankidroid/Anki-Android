@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">محدود کردن به برچسب هايی خاص</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
-    <string name="discard_unsaved_changes">آیا می خواهید خارج شوید؟ورودی ها از بین خواهد رفت.</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">کارتی ساخته نشد. لطفاً فیلدهای بیشتری را پر کنید</string>
     <string name="note_editor_no_first_field">فیلد نخست خالی است</string>
     <string name="note_editor_no_cloze_delations">این نوع یادداشت باید حاوی کلوز باشد</string>
@@ -125,6 +125,7 @@
     <string name="select">انتخاب</string>
     <string name="field_remapping">%1$s (از \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">هرکارتی که با هیچ چیز پیوند نخورده باشد حذف خواهد شد. اگر یک یادداشت هیچ کارت باقی مانده ای نداشته باشد، از دست خواهد رفت. ادامه می دهید؟</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">جعبه زمان رسیده</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">پس زمینه</string>
     <string name="choose_an_image">انتخاب تصویر</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">بازنشانی پیش‌فرض</string>
     <string name="cloze_sample_text">این یک {{%1$s::نمونه}} حذف کلوز است.</string>

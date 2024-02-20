@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Περιορισμός σε συγκεκριμένες ετικέτες</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
-    <string name="discard_unsaved_changes">Κλείσιμο και απώλεια της τρέχουσας καταχώρησης;</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Δεν δημιουργήθηκαν κάρτες. Συμπληρώστε περισσότερα πεδία</string>
     <string name="note_editor_no_first_field">Το πρώτο πεδίο είναι κενό</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
@@ -125,6 +125,7 @@
     <string name="select">Επιλέξτε</string>
     <string name="field_remapping">%1$s (από “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Kάρτες χωρίς αντιστοίχιση θα διαγραφούν. Αν μια σημείωση δεν έχει εναπομείναντες κάρτες, θα χαθεί. Είστε σίγουροι ότι θέλετε να συνεχίσετε;</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Χρονικό όριο ξεπεράστηκε</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Φόντο</string>
     <string name="choose_an_image">Επιλέξτε εικόνα</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Επαναφορά προεπιλογής</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>

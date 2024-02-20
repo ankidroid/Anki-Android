@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">विशेष टैग करने के लिए सीमा</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">नोट संपादित करें</string>
-    <string name="discard_unsaved_changes">बंद करें और वर्तमान इनपुट खो?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">कोई कार्ड नहीं बनाया गया। कृपया अधिक फ़ील्ड भरें</string>
     <string name="note_editor_no_first_field">पहला फील्ड खाली है</string>
     <string name="note_editor_no_cloze_delations">इस नोट प्रकार में क्लॉज विलोपन होना चाहिए</string>
@@ -125,6 +125,7 @@
     <string name="select">का चयन करें</string>
     <string name="field_remapping">%1$s (\"%2$s\" से)</string>
     <string name="confirm_map_cards_to_nothing">कुछ नहीं के लिए मैप किए गए किसी भी कार्ड को हटा दिया जाएगा । यदि किसी नोट में कोई शेष कार्ड नहीं है, तो वह खो जाएगा । क्या आप निश्चयपूर्वक जारी रखना चाहते हैं?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">टाइमबॉक्स पहुँच गया</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">पृष्ठभूमि</string>
     <string name="choose_an_image">चित्र चुनें</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">पहले जैसा कर देना</string>
     <string name="cloze_sample_text">यह एक {{%1$s::sample}} क्लोज़ विलोपन है।</string>

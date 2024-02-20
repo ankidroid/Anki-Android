@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Begränsa till vissa etiketter</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Redigera not</string>
-    <string name="discard_unsaved_changes">Vill du stänga och förlora nuvarande inmatning?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Inga kort skapade. Vänligen fyll i fler fält</string>
     <string name="note_editor_no_first_field">Det första fältet är tomt</string>
     <string name="note_editor_no_cloze_delations">Denna typ av anteckning måste innehålla textluckor</string>
@@ -125,6 +125,7 @@
     <string name="select">Välj</string>
     <string name="field_remapping">%1$s (från \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Alla kort som inte mappar till något kommer att tas bort. Om en not inte har några kvarvarande kort, kommer den att tas bort. Är du säker på att du vill fortsätta?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Tidsruta har uppnåtts</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Bakgrund</string>
     <string name="choose_an_image">Välj en bild</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Återställ standardvärde</string>
     <string name="cloze_sample_text">Detta är ett {{%1$s::exempel}} på en textlucka.</string>

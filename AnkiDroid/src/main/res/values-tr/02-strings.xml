@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Belirli etiketlere sınırla</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Notu düzenle</string>
-    <string name="discard_unsaved_changes">Kapatıp şu anki girdi kaybedilsin mi?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Hiçbir kart yaratılmadı. Lütfen daha fazla alan doldurun</string>
     <string name="note_editor_no_first_field">İlk alan boş</string>
     <string name="note_editor_no_cloze_delations">Bu not türü boşluk doldurma içermelidir</string>
@@ -125,6 +125,7 @@
     <string name="select">Seç</string>
     <string name="field_remapping">%1$s (\'%2$s\' içinden)</string>
     <string name="confirm_map_cards_to_nothing">Hiçbir şeyle eşlemeyen tüm kartlar silinecektir. Eğer bir notun kalan kartları yoksa, kaybolacaktır. Devam etmek istediğinizden emin misiniz?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Zaman sınırına ulaşıldı</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Arkaplan</string>
     <string name="choose_an_image">Bir resim seç</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Varsayılana Dön</string>
     <string name="cloze_sample_text">Bu {{%1$s::örnek}} bir boşluk doldurmadır.</string>

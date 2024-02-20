@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">নির্দিষ্ট ট্যাগে সীমিতকরণ</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">নোট সম্পাদন</string>
-    <string name="discard_unsaved_changes">লেখাগুলো বাতিল করে বন্ধ করতে চান?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">কোনও কার্ড বানানো যায়নি। আরো ক\'টি ফিল্ডে লিখুন।</string>
     <string name="note_editor_no_first_field">প্রথম ফিল্ডটি খালি</string>
     <string name="note_editor_no_cloze_delations">এই ধরনের নোটে অবশ্যই ক্লোজ ডিলিশন থাকতে হবে</string>
@@ -125,6 +125,7 @@
     <string name="select">বেছে নাও</string>
     <string name="field_remapping">%1$s (“%2$s” থেকে)</string>
     <string name="confirm_map_cards_to_nothing">ম্যাপিং বিহীন কার্ডগুলি মুছে ফেলা হবে। কোনও নোটে যদি আর কার্ড বাকি না থাকে তবে সেটাও মুছে যাবে। আপনি কি চালিয়ে যেতে চান?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">সময়সীমা অতিক্রান্ত হয়েছে</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
     <string name="choose_an_image">Select image</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>

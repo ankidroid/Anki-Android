@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Limiter à certaines étiquettes</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Modifier la note</string>
-    <string name="discard_unsaved_changes">Fermer et perdre la saisie en cours ?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Aucune carte créée. Veuillez remplir plus de champs</string>
     <string name="note_editor_no_first_field">Le premier champ est vide</string>
     <string name="note_editor_no_cloze_delations">Ce type de note doit contenir des textes à trous</string>
@@ -125,6 +125,7 @@
     <string name="select">Sélectionner</string>
     <string name="field_remapping">%1$s (de « %2$s »)</string>
     <string name="confirm_map_cards_to_nothing">Toute carte sans connexion sera effacée. Si une note n’a aucune carte restante, elle sera perdue. Êtes-vous sûr de vouloir continuer ?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Le temps imparti est écoulé</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Arrière-plan</string>
     <string name="choose_an_image">Sélectionner une image</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Rétablir par défaut</string>
     <string name="cloze_sample_text">Ceci est un {{%1$s::sample}} de suppression des trous</string>

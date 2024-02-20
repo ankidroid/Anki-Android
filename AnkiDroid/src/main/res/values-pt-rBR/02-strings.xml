@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Limitar a tags específicas</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Editar nota</string>
-    <string name="discard_unsaved_changes">Fechar e perder a entrada atual?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Nenhum card criado. Por favor, preencha mais campos</string>
     <string name="note_editor_no_first_field">O primeiro campo está vazio</string>
     <string name="note_editor_no_cloze_delations">Este tipo de nota deve usar Ocultar em algum termo</string>
@@ -125,6 +125,7 @@
     <string name="select">Selecionar</string>
     <string name="field_remapping">%1$s (de \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Quaisquer cards não-mapeados serão removidos. Se não houverem cards para uma nota, ela será perdida. Tem certeza de que deseja continuar?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Caixa do tempo alcançada</string>
     <plurals name="timebox_reached">
@@ -208,6 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Plano de fundo</string>
     <string name="choose_an_image">Escolha uma imagem</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restaurar Padrões</string>
     <string name="cloze_sample_text">Esse é um {{%1$s::exemplo}} ocultado.</string>

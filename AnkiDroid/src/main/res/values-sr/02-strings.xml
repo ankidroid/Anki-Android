@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Постави ограничење по ознакама</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Уреди белешку</string>
-    <string name="discard_unsaved_changes">Да затворим и искористим текући унос?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
     <string name="note_editor_no_first_field">The first field is empty</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
@@ -125,6 +125,7 @@
     <string name="select">Изабери</string>
     <string name="field_remapping">%1$s (од \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Немапиране карте ће бити избрисане. Напомене, које немају своје карте, биће изгубљене. Да продужим?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
@@ -211,6 +212,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
     <string name="choose_an_image">Select image</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>

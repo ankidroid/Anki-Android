@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Omezit podle štítků</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Upravit poznámku</string>
-    <string name="discard_unsaved_changes">Zavřít a ztratit stávající vstup?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Nebyly vytvořeny žádné karty. Vyplňte prosím další pole</string>
     <string name="note_editor_no_first_field">První pole je prázdné</string>
     <string name="note_editor_no_cloze_delations">Tento typ poznámky musí obsahovat doplňovačky</string>
@@ -125,6 +125,7 @@
     <string name="select">Vybrat</string>
     <string name="field_remapping">%1$s (z \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Karty mapované na prázdný cíl budou odstraněny. Nezbývají-li už v poznámce žádné karty, bude poznámka ztracena. Opravdu chcete pokračovat?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Časové omezení dosaženo</string>
     <plurals name="timebox_reached">
@@ -214,6 +215,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Pozadí</string>
     <string name="choose_an_image">Vybrat obrázek</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Obnovit výchozí</string>
     <string name="cloze_sample_text">Toto je {{%1$s::příklad}} doplňovačky.</string>

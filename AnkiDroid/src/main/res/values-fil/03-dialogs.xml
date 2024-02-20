@@ -109,6 +109,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Kumpirmahin</string>
     <string name="dialog_no">Hindi</string>
     <string name="dialog_yes">Oo</string>
+    <string name="dialog_keep">Keep</string>
+    <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Magpatuloy</string>
     <string name="dialog_processing">Pinoproseso...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Gumawa</string>

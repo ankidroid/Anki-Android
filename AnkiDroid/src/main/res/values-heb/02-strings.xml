@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">הגבל לתיוג ספציפי</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ערוך רשומה</string>
-    <string name="discard_unsaved_changes">סגור ולאבד קלט הנוכחי?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">לא נוצרו קלפים. יש למלא יותר שדות</string>
     <string name="note_editor_no_first_field">השדה הראשון ריק</string>
     <string name="note_editor_no_cloze_delations">סוג הרשומה חייב לכלול \'השלם את החסר\'</string>
@@ -125,6 +125,7 @@
     <string name="select">בחירה</string>
     <string name="field_remapping">%1$s (מתוך \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">קלף שממופה לכלום ימחק. אם לרשימה אין קלפים נותרים, היא תימחק. להמשיך?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">קופסת הזמן הגיעה</string>
     <plurals name="timebox_reached">
@@ -214,6 +215,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">רקע</string>
     <string name="choose_an_image">נא לבחור תמונה</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">שחזור בררת המחדל</string>
     <string name="cloze_sample_text">זוהי  {{%1$s::דוגמא}} של זיהוי cloze.</string>
