@@ -109,6 +109,7 @@ jobs:
               if (err.status === 422) {
                 console.log("A PR containing translations sync already exists!");
               } else {
+                console.log("Unexpected error creating pull request: " + err);
                 throw err;
               }
             }
