@@ -32,6 +32,8 @@ import java.util.regex.Pattern
 
 /**
  * Records information about a text to speech tag.
+ *
+ * @param speed speed of speech, where `1.0f` is normal speed. `null`: use system
  */
 data class TTSTag(
     val fieldText: String,
@@ -40,7 +42,7 @@ data class TTSTag(
      */
     val lang: String,
     val voices: List<String>,
-    val speed: Float,
+    val speed: Float?,
     /** each arg should be in the form 'foo=bar' */
     val otherArgs: List<String>
 ) : AvTag()
