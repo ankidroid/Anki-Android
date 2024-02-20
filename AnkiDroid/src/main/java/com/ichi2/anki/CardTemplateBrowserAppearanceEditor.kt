@@ -98,7 +98,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private fun showDiscardChangesDialog() {
-        DiscardChangesDialog.showDialog(this, getString(R.string.discard), CollectionManager.TR.addingKeepEditing(), CollectionManager.TR.addingDiscardCurrentInput()) {
+        DiscardChangesDialog.showDialog(this) {
             discardChangesAndClose()
         }
     }
