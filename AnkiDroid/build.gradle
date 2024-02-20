@@ -74,8 +74,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21700205
-        versionName="2.17beta5"
+        versionCode=21700206
+        versionName="2.17beta6"
         minSdk 23 // also in testlib/build.gradle.kts
         // After #13695: change .tests_emulator.yml
         targetSdk 33 // also in [api|testlib]/build.gradle.kts and ../robolectricDownloader.gradle
