@@ -25,8 +25,8 @@ import com.ichi2.utils.show
 object DiscardChangesDialog {
     fun showDialog(
         context: Context,
-        positiveButtonText: String,
-        negativeButtonText: String,
+        positiveButtonText: String = "Discard",
+        negativeButtonText: String = "Keep Editing",
         message: String,
         positiveMethod: () -> Unit
     ) = AlertDialog.Builder(context).show {
