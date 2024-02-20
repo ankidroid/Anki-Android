@@ -1255,7 +1255,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun showDiscardChangesDialog() {
-        DiscardChangesDialog.showDialog(this, getString(R.string.discard), TR.addingKeepEditing(), TR.addingDiscardCurrentInput()) {
+        DiscardChangesDialog.showDialog(this) {
             Timber.i("NoteEditor:: OK button pressed to confirm discard changes")
             closeNoteEditor()
         }
