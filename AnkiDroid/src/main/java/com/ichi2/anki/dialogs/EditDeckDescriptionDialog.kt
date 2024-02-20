@@ -107,7 +107,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
         }
 
         Timber.i("asking if user should discard changes")
-        DiscardChangesDialog.showDialog(requireContext(), getString(R.string.discard), CollectionManager.TR.addingKeepEditing(), CollectionManager.TR.addingDiscardCurrentInput()) {
+        DiscardChangesDialog.showDialog(requireContext()) {
             closeWithoutSaving()
         }
     }
