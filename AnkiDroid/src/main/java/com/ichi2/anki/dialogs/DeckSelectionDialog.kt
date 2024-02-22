@@ -98,6 +98,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val did = args.getLong("currentDeckId")
             recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
         }
+        // TODO: AlertDialog conversion: [CardBrowser] keyboard appears when searching (#15613)
         dialog = MaterialDialog(requireActivity())
             .negativeButton(R.string.dialog_cancel)
             .customView(view = dialogView, noVerticalPadding = true)
