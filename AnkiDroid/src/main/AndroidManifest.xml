@@ -40,6 +40,7 @@
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" android:maxSdkVersion="25" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <!-- Disabled on Play Store -->
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
     <permission android:name="${applicationId}.permission.READ_WRITE_DATABASE"
@@ -469,7 +470,10 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:configChanges="keyboardHidden|screenSize" />
 
-
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
             android:enabled="false"
