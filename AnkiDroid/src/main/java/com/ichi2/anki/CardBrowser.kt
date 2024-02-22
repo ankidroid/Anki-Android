@@ -36,6 +36,7 @@ import anki.collection.OpChanges
 import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Previewer.Companion.toIntent
@@ -70,6 +71,8 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
+import com.ichi2.anki.noteeditor.EditCardDestination
+import com.ichi2.anki.noteeditor.toIntent
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
@@ -657,14 +660,12 @@ open class CardBrowser :
 
     /** Opens the note editor for a card.
      * We use the Card ID to specify the preview target  */
+    @NeedsTest("note edits are saved")
+    @NeedsTest("I/O edits are saved")
     private fun openNoteEditorForCard(cardId: CardId) {
         currentCardId = cardId
-        cardBrowserCard = getColUnsafe.getCard(currentCardId)
-        // start note editor using the card we just loaded
-        val editCard = Intent(this, NoteEditor::class.java)
-            .putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT)
-            .putExtra(NoteEditor.EXTRA_CARD_ID, cardBrowserCard!!.id)
-        onEditCardActivityResult.launch(editCard)
+        val intent = EditCardDestination(currentCardId).toIntent(this, animation = Direction.DEFAULT)
+        onEditCardActivityResult.launch(intent)
         // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
         viewModel.endMultiSelectMode()
     }
@@ -1555,11 +1556,11 @@ open class CardBrowser :
 
     private suspend fun saveEditedCard() {
         Timber.d("CardBrowser - saveEditedCard()")
-        val card = cardBrowserCard!!
-        withProgress {
-            undoableOp {
-                updateNote(card.note())
-            }
+        val card = try {
+            withCol { getCard(currentCardId) }
+        } catch (e: Exception) {
+            Timber.i("edited card no longer exists")
+            return
         }
         updateCardInList(card)
     }
@@ -2199,8 +2200,6 @@ open class CardBrowser :
     }
 
     companion object {
-        var cardBrowserCard: Card? = null
-
         /**
          * Argument key to add on change deck dialog,
          * so it can be dismissed on activity recreation,
