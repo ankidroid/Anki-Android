@@ -98,7 +98,6 @@ import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.utils.*
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.widget.WidgetStatus
-import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -482,7 +481,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 finish()
                 return
             }
-            CALLER_REVIEWER_EDIT -> {
+            CALLER_EDIT -> {
                 val cardId = requireNotNull(intent.extras?.getLong(EXTRA_CARD_ID)) { "EXTRA_CARD_ID" }
                 mCurrentEditedCard = col.getCard(cardId)
                 mEditorNote = mCurrentEditedCard!!.note(col)
@@ -495,17 +494,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 mEditorNote = mCurrentEditedCard!!.note(getColUnsafe)
             }
             CALLER_STUDYOPTIONS, CALLER_DECKPICKER, CALLER_REVIEWER_ADD, CALLER_CARDBROWSER_ADD, CALLER_NOTEEDITOR ->
-                addNote =
-                    true
-            CALLER_CARDBROWSER_EDIT -> {
-                mCurrentEditedCard = CardBrowser.cardBrowserCard
-                if (mCurrentEditedCard == null) {
-                    finish()
-                    return
-                }
-                mEditorNote = mCurrentEditedCard!!.note(col)
-                addNote = false
-            }
+                addNote = true
             CALLER_NOTEEDITOR_INTENT_ADD -> {
                 fetchIntentInformation(intent)
                 if (sourceText == null) {
@@ -1023,7 +1012,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // these activities are updated to handle `opChanges`
             // and no longer using the legacy ActivityResultCallback/onActivityResult to
             // accept & update the note in the activity
-            if (caller == CALLER_PREVIEWER_EDIT || caller == CALLER_REVIEWER_EDIT) {
+            if (caller == CALLER_PREVIEWER_EDIT || caller == CALLER_EDIT) {
                 withProgress {
                     undoableOp {
                         updateNote(mCurrentEditedCard!!.note())
@@ -2368,7 +2357,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // * Consider persistence strategy for temporary media. Saving after multimedia edit is probably too early, but
         // we don't want to risk the cache being cleared. Maybe add in functionality to remove from collection if added and
         // the action is cancelled?
-        // kill sCardBrowserCard and AbstractFlashcardViewer.getEditorCard()
         //    public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
         //    public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
         const val SOURCE_TEXT = "SOURCE_TEXT"
@@ -2389,11 +2377,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         // calling activity
         const val CALLER_NO_CALLER = 0
-        const val CALLER_REVIEWER_EDIT = 1
+        const val CALLER_EDIT = 1
         const val CALLER_STUDYOPTIONS = 2
         const val CALLER_DECKPICKER = 3
         const val CALLER_REVIEWER_ADD = 11
-        const val CALLER_CARDBROWSER_EDIT = 6
         const val CALLER_CARDBROWSER_ADD = 7
         const val CALLER_NOTEEDITOR = 8
         const val CALLER_PREVIEWER_EDIT = 9
