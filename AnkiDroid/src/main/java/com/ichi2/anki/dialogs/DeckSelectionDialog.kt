@@ -25,13 +25,14 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.BundleCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
@@ -45,10 +46,6 @@ import com.ichi2.libanki.*
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
-import com.ichi2.utils.create
-import com.ichi2.utils.customView
-import com.ichi2.utils.negativeButton
-import com.ichi2.utils.positiveButton
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -68,11 +65,13 @@ import kotlin.collections.ArrayList
  */
 @NeedsTest("simulate 'don't keep activities'")
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
+    private var dialog: MaterialDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCancelable = true
     }
 
+    @Suppress("Deprecation") // Material dialog neutral button deprecation
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView = LayoutInflater.from(activity)
             .inflate(R.layout.deck_picker_dialog, null, false)
@@ -99,16 +98,15 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val did = args.getLong("currentDeckId")
             recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
         }
-
-        return AlertDialog.Builder(requireActivity()).create {
-            negativeButton(R.string.dialog_cancel)
-            customView(view = dialogView)
-            if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
-                positiveButton(R.string.restore_default) {
-                    onDeckSelected(null)
-                }
+        dialog = MaterialDialog(requireActivity())
+            .negativeButton(R.string.dialog_cancel)
+            .customView(view = dialogView, noVerticalPadding = true)
+        if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
+            (dialog as MaterialDialog).positiveButton(R.string.restore_default) {
+                onDeckSelected(null)
             }
         }
+        return dialog!!
     }
 
     private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>) =
@@ -208,11 +206,11 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     protected fun selectDeckAndClose(deck: SelectableDeck) {
         Timber.d("selected deck '%s'", deck.name)
         onDeckSelected(deck)
-        dismiss()
+        dialog!!.dismiss()
     }
 
     protected fun displayErrorAndCancel() {
-        dismiss()
+        dialog!!.dismiss()
     }
 
     open inner class DecksArrayAdapter(deckNames: List<SelectableDeck>) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(), Filterable {
