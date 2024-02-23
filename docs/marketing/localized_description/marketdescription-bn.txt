@@ -1,4 +1,4 @@
-AnkiDroid সাথে কোন কিছু মুখস্থ!
+AnkiDroid দিয়ে যেকোনো তথ্য মুখস্থ!
 
 AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
 

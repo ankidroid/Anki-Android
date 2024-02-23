@@ -294,7 +294,7 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">O AnkiDroid introduziu um mecanismo TTS melhor, que é compatível com outros clientes Anki e inclui mais vozes e melhorias na reprodução de idiomas! Por favor, atualize o mais rapidamente possível, pois esta definição será removida em breve</string>
-    <string name="readtext_reviewer_warn">Por favor, atualize para o novo texto para o formato da fala</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Por favor, atualize para o novo texto para o formato da fala</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opções do desenvolvedor</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ativar opções do desenvolvedor</string>

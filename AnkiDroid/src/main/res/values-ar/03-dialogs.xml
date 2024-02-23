@@ -129,8 +129,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">تأكيد</string>
     <string name="dialog_no">لا</string>
     <string name="dialog_yes">نعم</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">إبقاء</string>
+    <string name="dialog_remove">حذف</string>
     <string name="dialog_continue">استمرار</string>
     <string name="dialog_processing">تجري المعالجة...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">إنشاء</string>
@@ -201,7 +201,7 @@
     <string name="failed_to_apply_background_image">تعذر تطبيق صورة الخلفية %s</string>
     <string name="background_image_too_large">خلفية محدد الرزم كبيرة جدًا</string>
     <string name="image_max_size_allowed">الحد الأقصى لحجم الصورة المسموح به هو %d ميجابايت</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">أبعاد الصورة كبيرة جدًا (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">يفتقد إذن التخزين المطلوب. يرجى منح إذن التخزين ثم المحاولة مجددًا.</string>
@@ -211,7 +211,7 @@
     <string name="boot_service_failed_to_schedule_notifications">تعذرت جدولة التنبيهات</string>
     <string name="boot_service_too_many_notifications">تمت جدولة كثير من التنبيهات. لن يظهر بعضها</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">ضبط اللغة</string>
     <string name="locale_selection_dialog_summary">بعض لوحات المفاتيح متعددة اللغات، مثل GBoard، تدعم تغيير اللغة عند تحرير النص\n\nيرجى طلب ميزة “setImeHintLocales” من مصنّع لوحة المفاتيح الخاصة بك إذا كانت لوحة المفاتيح لا تغيّر اللغة.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">استخدام أنكيدرويد</string>
@@ -239,7 +239,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">أخكام وشروط أنكي ويب</string>
     <string name="help_title_send_exception">إرسال تقرير استكشاف الأخطاء</string>
     <string name="help_dialog_exception_report_debounce">تم إرسال التقرير مسبقًا</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">تم إرسال التقرير!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="zero">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>

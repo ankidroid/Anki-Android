@@ -52,7 +52,7 @@
     <string name="CardEditorModel">ধরন:</string>
     <string name="CardEditorTags">ট্যাগসমূহ: %1$s</string>
     <string name="CardEditorCards">কার্ড: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">শূন্য স্থান পূরণ সমস্যা সম্পাদনা</string>
     <string name="tag_name">ট্যাগের নাম</string>
     <string name="add_new_filter_tags">ট্যাগ যুক্ত/ফিল্টার করুন</string>
     <string name="add_tag">ট্যাগ যোগ করুন</string>
@@ -62,8 +62,8 @@
     <string name="updated_version">%s সংস্করণে আপডেট করা হয়েছে</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">হোয়াইটবোর্ড সংরক্ষণ করুন</string>
-    <string name="enable_stylus">Enable stylus writing</string>
-    <string name="disable_stylus">Disable stylus writing</string>
+    <string name="enable_stylus">স্টাইলাস মোড অন করুন</string>
+    <string name="disable_stylus">স্টাইলাস মোড অফ করুন</string>
     <string name="enable_whiteboard">হোয়াইটবোর্ড সক্রিয় করুন</string>
     <string name="disable_whiteboard">হোয়াইটবোর্ড নিষ্ক্রিয় করুন</string>
     <string name="show_whiteboard">হোয়াইটবোর্ড প্রদর্শন করুন</string>
@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">নির্দিষ্ট ট্যাগে সীমিতকরণ</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">নোট সম্পাদন</string>
-    <string name="discard">Discard</string>
+    <string name="discard">বাতিল করুন</string>
     <string name="note_editor_no_cards_created">কোনও কার্ড বানানো যায়নি। আরো ক\'টি ফিল্ডে লিখুন।</string>
     <string name="note_editor_no_first_field">প্রথম ফিল্ডটি খালি</string>
     <string name="note_editor_no_cloze_delations">এই ধরনের নোটে অবশ্যই ক্লোজ ডিলিশন থাকতে হবে</string>
@@ -125,7 +125,7 @@
     <string name="select">বেছে নাও</string>
     <string name="field_remapping">%1$s (“%2$s” থেকে)</string>
     <string name="confirm_map_cards_to_nothing">ম্যাপিং বিহীন কার্ডগুলি মুছে ফেলা হবে। কোনও নোটে যদি আর কার্ড বাকি না থাকে তবে সেটাও মুছে যাবে। আপনি কি চালিয়ে যেতে চান?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">নোট টাইপ খুঁজে পাওয়া যাই নি</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">সময়সীমা অতিক্রান্ত হয়েছে</string>
     <plurals name="timebox_reached">
@@ -145,7 +145,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">একটু দেখাও</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d -র মধ্যে %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">পুনঃনামকরণ</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">চেক করুন</string>
     <string name="check_db">ডেটাবেজ চেক</string>
     <string name="check_media">মিডিয়া চেক</string>
     <string name="empty_cards">খালি কার্ডসমূহ</string>
@@ -156,22 +156,22 @@
     <string name="import_title">আমদানি হচ্ছে</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">যোগ কর</string>
     <string name="import_message_replace_confirm">এর ফলে আপনার বর্তমান সংগ্রহ মুছে যাবে এবং %s ফাইলের ডেটা দ্বারা প্রতিস্থাপিত হবে।</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">\"%s\"কে সংগ্রহে যোগ করবেন? অনেক সময় প্রয়োজন হতে পারে</string>
     <string name="import_log_no_apkg">এটি কোন বৈধ আনকি প্যাকেজ ফাইল নয়</string>
     <string name="import_title_error" comment="Title of error dialog">ত্রুটি</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+    <string name="import_error_handle_exception">ফাইল আমদানিতে ব্যর্থ\n\n%s</string>
+    <string name="import_error_not_apkg_extension"> \"%s\" ফাইলে .apkg বা .colpkg এক্সটেনশন নেই</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_share_title">Send Anki package using</string>
-    <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+    <string name="import_interrupted">আমদানি ব্যাধিত: AnkiDroid বন্ধ করা হয়েছে</string>
+    <string name="export_preparation_in_progress">রপ্তানি প্রস্তুত করা হচ্ছে&#8230;</string>
+    <string name="export_ready_title">রপ্তানি প্রস্তুতি সমাপ্ত</string>
+    <string name="export_send_no_handlers">apkg সামলানোর জন্য কোনো অ্যাপ নেই। সেভ করা হচ্ছে...</string>
+    <string name="export_save_apkg_successful">সফলতাপূর্বক Anki প্যাকেজ সেভ হয়েছে</string>
+    <string name="export_save_apkg_unsuccessful">আনকি প্যাকেজ সেভ করা ব্যর্থ</string>
+    <string name="export_share_title">Anki প্যাকেজ পাঠান:</string>
+    <string name="export_email_subject">AnkiDroid এর রপ্তানি করা ফ্ল্যাশকার্ড: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
         This is an Anki flashcards deck sent from AnkiDroid[1].
@@ -185,7 +185,7 @@
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Set TTS language</string>
-    <string name="custom_study">Custom study</string>
+    <string name="custom_study">কাস্টম অধ্যয়ন </string>
     <string name="more_options">More</string>
     <string name="dyn_deck_desc">স্বাভাবিক সময়সূচীর বাইরে অধ্যয়ন করার জন্য এটি একটি বিশেষ ডেক। রিভিউয়ের পর কার্ডসমূহকে স্বয়ংক্রিয়ভাবে তাদের আসল ডেকসমূহে ফিরিয়ে দেয়া হবে। এই ডেকটি মুছে ফেলা হলে বাকি থাকা কার্ডগুলিকে তাদের আসল ডেকে ফিরিয়ে দেয়া হবে।</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>

@@ -50,8 +50,8 @@
         <item quantity="other">%d քարտ է ցուցադրված</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d գրառում է ցուցադրված</item>
+        <item quantity="other">%d գրառում է ցուցադրված</item>
     </plurals>
     <string name="card_browser_all_decks">Բոլոր կապուկները</string>
     <plurals name="card_browser_delete_cards">
@@ -70,29 +70,29 @@
     <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_list_my_searches">Իմ որոնումները</string>
     <string name="card_browser_list_my_searches_save">Պահպանել որոնումը</string>
-    <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-    <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
+    <string name="card_browser_list_my_searches_title">Ընտրեք պահպանված որոնում</string>
+    <string name="card_browser_list_my_searches_new_name">Որոնման անվանումը</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Որոնումը չի կարելի պահպանել առանց անվանման</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Անվանումը արդեն կա</string>
     <string name="card_browser_list_my_searches_remove_content">Ջնջե՞լ «%1$s»</string>
     <string name="card_browser_change_display_order">Change display order</string>
     <string name="card_browser_change_display_order_title">Choose display order</string>
-    <string name="card_details_tags">Tags</string>
+    <string name="card_details_tags">Պիտակներ</string>
     <string-array name="card_browser_order_labels">
-        <item>No sorting (faster)</item>
-        <item>By sort field</item>
-        <item>By created time</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Չդասավորել (ավելի արագ)</item>
+        <item>Ըստ դաշտի</item>
+        <item>Ըստ ստեղծման ամսաթվի</item>
+        <item>Ըստ գրառման խմբագրման ամսաթվի</item>
+        <item>Ըստ քարտի խմբագրման ամսաթվի</item>
         <item>By due time</item>
         <item>By interval</item>
-        <item>By ease</item>
-        <item>By reviews</item>
+        <item>Ըստ հեշտության</item>
+        <item>Ըստ վերանայումների</item>
         <item>By lapses</item>
     </string-array>
     <string name="card_browser_select_all">Նշել բոլորը</string>
     <string name="card_browser_select_none">Select none</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(նոր)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(learning)</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>

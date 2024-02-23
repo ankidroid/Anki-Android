@@ -47,22 +47,22 @@
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
         <item quantity="one">%d টি কার্ড দেখাচ্ছি</item>
-        <item quantity="other">%d টি কার্ড দেখাচ্ছি</item>
+        <item quantity="other">%d টি কার্ড</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
         <item quantity="one">%d টি নোট দেখাচ্ছি</item>
-        <item quantity="other">%d টি নোট দেখাচ্ছি</item>
+        <item quantity="other">%d টি নোট</item>
     </plurals>
     <string name="card_browser_all_decks">সকল ডেক</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">কার্ড ডিলিট করুন</item>
+        <item quantity="other">কার্ড ডিলিট করুন</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="other">নোট ডিলিট করুন</item>
     </plurals>
-    <string name="card_browser_change_deck">ডেক বদলাও</string>
+    <string name="card_browser_change_deck">ডেক পরিবর্তন</string>
     <string name="delete_card_title">নোট মুছব?</string>
     <string name="card_browser_show_marked">চিহ্নিতগুলো বাছো</string>
     <string name="card_browser_show_suspended">চিহ্নিতগুলো স্থগিত কর</string>
@@ -101,11 +101,11 @@
     <string name="card_browser_truncate" comment="allows users to show less of a field value">বিষয়বস্ত ছাঁটাই</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="other">কার্ড রপ্তানি করুন</item>
     </plurals>
     <plurals name="card_browser_export_notes">
         <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="other">নোট রপ্তানি করুন</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d টি কার্ড মুছেছি</item>
