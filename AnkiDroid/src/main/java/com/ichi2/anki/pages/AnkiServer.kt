@@ -59,7 +59,7 @@ open class AnkiServer(
     }
 
     private fun buildResponse(
-        block: suspend CoroutineScope.() -> ByteArray
+        block: suspend CoroutineScope.() -> ByteArray?
     ): Response {
         return try {
             val data = runBlocking {

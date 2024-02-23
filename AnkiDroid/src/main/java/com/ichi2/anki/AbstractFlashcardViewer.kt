@@ -2548,7 +2548,7 @@ abstract class AbstractFlashcardViewer :
         return AnkiDroidJsAPI.CardDataForJsApi()
     }
 
-    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
+    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray? {
         return if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
             jsApi.handleJsApiRequest(
                 uri.substring(AnkiServer.ANKIDROID_JS_PREFIX.length),
@@ -2556,7 +2556,8 @@ abstract class AbstractFlashcardViewer :
                 returnDefaultValues = true
             )
         } else {
-            throw IllegalArgumentException("unhandled request: $uri")
+            Timber.d("unhandled request: %s", uri)
+            return null
         }
     }
 

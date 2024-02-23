@@ -82,12 +82,12 @@ abstract class PageFragment : Fragment(R.layout.page_fragment), PostRequestHandl
         }
     }
 
-    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
-        val methodName = if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
-            uri.substring(AnkiServer.ANKI_PREFIX.length)
-        } else {
-            throw IllegalArgumentException("unhandled request: $uri")
+    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray? {
+        if (!uri.startsWith(AnkiServer.ANKI_PREFIX)) {
+            Timber.d("unhandled request: %s", uri)
+            return null
         }
+        val methodName = uri.substring(AnkiServer.ANKI_PREFIX.length)
         return requireActivity().handleUiPostRequest(methodName, bytes)
             ?: handleCollectionPostRequest(methodName, bytes)
             ?: throw IllegalArgumentException("unhandled method: $methodName")

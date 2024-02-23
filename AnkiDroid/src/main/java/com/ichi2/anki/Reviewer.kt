@@ -1406,7 +1406,7 @@ open class Reviewer :
         return activity.window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
     }
 
-    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
+    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray? {
         return if (uri.startsWith(ANKI_PREFIX)) {
             when (val methodName = uri.substring(ANKI_PREFIX.length)) {
                 "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
@@ -1420,7 +1420,8 @@ open class Reviewer :
                 returnDefaultValues = false
             )
         } else {
-            throw IllegalArgumentException("unhandled request: $uri")
+            Timber.d("unhandled request: %s", uri)
+            null
         }
     }
 

@@ -159,12 +159,12 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener, PostRequestHa
         }
     }
 
-    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
+    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray? {
         return if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
             AnkiDroidJsAPI.ApiResult(true, "-1").toString().toByteArray()
         } else {
             Timber.d("Unhandled post request %s", uri)
-            byteArrayOf()
+            null
         }
     }
 

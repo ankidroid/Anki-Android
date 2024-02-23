@@ -44,7 +44,7 @@ import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.delay
 
 interface PostRequestHandler {
-    suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray
+    suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray?
 }
 
 suspend fun handleCollectionPostRequest(methodName: String, bytes: ByteArray): ByteArray? {
