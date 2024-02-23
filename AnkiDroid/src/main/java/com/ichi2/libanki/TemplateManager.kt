@@ -26,12 +26,20 @@ import com.ichi2.libanki.Sound.VIDEO_EXTENSIONS
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote
+import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
 import com.ichi2.utils.deepClone
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 import org.intellij.lang.annotations.Language
+import org.jetbrains.annotations.VisibleForTesting
 import org.json.JSONObject
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document.OutputSettings
+import java.io.File
+import java.net.URI
+import java.net.URISyntaxException
+import java.nio.file.Paths
 
 private typealias Union<A, B> = Pair<A, B>
 private typealias TemplateReplacementList = MutableList<Union<String?, TemplateManager.TemplateReplacement?>>
@@ -198,15 +206,21 @@ class TemplateManager {
 
             val mediaDir = col.media.dir
             val qtext = parseVideos(
-                text = applyCustomFilters(partial.qnodes, this, frontSide = null),
-                mediaDir = mediaDir
+                parseSourcesToFileScheme(
+                    applyCustomFilters(partial.qnodes, this, frontSide = null),
+                    mediaDir
+                ),
+                mediaDir
             )
             val qout = col.backend.extractAvTags(text = qtext, questionSide = true)
             var qoutText = qout.text
 
             val atext = parseVideos(
-                text = applyCustomFilters(partial.anodes, this, frontSide = qout.text),
-                mediaDir = mediaDir
+                parseSourcesToFileScheme(
+                    applyCustomFilters(partial.anodes, this, frontSide = qout.text),
+                    mediaDir
+                ),
+                mediaDir
             )
             val aout = col.backend.extractAvTags(text = atext, questionSide = false)
             var aoutText = aout.text
@@ -311,4 +325,64 @@ class TemplateManager {
     companion object {
         val fieldFilters: MutableMap<String, FieldFilter> = mutableMapOf()
     }
+}
+
+/**
+ * Parses the sources of the `<img>`, `<video>`, `<audio>`, `<object>` and `<source>` tags
+ * to use the `file:///` scheme, which allows seeking audio and videos,
+ * and loads faster than using HTTP.
+ *
+ * Only attribute values that don't have a Uri scheme (http, file, etc) are parsed.
+ */
+@NotInLibAnki
+@VisibleForTesting
+fun parseSourcesToFileScheme(content: String, mediaDir: String): String {
+    val doc = Jsoup.parse(content)
+    doc.outputSettings(OutputSettings().prettyPrint(false))
+
+    fun replaceWithFileScheme(tag: String, attr: String): Boolean {
+        var madeChanges = false
+        for (elem in doc.select(tag)) {
+            val attrValue = elem.attr(attr)
+            if (attrValue.isEmpty()) continue
+
+            val attrUri = try {
+                URI(attrValue)
+            } catch (_: URISyntaxException) {
+                continue
+            }
+            if (attrUri.scheme != null) continue
+
+            val path = Paths.get(mediaDir, attrUri.path).toString()
+            val newUri = getFileUri(path)
+
+            elem.attr(attr, newUri.toString())
+            madeChanges = true
+        }
+        return madeChanges
+    }
+
+    val hasMadeChanges =
+        replaceWithFileScheme("img", "src") ||
+            replaceWithFileScheme("video", "src") ||
+            replaceWithFileScheme("audio", "src") ||
+            replaceWithFileScheme("source", "src") ||
+            replaceWithFileScheme("object", "data")
+
+    return if (hasMadeChanges) {
+        doc.body().html()
+    } else {
+        content
+    }
+}
+
+/** Similar to [File.toURI], but doesn't use the absolute file to simplify testing */
+@NotInLibAnki
+@VisibleForTesting
+fun getFileUri(path: String): URI {
+    var p = path
+    if (File.separatorChar != '/') p = p.replace(File.separatorChar, '/')
+    if (!p.startsWith("/")) p = "/$p"
+    if (!p.startsWith("//")) p = "//$p"
+    return URI("file", p, null)
 }
