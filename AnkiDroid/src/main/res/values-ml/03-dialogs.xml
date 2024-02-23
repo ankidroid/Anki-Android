@@ -221,7 +221,7 @@
         <item quantity="one">%d സെക്കൻഡിൽ ഒരു യാന്ത്രിക സമന്വയം പ്രവർത്തനക്ഷമമാക്കാം</item>
         <item quantity="other">%d സെക്കൻഡിനുള്ളിൽ ഒരു യാന്ത്രിക സമന്വയം പ്രവർത്തനക്ഷമമാക്കാം</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
     <string name="deck_picker_rev">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
     <string name="deck_picker_lrn">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>

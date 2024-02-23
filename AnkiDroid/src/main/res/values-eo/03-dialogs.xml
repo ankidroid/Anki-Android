@@ -221,7 +221,7 @@
         <item quantity="one">Aŭtomata samtempigo povas startigi post %d sekundo</item>
         <item quantity="other">Aŭtomata samtempigo povas startigi post %d sekundoj</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Nombro de novaj hodiaŭaj kartoj por montri en tiu ĉi kartaro.</string>
     <string name="deck_picker_rev">Nombro de hodiaŭaj lernendaj kartoj en tiu ĉi kartaro.</string>
     <string name="deck_picker_lrn">Nombro de lernataj kortoj en tiu ĉi kartaro.</string>

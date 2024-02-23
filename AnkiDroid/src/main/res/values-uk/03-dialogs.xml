@@ -235,7 +235,7 @@
         <item quantity="many">Автоматична синхронізація може запуститися через %d секунд.</item>
         <item quantity="other">Автоматична синхронізація може запуститися через %d секунди.</item>
     </plurals>
-    <string name="metered_sync_warning">Ваше з\'єднання вимірюється. За передачу даних можуть зніматися кошти</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Кількість нових карт, що будуть бачити сьогодні в цій колоді.</string>
     <string name="deck_picker_rev">Кількість нових карток на сьогодні в цій колоді</string>
     <string name="deck_picker_lrn">Кількість карток для повторення на сьогодні в цій колоді</string>

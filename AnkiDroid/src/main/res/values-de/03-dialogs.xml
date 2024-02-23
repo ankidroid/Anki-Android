@@ -221,7 +221,7 @@
         <item quantity="one">Ein automatische Synchronisierung kann in %d Sekunden ausgelöst werden</item>
         <item quantity="other">Ein automatische Synchronisierung kann in %d Sekunden ausgelöst werden</item>
     </plurals>
-    <string name="metered_sync_warning">Ihre Verbindung ist getaktet. Für die Datenübertragung könnten Kosten anfallen</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Anzahl der neuen Karten, die heute in diesem Stapel zu sehen sind.</string>
     <string name="deck_picker_rev">Anzahl der heute fälligen Karten in diesem Stapel.</string>
     <string name="deck_picker_lrn">Anzahl der Karten beim Lernen in diesem Stapel.</string>

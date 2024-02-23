@@ -214,7 +214,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Penyegerakan automatik mungkin dicetuskan dalam %d saat</item>
     </plurals>
-    <string name="metered_sync_warning">Sambungan anda bermeter. Pemindahan datam mungkin memerlukan wang</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Bilangan kad baru untuk lihat hari ini dalam dek ini.</string>
     <string name="deck_picker_rev">Bilangan kad tunggakan hari ini dalam dek ini.</string>
     <string name="deck_picker_lrn">Bilangan kad sedang dipelajari hari ini dalam dek ini.</string>

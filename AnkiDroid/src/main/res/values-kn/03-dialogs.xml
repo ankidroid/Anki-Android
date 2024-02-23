@@ -221,7 +221,7 @@
         <item quantity="one">%d ಸೆಕೆಂಡುಗಳಲ್ಲಿ ಸ್ವಯಂಚಾಲಿತ ಸಿಂಕ್ ಅನ್ನು ಪ್ರಚೋದಿಸಬಹುದು</item>
         <item quantity="other">%d ಸೆಕೆಂಡುಗಳಲ್ಲಿ ಸ್ವಯಂಚಾಲಿತ ಸಿಂಕ್ ಅನ್ನು ಪ್ರಚೋದಿಸಬಹುದು</item>
     </plurals>
-    <string name="metered_sync_warning">ನಿಮ್ಮ ಸಂಪರ್ಕವನ್ನು ಅಳತೆ ಮಾಡಲಾಗಿದೆ. ಡೇಟಾ ವರ್ಗಾವಣೆಗೆ ಹಣ ವೆಚ್ಚವಾಗಬಹುದು</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">ಈ ಡೆಕ್‌ನಲ್ಲಿ ಇಂದು ನೋಡಲು ಹೊಸ ಕಾರ್ಡ್‌ಗಳ ಸಂಖ್ಯೆ.</string>
     <string name="deck_picker_rev">Number of cards due today in this deck.</string>
     <string name="deck_picker_lrn">ಈ ಡೆಕ್‌ನಲ್ಲಿ ಕಲಿಯುತ್ತಿರುವ ಕಾರ್ಡ್‌ಗಳ ಸಂಖ್ಯೆ.</string>
