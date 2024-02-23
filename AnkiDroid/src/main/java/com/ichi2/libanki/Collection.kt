@@ -679,8 +679,9 @@ open class Collection(
     }
 
     /** Change the flag color of the specified cards. flag=0 removes flag. */
-    fun setUserFlagForCards(cids: Iterable<Long>, flag: Int) {
-        backend.setFlag(cardIds = cids, flag = flag)
+    @CheckResult
+    fun setUserFlagForCards(cids: Iterable<Long>, flag: Int): OpChangesWithCount {
+        return backend.setFlag(cardIds = cids, flag = flag)
     }
 
     fun getEmptyCards(): EmptyCardsReport {

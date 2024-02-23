@@ -263,7 +263,7 @@ open class Reviewer :
         }
         launchCatchingTask {
             card.setUserFlag(flag.code)
-            withCol {
+            undoableOp(this@Reviewer) {
                 setUserFlagForCards(listOf(card.id), flag.code)
             }
             refreshActionBar()
