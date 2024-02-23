@@ -96,7 +96,7 @@ class TemplatePreviewerViewModel(
     override fun onPageFinished(isAfterRecreation: Boolean) {
         if (isAfterRecreation) {
             launchCatchingIO {
-                if (showingAnswer.value) showAnswer() else showQuestion()
+                if (showingAnswer.value) showAnswerInternal() else showQuestion()
             }
             return
         }
@@ -123,7 +123,7 @@ class TemplatePreviewerViewModel(
                 showQuestion()
                 loadAndPlaySounds(CardSide.QUESTION)
             } else {
-                showAnswer()
+                showAnswerInternal()
                 loadAndPlaySounds(CardSide.ANSWER)
             }
         }

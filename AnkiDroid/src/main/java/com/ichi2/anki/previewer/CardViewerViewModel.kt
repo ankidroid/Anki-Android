@@ -114,7 +114,7 @@ abstract class CardViewerViewModel(
         eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '${bodyClass()}');")
     }
 
-    protected open suspend fun showAnswer() {
+    protected open suspend fun showAnswerInternal() {
         Timber.v("showAnswer()")
         showingAnswer.emit(true)
         val answerData = withCol { currentCard.answer(this) }
