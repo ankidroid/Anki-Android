@@ -60,16 +60,16 @@
     <string name="expand">Ընդարձակել</string>
     <string name="collapse">Կոծկել</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">Մնաց %d րոպե</item>
+        <item quantity="other">Մնաց %d րոպե</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Մնաց %1$d ժամ %2$d</item>
+        <item quantity="other">Մնաց %1$d ժամ %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Մնաց %1$d օր %2$d</item>
+        <item quantity="other">Մնաց %1$d օր %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Ավելացրեք քարտեր\n+ կոճակի միջոցով։</string>
@@ -179,7 +179,7 @@
     <string name="read_write_permission_description">մատչել առկա գրառումները, քարտերը, գրառումների տեսակները և կապուկները, ինչպես նաև նորերը ստեղծելը</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Anki քարտ</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -189,8 +189,8 @@
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d քարտ (0 կրկնելիք)</item>
+        <item quantity="other">%1$d քարտ (0 կրկնելիք)</item>
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>

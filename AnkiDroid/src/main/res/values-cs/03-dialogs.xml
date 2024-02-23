@@ -119,8 +119,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Potvrdit</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_yes">Ano</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Ponechat</string>
+    <string name="dialog_remove">Odebrat</string>
     <string name="dialog_continue">Pokračovat</string>
     <string name="dialog_processing">Zpracovává se...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Vytvořit</string>

@@ -40,39 +40,39 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">Add image</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
-    <string name="multimedia_editor_popup_audio">Record audio</string>
-    <string name="multimedia_editor_popup_text">Advanced editor</string>
+    <string name="multimedia_editor_popup_image">ছবি যোগ করুন</string>
+    <string name="multimedia_editor_popup_audio_clip">অডিও ক্লিপ যোগ করুন</string>
+    <string name="multimedia_editor_popup_video_clip">ভিডিও ক্লিপ যোগ করুন</string>
+    <string name="multimedia_editor_popup_audio">অডিও রেকর্ড করুন</string>
+    <string name="multimedia_editor_popup_text">উন্নত সম্পাদক</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
-    <string name="multimedia_editor_field_editing_image">Image</string>
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Done</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">টেক্সট</string>
+    <string name="multimedia_editor_field_editing_image">ছবি</string>
+    <string name="multimedia_editor_field_editing_audio">অডিও রেকর্ডিং</string>
+    <string name="multimedia_editor_field_editing_audio_clip">অডিও ক্লিপ</string>
+    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">সম্পন্ন হয়েছে</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Clear</string>
-    <string name="multimedia_editor_text_field_editing_clone">Clone from</string>
+    <string name="multimedia_editor_text_field_editing_clear">খালি করুন</string>
+    <string name="multimedia_editor_text_field_editing_clone">থেকে ক্লোন</string>
     <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
+    <string name="multimedia_editor_text_field_editing_clone_source">থেকে নিন</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
-    <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
-    <string name="multimedia_editor_image_field_editing_photo">Camera</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_image_field_editing_galery">গ্যালারি</string>
+    <string name="multimedia_editor_image_field_editing_photo">ক্যামেরা</string>
+    <string name="multimedia_editor_import_audio">অডিও</string>
+    <string name="multimedia_editor_import_video">ভিডিও</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">Something went wrong</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_something_wrong">কিছু একটি সমস্যা হয়েছে</string>
+    <string name="multimedia_editor_svg_preview">SVG ফাইল প্রিভিউ করা যাবে না</string>
+    <string name="multimedia_editor_png_paste_error">ক্লিপবোর্ড ছবিকে png তে পরিবর্তনে ত্রুটি: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
     <string name="multimedia_editor_attach_media">Attach media</string>
     <!-- Audio view -->

@@ -268,7 +268,7 @@
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
     <string name="binding_add_axis">ジョイスティック/モーションコントローラーの動作を追加</string>
     <string name="axis_picker_move_joystick">ジョイスティック/モーションコントローラーを動かしてください</string>
-    <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions" maxLength="41">ユーザーアクション</string>
     <string name="user_action_1" maxLength="41">ユーザーアクション 1</string>
     <string name="user_action_2" maxLength="41">ユーザーアクション 2</string>
     <string name="user_action_3" maxLength="41">ユーザーアクション 3</string>
@@ -277,7 +277,7 @@
     <string name="user_action_6" maxLength="41">ユーザーアクション 6</string>
     <string name="user_action_7" maxLength="41">ユーザーアクション 7</string>
     <string name="user_action_8" maxLength="41">ユーザーアクション 8</string>
-    <string name="user_action_9" maxLength="41"></string>
+    <string name="user_action_9" maxLength="41">ユーザーアクション 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">カードの表面 (質問側) と裏面 (解答側) 、どちらでの操作ですか？</string>
     <string name="card_side_question">表面</string>
@@ -292,7 +292,7 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">試験運用機能</string>
     <string name="readtext_deprecation_warn">AnkiDroidは、他のAnkiクライアント（デスクトップ版Anki、AnkiMobile）と互換性がある、より優れたTTS（テキスト読み上げ）システムを導入しました。新システムでは、より多くの音声や、品質の向上した再生機能が利用できます。\n\n従来のTTSシステムを対象とするこのオプションは近い将来に削除され、利用できなくなります。そうなる前に、できるだけ早く、ノートタイプ内のカードテンプレートを新しいTTSシステムに対応したものに変更することをおすすめします。</string>
-    <string name="readtext_reviewer_warn">テキスト読み上げ（TTS）の新しいフォーマットにアップグレードしてください</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">テキスト読み上げ（TTS）の新しいフォーマットにアップグレードしてください</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
     <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>

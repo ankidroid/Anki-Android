@@ -4,7 +4,6 @@ ar: البطاقات التعليميةآنكيدرويد
 az: AnkiDroid Flaş Kartları
 be: Карткі для запамінання AnkiDroid
 bg: AnkiDroid Флашкарти
-bn: অঙ্কিড্রইড ফ্লাসকার্ডস
 ca: AnkiDroid fitxes per memoritzar
 ckb: Naverokê Bixwaze
 cs: AnkiDroid kartičky

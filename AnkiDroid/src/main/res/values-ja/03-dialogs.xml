@@ -104,8 +104,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">確認</string>
     <string name="dialog_no">いいえ</string>
     <string name="dialog_yes">はい</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">維持</string>
+    <string name="dialog_remove">削除</string>
     <string name="dialog_continue">続行</string>
     <string name="dialog_processing">処理中です...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">作成</string>
@@ -163,8 +163,8 @@
     <string name="incompatible_database_version_title">互換性のないバージョンのデータベース</string>
     <string name="incompatible_database_version_summary">このデータベースは、このAnkiDroidでは使用できません。 これを使用するには、AnkiDroidをアップグレードするか、データベースをダウングレードしてください。\n\nこのAnkiDroidで開ける最大バージョン: %1$d\nこのデータベースのバージョン: %2$d\n\n次の復元オプションは、現在のコレクションを、このAnkiDroidで使用できる可能性が高いデータベースで上書きします。 </string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">背景画像を適用しました</string>
-    <string name="background_image_removed">背景画像を解除しました</string>
+    <string name="background_image_applied">背景画像に適用しました</string>
+    <string name="background_image_removed">背景画像を削除しました</string>
     <string name="no_image_selected">画像が選択されていません</string>
     <string name="error_selecting_image">画像の選択中にエラーが発生しました。マニュアルを参照してください。 %s</string>
     <string name="error_deleting_image">画像削除エラー</string>

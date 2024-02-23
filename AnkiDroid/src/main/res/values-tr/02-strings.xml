@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Belirli etiketlere sınırla</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Notu düzenle</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Vazgeç</string>
     <string name="note_editor_no_cards_created">Hiçbir kart yaratılmadı. Lütfen daha fazla alan doldurun</string>
     <string name="note_editor_no_first_field">İlk alan boş</string>
     <string name="note_editor_no_cloze_delations">Bu not türü boşluk doldurma içermelidir</string>

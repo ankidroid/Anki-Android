@@ -45,34 +45,35 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="disabled">Disabled</string>
+    <string name="disabled">নিষ্ক্রিয় করুন</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="other">%d মিনিট</item>
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">কোনো পরিণাম নেই</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">জেনারেল</string>
+    <string name="pref_cat_studying" maxLength="41">অধ্যয়ন</string>
+    <string name="pref_cat_system_wide" maxLength="41">সিস্টেম বিস্তৃত</string>
     <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
-    <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">সিঙ্ক</string>
+    <string name="pref_cat_scheduling" maxLength="41">সময়সূচি নির্ধারণ</string>
+    <string name="pref_cat_whiteboard" maxLength="41">হোয়াইটবোর্ড</string>
     <string name="pref_cat_appearance" maxLength="41">Appearance</string>
-    <string name="pref_cat_themes" maxLength="41">Themes</string>
-    <string name="pref_cat_gestures" maxLength="41">Gestures</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_advanced" maxLength="41">Advanced</string>
-    <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
-    <string name="pref_cat_plugins" maxLength="41">Plugins</string>
+    <string name="pref_cat_themes" maxLength="41">থিম</string>
+    <string name="pref_cat_gestures" maxLength="41">জেসচার</string>
+    <string name="pref_cat_controls" maxLength="41">নিয়ন্ত্রণ</string>
+    <string name="pref_cat_advanced" maxLength="41">উন্নত</string>
+    <string name="pref_cat_workarounds" maxLength="41">অন্য উপায়</string>
+    <string name="pref_cat_plugins" maxLength="41">প্লাগ ইন</string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
-    <string name="use_input_tag" maxLength="41">Type answer into the card</string>
-    <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-    <string name="reset_languages" maxLength="41">Reset languages</string>
+    <string name="whiteboard_stroke_width" maxLength="41">স্ট্রোকের প্রস্থ</string>
+    <string name="use_input_tag" maxLength="41">কার্ডে উত্তর টাইপ করুন</string>
+    <string name="use_input_tag_summ">উত্তর টাইপ করার জন্য কার্ডে টেক্সট ইনপুট বক্সের ব্যবহার
+করুন</string>
+    <string name="reset_languages" maxLength="41">ভাষা রিসেট করুন</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
     <string name="reset_confirmation">All states reset</string>
@@ -295,7 +296,7 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>

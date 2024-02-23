@@ -294,7 +294,7 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Deneysel</string>
     <string name="readtext_deprecation_warn">AnkiDroid diğer Anki istemcileriyle uyumlu, daha fazla ses ve dil seslendirmesine geliştirmeler içeren daha iyi bir metin okuma mekanizması getirdi!\n\nLütfen mümkün olan en yakın zamanda yeni sisteme geçin, çünkü bu ayar yakında kaldırılacak.</string>
-    <string name="readtext_reviewer_warn">Lütfen yeni metin okuma formatına geçin</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Lütfen yeni metin okuma formatına geçin</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Geliştirici seçenekleri</string>
     <string name="dev_options_enabled_pref" maxLength="41">Geliştirici seçeneklerini aç</string>
