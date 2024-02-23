@@ -249,7 +249,7 @@
         <item quantity="many">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
         <item quantity="other">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
     </plurals>
-    <string name="metered_sync_warning">اتصالك بالإنترنت محدود. قد يكلف نقل البيانات مصاريف</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">عدد البطاقات الجديدة لتراها اليوم من هذه الرزمة.</string>
     <string name="deck_picker_rev">عدد البطاقات التي موعدها اليوم في هذه الرزمة.</string>
     <string name="deck_picker_lrn">عدد بطاقات التعلّم في هذه الرزمة.</string>

@@ -221,7 +221,7 @@
         <item quantity="one">Ο αυτόματος συγχρονισμός μπορεί να ενεργοποιηθεί σε %d δευτερόλεπτο</item>
         <item quantity="other">Ο αυτόματος συγχρονισμός μπορεί να ενεργοποιηθεί σε %d δευτερόλεπτα</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Αριθμός νέων καρτών για να δείτε σήμερα σε αυτή την τράπουλα.</string>
     <string name="deck_picker_rev">Number of cards due today in this deck.</string>
     <string name="deck_picker_lrn">Αριθμός καρτών σε εκμάθηση σε αυτή την τράπουλα.</string>

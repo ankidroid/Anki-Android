@@ -221,7 +221,7 @@
         <item quantity="one">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
         <item quantity="other">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
     </plurals>
-    <string name="metered_sync_warning">ارتباط‌ شما دارای اندازه‌گیری است. انتقال داده می‌تواند هزینه اضافه داشته باشد.</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">تعداد کارت های جدیدی که امروز در این دسته خواهید دید.</string>
     <string name="deck_picker_rev">تعداد کارت های تا مهلت امروز در این دسته</string>
     <string name="deck_picker_lrn">تعداد کارت های در حال یاد‌گیری در این دسته.</string>

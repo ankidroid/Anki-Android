@@ -214,7 +214,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d秒後可執行自動同步</item>
     </plurals>
-    <string name="metered_sync_warning">您的連接已按流量計費。 資料傳輸可能需要資金</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">此牌組中今天要看的新卡片數</string>
     <string name="deck_picker_rev">詞牌組今天到期的卡片數量</string>
     <string name="deck_picker_lrn">詞牌組中學習中的卡片數</string>

@@ -221,7 +221,7 @@
         <item quantity="one">%d saniye içinde otomatik bir eşitleme tetiklenebilir</item>
         <item quantity="other">%d saniye içinde otomatik bir eşitleme tetiklenebilir</item>
     </plurals>
-    <string name="metered_sync_warning">Bağlantınız ölçülü. Veri aktarımı para yazabilir</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Bu destede bugün görülecek yeni kart sayısı</string>
     <string name="deck_picker_rev">Bu destede bugün vakti ğeçen yeni kart sayısı</string>
     <string name="deck_picker_lrn">Bu destede öğrenilen kart sayısı.</string>

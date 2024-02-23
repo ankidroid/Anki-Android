@@ -221,7 +221,7 @@
         <item quantity="one">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
         <item quantity="other">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
     </plurals>
-    <string name="metered_sync_warning">आपका कनेक्शन मीटर्ड है। डेटा ट्रांसफर में पैसे खर्च हो सकते हैं</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">इस डेक में आज देखने के लिए नई पत्तियों की संख्या।</string>
     <string name="deck_picker_rev">इस डेक में आज के लिए पत्तियों की संख्या।</string>
     <string name="deck_picker_lrn">इस डेक में सीखने में कार्डों की संख्या।</string>

@@ -235,7 +235,7 @@
         <item quantity="many">Аўтаматычная сінхранізацыя можа пачацца праз %d секунд</item>
         <item quantity="other">Аўтаматычная сінхранізацыя можа пачацца праз %d секунды</item>
     </plurals>
-    <string name="metered_sync_warning">Ваша злучэнне тарыфікуецца. За перададзеныя даныя могуць спаганяцца грошы</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Колькасць новых картак, якія можна ўбачыць за сёння ў гэтай калодзе.</string>
     <string name="deck_picker_rev">Колькасць картак на сёння ў гэтай калодзе.</string>
     <string name="deck_picker_lrn">Колькасць картак, якія вывучаюцца ў гэтай калодзе.</string>

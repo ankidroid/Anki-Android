@@ -221,7 +221,7 @@
         <item quantity="one">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ ଚାଳନ ହୋଇପାରେ</item>
         <item quantity="other">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ ଚାଳନ ହୋଇପାରେ</item>
     </plurals>
-    <string name="metered_sync_warning">ଆପଣଙ୍କ ସଂଯୋଜନା ମିଟର୍ ହେଉଛି। ଡାଟା ଅନ୍ତରଣରେ ଟଙ୍କା ଖର୍ଚ୍ଚ ହୋଇପାରେ</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ଦେଖିବାକୁ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
     <string name="deck_picker_rev">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ପାଇଁ ଧାର୍ଯ୍ୟ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
     <string name="deck_picker_lrn">ଏହି ତାସଖଣ୍ଡରେ ଶିକ୍ଷାଧିନ ପତ୍ରର ସଂଖ୍ୟା।</string>
