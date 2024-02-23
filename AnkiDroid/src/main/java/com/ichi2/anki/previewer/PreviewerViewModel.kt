@@ -87,7 +87,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, so
                 showQuestion()
                 soundPlayer.playAllSoundsForSide(CardSide.QUESTION)
             } else if (backSideOnly.value && !showingAnswer.value) {
-                showAnswer()
+                showAnswerInternal()
                 soundPlayer.playAllSoundsForSide(CardSide.ANSWER)
             }
         }
@@ -117,7 +117,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, so
     fun onNextButtonClick() {
         launchCatchingIO {
             if (!showingAnswer.value && !backSideOnly.value) {
-                showAnswer()
+                showAnswerInternal()
                 soundPlayer.playAllSoundsForSide(CardSide.ANSWER)
             } else {
                 currentIndex.update { it + 1 }
@@ -174,7 +174,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, so
 
     private suspend fun showCard(showAnswer: Boolean) {
         currentCard = withCol { getCard(selectedCardIds[currentIndex.value]) }
-        if (showAnswer) showAnswer() else showQuestion()
+        if (showAnswer) showAnswerInternal() else showQuestion()
         updateFlagIcon()
         updateMarkIcon()
     }
