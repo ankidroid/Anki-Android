@@ -214,7 +214,7 @@ open class Card : Cloneable {
      */
     open fun renderOutput(col: Collection, reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
         if (renderOutput == null || reload) {
-            renderOutput = TemplateManager.TemplateRenderContext.fromExistingCard(col, this, browser).render()
+            renderOutput = TemplateManager.TemplateRenderContext.fromExistingCard(col, this, browser).render(col)
         }
         return renderOutput!!
     }

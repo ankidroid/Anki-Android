@@ -435,7 +435,6 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                     ord
                 }
                 val context = TemplateManager.TemplateRenderContext.fromCardLayout(
-                    col,
                     note(col),
                     this,
                     model(col),
@@ -443,7 +442,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                     fillEmpty = false
                 )
                 renderOutput =
-                    context.render()
+                    context.render(col)
             }
             return renderOutput!!
         }
