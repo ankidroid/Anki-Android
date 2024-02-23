@@ -60,18 +60,18 @@ abstract class NavigationDrawerActivity :
      */
     var fragmented = false
         protected set
-    private var mNavButtonGoesBack = false
+    private var navButtonGoesBack = false
 
     // Navigation drawer list item entries
-    private lateinit var mDrawerLayout: DrawerLayout
-    private var mNavigationView: NavigationView? = null
+    private lateinit var drawerLayout: DrawerLayout
+    private var navigationView: NavigationView? = null
     lateinit var drawerToggle: ActionBarDrawerToggle
         private set
 
     /**
      * runnable that will be executed after the drawer has been closed.
      */
-    private var mPendingRunnable: Runnable? = null
+    private var pendingRunnable: Runnable? = null
 
     override fun setContentView(@LayoutRes layoutResID: Int) {
         val preferences = baseContext.sharedPrefs()
@@ -108,18 +108,18 @@ abstract class NavigationDrawerActivity :
     }
 
     fun navDrawerIsReady(): Boolean {
-        return mNavigationView != null
+        return navigationView != null
     }
 
     // Navigation drawer initialisation
     protected fun initNavigationDrawer(mainView: View) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
-        mDrawerLayout = mainView.findViewById(R.id.drawer_layout)
+        drawerLayout = mainView.findViewById(R.id.drawer_layout)
         // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
         window.statusBarColor = getColor(R.color.transparent)
-        mDrawerLayout.setStatusBarBackgroundColor(
+        drawerLayout.setStatusBarBackgroundColor(
             MaterialColors.getColor(
                 this,
                 R.attr.appBarColor,
@@ -127,8 +127,8 @@ abstract class NavigationDrawerActivity :
             )
         )
         // Setup toolbar and hamburger
-        mNavigationView = mDrawerLayout.findViewById(R.id.navdrawer_items_container)
-        mNavigationView!!.setNavigationItemSelectedListener(this)
+        navigationView = drawerLayout.findViewById(R.id.navdrawer_items_container)
+        navigationView!!.setNavigationItemSelectedListener(this)
         val toolbar: Toolbar? = mainView.findViewById(R.id.toolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
@@ -143,7 +143,7 @@ abstract class NavigationDrawerActivity :
         // between the sliding drawer and the action bar app icon
         drawerToggle = object : ActionBarDrawerToggle(
             this,
-            mDrawerLayout,
+            drawerLayout,
             R.string.drawer_open,
             R.string.drawer_close
         ) {
@@ -155,9 +155,9 @@ abstract class NavigationDrawerActivity :
                 // If animations are disabled, this is executed before onNavigationItemSelected is called
                 // PERF: May be able to reduce this delay
                 HandlerUtils.postDelayedOnNewHandler({
-                    if (mPendingRunnable != null) {
-                        HandlerUtils.postOnNewHandler(mPendingRunnable!!) // TODO: See if we can use the same handler here
-                        mPendingRunnable = null
+                    if (pendingRunnable != null) {
+                        HandlerUtils.postOnNewHandler(pendingRunnable!!) // TODO: See if we can use the same handler here
+                        pendingRunnable = null
                     }
                 }, 100)
             }
@@ -167,13 +167,13 @@ abstract class NavigationDrawerActivity :
                 invalidateOptionsMenu()
             }
         }
-        if (mDrawerLayout is ClosableDrawerLayout) {
-            (mDrawerLayout as ClosableDrawerLayout).setAnimationEnabled(animationEnabled())
+        if (drawerLayout is ClosableDrawerLayout) {
+            (drawerLayout as ClosableDrawerLayout).setAnimationEnabled(animationEnabled())
         } else {
             Timber.w("Unexpected Drawer layout - could not modify navigation animation")
         }
         drawerToggle.isDrawerSlideAnimationEnabled = animationEnabled()
-        mDrawerLayout.addDrawerListener(drawerToggle)
+        drawerLayout.addDrawerListener(drawerToggle)
 
         enablePostShortcut(this)
     }
@@ -182,7 +182,7 @@ abstract class NavigationDrawerActivity :
      * Sets selected navigation drawer item
      */
     protected fun selectNavigationItem(itemId: Int) {
-        val menu = mNavigationView!!.menu
+        val menu = navigationView!!.menu
         if (itemId == -1) {
             for (i in 0 until menu.size()) {
                 menu.getItem(i).isChecked = false
@@ -229,7 +229,7 @@ abstract class NavigationDrawerActivity :
      * function in a noop if the drawer hasn't been initialized.
      */
     protected fun disableDrawerSwipe() {
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
     /**
@@ -237,10 +237,10 @@ abstract class NavigationDrawerActivity :
      * function in a noop if the drawer hasn't been initialized.
      */
     protected fun enableDrawerSwipe() {
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
-    private val mPreferencesLauncher =
+    private val preferencesLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val preferences = preferences
             Timber.i(
@@ -275,7 +275,7 @@ abstract class NavigationDrawerActivity :
      * Design pattern: template method. Subclasses can override this to define their own behaviour.
      */
     public open fun onNavigationPressed() {
-        if (mNavButtonGoesBack) {
+        if (navButtonGoesBack) {
             finish()
         } else {
             openDrawer()
@@ -293,7 +293,7 @@ abstract class NavigationDrawerActivity :
          * This runnable will be executed in onDrawerClosed(...)
          * to make the animation more fluid on older devices.
          */
-        mPendingRunnable = Runnable {
+        pendingRunnable = Runnable {
             // Take action if a different item selected
             when (item.itemId) {
                 R.id.nav_decks -> {
@@ -318,7 +318,7 @@ abstract class NavigationDrawerActivity :
                 R.id.nav_settings -> {
                     Timber.i("Navigating to settings")
                     val intent = Intent(this, Preferences::class.java)
-                    mPreferencesLauncher.launch(intent)
+                    preferencesLauncher.launch(intent)
                 }
 
                 R.id.nav_help -> {
@@ -354,17 +354,17 @@ abstract class NavigationDrawerActivity :
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
-        mNavButtonGoesBack = true
+        navButtonGoesBack = true
     }
 
     protected fun restoreDrawerIcon() {
         drawerToggle.isDrawerIndicatorEnabled = true
-        mNavButtonGoesBack = false
+        navButtonGoesBack = false
     }
 
     @VisibleForTesting
     open val isDrawerOpen: Boolean
-        get() = mDrawerLayout.isDrawerOpen(GravityCompat.START)
+        get() = drawerLayout.isDrawerOpen(GravityCompat.START)
 
     /**
      * Restart the activity and discard old backstack, creating it new from the hierarchy in the manifest
@@ -388,17 +388,17 @@ abstract class NavigationDrawerActivity :
     }
 
     private fun openDrawer() {
-        mDrawerLayout.openDrawer(GravityCompat.START, animationEnabled())
+        drawerLayout.openDrawer(GravityCompat.START, animationEnabled())
     }
 
     private fun closeDrawer() {
-        mDrawerLayout.closeDrawer(GravityCompat.START, animationEnabled())
+        drawerLayout.closeDrawer(GravityCompat.START, animationEnabled())
     }
 
     fun focusNavigation() {
         // mNavigationView.getMenu().getItem(0).setChecked(true);
         selectNavigationItem(R.id.nav_decks)
-        mNavigationView!!.requestFocus()
+        navigationView!!.requestFocus()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
