@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.21">
 <title>AnkiDroid Changelog</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -140,7 +140,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #content::before{content:none}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
 #header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
-#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
 #header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
@@ -162,6 +162,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media screen and (min-width:768px){#toctitle{font-size:1.375em}
 body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
 #toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
 #toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
 #toc.toc2>ul{font-size:.9em;margin-bottom:0}
@@ -327,7 +328,7 @@ a.image{text-decoration:none;display:inline-block}
 a.image object{pointer-events:none}
 sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
 sup.footnote a,sup.footnoteref a{text-decoration:none}
-sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
 #footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
 #footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
 #footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
@@ -464,6 +465,314 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>AnkiDroid Changelog</h1>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_version_2_17_0_20240223"><a class="anchor" href="#_version_2_17_0_20240223"></a>Version 2.17.0 (20240223)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The Big News First! AnkiDroid 2.17 directly includes Anki Desktop code now.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://opencollective.com/ankidroid">🤜🤛 Thank you! Your donations makes progress like this happen!</a></p>
+</li>
+<li>
+<p>Including Anki Desktop directly is a powerful change, it gets you lots of highly requested features in their exact desktop form, for the first time in AnkiDroid:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.ankiweb.net/editing.html#image-occlusion">Image Occlusion</a>! Finally in AnkiDroid! Cloze deletion for your images</p>
+</li>
+<li>
+<p>Review Heatmap! &#8230;&#8203;along with all the other statistics from desktop</p>
+</li>
+<li>
+<p>CSV import/export! With desktop import/export included AnkiDroid finally gets this highly requested feature</p>
+</li>
+<li>
+<p>FSRS 4.5 scheduler: Say goodbye to ‘ease hell’! AnkiDroid welcomes the age of AI with this new scheduler. Select your desired retention then FSRS uses machine learning to calculate when you forget, reducing your review load. FSRS is optional, but may be enabled in <a href="https://docs.ankiweb.net/deck-options.html#fsrs">Deck Options</a></p>
+</li>
+<li>
+<p><a href="https://faqs.ankiweb.net/the-2021-scheduler.html">V3 scheduler is enabled by default</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Supports your own JavaScript for Custom Scheduling</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Unified congratulations screen when reviewing is complete</p>
+</li>
+<li>
+<p>Filtered Decks: customize preview delays for Again, Hard, and Good buttons</p>
+</li>
+<li>
+<p>Anki’s <a href="https://docs.ankiweb.net/searching.html">advanced search syntax</a> is available in the Browser and Filtered Decks</p>
+</li>
+<li>
+<p>See more in <a href="https://github.com/ankitects/anki/releases/tag/23.12.1">Anki’s full changelog</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>AnkiDroid-specific Changes</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Save your Statistics as a PDF. No more screenshots!</p>
+</li>
+<li>
+<p>Audio recording and Check Pronunciation usability overhaul</p>
+</li>
+<li>
+<p>Late night study session? Screens now refresh if you see the day rollover</p>
+</li>
+<li>
+<p>Undo has been expanded to almost all app activities. Redo has also been added</p>
+</li>
+<li>
+<p>New permissions screen to help new users of the app</p>
+</li>
+<li>
+<p>Note Editor: Added ‘Cloze Deletion (same card)’ toolbar button</p>
+</li>
+<li>
+<p>Improved button mapping support for gamepad joysticks, triggers and pedals</p>
+</li>
+<li>
+<p>Shake is now a supported gesture 🪇🪇</p>
+</li>
+<li>
+<p><a href="https://ankidroid.org/#userActions">User-defined JavaScript Actions</a> are now supported</p>
+</li>
+<li>
+<p>AnkiWeb rate limits for searches &amp; downloads are replaced with a sign in screen</p>
+</li>
+<li>
+<p>Exporting: "Include deck configs" option is enabled</p>
+</li>
+<li>
+<p>Sync: Cancellation is supported</p>
+</li>
+<li>
+<p>Use the Android ‘Share’ menu to create new notes from images (including Image Occlusion)</p>
+</li>
+<li>
+<p>UX: The Deck Picker menus are easier to navigate</p>
+</li>
+<li>
+<p>UI: Material Design has been introduced, making preferences easier to search &amp; navigate, along with a new layout for large screens</p>
+</li>
+<li>
+<p>UI: Better Deck Description screen (long press a deck to access)</p>
+</li>
+<li>
+<p>UI: The Android Navigation bar now matches the active screen</p>
+</li>
+<li>
+<p>UI: Card Info &amp; Help screens are improved</p>
+</li>
+<li>
+<p>&#8230;&#8203;Many more UI tweaks</p>
+</li>
+<li>
+<p>Improved keyboard shortcuts</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Previewer accepts arrow keys; Ctrl+Shift+P will preview the Browser’s selection</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Accessibility Option: minimum screen touch time to reveal answer</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>JS API (0.0.2)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>We continue to work on this new technology to allow for add-ons in AnkiDroid.</p>
+</li>
+<li>
+<p>This is still a technology preview but is already very powerful.</p>
+</li>
+<li>
+<p>⚠️ BREAKING: API is now asynchronous</p>
+</li>
+<li>
+<p>Added new API for Speech to Text</p>
+</li>
+<li>
+<p>Handle android dialog cancellation when used as frontend for js dialogs</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Replacements and Removals</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Advanced Statistics have been replaced with desktop statistics screen</p>
+</li>
+<li>
+<p>V3 scheduler replaces V2</p>
+</li>
+<li>
+<p>Auto Advance now located in Deck Options and syncs with all Anki clients</p>
+</li>
+<li>
+<p>Text to Speech (TTS) is now Desktop compatible!</p>
+<div class="ulist">
+<ul>
+<li>
+<p>We have introduced {{tts}} and {{tts-voices:}}, which supports more TTS voices and speeds: <a href="https://docs.ankiweb.net/templates/fields.html#text-to-speech-for-individual-fields">manual</a></p>
+</li>
+<li>
+<p>⚠️ Our legacy TTS (&lt;tts&gt;) will be removed in a future version. Please migrate your card templates to the new format</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Backup options unified with Anki Desktop</p>
+</li>
+<li>
+<p>Night mode inversion has been removed - <a href="https://ankidroid.org/removed-features.html#_automatic_night_mode_color_inversion">more info</a></p>
+</li>
+<li>
+<p><a href="https://ankidroid.org/removed-features.html#_custom_fonts_in_fonts">Custom fonts removed</a></p>
+</li>
+<li>
+<p><a href="https://ankidroid.org/removed-features.html">Full information on all removed features</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Bug Fixes</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Too many to mention! Hundreds of issues fixed. <a href="https://github.com/ankidroid/Anki-Android/milestone/51?closed=1">See the full changelog</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Release Statistics:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/ankidroid/Anki-Android/compare/v2.16.5...main">958 changes from 26 contributors since 2.16</a></p>
+</li>
+<li>
+<p><a href="https://opencollective.com/ankidroid">Thank you to our 3696 backers</a></p>
+</li>
+<li>
+<p><a href="https://crowdin.com/project/ankidroid">1972 Translators</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_16_5_20230906"><a class="anchor" href="#_version_2_16_5_20230906"></a>Version 2.16.5 (20230906)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Fix potential crash in our crash report system. See: Murphy&#8217;s Law</p>
+</li>
+<li>
+<p>Fix incorrect default setting for analytics opt-in. Should be default off.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Please check your setting if you want to make sure it is off</p>
+</li>
+<li>
+<p>Note1: our analytics is always anonymized and never shared as a first step</p>
+</li>
+<li>
+<p>Note2: the backend has been disabled for months, so there should be no exposure</p>
+</li>
+<li>
+<p>Still this was in error and counter to our strict opt-in ethos. We are deeply sorry.</p>
+</li>
+<li>
+<p>We will issue a future update shortly to opt everyone out as a precaution</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Thanks again for your patience waiting for 2.16 - we&#8217;re on to 2.17 work already!</p>
+</li>
+<li>
+<p>We are humbled by the <a href="https://opencollective.com/ankidroid">donations</a> 🤯</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_16_4_20230827"><a class="anchor" href="#_version_2_16_4_20230827"></a>Version 2.16.4 (20230827)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Your dev team is still very excited to be able to release quick fixes for you again!</p>
+</li>
+<li>
+<p>Last big stability release for 2.16 series (see below for main 2.16 info)</p>
+</li>
+<li>
+<p><a href="https://opencollective.com/ankidroid">❤️ We continue to be very thankful for your support</a></p>
+</li>
+<li>
+<p>Improved shortcut icons</p>
+</li>
+<li>
+<p>Fix card browser scroll position after editing a card</p>
+</li>
+<li>
+<p>Improve shared deck download handling</p>
+</li>
+<li>
+<p>Fix sound replay on cards</p>
+</li>
+<li>
+<p>Fix deck rebuild not updating UI</p>
+</li>
+<li>
+<p>Synced with <a href="https://crowdin.com/project/ankidroid">community language translations</a></p>
+</li>
+<li>
+<p>Development for 2.17 is already in progress!</p>
+</li>
+<li>
+<p>Are you still reading this? Good luck in your studies 🤓</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_version_2_16_3_20230818"><a class="anchor" href="#_version_2_16_3_20230818"></a>Version 2.16.3 (20230818)</h2>
 <div class="sectionbody">
@@ -3421,7 +3730,7 @@ essentially rewritten from scratch to be compatible with the new Anki Desktop v2
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-18 17:47:37 UTC
+Last updated 2024-02-23 17:45:24 UTC
 </div>
 </div>
 </body>
