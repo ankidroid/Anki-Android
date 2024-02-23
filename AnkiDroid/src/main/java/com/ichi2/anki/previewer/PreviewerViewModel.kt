@@ -25,6 +25,7 @@ import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
@@ -58,6 +59,8 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
     }
 
     private val showAnswerOnReload get() = showingAnswer.value || backSideOnly.value
+
+    override val server = AnkiServer(this).also { it.start() }
 
     /* *********************************************************************************************
     ************************ Public methods: meant to be used by the View **************************

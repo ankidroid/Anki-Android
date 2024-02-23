@@ -21,6 +21,7 @@ import androidx.annotation.CallSuper
 import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ichi2.anki.AnkiDroidJsAPI
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.cardviewer.MediaErrorHandler
@@ -28,6 +29,8 @@ import com.ichi2.anki.cardviewer.SoundErrorBehavior
 import com.ichi2.anki.cardviewer.SoundErrorListener
 import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.pages.AnkiServer
+import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.TtsPlayer
@@ -41,7 +44,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import org.json.JSONObject
 import timber.log.Timber
 
-abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
+abstract class CardViewerViewModel : ViewModel(), OnErrorListener, PostRequestHandler {
     override val onError = MutableSharedFlow<String>()
     val onMediaError = MutableSharedFlow<String>()
     val onTtsError = MutableSharedFlow<TtsPlayer.TtsError>()
@@ -53,10 +56,13 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
     protected val soundPlayer = SoundPlayer(createSoundErrorListener())
     protected lateinit var currentCard: Card
 
+    protected abstract val server: AnkiServer
+
     @CallSuper
     override fun onCleared() {
         super.onCleared()
         soundPlayer.close()
+        server.stop()
     }
 
     /* *********************************************************************************************
@@ -81,6 +87,10 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
             }
         }
     }
+
+    fun baseUrl() = server.baseUrl()
+
+    fun assetLoaderDomain() = server.domain()
 
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
@@ -146,6 +156,15 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
                     viewModelScope.launch { onTtsError.emit(error) }
                 }
             }
+        }
+    }
+
+    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
+        return if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
+            AnkiDroidJsAPI.ApiResult(true, "-1").toString().toByteArray()
+        } else {
+            Timber.d("Unhandled post request %s", uri)
+            byteArrayOf()
         }
     }
 

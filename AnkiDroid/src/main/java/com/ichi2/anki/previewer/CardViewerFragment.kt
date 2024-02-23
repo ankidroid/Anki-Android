@@ -39,7 +39,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.getViewerAssetLoader
 import com.ichi2.anki.localizedErrorMessage
-import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.themes.Themes
 import kotlinx.coroutines.flow.launchIn
@@ -83,7 +82,7 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 domStorageEnabled = true
             }
             loadDataWithBaseURL(
-                "http://${AnkiServer.LOCALHOST}/",
+                viewModel.baseUrl(),
                 stdHtml(requireContext(), Themes.currentTheme.isNightMode),
                 "text/html",
                 null,
@@ -119,13 +118,17 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
     }
 
     private fun onCreateWebViewClient(savedInstanceState: Bundle?): WebViewClient {
-        val assetLoader = requireContext().getViewerAssetLoader(AnkiServer.LOCALHOST)
+        val assetLoader = requireContext().getViewerAssetLoader(viewModel.assetLoaderDomain())
         return object : WebViewClient() {
             override fun shouldInterceptRequest(
                 view: WebView?,
                 request: WebResourceRequest
             ): WebResourceResponse? {
-                return assetLoader.shouldInterceptRequest(request.url)
+                return if (request.method == "GET") {
+                    assetLoader.shouldInterceptRequest(request.url)
+                } else {
+                    null
+                }
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {

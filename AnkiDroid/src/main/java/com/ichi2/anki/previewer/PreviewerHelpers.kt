@@ -37,6 +37,7 @@ class NoteEditorDestination(val cardId: Long) {
 /**
  * Not exactly equal to anki's stdHtml. Some differences:
  * * `ankidroid.css` is added
+ * * `js-api.js` is added
  * * `bridgeCommand()` is ignored
  *
  * Aimed to be used only for reviewing/previewing cards
@@ -99,6 +100,7 @@ fun stdHtml(
                     <script src="file:///android_asset/jquery.min.js"></script>
                     <script src="file:///android_asset/mathjax/tex-chtml.js"></script>
                     <script src="file:///android_asset/backend/web/reviewer.js"></script>
+                    <script src="file:///android_asset/scripts/js-api.js"></script>
                     <script>bridgeCommand = function(){};</script>
                 </body>
                 </html>

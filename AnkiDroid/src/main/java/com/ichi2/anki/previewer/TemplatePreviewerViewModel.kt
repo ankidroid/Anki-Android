@@ -23,6 +23,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NotetypeFile
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
 import com.ichi2.libanki.Note
@@ -47,6 +48,7 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
     private lateinit var note: Note
     private lateinit var templateNames: List<String>
     private var initJob: Job? = null
+    override val server = AnkiServer(this).also { it.start() }
 
     init {
         initJob = launchCatchingIO {

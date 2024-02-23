@@ -37,6 +37,8 @@ open class AnkiServer(
         return "http://$LOCALHOST:$listeningPort/"
     }
 
+    fun domain(): String = "$hostname:$listeningPort"
+
     // it's faster to serve local files without GZip. see 'page render' in logs
     // This also removes 'W/System: A resource failed to call end.'
     override fun useGzipWhenAccepted(r: Response?) = false
