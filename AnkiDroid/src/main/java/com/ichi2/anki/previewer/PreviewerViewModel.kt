@@ -43,6 +43,7 @@ import com.ichi2.libanki.Sound.addPlayButtons
 import com.ichi2.libanki.TtsPlayer
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.note
+import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -135,7 +136,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
 
     fun setFlag(flag: Flag) {
         launchCatchingIO {
-            withCol {
+            undoableOp {
                 setUserFlagForCards(listOf(currentCard.id), flag.code)
             }
             flagCode.emit(flag.code)
