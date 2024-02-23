@@ -74,8 +74,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21700206
-        versionName="2.17beta6"
+        versionCode=21700300
+        versionName="2.17.0"
         minSdk 23 // also in testlib/build.gradle.kts
         // After #13695: change .tests_emulator.yml
         targetSdk 33 // also in [api|testlib]/build.gradle.kts and ../robolectricDownloader.gradle
@@ -245,7 +245,7 @@ android {
 
 play {
     serviceAccountCredentials.set(file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json"))
-    track.set('alpha')
+    track.set('beta')
 }
 
 amazon {
