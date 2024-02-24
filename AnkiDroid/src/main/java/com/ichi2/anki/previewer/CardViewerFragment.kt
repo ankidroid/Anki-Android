@@ -36,8 +36,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
+import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
-import com.ichi2.anki.getViewerAssetLoader
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.snackbar.showSnackbar
@@ -119,13 +119,13 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
     }
 
     private fun onCreateWebViewClient(savedInstanceState: Bundle?): WebViewClient {
-        val assetLoader = requireContext().getViewerAssetLoader(AnkiServer.LOCALHOST)
+        val resourceHandler = ViewerResourceHandler(requireContext(), AnkiServer.LOCALHOST)
         return object : WebViewClient() {
             override fun shouldInterceptRequest(
                 view: WebView?,
                 request: WebResourceRequest
             ): WebResourceResponse? {
-                return assetLoader.shouldInterceptRequest(request.url)
+                return resourceHandler.shouldInterceptRequest(request)
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
