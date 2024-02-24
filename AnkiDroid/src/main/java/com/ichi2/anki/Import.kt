@@ -20,6 +20,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
+import androidx.lifecycle.Lifecycle
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.ImportDialog
@@ -29,6 +30,7 @@ import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
 
@@ -46,11 +48,17 @@ fun interface ImportColpkgListener {
     fun onImportColpkg(colpkgPath: String?)
 }
 
+@NeedsTest("successful import from the app menu")
 fun DeckPicker.onSelectedPackageToImport(data: Intent) {
     val importResult = ImportUtils.handleFileImport(this, data)
     if (!importResult.isSuccess) {
         runOnUiThread {
             ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, false)
+        }
+    } else {
+        // a Message was posted, don't wait for onResume to process it
+        if (this.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            dialogHandler.popMessage()?.let { dialogHandler.sendStoredMessage(it) }
         }
     }
 }
