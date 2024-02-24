@@ -77,13 +77,6 @@
         <item name="suspendedColor">#FFFFB2</item>
         <item name="selectedColor">#FFFFBB99</item>
         <item name="markedColor">#D9B2E9</item>
-        <item name="flagRed">@color/flag_red</item>
-        <item name="flagOrange">@color/flag_orange</item>
-        <item name="flagGreen">@color/flag_green</item>
-        <item name="flagBlue">@color/flag_blue</item>
-        <item name="flagPink">@color/flag_pink</item>
-        <item name="flagTurquoise">@color/flag_turquoise</item>
-        <item name="flagPurple">@color/flag_purple</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#fcc</item>
         <item name="editTextBackgroundColor">#EBCCCCCC</item>

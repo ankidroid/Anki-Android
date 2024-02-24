@@ -28,13 +28,14 @@ import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
+import androidx.annotation.ColorInt
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.ThemeUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
@@ -1784,7 +1785,7 @@ open class CardBrowser :
                     column.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
                 }
             // set card's background color
-            val backgroundColor: Int = MaterialColors.getColor(this@CardBrowser, card.color, 0)
+            val backgroundColor: Int = card.getBackgroundColor(this@CardBrowser)
             v.setBackgroundColor(backgroundColor)
             // setup checkbox to change color in multi-select mode
             val checkBox = v.findViewById<CheckBox>(R.id.card_checkbox)
@@ -1961,27 +1962,21 @@ open class CardBrowser :
          * Get the background color of items in the card list based on the Card
          * @return index into TypedArray specifying the background color
          */
-        val color: Int
-            get() {
-                return when (card.userFlag()) {
-                    1 -> R.attr.flagRed
-                    2 -> R.attr.flagOrange
-                    3 -> R.attr.flagGreen
-                    4 -> R.attr.flagBlue
-                    5 -> R.attr.flagPink
-                    6 -> R.attr.flagTurquoise
-                    7 -> R.attr.flagPurple
-                    else -> {
-                        if (isMarked(col, card.note(col))) {
-                            R.attr.markedColor
-                        } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
-                            R.attr.suspendedColor
-                        } else {
-                            android.R.attr.colorBackground
-                        }
-                    }
-                }
+        @ColorInt
+        fun getBackgroundColor(context: Context): Int {
+            val flagColor = Flag.fromCode(card.userFlag()).browserColorRes
+            if (flagColor != null) {
+                return context.getColor(flagColor)
             }
+            val colorAttr = if (isMarked(col, card.note(col))) {
+                R.attr.markedColor
+            } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
+                R.attr.suspendedColor
+            } else {
+                android.R.attr.colorBackground
+            }
+            return ThemeUtils.getThemeAttrColor(context, colorAttr)
+        }
 
         fun getColumnHeaderText(key: CardBrowserColumn?): String? {
             return when (key) {
