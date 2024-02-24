@@ -214,7 +214,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d 秒後に自動同期がスタートします。</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">データ通信量の消費によって、通信事業者（携帯会社など）への支払い料金が増える場合があります。</string>
     <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>
     <string name="deck_picker_rev">このデッキ内の、今日出題する予定のカードの数。</string>
     <string name="deck_picker_lrn">このデッキ内の、習得中カードの数。</string>

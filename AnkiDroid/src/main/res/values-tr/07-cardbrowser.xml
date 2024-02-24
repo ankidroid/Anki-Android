@@ -88,7 +88,7 @@
         <item>Aralığa göre</item>
         <item>Kolaylığa göre</item>
         <item>Tekrarlara göre</item>
-        <item>Süresi dolana göre</item>
+        <item>Hatalara göre</item>
     </string-array>
     <string name="card_browser_select_all">Hepsini seç</string>
     <string name="card_browser_select_none">Hiçbirini seçme</string>

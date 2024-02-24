@@ -69,8 +69,8 @@
     <string name="pref_cat_plugins" maxLength="41">プラグイン</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">線の太さ</string>
-    <string name="use_input_tag" maxLength="41">カード内にキーボード入力で解答する</string>
-    <string name="use_input_tag_summ">解答をキーボード入力で行うよう設定されているカードの内部に文字入力欄を表示します</string>
+    <string name="use_input_tag" maxLength="41">答えを入力する欄をカード内に表示</string>
+    <string name="use_input_tag_summ">答えをキーボード入力するタイプのカードの文字入力欄を、カードの下側ではなくカードの中に表示します</string>
     <string name="reset_languages" maxLength="41">言語設定をリセット</string>
     <string name="reset_languages_summ">すべてのデッキの（テキスト読み上げ用および辞書用の）言語設定をリセットします</string>
     <string name="reset_languages_question">言語の割り当て設定をすべてリセットします。よろしいですか？</string>
@@ -251,7 +251,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">改行タグを改行に置き換えて表示</string>
     <string name="note_editor_replace_newlines_summ">「ノートを編集」画面のフィールドで、改行を表すHTMLタグ &lt;br&gt; を表示せず、実際に改行に置き換えた状態で表示します。新たに改行を行った場合も、その箇所に &lt;br&gt; タグを挿入しますが、そのタグは表示しません</string>
     <string name="type_in_answer_focus" maxLength="41">文字入力欄にフォーカス</string>
-    <string name="type_in_answer_focus_summ">答えをキーボード入力する欄がカード内にある場合、自動的にカーソルを入れて、すぐに文字を入力できる状態にします</string>
+    <string name="type_in_answer_focus_summ">答えをキーボード入力するタイプのカードでは、カードを表示したときに、あらかじめ文字入力欄を選択してキーボードを表示した状態にします</string>
     <!-- About -->
     <string name="open_changelog">変更履歴を開く</string>
     <string name="pref_cat_about_title" maxLength="41">AnkiDroidについて</string>
