@@ -54,13 +54,13 @@
     <string name="cram_deck_conf_order_random">Rastgele</string>
     <string name="cram_deck_conf_order_increasing_intervals">Artan aralıkta</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Azalan aralıkta</string>
-    <string name="cram_deck_conf_order_most_lapsed">En çok yanıltan</string>
+    <string name="cram_deck_conf_order_most_lapsed">En çok hata</string>
     <string name="cram_deck_conf_order_order_added">Ekleniş sırası</string>
     <string name="cram_deck_conf_order_order_due">Çıkma sırası</string>
     <string name="cram_deck_conf_order_latest_added_first">En son eklenenler ilk</string>
     <string name="cram_deck_conf_order_relative_overdueness">Görece vadesi geçmişlik</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Geçerli desteyi kullan</string>
+    <string name="add_to_deck_use_current_deck">Mecut desteyi kullan</string>
     <string name="add_to_deck_decide_by_note_type">Not türüne göre karar ver</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Sistemi izle</string>

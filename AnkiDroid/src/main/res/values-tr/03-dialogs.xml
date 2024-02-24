@@ -71,7 +71,7 @@
         <item quantity="other">%d kartın zamanını değiştir</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Şu anki aralık: %d gün</item>
+        <item quantity="one">Mevcut aralık: %d gün</item>
         <item quantity="other">Şu anki aralık: %d gün</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Gözden geçirme için x gün sonra yeniden planla</string>

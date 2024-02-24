@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">仅限于特定标签</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">编辑笔记</string>
-    <string name="discard">Discard</string>
+    <string name="discard">丢弃</string>
     <string name="note_editor_no_cards_created">没有已创建的卡片。请填写更多字段</string>
     <string name="note_editor_no_first_field">第一字段为空</string>
     <string name="note_editor_no_cloze_delations">此笔记模板必须包含填空题</string>
@@ -125,7 +125,7 @@
     <string name="select">选择</string>
     <string name="field_remapping">%1$s（来自「%2$s」）</string>
     <string name="confirm_map_cards_to_nothing">任何无法映射的卡片都会被删除。如果该笔记没有生成其他卡片，该笔记将会丢失。你确定要继续吗？</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">找不到笔记类型</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">已到达指定时间</string>
     <plurals name="timebox_reached">
@@ -206,7 +206,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">背景</string>
     <string name="choose_an_image">选择图片</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">去除背景</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">恢复初始设置</string>
     <string name="cloze_sample_text">这是一个 {{%1$s::示例}} 填空题。</string>

@@ -270,7 +270,7 @@
     <string name="key_picker_default_press_key">Pressione uma tecla</string>
     <string name="binding_add_axis">Adicionar controle</string>
     <string name="axis_picker_move_joystick">Movimente o controle</string>
-    <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions" maxLength="41">Ações do usuário</string>
     <string name="user_action_1" maxLength="41">Ação do usuário 1</string>
     <string name="user_action_2" maxLength="41">Ação do usuário 2</string>
     <string name="user_action_3" maxLength="41">Ação do usuário 3</string>
