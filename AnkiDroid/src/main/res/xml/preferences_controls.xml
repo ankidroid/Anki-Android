@@ -256,7 +256,11 @@
             />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/user_actions">
+    <com.ichi2.anki.preferences.ExtendedPreferenceCategory
+        android:title="@string/user_actions"
+        android:summary="@string/user_actions_summary"
+        app:helpLink="@string/link_user_actions_help">
+
         <com.ichi2.preferences.ControlPreference
             android:key="@string/user_action_1_key"
             android:title="@string/user_action_1"
@@ -293,5 +297,5 @@
             android:key="@string/user_action_9_key"
             android:title="@string/user_action_9"
             />
-    </PreferenceCategory>
+    </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>
