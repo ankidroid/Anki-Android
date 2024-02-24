@@ -48,6 +48,7 @@ import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.*
@@ -450,6 +451,18 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             tabLayoutMediator!!.attach()
         }
 
+        /**
+         * Cloze and image occlusion note types can generate an arbitrary number of cards from a note
+         * Anki only offers:
+         * * Restore to Default
+         * * Browser Appearance
+         */
+        @NeedsTest("cannot perform operations on Image Occlusion")
+        private fun noteTypeCreatesDynamicNumberOfNotes(): Boolean {
+            val noteType = templateEditor.tempModel!!.notetype
+            return noteType.isCloze || noteType.isImageOcclusion
+        }
+
         private fun setupMenu() {
             // Enable menu
             (requireActivity() as MenuHost).addMenuProvider(
@@ -458,8 +471,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                         menu.clear()
                         menuInflater.inflate(R.menu.card_template_editor, menu)
 
-                        if (templateEditor.tempModel!!.notetype.isCloze) {
-                            Timber.d("Editing cloze model, disabling add/delete card template and deck override functionality")
+                        if (noteTypeCreatesDynamicNumberOfNotes()) {
+                            Timber.d("Editing cloze/occlusion model, disabling add/delete card template and deck override functionality")
                             menu.findItem(R.id.action_add).isVisible = false
                             menu.findItem(R.id.action_add_deck_override).isVisible = false
                         } else {
