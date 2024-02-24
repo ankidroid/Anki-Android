@@ -32,7 +32,7 @@ import timber.log.Timber
  */
 @Suppress("LeakingThis")
 abstract class PageFragment : Fragment(R.layout.page_fragment), PostRequestHandler {
-    abstract val title: String
+    abstract val title: String?
     abstract val pageName: String
 
     lateinit var webView: WebView

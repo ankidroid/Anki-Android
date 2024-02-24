@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationContentDescription="@string/abc_action_bar_up_description"
-        app:navigationIcon="?attr/homeAsUpIndicator"
-        />
+        app:navigationIcon="?attr/homeAsUpIndicator"/>
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:visibility="invisible"/>
 
 </LinearLayout>

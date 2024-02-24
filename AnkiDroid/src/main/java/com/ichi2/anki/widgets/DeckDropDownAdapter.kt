@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.ichi2.anki.R
+import com.ichi2.anki.StatisticsActivity
 import com.ichi2.libanki.DeckNameId
 
 class DeckDropDownAdapter(private val context: Context, decks: List<DeckNameId>) : BaseAdapter() {
@@ -69,6 +70,10 @@ class DeckDropDownAdapter(private val context: Context, decks: List<DeckNameId>)
             convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_selected_item, parent, false)
             deckNameView = convertView.findViewById(R.id.dropdown_deck_name)
             deckCountsView = convertView.findViewById(R.id.dropdown_deck_counts)
+            if (context is StatisticsActivity) {
+                deckNameView.setTextAppearance(R.style.SpinnerCustomTextStyle)
+                deckCountsView.setTextAppearance(R.style.SpinnerCustomTextStyle)
+            }
             viewHolder = DeckDropDownViewHolder()
             viewHolder.deckNameView = deckNameView
             viewHolder.deckCountsView = deckCountsView

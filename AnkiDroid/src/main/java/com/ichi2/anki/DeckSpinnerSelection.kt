@@ -84,6 +84,17 @@ class DeckSpinnerSelection(
     }
 
     @MainThread // spinner.adapter
+    suspend fun initializeStatsBarDeckSpinner(actionBar: ActionBar) {
+        actionBar.setDisplayShowTitleEnabled(false)
+
+        // Add drop-down menu to select deck to action bar.
+        dropDownDecks = computeDropDownDecks(includeFiltered = showFilteredDecks).toMutableList()
+        deckDropDownAdapter = DeckDropDownAdapter(context, dropDownDecks)
+        spinner.adapter = deckDropDownAdapter
+        setSpinnerListener()
+    }
+
+    @MainThread // spinner.adapter
     fun initializeNoteEditorDeckSpinner(col: Collection) {
         dropDownDecks = computeDropDownDecks(col, includeFiltered = false).toMutableList()
         val deckNames = dropDownDecks.map { it.name }
