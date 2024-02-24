@@ -37,8 +37,8 @@ object Utils {
 
     // Regex pattern used in removing tags from text before diff
     private val commentPattern = Pattern.compile("(?s)<!--.*?-->")
-    private val stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>")
-    private val scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>")
+    private val stylePattern = Pattern.compile("<style[^>]*>(.*?)</style>", Pattern.DOTALL)
+    private val scriptPattern = Pattern.compile("<script[^>]*>(.*?)</script>", Pattern.DOTALL)
     private val tagPattern = Pattern.compile("(?s)<.*?>")
     private val imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>")
     private val htmlEntitiesPattern = Pattern.compile("&#?\\w+;")
@@ -63,7 +63,8 @@ object Utils {
         var s = commentPattern.matcher(inputParam).replaceAll("")
         s = stripHTMLScriptAndStyleTags(s)
         s = tagPattern.matcher(s).replaceAll("")
-        return entsToTxt(s)
+        s = s.replace(Regex("\\[\\[.*?\\]\\]"), "").trim()
+        return s // Trim to remove leading and trailing whitespaces
     }
 
     /**
