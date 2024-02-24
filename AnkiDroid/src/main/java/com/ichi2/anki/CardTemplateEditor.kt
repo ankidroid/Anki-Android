@@ -48,6 +48,7 @@ import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.notetype.RenameCardTemplateDialog
+import com.ichi2.anki.notetype.RepositionCardTemplateDialog
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
@@ -442,6 +443,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
         }
 
+        private fun showRepositionDialog() {
+            RepositionCardTemplateDialog.showInstance(requireContext(), templateEditor.viewPager.adapter!!.itemCount) { newPosition ->
+                val currentPosition = templateEditor.viewPager.currentItem
+                Timber.w("moving card template %d to %d", currentPosition, newPosition)
+                TODO("CardTemplateNotetype is a complex class and requires significant testing")
+            }
+        }
+
         @Suppress("unused")
         private fun insertField(fieldName: String) {
             val start = max(editorEditText.selectionStart, 0)
@@ -544,6 +553,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                 confirmAddCards(tempModel.notetype, numAffectedCards)
                                 return true
                             }
+                            R.id.action_reposition -> showRepositionDialog()
                             R.id.action_rename -> showRenameDialog()
                             R.id.action_insert_field -> showInsertFieldDialog()
                             R.id.action_delete -> {
