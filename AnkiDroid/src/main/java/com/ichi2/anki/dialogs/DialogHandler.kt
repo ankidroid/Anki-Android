@@ -38,8 +38,8 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
         val msg = DialogHandlerMessage.fromMessage(message)
         UsageAnalytics.sendAnalyticsScreenView(msg.analyticName)
         Timber.i("Handling Message: %s", msg.analyticName)
-        val deckPicker = activity.get() as DeckPicker
-        msg.handleAsyncMessage(deckPicker)
+        val deckPicker = activity.get() as? DeckPicker
+        deckPicker?.let { msg.handleAsyncMessage(it) }
     }
 
     /**
