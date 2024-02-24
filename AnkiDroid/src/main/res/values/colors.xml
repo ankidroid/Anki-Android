@@ -104,14 +104,6 @@
     <color name="flag_turquoise">#85FFEF</color>
     <color name="flag_purple">#C398EC</color>
 
-    <color name="flag_red_dark">#D32525</color>
-    <color name="flag_orange_dark">#BB7A17</color>
-    <color name="flag_green_dark">#057A05</color>
-    <color name="flag_blue_dark">#1A4FC2</color>
-    <color name="flag_pink_dark">#A70D64</color>
-    <color name="flag_turquoise_dark">#138072</color>
-    <color name="flag_purple_dark">#6320A0</color>
-
     <!-- For flag icons -->
     <color name="flag_reviewer_red">#ff0000</color>
     <color name="flag_reviewer_orange">#ff9800</color>
