@@ -26,6 +26,7 @@ import androidx.annotation.StringRes
 import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.UIUtils
+import timber.log.Timber
 
 /**
  * Base class for constructing a permissions screen
@@ -53,6 +54,7 @@ abstract class PermissionsFragment(@LayoutRes contentLayoutId: Int) : Fragment(c
      * Lets a user grant any missing permissions which have been permanently denied
      */
     private fun openAppSettingsScreen() {
+        Timber.i("launching ACTION_APPLICATION_DETAILS_SETTINGS")
         startActivity(
             Intent(
                 Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
@@ -77,6 +79,7 @@ abstract class PermissionsFragment(@LayoutRes contentLayoutId: Int) : Fragment(c
         // From the docs: [ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION]
         // In some cases, a matching Activity may not exist, so ensure you safeguard against this.
         if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            Timber.i("launching ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION")
             launch(intent)
         } else {
             openAppSettingsScreen()
