@@ -46,6 +46,7 @@ import com.ichi2.anki.logging.ProductionCrashReportingTree
 import com.ichi2.anki.logging.RobolectricDebugTree
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
@@ -132,6 +133,8 @@ open class AnkiDroidApp : Application() {
         if (BuildConfig.DEBUG) {
             UsageAnalytics.setDryRun(true)
         }
+
+        Timber.i(DebugInfoService.getDebugInfo(this))
 
         // Stop after analytics and logging are initialised.
         if (CrashReportService.isProperServiceProcess()) {
