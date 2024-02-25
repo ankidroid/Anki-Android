@@ -65,9 +65,10 @@ class Note : Cloneable {
     }
 
     companion object {
-        fun fromNotetypeId(col: Collection, ntid: NoteTypeId): Note {
-            val backendNote = col.backend.newNote(ntid)
-            return Note(col, backendNote)
+        context (Collection)
+        fun fromNotetypeId(ntid: NoteTypeId): Note {
+            val backendNote = backend.newNote(ntid)
+            return Note(this@Collection, backendNote)
         }
     }
 

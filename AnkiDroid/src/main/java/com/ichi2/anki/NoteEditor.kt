@@ -1819,9 +1819,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /** Handles setting the current note (non-null afterwards) and rebuilding the UI based on this note  */
     private fun setNote(note: Note?, changeType: FieldChangeType) {
         editorNote = if (note == null || addNote) {
-            getColUnsafe.let { col ->
-                val notetype = col.notetypes.current()
-                Note.fromNotetypeId(col, notetype.id)
+            getColUnsafe.run {
+                val notetype = notetypes.current()
+                Note.fromNotetypeId(notetype.id)
             }
         } else {
             note
