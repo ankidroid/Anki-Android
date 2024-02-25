@@ -16,13 +16,13 @@
 package com.ichi2.anki.preferences
 
 import android.content.Context
-import android.content.Intent
 import android.util.AttributeSet
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceViewHolder
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.preferences.usingStyledAttributes
 
 /**
@@ -54,7 +54,7 @@ class ExtendedPreferenceCategory @JvmOverloads constructor(
             val helpIcon = holder.findViewById(R.id.help_icon)
             helpIcon.isVisible = true
             helpIcon.setOnClickListener {
-                context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+                context.openUrl(uri)
             }
         }
     }
