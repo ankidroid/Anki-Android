@@ -1168,7 +1168,7 @@ open class CardBrowser :
             viewModel.deleteSelectedNotes()
         }.ifNotZero { noteCount ->
             val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
-            showUndoSnackbar(deletedMessage)
+            showUndoSnackbar(deletedMessage, Snackbar.LENGTH_INDEFINITE)
         }
     }
 
@@ -1590,8 +1590,8 @@ open class CardBrowser :
 
     private fun suspendCards() = launchCatchingTask { withProgress { viewModel.suspendCards() } }
 
-    private fun showUndoSnackbar(message: CharSequence) {
-        showSnackbar(message, Snackbar.LENGTH_LONG) {
+    private fun showUndoSnackbar(message: CharSequence, duration: Int = Snackbar.LENGTH_LONG) {
+        showSnackbar(message, duration) {
             setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
             undoSnackbar = this
         }
