@@ -60,7 +60,7 @@
     <string name="expand">Išskleisti</string>
     <string name="collapse">Suskleisti</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
+        <item quantity="one">liko %d minučių</item>
         <item quantity="few">%d minutes left</item>
         <item quantity="many">%d minutes left</item>
         <item quantity="other">%d minutes left</item>

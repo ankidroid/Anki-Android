@@ -1,17 +1,17 @@
 Հիշե’ք ամեն ինչ AnkiDroid-ի օգնությամբ։
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. Այն համատեղելի է ինտերվալային կրկնության Anki ծրագրի հետ, որը հասանելի է Windows-ի, Linux-ի և macOS-ի համար։
+AnkiDroid-ի միջոցով կարող եք արդյունավետ սովորել ֆլեշ քարտեր, քանի որ այն ցույց է տալիս քարտերը` նրանց մոռանալու պահից քիչ առաջ։ Այն համատեղելի է ինտերվալային կրկնության Anki ծրագրի հետ, որը հասանելի է Windows-ի, Linux-ի և macOS-ի համար։
 
 Սովորեք որևէ բան` երբ և որտեղ ուզում եք։ Ճիշտ օգտագործեք ավտոբուսում կամ խանութի հերթում սպասելու ժամանակը։
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
+Ստեղծեք ֆլեշ քարտերի կապուկներ կամ բեռնեք բազմազան լեզուներով և թեմաներով անվճար կապուկներ (հասանելի է ավելի, քան 6000 կապուկ):
 
 Ավելացրեք նյութեր համակարգչային Anki ծրագրի միջոցով կամ հենց AnkiDroid-ում։ Ծրագիրը նաև կարող է ավտոմատ կերպով ավելացնել բառարանից նյութեր։
 
 ★ Key features:
 • համատեղելի ֆլեշ քարտերի պարունակություն` տեքստ, նկարներ, ձայն, LaTeX
 • ինտերվալային կրկնություն (supermemo 2 ալգորիթմով)
-• text-to-speech integration
+• տեքստի հնչեցում
 • 6000-ից ավել պատրաստի կապուկ
 • առաջընթացի վիջեթ
 • մանրամասն վիճակագրություն
@@ -22,15 +22,15 @@ Create your own flashcard decks or download free decks compiled for many languag
 • գրել պատասխանները
 • գրատախտակ
 • քարտերի խմբագրում/ավելացում
-• card browser
-• tablet layout
+• զննիչ
+• պլանշետային տեսք
 • import existing collection files (via Anki Desktop)
 • add cards by intent from other applications like dictionaries
 • custom font support
-• full backup system
+• պատճենման համակարգ
 • navigation by swipe, tap
 • customisable
 • dynamic deck handling
-• night mode
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+• գիշերային տեսք
+• 27 թարգմանություն
+• AnkiDroid-ի բոլոր նախորդ տարբերակները կարելի է բեռնել կայքից

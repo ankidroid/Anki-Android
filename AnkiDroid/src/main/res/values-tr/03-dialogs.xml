@@ -109,8 +109,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Onayla</string>
     <string name="dialog_no">Hayır</string>
     <string name="dialog_yes">Evet</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Bırak</string>
+    <string name="dialog_remove">Kaldır</string>
     <string name="dialog_continue">Devam Et</string>
     <string name="dialog_processing">İşlem yapılıyor...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Oluştur</string>
@@ -221,7 +221,7 @@
         <item quantity="one">%d saniye içinde otomatik bir eşitleme tetiklenebilir</item>
         <item quantity="other">%d saniye içinde otomatik bir eşitleme tetiklenebilir</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">İnternet sağlayıcınız veri kullanımı için ücret isteyebilir</string>
     <string name="deck_picker_new">Bu destede bugün görülecek yeni kart sayısı</string>
     <string name="deck_picker_rev">Bu destede bugün vakti ğeçen yeni kart sayısı</string>
     <string name="deck_picker_lrn">Bu destede öğrenilen kart sayısı.</string>
