@@ -22,11 +22,11 @@ See: https://www.jetbrains.com/help/idea/contract-annotations.html
 
 Annotations should now appear
 
-## Modificiation Instructions
+## Modification Instructions
 
 * In Android Studio Settings: `jdk.table.xml`
 * You can find the element under one of the `<jdk>` elements as a `file://` URL:
-* Removing this line will allow the selection of another annotations root.
+* Removing this line will allow the selection of another annotation root.
 
 Sample:
 ```xml
