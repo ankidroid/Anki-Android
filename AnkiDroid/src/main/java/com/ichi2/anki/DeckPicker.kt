@@ -732,7 +732,7 @@ open class DeckPicker :
                     )
                 )
                 positiveButton(R.string.close) {
-                    exit()
+                    closeCollectionAndFinish()
                 }
                 cancelable(false)
             }
@@ -1654,12 +1654,6 @@ open class DeckPicker :
                 message = resources.getQuantityString(R.plurals.delete_media_result_message, noOfDeletedFiles, noOfDeletedFiles)
             )
         }
-    }
-
-    fun exit() {
-        Timber.i("exit()")
-        CollectionHelper.instance.closeCollection("DeckPicker:exit()")
-        finish()
     }
 
     open fun handleDbError() {
