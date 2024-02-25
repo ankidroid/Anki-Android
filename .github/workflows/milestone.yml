@@ -20,7 +20,7 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: ${{ github.event.pull_request.number }},
-            milestone: 51
+            milestone: 52
           });
 
           // graphql query to get referenced issues to merged pull request
@@ -51,7 +51,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue.number,
-              milestone: 51
+              milestone: 52
             });
           }
                     
