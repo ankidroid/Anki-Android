@@ -732,7 +732,7 @@ open class DeckPicker :
                     )
                 )
                 positiveButton(R.string.close) {
-                    exit()
+                    closeCollectionAndFinish()
                 }
                 cancelable(false)
             }

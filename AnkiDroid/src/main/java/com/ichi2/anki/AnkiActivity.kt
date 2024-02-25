@@ -546,9 +546,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, attr)
     }
 
-    fun exit() {
-        Timber.i("exit()")
-        CollectionHelper.instance.closeCollection("AnkiActivity:exit()")
+    fun closeCollectionAndFinish() {
+        Timber.i("closeCollectionAndFinish()")
+        CollectionHelper.instance.closeCollection("AnkiActivity:closeCollectionAndFinish()")
         finish()
     }
 
