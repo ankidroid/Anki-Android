@@ -247,11 +247,22 @@ object ImportUtils {
 
         protected open fun getFileNameFromContentProvider(context: Context, data: Uri): String? {
             var filename: String? = null
-            context.contentResolver.query(data, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null).use { cursor ->
-                if (cursor != null && cursor.moveToFirst()) {
-                    filename = cursor.getString(0)
-                    Timber.d("handleFileImport() Importing from content provider: %s", filename)
+            try {
+                context.contentResolver.query(
+                    data,
+                    arrayOf(OpenableColumns.DISPLAY_NAME),
+                    null,
+                    null,
+                    null
+                ).use { cursor ->
+                    if (cursor != null && cursor.moveToFirst()) {
+                        filename = cursor.getString(0)
+                        Timber.d("handleFileImport() Importing from content provider: %s", filename)
+                    }
                 }
+            } catch (e: Exception) {
+                Timber.w(e, "Error querying content provider")
+                filename = null // Set filename to null in case of an exception
             }
             return filename
         }
