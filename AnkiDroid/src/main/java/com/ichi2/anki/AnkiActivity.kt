@@ -546,6 +546,12 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, attr)
     }
 
+    fun closeCollectionAndFinish() {
+        Timber.i("closeCollectionAndFinish()")
+        CollectionHelper.instance.closeCollection("AnkiActivity:closeCollectionAndFinish()")
+        finish()
+    }
+
     companion object {
         const val DIALOG_FRAGMENT_TAG = "dialog"
 
