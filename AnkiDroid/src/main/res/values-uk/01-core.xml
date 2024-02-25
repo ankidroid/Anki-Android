@@ -60,22 +60,22 @@
     <string name="expand">Розгорнути</string>
     <string name="collapse">Згорнути</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="few">%d minutes left</item>
-        <item quantity="many">%d minutes left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">Залишилася %d хвилина</item>
+        <item quantity="few">Залишилося %d хвилини</item>
+        <item quantity="many">Залишилося %d хвилини</item>
+        <item quantity="other">Залишилося %d хвилини</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Залишилася %1$d година %2$d</item>
+        <item quantity="few">Залишилося %1$d годин %2$d</item>
+        <item quantity="many">Залишилося %1$d годин %2$d</item>
+        <item quantity="other">Залишилося %1$d годин %2$d </item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Залишився %1$d день %2$d</item>
+        <item quantity="few">Залишилося %1$d дні %2$d</item>
+        <item quantity="many">Залишилося %1$d днів %2$d</item>
+        <item quantity="other">Залишилось %1$d днів %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Колекція порожня</string>
     <string name="no_cards_placeholder_description">Почніть додавати картки\nвикористовуючи значок +.</string>
@@ -97,7 +97,7 @@
     <string name="rename_deck">Перейменувати колоду</string>
     <string name="create_shortcut">Створити значок</string>
     <string name="browse_cards">Переглянути картки</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Редагувати опис</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Додати</string>
     <string name="menu_add_note">Додати запис</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Синхронізувати обліковий запис</string>
@@ -261,5 +261,5 @@
     <string name="storage_access_title">Доступ до сховища</string>
     <string name="storage_access_summary">Зберігає вашу колекцію в безпечному місці, яке не видалиться, якщо ви видалите програму</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Доступ до всіх файлів</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">Оклюзія зображення</string>
 </resources>
