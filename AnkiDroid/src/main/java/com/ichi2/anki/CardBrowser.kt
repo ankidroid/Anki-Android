@@ -647,11 +647,6 @@ open class CardBrowser :
         cardsAdapter.notifyDataSetChanged()
     }
 
-    @VisibleForTesting
-    suspend fun selectAllDecks() {
-        viewModel.setDeckId(ALL_DECKS_ID)
-    }
-
     /** Opens the note editor for a card.
      * We use the Card ID to specify the preview target  */
     @NeedsTest("note edits are saved")
