@@ -49,7 +49,7 @@ open class PageChromeClient : WebChromeClient() {
             CrashReportService.sendExceptionReport("$url: $message", "onJsAlert:windowCount")
             return false
         } catch (e: WindowManager.BadTokenException) {
-            Timber.w("onJsAlert", e)
+            Timber.w(e, "onJsAlert")
             return false
         }
 
