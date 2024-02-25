@@ -774,7 +774,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
      *
      * @return Display name of file identified by uri (null if does not exist)
      */
-    private fun getImageNameFromUri(context: Context, uri: Uri): String? {
+    private fun getImageNameFromUri(context: Context, uri: Uri): String? = try {
         Timber.d("getImageNameFromUri() URI: %s", uri)
         var imageName: String? = null
         if (DocumentsContract.isDocumentUri(context, uri)) {
@@ -784,19 +784,44 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 val selection = MediaStore.Images.Media._ID + "=" + id
                 imageName = getImageNameFromContentResolver(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection)
             } else if ("com.android.providers.downloads.documents" == uri.authority) {
-                val contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), docId.toLong())
-                imageName = getImageNameFromContentResolver(context, contentUri, null)
+                imageName = when {
+                    // `msf:1000034860` can be handled by using the URI
+                    docId.startsWith(MEDIASTORE_DOWNLOAD_FILE_PREFIX) -> {
+                        getImageNameFromContentResolver(context, uri, null)
+                    }
+
+                    // raw:/storage/emulated/0/Download/pexels-pixabay-36717.jpg
+                    docId.startsWith(RAW_DOCUMENTS_FILE_PREFIX) -> {
+                        docId.substring(RAW_DOCUMENTS_FILE_PREFIX.length).split("/").toTypedArray().last()
+                    }
+
+                    docId.toLongOrNull() != null -> {
+                        val contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), docId.toLong())
+                        getImageNameFromContentResolver(context, contentUri, null)
+                    }
+
+                    else -> {
+                        CrashReportService.sendExceptionReport(
+                            message = "Failed to get fileName from providers.downloads.documents",
+                            origin = "getImageNameFromUri"
+                        )
+                        null
+                    }
+                }
             }
         } else if ("content".equals(uri.scheme, ignoreCase = true)) {
             imageName = getImageNameFromContentResolver(context, uri, null)
         } else if ("file".equals(uri.scheme, ignoreCase = true)) {
             if (uri.path != null) {
-                val pathParts = uri.path!!.split("/").toTypedArray()
-                imageName = pathParts[pathParts.size - 1]
+                imageName = uri.path!!.split("/").last()
             }
         }
         Timber.d("getImageNameFromUri() returning name %s", imageName)
-        return imageName
+        imageName
+    } catch (e: Exception) {
+        Timber.w(e)
+        CrashReportService.sendExceptionReport(e, "getImageNameFromUri")
+        null
     }
 
     /**
@@ -888,6 +913,18 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         private const val TAKE_PICTURE_LAUNCHER_KEY = "take_picture_launcher_key"
         private const val SELECT_IMAGE_LAUNCHER_KEY = "select_image_launcher_key"
         private const val DRAWING_LAUNCHER_KEY = "drawing_launcher_key"
+
+        /**
+         * https://cs.android.com/android/platform/superproject/+/master:packages/providers/DownloadProvider/src/com/android/providers/downloads/MediaStoreDownloadsHelper.java;l=24
+         */
+        private const val MEDIASTORE_DOWNLOAD_FILE_PREFIX = "msf:"
+
+        /**
+         * The default prefix to raw file documentIds
+         *
+         * https://cs.android.com/android/platform/superproject/+/master:packages/providers/DownloadProvider/src/com/android/providers/downloads/RawDocumentsHelper.java;l=35?q=%5C%22raw:%5C%22&ss=android%2Fplatform%2Fsuperproject
+         */
+        const val RAW_DOCUMENTS_FILE_PREFIX = "raw:"
 
         /**
          * Get Uri based on current image path
