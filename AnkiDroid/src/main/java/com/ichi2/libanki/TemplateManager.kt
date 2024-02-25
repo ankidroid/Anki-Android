@@ -179,31 +179,6 @@ class TemplateManager {
                 )
             }
 
-            /**
-             * NOT in libanki.
-             *
-             * The desktop version handles videos in an external player (mpv)
-             * because of old webview codecs in python, and to allow extending the video player.
-             * To simplify things and deliver a better result,
-             * we use the webview player, like AnkiMobile does
-             *
-             * `file:///` is used to enable seeking the video
-             */
-            fun parseVideos(text: String, mediaDir: String): String {
-                return SOUND_RE.replace(text) { match ->
-                    val fileName = match.groupValues[1]
-                    val extension = fileName.substringAfterLast(".", "")
-                    if (extension in VIDEO_EXTENSIONS) {
-                        @Language("HTML")
-                        val result =
-                            """<video src="file:///$mediaDir/$fileName" controls controlsList="nodownload"></video>"""
-                        result
-                    } else {
-                        match.value
-                    }
-                }
-            }
-
             val mediaDir = col.media.dir
             val qtext = parseVideos(
                 parseSourcesToFileScheme(
@@ -324,6 +299,34 @@ class TemplateManager {
     }
     companion object {
         val fieldFilters: MutableMap<String, FieldFilter> = mutableMapOf()
+    }
+}
+
+/**
+ * The desktop version handles videos in an external player (mpv)
+ * because of old webview codecs in python, and to allow extending the video player.
+ * To simplify things and deliver a better result,
+ * we use the webview player, like AnkiMobile does
+ *
+ * `file:///` is used to enable seeking the video
+ */
+@NotInLibAnki
+@VisibleForTesting
+fun parseVideos(text: String, mediaDir: String): String {
+    return SOUND_RE.replace(text) { match ->
+        val fileName = match.groupValues[1]
+        val extension = fileName.substringAfterLast(".", "")
+        if (extension in VIDEO_EXTENSIONS) {
+            val path = Paths.get(mediaDir, fileName).toString()
+            val uri = getFileUri(path)
+
+            @Language("HTML")
+            val result =
+                """<video src="$uri" controls controlsList="nodownload"></video>"""
+            result
+        } else {
+            match.value
+        }
     }
 }
 
