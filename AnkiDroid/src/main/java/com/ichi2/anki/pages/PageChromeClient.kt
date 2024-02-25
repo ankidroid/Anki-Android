@@ -20,6 +20,7 @@ import android.webkit.JsResult
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.appcompat.app.AlertDialog
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.message
@@ -41,6 +42,12 @@ open class PageChromeClient : WebChromeClient() {
                 positiveButton(R.string.dialog_ok) { result?.confirm() }
                 setOnCancelListener { result?.cancel() }
             }
+        } catch (e: IllegalStateException) {
+            // window count is over max!!
+            Timber.w(e, "onJsAlert: message ignored")
+            // we want to know what went wrong
+            CrashReportService.sendExceptionReport("$url: $message", "onJsAlert:windowCount")
+            return false
         } catch (e: WindowManager.BadTokenException) {
             Timber.w("onJsAlert", e)
             return false
