@@ -637,7 +637,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             val notetype = templateEditor.tempModel!!.notetype
             val notetypeFile = NotetypeFile(requireContext(), notetype)
             val ord = templateEditor.viewPager.currentItem
-            val note = withCol { getNote(this) ?: Note.fromNotetypeId(this, notetype.id) }
+            val note = withCol { getNote(this) ?: Note.fromNotetypeId(notetype.id) }
             val args = TemplatePreviewerArguments(
                 notetypeFile = notetypeFile,
                 id = note.id,

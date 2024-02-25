@@ -1297,7 +1297,7 @@ class ContentProviderTest : InstrumentedTest() {
             fields: Array<String>,
             tag: String
         ): Uri {
-            val newNote = Note.fromNotetypeId(col, mid)
+            val newNote = col.run { Note.fromNotetypeId(mid) }
             for (idx in fields.indices) {
                 newNote.setField(idx, fields[idx])
             }

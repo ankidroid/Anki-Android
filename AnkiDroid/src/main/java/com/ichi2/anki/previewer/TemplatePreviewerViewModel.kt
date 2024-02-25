@@ -54,7 +54,7 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
                 if (arguments.id != 0L) {
                     Note(this, arguments.id)
                 } else {
-                    Note.fromNotetypeId(this, arguments.notetype.id)
+                    Note.fromNotetypeId(arguments.notetype.id)
                 }
             }.apply {
                 fields = arguments.fields

@@ -710,7 +710,7 @@ class CardContentProvider : ContentProvider() {
             }
             val fldsArray = Utils.splitFields(flds)
             // Create empty note
-            val newNote = Note.fromNotetypeId(col, thisModelId)
+            val newNote = col.run { Note.fromNotetypeId(thisModelId) }
             // Set fields
             // Check that correct number of flds specified
             if (fldsArray.size != newNote.fields.size) {
@@ -754,7 +754,7 @@ class CardContentProvider : ContentProvider() {
                 val tags = values.getAsString(FlashCardsContract.Note.TAGS)
 //                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
                 // Create empty note
-                val newNote = Note.fromNotetypeId(col, modelId) // ué
+                val newNote = col.run { Note.fromNotetypeId(modelId) }
                 // Set fields
                 val fldsArray = Utils.splitFields(flds)
                 // Check that correct number of flds specified
