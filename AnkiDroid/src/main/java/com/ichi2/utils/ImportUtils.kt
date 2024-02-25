@@ -261,7 +261,7 @@ object ImportUtils {
                     }
                 }
             } catch (e: Exception) {
-                Timber.e(e, "Error querying content provider")
+                Timber.w(e, "Error querying content provider")
                 filename = null // Set filename to null in case of an exception
             }
             return filename
