@@ -1656,12 +1656,6 @@ open class DeckPicker :
         }
     }
 
-    fun exit() {
-        Timber.i("exit()")
-        CollectionHelper.instance.closeCollection("DeckPicker:exit()")
-        finish()
-    }
-
     open fun handleDbError() {
         Timber.i("Displaying Database Error")
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
