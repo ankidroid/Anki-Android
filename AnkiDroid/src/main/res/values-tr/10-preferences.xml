@@ -270,16 +270,16 @@
     <string name="key_picker_default_press_key">Bir tuşa basın</string>
     <string name="binding_add_axis">Joystick/hareket kumandası ekle</string>
     <string name="axis_picker_move_joystick">Bir joystick/hareket kumandasını hareket ettir</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_actions" maxLength="41">Kullanıcı eylemleri</string>
+    <string name="user_action_1" maxLength="41">Kullanıcı eylemi 1</string>
+    <string name="user_action_2" maxLength="41">Kullanıcı eylemi 2</string>
+    <string name="user_action_3" maxLength="41">Kullanıcı eylemi 3</string>
+    <string name="user_action_4" maxLength="41">Kullanıcı eylemi 4</string>
+    <string name="user_action_5" maxLength="41">Kullanıcı eylemi 5</string>
+    <string name="user_action_6" maxLength="41">Kullanıcı eylemi 6</string>
+    <string name="user_action_7" maxLength="41">Kullanıcı eylemi 7</string>
+    <string name="user_action_8" maxLength="41">Kullanıcı eylemi 8</string>
+    <string name="user_action_9" maxLength="41">Kullanıcı eylemi 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartın tarafını seç</string>
     <string name="card_side_question">Soru</string>

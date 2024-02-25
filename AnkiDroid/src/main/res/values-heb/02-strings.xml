@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">הגבל לתיוג ספציפי</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ערוך רשומה</string>
-    <string name="discard">Discard</string>
+    <string name="discard">ביטול</string>
     <string name="note_editor_no_cards_created">לא נוצרו קלפים. יש למלא יותר שדות</string>
     <string name="note_editor_no_first_field">השדה הראשון ריק</string>
     <string name="note_editor_no_cloze_delations">סוג הרשומה חייב לכלול \'השלם את החסר\'</string>
@@ -125,7 +125,7 @@
     <string name="select">בחירה</string>
     <string name="field_remapping">%1$s (מתוך \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">קלף שממופה לכלום ימחק. אם לרשימה אין קלפים נותרים, היא תימחק. להמשיך?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">לא נמצא סוג פתק</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">קופסת הזמן הגיעה</string>
     <plurals name="timebox_reached">
@@ -215,7 +215,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">רקע</string>
     <string name="choose_an_image">נא לבחור תמונה</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">להסיר רקע?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">שחזור בררת המחדל</string>
     <string name="cloze_sample_text">זוהי  {{%1$s::דוגמא}} של זיהוי cloze.</string>
@@ -357,7 +357,7 @@
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">התקן</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">פתיחת הגדרות טקסט לדיבור נכשלה</string>
     <string name="shared_decks_login_required">אנא התחבר כדי להוריד חפיסות נוספות</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="deck_description_field_hint">תיאור</string>
+    <string name="failed_to_copy">ההעתקה נכשלה</string>
+    <string name="card_browser_unavailable_when_notes_mode">לא זמין במצב \'פתקים\'</string>
 </resources>

@@ -63,7 +63,7 @@
     <string name="model_field_editor_changing">Alanlar güncelleniyor</string>
     <string name="model_field_editor_sort_field">Bu alana göre sırala</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Bu mesajı silmek istediğinizden emin misiniz?</string>
+    <string name="model_delete_warning">Bu not türünü silmek istediğinize emin misiniz?</string>
     <string name="field_delete_warning">Bu alanı silmek istediğinize emin misiniz?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Ekle: %1$s </string>
