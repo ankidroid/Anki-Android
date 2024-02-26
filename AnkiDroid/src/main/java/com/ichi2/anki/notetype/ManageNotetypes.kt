@@ -18,35 +18,22 @@ package com.ichi2.anki.notetype
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
-import anki.notetypes.StockNotetype
 import anki.notetypes.copy
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.*
-import com.ichi2.libanki.backend.BackendUtils.from_json_bytes
-import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
-import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.libanki.utils.set
 import com.ichi2.utils.*
 
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
-    private lateinit var view: View
     private val notetypesAdapter: NotetypesAdapter by lazy {
         NotetypesAdapter(
             this@ManageNotetypes,
@@ -82,10 +69,10 @@ class ManageNotetypes : AnkiActivity() {
             adapter = notetypesAdapter
         }
         findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {
-            launchCatchingTask { addNewNotetype() }
+            val addNewNotesType = AddNewNotesType(this)
+            launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
         }
         launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
-        view = LayoutInflater.from(this).inflate(R.layout.dialog_new_note_type, null)
     }
 
     @SuppressLint("CheckResult")
@@ -157,114 +144,13 @@ class ManageNotetypes : AnkiActivity() {
         }
     }
 
-    private suspend fun addNewNotetype() {
-        val optionsToDisplay = withProgress {
-            withCol {
-                val standardNotetypesModels = StockNotetype.Kind.entries
-                    .filter { it != StockNotetype.Kind.UNRECOGNIZED }
-                    .map {
-                        val stockNotetype = from_json_bytes(getStockNotetypeLegacy(it))
-                        NotetypeBasicUiModel(
-                            id = it.number.toLong(),
-                            name = stockNotetype.get("name") as String,
-                            isStandard = true
-                        )
-                    }
-                mutableListOf<NotetypeBasicUiModel>().apply {
-                    addAll(standardNotetypesModels)
-                    addAll(getNotetypeNames().map { it.toUiModel() })
-                }
-            }
-        }
-        val dialog = AlertDialog.Builder(this).show {
-            customView(view, paddingLeft = 32, paddingRight = 32, paddingTop = 64, paddingBottom = 64)
-            positiveButton(R.string.dialog_ok) { _ ->
-                val newName =
-                    view.findViewById<EditText>(R.id.notetype_new_name).text.toString()
-                val selectedPosition =
-                    view.findViewById<Spinner>(R.id.notetype_new_type).selectedItemPosition
-                if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
-                val selectedOption = optionsToDisplay[selectedPosition]
-                if (selectedOption.isStandard) {
-                    addStandardNotetype(newName, selectedOption)
-                } else {
-                    cloneStandardNotetype(newName, selectedOption)
-                }
-            }
-            negativeButton(R.string.dialog_cancel)
-        }
-        dialog.initializeViewsWith(optionsToDisplay)
-    }
-
-    private fun AlertDialog.initializeViewsWith(optionsToDisplay: List<NotetypeBasicUiModel>) {
-        val addPrefixStr = resources.getString(R.string.model_browser_add_add)
-        val clonePrefixStr = resources.getString(R.string.model_browser_add_clone)
-        val nameInput = view.findViewById<EditText>(R.id.notetype_new_name)
-        nameInput.addTextChangedListener { editableText ->
-            val currentName = editableText?.toString() ?: ""
-            positiveButton.isEnabled =
-                currentName.isNotEmpty() && !optionsToDisplay.map { it.name }.contains(currentName)
-        }
-        view.findViewById<Spinner>(R.id.notetype_new_type).apply {
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(av: AdapterView<*>?, rv: View?, index: Int, id: Long) {
-                    val selectedNotetype = optionsToDisplay[index]
-                    nameInput.setText(randomizeName(selectedNotetype.name))
-                }
-
-                override fun onNothingSelected(widget: AdapterView<*>?) {
-                    nameInput.setText("")
-                }
-            }
-            adapter = ArrayAdapter(
-                this@ManageNotetypes,
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
-                optionsToDisplay.map {
-                    String.format(
-                        if (it.isStandard) addPrefixStr else clonePrefixStr,
-                        it.name
-                    )
-                }
-            ).apply {
-                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            }
-        }
-    }
-
-    private fun addStandardNotetype(newName: String, selectedOption: NotetypeBasicUiModel) {
-        launchCatchingTask {
-            runAndRefreshAfter {
-                val kind = StockNotetype.Kind.forNumber(selectedOption.id.toInt())
-                val updatedStandardNotetype =
-                    from_json_bytes(getStockNotetypeLegacy(kind)).apply {
-                        set("name", newName)
-                    }
-                addNotetypeLegacy(to_json_bytes(updatedStandardNotetype))
-            }
-        }
-    }
-
-    private fun cloneStandardNotetype(newName: String, model: NotetypeBasicUiModel) {
-        launchCatchingTask {
-            runAndRefreshAfter {
-                val targetNotetype = getNotetype(model.id)
-                val newNotetype = targetNotetype.copy {
-                    id = 0
-                    name = newName
-                }
-                addNotetype(newNotetype)
-            }
-        }
-    }
-
     /**
      * Run the provided block on the [Collection](also displaying progress) and then refresh the list
      * of note types to show the changes. This method expects to be called from the main thread.
      *
      * @param action the action to run before the notetypes refresh, if not provided simply refresh
      */
-    private suspend fun runAndRefreshAfter(action: com.ichi2.libanki.Collection.() -> Unit = {}) {
+    suspend fun runAndRefreshAfter(action: com.ichi2.libanki.Collection.() -> Unit = {}) {
         val updatedNotetypes = withProgress {
             withCol {
                 action()
@@ -292,13 +178,5 @@ class ManageNotetypes : AnkiActivity() {
             is Long -> putExtra(newExtra.key, newExtra.value as Long)
             else -> throw IllegalArgumentException("Unexpected value type: ${newExtra.value}")
         }
-    }
-
-    /**
-     * Takes the current timestamp from [Collection] and appends it to the end of the new note
-     * type to dissuade the user from reusing names(which are technically not unique however).
-     */
-    private fun randomizeName(currentName: String): String {
-        return "$currentName-${Utils.checksum(time.intTimeMS().toString()).substring(0, 5)}"
     }
 }
