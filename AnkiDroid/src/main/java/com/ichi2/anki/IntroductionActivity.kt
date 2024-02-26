@@ -66,10 +66,12 @@ class IntroductionActivity : AnkiActivity() {
     }
 
     private fun openLoginDialog() {
+        Timber.i("Opening login screen")
         onLoginResult.launch(Intent(this, LoginActivity::class.java))
     }
 
     private fun startDeckPicker(result: Int = RESULT_START_NEW) {
+        Timber.i("Opening deck picker, login: %b", result == RESULT_SYNC_PROFILE)
         this.sharedPrefs().edit { putBoolean(INTRODUCTION_SLIDES_SHOWN, true) }
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
