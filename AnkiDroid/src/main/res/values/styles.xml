@@ -199,9 +199,15 @@
         <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
         <item name="android:background">?attr/dialogBackground</item>
         <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
+        <item name="checkboxStyle">@style/AlertDialogCheckBox.Style</item>
     </style>
 
     <style name="CustomButtonBarButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">?attr/progressDialogButtonTextColor</item>
     </style>
+
+    <style name="AlertDialogCheckBox.Style" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/material_blue_500</item>
+    </style>
+
 </resources>
