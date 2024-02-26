@@ -1227,9 +1227,24 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Send the previewer all our current editing information
         val noteEditorBundle = Bundle()
         addInstanceStateToBundle(noteEditorBundle)
-        noteEditorBundle.putBundle("editFields", fieldsAsBundleForPreview)
+        addFieldsToBundle(noteEditorBundle)
         previewer.putExtra("noteEditorBundle", noteEditorBundle)
         startActivity(previewer)
+    }
+
+    @NeedsTest("IO fields are passed to the template previewer and the card can be previewed")
+    private fun addFieldsToBundle(bundle: Bundle) {
+        val fieldsBundle = if (currentNotetypeIsImageOcclusion()) {
+            val ioFieldsBundle = Bundle()
+            fieldsFromSelectedNote.forEachIndexed { index, field ->
+                val fieldValue = NoteService.convertToHtmlNewline(field[1], shouldReplaceNewlines())
+                ioFieldsBundle.putString(index.toString(), fieldValue)
+            }
+            ioFieldsBundle
+        } else {
+            fieldsAsBundleForPreview
+        }
+        bundle.putBundle("editFields", fieldsBundle)
     }
 
     /**
