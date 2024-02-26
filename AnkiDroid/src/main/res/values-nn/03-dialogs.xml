@@ -221,7 +221,7 @@
         <item quantity="one">An automatic sync may be triggered in %d second</item>
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Antall kort å gjennomgå i dag i denne stokken.</string>
     <string name="deck_picker_rev">Antall kort som forfaller i dag i denne stokken.</string>
     <string name="deck_picker_lrn">Antall kort å lære i dag i denne stokken.</string>

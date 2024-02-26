@@ -17,28 +17,16 @@ package com.ichi2.anki.previewer
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.webkit.CookieManager
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
@@ -47,31 +35,28 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
-import com.ichi2.anki.SingleFragmentActivity.Companion.FRAGMENT_ARGS_EXTRA
-import com.ichi2.anki.SingleFragmentActivity.Companion.FRAGMENT_NAME_EXTRA
 import com.ichi2.anki.browser.PreviewerIdsFile
-import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
-import com.ichi2.anki.getViewerAssetLoader
-import com.ichi2.anki.localizedErrorMessage
-import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
-import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.themes.Themes
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import kotlin.reflect.jvm.jvmName
 
 class PreviewerFragment :
-    Fragment(R.layout.previewer),
+    CardViewerFragment(R.layout.previewer),
     Toolbar.OnMenuItemClickListener,
     BaseSnackbarBuilderProvider {
-    private lateinit var viewModel: PreviewerViewModel
+
+    override val viewModel: PreviewerViewModel by viewModels {
+        val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(CARD_IDS_FILE_ARG)) {
+            "$CARD_IDS_FILE_ARG is required"
+        } as PreviewerIdsFile
+        val currentIndex = requireArguments().getInt(CURRENT_INDEX_ARG, 0)
+        PreviewerViewModel.factory(previewerIdsFile, currentIndex)
+    }
+    override val webView: WebView
+        get() = requireView().findViewById(R.id.webview)
 
     override val baseSnackbarBuilder: SnackbarBuilder
         get() = {
@@ -84,54 +69,13 @@ class PreviewerFragment :
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(CARD_IDS_FILE_ARG)) {
-            "$CARD_IDS_FILE_ARG is required"
-        } as PreviewerIdsFile
-        val currentIndex = requireArguments().getInt(CURRENT_INDEX_ARG, 0)
-
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            PreviewerViewModel.factory(previewerIdsFile, currentIndex)
-        )[PreviewerViewModel::class.java]
-
-        val webView = view.findViewById<WebView>(R.id.webview)
-        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
-        with(webView) {
-            webViewClient = onCreateWebViewClient()
-            webChromeClient = onCreateWebChromeClient()
-            scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
-            with(settings) {
-                javaScriptEnabled = true
-                loadWithOverviewMode = true
-                builtInZoomControls = true
-                displayZoomControls = false
-                allowFileAccess = true
-                domStorageEnabled = true
-            }
-            loadDataWithBaseURL(
-                "http://$LOCALHOST/",
-                stdHtml(requireContext(), Themes.currentTheme.isNightMode),
-                "text/html",
-                null,
-                null
-            )
-        }
-
-        setupErrorListeners()
-
+        super.onViewCreated(view, savedInstanceState)
         val slider = view.findViewById<Slider>(R.id.slider)
         val nextButton = view.findViewById<MaterialButton>(R.id.show_next)
         val previousButton = view.findViewById<MaterialButton>(R.id.show_previous)
         val progressIndicator = view.findViewById<MaterialTextView>(R.id.progress_indicator)
-
-        viewModel.eval
-            .flowWithLifecycle(lifecycle)
-            .onEach { eval ->
-                webView.evaluateJavascript(eval, null)
-            }
-            .launchIn(lifecycleScope)
-
         val cardsCount = viewModel.cardsCount()
+
         lifecycleScope.launch {
             viewModel.currentIndex
                 .flowWithLifecycle(lifecycle)
@@ -220,124 +164,6 @@ class PreviewerFragment :
             setOnMenuItemClickListener(this@PreviewerFragment)
             setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         }
-
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    private fun setupErrorListeners() {
-        viewModel.onError
-            .flowWithLifecycle(lifecycle)
-            .onEach { errorMessage ->
-                AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.vague_error)
-                    .setMessage(errorMessage)
-                    .show()
-            }
-            .launchIn(lifecycleScope)
-
-        viewModel.onMediaError
-            .onEach { showMediaErrorSnackbar(it) }
-            .launchIn(lifecycleScope)
-
-        viewModel.onTtsError
-            .onEach { showSnackbar(it.localizedErrorMessage(requireContext())) }
-            .launchIn(lifecycleScope)
-    }
-
-    private fun onCreateWebViewClient(): WebViewClient {
-        val assetLoader = requireContext().getViewerAssetLoader(LOCALHOST)
-        return object : WebViewClient() {
-            override fun shouldInterceptRequest(
-                view: WebView?,
-                request: WebResourceRequest
-            ): WebResourceResponse? {
-                return assetLoader.shouldInterceptRequest(request.url)
-            }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                viewModel.onPageFinished()
-            }
-
-            override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-                val urlString = request.url.toString()
-                if (urlString.startsWith("playsound:")) {
-                    viewModel.playSoundFromUrl(urlString)
-                    return true
-                }
-                if (urlString.startsWith("tts-voices:")) {
-                    TtsVoicesDialogFragment().show(childFragmentManager, null)
-                    return true
-                }
-                try {
-                    openUrl(request.url)
-                    return true
-                } catch (_: Exception) {
-                    Timber.w("Could not open url")
-                }
-                return false
-            }
-
-            override fun onReceivedError(
-                view: WebView,
-                request: WebResourceRequest,
-                error: WebResourceError
-            ) {
-                viewModel.mediaErrorHandler.processFailure(request) { filename: String ->
-                    showMediaErrorSnackbar(filename)
-                }
-            }
-        }
-    }
-
-    private fun onCreateWebChromeClient(): WebChromeClient {
-        return object : WebChromeClient() {
-            private lateinit var customView: View
-
-            // used for displaying `<video>` in fullscreen.
-            // This implementation requires configChanges="orientation" in the manifest
-            // to avoid destroying the View if the device is rotated
-            override fun onShowCustomView(
-                paramView: View,
-                paramCustomViewCallback: CustomViewCallback?
-            ) {
-                customView = paramView
-                val window = requireActivity().window
-                (window.decorView as FrameLayout).addView(
-                    customView,
-                    FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT
-                    )
-                )
-                // hide system bars
-                with(WindowInsetsControllerCompat(window, window.decorView)) {
-                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-                    hide(WindowInsetsCompat.Type.systemBars())
-                }
-            }
-
-            override fun onHideCustomView() {
-                val window = requireActivity().window
-                (window.decorView as FrameLayout).removeView(customView)
-                // show system bars back
-                with(WindowInsetsControllerCompat(window, window.decorView)) {
-                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
-                    show(WindowInsetsCompat.Type.systemBars())
-                }
-            }
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.setSoundPlayerEnabled(true)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (!requireActivity().isChangingConfigurations) {
-            viewModel.setSoundPlayerEnabled(false)
-        }
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -378,14 +204,6 @@ class PreviewerFragment :
         editCardLauncher.launch(intent)
     }
 
-    private fun showMediaErrorSnackbar(filename: String) {
-        showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
-            setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
-        }
-    }
-
-    private fun openUrl(uri: Uri) = startActivity(Intent(Intent.ACTION_VIEW, uri))
-
     companion object {
         /** Index of the card to be first displayed among the IDs provided by [CARD_IDS_FILE_ARG] */
         const val CURRENT_INDEX_ARG = "currentIndex"
@@ -398,10 +216,7 @@ class PreviewerFragment :
                 CURRENT_INDEX_ARG to currentIndex,
                 CARD_IDS_FILE_ARG to previewerIdsFile
             )
-            return Intent(context, PreviewerActivity::class.java).apply {
-                putExtra(FRAGMENT_NAME_EXTRA, PreviewerFragment::class.jvmName)
-                putExtra(FRAGMENT_ARGS_EXTRA, arguments)
-            }
+            return PreviewerActivity.getIntent(context, PreviewerFragment::class, arguments)
         }
     }
 }

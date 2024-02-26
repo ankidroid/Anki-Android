@@ -214,7 +214,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Sinkronisasi otomatis dapat terjadi dalam %d detik</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Jumlah kartu baru di dek untuk dipelajari hari ini.</string>
     <string name="deck_picker_rev">Jumlah kartu di dek yang jatuh tempo hari ini.</string>
     <string name="deck_picker_lrn">Jumlah kartu di dek yang sedang dipelajari.</string>

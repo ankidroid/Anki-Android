@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">タグで抽出して学習</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ノートを編集</string>
-    <string name="discard">Discard</string>
+    <string name="discard">破棄</string>
     <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
     <string name="note_editor_no_first_field">最初のフィールドが空です</string>
     <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め問題の箇所が含まれている必要があります</string>
@@ -125,7 +125,7 @@
     <string name="select">選択</string>
     <string name="field_remapping">%1$s (\'%2$s\'から)</string>
     <string name="confirm_map_cards_to_nothing">割り当て先のないカードは削除されます。カードがすべて削除されたノートは、そのノート自体が削除されます。続行してもよろしいですか？</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">ノートタイプが見つかりませんでした</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">タイムボックスの時間です</string>
     <plurals name="timebox_reached">
@@ -206,7 +206,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">デッキリスト画面の背景</string>
     <string name="choose_an_image">画像を選択</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">背景画像を削除しますか？</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">既定値に戻す</string>
     <string name="cloze_sample_text">これは穴埋め問題の{{%1$s::サンプル}}です。</string>

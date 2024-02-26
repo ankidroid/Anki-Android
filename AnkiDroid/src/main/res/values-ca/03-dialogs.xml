@@ -221,7 +221,7 @@
         <item quantity="one">Es pot activar una sincronització automàtica en %d segon</item>
         <item quantity="other">Es pot activar una sincronització automàtica en %d segons</item>
     </plurals>
-    <string name="metered_sync_warning">La teva connexió està mesurada. La transferència de dades pot suposar un cost addicional</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Nombre de cartes noves que es poden veure avui en aquest paquet.</string>
     <string name="deck_picker_rev">Nombre de cartes pendents per avui en aquest paquet.</string>
     <string name="deck_picker_lrn">Número de cartes que s\'estan aprenent en aquest paquet.</string>

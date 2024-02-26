@@ -60,28 +60,28 @@
     <string name="expand">إسدال</string>
     <string name="collapse">إخفاء</string>
     <plurals name="reviewer_window_title">
-        <item quantity="zero">%d minutes left</item>
-        <item quantity="one">%d minute left</item>
-        <item quantity="two">%d minutes left</item>
-        <item quantity="few">%d minutes left</item>
-        <item quantity="many">%d minutes left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="zero">%d دقيقة متبقية</item>
+        <item quantity="one">%d دقيقة متبقية</item>
+        <item quantity="two">%d دقيقة متبقية</item>
+        <item quantity="few">%d دقائق متبقية</item>
+        <item quantity="many">%d دقيقة متبقية</item>
+        <item quantity="other">%d دقيقة متبقية</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="zero">%1$d hours %2$d left</item>
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="two">%1$d hours %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="zero">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="one">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="two">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="few">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="many">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="other">تبقى %1$d ساعة و%2$d دقيقة</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="zero">%1$d days %2$d left</item>
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="two">%1$d days %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="zero">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="one">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="two">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="few">تبقى %1$d أيام و%2$d ساعة</item>
+        <item quantity="many">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="other">تبقى %1$d يوم و%2$d ساعة</item>
     </plurals>
     <string name="no_cards_placeholder_title">المجموعة فارغة</string>
     <string name="no_cards_placeholder_description">ابدأ بإضافة البطاقات\nباستخدام أيقونة +.</string>
@@ -103,7 +103,7 @@
     <string name="rename_deck">تغيير اسم الرزمة</string>
     <string name="create_shortcut">إنشاء اختصار</string>
     <string name="browse_cards">تصفح البطاقات</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">تحرير الوصف</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">إضافة</string>
     <string name="menu_add_note">إضافة ملحوظة</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">مزامنة الحساب</string>
@@ -274,5 +274,5 @@
     <string name="storage_access_title">الوصول إلى التخزين</string>
     <string name="storage_access_summary">احفظ مجموعتك في مكان آمن لا يتم حذفه عندما تحذف التطبيق</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">الوصول إلى كل الملفات</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">صورة معماة</string>
 </resources>

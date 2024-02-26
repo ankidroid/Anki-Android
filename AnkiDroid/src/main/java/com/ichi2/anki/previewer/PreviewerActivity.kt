@@ -15,6 +15,21 @@
  */
 package com.ichi2.anki.previewer
 
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.ichi2.anki.SingleFragmentActivity
+import kotlin.reflect.KClass
+import kotlin.reflect.jvm.jvmName
 
-class PreviewerActivity : SingleFragmentActivity()
+class PreviewerActivity : SingleFragmentActivity() {
+    companion object {
+        fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null): Intent {
+            return Intent(context, PreviewerActivity::class.java).apply {
+                putExtra(FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
+                putExtra(FRAGMENT_ARGS_EXTRA, arguments)
+            }
+        }
+    }
+}

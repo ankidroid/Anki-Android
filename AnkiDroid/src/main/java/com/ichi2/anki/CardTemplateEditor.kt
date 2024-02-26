@@ -47,7 +47,9 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
+import com.ichi2.anki.notetype.RenameCardTemplateDialog
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.*
@@ -412,6 +414,31 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
         }
 
+        @NeedsTest("Cancellation")
+        @NeedsTest("Prefill is correct")
+        @NeedsTest("Does not work for Cloze/Occlusion")
+        @NeedsTest("UI is updated on success")
+        private fun showRenameDialog() {
+            if (noteTypeCreatesDynamicNumberOfNotes()) {
+                Timber.w("attempted to rename a dynamic note type")
+                return
+            }
+            val ordinal = templateEditor.viewPager.currentItem
+            val template = templateEditor.tempModel!!.getTemplate(ordinal)
+
+            RenameCardTemplateDialog.showInstance(
+                requireContext(),
+                prefill = template.getString("name")
+            ) { newName ->
+                template.put("name", newName)
+                Timber.i("updated card template name")
+                Timber.d("updated name of template %d to '%s'", ordinal, newName)
+
+                // update the tab
+                templateEditor.viewPager.adapter!!.notifyDataSetChanged()
+            }
+        }
+
         @Suppress("unused")
         private fun insertField(fieldName: String) {
             val start = max(editorEditText.selectionStart, 0)
@@ -450,6 +477,18 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             tabLayoutMediator!!.attach()
         }
 
+        /**
+         * Cloze and image occlusion note types can generate an arbitrary number of cards from a note
+         * Anki only offers:
+         * * Restore to Default
+         * * Browser Appearance
+         */
+        @NeedsTest("cannot perform operations on Image Occlusion")
+        private fun noteTypeCreatesDynamicNumberOfNotes(): Boolean {
+            val noteType = templateEditor.tempModel!!.notetype
+            return noteType.isCloze || noteType.isImageOcclusion
+        }
+
         private fun setupMenu() {
             // Enable menu
             (requireActivity() as MenuHost).addMenuProvider(
@@ -458,9 +497,10 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                         menu.clear()
                         menuInflater.inflate(R.menu.card_template_editor, menu)
 
-                        if (templateEditor.tempModel!!.notetype.isCloze) {
-                            Timber.d("Editing cloze model, disabling add/delete card template and deck override functionality")
+                        if (noteTypeCreatesDynamicNumberOfNotes()) {
+                            Timber.d("Editing cloze/occlusion model, disabling add/delete card template and deck override functionality")
                             menu.findItem(R.id.action_add).isVisible = false
+                            menu.findItem(R.id.action_rename).isVisible = false
                             menu.findItem(R.id.action_add_deck_override).isVisible = false
                         } else {
                             val template = getCurrentTemplate()
@@ -501,6 +541,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                 confirmAddCards(tempModel.notetype, numAffectedCards)
                                 return true
                             }
+                            R.id.action_rename -> showRenameDialog()
                             R.id.action_insert_field -> showInsertFieldDialog()
                             R.id.action_delete -> {
                                 Timber.i("CardTemplateEditor:: Delete template button pressed")

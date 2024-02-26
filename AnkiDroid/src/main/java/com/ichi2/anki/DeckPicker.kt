@@ -732,7 +732,7 @@ open class DeckPicker :
                     )
                 )
                 positiveButton(R.string.close) {
-                    exit()
+                    closeCollectionAndFinish()
                 }
                 cancelable(false)
             }
@@ -1656,12 +1656,6 @@ open class DeckPicker :
         }
     }
 
-    fun exit() {
-        Timber.i("exit()")
-        CollectionHelper.instance.closeCollection("DeckPicker:exit()")
-        finish()
-    }
-
     open fun handleDbError() {
         Timber.i("Displaying Database Error")
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
@@ -1720,7 +1714,7 @@ open class DeckPicker :
             preferences.getBoolean(getString(R.string.metered_sync_key), false)
         if (!meteredSyncIsAllowed && isActiveNetworkMetered()) {
             AlertDialog.Builder(this).show {
-                message(R.string.metered_sync_warning)
+                message(R.string.metered_sync_data_warning)
                 positiveButton(R.string.dialog_continue) { doSync() }
                 negativeButton(R.string.dialog_cancel)
                 checkBoxPrompt(R.string.button_do_not_show_again) { isCheckboxChecked ->

@@ -83,7 +83,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
                     }
                     negativeButton(R.string.close) {
-                        exit()
+                        closeCollectionAndFinish()
                     }
                 }
             }
@@ -103,7 +103,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         dismissAllDialogFragments()
                     }
                     neutralButton(R.string.close) {
-                        exit()
+                        closeCollectionAndFinish()
                     }
                     setActionButtonEnabled(WhichButton.NEGATIVE, (activity as DeckPicker).hasErrorFiles())
                 }
@@ -304,7 +304,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     contentNullable(message)
                     positiveButton(R.string.close) {
-                        exit()
+                        closeCollectionAndFinish()
                     }
                     cancelable(false)
                 }
@@ -323,7 +323,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     contentNullable(message)
                     icon(R.drawable.ic_warning)
                     positiveButton(R.string.close) {
-                        exit()
+                        closeCollectionAndFinish()
                     }
                     listItems(items = options, waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
                         when (values[index]) {
@@ -341,7 +341,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     contentNullable(message)
                     positiveButton(R.string.close) {
-                        exit()
+                        closeCollectionAndFinish()
                     }
                 }
             }
@@ -439,7 +439,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         val ch = CollectionHelper.instance
                         ch.closeCollection("DatabaseErrorDialog: Before Create New Collection")
                         CollectionHelper.resetAnkiDroidDirectory(context)
-                        context.exit()
+                        context.closeCollectionAndFinish()
                     }
                     negativeButton(R.string.dialog_cancel)
                     cancelable(false)
@@ -455,8 +455,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         }
     }
 
-    private fun exit() {
-        (activity as DeckPicker).exit()
+    private fun closeCollectionAndFinish() {
+        (activity as AnkiActivity).closeCollectionAndFinish()
     } // Generic message shown when a libanki task failed
 
     // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)

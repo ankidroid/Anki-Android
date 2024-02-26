@@ -362,8 +362,8 @@ class NoteEditorTest : RobolectricTest() {
     fun `can switch two image occlusion note types 15579`() {
         val otherOcclusion = getSecondImageOcclusionNoteType()
         getNoteEditorAdding(NoteType.IMAGE_OCCLUSION).build().apply {
-            val position = requireNotNull(mNoteTypeSpinner!!.getItemIndex(otherOcclusion.name)) { "could not find ${otherOcclusion.name}" }
-            mNoteTypeSpinner!!.setSelection(position)
+            val position = requireNotNull(noteTypeSpinner!!.getItemIndex(otherOcclusion.name)) { "could not find ${otherOcclusion.name}" }
+            noteTypeSpinner!!.setSelection(position)
         }
     }
 

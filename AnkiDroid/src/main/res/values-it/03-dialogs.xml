@@ -221,7 +221,7 @@
         <item quantity="one">Una sincronizzazione automatica potrebbe essere attivata in %d secondo</item>
         <item quantity="other">Una sincronizzazione automatica potrebbe essere attivata in %d secondi</item>
     </plurals>
-    <string name="metered_sync_warning">Stai utilizzando una connessione a consumo. Il tuo provider potrebbe applicare costi aggiuntivi.</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Numero di nuove carte da vedere oggi in questo mazzo.</string>
     <string name="deck_picker_rev">Numero di carte in questo mazzo che scadono oggi.</string>
     <string name="deck_picker_lrn">Numero di carte da imparare in questo mazzo.</string>

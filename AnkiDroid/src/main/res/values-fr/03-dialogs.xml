@@ -221,7 +221,7 @@
         <item quantity="one">Une synchronisation automatique peut être déclenchée dans %d seconde</item>
         <item quantity="other">Une synchronisation automatique peut être déclenchée dans %d secondes</item>
     </plurals>
-    <string name="metered_sync_warning">Votre connexion est limitée. Le transfert de données peut coûter de l\'argent</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Nombre de nouvelles cartes à voir aujourd\'hui dans ce paquet.</string>
     <string name="deck_picker_rev">Nombre de cartes prévues aujourd\'hui dans ce paquet.</string>
     <string name="deck_picker_lrn">Nombre de cartes en cours d\'apprentissage dans ce paquet.</string>

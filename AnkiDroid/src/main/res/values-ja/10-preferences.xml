@@ -69,8 +69,8 @@
     <string name="pref_cat_plugins" maxLength="41">プラグイン</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">線の太さ</string>
-    <string name="use_input_tag" maxLength="41">カード内にキーボード入力で解答する</string>
-    <string name="use_input_tag_summ">解答をキーボード入力で行うよう設定されているカードの内部に文字入力欄を表示します</string>
+    <string name="use_input_tag" maxLength="41">答えを入力する欄をカード内に表示</string>
+    <string name="use_input_tag_summ">答えをキーボード入力するタイプのカードの文字入力欄を、カードの下側ではなくカードの中に表示します</string>
     <string name="reset_languages" maxLength="41">言語設定をリセット</string>
     <string name="reset_languages_summ">すべてのデッキの（テキスト読み上げ用および辞書用の）言語設定をリセットします</string>
     <string name="reset_languages_question">言語の割り当て設定をすべてリセットします。よろしいですか？</string>
@@ -251,7 +251,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">改行タグを改行に置き換えて表示</string>
     <string name="note_editor_replace_newlines_summ">「ノートを編集」画面のフィールドで、改行を表すHTMLタグ &lt;br&gt; を表示せず、実際に改行に置き換えた状態で表示します。新たに改行を行った場合も、その箇所に &lt;br&gt; タグを挿入しますが、そのタグは表示しません</string>
     <string name="type_in_answer_focus" maxLength="41">文字入力欄にフォーカス</string>
-    <string name="type_in_answer_focus_summ">答えをキーボード入力する欄がカード内にある場合、自動的にカーソルを入れて、すぐに文字を入力できる状態にします</string>
+    <string name="type_in_answer_focus_summ">答えをキーボード入力するタイプのカードでは、カードを表示したときに、あらかじめ文字入力欄を選択してキーボードを表示した状態にします</string>
     <!-- About -->
     <string name="open_changelog">変更履歴を開く</string>
     <string name="pref_cat_about_title" maxLength="41">AnkiDroidについて</string>
@@ -268,7 +268,7 @@
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
     <string name="binding_add_axis">ジョイスティック/モーションコントローラーの動作を追加</string>
     <string name="axis_picker_move_joystick">ジョイスティック/モーションコントローラーを動かしてください</string>
-    <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions" maxLength="41">ユーザーアクション</string>
     <string name="user_action_1" maxLength="41">ユーザーアクション 1</string>
     <string name="user_action_2" maxLength="41">ユーザーアクション 2</string>
     <string name="user_action_3" maxLength="41">ユーザーアクション 3</string>
@@ -277,7 +277,7 @@
     <string name="user_action_6" maxLength="41">ユーザーアクション 6</string>
     <string name="user_action_7" maxLength="41">ユーザーアクション 7</string>
     <string name="user_action_8" maxLength="41">ユーザーアクション 8</string>
-    <string name="user_action_9" maxLength="41"></string>
+    <string name="user_action_9" maxLength="41">ユーザーアクション 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">カードの表面 (質問側) と裏面 (解答側) 、どちらでの操作ですか？</string>
     <string name="card_side_question">表面</string>
@@ -292,7 +292,7 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">試験運用機能</string>
     <string name="readtext_deprecation_warn">AnkiDroidは、他のAnkiクライアント（デスクトップ版Anki、AnkiMobile）と互換性がある、より優れたTTS（テキスト読み上げ）システムを導入しました。新システムでは、より多くの音声や、品質の向上した再生機能が利用できます。\n\n従来のTTSシステムを対象とするこのオプションは近い将来に削除され、利用できなくなります。そうなる前に、できるだけ早く、ノートタイプ内のカードテンプレートを新しいTTSシステムに対応したものに変更することをおすすめします。</string>
-    <string name="readtext_reviewer_warn">テキスト読み上げ（TTS）の新しいフォーマットにアップグレードしてください</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">テキスト読み上げ（TTS）の新しいフォーマットにアップグレードしてください</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
     <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>

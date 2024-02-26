@@ -17,6 +17,10 @@
         android:title="@string/menu_add"
         ankidroid:showAsAction="never"/>
     <item
+        android:id="@+id/action_rename"
+        android:title="@string/rename"
+        ankidroid:showAsAction="never"/>
+    <item
         android:id="@+id/action_delete"
         android:title="@string/dialog_positive_delete"
         ankidroid:showAsAction="never"/>

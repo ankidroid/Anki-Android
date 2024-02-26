@@ -221,7 +221,7 @@
         <item quantity="one">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>
         <item quantity="other">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">ᱱᱚᱣᱟ ᱰᱮᱠᱨᱮ ᱛᱮᱦᱮᱧ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱱᱟᱣᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱮᱞ</string>
     <string name="deck_picker_rev">ᱱᱚᱣᱟ ᱰᱮᱠ ᱨᱮ ᱛᱮᱦᱮᱧ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱟᱜ ᱱᱟᱣᱟ ᱮᱞ</string>
     <string name="deck_picker_lrn">ᱱᱚᱣᱟ ᱰᱮᱠ ᱨᱮᱭᱟᱜ ᱥᱮᱪᱮᱫ ᱠᱟᱰ  ᱮᱞ </string>

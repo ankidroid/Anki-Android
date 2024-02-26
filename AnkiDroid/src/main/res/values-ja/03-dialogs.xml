@@ -104,8 +104,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">確認</string>
     <string name="dialog_no">いいえ</string>
     <string name="dialog_yes">はい</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">維持</string>
+    <string name="dialog_remove">削除</string>
     <string name="dialog_continue">続行</string>
     <string name="dialog_processing">処理中です...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">作成</string>
@@ -163,8 +163,8 @@
     <string name="incompatible_database_version_title">互換性のないバージョンのデータベース</string>
     <string name="incompatible_database_version_summary">このデータベースは、このAnkiDroidでは使用できません。 これを使用するには、AnkiDroidをアップグレードするか、データベースをダウングレードしてください。\n\nこのAnkiDroidで開ける最大バージョン: %1$d\nこのデータベースのバージョン: %2$d\n\n次の復元オプションは、現在のコレクションを、このAnkiDroidで使用できる可能性が高いデータベースで上書きします。 </string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">背景画像を適用しました</string>
-    <string name="background_image_removed">背景画像を解除しました</string>
+    <string name="background_image_applied">背景画像に適用しました</string>
+    <string name="background_image_removed">背景画像を削除しました</string>
     <string name="no_image_selected">画像が選択されていません</string>
     <string name="error_selecting_image">画像の選択中にエラーが発生しました。マニュアルを参照してください。 %s</string>
     <string name="error_deleting_image">画像削除エラー</string>
@@ -214,7 +214,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d 秒後に自動同期がスタートします。</item>
     </plurals>
-    <string name="metered_sync_warning">従量課金制のネット接続です。データ通信量に応じて通信費が増える可能性があります</string>
+    <string name="metered_sync_data_warning">データ通信量の消費によって、通信事業者（携帯会社など）への支払い料金が増える場合があります。</string>
     <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>
     <string name="deck_picker_rev">このデッキ内の、今日出題する予定のカードの数。</string>
     <string name="deck_picker_lrn">このデッキ内の、習得中カードの数。</string>

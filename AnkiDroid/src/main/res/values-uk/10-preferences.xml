@@ -177,8 +177,8 @@
     <string name="show_top_bar_summ">Показувати кількість карт, прапорець та зірочку на верхній панелі</string>
     <string name="show_progress" maxLength="41">Показати ті, що залишилися</string>
     <string name="show_progress_summ">Показувати кількість карток, що залишилися</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Показувати приблизний час, що залишився</string>
+    <string name="show_eta_summ">Показувати час, що залишився</string>
     <string name="use_current" maxLength="41">Колода для нових карт</string>
     <string name="learn_cutoff" maxLength="41">Ліміт вивчення карток наперед</string>
     <string name="time_limit" maxLength="41">Період лічильника переглядів</string>
@@ -275,16 +275,16 @@
     <string name="key_picker_default_press_key">Натисніть клавішу</string>
     <string name="binding_add_axis">Додати джойстик/контролер руху</string>
     <string name="axis_picker_move_joystick">Рухайте джойстиком/контролером руху</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_actions" maxLength="41">Дії користувача</string>
+    <string name="user_action_1" maxLength="41">Дія 1</string>
+    <string name="user_action_2" maxLength="41">Дія 2</string>
+    <string name="user_action_3" maxLength="41">Дія 3</string>
+    <string name="user_action_4" maxLength="41">Дія 4</string>
+    <string name="user_action_5" maxLength="41">Дія 5</string>
+    <string name="user_action_6" maxLength="41">Дія 6</string>
+    <string name="user_action_7" maxLength="41">Дія 7</string>
+    <string name="user_action_8" maxLength="41">Дія 8</string>
+    <string name="user_action_9" maxLength="41">Дія 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Вибрати сторону карти</string>
     <string name="card_side_question">Питання</string>
@@ -298,8 +298,8 @@
     <string name="bindings_already_bound">Вже прив\'язано до %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Експериментальні</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid створив кращий механізм TTS, який сумісний з іншими клієнтами Anki і містить більше голосів та покращене відтворення мови!\n\nБудь ласка, оновіть програму якомога швидше, оскільки це налаштування буде незабаром видалено.</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Будь ласка, оновіться до нового формату тексту-у-мовлення</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Параметри розробника</string>
     <string name="dev_options_enabled_pref" maxLength="41">Увімкнути параметри розробника</string>

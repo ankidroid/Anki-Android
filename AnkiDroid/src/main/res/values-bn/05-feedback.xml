@@ -47,13 +47,14 @@
     <!-- Feedback.java -->
     <string name="empty_string"></string>
     <string name="error_reporting_choice">ত্রুটি রিপোর্টিং মোড</string>
-    <string name="feedback_disclaimer">ডিসক্লেইমার: আমরা আপনার ইমেল ঠিকানা, ফোন নম্বর বা আপনার ফোনের IMEI এর মতো কোনো ব্যক্তিগত তথ্য সংগ্রহ করি না। আমরা আপনার ডিভাইস সম্পর্কে কিছু তথ্য সংগ্রহ করি বটে, যেমন প্রস্তুতকারক, মডেল এবং এন্ড্রয়েড সংস্করণ, সেইসাথে রিপোর্টকৃত ত্রুটির ধরণ এবং সেগুলি ঘটার পেছনের কারণগুলি।</string>
-    <string name="feedback_title">আনকিড্রয়েড ফিডব্যাক</string>
-    <string name="feedback_default_text">আপনি রিপোর্ট করছেন এমন কোনো ত্রুটির ধরণ সম্পর্কে আপনার প্রতিক্রিয়া বা তথ্য দিন।</string>
-    <string name="feedback_auto_toast_text">আনকিড্রয়েড একটি সমস্যার সম্মুখীন হয়েছে; ডেভেলপারদের কাছে একটি প্রতিবেদন পাঠানো হচ্ছে...</string>
-    <string name="feedback_for_manual_toast_text">ডেভেলপারদের জন্য একটি ত্রুটি রিপের্ট প্রস্তুত করা হচ্ছে...</string>
-    <string name="feedback_copy_debug">ডিবাগ ইনফো কপি কর</string>
-    <string name="feedback_report">Report</string>
-    <string name="feedback_report_automatically">Send error reports automatically</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="feedback_disclaimer">ডিসক্লেইমার: আমরা আপনার ইমেল ঠিকানা, ফোন নম্বর বা আপনার ফোনের IMEI এর মতো কোনো ব্যক্তিগত তথ্য সংগ্রহ করি না। তবে আমরা আপনার ডিভাইস সম্পর্কে কিছু তথ্য সংগ্রহ করি, যেমন প্রস্তুতকারক, মডেল এবং এন্ড্রয়েড সংস্করণ। তা ছাড়া রিপোর্টকৃত ত্রুটির ধরণ এবং সেগুলি ঘটার পেছনের কারণ সম্পর্কে তথ্য সংগ্রহ করা হয়ে থাকে।</string>
+    <string name="feedback_title">AnkiDroid ফিডব্যাক</string>
+    <string name="feedback_default_text">আপনি যে ত্রুটি সম্পর্কে রিপোর্ট পাঠাতে চাচ্ছেন তা
+সম্পর্কে তথ্য অথবা আপনার মতামত লিখুন।</string>
+    <string name="feedback_auto_toast_text">AnkiDroid সমস্যার সম্মুখীন হয়েছে; ডেভেলপারদের কাছে একটি প্রতিবেদন পাঠানো হচ্ছে...</string>
+    <string name="feedback_for_manual_toast_text">ডেভেলপারদের জন্য একটি ত্রুটি রিপোর্ট প্রস্তুত করা হচ্ছে...</string>
+    <string name="feedback_copy_debug">ডিবাগ তথ্য কপি করুন</string>
+    <string name="feedback_report">রিপোর্ট</string>
+    <string name="feedback_report_automatically">স্বয়ংক্রিয়ভাবে ত্রুটি সূচনা পাঠান</string>
+    <string name="feedback_no_suitable_app_found">উপযুক্ত কোন অ্যাপ নেই</string>
 </resources>

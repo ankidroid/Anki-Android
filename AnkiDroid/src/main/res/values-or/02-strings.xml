@@ -125,7 +125,7 @@
     <string name="select">ବାଛନ୍ତୁ</string>
     <string name="field_remapping">%1$s (“%2$s” ରୁ)</string>
     <string name="confirm_map_cards_to_nothing">କୌଣସି ଜିନିଷକୁ ମ୍ୟାପ୍ ନହୋଇ ଥିବା ପତ୍ରସବୁ ବିଲୋପ ହେବ। ଯଦି କୌଣସି ନୋଟ୍ ର ଅବଶିଷ୍ଟ ପତ୍ର ନଥାଏ, ତେବେ ଏହା ନଷ୍ଟ ହୋଇଯିବ। ଆପଣ ଜାରି ରଖିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">କୌଣସି ନୋଟ୍ ପ୍ରକାର ମିଳିଲା ନାହିଁ</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">ସମୟବାକ୍ସ ପହଞ୍ଚିଛି</string>
     <plurals name="timebox_reached">
@@ -209,7 +209,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">ପୃଷ୍ଠପଟ</string>
     <string name="choose_an_image">ଛବି ବାଛନ୍ତୁ</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">ପୃଷ୍ଠପଟ ଅପସାରଣ କରିବେ ତ?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ଡିଫଲ୍ଟ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ</string>
     <string name="cloze_sample_text">ଏହା ଏକ {{%1$s::ନମୁନା}} କ୍ଲୋଜ ବିଲୋପ।</string>
@@ -267,7 +267,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">ଏକ ବୈଧ ଇମେଲ୍ ପ୍ରବେଶ କରନ୍ତୁ</string>
     <string name="password_empty">ପାସ୍‌ୱର୍ଡ଼ ଆଵଶ୍ୟକ ଅଟେ</string>
     <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <string name="back_pressed_once_reviewer">ଫେରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
@@ -356,7 +356,7 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        ପାଠ୍ୟ ରୁ କଥନ ସେଟିଂ ଖୋଲିବାରେ ବିଫଳ
     </string>
     <string name="shared_decks_login_required">ଆହୁରି ତାସଖଣ୍ଡ ଡାଉନଲୋଡ୍ କରିବାକୁ ଦୟାକରି ଲଗ୍ ଇନ୍ କରନ୍ତୁ</string>
-    <string name="deck_description_field_hint">Description</string>
+    <string name="deck_description_field_hint">ବର୍ଣ୍ଣନା</string>
     <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="card_browser_unavailable_when_notes_mode">‘ନୋଟ୍’ ମୋଡ୍ ରେ ଉପଲବ୍ଧ ନାହିଁ</string>
 </resources>

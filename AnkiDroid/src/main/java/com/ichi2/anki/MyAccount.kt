@@ -140,12 +140,9 @@ open class MyAccount : AnkiActivity() {
         username.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 val email = username.text.toString().trim()
-                userNameLayout.apply {
-                    isErrorEnabled = email.isNotEmpty()
-                    error = if (email.isEmpty()) getString(R.string.invalid_email) else null
-                }
+                userNameLayout.error = if (email.isEmpty()) getString(R.string.invalid_email) else null
             } else {
-                userNameLayout.isErrorEnabled = false
+                userNameLayout.error = null
             }
         }
 
@@ -153,11 +150,10 @@ open class MyAccount : AnkiActivity() {
             if (!hasFocus) {
                 val password = password.text.toString()
                 if (password.isEmpty()) {
-                    passwordLayout.isErrorEnabled = true
                     passwordLayout.error = getString(R.string.password_empty)
                 }
             } else {
-                passwordLayout.isErrorEnabled = false
+                passwordLayout.error = null
             }
         }
 

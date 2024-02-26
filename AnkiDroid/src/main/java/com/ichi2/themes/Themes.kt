@@ -24,6 +24,7 @@ import android.content.res.Configuration
 import android.graphics.Color
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -51,6 +52,7 @@ object Themes {
     fun setTheme(context: Context) {
         updateCurrentTheme(context)
         Timber.i("Setting theme to %s", currentTheme.name)
+        AppCompatDelegate.setDefaultNightMode(getDefaultNightModeFromTheme(context))
         context.setTheme(currentTheme.resId)
     }
 
@@ -136,6 +138,23 @@ object Themes {
     fun systemIsInNightMode(context: Context): Boolean {
         return context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
             Configuration.UI_MODE_NIGHT_YES
+    }
+
+    private fun getDefaultNightModeFromTheme(context: Context): Int {
+        // TODO (#5019): always use the context as the parameter for sharedPrefs()
+        val prefs = if (context is AppCompatPreferenceActivity<*>) {
+            AnkiDroidApp.instance.sharedPrefs()
+        } else {
+            context.sharedPrefs()
+        }
+        if (themeFollowsSystem(prefs)) {
+            return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
+        return if (currentTheme.isNightMode) {
+            AppCompatDelegate.MODE_NIGHT_YES
+        } else {
+            AppCompatDelegate.MODE_NIGHT_NO
+        }
     }
 }
 

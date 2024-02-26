@@ -235,7 +235,7 @@
         <item quantity="many">Automatická synchronizácia sa môže spustiť za %d sekúnd</item>
         <item quantity="other">Automatická synchronizácia sa môže spustiť za %d sekúnd</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Počet nových kariet na dnes v tomto balíčku</string>
     <string name="deck_picker_rev">Počet kartičiek na preskúšanie na dnes v tomto balíčku</string>
     <string name="deck_picker_lrn">Počet kartičiek v štádiu učenia v tomto balíčku.</string>

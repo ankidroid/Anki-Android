@@ -73,7 +73,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private val talker = JavaScriptTTS()
 
     // Speech to Text
-    private val mSpeechRecognizer = JavaScriptSTT(context)
+    private val speechRecognizer = JavaScriptSTT(context)
 
     open fun convertToByteArray(apiContract: ApiContract, boolean: Boolean): ByteArray {
         return ApiResult(apiContract.isValid, boolean.toString()).toString().toByteArray()
@@ -333,7 +333,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_4)
                 convertToByteArray(apiContract, true)
             }
-            "sttSetLanguage" -> convertToByteArray(apiContract, mSpeechRecognizer.setLanguage(apiParams))
+            "sttSetLanguage" -> convertToByteArray(apiContract, speechRecognizer.setLanguage(apiParams))
             "sttStart" -> {
                 val callback = object : JavaScriptSTT.SpeechRecognitionCallback {
                     override fun onResult(results: List<String>) {
@@ -351,10 +351,10 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                         }
                     }
                 }
-                mSpeechRecognizer.setRecognitionCallback(callback)
-                convertToByteArray(apiContract, mSpeechRecognizer.start())
+                speechRecognizer.setRecognitionCallback(callback)
+                convertToByteArray(apiContract, speechRecognizer.start())
             }
-            "sttStop" -> convertToByteArray(apiContract, mSpeechRecognizer.stop())
+            "sttStop" -> convertToByteArray(apiContract, speechRecognizer.stop())
             else -> {
                 showDeveloperContact(ankiJsErrorCodeError, apiContract.cardSuppliedDeveloperContact)
                 throw Exception("unhandled request: $methodName")

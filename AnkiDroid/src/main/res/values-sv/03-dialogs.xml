@@ -221,7 +221,7 @@
         <item quantity="one">En automatisk synkronisering kan utlösas om %d sekund</item>
         <item quantity="other">En automatisk synkronisering kan utlösas om %d sekunder</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Antal nya kort att se idag i denna kortlek.</string>
     <string name="deck_picker_rev">Antal kort som förfaller idag i denna kortlek.</string>
     <string name="deck_picker_lrn">Antal kort i inlärning i denna kortlek.</string>

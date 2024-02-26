@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">اقتصر على وسوم معينة</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">تعديل الملحوظة</string>
-    <string name="discard">Discard</string>
+    <string name="discard">تجاهل</string>
     <string name="note_editor_no_cards_created">لم تُنشَأ أي بطاقات. الرجاء تعبئة مزيد من الحقول</string>
     <string name="note_editor_no_first_field">الحقل الأول فارغ</string>
     <string name="note_editor_no_cloze_delations">يجب أن يحتوي نوع الملحوظة هذا على عبارات ملء فراغات</string>
@@ -125,7 +125,7 @@
     <string name="select">حدد</string>
     <string name="field_remapping">%1$s (من “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">البطاقات غير المُوزعة ستُحذف. إذا لم يتبقَّ لملحوظة أي بطاقة، ستُحذف. هل أنت متأكد من الاستمرار؟</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">لا يوجد أي نوع ملحوظة</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">انتهت مهلة تقسيم المهام</string>
     <plurals name="timebox_reached">
@@ -221,7 +221,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">خلفية</string>
     <string name="choose_an_image">اختيار صورة</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">هل تريد إزالة الخلفية؟</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">استعادة الافتراضي</string>
     <string name="cloze_sample_text">هذا {{%1$s::مثال}} لعبارات ملء الفراغات.</string>
@@ -279,7 +279,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">أدخل بريدًا إلكترونيًا صالحًا</string>
     <string name="password_empty">تلزم كلمة مرور</string>
     <string name="back_pressed_once">اضغط رجوع مجدداً للخروج</string>
     <string name="back_pressed_once_reviewer">اضغط رجوع مجددًا للعودة</string>
@@ -371,7 +371,7 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        فشل فتح إعدادات تحويل النص إلى كلام
     </string>
     <string name="shared_decks_login_required">الرجاء تسجيل الدخول لتنزيل المزيد من المجموعات</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="deck_description_field_hint">الوصف</string>
+    <string name="failed_to_copy">فشل النسخ</string>
+    <string name="card_browser_unavailable_when_notes_mode">غير متوفر في وضع الملحوظات</string>
 </resources>

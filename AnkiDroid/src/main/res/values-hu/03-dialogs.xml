@@ -221,7 +221,7 @@
         <item quantity="one">Egy auto szinkronizálás elindulhat %d másodperc elteltével.</item>
         <item quantity="other">Egy automatikus szinkronizálás elindulhat %d másodperc múlva</item>
     </plurals>
-    <string name="metered_sync_warning">A kapcsolat forgalmi díjas. Az adatátvitel pénzbe kerülhet</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">A ma megnézendő új kártyák száma ebben a pakliban.</string>
     <string name="deck_picker_rev">A ma elvégzendő kártyák száma ebben a pakliban.</string>
     <string name="deck_picker_lrn">A tanulandó kártyák száma ebben a pakliban.</string>

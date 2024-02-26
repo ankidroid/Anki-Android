@@ -1753,13 +1753,13 @@ open class CardBrowser :
         private val toIds: IntArray,
         private val fontSizeScalePcent: Int
     ) : BaseAdapter() {
-        private var mOriginalTextSize = -1.0f
-        private val mInflater: LayoutInflater
+        private var originalTextSize = -1.0f
+        private val inflater: LayoutInflater
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             // Get the main container view if it doesn't already exist, and call bindView
             val v: View
             if (convertView == null) {
-                v = mInflater.inflate(resource, parent, false)
+                v = inflater.inflate(resource, parent, false)
                 val count = toIds.size
                 val columns = arrayOfNulls<View>(count)
                 for (i in 0 until count) {
@@ -1818,13 +1818,13 @@ open class CardBrowser :
         private fun setFont(v: TextView) {
             // Set the font and font size for a TextView v
             val currentSize = v.textSize
-            if (mOriginalTextSize < 0) {
-                mOriginalTextSize = v.textSize
+            if (originalTextSize < 0) {
+                originalTextSize = v.textSize
             }
             // do nothing when pref is 100% and apply scaling only once
-            if (fontSizeScalePcent != 100 && abs(mOriginalTextSize - currentSize) < 0.1) {
+            if (fontSizeScalePcent != 100 && abs(originalTextSize - currentSize) < 0.1) {
                 // getTextSize returns value in absolute PX so use that in the setter
-                v.setTextSize(TypedValue.COMPLEX_UNIT_PX, mOriginalTextSize * (fontSizeScalePcent / 100.0f))
+                v.setTextSize(TypedValue.COMPLEX_UNIT_PX, originalTextSize * (fontSizeScalePcent / 100.0f))
             }
         }
 
@@ -1853,7 +1853,7 @@ open class CardBrowser :
         }
 
         init {
-            mInflater = LayoutInflater.from(context)
+            inflater = LayoutInflater.from(context)
         }
     }
 
@@ -1934,7 +1934,7 @@ open class CardBrowser :
     class CardCache : Card.Cache, PositionAware {
         var isLoaded = false
             private set
-        private var mQa: Pair<String, String>? = null
+        private var qa: Pair<String, String>? = null
         override var position: Int
 
         private val inCardMode: Boolean
@@ -1945,7 +1945,7 @@ open class CardBrowser :
 
         constructor(cache: CardCache, position: Int) : super(cache) {
             isLoaded = cache.isLoaded
-            mQa = cache.mQa
+            qa = cache.qa
             this.position = position
             this.inCardMode = cache.inCardMode
         }
@@ -1954,7 +1954,7 @@ open class CardBrowser :
         override fun reload() {
             super.reload()
             isLoaded = false
-            mQa = null
+            qa = null
         }
 
         /**
@@ -2003,11 +2003,11 @@ open class CardBrowser :
                 CardBrowserColumn.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote(col).toString()
                 CardBrowserColumn.QUESTION -> {
                     updateSearchItemQA()
-                    mQa!!.first
+                    qa!!.first
                 }
                 CardBrowserColumn.ANSWER -> {
                     updateSearchItemQA()
-                    mQa!!.second
+                    qa!!.second
                 }
                 else -> null
             }
@@ -2069,7 +2069,7 @@ open class CardBrowser :
          * question.
          */
         private fun updateSearchItemQA() {
-            if (mQa != null) {
+            if (qa != null) {
                 return
             }
             // render question and answer
@@ -2097,7 +2097,7 @@ open class CardBrowser :
             }
             a = formatQA(a, qa, AnkiDroidApp.instance)
             q = formatQA(q, qa, AnkiDroidApp.instance)
-            mQa = Pair(q, a)
+            this.qa = Pair(q, a)
         }
 
         override fun equals(other: Any?): Boolean {

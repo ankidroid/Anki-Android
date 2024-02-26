@@ -294,7 +294,7 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">¡AnkiDroid ha introducido un mecanismo texto a voz mejor que es compatible con otros clientes Anki y que incluye más voces y mejoras de reproducción de idioma!\n\nPor favor actualice lo antes posible, ya que pronto se quitará esta configuración.</string>
-    <string name="readtext_reviewer_warn">Por favor actualice al formato de texto a voz nuevo.</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Por favor actualice al formato de texto a voz nuevo.</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opciones de desarrollador</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activar opciones de desarrollador</string>

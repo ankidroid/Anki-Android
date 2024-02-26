@@ -235,7 +235,7 @@
         <item quantity="many">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
         <item quantity="other">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
     </plurals>
-    <string name="metered_sync_warning">Korzystasz z połączenia taryfowego. Korzystanie z danych może dodatkowo kosztować</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Liczba nowych kart do zobaczenia dziś w tej talii.</string>
     <string name="deck_picker_rev">Liczba kart do powtórki na dziś w tej talii.</string>
     <string name="deck_picker_lrn">Liczba kart w uczeniu się w tej talii.</string>

@@ -221,7 +221,7 @@
         <item quantity="one">Automaattinen synkronointi voi käynnistyä %d sekunnissa</item>
         <item quantity="other">Automaattinen synkronointi voi käynnistyä %d sekunnissa</item>
     </plurals>
-    <string name="metered_sync_warning">Yhteytesi on käytön mukaan laskutettu. Tiedonsiirto saattaa maksaa</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Tässä pakassa olevien tänään näytettävien uusien korttien lukumäärä.</string>
     <string name="deck_picker_rev">Tässä pakassa olevien tänään erääntyvien korttien lukumäärä.</string>
     <string name="deck_picker_lrn">Tässä pakassa olevien opittavien korttien lukumäärä.</string>

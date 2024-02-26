@@ -37,7 +37,7 @@ object FileUtil {
      * @param path the filesystem path you need free space information on
      * @return long indicating the bytes available for that path
      */
-    fun determineBytesAvailable(path: String?): Long {
+    fun determineBytesAvailable(path: String): Long {
         return StatFs(path).availableBytes
     }
 
