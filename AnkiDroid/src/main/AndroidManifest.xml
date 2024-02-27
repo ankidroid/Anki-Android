@@ -500,6 +500,7 @@
         <receiver
             android:name="com.ichi2.widget.AnkiDroidWidgetSmall"
             android:label="@string/widget_small"
+            android:enabled="false"
             android:exported="true"
             >
             <intent-filter>
@@ -516,6 +517,7 @@
         <receiver
             android:name="com.ichi2.widget.AddNoteWidget"
             android:label="@string/menu_add_note"
+            android:enabled="false"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
