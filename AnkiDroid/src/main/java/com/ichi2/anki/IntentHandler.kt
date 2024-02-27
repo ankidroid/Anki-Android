@@ -17,8 +17,10 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Message
@@ -46,6 +48,8 @@ import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.trimToLength
+import com.ichi2.widget.AddNoteWidget
+import com.ichi2.widget.AnkiDroidWidgetSmall
 import timber.log.Timber
 import java.io.File
 import kotlin.math.max
@@ -72,6 +76,12 @@ class IntentHandler : Activity() {
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
         val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
+
+        runIfStoragePermissions {
+            enableWidgets(this)
+            NavigationDrawerActivity.enablePostShortcut(this)
+        }
+
         when (getLaunchType(intent)) {
             LaunchType.FILE_IMPORT -> runIfStoragePermissions {
                 handleFileImport(fileIntent, reloadIntent, action)
@@ -261,6 +271,26 @@ class IntentHandler : Activity() {
             // Negating a negative because we want to call specific attention to the fact that it's invalid
             // #6312 - Smart Launcher provided an empty ACTION_VIEW, no point in importing here.
             return !isInvalidViewIntent(intent)
+        }
+
+        /**
+         * Enables the widgets if the storage permission is granted. It enables both the small widget
+         * and the "Add Note" widget by setting their component enabled state to ENABLED.
+         **/
+        fun enableWidgets(context: Context) {
+            val smallWidgetComponentName = ComponentName(context, AnkiDroidWidgetSmall::class.java)
+            context.packageManager.setComponentEnabledSetting(
+                smallWidgetComponentName,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+            )
+
+            val addNoteWidgetComponentName = ComponentName(context, AddNoteWidget::class.java)
+            context.packageManager.setComponentEnabledSetting(
+                addNoteWidgetComponentName,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+            )
         }
 
         @VisibleForTesting

@@ -24,6 +24,8 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.NavigationDrawerActivity
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
 import com.ichi2.annotations.NeedsTest
@@ -68,6 +70,11 @@ class PermissionsActivity : AnkiActivity() {
 
     fun setContinueButtonEnabled(isEnabled: Boolean) {
         findViewById<AppCompatButton>(R.id.continue_button).isEnabled = isEnabled
+        // in case it's not play build
+        if (isEnabled) {
+            IntentHandler.enableWidgets(this)
+            NavigationDrawerActivity.enablePostShortcut(this)
+        }
     }
 
     companion object {
