@@ -42,6 +42,7 @@ import com.ichi2.libanki.stats.graphsRaw
 import com.ichi2.libanki.stats.setGraphPreferencesRaw
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.delay
+import timber.log.Timber
 
 interface PostRequestHandler {
     suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray
@@ -78,7 +79,11 @@ suspend fun handleCollectionPostRequest(methodName: String, bytes: ByteArray): B
     }
 }
 
-suspend fun FragmentActivity.handleUiPostRequest(methodName: String, bytes: ByteArray): ByteArray? {
+suspend fun FragmentActivity?.handleUiPostRequest(methodName: String, bytes: ByteArray): ByteArray? {
+    if (this == null) {
+        Timber.w("ignored UI request '%s' due to screen/app being backgrounded", methodName)
+        return null
+    }
     return when (methodName) {
         "searchInBrowser" -> searchInBrowser(bytes)
         "updateDeckConfigs" -> updateDeckConfigsRaw(bytes)
