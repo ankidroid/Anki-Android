@@ -166,6 +166,11 @@ class IntentHandler : Activity() {
 
     private fun handleFileImport(intent: Intent, reloadIntent: Intent, action: String?) {
         Timber.i("Handling file import")
+        if (!hasShownAppIntro()) {
+            Timber.i("Trying to import a file when the app was not started at all")
+            showThemedToast(this, R.string.app_not_initialized, false)
+            return
+        }
         val importResult = handleFileImport(this, intent)
         // attempt to delete the downloaded deck if it is a shared deck download import
         if (intent.hasExtra(SharedDecksDownloadFragment.EXTRA_IS_SHARED_DOWNLOAD)) {
