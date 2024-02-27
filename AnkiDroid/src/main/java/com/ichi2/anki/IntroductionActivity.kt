@@ -17,6 +17,7 @@
 
 package com.ichi2.anki
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResult
@@ -87,4 +88,8 @@ class IntroductionActivity : AnkiActivity() {
 
         const val INTRODUCTION_SLIDES_SHOWN = "IntroductionSlidesShown"
     }
+}
+
+internal fun Context.hasShownAppIntro(): Boolean {
+    return sharedPrefs().getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
 }

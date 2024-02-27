@@ -599,10 +599,6 @@ open class DeckPicker :
         }
     }
 
-    private fun hasShownAppIntro(): Boolean {
-        return this.sharedPrefs().getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
-    }
-
     /**
      * Check if the current WebView version is older than the last supported version and if it is,
      * inform the developer with a snackbar.
