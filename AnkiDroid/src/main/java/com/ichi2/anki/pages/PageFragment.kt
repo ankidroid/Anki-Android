@@ -88,7 +88,7 @@ abstract class PageFragment : Fragment(R.layout.page_fragment), PostRequestHandl
         } else {
             throw IllegalArgumentException("unhandled request: $uri")
         }
-        return requireActivity().handleUiPostRequest(methodName, bytes)
+        return activity.handleUiPostRequest(methodName, bytes)
             ?: handleCollectionPostRequest(methodName, bytes)
             ?: throw IllegalArgumentException("unhandled method: $methodName")
     }
