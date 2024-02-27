@@ -65,6 +65,7 @@ open class AnkiServer(
             }
             newChunkedResponse(data)
         } catch (exc: Exception) {
+            Timber.w(exc, "buildResponse failure")
             newChunkedResponse(exc.localizedMessage?.encodeToByteArray(), status = Response.Status.INTERNAL_ERROR)
         }
     }
