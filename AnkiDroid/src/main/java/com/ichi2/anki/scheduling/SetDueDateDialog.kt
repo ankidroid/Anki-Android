@@ -43,6 +43,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.libanki.CardId
@@ -81,7 +82,7 @@ class SetDueDateDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext()).create {
-            title(text = CollectionManager.TR.actionsSetDueDate()) // TODO: this is uppercase rather than title case
+            title(text = CollectionManager.TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date))
             positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
             negativeButton(R.string.dialog_cancel)
             neutralButton(R.string.help) {

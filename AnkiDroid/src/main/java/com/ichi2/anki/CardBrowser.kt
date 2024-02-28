@@ -56,8 +56,6 @@ import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListen
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleMultipleCards
-import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -75,9 +73,9 @@ import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
-import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
@@ -97,13 +95,14 @@ import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.updateInBackground
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
-import java.util.function.Consumer
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -787,6 +786,9 @@ open class CardBrowser :
             title = getColUnsafe.undoLabel()
         }
 
+        actionBarMenu?.findItem(R.id.action_reschedule_cards)?.title =
+            TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+
         launchOptions?.let { options ->
             if (options !is CardBrowserLaunchOptions.SystemContextMenu) return@let
             // Fill in the search.
@@ -1203,21 +1205,12 @@ open class CardBrowser :
             return
         }
         if (warnUserIfInNotesOnlyMode()) return
-        val rescheduleDialog: RescheduleDialog = selectedRowIds.run {
-            val consumer = Consumer { newDays: Int -> rescheduleWithoutValidation(this, newDays) }
-            if (size == 1) {
-                rescheduleSingleCard(resources, getColUnsafe.getCard(this[0]), consumer)
-            } else {
-                rescheduleMultipleCards(resources, consumer, size)
-            }
-        }
-        showDialogFragment(rescheduleDialog)
-    }
 
-    @VisibleForTesting
-    fun rescheduleWithoutValidation(selectedCardIds: List<CardId>, newDays: Int) {
         launchCatchingTask {
-            rescheduleCards(selectedCardIds, newDays)
+            val allCardIds = viewModel.queryAllSelectedCardIds()
+            withContext(Dispatchers.Main) {
+                showDialogFragment(SetDueDateDialog.newInstance(allCardIds))
+            }
         }
     }
 
