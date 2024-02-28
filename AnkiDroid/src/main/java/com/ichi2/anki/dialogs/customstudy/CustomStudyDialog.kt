@@ -29,13 +29,9 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.getActionButton
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -53,6 +49,12 @@ import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.HashUtil.hashMapInit
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.cancelable
+import com.ichi2.utils.customView
+import com.ichi2.utils.listItems
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.title
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.json.JSONArray
 import org.json.JSONObject
@@ -100,58 +102,60 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * Build a context menu for custom study
      * @param id the id type of the dialog
      */
-    private fun buildContextMenu(id: Int): MaterialDialog {
+    private fun buildContextMenu(id: Int): AlertDialog {
         val listIds = getListIds(ContextMenuConfiguration.fromInt(id)).map { it.value }.toIntArray()
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
+        val items = getValuesFromKeys(keyValueMap, listIds).toList().map { it as CharSequence }
 
-        return MaterialDialog(requireActivity())
-            .title(R.string.custom_study)
-            .cancelable(true)
-            .listItems(items = getValuesFromKeys(keyValueMap, listIds).toList().map { it as CharSequence }) { _: MaterialDialog, _: Int, charSequence: CharSequence ->
-                when (ContextMenuOption.fromString(resources, charSequence.toString())) {
-                    DECK_OPTIONS -> {
-                        // User asked to permanently change the deck options
-                        val deckId = requireArguments().getLong("did")
-                        val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
-                        requireActivity().startActivity(i)
-                    }
-                    MORE_OPTIONS -> {
-                        // User asked to see all custom study options
-                        val d = CustomStudyDialog(collection, customStudyListener)
-                            .withArguments(
-                                STANDARD,
-                                requireArguments().getLong("did"),
-                                jumpToReviewer
-                            )
-                        customStudyListener?.showDialogFragment(d)
-                    }
-                    STUDY_TAGS -> {
+        return AlertDialog.Builder(requireActivity()).apply {
+            title(R.string.custom_study)
+                .cancelable(true)
+                .listItems(items = items) { _, index ->
+                    when (ContextMenuOption.fromString(resources, items[index].toString())) {
+                        DECK_OPTIONS -> {
+                            // User asked to permanently change the deck options
+                            val deckId = requireArguments().getLong("did")
+                            val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
+                            requireActivity().startActivity(i)
+                        }
+                        MORE_OPTIONS -> {
+                            // User asked to see all custom study options
+                            val d = CustomStudyDialog(collection, customStudyListener)
+                                .withArguments(
+                                    STANDARD,
+                                    requireArguments().getLong("did"),
+                                    jumpToReviewer
+                                )
+                            customStudyListener?.showDialogFragment(d)
+                        }
+                        STUDY_TAGS -> {
                         /*
                          * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
                          * number, it is necessary to collect a list of tags. This case handles the creation
                          * of that Dialog.
                          */
-                        val currentDeck = requireArguments().getLong("did")
+                            val currentDeck = requireArguments().getLong("did")
 
-                        val dialogFragment = TagsDialog().withArguments(
-                            TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
-                            ArrayList(),
-                            ArrayList(collection.tags.byDeck(currentDeck))
-                        )
-                        customStudyListener?.showDialogFragment(dialogFragment)
-                    }
-                    else -> {
-                        // User asked for a standard custom study option
-                        val d = CustomStudyDialog(collection, customStudyListener)
-                            .withArguments(
-                                ContextMenuOption.fromString(resources, charSequence.toString()),
-                                requireArguments().getLong("did"),
-                                jumpToReviewer
+                            val dialogFragment = TagsDialog().withArguments(
+                                TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
+                                ArrayList(),
+                                ArrayList(collection.tags.byDeck(currentDeck))
                             )
-                        customStudyListener?.showDialogFragment(d)
+                            customStudyListener?.showDialogFragment(dialogFragment)
+                        }
+                        else -> {
+                            // User asked for a standard custom study option
+                            val d = CustomStudyDialog(collection, customStudyListener)
+                                .withArguments(
+                                    ContextMenuOption.fromString(resources, items[index].toString()),
+                                    requireArguments().getLong("did"),
+                                    jumpToReviewer
+                                )
+                            customStudyListener?.showDialogFragment(d)
+                        }
                     }
                 }
-            }
+        }.show()
     }
 
     @KotlinCleanup("make this use enum instead of Int")
@@ -167,7 +171,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * Build an input dialog that is used to get a parameter related to custom study from the user
      * @param contextMenuOption the option of the dialog
      */
-    private fun buildInputDialog(contextMenuOption: ContextMenuOption): MaterialDialog {
+    private fun buildInputDialog(contextMenuOption: ContextMenuOption): AlertDialog {
         /*
             TODO: Try to change to a standard input dialog (currently the thing holding us back is having the extra
             TODO: hint line for the number of cards available, and having the pre-filled text selected by default)
@@ -194,99 +198,100 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         // Whether or not to jump straight to the reviewer
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
         // Set material dialog parameters
-        val dialog = MaterialDialog(requireActivity())
-            .customView(view = v, scrollable = true, noVerticalPadding = false, horizontalPadding = true)
-            .positiveButton(R.string.dialog_ok) {
-                // Get the value selected by user
-                val n: Int = try {
-                    editText.text.toString().toInt()
-                } catch (e: Exception) {
-                    Timber.w(e)
-                    // This should never happen because we disable positive button for non-parsable inputs
-                    return@positiveButton
-                }
-                when (contextMenuOption) {
-                    STUDY_NEW -> {
-                        requireActivity().sharedPrefs().edit { putInt("extendNew", n) }
-                        val deck = collection.decks.get(did)!!
-                        deck.put("extendNew", n)
-                        collection.decks.save(deck)
-                        collection.sched.extendLimits(n, 0)
-                        onLimitsExtended(jumpToReviewer)
+        val dialog = AlertDialog.Builder(requireActivity()).apply {
+            customView(view = v, paddingLeft = 64, paddingRight = 64, paddingTop = 32, paddingBottom = 32)
+                .positiveButton(R.string.dialog_ok) {
+                    // Get the value selected by user
+                    val n: Int = try {
+                        editText.text.toString().toInt()
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        // This should never happen because we disable positive button for non-parsable inputs
+                        return@positiveButton
                     }
-                    STUDY_REV -> {
-                        requireActivity().sharedPrefs().edit { putInt("extendRev", n) }
-                        val deck = collection.decks.get(did)!!
-                        deck.put("extendRev", n)
-                        collection.decks.save(deck)
-                        collection.sched.extendLimits(0, n)
-                        onLimitsExtended(jumpToReviewer)
-                    }
-                    STUDY_FORGOT -> {
-                        val ar = JSONArray()
-                        ar.put(0, 1)
-                        createCustomStudySession(
-                            ar,
-                            arrayOf(
-                                String.format(
-                                    Locale.US,
-                                    "rated:%d:1",
-                                    n
+                    when (contextMenuOption) {
+                        STUDY_NEW -> {
+                            requireActivity().sharedPrefs().edit { putInt("extendNew", n) }
+                            val deck = collection.decks.get(did)!!
+                            deck.put("extendNew", n)
+                            collection.decks.save(deck)
+                            collection.sched.extendLimits(n, 0)
+                            onLimitsExtended(jumpToReviewer)
+                        }
+                        STUDY_REV -> {
+                            requireActivity().sharedPrefs().edit { putInt("extendRev", n) }
+                            val deck = collection.decks.get(did)!!
+                            deck.put("extendRev", n)
+                            collection.decks.save(deck)
+                            collection.sched.extendLimits(0, n)
+                            onLimitsExtended(jumpToReviewer)
+                        }
+                        STUDY_FORGOT -> {
+                            val ar = JSONArray()
+                            ar.put(0, 1)
+                            createCustomStudySession(
+                                ar,
+                                arrayOf(
+                                    String.format(
+                                        Locale.US,
+                                        "rated:%d:1",
+                                        n
+                                    ),
+                                    Consts.DYN_MAX_SIZE,
+                                    Consts.DYN_RANDOM
                                 ),
-                                Consts.DYN_MAX_SIZE,
-                                Consts.DYN_RANDOM
-                            ),
-                            false
-                        )
-                    }
-                    STUDY_AHEAD -> {
-                        createCustomStudySession(
-                            JSONArray(),
-                            arrayOf(
-                                String.format(
-                                    Locale.US,
-                                    "prop:due<=%d",
-                                    n
+                                false
+                            )
+                        }
+                        STUDY_AHEAD -> {
+                            createCustomStudySession(
+                                JSONArray(),
+                                arrayOf(
+                                    String.format(
+                                        Locale.US,
+                                        "prop:due<=%d",
+                                        n
+                                    ),
+                                    Consts.DYN_MAX_SIZE,
+                                    Consts.DYN_DUE
                                 ),
-                                Consts.DYN_MAX_SIZE,
-                                Consts.DYN_DUE
-                            ),
-                            true
-                        )
+                                true
+                            )
+                        }
+                        STUDY_RANDOM -> {
+                            createCustomStudySession(JSONArray(), arrayOf("", n, Consts.DYN_RANDOM), true)
+                        }
+                        STUDY_PREVIEW -> {
+                            createCustomStudySession(
+                                JSONArray(),
+                                arrayOf(
+                                    "is:new added:" +
+                                        n,
+                                    Consts.DYN_MAX_SIZE,
+                                    Consts.DYN_OLDEST
+                                ),
+                                false
+                            )
+                        }
+                        STUDY_TAGS,
+                        DECK_OPTIONS,
+                        MORE_OPTIONS -> TODO("This branch has not been covered before")
                     }
-                    STUDY_RANDOM -> {
-                        createCustomStudySession(JSONArray(), arrayOf("", n, Consts.DYN_RANDOM), true)
-                    }
-                    STUDY_PREVIEW -> {
-                        createCustomStudySession(
-                            JSONArray(),
-                            arrayOf(
-                                "is:new added:" +
-                                    n,
-                                Consts.DYN_MAX_SIZE,
-                                Consts.DYN_OLDEST
-                            ),
-                            false
-                        )
-                    }
-                    STUDY_TAGS,
-                    DECK_OPTIONS,
-                    MORE_OPTIONS -> TODO("This branch has not been covered before")
                 }
-            }
-            .negativeButton(R.string.dialog_cancel) {
-                customStudyListener?.dismissAllDialogFragments()
-            }
+                .negativeButton(R.string.dialog_cancel) {
+                    customStudyListener?.dismissAllDialogFragments()
+                }
+        }.create()
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun afterTextChanged(editable: Editable) {
                 try {
                     editText.text.toString().toInt()
-                    dialog.getActionButton(WhichButton.POSITIVE).isEnabled = true
+                    dialog.positiveButton.isEnabled = true
                 } catch (e: Exception) {
                     Timber.w(e)
-                    dialog.getActionButton(WhichButton.POSITIVE).isEnabled = false
+                    dialog.positiveButton.isEnabled = false
                 }
             }
         })
