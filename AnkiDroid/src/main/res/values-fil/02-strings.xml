@@ -203,7 +203,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Walang aplikasyong naka-install sa sistema na maaaring gumawa sa aksyong ito.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Maaring malaki ang litrato ng kamera. Pwede mong i-compress o paliitin ang litrato sa media directory.]]></string>
-    <string name="no_browser_notification">Walang makitang browser, mangyaring bisitahin ang pahina sa web gamit ang PC o mobile: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Kamalian sa pag-lo-load ng pahina: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -321,6 +321,8 @@
     <string name="intro_short_ankidroid_explanation">Mas patitibaying ng card schedule ng Anki ang mga bagay na mahirap tandaan, at pananatilihin nito ang mga bagay na madali mong matandaan.</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Magsimula</string>
     <string name="intro_sync_from_ankiweb">Mag-sync mula sa AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">Naka-login na</string>
     <!-- Deck Creation -->
     <string name="deck_created">Nailikha ang deck</string>

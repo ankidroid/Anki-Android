@@ -209,7 +209,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">System nie ma zainstalowanej aplikacji, która może wykonać tę czynność.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Zdjęcia z kamery mogą mieć duży rozmiar. Możesz skompresować oraz zmienić rozmiar obrazów w katalogu mediów]]></string>
-    <string name="no_browser_notification">Nie znaleziono przeglądarki, odwiedź stronę przez komputer lub telefon komórkowy: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Błąd ładowania strony: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -329,6 +329,8 @@
     <string name="intro_short_ankidroid_explanation">Algorytm Anki oszczędza czas poprzez  umacnianie najsłabszych wspomnień i pielęgnowanie najsilniejszych</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Rozpocznij</string>
     <string name="intro_sync_from_ankiweb">Synchronizacja z AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">Już zalogowany!</string>
     <!-- Deck Creation -->
     <string name="deck_created">Utworzono talię</string>

@@ -203,7 +203,7 @@ Context | Request Context    [1]</string>
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">시스템에 설치된 이 액션을 실행할 수 있는 앱이 없습니다.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[카메라 사진은 클 수 있습니다. 미디어 디렉토리에 있는 이미지를 압축하거나 크기를 조장할 수 있습니다.]]></string>
-    <string name="no_browser_notification">브라우저를 찾을 수 없습니다. 컴퓨터 또는 모바일로 웹 페이지를 방문하세요:</string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">페이지 로드 오류: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -320,6 +320,8 @@ Context | Request Context    [1]</string>
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
     <string name="deck_created">Deck created</string>

@@ -203,7 +203,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">ಈ ಕ್ರಿಯೆಯನ್ನು ನಿರ್ವಹಿಸಬಲ್ಲ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಸಿಸ್ಟಮ್ ಸ್ಥಾಪಿಸಿಲ್ಲ.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ಕ್ಯಾಮೆರಾ ಚಿತ್ರಗಳು ದೊಡ್ಡದಾಗಿರಬಹುದು. ಮಾಧ್ಯಮ ಡೈರೆಕ್ಟರಿಯಲ್ಲಿ ಚಿತ್ರಗಳನ್ನು ಕುಗ್ಗಿಸಲು ಮತ್ತು ಮರುಗಾತ್ರಗೊಳಿಸಲು ನೀವು ಬಯಸಬಹುದು]]></string>
-    <string name="no_browser_notification">ಯಾವುದೇ ಬ್ರೌಸರ್ ಕಂಡುಬಂದಿಲ್ಲ ， ದಯವಿಟ್ಟು ಪಿಸಿ ಅಥವಾ ಮೊಬೈಲ್ ಮೂಲಕ ವೆಬ್ ಪುಟಕ್ಕೆ ಭೇಟಿ ನೀಡಿ: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">ಪುಟವನ್ನು ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ:%s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -321,6 +321,8 @@
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
     <string name="deck_created">Deck created</string>

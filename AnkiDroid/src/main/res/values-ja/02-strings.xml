@@ -200,7 +200,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[撮影画像のデータ量が多い可能性があります。メディアディレクトリ内の画像を圧縮してサイズを変更したほうがよいかもしれません。]]></string>
-    <string name="no_browser_notification">ブラウザが見つかりません。PCまたはスマートフォンのブラウザで次のウェブページをご覧ください： </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">ページの読み込みエラー: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -317,6 +317,8 @@
     <string name="intro_short_ankidroid_explanation">Ankiは、記憶を定着させ強化するのに適したスケジュールでカードを表示する間隔反復学習システムです。AnkiDroidでAnkiの効率的な学習をお楽しみください</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">開始する</string>
     <string name="intro_sync_from_ankiweb">AnkiWebから同期</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">すでにログイン済みです</string>
     <!-- Deck Creation -->
     <string name="deck_created">デッキを作成しました</string>

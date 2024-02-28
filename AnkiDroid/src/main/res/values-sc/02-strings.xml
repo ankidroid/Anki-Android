@@ -206,7 +206,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Su sistema non tenet un\'aplicatzione installada chi potzat fàghere custa atzione.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Sas immàgines de sa fotocàmera diant pòdere resurtare mannas. Dias pòdere chèrrere a las cumprimire e mudare de mannària in sa cartella de sos documentos multimediales]]></string>
-    <string name="no_browser_notification">Perunu navigadore agatadu，bìsita sa pàgina dae unu pc o dae unu dispositivu mòbile:</string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Faddina de carrigamentu de sa pàgina: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -324,6 +324,8 @@
     <string name="intro_short_ankidroid_explanation">Su pranificadore de cartas de Anki rispàrmiat tempus afortiende sos ammentos prus dèbiles tuos e preservende sos prus fortes</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Incumintza</string>
     <string name="intro_sync_from_ankiweb">Sincroniza dae AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">Giai intradu</string>
     <!-- Deck Creation -->
     <string name="deck_created">Matzu creadu</string>

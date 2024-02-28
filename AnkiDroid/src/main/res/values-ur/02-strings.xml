@@ -204,7 +204,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">سسٹم میں کوئی ایپ انسٹال نہیں ہے جو اس کارروائی کو انجام دے سکے۔</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[کیمرے کی تصاویر بڑی ہو سکتی ہیں۔ آپ میڈیا ڈائرکٹری میں تصاویر کو سکیڑنا اور ان کا سائز تبدیل کرنا چاہتے ہیں۔]]></string>
-    <string name="no_browser_notification">کوئی براؤزر نہیں ملا، براہ کرم پی سی یا موبائل کے ذریعے ویب صفحہ دیکھیں:</string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">صفحہ لوڈ کرنے میں خرابی: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -322,6 +322,8 @@
     <string name="intro_short_ankidroid_explanation">انکی کا کارڈ شیڈیولر آپ کی کمزور یادوں کو مضبوط بنا کر اور آپ کی مضبوط ترین یادوں کو محفوظ کرکے وقت بچاتا ہے</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">شروع کرنے کے</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb سے مطابقت پذیری کریں۔</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">پہلے سے لاگ ان</string>
     <!-- Deck Creation -->
     <string name="deck_created">ڈیک بنایا گیا</string>
