@@ -73,6 +73,8 @@ enum class ViewerCommand(val resourceId: Int) {
     SHOW_HINT(R.string.gesture_show_hint),
     SHOW_ALL_HINTS(R.string.gesture_show_all_hints),
     ADD_NOTE(R.string.menu_add_note),
+
+    // TODO: CollectionManager.TR.actionsSetDueDate()
     RESCHEDULE_NOTE(R.string.card_editor_reschedule_card),
     USER_ACTION_1(R.string.user_action_1),
     USER_ACTION_2(R.string.user_action_2),

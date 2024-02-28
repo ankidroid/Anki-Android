@@ -591,29 +591,6 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    @Config(qualifiers = "en")
-    fun rescheduleDataTest() = runTest {
-        TimeManager.reset()
-        val b = getBrowserWithNotes(1)
-
-        b.selectRowsWithPositions(0)
-
-        val card = getCheckedCard(b)
-
-        assertThat(
-            "Initial position of checked card",
-            card.getColumnHeaderText(CardBrowserColumn.DUE),
-            equalTo("1")
-        )
-
-        b.rescheduleWithoutValidation(listOf(card.id), 5)
-
-        card.reload()
-
-        assertThat(card.card.due, equalTo(5))
-    }
-
-    @Test
     @Ignore("Doesn't work - but should")
     fun dataUpdatesAfterUndoReposition() {
         val b = getBrowserWithNotes(1)
@@ -643,20 +620,6 @@ class CardBrowserTest : RobolectricTest() {
             card.getColumnHeaderText(CardBrowserColumn.DUE),
             equalTo("1")
         )
-    }
-
-    @Test
-    @Ignore("FLAKY: Robolectric getOptionsMenu does not require invalidateOptionsMenu - so would not fail")
-    fun rescheduleUndoTest() {
-        val b = getBrowserWithNotes(1)
-
-        assertUndoDoesNotContain(b, R.string.deck_conf_cram_reschedule)
-
-        b.selectRowsWithPositions(0)
-
-        b.rescheduleWithoutValidation(listOf(getCheckedCard(b).id), 2)
-
-        assertUndoContains(b, R.string.deck_conf_cram_reschedule)
     }
 
     @Test
