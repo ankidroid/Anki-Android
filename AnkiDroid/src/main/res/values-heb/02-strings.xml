@@ -209,7 +209,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">במערכת לא מותקן יישומון שיכול לבצע את הפעולה הזאת.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[תמונות המצלמה גדולות מדי. אולי עדיף לך לדחוס ולשנות את גודל התמונות בתיקיית המדיה]]></string>
-    <string name="no_browser_notification">לא נמצא דפדפן, נא לבקר באתר במחשב או בנייד: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">טעינת העמוד נכשלה: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -329,6 +329,8 @@
     <string name="intro_short_ankidroid_explanation">מתזמן הכרטיסים של אנקי חוסך זמן על ידי חיזוק הזיכרונות החלשים ביותר שלך ושימור החזקים ביותר שלך</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">התחל</string>
     <string name="intro_sync_from_ankiweb">סנכרון מ-AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">כבר מחובר</string>
     <!-- Deck Creation -->
     <string name="deck_created">חבילה שנוצרה</string>

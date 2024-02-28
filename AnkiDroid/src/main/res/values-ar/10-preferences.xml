@@ -279,6 +279,7 @@
     <string name="binding_add_axis">إضافة وحدة عصا التحكم أو جهاز التحرك/حركة</string>
     <string name="axis_picker_move_joystick">نقل وحدة عصا التحكم أو جهاز التحرك/حركة</string>
     <string name="user_actions" maxLength="41">إجراءات المستخدم</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
     <string name="user_action_1" maxLength="41">إجراء رقم 1</string>
     <string name="user_action_2" maxLength="41">إجراء رقم 2</string>
     <string name="user_action_3" maxLength="41">إجراء رقم 3</string>
