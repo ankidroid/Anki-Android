@@ -2043,7 +2043,7 @@ abstract class AbstractFlashcardViewer :
 
     /** #6141 - blocks clicking links from executing "touch" gestures.
      * COULD_BE_BETTER: Make base class static and move this out of the CardViewer  */
-    internal inner class LinkDetectingGestureDetector() :
+    internal inner class LinkDetectingGestureDetector :
         MyGestureDetector(), ShakeDetector.Listener {
         private var shakeDetector: ShakeDetector? = null
 

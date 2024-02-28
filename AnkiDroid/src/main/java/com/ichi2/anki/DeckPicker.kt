@@ -136,7 +136,6 @@ import timber.log.Timber
 import java.io.File
 import java.lang.Runnable
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
@@ -1225,7 +1224,7 @@ open class DeckPicker :
         }
     }
 
-    @Suppress("DEPRECATION") // onBackPressed
+    // onBackPressed
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val preferences = baseContext.sharedPrefs()
@@ -1852,7 +1851,6 @@ open class DeckPicker :
             }
             negativeButton(R.string.dialog_cancel)
             if (AdaptionUtil.hasWebBrowser(this@DeckPicker)) {
-                @Suppress("DEPRECATION")
                 neutralButton(text = getColUnsafe.tr.schedulingUpdateMoreInfoButton()) {
                     this@DeckPicker.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
                 }
@@ -2348,7 +2346,6 @@ open class DeckPicker :
         MigrationService.start(baseContext)
     }
 
-    @OptIn(ExperimentalTime::class)
     private fun launchShowingHidingEssentialFileMigrationProgressDialog() = lifecycleScope.launch {
         while (true) {
             MigrationService.flowOfProgress

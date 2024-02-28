@@ -24,7 +24,7 @@ import java.util.*
  * Representation of the contents of a note in AnkiDroid.
  */
 @Suppress("unused")
-public class NoteInfo {
+class NoteInfo {
     private val id: Long
     private val fields: Array<String>
     private val tags: Set<String>
@@ -61,29 +61,29 @@ public class NoteInfo {
      * Clone a NoteInfo object
      * @param parent the object to clone
      */
-    public constructor(parent: NoteInfo) {
+    constructor(parent: NoteInfo) {
         id = parent.id
         fields = parent.fields.clone()
         tags = HashSet(parent.tags)
     }
 
     /** Note ID  */
-    public fun getId(): Long {
+    fun getId(): Long {
         return id
     }
 
     /** The array of fields  */
-    public fun getFields(): Array<String> {
+    fun getFields(): Array<String> {
         return fields
     }
 
     /** The set of tags  */
-    public fun getTags(): Set<String> {
+    fun getTags(): Set<String> {
         return tags
     }
 
     /** The first field  */
-    public fun getKey(): String {
+    fun getKey(): String {
         return getFields()[0]
     }
 }

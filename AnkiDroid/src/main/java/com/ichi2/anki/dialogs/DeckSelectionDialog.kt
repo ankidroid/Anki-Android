@@ -71,7 +71,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         isCancelable = true
     }
 
-    @Suppress("Deprecation") // Material dialog neutral button deprecation
+    // Material dialog neutral button deprecation
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView = LayoutInflater.from(activity)
             .inflate(R.layout.deck_picker_dialog, null, false)
