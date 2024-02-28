@@ -18,6 +18,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.PowerManager
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -78,3 +79,6 @@ fun Fragment.openUrl(uri: Uri) {
     }
     startActivity(Intent(Intent.ACTION_VIEW, uri))
 }
+
+fun Fragment.openUrl(@StringRes stringRes: Int) =
+    openUrl(Uri.parse(requireContext().getString(stringRes)))
