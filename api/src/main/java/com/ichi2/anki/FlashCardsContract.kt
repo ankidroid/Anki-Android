@@ -85,9 +85,9 @@ import com.ichi2.anki.api.BuildConfig
  * --------------------------------------------------------------------------------------------------------------------
  * ```
  */
-object FlashCardsContract {
-    const val AUTHORITY: String = BuildConfig.AUTHORITY
-    const val READ_WRITE_PERMISSION: String = BuildConfig.READ_WRITE_PERMISSION
+public object FlashCardsContract {
+    public const val AUTHORITY: String = BuildConfig.AUTHORITY
+    public const val READ_WRITE_PERMISSION: String = BuildConfig.READ_WRITE_PERMISSION
 
     /**
      * A content:// style uri to the authority for the flash card provider

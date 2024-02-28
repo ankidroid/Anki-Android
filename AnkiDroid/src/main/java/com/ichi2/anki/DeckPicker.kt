@@ -1224,7 +1224,6 @@ open class DeckPicker :
         }
     }
 
-    // onBackPressed
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val preferences = baseContext.sharedPrefs()
