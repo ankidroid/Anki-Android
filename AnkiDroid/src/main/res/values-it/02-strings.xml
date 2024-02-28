@@ -203,7 +203,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Il sistema non ha un\'applicazione installata che può eseguire questa azione.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Le immagini della fotocamera possono essere grandi. Dovrai forse comprimere e ridimensionare le immagini nella directory multimediale]]></string>
-    <string name="no_browser_notification">Nessun browser trovato, visita la pagina web tramite pc o cellulare: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Errore nel caricamento della pagina: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -320,6 +320,8 @@
     <string name="intro_short_ankidroid_explanation">L\'algoritmo delle carte di Anki ti fa risparmiare tempo focalizzandosi su ciò che ricordi meno e preservando ciò che già ricordi</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Per iniziare</string>
     <string name="intro_sync_from_ankiweb">Sincronizza da AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">Già loggato</string>
     <!-- Deck Creation -->
     <string name="deck_created">Mazzo creato</string>
