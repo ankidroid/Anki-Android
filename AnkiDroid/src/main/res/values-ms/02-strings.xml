@@ -200,7 +200,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Sistem tidak mempunyai aplikasi dipasang yang boleh melakukan tindakan ini.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Gambar kamera mungkin terlalu besar. Anda mungkin mahu memampatkan dan ubah saiz gambar dalam direktori media]]></string>
-    <string name="no_browser_notification">Tiada pelayar ditemui，sila lawat laman web melalui PC atau telefon: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Ralat memuatkan halaman: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -317,6 +317,8 @@
     <string name="intro_short_ankidroid_explanation">Penjadual kad Anki jimat masa dengan memperkasakan memori paling lemah dan memelihara memori paling kuat</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Mari Mulakan</string>
     <string name="intro_sync_from_ankiweb">Segerakkan dari AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">Telah log masuk</string>
     <!-- Deck Creation -->
     <string name="deck_created">Dek dicipta</string>

@@ -200,7 +200,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">此系統不包含能執行此操作的應用程式。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相機圖像可能很龐大。你可能希望壓縮和重設媒體資料夾中的圖像大小]]></string>
-    <string name="no_browser_notification">無瀏覽器已找到，請使用PC或行動裝置訪問網頁： </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">載入頁面時發生錯誤：%s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -317,6 +317,8 @@
     <string name="intro_short_ankidroid_explanation">Anki的卡片調度器通過增強你最薄弱的記憶和保存你最強大的記憶來節省時間</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">快速入門</string>
     <string name="intro_sync_from_ankiweb">從AnkiWeb同步</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">已登入</string>
     <!-- Deck Creation -->
     <string name="deck_created">已創建牌組</string>

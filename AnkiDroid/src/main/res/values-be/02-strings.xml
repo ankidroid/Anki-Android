@@ -209,7 +209,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">У сістэме адсутнічае ўсталяваная праграма, якая можа выканаць гэта дзеянне.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Відарысы камеры могуць быць надта вялікімі. Магчыма, што вы захочаце сціснуць або змяніць іх памер у адпаведным каталогу]]></string>
-    <string name="no_browser_notification">Браўзер не знойдзены. Вы можаце наведаць вэб-старонку з камп\'ютара або мабільнай прылады: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Памылка загрузкі старонкі: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -329,6 +329,8 @@
     <string name="intro_short_ankidroid_explanation">Запланаваныя карткі Anki ашчаджаюць час узмацняючы вашу ненадзейную памяць і трымаюць яе ў тонусе</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Пачаць працу</string>
     <string name="intro_sync_from_ankiweb">Сінхранізаваць з AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">Вы ўжо ўвайшлі</string>
     <!-- Deck Creation -->
     <string name="deck_created">Створаная калода</string>

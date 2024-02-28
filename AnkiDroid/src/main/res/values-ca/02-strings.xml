@@ -203,7 +203,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">El sistema no té instal·lada cap aplicació que pugui realitzar aquesta acció.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Les imatges de la càmera poden ser grans. És possible que vulgueu comprimir i canviar la mida de les imatges al directori multimèdia]]></string>
-    <string name="no_browser_notification">No s\'ha trobat cap navegador, visiteu la pàgina web amb un ordinador o un mòbil:</string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Error carregant la pàgina: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -321,6 +321,8 @@
     <string name="intro_short_ankidroid_explanation">El planificador de targetes de l\'Anki estalvia temps reforçant els vostres records més febles i conservant els vostres més forts</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Comença</string>
     <string name="intro_sync_from_ankiweb">Sincronitza-ho amb AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
     <string name="already_logged_in">Ja heu iniciat la sessió</string>
     <!-- Deck Creation -->
     <string name="deck_created">S\'ha generat un paquet</string>
