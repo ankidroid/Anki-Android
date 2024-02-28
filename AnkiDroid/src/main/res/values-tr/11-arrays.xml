@@ -60,7 +60,7 @@
     <string name="cram_deck_conf_order_latest_added_first">En son eklenenler ilk</string>
     <string name="cram_deck_conf_order_relative_overdueness">Görece vadesi geçmişlik</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Mecut desteyi kullan</string>
+    <string name="add_to_deck_use_current_deck">Geçerli desteyi kullan</string>
     <string name="add_to_deck_decide_by_note_type">Not türüne göre karar ver</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Sistemi izle</string>
@@ -85,18 +85,18 @@
     <string name="answer_easy">Kolay cevapla</string>
     <string name="gesture_play">Medyayı oynat</string>
     <string name="gesture_abort_learning">Öğrenmeyi durdur</string>
-    <string name="gesture_flag_red">Kırmızı bayrağı etkinleştir</string>
-    <string name="gesture_flag_orange">Turuncu bayrağı etkinleştir</string>
-    <string name="gesture_flag_green">Yeşil bayrağı etkinleştir</string>
-    <string name="gesture_flag_blue">Mavi bayrağı etkinleştir</string>
-    <string name="gesture_flag_pink">Pembe Bayrağı Etkinleştir</string>
-    <string name="gesture_flag_turquoise">Turkuaz Bayrağı Etkinleştir</string>
-    <string name="gesture_flag_purple">Mor Bayrağı Etkinleştir</string>
-    <string name="gesture_flag_remove">Bayrağı sil</string>
+    <string name="gesture_flag_red">Kırmızı Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_orange">Turuncu Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_green">Yeşil Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_blue">Mavi Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_pink">Pembe Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_turquoise">Turkuaz Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_purple">Mor Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_remove">Bayrağı Kaldır</string>
     <string name="gesture_page_up">Yukarı</string>
     <string name="gesture_page_down">Aşağı</string>
     <string name="gesture_abort_sync">Öğrenmeyi ve senkronizasyonu iptal et</string>
-    <string name="gesture_toggle_whiteboard">Yazı tahtasını etkinleştir</string>
+    <string name="gesture_toggle_whiteboard">Yazı Tahtasını Aç/Kapat</string>
     <string name="gesture_show_hint">İpucu Göster</string>
     <string name="gesture_show_all_hints">Tüm İpuçlarını Göster</string>
     <string name="record_voice">Ses kaydet</string>

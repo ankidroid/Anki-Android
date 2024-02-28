@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Tür:</string>
     <string name="CardEditorTags">Etiketler: %1$s</string>
     <string name="CardEditorCards">Kartlar: %1$s</string>
-    <string name="edit_occlusions">Örtüleri Değiştir</string>
+    <string name="edit_occlusions">Örtüleri Düzenle</string>
     <string name="tag_name">Etiket adı</string>
     <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
     <string name="add_tag">Etiket ekle</string>
@@ -65,7 +65,7 @@
     <string name="enable_stylus">Kalem modunu aç</string>
     <string name="disable_stylus">Kalem kodunu kapat</string>
     <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
-    <string name="disable_whiteboard">Yazı tahtasını devredışı bırak</string>
+    <string name="disable_whiteboard">Yazı tahtasını devre dışı bırak</string>
     <string name="show_whiteboard">Yazı tahtasını göster</string>
     <string name="hide_whiteboard">Yazı tahtasını gizle</string>
     <string name="clear_whiteboard">Yazı tahtasını temizle</string>
