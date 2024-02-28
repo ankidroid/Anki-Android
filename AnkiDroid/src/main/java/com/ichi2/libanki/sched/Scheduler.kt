@@ -21,7 +21,9 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import anki.config.ConfigKey
 import anki.config.OptionalStringConfigKey
+import anki.config.optionalStringConfigKey
 import anki.frontend.SchedulingStatesWithContext
 import anki.i18n.FormatTimespanRequest
 import anki.scheduler.*
@@ -38,11 +40,30 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.EpochSeconds
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.Utils
+import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import kotlin.math.ceil
 import kotlin.math.max
+
+/**
+ * A parameter for [Scheduler.setDueDate]
+ * This contains 3 elements:
+ * * start (int)
+ * * end (int - optional)
+ * * change interval (optional - represented as a "!" suffix)
+ *
+ * examples:
+ * ```
+ * 0 = today
+ * 1! = tomorrow + change interval to 1
+ * 3-7 = random choice of 3-7 days
+ * ```
+ */
+@JvmInline
+@NotInLibAnki
+value class SetDueDateDays(val value: String)
 
 data class CurrentQueueState(
     val topCard: Card,
@@ -303,6 +324,29 @@ open class Scheduler(val col: Collection) {
      */
     open fun reschedCards(ids: List<CardId>, imin: Int, imax: Int): OpChanges {
         return col.backend.setDueDate(ids, "$imin-$imax!", OptionalStringConfigKey.getDefaultInstance())
+    }
+
+    /**
+     * Set cards to be due in [days], turning them into review cards if necessary.
+     * `days` can be of the form '5' or '5..7'. See [SetDueDateDays]
+     * If `config_key` is provided, provided days will be remembered in config.
+     */
+    fun setDueDate(cardIds: List<CardId>, days: SetDueDateDays, configKey: ConfigKey.String? = null): OpChanges {
+        val key: OptionalStringConfigKey?
+        if (configKey != null) {
+            key = optionalStringConfigKey { this.key = configKey }
+        } else {
+            key = null
+        }
+
+        Timber.i("updating due date of %d card(s) to '%s'", cardIds.size, days.value)
+
+        return col.backend.setDueDate(
+            cardIds = cardIds,
+            days = days.value,
+            // this value is optional; the auto-generated typing is wrong
+            configKey = key ?: OptionalStringConfigKey.getDefaultInstance()
+        )
     }
 
     /**
