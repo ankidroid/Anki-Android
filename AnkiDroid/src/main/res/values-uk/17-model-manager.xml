@@ -74,7 +74,7 @@
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Клонувати: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Введіть шаблон, який використовуватиме переглядач карток для відображення ваших карток. Використовуйте це для відображення стислішої відповіді.\n\nШаблон передньої сторони\n\"Столицею {{Country}} є:\"\nможна стиснути в переглядачі карток до\n\"Столиця:{{Country}}\"</string>
+    <string name="card_template_browser_appearance_summary">Введіть шаблон, який використовуватиме переглядач карток для відображення ваших карток. Використовуйте це для відображення стислішої відповіді.\n\nШаблон передньої сторони\n\"Столицею {{Країна}} є:\"\nможна стиснути в переглядачі карток до\n\"Столиця:{{Країна}}\"</string>
     <string name="card_template_browser_appearance_question_format">Формат запитання</string>
     <string name="card_template_browser_appearance_answer_format">Формат відповіді</string>
     <string name="card_template_browser_appearance_restore_default_dialog">Відновити значення за замовчуванням?</string>
