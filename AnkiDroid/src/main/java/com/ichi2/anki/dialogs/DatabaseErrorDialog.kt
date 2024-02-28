@@ -202,8 +202,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 val path = CollectionHelper.getCollectionPath(requireContext())
                 backups = BackupManager.getBackups(File(path))
                 if (backups.isEmpty()) {
-                    dialog.title(R.string.backup_restore)
-                        .contentNullable(message)
+                    alertDialog.title(R.string.backup_restore)
+                        .title(text = message)
                         .positiveButton(R.string.dialog_ok) {
                             (activity as DeckPicker?)
                                 ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
@@ -298,8 +298,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_FULL_SYNC_FROM_SERVER -> {
                 // Allow user to do a full-sync from the server
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.show {
+                    title(R.string.backup_full_sync_from_server)
+                    message(text = message)
                     positiveButton(R.string.dialog_positive_overwrite) {
                         (activity as DeckPicker).sync(ConflictResolution.FULL_DOWNLOAD)
                         dismissAllDialogFragments()
@@ -309,8 +310,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_DB_LOCKED -> {
                 // If the database is locked, all we can do is ask the user to exit.
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.show {
+                    title(R.string.database_locked_title)
+                    message(text = message)
                     positiveButton(R.string.close) {
                         closeCollectionAndFinish()
                     }
@@ -346,8 +348,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_DISK_FULL -> {
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.show {
+                    title(R.string.storage_full_title)
+                    message(text = message)
                     positiveButton(R.string.close) {
                         closeCollectionAndFinish()
                     }
