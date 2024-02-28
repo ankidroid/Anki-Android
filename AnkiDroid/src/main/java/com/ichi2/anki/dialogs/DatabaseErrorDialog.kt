@@ -149,10 +149,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     repairValues[i] = values[i]
                     i++
                 }
-                dialog.show {
-                    icon(R.drawable.ic_warning)
+                alertDialog.show {
+                    title(R.string.error_handling_title)
+                    setIcon(R.drawable.ic_warning)
                     negativeButton(R.string.dialog_cancel)
-                    listItems(items = titles.toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, _: CharSequence ->
+                    listItems(items = titles.toList().map { it as CharSequence }) { _, index ->
                         when (repairValues[index]) {
                             0 -> {
                                 ActivityCompat.recreate(activity as DeckPicker)
