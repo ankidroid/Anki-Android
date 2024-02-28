@@ -23,7 +23,8 @@ package com.ichi2.libanki.utils
     AnnotationTarget.EXPRESSION,
     AnnotationTarget.FIELD,
     AnnotationTarget.PROPERTY,
-    AnnotationTarget.LOCAL_VARIABLE
+    AnnotationTarget.LOCAL_VARIABLE,
+    AnnotationTarget.TYPEALIAS
 )
 @Retention(AnnotationRetention.SOURCE)
 annotation class NotInLibAnki
