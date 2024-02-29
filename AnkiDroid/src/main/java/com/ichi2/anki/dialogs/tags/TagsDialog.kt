@@ -239,7 +239,7 @@ class TagsDialog : AnalyticsDialogFragment {
                 return true
             }
         })
-        val checkAllItem = toolbar.menu.findItem(R.id.tags_dialog_action_select_all)
+        val checkAllItem = toolbar.menu.findItem(R.id.tags_dialog_actionSelectAll)
         checkAllItem.setOnMenuItemClickListener {
             val didChange = tags!!.toggleAllCheckedStatuses()
             if (didChange) {

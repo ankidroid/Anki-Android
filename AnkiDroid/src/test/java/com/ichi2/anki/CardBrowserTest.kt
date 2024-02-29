@@ -99,14 +99,14 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun selectAllIsNotVisibleOnceCalled() {
         val browser = browserWithMultipleNotes
-        selectMenuItem(browser, R.id.action_select_all)
+        selectMenuItem(browser, R.id.actionSelectAll)
         assertThat(browser.isShowingSelectAll, equalTo(false))
     }
 
     @Test
     fun selectNoneIsVisibleOnceSelectAllCalled() {
         val browser = browserWithMultipleNotes
-        selectMenuItem(browser, R.id.action_select_all)
+        selectMenuItem(browser, R.id.actionSelectAll)
         assertThat(browser.isShowingSelectNone, equalTo(true))
     }
 
@@ -136,14 +136,14 @@ class CardBrowserTest : RobolectricTest() {
     @Flaky(os = OS.WINDOWS, "Expected `true`, got `false`")
     fun browserIsInMultiSelectModeWhenSelectingAll() {
         val browser = browserWithMultipleNotes
-        selectMenuItem(browser, R.id.action_select_all)
+        selectMenuItem(browser, R.id.actionSelectAll)
         assertThat(browser.viewModel.isInMultiSelectMode, equalTo(true))
     }
 
     @Test
     fun browserIsNotInMultiSelectModeWhenSelectingNone() {
         val browser = browserWithMultipleNotes
-        selectMenuItem(browser, R.id.action_select_all)
+        selectMenuItem(browser, R.id.actionSelectAll)
         selectMenuItem(browser, R.id.action_select_none)
         assertThat(browser.viewModel.isInMultiSelectMode, equalTo(false))
     }
@@ -872,11 +872,11 @@ class CardBrowserTest : RobolectricTest() {
         advanceRobolectricUiLooper()
     }
 
-    private fun selectMenuItem(browser: CardBrowser, action_select_all: Int) {
+    private fun selectMenuItem(browser: CardBrowser, actionSelectAll: Int) {
         Timber.d("Selecting menu item")
         // select seems to run an infinite loop :/
         val shadowActivity = shadowOf(browser)
-        shadowActivity.clickMenuItem(action_select_all)
+        shadowActivity.clickMenuItem(actionSelectAll)
         advanceRobolectricUiLooper()
     }
 
