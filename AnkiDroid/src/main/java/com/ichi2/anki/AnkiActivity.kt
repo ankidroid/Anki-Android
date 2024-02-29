@@ -43,6 +43,7 @@ import com.google.android.material.color.MaterialColors
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DialogHandler
