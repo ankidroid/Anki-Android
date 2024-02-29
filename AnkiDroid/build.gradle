@@ -261,6 +261,7 @@ tasks.register('installGitHook', Copy) {
     into { new File(rootProject.rootDir, '.git/hooks') }
     fileMode 0755
 }
+// to run manually: `./gradlew installGitHook`
 tasks.named('preBuild').configure { dependsOn('installGitHook') }
 
 // Issue 11078 - some emulators run, but run zero tests, and still report success
