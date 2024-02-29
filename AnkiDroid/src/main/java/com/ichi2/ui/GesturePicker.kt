@@ -27,6 +27,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.GestureListener
+import com.ichi2.anki.dialogs.WarningDisplay
 import com.ichi2.utils.UiUtil.setSelectedValue
 import timber.log.Timber
 
@@ -38,10 +39,12 @@ import timber.log.Timber
  */
 // This class exists as elements resized when adding in the spinner to GestureDisplay.kt
 class GesturePicker(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
-    ConstraintLayout(ctx, attributeSet, defStyleAttr) {
+    ConstraintLayout(ctx, attributeSet, defStyleAttr),
+    WarningDisplay {
 
     private val gestureSpinner: Spinner
     private val gestureDisplay: GestureDisplay
+    override val warningTextView: FixedTextView
 
     private var onGestureListener: GestureListener? = null
 
@@ -50,6 +53,7 @@ class GesturePicker(ctx: Context, attributeSet: AttributeSet? = null, defStyleAt
         inflater.inflate(R.layout.gesture_picker, this)
         gestureDisplay = findViewById(R.id.gestureDisplay)
         gestureSpinner = findViewById(R.id.spinner_gesture)
+        warningTextView = findViewById(R.id.warning)
         gestureDisplay.setGestureChangedListener(this::onGesture)
         gestureSpinner.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, allGestures())
         gestureSpinner.onItemSelectedListener = InnerSpinner()
@@ -79,7 +83,7 @@ class GesturePicker(ctx: Context, attributeSet: AttributeSet? = null, defStyleAt
         onGestureListener = listener
     }
 
-    fun allGestures(): List<GestureWrapper> {
+    private fun allGestures(): List<GestureWrapper> {
         return (listOf(null) + availableGestures()).map(this::GestureWrapper).toList()
     }
 

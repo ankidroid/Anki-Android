@@ -22,6 +22,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.WarningDisplay
 import com.ichi2.anki.reviewer.Binding
 import timber.log.Timber
 
@@ -31,8 +32,10 @@ typealias KeyCode = Int
  * Square dialog which allows a user to select a [Binding] for a key press
  * This does not yet support bluetooth headsets.
  */
-class KeyPicker(val rootLayout: View) {
+class KeyPicker(val rootLayout: View) : WarningDisplay {
     private val textView: TextView = rootLayout.findViewById(R.id.key_picker_selected_key)
+
+    override val warningTextView: FixedTextView = rootLayout.findViewById(R.id.warning)
 
     private val context: Context get() = rootLayout.context
 
