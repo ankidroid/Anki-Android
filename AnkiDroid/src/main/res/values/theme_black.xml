@@ -100,8 +100,6 @@
         <!-- Introduction -->
         <item name="introductionLogoTransparent">#55111111</item>
 
-        <!-- Browser Options Dialog-->
-        <item name="colorSurface">@color/theme_black_primary</item>
 
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/theme_black_primary_light</item>
