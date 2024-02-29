@@ -102,7 +102,7 @@
 
     <item
         ankidroid:showAsAction="ifRoom"
-        android:id="@+id/actionSelectAll"
+        android:id="@+id/action_select_all"
         android:title="@string/card_browser_select_all"
         android:icon="@drawable/ic_select_all_white"/>
 

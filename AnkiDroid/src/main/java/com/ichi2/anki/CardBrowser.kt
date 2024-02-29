@@ -880,7 +880,7 @@ open class CardBrowser :
                 )
             }
         }
-        actionBarMenu!!.findItem(R.id.actionSelectAll).isVisible = !hasSelectedAllCards()
+        actionBarMenu!!.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
         // Note: Theoretically should not happen, as this should kick us back to the menu
         actionBarMenu!!.findItem(R.id.action_select_none).isVisible =
             viewModel.hasSelectedAnyRows()
@@ -1087,7 +1087,7 @@ open class CardBrowser :
                 viewModel.selectNone()
                 return true
             }
-            R.id.actionSelectAll -> {
+            R.id.action_select_all -> {
                 viewModel.selectAll()
                 return true
             }
@@ -1862,7 +1862,7 @@ open class CardBrowser :
         try {
             // If we're not in mutliselect, we can select cards if there are cards to select
             if (!viewModel.isInMultiSelectMode) {
-                actionBarMenu?.findItem(R.id.actionSelectAll)?.apply {
+                actionBarMenu?.findItem(R.id.action_select_all)?.apply {
                     isVisible = viewModel.rowCount != 0
                 }
                 return
@@ -2154,7 +2154,7 @@ open class CardBrowser :
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val isShowingSelectAll: Boolean
-        get() = actionBarMenu?.findItem(R.id.actionSelectAll)?.isVisible == true
+        get() = actionBarMenu?.findItem(R.id.action_select_all)?.isVisible == true
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val isShowingSelectNone: Boolean

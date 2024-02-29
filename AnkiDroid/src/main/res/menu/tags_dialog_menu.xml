@@ -16,7 +16,7 @@
         ankidroid:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/tags_dialog_actionSelectAll"
+        android:id="@+id/tags_dialog_action_select_all"
         android:icon="@drawable/ic_select_all_white"
         android:title="@string/check_all_tags"
         ankidroid:showAsAction="ifRoom"/>
