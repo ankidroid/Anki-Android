@@ -872,11 +872,11 @@ class CardBrowserTest : RobolectricTest() {
         advanceRobolectricUiLooper()
     }
 
-    private fun selectMenuItem(browser: CardBrowser, action_select_all: Int) {
+    private fun selectMenuItem(browser: CardBrowser, actionSelectAll: Int) {
         Timber.d("Selecting menu item")
         // select seems to run an infinite loop :/
         val shadowActivity = shadowOf(browser)
-        shadowActivity.clickMenuItem(action_select_all)
+        shadowActivity.clickMenuItem(actionSelectAll)
         advanceRobolectricUiLooper()
     }
 
