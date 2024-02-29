@@ -134,7 +134,7 @@ class PreviewerFragment :
                     override fun onStartTrackingTouch(slider: Slider) {}
 
                     override fun onStopTrackingTouch(slider: Slider) {
-                        viewModel.currentIndex.tryEmit(slider.value.toInt() - 1)
+                        viewModel.onSliderChange(slider.value.toInt())
                     }
                 }
             )
