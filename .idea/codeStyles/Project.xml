@@ -24,6 +24,7 @@
         <package name="" withSubpackages="true" static="true" />
       </value>
     </option>
+    <option name="RIGHT_MARGIN" value="140" />
     <JavaCodeStyleSettings>
       <option name="FIELD_NAME_PREFIX" value="m" />
       <option name="BLANK_LINES_AROUND_INITIALIZER" value="2" />
