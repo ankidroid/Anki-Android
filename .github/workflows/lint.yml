@@ -69,6 +69,11 @@ jobs:
           # "lintPlayDebug" doesn't test the API
           arguments: lintPlayDebug :api:lintDebug ktLintCheck lint-rules:test --daemon
 
+        # Handled under the pre-commit hook: ./gradlew installGitHook
+
+        # To run manually, run the following inside folder: Anki-Android
+        # npm install --location=global prettier
+        # prettier --check AnkiDroid/**/*.js
       - name: Prettify code
         uses: creyD/prettier_action@v4.3
         with:
