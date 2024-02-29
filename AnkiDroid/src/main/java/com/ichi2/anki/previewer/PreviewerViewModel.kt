@@ -153,6 +153,12 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
 
     fun cardsCount() = selectedCardIds.count()
 
+    fun onSliderChange(value: Int) {
+        launchCatchingIO {
+            currentIndex.emit(value - 1)
+        }
+    }
+
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
     ********************************************************************************************* */
