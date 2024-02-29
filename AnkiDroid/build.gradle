@@ -23,10 +23,6 @@ idea {
     }
 }
 
-kotlin {
-    explicitApi()
-}
-
 def homePath = System.properties['user.home']
 /**
  * @return the current git hash
