@@ -93,7 +93,7 @@ public object FlashCardsContract {
      * A content:// style uri to the authority for the flash card provider
      */
     @JvmField // required for Java API
-    public val AUTHORITY_URI: Uri = Uri.parse("content://$AUTHORITY")
+    val AUTHORITY_URI: Uri = Uri.parse("content://$AUTHORITY")
 
     /**
      * The Notes can be accessed by
@@ -189,7 +189,7 @@ public object FlashCardsContract {
      * --------------------------------------------------------------------------------------------------------------------
      * ```
      */
-    public object Note {
+    object Note {
         /**
          * The content:// style URI for notes. If the it is appended by the note's ID, this
          * note can be directly accessed, e.g.
@@ -211,14 +211,14 @@ public object FlashCardsContract {
          * For examples on how to use the URI for queries see class description.
          */
         @JvmField // required for Java API
-        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "notes")
+        val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "notes")
 
         /**
          * The content:// style URI for notes, but with a direct SQL query to the notes table instead of accepting
          * a query in the libanki browser search syntax like the main URI #CONTENT_URI does.
          */
         @JvmField // required for Java API
-        public val CONTENT_URI_V2: Uri = Uri.withAppendedPath(AUTHORITY_URI, "notes_v2")
+        val CONTENT_URI_V2: Uri = Uri.withAppendedPath(AUTHORITY_URI, "notes_v2")
 
         /**
          * This is the ID of the note. It is the same as the note ID in Anki. This ID can be
@@ -226,32 +226,32 @@ public object FlashCardsContract {
          * "content://com.ichi2.anki.flashcards/notes/<ID>/data
          */
         @Suppress("ObjectPropertyName")
-        public const val _ID: String = "_id"
+        const val _ID: String = "_id"
 
         // field is part of the default projection available to the clients
         @Suppress("MemberVisibilityCanBePrivate")
-        public const val GUID: String = "guid"
-        public const val MID: String = "mid"
+        const val GUID: String = "guid"
+        const val MID: String = "mid"
 
         @Suppress("unused")
-        public const val ALLOW_EMPTY: String = "allow_empty"
-        public const val MOD: String = "mod"
+        const val ALLOW_EMPTY: String = "allow_empty"
+        const val MOD: String = "mod"
 
         // field is part of the default projection available to the clients
         @Suppress("MemberVisibilityCanBePrivate")
-        public const val USN: String = "usn"
-        public const val TAGS: String = "tags"
-        public const val FLDS: String = "flds"
+        const val USN: String = "usn"
+        const val TAGS: String = "tags"
+        const val FLDS: String = "flds"
 
         // field is part of the default projection available to the clients
         @Suppress("MemberVisibilityCanBePrivate")
-        public const val SFLD: String = "sfld"
-        public const val CSUM: String = "csum"
-        public const val FLAGS: String = "flags"
-        public const val DATA: String = "data"
+        const val SFLD: String = "sfld"
+        const val CSUM: String = "csum"
+        const val FLAGS: String = "flags"
+        const val DATA: String = "data"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
+        val DEFAULT_PROJECTION: Array<String> = arrayOf(
             _ID,
             GUID,
             MID,
@@ -268,17 +268,17 @@ public object FlashCardsContract {
         /**
          * MIME type used for a note.
          */
-        public const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.com.ichi2.anki.note"
+        const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.com.ichi2.anki.note"
 
         /**
          * MIME type used for notes.
          */
-        public const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.note"
+        const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.note"
 
         /**
          * Used only by bulkInsert() to specify which deck the notes should be placed in
          */
-        public const val DECK_ID_QUERY_PARAM: String = "deckId"
+        const val DECK_ID_QUERY_PARAM: String = "deckId"
     }
 
     /**
@@ -346,14 +346,14 @@ public object FlashCardsContract {
      *      Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, FlashCardsContract.Model.CURRENT_MODEL_ID);
      * ```
      */
-    public object Model {
+    object Model {
         /**
          * The content:// style URI for model. If the it is appended by the model's ID, this
          * note can be directly accessed. See class description above for further details.
          */
         @JvmField // required for Java API
-        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "models")
-        public const val CURRENT_MODEL_ID: String = "current"
+        val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "models")
+        const val CURRENT_MODEL_ID: String = "current"
 
         /**
          * This is the ID of the model. It is the same as the note ID in Anki. This ID can be
@@ -361,26 +361,26 @@ public object FlashCardsContract {
          * `content://com.ichi2.anki.flashcards/models/<ID>`
          */
         @Suppress("ObjectPropertyName")
-        public const val _ID: String = "_id"
-        public const val NAME: String = "name"
-        public const val FIELD_NAME: String = "field_name"
-        public const val FIELD_NAMES: String = "field_names"
-        public const val NUM_CARDS: String = "num_cards"
-        public const val CSS: String = "css"
-        public const val SORT_FIELD_INDEX: String = "sort_field_index"
-        public const val TYPE: String = "type"
-        public const val LATEX_POST: String = "latex_post"
-        public const val LATEX_PRE: String = "latex_pre"
-        public const val NOTE_COUNT: String = "note_count"
+        const val _ID: String = "_id"
+        const val NAME: String = "name"
+        const val FIELD_NAME: String = "field_name"
+        const val FIELD_NAMES: String = "field_names"
+        const val NUM_CARDS: String = "num_cards"
+        const val CSS: String = "css"
+        const val SORT_FIELD_INDEX: String = "sort_field_index"
+        const val TYPE: String = "type"
+        const val LATEX_POST: String = "latex_post"
+        const val LATEX_PRE: String = "latex_pre"
+        const val NOTE_COUNT: String = "note_count"
 
         /**
          * The deck ID that is selected by default when adding new notes with this model.
          * This is only used when the "Deck for new cards" preference is set to "Decide by note type"
          */
-        public const val DECK_ID: String = "deck_id"
+        const val DECK_ID: String = "deck_id"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
+        val DEFAULT_PROJECTION: Array<String> = arrayOf(
             _ID,
             NAME,
             FIELD_NAMES,
@@ -396,12 +396,12 @@ public object FlashCardsContract {
         /**
          * MIME type used for a model.
          */
-        public const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.com.ichi2.anki.model"
+        const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.com.ichi2.anki.model"
 
         /**
          * MIME type used for model.
          */
-        public const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.model"
+        const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.model"
     }
 
     /**
@@ -411,12 +411,12 @@ public object FlashCardsContract {
      * reverse card allowing review in the "reverse" direction (e.g dog -> 犬). When a Note is inserted, a Card will
      * be generated for each active CardTemplate which is defined.
      */
-    public object CardTemplate {
+    object CardTemplate {
         /**
          * MIME type used for data.
          */
-        public const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.model.template"
-        public const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.com.ichi2.anki.model.template"
+        const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.model.template"
+        const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.com.ichi2.anki.model.template"
 
         /**
          * Row ID. This is a virtual ID which actually does not exist in AnkiDroid's data base.
@@ -426,49 +426,49 @@ public object FlashCardsContract {
          * the _ID will change too.
          */
         @Suppress("ObjectPropertyName")
-        public const val _ID: String = "_id"
+        const val _ID: String = "_id"
 
         /**
          * This is the ID of the model that this row belongs to (i.e. [Model._ID]).
          */
-        public const val MODEL_ID: String = "model_id"
+        const val MODEL_ID: String = "model_id"
 
         /**
          * This is the ordinal / index of the card template (from 0 to number of cards - 1).
          */
-        public const val ORD: String = "ord"
+        const val ORD: String = "ord"
 
         /**
          * The template name e.g. "Card 1".
          */
-        public const val NAME: String = "card_template_name"
+        const val NAME: String = "card_template_name"
 
         /**
          * The definition of the template for the question
          */
-        public const val QUESTION_FORMAT: String = "question_format"
+        const val QUESTION_FORMAT: String = "question_format"
 
         /**
          * The definition of the template for the answer
          */
-        public const val ANSWER_FORMAT: String = "answer_format"
+        const val ANSWER_FORMAT: String = "answer_format"
 
         /**
          * Optional alternative definition of the template for the question when rendered with the browser
          */
-        public const val BROWSER_QUESTION_FORMAT: String = "browser_question_format"
+        const val BROWSER_QUESTION_FORMAT: String = "browser_question_format"
 
         /**
          * Optional alternative definition of the template for the answer when rendered with the browser
          */
-        public const val BROWSER_ANSWER_FORMAT: String = "browser_answer_format"
-        public const val CARD_COUNT: String = "card_count"
+        const val BROWSER_ANSWER_FORMAT: String = "browser_answer_format"
+        const val CARD_COUNT: String = "card_count"
 
         /**
          * Default columns that are returned when querying the ...models/#/templates URI.
          */
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
+        val DEFAULT_PROJECTION: Array<String> = arrayOf(
             _ID,
             MODEL_ID,
             ORD,
@@ -566,56 +566,56 @@ public object FlashCardsContract {
      *      } while (cur.moveToNext());
      * ```
      */
-    public object Card {
+    object Card {
         /**
          * This is the ID of the note that this card belongs to (i.e. [Note._ID]).
          */
-        public const val NOTE_ID: String = "note_id"
+        const val NOTE_ID: String = "note_id"
 
         /**
          * This is the ordinal of the card. A note has 1..n cards. The ordinal can also be used
          * to directly access a card as describe in the class description.
          */
-        public const val CARD_ORD: String = "ord"
+        const val CARD_ORD: String = "ord"
 
         /**
          * The card's name.
          */
-        public const val CARD_NAME: String = "card_name"
+        const val CARD_NAME: String = "card_name"
 
         /**
          * The name of the deck that this card is part of.
          */
-        public const val DECK_ID: String = "deck_id"
+        const val DECK_ID: String = "deck_id"
 
         /**
          * The question for this card.
          */
-        public const val QUESTION: String = "question"
+        const val QUESTION: String = "question"
 
         /**
          * The answer for this card.
          */
-        public const val ANSWER: String = "answer"
+        const val ANSWER: String = "answer"
 
         /**
          * Simplified version of the question, without card styling (CSS).
          */
-        public const val QUESTION_SIMPLE: String = "question_simple"
+        const val QUESTION_SIMPLE: String = "question_simple"
 
         /**
          * Simplified version of the answer, without card styling (CSS).
          */
-        public const val ANSWER_SIMPLE: String = "answer_simple"
+        const val ANSWER_SIMPLE: String = "answer_simple"
 
         /**
          * Purified version of the answer. In case the ANSWER contains any additional elements
          * (like a duplicate of the question) this is removed for ANSWER_PURE
          */
-        public const val ANSWER_PURE: String = "answer_pure"
+        const val ANSWER_PURE: String = "answer_pure"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
+        val DEFAULT_PROJECTION: Array<String> = arrayOf(
             NOTE_ID,
             CARD_ORD,
             CARD_NAME,
@@ -627,12 +627,12 @@ public object FlashCardsContract {
         /**
          * MIME type used for a card.
          */
-        public const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.com.ichi2.anki.card"
+        const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.com.ichi2.anki.card"
 
         /**
          * MIME type used for cards.
          */
-        public const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.card"
+        const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.card"
     }
 
     /**
@@ -742,59 +742,59 @@ public object FlashCardsContract {
      *      int updateCount = cr.update(reviewInfoUri, values, null, null);
      * ```
      */
-    public object ReviewInfo {
+    object ReviewInfo {
         @JvmField // required for Java API
-        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "schedule")
+        val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "schedule")
 
         /**
          * This is the ID of the note that this card belongs to (i.e. [Note._ID]).
          */
-        public const val NOTE_ID: String = "note_id"
+        const val NOTE_ID: String = "note_id"
 
         /**
          * This is the ordinal of the card. A note has 1..n cards. The ordinal can also be used
          * to directly access a card as describe in the class description.
          */
-        public const val CARD_ORD: String = "ord"
+        const val CARD_ORD: String = "ord"
 
         /**
          * This is the number of ease modes. It can take a value between 2 and 4.
          */
-        public const val BUTTON_COUNT: String = "button_count"
+        const val BUTTON_COUNT: String = "button_count"
 
         /**
          * This is a JSONArray containing the next review times for all buttons.
          */
-        public const val NEXT_REVIEW_TIMES: String = "next_review_times"
+        const val NEXT_REVIEW_TIMES: String = "next_review_times"
 
         /**
          * The names of the media files in the question and answer
          */
-        public const val MEDIA_FILES: String = "media_files"
+        const val MEDIA_FILES: String = "media_files"
 
         /*
          * Ease of an answer. Is not set when requesting the scheduled cards.
          * Can take values of AbstractFlashcardViewer e.g. EASE_1
          */
-        public const val EASE: String = "answer_ease"
+        const val EASE: String = "answer_ease"
 
         /*
          * Time it took to answer the card (in ms)
          */
-        public const val TIME_TAKEN: String = "time_taken"
+        const val TIME_TAKEN: String = "time_taken"
 
         /**
          * Write-only field, allows burying of a card when set to 1
          */
-        public const val BURY: String = "buried"
+        const val BURY: String = "buried"
 
         /**
          * Write-only field, allows suspending of a card when set to 1
          */
-        public const val SUSPEND: String = "suspended"
+        const val SUSPEND: String = "suspended"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
+        val DEFAULT_PROJECTION: Array<String> = arrayOf(
             NOTE_ID,
             CARD_ORD,
             BUTTON_COUNT,
@@ -805,7 +805,7 @@ public object FlashCardsContract {
         /**
          * MIME type used for ReviewInfo.
          */
-        public const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.review_info"
+        const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.review_info"
     }
 
     /**
@@ -900,45 +900,45 @@ public object FlashCardsContract {
      *      cr.update(selectDeckUri, values, null, null);
      * ```
      */
-    public object Deck {
+    object Deck {
         @JvmField // required for Java API
-        public val CONTENT_ALL_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "decks")
+        val CONTENT_ALL_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "decks")
 
         @JvmField // required for Java API
-        public val CONTENT_SELECTED_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "selected_deck")
+        val CONTENT_SELECTED_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "selected_deck")
 
         /**
          * The name of the Deck
          */
-        public const val DECK_NAME: String = "deck_name"
+        const val DECK_NAME: String = "deck_name"
 
         /**
          * The unique identifier of the Deck
          */
-        public const val DECK_ID: String = "deck_id"
+        const val DECK_ID: String = "deck_id"
 
         /**
          * The number of cards in the Deck
          */
-        public const val DECK_COUNTS: String = "deck_count"
+        const val DECK_COUNTS: String = "deck_count"
 
         /**
          * The options of the Deck
          */
-        public const val OPTIONS: String = "options"
+        const val OPTIONS: String = "options"
 
         /**
          * 1 if dynamic (AKA filtered) deck
          */
-        public const val DECK_DYN: String = "deck_dyn"
+        const val DECK_DYN: String = "deck_dyn"
 
         /**
          * Deck description
          */
-        public const val DECK_DESC: String = "deck_desc"
+        const val DECK_DESC: String = "deck_desc"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
+        val DEFAULT_PROJECTION: Array<String> = arrayOf(
             DECK_NAME,
             DECK_ID,
             DECK_COUNTS,
@@ -950,7 +950,7 @@ public object FlashCardsContract {
         /**
          * MIME type used for Deck.
          */
-        public const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.deck"
+        const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.deck"
     }
 
     /**
@@ -969,21 +969,21 @@ public object FlashCardsContract {
      *      Uri insertedFile = cr.insert(AnkiMedia.CONTENT_URI, cv);
      * ```
      */
-    public object AnkiMedia {
+    object AnkiMedia {
         /**
          * Content Uri for the MEDIA row of the CardContentProvider
          */
         @JvmField // required for Java API
-        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "media")
+        val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "media")
 
         /**
          * Uri.toString() which points to the media file that is to be inserted.
          */
-        public const val FILE_URI: String = "file_uri"
+        const val FILE_URI: String = "file_uri"
 
         /**
          * The preferred name for the file that will be inserted/copied into collection.media
          */
-        public const val PREFERRED_NAME: String = "preferred_name"
+        const val PREFERRED_NAME: String = "preferred_name"
     }
 }

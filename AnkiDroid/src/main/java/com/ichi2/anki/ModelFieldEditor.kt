@@ -432,7 +432,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
 
     private suspend fun changeSortField(notetype: NotetypeJson, idx: Int) {
         withProgress(resources.getString(R.string.model_field_editor_changing)) {
-            CollectionManager.withCol {
+            withCol {
                 Timber.d("doInBackgroundChangeSortField")
                 notetypes.set_sort_index(notetype, idx)
             }

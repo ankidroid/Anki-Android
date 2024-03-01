@@ -45,7 +45,7 @@ import java.util.*
  * this may be extended to all operations at a later date.
  */
 @Suppress("unused")
-public class AddContentApi(context: Context) {
+class AddContentApi(context: Context) {
     private val context: Context = context.applicationContext
     private val resolver: ContentResolver = this.context.contentResolver
 
@@ -58,7 +58,7 @@ public class AddContentApi(context: Context) {
      * @param tags tags to include in the new note
      * @return note id or null if the note could not be added
      */
-    public fun addNote(modelId: Long, deckId: Long, fields: Array<String>, tags: Set<String>?): Long? {
+    fun addNote(modelId: Long, deckId: Long, fields: Array<String>, tags: Set<String>?): Long? {
         val noteUri = addNoteInternal(modelId, deckId, fields, tags) ?: return null
         return noteUri.lastPathSegment!!.toLong()
     }
@@ -102,7 +102,7 @@ public class AddContentApi(context: Context) {
      * @param tagsList List of tags (one per note) (may be null)
      * @return The number of notes added (< 0 means there was a problem)
      */
-    public fun addNotes(
+    fun addNotes(
         modelId: Long,
         deckId: Long,
         fieldsList: List<Array<String>>,
@@ -157,7 +157,7 @@ public class AddContentApi(context: Context) {
      * @return the correctly formatted String for the media file to be placed in the desired field of a Card, or null
      * if unsuccessful.
      */
-    public fun addMediaFromUri(
+    fun addMediaFromUri(
         fileUri: Uri,
         preferredName: String,
         mimeType: String
@@ -188,7 +188,7 @@ public class AddContentApi(context: Context) {
      * @param key the first field of a note
      * @return a list of duplicate notes
      */
-    public fun findDuplicateNotes(mid: Long, key: String): List<NoteInfo?> {
+    fun findDuplicateNotes(mid: Long, key: String): List<NoteInfo?> {
         val notes = compat.findDuplicateNotes(mid, listOf(key))
         return if (notes!!.size() == 0) {
             emptyList<NoteInfo>()
@@ -204,7 +204,7 @@ public class AddContentApi(context: Context) {
      * @param keys list of keys
      * @return a SparseArray with a list of duplicate notes for each key
      */
-    public fun findDuplicateNotes(mid: Long, keys: List<String>): SparseArray<MutableList<NoteInfo?>>? {
+    fun findDuplicateNotes(mid: Long, keys: List<String>): SparseArray<MutableList<NoteInfo?>>? {
         return compat.findDuplicateNotes(mid, keys)
     }
 
@@ -213,7 +213,7 @@ public class AddContentApi(context: Context) {
      * @param mid id of the model to be used
      * @return number of notes that exist with that model ID or -1 if there was a problem
      */
-    public fun getNoteCount(mid: Long): Int = compat.queryNotes(mid)?.use { cursor -> cursor.count } ?: 0
+    fun getNoteCount(mid: Long): Int = compat.queryNotes(mid)?.use { cursor -> cursor.count } ?: 0
 
     /**
      * Set the tags for a given note
@@ -222,7 +222,7 @@ public class AddContentApi(context: Context) {
      * @return true if noteId was found, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public fun updateNoteTags(noteId: Long, tags: Set<String>): Boolean {
+    fun updateNoteTags(noteId: Long, tags: Set<String>): Boolean {
         return updateNote(noteId, null, tags)
     }
 
@@ -233,7 +233,7 @@ public class AddContentApi(context: Context) {
      * @return true if noteId was found, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public fun updateNoteFields(noteId: Long, fields: Array<String>): Boolean {
+    fun updateNoteFields(noteId: Long, fields: Array<String>): Boolean {
         return updateNote(noteId, fields, null)
     }
 
@@ -242,7 +242,7 @@ public class AddContentApi(context: Context) {
      * @param noteId the ID of the note to find
      * @return object containing the contents of note with noteID or null if there was a problem
      */
-    public fun getNote(noteId: Long): NoteInfo? {
+    fun getNote(noteId: Long): NoteInfo? {
         val noteUri = Uri.withAppendedPath(Note.CONTENT_URI, noteId.toString())
         val query = resolver.query(noteUri, PROJECTION, null, null, null) ?: return null
         return query.use { cursor ->
@@ -272,7 +272,7 @@ public class AddContentApi(context: Context) {
      * @return list of front &amp; back pairs for each card which contain the card HTML, or null if there was a problem
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public fun previewNewNote(mid: Long, flds: Array<String>): Map<String, Map<String, String>>? {
+    fun previewNewNote(mid: Long, flds: Array<String>): Map<String, Map<String, String>>? {
         if (!hasReadWritePermission()) {
             // avoid situation where addNote will pass, but deleteNote will fail
             throw SecurityException("previewNewNote requires full read-write-permission")
@@ -304,7 +304,7 @@ public class AddContentApi(context: Context) {
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public fun addNewBasicModel(name: String): Long? {
+    fun addNewBasicModel(name: String): Long? {
         return addNewCustomModel(
             name,
             BasicModel.FIELDS,
@@ -323,7 +323,7 @@ public class AddContentApi(context: Context) {
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public fun addNewBasic2Model(name: String): Long? {
+    fun addNewBasic2Model(name: String): Long? {
         return addNewCustomModel(
             name,
             Basic2Model.FIELDS,
@@ -350,7 +350,7 @@ public class AddContentApi(context: Context) {
      * @return the mid of the model which was created, or null if it could not be created
      */
     @Suppress("MemberVisibilityCanBePrivate") // silence IDE
-    public fun addNewCustomModel(
+    fun addNewCustomModel(
         name: String,
         fields: Array<String>,
         cards: Array<String>,
@@ -391,7 +391,7 @@ public class AddContentApi(context: Context) {
      * Get the ID for the note type / model which is currently in use
      * @return id for current model, or < 0 if there was a problem
      */
-    public val currentModelId: Long
+    val currentModelId: Long
         get() {
             // Get the current model
             val uri = Uri.withAppendedPath(Model.CONTENT_URI, Model.CURRENT_MODEL_ID)
@@ -407,7 +407,7 @@ public class AddContentApi(context: Context) {
      * @param modelId the ID of the model to use
      * @return the names of all the fields, or null if the model doesn't exist or there was some other problem
      */
-    public fun getFieldList(modelId: Long): Array<String>? {
+    fun getFieldList(modelId: Long): Array<String>? {
         // Get the current model
         val uri = Uri.withAppendedPath(Model.CONTENT_URI, modelId.toString())
         val modelQuery = resolver.query(uri, null, null, null, null) ?: return null
@@ -426,7 +426,7 @@ public class AddContentApi(context: Context) {
      * Get a map of all model ids and names
      * @return map of (id, name) pairs
      */
-    public val modelList: Map<Long, String>?
+    val modelList: Map<Long, String>?
         get() = getModelList(1)
 
     /**
@@ -434,7 +434,7 @@ public class AddContentApi(context: Context) {
      * @param minNumFields minimum number of fields to consider the model for inclusion
      * @return map of (id, name) pairs or null if there was a problem
      */
-    public fun getModelList(minNumFields: Int): Map<Long, String>? {
+    fun getModelList(minNumFields: Int): Map<Long, String>? {
         // Get the current model
         val allModelsQuery =
             resolver.query(Model.CONTENT_URI, null, null, null, null)
@@ -460,14 +460,14 @@ public class AddContentApi(context: Context) {
      * @param mid id of model
      * @return the name of the model, or null if no model was found
      */
-    public fun getModelName(mid: Long): String? = modelList!![mid]
+    fun getModelName(mid: Long): String? = modelList!![mid]
 
     /**
      * Create a new deck with specified name and save the reference to SharedPreferences for later
      * @param deckName name of the deck to add
      * @return id of the added deck, or null if the deck was not added
      */
-    public fun addNewDeck(deckName: String): Long? {
+    fun addNewDeck(deckName: String): Long? {
         // Create a new note
         val values = ContentValues().apply { put(Deck.DECK_NAME, deckName) }
         val newDeckUri = resolver.insert(Deck.CONTENT_ALL_URI, values)
@@ -482,7 +482,7 @@ public class AddContentApi(context: Context) {
      * Get the name of the selected deck
      * @return deck name or null if there was a problem
      */
-    public val selectedDeckName: String?
+    val selectedDeckName: String?
         get() {
             val selectedDeckQuery = resolver.query(
                 Deck.CONTENT_SELECTED_URI,
@@ -504,7 +504,7 @@ public class AddContentApi(context: Context) {
      * Get a list of all the deck id / name pairs
      * @return Map of (id, name) pairs, or null if there was a problem
      */
-    public val deckList: Map<Long, String>?
+    val deckList: Map<Long, String>?
         get() {
             // Get the current model
             val allDecksQuery =
@@ -526,7 +526,7 @@ public class AddContentApi(context: Context) {
      * @param did ID of deck
      * @return the name of the deck, or null if no deck was found
      */
-    public fun getDeckName(did: Long): String? = deckList!![did]
+    fun getDeckName(did: Long): String? = deckList!![did]
 
     /**
      * The API spec version of the installed AnkiDroid app. This is not the same as the AnkiDroid app version code.
@@ -541,7 +541,7 @@ public class AddContentApi(context: Context) {
      *
      * @return the spec version number or -1 if AnkiDroid is not installed.
      */
-    public val apiHostSpecVersion: Int
+    val apiHostSpecVersion: Int
         get() {
             // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
             // GET_META_DATA seems to work anyway
@@ -747,9 +747,9 @@ public class AddContentApi(context: Context) {
         }
     }
 
-    public companion object {
-        public const val READ_WRITE_PERMISSION: String = FlashCardsContract.READ_WRITE_PERMISSION
-        public const val DEFAULT_DECK_ID: Long = 1L
+    companion object {
+        const val READ_WRITE_PERMISSION: String = FlashCardsContract.READ_WRITE_PERMISSION
+        const val DEFAULT_DECK_ID: Long = 1L
         private const val TEST_TAG = "PREVIEW_NOTE"
         private const val PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec"
         private const val DEFAULT_PROVIDER_SPEC_VALUE = 1 // for when meta-data key does not exist
@@ -767,7 +767,7 @@ public class AddContentApi(context: Context) {
          * @return packageId of AnkiDroid if a supported version is not installed, otherwise null
          */
         @JvmStatic // required for API
-        public fun getAnkiDroidPackageName(context: Context): String? {
+        fun getAnkiDroidPackageName(context: Context): String? {
             val manager = context.packageManager
             return if (Build.VERSION.SDK_INT >= 33) {
                 manager.resolveContentProvider(

@@ -13,7 +13,11 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
@@ -27,8 +31,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabColorSchemeParams
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.browser.customtabs.CustomTabsIntent.*
+import androidx.browser.customtabs.CustomTabsIntent.Builder
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.fragment.app.DialogFragment
@@ -331,7 +337,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
             .setToolbarColor(toolbarColor)
             .setNavigationBarColor(navBarColor)
             .build()
-        val builder = CustomTabsIntent.Builder(customTabActivityHelper.session)
+        val builder = Builder(customTabActivityHelper.session)
             .setShowTitle(true)
             .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
             .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
