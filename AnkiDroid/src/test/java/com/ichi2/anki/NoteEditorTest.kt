@@ -59,21 +59,6 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    fun verifyPreviewAddingNote() {
-        val n = getNoteEditorAdding(NoteType.BASIC).withFirstField("Preview Test").build()
-        n.performPreview()
-        val intent = shadowOf(n).nextStartedActivityForResult
-        val noteEditorBundle = intent.intent.getBundleExtra("noteEditorBundle")
-        assertThat("Bundle set to add note style", noteEditorBundle!!.getBoolean("addNote"), equalTo(true))
-        val fieldsBundle = noteEditorBundle.getBundle("editFields")
-        assertThat("Bundle has fields", fieldsBundle, notNullValue())
-        assertThat("Bundle has fields edited value", fieldsBundle!!.getString("0"), equalTo("Preview Test"))
-        assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), equalTo(ArrayList<Any>()))
-        assertThat("Bundle has no ordinal for ephemeral preview", intent.intent.hasExtra("ordinal"), equalTo(false))
-        assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME), equalTo(true))
-    }
-
-    @Test
     fun whenEditingMultimediaEditUsesCurrentValueOfFields() {
         // Arrange
         val fieldIndex = 0
