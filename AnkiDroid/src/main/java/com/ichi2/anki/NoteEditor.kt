@@ -50,6 +50,7 @@ import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isVisible
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
@@ -987,10 +988,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 currentEditedCard!!.did = deckId
                 modified = true
             }
-            if (currentNotetypeIsImageOcclusion()) {
-                closeNoteEditor()
-                return
-            }
             // now load any changes to the fields from the form
             for (f in editFields!!) {
                 modified = modified or updateField(f)
@@ -1215,11 +1212,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
     private fun openNewPreviewer() {
-        val fields = if (currentNotetypeIsImageOcclusion()) {
-            fieldsFromSelectedNote.mapTo(mutableListOf()) { it[1] }
-        } else {
-            editFields?.mapTo(mutableListOf()) { it!!.fieldText.toString() } ?: mutableListOf()
-        }
+        val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toString() } ?: mutableListOf()
         val tags = selectedTags ?: mutableListOf()
         val args = TemplatePreviewerArguments(
             notetypeFile = NotetypeFile(this, editorNote!!.notetype),
@@ -1251,24 +1244,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Send the previewer all our current editing information
         val noteEditorBundle = Bundle()
         addInstanceStateToBundle(noteEditorBundle)
-        addFieldsToBundle(noteEditorBundle)
+        noteEditorBundle.putBundle("editFields", fieldsAsBundleForPreview)
         previewer.putExtra("noteEditorBundle", noteEditorBundle)
         startActivity(previewer)
-    }
-
-    @NeedsTest("IO fields are passed to the template previewer and the card can be previewed")
-    private fun addFieldsToBundle(bundle: Bundle) {
-        val fieldsBundle = if (currentNotetypeIsImageOcclusion()) {
-            val ioFieldsBundle = Bundle()
-            fieldsFromSelectedNote.forEachIndexed { index, field ->
-                val fieldValue = NoteService.convertToHtmlNewline(field[1], shouldReplaceNewlines())
-                ioFieldsBundle.putString(index.toString(), fieldValue)
-            }
-            ioFieldsBundle
-        } else {
-            fieldsAsBundleForPreview
-        }
-        bundle.putBundle("editFields", fieldsBundle)
     }
 
     /**
@@ -1437,12 +1415,19 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         val editLines = fieldState.loadFieldEditLines(type)
         fieldsLayoutContainer!!.removeAllViews()
         customViewIds.clear()
+        imageOcclusionButtonsContainer?.isVisible = currentNotetypeIsImageOcclusion()
+
+        val indicesToHide = mutableListOf<Int>()
         if (currentNotetypeIsImageOcclusion()) {
-            setImageOcclusionButton()
-            return
-        } else {
-            imageOcclusionButtonsContainer?.visibility = View.GONE
-            fieldsLayoutContainer?.visibility = View.VISIBLE
+            val occlusionTag = "0"
+            val imageTag = "1"
+            val fields = currentlySelectedNotetype!!.getJSONArray("flds")
+            for (i in 0 until fields.length()) {
+                val tag = fields.getJSONObject(i).getString("tag")
+                if (tag == occlusionTag || tag == imageTag) {
+                    indicesToHide.add(i)
+                }
+            }
         }
 
         editFields = LinkedList()
@@ -1510,6 +1495,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 getString(R.string.multimedia_editor_attach_mm_content, editLineView.name)
             toggleStickyButton.contentDescription =
                 getString(R.string.note_editor_toggle_sticky, editLineView.name)
+
+            editLineView.isVisible = i !in indicesToHide
             fieldsLayoutContainer!!.addView(editLineView)
         }
     }
@@ -2126,11 +2113,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun currentNotetypeIsImageOcclusion() =
         currentlySelectedNotetype?.isImageOcclusion == true
-
-    private fun setImageOcclusionButton() {
-        imageOcclusionButtonsContainer?.visibility = View.VISIBLE
-        fieldsLayoutContainer?.visibility = View.GONE
-    }
 
     private fun setupImageOcclusionEditor(imagePath: String = "") {
         val kind: String
