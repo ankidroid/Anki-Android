@@ -1211,8 +1211,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
+    @VisibleForTesting
     @NeedsTest("previewing newlines")
-    private fun openNewPreviewer() {
+    fun performPreview() {
         val convertNewlines = shouldReplaceNewlines()
         fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
         val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toFieldText() } ?: mutableListOf()
@@ -1227,29 +1228,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         )
         val intent = TemplatePreviewerFragment.getIntent(this, args)
         startActivity(intent)
-    }
-
-    @VisibleForTesting
-    fun performPreview() {
-        if (sharedPrefs().getBoolean("new_previewer", false)) {
-            openNewPreviewer()
-            return
-        }
-        val previewer = Intent(this@NoteEditor, CardTemplatePreviewer::class.java)
-        if (currentEditedCard != null) {
-            previewer.putExtra("ordinal", currentEditedCard!!.ord)
-        }
-        previewer.putExtra(
-            CardTemplateNotetype.INTENT_MODEL_FILENAME,
-            CardTemplateNotetype.saveTempModel(this, editorNote!!.notetype)
-        )
-
-        // Send the previewer all our current editing information
-        val noteEditorBundle = Bundle()
-        addInstanceStateToBundle(noteEditorBundle)
-        noteEditorBundle.putBundle("editFields", fieldsAsBundleForPreview)
-        previewer.putExtra("noteEditorBundle", noteEditorBundle)
-        startActivity(previewer)
     }
 
     /**

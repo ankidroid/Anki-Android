@@ -41,7 +41,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN1_KEYS
@@ -1219,15 +1218,11 @@ open class CardBrowser :
 
     private fun onPreview() {
         val intentData = viewModel.previewIntentData
-        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.index, intentData.previewerIdsFile))
+        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.previewerIdsFile))
     }
 
     private fun getPreviewIntent(index: Int, previewerIdsFile: PreviewerIdsFile): Intent {
-        return if (sharedPrefs().getBoolean("new_previewer", false)) {
-            Previewer2Destination(index, previewerIdsFile).toIntent(this)
-        } else {
-            PreviewDestination(index, previewerIdsFile).toIntent(this)
-        }
+        return PreviewerDestination(index, previewerIdsFile).toIntent(this)
     }
 
     private fun rescheduleSelectedCards() {
@@ -2278,8 +2273,8 @@ private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<C
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
 
-class Previewer2Destination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
+class PreviewerDestination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
 
 @CheckResult
-fun Previewer2Destination.toIntent(context: Context) =
+fun PreviewerDestination.toIntent(context: Context) =
     PreviewerFragment.getIntent(context, previewerIdsFile, currentIndex)

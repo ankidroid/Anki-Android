@@ -459,7 +459,7 @@ class CardBrowserTest : RobolectricTest() {
 
         b.selectRowsWithPositions(0)
         val previewIntent = b.viewModel.previewIntentData
-        assertThat("before: index", previewIntent.index, equalTo(0))
+        assertThat("before: index", previewIntent.currentIndex, equalTo(0))
         assertThat(
             "before: cards",
             previewIntent.previewerIdsFile.getCardIds(),
@@ -474,7 +474,7 @@ class CardBrowserTest : RobolectricTest() {
 
         b.replaceSelectionWith(intArrayOf(0))
         val intentAfterReverse = b.viewModel.previewIntentData
-        assertThat("after: index", intentAfterReverse.index, equalTo(0))
+        assertThat("after: index", intentAfterReverse.currentIndex, equalTo(0))
         assertThat(
             "after: cards",
             intentAfterReverse.previewerIdsFile.getCardIds(),
