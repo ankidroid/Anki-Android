@@ -345,7 +345,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
-    @Suppress("UNCHECKED_CAST", "deprecation") // deprecation: getSerializable
     @KotlinCleanup("fix suppress")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -364,9 +363,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             selectedTags = savedInstanceState.getStringArrayList("tags")
             reloadRequired = savedInstanceState.getBoolean(RELOAD_REQUIRED_EXTRA_KEY)
             pastedImageCache =
-                savedInstanceState.getSerializable("imageCache") as HashMap<String, String>
+                savedInstanceState.getSerializableCompat<HashMap<String, String>>("imageCache")!!
             toggleStickyText =
-                savedInstanceState.getSerializable("toggleSticky") as HashMap<Int, String?>
+                savedInstanceState.getSerializableCompat<HashMap<Int, String?>>("toggleSticky")!!
             changed = savedInstanceState.getBoolean(NOTE_CHANGED_EXTRA_KEY)
         } else {
             if (intentLaunchedWithImage(intent)) {
