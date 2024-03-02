@@ -174,6 +174,8 @@ abstract class NavigationDrawerActivity :
         }
         drawerToggle.isDrawerSlideAnimationEnabled = animationEnabled()
         drawerLayout.addDrawerListener(drawerToggle)
+
+        enablePostShortcut(this)
     }
 
     /**
