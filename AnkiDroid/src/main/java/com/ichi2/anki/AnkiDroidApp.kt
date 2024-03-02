@@ -136,12 +136,7 @@ open class AnkiDroidApp : Application() {
         }
 
         applicationScope.launch {
-            try {
-                val debugInfo = DebugInfoService.getDebugInfo(this@AnkiDroidApp)
-                Timber.i(debugInfo)
-            } catch (e: Exception) {
-                Timber.w(e, "Error getting debug info")
-            }
+            Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
         }
 
         // Stop after analytics and logging are initialised.
