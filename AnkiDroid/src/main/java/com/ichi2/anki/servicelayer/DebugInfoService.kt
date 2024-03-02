@@ -79,6 +79,8 @@ object DebugInfoService {
     private fun isSendingCrashReports(context: Context): Boolean {
         return CrashReportService.isAcraEnabled(context, false)
     }
+
+    // Uses config.get() to get the FSRS status from the collection using withOpenColOrNull
     private suspend fun getFSRSStatus(): Boolean? = try {
         CollectionManager.withOpenColOrNull { config.get<Boolean>("fsrs") }
     } catch (e: Error) {

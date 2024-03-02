@@ -116,6 +116,7 @@ class AboutFragment : Fragment(R.layout.about_layout) {
      * Copies debug info (from [DebugInfoService.getDebugInfo]) to the clipboard
      */
     private fun copyDebugInfo() {
+        // Use lifecycleScope as a coroutine scope to use getDebugInfo() since it is a suspend fun
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 val debugInfo = withContext(Dispatchers.IO) {
