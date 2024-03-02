@@ -1006,7 +1006,7 @@ abstract class AbstractFlashcardViewer :
                 domStorageEnabled = true
             }
             webChromeClient = AnkiDroidWebChromeClient()
-            isFocusableInTouchMode = typeAnswer!!.autoFocus
+            isFocusableInTouchMode = typeAnswer!!.useInputTag
             isScrollbarFadingEnabled = true
             // Set transparent color to prevent flashing white when night mode enabled
             setBackgroundColor(Color.argb(1, 0, 0, 0))
@@ -2462,6 +2462,11 @@ abstract class AbstractFlashcardViewer :
             // onPageFinished will be called multiple times if the WebView redirects by setting window.location.href
             onPageFinishedCallback?.onPageFinished(view)
             view.loadUrl("javascript:onPageFinished();")
+            // focus keyboard automatically only when if it has inputTag and focus set to true
+            val autoFocus = typeAnswer!!.useInputTag && typeAnswer!!.autoFocus
+            if (autoFocus) {
+                view.requestFocus()
+            }
         }
 
         @TargetApi(Build.VERSION_CODES.O)
