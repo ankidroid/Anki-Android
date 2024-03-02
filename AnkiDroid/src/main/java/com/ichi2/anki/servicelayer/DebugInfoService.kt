@@ -29,7 +29,11 @@ import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
 object DebugInfoService {
 
-    // This is run on the startup path, we need to protect against a null/corrupt collection
+    /**
+     * Retrieves the debug info based in different parameters of the app.
+     *
+     * Note that the `FSRS` parameter can be null if the collection doesn't exist or the config is not set.
+     */
     suspend fun getDebugInfo(info: Context): String {
         val webviewUserAgent = getWebviewUserAgent(info)
         val isFSRSEnabled = getFSRSStatus()
@@ -52,7 +56,7 @@ object DebugInfoService {
                
                ACRA UUID = ${Installation.id(info)}
                
-               FSRS  = $isFSRSEnabled
+               FSRS Enabled = $isFSRSEnabled
                
                Crash Reports Enabled = ${isSendingCrashReports(info)}
         """.trimIndent()
