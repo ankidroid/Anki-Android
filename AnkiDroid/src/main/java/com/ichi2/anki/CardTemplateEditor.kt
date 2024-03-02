@@ -17,6 +17,7 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -62,6 +63,7 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.jsonObjectIterable
 import org.json.JSONArray
 import org.json.JSONException
@@ -545,6 +547,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                 return true
                             }
                             R.id.action_rename -> showRenameDialog()
+                            R.id.action_copy_as_markdown -> copyMarkdownTemplateToClipboard()
                             R.id.action_insert_field -> showInsertFieldDialog()
                             R.id.action_delete -> {
                                 Timber.i("CardTemplateEditor:: Delete template button pressed")
@@ -616,6 +619,34 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 viewLifecycleOwner,
                 Lifecycle.State.RESUMED
             )
+        }
+
+        private val currentTemplate: CardTemplate?
+            get() = try {
+                val tempModel = templateEditor.tempModel
+                val template: JSONObject = tempModel!!.getTemplate(templateEditor.viewPager.currentItem)
+                CardTemplate(
+                    front = template.getString("qfmt"),
+                    back = template.getString("afmt"),
+                    style = tempModel.css
+                )
+            } catch (e: Exception) {
+                Timber.w(e, "Exception loading template in CardTemplateFragment. Probably stale fragment.")
+                null
+            }
+
+        /** Copies the template to clipboard in markdown format */
+        private fun copyMarkdownTemplateToClipboard() {
+            // A number of users who post their templates to Reddit/Discord have these badly formatted
+            // It makes it much easier for people to understand if these are provided as markdown
+            val template = currentTemplate ?: return
+
+            context?.let { ctx ->
+                ctx.copyToClipboard(
+                    template.toMarkdown(ctx),
+                    failureMessageId = R.string.failed_to_copy
+                )
+            }
         }
 
         private fun onModelSaved() {
@@ -943,6 +974,19 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 }
                 n += 1
             }
+        }
+
+        data class CardTemplate(val front: String, val back: String, val style: String) {
+            fun toMarkdown(context: Context) =
+                // backticks are not supported by old reddit
+                buildString {
+                    appendLine("**${context.getString(R.string.card_template_editor_front)}**\n")
+                    appendLine("```html\n$front\n```\n")
+                    appendLine("**${context.getString(R.string.card_template_editor_back)}**\n")
+                    appendLine("```html\n$back\n```\n")
+                    appendLine("**${context.getString(R.string.card_template_editor_styling)}**\n")
+                    append("```css\n$style\n```")
+                }
         }
 
         companion object {
