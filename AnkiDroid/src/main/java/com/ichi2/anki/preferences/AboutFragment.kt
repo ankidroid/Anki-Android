@@ -27,6 +27,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.*
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.snackbar.showSnackbar
@@ -34,6 +35,10 @@ import com.ichi2.utils.IntentUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.show
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -111,11 +116,19 @@ class AboutFragment : Fragment(R.layout.about_layout) {
      * Copies debug info (from [DebugInfoService.getDebugInfo]) to the clipboard
      */
     private fun copyDebugInfo() {
-        val debugInfo = DebugInfoService.getDebugInfo(requireContext())
-        requireContext().copyToClipboard(
-            debugInfo,
-            failureMessageId = R.string.about_ankidroid_error_copy_debug_info
-        )
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val debugInfo = withContext(Dispatchers.IO) {
+                    DebugInfoService.getDebugInfo(requireContext())
+                }
+                requireContext().copyToClipboard(
+                    debugInfo,
+                    failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+                )
+            } catch (e: Exception) {
+                Timber.e(e, "Error copying debug info")
+            }
+        }
     }
 
     /**
