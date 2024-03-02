@@ -134,7 +134,7 @@ open class AnkiDroidApp : Application() {
         if (BuildConfig.DEBUG) {
             UsageAnalytics.setDryRun(true)
         }
-
+        // Use applicationScope as a coroutine scope to use getDebugInfo() since it is a suspend fun
         applicationScope.launch {
             try {
                 val debugInfo = DebugInfoService.getDebugInfo(this@AnkiDroidApp)
