@@ -36,6 +36,7 @@ object DebugInfoService {
      */
     suspend fun getDebugInfo(info: Context): String {
         val webviewUserAgent = getWebviewUserAgent(info)
+        // isFSRSEnabled is null on startup
         val isFSRSEnabled = getFSRSStatus()
         return """
                AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
@@ -77,7 +78,7 @@ object DebugInfoService {
 
     // Uses config.get() to get the FSRS status from the collection using withOpenColOrNull
     private suspend fun getFSRSStatus(): Boolean? = try {
-        CollectionManager.withOpenColOrNull { config.get<Boolean>("fsrs") }
+        CollectionManager.withOpenColOrNull { config.get<Boolean>("fsrs", false) }
     } catch (e: Error) {
         Timber.w(e)
         null
