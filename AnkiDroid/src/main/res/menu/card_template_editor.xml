@@ -44,4 +44,8 @@
         android:id="@+id/action_insert_field"
         android:title="@string/card_template_editor_insert_field"
         ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_copy_as_markdown"
+        android:title="@string/copy_as_markdown"
+        ankidroid:showAsAction="never" />
 </menu>
