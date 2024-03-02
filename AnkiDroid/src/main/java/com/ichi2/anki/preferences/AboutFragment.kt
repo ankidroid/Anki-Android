@@ -36,7 +36,6 @@ import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -115,17 +114,13 @@ class AboutFragment : Fragment(R.layout.about_layout) {
      */
     private fun copyDebugInfo() {
         launchCatchingTask {
-            try {
-                val debugInfo = withContext(Dispatchers.IO) {
-                    DebugInfoService.getDebugInfo(requireContext())
-                }
-                requireContext().copyToClipboard(
-                    debugInfo,
-                    failureMessageId = R.string.about_ankidroid_error_copy_debug_info
-                )
-            } catch (e: Exception) {
-                Timber.w(e, "Error copying debug info")
+            val debugInfo = withContext(Dispatchers.IO) {
+                DebugInfoService.getDebugInfo(requireContext())
             }
+            requireContext().copyToClipboard(
+                debugInfo,
+                failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+            )
         }
     }
 
