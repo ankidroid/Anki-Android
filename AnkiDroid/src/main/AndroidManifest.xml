@@ -496,11 +496,11 @@
             android:foregroundServiceType="dataSync"
             />
 
+        <!-- Don't disable/enable the widgets here until min API>=31, see issue #15747 & https://issuetracker.google.com/issues/36914010 -->
         <!-- small widget -->
         <receiver
             android:name="com.ichi2.widget.AnkiDroidWidgetSmall"
             android:label="@string/widget_small"
-            android:enabled="false"
             android:exported="true"
             >
             <intent-filter>
@@ -517,7 +517,6 @@
         <receiver
             android:name="com.ichi2.widget.AddNoteWidget"
             android:label="@string/menu_add_note"
-            android:enabled="false"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
