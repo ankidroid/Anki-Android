@@ -23,10 +23,6 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.utils.VersionUtils.pkgVersionName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import org.acra.util.Installation
 import timber.log.Timber
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
@@ -36,12 +32,7 @@ object DebugInfoService {
     // This is run on the startup path, we need to protect against a null/corrupt collection
     suspend fun getDebugInfo(info: Context): String {
         val webviewUserAgent = getWebviewUserAgent(info)
-        // Launch a coroutine to get the FSRS status
-        val deferred: Deferred<Boolean?> = CoroutineScope(Dispatchers.Main).async {
-            getFSRSStatus()
-        }
-        // Await the result of the coroutine
-        val isFSRSEnabled = deferred.await()
+        val isFSRSEnabled = getFSRSStatus()
         return """
                AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
                
