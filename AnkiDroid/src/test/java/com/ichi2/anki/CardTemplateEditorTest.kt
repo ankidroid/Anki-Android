@@ -22,6 +22,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.assertFalse
@@ -602,6 +603,41 @@ class CardTemplateEditorTest : RobolectricTest() {
             getAlertDialogText(true)
         )
         clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
+    }
+
+    @Test
+    fun `template to markdown`() {
+        val template = CardTemplate(
+            front = "Hello World{{Front}}\n{{Extra}}",
+            back = "{{FrontSide}}\n",
+            style = ".card { }"
+        )
+
+        assertEquals(
+            "markdown formatted template",
+"""
+**Front template**
+
+```html
+Hello World{{Front}}
+{{Extra}}
+```
+
+**Back template**
+
+```html
+{{FrontSide}}
+
+```
+
+**Styling**
+
+```css
+.card { }
+```
+""".trim(),
+            template.toMarkdown(targetContext)
+        )
     }
 
     private fun getModelCardCount(notetype: NotetypeJson): Int {
