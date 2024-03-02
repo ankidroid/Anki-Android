@@ -79,7 +79,6 @@
                 android:defaultValue="true"
                 android:key="@string/type_in_answer_focus_key"
                 android:summary="@string/type_in_answer_focus_summ"
-                android:dependency="@string/use_input_tag_key"
                 android:title="@string/type_in_answer_focus" />
             <!-- #9639 - allow all files in media selection dialog - .opus is application/octet-stream
             in older versions of Android (fixed between API 26 and API 30)
