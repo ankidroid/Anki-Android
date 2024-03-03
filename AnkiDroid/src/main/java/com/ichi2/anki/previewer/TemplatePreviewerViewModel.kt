@@ -63,7 +63,7 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
 
             templateNames = if (notetype.isCloze) {
                 val tr = CollectionManager.TR
-                withCol { clozeNumbersInNote(note) }.map { tr.cardTemplatesCloze(it) }
+                withCol { clozeNumbersInNote(note) }.map { tr.cardTemplatesCard(it) }
             } else {
                 notetype.templatesNames
             }

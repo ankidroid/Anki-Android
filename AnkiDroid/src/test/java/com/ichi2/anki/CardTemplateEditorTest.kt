@@ -489,7 +489,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         assertEquals(
             "Did not show dialog about deleting template and it's card?",
-            getQuantityString(R.plurals.card_template_editor_confirm_delete, 0, 0, "Card 2"),
+            getQuantityString(R.plurals.card_template_editor_confirm_delete, 0, 0, CollectionManager.TR.cardTemplatesCard(2)),
             getAlertDialogText(true)
         )
         clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
