@@ -125,7 +125,7 @@
     <string name="select">Vybrat</string>
     <string name="field_remapping">%1$s (z \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Karty mapované na prázdný cíl budou odstraněny. Nezbývají-li už v poznámce žádné karty, bude poznámka ztracena. Opravdu chcete pokračovat?</string>
-    <string name="missing_note_type">Nebyl nalezen žádný typ poznámky</string>
+    <string name="missing_note_type">Nenalezen žádný typ poznámky</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Časové omezení dosaženo</string>
     <plurals name="timebox_reached">
@@ -209,7 +209,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">V systému není nainstalována aplikace, která může provést tuto akci.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky kamery mohou být velké. Můžete komprimovat a změnit velikost obrázků v adresáři media]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">Nenalezen žádný prohlížeč pro otevření odkazu: %s</string>
     <string name="web_page_error">Chyba při načítání stránky: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -330,7 +330,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Začínáme</string>
     <string name="intro_sync_from_ankiweb">Synchronizovat z AnkiWebu</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
+    <string name="app_not_initialized">AnkiDroid ještě není inicializován. Otevřete prosím AnkiDroid, a poté to zkuste znovu</string>
     <string name="already_logged_in">Již jste přihlášeni</string>
     <!-- Deck Creation -->
     <string name="deck_created">Balíček vytvořen</string>
