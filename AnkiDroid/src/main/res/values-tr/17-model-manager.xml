@@ -76,8 +76,8 @@
     <string name="card_template_browser_appearance_restore_default_dialog">Varsayılan değerler korunsun mu?</string>
     <string name="card_template_browser_appearance_saving_note">Kart şablonu kaydedildiğinde bu değişiklikler uygulanır</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Destenin üzerine yazmak (açık)</string>
-    <string name="card_template_editor_deck_override_off">Destenin üezerine yazmak (kapalı)</string>
+    <string name="card_template_editor_deck_override_on">Desteyi geçersiz kılma (açık)</string>
+    <string name="card_template_editor_deck_override_off">Desteyi geçersiz kılma (kapalı)</string>
     <string name="model_manager_deck_override_added_message">\'%1$s\' varsayılan destesini \'%2$s\' olarak ayarlayın</string>
     <string name="model_manager_deck_override_removed_message">\'%s\' için varsayılan deste kaldırıldı</string>
     <string name="deck_override_explanation">Yeni \'%s\' kartlarının yerleştirileceği desteyi seçin</string>
