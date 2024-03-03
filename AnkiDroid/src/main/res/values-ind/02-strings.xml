@@ -137,7 +137,7 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Kartu AnkiDroid</string>
     <string name="note_editor_copy_note">Salin Catatan</string>
-    <string name="card_editor_reposition_card">Pindah posisi</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Pindah posisi</string>
     <string name="card_editor_reset_card">Reset kemajuan</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Jadwalkan ulang</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pratinjau</string>
@@ -357,4 +357,5 @@
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
 </resources>

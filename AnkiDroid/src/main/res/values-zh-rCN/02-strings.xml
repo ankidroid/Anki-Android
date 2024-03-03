@@ -137,7 +137,7 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid卡片</string>
     <string name="note_editor_copy_note">复制笔记</string>
-    <string name="card_editor_reposition_card">更改位置</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">更改位置</string>
     <string name="card_editor_reset_card">重设学习进度</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">重新安排</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">预览</string>
@@ -357,4 +357,5 @@
     <string name="deck_description_field_hint">描述</string>
     <string name="failed_to_copy">复制失败</string>
     <string name="card_browser_unavailable_when_notes_mode">在“笔记”模式中不可用</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
 </resources>
