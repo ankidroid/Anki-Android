@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Auf bestimmte Schlagwörter beschränken</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Verwerfen</string>
     <string name="note_editor_no_cards_created">Keine Karten erstellt. Bitte füllen Sie weitere Felder aus</string>
     <string name="note_editor_no_first_field">Das erste Feld ist leer</string>
     <string name="note_editor_no_cloze_delations">Dieser Notiztyp muss Auslassungen enthalten</string>
@@ -203,13 +203,13 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Auf dem System ist keine App installiert, die diese Aktion ausführen kann.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerabilder können groß sein. Im Medienverzeichnis können Sie Bilder komprimieren und deren Größe anpassen]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">Kein Browser zum Öffnen des Links gefunden: %s</string>
     <string name="web_page_error">Fehler beim Laden der Seite: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Hintergrund</string>
     <string name="choose_an_image">Bild auswählen</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">Hintergrund entfernen?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Standard wiederherstellen</string>
     <string name="cloze_sample_text">Dies ist eine {{%1$s::sample}} cloze deletion.</string>
@@ -267,7 +267,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">Geben Sie eine gültige E-Mail ein</string>
     <string name="password_empty">Das Passwort ist erforderlich</string>
     <string name="back_pressed_once">Zum Beenden erneut \"Zurück\" drücken</string>
     <string name="back_pressed_once_reviewer">Drücken Sie erneut auf Zurück, um zurückzukehren</string>
@@ -322,7 +322,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Los geht\'s</string>
     <string name="intro_sync_from_ankiweb">Mit AnkiWeb synchronisieren</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
+    <string name="app_not_initialized">AnkiDroid ist noch nicht initialisiert. Bitte öffnen Sie AnkiDroid einmal und versuchen Sie es dann erneut</string>
     <string name="already_logged_in">Bereits angemeldet</string>
     <!-- Deck Creation -->
     <string name="deck_created">Stapel wurde erstellt</string>
@@ -357,7 +357,7 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Fehler beim Öffnen der TTS-Einstellungen
     </string>
     <string name="shared_decks_login_required">Bitte melde dich an, um weitere Stapel herunterzuladen</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
+    <string name="deck_description_field_hint">Beschreibung</string>
+    <string name="failed_to_copy">Kopieren fehlgeschlagen</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
 </resources>

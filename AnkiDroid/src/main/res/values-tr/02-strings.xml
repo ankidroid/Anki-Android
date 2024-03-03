@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Yazı tahtasını göster</string>
     <string name="hide_whiteboard">Yazı tahtasını gizle</string>
     <string name="clear_whiteboard">Yazı tahtasını temizle</string>
-    <string name="replay_audio">Sesi yeniden çal</string>
+    <string name="replay_audio">Sesi tekrar oynat</string>
     <string name="leech_suspend_notification">Kart asalak olarak işaretlenip askıya alınmış</string>
     <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
     <string name="webview_crash_unknown">Bilinmeyen hata</string>
@@ -203,7 +203,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Sistemde bu eylemi gerçekleştirebilecek bir uygulama yüklü değil.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Fotoğraf dosyaları büyük olabilir. Resimleri medya dizininde sıkıştırmak ve boyutlarını değiştirmek isteyebilirsiniz.]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">%s linkini açacak tarayıcı bulunamadı</string>
     <string name="web_page_error">Sayfa yüklenirken hata: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -322,7 +322,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Başla</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb\'den senkronize et</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
+    <string name="app_not_initialized">AnkiDroid henüz başlatılmadı. Lütfen AnkiDroid\'i bir kez açın, sonra yeniden deneyin.</string>
     <string name="already_logged_in">Zaten giriş yapılmış</string>
     <!-- Deck Creation -->
     <string name="deck_created">Deste oluşturuldu</string>

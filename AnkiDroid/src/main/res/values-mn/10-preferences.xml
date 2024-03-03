@@ -45,22 +45,22 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="disabled">Disabled</string>
+    <string name="disabled">Идэвхгүй</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="one">%d минут</item>
+        <item quantity="other">%d минут</item>
     </plurals>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Таарах зүйл байхгүй байна</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Ерөнхий</string>
     <string name="pref_cat_studying" maxLength="41">Studying</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Тааруулах</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
-    <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
-    <string name="pref_cat_appearance" maxLength="41">Appearance</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Самбар</string>
+    <string name="pref_cat_appearance" maxLength="41">Харагдах байдал</string>
     <string name="pref_cat_themes" maxLength="41">Themes</string>
     <string name="pref_cat_gestures" maxLength="41">Gestures</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
