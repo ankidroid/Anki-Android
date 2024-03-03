@@ -948,7 +948,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // If the starting point for name already exists, iteratively increase n until we find a unique name
             while (true) {
                 // Get new name
-                val name = resources.getString(R.string.card_n_name, n)
+                val name = CollectionManager.TR.cardTemplatesCard(n)
                 // Cycle through all templates checking if new name exists
                 if (templates.jsonObjectIterable().all { name != it.getString("name") }) {
                     return name
