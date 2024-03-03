@@ -735,7 +735,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
                     if (allowSaveAndPreview()) {
-                        performPreview()
+                        launchCatchingTask { performPreview() }
                     }
                 }
             }
@@ -1101,7 +1101,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
                 if (allowSaveAndPreview()) {
-                    performPreview()
+                    launchCatchingTask { performPreview() }
                 }
                 return true
             }
@@ -1213,17 +1213,33 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // ----------------------------------------------------------------------------
     @VisibleForTesting
     @NeedsTest("previewing newlines")
-    fun performPreview() {
+    @NeedsTest("cards with a cloze notetype but no cloze in fields are previewed as empty card")
+    @NeedsTest("clozes that don't start at '1' are correctly displayed")
+    suspend fun performPreview() {
         val convertNewlines = shouldReplaceNewlines()
         fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
         val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toFieldText() } ?: mutableListOf()
         val tags = selectedTags ?: mutableListOf()
+
+        val ord = if (editorNote!!.notetype.isCloze) {
+            val tempNote = withCol { Note.fromNotetypeId(editorNote!!.notetype.id) }
+            tempNote.fields = fields // makes possible to get the cloze numbers from the fields
+            val clozeNumbers = withCol { clozeNumbersInNote(tempNote) }
+            if (clozeNumbers.isNotEmpty()) {
+                clozeNumbers.first() - 1
+            } else {
+                0
+            }
+        } else {
+            currentEditedCard?.ord ?: 0
+        }
+
         val args = TemplatePreviewerArguments(
             notetypeFile = NotetypeFile(this, editorNote!!.notetype),
             fields = fields,
             tags = tags,
             id = editorNote!!.id,
-            ord = currentEditedCard?.ord ?: 0,
+            ord = ord,
             fillEmpty = false
         )
         val intent = TemplatePreviewerFragment.getIntent(this, args)
