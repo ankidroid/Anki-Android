@@ -19,6 +19,7 @@ package com.ichi2.anki.scheduling
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.core.os.bundleOf
@@ -55,6 +56,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import kotlin.math.min
 
 /**
  * Dialog for [Scheduler.setDueDate], containing two tabs: [Tab.SINGLE_DAY] and [Tab.DATE_RANGE]
@@ -78,6 +80,20 @@ class SetDueDateDialog : DialogFragment() {
         val cardIds = requireNotNull(requireArguments().getLongArray(ARG_CARD_IDS)) { ARG_CARD_IDS }
         viewModel.init(cardIds)
         Timber.d("Set due date dialog: %d card(s)", cardIds.size)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // The dialog is too wide on tablets
+        // Select either 450dp (tablets)
+        // or 90% of the screen width (smaller phones)
+        val intendedWidth = min(450.dpToPx, (resources.displayMetrics.widthPixels * 0.9).toInt())
+
+        dialog?.window?.setLayout(
+            intendedWidth,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -240,3 +256,7 @@ private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) = this@An
         Snackbar.LENGTH_SHORT
     )
 }
+
+context (DialogFragment)
+val Int.dpToPx: Int
+    get() = (this * requireContext().resources.displayMetrics.density + 0.5f).toInt()
