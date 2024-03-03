@@ -25,6 +25,7 @@ import com.ichi2.anki.NotetypeFile
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import kotlinx.coroutines.Job
@@ -36,6 +37,7 @@ import org.intellij.lang.annotations.Language
 class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardViewerViewModel() {
     private val notetype = arguments.notetype
     private val fillEmpty = arguments.fillEmpty
+    private val isCloze = notetype.isCloze
 
     /**
      * identifies which of the card templates or cloze deletions it corresponds to
@@ -46,6 +48,7 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
 
     private lateinit var note: Note
     private lateinit var templateNames: List<String>
+    private var clozeNumbers: List<Int>? = null
     private var initJob: Job? = null
 
     init {
@@ -61,11 +64,12 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
                 tags = arguments.tags
             }
 
-            templateNames = if (notetype.isCloze) {
+            if (isCloze) {
+                clozeNumbers = withCol { clozeNumbersInNote(note) }
                 val tr = CollectionManager.TR
-                withCol { clozeNumbersInNote(note) }.map { tr.cardTemplatesCard(it) }
+                templateNames = clozeNumbers!!.map { tr.cardTemplatesCard(it) }
             } else {
-                notetype.templatesNames
+                templateNames = notetype.templatesNames
             }
         }.also {
             it.invokeOnCompletion {
@@ -119,11 +123,26 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
         return templateNames
     }
 
-    fun onTabSelected(ord: Int) {
-        launchCatchingIO { ordFlow.emit(ord) }
+    @NeedsTest("the correct cloze ord is shown for the tab")
+    fun onTabSelected(position: Int) {
+        launchCatchingIO {
+            val ord = if (isCloze) {
+                clozeNumbers!![position] - 1
+            } else {
+                position
+            }
+            ordFlow.emit(ord)
+        }
     }
 
-    fun getCurrentTabIndex(): Int = ordFlow.value
+    @NeedsTest("tab is selected if the first cloze isn't '1'")
+    fun getCurrentTabIndex(): Int {
+        return if (isCloze) {
+            clozeNumbers!!.indexOf(ordFlow.value) + 1
+        } else {
+            ordFlow.value
+        }
+    }
 
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************

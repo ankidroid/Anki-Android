@@ -38,6 +38,7 @@ import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
@@ -234,7 +235,7 @@ class NoteEditorTest : RobolectricTest() {
     fun previewWorksWithNoError() {
         // #6923 regression test - Low value - Could not make this fail as onSaveInstanceState did not crash under Robolectric.
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
-        assertDoesNotThrow { editor.performPreview() }
+        assertDoesNotThrow { runBlocking { editor.performPreview() } }
     }
 
     @Test
