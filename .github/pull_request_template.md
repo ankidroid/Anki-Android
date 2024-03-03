@@ -3,7 +3,7 @@
 _Describe the problem or feature and motivation_
 
 ## Fixes
-* Fixes _Link to the issues._
+* Fixes #<!-- replace this comment with the issue number e.g. 'Fixes #100'-->
 
 ## Approach
 _How does this change address the problem?_
