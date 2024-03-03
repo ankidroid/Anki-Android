@@ -137,7 +137,7 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid カード</string>
     <string name="note_editor_copy_note">ノートをコピー</string>
-    <string name="card_editor_reposition_card">導入順序を変更</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">導入順序を変更</string>
     <string name="card_editor_reset_card">学習履歴をリセット</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">スケジュールを変更</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">プレビュー</string>
@@ -357,4 +357,5 @@
     <string name="deck_description_field_hint">デッキ説明文</string>
     <string name="failed_to_copy">コピーに失敗しました</string>
     <string name="card_browser_unavailable_when_notes_mode">「ノート」モードでは使用できません</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
 </resources>

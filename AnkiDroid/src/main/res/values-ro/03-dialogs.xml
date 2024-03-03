@@ -76,7 +76,7 @@
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Current interval: %d day</item>
         <item quantity="few">Current interval: %d days</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="other">Intervalul curent: %d zile</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Reschedule for review in x days</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
