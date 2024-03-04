@@ -143,6 +143,7 @@
     <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">برنامه ریزی مجدد</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">پیش نمایش</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d از %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">تغییر نام</string>
     <string name="checks_action">بررسی</string>
@@ -321,7 +322,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">از اول شروع کنید</string>
     <string name="intro_sync_from_ankiweb">سینک از انکی‌وب</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">قبلاً وارد شده‌اید</string>
     <!-- Deck Creation -->
     <string name="deck_created">دسته ایجاد شد</string>
