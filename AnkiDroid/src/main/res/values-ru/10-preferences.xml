@@ -52,6 +52,7 @@
         <item quantity="many">%d мин</item>
         <item quantity="other">%d мин</item>
     </plurals>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Не найдено</string>
     <!-- preferences.xml categories-->

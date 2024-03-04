@@ -143,6 +143,7 @@
     <string name="card_editor_reset_card">Reset folyamat</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Átütemezés</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Előnézet</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ennyiből %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Átnevezés</string>
     <string name="checks_action">Ellenőrzés</string>
@@ -323,7 +324,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Kezdj hozzá</string>
     <string name="intro_sync_from_ankiweb">Szinkronizálás AnkiWebről</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">Már bejelentkeztél</string>
     <!-- Deck Creation -->
     <string name="deck_created">Pakli elkészült</string>
