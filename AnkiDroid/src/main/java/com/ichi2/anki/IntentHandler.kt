@@ -158,7 +158,7 @@ class IntentHandler : Activity() {
         Timber.i("Handling file import")
         if (!hasShownAppIntro()) {
             Timber.i("Trying to import a file when the app was not started at all")
-            showThemedToast(this, R.string.app_not_initialized, false)
+            showThemedToast(this, R.string.app_not_initialized_new, false)
             return
         }
         val importResult = handleFileImport(this, intent)
