@@ -352,6 +352,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         mediaRegistration = MediaRegistration(this)
         super.onCreate(savedInstanceState)
+        if (!ensureStoragePermissions()) {
+            return
+        }
         fieldState.setInstanceState(savedInstanceState)
         setContentView(R.layout.note_editor)
         val intent = intent
