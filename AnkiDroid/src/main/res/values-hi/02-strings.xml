@@ -143,6 +143,7 @@
     <string name="card_editor_reset_card">प्रगति को रीसेट</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">पुनः शेड्यूल करें</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">पूर्वावलोकन</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d का %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">का नाम बदलें</string>
     <string name="checks_action">जांचें</string>
@@ -322,7 +323,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">शुरू करें</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb से सिंक करें</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized">AnkiDroid is not initialized yet. Please open AnkiDroid once, then try again</string>
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">पहले से ही लॉगिन है</string>
     <!-- Deck Creation -->
     <string name="deck_created">बनाया गया डेक</string>

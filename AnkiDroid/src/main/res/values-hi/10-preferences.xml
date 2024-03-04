@@ -50,6 +50,7 @@
         <item quantity="one">%d मिनट</item>
         <item quantity="other">%d मिनट</item>
     </plurals>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">कोई परिणाम नहीं </string>
     <!-- preferences.xml categories-->
