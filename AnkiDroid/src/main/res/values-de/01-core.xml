@@ -250,5 +250,5 @@
     <string name="storage_access_title">Speicherzugang</string>
     <string name="storage_access_summary">Speichert Ihre Sammlung an einem sicheren Ort, der nicht gelöscht wird, wenn die App deinstalliert wird</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Zugang zu allen Daten</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">Bildverdeckung</string>
 </resources>
