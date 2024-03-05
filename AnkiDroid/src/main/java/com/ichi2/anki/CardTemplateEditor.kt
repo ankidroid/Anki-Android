@@ -653,8 +653,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             context?.let { ctx ->
                 ctx.copyToClipboard(
-                    template.toMarkdown(ctx),
-                    failureMessageId = R.string.failed_to_copy
+                    template.toMarkdown(ctx)
                 )
             }
         }

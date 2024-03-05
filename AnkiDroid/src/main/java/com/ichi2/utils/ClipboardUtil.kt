@@ -81,7 +81,7 @@ object ClipboardUtil {
 fun Context.copyToClipboard(
     text: String,
     @StringRes successMessageId: Int = R.string.about_ankidroid_successfully_copied_debug_info,
-    @StringRes failureMessageId: Int
+    @StringRes failureMessageId: Int = R.string.failed_to_copy
 ) {
     val copied = copyTextToClipboard(text)
     // in Android S_V2 and above, the system is guaranteed to show a message on a successful copy
