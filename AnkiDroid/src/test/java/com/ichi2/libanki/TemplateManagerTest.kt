@@ -133,6 +133,33 @@ class TemplateManagerTest {
         assertEquals("""<img src="file:///storage/emulated/0/AnkiDroid@%23$%25/collection.media/magenta.png">""", result)
     }
 
+    @Test
+    fun `parseSourcesToFileScheme - mixed script`() {
+        @Language("HTML")
+        val input = """
+            <!-- VERSION 1.14 -->
+            <script>
+            var scroll = false;
+            </script>
+            <img src="lovely.jpg">
+            <!-- ENHANCED_CLOZE -->
+            hughes and kisses
+        """
+
+        @Language("HTML")
+        val expectedResult = """
+            <!-- VERSION 1.14 -->
+            <script>
+            var scroll = false;
+            </script>
+            <img src="file:///storage/emulated/0/15773/collection.media/lovely.jpg">
+            <!-- ENHANCED_CLOZE -->
+            hughes and kisses
+        """
+        val result = parseSourcesToFileScheme(input, "/storage/emulated/0/15773/collection.media")
+        assertEquals(expectedResult, result)
+    }
+
     /***********************************************************************************************
      * [parseVideos] tests
      **********************************************************************************************/

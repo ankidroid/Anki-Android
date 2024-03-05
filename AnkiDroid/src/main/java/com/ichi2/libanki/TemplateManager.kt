@@ -340,7 +340,7 @@ fun parseVideos(text: String, mediaDir: String): String {
 @NotInLibAnki
 @VisibleForTesting
 fun parseSourcesToFileScheme(content: String, mediaDir: String): String {
-    val doc = Jsoup.parse(content)
+    val doc = Jsoup.parseBodyFragment(content)
     doc.outputSettings(OutputSettings().prettyPrint(false))
 
     fun replaceWithFileScheme(tag: String, attr: String): Boolean {
