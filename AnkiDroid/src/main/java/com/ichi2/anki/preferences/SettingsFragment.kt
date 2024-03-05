@@ -29,6 +29,7 @@ import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceManager.OnPreferenceTreeClickListener
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.preferences.DialogFragmentProvider
+import timber.log.Timber
 import java.lang.NumberFormatException
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
@@ -91,14 +92,12 @@ abstract class SettingsFragment :
     // `getTargetFragment()`, which throws if `setTargetFragment()` isn't used before.
     // While this isn't fixed on upstream, suppress the deprecation warning
     override fun onDisplayPreferenceDialog(preference: Preference) {
-        if (preference is DialogFragmentProvider) {
-            val dialogFragment = preference.makeDialogFragment()
-            dialogFragment.arguments = bundleOf("key" to preference.key)
-            dialogFragment.setTargetFragment(this, 0)
-            dialogFragment.show(parentFragmentManager, "androidx.preference.PreferenceFragment.DIALOG")
-        } else {
-            super.onDisplayPreferenceDialog(preference)
-        }
+        val dialogFragment = (preference as? DialogFragmentProvider)?.makeDialogFragment()
+            ?: return super.onDisplayPreferenceDialog(preference)
+        Timber.d("displaying custom preference: ${dialogFragment::class.simpleName}")
+        dialogFragment.arguments = bundleOf("key" to preference.key)
+        dialogFragment.setTargetFragment(this, 0)
+        dialogFragment.show(parentFragmentManager, "androidx.preference.PreferenceFragment.DIALOG")
     }
 
     override fun onStart() {
