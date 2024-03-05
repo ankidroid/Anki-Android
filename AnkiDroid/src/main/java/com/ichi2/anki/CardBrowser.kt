@@ -29,6 +29,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
@@ -86,6 +87,7 @@ import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.BasicItemSelectedListener
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
@@ -847,7 +849,7 @@ open class CardBrowser :
         }
         if (viewModel.hasSelectedAnyRows()) {
             actionBarMenu!!.findItem(R.id.action_suspend_card).apply {
-                title = TR.browsingToggleSuspend()
+                title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
                 setIcon(R.drawable.ic_suspend)
             }
             actionBarMenu!!.findItem(R.id.action_mark_card).apply {
