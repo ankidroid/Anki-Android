@@ -446,7 +446,7 @@ open class CollectionHelper {
          * @see android.content.Context.getExternalFilesDirs
          */
         fun getAppSpecificExternalDirectories(context: Context): List<File> {
-            return context.getExternalFilesDirs(null).filterNotNull()
+            return context.getExternalFilesDirs(null)?.filterNotNull() ?: listOf()
         }
 
         /**
