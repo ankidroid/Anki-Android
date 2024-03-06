@@ -21,8 +21,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:iconifiedByDefault="false"
-            android:queryHint="Search Note Types"/>
-
+            android:queryHint="Search Note Types"
+            android:contentDescription="@string/search"
+            android:importantForAccessibility="yes"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
         <!-- RecyclerView for displaying note types -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/note_types_list"

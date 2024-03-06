@@ -53,7 +53,11 @@ class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
     private lateinit var searchView: SearchView
+
+    // Initialize the list of current note types to an empty list
     private var currentNotetypes: List<NoteTypeUiModel> = emptyList()
+
+    // Flag to track if it's the first run of the function ie the initial list is updated to currentList
     private var isFirstRun: Boolean = true
 
     private val notetypesAdapter: NotetypesAdapter by lazy {
@@ -101,7 +105,7 @@ class ManageNotetypes : AnkiActivity() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 // Filter the note types based on the search query
                 val filteredList = if (newText.isNullOrEmpty()) {
-                    currentNotetypes
+                    currentNotetypes // returns the initial list if search query is  empty
                 } else {
                     notetypesAdapter.currentList.filter {
                         it.name.lowercase().contains(newText.lowercase())
