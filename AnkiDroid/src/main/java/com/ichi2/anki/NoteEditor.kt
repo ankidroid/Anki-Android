@@ -1211,8 +1211,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
+    @NeedsTest("previewing newlines")
     private fun openNewPreviewer() {
-        val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toString() } ?: mutableListOf()
+        val convertNewlines = shouldReplaceNewlines()
+        fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
+        val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toFieldText() } ?: mutableListOf()
         val tags = selectedTags ?: mutableListOf()
         val args = TemplatePreviewerArguments(
             notetypeFile = NotetypeFile(this, editorNote!!.notetype),
