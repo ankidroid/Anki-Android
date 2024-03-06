@@ -18,6 +18,7 @@ package com.ichi2.anki.notetype
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -52,7 +53,6 @@ import com.ichi2.utils.*
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
-    private lateinit var searchView: SearchView
 
     // Initialize the list of current note types to an empty list
     private var currentNotetypes: List<NoteTypeUiModel> = emptyList()
@@ -91,14 +91,28 @@ class ManageNotetypes : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setTitle(R.string.model_browser_label)
         setContentView(R.layout.activity_manage_note_types)
+
         actionBar = enableToolbar()
         noteTypesList = findViewById<RecyclerView?>(R.id.note_types_list).apply {
             adapter = notetypesAdapter
         }
+        findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {
+            launchCatchingTask { addNewNotetype() }
+        }
+        launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
+    }
 
-        searchView = findViewById(R.id.search_view)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.manage_notes_type_menu, menu)
+        val searchItem = menu.findItem(R.id.manage_notes_types_dialog_action_filter)
+        val searchView = searchItem.actionView as SearchView?
+
+        // Configure the SearchView
+        searchView!!.queryHint = getString(R.string.search)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // Handle search query submission
                 return false
             }
 
@@ -117,10 +131,7 @@ class ManageNotetypes : AnkiActivity() {
             }
         })
 
-        findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {
-            launchCatchingTask { addNewNotetype() }
-        }
-        launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
+        return true
     }
 
     @SuppressLint("CheckResult")
