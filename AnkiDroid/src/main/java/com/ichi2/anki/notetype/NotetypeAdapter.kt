@@ -47,6 +47,7 @@ internal class NotetypesAdapter(
     private val onEditCards: (NoteTypeUiModel) -> Unit,
     private val onRename: (NoteTypeUiModel) -> Unit,
     private val onDelete: (NoteTypeUiModel) -> Unit
+
 ) : ListAdapter<NoteTypeUiModel, NotetypeViewHolder>(notetypeNamesAndCountDiff) {
     private val layoutInflater = LayoutInflater.from(context)
 
@@ -59,7 +60,6 @@ internal class NotetypesAdapter(
             onShowFields = onShowFields
         )
     }
-
     override fun onBindViewHolder(holder: NotetypeViewHolder, position: Int) {
         holder.bind(getItem(position))
     }

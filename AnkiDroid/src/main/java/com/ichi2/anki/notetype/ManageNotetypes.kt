@@ -27,6 +27,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.StockNotetype
@@ -51,6 +52,10 @@ import com.ichi2.utils.*
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
+    private lateinit var searchView: SearchView
+    private var currentNotetypes: List<NoteTypeUiModel> = emptyList()
+    private var isFirstRun: Boolean = true
+
     private val notetypesAdapter: NotetypesAdapter by lazy {
         NotetypesAdapter(
             this@ManageNotetypes,
@@ -78,6 +83,7 @@ class ManageNotetypes : AnkiActivity() {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
+
         super.onCreate(savedInstanceState)
         setTitle(R.string.model_browser_label)
         setContentView(R.layout.activity_manage_note_types)
@@ -85,6 +91,28 @@ class ManageNotetypes : AnkiActivity() {
         noteTypesList = findViewById<RecyclerView?>(R.id.note_types_list).apply {
             adapter = notetypesAdapter
         }
+
+        searchView = findViewById(R.id.search_view)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Filter the note types based on the search query
+                val filteredList = if (newText.isNullOrEmpty()) {
+                    currentNotetypes
+                } else {
+                    notetypesAdapter.currentList.filter {
+                        it.name.lowercase().contains(newText.lowercase())
+                    }
+                }
+                notetypesAdapter.submitList(filteredList) // Update adapter with filtered or complete list
+
+                return true
+            }
+        })
+
         findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {
             launchCatchingTask { addNewNotetype() }
         }
@@ -274,7 +302,13 @@ class ManageNotetypes : AnkiActivity() {
                 getNotetypeNameIdUseCount().map { it.toUiModel() }
             }
         }
+        if (isFirstRun) {
+            currentNotetypes = updatedNotetypes
+            isFirstRun = false
+        }
+
         notetypesAdapter.submitList(updatedNotetypes)
+
         actionBar.subtitle = resources.getQuantityString(
             R.plurals.model_browser_types_available,
             updatedNotetypes.size,
