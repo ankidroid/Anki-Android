@@ -24,8 +24,6 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.servicelayer.DeckService
-import com.ichi2.anki.servicelayer.DeckService.deckExists
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
@@ -119,10 +117,7 @@ class CreateDeckDialog(
     }
 
     fun createDeck(deckName: String) {
-        if(deckExists(DeckService.dueTree!!, deckName)) {
-            displayFeedback("Deck name already exists", Snackbar.LENGTH_LONG)
-        }
-        else if (Decks.isValidDeckName(deckName)) {
+        if (Decks.isValidDeckName(deckName)) {
             createNewDeck(deckName)
             // 11668: Display feedback if a deck is created
             displayFeedback(context.getString(R.string.deck_created))
