@@ -18,7 +18,7 @@ buildscript {
     ext.androidx_test_version = '1.5.0'
     ext.androidx_test_junit_version = '1.1.5'
     ext.robolectric_version = '4.11.1'
-    ext.android_gradle_plugin = "8.1.2"
+    ext.android_gradle_plugin = "8.2.2"
     ext.dokka_version = "1.9.10" // not the same with kotlin version!
     ext.uiautomator_version = "2.3.0-rc01"
 
@@ -109,21 +109,21 @@ subprojects {
 ext {
 
     jvmVersion = Jvm.current().javaVersion.majorVersion
-//    if (jvmVersion != "17" && jvmVersion != "21") {
-//        println "\n\n\n"
-//        println "**************************************************************************************************************"
-//        println "\n\n\n"
-//        println "ERROR: AnkiDroid builds with JVM version 17 or 21."
-//        println "  Incompatible major version detected: '" + jvmVersion + "'"
-//        println "\n\n\n"
-//        println "  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions."
-//        println "  Edit the main build.gradle file, find this message in the file, and add support for the new version."
-//        println "  Please make sure the `jacocoTestReport` target works on an emulator with our minSdkVersion (currently 23)."
-//        println "\n\n\n"
-//        println "**************************************************************************************************************"
-//        println "\n\n\n"
-//        System.exit(1)
-//    }
+   if (jvmVersion != "17" && jvmVersion != "21") {
+       println "\n\n\n"
+       println "**************************************************************************************************************"
+       println "\n\n\n"
+       println "ERROR: AnkiDroid builds with JVM version 17 or 21."
+       println "  Incompatible major version detected: '" + jvmVersion + "'"
+       println "\n\n\n"
+       println "  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions."
+       println "  Edit the main build.gradle file, find this message in the file, and add support for the new version."
+       println "  Please make sure the `jacocoTestReport` target works on an emulator with our minSdkVersion (currently 23)."
+       println "\n\n\n"
+       println "**************************************************************************************************************"
+       println "\n\n\n"
+       System.exit(1)
+   }
     ciBuild = System.getenv("CI") == "true" // works for Travis CI or Github Actions
     // allows for -Dpre-dex=false to be set
     preDexEnabled = "true" == System.getProperty("pre-dex", "true")
