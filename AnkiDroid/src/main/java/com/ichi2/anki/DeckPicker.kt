@@ -71,6 +71,7 @@ import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
+import com.ichi2.anki.DueTree.dueTree
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.StartupFailure.*
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
@@ -135,6 +136,7 @@ import org.json.JSONException
 import timber.log.Timber
 import java.io.File
 import java.lang.Runnable
+import java.util.Locale
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -239,9 +241,6 @@ open class DeckPicker :
     /** See [OptionsMenuState]. */
     @VisibleForTesting
     var optionsMenuState: OptionsMenuState? = null
-
-    @VisibleForTesting
-    var dueTree: DeckNode? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var searchDecksIcon: MenuItem? = null
