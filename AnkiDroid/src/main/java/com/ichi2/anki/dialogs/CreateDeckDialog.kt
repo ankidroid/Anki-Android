@@ -120,7 +120,7 @@ class CreateDeckDialog(
 
     fun createDeck(deckName: String) {
         if(deckExists(deckName)) {
-            displayFeedback(context.getString(R.string.deck_name_already_exists), Snackbar.LENGTH_LONG)
+            displayFeedback("Deck name already exists", Snackbar.LENGTH_LONG)
         }
         else if (Decks.isValidDeckName(deckName)) {
             createNewDeck(deckName)
