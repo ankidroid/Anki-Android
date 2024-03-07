@@ -1954,7 +1954,6 @@ open class DeckPicker :
             studyoptionsFrame!!.visibility = View.VISIBLE
         }
         dueTree = result
-        DeckService.dueTree = result
         launchCatchingTask { renderPage(collectionIsEmpty) }
         // Update the mini statistics bar as well
         reviewSummaryTextView.setSingleLine()
