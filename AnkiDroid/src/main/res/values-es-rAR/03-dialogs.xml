@@ -109,8 +109,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Confirmar</string>
     <string name="dialog_no">No</string>
     <string name="dialog_yes">Sí</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Conservar</string>
+    <string name="dialog_remove">Quitar</string>
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_processing">Procesando...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crear</string>
@@ -221,7 +221,7 @@
         <item quantity="one">Una sincronización automática puede activarse en %d segundo</item>
         <item quantity="other">Una sincronización automática puede activarse en %d segundos</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">Su proveedor de Internet podría cobrar dinero por el uso de datos</string>
     <string name="deck_picker_new">Número de cartas nuevas para ver hoy en este mazo.</string>
     <string name="deck_picker_rev">Número de cartas que vencen hoy en este mazo.</string>
     <string name="deck_picker_lrn">Número de cartas en aprendizaje en este mazo.</string>
