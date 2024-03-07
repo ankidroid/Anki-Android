@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
@@ -29,6 +30,26 @@ import kotlin.reflect.jvm.jvmName
  * to avoid unwanted activity recreations
  */
 class ImageOcclusionActivity : SingleFragmentActivity() {
+    override fun onStart() {
+        super.onStart()
+        onBackPressedDispatcher.addCallback(this) {
+            showExitConfirmationDialog()
+        }
+    }
+
+    private fun showExitConfirmationDialog() {
+        val alertDialogBuilder = android.app.AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage("Discard current input?")
+        alertDialogBuilder.setPositiveButton("Discard") { dialog, _ ->
+            dialog.dismiss()
+            finish()
+        }
+        alertDialogBuilder.setNegativeButton("Keep Editing") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val alertDialog: android.app.AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
 
     companion object {
 
