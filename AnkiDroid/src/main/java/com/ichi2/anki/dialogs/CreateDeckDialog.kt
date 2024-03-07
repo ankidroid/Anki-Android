@@ -22,6 +22,7 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.DueTree.dueTree
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
@@ -37,6 +38,7 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import timber.log.Timber
+import java.util.Locale
 
 /**
  * A dialog which manages the creation of decks, subdecks and filtered decks.
@@ -117,7 +119,10 @@ class CreateDeckDialog(
     }
 
     fun createDeck(deckName: String) {
-        if (Decks.isValidDeckName(deckName)) {
+        if(deckExists(deckName)) {
+            displayFeedback(context.getString(R.string.deck_name_already_exists), Snackbar.LENGTH_LONG)
+        }
+        else if (Decks.isValidDeckName(deckName)) {
             createNewDeck(deckName)
             // 11668: Display feedback if a deck is created
             displayFeedback(context.getString(R.string.deck_created))
@@ -126,6 +131,22 @@ class CreateDeckDialog(
             displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
         }
         shownDialog?.dismiss()
+    }
+
+    private fun deckExists(deckName: String) : Boolean {
+        val newDeckName = deckName.lowercase(Locale.getDefault())
+        if(newDeckName == "default") {
+            return true
+        }
+        val tree = dueTree
+        if (tree != null) {
+            for(child in tree.children) {
+                if(child.fullDeckName.lowercase(Locale.getDefault()) == newDeckName) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     fun createFilteredDeck(deckName: String): Boolean {
