@@ -19,6 +19,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
@@ -38,16 +39,16 @@ class ImageOcclusionActivity : SingleFragmentActivity() {
     }
 
     private fun showExitConfirmationDialog() {
-        val alertDialogBuilder = android.app.AlertDialog.Builder(this)
-        alertDialogBuilder.setMessage("Discard current input?")
-        alertDialogBuilder.setPositiveButton("Discard") { dialog, _ ->
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage(CollectionManager.TR.addingDiscardCurrentInput())
+        alertDialogBuilder.setPositiveButton(getString(R.string.discard)) { dialog, _ ->
             dialog.dismiss()
             finish()
         }
-        alertDialogBuilder.setNegativeButton("Keep Editing") { dialog, _ ->
+        alertDialogBuilder.setNegativeButton(CollectionManager.TR.addingKeepEditing()) { dialog, _ ->
             dialog.dismiss()
         }
-        val alertDialog: android.app.AlertDialog = alertDialogBuilder.create()
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
         alertDialog.show()
     }
 
