@@ -19,8 +19,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.addCallback
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
@@ -31,25 +31,18 @@ import kotlin.reflect.jvm.jvmName
  * to avoid unwanted activity recreations
  */
 class ImageOcclusionActivity : SingleFragmentActivity() {
+
     override fun onStart() {
         super.onStart()
         onBackPressedDispatcher.addCallback(this) {
-            showExitConfirmationDialog()
+            DiscardChangesDialog.showDialog(this@ImageOcclusionActivity) {
+                closeIOEditor()
+            }
         }
     }
 
-    private fun showExitConfirmationDialog() {
-        val alertDialogBuilder = AlertDialog.Builder(this)
-        alertDialogBuilder.setMessage(CollectionManager.TR.addingDiscardCurrentInput())
-        alertDialogBuilder.setPositiveButton(getString(R.string.discard)) { dialog, _ ->
-            dialog.dismiss()
-            finish()
-        }
-        alertDialogBuilder.setNegativeButton(CollectionManager.TR.addingKeepEditing()) { dialog, _ ->
-            dialog.dismiss()
-        }
-        val alertDialog: AlertDialog = alertDialogBuilder.create()
-        alertDialog.show()
+    private fun closeIOEditor() {
+        finish()
     }
 
     companion object {
