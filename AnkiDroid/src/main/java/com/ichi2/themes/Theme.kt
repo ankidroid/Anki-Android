@@ -31,7 +31,7 @@ enum class Theme(val id: String, @StyleRes val resId: Int, val isNightMode: Bool
             get() = LIGHT
 
         fun ofId(id: String): Theme {
-            return values().find { it.id == id } ?: fallback
+            return entries.find { it.id == id } ?: fallback
         }
     }
 }
