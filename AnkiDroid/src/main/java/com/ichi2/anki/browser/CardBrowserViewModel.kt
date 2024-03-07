@@ -207,6 +207,7 @@ class CardBrowserViewModel(
     val initCompleted get() = flowOfInitCompleted.value
 
     init {
+        Timber.d("CardBrowserViewModel::init")
         flowOfColumnIndex1
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
             .launchIn(viewModelScope)
