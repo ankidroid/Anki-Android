@@ -359,7 +359,6 @@
     <!-- Deck Creation -->
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
-    <string name="deck_name_already_exists">Deck name already exists</string>
 
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
