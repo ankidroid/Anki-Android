@@ -45,17 +45,17 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Öppna panel</string>
-    <string name="drawer_close">Stäng panel</string>
+    <string name="drawer_open">Öppna meny</string>
+    <string name="drawer_close">Stäng meny</string>
     <string name="CardEditorCardDeck">Kortlek:</string>
     <string name="CardEditorNoteDeck">Kortlek:</string>
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Etiketter: %1$s</string>
     <string name="CardEditorCards">Kort: %1$s</string>
-    <string name="edit_occlusions">Redigera skärmar</string>
-    <string name="tag_name">Taggnamn</string>
+    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="tag_name">Etikettnamn</string>
     <string name="add_new_filter_tags">Lägg till/Filtrera etiketter</string>
-    <string name="add_tag">Lägg till tagg</string>
+    <string name="add_tag">Lägg till etikett</string>
     <string name="check_all_tags">Markera/avmarkera alla etiketter</string>
     <string name="filter_tags">Filtrera etiketter</string>
     <string name="no_tags">Du har inte lagt till några etiketter än.</string>
@@ -70,16 +70,16 @@
     <string name="hide_whiteboard">Stäng av whiteboard</string>
     <string name="clear_whiteboard">Rensa whiteboard</string>
     <string name="replay_audio">Spela om ljud</string>
-    <string name="leech_suspend_notification">Markerat som utsugarkort och åsidosatt</string>
-    <string name="leech_notification">Markerat som utsugarkort</string>
+    <string name="leech_suspend_notification">Kort markerat som igel och avstängt</string>
+    <string name="leech_notification">Kort markerat som igel</string>
     <string name="webview_crash_unknown">Okänt fel</string>
     <string name="webview_crash_unknwon_detailed">Detta orsakades av ett internt fel i WebView</string>
     <string name="webview_crash_oom">Slut på minne</string>
-    <string name="webview_crash_oom_details">WebView avslutades av systemet. Detta händer vanligtvis när programmet tar slut på minne, ofta på grund av stora teckensnitt eller media.</string>
-    <string name="webview_crash_nonfatal">WebView renderare kraschade. Orsak: %s</string>
-    <string name="webview_crash_fatal">Kritiskt fel: WebView renderare kraschade. Orsak: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Misslyckades</string>
-    <string name="webview_crash_loop_dialog_content">System WebView kunde inte rendera kortet \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_oom_details">WebView avslutades av systemet. Detta händer vanligtvis när programmet får slut på minne, ofta på grund av stora teckensnitt eller media.</string>
+    <string name="webview_crash_nonfatal">WebViewern kraschade. Orsak: %s</string>
+    <string name="webview_crash_fatal">Kritiskt fel: WebViewern kraschade. Orsak: %s</string>
+    <string name="webview_crash_loop_dialog_title">Systemfel hos WebViewern</string>
+    <string name="webview_crash_loop_dialog_content">WebViewern kunde inte hämta kortet \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Fråga</item>
@@ -89,7 +89,7 @@
         <item>Svar</item>
         <item>Kort</item>
         <item>Kortlek</item>
-        <item>Not</item>
+        <item>Anteckning</item>
         <item>Fråga</item>
         <item>Etiketter</item>
         <item>Felsvar</item>
@@ -97,40 +97,40 @@
         <item>Intervall</item>
         <item>Lätthet</item>
         <item>Förfallodatum</item>
-        <item>Kort Modifierat</item>
+        <item>Kort ändrat</item>
         <item>Skapad</item>
         <item>Anteckning ändrad</item>
     </string-array>
     <string name="filter_by_flags">Flaggor</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ändra dagens gräns för nya kort</string>
-    <string name="custom_study_increase_review_limit">Modifiera dagens dagens gräns för kortrepetitioner</string>
-    <string name="custom_study_review_forgotten">Repetera glömda kort</string>
-    <string name="custom_study_review_ahead">Repetera i förväg</string>
+    <string name="custom_study_increase_review_limit">Ändra dagens gräns för kortgranskning</string>
+    <string name="custom_study_review_forgotten">Granska glömda kort</string>
+    <string name="custom_study_review_ahead">Granska i förväg</string>
     <string name="custom_study_random_selection">Studera ett slumpmässigt urval av kort</string>
     <string name="custom_study_preview_new">Förhandsgranska nya kort</string>
     <string name="custom_study_limit_tags">Begränsa till vissa etiketter</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Redigera not</string>
+    <string name="cardeditor_title_edit_card">Redigera anteckning</string>
     <string name="discard">Kasta</string>
     <string name="note_editor_no_cards_created">Inga kort skapade. Vänligen fyll i fler fält</string>
     <string name="note_editor_no_first_field">Det första fältet är tomt</string>
-    <string name="note_editor_no_cloze_delations">Denna typ av anteckning måste innehålla textluckor</string>
-    <string name="note_editor_no_cards_created_all_fields">Den aktuella anteckningstypen producerade inga kort.\nVälj en annan anteckningstyp, eller klicka på ‘Kort’ och lägg till ett fältbyte</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Luckborttagningar fungerar bara för anteckningar av Textluck-typ</string>
-    <string name="saving_facts">Sparar not</string>
+    <string name="note_editor_no_cloze_delations">Denna typ av anteckning måste innehålla blanka textluckor</string>
+    <string name="note_editor_no_cards_created_all_fields">Den aktuella anteckningstypen producerade inga kort.\nVälj en annan anteckningstyp, eller klicka på ‘Kort’ och lägg till ett fält</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Blankluckor fungerar bara för anteckningar på Blankluckskort</string>
+    <string name="saving_facts">Sparar anteckning</string>
     <string name="saving_model">Sparar anteckningstyp</string>
     <string name="save">Spara</string>
     <string name="close">Stäng</string>
     <string name="select">Välj</string>
     <string name="field_remapping">%1$s (från \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">Alla kort som inte mappar till något kommer att tas bort. Om en not inte har några kvarvarande kort, kommer den att tas bort. Är du säker på att du vill fortsätta?</string>
+    <string name="confirm_map_cards_to_nothing">Alla kort som inte kopplar till något kommer att tas bort. Om en anteckning inte har några kvarvarande kort, kommer den att försvinna. Är du säker på att du vill fortsätta?</string>
     <string name="missing_note_type">Anteckningstyp saknas</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Tidsruta har uppnåtts</string>
     <plurals name="timebox_reached">
         <item quantity="one">Studera %1$d kort i %2$s</item>
-        <item quantity="other">Studera %1$d kort i %2$s</item>
+        <item quantity="other">%1$d kort studerade på %2$s</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
@@ -152,20 +152,20 @@
     <string name="empty_cards">Tomma kort</string>
     <string name="empty_card_warning">Detta kort är tomt. Använd alternativet \"Tomma kort\" i menyn på kortleksväljaren.</string>
     <string name="unknown_type_field_warning">Skriv svar: okänt fält %s</string>
-    <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
+    <string name="delete_deck">Raderar kortlek&#8230;</string>
     <string name="info_rate">Betygsätt AnkiDroid</string>
     <string name="import_title">Importera</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Lägg till</string>
-    <string name="import_message_replace_confirm">Detta kommer att ta bort din befintliga samling och ersätta den med datat i filen %s. Är du säker?</string>
-    <string name="import_dialog_message_add">Lägg till “%s” i samlingen? Det kan ta lång</string>
+    <string name="import_message_replace_confirm">Detta kommer att ta bort din befintliga samling och ersätta den med datan i filen %s. Är du säker?</string>
+    <string name="import_dialog_message_add">Lägg till “%s” i samlingen? Det kan ta lång tid</string>
     <string name="import_log_no_apkg">Detta är ingen giltig Anki-paketfil</string>
     <string name="import_title_error" comment="Title of error dialog">Fel</string>
-    <string name="import_error_handle_exception">Det gick inte att importera filen\n\n%s</string>
+    <string name="import_error_handle_exception">Misslyckades med att importera filen\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filnamnet \"%s\" har varken .apkg eller .colpkg suffix</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) ersättningar stöds inte än. Se manualen för ersättningsinstruktioner.</string>
     <string name="import_error_content_provider">Den valda filen kunde inte importeras automatiskt av AnkiDroid. Vänligen se användarmanualen för information om manuell import av Anki-filer: \n %s</string>
     <string name="import_error_copy_to_cache">Misslyckades att cacha filen (eventuellt slut lagringsutrymme)</string>
-    <string name="import_interrupted">Importering avbruten: AnkiDroid stängdes ned</string>
+    <string name="import_interrupted">Import avbruten: AnkiDroid stängdes</string>
     <string name="export_preparation_in_progress">Förbereder export&#8230;</string>
     <string name="export_ready_title">Export redo</string>
     <string name="export_send_no_handlers">Inga program tillgängliga för att hantera apkg. Sparar...</string>
@@ -173,10 +173,10 @@
     <string name="export_save_apkg_unsuccessful">Anki-paketet kunde inte sparas</string>
     <string name="export_share_title">Skicka Anki-paketet med</string>
     <string name="export_email_subject">AnkiDroid exporterade flashcards: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hej!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Det här är en Anki flashcard-samling från AnkiDroid[1].
+        Testa att öppna den genom en av de tillgängliga Anki-länkarna[2] och njut av enkel och effektiv inlärning!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -188,7 +188,7 @@
     <string name="select_tts">Ställ in TTS-språk</string>
     <string name="custom_study">Anpassade studier</string>
     <string name="more_options">Mer</string>
-    <string name="dyn_deck_desc">Det här är en specialkortlek för studier utanför det normala schemat. Kort återförs automatiskt till sina ursprungliga kortlekar efter att du repeterat dem. Om du tar bort denna kortlek återförs alla återstående kort till sina ursprungliga kortlekar.</string>
+    <string name="dyn_deck_desc">Det här är en specialkortlek för studier utanför det normala schemat. Korten återförs automatiskt till sina ursprungliga kortlekar efter att du repeterat dem. Om du tar bort denna kortlek återförs alla återstående kort till sina ursprungliga kortlekar.</string>
     <string name="steps_error">Steg måste definieras som siffror högre än 0</string>
     <string name="steps_min_error">Du måste ha minst ett steg</string>
     <string name="tag_editor_add_feedback">Tryck på “%2$s” för att bekräfta att lägga till “%1$s”</string>
@@ -196,7 +196,7 @@
     <!-- Time spans -->
     <string name="reminder_title">Glöm inte att studera idag!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d kort att granska i %1$s</item>
+        <item quantity="one">%2$d kort att repetera i %1$s</item>
         <item quantity="other">%2$d kort att repetera i %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
@@ -204,13 +204,13 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Systemet saknar en installerad app som kan utföra denna handling.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerbilder kan ta upp mycket lagringsutrymme. Du kan vilja komprimera & ändra storleken på bilderna i media-mappen.]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">Ingen webbläsare hittades för att öppna länken: %s</string>
     <string name="web_page_error">Fel vid inläsning av sidan: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Bakgrund</string>
     <string name="choose_an_image">Välj en bild</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">Ta bort bakgrund?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Återställ standardvärde</string>
     <string name="cloze_sample_text">Detta är ett {{%1$s::exempel}} på en textlucka.</string>
@@ -237,7 +237,7 @@
     <string name="card_viewer_could_not_find_image">Kortet innehållsfel: Det gick inte att läsa in ‘%s’</string>
     <!-- Deck Picker -->
     <string name="search_decks">Sök kortlekar</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Visa överföringsframsteg</string>
     <string name="ankidroid_init_failed_webview_title">Kritiskt fel</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid använder sig av System WebView vilket inte är tillgängligt. Detta kan hända om systemet håller på att installera uppdateringar. Försök igen om några minuter.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -268,7 +268,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">Skriv in en giltig e-postadress</string>
     <string name="password_empty">Lösenord krävs</string>
     <string name="back_pressed_once">Tryck tillbaka igen för att avsluta</string>
     <string name="back_pressed_once_reviewer">Tryck tillbaka igen för att återvända</string>
@@ -285,14 +285,14 @@
     <string name="deck_download_progress_message">Du kan använda andra appar medan nedladdningen kör</string>
     <string name="check_network">Kontrollera din nätverksanslutning</string>
     <string name="search_using_deck_name">Sök efter kortlekens namn</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">Nedladdningen avbruten, det externa lagringsutrymmet är inte tillgängligt</string>
     <string name="home">Hem</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Kort gömt i högen</string>
     <plurals name="note_suspended">
         <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="other">%d kort avstängda.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Gör fältet %s klibbigt</string>
@@ -302,8 +302,8 @@
     <string name="scoped_storage_postpone">Senarelägg</string>
     <string name="scoped_storage_migrate">Migrera</string>
     <string name="search_card_js_api_no_results">Sökning gav inga resultat</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid måste överföra lagringen för att följa säkerhetspolicyn för Android 10.\n\nÖverföringen kommer förbättra mediasynkningen.&lt;br&gt;&lt;br&gt;Medan överföringen pågår kan du inte synka och vissa inställningar kommer att inaktiveras. En mediasynkning kommer genomföras innan överföringen startar för att säkra din data.&lt;br&gt;&lt;br&gt;Det går bra att använda eller stänga AnkiDroid medan överföringen pågår.</string>
+    <string name="start_migration_progress_message">Startar lagringsöverföring. Du kan strax fortsätta använda AnkiDroid.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
 \nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
