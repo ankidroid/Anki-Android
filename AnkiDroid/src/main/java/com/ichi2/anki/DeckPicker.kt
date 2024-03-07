@@ -71,7 +71,6 @@ import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
-import com.ichi2.anki.DueTree.dueTree
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.StartupFailure.*
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
@@ -136,7 +135,6 @@ import org.json.JSONException
 import timber.log.Timber
 import java.io.File
 import java.lang.Runnable
-import java.util.Locale
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -244,6 +242,9 @@ open class DeckPicker :
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var searchDecksIcon: MenuItem? = null
+
+    @VisibleForTesting
+    var dueTree: DeckNode? = null
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -1953,6 +1954,7 @@ open class DeckPicker :
             studyoptionsFrame!!.visibility = View.VISIBLE
         }
         dueTree = result
+        DeckService.dueTree = result
         launchCatchingTask { renderPage(collectionIsEmpty) }
         // Update the mini statistics bar as well
         reviewSummaryTextView.setSingleLine()
