@@ -273,7 +273,7 @@ class AutomaticAnswerSettings(
             col: Collection,
             selectedDid: DeckId
         ): AutomaticAnswerSettings {
-            val conf = col.decks.confForDid(selectedDid)
+            val conf = col.decks.configDictForDeckId(selectedDid)
             val action = getAction(conf)
             val useTimer = preferences.getBoolean("timeoutAnswer", false)
 

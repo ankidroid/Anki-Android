@@ -43,13 +43,13 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
     }
 
     private fun resetPrefs() {
-        val conf = col.decks.confForDid(col.decks.selected())
+        val conf = col.decks.configDictForDeckId(col.decks.selected())
         conf.remove(AutomaticAnswerAction.CONFIG_KEY)
         col.decks.save(conf)
     }
 
     private fun setPreference(value: Int) {
-        val conf = col.decks.confForDid(col.decks.selected())
+        val conf = col.decks.configDictForDeckId(col.decks.selected())
         conf.put(AutomaticAnswerAction.CONFIG_KEY, value)
         col.decks.save(conf)
     }

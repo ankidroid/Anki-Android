@@ -277,7 +277,7 @@ class CongratsViewModel : ViewModel(), OnErrorListener {
     fun onDeckOptions() {
         launchCatchingIO {
             val deckId = withCol { decks.getCurrentId() }
-            val isFiltered = withCol { decks.isDyn(deckId) }
+            val isFiltered = withCol { decks.isFiltered(deckId) }
             deckOptionsDestination.emit(DeckOptionsDestination(deckId, isFiltered))
         }
     }
