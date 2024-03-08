@@ -112,8 +112,7 @@ class CreateDeckDialog(
     /**
      * @return true if the collection contains a deck with the given name
      */
-    private fun deckExists(col: Collection, name: String) =
-        col.decks.byName(name) != null
+    private fun deckExists(col: Collection, name: String): Boolean = col.decks.byName(name) != null
 
     /**
      * Returns the fully qualified deck name for the provided input
