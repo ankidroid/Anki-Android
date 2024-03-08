@@ -177,7 +177,6 @@
         <item quantity="many">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
         <item quantity="other">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
     </plurals>
-    <string name="invalid_template">לא ניתן לייצר קלף</string>
     <string name="card_template_editor_would_delete_note">הסרת סוג קלף זה תוביל למחיקת רשומה אחת או יותר. נא ליצור ולשמור סוג קלף חדש תחילה.</string>
     <string name="card_template_editor_save_error">לא ניתן לשמור שינויים לתבנית הקלף: %s</string>
     <string name="template_for_current_card_deleted">סוג הקלף של הקלף הנוכחי נמחק.</string>

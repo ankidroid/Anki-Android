@@ -161,7 +161,6 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Hapus tipe kartu \"%2$s\", beserta kartu %1$d?</item>
     </plurals>
-    <string name="invalid_template">Kartu tidak dapat dibuat</string>
     <string name="card_template_editor_would_delete_note">Menghapus tipe kartu ini akan menyebabkan satu catatan atau lebih terhapus. Silahkan buat dahulu tipe kartu yang baru.</string>
     <string name="card_template_editor_save_error">Tidak dapat menyimpan perubahan templat kartu: %s</string>
     <string name="template_for_current_card_deleted">Templat untuk kartu ini sudah dihapus.</string>

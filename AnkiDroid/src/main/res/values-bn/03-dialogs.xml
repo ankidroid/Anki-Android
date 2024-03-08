@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">কোনও টেক্সট টু স্পিচ ভাষা উপলব্ধ নেই</string>
     <string name="tts_no_tts">নিশ্চুপ</string>
     <string name="unused_strings">\n\nঅব্যবহৃত ফাইলসমূহ:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">আগাম প্রদর্শন</string>
     <string name="reposition_card_dialog_title">নতুন কার্ড এর ক্রম পরিবর্তন</string>
     <string name="reposition_card_dialog_message">শুরুর অবস্থান:</string>
     <string name="reposition_card_not_new_error">শুধু মাত্র নতুন কার্ড এর ক্রম বদলানো যাবে</string>

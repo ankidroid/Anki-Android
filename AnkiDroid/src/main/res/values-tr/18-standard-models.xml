@@ -31,8 +31,6 @@
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Metin</string>
     <string name="extra_field_name_new">Arka Ekstra</string>
     <string name="field_to_ask_front_name">Tersini Ekle</string>
-    <!--Card type-->
-    <string name="card_n_name">Kart: %d</string>
     <!--Note type-->
     <string name="basic_model_name">Temel</string>
     <string name="cloze_model_name">Boşluklu</string>

@@ -31,8 +31,6 @@
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Tekst</string>
     <string name="extra_field_name_new">Ekstra baksiden </string>
     <string name="field_to_ask_front_name">Legg til revers</string>
-    <!--Card type-->
-    <string name="card_n_name">Kort %d</string>
     <!--Note type-->
     <string name="basic_model_name">Grunnleggende</string>
     <string name="cloze_model_name">Hulltekst</string>

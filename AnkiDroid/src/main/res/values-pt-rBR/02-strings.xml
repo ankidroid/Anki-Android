@@ -213,9 +213,6 @@
     <string name="remove_background_image">Remover fundo?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restaurar Padrões</string>
-    <string name="cloze_sample_text">Esse é um {{%1$s::exemplo}} ocultado.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">ezemplo</string>
-    <string name="basic_answer_sample_text">um exemplo</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vazio</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Falha ao salvar imagem do quadro. %s</string>

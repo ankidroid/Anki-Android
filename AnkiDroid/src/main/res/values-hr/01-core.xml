@@ -171,7 +171,6 @@
         <item quantity="few">Izbrisati \"%2$s\" vrstu kartica i njezine %1$d kartice?</item>
         <item quantity="other">Izbrisati \"%2$s\" vrstu kartica i njezinih %1$d kartica?</item>
     </plurals>
-    <string name="invalid_template">Nije moguće generirati karticu</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">Tip kartice za trenutnu karticu je obrisan.</string>
