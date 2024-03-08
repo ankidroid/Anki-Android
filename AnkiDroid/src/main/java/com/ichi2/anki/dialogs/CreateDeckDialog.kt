@@ -96,7 +96,7 @@ class CreateDeckDialog(
                 dialog.positiveButton.isEnabled = false
                 return@input
             }
-            else if (deckExists(getColUnsafe, maybeDeckName)){
+            if (deckExists(getColUnsafe, maybeDeckName)){
                 dialog.getInputTextLayout().error = context.getString(R.string.deck_name_exist)
                 dialog.positiveButton.isEnabled = false
                 return@input
@@ -110,7 +110,7 @@ class CreateDeckDialog(
     /**
      * @return true if the collection contains a deck with the given name
      */
-    private fun deckExists(col: Collection, name: String) =
+    fun deckExists(col: Collection, name: String) =
         col.decks.byName(name) != null
 
     /**
