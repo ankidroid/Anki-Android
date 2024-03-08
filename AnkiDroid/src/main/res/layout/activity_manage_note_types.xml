@@ -13,8 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-<include layout="@layout/manage_notes_type_toolbar" />
+        <include layout="@layout/toolbar" />
 
         <!-- RecyclerView for displaying note types -->
         <androidx.recyclerview.widget.RecyclerView

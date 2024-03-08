@@ -16,6 +16,8 @@
 package com.ichi2.anki.notetype
 
 import android.annotation.SuppressLint
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -55,10 +57,8 @@ class ManageNotetypes : AnkiActivity() {
     private lateinit var noteTypesList: RecyclerView
 
     // Initialize the list of current note types to an empty list
+    // The list is being duplicated, so when performing filtering, the original list doesn't get updated as well
     private var currentNotetypes: List<NoteTypeUiModel> = emptyList()
-
-    // Flag to track if it's the first run of the function ie the initial list is updated to currentList
-    private var isFirstRun: Boolean = true
 
     private val notetypesAdapter: NotetypesAdapter by lazy {
         NotetypesAdapter(
@@ -91,7 +91,6 @@ class ManageNotetypes : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setTitle(R.string.model_browser_label)
         setContentView(R.layout.activity_manage_note_types)
-
         actionBar = enableToolbar()
         noteTypesList = findViewById<RecyclerView?>(R.id.note_types_list).apply {
             adapter = notetypesAdapter
@@ -101,18 +100,21 @@ class ManageNotetypes : AnkiActivity() {
         }
         launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.manage_notes_type_menu, menu)
-        val searchItem = menu.findItem(R.id.manage_notes_types_dialog_action_filter)
-        val searchView = searchItem.actionView as SearchView?
+        menuInflater.inflate(R.menu.locale_dialog_search_bar, menu)
 
-        // Configure the SearchView
-        searchView!!.queryHint = getString(R.string.search)
+        // Get the SearchView MenuItem
+        val searchItem = menu.findItem(R.id.locale_dialog_action_search)
+
+        // Get the SearchView and set the searchable configuration
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = searchItem.actionView as SearchView?
+        searchView!!.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
+        // Set up search view listener if needed
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                // Handle search query submission
+                // Perform search
                 return false
             }
 
@@ -121,7 +123,7 @@ class ManageNotetypes : AnkiActivity() {
                 val filteredList = if (newText.isNullOrEmpty()) {
                     currentNotetypes // returns the initial list if search query is empty
                 } else {
-                    notetypesAdapter.currentList.filter {
+                    currentNotetypes.filter {
                         it.name.lowercase().contains(newText.lowercase())
                     }
                 }
@@ -130,7 +132,6 @@ class ManageNotetypes : AnkiActivity() {
                 return true
             }
         })
-
         return true
     }
 
@@ -317,10 +318,8 @@ class ManageNotetypes : AnkiActivity() {
                 getNotetypeNameIdUseCount().map { it.toUiModel() }
             }
         }
-        if (isFirstRun) {
-            currentNotetypes = updatedNotetypes
-            isFirstRun = false
-        }
+
+        currentNotetypes = updatedNotetypes
 
         notetypesAdapter.submitList(updatedNotetypes)
 

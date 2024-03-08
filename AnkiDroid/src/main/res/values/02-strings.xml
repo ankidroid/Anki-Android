@@ -344,6 +344,7 @@
 
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="search_notes">Search Notes</string>
 
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Study less</string>
