@@ -297,10 +297,6 @@ class Decks(private val col: Collection) {
     * ***********************************************************
     */
         fun isValidDeckName(deckName: String): Boolean = deckName.trim { it <= ' ' }.isNotEmpty()
-        /**
-         * @return true if the collection contains a deck with the given name
-         */
-        fun deckExists(col: Collection, name: String): Boolean = col.decks.byName(name) != null
     }
 }
 
