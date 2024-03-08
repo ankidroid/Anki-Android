@@ -32,17 +32,13 @@ import kotlin.reflect.jvm.jvmName
  */
 class ImageOcclusionActivity : SingleFragmentActivity() {
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         onBackPressedDispatcher.addCallback(this) {
             DiscardChangesDialog.showDialog(this@ImageOcclusionActivity) {
-                closeIOEditor()
+                finish()
             }
         }
-    }
-
-    private fun closeIOEditor() {
-        finish()
     }
 
     companion object {
