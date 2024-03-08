@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Keine Vorlesesprache verfügbar</string>
     <string name="tts_no_tts">Nicht vorlesen</string>
     <string name="unused_strings">\n\nUnbenutzte Dateien:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Vorschau</string>
     <string name="reposition_card_dialog_title">Position der neuen Karte ändern</string>
     <string name="reposition_card_dialog_message">Anfangsposition:</string>
     <string name="reposition_card_not_new_error">Die Position kann nur für neue Karten geändert werden</string>

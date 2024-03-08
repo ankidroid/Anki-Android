@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">No hay un idioma de texto-a-voz disponible</string>
     <string name="tts_no_tts">No hable</string>
     <string name="unused_strings">\n\nArchivos sin utilizar:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Vista previa</string>
     <string name="reposition_card_dialog_title">Reposicionar nueva tarjeta</string>
     <string name="reposition_card_dialog_message">Posición inicial:</string>
     <string name="reposition_card_not_new_error">Sólo las tarjetas nuevas pueden ser reposicionadas</string>

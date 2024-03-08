@@ -31,8 +31,6 @@
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">ტექსტი</string>
     <string name="extra_field_name_new">უკანა მხარე (დამატებითი)</string>
     <string name="field_to_ask_front_name">გადმობრუნებული ბარათის დამატება</string>
-    <!--Card type-->
-    <string name="card_n_name">ბარათი %d</string>
     <!--Note type-->
     <string name="basic_model_name">ზოგადი</string>
     <string name="cloze_model_name">გამოტოვებული ადგილ(ებ)ით</string>

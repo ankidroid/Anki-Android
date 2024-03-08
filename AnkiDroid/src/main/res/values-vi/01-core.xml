@@ -161,7 +161,6 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Xoá loại thẻ \"%2$s\" và (các) thẻ %1$d của nó?</item>
     </plurals>
-    <string name="invalid_template">Không thể tạo thẻ</string>
     <string name="card_template_editor_would_delete_note">Xóa loại thẻ này sẽ khiến một hoặc nhiều ghi chú bị xóa. Trước tiên hãy tạo và lưu một loại thẻ mới.</string>
     <string name="card_template_editor_save_error">Không thể lưu thay đổi mẫu thẻ: %s</string>
     <string name="template_for_current_card_deleted">Loại thẻ cho thẻ hiện tại đã bị xóa</string>

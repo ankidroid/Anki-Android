@@ -176,7 +176,6 @@
         <item quantity="many">Odstranit typ karty „%2$s“ a jeho %1$d karty?</item>
         <item quantity="other">Odstranit typ karty „%2$s“ a jeho %1$d karet?</item>
     </plurals>
-    <string name="invalid_template">Karta nemůže být vytvořena</string>
     <string name="card_template_editor_would_delete_note">Odebrání tohoto typu karty by způsobilo odstranění jedné nebo více poznámek. Nejprve prosím vytvořte a uložte nový typ karty.</string>
     <string name="card_template_editor_save_error">Změny šablony karty nelze uložit: %s</string>
     <string name="template_for_current_card_deleted">Typ karty současné karty byl odstraněn.</string>

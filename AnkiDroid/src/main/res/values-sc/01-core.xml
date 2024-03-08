@@ -169,7 +169,6 @@
         <item quantity="one">Cheres iscantzellare sa casta de cartas “%2$s” e sa carta chi cuntenet?</item>
         <item quantity="other">Cheres iscantzellare sa casta de cartas “%2$s” e sas %1$d cartas suas?</item>
     </plurals>
-    <string name="invalid_template">No est istadu possìbile generare una carta</string>
     <string name="card_template_editor_would_delete_note">Iscantzellende custa casta de carta dias iscantzellare una o prus notas. Pro praghere in antis crea e sarva una casta de carta noa.</string>
     <string name="card_template_editor_save_error">Impossìbile sarvare sas modìficas a su mollu de carta: %s</string>
     <string name="template_for_current_card_deleted">Sa casta de carta pro sa carta atuale est istada iscantzellada.</string>

@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Noben jezik pretvorbe besedila v govor ni na voljo</string>
     <string name="tts_no_tts">Bodite tiho</string>
     <string name="unused_strings">\n\nNeuporabljene datoteke:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Predogled</string>
     <string name="reposition_card_dialog_title">Prestavi novo kartico</string>
     <string name="reposition_card_dialog_message">Začetni položaj:</string>
     <string name="reposition_card_not_new_error">Prerazporedite lahko samo nove kartice.</string>

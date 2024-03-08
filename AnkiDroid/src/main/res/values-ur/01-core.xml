@@ -166,7 +166,6 @@
         <item quantity="one">\"%2$s\" کارڈ کی قسم، اور اس کا %1$d کارڈ حذف کریں؟</item>
         <item quantity="other">\"%2$s\" کارڈ کی قسم، اور اس کے %1$d کارڈز کو حذف کریں؟</item>
     </plurals>
-    <string name="invalid_template">کارڈ نہیں بنایا جا سکا</string>
     <string name="card_template_editor_would_delete_note">اس کارڈ کی قسم کو ہٹانے سے ایک یا زیادہ نوٹ حذف ہو جائیں گے۔ براہ کرم پہلے کارڈ کی نئی قسم بنائیں اور محفوظ کریں۔</string>
     <string name="card_template_editor_save_error">کارڈ ٹیمپلیٹ کی تبدیلیاں محفوظ کرنے سے قاصر: %s</string>
     <string name="template_for_current_card_deleted">موجودہ کارڈ کے لیے کارڈ کی قسم کو حذف کر دیا گیا تھا۔</string>
