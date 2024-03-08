@@ -119,7 +119,7 @@ class ManageNotetypes : AnkiActivity() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 // Filter the note types based on the search query
                 val filteredList = if (newText.isNullOrEmpty()) {
-                    currentNotetypes // returns the initial list if search query is  empty
+                    currentNotetypes // returns the initial list if search query is empty
                 } else {
                     notetypesAdapter.currentList.filter {
                         it.name.lowercase().contains(newText.lowercase())
