@@ -2126,7 +2126,7 @@ open class DeckPicker :
         return launchCatchingTask {
             val changes = withProgress(resources.getString(R.string.delete_deck)) {
                 undoableOp {
-                    decks.removeDecks(listOf(did))
+                    decks.remove(listOf(did))
                 }
             }
             showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT) {
