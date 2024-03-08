@@ -55,6 +55,7 @@ class Decks(private val col: Collection) {
         return deck.id
     }
 
+    @LibAnkiAlias("add_deck_legacy")
     private fun addDeckLegacy(deck: Deck): OpChangesWithId {
         val changes = col.backend.addDeckLegacy(
             json = BackendUtils.to_json_bytes(deck)
@@ -68,6 +69,7 @@ class Decks(private val col: Collection) {
     }
 
     /** A sorted sequence of deck names and IDs. */
+    @LibAnkiAlias("all_names_and_ids")
     fun allNamesAndIds(
         skipEmptyDefault: Boolean = false,
         includeFiltered: Boolean = true
@@ -77,6 +79,7 @@ class Decks(private val col: Collection) {
         }
     }
 
+    @LibAnkiAlias("id_for_name")
     fun idForName(name: String): DeckId? {
         return try {
             col.backend.getDeckIdByName(name)
@@ -93,6 +96,7 @@ class Decks(private val col: Collection) {
         }
     }
 
+    @LibAnkiAlias("new_deck_legacy")
     private fun newDeckLegacy(filtered: Boolean): Deck {
         val deck = BackendUtils.from_json_bytes(col.backend.newDeckLegacy(filtered))
         return Deck(
@@ -123,6 +127,7 @@ class Decks(private val col: Collection) {
     }
 
     /** Get deck with NAME, ignoring case. */
+    @LibAnkiAlias("by_name")
     fun byName(name: String): Deck? {
         val id = this.idForName(name)
         if (id != null) {
@@ -151,6 +156,7 @@ class Decks(private val col: Collection) {
     /* Deck configurations */
 
     /** A list of all deck config. */
+    @LibAnkiAlias("all_config")
     fun allConfig(): List<DeckConfig> {
         return BackendUtils.jsonToArray(col.backend.allDeckConfigLegacy())
             .jsonObjectIterable()
@@ -159,6 +165,7 @@ class Decks(private val col: Collection) {
     }
 
     /** Falls back on default config if deck or config missing */
+    @LibAnkiAlias("config_dict_for_deck_id")
     fun configDictForDeckId(did: DeckId): DeckConfig {
         val conf = get(did)?.conf ?: 1
         return DeckConfig(BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(conf)))
@@ -168,6 +175,7 @@ class Decks(private val col: Collection) {
         g.id = col.backend.addOrUpdateDeckConfigLegacy(g.toString().toByteStringUtf8())
     }
 
+    @LibAnkiAlias("add_config")
     private fun addConfig(
         name: String
     ): DeckConfig {
@@ -181,15 +189,18 @@ class Decks(private val col: Collection) {
         return DeckConfig(BackendUtils.from_json_bytes(col.backend.newDeckConfigLegacy()))
     }
 
+    @LibAnkiAlias("set_config_id_for_deck_dict")
     fun setConfigIdForDeckDict(grp: Deck, id: DeckConfigId) {
         grp.conf = id
         this.save(grp)
     }
 
     /* Reverts to default if provided id missing */
+    @LibAnkiAlias("get_config")
     fun getConfig(confId: DeckConfigId): DeckConfig =
         DeckConfig(BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(confId)))
 
+    @LibAnkiAlias("add_config_returning_id")
     fun addConfigReturningId(name: String): Long {
         return addConfig(name).id
     }
@@ -206,6 +217,7 @@ class Decks(private val col: Collection) {
     }
 
     /** @return The currently selected deck ID. */
+    @LibAnkiAlias("get_current_id")
     fun getCurrentId(): DeckId = col.backend.getCurrentDeck().id
 
     /** @return The currently selected deck ID. */
@@ -231,6 +243,7 @@ class Decks(private val col: Collection) {
      */
 
     /** Return a new dynamic deck and set it as the current deck. */
+    @LibAnkiAlias("new_filtered")
     fun newFiltered(name: String): DeckId {
         val deck = this.newDeckLegacy(true)
         deck.name = name
@@ -239,6 +252,7 @@ class Decks(private val col: Collection) {
         return deck.id
     }
 
+    @LibAnkiAlias("is_filtered")
     fun isFiltered(did: DeckId): Boolean {
         return this.get(did)?.isFiltered == true
     }
