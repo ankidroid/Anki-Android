@@ -97,7 +97,7 @@ class CreateDeckDialog(
                 return@input
             }
             // if deck name already exists, show an error
-            if (deckExists(getColUnsafe, maybeDeckName)){
+            if (deckExists(getColUnsafe, maybeDeckName)) {
                 dialog.getInputTextLayout().error = context.getString(R.string.deck_name_exist)
                 dialog.positiveButton.isEnabled = false
                 return@input
