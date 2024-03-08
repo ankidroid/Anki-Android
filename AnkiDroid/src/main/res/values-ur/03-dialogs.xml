@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">متن سے تقریر کی کوئی زبان دستیاب نہیں ہے۔</string>
     <string name="tts_no_tts">مت بولو</string>
     <string name="unused_strings">\n\nغیر استعمال شدہ فائلیں:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">پیش نظارہ</string>
     <string name="reposition_card_dialog_title">نئے کارڈ کی جگہ</string>
     <string name="reposition_card_dialog_message">شروع کی پوزیشن:</string>
     <string name="reposition_card_not_new_error">صرف نئے کارڈز کی جگہ تبدیل کی جا سکتی ہے۔</string>

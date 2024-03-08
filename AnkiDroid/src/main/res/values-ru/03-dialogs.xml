@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Синтез речи недоступен</string>
     <string name="tts_no_tts">Не произносить</string>
     <string name="unused_strings">\n\nНеиспользуемые файлы:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Предпросмотр</string>
     <string name="reposition_card_dialog_title">Переместить новую карточку</string>
     <string name="reposition_card_dialog_message">Начальная позиция:</string>
     <string name="reposition_card_not_new_error">Можно переместить только новые карточки</string>

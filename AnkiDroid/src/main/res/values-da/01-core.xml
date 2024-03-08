@@ -166,7 +166,6 @@
         <item quantity="one">Slet korttypen “%2$s” og dens %1$d kort?</item>
         <item quantity="other">Slet korttypen “%2$s” og dens %1$d kort?</item>
     </plurals>
-    <string name="invalid_template">Et kort kunne ikke genereres</string>
     <string name="card_template_editor_would_delete_note">Fjernelse af denne korttype vil få en eller flere noter til at blive slettet. Opret og gem først en ny korttype.</string>
     <string name="card_template_editor_save_error">Kan ikke gemme kortskabelonændringer: %s</string>
     <string name="template_for_current_card_deleted">Korttypen for det aktuelle kort blev slettet.</string>

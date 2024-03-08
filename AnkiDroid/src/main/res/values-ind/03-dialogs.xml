@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Tidak ada bahasa teks-ke-ucapan tersedia</string>
     <string name="tts_no_tts">Jangan bicara</string>
     <string name="unused_strings">\n\nBerkas yang tidak digunakan:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Pratinjau</string>
     <string name="reposition_card_dialog_title">Pindah posisi kartu baru</string>
     <string name="reposition_card_dialog_message">Posisi Mulai:</string>
     <string name="reposition_card_not_new_error">Hanya kartu baru yang dapat pindah posisi</string>

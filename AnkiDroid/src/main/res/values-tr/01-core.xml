@@ -166,7 +166,6 @@
         <item quantity="one">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
         <item quantity="other">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
     </plurals>
-    <string name="invalid_template">Bir kart oluşturulamadı</string>
     <string name="card_template_editor_would_delete_note">Bu kart türünü kaldırmak bir veya daha fazla notun silinmesine neden olacaktır. Lütfen önce yeni bir kart türü oluşturup kaydediniz.</string>
     <string name="card_template_editor_save_error">Kart şablon değişiklikleri kaydedilemiyor: %s</string>
     <string name="template_for_current_card_deleted">Geçerli kart için kart türü silindi.</string>

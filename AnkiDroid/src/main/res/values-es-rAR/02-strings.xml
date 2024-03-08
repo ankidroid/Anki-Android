@@ -213,9 +213,6 @@
     <string name="remove_background_image">¿Quitar fondo?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restablecer Predefinidos</string>
-    <string name="cloze_sample_text">Esta es una eliminación de capa {{%1$s::sample}}</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">un ejempla</string>
-    <string name="basic_answer_sample_text">un ejemplo</string>
     <string name="reviewer_tts_cloze_spoken_replacement">En blanco</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">No se pudo guardar la imagen de pizarra. %s</string>

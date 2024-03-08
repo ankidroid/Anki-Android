@@ -166,7 +166,6 @@
         <item quantity="one">Ta bort korttypen \"%2$s\" och dess %1$d kort?</item>
         <item quantity="other">Ta bort korttypen \"%2$s\" och dess %1$d kort?</item>
     </plurals>
-    <string name="invalid_template">Ett kort kunde inte genereras</string>
     <string name="card_template_editor_would_delete_note">Att ta bort den här korttypen skulle göra att en eller flera anteckningar tas bort. Vänligen skapa en ny korttyp först.</string>
     <string name="card_template_editor_save_error">Det går inte att spara ändringar i kortmallen: %s</string>
     <string name="template_for_current_card_deleted">Korttypen för det aktuella kortet har tagits bort.</string>
