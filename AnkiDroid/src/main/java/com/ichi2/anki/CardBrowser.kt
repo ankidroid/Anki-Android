@@ -1490,7 +1490,7 @@ open class CardBrowser :
 
     // convenience method for updateCardsInList(...)
     private fun updateCardInList(card: Card) {
-        val cards: MutableList<Card> = java.util.ArrayList(1)
+        val cards: MutableList<Card> = ArrayList(1)
         cards.add(card)
         updateCardsInList(cards)
     }
@@ -1773,7 +1773,6 @@ open class CardBrowser :
             return v
         }
 
-        @Suppress("UNCHECKED_CAST")
         @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
