@@ -260,4 +260,6 @@
         Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
 
+    <string name="deck_name_exist">Deck name already exist</string>
+
 </resources>
