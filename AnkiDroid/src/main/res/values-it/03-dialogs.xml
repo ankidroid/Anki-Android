@@ -245,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        A causa delle modifiche alla privacy di Android, i tuoi dati e i backup automatici verranno eliminati dal tuo telefono se l\'app viene disinstallata
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>
