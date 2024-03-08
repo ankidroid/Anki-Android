@@ -167,7 +167,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun limitAppliedAfterReview() {
         val sched = col.sched
-        val dconf = col.decks.getConf(1)
+        val dconf = col.decks.getConfig(1)
         assertNotNull(dconf)
         dconf.getJSONObject("new").put("perDay", 10)
         col.decks.save(dconf)

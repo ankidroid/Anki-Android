@@ -131,7 +131,7 @@ interface TestClass {
 
     fun addDynamicDeck(name: String?): DeckId {
         return try {
-            col.decks.newDyn(name!!)
+            col.decks.newFiltered(name!!)
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             throw RuntimeException(filteredAncestor)
         }
@@ -153,7 +153,7 @@ interface TestClass {
 
     /** helper method to update deck config */
     fun updateDeckConfig(deckId: DeckId, function: DeckConfig.() -> Unit) {
-        val deckConfig = col.decks.confForDid(deckId)
+        val deckConfig = col.decks.configDictForDeckId(deckId)
         function(deckConfig)
         col.decks.save(deckConfig)
     }

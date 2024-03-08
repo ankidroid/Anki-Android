@@ -132,7 +132,7 @@ class CreateDeckDialog(
         try {
             // create filtered deck
             Timber.i("CreateDeckDialog::createFilteredDeck...")
-            val newDeckId = getColUnsafe.decks.newDyn(deckName)
+            val newDeckId = getColUnsafe.decks.newFiltered(deckName)
             Timber.d("Created filtered deck '%s'; id: %d", deckName, newDeckId)
             onNewDeckCreated(newDeckId)
         } catch (ex: BackendDeckIsFilteredException) {

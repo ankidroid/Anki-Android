@@ -1793,7 +1793,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
 
             val currentDeckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1L
-            return if (getColUnsafe.decks.isDyn(currentDeckId)) {
+            return if (getColUnsafe.decks.isFiltered(currentDeckId)) {
                 /*
                  * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
                  * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been

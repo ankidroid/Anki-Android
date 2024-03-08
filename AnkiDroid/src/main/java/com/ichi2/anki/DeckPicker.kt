@@ -373,7 +373,7 @@ open class DeckPicker :
                 decks.select(deckId)
                 Triple(
                     decks.name(deckId),
-                    decks.isDyn(deckId),
+                    decks.isFiltered(deckId),
                     sched.haveBuriedInCurrentDeck()
                 )
             }
@@ -2046,7 +2046,7 @@ open class DeckPicker :
     // Callback to show study options for currently selected deck
     fun showContextMenuDeckOptions(did: DeckId) {
         // open deck options
-        if (getColUnsafe.decks.isDyn(did)) {
+        if (getColUnsafe.decks.isFiltered(did)) {
             // open cram options if filtered deck
             val i = Intent(this@DeckPicker, FilteredDeckOptions::class.java)
             i.putExtra("did", did)
@@ -2546,7 +2546,7 @@ open class DeckPicker :
         when {
             sched.hasCardsTodayAfterStudyAheadLimit() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
             sched.newDue() || sched.revDue() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
-            decks.isDyn(did) -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
+            decks.isFiltered(did) -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
             deckListAdapter.getNodeByDid(did).children.isEmpty() && isEmptyDeck(did) -> CompletedDeckStatus.EMPTY_REGULAR_DECK
             else -> CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY
         }

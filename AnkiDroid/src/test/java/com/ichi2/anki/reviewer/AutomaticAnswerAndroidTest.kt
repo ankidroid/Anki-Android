@@ -19,7 +19,6 @@ package com.ichi2.anki.reviewer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -44,13 +43,13 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
     }
 
     private fun resetPrefs() {
-        val conf = col.decks.confForDid(col.decks.selected())
+        val conf = col.decks.configDictForDeckId(col.decks.selected())
         conf.remove(AutomaticAnswerAction.CONFIG_KEY)
         col.decks.save(conf)
     }
 
     private fun setPreference(value: Int) {
-        val conf = col.decks.confForDid(col.decks.selected())
+        val conf = col.decks.configDictForDeckId(col.decks.selected())
         conf.put(AutomaticAnswerAction.CONFIG_KEY, value)
         col.decks.save(conf)
     }

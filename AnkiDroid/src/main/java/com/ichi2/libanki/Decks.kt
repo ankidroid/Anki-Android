@@ -159,7 +159,7 @@ class Decks(private val col: Collection) {
     }
 
     /** Falls back on default config if deck or config missing */
-    fun confForDid(did: DeckId): DeckConfig {
+    fun configDictForDeckId(did: DeckId): DeckConfig {
         val conf = get(did)?.conf ?: 1
         return DeckConfig(BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(conf)))
     }
@@ -181,16 +181,16 @@ class Decks(private val col: Collection) {
         return DeckConfig(BackendUtils.from_json_bytes(col.backend.newDeckConfigLegacy()))
     }
 
-    fun setConf(grp: Deck, id: DeckConfigId) {
+    fun setConfigIdForDeckDict(grp: Deck, id: DeckConfigId) {
         grp.conf = id
         this.save(grp)
     }
 
     /* Reverts to default if provided id missing */
-    fun getConf(confId: DeckConfigId): DeckConfig =
+    fun getConfig(confId: DeckConfigId): DeckConfig =
         DeckConfig(BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(confId)))
 
-    fun confId(name: String): Long {
+    fun addConfigReturningId(name: String): Long {
         return addConfig(name).id
     }
 
@@ -231,7 +231,7 @@ class Decks(private val col: Collection) {
      */
 
     /** Return a new dynamic deck and set it as the current deck. */
-    fun newDyn(name: String): DeckId {
+    fun newFiltered(name: String): DeckId {
         val deck = this.newDeckLegacy(true)
         deck.name = name
         addDeckLegacy(deck)
@@ -239,7 +239,7 @@ class Decks(private val col: Collection) {
         return deck.id
     }
 
-    fun isDyn(did: DeckId): Boolean {
+    fun isFiltered(did: DeckId): Boolean {
         return this.get(did)?.isFiltered == true
     }
 
@@ -252,6 +252,7 @@ class Decks(private val col: Collection) {
      */
 
     /** @return the fully qualified name of the subdeck, or null if unavailable */
+    @NotInLibAnki
     fun getSubdeckName(did: DeckId, subdeckName: String?): String? {
         if (subdeckName.isNullOrEmpty()) {
             return null
