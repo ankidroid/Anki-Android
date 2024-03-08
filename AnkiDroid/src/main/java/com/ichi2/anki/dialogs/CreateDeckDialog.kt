@@ -26,6 +26,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.getOrCreateFilteredDeck
@@ -96,16 +97,23 @@ class CreateDeckDialog(
                 return@input
             }
             // if deck name already exists, show an error
-            else if (Decks.deckExists(getColUnsafe, maybeDeckName)){
+            if (deckExists(getColUnsafe, maybeDeckName)){
                 dialog.getInputTextLayout().error = context.getString(R.string.deck_name_exist)
                 dialog.positiveButton.isEnabled = false
                 return@input
-            } else dialog.getInputTextLayout().error = null
+            }
+            dialog.getInputTextLayout().error = null
             dialog.positiveButton.isEnabled = true
         }
         shownDialog = dialog
         return dialog
     }
+
+    /**
+     * @return true if the collection contains a deck with the given name
+     */
+    private fun deckExists(col: Collection, name: String) =
+        col.decks.byName(name) != null
 
     /**
      * Returns the fully qualified deck name for the provided input
