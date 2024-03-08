@@ -807,7 +807,7 @@ class CardContentProvider : ContentProvider() {
                     // Add some empty card templates
                     var idx = 0
                     while (idx < numCards) {
-                        val cardName = context!!.resources.getString(R.string.card_n_name, idx + 1)
+                        val cardName = CollectionManager.TR.cardTemplatesCard(idx + 1)
                         val t = Notetypes.newTemplate(cardName)
                         t.put("qfmt", "{{${allFields[0]}}}")
                         var answerField: String? = allFields[0]

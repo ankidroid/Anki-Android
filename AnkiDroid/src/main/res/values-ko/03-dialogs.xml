@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">문장 읽어주기 기능(TTS)을 사용할 수 없음</string>
     <string name="tts_no_tts">말하지 마십시오</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">미리보기</string>
     <string name="reposition_card_dialog_title">새 카드 위치 변경</string>
     <string name="reposition_card_dialog_message">시작 위치:</string>
     <string name="reposition_card_not_new_error">새 카드만 순서를 조정할 수 있습니다.</string>
@@ -239,4 +238,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

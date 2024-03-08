@@ -1,34 +1,34 @@
 Hafalkan semuanya dengan AnkiDroid!
 
-AnkiDroid memungkinkanmu mempelajari kartu flash secara efisien dengan menampilkannya sesaat sebelum kamu lupa. Aplikasi ini sepenuhnya kompatibel dengan perangkat lunak hafalan berjarak Anki (termasuk sinkronisasi), yang tersedia untuk Windows, Linux dan MacOS.
+AnkiDroid memungkinkan Anda mempelajari kartu flash secara efisien dengan menampilkannya sesaat sebelum Anda lupa. Aplikasi ini sepenuhnya kompatibel dengan perangkat lunak hafalan berjarak Anki (termasuk sinkronisasi), yang tersedia untuk Windows, Linux dan MacOS.
 
-Belajar banyak hal di manapun dan kapanpun kamu mau. Manfaatkan waktu gabut saat naik bus, di antrean supermarket atau waktu lainnya!
+Belajar banyak hal di mana pun dan kapan pun Anda inginkan. Manfaatkan waktu luang saat naik bus, di antrean supermarket atau saat ada waktu luang lainnya!
 
-Buat dek sendiri atau unduh dek bebas dari berbagai macam bahasa dan topik (lebih dari 6000 tersedia).
+Buat dek sendiri atau unduh dek gratis dari berbagai macam bahasa dan topik (lebih dari 6000 tersedia).
 
-Tambahkan materi melalui aplikasi desktop Anki atau langsung melalui AnkiDroid. Aplikasi juga mendukung menambah materi secara otomatis dari kamus!
+Tambahkan materi melalui aplikasi desktop Anki atau langsung melalui AnkiDroid. Aplikasi ini juga mendukung menambah materi secara otomatis dari sebuah kamus!
 
 ★ Fitur utama:
 • isi kartu flash yang didukung: teks, gambar, audio, LaTeX
 • hafalan berjarak (algoritma supermemo 2)
-• integrasi teks-suara
+• integrasi teks ke suara
 • lebih dari 6000 dek tersedia
-• gawit kemajuan
+• widget kemajuan
 • statistik yang rinci
 • sinkronisasi dengan AnkiWeb
-• sumber terbuka (open source)
+• bersumber terbuka
 
 ★ Fitur tambahan:
 • tulis jawaban (opsional)
-• whiteboard
-• editor/tambah kartu
+• papan tulis
+• penyunting/penambah kartu
 • penelusur kartu
 • tata letak tablet
-• impor berkas koleksi yang ada (lewat Anki Desktop)
+• impor berkas koleksi yang ada (melalui Anki Desktop)
 • tambahkan kartu dengan intent dari aplikasi lain seperti kamus
 • dukungan fon kustom
-• cadangan sistem penuh
-• navigasi dengan usapan, tekan
+• sistem pencadangan lengkap
+• navigasi dengan usapan, ketukan
 • dapat disesuaikan
 • penanganan dek kartu dinamis
 • mode malam

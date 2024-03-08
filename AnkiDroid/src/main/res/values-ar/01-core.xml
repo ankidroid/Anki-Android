@@ -186,7 +186,6 @@
         <item quantity="many">هل تريد حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة بها؟</item>
         <item quantity="other">هل تريد حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة بها؟</item>
     </plurals>
-    <string name="invalid_template">لا يمكن إنشاء بطاقة</string>
     <string name="card_template_editor_would_delete_note">سيؤدي حذف نوع البطاقة هذا إلى حذف ملحوظة أو أكثر. الرجاء إنشاء نوع بطاقة جديد وحفظه أولًا.</string>
     <string name="card_template_editor_save_error">يتعذر حفظ تغييرات قالب البطاقة: %s</string>
     <string name="template_for_current_card_deleted">تم حذف نوع البطاقة للبطاقة الحالية.</string>

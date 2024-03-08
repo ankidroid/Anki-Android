@@ -18,6 +18,7 @@ package com.ichi2.anki.previewer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -33,6 +34,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
+import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.PreviewerIdsFile
@@ -40,13 +42,15 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.utils.performClickIfEnabled
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class PreviewerFragment :
     CardViewerFragment(R.layout.previewer),
     Toolbar.OnMenuItemClickListener,
-    BaseSnackbarBuilderProvider {
+    BaseSnackbarBuilderProvider,
+    DispatchKeyEventListener {
 
     override val viewModel: PreviewerViewModel by viewModels {
         val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(CARD_IDS_FILE_ARG)) {
@@ -134,7 +138,7 @@ class PreviewerFragment :
                     override fun onStartTrackingTouch(slider: Slider) {}
 
                     override fun onStopTrackingTouch(slider: Slider) {
-                        viewModel.currentIndex.tryEmit(slider.value.toInt() - 1)
+                        viewModel.onSliderChange(slider.value.toInt())
                     }
                 }
             )
@@ -202,6 +206,22 @@ class PreviewerFragment :
     private fun editCard() {
         val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
         editCardLauncher.launch(intent)
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (event.action != KeyEvent.ACTION_DOWN) return false
+
+        when (event.keyCode) {
+            KeyEvent.KEYCODE_DPAD_LEFT -> {
+                requireView().findViewById<MaterialButton>(R.id.show_previous).performClickIfEnabled()
+            }
+            KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                requireView().findViewById<MaterialButton>(R.id.show_next).performClickIfEnabled()
+            }
+            KeyEvent.KEYCODE_R -> viewModel.replayAudios()
+            else -> return false
+        }
+        return true
     }
 
     companion object {

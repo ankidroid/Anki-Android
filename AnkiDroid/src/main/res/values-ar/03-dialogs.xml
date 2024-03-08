@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">لا يتوفر دعم تحويل النص إلى كلام لأي لغة</string>
     <string name="tts_no_tts">لا تنطق</string>
     <string name="unused_strings">\n\nملفات عير مستخدمة:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">معاينة</string>
     <string name="reposition_card_dialog_title">تغيير موضع البطاقة الجديدة</string>
     <string name="reposition_card_dialog_message">موضع البداية:</string>
     <string name="reposition_card_not_new_error">يمكن تغيير موضع البطاقات الجديدة فقط</string>
@@ -274,4 +273,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        بسبب تغييرات خصوصية الأندرويد، سيتم حذف بياناتك والنسخ الاحتياطية الآلية من هاتفك إذا تم إلغاء تثبيت التطبيق
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

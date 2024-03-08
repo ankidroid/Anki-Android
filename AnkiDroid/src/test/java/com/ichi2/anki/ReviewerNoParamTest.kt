@@ -149,6 +149,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.ALL, "Expected: a value greater than <2> but: <2> was equal to <2>")
     fun undoingCardHidesFullScreen() = runTest {
         addNoteUsingBasicModel("Hello", "World")
         val reviewer = startReviewerFullScreen()

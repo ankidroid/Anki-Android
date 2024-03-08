@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Няма наличен синтез за език</string>
     <string name="tts_no_tts">Не говори</string>
     <string name="unused_strings">\n\nНеизползвани файли:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Преглед</string>
     <string name="reposition_card_dialog_title">Преместване на нова карта</string>
     <string name="reposition_card_dialog_message">Начална позиция:</string>
     <string name="reposition_card_not_new_error">Само нови карти могат да бъдат премествани</string>
@@ -246,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

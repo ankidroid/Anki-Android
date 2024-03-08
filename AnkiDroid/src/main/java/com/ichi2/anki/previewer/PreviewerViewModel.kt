@@ -24,6 +24,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
@@ -151,7 +152,20 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         }
     }
 
+    fun replayAudios() {
+        launchCatchingIO {
+            val side = if (showingAnswer.value) SingleCardSide.BACK else SingleCardSide.FRONT
+            soundPlayer.replayAllSounds(side)
+        }
+    }
+
     fun cardsCount() = selectedCardIds.count()
+
+    fun onSliderChange(value: Int) {
+        launchCatchingIO {
+            currentIndex.emit(value - 1)
+        }
+    }
 
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
