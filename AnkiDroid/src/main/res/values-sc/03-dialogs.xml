@@ -259,4 +259,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Pro neghe de sas modìficas a sa riservadesa de Android, non s\'at a pòdere atzèdere a sos datos tuos e a sas còpias de seguresa automàticas tuas si as a disinstallare s\'aplicatzione
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

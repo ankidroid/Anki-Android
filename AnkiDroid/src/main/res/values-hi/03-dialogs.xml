@@ -245,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        एंड्रॉइड गोपनीयता परिवर्तनों के कारण, ऐप अनइंस्टॉल होने पर आपका डेटा और स्वचालित बैकअप पहुंच योग्य नहीं होगा
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

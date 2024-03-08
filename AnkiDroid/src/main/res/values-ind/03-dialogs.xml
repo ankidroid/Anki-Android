@@ -238,4 +238,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Karena perubahan privasi Android, data dan cadangan otomatis Anda tidak akan dapat diakses jika aplikasi ini dicopot pemasangannya
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

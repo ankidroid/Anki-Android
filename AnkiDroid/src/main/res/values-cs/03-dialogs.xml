@@ -259,4 +259,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        V důsledku změn ochrany osobních údajů systému Android budou vaše data a automatické zálohy nedostupné, pokud bude aplikace odinstalována
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

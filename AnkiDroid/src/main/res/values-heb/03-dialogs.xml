@@ -258,4 +258,5 @@
     <string name="dismiss_backup_warning_title">אזהרת אובדן נתונים</string>
     <string name="dismiss_backup_warning_new_user">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך יימחקו מהטלפון שלך אם האפליקציה תוסר</string>
     <string name="dismiss_backup_warning_upgrade">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך לא יהיו נגישים אם האפליקציה תוסר</string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

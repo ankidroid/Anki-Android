@@ -243,4 +243,5 @@
     <string name="dismiss_backup_warning_title">Figyelmeztetés adatveszteségről</string>
     <string name="dismiss_backup_warning_new_user">Az Android adatvédelmi módosításai miatt az adatok és az automatikus biztonsági mentések is törlődnek, ha az alkalmazás eltávolításra kerül.</string>
     <string name="dismiss_backup_warning_upgrade">Az Android adatvédelmi módosításai miatt az adatok és az automatikus biztonsági mentések is elérhetetlenné válnak, ha az alkalmazás eltávolításra kerül.</string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

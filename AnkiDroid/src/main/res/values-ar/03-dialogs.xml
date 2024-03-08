@@ -273,4 +273,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        بسبب تغييرات خصوصية الأندرويد، سيتم حذف بياناتك والنسخ الاحتياطية الآلية من هاتفك إذا تم إلغاء تثبيت التطبيق
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

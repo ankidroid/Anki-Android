@@ -245,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Androidin tietosuojamuutosten vuoksi tietoihisi ja automaattisiin varmuuskopioihin ei pääse käsiksi, jos sovellus poistetaan.
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

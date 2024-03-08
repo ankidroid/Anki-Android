@@ -259,4 +259,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Ze względu na zmiany prywatności w systemie Android Twoje dane i automatyczne kopie zapasowe będą niedostępne, jeśli aplikacja zostanie odinstalowana
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>
