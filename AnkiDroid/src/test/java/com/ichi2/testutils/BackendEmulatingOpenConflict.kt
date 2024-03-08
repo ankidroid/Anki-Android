@@ -24,8 +24,7 @@ import org.mockito.Mockito
 /** Test helper:
  * causes getCol to emulate an exception caused by having another AnkiDroid instance open on the same collection
  */
-class BackendEmulatingOpenConflict() : Backend() {
-    @Suppress("UNUSED_PARAMETER")
+class BackendEmulatingOpenConflict : Backend() {
     override fun openCollection(
         collectionPath: String,
         mediaFolderPath: String,
