@@ -246,4 +246,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

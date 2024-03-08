@@ -261,4 +261,5 @@
     <string name="dismiss_backup_warning_upgrade">        У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматычныя рэзервовыя копіі стануць недаступны
     
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

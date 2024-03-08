@@ -238,4 +238,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Akibat perubahan privasi Android, data anda dan sandaran automatik tidak akan dapat dicapai jika aplikasi dinyahpasang
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

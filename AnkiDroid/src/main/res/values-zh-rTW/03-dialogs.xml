@@ -238,4 +238,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        由於 Android 隱私變更，你的資料和自動備份將在應用程式解除安裝時不再可存取
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

@@ -238,4 +238,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Do những thay đổi về quyền riêng tư của Android, dữ liệu và các bản sao lưu tự động của bạn sẽ không thể truy cập được nếu ứng dụng bị gỡ cài đặt
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

@@ -243,4 +243,5 @@
     <string name="dismiss_backup_warning_title">خطر از دست رفتن داده‌ها</string>
     <string name="dismiss_backup_warning_new_user">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک نیز حذف خواهند شد    </string>
     <string name="dismiss_backup_warning_upgrade">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک، از دسترس خارج خواهند شد    </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

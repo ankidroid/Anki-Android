@@ -243,4 +243,5 @@
     <string name="dismiss_backup_warning_title">Risque de perte de données</string>
     <string name="dismiss_backup_warning_new_user">En raison de changement dans la politique de confidentialité d\'Android, vos données et sauvegardes automatiques seront supprimées de votre téléphone si l\'application est désinstallée</string>
     <string name="dismiss_backup_warning_upgrade">En raison de changement dans la politique de confidentialité d\'Android, vos données et sauvegardes automatiques seront inaccessibles si l\'application est désinstallée</string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>
