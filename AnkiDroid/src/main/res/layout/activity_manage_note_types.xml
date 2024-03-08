@@ -37,6 +37,7 @@
         android:layout_marginEnd="32dp"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_add_white"
+        android:contentDescription="@string/fab_content_description"
         app:backgroundTint="?attr/fab_normal"
         tools:ignore="HardcodedText" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
