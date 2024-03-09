@@ -166,35 +166,4 @@ class TemplateManagerTest {
         val result = parseSourcesToFileScheme(input, "/storage/emulated/0/15773/collection.media")
         assertEquals(expectedResult, result)
     }
-
-    /***********************************************************************************************
-     * [parseVideos] tests
-     **********************************************************************************************/
-
-    @Test
-    fun `parseVideos - video in anki scheme`() {
-        val mediaDir = "storage/emulated/0/AnkiDroid/collection.media"
-        val result = parseVideos("[sound:samba.mp4]", mediaDir)
-        assertEquals("""<video src="file:///$mediaDir/samba.mp4" controls controlsList="nodownload"></video>""", result)
-    }
-
-    @Test
-    fun `parseVideos - special characters are encoded`() {
-        val mediaDir = "storage/emulated/0/AnkiDroid/collection.media"
-        val result = parseVideos("[sound:bregafunk@$%#.mp4]", mediaDir)
-        assertEquals("""<video src="file:///$mediaDir/bregafunk@$%25%23.mp4" controls controlsList="nodownload"></video>""", result)
-    }
-
-    @Test
-    fun `parseVideos - sound extensions aren't parsed`() {
-        val result = parseVideos("[sound:forró.mp3]", "any_directory")
-        assertEquals("[sound:forró.mp3]", result)
-    }
-
-    @Test
-    fun `parseVideos - other content kept`() {
-        val mediaDir = "storage/emulated/0/AnkiDroid/collection.media"
-        val result = parseVideos("rio [sound:bossa_nova.mkv]", mediaDir)
-        assertEquals("""rio <video src="file:///$mediaDir/bossa_nova.mkv" controls controlsList="nodownload"></video>""", result)
-    }
 }

@@ -100,7 +100,10 @@ abstract class CardViewerViewModel(
         typeAnsFilter(prepareCardTextForDisplay(text))
 
     private suspend fun prepareCardTextForDisplay(text: String): String {
-        return Sound.addPlayButtons(withCol { media.escapeMediaFilenames(text) })
+        return Sound.addPlayButtons(
+            text = withCol { media.escapeMediaFilenames(text) },
+            renderOutput = currentCard.await().let { card -> withCol { card.renderOutput(this) } }
+        )
     }
 
     protected open suspend fun showQuestion() {
