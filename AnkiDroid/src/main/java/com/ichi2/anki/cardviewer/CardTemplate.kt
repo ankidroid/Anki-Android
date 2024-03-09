@@ -15,9 +15,23 @@
  */
 package com.ichi2.anki.cardviewer
 
+import android.content.Context
 import androidx.annotation.CheckResult
-import java.lang.IllegalStateException
+import com.ichi2.anki.cardviewer.CardTemplate.Companion.TEMPLATE_FILE
+import com.ichi2.anki.utils.ext.convertToString
+import java.io.IOException
 
+/**
+ * Full HTML to be displayed in a WebView
+ */
+@JvmInline
+value class RenderedCard(val html: String)
+
+/**
+ * The static, global AnkiDroid template for rendering a card: [TEMPLATE_FILE]
+ *
+ * Handles loading the file from disk and replacements of sections of dynamic content
+ */
 class CardTemplate(template: String) {
     private var preStyle: String? = null
     private var preScript: String? = null
@@ -26,8 +40,9 @@ class CardTemplate(template: String) {
     private var postContent: String? = null
 
     @CheckResult
-    fun render(content: String, style: String, script: String, cardClass: String): String {
-        return preStyle + style + preScript + script + preClass + cardClass + preContent + content + postContent
+    fun render(content: String, style: String, script: String, cardClass: String): RenderedCard {
+        val html = preStyle + style + preScript + script + preClass + cardClass + preContent + content + postContent
+        return RenderedCard(html)
     }
 
     init {
@@ -50,5 +65,18 @@ class CardTemplate(template: String) {
         } catch (ex: StringIndexOutOfBoundsException) {
             throw IllegalStateException("The card template had replacement string order, or content changed", ex)
         }
+    }
+
+    companion object {
+        private const val TEMPLATE_FILE = "card_template.html"
+
+        /**
+         * Load the template for the card
+         *
+         * @throws IOException failure to read [TEMPLATE_FILE]
+         */
+        fun load(context: Context) = CardTemplate(
+            template = context.assets.open(TEMPLATE_FILE).convertToString()
+        )
     }
 }
