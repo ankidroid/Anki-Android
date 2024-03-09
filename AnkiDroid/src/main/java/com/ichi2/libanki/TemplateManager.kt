@@ -185,17 +185,13 @@ class TemplateManager {
             }
 
             val mediaDir = col.media.dir
-            val qtext = parseVideos(
-                applyCustomFilters(partial.qnodes, this, frontSide = null),
-                mediaDir
-            )
+            val qtext = applyCustomFilters(partial.qnodes, this, frontSide = null)
+
             val qout = col.backend.extractAvTags(text = qtext, questionSide = true)
             var qoutText = parseSourcesToFileScheme(qout.text, mediaDir)
 
-            val atext = parseVideos(
-                applyCustomFilters(partial.anodes, this, frontSide = qout.text),
-                mediaDir
-            )
+            val atext = applyCustomFilters(partial.anodes, this, frontSide = qout.text)
+
             val aout = col.backend.extractAvTags(text = atext, questionSide = false)
             var aoutText = parseSourcesToFileScheme(aout.text, mediaDir)
 

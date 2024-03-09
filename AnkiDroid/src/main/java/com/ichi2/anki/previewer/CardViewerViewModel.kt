@@ -95,7 +95,10 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
         typeAnsFilter(prepareCardTextForDisplay(text))
 
     private suspend fun prepareCardTextForDisplay(text: String): String {
-        return Sound.addPlayButtons(withCol { media.escapeMediaFilenames(text) })
+        return Sound.addPlayButtons(
+            text = withCol { media.escapeMediaFilenames(text) },
+            renderOutput = withCol { currentCard.renderOutput(this) }
+        )
     }
 
     protected open suspend fun showQuestion() {
