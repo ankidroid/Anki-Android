@@ -31,9 +31,9 @@ import timber.log.Timber
 /**
  * Holds Android-specific context which affects how a card is rendered to HTML
  *
- * @see generateHtml
+ * @see renderCard
  */
-class HtmlGenerator(
+class AndroidCardRenderContext(
     private val typeAnswer: TypeAnswer,
     private val cardAppearance: CardAppearance,
     private val cardTemplate: CardTemplate,
@@ -44,7 +44,7 @@ class HtmlGenerator(
      * Renders Android-specific functionality to produce a [RenderedCard]
      */
     @CheckResult
-    fun generateHtml(col: Collection, card: Card, side: SingleCardSide): RenderedCard {
+    fun renderCard(col: Collection, card: Card, side: SingleCardSide): RenderedCard {
         // obtain the libAnki-rendered card
         var content: String = if (side == SingleCardSide.FRONT) card.question(col) else card.answer(col)
         // IRI-encodes media: `foo bar` -> `foo%20bar`
@@ -112,12 +112,12 @@ class HtmlGenerator(
             context: Context,
             col: Collection,
             typeAnswer: TypeAnswer
-        ): HtmlGenerator {
+        ): AndroidCardRenderContext {
             val preferences = context.sharedPrefs()
             val cardAppearance = CardAppearance.create(ReviewerCustomFonts(), preferences)
             val cardHtmlTemplate = CardTemplate.load(context)
             val showAudioPlayButtons = !col.config.getBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS)
-            return HtmlGenerator(
+            return AndroidCardRenderContext(
                 typeAnswer,
                 cardAppearance,
                 cardHtmlTemplate,

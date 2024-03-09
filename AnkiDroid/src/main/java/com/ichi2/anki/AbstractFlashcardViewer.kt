@@ -57,7 +57,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
-import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
+import com.ichi2.anki.cardviewer.AndroidCardRenderContext.Companion.createInstance
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -159,7 +159,7 @@ abstract class AbstractFlashcardViewer :
     internal var typeAnswer: TypeAnswer? = null
 
     /** Generates HTML content  */
-    private var htmlGenerator: HtmlGenerator? = null
+    private var cardRenderContext: AndroidCardRenderContext? = null
 
     // Default short animation duration, provided by Android framework
     private var shortAnimDuration = 0
@@ -536,7 +536,7 @@ abstract class AbstractFlashcardViewer :
         registerExternalStorageListener()
         restoreCollectionPreferences(col)
         initLayout()
-        htmlGenerator = createInstance(this, col, typeAnswer!!)
+        cardRenderContext = createInstance(this, col, typeAnswer!!)
 
         // Initialize text-to-speech. This is an asynchronous operation.
         tts.initialize(this, ReadTextListener())
@@ -1293,7 +1293,7 @@ abstract class AbstractFlashcardViewer :
         } else {
             answerField?.visibility = View.GONE
         }
-        val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
+        val content = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
         automaticAnswer.onDisplayQuestion()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForAudio()) {
@@ -1339,7 +1339,7 @@ abstract class AbstractFlashcardViewer :
             typeAnswer!!.input = answerField!!.text.toString()
         }
         isSelecting = false
-        val answerContent = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.BACK)
+        val answerContent = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.BACK)
         automaticAnswer.onDisplayAnswer()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForAudio()) {
@@ -1864,7 +1864,7 @@ abstract class AbstractFlashcardViewer :
             } else {
                 answerField?.visibility = View.GONE
             }
-            val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
+            val content = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
             automaticAnswer.onDisplayQuestion()
             updateCard(content)
             hideEaseButtons()
