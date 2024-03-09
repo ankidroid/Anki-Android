@@ -518,6 +518,13 @@
                 />
         </receiver>
 
+        <receiver android:name="com.ichi2.widget.WidgetPermissionReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.ichi2.widget.UPDATE_WIDGET" />
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name="com.ichi2.anki.receiver.SdCardReceiver"
             android:enabled="true"
