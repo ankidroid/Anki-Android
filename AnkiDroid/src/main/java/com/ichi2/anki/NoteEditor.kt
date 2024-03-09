@@ -735,7 +735,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
                     if (allowSaveAndPreview()) {
-                        performPreview()
+                        launchCatchingTask { performPreview() }
                     }
                 }
             }
@@ -1101,7 +1101,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
                 if (allowSaveAndPreview()) {
-                    performPreview()
+                    launchCatchingTask { performPreview() }
                 }
                 return true
             }
@@ -1211,42 +1211,39 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
-    private fun openNewPreviewer() {
-        val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toString() } ?: mutableListOf()
+    @VisibleForTesting
+    @NeedsTest("previewing newlines")
+    @NeedsTest("cards with a cloze notetype but no cloze in fields are previewed as empty card")
+    @NeedsTest("clozes that don't start at '1' are correctly displayed")
+    suspend fun performPreview() {
+        val convertNewlines = shouldReplaceNewlines()
+        fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
+        val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toFieldText() } ?: mutableListOf()
         val tags = selectedTags ?: mutableListOf()
+
+        val ord = if (editorNote!!.notetype.isCloze) {
+            val tempNote = withCol { Note.fromNotetypeId(editorNote!!.notetype.id) }
+            tempNote.fields = fields // makes possible to get the cloze numbers from the fields
+            val clozeNumbers = withCol { clozeNumbersInNote(tempNote) }
+            if (clozeNumbers.isNotEmpty()) {
+                clozeNumbers.first() - 1
+            } else {
+                0
+            }
+        } else {
+            currentEditedCard?.ord ?: 0
+        }
+
         val args = TemplatePreviewerArguments(
             notetypeFile = NotetypeFile(this, editorNote!!.notetype),
             fields = fields,
             tags = tags,
             id = editorNote!!.id,
-            ord = currentEditedCard?.ord ?: 0,
+            ord = ord,
             fillEmpty = false
         )
         val intent = TemplatePreviewerFragment.getIntent(this, args)
         startActivity(intent)
-    }
-
-    @VisibleForTesting
-    fun performPreview() {
-        if (sharedPrefs().getBoolean("new_previewer", false)) {
-            openNewPreviewer()
-            return
-        }
-        val previewer = Intent(this@NoteEditor, CardTemplatePreviewer::class.java)
-        if (currentEditedCard != null) {
-            previewer.putExtra("ordinal", currentEditedCard!!.ord)
-        }
-        previewer.putExtra(
-            CardTemplateNotetype.INTENT_MODEL_FILENAME,
-            CardTemplateNotetype.saveTempModel(this, editorNote!!.notetype)
-        )
-
-        // Send the previewer all our current editing information
-        val noteEditorBundle = Bundle()
-        addInstanceStateToBundle(noteEditorBundle)
-        noteEditorBundle.putBundle("editFields", fieldsAsBundleForPreview)
-        previewer.putExtra("noteEditorBundle", noteEditorBundle)
-        startActivity(previewer)
     }
 
     /**

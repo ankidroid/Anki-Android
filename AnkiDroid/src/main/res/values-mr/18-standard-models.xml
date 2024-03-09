@@ -31,8 +31,6 @@
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">मजकूर</string>
     <string name="extra_field_name_new">Back Extra</string>
     <string name="field_to_ask_front_name">उलट जोडा</string>
-    <!--Card type-->
-    <string name="card_n_name">कार्ड %d</string>
     <!--Note type-->
     <string name="basic_model_name">मूलभूत</string>
     <string name="cloze_model_name">क्लोज</string>

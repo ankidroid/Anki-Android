@@ -31,8 +31,6 @@
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">വാചകം</string>
     <string name="extra_field_name_new">Back Extra</string>
     <string name="field_to_ask_front_name">വിപരീതം ചേർക്കുക</string>
-    <!--Card type-->
-    <string name="card_n_name">കാർഡുകൾ:%d</string>
     <!--Note type-->
     <string name="basic_model_name">അടിസ്ഥാനം</string>
     <string name="cloze_model_name">അടയ്ക്കുക</string>

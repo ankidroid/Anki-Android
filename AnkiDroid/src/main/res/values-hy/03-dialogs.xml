@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">No text-to-speech language available</string>
     <string name="tts_no_tts">Չխոսել</string>
     <string name="unused_strings">\n\nՉօգտագործվող ֆայլեր`\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Նախադիտում</string>
     <string name="reposition_card_dialog_title">Տեղափոխել նոր քարտը</string>
     <string name="reposition_card_dialog_message">Սկսման դիրքը</string>
     <string name="reposition_card_not_new_error">Կարելի է տեղափոխել միայն նոր քարտերը</string>
@@ -244,4 +243,5 @@
     <string name="dismiss_backup_warning_title">Տվյալների կորուստի մասին նախազգուշացում</string>
     <string name="dismiss_backup_warning_new_user">Android-ի գաղտնիության փոփոխությունների պատճառով ձեր տվյալները և նրանց` ավտոմատ կերպով ստեղծված պատճենները կջնջվեն` ծրագրի ապատեղադրման ժամանակ։</string>
     <string name="dismiss_backup_warning_upgrade">Android-ի գաղտնիության փոփոխությունների պատճառով ձեր տվյալները և նրանց` ավտոմատ կերպով ստեղծված պատճենները անհասանելի կլինեն` ծրագրի ապատեղադրման ժամանակ։</string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

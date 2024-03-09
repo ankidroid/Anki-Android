@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Nenhum idioma disponível para o texto para voz</string>
     <string name="tts_no_tts">Não falar</string>
     <string name="unused_strings">\n\nFicheiros não utilizados:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Pré-visualizar</string>
     <string name="reposition_card_dialog_title">Reposicionar o novo cartão</string>
     <string name="reposition_card_dialog_message">Posição inicial:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
@@ -246,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

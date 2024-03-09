@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">मजकूर-ते-भाषणाची भाषा उपलब्ध नाही</string>
     <string name="tts_no_tts">बोलू नका</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">पूर्वावलोकन</string>
     <string name="reposition_card_dialog_title">नवीन कार्ड पुनर्स्थित करा</string>
     <string name="reposition_card_dialog_message">प्रारंभ स्थितीः</string>
     <string name="reposition_card_not_new_error">केवळ नवीन कार्डे पुनर्स्थित केली जाऊ शकतात</string>
@@ -246,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

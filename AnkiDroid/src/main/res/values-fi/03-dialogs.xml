@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
     <string name="tts_no_tts">Ei puhetta</string>
     <string name="unused_strings">\n\nKäyttämättömät tiedostot:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Esikatselu</string>
     <string name="reposition_card_dialog_title">Siirrä uusi kortti</string>
     <string name="reposition_card_dialog_message">Aloituspiste:</string>
     <string name="reposition_card_not_new_error">Ainoastaan uudet kortit voidaan siirtää</string>
@@ -246,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Androidin tietosuojamuutosten vuoksi tietoihisi ja automaattisiin varmuuskopioihin ei pääse käsiksi, jos sovellus poistetaan.
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

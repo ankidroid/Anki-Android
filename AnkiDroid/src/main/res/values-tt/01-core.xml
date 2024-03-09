@@ -161,7 +161,6 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">\"%2$s\" кәрт төрен hәм аның %1$d кәртен бетерергәме?</item>
     </plurals>
-    <string name="invalid_template">Кәрт ясала алмады</string>
     <string name="card_template_editor_would_delete_note">Бу кәрт төрен бетерү бер я берничә язунын бетерелүнә китерер. Зинhар, башта яңа кәрт төрен ясап саклагыз. </string>
     <string name="card_template_editor_save_error">Кәрт шаблонындагы үзгәртүләрне саклап булмый: %s</string>
     <string name="template_for_current_card_deleted">Бу кәртнең кәрт төре бетерелгән иде.</string>

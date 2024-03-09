@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">沒有可用的朗讀語言</string>
     <string name="tts_no_tts">不要發音</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">預覽</string>
     <string name="reposition_card_dialog_title">變更新卡片位置</string>
     <string name="reposition_card_dialog_message">開始位置：</string>
     <string name="reposition_card_not_new_error">只有新卡片可以變更位置</string>
@@ -239,4 +238,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        由於 Android 隱私變更，你的資料和自動備份將在應用程式解除安裝時不再可存取
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

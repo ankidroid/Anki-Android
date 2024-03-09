@@ -29,6 +29,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
@@ -40,7 +41,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN1_KEYS
@@ -86,6 +86,7 @@ import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.BasicItemSelectedListener
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
@@ -847,7 +848,7 @@ open class CardBrowser :
         }
         if (viewModel.hasSelectedAnyRows()) {
             actionBarMenu!!.findItem(R.id.action_suspend_card).apply {
-                title = TR.browsingToggleSuspend()
+                title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
                 setIcon(R.drawable.ic_suspend)
             }
             actionBarMenu!!.findItem(R.id.action_mark_card).apply {
@@ -1217,15 +1218,11 @@ open class CardBrowser :
 
     private fun onPreview() {
         val intentData = viewModel.previewIntentData
-        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.index, intentData.previewerIdsFile))
+        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.previewerIdsFile))
     }
 
     private fun getPreviewIntent(index: Int, previewerIdsFile: PreviewerIdsFile): Intent {
-        return if (sharedPrefs().getBoolean("new_previewer", false)) {
-            Previewer2Destination(index, previewerIdsFile).toIntent(this)
-        } else {
-            PreviewDestination(index, previewerIdsFile).toIntent(this)
-        }
+        return PreviewerDestination(index, previewerIdsFile).toIntent(this)
     }
 
     private fun rescheduleSelectedCards() {
@@ -2276,8 +2273,8 @@ private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<C
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
 
-class Previewer2Destination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
+class PreviewerDestination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
 
 @CheckResult
-fun Previewer2Destination.toIntent(context: Context) =
+fun PreviewerDestination.toIntent(context: Context) =
     PreviewerFragment.getIntent(context, previewerIdsFile, currentIndex)

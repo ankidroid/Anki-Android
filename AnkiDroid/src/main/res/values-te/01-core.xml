@@ -166,7 +166,6 @@
         <item quantity="one">తొలగించు \"%2$s\" కార్డు రకం, మరియు దాని %1$d కార్డు?</item>
         <item quantity="other">తొలగించు \"%2$s\" కార్డు రకం, మరియు దాని %1$d కార్డులు?</item>
     </plurals>
-    <string name="invalid_template">ఒక కార్డు సృష్టించబడలేదు</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">ప్రస్తుత కార్డ్ కోసం కార్డ్ రకం తొలగించబడింది.</string>

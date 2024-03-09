@@ -210,9 +210,6 @@
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Pulih Lalai</string>
-    <string name="cloze_sample_text">Ini merupakan {{%1$s::sampel}} penghapusan kloz.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">conteh</string>
-    <string name="basic_answer_sample_text">sebagai contoh</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Kosong</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Gagal menyimpan gambar papan putih. %s</string>

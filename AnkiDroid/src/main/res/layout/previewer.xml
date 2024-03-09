@@ -24,7 +24,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationContentDescription="@string/abc_action_bar_up_description"
                 app:navigationIcon="?attr/homeAsUpIndicator"
-                app:menu="@menu/previewer2"
+                app:menu="@menu/previewer"
                 />
 
         </com.google.android.material.appbar.AppBarLayout>

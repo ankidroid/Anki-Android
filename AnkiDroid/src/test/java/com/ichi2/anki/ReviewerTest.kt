@@ -374,7 +374,7 @@ class ReviewerTest : RobolectricTest() {
         val newTemplate = defaultTemplate.deepClone()
         newTemplate.put("ord", tmpls.length())
 
-        val cardName = targetContext.getString(R.string.card_n_name, tmpls.length() + 1)
+        val cardName = CollectionManager.TR.cardTemplatesCard(tmpls.length() + 1)
         newTemplate.put("name", cardName)
         newTemplate.put("qfmt", newTemplate.getString("qfmt") + extra)
 
