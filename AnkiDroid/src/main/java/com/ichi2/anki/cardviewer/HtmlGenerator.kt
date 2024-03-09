@@ -86,12 +86,10 @@ class HtmlGenerator(
      * @param content The content to surround with tags.
      * @return The enriched content
      */
-    private fun enrichWithQADiv(content: String?): String {
-        val sb = StringBuilder()
-        sb.append("""<div id="qa">""")
-        sb.append(content)
-        sb.append("</div>")
-        return sb.toString()
+    private fun enrichWithQADiv(content: String) = buildString {
+        append("""<div id="qa">""")
+        append(content)
+        append("</div>")
     }
 
     private fun filterTypeAnswer(content: String, side: SingleCardSide): String {
