@@ -131,8 +131,9 @@ class SoundPlayer : Closeable {
     suspend fun loadCardSounds(card: Card) {
         Timber.i("loading sounds for card %d", card.id)
         stopSounds()
-        this.questions = withCol { card.renderOutput(this).questionAvTags }
-        this.answers = withCol { card.renderOutput(this).answerAvTags }
+        val renderOutput = withCol { card.renderOutput(this) }
+        this.questions = renderOutput.questionAvTags
+        this.answers = renderOutput.answerAvTags
 
         if (!this::config.isInitialized || !config.appliesTo(card)) {
             config = withCol { CardSoundConfig.create(card) }
