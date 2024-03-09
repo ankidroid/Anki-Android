@@ -375,7 +375,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     }
 
     /** List items for [DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL] */
-    private enum class UninstallListItem(@StringRes val stringRes: Int, val dismissesDialog: Boolean, val onClick: (DeckPicker) -> Unit) {
+    enum class UninstallListItem(@StringRes val stringRes: Int, val dismissesDialog: Boolean, val onClick: (AnkiActivity) -> Unit) {
 
         RESTORE_FROM_ANKIWEB(
             R.string.restore_data_from_ankiweb,
@@ -403,7 +403,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         RESTORE_FROM_BACKUP(
             R.string.restore_data_from_backup,
             dismissesDialog = false,
-            { deckPicker ->
+            { activity ->
+                val deckPicker = activity as DeckPicker
                 Timber.i("Restoring from colpkg")
                 val newAnkiDroidDirectory = CollectionHelper.getDefaultAnkiDroidDirectory(deckPicker)
                 deckPicker.importColpkgListener = DatabaseRestorationListener(deckPicker, newAnkiDroidDirectory)
@@ -440,7 +441,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
         companion object {
             /** A dialog which creates a new collection in an unsafe location */
-            fun displayResetToNewDirectoryDialog(context: DeckPicker) {
+            fun displayResetToNewDirectoryDialog(context: AnkiActivity) {
                 AlertDialog.Builder(context).show {
                     title(R.string.backup_new_collection)
                     setIcon(R.drawable.ic_warning)
