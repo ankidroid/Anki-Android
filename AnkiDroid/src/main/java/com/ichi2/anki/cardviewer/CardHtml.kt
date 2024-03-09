@@ -46,7 +46,7 @@ class CardHtml(
         Timber.v("content card = \n %s", content)
         Timber.v("::style:: / %s", style)
 
-        return context.cardTemplate.render(content, style, script, cardClass)
+        return context.cardTemplate.render(content, style, script, cardClass).html
     }
 
     private fun getContent(): String {
