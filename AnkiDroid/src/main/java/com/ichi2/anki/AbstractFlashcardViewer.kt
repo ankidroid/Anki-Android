@@ -57,7 +57,6 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
-import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
 import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
@@ -1397,13 +1396,13 @@ abstract class AbstractFlashcardViewer :
     internal val isInNightMode: Boolean
         get() = Themes.currentTheme.isNightMode
 
-    private fun updateCard(content: CardHtml) {
+    private fun updateCard(content: RenderedCard) {
         Timber.d("updateCard()")
         // TODO: This doesn't need to be blocking
         runBlocking {
             soundPlayer.loadCardSounds(currentCard!!)
         }
-        cardContent = content.getTemplateHtml()
+        cardContent = content.html
         fillFlashcard()
         playSounds(false) // Play sounds if appropriate
     }
