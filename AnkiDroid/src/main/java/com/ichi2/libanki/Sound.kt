@@ -28,6 +28,9 @@ package com.ichi2.libanki
 import anki.config.ConfigKey
 import com.ichi2.anki.CollectionManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import org.intellij.lang.annotations.Language
+import java.io.File
+import java.nio.file.Paths
 import java.util.regex.Pattern
 
 /**
@@ -70,42 +73,84 @@ object Sound {
     val AUDIO_OR_VIDEO_EXTENSIONS = setOf("mp4", "mpg", "mpeg", "webm")
 
     /**
-     * expandSounds takes content with embedded sound file placeholders and expands them to reference the actual media
-     * file
+     * Takes content with [AvRef]s and expands them to reference the media file
      *
-     * @param content -- card content to be rendered that may contain embedded audio
-     * @return -- the same content but in a format that will render working play buttons when audio was embedded
+     * * Videos are replaced with `<video>`
+     * * Audio is replaced with <a href="playsound:">
+     *
+     * @param content card content to be rendered that may contain embedded audio
+     *
+     * @return content with [AvRef]s replaced with HTML to play the file
      */
-    fun expandSounds(content: String): String {
-        return avRefsToPlayIcons(content)
+    @Suppress("HtmlUnknownAttribute", "HtmlDeprecatedAttribute")
+    fun expandSounds(
+        content: String,
+        renderOutput: TemplateRenderOutput,
+        showAudioPlayButtons: Boolean,
+        mediaDir: String
+    ) = replaceAvRefsWith(content, renderOutput) { tag, playTag ->
+        fun asAudio(): String {
+            if (!showAudioPlayButtons) return ""
+            val playsound = "playsound:${playTag.side}:${playTag.index}"
+
+            @Language("HTML")
+            val result = """<a class="replay-button soundLink" href=$playsound><span>
+                        <svg class="playImage" viewBox="0 0 64 64" version="1.1">
+                            <circle cx="32" cy="32" r="29" fill="lightgrey"/>
+                            <path d="M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z" fill="black"/>Replay
+                        </svg>
+                    </span></a>"""
+            return result
+        }
+
+        fun asVideo(tag: SoundOrVideoTag): String {
+            val path = Paths.get(mediaDir, tag.filename).toString()
+            val uri = getFileUri(path)
+
+            @Language("HTML")
+            val result =
+                """<video src="$uri" controls controlsList="nodownload"></video>"""
+            return result
+        }
+
+        when (tag) {
+            is TTSTag -> asAudio()
+            is SoundOrVideoTag -> {
+                val extension = tag.filename.substringAfterLast(".", "")
+                when (extension) {
+                    in VIDEO_ONLY_EXTENSIONS -> asVideo(tag)
+                    in AUDIO_OR_VIDEO_EXTENSIONS -> {
+                        val file = File(mediaDir, tag.filename)
+                        if (isAudioFileInVideoContainer(file) == true) {
+                            asAudio()
+                        } else {
+                            asVideo(tag)
+                        }
+                    }
+                    else -> asAudio()
+                }
+            }
+            else -> throw IllegalStateException("unrecognised tag")
+        }
     }
 
     /* Methods */
     val AV_PLAYLINK_RE = Regex("playsound:(.):(\\d+)")
 
-    /** Return card text with play buttons added, or stripped. */
-    suspend fun addPlayButtons(text: String): String {
-        return if (CollectionManager.withCol { config.getBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS) }) {
-            stripAvRefs(text)
-        } else {
-            avRefsToPlayIcons(text)
-        }
-    }
-
-    /** Add play icons into the HTML */
-    fun avRefsToPlayIcons(text: String): String {
-        return AvRef.REGEX.replace(text) { match ->
-            val groups = match.groupValues
-            val side = groups[2]
-            val index = groups[3]
-            val playsound = "playsound:$side:$index"
-            """<a class="replay-button soundLink" href=$playsound><span>
-    <svg class="playImage" viewBox="0 0 64 64" version="1.1">
-        <circle cx="32" cy="32" r="29" fill="lightgrey"/>
-        <path d="M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z" fill="black"/>Replay
-    </svg>
-</span></a>"""
-        }
+    /**
+     * Return card text with play buttons added, or stripped.
+     *
+     * @param text A string, maybe containing `[anki:play]` tags to replace
+     * @param renderOutput Context: whether a file is audio or video
+     */
+    suspend fun addPlayButtons(
+        text: String,
+        renderOutput: TemplateRenderOutput
+    ): String {
+        val mediaDir = CollectionManager.withCol { media.dir }
+        val hidePlayButtons =
+            CollectionManager.withCol { config.getBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS) }
+        return expandSounds(text, renderOutput, showAudioPlayButtons = !hidePlayButtons, mediaDir)
     }
 
     /**
@@ -114,7 +159,9 @@ object Sound {
     fun replaceWithSoundTags(
         content: String,
         renderOutput: TemplateRenderOutput
-    ): String = replaceAvRefsWith(content, renderOutput) { tag -> "[sound:${tag.filename}]" }
+    ): String = replaceAvRefsWith(content, renderOutput) { tag, _ ->
+        if (tag !is SoundOrVideoTag) null else "[sound:${tag.filename}]"
+    }
 
     /**
      * Replaces `[anki:play:q:0]` with ` example.mp3 `
@@ -122,12 +169,21 @@ object Sound {
     fun replaceWithFileNames(
         content: String,
         renderOutput: TemplateRenderOutput
-    ): String = replaceAvRefsWith(content, renderOutput) { tag -> " ${tag.filename} " }
+    ): String = replaceAvRefsWith(content, renderOutput) { tag, _ ->
+        if (tag !is SoundOrVideoTag) null else " ${tag.filename} "
+    }
 
+    /**
+     * Replaces [AvRef]s using the provided [processTag] function
+     *
+     * @param renderOutput context
+     * @param processTag the text to replace the [AvTag] with, or `null` to perform no replacement
+     */
+    @Language("HTML")
     private fun replaceAvRefsWith(
         content: String,
         renderOutput: TemplateRenderOutput,
-        processTag: (SoundOrVideoTag) -> String
+        processTag: (AvTag, AvRef) -> String?
     ): String {
         return AvRef.REGEX.replace(content) { match ->
             val avRef = AvRef.from(match) ?: return@replace match.value
@@ -138,11 +194,7 @@ object Sound {
                 else -> null
             } ?: return@replace match.value
 
-            if (tag !is SoundOrVideoTag) {
-                return@replace match.value
-            } else {
-                return@replace processTag(tag)
-            }
+            return@replace processTag(tag, avRef) ?: match.value
         }
     }
 
