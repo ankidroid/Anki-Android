@@ -299,3 +299,16 @@ fun AlertDialog.getInputField() = getInputTextLayout().editText!!
 /** @see AlertDialog.getButton */
 val AlertDialog.positiveButton: Button
     get() = getButton(DialogInterface.BUTTON_POSITIVE)
+
+/**
+ * Extension function for AlertDialog.Builder to set a list of items.
+ * Items are not displayed if [AlertDialog.Builder.setMessage] has been called
+ *
+ * @param items The items to display in the list.
+ * @param onClick A lambda function that is invoked when an item is clicked.
+ */
+fun AlertDialog.Builder.listItems(items: List<CharSequence>, onClick: (dialog: DialogInterface, index: Int) -> Unit): AlertDialog.Builder {
+    return this.setItems(items.toTypedArray()) { dialog, which ->
+        onClick(dialog, which)
+    }
+}
