@@ -176,6 +176,8 @@ abstract class NavigationDrawerActivity :
         drawerLayout.addDrawerListener(drawerToggle)
 
         enablePostShortcut(this)
+        val intent = Intent("com.ichi2.widget.UPDATE_WIDGET")
+        this.sendBroadcast(intent)
     }
 
     /**
