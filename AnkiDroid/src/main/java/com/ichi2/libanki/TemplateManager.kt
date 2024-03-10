@@ -22,6 +22,7 @@
 
 package com.ichi2.libanki
 
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Sound.VIDEO_EXTENSIONS
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
 import com.ichi2.libanki.backend.BackendUtils
@@ -166,6 +167,9 @@ class TemplateManager {
         fun note() = _note
         fun noteType() = noteType
 
+        @NeedsTest(
+            "TTS tags `fieldText` is correctly extracted when sources are parsed to file scheme"
+        )
         fun render(col: Collection): TemplateRenderOutput {
             val partial: PartiallyRenderedCard
             try {
@@ -181,24 +185,18 @@ class TemplateManager {
 
             val mediaDir = col.media.dir
             val qtext = parseVideos(
-                parseSourcesToFileScheme(
-                    applyCustomFilters(partial.qnodes, this, frontSide = null),
-                    mediaDir
-                ),
+                applyCustomFilters(partial.qnodes, this, frontSide = null),
                 mediaDir
             )
             val qout = col.backend.extractAvTags(text = qtext, questionSide = true)
-            var qoutText = qout.text
+            var qoutText = parseSourcesToFileScheme(qout.text, mediaDir)
 
             val atext = parseVideos(
-                parseSourcesToFileScheme(
-                    applyCustomFilters(partial.anodes, this, frontSide = qout.text),
-                    mediaDir
-                ),
+                applyCustomFilters(partial.anodes, this, frontSide = qout.text),
                 mediaDir
             )
             val aout = col.backend.extractAvTags(text = atext, questionSide = false)
-            var aoutText = aout.text
+            var aoutText = parseSourcesToFileScheme(aout.text, mediaDir)
 
             if (!_browser) {
                 val svg = noteType.optBoolean("latexsvg", false)
@@ -335,7 +333,7 @@ fun parseVideos(text: String, mediaDir: String): String {
  * to use the `file:///` scheme, which allows seeking audio and videos,
  * and loads faster than using HTTP.
  *
- * Only attribute values that don't have a Uri scheme (http, file, etc) are parsed.
+ * Only attribute values that don't have an Uri scheme (http, file, etc) are parsed.
  */
 @NotInLibAnki
 @VisibleForTesting
