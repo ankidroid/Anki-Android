@@ -59,7 +59,7 @@ fun Context.openUrl(uri: Uri) {
         if (this is FragmentActivity) {
             showSnackbar(noBrowserMessage) {
                 setAction(android.R.string.copyUrl) {
-                    copyToClipboard(uri.toString(), failureMessageId = R.string.failed_to_copy)
+                    copyToClipboard(uri.toString())
                 }
             }
         } else {
