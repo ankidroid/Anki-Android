@@ -50,7 +50,7 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
     val eval = MutableSharedFlow<String>()
 
     val showingAnswer = MutableStateFlow(false)
-    protected val soundPlayer = SoundPlayer(createSoundErrorListener())
+    protected val soundPlayer = SoundPlayer(createSoundErrorListener()) { launchCatchingIO { eval.emit(it) } }
     protected lateinit var currentCard: Card
 
     @CallSuper

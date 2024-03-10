@@ -81,6 +81,8 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 displayZoomControls = false
                 allowFileAccess = true
                 domStorageEnabled = true
+                // allow videos to autoplay via our JavaScript eval
+                mediaPlaybackRequiresUserGesture = false
             }
             loadDataWithBaseURL(
                 "http://${AnkiServer.LOCALHOST}/",
