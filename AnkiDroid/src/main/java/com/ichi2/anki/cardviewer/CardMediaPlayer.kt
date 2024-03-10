@@ -89,6 +89,7 @@ import java.io.File
  *
  */
 @NeedsTest("Integration test: A video is autoplayed if it's the first media on a card")
+@NeedsTest("A sound is played after a video finishes")
 class CardMediaPlayer : Closeable {
 
     private val soundTagPlayer: SoundTagPlayer
@@ -328,6 +329,10 @@ class CardMediaPlayer : Closeable {
             block()
             playSoundsJob = null
         }
+    }
+
+    fun onVideoFinished() {
+        soundTagPlayer.videoPlayer.onVideoFinished()
     }
 
     companion object {
