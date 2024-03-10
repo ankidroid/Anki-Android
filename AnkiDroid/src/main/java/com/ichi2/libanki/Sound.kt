@@ -135,6 +135,7 @@ object Sound {
             val playsound = "${playTag.side}:${playTag.index}"
 
             val onEnded = """window.location.href = "videoended:$playsound";"""
+            val onPause = """if (this.currentTime != this.duration) { window.location.href = "videopause:$playsound"; }"""
 
             // TODO: Make the loading screen nicer if the video doesn't autoplay
             @Language("HTML")
@@ -144,6 +145,7 @@ object Sound {
                     | controls
                     | data-file="${TextUtils.htmlEncode(tag.filename)}"
                     | onended='$onEnded'
+                    | onpause='$onPause'
                     | data-play="$playsound" controlsList="nodownload"></video>
                 """.trimMargin()
             return result
@@ -154,7 +156,7 @@ object Sound {
             is SoundOrVideoTag -> {
                 when (tag.getType(mediaDir)) {
                     SoundOrVideoTag.Type.AUDIO -> asAudio()
-                    SoundOrVideoTag.Type.VIDEO -> asVideo()
+                    SoundOrVideoTag.Type.VIDEO -> asVideo(tag)
                 }
             }
             else -> throw IllegalStateException("unrecognised tag")

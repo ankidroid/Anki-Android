@@ -92,6 +92,10 @@ abstract class CardViewerViewModel(
 
     fun onVideoFinished() = cardMediaPlayer.onVideoFinished()
 
+    // A coroutine in the cardMediaPlayer waits for the video to complete
+    // This cancels it
+    fun onVideoPaused() = cardMediaPlayer.onVideoPaused()
+
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
     ********************************************************************************************* */
