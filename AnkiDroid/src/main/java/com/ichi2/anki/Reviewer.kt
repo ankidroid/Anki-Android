@@ -173,6 +173,9 @@ open class Reviewer :
             return
         }
         super.onCreate(savedInstanceState)
+        if (!ensureStoragePermissions()) {
+            return
+        }
         colorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
         textBarNew = findViewById(R.id.new_number)

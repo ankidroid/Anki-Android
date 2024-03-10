@@ -388,8 +388,8 @@ class Notetypes(val col: Collection) {
      * [ConfirmModSchemaException]
      */
     @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
-    fun addFieldInNewModel(m: com.ichi2.libanki.NotetypeJson, field: JSONObject) {
-        Assert.that(Notetypes.isModelNew(m), "Model was assumed to be new, but is not")
+    fun addFieldInNewModel(m: NotetypeJson, field: JSONObject) {
+        Assert.that(isModelNew(m), "Model was assumed to be new, but is not")
         try {
             _addField(m, field)
         } catch (e: ConfirmModSchemaException) {
@@ -399,10 +399,10 @@ class Notetypes(val col: Collection) {
         }
     }
 
-    fun addTemplateInNewModel(m: com.ichi2.libanki.NotetypeJson, template: JSONObject) {
+    fun addTemplateInNewModel(m: NotetypeJson, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
-        Assert.that(Notetypes.isModelNew(m), "Model was assumed to be new, but is not")
+        Assert.that(isModelNew(m), "Model was assumed to be new, but is not")
 
         try {
             _addTemplate(m, template)
@@ -413,7 +413,7 @@ class Notetypes(val col: Collection) {
         }
     }
 
-    fun addFieldModChanged(m: com.ichi2.libanki.NotetypeJson, field: JSONObject) {
+    fun addFieldModChanged(m: NotetypeJson, field: JSONObject) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
         // ConfirmModSchemaException.
@@ -421,7 +421,7 @@ class Notetypes(val col: Collection) {
         _addField(m, field)
     }
 
-    fun addTemplateModChanged(m: com.ichi2.libanki.NotetypeJson, template: JSONObject) {
+    fun addTemplateModChanged(m: NotetypeJson, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
         Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
@@ -573,11 +573,11 @@ class Notetypes(val col: Collection) {
         return all_names_and_ids().count()
     }
 
-    fun _addTemplate(m: com.ichi2.libanki.NotetypeJson, template: JSONObject) {
+    fun _addTemplate(m: NotetypeJson, template: JSONObject) {
         addTemplate(m, template)
     }
 
-    fun _addField(m: com.ichi2.libanki.NotetypeJson, field: JSONObject) {
+    fun _addField(m: NotetypeJson, field: JSONObject) {
         addField(m, field)
     }
 
@@ -629,7 +629,7 @@ class Notetypes(val col: Collection) {
                 )
 
         /** "Mapping of field name -> (ord, field).  */
-        fun fieldMap(m: com.ichi2.libanki.NotetypeJson): Map<String, Pair<Int, JSONObject>> {
+        fun fieldMap(m: NotetypeJson): Map<String, Pair<Int, JSONObject>> {
             val flds = m.getJSONArray("flds")
             // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
             val result: MutableMap<String, Pair<Int, JSONObject>> = HashUtil.hashMapInit(flds.length())
@@ -640,11 +640,11 @@ class Notetypes(val col: Collection) {
         }
 
         // not in anki
-        fun isModelNew(m: com.ichi2.libanki.NotetypeJson): Boolean {
+        fun isModelNew(m: NotetypeJson): Boolean {
             return m.getLong("id") == 0L
         }
 
-        fun _updateTemplOrds(m: com.ichi2.libanki.NotetypeJson) {
+        fun _updateTemplOrds(m: NotetypeJson) {
             val tmpls = m.getJSONArray("tmpls")
             for (i in 0 until tmpls.length()) {
                 val f = tmpls.getJSONObject(i)

@@ -420,6 +420,10 @@ abstract class NavigationDrawerActivity :
         const val EXTRA_STARTED_WITH_SHORTCUT = "com.ichi2.anki.StartedWithShortcut"
 
         fun enablePostShortcut(context: Context) {
+            if (!IntentHandler.grantedStoragePermissions(context, showToast = false)) {
+                Timber.w("No storage access, not enabling shortcuts")
+                return
+            }
             // Review Cards Shortcut
             val intentReviewCards = Intent(context, Reviewer::class.java)
             intentReviewCards.action = Intent.ACTION_VIEW
