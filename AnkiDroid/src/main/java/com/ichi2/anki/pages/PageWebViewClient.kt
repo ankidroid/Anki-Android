@@ -16,6 +16,7 @@
 package com.ichi2.anki.pages
 
 import android.graphics.Bitmap
+import android.webkit.ValueCallback
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -59,9 +60,10 @@ open class PageWebViewClient : WebViewClient() {
         super.onPageStarted(view, url, favicon)
         view?.let { webView ->
             val bgColor = MaterialColors.getColor(webView, android.R.attr.colorBackground).toRGBHex()
-            webView.evaluateJavascript("""document.body.style.setProperty("background-color", "$bgColor", "important")""") {
-                Timber.v("backgroundColor set")
-            }
+            webView.evaluateAfterDOMContentLoaded(
+                """document.body.style.setProperty("background-color", "$bgColor", "important");
+                    console.log("Background color set");"""
+            )
         }
     }
 
@@ -90,4 +92,21 @@ open class PageWebViewClient : WebViewClient() {
         }
         return super.shouldOverrideUrlLoading(view, request)
     }
+}
+
+fun WebView.evaluateAfterDOMContentLoaded(script: String, resultCallback: ValueCallback<String>? = null) {
+    evaluateJavascript(
+        """
+                var codeToRun = function() { 
+                    $script
+                }
+                
+                if (document.readyState === "loading") {
+                  document.addEventListener("DOMContentLoaded", codeToRun);
+                } else {
+                  codeToRun();
+                }
+        """.trimIndent(),
+        resultCallback
+    )
 }
