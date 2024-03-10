@@ -137,6 +137,8 @@ object Sound {
 
                     val playsound = "${playTag.side}:${playTag.index}"
 
+                    val onEnded = """window.location.href = "videoended:$playsound";"""
+
                     // TODO: Make the loading screen nicer if the video doesn't autoplay
                     @Language("HTML")
                     val result =
@@ -144,6 +146,7 @@ object Sound {
                     | src="$uri"
                     | controls
                     | data-file="${TextUtils.htmlEncode(tag.filename)}"
+                    | onended='$onEnded'
                     | data-play="$playsound" controlsList="nodownload"></video>
                         """.trimMargin()
                     return result

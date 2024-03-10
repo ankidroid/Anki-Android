@@ -2308,6 +2308,11 @@ abstract class AbstractFlashcardViewer :
                 }
                 return true
             }
+            if (url.startsWith("videoended:")) {
+                // note: 'q:0' is provided
+                soundPlayer.onVideoFinished()
+                return true
+            }
             if (url.startsWith("state-mutation-error:")) {
                 onStateMutationError()
                 return true
