@@ -36,7 +36,7 @@ import kotlin.coroutines.resumeWithException
 
 /** Player for the sounds of [SoundOrVideoTag] */
 @NeedsTest("CardSoundConfig.autoplay should mean that video also isn't played automatically")
-class SoundTagPlayer(private val soundUriBase: String, private val videoPlayer: VideoPlayer) {
+class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPlayer) {
     private var mediaPlayer: MediaPlayer? = null
 
     private val music = AudioAttributes.Builder()

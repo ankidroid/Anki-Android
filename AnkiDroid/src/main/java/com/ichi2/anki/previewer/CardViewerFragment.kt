@@ -153,6 +153,10 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                     viewModel.playSoundFromUrl(urlString)
                     return true
                 }
+                if (urlString.startsWith("videoended:")) {
+                    viewModel.onVideoFinished()
+                    return true
+                }
                 if (urlString.startsWith("tts-voices:")) {
                     TtsVoicesDialogFragment().show(childFragmentManager, null)
                     return true
