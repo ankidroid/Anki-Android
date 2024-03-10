@@ -2313,6 +2313,11 @@ abstract class AbstractFlashcardViewer :
                 soundPlayer.onVideoFinished()
                 return true
             }
+            if (url.startsWith("videopause:")) {
+                // note: 'q:0' is provided
+                soundPlayer.onVideoPaused()
+                return true
+            }
             if (url.startsWith("state-mutation-error:")) {
                 onStateMutationError()
                 return true

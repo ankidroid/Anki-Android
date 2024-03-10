@@ -21,6 +21,7 @@ import com.ichi2.libanki.SoundOrVideoTag
 import kotlinx.coroutines.CancellableContinuation
 import timber.log.Timber
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 /**
  * Interacts with `<video>` tags, triggering the start and detecting completion of videos
@@ -58,6 +59,12 @@ class VideoPlayer(private val jsEval: () -> JavascriptEvaluator) {
     fun onVideoFinished() {
         Timber.v("video ended")
         continuation?.resume(Unit)
+        continuation = null
+    }
+
+    fun onVideoPaused() {
+        Timber.i("video paused")
+        continuation?.resumeWithException(SoundException(SoundErrorBehavior.STOP_AUDIO))
         continuation = null
     }
 }

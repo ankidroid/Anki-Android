@@ -144,6 +144,10 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                     viewModel.onVideoFinished()
                     return true
                 }
+                if (urlString.startsWith("videopause:")) {
+                    viewModel.onVideoPaused()
+                    return true
+                }
                 if (urlString.startsWith("tts-voices:")) {
                     TtsVoicesDialogFragment().show(childFragmentManager, null)
                     return true

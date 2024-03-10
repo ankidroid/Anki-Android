@@ -84,6 +84,9 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
 
     fun onVideoFinished() = soundPlayer.onVideoFinished()
 
+    // Optimization to stop a coroutine which waits for completion
+    fun onVideoPaused() = soundPlayer.onVideoPaused()
+
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
     ********************************************************************************************* */
