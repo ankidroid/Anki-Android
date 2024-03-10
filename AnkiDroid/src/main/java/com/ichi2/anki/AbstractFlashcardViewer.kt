@@ -2311,6 +2311,11 @@ abstract class AbstractFlashcardViewer :
                 cardMediaPlayer.onVideoFinished()
                 return true
             }
+            if (url.startsWith("videopause:")) {
+                // note: 'q:0' is provided
+                cardMediaPlayer.onVideoPaused()
+                return true
+            }
             if (url.startsWith("state-mutation-error:")) {
                 onStateMutationError()
                 return true

@@ -21,6 +21,7 @@ import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
+import androidx.annotation.VisibleForTesting
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import com.ichi2.anki.AnkiDroidApp
@@ -69,12 +70,18 @@ class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPla
             Timber.d("Playing SoundOrVideoTag")
             when (tagType) {
                 SoundOrVideoTag.Type.AUDIO -> playSound(continuation, tag, soundErrorListener)
-                SoundOrVideoTag.Type.VIDEO -> {
-                    Timber.d("Playing video")
-                    videoPlayer.playVideo(continuation, tag)
-                }
+                SoundOrVideoTag.Type.VIDEO -> playVideo(continuation, tag)
             }
         }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun playVideo(
+        continuation: CancellableContinuation<Unit>,
+        tag: SoundOrVideoTag
+    ) {
+        Timber.d("Playing video")
+        videoPlayer.playVideo(continuation, tag)
     }
 
     private fun playSound(

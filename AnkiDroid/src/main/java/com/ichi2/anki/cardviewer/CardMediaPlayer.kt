@@ -90,6 +90,7 @@ import java.io.File
  */
 @NeedsTest("Integration test: A video is autoplayed if it's the first media on a card")
 @NeedsTest("A sound is played after a video finishes")
+@NeedsTest("Pausing a video calls onSoundGroupCompleted")
 class CardMediaPlayer : Closeable {
 
     private val soundTagPlayer: SoundTagPlayer
@@ -331,8 +332,15 @@ class CardMediaPlayer : Closeable {
         }
     }
 
+    @NeedsTest("finish moves to next sound")
     fun onVideoFinished() {
         soundTagPlayer.videoPlayer.onVideoFinished()
+    }
+
+    @NeedsTest("pause starts automatic answer")
+    fun onVideoPaused() {
+        Timber.i("video paused")
+        soundTagPlayer.videoPlayer.onVideoPaused()
     }
 
     companion object {
