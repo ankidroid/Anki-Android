@@ -105,10 +105,8 @@ class ManageNotetypes : AnkiActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.locale_dialog_search_bar, menu)
 
-        // Get the SearchView MenuItem
         val searchItem = menu.findItem(R.id.locale_dialog_action_search)
 
-        // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = searchItem?.actionView as? SearchView
         searchView!!.setSearchableInfo(searchManager.getSearchableInfo(componentName))
@@ -173,7 +171,6 @@ class ManageNotetypes : AnkiActivity() {
                 }
                 negativeButton(R.string.dialog_cancel)
             }
-            // start with the button disabled as dialog shows the initial name
             dialog.getActionButton(WhichButton.POSITIVE).isEnabled = false
         }
     }
