@@ -20,9 +20,6 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:visibility="gone" />
-
-
-
         <Spinner
             android:id="@+id/toolbar_spinner"
             android:layout_width="match_parent"

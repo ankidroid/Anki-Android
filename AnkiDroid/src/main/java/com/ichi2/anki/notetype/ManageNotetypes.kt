@@ -32,6 +32,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.StockNotetype
 import anki.notetypes.copy
@@ -51,13 +52,14 @@ import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.libanki.utils.set
 import com.ichi2.utils.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
 
-    // Initialize the list of current note types to an empty list
-    // The list is being duplicated, so when performing filtering, the original list doesn't get updated as well
     private var currentNotetypes: List<NoteTypeUiModel> = emptyList()
 
     private val notetypesAdapter: NotetypesAdapter by lazy {
@@ -98,7 +100,7 @@ class ManageNotetypes : AnkiActivity() {
         findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {
             launchCatchingTask { addNewNotetype() }
         }
-        launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
+        launchCatchingTask { runAndRefreshAfter() }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.locale_dialog_search_bar, menu)
@@ -108,27 +110,30 @@ class ManageNotetypes : AnkiActivity() {
 
         // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = searchItem.actionView as SearchView?
+        val searchView = searchItem?.actionView as? SearchView
         searchView!!.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
-        // Set up search view listener if needed
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                // Perform search
-                return false
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Filter the note types based on the search query
-                val filteredList = if (newText.isNullOrEmpty()) {
-                    currentNotetypes // returns the initial list if search query is empty
-                } else {
-                    currentNotetypes.filter {
-                        it.name.lowercase().contains(newText.lowercase())
+                lifecycleScope.launch {
+                    val filteredList = if (newText.isNullOrEmpty()) {
+                        currentNotetypes
+                    } else {
+                        withContext(Dispatchers.IO) {
+                            currentNotetypes.filter {
+                                it.name.lowercase().contains(newText.lowercase())
+                            }
+                        }
+                    }
+
+                    withContext(Dispatchers.Main) {
+                        notetypesAdapter.submitList(filteredList)
                     }
                 }
-                notetypesAdapter.submitList(filteredList) // Update adapter with filtered or complete list
-
                 return true
             }
         })
