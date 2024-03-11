@@ -52,7 +52,7 @@
         <item quantity="many">%d דקות</item>
         <item quantity="other">%d דקות</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s מילישניות</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">אין תוצאות</string>
     <!-- preferences.xml categories-->
@@ -275,7 +275,7 @@
     <string name="binding_add_axis">הוסף ג\'ויסטיק/בקר תנועה</string>
     <string name="axis_picker_move_joystick">הזז ג\'ויסטיק/בקר תנועה</string>
     <string name="user_actions" maxLength="41">פעולות משתמש</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
+    <string name="user_actions_summary" maxLength="41">הפעל JavaScript ממסך הסקירה</string>
     <string name="user_action_1" maxLength="41">פעולת משתמש 1</string>
     <string name="user_action_2" maxLength="41">פעולת משתמש 2</string>
     <string name="user_action_3" maxLength="41">פעולת משתמש 3</string>

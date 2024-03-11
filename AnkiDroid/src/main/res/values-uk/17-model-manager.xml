@@ -30,7 +30,7 @@
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Керувати полями</string>
     <!--Toasts-->
     <string name="toast_last_model">Ви не можете видалити останній тип примітки</string>
-    <string name="toast_last_field">Має бути принаймні одне поле в типі записів</string>
+    <string name="toast_last_field">Типи записів повинні містити хоча б одне поле</string>
     <string name="toast_empty_name">Необхідно ввести ім\'я</string>
     <string name="toast_duplicate_field">Ім\'я поля вже використовується</string>
     <string name="toast_out_of_range">Введіть дійсне значення</string>
@@ -45,7 +45,7 @@
         <item quantity="one">%d запис</item>
         <item quantity="few">%d записи</item>
         <item quantity="many">%d записів</item>
-        <item quantity="other">%d записи</item>
+        <item quantity="other">%d записів</item>
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Видалити тип запису</string>
