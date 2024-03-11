@@ -26,7 +26,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
-import com.ichi2.anki.PreviewDestination
+import com.ichi2.anki.PreviewerDestination
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
@@ -207,6 +207,7 @@ class CardBrowserViewModel(
     val initCompleted get() = flowOfInitCompleted.value
 
     init {
+        Timber.d("CardBrowserViewModel::init")
         flowOfColumnIndex1
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
             .launchIn(viewModelScope)
@@ -486,15 +487,15 @@ class CardBrowserViewModel(
 
     /** Previewing */
 
-    val previewIntentData: PreviewDestination
+    val previewIntentData: PreviewerDestination
         get() {
             // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
             return if (selectedRowCount() > 1) {
-                PreviewDestination(index = 0, PreviewerIdsFile(cacheDir, selectedRowIds))
+                PreviewerDestination(currentIndex = 0, PreviewerIdsFile(cacheDir, selectedRowIds))
             } else {
                 // Preview all cards, starting from the one that is currently selected
                 val startIndex = indexOfFirstCheckedCard() ?: 0
-                PreviewDestination(startIndex, PreviewerIdsFile(cacheDir, allCardIds))
+                PreviewerDestination(startIndex, PreviewerIdsFile(cacheDir, allCardIds))
             }
         }
 

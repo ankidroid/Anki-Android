@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import androidx.core.app.PendingIntentCompat
+import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -38,6 +39,10 @@ class AddNoteWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
+        if (!IntentHandler.grantedStoragePermissions(context, showToast = false)) {
+            Timber.w("Opening AddNote widget without storage access")
+            return
+        }
         Timber.d("onUpdate")
         val remoteViews = RemoteViews(context.packageName, R.layout.widget_add_note)
         val intent = Intent(context, NoteEditor::class.java)

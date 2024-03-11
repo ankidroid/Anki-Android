@@ -166,7 +166,6 @@
         <item quantity="one">Voleu eliminar el tipus de carta \"%2$s\", i la seva %1$d carta?</item>
         <item quantity="other">Voleu eliminar el tipus de carta \"%2$s\", i les seves %1$d cartes?</item>
     </plurals>
-    <string name="invalid_template">No s\'ha pogut generar una carta.</string>
     <string name="card_template_editor_would_delete_note">L\'eliminació d\'aquest tipus de carta suprimirà una o més notes. Creeu i deseu primer un tipus de carta nou.</string>
     <string name="card_template_editor_save_error">No es poden desar els canvis a la plantilla de carta: %s</string>
     <string name="template_for_current_card_deleted">S\'ha esborrat el tipus de carta per la carta actual.</string>

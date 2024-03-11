@@ -213,9 +213,6 @@
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">पहले जैसा कर देना</string>
-    <string name="cloze_sample_text">यह एक {{%1$s::sample}} क्लोज़ विलोपन है।</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">एक दाहरण</string>
-    <string name="basic_answer_sample_text">एक उदाहरण</string>
     <string name="reviewer_tts_cloze_spoken_replacement">रिक्त</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">श्वेतपट्ट छवि को सहेजने में विफल। %s</string>

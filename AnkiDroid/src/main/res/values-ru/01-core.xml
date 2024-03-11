@@ -176,7 +176,6 @@
         <item quantity="many">Удалить тип “%2$s” и его %1$d карточек?</item>
         <item quantity="other">Удалить тип “%2$s” и его %1$d карточек?</item>
     </plurals>
-    <string name="invalid_template">Невозможно сгенерировать карточку</string>
     <string name="card_template_editor_would_delete_note">При удалении этого типа карточек будут удалены записи. Сначала создайте и сохраните новый тип карточек.</string>
     <string name="card_template_editor_save_error">Не удаётся сохранить изменения в шаблоне: %s</string>
     <string name="template_for_current_card_deleted">Тип карточек текущей карточки был удалён.</string>

@@ -176,7 +176,6 @@
         <item quantity="many">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
         <item quantity="other">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
     </plurals>
-    <string name="invalid_template">Karta nie mogła zostać wygenerowana</string>
     <string name="card_template_editor_would_delete_note">Usunięcie tego typu karty spowodowałoby usunięcie przynajmniej jednej notatki. Proszę najpierw utworzyć i zapisać nowy typ karty.</string>
     <string name="card_template_editor_save_error">Nie można zapisać zmian szablonu karty: %s</string>
     <string name="template_for_current_card_deleted">Typ karty dla aktualnej karty został usunięty</string>

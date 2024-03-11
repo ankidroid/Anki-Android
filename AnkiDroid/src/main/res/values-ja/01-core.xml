@@ -161,7 +161,6 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">カードタイプ \'%2$s\' とそのカード%1$d枚を削除しますか？</item>
     </plurals>
-    <string name="invalid_template">カードを作成できませんでした</string>
     <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１枚または複数枚のノートが削除されます。先に新しいカードタイプを追加し保存してください。</string>
     <string name="card_template_editor_save_error">カードテンプレートの変更を保存できません: %s</string>
     <string name="template_for_current_card_deleted">現在のカードのカードタイプが削除されました。</string>

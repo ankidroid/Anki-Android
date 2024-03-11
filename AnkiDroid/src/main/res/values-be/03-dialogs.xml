@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Сінтэз маўлення недаступны</string>
     <string name="tts_no_tts">Не прамаўляць</string>
     <string name="unused_strings">\n\nНявыкарыстаныя файлы:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Папярэдні прагляд</string>
     <string name="reposition_card_dialog_title">Перамясціць новую картку</string>
     <string name="reposition_card_dialog_message">Пачатковая пазіцыя:</string>
     <string name="reposition_card_not_new_error">Толькі новыя карткі могуць быць перамешчаныя</string>
@@ -262,4 +261,5 @@
     <string name="dismiss_backup_warning_upgrade">        У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматычныя рэзервовыя копіі стануць недаступны
     
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

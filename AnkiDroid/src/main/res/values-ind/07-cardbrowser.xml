@@ -49,14 +49,14 @@
         <item quantity="other">%d kartu ditampilkan</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="other">%d notes shown</item>
+        <item quantity="other">%d catatan ditampilkan</item>
     </plurals>
     <string name="card_browser_all_decks">Semua dek</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="other">Delete cards</item>
+        <item quantity="other">Hapus kartu</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="other">Delete notes</item>
+        <item quantity="other">Hapus catatan</item>
     </plurals>
     <string name="card_browser_change_deck">Ganti dek</string>
     <string name="delete_card_title">Hapus catatan?</string>
@@ -68,7 +68,7 @@
     <string name="card_browser_list_my_searches_save">Simpan pencarian</string>
     <string name="card_browser_list_my_searches_title">Pilih pencarian tersimpan</string>
     <string name="card_browser_list_my_searches_new_name">Nama untuk pencarian sekarang</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">Kamu tidak dapat menyimpan pencarian tanpa nama</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Anda tidak dapat menyimpan pencarian tanpa nama</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nama sudah ada</string>
     <string name="card_browser_list_my_searches_remove_content">Hapus \" %1$s \"?</string>
     <string name="card_browser_change_display_order">Ubah urutan tampilan</string>
@@ -94,12 +94,12 @@
     <string name="card_browser_no_cards_in_deck">Tidak ada kartu ditemukan di dek ‘%s’</string>
     <string name="card_browser_search_all_decks">Cari seluruh dek</string>
     <string name="card_browser_unknown_deck_name">Tak diketahui</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Tutup konten</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="other">Export cards</item>
+        <item quantity="other">Ekspor kartu</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="other">Export notes</item>
+        <item quantity="other">Ekspor catatan</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d kartu telah dihapus</item>

@@ -50,7 +50,6 @@ import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.notetype.RenameCardTemplateDialog
 import com.ichi2.anki.notetype.RepositionCardTemplateDialog
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.snackbar.showSnackbar
@@ -673,50 +672,23 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return if (nid != -1L) col.getNote(nid) else null
         }
 
-        private suspend fun openNewPreviewer() {
-            val notetype = templateEditor.tempModel!!.notetype
-            val notetypeFile = NotetypeFile(requireContext(), notetype)
-            val ord = templateEditor.viewPager.currentItem
-            val note = withCol { getNote(this) ?: Note.fromNotetypeId(notetype.id) }
-            val args = TemplatePreviewerArguments(
-                notetypeFile = notetypeFile,
-                id = note.id,
-                ord = ord,
-                fields = note.fields,
-                tags = note.tags,
-                fillEmpty = true
-            )
-            val intent = TemplatePreviewerFragment.getIntent(requireContext(), args)
-            startActivity(intent)
-            return
-        }
-
         fun performPreview() {
-            if (requireContext().sharedPrefs().getBoolean("new_previewer", false)) {
-                launchCatchingTask { openNewPreviewer() }
-                return
+            launchCatchingTask {
+                val notetype = templateEditor.tempModel!!.notetype
+                val notetypeFile = NotetypeFile(requireContext(), notetype)
+                val ord = templateEditor.viewPager.currentItem
+                val note = withCol { getNote(this) ?: Note.fromNotetypeId(notetype.id) }
+                val args = TemplatePreviewerArguments(
+                    notetypeFile = notetypeFile,
+                    id = note.id,
+                    ord = ord,
+                    fields = note.fields,
+                    tags = note.tags,
+                    fillEmpty = true
+                )
+                val intent = TemplatePreviewerFragment.getIntent(requireContext(), args)
+                startActivity(intent)
             }
-            val col = templateEditor.getColUnsafe
-            val tempModel = templateEditor.tempModel
-            Timber.i("CardTemplateEditor:: Preview on tab %s", templateEditor.viewPager.currentItem)
-            // Create intent for the previewer and add some arguments
-            val i = Intent(templateEditor, CardTemplatePreviewer::class.java)
-            val ordinal = templateEditor.viewPager.currentItem
-            i.putExtra("ordinal", ordinal)
-            i.putExtra("cardListIndex", 0)
-
-            // If we have a card for this position, send it, otherwise an empty card list signals to show a blank
-            getNote(col)?.let {
-                val cids = it.cardIds(col)
-                if (ordinal < cids.size) {
-                    i.putExtra("cardList", longArrayOf(cids[ordinal]))
-                }
-            }
-            // Save the model and pass the filename if updated
-            tempModel!!.editedModelFileName =
-                CardTemplateNotetype.saveTempModel(templateEditor, tempModel.notetype)
-            i.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModel.editedModelFileName)
-            onRequestPreviewResult.launch(i)
         }
 
         private fun displayDeckOverrideDialog(tempModel: CardTemplateNotetype) = launchCatchingTask {
@@ -976,7 +948,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // If the starting point for name already exists, iteratively increase n until we find a unique name
             while (true) {
                 // Get new name
-                val name = resources.getString(R.string.card_n_name, n)
+                val name = CollectionManager.TR.cardTemplatesCard(n)
                 // Cycle through all templates checking if new name exists
                 if (templates.jsonObjectIterable().all { name != it.getString("name") }) {
                     return name

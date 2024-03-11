@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
     <string name="tts_no_tts">حرف نزن</string>
     <string name="unused_strings">\n\nفایل های استفاده نشده:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">پیش نمایش</string>
     <string name="reposition_card_dialog_title">تغییر مکان کارت جدید</string>
     <string name="reposition_card_dialog_message">موقعیت شروع:</string>
     <string name="reposition_card_not_new_error">فقط کارت‌های جدید می‌توانند جابه‌جا شوند</string>
@@ -244,4 +243,5 @@
     <string name="dismiss_backup_warning_title">خطر از دست رفتن داده‌ها</string>
     <string name="dismiss_backup_warning_new_user">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک نیز حذف خواهند شد    </string>
     <string name="dismiss_backup_warning_upgrade">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک، از دسترس خارج خواهند شد    </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

@@ -47,11 +47,11 @@
     <!-- Feedback.java -->
     <string name="empty_string"></string>
     <string name="error_reporting_choice">Mode melapor galat</string>
-    <string name="feedback_disclaimer">Penafian: Kami tidak mengumpulkan informasi pribadi apapun seperti alamat surel, nomor telepon, atau IMEI teleponmu. Tetapi kami mengumpulkan beberapa informasi perangkat seperti pembuat, model dan versi Android, serta ciri-ciri galat yang dilaporkan dan langkah-langkah yang menyebabkannya terjadi.</string>
+    <string name="feedback_disclaimer">Penafian: Kami tidak mengumpulkan informasi pribadi apa pun seperti alamat surel, nomor telepon, atau IMEI telepon Anda. Tetapi kami mengumpulkan beberapa informasi perangkat seperti pembuat, model dan versi Android, serta ciri-ciri eror yang dilaporkan dan langkah-langkah yang menyebabkannya terjadi.</string>
     <string name="feedback_title">Umpan balik AnkiDroid</string>
     <string name="feedback_default_text">Silakan tulis umpan balik atau informasi tentang galat yang kamu laporkan.</string>
     <string name="feedback_auto_toast_text">AnkiDroid mengalami masalah; sebuah laporan dikirim ke pengembang&#8230;</string>
-    <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
+    <string name="feedback_for_manual_toast_text">Sebuah laporan eror sedang disiapkan untuk para pengembang&#8230;</string>
     <string name="feedback_copy_debug">Salin info debug</string>
     <string name="feedback_report">Laporkan</string>
     <string name="feedback_report_automatically">Kirim laporan galat secara otomatis</string>

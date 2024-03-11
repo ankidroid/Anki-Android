@@ -177,6 +177,10 @@ abstract class AbstractFlashcardViewer :
      */
     var webView: WebView? = null
         private set
+
+    /** Accessor for [WebView.getWebViewClient] before API 26 */
+    private var webViewClient: CardViewerWebClient? = null
+
     private var cardFrame: FrameLayout? = null
     private var touchLayer: FrameLayout? = null
     protected var answerField: FixedEditText? = null
@@ -1010,7 +1014,10 @@ abstract class AbstractFlashcardViewer :
             isScrollbarFadingEnabled = true
             // Set transparent color to prevent flashing white when night mode enabled
             setBackgroundColor(Color.argb(1, 0, 0, 0))
-            webViewClient = CardViewerWebClient(assetLoader, this@AbstractFlashcardViewer)
+            CardViewerWebClient(assetLoader, this@AbstractFlashcardViewer).apply {
+                webViewClient = this
+                this@AbstractFlashcardViewer.webViewClient = this
+            }
         }
         Timber.d(
             "Focusable = %s, Focusable in touch mode = %s",
@@ -2043,7 +2050,7 @@ abstract class AbstractFlashcardViewer :
 
     /** #6141 - blocks clicking links from executing "touch" gestures.
      * COULD_BE_BETTER: Make base class static and move this out of the CardViewer  */
-    internal inner class LinkDetectingGestureDetector() :
+    internal inner class LinkDetectingGestureDetector :
         MyGestureDetector(), ShakeDetector.Listener {
         private var shakeDetector: ShakeDetector? = null
 
@@ -2504,14 +2511,7 @@ abstract class AbstractFlashcardViewer :
     @SuppressLint("WebViewApiAvailability")
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun handleUrlFromJavascript(url: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // WebViewCompat recommended here, but I'll avoid the dependency as it's test code
-            val c = webView?.webViewClient as? CardViewerWebClient?
-                ?: throw IllegalStateException("Couldn't obtain WebView - maybe it wasn't created yet")
-            c.filterUrl(url)
-        } else {
-            throw IllegalStateException("Can't get WebViewClient due to Android API")
-        }
+        webViewClient?.filterUrl(url) ?: throw IllegalStateException("Couldn't obtain WebView - maybe it wasn't created yet")
     }
 
     val isDisplayingAnswer

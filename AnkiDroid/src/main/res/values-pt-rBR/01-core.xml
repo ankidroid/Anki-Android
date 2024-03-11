@@ -166,7 +166,6 @@
         <item quantity="one">Excluir o tipo de cartão %2$s e seu %1$d cartão?</item>
         <item quantity="other">Excluir o tipo de cartão %2$s e seus %1$d cartões?</item>
     </plurals>
-    <string name="invalid_template">Não foi possível gerar o card</string>
     <string name="card_template_editor_would_delete_note">Excluir este tipo de card resultará na remoção de uma ou mais notas. Por favor, primeiro crie um novo tipo de card.</string>
     <string name="card_template_editor_save_error">Não é possível salvar as alterações no modelo de card: %s</string>
     <string name="template_for_current_card_deleted">O modelo para o card atual foi excluído.</string>

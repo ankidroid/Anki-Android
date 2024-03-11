@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Non b\'est a disponimentu peruna limba de sìntesi vocale</string>
     <string name="tts_no_tts">Non chistiones</string>
     <string name="unused_strings">\n\nDocumentos no impreados:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Antiprima</string>
     <string name="reposition_card_dialog_title">Torra a positzionare sa carta noa</string>
     <string name="reposition_card_dialog_message">Positzione de incumintzu:</string>
     <string name="reposition_card_not_new_error">Petzi sas cartas noas si podent torrare a positzionare</string>
@@ -260,4 +259,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Pro neghe de sas modìficas a sa riservadesa de Android, non s\'at a pòdere atzèdere a sos datos tuos e a sas còpias de seguresa automàticas tuas si as a disinstallare s\'aplicatzione
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

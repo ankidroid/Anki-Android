@@ -24,7 +24,6 @@ import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
-import com.ichi2.libanki.utils.set
 import com.ichi2.testutils.createTransientFile
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat

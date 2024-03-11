@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Không có ngôn ngữ chuyển-văn-bản-thành-lời</string>
     <string name="tts_no_tts">Đừng phát âm</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Xem trước</string>
     <string name="reposition_card_dialog_title">Đặt lại vị trí thẻ mới</string>
     <string name="reposition_card_dialog_message">Vị trí bắt đầu:</string>
     <string name="reposition_card_not_new_error">Chỉ thẻ mới có thể được định vị lại</string>
@@ -239,4 +238,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Do những thay đổi về quyền riêng tư của Android, dữ liệu và các bản sao lưu tự động của bạn sẽ không thể truy cập được nếu ứng dụng bị gỡ cài đặt
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

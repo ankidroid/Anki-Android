@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
     <string name="tts_no_tts">Konuşma</string>
     <string name="unused_strings">\n\nKullanılmayan dosyalar:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Önizleme</string>
     <string name="reposition_card_dialog_title">Yeni kartın yerini değiştir</string>
     <string name="reposition_card_dialog_message">Başlangıç konumu:</string>
     <string name="reposition_card_not_new_error">Yalnızca yeni kartların yeri değiştirilebilir</string>
@@ -246,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Android gizlilik değişikliklerinden dolayı, uygulama kaldırılırsa veriniz ve otomatik yedekleriniz erişilemez hâle gelecek
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
     <string name="tts_no_tts">Σίγαση</string>
     <string name="unused_strings">\n\nΑχρησιμοποίητα αρχεία:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Προεπισκόπηση</string>
     <string name="reposition_card_dialog_title">Επανατοποθέτηση νέας κάρτας</string>
     <string name="reposition_card_dialog_message">Θέση έναρξης:</string>
     <string name="reposition_card_not_new_error">Μόνο νέες κάρτες μπορούν να επανατοποθετηθούν</string>
@@ -246,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

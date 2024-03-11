@@ -171,7 +171,6 @@
         <item quantity="one">Izdzēst “%2$s” veidu un tā %1$d kārti?</item>
         <item quantity="other">Izdzēst “%2$s” veidu un tā %1$d kārtis?</item>
     </plurals>
-    <string name="invalid_template">Neizdevās izveidot</string>
     <string name="card_template_editor_would_delete_note">Izdzēšot šo kāršu veidu, daži raksti var tikt dzēsti līdzi. Lūdzu, vispirms izveidojiet jaunu kāršu veidu.</string>
     <string name="card_template_editor_save_error">Neizdevās saglabāt veidnes izmaiņas: %s</string>
     <string name="template_for_current_card_deleted">Šīs kārts veids tika izdzēsts</string>

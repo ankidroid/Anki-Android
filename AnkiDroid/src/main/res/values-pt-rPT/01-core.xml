@@ -166,7 +166,6 @@
         <item quantity="one">Eliminar o tipo de ficha \"%2$s\", e a sua %1$d ficha?</item>
         <item quantity="other">Eliminar o tipo de ficha \"%2$s\", e a sua %1$d fichas?</item>
     </plurals>
-    <string name="invalid_template">Uma ficha não pôde ser gerada</string>
     <string name="card_template_editor_would_delete_note">A eliminação deste tipo de ficha faria com que uma ou mais notas fossem eliminadas. Por favor crie e grave um novo tipo de ficha primeiro.</string>
     <string name="card_template_editor_save_error">Incapaz de gravar alterações ao modelo das fichas: %s</string>
     <string name="template_for_current_card_deleted">O tipo de ficha para a ficha atual foi eliminado.</string>

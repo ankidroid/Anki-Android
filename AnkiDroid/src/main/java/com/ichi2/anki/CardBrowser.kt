@@ -29,7 +29,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
@@ -41,8 +40,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.Previewer.Companion.toIntent
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN1_KEYS
 import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN2_KEYS
@@ -68,7 +65,6 @@ import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.export.ExportDialogsFactory
 import com.ichi2.anki.export.ExportDialogsFactoryProvider
-import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
@@ -350,23 +346,15 @@ open class CardBrowser :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        // must be called after showedActivityFailedScreen
-        viewModel = createViewModel()
-
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         exportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
         super.onCreate(savedInstanceState)
-        if (wasLoadedFromExternalTextActionItem() && !hasCollectionStoragePermissions()) {
-            // we need to do this as DeckPicker still contains app init logic/upgrade logic
-            Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
-            showThemedToast(
-                this,
-                getString(R.string.intent_handler_failed_no_storage_permission),
-                false
-            )
-            displayDeckPickerForPermissionsDialog()
+        if (!ensureStoragePermissions()) {
             return
         }
+        // must be called once we have an accessible collection
+        viewModel = createViewModel()
+
         launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
         setContentView(R.layout.card_browser)
         initNavigationDrawer(findViewById(android.R.id.content))
@@ -821,23 +809,6 @@ open class CardBrowser :
         }
     }
 
-    private fun displayDeckPickerForPermissionsDialog() {
-        // TODO: Combine this with class: IntentHandler after both are well-tested
-        val deckPicker = Intent(this, DeckPicker::class.java)
-        deckPicker.action = Intent.ACTION_MAIN
-        deckPicker.addCategory(Intent.CATEGORY_LAUNCHER)
-        deckPicker.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(deckPicker)
-        finish()
-        this.setResult(RESULT_CANCELED)
-    }
-
-    private fun wasLoadedFromExternalTextActionItem(): Boolean {
-        val intent = this.intent ?: return false
-        // API 23: Replace with Intent.ACTION_PROCESS_TEXT
-        return "android.intent.action.PROCESS_TEXT".equals(intent.action, ignoreCase = true)
-    }
-
     private fun updatePreviewMenuItem() {
         previewItem?.isVisible = viewModel.rowCount > 0
     }
@@ -1219,15 +1190,11 @@ open class CardBrowser :
 
     private fun onPreview() {
         val intentData = viewModel.previewIntentData
-        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.index, intentData.previewerIdsFile))
+        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.previewerIdsFile))
     }
 
     private fun getPreviewIntent(index: Int, previewerIdsFile: PreviewerIdsFile): Intent {
-        return if (sharedPrefs().getBoolean("new_previewer", false)) {
-            Previewer2Destination(index, previewerIdsFile).toIntent(this)
-        } else {
-            PreviewDestination(index, previewerIdsFile).toIntent(this)
-        }
+        return PreviewerDestination(index, previewerIdsFile).toIntent(this)
     }
 
     private fun rescheduleSelectedCards() {
@@ -1493,7 +1460,7 @@ open class CardBrowser :
 
     // convenience method for updateCardsInList(...)
     private fun updateCardInList(card: Card) {
-        val cards: MutableList<Card> = java.util.ArrayList(1)
+        val cards: MutableList<Card> = ArrayList(1)
         cards.add(card)
         updateCardsInList(cards)
     }
@@ -1776,7 +1743,6 @@ open class CardBrowser :
             return v
         }
 
-        @Suppress("UNCHECKED_CAST")
         @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
@@ -2278,8 +2244,8 @@ private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<C
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
 
-class Previewer2Destination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
+class PreviewerDestination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
 
 @CheckResult
-fun Previewer2Destination.toIntent(context: Context) =
+fun PreviewerDestination.toIntent(context: Context) =
     PreviewerFragment.getIntent(context, previewerIdsFile, currentIndex)

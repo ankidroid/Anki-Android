@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Teks-ke-ucapan bahasa tiada</string>
     <string name="tts_no_tts">Jangan bercakap</string>
     <string name="unused_strings">\n\nFail tidak digunakan:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Pratonton</string>
     <string name="reposition_card_dialog_title">Alih posisi kad baru</string>
     <string name="reposition_card_dialog_message">Posisi mula:</string>
     <string name="reposition_card_not_new_error">Hanya kad baru boleh alih posisi</string>
@@ -239,4 +238,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Akibat perubahan privasi Android, data anda dan sandaran automatik tidak akan dapat dicapai jika aplikasi dinyahpasang
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>
