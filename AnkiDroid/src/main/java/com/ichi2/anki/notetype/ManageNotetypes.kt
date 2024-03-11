@@ -109,9 +109,9 @@ class ManageNotetypes : AnkiActivity() {
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = searchItem?.actionView as? SearchView
-        searchView!!.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView?.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return true
             }
