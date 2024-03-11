@@ -10,6 +10,7 @@
         <item name="colorAccent">@color/material_blue_grey_700</item>
         <item name="colorPrimaryContainer">@color/white</item> <!-- Switch thumb color when disabled and being pressed -->
         <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
+        <item name="colorControlNormal">@color/white</item>
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">?android:attr/colorBackground</item>
