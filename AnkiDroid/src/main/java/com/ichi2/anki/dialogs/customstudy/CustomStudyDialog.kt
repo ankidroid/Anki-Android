@@ -519,7 +519,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         EMPTY_SCHEDULE(3);
 
         companion object {
-            fun fromInt(value: Int): ContextMenuConfiguration = values().first { it.value == value }
+            fun fromInt(value: Int): ContextMenuConfiguration = entries.first { it.value == value }
         }
     }
 
@@ -541,8 +541,8 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         MORE_OPTIONS(108, R.string.more_options);
 
         companion object {
-            fun fromInt(value: Int): ContextMenuOption = values().first { it.value == value }
-            fun fromString(resources: Resources, stringValue: String): ContextMenuOption = values().first { resources.getString(it.stringResource as Int) == stringValue }
+            fun fromInt(value: Int): ContextMenuOption = entries.first { it.value == value }
+            fun fromString(resources: Resources, stringValue: String): ContextMenuOption = entries.first { resources.getString(it.stringResource as Int) == stringValue }
         }
     }
 }

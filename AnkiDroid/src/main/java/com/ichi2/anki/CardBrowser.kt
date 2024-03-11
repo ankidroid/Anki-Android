@@ -1406,7 +1406,7 @@ open class CardBrowser :
             val cards = withProgress { searchForCards(query, order, viewModel.cardsOrNotes) }
             Timber.d("Search returned %d cards", cards.size)
             // Render the first few items
-            for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
+            for (i in 0 until numCardsToRender().coerceAtMost(cards.size)) {
                 cards[i].load(false, viewModel.column1Index, viewModel.column2Index)
             }
             redrawAfterSearch(cards)

@@ -268,7 +268,7 @@ open class Card : Cloneable {
     fun timeTaken(col: Collection): Int {
         // Indeed an int. Difference between two big numbers is still small.
         val total = (TimeManager.time.intTimeMS() - timerStarted).toInt()
-        return Math.min(total, timeLimit(col))
+        return total.coerceAtMost(timeLimit(col))
     }
 
     /*

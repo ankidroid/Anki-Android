@@ -809,7 +809,7 @@ abstract class AbstractFlashcardViewer :
     private fun deleteNoteWithoutConfirmation() {
         val cardId = currentCard!!.id
         launchCatchingTask {
-            val noteCount = withProgress() {
+            val noteCount = withProgress {
                 undoableOp {
                     removeNotes(cids = listOf(cardId))
                 }.count

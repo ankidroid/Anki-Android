@@ -58,7 +58,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
         }
         if (type.type == Type.CHANGE_FIELD_COUNT) {
             val currentFieldStrings = editor.currentFieldStrings
-            for (i in 0 until Math.min(currentFieldStrings.size, fieldEditLines.size)) {
+            for (i in 0 until currentFieldStrings.size.coerceAtMost(fieldEditLines.size)) {
                 fieldEditLines[i].setContent(currentFieldStrings[i], type.replaceNewlines)
             }
         }

@@ -876,10 +876,7 @@ open class Reviewer :
         if (answerFieldIsFocused()) {
             return super.onKeyDown(keyCode, event)
         }
-        if (processor.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)) {
-            return true
-        }
-        return false
+        return processor.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
