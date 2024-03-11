@@ -52,7 +52,6 @@ object Themes {
     fun setTheme(context: Context) {
         updateCurrentTheme(context)
         Timber.i("Setting theme to %s", currentTheme.name)
-        AppCompatDelegate.setDefaultNightMode(getDefaultNightModeFromTheme(context))
         context.setTheme(currentTheme.resId)
     }
 
@@ -77,13 +76,17 @@ object Themes {
         }
 
         currentTheme = if (themeFollowsSystem(prefs)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             if (systemIsInNightMode(context)) {
                 Theme.ofId(prefs.getString(NIGHT_THEME_KEY, Theme.BLACK.id)!!)
             } else {
                 Theme.ofId(prefs.getString(DAY_THEME_KEY, Theme.LIGHT.id)!!)
             }
         } else {
-            Theme.ofId(prefs.getString(APP_THEME_KEY, Theme.fallback.id)!!)
+            Theme.ofId(prefs.getString(APP_THEME_KEY, Theme.fallback.id)!!).also {
+                val mode = if (it.isNightMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+                AppCompatDelegate.setDefaultNightMode(mode)
+            }
         }
     }
 
@@ -138,23 +141,6 @@ object Themes {
     fun systemIsInNightMode(context: Context): Boolean {
         return context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
             Configuration.UI_MODE_NIGHT_YES
-    }
-
-    private fun getDefaultNightModeFromTheme(context: Context): Int {
-        // TODO (#5019): always use the context as the parameter for sharedPrefs()
-        val prefs = if (context is AppCompatPreferenceActivity<*>) {
-            AnkiDroidApp.instance.sharedPrefs()
-        } else {
-            context.sharedPrefs()
-        }
-        if (themeFollowsSystem(prefs)) {
-            return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-        }
-        return if (currentTheme.isNightMode) {
-            AppCompatDelegate.MODE_NIGHT_YES
-        } else {
-            AppCompatDelegate.MODE_NIGHT_NO
-        }
     }
 }
 
