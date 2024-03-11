@@ -259,5 +259,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        У зв\'язку зі зміною політики конфіденційності Android, ваші дані та автоматизовані резервні копії стануть недоступними, якщо додаток буде видалено
     </string>
-    <string name="deck_already_exists">Deck already exists</string>
+    <string name="deck_already_exists">Колода вже існує</string>
 </resources>

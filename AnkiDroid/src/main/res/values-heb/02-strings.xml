@@ -147,7 +147,7 @@
     <string name="card_editor_reset_card">איפוס התקדמות</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">תזמן מחדש</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">תצוגה מקדימה</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">העתק בתור Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d מ-%2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">שינוי שם</string>
     <string name="checks_action">בדוק</string>
@@ -210,7 +210,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">במערכת לא מותקן יישומון שיכול לבצע את הפעולה הזאת.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[תמונות המצלמה גדולות מדי. אולי עדיף לך לדחוס ולשנות את גודל התמונות בתיקיית המדיה]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">לא נמצא דפדפן לפתיחת הקישור: %s</string>
     <string name="web_page_error">טעינת העמוד נכשלה: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -328,7 +328,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">התחל</string>
     <string name="intro_sync_from_ankiweb">סנכרון מ-AnkiWeb</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">AnkiDroid עדיין לא אתחול. פתח את AnkiDroid ונסה שוב</string>
     <string name="already_logged_in">כבר מחובר</string>
     <!-- Deck Creation -->
     <string name="deck_created">חבילה שנוצרה</string>
@@ -360,5 +360,5 @@
     <string name="deck_description_field_hint">תיאור</string>
     <string name="failed_to_copy">ההעתקה נכשלה</string>
     <string name="card_browser_unavailable_when_notes_mode">לא זמין במצב \'פתקים\'</string>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">מיקום מחדש</string>
 </resources>
