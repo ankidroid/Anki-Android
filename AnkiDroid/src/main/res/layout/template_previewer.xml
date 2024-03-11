@@ -46,6 +46,14 @@
             app:layout_constraintBottom_toTopOf="@id/show_answer"
             />
 
+        <com.google.android.material.divider.MaterialDivider
+            app:layout_constraintBottom_toTopOf="@id/show_answer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:dividerThickness="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/show_answer"
             android:layout_width="0dp"
