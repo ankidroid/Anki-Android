@@ -48,10 +48,11 @@ class TemplateManagerTest {
     }
 
     @Test
-    fun `parseSourcesToFileScheme - object`() {
+    fun `parseSourcesToFileScheme - object isn't parsed`() {
         val mediaDir = "storage/emulated/0/AnkiDroid/collection.media"
-        val result = parseSourcesToFileScheme("<object data=\"ben.mov\"></object>", mediaDir)
-        assertEquals("""<object data="file:///$mediaDir/ben.mov"></object>""", result)
+        val content = "<object data=\"ben.mov\"></object>"
+        val result = parseSourcesToFileScheme(content, mediaDir)
+        assertEquals(content, result)
     }
 
     @Test
