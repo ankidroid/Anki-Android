@@ -72,7 +72,7 @@ internal class NotetypeViewHolder(
     onDelete: (NoteTypeUiModel) -> Unit
 ) : RecyclerView.ViewHolder(rowView) {
     val name: TextView = rowView.findViewById(R.id.note_name)
-    private val useCount: TextView = rowView.findViewById(R.id.note_use_count)
+    val useCount: TextView = rowView.findViewById(R.id.note_use_count)
     private val btnDelete: Button = rowView.findViewById(R.id.note_delete)
     private val btnRename: Button = rowView.findViewById(R.id.note_rename)
     private val btnEditCards: Button = rowView.findViewById(R.id.note_edit_cards)

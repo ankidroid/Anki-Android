@@ -32,7 +32,6 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.StockNotetype
 import anki.notetypes.copy
@@ -52,9 +51,6 @@ import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.libanki.utils.set
 import com.ichi2.utils.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
@@ -117,21 +113,14 @@ class ManageNotetypes : AnkiActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                lifecycleScope.launch {
-                    val filteredList = if (newText.isNullOrEmpty()) {
-                        currentNotetypes
-                    } else {
-                        withContext(Dispatchers.IO) {
-                            currentNotetypes.filter {
-                                it.name.lowercase().contains(newText.lowercase())
-                            }
-                        }
-                    }
-
-                    withContext(Dispatchers.Main) {
-                        notetypesAdapter.submitList(filteredList)
+                val filteredList = if (newText.isNullOrEmpty()) {
+                    currentNotetypes
+                } else {
+                    currentNotetypes.filter {
+                        it.name.lowercase().contains(newText.lowercase())
                     }
                 }
+                notetypesAdapter.submitList(filteredList)
                 return true
             }
         })
@@ -171,6 +160,7 @@ class ManageNotetypes : AnkiActivity() {
                 }
                 negativeButton(R.string.dialog_cancel)
             }
+            // start with the button disabled as dialog shows the initial name
             dialog.getActionButton(WhichButton.POSITIVE).isEnabled = false
         }
     }
@@ -324,7 +314,6 @@ class ManageNotetypes : AnkiActivity() {
         currentNotetypes = updatedNotetypes
 
         notetypesAdapter.submitList(updatedNotetypes)
-
         actionBar.subtitle = resources.getQuantityString(
             R.plurals.model_browser_types_available,
             updatedNotetypes.size,
