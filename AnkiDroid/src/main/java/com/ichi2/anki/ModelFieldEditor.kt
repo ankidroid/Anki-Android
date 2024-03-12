@@ -166,14 +166,14 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldNameInput = FixedEditText(this).apply {
             focusWithKeyboard()
         }
-        fieldNameInput?.let { _fieldNameInput ->
-            _fieldNameInput.isSingleLine = true
+        fieldNameInput?.let { fieldNameInput ->
+            fieldNameInput.isSingleLine = true
             AlertDialog.Builder(this).show {
-                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(R.string.model_field_editor_add)
                 positiveButton(R.string.dialog_ok) {
                     // Name is valid, now field is added
-                    val fieldName = uniqueName(_fieldNameInput)
+                    val fieldName = uniqueName(fieldNameInput)
                     try {
                         addField(fieldName, true)
                     } catch (e: ConfirmModSchemaException) {
@@ -285,15 +285,15 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     private fun renameFieldDialog() {
         fieldNameInput = FixedEditText(this).apply { focusWithKeyboard() }
-        fieldNameInput?.let { _fieldNameInput ->
-            _fieldNameInput.isSingleLine = true
-            _fieldNameInput.setText(fieldsLabels[currentPos])
-            _fieldNameInput.setSelection(_fieldNameInput.text!!.length)
+        fieldNameInput?.let { fieldNameInput ->
+            fieldNameInput.isSingleLine = true
+            fieldNameInput.setText(fieldsLabels[currentPos])
+            fieldNameInput.setSelection(fieldNameInput.text!!.length)
             AlertDialog.Builder(this).show {
-                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(R.string.model_field_editor_rename)
                 positiveButton(R.string.rename) {
-                    if (uniqueName(_fieldNameInput) == null) {
+                    if (uniqueName(fieldNameInput) == null) {
                         return@positiveButton
                     }
                     // Field is valid, now rename
@@ -330,22 +330,22 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     private fun repositionFieldDialog() {
         fieldNameInput = FixedEditText(this).apply { focusWithKeyboard() }
-        fieldNameInput?.let { _fieldNameInput ->
-            _fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
+        fieldNameInput?.let { fieldNameInput ->
+            fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
             AlertDialog.Builder(this).show {
-                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(text = String.format(resources.getString(R.string.model_field_editor_reposition), 1, fieldsLabels.size))
                 positiveButton(R.string.dialog_ok) {
-                    val newPosition = _fieldNameInput.text.toString()
+                    val newPosition = fieldNameInput.text.toString()
                     val pos: Int = try {
                         newPosition.toInt()
                     } catch (n: NumberFormatException) {
                         Timber.w(n)
-                        _fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
+                        fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
                         return@positiveButton
                     }
                     if (pos < 1 || pos > fieldsLabels.size) {
-                        _fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
+                        fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
                     } else {
                         // Input is valid, now attempt to modify
                         try {

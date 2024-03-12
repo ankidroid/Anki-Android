@@ -155,7 +155,6 @@ abstract class AbstractFlashcardViewer :
     private var doubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL
 
     // Android WebView
-    @Suppress("LeakingThis")
     var automaticAnswer = AutomaticAnswer.defaultInstance(this)
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -226,14 +225,13 @@ abstract class AbstractFlashcardViewer :
     /**
      * Gesture Allocation
      */
-    protected val gestureProcessor: GestureProcessor get() = GestureProcessor(this)
+    protected val gestureProcessor = GestureProcessor(this)
 
     /** Handle joysticks/pedals */
     // needs to be lateinit due to a reliance on Context
     protected lateinit var motionEventHandler: MotionEventHandler
 
-    val server: AnkiServer
-        get() = AnkiServer(this).also { it.start() }
+    val server = AnkiServer(this).also { it.start() }
 
     @get:VisibleForTesting
     var cardContent: String? = null
@@ -258,8 +256,7 @@ abstract class AbstractFlashcardViewer :
     private var exitViaDoubleTapBack = false
 
     @VisibleForTesting
-    val onRenderProcessGoneDelegate: OnRenderProcessGoneDelegate
-        get() = OnRenderProcessGoneDelegate(this)
+    val onRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
     protected val tts = TTS()
 
     // ----------------------------------------------------------------------------
@@ -328,7 +325,6 @@ abstract class AbstractFlashcardViewer :
     }
 
     init {
-        @Suppress("LeakingThis")
         ChangeManager.subscribe(this)
     }
 
@@ -616,7 +612,6 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    @Deprecated("override Deprecated")
     override fun onBackPressed() {
         if (isDrawerOpen) {
             super.onBackPressed()
@@ -818,7 +813,7 @@ abstract class AbstractFlashcardViewer :
     private fun deleteNoteWithoutConfirmation() {
         val cardId = currentCard!!.id
         launchCatchingTask {
-            val noteCount = withProgress {
+            val noteCount = withProgress() {
                 undoableOp {
                     removeNotes(cids = listOf(cardId))
                 }.count
@@ -2523,7 +2518,7 @@ abstract class AbstractFlashcardViewer :
         get() = displayAnswer
 
     internal fun showTagsDialog() {
-        val tags = ArrayList(getColUnsafe.run { tags.all() })
+        val tags = ArrayList(getColUnsafe.tags.all())
         val selTags = ArrayList(currentCard!!.note(getColUnsafe).tags)
         val dialog = tagsDialogFactory!!.newTagsDialog()
             .withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
