@@ -203,8 +203,6 @@
     <string name="reset">Сброс</string>
     <string name="thirdparty_apps_title" maxLength="41">Сторонние приложения</string>
     <string name="thirdparty_apps_summary">Покажет список приложений, которые используют API AnkiDroid, например, словари</string>
-    <string name="html_javascript_debugging" maxLength="41">Отладка HTML и JavaScript</string>
-    <string name="html_javascript_debugging_summ">Включает удалённые соединения WebView и сохраняет HTML карточек в директорию AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Повторение</string>
     <string name="show_deck_title" maxLength="41">Показать название колоды</string>

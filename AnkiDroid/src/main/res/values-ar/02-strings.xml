@@ -319,7 +319,7 @@
     <string name="start_migration_progress_message">OKey</string>
     <string name="migration_part_1_done_resume">تستطيع المواظبة باستخدام أنكيدرويد.\nستستمر عملية نقل البيانات في الخلفية.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s ليست حزمة إضافة جافاسكربت صالحة</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">فشل إنشاء المجلد %s</string>
     <string name="malicious_archive_entry_outside">أرشيف خبيث. يحتوي على مدخلة خارج المجلد الهدف: %s</string>
     <string name="malicious_archive_exceeds_limit">أرشيف خبيث. يتخطى الحجم %1$s أو يحتوي على أكثر من %2$d ملف</string>

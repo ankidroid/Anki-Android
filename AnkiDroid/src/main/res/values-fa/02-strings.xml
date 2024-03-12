@@ -303,7 +303,7 @@
     <string name="start_migration_progress_message">مهاجرت حافظه شروع شد. به زودی می‌توانید دوباره از انکی‌دروید استفاده کنید.</string>
     <string name="migration_part_1_done_resume">شما می‌توانید از انکی‌دروید استفاده کنید.\nمهاجرت حافظه در پس‌زمینه ادامه خواهد داشت.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s بسته ی JavaScript معتبری نیست</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">ساخت فهرست %s ناموفق بود</string>
     <string name="malicious_archive_entry_outside">آرشیو خطرناک. حاوی ورودی خارج از فهرست هدف است: %s</string>
     <string name="malicious_archive_exceeds_limit">ارشیو خطرناک. حجم آن از %1$s بیشتر است یا شامل بیشتر از %2$d فایل است</string>

@@ -204,8 +204,6 @@
     <string name="reset">Скінуць</string>
     <string name="thirdparty_apps_title" maxLength="41">Праграмныя API іншых распрацоўшчыкаў</string>
     <string name="thirdparty_apps_summary">Паглядзець спіс праграм, якія выкарыстоўваць API AnkiDroid (слоўнікі, службовыя праграмы і г.д.).</string>
-    <string name="html_javascript_debugging" maxLength="41">Адладка HTML / JavaScript</string>
-    <string name="html_javascript_debugging_summ">Уключыць аддаленыя злучэнні WebView і захаваць картку HTML у каталозе AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Паўтарэнне</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

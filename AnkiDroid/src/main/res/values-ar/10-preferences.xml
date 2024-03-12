@@ -207,8 +207,6 @@
     <string name="reset">إعادة ضبط</string>
     <string name="thirdparty_apps_title" maxLength="41">تطبيقات الطرف الثالث التي تستخدم واجهة البرمجة</string>
     <string name="thirdparty_apps_summary">اطلع على قائمة تطبيقات تستخدم واجهة برمجة أنكيدرويد مثل القواميس، والأدوات.</string>
-    <string name="html_javascript_debugging" maxLength="41">تصحيح أخطاء HTML / جافا سكريبت</string>
-    <string name="html_javascript_debugging_summ">تمكين اتصالات عارض الويب البعيدة، وحفظ HTML البطاقة إلى مجلد أنكيدرويد</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">شاشة المراجعة</string>
     <string name="show_deck_title" maxLength="41">إظهار عنوان المجموعة</string>

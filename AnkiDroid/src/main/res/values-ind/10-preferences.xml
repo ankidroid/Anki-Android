@@ -198,8 +198,6 @@
     <string name="reset">Atur ulang</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplikasi API pihak ketiga</string>
     <string name="thirdparty_apps_summary">Lihat daftar aplikasi yang menggunakan API AnkiDroid seperti kamus, alat.</string>
-    <string name="html_javascript_debugging" maxLength="41">Pengawakutuan HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Aktifkan koneksi WebView jarak jauh, dan simpan kartu HTML ke direktori AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Peninjau</string>
     <string name="show_deck_title" maxLength="41">Tampilkan judul dek</string>

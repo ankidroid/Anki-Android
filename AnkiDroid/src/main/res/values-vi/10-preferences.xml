@@ -197,8 +197,6 @@
     <string name="reset">Thiết lập lại</string>
     <string name="thirdparty_apps_title" maxLength="41">Ứng dụng API của bên thứ ba</string>
     <string name="thirdparty_apps_summary">Xem danh sách các ứng dụng sử dụng AnkiDroid API như từ điển, tiện ích.</string>
-    <string name="html_javascript_debugging" maxLength="41">Gỡ lỗi HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Bật kết nối WebView từ xa và lưu HTML thẻ vào thư mục AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Người xem xét</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

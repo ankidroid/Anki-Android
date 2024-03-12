@@ -312,7 +312,7 @@
     <string name="migration_part_1_done_resume">ביכולתך להמשיך להשתמש ב-AnkiDroid.
 \nהעברת אחסון תמשיך ברקע.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s אינו תוסף JS תקין</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">לא ניתן ליצור תיקיה %s</string>
     <string name="malicious_archive_entry_outside">ארכיון זדוני. מכיל ערך מחוץ לתיקיית היעד: %s</string>
     <string name="malicious_archive_exceeds_limit">ארכיון זדוני. הגודל עולה על %1$s או מכיל יותר מ-%2$d קבצים</string>
