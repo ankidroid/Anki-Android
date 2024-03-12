@@ -116,7 +116,6 @@ import java.util.function.Consumer
 import java.util.function.Function
 import kotlin.math.abs
 
-@Suppress("LeakingThis", "LeakingThis", "LeakingThis", "LeakingThis")
 @KotlinCleanup("lots to deal with")
 abstract class AbstractFlashcardViewer :
     NavigationDrawerActivity(),
@@ -156,6 +155,7 @@ abstract class AbstractFlashcardViewer :
     private var doubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL
 
     // Android WebView
+    @Suppress("LeakingThis")
     var automaticAnswer = AutomaticAnswer.defaultInstance(this)
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -226,13 +226,14 @@ abstract class AbstractFlashcardViewer :
     /**
      * Gesture Allocation
      */
-    protected val gestureProcessor = GestureProcessor(this)
+    protected val gestureProcessor: GestureProcessor get() = GestureProcessor(this)
 
     /** Handle joysticks/pedals */
     // needs to be lateinit due to a reliance on Context
     protected lateinit var motionEventHandler: MotionEventHandler
 
-    val server = AnkiServer(this).also { it.start() }
+    val server: AnkiServer
+        get() = AnkiServer(this).also { it.start() }
 
     @get:VisibleForTesting
     var cardContent: String? = null
@@ -257,7 +258,8 @@ abstract class AbstractFlashcardViewer :
     private var exitViaDoubleTapBack = false
 
     @VisibleForTesting
-    val onRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
+    val onRenderProcessGoneDelegate: OnRenderProcessGoneDelegate
+        get() = OnRenderProcessGoneDelegate(this)
     protected val tts = TTS()
 
     // ----------------------------------------------------------------------------
@@ -326,6 +328,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     init {
+        @Suppress("LeakingThis")
         ChangeManager.subscribe(this)
     }
 
@@ -613,7 +616,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    @Deprecated("Deprecated in Java")
+    @Deprecated("override Deprecated")
     override fun onBackPressed() {
         if (isDrawerOpen) {
             super.onBackPressed()
@@ -2519,9 +2522,8 @@ abstract class AbstractFlashcardViewer :
     val isDisplayingAnswer
         get() = displayAnswer
 
-    @SuppressLint("WrongThread")
     internal fun showTagsDialog() {
-        val tags = ArrayList(getColUnsafe.tags.all())
+        val tags = ArrayList(getColUnsafe.run { tags.all() })
         val selTags = ArrayList(currentCard!!.note(getColUnsafe).tags)
         val dialog = tagsDialogFactory!!.newTagsDialog()
             .withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
