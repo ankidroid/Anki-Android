@@ -329,7 +329,7 @@ fun parseVideos(text: String, mediaDir: String): String {
 }
 
 /**
- * Parses the sources of the `<img>`, `<video>`, `<audio>`, `<object>` and `<source>` tags
+ * Parses the sources of the `<img>`, `<video>`, `<audio>` and `<source>` tags
  * to use the `file:///` scheme, which allows seeking audio and videos,
  * and loads faster than using HTTP.
  *
@@ -367,8 +367,7 @@ fun parseSourcesToFileScheme(content: String, mediaDir: String): String {
         replaceWithFileScheme("img", "src") ||
             replaceWithFileScheme("video", "src") ||
             replaceWithFileScheme("audio", "src") ||
-            replaceWithFileScheme("source", "src") ||
-            replaceWithFileScheme("object", "data")
+            replaceWithFileScheme("source", "src")
 
     return if (hasMadeChanges) {
         doc.body().html()
