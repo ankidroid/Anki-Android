@@ -12,13 +12,13 @@
         android:title="@string/rebuild_cram_label"
         android:visibility = "gone"
         android:icon="@drawable/ic_refresh_white"
-        ankidroid:showAsAction="ifRoom"/>
+        ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_empty"
         android:title="@string/empty_cram_label"
         android:visibility = "gone"
         android:icon="@drawable/ic_clear_white"
-        ankidroid:showAsAction="ifRoom"/>
+        ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_custom_study"
         android:title="@string/custom_study"
