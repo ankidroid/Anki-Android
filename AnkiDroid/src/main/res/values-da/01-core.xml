@@ -60,7 +60,7 @@
     <string name="expand">Udvid</string>
     <string name="collapse">Minimér</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
+        <item quantity="one">%d minut tilbage</item>
         <item quantity="other">%d minutes left</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">

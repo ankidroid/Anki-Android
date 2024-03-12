@@ -237,5 +237,5 @@
     <string name="dismiss_backup_warning_new_user">        Androidのプライバシーポリシーの変更に伴い、今後AnkiDroidをアンインストールすると、あなたのコレクションや自動バックアップのデータもこの端末から削除されます。
     </string>
     <string name="dismiss_backup_warning_upgrade">        Androidのプライバシーポリシーの変更に伴い、今後AnkiDroidをアンインストールすると、現在のコレクションや自動バックアップのデータにアクセスできなくなります。</string>
-    <string name="deck_already_exists">Deck already exists</string>
+    <string name="deck_already_exists">同じ名前のデッキがすでにあります</string>
 </resources>

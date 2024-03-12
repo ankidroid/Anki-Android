@@ -304,7 +304,7 @@
     <string name="migration_part_1_done_resume">ისევ შეგიძლიათ AnkiDroid გამოიყენოთ.
 \nმეხსიერების მიგრაცია ფონში გაგრძელდება</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s არ არის მოქმედი JavaScript-ის დანამატი პაკეტი</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">ვერ შეიქმნა ნუსხა %s</string>
     <string name="malicious_archive_entry_outside">მავნე არქივი. შეიცავს შენატანს სამიზნე ნუსხის ფარგლებს გარეთ: %s</string>
     <string name="malicious_archive_exceeds_limit">მავნე არქივი. ზომა აღემატება %1$s ს ან შეიცავს %2$d ზე მეტ ფაილს.</string>

@@ -222,7 +222,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
     }
 
     // inner allows access to viewModel/openTtsSettings
-    inner class TtsVoiceAdapter() : ListAdapter<AndroidTtsVoice, TtsVoiceAdapter.TtsViewHolder>(TtsVoiceDiffCallback()) {
+    inner class TtsVoiceAdapter : ListAdapter<AndroidTtsVoice, TtsVoiceAdapter.TtsViewHolder>(TtsVoiceDiffCallback()) {
         inner class TtsViewHolder(private val voiceView: View) : RecyclerView.ViewHolder(voiceView) {
             private val textViewTop = voiceView.findViewById<TextView>(R.id.mtrl_list_item_secondary_text)
             private val textViewBottom = voiceView.findViewById<TextView>(R.id.mtrl_list_item_text)

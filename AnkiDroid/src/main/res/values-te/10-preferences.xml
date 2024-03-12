@@ -199,8 +199,6 @@
     <string name="reset">రీసెట్ చేయండి</string>
     <string name="thirdparty_apps_title" maxLength="41">మూడవ పక్షం API యాప్‌లు</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
     <string name="show_deck_title" maxLength="41">డెక్ శీర్షికను చూపించు</string>

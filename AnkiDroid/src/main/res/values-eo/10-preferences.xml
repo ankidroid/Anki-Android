@@ -199,8 +199,6 @@
     <string name="reset">Restarigi</string>
     <string name="thirdparty_apps_title" maxLength="41">Eksteraj aplikaĵoj uzantaj API</string>
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
-    <string name="html_javascript_debugging" maxLength="41">Senerarigado de HTML / JavaScript</string>
-    <string name="html_javascript_debugging_summ">Aktivigi forajn konektojn por WebView kaj konservi HTML de kartoj al la dosierujo “AnkiDroid”</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

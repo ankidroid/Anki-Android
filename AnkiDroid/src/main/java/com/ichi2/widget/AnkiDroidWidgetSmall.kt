@@ -28,6 +28,7 @@ import androidx.core.app.PendingIntentCompat
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.preferences.sharedPrefs
@@ -38,6 +39,10 @@ import kotlin.math.sqrt
 class AnkiDroidWidgetSmall : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         Timber.d("SmallWidget: onUpdate")
+        if (!grantedStoragePermissions(context, showToast = false)) {
+            Timber.w("Opening AnkiDroid Small widget without storage access")
+            return
+        }
         WidgetStatus.updateInBackground(context)
     }
 

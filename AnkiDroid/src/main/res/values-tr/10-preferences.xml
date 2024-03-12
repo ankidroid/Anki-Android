@@ -199,8 +199,6 @@
     <string name="reset">Sıfırla</string>
     <string name="thirdparty_apps_title" maxLength="41">Üçüncü parti API uygulamaları</string>
     <string name="thirdparty_apps_summary">AnkiDroid API\'ından faydalanan sözlük, araç gibi uygulamaların bir listesine bakın.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">WebView bağlantılarını etkinleştir, ve kart HTML\'ini AnkiDroid dizinine kaydet</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Çalışıcı</string>
     <string name="show_deck_title" maxLength="41">Deste başlığını göster</string>

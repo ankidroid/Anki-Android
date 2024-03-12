@@ -70,7 +70,7 @@
     <string name="hide_whiteboard">Stäng av whiteboard</string>
     <string name="clear_whiteboard">Rensa whiteboard</string>
     <string name="replay_audio">Spela om ljud</string>
-    <string name="leech_suspend_notification">Kort markerat som igel och avstängt</string>
+    <string name="leech_suspend_notification">Kort markerat som utsugarkort och låst</string>
     <string name="leech_notification">Kort markerat som igel</string>
     <string name="webview_crash_unknown">Okänt fel</string>
     <string name="webview_crash_unknwon_detailed">Detta orsakades av ett internt fel i WebView</string>
@@ -89,7 +89,7 @@
         <item>Svar</item>
         <item>Kort</item>
         <item>Kortlek</item>
-        <item>Anteckning</item>
+        <item>Not</item>
         <item>Fråga</item>
         <item>Etiketter</item>
         <item>Felsvar</item>
@@ -99,7 +99,7 @@
         <item>Förfallodatum</item>
         <item>Kort ändrat</item>
         <item>Skapad</item>
-        <item>Anteckning ändrad</item>
+        <item>Not ändrad</item>
     </string-array>
     <string name="filter_by_flags">Flaggor</string>
     <!-- Custom study options -->
@@ -111,21 +111,21 @@
     <string name="custom_study_preview_new">Förhandsgranska nya kort</string>
     <string name="custom_study_limit_tags">Begränsa till vissa etiketter</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Redigera anteckning</string>
+    <string name="cardeditor_title_edit_card">Redigera not</string>
     <string name="discard">Kasta</string>
     <string name="note_editor_no_cards_created">Inga kort skapade. Vänligen fyll i fler fält</string>
     <string name="note_editor_no_first_field">Det första fältet är tomt</string>
-    <string name="note_editor_no_cloze_delations">Denna typ av anteckning måste innehålla blanka textluckor</string>
-    <string name="note_editor_no_cards_created_all_fields">Den aktuella anteckningstypen producerade inga kort.\nVälj en annan anteckningstyp, eller klicka på ‘Kort’ och lägg till ett fält</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Blankluckor fungerar bara för anteckningar på Blankluckskort</string>
-    <string name="saving_facts">Sparar anteckning</string>
-    <string name="saving_model">Sparar anteckningstyp</string>
+    <string name="note_editor_no_cloze_delations">Denna nottyp måste innehålla textluckor</string>
+    <string name="note_editor_no_cards_created_all_fields">Den aktuella nottypen gav inga kort.\nVälj en annan nottyp, eller klicka på ‘Kort’ och lägg till ett fältbyte</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Textluckor fungerar bara för nottypen Lucktext</string>
+    <string name="saving_facts">Sparar not</string>
+    <string name="saving_model">Sparar nottyp</string>
     <string name="save">Spara</string>
     <string name="close">Stäng</string>
     <string name="select">Välj</string>
     <string name="field_remapping">%1$s (från \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">Alla kort som inte kopplar till något kommer att tas bort. Om en anteckning inte har några kvarvarande kort, kommer den att försvinna. Är du säker på att du vill fortsätta?</string>
-    <string name="missing_note_type">Anteckningstyp saknas</string>
+    <string name="confirm_map_cards_to_nothing">Alla kort som inte kopplar till något kommer att tas bort. Om en not inte har några kvarvarande kort, kommer den att försvinna. Är du säker på att du vill fortsätta?</string>
+    <string name="missing_note_type">Nottyp saknas</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Tidsruta har uppnåtts</string>
     <plurals name="timebox_reached">
@@ -138,7 +138,7 @@
         <item quantity="other">%1$d minuter</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-kort</string>
-    <string name="note_editor_copy_note">Kopiera anteckning</string>
+    <string name="note_editor_copy_note">Kopiera not</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Ompositionera</string>
     <string name="card_editor_reset_card">Återställ framsteg</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Omplanera</string>
@@ -176,7 +176,7 @@
     <string name="export_email_text"><![CDATA[        Hej!
         <br/><br/>
         Det här är en Anki flashcard-samling från AnkiDroid[1].
-        Testa att öppna den genom en av de tillgängliga Anki-länkarna[2] och njut av enkel och effektiv inlärning!<br/><br/>
+        Testa att öppna den genom en av de tillgängliga Anki-distributionerna[2] och njut av enkel och effektiv inlärning!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -288,8 +288,8 @@
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kort gömt i högen</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d kort avstängt.</item>
-        <item quantity="other">%d kort avstängda.</item>
+        <item quantity="one">%d kort låst.</item>
+        <item quantity="other">%d kort låsta.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Fäst fältet %s</string>
@@ -304,7 +304,7 @@
     <string name="migration_part_1_done_resume">Du kan nu fortsätta använda AnkiDroid.
 \nLagringsförflyttningen kommer fortsätta i bakgrunden.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s är inte ett giltigt javascript tilläggspaket</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Kunde inte skapa katalog
   %s</string>
     <string name="malicious_archive_entry_outside">Skadligt arkiv. Innehåller post utanför målmapp: %s</string>
@@ -330,9 +330,9 @@
     <string name="deck_shortcut_doesnt_exist">Kortlek raderad. Ta bort genvägen</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kort</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Anteckningar</string>
-    <string name="toggle_cards_notes">Växla kort/anteckningar</string>
-    <string name="toggle_browser_mode_help">Växla mellan Visa kort eller Anteckningar i webbläsaren</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Noter</string>
+    <string name="toggle_cards_notes">Växla kort/noter</string>
+    <string name="toggle_browser_mode_help">Växla Visar kort eller noter i bläddraren</string>
     <string name="truncate_content_help">Justera höjden på varje rad i webbläsaren för att endast visa de första 3 radernas innehåll</string>
     <string name="browser_options_dialog_heading">Inställningar för webbläsare</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Den här funktionen är otillgänglig medan lagringsförflyttning pågår
@@ -341,7 +341,7 @@
     <string name="media_sync_required_title">Mediasynkning krävs</string>
     <string name="media_sync_unavailable_message">Mediasynkning är inaktiverad i inställningarna. Synka och säkerhetskopiera alla filer som inte redan synkats innan du fortsätter</string>
     <string name="audio_saved">Inspelning sparad</string>
-    <string name="deleting_selected_notes">Raderar markerade anteckningar</string>
+    <string name="deleting_selected_notes">Raderar markerade noter</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tryck på en röst för att lyssna
     </string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Röst bör installeras innan den används    </string>
@@ -358,6 +358,6 @@
     <string name="shared_decks_login_required">Logga in för att ladda ner fler kortlekar</string>
     <string name="deck_description_field_hint">Beskrivning</string>
     <string name="failed_to_copy">Misslyckades att kopiera</string>
-    <string name="card_browser_unavailable_when_notes_mode">Ej tillgängligt i \'anteckningsläge\'</string>
+    <string name="card_browser_unavailable_when_notes_mode">Ej tillgängligt i ”Noter”-läget</string>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Flytta på</string>
 </resources>
