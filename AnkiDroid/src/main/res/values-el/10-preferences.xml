@@ -200,8 +200,6 @@
     <string name="reset">Επαναφορά</string>
     <string name="thirdparty_apps_title" maxLength="41">Εφαρμογές API τρίτων</string>
     <string name="thirdparty_apps_summary">Δείτε μια λίστα εφαρμογών που κάνουν χρήση του AnkiDroid API όπως λεξικά, βοηθητικά προγράμματα.</string>
-    <string name="html_javascript_debugging" maxLength="41">Έλεγχος σφαλμάτων HTML/Javascript</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

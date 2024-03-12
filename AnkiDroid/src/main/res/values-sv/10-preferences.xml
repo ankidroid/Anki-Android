@@ -199,8 +199,6 @@
     <string name="reset">Nollställ</string>
     <string name="thirdparty_apps_title" maxLength="41">Tredjeparts API-appar</string>
     <string name="thirdparty_apps_summary">Se en lista över alla applikationer som använder AnkiDroids API, exempelvis ordböcker och händiga verktyg.</string>
-    <string name="html_javascript_debugging" maxLength="41">Avlusning - HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Aktivera WebView fjärråtkomst, och spara korts HTML till AnkiDroid-katalogen</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Repeterare</string>
     <string name="show_deck_title" maxLength="41">Visa kortlekens titel</string>

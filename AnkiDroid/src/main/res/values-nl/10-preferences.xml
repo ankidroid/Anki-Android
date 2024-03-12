@@ -199,8 +199,6 @@
     <string name="reset">Resetten</string>
     <string name="thirdparty_apps_title" maxLength="41">API-apps van derden</string>
     <string name="thirdparty_apps_summary">Raadpleeg de lijst van applicaties die gebruik maken van de AnkiDroid API zoals woordenboeken, hulpprogramma\'s.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript debugging</string>
-    <string name="html_javascript_debugging_summ">Schakel externe WebView-verbindingen in en sla de kaart HTML op in de AnkiDroid-folder</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

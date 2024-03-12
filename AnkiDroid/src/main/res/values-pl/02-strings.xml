@@ -312,7 +312,7 @@
     <string name="migration_part_1_done_resume">Możesz wznowić korzystanie z AnkiDroid.
 \nMigracja pamięci masowej będzie kontynuowana w tle.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s nie jest poprawną paczką wtyczki javascript</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Nie można utworzyć katalogu %s</string>
     <string name="malicious_archive_entry_outside">Złośliwe archiwum. Zawiera wpis poza docelowym katalogiem: %s</string>
     <string name="malicious_archive_exceeds_limit">Złośliwe archiwum. Rozmiar przekracza %1$s lub zawiera więcej niż %2$d plików</string>
