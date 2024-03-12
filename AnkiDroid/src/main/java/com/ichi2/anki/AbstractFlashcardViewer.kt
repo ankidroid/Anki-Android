@@ -116,6 +116,7 @@ import java.util.function.Consumer
 import java.util.function.Function
 import kotlin.math.abs
 
+@Suppress("LeakingThis", "LeakingThis", "LeakingThis", "LeakingThis")
 @KotlinCleanup("lots to deal with")
 abstract class AbstractFlashcardViewer :
     NavigationDrawerActivity(),
@@ -612,6 +613,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (isDrawerOpen) {
             super.onBackPressed()
@@ -813,7 +815,7 @@ abstract class AbstractFlashcardViewer :
     private fun deleteNoteWithoutConfirmation() {
         val cardId = currentCard!!.id
         launchCatchingTask {
-            val noteCount = withProgress() {
+            val noteCount = withProgress {
                 undoableOp {
                     removeNotes(cids = listOf(cardId))
                 }.count
@@ -2517,6 +2519,7 @@ abstract class AbstractFlashcardViewer :
     val isDisplayingAnswer
         get() = displayAnswer
 
+    @SuppressLint("WrongThread")
     internal fun showTagsDialog() {
         val tags = ArrayList(getColUnsafe.tags.all())
         val selTags = ArrayList(currentCard!!.note(getColUnsafe).tags)
