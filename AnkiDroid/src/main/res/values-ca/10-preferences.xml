@@ -199,8 +199,6 @@
     <string name="reset">Reinicia</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplicacions de terceres parts</string>
     <string name="thirdparty_apps_summary">Consulteu una llista d\'aplicacions que fan ús de l\'API AnkiDroid, com ara diccionaris i utilitats.</string>
-    <string name="html_javascript_debugging" maxLength="41">Depuració HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Activeu les connexions WebView remotes i deseu l\'HTML de la carta al directori AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Revisor</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

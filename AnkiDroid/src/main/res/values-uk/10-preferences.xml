@@ -204,8 +204,6 @@
     <string name="reset">Скинути</string>
     <string name="thirdparty_apps_title" maxLength="41">API додатки сторонніх виробників</string>
     <string name="thirdparty_apps_summary">Переглянути список програм, які використовують API AnkiDroid, наприклад словники, утиліти</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript налагодження</string>
-    <string name="html_javascript_debugging_summ">Увімкнути віддалені з\'єднання WebView і зберегти HTML-карту в каталозі AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Повторення</string>
     <string name="show_deck_title" maxLength="41">Показувати назву колоди</string>

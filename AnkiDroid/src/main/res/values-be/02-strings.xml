@@ -312,7 +312,7 @@
     <string name="migration_part_1_done_resume">Вы можаце працягваць выкарыстоўваць AnkiDroid.
 \nПеранос сховішча будзе працягнуты ў фонавым рэжыме.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s не з\'яўляецца сапраўдным пакетам дадатку JavaScript</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Не атрымалася стварыць каталог %s</string>
     <string name="malicious_archive_entry_outside">Шкодны архіў. Змяшчае запіс па-за межамі мэтавага каталога: %s</string>
     <string name="malicious_archive_exceeds_limit">Шкодны архіў. Памер перавышае %1$s або змяшчае больш %2$d файлаў</string>

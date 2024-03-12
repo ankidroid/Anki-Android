@@ -304,7 +304,7 @@
     <string name="migration_part_1_done_resume">Folytathatja az AnkiDroid használatát.
 \nA tároló áttelepítése folytatódik a háttérben.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s nem érvényes javascript csomag</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Nem sikerült létrehozni a könyvtárat: 
 %s</string>
     <string name="malicious_archive_entry_outside">Rosszindulatú archív. A cél könyvtáron kívüli bejegyzést tartalmaz  %s</string>

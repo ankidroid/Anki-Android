@@ -303,7 +303,7 @@
     <string name="start_migration_progress_message">Avvio migrazione dell\'archivio. Potrai riprendere a usare AnkiDroid a breve.</string>
     <string name="migration_part_1_done_resume">Puoi riprendere l\'uso di AnkiDroid. \n La migrazione dell\'archivio continuerà in background.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s non è un pacchetto addon javascript valido</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Impossibile creare la cartella %s</string>
     <string name="malicious_archive_entry_outside">Archivio dannoso. Contiene voce fuori dalla directory di destinazione: %s</string>
     <string name="malicious_archive_exceeds_limit">Archivio dannoso. La dimensione supera %1$s o contiene più di %2$d file</string>
