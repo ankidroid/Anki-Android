@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -11,6 +12,7 @@
         android:theme="@style/ActionBarStyle"
         app:navigationContentDescription="@string/abc_action_bar_up_description"
         app:navigationIcon="?attr/homeAsUpIndicator">
+
         <com.ichi2.ui.FixedTextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
@@ -18,6 +20,7 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:visibility="gone" />
+
         <Spinner
             android:id="@+id/toolbar_spinner"
             android:layout_width="match_parent"

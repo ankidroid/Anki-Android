@@ -59,6 +59,7 @@ internal class NotetypesAdapter(
             onShowFields = onShowFields
         )
     }
+
     override fun onBindViewHolder(holder: NotetypeViewHolder, position: Int) {
         holder.bind(getItem(position))
     }

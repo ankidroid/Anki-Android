@@ -96,7 +96,7 @@ class ManageNotetypes : AnkiActivity() {
         findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {
             launchCatchingTask { addNewNotetype() }
         }
-        launchCatchingTask { runAndRefreshAfter() }
+        launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.locale_dialog_search_bar, menu)
