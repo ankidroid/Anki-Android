@@ -15,13 +15,21 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests
 
+import android.annotation.SuppressLint
 import android.content.Context
+import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertTrue
+import timber.log.Timber
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.IOException
+import java.io.InputStream
 
 /**
  * Shared methods for unit tests.
@@ -59,7 +67,7 @@ object Shared {
         }
         val dir = File(context.cacheDir, "testfiles$suffix")
         if (!dir.exists()) {
-            assertTrue(dir.mkdir())
+            assertTrue("failed to make directory '${dir.path}'", dir.mkdir())
         }
         val files = dir.listFiles()
             ?: // Had this problem on an API 16 emulator after a stress test - directory existed
@@ -68,8 +76,95 @@ object Shared {
             // and the directory exists, even if it's unusable.
             return dir
         for (f in files) {
-            assertTrue(f.delete())
+            assertTrue("failed to delete '${f.path}'", f.delete())
         }
         return dir
+    }
+
+    /**
+     * Copy a file from the application's assets directory and return the absolute path of that
+     * copy.
+     *
+     * Files located inside the application's assets collection are not stored on the file
+     * system and can not return a usable path, so copying them to disk is a requirement.
+     */
+    @Throws(IOException::class)
+    fun getTestFile(context: Context, name: String): File {
+        assertThat("folders are not yet supported", name, not(containsString("/")))
+        val inputStream = context.classLoader.getResourceAsStream("assets/$name")
+            ?: throw FileNotFoundException("Could not find test file: assets/$name")
+        val dstFile = File(getTestDir(context, name), name)
+        val dst = dstFile.absolutePath
+        writeToFile(inputStream, dst)
+        Timber.w("extracted '%s' to '%s'", name, dst)
+        assertTrue("file should exist", dstFile.exists())
+        return dstFile
+    }
+
+    /**
+     * Calls [.writeToFileImpl] and handles IOExceptions
+     * Does not close the provided stream
+     * @throws IOException Rethrows exception after a set number of retries
+     */
+    @Throws(IOException::class)
+    fun writeToFile(source: InputStream, destination: String) {
+        // sometimes this fails and works on retries (hardware issue?)
+        val retries = 5
+        var retryCnt = 0
+        var success = false
+        while (!success && retryCnt++ < retries) {
+            try {
+                writeToFileImpl(source, destination)
+                success = true
+            } catch (e: IOException) {
+                if (retryCnt == retries) {
+                    Timber.e("IOException while writing to file, out of retries.")
+                    throw e
+                } else {
+                    Timber.e("IOException while writing to file, retrying...")
+                    try {
+                        Thread.sleep(200)
+                    } catch (e1: InterruptedException) {
+                        Timber.w(e1)
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Utility method to write to a file.
+     * Throws the exception, so we can report it in syncing log
+     */
+    @Throws(IOException::class)
+    private fun writeToFileImpl(source: InputStream, destination: String) {
+        val f = File(destination)
+        try {
+            Timber.d("Creating new file... = %s", destination)
+            f.createNewFile()
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
+            val startTimeMillis =
+                System.currentTimeMillis()
+            val sizeBytes = CompatHelper.compat.copyFile(source, destination)
+
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
+            val endTimeMillis =
+                System.currentTimeMillis()
+            Timber.d("Finished writeToFile!")
+            val durationSeconds = (endTimeMillis - startTimeMillis) / 1000
+            val sizeKb = sizeBytes / 1024
+            var speedKbSec: Long = 0
+            if (endTimeMillis != startTimeMillis) {
+                speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis)
+            }
+            Timber.d(
+                "Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s",
+                sizeKb,
+                durationSeconds,
+                speedKbSec
+            )
+        } catch (e: IOException) {
+            throw IOException(f.name + ": " + e.localizedMessage, e)
+        }
     }
 }
