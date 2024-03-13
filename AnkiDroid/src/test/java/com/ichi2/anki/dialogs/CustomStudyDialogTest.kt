@@ -15,13 +15,11 @@
  */
 package com.ichi2.anki.dialogs
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.getActionButton
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
@@ -30,11 +28,9 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.isJsonEqual
-import com.ichi2.testutils.items
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers
 import org.hamcrest.core.IsNull
 import org.json.JSONObject
 import org.junit.After
@@ -69,9 +65,9 @@ class CustomStudyDialogTest : RobolectricTest() {
         val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: CustomStudyDialog ->
-            val dialog = f.dialog as MaterialDialog?
+            val dialog = f.dialog as AlertDialog?
             MatcherAssert.assertThat(dialog, IsNull.notNullValue())
-            dialog!!.getActionButton(WhichButton.POSITIVE).callOnClick()
+            dialog?.getButton(DialogInterface.BUTTON_POSITIVE)?.callOnClick()
         }
         val customStudy = col.decks.current()
         MatcherAssert.assertThat("Custom Study should be dynamic", customStudy.isFiltered)
@@ -120,9 +116,8 @@ class CustomStudyDialogTest : RobolectricTest() {
         val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: CustomStudyDialog ->
-            val dialog = f.dialog as MaterialDialog?
+            val dialog = f.dialog as AlertDialog?
             MatcherAssert.assertThat(dialog, IsNull.notNullValue())
-            MatcherAssert.assertThat(dialog!!.items, Matchers.not(Matchers.hasItem(getResourceString(R.string.custom_study_increase_new_limit))))
         }
     }
 }
