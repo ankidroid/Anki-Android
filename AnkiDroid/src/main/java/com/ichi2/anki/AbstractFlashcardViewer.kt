@@ -2238,6 +2238,12 @@ abstract class AbstractFlashcardViewer :
         private var pageFinishedFired = true
         private val pageRenderStopwatch = Stopwatch.init("page render")
 
+        @Deprecated("Deprecated in Java") // still needed for API 23
+        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            Timber.d("Obtained URL from card: '%s'", url)
+            return filterUrl(url)
+        }
+
         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
             val url = request.url.toString()
             Timber.d("Obtained URL from card: '%s'", url)
