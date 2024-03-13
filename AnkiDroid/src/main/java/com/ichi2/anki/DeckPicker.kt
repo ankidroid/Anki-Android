@@ -27,11 +27,14 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.content.*
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.*
+import android.provider.Settings
 import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
@@ -142,6 +145,7 @@ import kotlin.time.measureTimedValue
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
 const val TIMES_STORAGE_MIGRATION_POSTPONED_KEY = "timesStorageMigrationPostponed"
 const val OLDEST_WORKING_WEBVIEW_VERSION = 77
+const val WEBVIEW_UPDATION_LINK = "https://github.com/ankidroid/Anki-Android/wiki"
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -503,9 +507,8 @@ open class DeckPicker :
         Onboarding.DeckPicker(this, recyclerViewLayoutManager).onCreate()
 
         launchShowingHidingEssentialFileMigrationProgressDialog()
-        if (BuildConfig.DEBUG) {
-            checkWebviewVersion()
-        }
+
+        checkWebviewVersion()
 
         supportFragmentManager.setFragmentResultListener(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, this) { requestKey, arguments ->
             when (requestKey) {
@@ -598,25 +601,78 @@ open class DeckPicker :
             }
         }
     }
+    private fun checkOlderWebView(): PackageInfo? {
+        return try {
+            packageManager.getPackageInfo("com.android.webview", 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
+    }
 
     /**
      * Check if the current WebView version is older than the last supported version and if it is,
-     * inform the developer with a snackbar.
+     * inform the user with a dialog box containing further instructions.
      */
     private fun checkWebviewVersion() {
-        // Doesn't need to be translated as it's debug only
         val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager)
-        if (webviewPackageInfo == null) {
-            val snackbarMessage = "No Android System WebView found"
-            showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
-            return
-        }
+        val webviewOlder = checkOlderWebView()
 
-        val versionCode = webviewPackageInfo.versionName.split(".")[0].toInt()
-        if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
-            val snackbarMessage =
-                "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION)."
-            showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
+        if (webviewPackageInfo == null) {
+            AlertDialog.Builder(this).show {
+                title(R.string.ankidroid_init_failed_webview_title)
+                message(
+                    text = "AnkiDroid relies on the System WebView which is unavailable."
+                )
+                positiveButton(R.string.deck_picker_updation_older_webview) {
+                    val openURL = Intent(android.content.Intent.ACTION_VIEW)
+                    openURL.data = Uri.parse(WEBVIEW_UPDATION_LINK)
+                    startActivity(openURL)
+                }
+                cancelable(false)
+            }
+        } else {
+            if (webviewOlder == null) {
+                val versionCode = webviewPackageInfo.versionName.split(".").get(0).toInt()
+                if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
+                    val snackbarMessage =
+                        "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION).You can update it by following the given link"
+                    AlertDialog.Builder(this).show {
+                        title(R.string.ankidroid_init_failed_webview_title)
+                        message(
+                            text = snackbarMessage
+                        )
+
+                        positiveButton(R.string.deck_picker_updation_older_webview) {
+                            val openURL = Intent(android.content.Intent.ACTION_VIEW)
+                            openURL.data =
+                                Uri.parse(WEBVIEW_UPDATION_LINK)
+                            startActivity(openURL)
+                        }
+
+                        cancelable(false)
+                    }
+                }
+            } else {
+                AlertDialog.Builder(this).show {
+                    title(R.string.ankidroid_init_failed_webview_title)
+                    message(
+                        text = "The WebView Package is not supported.You must disable the existing WebView Package and Install the newer version"
+                    )
+
+                    positiveButton(R.string.deck_picker_updation_older_webview) {
+                        val openURL = Intent(android.content.Intent.ACTION_VIEW)
+                        openURL.data =
+                            Uri.parse(WEBVIEW_UPDATION_LINK)
+                        startActivity(openURL)
+                    }
+                    neutralButton(R.string.deck_picker_disable_older_webview) {
+                        val intent = Intent(Settings.ACTION_APPLICATION_SETTINGS)
+                        startActivity(intent)
+                    }
+
+                    cancelable(false)
+                }
+            }
         }
     }
 
@@ -1136,6 +1192,7 @@ open class DeckPicker :
             refreshState()
         }
         message?.let { dialogHandler.sendStoredMessage(it) }
+        checkWebviewVersion()
     }
 
     fun refreshState() {
