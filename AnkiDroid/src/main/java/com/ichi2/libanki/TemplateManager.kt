@@ -23,7 +23,9 @@
 package com.ichi2.libanki
 
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.Sound.VIDEO_EXTENSIONS
+import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.Sound.AUDIO_OR_VIDEO_EXTENSIONS
+import com.ichi2.libanki.Sound.VIDEO_ONLY_EXTENSIONS
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote
@@ -32,7 +34,6 @@ import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
 import com.ichi2.utils.deepClone
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
-import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 import org.json.JSONObject
 import org.jsoup.Jsoup
@@ -311,19 +312,28 @@ class TemplateManager {
 @NotInLibAnki
 @VisibleForTesting
 fun parseVideos(text: String, mediaDir: String): String {
+    fun toVideoTag(path: String): String {
+        val uri = getFileUri(path)
+        return """<video src="$uri" controls controlsList="nodownload"></video>"""
+    }
+
     return SOUND_RE.replace(text) { match ->
         val fileName = match.groupValues[1]
         val extension = fileName.substringAfterLast(".", "")
-        if (extension in VIDEO_EXTENSIONS) {
-            val path = Paths.get(mediaDir, fileName).toString()
-            val uri = getFileUri(path)
-
-            @Language("HTML")
-            val result =
-                """<video src="$uri" controls controlsList="nodownload"></video>"""
-            result
-        } else {
-            match.value
+        when (extension) {
+            in VIDEO_ONLY_EXTENSIONS -> {
+                val path = Paths.get(mediaDir, fileName).toString()
+                toVideoTag(path)
+            }
+            in AUDIO_OR_VIDEO_EXTENSIONS -> {
+                val file = File(mediaDir, fileName)
+                if (isAudioFileInVideoContainer(file) == true) {
+                    match.value
+                } else {
+                    toVideoTag(file.path)
+                }
+            }
+            else -> match.value
         }
     }
 }
@@ -386,4 +396,25 @@ fun getFileUri(path: String): URI {
     if (!p.startsWith("/")) p = "/$p"
     if (!p.startsWith("//")) p = "//$p"
     return URI("file", p, null)
+}
+
+/**
+ * Whether a video file only contains an audio stream
+ *
+ * @return `null` - file is not a video, or not found
+ */
+@VisibleForTesting
+fun isAudioFileInVideoContainer(file: File): Boolean? {
+    if (file.extension !in VIDEO_ONLY_EXTENSIONS && file.extension !in AUDIO_OR_VIDEO_EXTENSIONS) {
+        return null
+    }
+
+    if (file.extension in VIDEO_ONLY_EXTENSIONS) return false
+
+    // file.extension is in AUDIO_OR_VIDEO_EXTENSIONS
+    if (!file.exists()) return null
+
+    // Also check that there is a video thumbnail, as some formats like mp4 can be audio only
+    val isVideo = CompatHelper.compat.hasVideoThumbnail(file.absolutePath) ?: return null
+    return !isVideo
 }
