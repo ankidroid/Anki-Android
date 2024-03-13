@@ -26,20 +26,25 @@ import android.provider.MediaStore
 import android.util.Size
 import com.ichi2.libanki.utils.TimeManager
 import java.io.File
+import java.io.IOException
 
 /** Implementation of [Compat] for SDK level 29  */
 @TargetApi(29)
 open class CompatV29 : CompatV26(), Compat {
-    override fun hasVideoThumbnail(path: String): Boolean {
+    override fun hasVideoThumbnail(path: String): Boolean? {
         return try {
             ThumbnailUtils.createVideoThumbnail(File(path), THUMBNAIL_MINI_KIND, null)
             // createVideoThumbnail throws an exception if it's null
             true
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             // The default for audio is an IOException, so don't log it
             // A log line is still produced:
             // E/MediaMetadataRetrieverJNI: getEmbeddedPicture: Call to getEmbeddedPicture failed
-            false
+            if (e.message == "Failed to create thumbnail") return false
+            null
+        } catch (e: Exception) {
+            // unexpected exception
+            null
         }
     }
 

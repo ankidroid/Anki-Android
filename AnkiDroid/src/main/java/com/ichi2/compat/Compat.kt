@@ -161,7 +161,7 @@ interface Compat {
      */
     @Throws(IOException::class)
     fun createDirectories(directory: File)
-    fun hasVideoThumbnail(path: String): Boolean
+    fun hasVideoThumbnail(path: String): Boolean?
 
     /**
      * Writes an image represented by bitmap to the Pictures/AnkiDroid directory under the primary
