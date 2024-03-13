@@ -15,8 +15,7 @@
  */
 package com.ichi2.anki.dialogs
 
-import android.app.AlertDialog
-import android.content.DialogInterface
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -24,6 +23,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
+import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.ParametersUtils
@@ -40,6 +40,7 @@ import org.mockito.Mockito
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.robolectric.annotation.Config
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class CustomStudyDialogTest : RobolectricTest() {
@@ -62,12 +63,11 @@ class CustomStudyDialogTest : RobolectricTest() {
             .withArguments(CustomStudyDialog.ContextMenuOption.STUDY_AHEAD, 1)
             .arguments
         val factory = CustomStudyDialogFactory({ this.col }, mockListener)
-        val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
+        val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
+        scenario.moveToState(Lifecycle.State.RESUMED)
         scenario.onFragment { f: CustomStudyDialog ->
-            val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
-            dialog?.getButton(DialogInterface.BUTTON_POSITIVE)?.callOnClick()
+            val dialog = assertNotNull(f.dialog as AlertDialog?)
+            dialog.performPositiveClick()
         }
         val customStudy = col.decks.current()
         MatcherAssert.assertThat("Custom Study should be dynamic", customStudy.isFiltered)
