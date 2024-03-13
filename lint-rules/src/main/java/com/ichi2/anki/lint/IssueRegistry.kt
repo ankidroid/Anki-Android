@@ -36,6 +36,7 @@ import com.ichi2.anki.lint.rules.InvalidStringFormatDetector
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
 import com.ichi2.anki.lint.rules.NonPositionalFormatSubstitutions
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage
+import com.ichi2.anki.lint.rules.TranslationTypo
 import com.ichi2.anki.lint.rules.VariableNamingDetector
 
 class IssueRegistry : IssueRegistry() {
@@ -57,6 +58,7 @@ class IssueRegistry : IssueRegistry() {
                 JUnitNullAssertionDetector.ISSUE,
                 PrintStackTraceUsage.ISSUE,
                 NonPositionalFormatSubstitutions.ISSUE,
+                TranslationTypo.ISSUE,
                 FixedPreferencesTitleLength.ISSUE_MAX_LENGTH,
                 FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH,
                 VariableNamingDetector.ISSUE,
