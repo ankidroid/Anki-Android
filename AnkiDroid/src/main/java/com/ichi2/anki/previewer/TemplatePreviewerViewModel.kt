@@ -138,11 +138,10 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
         }
     }
 
-    @NeedsTest("tab is selected if the first cloze isn't '1'")
     @CheckResult
     suspend fun getCurrentTabIndex(): Int {
         return if (isCloze) {
-            clozeNumbers!!.await().indexOf(ordFlow.value) + 1
+            clozeNumbers!!.await().indexOf(ordFlow.value + 1)
         } else {
             ordFlow.value
         }
