@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">প্রসারণ করুন</string>
     <string name="collapse">সঙ্কোচন</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d মিনিট বাকি</item>
         <item quantity="other"></item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">ডেক অনুসন্ধান</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ডেক অনুসন্ধান</string>
     <string name="invalid_deck_name">ডেক নাম বৈধ নয়</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">কোন কার্ড এখনও কার্যকরী হবে</string>
     <string name="sd_card_not_mounted">ডিভাইস স্টোরেজ মাউন্টেড নয়</string>
     <string name="button_sync" comment="Text of the sync button">সিংক্রোনাইজ</string>
@@ -236,6 +240,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">স্থানান্তর আবার শুরু করুন</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">দুর্গম সংগ্রহ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store পলিসি পরিবর্তন হওয়ার জন্য AnkiDroid আনইনষ্টলের পর আপনার সংগ্রহ একসেস করা যাচ্ছে না\n\nআপনার ডাটা\n%s\n\nতে সুরক্ষিত রয়েছে এবং তাকে রিস্টোর করা যাবে। রিস্টোর করার জন্য নিচের যেকোনো অপশন ক্লিক করুন:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">AnkiWeb থেকে রিস্টোর করুন (প্রস্তাবিত)</string>
     <string name="install_non_play_store_ankidroid_recommended">ফোল্ডারের একসেস রিস্টোর করুন (প্রস্তাবিত)</string>
     <string name="install_non_play_store_ankidroid">ফোল্ডারের একসেস রিস্টোর করুন (উন্নত)</string>
