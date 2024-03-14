@@ -199,8 +199,6 @@
     <string name="reset">रीसेट</string>
     <string name="thirdparty_apps_title" maxLength="41">तृतीय-पक्ष API ऐप्स</string>
     <string name="thirdparty_apps_summary">शब्दकोशों और उपयोगिताओं सहित AnkiDroid का उपयोग करने वाले ऐप्स की सूची देखने के लिए यहां टैप करें</string>
-    <string name="html_javascript_debugging" maxLength="41">हटम्ल/जावास्क्रिप्ट डिबगिंग</string>
-    <string name="html_javascript_debugging_summ">दूरस्थ वेब्वयेव कनेक्शन सक्षम करें और कार्ड हटम्ल को अंकिड़रोइड निर्देशिका में सहेजें</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">समीक्षक</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

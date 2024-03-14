@@ -99,6 +99,7 @@ import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
+import com.ichi2.anki.pages.CongratsPage.Companion.onDeckCompleted
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -263,7 +264,7 @@ open class DeckPicker :
     var importColpkgListener: ImportColpkgListener? = null
 
     private var toolbarSearchView: SearchView? = null
-    private lateinit var customStudyDialogFactory: CustomStudyDialogFactory
+    internal lateinit var customStudyDialogFactory: CustomStudyDialogFactory
 
     override val permissionScreenLauncher = recreateActivityResultLauncher()
 
@@ -1117,7 +1118,7 @@ open class DeckPicker :
 
     private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-            startActivity(CongratsPage.getIntent(this))
+            CongratsPage.onReviewsCompleted(this, getColUnsafe.sched.totalCount() == 0)
         } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
             Timber.i("Obtained Abort and Sync result")
             sync()
@@ -1798,7 +1799,7 @@ open class DeckPicker :
         startActivity(intent)
     }
 
-    private fun openStudyOptions(@Suppress("SameParameterValue") withDeckOptions: Boolean) {
+    internal fun openStudyOptions(@Suppress("SameParameterValue") withDeckOptions: Boolean) {
         if (fragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions)
@@ -1887,12 +1888,12 @@ open class DeckPicker :
             return
         }
 
-        when (queryCompletedDeckCustomStudyAction(did)) {
+        when (val completedDeckStatus = queryCompletedDeckCustomStudyAction(did)) {
             CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED,
             CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY,
             CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED,
             CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED -> {
-                startActivity(CongratsPage.getIntent(this))
+                onDeckCompleted(did, completedDeckStatus, ::updateUi)
             }
             CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
                 // If the deck is empty (& has no children) then show a message saying it's empty

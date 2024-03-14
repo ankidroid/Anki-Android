@@ -199,8 +199,6 @@
     <string name="reset">საწყისი პარამეტრების აღდგენა</string>
     <string name="thirdparty_apps_title" maxLength="41">მესამე მხარეების API-აპლიკაციები</string>
     <string name="thirdparty_apps_summary">იხილეთ სია იმ აპლიკაციებისა, როგორებიცაა მაგალითად ლექსიკონები, რომლებიც AnkiDroid-ის API-ს მოიხმარებენ.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript კოდის გამართვა</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">გადამხედველი</string>
     <string name="show_deck_title" maxLength="41">დასტის სათაურის ჩვენება</string>

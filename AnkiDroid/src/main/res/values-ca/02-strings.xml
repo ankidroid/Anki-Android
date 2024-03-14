@@ -304,7 +304,7 @@
     <string name="migration_part_1_done_resume">Podeu tornar a utilitzar l\'AnkiDroid.
 \nLa migració continuarà en segon pla.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s no és un paquet de complements javascript vàlid</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">No s\'ha pogut crear la carpeta %s</string>
     <string name="malicious_archive_entry_outside">Arxiu maliciós. Conté una entrada fora de la carpeta de destinació: %s</string>
     <string name="malicious_archive_exceeds_limit">Arxiu maliciós. La mida supera %1$s o conté més de %2$d fitxers</string>

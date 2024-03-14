@@ -52,7 +52,7 @@
         <item quantity="many">%d хв.</item>
         <item quantity="other">%d хв.</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s мс</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Немає результатів</string>
     <!-- preferences.xml categories-->
@@ -118,7 +118,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Дотик лівого нижнього кута</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Дотик правого нижнього кута</string>
     <string name="gestures_shake" maxLength="41">Потрясти пристроєм</string>
-    <string name="card_browser_enable_external_context_menu">\'%s\' Меню</string>
+    <string name="card_browser_enable_external_context_menu">Меню \'%s\'</string>
     <string name="card_browser_enable_external_context_menu_summary">Включає \'%s\' в загальне контекстне меню</string>
     <string name="double_scrolling_gap" maxLength="41">Подвійне прокручування</string>
     <string name="double_scrolling_gap_summ">Подвоїти розрив прокручування в eReader-і</string>
@@ -174,7 +174,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Показати великі кнопки відповіді</string>
     <string name="show_large_answer_buttons_summ">Показувати кнопку відповіді в 2 рядках</string>
     <string name="show_top_bar" maxLength="41">Показати верхню панель</string>
-    <string name="show_top_bar_summ">Показувати кількість карт, прапорець та зірочку на верхній панелі</string>
+    <string name="show_top_bar_summ">Показувати кількість карток, прапорець та зірочку на верхній панелі</string>
     <string name="show_progress" maxLength="41">Показати ті, що залишилися</string>
     <string name="show_progress_summ">Показувати кількість карток, що залишилися</string>
     <string name="show_eta" maxLength="41">Показувати приблизний час, що залишився</string>
@@ -204,8 +204,6 @@
     <string name="reset">Скинути</string>
     <string name="thirdparty_apps_title" maxLength="41">API додатки сторонніх виробників</string>
     <string name="thirdparty_apps_summary">Переглянути список програм, які використовують API AnkiDroid, наприклад словники, утиліти</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript налагодження</string>
-    <string name="html_javascript_debugging_summ">Увімкнути віддалені з\'єднання WebView і зберегти HTML-карту в каталозі AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Повторення</string>
     <string name="show_deck_title" maxLength="41">Показувати назву колоди</string>
@@ -213,7 +211,7 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставити зображення у форматі PNG</string>
     <string name="paste_as_png_summary">За замовчуванням Anki вводить зображення в буфер обміну в якості JPG файлів для економії місця на диску. Ви можете змінити в меню на PNG зображення.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">«Назад» двіч для повернення/виходу</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Натиснeння \"Назад\" двічі, щоб перейти назад/вийти</string>
     <string name="exit_via_double_tap_back_summ">Для уникнення випадкового виходу з оглядача чи додатку</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Дозволити всі файли при імпорті медіа</string>
@@ -270,7 +268,7 @@
     <!-- Controls -->
     <string name="binding_add_gesture">Додати жест</string>
     <string name="binding_replace_gesture">Замінити жест</string>
-    <string name="binding_add_key">Додати ключ</string>
+    <string name="binding_add_key">Додати клавішу</string>
     <string name="binding_replace_key">Замінити клавішу</string>
     <string name="key_picker_default_press_key">Натисніть клавішу</string>
     <string name="binding_add_axis">Додати джойстик/контролер руху</string>

@@ -199,8 +199,6 @@
     <string name="reset">تنظیم مجدد</string>
     <string name="thirdparty_apps_title" maxLength="41">ای پی آی سایر نرم‌افزارها</string>
     <string name="thirdparty_apps_summary">نمایش لیست کامل از همۀ نرم‌افزارهایی که از ای پی آی آنکی‌دروید استفاده می‌کنند. (برای مثال نرم‌افزارهای فرهنگ لغت و ...)</string>
-    <string name="html_javascript_debugging" maxLength="41">دیباگ کردن HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">فعال‌سازی اتصالات از بیرونی و ذخیرۀ اچ تی ام ال کارت‌ها در مسیر آنکی‌دروید</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">مرور کننده</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

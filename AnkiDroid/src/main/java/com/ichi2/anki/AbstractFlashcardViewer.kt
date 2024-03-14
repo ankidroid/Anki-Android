@@ -49,7 +49,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
-import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
@@ -473,7 +472,7 @@ abstract class AbstractFlashcardViewer :
             closeReviewer(RESULT_NO_MORE_CARDS)
             // When launched with a shortcut, we want to display a message when finishing
             if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
-                startActivity(CongratsPage.getIntent(this))
+                CongratsPage.display(this)
             }
             return
         }
@@ -996,7 +995,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun createWebView(): WebView {
-        val assetLoader = getViewerAssetLoader(webviewDomain)
+        val resourceHandler = ViewerResourceHandler(this, webviewDomain)
         val webView: WebView = MyWebView(this).apply {
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
@@ -1014,7 +1013,7 @@ abstract class AbstractFlashcardViewer :
             isScrollbarFadingEnabled = true
             // Set transparent color to prevent flashing white when night mode enabled
             setBackgroundColor(Color.argb(1, 0, 0, 0))
-            CardViewerWebClient(assetLoader, this@AbstractFlashcardViewer).apply {
+            CardViewerWebClient(resourceHandler, this@AbstractFlashcardViewer).apply {
                 webViewClient = this
                 this@AbstractFlashcardViewer.webViewClient = this
             }
@@ -2239,11 +2238,17 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected inner class CardViewerWebClient internal constructor(
-        private val loader: WebViewAssetLoader?,
+        private val loader: ViewerResourceHandler?,
         private val onPageFinishedCallback: OnPageFinishedCallback? = null
     ) : WebViewClient() {
         private var pageFinishedFired = true
         private val pageRenderStopwatch = Stopwatch.init("page render")
+
+        @Deprecated("Deprecated in Java") // still needed for API 23
+        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            Timber.d("Obtained URL from card: '%s'", url)
+            return filterUrl(url)
+        }
 
         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
             val url = request.url.toString()
@@ -2261,9 +2266,7 @@ abstract class AbstractFlashcardViewer :
             request: WebResourceRequest
         ): WebResourceResponse? {
             val url = request.url
-            if (request.method == "GET") {
-                loader!!.shouldInterceptRequest(url)?.let { return it }
-            }
+            loader!!.shouldInterceptRequest(request)?.let { return it }
             if (url.toString().startsWith("file://")) {
                 url.path?.let { path -> migrationService?.migrateFileImmediately(File(path)) }
             }
