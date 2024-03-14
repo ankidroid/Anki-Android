@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">残り約%d分</item>
     </plurals>
@@ -135,6 +136,9 @@
     <string name="search_deck" comment="Deck search for selecting it">デッキ検索</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">デッキを検索</string>
     <string name="invalid_deck_name">無効なデッキ名です</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
@@ -232,6 +236,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">移行を再開</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">アクセスできないコレクション</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid"> Playストアのプライバシーポリシーの変更により、AnkiDroidはアンインストール前のコレクションにはアクセスできなくなりました。\n\nコレクションは\n%s\nに保存されており、復元可能です。 \n\n復元するための選択肢は次の通りです:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">AnkiWebから復元 (推奨)</string>
     <string name="install_non_play_store_ankidroid_recommended">フォルダへのアクセスを回復 (推奨)</string>
     <string name="install_non_play_store_ankidroid">フォルダへのアクセスを回復 (高度)</string>

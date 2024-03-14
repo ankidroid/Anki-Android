@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Nagyítás</string>
     <string name="collapse">Összecsukás</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Paklik keresése</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Paklik keresése</string>
     <string name="invalid_deck_name">Érvénytelen paklinév</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Jelenleg nincs esedékes kártya</string>
     <string name="sd_card_not_mounted">Nincs elérhető tárolóhely</string>
     <string name="button_sync" comment="Text of the sync button">Szinkronizálás</string>
@@ -237,6 +241,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Áthelyezés folytatása</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Gyűjtemény nem elérhelő</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Az AnkiDroid eltávolítása után nem tudunk hozzáférni a gyűjteményedhez a Play Áruház Szabályzatban történt változás miatt.\n\nAz adatok biztonságban vannak, és visszaállíthatók. A következő helyen találhatóak:\n%s\n\nVálassz az alábbi lehetőségek közül a visszaállításhoz:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Visszaállítás az AnkiWebről (ajánlott)</string>
     <string name="install_non_play_store_ankidroid_recommended">Mappahozzáférés visszaállítása (ajánlott)</string>
     <string name="install_non_play_store_ankidroid">Mappahozzáférés visszaállítása (haladó)</string>

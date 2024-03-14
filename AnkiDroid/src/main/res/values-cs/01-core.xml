@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Rozbalit</string>
     <string name="collapse">Sbalit</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Zbývá %d minuta</item>
         <item quantity="few">Zbývají %d minuty</item>
@@ -144,6 +145,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Hledat balíček</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Hledat balíček</string>
     <string name="invalid_deck_name">Neplatný název balíčku</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Žádné karty ještě nejsou ke zkoušení</string>
     <string name="sd_card_not_mounted">Zařízení úložiště není připojeno</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizovat</string>
@@ -250,6 +254,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Pokračovat v přesunu dat</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Nepřístupná kolekce</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Po odinstalování AnkiDroidu nelze otevřít vaši sbírku z důvodu změny zásad obchodu Play\n\nVaše data jsou v bezpečí a mohou být obnovena. Jsou umístěna v\n%s\n\nVyberte možnost níže, pokus je chcete obnovit:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Obnovit z AnkiWeb (doporučeno)</string>
     <string name="install_non_play_store_ankidroid_recommended">Obnovit přístup ke složce (doporučeno)</string>
     <string name="install_non_play_store_ankidroid">Obnovit přístup ke složce (pro pokročilé)</string>
