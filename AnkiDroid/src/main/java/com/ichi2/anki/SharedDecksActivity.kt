@@ -122,7 +122,7 @@ class SharedDecksActivity : AnkiActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        webviewToolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.close_icon)
+        webviewToolbar.navigationIcon = ContextCompat.getDrawable(applicationContext, R.drawable.close_icon)
 
         webView = findViewById(R.id.web_view)
 
