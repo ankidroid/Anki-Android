@@ -64,7 +64,7 @@ open class SingleFragmentActivity : AnkiActivity() {
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)!!
         return if (fragment is DispatchKeyEventListener) {
-            fragment.dispatchKeyEvent(event)
+            fragment.dispatchKeyEvent(event) || super.dispatchKeyEvent(event)
         } else {
             super.dispatchKeyEvent(event)
         }
