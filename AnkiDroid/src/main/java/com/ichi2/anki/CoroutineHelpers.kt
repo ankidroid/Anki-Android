@@ -43,8 +43,10 @@ import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -98,6 +100,14 @@ fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel
         { onError.emit(it) },
         { block() }
     )
+}
+
+fun <T> CoroutineScope.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
+    return async(Dispatchers.IO, block = block)
+}
+
+fun <T> ViewModel.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
+    return viewModelScope.asyncIO(block)
 }
 
 /**
