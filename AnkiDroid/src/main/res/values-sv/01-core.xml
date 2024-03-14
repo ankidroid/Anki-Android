@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Expandera</string>
     <string name="collapse">Minimera</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minut kvar</item>
         <item quantity="other">%d minuter kvar</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kortlekssökning</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Inga kort i kö.</string>
     <string name="sd_card_not_mounted">Lagringsenhet ej monterad</string>
     <string name="button_sync" comment="Text of the sync button">Synkronisera</string>
@@ -237,6 +241,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Återuppta överföring</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Otillgänglig samling</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Vi kan inte komma åt din samling efter att AnkiDroid har avinstallerats på grund av en ändring i Play Store-policyn\n\nDin data är säker och kan återställas. Den ligger på\n%s\n\nVälj ett alternativ nedan för att återställa:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Återställ från AnkiWeb (rekommenderas)</string>
     <string name="install_non_play_store_ankidroid_recommended">Återställ mappåtkomst (rekommenderas)</string>
     <string name="install_non_play_store_ankidroid">Återställ mappåtkomst (avancerat)</string>
