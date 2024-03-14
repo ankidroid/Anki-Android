@@ -41,7 +41,9 @@ import org.jetbrains.annotations.VisibleForTesting
 import org.json.JSONObject
 import timber.log.Timber
 
-abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
+abstract class CardViewerViewModel(
+    soundPlayer: SoundPlayer
+) : ViewModel(), OnErrorListener {
     override val onError = MutableSharedFlow<String>()
     val onMediaError = MutableSharedFlow<String>()
     val onTtsError = MutableSharedFlow<TtsPlayer.TtsError>()
@@ -50,7 +52,9 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
     val eval = MutableSharedFlow<String>()
 
     val showingAnswer = MutableStateFlow(false)
-    protected val soundPlayer = SoundPlayer(createSoundErrorListener())
+    protected val soundPlayer = soundPlayer.apply {
+        setSoundErrorListener(createSoundErrorListener())
+    }
     protected lateinit var currentCard: Card
 
     @CallSuper
