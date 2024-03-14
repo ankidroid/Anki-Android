@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsIntent.*
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
@@ -330,7 +331,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
             .setToolbarColor(toolbarColor)
             .setNavigationBarColor(navBarColor)
             .build()
-        val builder = Builder(customTabActivityHelper.session)
+        val builder = CustomTabsIntent.Builder(customTabActivityHelper.session)
             .setShowTitle(true)
             .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
             .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
