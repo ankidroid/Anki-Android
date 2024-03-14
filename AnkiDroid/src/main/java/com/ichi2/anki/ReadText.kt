@@ -36,7 +36,6 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
 import timber.log.Timber
 import java.lang.ref.WeakReference
-import java.util.*
 
 object ReadText {
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
