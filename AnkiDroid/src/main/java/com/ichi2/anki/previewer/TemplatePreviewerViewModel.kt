@@ -24,6 +24,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NotetypeFile
 import com.ichi2.anki.asyncIO
+import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
@@ -37,7 +38,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.parcelize.Parcelize
 import org.intellij.lang.annotations.Language
 
-class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardViewerViewModel() {
+class TemplatePreviewerViewModel(
+    arguments: TemplatePreviewerArguments,
+    soundPlayer: SoundPlayer
+) : CardViewerViewModel(soundPlayer) {
     private val notetype = arguments.notetype
     private val fillEmpty = arguments.fillEmpty
     private val isCloze = notetype.isCloze
@@ -186,10 +190,10 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
     }
 
     companion object {
-        fun factory(arguments: TemplatePreviewerArguments): ViewModelProvider.Factory {
+        fun factory(arguments: TemplatePreviewerArguments, soundPlayer: SoundPlayer): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
-                    TemplatePreviewerViewModel(arguments)
+                    TemplatePreviewerViewModel(arguments, soundPlayer)
                 }
             }
         }

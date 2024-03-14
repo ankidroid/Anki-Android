@@ -29,6 +29,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.ichi2.anki.R
+import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import kotlinx.coroutines.flow.launchIn
@@ -42,7 +43,7 @@ class TemplatePreviewerFragment :
 
     override val viewModel: TemplatePreviewerViewModel by viewModels {
         val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
-        TemplatePreviewerViewModel.factory(arguments)
+        TemplatePreviewerViewModel.factory(arguments, SoundPlayer())
     }
     override val webView: WebView
         get() = requireView().findViewById(R.id.webview)
