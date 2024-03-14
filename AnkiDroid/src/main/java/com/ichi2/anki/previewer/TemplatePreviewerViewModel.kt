@@ -28,7 +28,6 @@ import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import kotlinx.coroutines.CompletableDeferred
@@ -37,6 +36,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.parcelize.Parcelize
 import org.intellij.lang.annotations.Language
+import org.jetbrains.annotations.VisibleForTesting
 
 class TemplatePreviewerViewModel(
     arguments: TemplatePreviewerArguments,
@@ -51,7 +51,8 @@ class TemplatePreviewerViewModel(
      * * for card templates, values are from 0 to the number of templates minus 1
      * * for cloze deletions, values are from 0 to max cloze index minus 1
      */
-    private val ordFlow = MutableStateFlow(arguments.ord)
+    @VisibleForTesting
+    val ordFlow = MutableStateFlow(arguments.ord)
 
     private val note: Deferred<Note>
     private val templateNames: Deferred<List<String>>
@@ -130,7 +131,6 @@ class TemplatePreviewerViewModel(
         return templateNames.await()
     }
 
-    @NeedsTest("the correct cloze ord is shown for the tab")
     fun onTabSelected(position: Int) {
         launchCatchingIO {
             val ord = if (isCloze) {
