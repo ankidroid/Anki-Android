@@ -24,6 +24,7 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -42,6 +43,7 @@ import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.performClickIfEnabled
@@ -173,6 +175,14 @@ class PreviewerFragment :
 
         if (sharedPrefs().getBoolean("safeDisplay", false)) {
             view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
+        }
+
+        with(requireActivity()) {
+            // use the screen background color if the nav bar doesn't need a scrim when using a
+            // transparent background. e.g. when navigation gestures are enabled
+            if (!navBarNeedsScrim) {
+                window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
+            }
         }
     }
 
