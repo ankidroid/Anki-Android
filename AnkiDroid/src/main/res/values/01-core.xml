@@ -120,6 +120,9 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_no_scheduled">No cards are scheduled to study.</string>
+    <string name="studyoptions_empty_deck">The deck is empty, try adding some cards to it.</string>
+    <string name="studyoptions_congrats_limit_set">There are more new cards available, but the daily limit has been reached. You can Increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>
     <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
