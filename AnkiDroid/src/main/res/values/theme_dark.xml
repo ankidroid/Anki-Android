@@ -69,6 +69,7 @@
         <item name="hardButtonTextColor">@color/white</item>
         <item name="goodButtonTextColor">@color/white</item>
         <item name="easyButtonTextColor">@color/white</item>
+        <item name="alternativeBackgroundColor">#2a2a2a</item>
         <!-- Reviewer button drawables -->
         <item name="showAnswerColor">@color/material_blue_grey_800</item>
         <item name="againButtonRef">@drawable/footer_button_again_dark</item>

@@ -24,6 +24,7 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -32,6 +33,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.DispatchKeyEventListener
@@ -40,6 +42,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.performClickIfEnabled
@@ -167,6 +171,18 @@ class PreviewerFragment :
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
             setOnMenuItemClickListener(this@PreviewerFragment)
             setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
+        }
+
+        if (sharedPrefs().getBoolean("safeDisplay", false)) {
+            view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
+        }
+
+        with(requireActivity()) {
+            // use the screen background color if the nav bar doesn't need a scrim when using a
+            // transparent background. e.g. when navigation gestures are enabled
+            if (!navBarNeedsScrim) {
+                window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
+            }
         }
     }
 
