@@ -39,3 +39,11 @@ fun getAndroidSystemWebViewPackageInfo(packageManager: PackageManager): PackageI
     return getPackage("com.google.android.webview")
         ?: getPackage("com.android.webview") // com.android.webview is used on API 24
 }
+
+fun checkOlderWebView(packageManager: PackageManager): PackageInfo? {
+    return try {
+        packageManager.getPackageInfo("com.android.webview", 0)
+    } catch (e: PackageManager.NameNotFoundException) {
+        null
+    }
+}
