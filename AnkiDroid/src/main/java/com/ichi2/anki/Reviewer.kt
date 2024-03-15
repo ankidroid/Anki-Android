@@ -803,7 +803,7 @@ open class Reviewer :
             if (!actionButtons.status.whiteboardPenColorIsDisabled()) {
                 changePenColorIcon.isVisible = true
             }
-            val whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
+            val whiteboardIcon = ContextCompat.getDrawable(applicationContext, R.drawable.ic_gesture_white)!!.mutate()
             val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
             val whiteboardColorPaletteIcon = VectorDrawableCompat.create(resources, R.drawable.ic_color_lens_white_24dp, this.theme)!!.mutate()
             if (showWhiteboard) {
