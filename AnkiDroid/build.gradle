@@ -1,12 +1,12 @@
 plugins {
     // Gradle plugin portal
-    id 'com.github.triplet.play' version '3.9.0'
-    id 'com.android.application'
-    id 'app.brant.amazonappstorepublisher'
+    alias(libs.plugins.com.github.triplet.play)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.app.brant.amazonappstorepublisher)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.serialization)
     id 'idea'
-    id 'kotlin-android'
-    id 'kotlin-parcelize'
-    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 repositories {
@@ -46,7 +46,7 @@ android {
         applicationId "com.ichi2.anki"
         buildConfigField "Boolean", "CI", (System.getenv("CI") == "true").toString()
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
-        buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
+        buildConfigField "String", "BACKEND_VERSION", "\"${libs.versions.ankidroidBackend}\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
         buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
         buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash()}\""
@@ -312,7 +312,6 @@ dependencies {
     implementation libs.androidx.core.ktx
     implementation libs.androidx.exifinterface
     implementation libs.androidx.fragment.ktx
-    debugImplementation(libs.androidx.fragment.testing.manifest)
     implementation libs.androidx.media
     implementation libs.androidx.preference.ktx
     implementation libs.androidx.recyclerview
@@ -327,6 +326,8 @@ dependencies {
     implementation libs.kotlinx.serialization.json
     implementation libs.seismic
 
+    debugImplementation(libs.androidx.fragment.testing.manifest)
+
     // Backend libraries
 
     implementation libs.protobuf.kotlin.lite // This is required when loading from a file
@@ -339,15 +340,12 @@ dependencies {
         implementation files("../../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")
         testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")
     } else {
-        implementation "io.github.david-allison-1:anki-android-backend:$ankidroid_backend_version"
-        testImplementation "io.github.david-allison-1:anki-android-backend-testing:$ankidroid_backend_version"
+        implementation libs.io.github.david.allison.one.anki.android.backend
+        implementation libs.io.github.david.allison.one.anki.android.backend.testing
     }
 
     // May need a resolution strategy for support libs to our versions
-    implementation libs.acra.http
-    implementation libs.acra.dialog
-    implementation libs.acra.toast
-    implementation libs.acra.limiter
+    implementation libs.bundles.acra
 
     implementation libs.core
     implementation libs.input
@@ -384,7 +382,7 @@ dependencies {
     testImplementation libs.timber.junit.rule
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
     testImplementation libs.robolectric
-    testImplementation libs.androidx.core
+    testImplementation libs.androidx.test.core
     testImplementation libs.androidx.junit
     testImplementation libs.kotlin.reflect
     testImplementation libs.kotlin.test
@@ -410,7 +408,7 @@ dependencies {
     androidTestImplementation(libs.espresso.contrib) {
         exclude module: "protobuf-lite"
     }
-    androidTestImplementation libs.androidx.core
+    androidTestImplementation libs.androidx.test.core
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.test.rules
     androidTestImplementation libs.androidx.uiautomator

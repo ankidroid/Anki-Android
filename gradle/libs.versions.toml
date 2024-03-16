@@ -1,12 +1,8 @@
 [versions]
-acraLimiter = "5.11.3"
-acraToast = "5.11.3"
-acraDialog = "5.11.3"
-acraHttp = "5.11.3"
-androidImageCropper = "4.5.0"
-appcompatVersion = "1.7.0-alpha03"
-annotationVersion = "1.7.1"
-activityKtxVersion = "1.8.2"
+androidXImageCropper = "4.5.0"
+androidxAppCompat = "1.7.0-alpha03"
+androidxAnnotation = "1.7.1"
+androidxActivityKtx = "1.8.2"
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 annotations = "24.1.0"
@@ -15,19 +11,14 @@ commonsExec = "1.4.0"
 commonsIo = "2.15.1"
 commonsCollections4 = "4.4"
 commonsCompress = "1.26.0"
-constraintlayout = "2.1.4"
-core = "3.3.0"
-coreKtxVersion = "1.12.0"
-browserVersion = "1.7.0"
-coreVersion = "1.5.0"
-desugar_jdk_libs_nio = "2.0.4"
+androidxConstraintlayout = "2.1.4"
+androidxTextCore = "1.5.0"
+androidxCoreKtx = "1.12.0"
+androidxBrowser = "1.7.0"
+desugar-jdk-libs-nio = "2.0.4"
 drawer = "1.0.3"
-espressoContribVersion = "3.5.1"
-espressoCoreVersion = "3.5.1"
-espressoContrib = "3.5.1"
-espressoCore = "3.5.1"
-fragmentKtxVersion = "1.6.2"
-exifinterfaceVersion = "1.3.7"
+androidxFragmentKtx = "1.6.2"
+androidxExifinterface = "1.3.7"
 googleAnalyticsJava7 = "2.0.13"
 hamcrest = "2.2"
 input = "3.3.0"
@@ -38,22 +29,16 @@ junit = "1.1.5"
 junitVintageEngine = "5.10.2"
 junitJupiterParams = "5.10.2"
 junitJupiter = "5.10.2"
-kotlin = "1.9.22"
-kotlin_version = '1.9.22'
+kotlin = '1.9.22'
 kotlinTest = "1.9.22"
 kotlinReflect = "1.9.22"
 kotlinxSerializationJson = "1.6.3"
 leakcanaryAndroid = "2.13"
-lint_version = '31.1.1'
-acra_version = '5.11.3'
-ankidroid_backend_version = '0.1.34-anki23.12.1'
-hamcrest_version = '2.2'
-junit_version = '5.10.2'
-coroutines_version = '1.8.0'
-fragments_version = "1.6.2"
-espresso_version = '3.5.1'
-androidx_test_version = '1.5.0'
-androidx_test_junit_version = '1.1.5'
+lint = '31.1.1'
+acra = '5.11.3'
+ankidroidBackend = '0.1.34-anki23.12.1'
+coroutines = '1.8.0'
+espresso = '3.5.1'
 materialTapTargetPrompt = "3.3.2"
 mockitoKotlin = "5.2.1"
 mockitoInline = "5.2.0"
@@ -61,59 +46,59 @@ mockk = "1.13.9"
 nanohttpd = "2.3.1"
 material = "1.11.0"
 okhttp = "4.12.0"
-preferenceKtx = "1.2.1"
-media = "1.7.0"
+androidxpreferenceKtx = "1.2.1"
+androidxMedia = "1.7.0"
 protobufKotlinLite = "3.25.3"
-recyclerview = "1.3.2"
+androidxRecyclerview = "1.3.2"
 robolectric = "4.11.1"
-robolectric_version = '4.11.1'
-android_gradle_plugin = "8.2.2"
-dokka_version = "1.9.10"
-runner = "1.5.2"
+androidGradlePlugin = "8.2.2"
+dokka = "1.9.10"
+androidxRunner = "1.5.2"
 searchpreference = "2.5.1"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
 slf4jTimber = "3.1"
-swiperefreshlayout = "1.1.0"
-sqliteFramework = "2.4.0"
+androidxSwiperefreshlayout = "1.1.0"
+androidxSqliteFramework = "2.4.0"
 timber = "5.0.1"
 timberJunitRule = "1.0.1"
-uiautomator = "2.3.0-rc01"
-uiautomator_version = "2.3.0-rc01"
-webkit = "1.10.0"
-viewpager2 = "1.0.0"
+androidxUiautomator = "2.3.0-rc01"
+androidxWebkit = "1.10.0"
+androidxViewpager2 = "1.0.0"
+amazonappstorepublisher = "3.9.0"
+triplet = "3.9.0"
+ktlint = "11.6.1"
 
 [libraries]
-acra-limiter = { module = "ch.acra:acra-limiter", version.ref = "acraLimiter" }
-acra-toast = { module = "ch.acra:acra-toast", version.ref = "acraToast" }
-acra-dialog = { module = "ch.acra:acra-dialog", version.ref = "acraDialog" }
-acra-http = { module = "ch.acra:acra-http", version.ref = "acraHttp" }
-android-image-cropper = { module = "com.vanniktech:android-image-cropper", version.ref = "androidImageCropper" }
-androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
-androidx-core = { module = "androidx.test:core", version.ref = "coreVersion" }
-androidx-fragment-fragment-testing = { module = "androidx.fragment:fragment-testing", version.ref = "fragmentKtxVersion" }
-androidx-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espressoContrib" }
-androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
-androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtxVersion" }
-androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "exifinterfaceVersion" }
-androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
-androidx-browser = { module = "androidx.browser:browser", version.ref = "browserVersion" }
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
-androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotationVersion" }
-androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtxVersion" }
-androidx-fragment-testing = { module = "androidx.fragment:fragment-testing", version.ref = "fragmentKtxVersion" }
-androidx-fragment-testing-manifest = { module = "androidx.fragment:fragment-testing-manifest", version.ref = "fragmentKtxVersion" }
+acra-limiter = { module = "ch.acra:acra-limiter", version.ref = "acra" }
+acra-toast = { module = "ch.acra:acra-toast", version.ref = "acra" }
+acra-dialog = { module = "ch.acra:acra-dialog", version.ref = "acra" }
+acra-http = { module = "ch.acra:acra-http", version.ref = "acra" }
+android-image-cropper = { module = "com.vanniktech:android-image-cropper", version.ref = "androidXImageCropper" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidxConstraintlayout" }
+androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTextCore" }
+androidx-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragmentKtx" }
+androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifinterface" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCoreKtx" }
+androidx-browser = { module = "androidx.browser:browser", version.ref = "androidxBrowser" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivityKtx" }
+androidx-fragment-testing = { module = "androidx.fragment:fragment-testing", version.ref = "androidxFragmentKtx" }
+androidx-fragment-testing-manifest = { module = "androidx.fragment:fragment-testing-manifest", version.ref = "androidxFragmentKtx" }
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junit" }
-androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
-androidx-media = { module = "androidx.media:media", version.ref = "media" }
-androidx-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "uiautomator" }
-androidx-rules = { module = "androidx.test:rules", version.ref = "coreVersion" }
-androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
-androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
-androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
-androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
-androidx-sqlite-framework = { module = "androidx.sqlite:sqlite-framework", version.ref = "sqliteFramework" }
-androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "androidxpreferenceKtx" }
+androidx-media = { module = "androidx.media:media", version.ref = "androidxMedia" }
+androidx-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidxUiautomator" }
+androidx-rules = { module = "androidx.test:rules", version.ref = "androidxTextCore" }
+androidx-runner = { module = "androidx.test:runner", version.ref = "androidxRunner" }
+androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "androidxWebkit" }
+androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "androidxViewpager2" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidxSwiperefreshlayout" }
+androidx-sqlite-framework = { module = "androidx.sqlite:sqlite-framework", version.ref = "androidxSqliteFramework" }
+androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidxRecyclerview" }
 auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
 auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoServiceAnnotations" }
 annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
@@ -122,12 +107,12 @@ commons-exec = { module = "org.apache.commons:commons-exec", version.ref = "comm
 commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
 commons-collections4 = { module = "org.apache.commons:commons-collections4", version.ref = "commonsCollections4" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
-core = { module = "com.afollestad.material-dialogs:core", version.ref = "core" }
-desugar_jdk_libs_nio = { module = "com.android.tools:desugar_jdk_libs_nio", version.ref = "desugar_jdk_libs_nio" }
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin_version" }
+core = { module = "com.afollestad.material-dialogs:core", version.ref = "androidxTextCore" }
+desugar-jdk-libs-nio = { module = "com.android.tools:desugar_jdk_libs_nio", version.ref = "desugar-jdk-libs-nio" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlinTest" }
-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espressoContribVersion" }
-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
+espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso" }
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 json = { module = "org.json:json", version.ref = "json" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlinTest" }
 hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
@@ -154,25 +139,38 @@ seismic = { module = "com.squareup:seismic", version.ref = "seismic" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 nanohttpd = { module = "org.nanohttpd:nanohttpd", version.ref = "nanohttpd" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
-test-rules = { module = "androidx.test:rules", version.ref = "coreVersion" }
+test-rules = { module = "androidx.test:rules", version.ref = "androidxTextCore" }
 shared-preferences-mock = { module = "io.github.ivanshafran:shared-preferences-mock", version.ref = "sharedPreferencesMock" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 slf4j-timber = { module = "com.arcao:slf4j-timber", version.ref = "slf4jTimber" }
 timber-junit-rule = { module = "net.lachlanmckee:timber-junit-rule", version.ref = "timberJunitRule" }
-kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core"}
-kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines_version" }
-com-android-tools-lint-api = { module = "com.android.tools.lint:lint-api", version.ref = "lint_version" }
-com-android-tools-lint = { module = "com.android.tools.lint:lint", version.ref = "lint_version" }
-com-android-tools-lint-tests = { module = "com.android.tools.lint:lint-tests", version.ref = "lint_version" }
-org-hamcrest-hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest_version" }
-org-hamcrest-hamcrest-library = { module = "org.hamcrest:hamcrest-library", version.ref = "hamcrest_version" }
+kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+com-android-tools-lint-api = { module = "com.android.tools.lint:lint-api", version.ref = "lint" }
+com-android-tools-lint = { module = "com.android.tools.lint:lint", version.ref = "lint" }
+com-android-tools-lint-tests = { module = "com.android.tools.lint:lint-tests", version.ref = "lint" }
+org-hamcrest-hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
+org-hamcrest-hamcrest-library = { module = "org.hamcrest:hamcrest-library", version.ref = "hamcrest" }
+io-github-david-allison-one-anki-android-backend = { module = "io.github.david-allison-1:anki-android-backend", version.ref = "ankidroidBackend" }
+io-github-david-allison-one-anki-android-backend-testing = { module = "io.github.david-allison-1:anki-android-backend-testing", version.ref = "ankidroidBackend" }
 
 
-# Dependencies of the included build-logic
+[bundles]
+acra= ["acra-dialog","acra-http","acra-limiter","acra-toast"]
+
+
 
 
 [plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+app-brant-amazonappstorepublisher = { id = "app.brant.amazonappstorepublisher", version.ref = "amazonappstorepublisher" }
+com-github-triplet-play = { id = "com.github.triplet.play", version.ref = "triplet" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+org-jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+org-jlleitschuh-gradle-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
-
-# Plugins defined by this project
 

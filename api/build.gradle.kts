@@ -1,10 +1,10 @@
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 
 plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.org.jetbrains.dokka)
     id("maven-publish")
-    id("com.android.library")
-    id("kotlin-android")
-    id("org.jetbrains.dokka")
 }
 
 group = "com.ichi2.anki"
