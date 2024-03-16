@@ -1,6 +1,5 @@
 import org.gradle.internal.jvm.Jvm
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {

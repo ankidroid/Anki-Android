@@ -17,14 +17,13 @@ tasks.withType(KotlinCompile::class).all {
 }
 
 dependencies {
-    compileOnly("com.android.tools.lint:lint-api:${rootProject.extra["lint_version"]}")
-    compileOnly("com.android.tools.lint:lint:${rootProject.extra["lint_version"]}")
-
-    testImplementation("org.hamcrest:hamcrest:${rootProject.extra["hamcrest_version"]}")
-    testImplementation("org.hamcrest:hamcrest-library:${rootProject.extra["hamcrest_version"]}")
-    testImplementation("org.junit.jupiter:junit-jupiter:${rootProject.extra["junit_version"]}")
-    testImplementation("org.junit.vintage:junit-vintage-engine:${rootProject.extra["junit_version"]}")
-    testImplementation("com.android.tools.lint:lint:${rootProject.extra["lint_version"]}")
-    testImplementation("com.android.tools.lint:lint-api:${rootProject.extra["lint_version"]}")
-    testImplementation("com.android.tools.lint:lint-tests:${rootProject.extra["lint_version"]}")
+    compileOnly(libs.com.android.tools.lint.api)
+    compileOnly(libs.com.android.tools.lint)
+    testImplementation(libs.org.hamcrest.hamcrest)
+    testImplementation(libs.org.hamcrest.hamcrest.library)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.vintage.engine)
+    testImplementation(libs.com.android.tools.lint.api)
+    testImplementation(libs.com.android.tools.lint)
+    testImplementation(libs.com.android.tools.lint.tests)
 }
