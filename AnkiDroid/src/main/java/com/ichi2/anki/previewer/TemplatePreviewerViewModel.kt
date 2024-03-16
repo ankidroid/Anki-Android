@@ -56,7 +56,7 @@ class TemplatePreviewerViewModel(
 
     private val note: Deferred<Note>
     private val templateNames: Deferred<List<String>>
-    private val clozeNumbers: Deferred<List<Int>>?
+    private val clozeOrds: Deferred<List<Int>>?
 
     init {
         note = asyncIO {
@@ -72,16 +72,19 @@ class TemplatePreviewerViewModel(
             }
         }
         if (isCloze) {
-            clozeNumbers = asyncIO {
+            val clozeNumbers = asyncIO {
                 val note = note.await()
                 withCol { clozeNumbersInNote(note) }
+            }
+            clozeOrds = asyncIO {
+                clozeNumbers.await().map { it - 1 }
             }
             templateNames = asyncIO {
                 val tr = CollectionManager.TR
                 clozeNumbers.await().map { tr.cardTemplatesCard(it) }
             }
         } else {
-            clozeNumbers = null
+            clozeOrds = null
             templateNames = CompletableDeferred(notetype.templatesNames)
         }
     }
@@ -134,7 +137,7 @@ class TemplatePreviewerViewModel(
     fun onTabSelected(position: Int) {
         launchCatchingIO {
             val ord = if (isCloze) {
-                clozeNumbers!!.await()[position] - 1
+                clozeOrds!!.await()[position]
             } else {
                 position
             }
@@ -145,7 +148,7 @@ class TemplatePreviewerViewModel(
     @CheckResult
     suspend fun getCurrentTabIndex(): Int {
         return if (isCloze) {
-            clozeNumbers!!.await().indexOf(ordFlow.value + 1)
+            clozeOrds!!.await().indexOf(ordFlow.value)
         } else {
             ordFlow.value
         }
