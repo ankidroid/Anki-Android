@@ -99,7 +99,7 @@ import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
-import com.ichi2.anki.pages.CongratsPage.Companion.onDeckCompleted
+
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -1118,7 +1118,7 @@ open class DeckPicker :
 
     private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-            CongratsPage.onReviewsCompleted(this, getColUnsafe.sched.totalCount() == 0)
+            startActivity(CongratsPage.getIntent(this))
         } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
             Timber.i("Obtained Abort and Sync result")
             sync()
@@ -1888,16 +1888,16 @@ open class DeckPicker :
             return
         }
 
-        when (val completedDeckStatus = queryCompletedDeckCustomStudyAction(did)) {
+        when (queryCompletedDeckCustomStudyAction(did)) {
             CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED,
             CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY,
             CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED,
             CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED -> {
-                onDeckCompleted(did, completedDeckStatus, ::updateUi)
+                startActivity(CongratsPage.getIntent(this))
             }
             CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
+                startActivity(CongratsPage.getIntent(this))
                 // If the deck is empty (& has no children) then show a message saying it's empty
-                showEmptyDeckSnackbar()
                 updateUi()
             }
         }
