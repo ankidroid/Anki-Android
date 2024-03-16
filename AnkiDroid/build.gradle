@@ -1,8 +1,8 @@
 plugins {
     // Gradle plugin portal
-    alias(libs.plugins.com.github.triplet.play)
+    alias(libs.plugins.tripletPlay)
     alias(libs.plugins.android.application)
-    alias(libs.plugins.app.brant.amazonappstorepublisher)
+    alias(libs.plugins.amazonappstorepublisher)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
@@ -298,10 +298,11 @@ dependencies {
         }
     }
     api project(":api")
+    implementation libs.androidx.work.runtime
     lintChecks project(":lint-rules")
     coreLibraryDesugaring libs.desugar.jdk.libs.nio
 
-    compileOnly libs.annotations
+    compileOnly libs.jetbrains.annotations
     compileOnly libs.auto.service.annotations
     annotationProcessor libs.auto.service
 
@@ -320,13 +321,13 @@ dependencies {
     implementation libs.androidx.viewpager2
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.webkit
-    implementation libs.material
+    implementation libs.google.material
     implementation libs.android.image.cropper
     implementation libs.nanohttpd
     implementation libs.kotlinx.serialization.json
     implementation libs.seismic
 
-    debugImplementation(libs.androidx.fragment.testing.manifest)
+    debugImplementation libs.androidx.fragment.testing.manifest
 
     // Backend libraries
 
@@ -340,30 +341,33 @@ dependencies {
         implementation files("../../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")
         testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")
     } else {
-        implementation libs.io.github.david.allison.one.anki.android.backend
-        implementation libs.io.github.david.allison.one.anki.android.backend.testing
+        implementation libs.ankiBackend.backend
+        implementation libs.ankiBackend.testing
     }
 
     // May need a resolution strategy for support libs to our versions
-    implementation libs.bundles.acra
+    implementation libs.acra.limiter
+    implementation libs.acra.toast
+    implementation libs.acra.dialog
+    implementation libs.acra.http
 
-    implementation libs.core
-    implementation libs.input
+    implementation libs.materialDialogs.core
+    implementation libs.materialDialogs.input
     implementation libs.commons.compress
     implementation libs.commons.collections4 // SetUniqueList
     implementation libs.commons.io // FileUtils.contentEquals
-    implementation libs.google.analytics.java7
+    implementation libs.mikehardy.google.analytics.java7
     implementation libs.okhttp
     implementation libs.slf4j.timber
-    implementation libs.timber
+    implementation libs.jakewharton.timber
     implementation libs.jsoup
     implementation libs.java.semver // For AnkiDroid JS API Versioning
-    implementation libs.drawer
-    implementation libs.material.tap.target.prompt
+    implementation libs.drakeet.drawer
+    implementation libs.tapTargetPrompt
     implementation libs.colorpicker
     implementation libs.kotlin.reflect
     implementation libs.kotlin.test
-    implementation libs.searchPreference
+    implementation libs.search.preference
 
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release
@@ -379,23 +383,22 @@ dependencies {
     testImplementation libs.mockito.inline
     testImplementation libs.mockito.kotlin
     testImplementation libs.hamcrest
-    testImplementation libs.timber.junit.rule
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
     testImplementation libs.robolectric
     testImplementation libs.androidx.test.core
-    testImplementation libs.androidx.junit
+    testImplementation libs.androidx.test.junit
     testImplementation libs.kotlin.reflect
     testImplementation libs.kotlin.test
     testImplementation libs.kotlin.test.junit5
-    testImplementation libs.kotlin.coroutines.test
+    testImplementation libs.kotlinx.coroutines.test
     testImplementation libs.mockk
     testImplementation libs.commons.exec // obtaining the OS
-    testImplementation(libs.androidx.fragment.testing)
+    testImplementation libs.androidx.fragment.testing
     // in a JvmTest we need org.json.JSONObject to not be mocked
     testImplementation libs.json
-    testImplementation libs.shared.preferences.mock
-    testImplementation libs.androidx.runner
-    testImplementation libs.androidx.rules
+    testImplementation libs.ivanshafran.shared.preferences.mock
+    testImplementation libs.androidx.test.runner
+    testImplementation libs.androidx.test.rules
     testImplementation libs.androidx.espresso.core
     testImplementation(libs.androidx.espresso.contrib) {
         exclude module: "protobuf-lite"
@@ -404,15 +407,15 @@ dependencies {
     androidTestImplementation project(':testlib')
 
     // May need a resolution strategy for support libs to our versions
-    androidTestImplementation libs.espresso.core
-    androidTestImplementation(libs.espresso.contrib) {
+    androidTestImplementation libs.androidx.espresso.core
+    androidTestImplementation(libs.androidx.espresso.contrib) {
         exclude module: "protobuf-lite"
     }
     androidTestImplementation libs.androidx.test.core
-    androidTestImplementation libs.androidx.junit
-    androidTestImplementation libs.test.rules
+    androidTestImplementation libs.androidx.test.junit
+    androidTestImplementation libs.androidx.test.rules
     androidTestImplementation libs.androidx.uiautomator
     androidTestImplementation libs.kotlin.test
     androidTestImplementation libs.kotlin.test.junit
-    androidTestImplementation(libs.androidx.fragment.fragment.testing)
+    androidTestImplementation libs.androidx.fragment.testing
 }
