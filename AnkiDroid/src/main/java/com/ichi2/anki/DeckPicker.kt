@@ -1118,7 +1118,7 @@ open class DeckPicker :
 
     private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-            startActivity(CongratsPage.getIntent(this))
+            CongratsPage.onReviewsCompleted(this, getColUnsafe.sched.totalCount() == 0)
         } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
             Timber.i("Obtained Abort and Sync result")
             sync()
@@ -1888,16 +1888,16 @@ open class DeckPicker :
             return
         }
 
-        when (queryCompletedDeckCustomStudyAction(did)) {
+        when (val completedDeckStatus = queryCompletedDeckCustomStudyAction(did)) {
             CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED,
             CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY,
             CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED,
             CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED -> {
-                startActivity(CongratsPage.getIntent(this))
+                onDeckCompleted(did, completedDeckStatus, ::updateUi)
             }
             CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
-                startActivity(CongratsPage.getIntent(this))
                 // If the deck is empty (& has no children) then show a message saying it's empty
+                showEmptyDeckSnackbar()
                 updateUi()
             }
         }
