@@ -237,24 +237,62 @@ class CongratsPage :
 
             when (completedDeckStatus) {
                 CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED -> {
+                    fun display(activity: Activity) {
+                        if (displayNewCongratsScreen(activity)) {
+                            activity.startActivity(getIntent(activity))
+                        } else {
+                            UIUtils.showThemedToast(activity, R.string.studyoptions_congrats_limit_set, false)
+                        }
+                    }
+
                     // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
                     openStudyOptions(withDeckOptions = false)
                 }
                 CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED -> {
+                    fun display(activity: Activity) {
+                        if (displayNewCongratsScreen(activity)) {
+                            activity.startActivity(getIntent(activity))
+                        } else {
+                            UIUtils.showThemedToast(activity, R.string.studyoptions_congrats_limit_set, false)
+                        }
+                    }
+
                     // If there are no cards to review because of the daily study limit then give "Study more" option
                     showStudyMoreSnackbar(did)
                     updateUi()
                 }
                 CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED -> {
+                    fun display(activity: Activity) {
+                        if (displayNewCongratsScreen(activity)) {
+                            activity.startActivity(getIntent(activity))
+                        } else {
+                            UIUtils.showThemedToast(activity, R.string.studyoptions_no_scheduled, false)
+                        }
+                    }
+
                     // Go to the study options screen if filtered deck with no cards to study
                     openStudyOptions(withDeckOptions = false)
                 }
                 CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY -> {
+                    fun display(activity: Activity) {
+                        if (displayNewCongratsScreen(activity)) {
+                            activity.startActivity(getIntent(activity))
+                        } else {
+                            UIUtils.showThemedToast(activity, R.string.studyoptions_empty_schedule, false)
+                        }
+                    }
+
                     // Otherwise say there are no cards scheduled to study, and give option to do custom study
                     showCustomStudySnackbar(did)
                     updateUi()
                 }
-                CompletedDeckStatus.EMPTY_REGULAR_DECK -> { }
+                CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
+                    fun display(activity: Activity) {
+                        UIUtils.showThemedToast(activity, R.string.empty_deck, false)
+                    }
+                    openStudyOptions(withDeckOptions = false)
+                    updateUi()
+                }
             }
         }
     }
