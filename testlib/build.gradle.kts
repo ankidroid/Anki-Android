@@ -44,8 +44,8 @@ android {
 
 dependencies {
     implementation(project(":AnkiDroid"))
-    compileOnly(libs.kotlin.coroutines.core)
-    compileOnly(libs.org.hamcrest.hamcrest)
+    compileOnly(libs.kotlinx.coroutines.core)
+    compileOnly(libs.hamcrest)
     compileOnly(libs.junit.jupiter)
     compileOnly(libs.junit.jupiter.params)
     compileOnly(libs.junit.vintage.engine)
