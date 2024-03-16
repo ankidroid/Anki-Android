@@ -209,4 +209,8 @@
         <item name="buttonTint">@color/material_blue_500</item>
     </style>
 
+    <style name="CardView.PreviewerStyle" parent="Widget.Material3.CardView.Elevated">
+        <item name="android:elevation">0.8dp</item>
+    </style>
+
 </resources>

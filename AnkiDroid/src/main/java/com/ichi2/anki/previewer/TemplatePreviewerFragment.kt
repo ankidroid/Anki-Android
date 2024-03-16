@@ -20,17 +20,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
+import androidx.appcompat.widget.ThemeUtils
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.utils.navBarNeedsScrim
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -90,6 +94,18 @@ class TemplatePreviewerFragment :
                     // do nothing
                 }
             })
+        }
+
+        if (sharedPrefs().getBoolean("safeDisplay", false)) {
+            view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
+        }
+
+        with(requireActivity()) {
+            // use the screen background color if the nav bar doesn't need a scrim when using a
+            // transparent background. e.g. when navigation gestures are enabled
+            if (!navBarNeedsScrim) {
+                window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
+            }
         }
     }
 

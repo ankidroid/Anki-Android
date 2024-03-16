@@ -5,11 +5,14 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="?attr/alternativeBackgroundColor"
     tools:context=".previewer.TemplatePreviewerFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -23,7 +26,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationContentDescription="@string/abc_action_bar_up_description"
-                app:navigationIcon="?attr/homeAsUpIndicator">
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                android:background="?attr/alternativeBackgroundColor">
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
@@ -37,14 +41,23 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <WebView
-            android:id="@+id/webview"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/webview_container"
             android:layout_width="match_parent"
+            android:layout_marginHorizontal="8dp"
             android:layout_height="0dp"
-            android:background="@color/transparent"
             app:layout_constraintTop_toBottomOf="@id/appbar"
             app:layout_constraintBottom_toTopOf="@id/show_answer"
-            />
+            style="@style/CardView.PreviewerStyle"
+            >
+
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/show_answer"
@@ -54,7 +67,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/webview"
+            app:layout_constraintTop_toBottomOf="@id/webview_container"
             android:text="@string/show_answer"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
