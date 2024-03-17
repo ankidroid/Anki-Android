@@ -59,7 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Expandir</string>
     <string name="collapse">Fechar</string>
-    <string name="study_more">Study more</string>
+    <string name="study_more">Estudar mais</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuto restante</item>
         <item quantity="other">%d minutos restantes</item>
@@ -139,9 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralho</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralho</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
+    <string name="studyoptions_empty_schedule">Sem cartas programadas para estudar</string>
+    <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
     <string name="studyoptions_no_cards_due">Sem cartões programados por enquanto.</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
@@ -242,7 +242,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Retomar migração</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Coleção inacessível</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Não podemos acessar sua coleção após a desinstalação do AnkiDroid devido a uma mudança na Política da Play Store.\n\nSeus dados estão seguros e podem ser restaurados. Eles estão localizados em\n%s\n\nSelecione uma opção abaixo para restaurar:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">O Android removeu a permissão %1$s do AnkiDroid devido a inatividade do app.\n\nSeus dados são seguros e podem ser restaurados. Está localizado em\n%2$s\n\nSelecione uma opção abaixo para restaurar:</string>
     <string name="restore_data_from_ankiweb">Restaurar do AnkiWeb (recomendado)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restaurar acesso à pasta (recomendado)</string>
     <string name="install_non_play_store_ankidroid">Restaurar acesso à pasta (avançado)</string>

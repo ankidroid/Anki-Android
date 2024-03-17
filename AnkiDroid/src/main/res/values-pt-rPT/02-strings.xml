@@ -74,7 +74,7 @@
     <string name="leech_notification">Ficha marcada como sanguessuga</string>
     <string name="webview_crash_unknown">Unknown error</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom">Sem memória</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
@@ -94,11 +94,11 @@
         <item>Etiquetas</item>
         <item>Falhas</item>
         <item>Revisões</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
+        <item>Intervalo</item>
+        <item>Facilidade</item>
+        <item>Data limite</item>
+        <item>Ficha modificada</item>
+        <item>Criada</item>
         <item>Note Modified</item>
     </string-array>
     <string name="filter_by_flags">Flags</string>
@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Limitar a etiquetas específicas</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Editar nota</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Descartar</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
     <string name="note_editor_no_first_field">The first field is empty</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
@@ -141,7 +141,7 @@
     <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Reposition</string>
     <string name="card_editor_reset_card">Reiniciar progresso</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reagendar</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pré-visualizar</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
@@ -326,7 +326,7 @@
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">Baralho apagado. Por favor, apague o atalho</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
