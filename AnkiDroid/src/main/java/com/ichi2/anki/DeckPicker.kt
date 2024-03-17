@@ -1633,8 +1633,12 @@ open class DeckPicker :
      */
     override fun mediaCheck() {
         launchCatchingTask {
-            val mediaCheckResult = checkMedia() ?: return@launchCatchingTask
-            showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
+            this@DeckPicker.withProgress(R.string.check_media_message) {
+                val mediaCheckResult = checkMedia()
+                if (mediaCheckResult != null) {
+                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
+                }
+            }
         }
     }
 
