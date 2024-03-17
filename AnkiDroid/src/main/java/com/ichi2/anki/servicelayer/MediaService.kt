@@ -26,21 +26,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 suspend fun AnkiActivity.checkMedia(): MediaCheckResult? {
-    return try {
-        withContext(Dispatchers.IO) {
-            if (ScopedStorageService.mediaMigrationIsInProgress(this@checkMedia)) {
-                withContext(Dispatchers.Main) {
-                    showSnackbar(
-                        R.string.functionality_disabled_during_storage_migration,
-                        Snackbar.LENGTH_SHORT
-                    )
-                }
-                null
-            } else {
-                CollectionManager.withCol { media.check() }
+    return withContext(Dispatchers.IO) {
+        if (ScopedStorageService.mediaMigrationIsInProgress(this@checkMedia)) {
+            withContext(Dispatchers.Main) {
+                showSnackbar(
+                    R.string.functionality_disabled_during_storage_migration,
+                    Snackbar.LENGTH_SHORT
+                )
             }
+            null
+        } else {
+            CollectionManager.withCol { media.check() }
         }
-    } finally {
-        this@checkMedia.hideProgressBar()
     }
 }
