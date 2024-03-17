@@ -59,7 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">প্রসারণ করুন</string>
     <string name="collapse">সঙ্কোচন</string>
-    <string name="study_more">Study more</string>
+    <string name="study_more">আরও পড়ুন</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d মিনিট বাকি</item>
         <item quantity="other"></item>
@@ -139,7 +139,7 @@
     <string name="search_deck" comment="Deck search for selecting it">ডেক অনুসন্ধান</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ডেক অনুসন্ধান</string>
     <string name="invalid_deck_name">ডেক নাম বৈধ নয়</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_limit_reached">প্রতিদিনের পড়াশোনা সীমায় পৌঁছে গিয়েছে</string>
     <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">কোন কার্ড এখনও কার্যকরী হবে</string>
