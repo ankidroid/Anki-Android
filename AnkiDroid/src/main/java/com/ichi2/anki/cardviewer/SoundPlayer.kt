@@ -124,8 +124,19 @@ class SoundPlayer : Closeable {
 
     private var onSoundGroupCompleted: (() -> Unit)? = null
 
+    private var currentTagFileName = ""
+
     fun setOnSoundGroupCompletedListener(listener: (() -> Unit)?) {
         onSoundGroupCompleted = listener
+    }
+
+    private fun isSameTag(tag: AvTag) : Boolean {
+        if ((tag as SoundOrVideoTag).filename == currentTagFileName) {
+            Timber.i("Toggling sound")
+            soundTagPlayer.toggleSounds()
+            return true
+        }
+        return false
     }
 
     suspend fun loadCardSounds(card: Card) {
@@ -151,6 +162,8 @@ class SoundPlayer : Closeable {
 
     suspend fun playOneSound(tag: AvTag): Job? {
         if (!isEnabled) return null
+        if (isSameTag(tag))
+            return playSoundsJob
         cancelPlaySoundsJob()
         Timber.i("playing one sound")
 
@@ -246,7 +259,10 @@ class SoundPlayer : Closeable {
         suspend fun play() {
             ensureActive()
             when (tag) {
-                is SoundOrVideoTag -> soundTagPlayer.play(tag, soundErrorListener)
+                is SoundOrVideoTag -> {
+                    currentTagFileName = tag.filename
+                    soundTagPlayer.play(tag, soundErrorListener)
+                }
                 is TTSTag -> {
                     awaitTtsPlayer(isAutomaticPlayback)?.play(tag)?.error?.let {
                         soundErrorListener.onTtsError(it, isAutomaticPlayback)
@@ -254,6 +270,8 @@ class SoundPlayer : Closeable {
                 }
                 else -> Timber.w("unknown audio: ${tag.javaClass}")
             }
+            if (tag !is SoundOrVideoTag)
+                currentTagFileName = ""
             ensureActive()
         }
 

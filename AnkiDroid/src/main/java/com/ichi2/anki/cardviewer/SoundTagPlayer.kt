@@ -119,6 +119,27 @@ class SoundTagPlayer(private val soundUriBase: String) {
         abandonAudioFocus()
     }
 
+    /**
+     * Pauses the sound if playing
+     * Resumes the sound if paused
+     */
+    fun toggleSounds() {
+        try {
+            mediaPlayer?.let { player ->
+                if (player.isPlaying) {
+                    mediaPlayer!!.pause()
+                    abandonAudioFocus()
+                }
+                else {
+                    mediaPlayer!!.start()
+                    requestAudioFocus()
+                }
+            }
+        } catch (e: Exception) {
+            Timber.w(e, "toggleSounds()")
+        }
+    }
+
     fun stopSounds() {
         try {
             mediaPlayer?.stop()
