@@ -21,7 +21,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.webkit.JavascriptInterface
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -213,14 +212,6 @@ class CongratsPage :
                 return
             }
 
-            fun showToastForCongrats(messageResId: Int) {
-                Toast.makeText(
-                    this,
-                    messageResId,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
             fun showStudyMoreSnackbar(did: DeckId) =
                 showSnackbar(R.string.studyoptions_limit_reached) {
                     setAction(R.string.study_more) {
@@ -246,7 +237,7 @@ class CongratsPage :
 
             when (completedDeckStatus) {
                 CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED -> {
-                    showToastForCongrats(R.string.studyoptions_congrats_limit_set)
+                    UIUtils.showThemedToast(this, R.string.studyoptions_congrats_limit_set, false)
 
                     // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
                     openStudyOptions(withDeckOptions = false)
