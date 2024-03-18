@@ -20,6 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
@@ -35,11 +36,18 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
 
     @Test
     fun preference_sets_action() {
-        setPreference(1)
+        setActionType(1)
         assertThat(createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.ANSWER_AGAIN))
         // reset the value
         resetPrefs()
         assertThat("default", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
+    }
+
+    @Ignore("15928")
+    @Test
+    fun `milliseconds are handled`() {
+        setShowQuestionDuration(1.5)
+        assertThat(createInstance().settings.millisecondsToShowQuestionFor, equalTo(1500))
     }
 
     private fun resetPrefs() {
@@ -48,9 +56,17 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
         col.decks.save(conf)
     }
 
-    private fun setPreference(value: Int) {
+    @Suppress("SameParameterValue")
+    private fun setActionType(value: Int) {
         val conf = col.decks.configDictForDeckId(col.decks.selected())
         conf.put(AutomaticAnswerAction.CONFIG_KEY, value)
+        col.decks.save(conf)
+    }
+
+    @Suppress("SameParameterValue")
+    private fun setShowQuestionDuration(value: Double) {
+        val conf = col.decks.configDictForDeckId(col.decks.selected())
+        conf.put("secondsToShowQuestion", value)
         col.decks.save(conf)
     }
 
