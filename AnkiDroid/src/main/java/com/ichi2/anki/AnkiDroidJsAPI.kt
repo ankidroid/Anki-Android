@@ -76,15 +76,15 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private val speechRecognizer = JavaScriptSTT(context)
 
     open fun convertToByteArray(apiContract: ApiContract, boolean: Boolean): ByteArray {
-        return ApiResult(apiContract.isValid, boolean.toString()).toString().toByteArray()
+        return ApiResult(apiContract.isValid, boolean).toString().toByteArray()
     }
 
     open fun convertToByteArray(apiContract: ApiContract, int: Int): ByteArray {
-        return ApiResult(apiContract.isValid, int.toString()).toString().toByteArray()
+        return ApiResult(apiContract.isValid, int).toString().toByteArray()
     }
 
     open fun convertToByteArray(apiContract: ApiContract, long: Long): ByteArray {
-        return ApiResult(apiContract.isValid, long.toString()).toString().toByteArray()
+        return ApiResult(apiContract.isValid, long).toString().toByteArray()
     }
 
     open fun convertToByteArray(apiContract: ApiContract, string: String): ByteArray {
@@ -425,11 +425,24 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         var nextTime4 = ""
     }
 
-    class ApiResult(private val status: Boolean, private val value: String) {
+    class ApiResult(private val status: Boolean, private val value: Any) {
         override fun toString(): String {
             return JSONObject().apply {
                 put("success", status)
-                put("value", value)
+                when (value) {
+                    is Boolean -> {
+                        put("value", value)
+                    }
+                    is Int -> {
+                        put("value", value)
+                    }
+                    is Long -> {
+                        put("value", value)
+                    }
+                    else -> {
+                        put("value", value.toString())
+                    }
+                }
             }.toString()
         }
     }

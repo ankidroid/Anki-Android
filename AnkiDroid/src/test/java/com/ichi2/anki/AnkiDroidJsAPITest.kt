@@ -420,7 +420,23 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         }
 
         fun formatApiResult(res: Any): String {
-            return "{\"success\":true,\"value\":\"$res\"}"
+            return JSONObject().apply {
+                put("success", true)
+                when (res) {
+                    is Boolean -> {
+                        put("value", res)
+                    }
+                    is Int -> {
+                        put("value", res)
+                    }
+                    is Long -> {
+                        put("value", res)
+                    }
+                    else -> {
+                        put("value", res.toString())
+                    }
+                }
+            }.toString()
         }
 
         suspend fun getDataFromRequest(
