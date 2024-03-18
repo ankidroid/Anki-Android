@@ -1683,6 +1683,11 @@ abstract class AbstractFlashcardViewer :
                 true
             }
 
+            ViewerCommand.TOGGLE_AUTO_ADVANCE -> {
+                toggleAutoAdvance()
+                true
+            }
+
             ViewerCommand.CLEAR_WHITEBOARD -> {
                 clearWhiteboard()
                 true
@@ -1727,6 +1732,10 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun toggleWhiteboard() {
+        // intentionally blank
+    }
+
+    protected open fun toggleAutoAdvance() {
         // intentionally blank
     }
 

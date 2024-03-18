@@ -19,6 +19,7 @@ package com.ichi2.anki.reviewer
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import anki.config.preferences
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
@@ -139,6 +140,16 @@ class AutomaticAnswer(
         isDisabled = false
     }
 
+    fun toggle() {
+        if (isEnabled()) {
+            isDisabled = true
+            settings.useTimer = false
+        } else {
+            isDisabled = false
+            settings.useTimer = true
+        }
+    }
+
     fun disable() {
         isDisabled = true
         stopShowAnswerTask()
@@ -251,7 +262,7 @@ class AutomaticAnswer(
  */
 class AutomaticAnswerSettings(
     val answerAction: AutomaticAnswerAction = AutomaticAnswerAction.BURY_CARD,
-    @get:JvmName("useTimer") val useTimer: Boolean = false,
+    @get:JvmName("useTimer") var useTimer: Boolean = false,
     private val secondsToShowQuestionFor: Int = 60,
     private val secondsToShowAnswerFor: Int = 20
 ) {
