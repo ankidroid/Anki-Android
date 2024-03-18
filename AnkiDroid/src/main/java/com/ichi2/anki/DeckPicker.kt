@@ -99,7 +99,6 @@ import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
-
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -1118,7 +1117,7 @@ open class DeckPicker :
 
     private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-            startActivity(CongratsPage.getIntent(this))
+            CongratsPage.onReviewsCompleted(this, getColUnsafe.sched.totalCount() == 0)
         } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
             Timber.i("Obtained Abort and Sync result")
             sync()
