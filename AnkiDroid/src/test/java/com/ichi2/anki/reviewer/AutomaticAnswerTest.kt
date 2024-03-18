@@ -54,8 +54,8 @@ class AutomaticAnswerTest : JvmTest() {
             target = automaticallyAnsweredMock(),
             settings = AutomaticAnswerSettings(
                 useTimer = true,
-                secondsToShowQuestionFor = 0,
-                secondsToShowAnswerFor = 0
+                secondsToShowQuestionFor = 0.0,
+                secondsToShowAnswerFor = 0.0
             )
         )
 
@@ -137,8 +137,8 @@ class AutomaticAnswerTest : JvmTest() {
             target = automaticAnswerHandler,
             settings = AutomaticAnswerSettings(
                 useTimer = true,
-                secondsToShowQuestionFor = 10,
-                secondsToShowAnswerFor = 10
+                secondsToShowQuestionFor = 10.0,
+                secondsToShowAnswerFor = 10.0
             )
         ).apply {
             automaticAnswerHandle = this

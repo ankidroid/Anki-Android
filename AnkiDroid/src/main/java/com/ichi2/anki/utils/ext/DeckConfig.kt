@@ -19,10 +19,10 @@ package com.ichi2.anki.utils.ext
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.utils.set
 
-var DeckConfig.secondsToShowQuestion: Int
-    get() = optInt("secondsToShowQuestion", 0)
+var DeckConfig.secondsToShowQuestion: Double
+    get() = optDouble("secondsToShowQuestion", 0.0)
     set(value) { set("secondsToShowQuestion", value) }
 
-var DeckConfig.secondsToShowAnswer: Int
-    get() = optInt("secondsToShowAnswer", 0)
+var DeckConfig.secondsToShowAnswer: Double
+    get() = optDouble("secondsToShowAnswer", 0.0)
     set(value) { set("secondsToShowAnswer", value) }
