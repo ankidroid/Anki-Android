@@ -130,7 +130,7 @@ class SoundPlayer : Closeable {
         onSoundGroupCompleted = listener
     }
 
-    private fun isSameTag(tag: AvTag) : Boolean {
+    private fun isSameTag(tag: AvTag): Boolean {
         if ((tag as SoundOrVideoTag).filename == currentTagFileName) {
             Timber.i("Toggling sound")
             soundTagPlayer.toggleSounds()
@@ -162,8 +162,9 @@ class SoundPlayer : Closeable {
 
     suspend fun playOneSound(tag: AvTag): Job? {
         if (!isEnabled) return null
-        if (isSameTag(tag))
+        if (isSameTag(tag)) {
             return playSoundsJob
+        }
         cancelPlaySoundsJob()
         Timber.i("playing one sound")
 
@@ -270,8 +271,9 @@ class SoundPlayer : Closeable {
                 }
                 else -> Timber.w("unknown audio: ${tag.javaClass}")
             }
-            if (tag !is SoundOrVideoTag)
+            if (tag !is SoundOrVideoTag) {
                 currentTagFileName = ""
+            }
             ensureActive()
         }
 

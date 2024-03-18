@@ -129,8 +129,7 @@ class SoundTagPlayer(private val soundUriBase: String) {
                 if (player.isPlaying) {
                     mediaPlayer!!.pause()
                     abandonAudioFocus()
-                }
-                else {
+                } else {
                     mediaPlayer!!.start()
                     requestAudioFocus()
                 }
