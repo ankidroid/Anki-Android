@@ -20,7 +20,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
@@ -43,7 +42,6 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
         assertThat("default", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))
     }
 
-    @Ignore("15928")
     @Test
     fun `milliseconds are handled`() {
         setShowQuestionDuration(1.5)
