@@ -92,5 +92,10 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
         if (element.textContent.lowercase().contains("javascript") && !element.textContent.contains("JavaScript")) {
             context.report(ISSUE, context.getElementLocation(element), "should be 'JavaScript'")
         }
+
+        // remove empty strings
+        if (element.textContent.isEmpty() && element.getAttribute("name") != "empty_string") {
+            context.report(ISSUE, context.getElementLocation(element), "should not be empty")
+        }
     }
 }
