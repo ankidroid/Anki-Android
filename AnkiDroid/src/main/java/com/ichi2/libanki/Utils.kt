@@ -63,7 +63,8 @@ object Utils {
         var s = commentPattern.matcher(inputParam).replaceAll("")
         s = stripHTMLScriptAndStyleTags(s)
         s = tagPattern.matcher(s).replaceAll("")
-        return entsToTxt(s)
+        val cleanEmptyLines = cleanEmptyLines(s)
+        return entsToTxt(cleanEmptyLines)
     }
 
     /**
@@ -111,6 +112,9 @@ object Utils {
         return sb.toString()
     }
 
+    private fun cleanEmptyLines(input: String): String {
+        return input.replace(Regex("[\r\n]+"), "\n").trim() // Replace multiple line breaks with a single one and trim whitespace
+    }
     /*
      * IDs
      * ***********************************************************************************************
