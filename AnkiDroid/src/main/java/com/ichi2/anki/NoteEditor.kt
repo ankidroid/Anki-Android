@@ -865,7 +865,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // changed tags?
     }
 
-    fun collectionHasLoaded(): Boolean {
+    private fun collectionHasLoaded(): Boolean {
         return allModelIds != null
     }
 
