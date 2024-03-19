@@ -47,6 +47,29 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
             Constants.ANKI_XML_SEVERITY,
             implementation
         )
+
+        // copied from tools/localization/src/constants.ts
+        // excludes ankidroid-titles and marketdescription as these are .txt
+        private val I18N_FILES = listOf(
+            "01-core",
+            "02-strings",
+            "03-dialogs",
+            "04-network",
+            "05-feedback",
+            "06-statistics",
+            "07-cardbrowser",
+            "08-widget",
+            "09-backup",
+            "10-preferences",
+            "11-arrays",
+            "16-multimedia-editor",
+            "17-model-manager",
+            "18-standard-models",
+            "20-search-preference"
+        ).map { "$it.xml" }
+
+        // CrowdIn strings+ additional string XML which are not translated
+        val STRING_XML_FILES = I18N_FILES + listOf("constants.xml", "sentence-case.xml")
     }
 
     override fun getApplicableElements(): Collection<String>? = ALL
@@ -55,13 +78,17 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
         folderType == ResourceFolderType.XML || folderType == ResourceFolderType.VALUES
 
     override fun visitElement(context: XmlContext, element: Element) {
-        if ("preferences.xml" == context.file.name) {
+        // ignore files not containing strings
+        if (!STRING_XML_FILES.contains(context.file.name)) {
             return
         }
+
+        // Only check <string> or <plurals><item>, not the container
         if ("resources" == element.tagName) {
             return
         }
 
+        // casing of 'JavaScript'
         if (element.textContent.lowercase().contains("javascript") && !element.textContent.contains("JavaScript")) {
             context.report(ISSUE, context.getElementLocation(element), "should be 'JavaScript'")
         }
