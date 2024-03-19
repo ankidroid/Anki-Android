@@ -147,6 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Tiếp tục đồng bộ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Đã huỷ đồng bộ</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Đang huỷ&#8230;\nCó thể hơi lâu.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Xuất bộ thẻ</string>
     <string name="nothing">Không có gì</string>
     <!-- Card template editor -->

@@ -156,6 +156,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Продовжити синхронізацію</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронізацію скасовано</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Скасування&#8230;\nЦе триватиме деякий час.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Експортувати колоду</string>
     <string name="nothing">Нічого</string>
     <!-- Card template editor -->
