@@ -59,10 +59,10 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ᱣᱤᱥᱛᱟᱨ ᱢᱮ</string>
     <string name="collapse">ᱦᱚᱯᱚᱱ ᱢᱮ</string>
-    <string name="study_more">Study more</string>
+    <string name="study_more">ᱟᱨᱦᱚᱸ ᱯᱟᱰᱦᱣ ᱢᱮ</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">%d ᱴᱤᱡ ᱥᱟᱨᱮᱡ ᱠᱟᱱᱟ</item>
+        <item quantity="other">%d ᱴᱤᱡ ᱥᱟᱨᱮᱡ ᱠᱟᱱᱟ</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>
