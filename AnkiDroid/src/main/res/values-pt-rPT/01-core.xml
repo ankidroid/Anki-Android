@@ -66,7 +66,7 @@
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hora %2$d restante</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d horas %2$d restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d dia %2$d restante</item>
@@ -213,46 +213,46 @@
         Por favor assegure-se que os seus dados estão seguros, sincronizando-os frequentemente ou exportandos cópias de segurança.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Falha na Migração</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        A cópia dos ficheiros da base de dados falhou com o erro: %1$s.
         <br><br>
-        The changes were reverted.
+        As alterações foram revertidas.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Por favor, tente executar a migração de novo.
+        Para resolver o seu problema, pode precisar de libertar espaço no disco,
+        ou reconectar o espaço de armazenamento amovível onde está guardada a sua colecção.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Descubra mais e obtenha ajuda</a>
     ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        A transferência de ficheiros de multimédia está parada por ter sido obtido o erro: %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        As alterações <i>não</i> foram revertidas.
+        Apesar de, provavelmente, não ter perdido dados,
+        os ficheiros de multimédia podem estar divididos entre a antiga pasta e a nova.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Por favor, tente executar a migração de novo.
+        Para resolver o seu problema, pode precisar de libertar espaço no disco,
+        ou reconectar o espaço de armazenamento amovível onde está guardada a sua colecção.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Descubra mais e obtenha ajuda</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        A migração de espaço de armazenamento está parada por ter sido obtido o erro: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Descubra mais e obtenha ajuda</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Retomar a migração</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Colecção inacessível</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">É-nos impossível aceder à sua colecção depois de desinstalar o AnkiDroid, devido a alterações nas políticas da Play Store.\n\nOs seus dados estão seguros e podem ser restaurados. Estes estão localizados no\n%s\n\nSelecione uma das opções abaixo, para os restaurar:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">O Android removeu a permissão %1$s do AnkiDroid devido à inatividade da aplicação.\n\nOs seus dados estão seguros e podem ser restaurados. Estes estão localizados no\n%2$s\n\nSelecione uma das opções abaixo, para os restaurar:</string>
     <string name="restore_data_from_ankiweb">Restaurar do AnkiWeb (recomendado)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restaurar o acesso à pasta (recomendado)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="install_non_play_store_ankidroid">Restaurar o acesso à pasta (avançado)</string>
+    <string name="restore_data_from_backup">Restaurar a partir da cópia de segurança .colpkg (avançado)</string>
+    <string name="create_new_collection">Criar uma nova colecção</string>
+    <string name="new_unsafe_collection">A nova colecção será eliminada do seu telefone se desinstalar o AnkiDroid.</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="permissions_screen_headline">O AnkiDroid precisa de algumas permissões para funcionar</string>
+    <string name="storage_access_title">Acesso ao armazenamento</string>
+    <string name="storage_access_summary">Guarda a sua colecção num lugar seguro, que não é eliminado se a aplicação for desinstalada</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acesso a todos os ficheiros</string>
+    <string name="image_occlusion">Oclusão de imagem</string>
 </resources>

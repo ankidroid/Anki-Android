@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">კონკრეტულ იარლიყებზე შეზღუდვა</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">შენიშვნის რედაქტირება</string>
-    <string name="discard">Discard</string>
+    <string name="discard">წაშლა</string>
     <string name="note_editor_no_cards_created">ბარათები არ შეიქმნა. გთხოვთ მეტი ველი შეავსოთ</string>
     <string name="note_editor_no_first_field">პირველი ველი ცარიელია</string>
     <string name="note_editor_no_cloze_delations">შენიშვნის ეს ტიპი უნდა შეიცავდეს გამოტოვებულ ადგილებს</string>
@@ -125,7 +125,7 @@
     <string name="select">არჩევა</string>
     <string name="field_remapping">%1$s (\"%2$s\"-დან)</string>
     <string name="confirm_map_cards_to_nothing">ყველა ბარათი რომელიც არაფერთანაა დაკავშირებული წაიშლება. თუ შენიშვნას არ აქვს შერჩენილი ბარათები ის დაიკარგება. დარწმუნებული ხართ, რომ გსურთ გაგრძელება?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">შენიშვნის ტიპი ვერ მოიძებნა</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">დროის ლიმიტი ამოიწურა</string>
     <plurals name="timebox_reached">
@@ -143,7 +143,7 @@
     <string name="card_editor_reset_card">პროგრესის წაშლა</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">გადადება</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">წინასწარ ნახვა</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Markdown-ად კოპირება</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ბარათი %2$d-დან</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">გადარქმევა</string>
     <string name="checks_action">შემოწმება</string>
@@ -210,7 +210,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">ფონი</string>
     <string name="choose_an_image">სურათის არჩევა</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">გსურთ ფონის წაშლა?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ნაგულისხმევის აღდგენა</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ცარიელი</string>
@@ -219,7 +219,7 @@
     <string name="white_board_image_saved">დაფის სურათი შეინახა %s-ში</string>
     <string name="title_whiteboard_pen_color">დაფის მარკერის ფერი</string>
     <string name="title_whiteboard_editor">დაფის რედაქტორი</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">აღიქვა ავტომატიზებული ტესტი. თუკი ადამიანი ხართ, გთხოვთ, მიმართოთ AnkiDroid-ის მხარდაჭერის გუნდს</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">ეს ბარათი შეიცავს AnkiDroid-ის ფუნქციებს, რომლებიც არაა მხარდაჭერილი. დაუკავშირდით დეველოპერს %1$s ან იხილეთ ვიკი. %2$s</string>
     <string name="invalid_json_data">ბარათში არასწორი მონაცემებია. %s</string>
@@ -255,7 +255,7 @@
     <string name="toolbar_item_explain_edit_or_remove">შეიყვანეთ მონიშნული ტექსტის ორივე ბოლოს ჩასასმელი HTML-კოდი\n\nხელსაწყოთა ზოლს დიდი ხნით დააჭირეთ, რათა დაარედაქტიროთ ან წაშალოთ</string>
     <string name="remove_toolbar_item">ამოიშალოს ხელსაწყოთა ზოლის ელემენტი?</string>
     <string name="note_editor_paste_too_large">სურათი ზედმეტად დიდია ჩასასმელად, გთხოვთ სურათი ხელით ჩაამატოთ</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        მიმდინარეობს Android-ის სარეზერვო ასლის შექმნა. გთხოვთ, ხელახლა სცადოთ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">შესაძლოა iManager-ის გამოყენება დაგჭირდეთ, რათა AnkiDroid-ით სწრაფი ბმულის დამატება შეძლოთ</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">თქვენი საწყისი ეკრანი არ აძლევს AnkiDroid-ს სწრაფი ბმულის დამატების უფლებას</string>
     <string name="create_shortcut_error">შეცდომა სწრაფი ბმულის დამატებისას: %s</string>
@@ -355,8 +355,8 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        ხმოვანი წამკითხველის პარამეტრები ვერ გაიხსნა
     </string>
     <string name="shared_decks_login_required">მეტი დასტის გადმოსაწერად, გთხოვთ, გაიაროთ ავტორიზაცია</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="deck_description_field_hint">აღწერა</string>
+    <string name="failed_to_copy">კოპირება ვერ მოხერხდა</string>
+    <string name="card_browser_unavailable_when_notes_mode">„შენიშვნების“ რეჟიმში ვერ გამოიყენებთ</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">გადაადგილება</string>
 </resources>

@@ -62,7 +62,7 @@
     <string name="study_more">আরও পড়ুন</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d মিনিট বাকি</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d minutes left</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d ঘণ্টা %2$d মিনিট বাকি</item>
