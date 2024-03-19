@@ -48,7 +48,7 @@ data class TTSTag(
 ) : AvTag()
 
 /**
- * Contains the filename inside a [sound:...] tag.
+ * Contains the filename inside a `[sound:...]` tag.
  */
 data class SoundOrVideoTag(val filename: String) : AvTag()
 
@@ -111,7 +111,7 @@ object Sound {
     }
 
     /**
-     * Replaces [anki:play:q:0] with [sound:...]
+     * Replaces `[anki:play:q:0]` with `[sound:...]`
      */
     fun replaceWithSoundTags(
         content: String,
@@ -119,7 +119,7 @@ object Sound {
     ): String = replaceAvRefsWith(content, renderOutput) { tag -> "[sound:${tag.filename}]" }
 
     /**
-     * Replaces [anki:play:q:0] with ` example.mp3 `
+     * Replaces `[anki:play:q:0]` with ` example.mp3 `
      */
     fun replaceWithFileNames(
         content: String,
