@@ -150,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">సమకాలీకరించండి</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">సమకాలీకరణ రద్దు చేయబడింది</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">రద్దు...\nదీనికి కొంత సమయం పట్టవచ్చు.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">ఎగుమతి డెక్</string>
     <string name="nothing">ఏమీ</string>
     <!-- Card template editor -->

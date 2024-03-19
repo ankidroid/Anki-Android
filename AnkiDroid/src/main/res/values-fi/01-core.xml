@@ -150,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Jatka synkronointia</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronointi peruutettu</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Peruutetaan&#8230;\nTämä voi kestää jonkin aikaa.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Vie pakka</string>
     <string name="nothing">Ei mitään</string>
     <!-- Card template editor -->

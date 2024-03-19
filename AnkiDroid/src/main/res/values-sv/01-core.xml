@@ -150,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Fortsätt synkronisering</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronisering avbruten</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Avbryter&#8230;\nDetta kan ta en stund.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Exportera kortlek</string>
     <string name="nothing">Inget</string>
     <!-- Card template editor -->
