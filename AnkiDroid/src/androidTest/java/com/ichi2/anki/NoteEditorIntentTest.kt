@@ -27,7 +27,6 @@ import com.ichi2.anki.testutil.GrantStoragePermission
 import junit.framework.TestCase.assertFalse
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
@@ -48,22 +47,7 @@ class NoteEditorIntentTest : InstrumentedTest() {
     fun launchActivityWithIntent() {
         col
         val scenario = activityRuleIntent!!.scenario
-        scenario.moveToState(Lifecycle.State.RESUMED)
-
-        val maxRetryCount = 5
-        var retryCount = 0
-        var collectionLoaded = false
-
-        while (!collectionLoaded && retryCount < maxRetryCount) {
-            onActivity(scenario) { editor ->
-                collectionLoaded = editor.collectionHasLoaded()
-            }
-            if (!collectionLoaded) {
-                Thread.sleep(1000)
-                retryCount++
-            }
-        }
-        Assert.assertTrue(collectionLoaded)
+        scenario.moveToState(Lifecycle.State.CREATED)
 
         onActivity(scenario) { editor ->
             val currentFieldStrings = editor.currentFieldStrings
