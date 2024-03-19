@@ -60,7 +60,7 @@ open class AvTag
  */
 val SOUND_RE = Pattern.compile("\\[sound:([^\\[\\]]*)]").toRegex()
 
-fun stripAvRefs(text: String, replacement: String = "") = Sound.AV_REF_RE.replace(text, replacement)
+fun stripAvRefs(text: String, replacement: String = "") = AvRef.REGEX.replace(text, replacement)
 
 // not in libAnki
 object Sound {
@@ -81,8 +81,6 @@ object Sound {
     }
 
     /* Methods */
-
-    val AV_REF_RE = Regex("\\[anki:(play:(.):(\\d+))]")
     val AV_PLAYLINK_RE = Regex("playsound:(.):(\\d+)")
 
     /** Return card text with play buttons added, or stripped. */
@@ -96,7 +94,7 @@ object Sound {
 
     /** Add play icons into the HTML */
     fun avRefsToPlayIcons(text: String): String {
-        return AV_REF_RE.replace(text) { match ->
+        return AvRef.REGEX.replace(text) { match ->
             val groups = match.groupValues
             val side = groups[2]
             val index = groups[3]
@@ -131,16 +129,15 @@ object Sound {
         renderOutput: TemplateRenderOutput,
         processTag: (SoundOrVideoTag) -> String
     ): String {
-        return AV_REF_RE.replace(content) { match ->
-            val groups = match.groupValues
+        return AvRef.REGEX.replace(content) { match ->
+            val avRef = AvRef.from(match) ?: return@replace match.value
 
-            val index = groups[3].toIntOrNull() ?: return@replace match.value
-
-            val tag = when (groups[2]) {
-                "q" -> renderOutput.questionAvTags.getOrNull(index)
-                "a" -> renderOutput.answerAvTags.getOrNull(index)
+            val tag = when (avRef.side) {
+                "q" -> renderOutput.questionAvTags.getOrNull(avRef.index)
+                "a" -> renderOutput.answerAvTags.getOrNull(avRef.index)
                 else -> null
-            }
+            } ?: return@replace match.value
+
             if (tag !is SoundOrVideoTag) {
                 return@replace match.value
             } else {
@@ -168,5 +165,27 @@ object Sound {
                 null
             }
         }
+    }
+}
+
+/**
+ * An [AvTag] partially rendered as `[anki:play:q:100]`
+ */
+data class AvRef(val side: String, val index: Int) {
+    companion object {
+        fun from(match: MatchResult): AvRef? {
+            val groups = match.groupValues
+
+            val index = groups[3].toIntOrNull() ?: return null
+
+            val side = when (groups[2]) {
+                "q" -> "q"
+                "a" -> "a"
+                else -> return null
+            }
+            return AvRef(side, index)
+        }
+
+        val REGEX = Regex("\\[anki:(play:(.):(\\d+))]")
     }
 }
