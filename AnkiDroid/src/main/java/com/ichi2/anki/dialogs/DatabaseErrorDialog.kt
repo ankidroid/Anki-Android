@@ -135,7 +135,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 values.add(3)
                 // one-way sync from server
                 if (isLoggedIn) {
-                    options.add(res.getString(R.string.backup_full_sync_from_server))
+                    options.add(res.getString(R.string.backup_one_way_sync_from_server))
                     values.add(4)
                 }
                 // delete old collection and build new one
@@ -299,7 +299,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_ONE_WAY_SYNC_FROM_SERVER -> {
                 // Allow user to do a full-sync from the server
                 alertDialog.show {
-                    title(R.string.backup_full_sync_from_server)
+                    title(R.string.backup_one_way_sync_from_server)
                     message(text = message)
                     positiveButton(R.string.dialog_positive_overwrite) {
                         (activity as DeckPicker).sync(ConflictResolution.FULL_DOWNLOAD)
@@ -325,7 +325,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 options.add(makeBold(res.getString(R.string.backup_restore)))
                 values.add(0)
                 if (isLoggedIn) {
-                    options.add(makeBold(res.getString(R.string.backup_full_sync_from_server)))
+                    options.add(makeBold(res.getString(R.string.backup_one_way_sync_from_server)))
                     values.add(1)
                 }
                 dialog.show {
@@ -522,7 +522,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_new_collection)
             DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_title)
             DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup_title)
-            DIALOG_ONE_WAY_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server)
+            DIALOG_ONE_WAY_SYNC_FROM_SERVER -> res().getString(R.string.backup_one_way_sync_from_server)
             DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_title)
             INCOMPATIBLE_DB_VERSION -> res().getString(R.string.incompatible_database_version_title)
             DIALOG_DB_ERROR -> res().getString(R.string.answering_error_title)

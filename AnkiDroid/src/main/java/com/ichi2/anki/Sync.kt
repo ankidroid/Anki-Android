@@ -291,7 +291,7 @@ private suspend fun handleDownload(
     }
 
     Timber.i("Full Download Completed")
-    deckPicker.showSyncLogMessage(R.string.backup_full_sync_from_server, "")
+    deckPicker.showSyncLogMessage(R.string.backup_one_way_sync_from_server, "")
 }
 
 private suspend fun handleUpload(
