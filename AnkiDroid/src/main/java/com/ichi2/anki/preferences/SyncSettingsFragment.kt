@@ -47,7 +47,7 @@ class SyncSettingsFragment : SettingsFragment() {
             setSummary(TR.preferencesOnNextSyncForceChangesIn())
             setOnPreferenceClickListener {
                 AlertDialog.Builder(requireContext()).show {
-                    setTitle(R.string.force_full_sync_title)
+                    setTitle(R.string.one_way_sync_title)
                     setMessage(TR.preferencesOnNextSyncForceChangesIn())
                     setPositiveButton(R.string.dialog_ok) { _, _ ->
                         launchCatchingTask {
