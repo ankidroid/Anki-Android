@@ -88,6 +88,9 @@ import java.io.File
  * This uses [com.ichi2.anki.MetaDB], and may either read `<tts>` or all text on a card
  *
  */
+@NeedsTest("Integration test: A video is autoplayed if it's the first media on a card")
+@NeedsTest("A sound is played after a video finishes")
+@NeedsTest("Pausing a video calls onSoundGroupCompleted")
 class SoundPlayer : Closeable {
 
     private val soundTagPlayer: SoundTagPlayer
@@ -100,8 +103,8 @@ class SoundPlayer : Closeable {
         this.soundErrorListener = soundErrorListener
     }
 
-    constructor(soundErrorListener: SoundErrorListener) {
-        this.soundTagPlayer = SoundTagPlayer(getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance).path))
+    constructor(soundErrorListener: SoundErrorListener, jsEval: JavascriptEvaluator) {
+        this.soundTagPlayer = SoundTagPlayer(getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance).path), VideoPlayer { jsEval })
         this.ttsPlayer = scope.async { AndroidTtsPlayer.createInstance(AnkiDroidApp.instance, scope) }
         this.soundErrorListener = soundErrorListener
     }
@@ -324,6 +327,17 @@ class SoundPlayer : Closeable {
         }
     }
 
+    @NeedsTest("finish moves to next sound")
+    fun onVideoFinished() {
+        soundTagPlayer.videoPlayer.onVideoFinished()
+    }
+
+    @NeedsTest("pause starts automatic answer")
+    fun onVideoPaused() {
+        Timber.i("video paused")
+        soundTagPlayer.videoPlayer.onVideoPaused()
+    }
+
     companion object {
         const val TTS_PLAYER_TIMEOUT_MS = 2_500L
 
@@ -337,7 +351,7 @@ class SoundPlayer : Closeable {
             // tts can take a long time to init, this defers the operation until it's needed
             val tts = scope.async(Dispatchers.IO) { AndroidTtsPlayer.createInstance(viewer, viewer.lifecycleScope) }
 
-            val soundPlayer = SoundTagPlayer(soundUriBase)
+            val soundPlayer = SoundTagPlayer(soundUriBase, VideoPlayer { viewer.webViewClient!! })
 
             return SoundPlayer(
                 soundTagPlayer = soundPlayer,

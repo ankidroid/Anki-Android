@@ -50,7 +50,7 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
     val eval = MutableSharedFlow<String>()
 
     val showingAnswer = MutableStateFlow(false)
-    protected val soundPlayer = SoundPlayer(createSoundErrorListener())
+    protected val soundPlayer = SoundPlayer(createSoundErrorListener()) { launchCatchingIO { eval.emit(it) } }
     protected lateinit var currentCard: Card
 
     @CallSuper
@@ -82,6 +82,11 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
         }
     }
 
+    fun onVideoFinished() = soundPlayer.onVideoFinished()
+
+    // Optimization to stop a coroutine which waits for completion
+    fun onVideoPaused() = soundPlayer.onVideoPaused()
+
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
     ********************************************************************************************* */
@@ -95,7 +100,10 @@ abstract class CardViewerViewModel : ViewModel(), OnErrorListener {
         typeAnsFilter(prepareCardTextForDisplay(text))
 
     private suspend fun prepareCardTextForDisplay(text: String): String {
-        return Sound.addPlayButtons(withCol { media.escapeMediaFilenames(text) })
+        return Sound.addPlayButtons(
+            text = withCol { media.escapeMediaFilenames(text) },
+            renderOutput = withCol { currentCard.renderOutput(this) }
+        )
     }
 
     protected open suspend fun showQuestion() {

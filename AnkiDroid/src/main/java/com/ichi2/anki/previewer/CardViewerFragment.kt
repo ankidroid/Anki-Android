@@ -81,6 +81,8 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 displayZoomControls = false
                 allowFileAccess = true
                 domStorageEnabled = true
+                // allow videos to autoplay via our JavaScript eval
+                mediaPlaybackRequiresUserGesture = false
             }
             loadDataWithBaseURL(
                 "http://${AnkiServer.LOCALHOST}/",
@@ -136,6 +138,14 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 val urlString = request.url.toString()
                 if (urlString.startsWith("playsound:")) {
                     viewModel.playSoundFromUrl(urlString)
+                    return true
+                }
+                if (urlString.startsWith("videoended:")) {
+                    viewModel.onVideoFinished()
+                    return true
+                }
+                if (urlString.startsWith("videopause:")) {
+                    viewModel.onVideoPaused()
                     return true
                 }
                 if (urlString.startsWith("tts-voices:")) {

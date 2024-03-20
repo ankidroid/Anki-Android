@@ -21,18 +21,23 @@ import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
+import androidx.annotation.VisibleForTesting
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.ensureActive
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.SoundOrVideoTag
+import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 /** Player for the sounds of [SoundOrVideoTag] */
-class SoundTagPlayer(private val soundUriBase: String) {
+@NeedsTest("CardSoundConfig.autoplay should mean that video also isn't played automatically")
+class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPlayer) {
     private var mediaPlayer: MediaPlayer? = null
 
     private val music = AudioAttributes.Builder()
@@ -59,8 +64,31 @@ class SoundTagPlayer(private val soundUriBase: String) {
     suspend fun play(
         tag: SoundOrVideoTag,
         soundErrorListener: SoundErrorListener
-    ) = suspendCancellableCoroutine { continuation ->
-        Timber.d("Playing SoundOrVideoTag")
+    ) {
+        val tagType = tag.getType()
+        return suspendCancellableCoroutine { continuation ->
+            Timber.d("Playing SoundOrVideoTag")
+            when (tagType) {
+                SoundOrVideoTag.Type.AUDIO -> playSound(continuation, tag, soundErrorListener)
+                SoundOrVideoTag.Type.VIDEO -> playVideo(continuation, tag)
+            }
+        }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun playVideo(
+        continuation: CancellableContinuation<Unit>,
+        tag: SoundOrVideoTag
+    ) {
+        Timber.d("Playing video")
+        videoPlayer.playVideo(continuation, tag)
+    }
+
+    private fun playSound(
+        continuation: CancellableContinuation<Unit>,
+        tag: SoundOrVideoTag,
+        soundErrorListener: SoundErrorListener
+    ) {
         requireNewMediaPlayer().apply {
             continuation.invokeOnCancellation {
                 Timber.i("stopping MediaPlayer due to cancellation")
@@ -94,7 +122,7 @@ class SoundTagPlayer(private val soundUriBase: String) {
                 continuation.ensureActive()
                 val continuationBehavior = soundErrorListener.onError(soundUri)
                 val exception = SoundException(continuationBehavior, e)
-                return@suspendCancellableCoroutine continuation.resumeWithException(exception)
+                return continuation.resumeWithException(exception)
             }
 
             requestAudioFocus()
@@ -164,3 +192,5 @@ class SoundTagPlayer(private val soundUriBase: String) {
         AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
     }
 }
+
+suspend fun SoundOrVideoTag.getType(): SoundOrVideoTag.Type = getType(withCol { media.dir })
