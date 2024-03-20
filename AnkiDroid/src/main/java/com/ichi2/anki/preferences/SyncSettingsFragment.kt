@@ -18,6 +18,7 @@ package com.ichi2.anki.preferences
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.customSyncBase
@@ -42,19 +43,22 @@ class SyncSettingsFragment : SettingsFragment() {
         updateForceFullSyncEnabledState()
 
         // Configure force full sync option
-        requirePreference<Preference>(R.string.force_full_sync_key).setOnPreferenceClickListener {
-            AlertDialog.Builder(requireContext()).show {
-                setTitle(R.string.force_full_sync_title)
-                setMessage(R.string.force_full_sync_summary)
-                setPositiveButton(R.string.dialog_ok) { _, _ ->
-                    launchCatchingTask {
-                        withCol { modSchemaNoCheck() }
-                        showSnackbar(R.string.force_full_sync_confirmation, Snackbar.LENGTH_SHORT)
+        requirePreference<Preference>(R.string.force_full_sync_key).apply {
+            setSummary(TR.preferencesOnNextSyncForceChangesIn())
+            setOnPreferenceClickListener {
+                AlertDialog.Builder(requireContext()).show {
+                    setTitle(R.string.force_full_sync_title)
+                    setMessage(TR.preferencesOnNextSyncForceChangesIn())
+                    setPositiveButton(R.string.dialog_ok) { _, _ ->
+                        launchCatchingTask {
+                            withCol { modSchemaNoCheck() }
+                            showSnackbar(R.string.force_full_sync_confirmation, Snackbar.LENGTH_SHORT)
+                        }
                     }
+                    setNegativeButton(R.string.dialog_cancel) { _, _ -> }
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                false
             }
-            false
         }
         // Custom sync server
         requirePreference<Preference>(R.string.custom_sync_server_key).setSummaryProvider {
