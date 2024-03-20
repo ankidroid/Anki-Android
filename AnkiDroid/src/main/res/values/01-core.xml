@@ -123,7 +123,6 @@
     <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
-    <string name="studyoptions_congrats_limit_set">There are more new cards available, but the daily limit has been reached. You can Increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>
 
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="button_sync" comment="Text of the sync button">Sync</string>

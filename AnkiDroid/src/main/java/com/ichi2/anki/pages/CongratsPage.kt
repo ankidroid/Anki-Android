@@ -237,8 +237,6 @@ class CongratsPage :
 
             when (completedDeckStatus) {
                 CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED -> {
-                    UIUtils.showThemedToast(this, R.string.studyoptions_congrats_limit_set, false)
-
                     // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
                     openStudyOptions(withDeckOptions = false)
                 }
