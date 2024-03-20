@@ -17,18 +17,18 @@
 package com.ichi2.anki
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.os.Parcelable
-import android.provider.Settings
 import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
+import androidx.fragment.app.FragmentManager
+import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
@@ -36,6 +36,7 @@ import com.ichi2.anki.ui.windows.permissions.Full30and31PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
 import com.ichi2.anki.ui.windows.permissions.TiramisuPermissionsFragment
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.cancelable
@@ -223,65 +224,53 @@ fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
  * Check if the current WebView version is older than the last supported version and if it is,
  * inform the user with a dialog box containing further instructions.
  */
-fun checkWebviewVersion(packageManager: PackageManager, context: Context) {
-    val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager)
+fun checkWebviewVersion(packageManager: PackageManager, context: Context, fragmentManager: FragmentManager) {
+    val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager) ?: return
     val webviewOlder = checkOlderWebView(packageManager)
 
-    if (webviewPackageInfo == null) {
-        // User is missing both com.android.webview and com.google.android.webview
-        AlertDialog.Builder(context).show {
-            title(R.string.ankidroid_init_failed_webview_title)
-            message(
-                text = context.getString(R.string.missing_webview)
-            )
-            positiveButton(R.string.deck_picker_updation_older_webview) {
-                val openURL = Intent(Intent.ACTION_VIEW)
-                openURL.data = Uri.parse(context.getString(R.string.webview_update_link))
-                context.startActivity(openURL)
-            }
-            cancelable(false)
-        }
-    } else if (webviewOlder == null) {
+    if (webviewOlder == null) {
         // com.google.android.webview found
         val versionCode = webviewPackageInfo.versionName.split(".").get(0).toInt()
         if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
-            val message = String.format(context.getString(R.string.webview_update_message), versionCode, OLDEST_WORKING_WEBVIEW_VERSION)
-            AlertDialog.Builder(context).show {
-                title(R.string.ankidroid_init_failed_webview_title)
-                message(
-                    text = message
-                )
-
-                positiveButton(R.string.deck_picker_updation_older_webview) {
-                    val openURL = Intent(Intent.ACTION_VIEW)
-                    openURL.data =
-                        Uri.parse(context.getString(R.string.webview_update_link))
-                    context.startActivity(openURL)
-                }
-
-                cancelable(false)
-            }
+            showOutdatedWebViewDialog(context, fragmentManager, webviewPackageInfo.versionName)
         }
     } else {
+        showNativeOutdatedWebViewDialog(context, fragmentManager, webviewOlder.versionName)
         // For older Android Devices having com.android.webview instead of com.google.android.webview
-        AlertDialog.Builder(context).show {
-            title(R.string.ankidroid_init_failed_webview_title)
-            message(
-                text = context.getString(R.string.older_webview_found_alert)
-            )
-
-            positiveButton(R.string.deck_picker_updation_older_webview) {
-                val openURL = Intent(Intent.ACTION_VIEW)
-                openURL.data =
-                    Uri.parse(context.getString(R.string.webview_update_link))
-                context.startActivity(openURL)
-            }
-            neutralButton(R.string.deck_picker_disable_older_webview) {
-                val intent = Intent(Settings.ACTION_APPLICATION_SETTINGS)
-                context.startActivity(intent)
-            }
-
-            cancelable(false)
+    }
+}
+private fun showOutdatedWebViewDialog(context: Context, fragmentManager: FragmentManager, versionName: String) {
+    val message = String.format(context.getString(R.string.webview_update_message), versionName)
+    AlertDialog.Builder(context).show {
+        title(R.string.ankidroid_init_failed_webview_title)
+        message(
+            text = message
+        )
+        positiveButton(R.string.scoped_storage_learn_more) {
+            context.openUrl(Uri.parse(context.getString(R.string.webview_update_link)))
         }
+        neutralButton(R.string.help) {
+            val helpDialog = HelpDialog.newHelpInstance()
+            helpDialog.show(fragmentManager, "HelpDialog")
+        }
+        cancelable(false)
+    }
+}
+
+private fun showNativeOutdatedWebViewDialog(context: Context, fragmentManager: FragmentManager, versionName: String) {
+    AlertDialog.Builder(context).show {
+        title(R.string.ankidroid_init_failed_webview_title)
+        val message = String.format(context.getString(R.string.older_native_webview_found_alert), versionName)
+        message(
+            text = message
+        )
+        positiveButton(R.string.scoped_storage_learn_more) {
+            context.openUrl(Uri.parse(context.getString(R.string.native_webview_update_link)))
+        }
+        neutralButton(R.string.help) {
+            val helpDialog = HelpDialog.newHelpInstance()
+            helpDialog.show(fragmentManager, "HelpDialog")
+        }
+        cancelable(false)
     }
 }

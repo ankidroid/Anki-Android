@@ -504,7 +504,7 @@ open class DeckPicker :
 
         launchShowingHidingEssentialFileMigrationProgressDialog()
 
-        checkWebviewVersion(packageManager, this)
+        checkWebviewVersion(packageManager, this, supportFragmentManager)
 
         supportFragmentManager.setFragmentResultListener(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, this) { requestKey, arguments ->
             when (requestKey) {
@@ -1114,7 +1114,9 @@ open class DeckPicker :
             refreshState()
         }
         message?.let { dialogHandler.sendStoredMessage(it) }
-        checkWebviewVersion(packageManager, this)
+        checkWebviewVersion(packageManager, this, supportFragmentManager)
+        // In case the user returns to the App without making the required updates to WebView
+        // As without a "onResume()" , the dialog box is removed on resume.
     }
 
     fun refreshState() {
