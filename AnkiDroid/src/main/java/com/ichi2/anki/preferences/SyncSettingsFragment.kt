@@ -52,7 +52,7 @@ class SyncSettingsFragment : SettingsFragment() {
                     setPositiveButton(R.string.dialog_ok) { _, _ ->
                         launchCatchingTask {
                             withCol { modSchemaNoCheck() }
-                            showSnackbar(R.string.force_full_sync_confirmation, Snackbar.LENGTH_SHORT)
+                            showSnackbar(R.string.one_way_sync_confirmation, Snackbar.LENGTH_SHORT)
                         }
                     }
                     setNegativeButton(R.string.dialog_cancel) { _, _ -> }
