@@ -17,7 +17,6 @@
 package com.ichi2.anki
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -37,6 +36,7 @@ import com.ichi2.anki.ui.windows.permissions.Full30and31PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
 import com.ichi2.anki.ui.windows.permissions.TiramisuPermissionsFragment
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.cancelable
@@ -165,20 +165,11 @@ sealed class AnkiDroidFolder(val permissionSet: PermissionSet) {
 }
 
 @Parcelize
-enum class PermissionSet(
-    val permissions: List<String>,
-    val permissionsFragment: Class<out PermissionsFragment>?
-) : Parcelable {
-    LEGACY_ACCESS(
-        Permissions.legacyStorageAccessPermissions,
-        PermissionsUntil29Fragment::class.java
-    ),
+enum class PermissionSet(val permissions: List<String>, val permissionsFragment: Class<out PermissionsFragment>?) : Parcelable {
+    LEGACY_ACCESS(Permissions.legacyStorageAccessPermissions, PermissionsUntil29Fragment::class.java),
 
     @RequiresApi(Build.VERSION_CODES.R)
-    EXTERNAL_MANAGER(
-        listOf(Permissions.MANAGE_EXTERNAL_STORAGE),
-        Full30and31PermissionsFragment::class.java
-    ),
+    EXTERNAL_MANAGER(listOf(Permissions.MANAGE_EXTERNAL_STORAGE), Full30and31PermissionsFragment::class.java),
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     TIRAMISU_EXTERNAL_MANAGER(
@@ -220,10 +211,8 @@ internal fun selectAnkiDroidFolder(
 }
 
 fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
-    val canAccessLegacyStorage =
-        Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || Environment.isExternalStorageLegacy()
-    val currentFolderIsAccessibleAndLegacy =
-        canAccessLegacyStorage && isLegacyStorage(context, setCollectionPath = false) == true
+    val canAccessLegacyStorage = Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || Environment.isExternalStorageLegacy()
+    val currentFolderIsAccessibleAndLegacy = canAccessLegacyStorage && isLegacyStorage(context, setCollectionPath = false) == true
 
     return selectAnkiDroidFolder(
         canManageExternalStorage = Permissions.canManageExternalStorage(context),
@@ -235,46 +224,32 @@ fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
  * Check if the current WebView version is older than the last supported version and if it is,
  * inform the user with a dialog box containing further instructions.
  */
-fun checkWebviewVersion(
-    packageManager: PackageManager,
-    context: Context,
-    fragmentManager: FragmentManager
-) {
-    val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager)
+fun checkWebviewVersion(packageManager: PackageManager, context: Context, fragmentManager: FragmentManager) {
+    val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager) ?: return
     val webviewOlder = checkOlderWebView(packageManager)
-    if (webviewPackageInfo == null) {
-        // Nothing as already checked inside webViewFailedToLoad
-    } else if (webviewOlder == null) {
+
+    if (webviewOlder == null) {
         // com.google.android.webview found
         val versionCode = webviewPackageInfo.versionName.split(".").get(0).toInt()
         if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
-            showOutdatedWebViewDialog(context, fragmentManager)
+            showOutdatedWebViewDialog(context, fragmentManager, webviewPackageInfo.versionName)
         }
     } else {
+        showNativeOutdatedWebViewDialog(context, fragmentManager, webviewOlder.versionName)
         // For older Android Devices having com.android.webview instead of com.google.android.webview
-        showOlderWebViewDialog(context, fragmentManager)
     }
 }
-
-private fun showOutdatedWebViewDialog(context: Context, fragmentManager: FragmentManager) {
-    val message = String.format(
-        context.getString(R.string.webview_update_message),
-        OLDEST_WORKING_WEBVIEW_VERSION
-    )
+private fun showOutdatedWebViewDialog(context: Context, fragmentManager: FragmentManager, versionName: String) {
+    val message = String.format(context.getString(R.string.webview_update_message), versionName)
     AlertDialog.Builder(context).show {
         title(R.string.ankidroid_init_failed_webview_title)
         message(
             text = message
         )
-
         positiveButton(R.string.scoped_storage_learn_more) {
-            val openURL = Intent(Intent.ACTION_VIEW)
-            openURL.data =
-                Uri.parse(context.getString(R.string.webview_update_link))
-            context.startActivity(openURL)
+            context.openUrl(Uri.parse(context.getString(R.string.webview_update_link)))
         }
-        neutralButton(R.string.help_title_get_help) {
-            // Show the HelpDialog
+        neutralButton(R.string.help) {
             val helpDialog = HelpDialog.newHelpInstance()
             helpDialog.show(fragmentManager, "HelpDialog")
         }
@@ -282,20 +257,17 @@ private fun showOutdatedWebViewDialog(context: Context, fragmentManager: Fragmen
     }
 }
 
-private fun showOlderWebViewDialog(context: Context, fragmentManager: FragmentManager) {
+private fun showNativeOutdatedWebViewDialog(context: Context, fragmentManager: FragmentManager, versionName: String) {
     AlertDialog.Builder(context).show {
         title(R.string.ankidroid_init_failed_webview_title)
+        val message = String.format(context.getString(R.string.older_native_webview_found_alert), versionName)
         message(
-            text = context.getString(R.string.older_webview_found_alert)
+            text = message
         )
-
         positiveButton(R.string.scoped_storage_learn_more) {
-            val openURL = Intent(Intent.ACTION_VIEW)
-            openURL.data =
-                Uri.parse(context.getString(R.string.webview_update_link))
-            context.startActivity(openURL)
+            context.openUrl(Uri.parse(context.getString(R.string.native_webview_update_link)))
         }
-        neutralButton(R.string.help_title_get_help) {
+        neutralButton(R.string.help) {
             val helpDialog = HelpDialog.newHelpInstance()
             helpDialog.show(fragmentManager, "HelpDialog")
         }

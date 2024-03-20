@@ -48,7 +48,7 @@ fun getAndroidSystemWebViewPackageInfo(packageManager: PackageManager): PackageI
  * Modern devices often require the "com.google.android.webview" package to provide WebView capabilities.
  * @param packageManager The PackageManager instance to use for querying installed packages.
  * @return A PackageInfo object containing information about the older WebView package if found,
- *  *         otherwise null.
+ *           otherwise null.
  */
 fun checkOlderWebView(packageManager: PackageManager): PackageInfo? {
     return try {
