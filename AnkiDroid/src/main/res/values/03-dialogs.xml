@@ -260,10 +260,7 @@
     </string>
 
     <string name="deck_already_exists">Deck already exists</string>
-    <string name="deck_picker_disable_older_webview">Disable WebView</string>
-    <string name="deck_picker_updation_older_webview">Install Now </string>
-    <string name="webview_update_message">The WebView version %1$s is outdated (less than %2$s). You can update it by following the given link.</string>
-    <string name="missing_webview">"AnkiDroid relies on the System WebView which is unavailable"</string>
-    <string name="older_webview_found_alert">"The WebView Package com.android.webview is not supported.You must disable the existing WebView Package and Install com.google.android.webview ."</string>
+    <string name="webview_update_message">The WebView version is outdated (must be >= %1$s)</string>
+    <string name="older_webview_found_alert">Android System WebView is out of date. You may need to use com.google.android.webview</string>
 
 </resources>
