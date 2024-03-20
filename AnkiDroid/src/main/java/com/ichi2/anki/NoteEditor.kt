@@ -103,7 +103,6 @@ import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import java.util.function.Consumer
-import kotlin.collections.ArrayList
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -148,6 +147,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     // non-null after onCollectionLoaded
     private var editorNote: Note? = null
+    private var currentImageOccPath: String? = null
 
     /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
     private var currentEditedCard: Card? = null
@@ -253,7 +253,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     )
 
-    private val ioEditorLauncher = registerForActivityResult(
+    private var ioEditorLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
         if (uri != null) {
@@ -550,6 +550,22 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             editOcclusionsButton?.text = resources.getString(R.string.edit_occlusions)
             editOcclusionsButton?.setOnClickListener {
                 setupImageOcclusionEditor()
+            }
+        }
+
+        fun startCrop(imageUri: Uri) {
+            ImageUtils.cropImage(activityResultRegistry, imageUri) { result ->
+                if (result != null && result.isSuccessful) {
+                    val uriFilePath = result.getUriFilePath(this)
+                    uriFilePath?.let { setupImageOcclusionEditor(it) }
+                } else {
+                    Timber.v("Failed to crop the image")
+                }
+            }
+        }
+        ioEditorLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let { imageUri ->
+                startCrop(imageUri)
             }
         }
 
@@ -1188,7 +1204,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return sp.roundToInt().toString()
         }
 
-    fun addNewNote() {
+    private fun addNewNote() {
         openNewNoteEditor { }
     }
 
