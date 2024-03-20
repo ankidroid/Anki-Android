@@ -956,7 +956,7 @@ open class DeckPicker :
             menuItem.setTitle(
                 when (state.syncIcon) {
                     SyncIconState.Normal, SyncIconState.PendingChanges -> R.string.button_sync
-                    SyncIconState.OneWay -> R.string.sync_menu_title_full_sync
+                    SyncIconState.OneWay -> R.string.sync_menu_title_one_way_sync
                     SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
                 }
             )
