@@ -418,7 +418,7 @@ private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
 }
 
 /**
- * If a full sync is not already required, confirm the user wishes to proceed.
+ * If a one-way sync is not already required, confirm the user wishes to proceed.
  * If the user agrees, the schema is bumped and the routine will return true.
  * On false, calling routine should abort.
  */
