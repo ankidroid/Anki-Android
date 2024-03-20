@@ -54,7 +54,7 @@
         android:summary="@string/metered_sync_summary" />
     <PreferenceCategory android:title="@string/pref_cat_advanced">
         <Preference
-            android:key="@string/force_full_sync_key"
+            android:key="@string/one_way_sync_key"
             android:title="@string/one_way_sync_title"
             tools:summary="On next sync, force changes in one direction" />
         <Preference

@@ -133,7 +133,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // // restore from backup
                 options.add(res.getString(R.string.backup_restore))
                 values.add(3)
-                // full sync from server
+                // one-way sync from server
                 if (isLoggedIn) {
                     options.add(res.getString(R.string.backup_full_sync_from_server))
                     values.add(4)
@@ -172,7 +172,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 return@listItems
                             }
                             4 -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_FULL_SYNC_FROM_SERVER)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER)
                                 return@listItems
                             }
                             5 -> {
@@ -296,7 +296,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     negativeButton(R.string.dialog_cancel)
                 }
             }
-            DIALOG_FULL_SYNC_FROM_SERVER -> {
+            DIALOG_ONE_WAY_SYNC_FROM_SERVER -> {
                 // Allow user to do a full-sync from the server
                 alertDialog.show {
                     title(R.string.backup_full_sync_from_server)
@@ -341,7 +341,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 DIALOG_RESTORE_BACKUP
                             )
                             1 -> (activity as DeckPicker).showDatabaseErrorDialog(
-                                DIALOG_FULL_SYNC_FROM_SERVER
+                                DIALOG_ONE_WAY_SYNC_FROM_SERVER
                             )
                         }
                     }
@@ -490,7 +490,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_del_collection_question)
             DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_warning)
             DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup)
-            DIALOG_FULL_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server_question)
+            DIALOG_ONE_WAY_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server_question)
             DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_summary)
             INCOMPATIBLE_DB_VERSION -> {
                 var databaseVersion = -1
@@ -522,7 +522,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_new_collection)
             DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_title)
             DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup_title)
-            DIALOG_FULL_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server)
+            DIALOG_ONE_WAY_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server)
             DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_title)
             INCOMPATIBLE_DB_VERSION -> res().getString(R.string.incompatible_database_version_title)
             DIALOG_DB_ERROR -> res().getString(R.string.answering_error_title)
@@ -552,7 +552,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         DIALOG_NEW_COLLECTION,
         DIALOG_CONFIRM_DATABASE_CHECK,
         DIALOG_CONFIRM_RESTORE_BACKUP,
-        DIALOG_FULL_SYNC_FROM_SERVER,
+        DIALOG_ONE_WAY_SYNC_FROM_SERVER,
 
         /** If the database is locked, all we can do is reset the app  */
         DIALOG_DB_LOCKED,
