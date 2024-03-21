@@ -90,6 +90,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val dividerItemDecoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(dividerItemDecoration)
         val decks: List<SelectableDeck> = getDeckNames(arguments)
+        // build the hierarchy
+        buildHierarchy(decks)
         val adapter = DecksArrayAdapter(decks)
         recyclerView.adapter = adapter
         adjustToolbar(dialogView, adapter)
@@ -110,6 +112,24 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         return dialog!!
     }
 
+    private fun buildHierarchy(decks: List<SelectableDeck>) {
+        // TODO: attach the subdecks to the parents and change the parent visibility to true
+        for (deck in decks) {
+            if ("::" in deck.name) {
+                val parentName = deck.name.substringBeforeLast("::")
+                val parentDeck: SelectableDeck? = getDeckByName(decks, parentName)
+                parentDeck?.subDecks?.add(deck)
+            } else {
+                deck.isExpanded = true
+            }
+        }
+    }
+    private fun getDeckByName(decks: List<SelectableDeck>, name: String): SelectableDeck? {
+        for (deck in decks) {
+            if (deck.name == name)return deck
+        }
+        return null
+    }
     private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>) =
         decks.indexOfFirst { it.deckId == did }
 
@@ -237,6 +257,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                     }
                     true
                 }
+                // TODO: add the expand toggle listener here
+                // loop through all the sub deck and change var isExpanded to true
             }
         }
 
@@ -255,14 +277,22 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val v = LayoutInflater.from(parent.context)
                 .inflate(R.layout.deck_picker_dialog_list_item, parent, false)
             return ViewHolder(v.findViewById(R.id.deck_picker_dialog_list_item_value))
+//            val v = layoutInflater.inflate(R.layout.deck_item, parent, false)
+//            return ViewHolder(v)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val deck = currentlyDisplayedDecks[position]
-            holder.setDeck(deck)
+            if (deck.isExpanded) {
+                holder.setDeck(deck)
+                holder.itemView.visibility = View.VISIBLE
+            } else {
+                holder.itemView.visibility = View.GONE
+            }
         }
 
         override fun getItemCount(): Int {
+            // TODO: you need to change this to make the dialog size compatibel with the new feature
             return currentlyDisplayedDecks.size
         }
 
@@ -294,7 +324,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         init {
             allDecksList.addAll(deckNames)
-            currentlyDisplayedDecks.addAll(deckNames)
+            currentlyDisplayedDecks.addAll(deckNames.filter { it.isExpanded })
+//            currentlyDisplayedDecks.addAll(deckNames)
             currentlyDisplayedDecks.sort()
         }
     }
@@ -304,7 +335,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
      * @param name Name of the deck, or localization of "all decks"
      */
     @Parcelize
-    class SelectableDeck(val deckId: DeckId, val name: String) : Comparable<SelectableDeck>, Parcelable {
+    class SelectableDeck(val deckId: DeckId, val name: String, var subDecks: MutableList<SelectableDeck> = mutableListOf(), var isExpanded: Boolean = false) : Comparable<SelectableDeck>, Parcelable {
         /**
          * The name to be displayed to the user. Contains
          * only the sub-deck name with proper indentation
