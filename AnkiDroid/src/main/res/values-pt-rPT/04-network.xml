@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remota</string>
-    <string name="force_full_sync_title">Forçar sincronização completa</string>
-    <string name="force_full_sync_summary">Na próxima vez, força a sincronização numa direção</string>
-    <string name="force_full_sync_confirmation">Sincronização completa forçada</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">A alteração solicitada requer um upload completo da base de dados na próxima vez que sincronizar a coleção. Se tiver revisões ou outras alterações pendentes noutro dispositivo que ainda não tenham sido sincronizadas, elas serão perdidas. Deseja continuar?</string>
     <string name="full_sync_confirmation_upgrade">Devido a um erro na versão anterior do AnkiDroid, é recomendado fazer uma sincronização integral.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sincronização (completa)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Sincronização (iniciar sessão)</string>
 </resources>

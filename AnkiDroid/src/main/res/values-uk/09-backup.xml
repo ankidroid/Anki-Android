@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Нова колекція</string>
     <string name="backup_del_collection">Видалити колекцію та створити нову</string>
     <string name="backup_del_collection_question">Ви дійсно бажаєте видалити колекцію та створити нову? Це скине ваш навчальний поступ та видалить всі картки!</string>
-    <string name="backup_full_sync_from_server">Повна синхронізація з серверу</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Ви дійсно бажаєте перезаписати вашу колекцію версією з AnkiWeb? Це скине ваш навчальний поступ та додану інформації з часу останньої синхронізації!</string>
     <string name="error_handling_title">Обробка помилок</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Параметри</string>

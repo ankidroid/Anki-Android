@@ -50,7 +50,7 @@
     <string name="backup_new_collection">אוסף חדש</string>
     <string name="backup_del_collection">מחיקת האוסף הקיים ויצירת אוסף חדש</string>
     <string name="backup_del_collection_question">למחוק את האוסף הקיים וליצור אוסף חדש? פעולה זו תאפס את כל ההתקדמות שלך ותמחק את כל הקלפים.</string>
-    <string name="backup_full_sync_from_server">סנכרון מלא מהשרת</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">להחליף את האוסף המקומי בזה שב־AnkiWeb? פעולה זו תאפס את כל ההתקדמות שלך ותגרום לאובדן כל מידע שנוסף מאז הסנכרון הקודם.</string>
     <string name="error_handling_title">טיפול בשגיאות</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">אפשרויות</string>

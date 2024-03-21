@@ -76,12 +76,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Locales</string>
     <string name="sync_sanity_remote">Remotos</string>
-    <string name="force_full_sync_title">Fortza una sincronizatzione intrea</string>
-    <string name="force_full_sync_summary">In sa sincronizatzione imbeniente fortza sas modìficas cara a una diretzione</string>
-    <string name="force_full_sync_confirmation">Sincronizatzione intrea fortzada</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">Sa modìfica pedida at a bisongiare de unu carrigamentu intreu de sa base de datos cando as a sincronizare sa colletzione tua. Si tenes revisiones o àteras modìficas isetende in un\'àteru dispositivu chi non sunt istadas galu sincronizadas inoghe s\'ant a pèrdere. Cheres sighire?</string>
     <string name="full_sync_confirmation_upgrade">Pro neghe de una faddina in su còdighe de sa versione installada anteposta de AnkiDroid est mègius a fortzare una sincronizatzione totale.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sincronizatzione (totale)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Sincronizatzione (intra)</string>
 </resources>

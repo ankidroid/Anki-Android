@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Yerel</string>
     <string name="sync_sanity_remote">Sunucu</string>
-    <string name="force_full_sync_title">Tam senkronizasyon zorla</string>
-    <string name="force_full_sync_summary">Sonraki senkronizasyonda, değişiklikleri tek yönde zorla</string>
-    <string name="force_full_sync_confirmation">Tam senkronizasyon zorlama</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">İstenen değişiklik koleksiyonunuzu bir sonraki senkronize edişinizde veritabanının toptan karşıya yüklenmesini gerektirecek. Başka bir cihazda bekleyen, burada henüz senkronize edilmemiş çalışmalarınız veya başka değişiklikleriniz varsa kaybolacaklar. Devam edilsin mi?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid\'in daha önce yüklü sürümündeki bir hata nedeniyle, bir tam senkronizasyon zorlamanız tavsiye edilir.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Senkronizasyon (tam)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Senkronizasyon (giriş yap)</string>
 </resources>

@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Νέα συλλογή</string>
     <string name="backup_del_collection">Διαγραφή συλλογής και δημιουργία καινούργιας</string>
     <string name="backup_del_collection_question">Είστε βέβαιοι ότι θέλετε να διαγράψετε τη συλλογή σας και να δημιουργήσετε μία νέα; Αυτό θα διαγράψει όλη την πρόοδο εκμάθησή σας και όλες τις κάρτες!</string>
-    <string name="backup_full_sync_from_server">Πλήρης συγχρονισμός από διακομιστή</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Είστε βέβαιοι ότι θέλετε να αντικαταστήσετε τη συλλογή σας με αυτή από το AnkiWeb; Αυτό θα διαγράψει όλη την πρόοδο εκμάθησής σας και πληροφορίες που προσθέσατε από τον τελευταίο συγχρονισμό!</string>
     <string name="error_handling_title">Χειρισμός σφαλμάτων</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Επιλογές</string>

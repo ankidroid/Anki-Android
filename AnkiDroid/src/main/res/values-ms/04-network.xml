@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Tempatan</string>
     <string name="sync_sanity_remote">Jarak Jauh</string>
-    <string name="force_full_sync_title">Paksa penyegerakan penuh</string>
-    <string name="force_full_sync_summary">Pada penyegerakkan seterusnya, paksa perubahan mengikut satu arah</string>
-    <string name="force_full_sync_confirmation">Telah dipaksa penyegerakan penuh</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">perubahan diminta akan memerlukan muat naik penuh pangkalan data apabila anda menyegerakkan koleksi anda. Jika anda mempunyai semakan atau perubahan pada peranti lain yang belum disegerakkan ke sini, maka mereka akan dibuang. Teruskan?</string>
     <string name="full_sync_confirmation_upgrade">Akibat pepijat dalam versi yang dipasang sebelum ini, disarankan anda memaksa penyegerakan penuh.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Segerak (penuh)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Segerak (log in)</string>
 </resources>
