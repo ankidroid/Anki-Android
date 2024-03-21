@@ -126,12 +126,11 @@ class IntentHandler : Activity() {
      */
     @NeedsTest("clicking a file in 'Files' to import")
     private fun performActionIfStorageAccessible(reloadIntent: Intent, action: String?, block: () -> Unit) {
-        if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this) || Permissions.isExternalStorageManagerCompat()) {
+        if (grantedStoragePermissions(this, showToast = true)) {
             Timber.i("User has storage permissions. Running intent: %s", action)
             block()
         } else {
             Timber.i("No Storage Permission, cancelling intent '%s'", action)
-            showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
             launchDeckPickerIfNoOtherTasks(reloadIntent)
         }
     }
@@ -156,6 +155,11 @@ class IntentHandler : Activity() {
 
     private fun handleFileImport(intent: Intent, reloadIntent: Intent, action: String?) {
         Timber.i("Handling file import")
+        if (!hasShownAppIntro()) {
+            Timber.i("Trying to import a file when the app was not started at all")
+            showThemedToast(this, R.string.app_not_initialized_new, false)
+            return
+        }
         val importResult = handleFileImport(this, intent)
         // attempt to delete the downloaded deck if it is a shared deck download import
         if (intent.hasExtra(SharedDecksDownloadFragment.EXTRA_IS_SHARED_DOWNLOAD)) {
@@ -261,6 +265,20 @@ class IntentHandler : Activity() {
             // Negating a negative because we want to call specific attention to the fact that it's invalid
             // #6312 - Smart Launcher provided an empty ACTION_VIEW, no point in importing here.
             return !isInvalidViewIntent(intent)
+        }
+
+        /** Checks whether storage permissions are granted on the device. If the device is not using legacy storage,
+         *  it verifies if the app has been granted the necessary storage access permission.
+         *  @return `true`: if granted, otherwise `false` and shows a missing permission toast
+         */
+        fun grantedStoragePermissions(context: Context, showToast: Boolean): Boolean {
+            val granted = !ScopedStorageService.isLegacyStorage(context) || hasStorageAccessPermission(context) || Permissions.isExternalStorageManagerCompat()
+
+            if (!granted && showToast) {
+                showThemedToast(context, context.getString(R.string.intent_handler_failed_no_storage_permission), false)
+            }
+
+            return granted
         }
 
         @VisibleForTesting

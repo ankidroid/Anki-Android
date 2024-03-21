@@ -50,7 +50,7 @@
         <item quantity="one">%d मिनट</item>
         <item quantity="other">%d मिनट</item>
     </plurals>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">कोई परिणाम नहीं </string>
     <!-- preferences.xml categories-->
@@ -199,8 +199,6 @@
     <string name="reset">रीसेट</string>
     <string name="thirdparty_apps_title" maxLength="41">तृतीय-पक्ष API ऐप्स</string>
     <string name="thirdparty_apps_summary">शब्दकोशों और उपयोगिताओं सहित AnkiDroid का उपयोग करने वाले ऐप्स की सूची देखने के लिए यहां टैप करें</string>
-    <string name="html_javascript_debugging" maxLength="41">हटम्ल/जावास्क्रिप्ट डिबगिंग</string>
-    <string name="html_javascript_debugging_summ">दूरस्थ वेब्वयेव कनेक्शन सक्षम करें और कार्ड हटम्ल को अंकिड़रोइड निर्देशिका में सहेजें</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">समीक्षक</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>
@@ -268,6 +266,7 @@
     <string name="binding_add_axis">जॉयस्टिक/मोशन कंट्रोलर को जोड़ें</string>
     <string name="axis_picker_move_joystick">जॉयस्टिक/मोशन कंट्रोलर को स्थानांतरित करें</string>
     <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
     <string name="user_action_1" maxLength="41">User action 1</string>
     <string name="user_action_2" maxLength="41">User action 2</string>
     <string name="user_action_3" maxLength="41">User action 3</string>

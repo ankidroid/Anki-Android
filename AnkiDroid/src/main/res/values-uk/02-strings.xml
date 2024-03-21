@@ -101,7 +101,7 @@
         <item>Створено</item>
         <item>Запис змінено</item>
     </string-array>
-    <string name="filter_by_flags">Прапори</string>
+    <string name="filter_by_flags">Прапорці</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>
     <string name="custom_study_increase_review_limit">Змінити сьогоднішній ліміт на повторення карток</string>
@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Обмежити конкретними тегами</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Редагувати запис</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Відкинути</string>
     <string name="note_editor_no_cards_created">Картки не створено. Будь ласка, заповніть більше полів</string>
     <string name="note_editor_no_first_field">Перше поле порожнє</string>
     <string name="note_editor_no_cloze_delations">Цей тип запису повинен містити пропуски</string>
@@ -125,7 +125,7 @@
     <string name="select">Вибрати</string>
     <string name="field_remapping">%1$s (з\"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Картки, які не прив\'язані, будуть видалені. Якщо запис не має жодної картки, то запис буде втрачено. Ви хочете продовжити?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">Жодного типу записів не знайдено</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Досягнуто часу</string>
     <plurals name="timebox_reached">
@@ -143,10 +143,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Картка AnkiDroid</string>
     <string name="note_editor_copy_note">Копіювати запис</string>
-    <string name="card_editor_reposition_card">Перемістити</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Перемістити</string>
     <string name="card_editor_reset_card">Скинути перебіг</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перепланувати</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Попередній перегляд</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d з %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Перейменувати</string>
     <string name="checks_action">Перевірити</string>
@@ -209,7 +210,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Система не має встановленого додатку, який може це виконати.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Зображення можуть бути завеликими. Можливо вам треба буде стиснути або змінити розмір зображень в медіатеці]]></string>
-    <string name="no_browser_notification">Браузер не знайдено, будь ласка, відвідайте веб-сторінку з компʼютера чи з мобільного телефону: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Помилка при завантаженні сторінки: \"%s\"</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -218,9 +219,6 @@
     <string name="remove_background_image">Видалити задній фон?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Відновити «Типове»</string>
-    <string name="cloze_sample_text">Це {{%1$s::sample}} завдання з пропусками</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">пріклад</string>
-    <string name="basic_answer_sample_text">приклад</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Порожня</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
@@ -314,7 +312,7 @@
     <string name="migration_part_1_done_resume">Ви можете продовжити використовувати AnkiDroid.
 \nПеренесення сховища буде відбуватись у фоновому режимі.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s не є дійсним пакетом доповнення javascript</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Не вдалося створити каталог %s</string>
     <string name="malicious_archive_entry_outside">Шкідливий архів. Містить запис за межами цільового каталогу: %s</string>
     <string name="malicious_archive_exceeds_limit">Шкідливий архів. Розмір перевищує %1$s або містить більше ніж %2$d файлів</string>
@@ -329,6 +327,8 @@
     <string name="intro_short_ankidroid_explanation">Планувальник карток Anki заощаджує час, посилюючи найслабші спогади й зберігаючи найсильніші.</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Почнемо</string>
     <string name="intro_sync_from_ankiweb">Синхронізувати з AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">Вже ввійшли в систему</string>
     <!-- Deck Creation -->
     <string name="deck_created">Створена колода</string>
@@ -365,4 +365,5 @@
     <string name="deck_description_field_hint">Опис</string>
     <string name="failed_to_copy">Не вдалося скопіювати</string>
     <string name="card_browser_unavailable_when_notes_mode">Недоступно в режимі \'Записи\'</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
 </resources>

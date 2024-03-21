@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Perluaskan</string>
     <string name="collapse">Sembunyikan</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">%d minutes left</item>
     </plurals>
@@ -135,6 +136,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Carian Dek</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Carian Dek</string>
     <string name="invalid_deck_name">Nama dek tidak sah</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Tiada kad tertunggak lagi</string>
     <string name="sd_card_not_mounted">Peranti storan tidak dipasang</string>
     <string name="button_sync" comment="Text of the sync button">Segerak</string>
@@ -143,6 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Teruskan penyegerakan</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Penyegerakan terbatal</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Membatal&#8230;\nMungkin mengambil masa.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Eksport dek</string>
     <string name="nothing">Tiada</string>
     <!-- Card template editor -->
@@ -161,7 +166,6 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Padam jenis kad “%2$s”, dan %1$d kad-kadnya?</item>
     </plurals>
-    <string name="invalid_template">Kad tidak dapat dihasilkan</string>
     <string name="card_template_editor_would_delete_note">Membuang jenis kad ini akan akibatkan satu atau lebih nota turut dipadam. Sila cipta dan simpan jenis kad yang baru dahulu.</string>
     <string name="card_template_editor_save_error">Gagal simpan suntingan templat kad: %s</string>
     <string name="template_for_current_card_deleted">Jenis kad bagi kad ini telah dipadam.</string>
@@ -233,6 +237,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Teruskan penghijrahan</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Koleksi tidak dapat dicapai</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Kami gagal mencapai koleksi anda setelah AnkiDroid dinyahpasang akibat perubahan Polisi Play Store\n\nData anda selamat dan boleh dipulihkan. Ia terletak di \n%s\n\nPilih antara pilihan di bawah untuk pulihkan:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Pulih dari AnkiWeb (disyorkan)</string>
     <string name="install_non_play_store_ankidroid_recommended">Pulih capaian folder (disyorkan)</string>
     <string name="install_non_play_store_ankidroid">Pulih capaian folder (lanjutan)</string>

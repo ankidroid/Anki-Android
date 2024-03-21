@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Szűkítés címkékre</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Jegyzet szerkesztése</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Elvetés</string>
     <string name="note_editor_no_cards_created">A kártyák nem lettek létrehozva. Kérjük töltsön ki több mezőt</string>
     <string name="note_editor_no_first_field">Az első mező üres</string>
     <string name="note_editor_no_cloze_delations">Ennek a jegyzet típusnak részleges törléseket kell tartalmaznia</string>
@@ -139,10 +139,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid Kártya</string>
     <string name="note_editor_copy_note">Jegyzet másolása</string>
-    <string name="card_editor_reposition_card">Áthelyezés</string>
-    <string name="card_editor_reset_card">Reset folyamat</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Áthelyezés</string>
+    <string name="card_editor_reset_card">Folyamat visszaállítása</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Átütemezés</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Előnézet</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ennyiből %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Átnevezés</string>
     <string name="checks_action">Ellenőrzés</string>
@@ -203,7 +204,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Nincsen letöltve olyan alkalmazás, ami végre tudná hajtani ezt a műveletet.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[A kamera képei lehet túl nagyok. Lehet, hogy tömörítenie vagy újra kéne méreteznie őket a média mappájában.]]></string>
-    <string name="no_browser_notification">Nem találtunk böngészőt, kérjük látogasson meg egy weblapot PC-n vagy mobilon: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Az oldal betöltése sikertelen: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -212,9 +213,6 @@
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Alaphelyzetbe állítás</string>
-    <string name="cloze_sample_text">Ez egy {{%1$s::minta}} kihagyásos szöveg.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">centíroz</string>
-    <string name="basic_answer_sample_text">egy példa</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Üres</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">A rajztábla kép mentése sikertelen. %s</string>
@@ -306,7 +304,7 @@
     <string name="migration_part_1_done_resume">Folytathatja az AnkiDroid használatát.
 \nA tároló áttelepítése folytatódik a háttérben.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s nem érvényes javascript csomag</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Nem sikerült létrehozni a könyvtárat: 
 %s</string>
     <string name="malicious_archive_entry_outside">Rosszindulatú archív. A cél könyvtáron kívüli bejegyzést tartalmaz  %s</string>
@@ -322,6 +320,8 @@
     <string name="intro_short_ankidroid_explanation">Az Anki kártyatervező időt spórol: megerősíti a leggyengébb emlékeidet, és megőrzi a legerősebbeket.</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Kezdj hozzá</string>
     <string name="intro_sync_from_ankiweb">Szinkronizálás AnkiWebről</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">Már bejelentkeztél</string>
     <!-- Deck Creation -->
     <string name="deck_created">Pakli elkészült</string>
@@ -350,7 +350,8 @@
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Letöltés</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">A felolvasás beállítások megnyitása sikertelen</string>
     <string name="shared_decks_login_required">Több pakli letöltéséhez jelentkezz be</string>
-    <string name="deck_description_field_hint">Description</string>
+    <string name="deck_description_field_hint">Megjegyzés</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
 </resources>

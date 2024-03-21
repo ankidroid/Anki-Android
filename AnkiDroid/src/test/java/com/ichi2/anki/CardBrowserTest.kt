@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -29,10 +28,10 @@ import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
+import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
-import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.servicelayer.NoteService
@@ -48,15 +47,17 @@ import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.OS
 import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.AdaptionUtil
 import io.mockk.every
-import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.any
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
@@ -383,36 +384,21 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     fun startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
-        val inputIntent = Intent("android.intent.action.PROCESS_TEXT")
-
-        val mockedMethod = AnkiActivity::hasCollectionStoragePermissions
         try {
-            mockkStatic(mockedMethod)
+            mockkObject(AdaptionUtil)
+            mockkObject(IntentHandler)
 
-            every { any<AnkiActivity>().hasCollectionStoragePermissions() } returns false
+            every { grantedStoragePermissions(any(), any()) } returns false
+            every { AdaptionUtil.isRunningAsUnitTest } returns false
 
-            val browserController =
-                Robolectric.buildActivity(CardBrowser::class.java, inputIntent).create()
+            val browserController = Robolectric.buildActivity(CardBrowser::class.java).create()
             val cardBrowser = browserController.get()
             saveControllerForCleanup(browserController)
 
-            val shadowActivity = shadowOf(cardBrowser)
-            val outputIntent = shadowActivity.nextStartedActivity
-            val component = assertNotNull(outputIntent.component)
-
-            assertThat(
-                "Deck Picker currently handles permissions, so should be called",
-                component.className,
-                equalTo("com.ichi2.anki.DeckPicker")
-            )
             assertThat("Activity should be finishing", cardBrowser.isFinishing)
-            assertThat(
-                "Activity should be cancelled as it did nothing",
-                shadowActivity.resultCode,
-                equalTo(Activity.RESULT_CANCELED)
-            )
         } finally {
-            unmockkStatic(mockedMethod)
+            unmockkObject(AdaptionUtil)
+            unmockkObject(IntentHandler)
         }
     }
 
@@ -459,7 +445,7 @@ class CardBrowserTest : RobolectricTest() {
 
         b.selectRowsWithPositions(0)
         val previewIntent = b.viewModel.previewIntentData
-        assertThat("before: index", previewIntent.index, equalTo(0))
+        assertThat("before: index", previewIntent.currentIndex, equalTo(0))
         assertThat(
             "before: cards",
             previewIntent.previewerIdsFile.getCardIds(),
@@ -474,7 +460,7 @@ class CardBrowserTest : RobolectricTest() {
 
         b.replaceSelectionWith(intArrayOf(0))
         val intentAfterReverse = b.viewModel.previewIntentData
-        assertThat("after: index", intentAfterReverse.index, equalTo(0))
+        assertThat("after: index", intentAfterReverse.currentIndex, equalTo(0))
         assertThat(
             "after: cards",
             intentAfterReverse.previewerIdsFile.getCardIds(),
@@ -872,11 +858,11 @@ class CardBrowserTest : RobolectricTest() {
         advanceRobolectricUiLooper()
     }
 
-    private fun selectMenuItem(browser: CardBrowser, action_select_all: Int) {
+    private fun selectMenuItem(browser: CardBrowser, actionSelectAll: Int) {
         Timber.d("Selecting menu item")
         // select seems to run an infinite loop :/
         val shadowActivity = shadowOf(browser)
-        shadowActivity.clickMenuItem(action_select_all)
+        shadowActivity.clickMenuItem(actionSelectAll)
         advanceRobolectricUiLooper()
     }
 

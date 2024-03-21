@@ -64,7 +64,7 @@
     <string name="log_out">Logga ut</string>
     <string name="reset_password">Återställ lösenord</string>
     <string name="lost_mail_instructions">Glömt e-post?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">Loggar in</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Alternativ för XXX</string>
     <string name="sync_title">Synkronisering</string>
@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Server</string>
-    <string name="force_full_sync_title">Framtvinga fullständig synkronisering</string>
-    <string name="force_full_sync_summary">Vid nästa synkroniseringstillfälle, framtvinga förändringar i en riktning</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">Den önskade förändringen kommer att kräva en full uppladdning av databasen vid nästa synkronisering av din samling. Om du har recensioner eller andra förändringar som väntar på en annan enhet som inte har synkroniserats här ännu, så kommer de att förloras. Vill du fortsätta?</string>
     <string name="full_sync_confirmation_upgrade">På grund av en bugg i den tidigare installerade versionen av AnkiDroid är det rekommenderat att tvinga en fullständig synkronisering.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Synkronisera (full)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Synkronisera (logga in)</string>
 </resources>

@@ -137,10 +137,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Kad AnkiDroid</string>
     <string name="note_editor_copy_note">Salin nota</string>
-    <string name="card_editor_reposition_card">Alih posisi</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Alih posisi</string>
     <string name="card_editor_reset_card">Tetap semula kemajuan</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Jadual semula</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pratonton</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d daripada %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Nama semula</string>
     <string name="checks_action">Check</string>
@@ -200,7 +201,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Sistem tidak mempunyai aplikasi dipasang yang boleh melakukan tindakan ini.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Gambar kamera mungkin terlalu besar. Anda mungkin mahu memampatkan dan ubah saiz gambar dalam direktori media]]></string>
-    <string name="no_browser_notification">Tiada pelayar ditemui，sila lawat laman web melalui PC atau telefon: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Ralat memuatkan halaman: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -209,9 +210,6 @@
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Pulih Lalai</string>
-    <string name="cloze_sample_text">Ini merupakan {{%1$s::sampel}} penghapusan kloz.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">conteh</string>
-    <string name="basic_answer_sample_text">sebagai contoh</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Kosong</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Gagal menyimpan gambar papan putih. %s</string>
@@ -302,7 +300,7 @@
     <string name="migration_part_1_done_resume">Anda boleh terus menggunakan AnkiDroid.
 \nPenghijrahan storan akan diteruskan sementara itu.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s bukan pakej javascript tambahan yang sah</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Tidak dapat mencipta direktori %s</string>
     <string name="malicious_archive_entry_outside">Arkib berbahaya. Mengandungi entri di luar direktori sasaran: %s</string>
     <string name="malicious_archive_exceeds_limit">Arkib berbahaya. Saiz melangkaui %1$s atau mengandungi lebih daripada %2$d fail</string>
@@ -317,6 +315,8 @@
     <string name="intro_short_ankidroid_explanation">Penjadual kad Anki jimat masa dengan memperkasakan memori paling lemah dan memelihara memori paling kuat</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Mari Mulakan</string>
     <string name="intro_sync_from_ankiweb">Segerakkan dari AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">Telah log masuk</string>
     <!-- Deck Creation -->
     <string name="deck_created">Dek dicipta</string>
@@ -355,4 +355,5 @@
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
 </resources>

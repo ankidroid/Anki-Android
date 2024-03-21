@@ -26,10 +26,12 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.getOrCreateFilteredDeck
 import com.ichi2.utils.getInputField
+import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -94,11 +96,22 @@ class CreateDeckDialog(
                 dialog.positiveButton.isEnabled = false
                 return@input
             }
+            if (deckExists(getColUnsafe, maybeDeckName)) {
+                dialog.getInputTextLayout().error = context.getString(R.string.deck_already_exists)
+                dialog.positiveButton.isEnabled = false
+                return@input
+            }
+            dialog.getInputTextLayout().error = null
             dialog.positiveButton.isEnabled = true
         }
         shownDialog = dialog
         return dialog
     }
+
+    /**
+     * @return true if the collection contains a deck with the given name
+     */
+    private fun deckExists(col: Collection, name: String): Boolean = col.decks.byName(name) != null
 
     /**
      * Returns the fully qualified deck name for the provided input
@@ -132,7 +145,7 @@ class CreateDeckDialog(
         try {
             // create filtered deck
             Timber.i("CreateDeckDialog::createFilteredDeck...")
-            val newDeckId = getColUnsafe.decks.newDyn(deckName)
+            val newDeckId = getColUnsafe.decks.newFiltered(deckName)
             Timber.d("Created filtered deck '%s'; id: %d", deckName, newDeckId)
             onNewDeckCreated(newDeckId)
         } catch (ex: BackendDeckIsFilteredException) {

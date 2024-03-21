@@ -21,7 +21,7 @@ he: קלפי לימוד של AnkiDroid
 hi: AnkiDroid फ़्लैशकार्ड
 hu: AnkiDroid Szókártyák
 hy-AM: AnkiDroid քարտեր
-id: Kartu flash AnkiDroid
+id: Kartu Flash AnkiDroid
 ka: AnkiDroid: სამეცადინო ბარათები
 kk: AnkiDroid жаттау карталары
 ko: AnkiDroid 플래시 카드

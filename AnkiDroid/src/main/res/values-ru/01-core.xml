@@ -59,17 +59,18 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Развернуть</string>
     <string name="collapse">Свернуть</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="few">%d minutes left</item>
-        <item quantity="many">%d minutes left</item>
+        <item quantity="many">Осталось %d минут</item>
         <item quantity="other">%d minutes left</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>
         <item quantity="few">%1$d hours %2$d left</item>
         <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">Осталось %1$d часов %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$d left</item>
@@ -144,6 +145,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Поиск колод</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Поиск колоды</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Нет карточек на сегодня</string>
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизировать</string>
@@ -152,6 +156,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Продолжить синхронизацию</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизация отменена</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Отмена...\nЭто может занять некоторое время.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Экспортировать колоду</string>
     <string name="nothing">Ничего</string>
     <!-- Card template editor -->
@@ -176,7 +181,6 @@
         <item quantity="many">Удалить тип “%2$s” и его %1$d карточек?</item>
         <item quantity="other">Удалить тип “%2$s” и его %1$d карточек?</item>
     </plurals>
-    <string name="invalid_template">Невозможно сгенерировать карточку</string>
     <string name="card_template_editor_would_delete_note">При удалении этого типа карточек будут удалены записи. Сначала создайте и сохраните новый тип карточек.</string>
     <string name="card_template_editor_save_error">Не удаётся сохранить изменения в шаблоне: %s</string>
     <string name="template_for_current_card_deleted">Тип карточек текущей карточки был удалён.</string>
@@ -249,6 +253,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Возобновить перенос файлов</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Коллекция недоступна</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Не удаётся получить доступ к вашей коллекции, так как AnkiDroid был удалён из-за изменения политики Play Store\n\nВаши данные в безопасности и могут быть восстановлены. Они расположены в\n%s\n\nВыберите способ восстановления:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Восстановить из AnkiWeb (рекомендуемый)</string>
     <string name="install_non_play_store_ankidroid_recommended">Восстановить доступ к папке (рекомендуемый)</string>
     <string name="install_non_play_store_ankidroid">Восстановить доступ к папке (продвинутый)</string>

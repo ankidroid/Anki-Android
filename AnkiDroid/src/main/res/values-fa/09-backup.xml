@@ -50,7 +50,7 @@
     <string name="backup_new_collection">مجموعه جدید</string>
     <string name="backup_del_collection">حذف مجموعه و ایجاد یک مجموعه جدید دیگر</string>
     <string name="backup_del_collection_question">آیا واقعا می خواهید مجموعه را حذف کنید و یک مجموعه جدید دیگر ایجاد کنید؟ این عمل سبب از بین رفتن تمام اطلاعات فرایند یادگیری شما و حذف همۀ کارت‌ها خواهد شد.</string>
-    <string name="backup_full_sync_from_server">همگام‌سازی کامل از سرور</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">آیا شما واقعا می خواهید مجموعتان با یکی دیگر از طریق وب سایت آنکی بازنویسی شود؟ این عمل سبب از بین رفتن تمام اطلاعات پیشرفت یادگیری تان خواهد شد و اطلاعات از آخرین همگام سازی اضافه می شود!</string>
     <string name="error_handling_title">در حال بررسی خطا</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">گزینه ها</string>

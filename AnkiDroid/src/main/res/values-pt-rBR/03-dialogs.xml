@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Nenhum idioma de texto para fala disponível</string>
     <string name="tts_no_tts">Não fale</string>
     <string name="unused_strings">\n\nArquivos não utilizados:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Pré-visualizar</string>
     <string name="reposition_card_dialog_title">Reposicionar novo card</string>
     <string name="reposition_card_dialog_message">Posição inicial:</string>
     <string name="reposition_card_not_new_error">Apenas novos cards podem ser reposicionados</string>
@@ -246,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Devido às alterações de privacidade do Android, seus dados e cópias automáticas serão inacessíveis se o aplicativo for desinstalado.
     </string>
+    <string name="deck_already_exists">Baralho já existe</string>
 </resources>

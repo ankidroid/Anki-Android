@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Expandir</string>
     <string name="collapse">Contraer</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Queda %d minuto</item>
         <item quantity="other">Quedan %d minutos</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Buscar mazo</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Búsqueda de Mazo</string>
     <string name="invalid_deck_name">Nombre de mazo inválido</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Aún no hay tarjetas programadas.</string>
     <string name="sd_card_not_mounted">El almacenamiento del dispositivo no se encuentra montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continuar la sincronización</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronización cancelada</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelando&#8230;\nEsto puede tardar un poco.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Exportar mazo</string>
     <string name="nothing">Nada</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">¿Eliminar el tipo de tarjeta \'%2$s\' y su %1$d tarjeta?</item>
         <item quantity="other">¿Eliminar el tipo de tarjeta \'%2$s\' y sus %1$d tarjetas?</item>
     </plurals>
-    <string name="invalid_template">Una tarjeta no pudo ser generada</string>
     <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta causaría que se eliminaran una o más notas. Por favor, cree y guarde primero un nuevo tipo de tarjeta.</string>
     <string name="card_template_editor_save_error">No se pueden guardar los cambios de plantilla de tarjeta: %s</string>
     <string name="template_for_current_card_deleted">El tipo de tarjeta para la tarjeta actual fue eliminado.</string>
@@ -236,6 +240,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Reanudar migración</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Colección inaccesible</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">No podemos acceder a tu colección después de desinstalar AnkiDroid debido a un cambio en la política de Play Store\n\nTus datos están seguros y pueden ser restaurados. Están ubicados en\n%s\n\nSelecciona una opción debajo para restaurar:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restaurar desde AnkiWeb (recomendado)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restaurar acceso a la carpeta (recomendado)</string>
     <string name="install_non_play_store_ankidroid">Restaurar acceso a la carpeta (avanzado)</string>

@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">إسدال</string>
     <string name="collapse">إخفاء</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="zero">%d دقيقة متبقية</item>
         <item quantity="one">%d دقيقة متبقية</item>
@@ -150,6 +151,9 @@
     <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">بحث عن رزمة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">لا توجد بطاقات مستحقة بعد</string>
     <string name="sd_card_not_mounted">لا توجد وحدة تخزين خارجية</string>
     <string name="button_sync" comment="Text of the sync button">مزامنة</string>
@@ -158,6 +162,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">واصِل المزامنة</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">أُلغِيت المزامنة</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">جار الإلغاء&#8230;\nقد يستغرق الأمر بعض الوقت.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">تصدير الرزمة</string>
     <string name="nothing">فارغ</string>
     <!-- Card template editor -->
@@ -186,7 +191,6 @@
         <item quantity="many">هل تريد حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة بها؟</item>
         <item quantity="other">هل تريد حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة بها؟</item>
     </plurals>
-    <string name="invalid_template">لا يمكن إنشاء بطاقة</string>
     <string name="card_template_editor_would_delete_note">سيؤدي حذف نوع البطاقة هذا إلى حذف ملحوظة أو أكثر. الرجاء إنشاء نوع بطاقة جديد وحفظه أولًا.</string>
     <string name="card_template_editor_save_error">يتعذر حفظ تغييرات قالب البطاقة: %s</string>
     <string name="template_for_current_card_deleted">تم حذف نوع البطاقة للبطاقة الحالية.</string>
@@ -263,6 +267,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">استئناف النقل</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">فشل في الوصول إلى المجموعة</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">نحن غير قادرين على الوصول إلى مجموعتك بعد إلغاء تثبيت AnkiDroid بسبب تغيير في سياسة متجر \n Play\n البيانات الخاصة بك آمنة ويمكن استعادتها في\n%s\n\nحدد الخيار أدناه للاستعادة:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">استعادة من AnkiWeb (مستحسن)</string>
     <string name="install_non_play_store_ankidroid_recommended">استعادة الوصول إلى الملفات(مستحسن)</string>
     <string name="install_non_play_store_ankidroid">استعادة الوصول إلى الملفات (متقدم)</string>

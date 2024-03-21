@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
+    <string name="study_more">さらに学習</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">残り約%d分</item>
     </plurals>
@@ -135,6 +136,9 @@
     <string name="search_deck" comment="Deck search for selecting it">デッキ検索</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">デッキを検索</string>
     <string name="invalid_deck_name">無効なデッキ名です</string>
+    <string name="studyoptions_limit_reached">すでに一日の学習枚数の上限に達しています</string>
+    <string name="studyoptions_empty_schedule">このデッキでは、今日このあと出題予定の課題はありません</string>
+    <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの現在の課題をすべて達成しました！</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
@@ -143,6 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">同期を続行</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">同期がキャンセルされました</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">デッキをエクスポート</string>
     <string name="nothing">なし</string>
     <!-- Card template editor -->
@@ -161,7 +166,6 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">カードタイプ \'%2$s\' とそのカード%1$d枚を削除しますか？</item>
     </plurals>
-    <string name="invalid_template">カードを作成できませんでした</string>
     <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１枚または複数枚のノートが削除されます。先に新しいカードタイプを追加し保存してください。</string>
     <string name="card_template_editor_save_error">カードテンプレートの変更を保存できません: %s</string>
     <string name="template_for_current_card_deleted">現在のカードのカードタイプが削除されました。</string>
@@ -233,6 +237,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">移行を再開</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">アクセスできないコレクション</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid"> Playストアのプライバシーポリシーの変更により、AnkiDroidはアンインストール前のコレクションにはアクセスできなくなりました。\n\nコレクションは\n%s\nに保存されており、復元可能です。 \n\n復元するための選択肢は次の通りです:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">AnkiDroidを数か月使用していなかったため、 %1$s の権限が、Androidによって削除されました。\n\nあなたのコレクション（データ）自体は削除されておらず、使用を再開することも可能ですのでご安心ください。あなたのコレクションは次のフォルダに安全に保管されています：\n%2$s\n\nAnkiDroidの利用を再開するために、次の中からご希望の対処方法を選択してください。</string>
     <string name="restore_data_from_ankiweb">AnkiWebから復元 (推奨)</string>
     <string name="install_non_play_store_ankidroid_recommended">フォルダへのアクセスを回復 (推奨)</string>
     <string name="install_non_play_store_ankidroid">フォルダへのアクセスを回復 (高度)</string>

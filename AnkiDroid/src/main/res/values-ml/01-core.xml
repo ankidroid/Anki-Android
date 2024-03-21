@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">വികസിപ്പിക്കുക</string>
     <string name="collapse">ചുരുക്കുക</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">ഡെക്ക് തിരയൽ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">ഡെക്കിന്റെ പേര് അസാധുവാണ്</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">കാർഡുകളൊന്നും ഇതുവരെ ലഭിച്ചിട്ടില്ല</string>
     <string name="sd_card_not_mounted">ഉപകരണ സംഭരണം മ .ണ്ട് ചെയ്തിട്ടില്ല</string>
     <string name="button_sync" comment="Text of the sync button">സമന്വയിപ്പിക്കുക</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">സമന്വയം തുടരുക</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">സമന്വയം റദ്ദാക്കി</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">റദ്ദാക്കുന്നു&#8230; \ n ഇതിന് കുറച്ച് സമയമെടുത്തേക്കാം.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">കയറ്റുമതി ഡെക്ക്</string>
     <string name="nothing">ഒന്നുമില്ല</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">“%2$s” കാർഡ് തരവും അതിന്റെ %1$d കാർഡും ഇല്ലാതാക്കണോ?</item>
         <item quantity="other">“%2$s” കാർഡ് തരവും അതിന്റെ %1$d കാർഡുകളും ഇല്ലാതാക്കണോ?</item>
     </plurals>
-    <string name="invalid_template">ഒരു കാർഡ് സൃഷ്ടിക്കാൻ കഴിഞ്ഞില്ല</string>
     <string name="card_template_editor_would_delete_note">ഈ കാർഡ് തരം നീക്കംചെയ്യുന്നത് ഒന്നോ അതിലധികമോ കുറിപ്പുകൾ ഇല്ലാതാക്കാൻ കാരണമാകും. ആദ്യം ഒരു പുതിയ കാർഡ് തരം സൃഷ്ടിച്ച് സംരക്ഷിക്കുക.</string>
     <string name="card_template_editor_save_error">കാർഡ് ടെംപ്ലേറ്റ് മാറ്റങ്ങൾ സംരക്ഷിക്കാൻ കഴിയില്ല: %s</string>
     <string name="template_for_current_card_deleted">നിലവിലെ കാർഡിനായുള്ള കാർഡ് തരം ഇല്ലാതാക്കി.</string>
@@ -239,6 +243,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>

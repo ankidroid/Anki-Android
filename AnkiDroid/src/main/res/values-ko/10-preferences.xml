@@ -49,7 +49,7 @@
     <plurals name="pref_summ_minutes">
         <item quantity="other">%d mins</item>
     </plurals>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">검색 결과 없음</string>
     <!-- preferences.xml categories-->
@@ -197,8 +197,6 @@
     <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">타사 API 앱</string>
     <string name="thirdparty_apps_summary">Ankidroid API를 사용하는 어플 목록 보기 (사전, 편집기 등)</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML 자바스크립트 디버깅</string>
-    <string name="html_javascript_debugging_summ">원격 WebView 연결을 활성화하고, 카드 HTML을 AnkiDroid 디렉토리에 저장하기</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>
@@ -269,6 +267,7 @@
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
     <string name="user_action_1" maxLength="41">User action 1</string>
     <string name="user_action_2" maxLength="41">User action 2</string>
     <string name="user_action_3" maxLength="41">User action 3</string>

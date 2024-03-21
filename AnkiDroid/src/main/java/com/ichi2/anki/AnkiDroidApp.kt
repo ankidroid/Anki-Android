@@ -60,6 +60,7 @@ import com.ichi2.utils.Permissions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.Locale
@@ -134,7 +135,9 @@ open class AnkiDroidApp : Application() {
             UsageAnalytics.setDryRun(true)
         }
 
-        Timber.i(DebugInfoService.getDebugInfo(this))
+        applicationScope.launch {
+            Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
+        }
 
         // Stop after analytics and logging are initialised.
         if (CrashReportService.isProperServiceProcess()) {

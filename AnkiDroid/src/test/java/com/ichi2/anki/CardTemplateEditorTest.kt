@@ -22,7 +22,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.previewer.PreviewerActivity
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.assertFalse
 import org.hamcrest.MatcherAssert
@@ -106,9 +108,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         val startedIntent = shadowTestEditor.nextStartedActivity
         val shadowIntent = shadowOf(startedIntent)
         advanceRobolectricLooperWithSleep()
-        assertEquals("Previewer not started?", CardTemplatePreviewer::class.java.name, shadowIntent.intentClass.name)
-        assertNotNull("intent did not have model JSON filename?", startedIntent.getStringExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME))
-        assertNotEquals("Model sent to Previewer is unchanged?", testEditor.tempModel?.notetype, CardTemplateNotetype.getTempModel(startedIntent.getStringExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME)!!))
+        assertEquals("Previewer not started?", PreviewerActivity::class.java.name, shadowIntent.intentClass.name)
         assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
         shadowTestEditor.receiveResult(startedIntent, Activity.RESULT_OK, Intent())
 
@@ -195,10 +195,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_preview))
         val startedIntent = shadowTestEditor.nextStartedActivity
         val shadowIntent = shadowOf(startedIntent)
-        assertEquals("Previewer not started?", CardTemplatePreviewer::class.java.name, shadowIntent.intentClass.name)
-        assertNotNull("intent did not have model JSON filename?", startedIntent.getStringExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME))
-        assertEquals("intent did not have ordinal?", 1, startedIntent.getIntExtra("ordinal", -1))
-        assertNotEquals("Model sent to Previewer is unchanged?", testEditor.tempModel?.notetype, CardTemplateNotetype.getTempModel(startedIntent.getStringExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME)!!))
+        assertEquals("Previewer not started?", PreviewerActivity::class.java.name, shadowIntent.intentClass.name)
         assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
 
         // Save the change to the database and make sure there are two templates after
@@ -492,7 +489,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         assertEquals(
             "Did not show dialog about deleting template and it's card?",
-            getQuantityString(R.plurals.card_template_editor_confirm_delete, 0, 0, "Card 2"),
+            getQuantityString(R.plurals.card_template_editor_confirm_delete, 0, 0, CollectionManager.TR.cardTemplatesCard(2)),
             getAlertDialogText(true)
         )
         clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
@@ -602,6 +599,41 @@ class CardTemplateEditorTest : RobolectricTest() {
             getAlertDialogText(true)
         )
         clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
+    }
+
+    @Test
+    fun `template to markdown`() {
+        val template = CardTemplate(
+            front = "Hello World{{Front}}\n{{Extra}}",
+            back = "{{FrontSide}}\n",
+            style = ".card { }"
+        )
+
+        assertEquals(
+            "markdown formatted template",
+"""
+**Front template**
+
+```html
+Hello World{{Front}}
+{{Extra}}
+```
+
+**Back template**
+
+```html
+{{FrontSide}}
+
+```
+
+**Styling**
+
+```css
+.card { }
+```
+""".trim(),
+            template.toMarkdown(targetContext)
+        )
     }
 
     private fun getModelCardCount(notetype: NotetypeJson): Int {

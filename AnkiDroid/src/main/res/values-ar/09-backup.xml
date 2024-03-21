@@ -50,7 +50,7 @@
     <string name="backup_new_collection">مجموعة جديدة</string>
     <string name="backup_del_collection">حذف المجموعة وإنشاء واحدة جديدة</string>
     <string name="backup_del_collection_question">هل أنت متأكد من حذف المجموعة وإنشاء واحدة جديدة؟ سيحذف هذا كل تقدمك والبطاقات.</string>
-    <string name="backup_full_sync_from_server">مزامنة كاملة من الخادم</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">هل تريد استبدال مجموعتك بالمجموعة في أنكي ويب؟ سيحذف هذا كل تقدمك والمعلومات المضافة منذ آخر مزامنة.</string>
     <string name="error_handling_title">معالجة الأخطاء</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">خيارات</string>

@@ -18,6 +18,7 @@
 
 package com.ichi2.utils
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
 import android.text.InputFilter
@@ -31,6 +32,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
@@ -216,6 +218,20 @@ fun AlertDialog.Builder.customListAdapter(adapter: RecyclerView.Adapter<*>) {
 }
 
 /**
+ * Adds a RecyclerView with a custom adapter and decoration to the AlertDialog.
+ * @param adapter The adapter for the RecyclerView.
+ * @param context The context used to access resources and LayoutInflater.
+ */
+fun AlertDialog.Builder.customListAdapterWithDecoration(adapter: RecyclerView.Adapter<*>, context: Context) {
+    val recyclerView = LayoutInflater.from(context).inflate(R.layout.dialog_generic_recycler_view, null, false) as RecyclerView
+    recyclerView.adapter = adapter
+    recyclerView.layoutManager = LinearLayoutManager(context)
+    val dividerItemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL)
+    recyclerView.addItemDecoration(dividerItemDecoration)
+    this.setView(recyclerView)
+}
+
+/**
  * @param hint The hint text to be displayed to the user
  * @param prefill The text to initially appear in the [EditText]
  * @param allowEmpty If true, [DialogInterface.BUTTON_POSITIVE] is disabled if the [EditText] is empty
@@ -302,6 +318,8 @@ val AlertDialog.positiveButton: Button
 
 /**
  * Extension function for AlertDialog.Builder to set a list of items.
+ * Items are not displayed if [AlertDialog.Builder.setMessage] has been called
+ *
  * @param items The items to display in the list.
  * @param onClick A lambda function that is invoked when an item is clicked.
  */

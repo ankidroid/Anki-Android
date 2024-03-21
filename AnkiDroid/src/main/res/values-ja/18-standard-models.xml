@@ -31,8 +31,6 @@
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">テキスト</string>
     <string name="extra_field_name_new">裏面追記</string>
     <string name="field_to_ask_front_name">任意の入力で反転カード追加</string>
-    <!--Card type-->
-    <string name="card_n_name">カード %d</string>
     <!--Note type-->
     <string name="basic_model_name">基本</string>
     <string name="cloze_model_name">穴埋め問題</string>

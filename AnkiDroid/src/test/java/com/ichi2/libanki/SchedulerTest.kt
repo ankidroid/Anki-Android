@@ -178,20 +178,20 @@ open class SchedulerTest : JvmTest() {
             col.addNote(note)
         }
         // give the child deck a different configuration
-        val c2 = col.decks.confId("new conf")
-        col.decks.setConf(col.decks.get(deck2)!!, c2)
+        val c2 = col.decks.addConfigReturningId("new conf")
+        col.decks.setConfigIdForDeckDict(col.decks.get(deck2)!!, c2)
         // both confs have defaulted to a limit of 20
         Assert.assertEquals(20, col.sched.newCount().toLong())
         // first card we get comes from parent
         val c = col.sched.card!!
         Assert.assertEquals(1, c.did)
         // limit the parent to 10 cards, meaning we get 10 in total
-        val conf1 = col.decks.confForDid(1)
+        val conf1 = col.decks.configDictForDeckId(1)
         conf1.getJSONObject("new").put("perDay", 10)
         col.decks.save(conf1)
         Assert.assertEquals(10, col.sched.newCount().toLong())
         // if we limit child to 4, we should get 9
-        val conf2 = col.decks.confForDid(deck2)
+        val conf2 = col.decks.configDictForDeckId(deck2)
         conf2.getJSONObject("new").put("perDay", 4)
         col.decks.save(conf2)
         Assert.assertEquals(9, col.sched.newCount().toLong())
@@ -339,7 +339,7 @@ open class SchedulerTest : JvmTest() {
             type = CARD_TYPE_REV
         }
         col.updateCard(c, skipUndoEntry = true)
-        val conf = col.decks.confForDid(1)
+        val conf = col.decks.configDictForDeckId(1)
         conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
         col.decks.save(conf)
 
@@ -492,7 +492,7 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals(2650, c.factor)
         // leech handling
         // //////////////////////////////////////////////////////////////////////////////////////////////////
-        val conf = col.decks.getConf(1)
+        val conf = col.decks.getConfig(1)
         conf.getJSONObject("lapse").put("leechAction", LEECH_SUSPEND)
         col.decks.save(conf)
         cardcopy.clone().update { lapses = 7 }
@@ -552,7 +552,7 @@ open class SchedulerTest : JvmTest() {
         )
 
         // if hard factor is <= 1, then hard may not increase
-        val conf = col.decks.confForDid(1)
+        val conf = col.decks.configDictForDeckId(1)
         conf.getJSONObject("rev").put("hardFactor", 1)
         col.decks.save(conf)
         Assert.assertEquals(
@@ -606,7 +606,7 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Front", "one")
         note.setItem("Back", "two")
         col.addNote(note)
-        val conf = col.decks.confForDid(1)
+        val conf = col.decks.configDictForDeckId(1)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(0.5, 3.0, 10.0)))
         conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf(1.0, 5.0, 9.0)))
         col.decks.save(conf)

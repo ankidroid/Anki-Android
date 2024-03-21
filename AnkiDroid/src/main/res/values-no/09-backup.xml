@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Ny samling</string>
     <string name="backup_del_collection">Slett samling og lag ny</string>
     <string name="backup_del_collection_question">Vil du virkelig slette samlingen og lage en ny? Det kommer til å slette all framgangs-informasjonen din, og slette alle kort!</string>
-    <string name="backup_full_sync_from_server">Full synkronisering fra serveren</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Vil du virkelig skrive over samlingen din med den fra AnkiWeb? Det sletter all fremgangs-informasjonen og informasjon du har lagt til siden siste synkronisering!</string>
     <string name="error_handling_title">Feilbehandling</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Alternativer</string>

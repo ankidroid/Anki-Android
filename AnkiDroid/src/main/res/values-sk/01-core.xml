@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Rozbaliť</string>
     <string name="collapse">Zbaliť</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="few">%d minutes left</item>
@@ -144,6 +145,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Vyhľadávanie v balíčku</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Vyhľadávanie v balíčku</string>
     <string name="invalid_deck_name">Neplatný názov balíčka</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Ešte nie sú žiadne kartičky na preskúšanie</string>
     <string name="sd_card_not_mounted">Ukladacie zariadenie nepripojené</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizácia</string>
@@ -152,6 +156,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Pokračovať v synchronizácii</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronizácia zrušená</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Ruší sa synchronizácia&#8230;\nMôže to chvíľu trvať.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Exportovať balíček</string>
     <string name="nothing">Nič</string>
     <!-- Card template editor -->
@@ -176,7 +181,6 @@
         <item quantity="many">Vymazať “%2$s” typov kartičiek a ich %1$d kartičiek?</item>
         <item quantity="other">Vymazať “%2$s” typov kartičiek a ich %1$d kartičiek?</item>
     </plurals>
-    <string name="invalid_template">Kartičku nie je možné vygenerovať</string>
     <string name="card_template_editor_would_delete_note">Odstránenie tejto kartičky by spôsobilo, že jedna alebo viac poznámok by bola vymazaná. Prosím vytvorte a uložte najprv nový typ kartičky.</string>
     <string name="card_template_editor_save_error">Nepodarilo sa uložiť zmeny pre šablóny kartičiek: %s</string>
     <string name="template_for_current_card_deleted">Typ kartičky pre aktuálnu kartičku bol vymazaný.</string>
@@ -251,6 +255,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>

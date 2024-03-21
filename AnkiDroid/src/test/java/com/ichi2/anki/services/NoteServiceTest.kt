@@ -57,7 +57,7 @@ class NoteServiceTest : RobolectricTest() {
         multiMediaNote!!.getField(0)!!.text = "foo"
         multiMediaNote.getField(1)!!.text = "bar"
 
-        val basicNote = Note.fromNotetypeId(col, testModel.id).apply {
+        val basicNote = col.run { Note.fromNotetypeId(testModel.id) }.apply {
             setField(0, "this should be changed to foo")
             setField(1, "this should be changed to bar")
         }
@@ -78,7 +78,7 @@ class NoteServiceTest : RobolectricTest() {
         testNotetype = col.notetypes.newBasicNotetype()
         testNotetype.id = 45
         col.notetypes.add(testNotetype)
-        val noteWithID45 = Note.fromNotetypeId(col, testNotetype.id)
+        val noteWithID45 = col.run { Note.fromNotetypeId(testNotetype.id) }
         val expectedException: Throwable = assertThrows(RuntimeException::class.java) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
         assertEquals(expectedException.message, "Source and Destination Note ID do not match.")
     }

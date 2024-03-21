@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Extindeți</string>
     <string name="collapse">Restrângeți</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="few">%d minutes left</item>
@@ -141,6 +142,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Căutare Pachete</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Căutare Pachete</string>
     <string name="invalid_deck_name">Nume pachet invalid</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Niciun cartonaș scadent</string>
     <string name="sd_card_not_mounted">Cardul SD nu a fost găsit</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizare</string>
@@ -149,6 +153,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continuați sincronizarea</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronizare anulată</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Anulare&#8230;\nAceasta poate dura ceva timp.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Exportați pachetul</string>
     <string name="nothing">Nimic</string>
     <!-- Card template editor -->
@@ -171,7 +176,6 @@
         <item quantity="few">Delete the “%2$s” card type, and its %1$d cards?</item>
         <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
     </plurals>
-    <string name="invalid_template">Cartonașul nu a putut fi generat</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
@@ -245,6 +249,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Colecție inaccesibilă</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Nu putem accesa colecția ta după ce AnkiDroid este dezinstalat din cauza unei schimbări în Politica Magazinului Play.\n\nDatele tale sunt sigure și pot fi restaurate. Se află la\n%s\n\nSelectați una din opțiunile de mai jos pentru a le restaura:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restaurează din AnkiWeb (recomandat)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restaurează accesul la dosar (recomandat)</string>
     <string name="install_non_play_store_ankidroid">Restaurează accesul la dosar (avansat)</string>

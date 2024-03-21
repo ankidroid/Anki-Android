@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Paplašināt</string>
     <string name="collapse">Sakļaut</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="zero">%d minutes left</item>
         <item quantity="one">%d minute left</item>
@@ -141,6 +142,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Kavu pārlūks</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kavu meklētājs</string>
     <string name="invalid_deck_name">Nederīgs kavas nosaukums</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Nav gaidāmu kāršu</string>
     <string name="sd_card_not_mounted">Ierīces krātuve nav uzstādīta</string>
     <string name="button_sync" comment="Text of the sync button">Saskaņošana</string>
@@ -149,6 +153,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Turpināt</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Saskaņošana atcelta</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Pārtrauc&#8230;\nTas var aizņemt labu laiku.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">izrakstīt kavu</string>
     <string name="nothing">Nekā</string>
     <!-- Card template editor -->
@@ -171,7 +176,6 @@
         <item quantity="one">Izdzēst “%2$s” veidu un tā %1$d kārti?</item>
         <item quantity="other">Izdzēst “%2$s” veidu un tā %1$d kārtis?</item>
     </plurals>
-    <string name="invalid_template">Neizdevās izveidot</string>
     <string name="card_template_editor_would_delete_note">Izdzēšot šo kāršu veidu, daži raksti var tikt dzēsti līdzi. Lūdzu, vispirms izveidojiet jaunu kāršu veidu.</string>
     <string name="card_template_editor_save_error">Neizdevās saglabāt veidnes izmaiņas: %s</string>
     <string name="template_for_current_card_deleted">Šīs kārts veids tika izdzēsts</string>
@@ -245,6 +249,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Nepieejams krājums</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Mēs nespējam piekļūt jūsu krājumam pēc  AnkiDroid atstādīšanas dēļ Play Store noteikumiem\n\nTavi dati ir drošībā un var tikt atgūti. Tie atrodas\n%s\n\nIzvēlies atgūšanas veidu:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Atgūt no AnkiWeb (ieteikts)</string>
     <string name="install_non_play_store_ankidroid_recommended">Atgūt dotņu pieeju (ieteikts)</string>
     <string name="install_non_play_store_ankidroid">Atgūt dotņu pieeju (sarežģīti)</string>

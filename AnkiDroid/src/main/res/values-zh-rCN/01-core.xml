@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">展开</string>
     <string name="collapse">折叠</string>
+    <string name="study_more">继续学习</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">剩余 %d 分钟</item>
     </plurals>
@@ -135,6 +136,9 @@
     <string name="search_deck" comment="Deck search for selecting it">牌组搜索</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">牌组搜索</string>
     <string name="invalid_deck_name">无效的牌组名称</string>
+    <string name="studyoptions_limit_reached">达到每日学习限制</string>
+    <string name="studyoptions_empty_schedule">计划中没有需要学习的卡片</string>
+    <string name="studyoptions_congrats_finished">恭喜！你已经完成了目前的学习任务。</string>
     <string name="studyoptions_no_cards_due">没有卡片待复习。</string>
     <string name="sd_card_not_mounted">未挂载储存设备</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
@@ -143,6 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">继续同步</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">同步已取消</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">正在取消&#8230;\n这可能需要一点时间。</string>
+    <string name="syncing_media">同步媒体中</string>
     <string name="export_deck">导出牌组</string>
     <string name="nothing">无</string>
     <!-- Card template editor -->
@@ -161,7 +166,6 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">确定删除「%2$s」卡片模板和它包含的 %1$d 张卡片吗？</item>
     </plurals>
-    <string name="invalid_template">无法生成卡片</string>
     <string name="card_template_editor_would_delete_note">移除此卡片模板将删除一个或多个笔记。请首先创建并保存一个新的卡片模板。</string>
     <string name="card_template_editor_save_error">无法保存卡片模板更改：%s</string>
     <string name="template_for_current_card_deleted">当前卡片的卡片模板已被删除。</string>
@@ -233,6 +237,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">恢复迁移</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">无法访问牌组</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">卸载 AnkiDroid 后由于 Play Store 政策更改，我们无法访问您的牌组\n\n您的数据是安全的且可以被恢复。数据位于\n%s\n\n选择下方的一个选项进行还原：</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">由于不活跃，系统移除了AnkiDroid的 %1$s 权限。\n\n您的数据是安全的，可以恢复。 它位于\n%2$s\n\n选择下方的一个选项来进行恢复：</string>
     <string name="restore_data_from_ankiweb">从 AnkiWeb 还原（推荐）</string>
     <string name="install_non_play_store_ankidroid_recommended">还原文件夹访问权限（推荐）</string>
     <string name="install_non_play_store_ankidroid">还原文件夹访问权限（高级）</string>

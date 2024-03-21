@@ -59,17 +59,18 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Nagyítás</string>
     <string name="collapse">Összecsukás</string>
+    <string name="study_more">Tanulj többet</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d perc van hátra</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d óra %2$d maradt</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d nap %2$d van hátra</item>
+        <item quantity="other">%1$d nap %2$d van hátra</item>
     </plurals>
     <string name="no_cards_placeholder_title">Üres gyűjtemény</string>
     <string name="no_cards_placeholder_description">Adj hozzá kártyákat\na + ikon használatával</string>
@@ -84,19 +85,19 @@
     <string name="ease_button_easy">Könnyű</string>
     <string name="menu_import">Importálás</string>
     <string name="undo">Visszavonás</string>
-    <string name="redo">Újra</string>
+    <string name="redo">Mégis</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Utolsó vonal törlése</string>
     <string name="move_all_to_deck">Összes pakli áthelyezése</string>
     <string name="unbury">Félretétel megszüntetése</string>
     <string name="rename_deck">Pakli átnevezése</string>
     <string name="create_shortcut">Kezdőképernyőre</string>
-    <string name="browse_cards">cards</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="browse_cards">Kártyák átnézése</string>
+    <string name="edit_deck_description" comment="edit the deck description">Megjegyzés szerkesztése</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Hozzáadás</string>
     <string name="menu_add_note">Megjegyzés hozzáadása</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Fiók szinkronizálása</string>
     <string name="menu_dismiss_note">Elrejtés / Törlés</string>
-    <string name="menu_bury_card">Kártya holnapra halasztása</string>
+    <string name="menu_bury_card">Kártya félretétele</string>
     <string name="menu_bury_note">Jegyzet holnapra halasztása</string>
     <string name="menu_suspend_card">Kártya felfüggesztése</string>
     <string name="menu_suspend_note">Jegyzet felfüggesztése</string>
@@ -129,7 +130,7 @@
     <string name="startup_no_storage_permission">A folytatáshoz kérjük engedélyezze, hogy az AnkiDroid hozzáférhessen a tárhelyhez</string>
     <string name="rebuild_filtered_deck">Szűrt pakli újraépítése</string>
     <string name="rebuild_cram_label">Újraépítés</string>
-    <string name="empty_cram_label">Kiürítés</string>
+    <string name="empty_cram_label">Kiürít</string>
     <string name="create_subdeck">Alcsoportok létrehozása</string>
     <string name="empty_filtered_deck">Szűrt pakli kiürítése</string>
     <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Paklik keresése</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Paklik keresése</string>
     <string name="invalid_deck_name">Érvénytelen paklinév</string>
+    <string name="studyoptions_limit_reached">Elérted a napi tanulási mennyiséget</string>
+    <string name="studyoptions_empty_schedule">A tanuláshoz nincsenek kártyák ütemezve</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Jelenleg nincs esedékes kártya</string>
     <string name="sd_card_not_mounted">Nincs elérhető tárolóhely</string>
     <string name="button_sync" comment="Text of the sync button">Szinkronizálás</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Szinkronizálás folytatása</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Szinkronizálás megszakítva</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Visszavonás&#8230;\nEz eltarthat egy darabig.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Pakli exportálása</string>
     <string name="nothing">Semmi</string>
     <!-- Card template editor -->
@@ -156,7 +161,7 @@
     <string name="card_template_editor_menu_card_browser_appearance">A kártya böngésző kinézete</string>
     <string name="card_template_editor_deck_override">Kártyacsomag felülírása</string>
     <string name="card_template_editor_insert_field">Mező beszúrása</string>
-    <string name="card_template_editor_select_field">Válasszon mezőt</string>
+    <string name="card_template_editor_select_field">Válassz mezőt</string>
     <string name="card_template_editor_cant_delete">Legalább egy kártya típus szükséges</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">Ez a művelet %1$d kártyát hoz létre. Folytatja?</item>
@@ -166,7 +171,6 @@
         <item quantity="one">Törlöd a “%2$s” és a %1$d kártya típusát?</item>
         <item quantity="other">Törlöd a “%2$s” kártyatípust és a %1$d kártyákat?</item>
     </plurals>
-    <string name="invalid_template">A kártya nem hozható létre</string>
     <string name="card_template_editor_would_delete_note">A kártyatípus eltávolítása egy vagy több megjegyzés törlését okozhatja. Először hozz létre és ments el egy új kártyatípust.</string>
     <string name="card_template_editor_save_error">Nem lehet elmenteni a kártya sablonjának változásait: %s</string>
     <string name="template_for_current_card_deleted">A kártya típusa törölve lett.</string>
@@ -238,6 +242,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Áthelyezés folytatása</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Gyűjtemény nem elérhelő</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Az AnkiDroid eltávolítása után nem tudunk hozzáférni a gyűjteményedhez a Play Áruház Szabályzatban történt változás miatt.\n\nAz adatok biztonságban vannak, és visszaállíthatók. A következő helyen találhatóak:\n%s\n\nVálassz az alábbi lehetőségek közül a visszaállításhoz:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Visszaállítás az AnkiWebről (ajánlott)</string>
     <string name="install_non_play_store_ankidroid_recommended">Mappahozzáférés visszaállítása (ajánlott)</string>
     <string name="install_non_play_store_ankidroid">Mappahozzáférés visszaállítása (haladó)</string>

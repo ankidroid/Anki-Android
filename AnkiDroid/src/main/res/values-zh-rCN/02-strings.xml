@@ -137,10 +137,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid卡片</string>
     <string name="note_editor_copy_note">复制笔记</string>
-    <string name="card_editor_reposition_card">更改位置</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">更改位置</string>
     <string name="card_editor_reset_card">重设学习进度</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">重新安排</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">预览</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">以 Markdown 格式复制</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d 中的 %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">重命名</string>
     <string name="checks_action">检查</string>
@@ -200,7 +201,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">系统中没有安装可以执行此操作的应用程序。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相机图像可能偏大。您可能希望在媒体目录中压缩并调整图像大小]]></string>
-    <string name="no_browser_notification">未找到浏览器，请通过 PC 或移动设备访问网页： </string>
+    <string name="no_browser_msg">未找到打开链接的浏览器: %s</string>
     <string name="web_page_error">加载页面出错：%s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -209,9 +210,6 @@
     <string name="remove_background_image">去除背景</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">恢复初始设置</string>
-    <string name="cloze_sample_text">这是一个 {{%1$s::示例}} 填空题。</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">示例</string>
-    <string name="basic_answer_sample_text">一个示例</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">保存白板图像失败。 %s</string>
@@ -302,7 +300,7 @@
     <string name="migration_part_1_done_resume">您可以继续使用 AnkiDroid 了。
 \n存储迁移将在后台继续。</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s 不是一个有效的 JavaScript 附加组件包</string>
+    <string name="not_valid_js_addon_package">%s 不是一个有效的 JavaScript 附加组件包</string>
     <string name="could_not_create_dir">无法创建目录 %s</string>
     <string name="malicious_archive_entry_outside">恶意压缩文件。包含目标目录外的条目： %s</string>
     <string name="malicious_archive_exceeds_limit">恶意压缩文件。大小超过 %1$s 或包含超过 %2$d 个文件</string>
@@ -317,6 +315,8 @@
     <string name="intro_short_ankidroid_explanation">Anki 的卡片调度器通过增强你最薄弱的记忆和保存你最强大的记忆来节省时间</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">开始</string>
     <string name="intro_sync_from_ankiweb">从 AnkiWeb 同步</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid 尚未初始化。请打开 AnkiDroid，然后再试</string>
     <string name="already_logged_in">已经登录</string>
     <!-- Deck Creation -->
     <string name="deck_created">已创建牌组</string>
@@ -355,4 +355,5 @@
     <string name="deck_description_field_hint">描述</string>
     <string name="failed_to_copy">复制失败</string>
     <string name="card_browser_unavailable_when_notes_mode">在“笔记”模式中不可用</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">更改位置</string>
 </resources>

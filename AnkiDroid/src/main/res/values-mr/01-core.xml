@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">विस्तृत करा</string>
     <string name="collapse">कोसळणे</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">डेक शोध</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">डेक शोध</string>
     <string name="invalid_deck_name">अवैध डेक नाव</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">अद्याप कोणतीही कार्ड शिल्लक नाही</string>
     <string name="sd_card_not_mounted">डिव्हाइस संचयन आरोहित नाही</string>
     <string name="button_sync" comment="Text of the sync button">समक्रमित करा</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">संकालन सुरू ठेवा</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">संकालन रद्द केले</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द करीत आहे... \n यास काही वेळ लागू शकेल.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">निर्यात डेक</string>
     <string name="nothing">काही नाही</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">“%2$s” कार्ड प्रकार आणि त्याचे %1$d कार्ड हटवायचे?</item>
         <item quantity="other">“%2$s” कार्ड प्रकार आणि त्याची %1$d कार्ड हटवायची?</item>
     </plurals>
-    <string name="invalid_template">कार्ड व्युत्पन्न करणे शक्य नाही</string>
     <string name="card_template_editor_would_delete_note">हा कार्ड प्रकार हटविल्यामुळे एक किंवा अधिक नोट्स हटविल्या जाऊ शकतात. कृपया प्रथम एक नवीन कार्ड प्रकार तयार करा आणि जतन करा.</string>
     <string name="card_template_editor_save_error">कार्ड टेम्पलेट बदल जतन करण्यात अक्षम:%s</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्डासाठी कार्ड प्रकार हटविला गेला.</string>
@@ -239,6 +243,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">स्थलांतर पुन्हा सुरू करा</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">अगम्य संग्रह</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store धोरणातील बदलामुळे AnkiDroid अनइंस्टॉल केल्यानंतर आम्ही तुमच्या संग्रहात प्रवेश करू शकत नाही \n\n तुमचा डेटा सुरक्षित आहे आणि तो पुनर्संचयित केला जाऊ शकतो. ते \n%s वर स्थित आहे \n\n पुनर्संचयित करण्यासाठी खालील पर्याय निवडा:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">AnkiWeb वरून पुनर्संचयित करा (शिफारस केलेले)</string>
     <string name="install_non_play_store_ankidroid_recommended">फोल्डर प्रवेश पुनर्संचयित करा (शिफारस केलेले)</string>
     <string name="install_non_play_store_ankidroid">फोल्डर प्रवेश पुनर्संचयित करा (प्रगत)</string>

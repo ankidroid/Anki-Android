@@ -54,7 +54,7 @@
         <item quantity="many">%d دقيقة</item>
         <item quantity="other">%d دقيقة</item>
     </plurals>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">لا نتائج</string>
     <!-- preferences.xml categories-->
@@ -207,8 +207,6 @@
     <string name="reset">إعادة ضبط</string>
     <string name="thirdparty_apps_title" maxLength="41">تطبيقات الطرف الثالث التي تستخدم واجهة البرمجة</string>
     <string name="thirdparty_apps_summary">اطلع على قائمة تطبيقات تستخدم واجهة برمجة أنكيدرويد مثل القواميس، والأدوات.</string>
-    <string name="html_javascript_debugging" maxLength="41">تصحيح أخطاء HTML / جافا سكريبت</string>
-    <string name="html_javascript_debugging_summ">تمكين اتصالات عارض الويب البعيدة، وحفظ HTML البطاقة إلى مجلد أنكيدرويد</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">شاشة المراجعة</string>
     <string name="show_deck_title" maxLength="41">إظهار عنوان المجموعة</string>
@@ -279,6 +277,7 @@
     <string name="binding_add_axis">إضافة وحدة عصا التحكم أو جهاز التحرك/حركة</string>
     <string name="axis_picker_move_joystick">نقل وحدة عصا التحكم أو جهاز التحرك/حركة</string>
     <string name="user_actions" maxLength="41">إجراءات المستخدم</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
     <string name="user_action_1" maxLength="41">إجراء رقم 1</string>
     <string name="user_action_2" maxLength="41">إجراء رقم 2</string>
     <string name="user_action_3" maxLength="41">إجراء رقم 3</string>

@@ -143,10 +143,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Картка AnkiDroid</string>
     <string name="note_editor_copy_note">Скапіяваць нататку</string>
-    <string name="card_editor_reposition_card">Перамясціць</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Перамясціць</string>
     <string name="card_editor_reset_card">Скінуць дасягненні</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перапланаваць</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Папярэдні прагляд</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d з %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Перайменаваць</string>
     <string name="checks_action">Праверыць</string>
@@ -209,7 +210,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">У сістэме адсутнічае ўсталяваная праграма, якая можа выканаць гэта дзеянне.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Відарысы камеры могуць быць надта вялікімі. Магчыма, што вы захочаце сціснуць або змяніць іх памер у адпаведным каталогу]]></string>
-    <string name="no_browser_notification">Браўзер не знойдзены. Вы можаце наведаць вэб-старонку з камп\'ютара або мабільнай прылады: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Памылка загрузкі старонкі: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -218,9 +219,6 @@
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Вярнуцца да прадвызначаных</string>
-    <string name="cloze_sample_text">Гэта {{%1$s::sample}} заданне з пропускамі.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">праклад</string>
-    <string name="basic_answer_sample_text">прыклад</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пуста</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Не атрымалася захаваць відарыс дошкі. %s</string>
@@ -314,7 +312,7 @@
     <string name="migration_part_1_done_resume">Вы можаце працягваць выкарыстоўваць AnkiDroid.
 \nПеранос сховішча будзе працягнуты ў фонавым рэжыме.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s не з\'яўляецца сапраўдным пакетам дадатку JavaScript</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Не атрымалася стварыць каталог %s</string>
     <string name="malicious_archive_entry_outside">Шкодны архіў. Змяшчае запіс па-за межамі мэтавага каталога: %s</string>
     <string name="malicious_archive_exceeds_limit">Шкодны архіў. Памер перавышае %1$s або змяшчае больш %2$d файлаў</string>
@@ -329,6 +327,8 @@
     <string name="intro_short_ankidroid_explanation">Запланаваныя карткі Anki ашчаджаюць час узмацняючы вашу ненадзейную памяць і трымаюць яе ў тонусе</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Пачаць працу</string>
     <string name="intro_sync_from_ankiweb">Сінхранізаваць з AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">Вы ўжо ўвайшлі</string>
     <!-- Deck Creation -->
     <string name="deck_created">Створаная калода</string>
@@ -367,4 +367,5 @@
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
 </resources>

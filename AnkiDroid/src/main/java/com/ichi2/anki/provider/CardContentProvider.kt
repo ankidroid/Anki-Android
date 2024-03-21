@@ -454,7 +454,7 @@ class CardContentProvider : ContentProvider() {
                     isDeckUpdate = key == FlashCardsContract.Card.DECK_ID
                     did = values.getAsLong(key)
                 }
-                require(!col.decks.isDyn(did)) { "Cards cannot be moved to a filtered deck" }
+                require(!col.decks.isFiltered(did)) { "Cards cannot be moved to a filtered deck" }
                 /* now update the card
                  */if (isDeckUpdate && did >= 0) {
                     Timber.d("CardContentProvider: Moving card to other deck...")
@@ -495,7 +495,7 @@ class CardContentProvider : ContentProvider() {
                         updated++
                     }
                     if (newDid != null) {
-                        if (col.decks.isDyn(newDid.toLong())) {
+                        if (col.decks.isFiltered(newDid.toLong())) {
                             throw IllegalArgumentException("Cannot set a filtered deck as default deck for a model")
                         }
                         model!!.put("did", newDid)
@@ -693,7 +693,7 @@ class CardContentProvider : ContentProvider() {
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        if (col.decks.isDyn(deckId)) {
+        if (col.decks.isFiltered(deckId)) {
             throw IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes")
         }
         col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null)))
@@ -710,7 +710,7 @@ class CardContentProvider : ContentProvider() {
             }
             val fldsArray = Utils.splitFields(flds)
             // Create empty note
-            val newNote = Note.fromNotetypeId(col, thisModelId)
+            val newNote = col.run { Note.fromNotetypeId(thisModelId) }
             // Set fields
             // Check that correct number of flds specified
             if (fldsArray.size != newNote.fields.size) {
@@ -754,7 +754,7 @@ class CardContentProvider : ContentProvider() {
                 val tags = values.getAsString(FlashCardsContract.Note.TAGS)
 //                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
                 // Create empty note
-                val newNote = Note.fromNotetypeId(col, modelId) // ué
+                val newNote = col.run { Note.fromNotetypeId(modelId) }
                 // Set fields
                 val fldsArray = Utils.splitFields(flds)
                 // Check that correct number of flds specified
@@ -792,7 +792,7 @@ class CardContentProvider : ContentProvider() {
                 if (modelName == null || fieldNames == null || numCards == null) {
                     throw IllegalArgumentException("Model name, field_names, and num_cards can't be empty")
                 }
-                if (did != null && col.decks.isDyn(did)) {
+                if (did != null && col.decks.isFiltered(did)) {
                     throw IllegalArgumentException("Cannot set a filtered deck as default deck for a model")
                 }
                 // Create a new model
@@ -807,7 +807,7 @@ class CardContentProvider : ContentProvider() {
                     // Add some empty card templates
                     var idx = 0
                     while (idx < numCards) {
-                        val cardName = context!!.resources.getString(R.string.card_n_name, idx + 1)
+                        val cardName = CollectionManager.TR.cardTemplatesCard(idx + 1)
                         val t = Notetypes.newTemplate(cardName)
                         t.put("qfmt", "{{${allFields[0]}}}")
                         var answerField: String? = allFields[0]
@@ -1132,10 +1132,10 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Deck.DECK_ID -> rb.add(id)
                 FlashCardsContract.Deck.DECK_COUNTS -> rb.add(deckCounts)
                 FlashCardsContract.Deck.OPTIONS -> {
-                    val config = col.decks.confForDid(id).toString()
+                    val config = col.decks.configDictForDeckId(id).toString()
                     rb.add(config)
                 }
-                FlashCardsContract.Deck.DECK_DYN -> rb.add(col.decks.isDyn(id))
+                FlashCardsContract.Deck.DECK_DYN -> rb.add(col.decks.isFiltered(id))
                 FlashCardsContract.Deck.DECK_DESC -> {
                     val desc = col.decks.current().description
                     rb.add(desc)

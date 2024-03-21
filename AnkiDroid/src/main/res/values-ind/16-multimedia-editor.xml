@@ -42,7 +42,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Tambah gambar</string>
     <string name="multimedia_editor_popup_audio_clip">Tambah klip audio</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Tambahkan klip video</string>
     <string name="multimedia_editor_popup_audio">Rekam audio</string>
     <string name="multimedia_editor_popup_text">Editor lanjutan</string>
     <string name="multimedia_editor_popup_cloze">Deletasi kloza (titik-titik)</string>
@@ -71,7 +71,7 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Ada yang salah</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
+    <string name="multimedia_editor_svg_preview">SVG tidak tersedia untuk ditampilkan</string>
     <string name="multimedia_editor_png_paste_error">Gagal mengkonversi gambar di papan klip ke png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Lampirkan isi multimedia ke kolom %1$s</string>
     <string name="multimedia_editor_attach_media">Lampirkan media</string>
@@ -88,5 +88,5 @@
     <string name="save_dialog_content">Saat ini gambar berukuran %sMB. Batas ukuran gambar adalah 1MB. Apa kamu ingin memangkasnya?</string>
     <string name="select_image_failed">"Memilih gambar gagal, coba lagi"</string>
     <string name="activity_result_unexpected">Aplikasi mengembalikan nilai tak terduga. Kamu bisa menggunakan aplikasi lain</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Konten Kolom</string>
 </resources>

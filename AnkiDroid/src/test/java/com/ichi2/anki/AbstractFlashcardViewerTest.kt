@@ -8,10 +8,10 @@ import android.content.Intent
 import android.os.Build
 import android.webkit.RenderProcessGoneDetail
 import androidx.annotation.CheckResult
-import androidx.annotation.RequiresApi
 import androidx.core.content.IntentCompat
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SdkSuppress
 import anki.config.ConfigKey
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1
@@ -54,7 +54,7 @@ import java.util.stream.Stream
 import com.ichi2.anim.ActivityTransitionAnimation.Direction as Direction
 
 @Suppress("SameParameterValue")
-@RequiresApi(api = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
+@SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerTest : RobolectricTest() {
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
@@ -270,7 +270,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() = runTest {
         val controller = getViewerController(addCard = true, startedWithShortcut = false)
         val viewer = controller.get()
-        viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5))
+        viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5.0, 5.0))
         viewer.executeCommand(ViewerCommand.SHOW_ANSWER)
         assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true))
         controller.pause()

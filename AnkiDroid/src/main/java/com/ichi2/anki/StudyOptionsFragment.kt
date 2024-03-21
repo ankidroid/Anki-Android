@@ -230,7 +230,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             R.id.action_deck_or_study_options -> {
                 Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
-                if (col!!.decks.isDyn(col!!.decks.selected())) {
+                if (col!!.decks.isFiltered(col!!.decks.selected())) {
                     openFilteredDeckOptions()
                 } else {
                     val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col!!.decks.current().id)
@@ -315,7 +315,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             toolbar!!.setOnMenuItemClickListener(this)
             val menu = toolbar!!.menu
             // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
-            if (col != null && col!!.decks.isDyn(col!!.decks.selected())) {
+            if (col != null && col!!.decks.isFiltered(col!!.decks.selected())) {
                 menu.findItem(R.id.action_rebuild).isVisible = true
                 menu.findItem(R.id.action_empty).isVisible = true
                 menu.findItem(R.id.action_custom_study).isVisible = false

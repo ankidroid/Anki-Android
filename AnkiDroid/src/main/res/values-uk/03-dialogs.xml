@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
     <string name="tts_no_tts">Не говорити</string>
     <string name="unused_strings">\n\nНевикористані файли:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Попередній перегляд</string>
     <string name="reposition_card_dialog_title">Перемістити нову картку</string>
     <string name="reposition_card_dialog_message">Початкова позиція:</string>
     <string name="reposition_card_not_new_error">Можна перемістити тільки нові картки</string>
@@ -260,4 +259,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        У зв\'язку зі зміною політики конфіденційності Android, ваші дані та автоматизовані резервні копії стануть недоступними, якщо додаток буде видалено
     </string>
+    <string name="deck_already_exists">Колода вже існує</string>
 </resources>

@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Разширяване</string>
     <string name="collapse">Свиване</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Потърси тесте</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Потърси тесте</string>
     <string name="invalid_deck_name">Невалидно име на тесте</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Няма оставащи карти</string>
     <string name="sd_card_not_mounted">Не е поставена SD-карта памет</string>
     <string name="button_sync" comment="Text of the sync button">Синхрон</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Продължи синхронизацията</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизирането отменено</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Отменяне&#8230;\nТова може да отнеме известно време.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Експортиране на тесте</string>
     <string name="nothing">Нищо</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">Изтриване на тип карта \"%2$s\" и неговата %1$d карта?</item>
         <item quantity="other">Изтриване на тип карта \"%2$s\" и неговите %1$d карти?</item>
     </plurals>
-    <string name="invalid_template">Картата не може да се генерира</string>
     <string name="card_template_editor_would_delete_note">Изтриването на този тип карти ще доведе до премахване на една или няколко бележки. Моля, първо създайте и запазете нов тип карти.</string>
     <string name="card_template_editor_save_error">Не може да се запазят промените в шаблона на картата: %s</string>
     <string name="template_for_current_card_deleted">Видът карта за текущата карта беше изтрит.</string>
@@ -239,6 +243,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>

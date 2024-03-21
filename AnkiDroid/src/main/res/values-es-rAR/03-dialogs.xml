@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">No hay un idioma de texto-a-voz disponible</string>
     <string name="tts_no_tts">No hable</string>
     <string name="unused_strings">\n\nArchivos sin utilizar:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Vista previa</string>
     <string name="reposition_card_dialog_title">Reposicionar nueva tarjeta</string>
     <string name="reposition_card_dialog_message">Posición inicial:</string>
     <string name="reposition_card_not_new_error">Sólo las tarjetas nuevas pueden ser reposicionadas</string>
@@ -109,8 +108,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Confirmar</string>
     <string name="dialog_no">No</string>
     <string name="dialog_yes">Sí</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Conservar</string>
+    <string name="dialog_remove">Quitar</string>
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_processing">Procesando...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crear</string>
@@ -221,7 +220,7 @@
         <item quantity="one">Una sincronización automática puede activarse en %d segundo</item>
         <item quantity="other">Una sincronización automática puede activarse en %d segundos</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">Su proveedor de Internet podría cobrar dinero por el uso de datos</string>
     <string name="deck_picker_new">Número de cartas nuevas para ver hoy en este mazo.</string>
     <string name="deck_picker_rev">Número de cartas que vencen hoy en este mazo.</string>
     <string name="deck_picker_lrn">Número de cartas en aprendizaje en este mazo.</string>
@@ -246,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Debido a cambios en la privacidad de Android, tus datos y copias de seguridad automatizadas serán inaccesibles si la aplicación es desinstalada
     </string>
+    <string name="deck_already_exists">El mazo ya existe.</string>
 </resources>

@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Aucun langage de synthèse vocale disponible</string>
     <string name="tts_no_tts">Ne pas parler</string>
     <string name="unused_strings">\n\nFichiers inutilisés :\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Aperçu</string>
     <string name="reposition_card_dialog_title">Repositionner la nouvelle carte</string>
     <string name="reposition_card_dialog_message">Position de départ:</string>
     <string name="reposition_card_not_new_error">Seules les nouvelles cartes peuvent être repositionnées</string>
@@ -109,8 +108,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Confirmer</string>
     <string name="dialog_no">Non</string>
     <string name="dialog_yes">Oui</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Conserver</string>
+    <string name="dialog_remove">Retirer</string>
     <string name="dialog_continue">Continuer</string>
     <string name="dialog_processing">Traitement&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Créer</string>
@@ -177,7 +176,7 @@
     <string name="failed_to_apply_background_image">Impossible d\'appliquer l\'image d\'arrière-plan %s</string>
     <string name="background_image_too_large">L\'arrière-plan du sélecteur de paquets est trop grand</string>
     <string name="image_max_size_allowed">Taille maximale de l’image de %d Mo autorisée</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">Les dimensions de l\'image sont trop grandes (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Autorisation de stockage requise manquante. Veuillez accorder l’autorisation de stockage puis réessayez.</string>
@@ -215,13 +214,13 @@
     <string name="help_item_ankiweb_terms_and_conditions">Termes et conditions d\'utilisation d\'AnkiWeb</string>
     <string name="help_title_send_exception">Envoyer un rapport de dépannage</string>
     <string name="help_dialog_exception_report_debounce">Rapport déjà soumis</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Le rapport a été envoyé !</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Une synchronisation automatique peut être déclenchée dans %d seconde</item>
         <item quantity="other">Une synchronisation automatique peut être déclenchée dans %d secondes</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">Votre fournisseur d\'accès Internet peut vous facturer pour l\'utilisation des données</string>
     <string name="deck_picker_new">Nombre de nouvelles cartes à voir aujourd\'hui dans ce paquet.</string>
     <string name="deck_picker_rev">Nombre de cartes prévues aujourd\'hui dans ce paquet.</string>
     <string name="deck_picker_lrn">Nombre de cartes en cours d\'apprentissage dans ce paquet.</string>
@@ -244,4 +243,5 @@
     <string name="dismiss_backup_warning_title">Risque de perte de données</string>
     <string name="dismiss_backup_warning_new_user">En raison de changement dans la politique de confidentialité d\'Android, vos données et sauvegardes automatiques seront supprimées de votre téléphone si l\'application est désinstallée</string>
     <string name="dismiss_backup_warning_upgrade">En raison de changement dans la politique de confidentialité d\'Android, vos données et sauvegardes automatiques seront inaccessibles si l\'application est désinstallée</string>
+    <string name="deck_already_exists">Le paquet existe déjà</string>
 </resources>

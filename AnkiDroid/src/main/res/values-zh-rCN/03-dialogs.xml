@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">没有可用的文字转语音（TTS）语言</string>
     <string name="tts_no_tts">不要朗读</string>
     <string name="unused_strings">\n\n未使用的文件：\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">预览</string>
     <string name="reposition_card_dialog_title">更改新卡位置</string>
     <string name="reposition_card_dialog_message">起始位置</string>
     <string name="reposition_card_not_new_error">只有新卡牌可被更改位置</string>
@@ -239,4 +238,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        由于Android 隐私发生变化，如果应用被卸载，您的数据和自动备份将无法访问
     </string>
+    <string name="deck_already_exists">牌组已存在</string>
 </resources>

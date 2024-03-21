@@ -50,7 +50,7 @@
         <item quantity="one">%d ମି</item>
         <item quantity="other">%d ମି</item>
     </plurals>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">କିଛି ପରିଣାମ ନାହିଁ</string>
     <!-- preferences.xml categories-->
@@ -199,8 +199,6 @@
     <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ</string>
     <string name="thirdparty_apps_summary">ଆପ୍ଲିକେସନଗୁଡ଼ିକର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହା AnkiDroid API ଯେପରିକି ଅଭିଧାନ, ଉପଯୋଗୀତା ର ବ୍ୟବହାର କରନ୍ତି।</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript ତ୍ରୁଟି ନିବାରଣ</string>
-    <string name="html_javascript_debugging_summ">ସୁଦୂର WebView ସଂଯୋଗଗୁଡ଼ିକ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରିବା</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">ସମୀକ୍ଷକ</string>
     <string name="show_deck_title" maxLength="41">ତାସଖଣ୍ଡ ଆଖ୍ୟା ଦେଖାଇବା</string>
@@ -271,6 +269,7 @@
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">ଉପଭୋକ୍ତା କୃତ୍ୟ</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
     <string name="user_action_1" maxLength="41">ଉପଭୋକ୍ତା କୃତ୍ୟ ୧</string>
     <string name="user_action_2" maxLength="41">ଉପଭୋକ୍ତା କୃତ୍ୟ ୨</string>
     <string name="user_action_3" maxLength="41">ଉପଭୋକ୍ତା କୃତ୍ୟ ୩</string>

@@ -162,6 +162,8 @@ var onPageFinished = function () {
 
     var card = document.querySelector(".card");
 
+    var typedElement = document.getElementsByName("typed")[0];
+
     _runHook(onUpdateHook)
         .then(() => {
             if (window.MathJax != null) {
@@ -184,6 +186,12 @@ var onPageFinished = function () {
             }
         })
         .then(() => card.classList.add("mathjax-rendered"))
+        .then(() => {
+            // Focus if the element contains the attribute
+            if (typedElement && typedElement.getAttribute("data-focus")) {
+                typedElement.focus();
+            }
+        })
         .then(_runHook(onShownHook));
 };
 

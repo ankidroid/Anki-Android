@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">No text-to-speech language available</string>
     <string name="tts_no_tts">Nu vorbi</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Previzualizare</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
@@ -76,7 +75,7 @@
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Current interval: %d day</item>
         <item quantity="few">Current interval: %d days</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="other">Intervalul curent: %d zile</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Reschedule for review in x days</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
@@ -253,4 +252,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

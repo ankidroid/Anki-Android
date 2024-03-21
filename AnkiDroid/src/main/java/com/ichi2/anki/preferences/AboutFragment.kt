@@ -34,6 +34,8 @@ import com.ichi2.utils.IntentUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.show
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -111,11 +113,15 @@ class AboutFragment : Fragment(R.layout.about_layout) {
      * Copies debug info (from [DebugInfoService.getDebugInfo]) to the clipboard
      */
     private fun copyDebugInfo() {
-        val debugInfo = DebugInfoService.getDebugInfo(requireContext())
-        requireContext().copyToClipboard(
-            debugInfo,
-            failureMessageId = R.string.about_ankidroid_error_copy_debug_info
-        )
+        launchCatchingTask {
+            val debugInfo = withContext(Dispatchers.IO) {
+                DebugInfoService.getDebugInfo(requireContext())
+            }
+            requireContext().copyToClipboard(
+                debugInfo,
+                failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+            )
+        }
     }
 
     /**

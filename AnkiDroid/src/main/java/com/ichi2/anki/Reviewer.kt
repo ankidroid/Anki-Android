@@ -173,6 +173,9 @@ open class Reviewer :
             return
         }
         super.onCreate(savedInstanceState)
+        if (!ensureStoragePermissions()) {
+            return
+        }
         colorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
         textBarNew = findViewById(R.id.new_number)
@@ -800,7 +803,7 @@ open class Reviewer :
             if (!actionButtons.status.whiteboardPenColorIsDisabled()) {
                 changePenColorIcon.isVisible = true
             }
-            val whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
+            val whiteboardIcon = ContextCompat.getDrawable(applicationContext, R.drawable.ic_gesture_white)!!.mutate()
             val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
             val whiteboardColorPaletteIcon = VectorDrawableCompat.create(resources, R.drawable.ic_color_lens_white_24dp, this.theme)!!.mutate()
             if (showWhiteboard) {
@@ -832,7 +835,7 @@ open class Reviewer :
         } else {
             toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
         }
-        if (colIsOpenUnsafe() && getColUnsafe.decks.isDyn(parentDid)) {
+        if (colIsOpenUnsafe() && getColUnsafe.decks.isFiltered(parentDid)) {
             menu.findItem(R.id.action_open_deck_options).isVisible = false
         }
         if (tts.enabled && !actionButtons.status.selectTtsIsDisabled()) {
@@ -1286,7 +1289,7 @@ open class Reviewer :
     override fun restoreCollectionPreferences(col: Collection) {
         super.restoreCollectionPreferences(col)
         showRemainingCardCount = col.config.get("dueCounts") ?: true
-        stopTimerOnAnswer = col.decks.confForDid(col.decks.current().id).getBoolean("stopTimerOnAnswer")
+        stopTimerOnAnswer = col.decks.configDictForDeckId(col.decks.current().id).getBoolean("stopTimerOnAnswer")
     }
 
     override fun onSingleTap(): Boolean {

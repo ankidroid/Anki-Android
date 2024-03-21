@@ -10,6 +10,10 @@ plugins {
 group = "com.ichi2.anki"
 version = "2.0.0"
 
+kotlin {
+    explicitApi()
+}
+
 android {
     namespace = "com.ichi2.anki.api"
     compileSdk = 34

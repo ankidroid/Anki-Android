@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
     <string name="tts_no_tts">אל תדבר.‏</string>
     <string name="unused_strings">\n\nקבצים שאינם בשימוש:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">תצוגה מקדימה</string>
     <string name="reposition_card_dialog_title">שינוי מיקום כרטיס חדש</string>
     <string name="reposition_card_dialog_message">מיקום התחלתי:</string>
     <string name="reposition_card_not_new_error">ניתן לשנות מיקום לכרטיסים חדשים בלבד</string>
@@ -259,4 +258,5 @@
     <string name="dismiss_backup_warning_title">אזהרת אובדן נתונים</string>
     <string name="dismiss_backup_warning_new_user">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך יימחקו מהטלפון שלך אם האפליקציה תוסר</string>
     <string name="dismiss_backup_warning_upgrade">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך לא יהיו נגישים אם האפליקציה תוסר</string>
+    <string name="deck_already_exists">החפיסה כבר קיימת</string>
 </resources>

@@ -17,6 +17,7 @@
 package com.ichi2.testutils
 
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.ioDispatcher
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -131,7 +132,7 @@ interface TestClass {
 
     fun addDynamicDeck(name: String?): DeckId {
         return try {
-            col.decks.newDyn(name!!)
+            col.decks.newFiltered(name!!)
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             throw RuntimeException(filteredAncestor)
         }
@@ -153,7 +154,7 @@ interface TestClass {
 
     /** helper method to update deck config */
     fun updateDeckConfig(deckId: DeckId, function: DeckConfig.() -> Unit) {
-        val deckConfig = col.decks.confForDid(deckId)
+        val deckConfig = col.decks.configDictForDeckId(deckId)
         function(deckConfig)
         col.decks.save(deckConfig)
     }
@@ -228,7 +229,9 @@ interface TestClass {
         times: Int = 1,
         testBody: suspend TestScope.() -> Unit
     ) {
-        Dispatchers.setMain(UnconfinedTestDispatcher())
+        val dispatcher = UnconfinedTestDispatcher()
+        Dispatchers.setMain(dispatcher)
+        ioDispatcher = dispatcher
         repeat(times) {
             if (times != 1) Timber.d("------ Executing test $it/$times ------")
             kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs.milliseconds) {

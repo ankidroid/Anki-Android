@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Ανάπτυξη</string>
     <string name="collapse">Σύμπτυξη</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Αναζήτηση</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Αναζήτηση</string>
     <string name="invalid_deck_name">Μη έγκυρο όνομα</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Δεν υπάρχουν ακόμη κάρτες για επανάληψη</string>
     <string name="sd_card_not_mounted">O χώρος αποθήκευσης συσκευής δεν έχει προσαρτηθεί</string>
     <string name="button_sync" comment="Text of the sync button">Συγχρονισμός</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Συνέχεια συγχρονισμού</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Ο συγχρονισμός ακυρώθηκε</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Ακύρωση&#8230;\nΑυτό μπορεί να διαρκέσει κάποιο χρόνο.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Εξαγωγή τράπουλας</string>
     <string name="nothing">Τίποτε</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">Διαγραφή του “%2$s” τύπου κάρτας και της %1$d κάρτας του;</item>
         <item quantity="other">Διαγραφή του “%2$s” τύπου κάρτας και των %1$d καρτών του;</item>
     </plurals>
-    <string name="invalid_template">Δεν ήταν δυνατή η δημιουργία κάρτας</string>
     <string name="card_template_editor_would_delete_note">Η κατάργηση αυτού του τύπου κάρτας θα προκαλέσει τη διαγραφή ενός ή παραπάνω σημειώσεων. Παρακαλούμε δημιουργήστε και αποθηκεύστε ένα νέο τύπο κάρτας πρώτα.</string>
     <string name="card_template_editor_save_error">Δεν είναι δυνατή η αποθήκευση αλλαγών προτύπου κάρτας: %s</string>
     <string name="template_for_current_card_deleted">Ο τύπος κάρτας για την τρέχουσα κάρτα έχει διαγραφεί.</string>
@@ -237,6 +241,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Συνέχιση μετεγκατάστασης</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Μη προσβάσιμη συλλογή</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Δεν είναι δυνατή η πρόσβαση στη συλλογή σας μετά την απεγκατάσταση του AnkiDroid λόγω αλλαγής στην Πολιτική Play Store\n\nΤα δεδομένα σας είναι ασφαλή και μπορούν να αποκατασταθούν. Βρίσκονται στο\n%s\n\nΕπιλέξτε μια παρακάτω επιλογή για επαναφορά:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Επαναφορά από AnkiWeb (συνιστάται)</string>
     <string name="install_non_play_store_ankidroid_recommended">Επαναφορά πρόσβασης φακέλου (συνιστάται)</string>
     <string name="install_non_play_store_ankidroid">Επαναφορά πρόσβασης φακέλου (προχωρημένο)</string>

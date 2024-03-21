@@ -317,7 +317,7 @@ class CardTest : JvmTest() {
         assertEquals("", c.dueString())
 
         // Dynamic deck
-        val dyn = decks.newDyn("dyn")
+        val dyn = decks.newFiltered("dyn")
         c.oDid = c.did
         c.did = dyn
         assertEquals("(filtered)", c.nextDue())

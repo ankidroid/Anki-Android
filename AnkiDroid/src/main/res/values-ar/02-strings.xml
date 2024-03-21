@@ -147,10 +147,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">بطاقة أنكيدرويد</string>
     <string name="note_editor_copy_note">نسخ الملحوظة</string>
-    <string name="card_editor_reposition_card">تغيير الموضع</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">تغيير الموضع</string>
     <string name="card_editor_reset_card">إعادة تعيين التقدم</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">إعادة الجدولة</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">معاينة</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d من %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">إعادة التسمية</string>
     <string name="checks_action">تحقق</string>
@@ -215,7 +216,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">ليس للنظام تطبيق منصب يمكنه إجراء هذا.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[قد تكون صور الكاميرا كبيرة. قد ترغب في ضغط الصور وتغيير حجمها في مجلد الوسائط]]></string>
-    <string name="no_browser_notification">تعذر العثور على متصفح، الرجاء زيارة صفحة الويب بواسطة حاسوب شخصي أو هاتف محمول: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">خطأ في تحميل الصفحة: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -224,9 +225,6 @@
     <string name="remove_background_image">هل تريد إزالة الخلفية؟</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">استعادة الافتراضي</string>
-    <string name="cloze_sample_text">هذا {{%1$s::مثال}} لعبارات ملء الفراغات.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">متال</string>
-    <string name="basic_answer_sample_text">مثال</string>
     <string name="reviewer_tts_cloze_spoken_replacement">فارغ</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">فشل حفظ صورة السبورة. %s</string>
@@ -321,7 +319,7 @@
     <string name="start_migration_progress_message">OKey</string>
     <string name="migration_part_1_done_resume">تستطيع المواظبة باستخدام أنكيدرويد.\nستستمر عملية نقل البيانات في الخلفية.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s ليست حزمة إضافة جافاسكربت صالحة</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">فشل إنشاء المجلد %s</string>
     <string name="malicious_archive_entry_outside">أرشيف خبيث. يحتوي على مدخلة خارج المجلد الهدف: %s</string>
     <string name="malicious_archive_exceeds_limit">أرشيف خبيث. يتخطى الحجم %1$s أو يحتوي على أكثر من %2$d ملف</string>
@@ -336,6 +334,8 @@
     <string name="intro_short_ankidroid_explanation">يوفر مجدول بطاقات أنكي الوقت عن طريق تقوية أضعف الذكريات والحفاظ على الأقوى</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">ابدأ</string>
     <string name="intro_sync_from_ankiweb">مزامنة من أنكي ويب</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">تم تسجيل الدخول مسبقًا</string>
     <!-- Deck Creation -->
     <string name="deck_created">كيفية </string>
@@ -374,4 +374,5 @@
     <string name="deck_description_field_hint">الوصف</string>
     <string name="failed_to_copy">فشل النسخ</string>
     <string name="card_browser_unavailable_when_notes_mode">غير متوفر في وضع الملحوظات</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
 </resources>

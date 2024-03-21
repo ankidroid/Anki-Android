@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
     <string name="tts_no_tts">発声なし</string>
     <string name="unused_strings">\n\n(*) のファイルのリスト:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">プレビュー</string>
     <string name="reposition_card_dialog_title">新規カードの導入順序を変更</string>
     <string name="reposition_card_dialog_message">開始位置</string>
     <string name="reposition_card_not_new_error">新規カード以外は順序を変更できません。</string>
@@ -238,4 +237,5 @@
     <string name="dismiss_backup_warning_new_user">        Androidのプライバシーポリシーの変更に伴い、今後AnkiDroidをアンインストールすると、あなたのコレクションや自動バックアップのデータもこの端末から削除されます。
     </string>
     <string name="dismiss_backup_warning_upgrade">        Androidのプライバシーポリシーの変更に伴い、今後AnkiDroidをアンインストールすると、現在のコレクションや自動バックアップのデータにアクセスできなくなります。</string>
+    <string name="deck_already_exists">同じ名前のデッキがすでにあります</string>
 </resources>

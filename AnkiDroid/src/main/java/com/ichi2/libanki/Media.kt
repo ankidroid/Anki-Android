@@ -75,6 +75,11 @@ open class Media(private val col: Collection) {
         return check().unusedFileNames.map { File(dir, it) }
     }
 
+    /**
+     * [IRI](https://en.wikipedia.org/wiki/Internationalized_Resource_Identifier) encodes media
+     *
+     * `foo bar` -> `foo%20bar`
+     */
     fun escapeMediaFilenames(string: String, unescape: Boolean = false): String {
         return if (unescape) {
             col.backend.decodeIriPaths(string)

@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
     <string name="tts_no_tts">Ne beszélj</string>
     <string name="unused_strings">\n\bNem használt fájlok:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Előnézet</string>
     <string name="reposition_card_dialog_title">Helyezze át az új kártyát</string>
     <string name="reposition_card_dialog_message">Kiinduló helyzet:</string>
     <string name="reposition_card_not_new_error">Csak az új kártyákat lehet áthelyezni</string>
@@ -110,7 +109,7 @@
     <string name="dialog_no">Nem</string>
     <string name="dialog_yes">Igen</string>
     <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_remove">Eltávolít</string>
     <string name="dialog_continue">Folytatás</string>
     <string name="dialog_processing">Feldolgozás...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Létrehoz</string>
@@ -244,4 +243,5 @@
     <string name="dismiss_backup_warning_title">Figyelmeztetés adatveszteségről</string>
     <string name="dismiss_backup_warning_new_user">Az Android adatvédelmi módosításai miatt az adatok és az automatikus biztonsági mentések is törlődnek, ha az alkalmazás eltávolításra kerül.</string>
     <string name="dismiss_backup_warning_upgrade">Az Android adatvédelmi módosításai miatt az adatok és az automatikus biztonsági mentések is elérhetetlenné válnak, ha az alkalmazás eltávolításra kerül.</string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

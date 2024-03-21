@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">कोई लेख-से-बोली भाषा उपलब्ध नहीं</string>
     <string name="tts_no_tts">बात न करें</string>
     <string name="unused_strings">\n\nअप्रयुक्त फाइलें:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">पूर्वावलोकन</string>
     <string name="reposition_card_dialog_title">नया कार्ड पुन: प्रस्तुत करें</string>
     <string name="reposition_card_dialog_message">शुरू करने की स्थिति:</string>
     <string name="reposition_card_not_new_error">केवल नए कार्डों को बदला जा सकता है</string>
@@ -246,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        एंड्रॉइड गोपनीयता परिवर्तनों के कारण, ऐप अनइंस्टॉल होने पर आपका डेटा और स्वचालित बैकअप पहुंच योग्य नहीं होगा
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
 </resources>

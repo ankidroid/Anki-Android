@@ -49,7 +49,7 @@
     <plurals name="pref_summ_minutes">
         <item quantity="other">%d phút</item>
     </plurals>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Không có kết quả</string>
     <!-- preferences.xml categories-->
@@ -197,8 +197,6 @@
     <string name="reset">Thiết lập lại</string>
     <string name="thirdparty_apps_title" maxLength="41">Ứng dụng API của bên thứ ba</string>
     <string name="thirdparty_apps_summary">Xem danh sách các ứng dụng sử dụng AnkiDroid API như từ điển, tiện ích.</string>
-    <string name="html_javascript_debugging" maxLength="41">Gỡ lỗi HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Bật kết nối WebView từ xa và lưu HTML thẻ vào thư mục AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Người xem xét</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>
@@ -268,6 +266,7 @@
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
     <string name="user_action_1" maxLength="41">User action 1</string>
     <string name="user_action_2" maxLength="41">User action 2</string>
     <string name="user_action_3" maxLength="41">User action 3</string>

@@ -48,10 +48,11 @@ class TemplateManagerTest {
     }
 
     @Test
-    fun `parseSourcesToFileScheme - object`() {
+    fun `parseSourcesToFileScheme - object isn't parsed`() {
         val mediaDir = "storage/emulated/0/AnkiDroid/collection.media"
-        val result = parseSourcesToFileScheme("<object data=\"ben.avi\"></object>", mediaDir)
-        assertEquals("""<object data="file:///$mediaDir/ben.avi"></object>""", result)
+        val content = "<object data=\"ben.mov\"></object>"
+        val result = parseSourcesToFileScheme(content, mediaDir)
+        assertEquals(content, result)
     }
 
     @Test
@@ -131,6 +132,33 @@ class TemplateManagerTest {
     fun `parseSourcesToFileScheme - path with special characters`() {
         val result = parseSourcesToFileScheme("<img src=magenta.png>", "storage/emulated/0/AnkiDroid@#$%/collection.media")
         assertEquals("""<img src="file:///storage/emulated/0/AnkiDroid@%23$%25/collection.media/magenta.png">""", result)
+    }
+
+    @Test
+    fun `parseSourcesToFileScheme - mixed script`() {
+        @Language("HTML")
+        val input = """
+            <!-- VERSION 1.14 -->
+            <script>
+            var scroll = false;
+            </script>
+            <img src="lovely.jpg">
+            <!-- ENHANCED_CLOZE -->
+            hughes and kisses
+        """
+
+        @Language("HTML")
+        val expectedResult = """
+            <!-- VERSION 1.14 -->
+            <script>
+            var scroll = false;
+            </script>
+            <img src="file:///storage/emulated/0/15773/collection.media/lovely.jpg">
+            <!-- ENHANCED_CLOZE -->
+            hughes and kisses
+        """
+        val result = parseSourcesToFileScheme(input, "/storage/emulated/0/15773/collection.media")
+        assertEquals(expectedResult, result)
     }
 
     /***********************************************************************************************

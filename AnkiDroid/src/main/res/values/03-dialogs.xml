@@ -26,7 +26,6 @@
     <string name="tts_no_tts">Don’t speak</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
 
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Preview</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
@@ -259,5 +258,7 @@
     <string name="dismiss_backup_warning_upgrade">
         Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+
+    <string name="deck_already_exists">Deck already exists</string>
 
 </resources>

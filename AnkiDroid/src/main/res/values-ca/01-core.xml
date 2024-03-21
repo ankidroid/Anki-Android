@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Desplega</string>
     <string name="collapse">Replega</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Cerca un paquet</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Cerca un paquet</string>
     <string name="invalid_deck_name">El nom del paquet no és vàlid</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">No hi ha cartes previstes.</string>
     <string name="sd_card_not_mounted">La tarjeta SD no funciona correctament</string>
     <string name="button_sync" comment="Text of the sync button">Sincronització</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continua la sincronització</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">S\'ha cancel·lat la sincronització</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">S\'està cancel·lant...\nAixò pot trigar una estona.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Exporta el paquet</string>
     <string name="nothing">Res</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">Voleu eliminar el tipus de carta \"%2$s\", i la seva %1$d carta?</item>
         <item quantity="other">Voleu eliminar el tipus de carta \"%2$s\", i les seves %1$d cartes?</item>
     </plurals>
-    <string name="invalid_template">No s\'ha pogut generar una carta.</string>
     <string name="card_template_editor_would_delete_note">L\'eliminació d\'aquest tipus de carta suprimirà una o més notes. Creeu i deseu primer un tipus de carta nou.</string>
     <string name="card_template_editor_save_error">No es poden desar els canvis a la plantilla de carta: %s</string>
     <string name="template_for_current_card_deleted">S\'ha esborrat el tipus de carta per la carta actual.</string>
@@ -237,6 +241,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Continua la migració</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">No es pot accedir a la col·lecció</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">No ha estat accedir a la vostre col·lecció després de desinstal·lar AnkiDroid a causa d\'un canvi a la política de Play Store\n\nLes vostres dades estan segures i es poden restaurar. Es troben a\n%s\n\nSeleccioneu una opció per restaurar:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restaura des d\'AnkiWeb (recomanat)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restaura l\'accés a la carpeta (recomanat)</string>
     <string name="install_non_play_store_ankidroid">Restaura l\'accés a la carpeta (avançat)</string>

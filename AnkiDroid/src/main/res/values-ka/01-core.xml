@@ -59,17 +59,18 @@
     <!-- DeckPicker.kt -->
     <string name="expand">გაშლა</string>
     <string name="collapse">ჩაკეცვა</string>
+    <string name="study_more">მეტის სწავლა</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">დარჩენილია %d წუთი</item>
+        <item quantity="other">დარჩენილია %d წუთი</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">დარჩენილია %1$d საათი და %2$d წუთი</item>
+        <item quantity="other">დარჩენილია %1$d საათი და %2$d წუთი</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">დარჩენილია %1$d დღე და %2$d საათი</item>
+        <item quantity="other">დარჩენილია %1$d დღე და %2$d საათი</item>
     </plurals>
     <string name="no_cards_placeholder_title">კოლექცია ცარიელია</string>
     <string name="no_cards_placeholder_description">ატვირთეთ ბარათები\n+ნიშნით</string>
@@ -91,7 +92,7 @@
     <string name="rename_deck">დასტის სახელის შეცვლა</string>
     <string name="create_shortcut">სწრაფი ბმულის შექმნა</string>
     <string name="browse_cards">ბარათების ძიება</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">აღწერის რედაქტირება</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">დამატება</string>
     <string name="menu_add_note">დაამატე შენიშვნა</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ანგარიშის სინქრონიზაცია</string>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">დასტის ძებნა</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">დასტის ძიება</string>
     <string name="invalid_deck_name">დასტის სახელი არასწორია</string>
+    <string name="studyoptions_limit_reached">ყოველდღიური სწავლის ლიმიტამდე ახვედით</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">გილოცავთ! დღეისთვის სულ ეს იყო.</string>
     <string name="studyoptions_no_cards_due">ჯერ ბარათები არ არის</string>
     <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
     <string name="button_sync" comment="Text of the sync button">სინქრონიზაცია</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">სინქრონიზაციის გაგრძელება</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">სინქრონიზაცია გაუქმებულია</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">გაუქმება\&#8230;\nამან შეიძლება ცოტა დრო წაიღოს.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">დასტის ექსპორტი</string>
     <string name="nothing">არაფერი</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">წავშალოთ \"%2$s\" ბარათის ტიპი და მისი %1$d ბარათი?</item>
         <item quantity="other">წავშალოთ \"%2$s\" ბარათის ტიპი და მისი %1$d ბარათი?</item>
     </plurals>
-    <string name="invalid_template">ბარათი ვერ გენერირდება</string>
     <string name="card_template_editor_would_delete_note">ბარათის ტიპის გაუქმებამ შესაძლოა გამოიწვიოს ერთი ან რამდენიმე შენიშვნის წაშლა. გთხოვთ ჯერ შექმნათ და შეინახოთ ბარათის ახალი ტიპი.</string>
     <string name="card_template_editor_save_error">ბარათის შაბლონის შენახვა შეუძლებელია: %s</string>
     <string name="template_for_current_card_deleted">ბარათის ტიპი ამ ბარათიდან წაიშალა.</string>
@@ -239,6 +243,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">მიგრაციის გაგრძელება</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">მიუწვდომელი კოლექცია</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store-ის პოლიტიკაში შეტანილი ცვლილებების შედეგად თქვენს კოლექციაზე წვდომა აღარ გვექნება, თუკი მოახდენთ AnkiDroid-ის დეინსტალაციას\n\nთქვენი მონაცემები დაცულია და მათი აღდგენაც შესაძლებელია. ისინი შეგიძლიათ იხილოთ აქ:\n%s\n\nაღსადგენად შეგიძლიათ ჩამოთვლილთაგან რომელიმე აირჩიოთ:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">AnkiWeb-იდან აღდგენა (რეკომენდებული)</string>
     <string name="install_non_play_store_ankidroid_recommended">საქაღალდეზე წვდომის აღდგენა (რეკომენდებული)</string>
     <string name="install_non_play_store_ankidroid">საქაღალდეზე წვდომის აღდგენა (გაღრმავებული პარამეტრი)</string>
@@ -250,5 +255,5 @@
     <string name="storage_access_title">წვდომა მეხსიერებაზე</string>
     <string name="storage_access_summary">თქვენი კოლექცია შეინახება უსაფრთხო ადგილას, რომელიც აპლიკაციის დეინსტალაციის შემთხვევაში არ წაიშლება</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">წვდომა ყველა ფაილზე</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">სასურათე საფარველები</string>
 </resources>

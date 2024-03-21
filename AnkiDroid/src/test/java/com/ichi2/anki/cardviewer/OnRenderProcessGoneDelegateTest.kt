@@ -19,8 +19,8 @@ import android.content.res.Resources
 import android.os.Build
 import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebView
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
+import androidx.test.filters.SdkSuppress
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
@@ -32,7 +32,7 @@ import org.mockito.Mockito.*
 import org.mockito.kotlin.whenever
 import java.util.concurrent.locks.Lock
 
-@RequiresApi(api = Build.VERSION_CODES.O) // onRenderProcessGone & RenderProcessGoneDetail
+@SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // onRenderProcessGone & RenderProcessGoneDetail
 class OnRenderProcessGoneDelegateTest {
     @Test
     fun singleCallCausesRefresh() {

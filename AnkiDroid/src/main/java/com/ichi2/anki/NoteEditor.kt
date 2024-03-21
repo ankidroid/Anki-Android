@@ -50,6 +50,7 @@ import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isVisible
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
@@ -79,6 +80,8 @@ import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.previewer.TemplatePreviewerArguments
+import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.NoteService
@@ -343,7 +346,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
-    @Suppress("UNCHECKED_CAST", "deprecation") // deprecation: getSerializable
     @KotlinCleanup("fix suppress")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -352,6 +354,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         mediaRegistration = MediaRegistration(this)
         super.onCreate(savedInstanceState)
+        if (!ensureStoragePermissions()) {
+            return
+        }
         fieldState.setInstanceState(savedInstanceState)
         setContentView(R.layout.note_editor)
         val intent = intent
@@ -362,9 +367,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             selectedTags = savedInstanceState.getStringArrayList("tags")
             reloadRequired = savedInstanceState.getBoolean(RELOAD_REQUIRED_EXTRA_KEY)
             pastedImageCache =
-                savedInstanceState.getSerializable("imageCache") as HashMap<String, String>
+                savedInstanceState.getSerializableCompat<HashMap<String, String>>("imageCache")!!
             toggleStickyText =
-                savedInstanceState.getSerializable("toggleSticky") as HashMap<Int, String?>
+                savedInstanceState.getSerializableCompat<HashMap<Int, String?>>("toggleSticky")!!
             changed = savedInstanceState.getBoolean(NOTE_CHANGED_EXTRA_KEY)
         } else {
             if (intentLaunchedWithImage(intent)) {
@@ -749,7 +754,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
                     if (allowSaveAndPreview()) {
-                        performPreview()
+                        launchCatchingTask { performPreview() }
                     }
                 }
             }
@@ -1002,10 +1007,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 currentEditedCard!!.did = deckId
                 modified = true
             }
-            if (currentNotetypeIsImageOcclusion()) {
-                closeNoteEditor()
-                return
-            }
             // now load any changes to the fields from the form
             for (f in editFields!!) {
                 modified = modified or updateField(f)
@@ -1119,7 +1120,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
                 if (allowSaveAndPreview()) {
-                    performPreview()
+                    launchCatchingTask { performPreview() }
                 }
                 return true
             }
@@ -1230,22 +1231,38 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
     @VisibleForTesting
-    fun performPreview() {
-        val previewer = Intent(this@NoteEditor, CardTemplatePreviewer::class.java)
-        if (currentEditedCard != null) {
-            previewer.putExtra("ordinal", currentEditedCard!!.ord)
-        }
-        previewer.putExtra(
-            CardTemplateNotetype.INTENT_MODEL_FILENAME,
-            CardTemplateNotetype.saveTempModel(this, editorNote!!.notetype)
-        )
+    @NeedsTest("previewing newlines")
+    @NeedsTest("cards with a cloze notetype but no cloze in fields are previewed as empty card")
+    @NeedsTest("clozes that don't start at '1' are correctly displayed")
+    suspend fun performPreview() {
+        val convertNewlines = shouldReplaceNewlines()
+        fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
+        val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toFieldText() } ?: mutableListOf()
+        val tags = selectedTags ?: mutableListOf()
 
-        // Send the previewer all our current editing information
-        val noteEditorBundle = Bundle()
-        addInstanceStateToBundle(noteEditorBundle)
-        noteEditorBundle.putBundle("editFields", fieldsAsBundleForPreview)
-        previewer.putExtra("noteEditorBundle", noteEditorBundle)
-        startActivity(previewer)
+        val ord = if (editorNote!!.notetype.isCloze) {
+            val tempNote = withCol { Note.fromNotetypeId(editorNote!!.notetype.id) }
+            tempNote.fields = fields // makes possible to get the cloze numbers from the fields
+            val clozeNumbers = withCol { clozeNumbersInNote(tempNote) }
+            if (clozeNumbers.isNotEmpty()) {
+                clozeNumbers.first() - 1
+            } else {
+                0
+            }
+        } else {
+            currentEditedCard?.ord ?: 0
+        }
+
+        val args = TemplatePreviewerArguments(
+            notetypeFile = NotetypeFile(this, editorNote!!.notetype),
+            fields = fields,
+            tags = tags,
+            id = editorNote!!.id,
+            ord = ord,
+            fillEmpty = false
+        )
+        val intent = TemplatePreviewerFragment.getIntent(this, args)
+        startActivity(intent)
     }
 
     /**
@@ -1414,12 +1431,19 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         val editLines = fieldState.loadFieldEditLines(type)
         fieldsLayoutContainer!!.removeAllViews()
         customViewIds.clear()
+        imageOcclusionButtonsContainer?.isVisible = currentNotetypeIsImageOcclusion()
+
+        val indicesToHide = mutableListOf<Int>()
         if (currentNotetypeIsImageOcclusion()) {
-            setImageOcclusionButton()
-            return
-        } else {
-            imageOcclusionButtonsContainer?.visibility = View.GONE
-            fieldsLayoutContainer?.visibility = View.VISIBLE
+            val occlusionTag = "0"
+            val imageTag = "1"
+            val fields = currentlySelectedNotetype!!.getJSONArray("flds")
+            for (i in 0 until fields.length()) {
+                val tag = fields.getJSONObject(i).getString("tag")
+                if (tag == occlusionTag || tag == imageTag) {
+                    indicesToHide.add(i)
+                }
+            }
         }
 
         editFields = LinkedList()
@@ -1487,6 +1511,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 getString(R.string.multimedia_editor_attach_mm_content, editLineView.name)
             toggleStickyButton.contentDescription =
                 getString(R.string.note_editor_toggle_sticky, editLineView.name)
+
+            editLineView.isVisible = i !in indicesToHide
             fieldsLayoutContainer!!.addView(editLineView)
         }
     }
@@ -1786,7 +1812,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
 
             val currentDeckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1L
-            return if (getColUnsafe.decks.isDyn(currentDeckId)) {
+            return if (getColUnsafe.decks.isFiltered(currentDeckId)) {
                 /*
                  * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
                  * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been
@@ -1810,9 +1836,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /** Handles setting the current note (non-null afterwards) and rebuilding the UI based on this note  */
     private fun setNote(note: Note?, changeType: FieldChangeType) {
         editorNote = if (note == null || addNote) {
-            getColUnsafe.let { col ->
-                val notetype = col.notetypes.current()
-                Note.fromNotetypeId(col, notetype.id)
+            getColUnsafe.run {
+                val notetype = notetypes.current()
+                Note.fromNotetypeId(notetype.id)
             }
         } else {
             note
@@ -2103,11 +2129,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun currentNotetypeIsImageOcclusion() =
         currentlySelectedNotetype?.isImageOcclusion == true
-
-    private fun setImageOcclusionButton() {
-        imageOcclusionButtonsContainer?.visibility = View.VISIBLE
-        fieldsLayoutContainer?.visibility = View.GONE
-    }
 
     private fun setupImageOcclusionEditor(imagePath: String = "") {
         val kind: String

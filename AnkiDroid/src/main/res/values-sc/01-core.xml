@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Ismànnia</string>
     <string name="collapse">Mìnima</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">mancat %d minutu</item>
         <item quantity="other">mancant %d minutos</item>
@@ -140,6 +141,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Chirca de matzos</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Chirca de matzos</string>
     <string name="invalid_deck_name">Nùmene de su matzu non vàlidu</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Peruna carta de revisionare como</string>
     <string name="sd_card_not_mounted">Sa memòria de su dispositivu no est montada</string>
     <string name="button_sync" comment="Text of the sync button">Sincroniza</string>
@@ -149,6 +153,7 @@
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronizatzione annullada</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Annullende&#8230;\n
     Bi diat pòdere chèrrere unu pagu de tempus.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Esporta su matzu</string>
     <string name="nothing">Nudda</string>
     <!-- Card template editor -->
@@ -169,7 +174,6 @@
         <item quantity="one">Cheres iscantzellare sa casta de cartas “%2$s” e sa carta chi cuntenet?</item>
         <item quantity="other">Cheres iscantzellare sa casta de cartas “%2$s” e sas %1$d cartas suas?</item>
     </plurals>
-    <string name="invalid_template">No est istadu possìbile generare una carta</string>
     <string name="card_template_editor_would_delete_note">Iscantzellende custa casta de carta dias iscantzellare una o prus notas. Pro praghere in antis crea e sarva una casta de carta noa.</string>
     <string name="card_template_editor_save_error">Impossìbile sarvare sas modìficas a su mollu de carta: %s</string>
     <string name="template_for_current_card_deleted">Sa casta de carta pro sa carta atuale est istada iscantzellada.</string>
@@ -243,6 +247,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Sighi cun su tramudòngiu</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Non faghet a atzèdere a sa colletzione</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Non semus in gradu de atzèdere a sa colletzione tua a pustis de sa disinstallatzione de AnkiDroid pro neghe de una modìfica in sa polìtica de su Play Store\n\nSos datos tuos sunt seguros e si podent ripristinare. Sunt postos in\n%s\n\nSeletziona un\'optzione in suta pro ripristinare:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Riprìstina dae AnkiWeb (cussigiadu)</string>
     <string name="install_non_play_store_ankidroid_recommended">Riprìstina s\'atzessu a sa cartella (cussigiadu)</string>
     <string name="install_non_play_store_ankidroid">Riprìstina s\'atzessu a sa cartella (avantzadu)</string>

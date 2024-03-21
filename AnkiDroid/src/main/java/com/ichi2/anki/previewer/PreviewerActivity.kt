@@ -23,6 +23,10 @@ import com.ichi2.anki.SingleFragmentActivity
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
+/**
+ * @see PreviewerFragment
+ * @see TemplatePreviewerFragment
+ */
 class PreviewerActivity : SingleFragmentActivity() {
     companion object {
         fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null): Intent {

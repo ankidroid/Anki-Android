@@ -616,7 +616,7 @@ open class Scheduler(val col: Collection) {
      * @return The conf of the deck of the card.
      */
     fun cardConf(card: Card): DeckConfig {
-        return col.decks.confForDid(card.did)
+        return col.decks.configDictForDeckId(card.did)
     }
 
     /*

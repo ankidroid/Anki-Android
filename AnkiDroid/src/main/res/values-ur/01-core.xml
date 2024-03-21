@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">پھیلائیں</string>
     <string name="collapse">بند کریں</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">ڈیک تلاش</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ڈیک تلاش</string>
     <string name="invalid_deck_name">ڈیک کا نام غلط ہے</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">ابھی تک کوئی کارڈ باقی نہیں ہے</string>
     <string name="sd_card_not_mounted">ڈیوائس اسٹوریج نصب نہیں ہے</string>
     <string name="button_sync" comment="Text of the sync button">ہم وقت سازی</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">مطابقت پذیری جاری رکھیں</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">مطابقت پذیری منسوخ کر دی گئی</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">منسوخ ہو رہا ہے&#8230;\nاس میں کچھ وقت لگ سکتا ہے۔</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">ڈیک برآمد کریں</string>
     <string name="nothing">کچھ بھی نہیں</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">\"%2$s\" کارڈ کی قسم، اور اس کا %1$d کارڈ حذف کریں؟</item>
         <item quantity="other">\"%2$s\" کارڈ کی قسم، اور اس کے %1$d کارڈز کو حذف کریں؟</item>
     </plurals>
-    <string name="invalid_template">کارڈ نہیں بنایا جا سکا</string>
     <string name="card_template_editor_would_delete_note">اس کارڈ کی قسم کو ہٹانے سے ایک یا زیادہ نوٹ حذف ہو جائیں گے۔ براہ کرم پہلے کارڈ کی نئی قسم بنائیں اور محفوظ کریں۔</string>
     <string name="card_template_editor_save_error">کارڈ ٹیمپلیٹ کی تبدیلیاں محفوظ کرنے سے قاصر: %s</string>
     <string name="template_for_current_card_deleted">موجودہ کارڈ کے لیے کارڈ کی قسم کو حذف کر دیا گیا تھا۔</string>
@@ -235,6 +239,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">ہجرت دوبارہ شروع کریں</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ناقابل رسائی مجموعہ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store کی پالیسی میں تبدیلی کی وجہ سے AnkiDroid کے ان انسٹال ہونے کے بعد ہم آپ کے کلیکشن تک رسائی حاصل کرنے سے قاصر ہیں\n\nآپ کا ڈیٹا محفوظ ہے اور اسے بحال کیا جا سکتا ہے۔ یہ پر واقع ہے\n%s\n\nبحال کرنے کے لیے نیچے ایک آپشن منتخب کریں:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">AnkiWeb سے بحال کریں (تجویز کردہ)</string>
     <string name="install_non_play_store_ankidroid_recommended">فولڈر تک رسائی بحال کریں (تجویز کردہ)</string>
     <string name="install_non_play_store_ankidroid">فولڈر تک رسائی بحال کریں (جدید)</string>

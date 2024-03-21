@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Nessuna lingua per la sintesi vocale disponibile</string>
     <string name="tts_no_tts">Non parlare</string>
     <string name="unused_strings">\n\nFile inutilizzati:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Anteprima</string>
     <string name="reposition_card_dialog_title">Riposiziona nuova carta</string>
     <string name="reposition_card_dialog_message">Posizione iniziale:</string>
     <string name="reposition_card_not_new_error">Solo le nuove carte possono essere riposizionate</string>
@@ -109,8 +108,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Conferma</string>
     <string name="dialog_no">No</string>
     <string name="dialog_yes">Si</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Mantieni</string>
+    <string name="dialog_remove">Rimuovi</string>
     <string name="dialog_continue">Continua</string>
     <string name="dialog_processing">Elaborazione...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crea</string>
@@ -141,7 +140,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Tutte le carte</string>
     <string name="tags_dialog_option_new_cards">Nuove</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Scadute</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Ripasso</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Cerco carte vuote&#8230;</string>
     <string name="empty_cards_count">Carte de eliminare: %d</string>
@@ -177,7 +176,7 @@
     <string name="failed_to_apply_background_image">Impossibile applicare l\'immagine di sfondo %s</string>
     <string name="background_image_too_large">Sfondo del selettore di mazzo troppo grande</string>
     <string name="image_max_size_allowed">Dimensione massima dell\'immagine: %d MB consentiti</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">Le dimensioni dell\'immagine sono troppo grandi (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Autorizzazione di archiviazione mancante. Si prega di concedere l\'autorizzazione all\'archiviazione e riprovare l\'azione.</string>
@@ -187,7 +186,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Pianificazione dei promemoria fallita</string>
     <string name="boot_service_too_many_notifications">Troppi promemoria pianificati. Alcuni non appariranno.</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">Imposta lingua</string>
     <string name="locale_selection_dialog_summary">Alcune tastiere multilingue, come GBoard, supportano il cambio di lingua durante la modifica del testo\n\nSi prega di richiedere la funzione “setImeHintLocales” dal produttore della tastiera se la tastiera non cambia lingua.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Usare AnkiDroid</string>
@@ -215,13 +214,13 @@
     <string name="help_item_ankiweb_terms_and_conditions">Termini e Condizioni AnkiWeb</string>
     <string name="help_title_send_exception">Invia un rapporto sulla risoluzione dei problemi</string>
     <string name="help_dialog_exception_report_debounce">Rapporto già inviato</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Segnalazione inviata</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Una sincronizzazione automatica potrebbe essere attivata in %d secondo</item>
         <item quantity="other">Una sincronizzazione automatica potrebbe essere attivata in %d secondi</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">Il proprio provider internet potrebbe addebitare dei costi per l\'utilizzo del traffico dati</string>
     <string name="deck_picker_new">Numero di nuove carte da vedere oggi in questo mazzo.</string>
     <string name="deck_picker_rev">Numero di carte in questo mazzo che scadono oggi.</string>
     <string name="deck_picker_lrn">Numero di carte da imparare in questo mazzo.</string>
@@ -246,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        A causa delle modifiche alla privacy di Android, i tuoi dati e i backup automatici verranno eliminati dal tuo telefono se l\'app viene disinstallata
     </string>
+    <string name="deck_already_exists">Mazzo già esistente</string>
 </resources>

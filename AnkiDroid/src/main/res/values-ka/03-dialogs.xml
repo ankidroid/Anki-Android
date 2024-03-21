@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">მიუწვდომელია ხმოვანი წამკითხველის ენა</string>
     <string name="tts_no_tts">არ წაიკითხოს</string>
     <string name="unused_strings">\n\nგამოუყენებელი ფაილები:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">წინასწარ ნახვა</string>
     <string name="reposition_card_dialog_title">ახალი ბარათის გადაადგილება</string>
     <string name="reposition_card_dialog_message">საწყისი პოზიცია:</string>
     <string name="reposition_card_not_new_error">პოზიციის შეცვლა მხოლოდ ახალი ბარათებისთვის შეიძლება</string>
@@ -90,9 +89,9 @@
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
     <string name="custom_study_new_total_new">ახალი ბარათი დასტაში: %d</string>
     <string name="custom_study_rev_total_rev">გადასახედი დასტაში: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_new_extend">დღევანდელი ახალი ბარათების ლიმიტის გაზრდა/შემცირება (\"-3\") ამდენით:</string>
     <string name="custom_study_rev_extend">დღევანდელი გადახედვების ლიმიტის გაზრდა/შემცირება (\"-3\") ამდენით:</string>
-    <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
+    <string name="custom_study_forgotten">გასულ x დღეში დავიწყებული ბარათების გადახედვა:</string>
     <string name="custom_study_ahead">X დღით ადრე სწავლა:</string>
     <string name="custom_study_random">დასტიდან x ბარათის შემთხვევით ამორჩევა:</string>
     <string name="custom_study_preview">ბოლო x დღეში დამატებული ბარათების წინასწარ ნახვა:</string>
@@ -109,8 +108,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">დადასტურება</string>
     <string name="dialog_no">არა</string>
     <string name="dialog_yes">კი</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">შენარჩუნება</string>
+    <string name="dialog_remove">წაშლა</string>
     <string name="dialog_continue">გაგრძელება</string>
     <string name="dialog_processing">მუშავდება&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">შექმნა</string>
@@ -215,13 +214,13 @@
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb-ის წესები და პირობები</string>
     <string name="help_title_send_exception">უწესივრობათა დიაგნოსტიკისა და აღმოფხვრის ანგარიშის გაგზავნა</string>
     <string name="help_dialog_exception_report_debounce">შეტყობინება უკვე გაგზავნილია</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">ანგარიში გაიგზავნა!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">შესაძლოა, თქვენმა ინტერნეტ-მომსახურების მომწოდებელმა ფული ჩამოგაჭრათ მობილური მონაცემების გამოყენებისათვის</string>
     <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
     <string name="deck_picker_rev">Number of cards due today in this deck.</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
@@ -236,7 +235,7 @@
     <string name="cannot_create_subdeck_for_all_decks">ყველა დასტისთვის ვერ შექმნით ქვედასტას</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">კოლექციის სარეზერვო ასლი</string>
-    <string name="backup_collection_message">კარგი ხანია არ შეგიქმნიათ კოლექციის სარეზერვო ასლი. უმჯობესია ეს გააკეთოთ, რათა მონაცემები არ დაგეკარგოთ.</string>
+    <string name="backup_collection_message">კარგა ხანია არ შეგიქმნიათ კოლექციის სარეზერვო ასლი. უმჯობესია ეს გააკეთოთ, რათა მონაცემები არ დაგეკარგოთ</string>
     <string name="button_backup">სარეზერვო ასლი</string>
     <string name="button_disable_reminder">შეხსენების გამორთვა</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">მოგვიანებით</string>
@@ -246,4 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+    <string name="deck_already_exists">დასტა უკვე არსებობს</string>
 </resources>

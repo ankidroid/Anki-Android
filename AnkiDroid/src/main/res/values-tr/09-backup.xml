@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Yeni koleksiyon</string>
     <string name="backup_del_collection">Koleksiyonu silip yenisini oluştur</string>
     <string name="backup_del_collection_question">Koleksiyonu silip yenisini oluşturmayı gerçekten istiyor musunuz? Bu bütün öğrenme ilerlemenizi ve kartlarınızı silecek!</string>
-    <string name="backup_full_sync_from_server">Sunucudan tam eşitleme</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Koleksiyonunuzun AnkiWeb\'dekiyle değiştirilmesini gerçekten istiyor musunuz? Bu son eşitlemenizden bu yana öğrendiklerinizi ve eklediğiniz bilgileri silecek!</string>
     <string name="error_handling_title">Hatâ denetimi</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Seçenekler</string>

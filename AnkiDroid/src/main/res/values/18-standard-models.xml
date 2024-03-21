@@ -8,11 +8,6 @@
     <string name="extra_field_name_new">Back Extra</string>
     <string name="field_to_ask_front_name">Add Reverse</string>
 
-
-    <!--Card type-->
-    <string name="card_n_name">Card %d</string>
-
-
     <!--Note type-->
     <string name="basic_model_name">Basic</string>
     <string name="cloze_model_name">Cloze</string>

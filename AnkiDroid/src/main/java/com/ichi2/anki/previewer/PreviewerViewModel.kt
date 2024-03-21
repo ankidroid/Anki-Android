@@ -24,6 +24,8 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
@@ -40,8 +42,8 @@ import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 
-class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
-    CardViewerViewModel(),
+class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, soundPlayer: SoundPlayer) :
+    CardViewerViewModel(soundPlayer),
     OnErrorListener {
 
     val currentIndex = MutableStateFlow(firstIndex)
@@ -151,7 +153,20 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
         }
     }
 
+    fun replayAudios() {
+        launchCatchingIO {
+            val side = if (showingAnswer.value) SingleCardSide.BACK else SingleCardSide.FRONT
+            soundPlayer.replayAllSounds(side)
+        }
+    }
+
     fun cardsCount() = selectedCardIds.count()
+
+    fun onSliderChange(value: Int) {
+        launchCatchingIO {
+            currentIndex.emit(value - 1)
+        }
+    }
 
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
@@ -193,10 +208,10 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
     }
 
     companion object {
-        fun factory(previewerIdsFile: PreviewerIdsFile, currentIndex: Int): ViewModelProvider.Factory {
+        fun factory(previewerIdsFile: PreviewerIdsFile, currentIndex: Int, soundPlayer: SoundPlayer): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
-                    PreviewerViewModel(previewerIdsFile, currentIndex)
+                    PreviewerViewModel(previewerIdsFile, currentIndex, soundPlayer)
                 }
             }
         }
@@ -213,7 +228,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int) :
             val expectedAnswer = getExpectedTypeInAnswer(card, typeAnswerField)
                 ?: return typeAnsRe.replace(text, "")
             val typeFont = typeAnswerField.getString("font")
-            val typeSize = typeAnswerField.getString("size")
+            val typeSize = getFontSize(typeAnswerField)
             val answerComparison = withCol { compareAnswer(expectedAnswer, provided = "") }
 
             @Language("HTML")

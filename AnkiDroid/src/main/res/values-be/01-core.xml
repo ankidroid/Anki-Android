@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Разгарнуць</string>
     <string name="collapse">Згарнуць</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="few">%d minutes left</item>
@@ -144,6 +145,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Пошук калоды</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук калоды</string>
     <string name="invalid_deck_name">Памылковая назва калоды</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">На сёння картак не засталося.</string>
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
     <string name="button_sync" comment="Text of the sync button">Сінхранізаваць</string>
@@ -152,6 +156,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Працягнуць сiнхранiзацыю</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Сiнхранiзацыя скасаваная</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Адбываецца скасаванне сінхранізацыі...\nГэта можа заняць некаторы час.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Экспартаваць калоду</string>
     <string name="nothing">Нічога</string>
     <!-- Card template editor -->
@@ -176,7 +181,6 @@
         <item quantity="many">Выдаліць тып карткі \'%2$s\' і %1$d яе картак?</item>
         <item quantity="other">Выдаліць тып карткі \'%2$s\' і %1$d яе картак?</item>
     </plurals>
-    <string name="invalid_template">Немагчыма згенерыраваць картку</string>
     <string name="card_template_editor_would_delete_note">Выдаленне гэтага тыпу картак прывядзе да выдалення некаторых нататак. Спачатку стварыце і захавайце новы тып картак.</string>
     <string name="card_template_editor_save_error">Немагчыма захаваць змены ў шаблоне карткі: %s</string>
     <string name="template_for_current_card_deleted">Тып карткі для бягучай карткі быў выдалены.</string>
@@ -251,6 +255,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Працягнуць перанос</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недаступная калекцыя</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Мы не можам атрымаць доступ да вашай калекцыі пасля выдалення AnkiDroid па прычыне змены палітыкі Play Store\n\nВашы даныя знаходзяцца ў бяспецы і могуць быць адноўлены. Яны размяшчаюцца ў\n%s\n\nВыберыце параметр ніжэй, каб аднавіць:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Аднавіць з AnkiWeb (рэкамендавана)</string>
     <string name="install_non_play_store_ankidroid_recommended">Аднавіць доступ да папкі (рэкамендавана)</string>
     <string name="install_non_play_store_ankidroid">Аднавіць доступ да папкі (пашырана)</string>

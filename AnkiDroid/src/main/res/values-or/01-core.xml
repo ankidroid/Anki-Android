@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ପ୍ରସାରଣ</string>
     <string name="collapse">ସଙ୍କୋଚନ</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d ମିନିଟ୍ ବାକି ଅଛି</item>
         <item quantity="other">%d ମିନିଟ୍ ବାକି ଅଛି</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
     <string name="sd_card_not_mounted">ଡିଵାଇସ୍ ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
     <string name="button_sync" comment="Text of the sync button">ସୀଙ୍କ୍</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ସୀଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ସୀଙ୍କ୍ ବାତିଲ୍ ହେଲା</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ବାତିଲ ହେଉଛି&#8230;\nଏହା କିଛି ସମୟ ନେଇପାରେ।</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">ତାସଖଣ୍ଡ ରପ୍ତାନି କରନ୍ତୁ</string>
     <string name="nothing">କିଛି ନାହିଁ</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">\"%2$s\" ପତ୍ର ପ୍ରକାର ଏବଂ ଏହାର %1$dଟିଏ ପତ୍ର ବିଲୋପ କରିବେ କି?</item>
         <item quantity="other">\"%2$s\" ପତ୍ର ପ୍ରକାର ଏବଂ ଏହାର %1$dଟି ପତ୍ର ବିଲୋପ କରିବେ କି?</item>
     </plurals>
-    <string name="invalid_template">ଏକ ପତ୍ର ସୃଷ୍ଟି କରିହେଲା ନାହିଁ</string>
     <string name="card_template_editor_would_delete_note">ଏହି ପତ୍ର ପ୍ରକାର ଅପସାରଣ କରିବା ଦ୍ୱାରା ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ବିଲୋପ ହୋଇପାରେ। ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ ପତ୍ର ପ୍ରକାର ସୃଷ୍ଟି କରି ସଂରକ୍ଷଣ କରନ୍ତୁ।</string>
     <string name="card_template_editor_save_error">ପତ୍ର ଟେମ୍ପଲେଟ୍ ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଞ୍ଚୟ କରିବାରେ ଅସମର୍ଥ: %s</string>
     <string name="template_for_current_card_deleted">ସାମ୍ପ୍ରତିକ ପତ୍ରର ପତ୍ର ପ୍ରକାର ବିଲୋପ ହେଇଯାଇଛି।</string>
@@ -239,6 +243,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ଅଗମ୍ୟ ସଂଗ୍ରହ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store ନୀତିରେ ପରିଵର୍ତ୍ତନ ହେତୁ AnkiDroid ଅନଇନଷ୍ଟଲ୍ ହେବା ପରେ ଆମେ ଆପଣଙ୍କ ସଂଗ୍ରହ ପାଖରେ ପହଞ୍ଚିବାରେ ଅସମର୍ଥ\n\nଆପଣଙ୍କ ଡାଟା ସୁରକ୍ଷିତ ଅଛି ଏଵଂ ପୁନରୁଦ୍ଧାର କରାଯାଇପାରିବ। ଯାହା ଏଠି ଗଚ୍ଛିତ ଅଛି\n%s\n\nପୁନରୁଦ୍ଧାର କରିବାକୁ ହେଲେ ତଳେ ଏକ ଵିକଳ୍ପ ବାଛନ୍ତୁ:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">AnkiWebରୁ ପୁନରୁଦ୍ଧାର କରିବା (ସୁପାରିଶିତ)</string>
     <string name="install_non_play_store_ankidroid_recommended">ଫୋଲ୍ଡର୍ ପ୍ରଵେଶାଧିକାର ପୁନଃସ୍ଥାପନ କରିବା (ସୁପାରିଶିତ)</string>
     <string name="install_non_play_store_ankidroid">ଫୋଲ୍ଡର୍ ପ୍ରଵେଶାଧିକାର ପୁନଃସ୍ଥାପନ କରିବା (ଵିକଶିତ)</string>

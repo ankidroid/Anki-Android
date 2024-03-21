@@ -59,17 +59,18 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Développer</string>
     <string name="collapse">Regrouper</string>
+    <string name="study_more">Réviser davantage</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">%d minute restante</item>
+        <item quantity="other">%d minutes restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d heure %2$d restante</item>
+        <item quantity="other">%1$d heures %2$d restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d jour %2$d restant</item>
+        <item quantity="other">%1$d jours %2$d restants</item>
     </plurals>
     <string name="no_cards_placeholder_title">La collection est vide</string>
     <string name="no_cards_placeholder_description">Ajoutez de nouvelles cartes\nen utilisant l\'icône +</string>
@@ -91,7 +92,7 @@
     <string name="rename_deck">Renommer le paquet</string>
     <string name="create_shortcut">Créer un raccourci</string>
     <string name="browse_cards">Parcourir les cartes</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Modifier la description</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Ajouter</string>
     <string name="menu_add_note">Ajouter une note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de synchronisation</string>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Recherche de paquet</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Chercher un deck</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
+    <string name="studyoptions_limit_reached">Limite de révision quotidienne atteinte</string>
+    <string name="studyoptions_empty_schedule">Aucune carte à réviser actuellement</string>
+    <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé&#8230; pour l’instant !</string>
     <string name="studyoptions_no_cards_due">Aucune carte due actuellement</string>
     <string name="sd_card_not_mounted">Aucune carte SD</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniser</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continuer la synchronisation</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronisation annulée</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Annulation...\nCeci peut prendre un certain temps.</string>
+    <string name="syncing_media">Synchronisation des médias</string>
     <string name="export_deck">Exporter le paquet</string>
     <string name="nothing">Rien</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">Supprimer le type de carte « %2$s » et son %1$d carte ?</item>
         <item quantity="other">Supprimer le type de carte “%2$s” et ses %1$d cartes ?</item>
     </plurals>
-    <string name="invalid_template">Une carte n\'a pas pu être générée</string>
     <string name="card_template_editor_would_delete_note">Retirer ce type de carte provoquera la suppression d\'une ou de plusieurs notes. Veuillez d\'abord créer et sauvegarder un nouveau type de carte.</string>
     <string name="card_template_editor_save_error">Impossible de sauvegarder les modifications apportées au modèle de carte : %s</string>
     <string name="template_for_current_card_deleted">Le type de carte pour la carte actuelle a été supprimé.</string>
@@ -238,6 +242,7 @@ ou reconnecter le support amovible qui contient votre collection.
     <string name="migration__resume_after_failed_dialog__button_positive">Reprendre la migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Collection inaccessible</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Nous ne pouvons pas accéder à votre collection après la désinstallation d\'AnkiDroid, en raison d\'une modification de la politique du Play Store\n\nVos données sont conservées et peuvent être restaurées. Elles se trouvent à\n%s\n\nSélectionnez une option ci-dessous pour les restaurer :</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android a supprimé la permission %1$s d\'AnkiDroid en raison de l\'inactivité de l\'application.\n\nVos données sont intactes et peuvent être restaurées. Elles se trouvent ici :\n%2$s\n\nSélectionnez une option pour les restaurer :</string>
     <string name="restore_data_from_ankiweb">Restaurez depuis Ankiweb (recommandé)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restaurer l\'accès au dossier (recommandé)</string>
     <string name="install_non_play_store_ankidroid">Restaurer l\'accès au dossier (avancé)</string>
@@ -249,5 +254,5 @@ ou reconnecter le support amovible qui contient votre collection.
     <string name="storage_access_title">Autorisations de stockage</string>
     <string name="storage_access_summary">Enregistre votre collection dans un endroit sûr qui ne sera pas supprimé si l\'application est désinstallée</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Accès à tous les fichiers</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">Schéma à remplir</string>
 </resources>

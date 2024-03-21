@@ -49,7 +49,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
-import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
@@ -58,8 +57,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
-import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
-import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
+import com.ichi2.anki.cardviewer.AndroidCardRenderContext.Companion.createInstance
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -161,7 +159,7 @@ abstract class AbstractFlashcardViewer :
     internal var typeAnswer: TypeAnswer? = null
 
     /** Generates HTML content  */
-    private var htmlGenerator: HtmlGenerator? = null
+    private var cardRenderContext: AndroidCardRenderContext? = null
 
     // Default short animation duration, provided by Android framework
     private var shortAnimDuration = 0
@@ -177,6 +175,10 @@ abstract class AbstractFlashcardViewer :
      */
     var webView: WebView? = null
         private set
+
+    /** Accessor for [WebView.getWebViewClient] before API 26 */
+    private var webViewClient: CardViewerWebClient? = null
+
     private var cardFrame: FrameLayout? = null
     private var touchLayer: FrameLayout? = null
     protected var answerField: FixedEditText? = null
@@ -469,7 +471,7 @@ abstract class AbstractFlashcardViewer :
             closeReviewer(RESULT_NO_MORE_CARDS)
             // When launched with a shortcut, we want to display a message when finishing
             if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
-                startActivity(CongratsPage.getIntent(this))
+                CongratsPage.display(this)
             }
             return
         }
@@ -534,7 +536,7 @@ abstract class AbstractFlashcardViewer :
         registerExternalStorageListener()
         restoreCollectionPreferences(col)
         initLayout()
-        htmlGenerator = createInstance(this, col, typeAnswer!!)
+        cardRenderContext = createInstance(this, col, typeAnswer!!)
 
         // Initialize text-to-speech. This is an asynchronous operation.
         tts.initialize(this, ReadTextListener())
@@ -992,7 +994,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun createWebView(): WebView {
-        val assetLoader = getViewerAssetLoader(webviewDomain)
+        val resourceHandler = ViewerResourceHandler(this, webviewDomain)
         val webView: WebView = MyWebView(this).apply {
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
@@ -1006,11 +1008,14 @@ abstract class AbstractFlashcardViewer :
                 domStorageEnabled = true
             }
             webChromeClient = AnkiDroidWebChromeClient()
-            isFocusableInTouchMode = typeAnswer!!.autoFocus
+            isFocusableInTouchMode = typeAnswer!!.useInputTag
             isScrollbarFadingEnabled = true
             // Set transparent color to prevent flashing white when night mode enabled
             setBackgroundColor(Color.argb(1, 0, 0, 0))
-            webViewClient = CardViewerWebClient(assetLoader, this@AbstractFlashcardViewer)
+            CardViewerWebClient(resourceHandler, this@AbstractFlashcardViewer).apply {
+                webViewClient = this
+                this@AbstractFlashcardViewer.webViewClient = this
+            }
         }
         Timber.d(
             "Focusable = %s, Focusable in touch mode = %s",
@@ -1263,7 +1268,7 @@ abstract class AbstractFlashcardViewer :
 
     private suspend fun automaticAnswerShouldWaitForAudio(): Boolean {
         return withCol {
-            decks.confForDid(currentCard!!.did).optBoolean("waitForAudio", true)
+            decks.configDictForDeckId(currentCard!!.did).optBoolean("waitForAudio", true)
         }
     }
 
@@ -1288,7 +1293,7 @@ abstract class AbstractFlashcardViewer :
         } else {
             answerField?.visibility = View.GONE
         }
-        val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
+        val content = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
         automaticAnswer.onDisplayQuestion()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForAudio()) {
@@ -1334,7 +1339,7 @@ abstract class AbstractFlashcardViewer :
             typeAnswer!!.input = answerField!!.text.toString()
         }
         isSelecting = false
-        val answerContent = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.BACK)
+        val answerContent = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.BACK)
         automaticAnswer.onDisplayAnswer()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForAudio()) {
@@ -1391,13 +1396,13 @@ abstract class AbstractFlashcardViewer :
     internal val isInNightMode: Boolean
         get() = Themes.currentTheme.isNightMode
 
-    private fun updateCard(content: CardHtml) {
+    private fun updateCard(content: RenderedCard) {
         Timber.d("updateCard()")
         // TODO: This doesn't need to be blocking
         runBlocking {
             soundPlayer.loadCardSounds(currentCard!!)
         }
-        cardContent = content.getTemplateHtml()
+        cardContent = content.html
         fillFlashcard()
         playSounds(false) // Play sounds if appropriate
     }
@@ -1859,7 +1864,7 @@ abstract class AbstractFlashcardViewer :
             } else {
                 answerField?.visibility = View.GONE
             }
-            val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
+            val content = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
             automaticAnswer.onDisplayQuestion()
             updateCard(content)
             hideEaseButtons()
@@ -2232,11 +2237,17 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected inner class CardViewerWebClient internal constructor(
-        private val loader: WebViewAssetLoader?,
+        private val loader: ViewerResourceHandler?,
         private val onPageFinishedCallback: OnPageFinishedCallback? = null
     ) : WebViewClient() {
         private var pageFinishedFired = true
         private val pageRenderStopwatch = Stopwatch.init("page render")
+
+        @Deprecated("Deprecated in Java") // still needed for API 23
+        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            Timber.d("Obtained URL from card: '%s'", url)
+            return filterUrl(url)
+        }
 
         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
             val url = request.url.toString()
@@ -2254,9 +2265,7 @@ abstract class AbstractFlashcardViewer :
             request: WebResourceRequest
         ): WebResourceResponse? {
             val url = request.url
-            if (request.method == "GET") {
-                loader!!.shouldInterceptRequest(url)?.let { return it }
-            }
+            loader!!.shouldInterceptRequest(request)?.let { return it }
             if (url.toString().startsWith("file://")) {
                 url.path?.let { path -> migrationService?.migrateFileImmediately(File(path)) }
             }
@@ -2462,6 +2471,11 @@ abstract class AbstractFlashcardViewer :
             // onPageFinished will be called multiple times if the WebView redirects by setting window.location.href
             onPageFinishedCallback?.onPageFinished(view)
             view.loadUrl("javascript:onPageFinished();")
+            // focus keyboard automatically only when if it has inputTag and focus set to true
+            val autoFocus = typeAnswer!!.useInputTag && typeAnswer!!.autoFocus
+            if (autoFocus) {
+                view.requestFocus()
+            }
         }
 
         @TargetApi(Build.VERSION_CODES.O)
@@ -2499,14 +2513,7 @@ abstract class AbstractFlashcardViewer :
     @SuppressLint("WebViewApiAvailability")
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun handleUrlFromJavascript(url: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // WebViewCompat recommended here, but I'll avoid the dependency as it's test code
-            val c = webView?.webViewClient as? CardViewerWebClient?
-                ?: throw IllegalStateException("Couldn't obtain WebView - maybe it wasn't created yet")
-            c.filterUrl(url)
-        } else {
-            throw IllegalStateException("Can't get WebViewClient due to Android API")
-        }
+        webViewClient?.filterUrl(url) ?: throw IllegalStateException("Couldn't obtain WebView - maybe it wasn't created yet")
     }
 
     val isDisplayingAnswer

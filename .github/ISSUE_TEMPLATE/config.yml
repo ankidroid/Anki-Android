@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Anki Forums
+    url: https://forums.ankiweb.net/
+    about: If your issue also occurs in Anki Desktop, please report it in the forums

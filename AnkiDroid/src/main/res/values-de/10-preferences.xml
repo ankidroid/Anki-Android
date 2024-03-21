@@ -50,7 +50,7 @@
         <item quantity="one">%d min</item>
         <item quantity="other">%d Minuten</item>
     </plurals>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_milliseconds">%s Millisekunden</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Keine Ergebnisse gefunden</string>
     <!-- preferences.xml categories-->
@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrieren</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blinken</string>
     <string name="timeout_answer_text" maxLength="41">Antwort automatisch anzeigen</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Lösung automatisch ohne Eingabe anzeigen. Konfiguriere in den Stapeleinstellungen.</string>
     <string name="select_locale_title">Sprache wählen</string>
     <string name="software_render" maxLength="41">Karten-Hardware-Rendering deaktivieren</string>
     <string name="software_render_summ">Hardware-Rendering ist schneller, kann aber Probleme haben, insbesondere auf Android 8/8.1. Wenn Sie Teile der Benutzeroberfläche der Karte nicht sehen können, versuchen Sie diese Einstellung.</string>
@@ -174,8 +174,8 @@
     <string name="show_top_bar_summ">Kartenanzahl, Flagge und Markierung in oberer Leiste anzeigen</string>
     <string name="show_progress" maxLength="41">Fällige anzeigen</string>
     <string name="show_progress_summ">Verbleibende Anzahl der Karten anzeigen</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Ankunftszeit anzeigen</string>
+    <string name="show_eta_summ">Verbleibende Zeit anzeigen</string>
     <string name="use_current" maxLength="41">Stapel für neue Karten</string>
     <string name="learn_cutoff" maxLength="41">Grenzwert für vorzeitiges Lernen</string>
     <string name="time_limit" maxLength="41">Zeitlimitwert</string>
@@ -199,8 +199,6 @@
     <string name="reset">Zurücksetzen</string>
     <string name="thirdparty_apps_title" maxLength="41">API-Apps von Drittanbietern</string>
     <string name="thirdparty_apps_summary">Eine Liste von Anwendungen anzeigen, die die AnkiDroid-API verwenden (z. B. Wörterbücher, Werkzeuge etc.)</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML/Javascript-Debugging</string>
-    <string name="html_javascript_debugging_summ">Remote-WebView-Verbindungen aktivieren und Karten-HTML ins AnkiDroid-Verzeichnis speichern</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Feedback-Geber</string>
     <string name="show_deck_title" maxLength="41">Stapeltitel anzeigen</string>
@@ -244,8 +242,8 @@
     <string name="deck_conf_cram_reschedule_summ">Karten basierend auf meinen Antworten in diesem Stapel umplanen</string>
     <string name="deck_conf_cram_filter_2_check">Zweiten Filter einschalten</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Personalisierte Schritte definieren</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Verzögerungen vorhersehen</string>
+    <string name="deck_conf_cram_preview_delays_summ">Verspätungen werden in Sekunden angezeigt. 0 wird die Karte zum ursprünglichen Stapel zurückbringen.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Helfen Sie mit, AnkiDroid zu verbessern!</string>
     <string name="analytics_title" maxLength="41">Funktionsnutzung teilen</string>
@@ -270,16 +268,17 @@
     <string name="key_picker_default_press_key">Eine Taste drücken</string>
     <string name="binding_add_axis">Joystick/Motion Controller hinzufügen</string>
     <string name="axis_picker_move_joystick">Joystick/Motion Controller bewegen</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_actions" maxLength="41">Benutzerdefinierte Aktionen</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
+    <string name="user_action_1" maxLength="41">Benutzerdefinierte Aktion 1</string>
+    <string name="user_action_2" maxLength="41">Benutzerdefinierte Aktion 2</string>
+    <string name="user_action_3" maxLength="41">Benutzerdefinierte Aktion 3</string>
+    <string name="user_action_4" maxLength="41">Benutzerdefinierte Aktion 4</string>
+    <string name="user_action_5" maxLength="41">Benutzerdefinierte Aktion 5</string>
+    <string name="user_action_6" maxLength="41">Benutzerdefinierte Aktion 6</string>
+    <string name="user_action_7" maxLength="41">Benutzerdefinierte Aktion 7</string>
+    <string name="user_action_8" maxLength="41">Benutzerdefinierte Aktion 8</string>
+    <string name="user_action_9" maxLength="41">Benutzerdefinierte Aktion 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartenseite auswählen</string>
     <string name="card_side_question">Frage</string>

@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">گسترش</string>
     <string name="collapse">بستن</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">جستجوی دسته‌ها </string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">جستجوی دسته‌ها </string>
     <string name="invalid_deck_name">نام دسته نامعتبر است</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">هیچ کارتی هنوز موعد نیست</string>
     <string name="sd_card_not_mounted">حافظۀ دستگاه یافت نشد</string>
     <string name="button_sync" comment="Text of the sync button">همگام سازی</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ادامه همگام‌سازی</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">همگام‌سازی لغو شد</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">در حال لغو کردن...\nممکن است کمی زمان بر باشد.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">صدور دسته</string>
     <string name="nothing">هیچ</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">حذف نوع کارت \"%2$s\"، و %1$d کارت آن؟</item>
         <item quantity="other">حذف نوع کارت \"%2$s\"، و %1$d تا از کارت‌های آن؟</item>
     </plurals>
-    <string name="invalid_template">کارت نمیتواند تولید شود</string>
     <string name="card_template_editor_would_delete_note">حذف این نوع کارت باعث حذف یک یا چند یادداشت خواهد شد. لطفاً ابتدا نوع کارت جدیدی را ساخته و ذخیره کنید.</string>
     <string name="card_template_editor_save_error">نمیتوان تغییرات قالب کارت را ذخیره کرد: %s</string>
     <string name="template_for_current_card_deleted">نوع کارت برای کارت فعلی حذف شد.</string>
@@ -238,6 +242,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">ادامه مهاجرت</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">مجموعه خارج از دسترس</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">ما به دلیل تغییرات قوانین Play Store، پس از پاک کردن اپلیکیشن AnkiDroid، امکان دسترسی به مجموعه‌های شما را نداریم\n\nداده‌های شما امن است و امکان بازیابی آن وجود دارد. این داده‌ها در آدرس %s\n\nهستند یکی از گزینه‌های زیر را برای بازیابی انتخاب کنید:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">بازیابی از AnkiWeb (توصیه شده)</string>
     <string name="install_non_play_store_ankidroid_recommended">بازیابی دسترسی به پوشه (توصیه شده)</string>
     <string name="install_non_play_store_ankidroid">بازیابی دسترسی به پوشه (پیشرفته)</string>

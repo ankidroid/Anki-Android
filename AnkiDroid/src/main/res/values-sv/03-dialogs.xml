@@ -44,14 +44,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Kontrollera databas</string>
+    <string name="check_db_title">Kontrollera databas?</string>
     <string name="check_db_warning">Det här kan ta lång tid</string>
     <string name="contextmenu_deckpicker_delete_deck">Radera kortlek</string>
     <string name="delete_deck_title">Radera kortlek</string>
     <string name="no_tts_available_message">Det finns inget språk för text-till-tal</string>
     <string name="tts_no_tts">Tala inte</string>
     <string name="unused_strings">\n\nOanvända filer:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Förhandsgranskning</string>
     <string name="reposition_card_dialog_title">Ompositionera nytt kort</string>
     <string name="reposition_card_dialog_message">Startposition:</string>
     <string name="reposition_card_not_new_error">Endast nya kort kan ompositioneras</string>
@@ -59,7 +58,7 @@
         <item quantity="one">%d kort ompositionerat</item>
         <item quantity="other">%d kort ompositionerade</item>
     </plurals>
-    <string name="reset_card_dialog_title">Nollställ inlärningsdata för kort</string>
+    <string name="reset_card_dialog_title">Återställ kortets framsteg</string>
     <string name="reset_card_dialog_message">Detta kort kommer att placeras sist i kön för nya kort.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d kort återställt</item>
@@ -67,8 +66,8 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">Schemalägg %d kort</item>
+        <item quantity="other">Schemalägg %d kort</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Nuvarande intervall: %d dag</item>
@@ -84,7 +83,7 @@
     <string name="answering_error_title">Databasfel</string>
     <string name="answering_error_message">Ett fel uppstod när data skrevs till samlingen. Detta kan bero på en korrupt databas eller otillräckligt diskutrymme.\n\nOm detta händer flera gånger, vänligen kontrollera databasen, reparera samlingen eller återställ den från en säkerhetskopia. Klicka på \'alternativ\' för det.\n\nAnnars kan detta också bero på en bug i AnkiDroid; vänligen rapportera felet så vi kan kontrollera detta.</string>
     <string name="answering_error_report">Rapportera fel</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Det finns inte tillräckligt med ledigt lagringsutrymme för att öppna AnkiDroid. Frigör lite utrymme för att fortsätta. </string>
     <string name="repair_deck_dialog">Vill du verkligen försöka reparera databasen?\n\nEn kopia kommer att skapas i mappen \'%s\' innan.</string>
     <string name="intent_aedict_empty">Kategori \'default\' är tom</string>
     <string name="intent_aedict_category">För att lägga till kort till AnkiDroid, ta bort alla Notepadkategorier eller lägg till en som heter \'default\'</string>
@@ -97,22 +96,22 @@
     <string name="custom_study_random">Välj x kort slumpmässigt från kortleken:</string>
     <string name="custom_study_preview">Förhandsgranska nya kort som lagts till de senaste x dagarna:</string>
     <string name="custom_study_rebuild_deck_corrupt">Kunde inte bygga om anpassad studiekortlek</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">Lagring full</string>
+    <string name="storage_almost_full_title">Lagring nästan full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Inget utrymme</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid behöver %s ledigt lagringsutrymme för att fortsätta. Rensa lite utrymme</string>
     <string name="restore_backup_title">Återställ säkerhetskopia?</string>
     <string name="restore_backup">Din samling kommer att ersättas med en äldre kopia. Ej sparade framsteg kommer att gå förlorade.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Välj en annan</string>
     <string name="dialog_cancel">Avbryt</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Bekräfta</string>
     <string name="dialog_no">Nej</string>
     <string name="dialog_yes">Ja</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Behåll</string>
+    <string name="dialog_remove">Ta bort</string>
     <string name="dialog_continue">Fortsätt</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Bearbetar...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Skapa</string>
     <string name="dialog_positive_delete">Radera</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -177,7 +176,7 @@
     <string name="failed_to_apply_background_image">Det gick inte att använda bakgrundsbilden %s</string>
     <string name="background_image_too_large">Kortleksväljarbakgrund för stor</string>
     <string name="image_max_size_allowed">Maximal bildstorlek %d MB som tillåts</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">Bilden är för högupplöst (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Behörighet saknas för lagringsutrymme. Vänligen ge lagringsbehörighet och försök sedan igen.</string>
@@ -187,7 +186,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Det gick inte att schemalägga påminnelser</string>
     <string name="boot_service_too_many_notifications">För många påminnelser schemalagda. Vissa kommer inte att visas</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">Ställ in språk</string>
     <string name="locale_selection_dialog_summary">Vissa flerspråkiga tangentbord, till exempel GBoard har stöd för att ändra språk vid redigering av text\n\nVänligen begär funktionen ”setImeHintLocales” från din tangentbordstillverkare om ditt tangentbord inte ändrar språk.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Hur man använder AnkiDroid</string>
@@ -203,7 +202,7 @@
     <string name="help_item_support_develop_ankidroid">Utveckla</string>
     <string name="help_item_support_rate_ankidroid">Betygsätt</string>
     <string name="help_item_support_other_ankidroid">Övrigt</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Översätt</string>
     <string name="help_title_community">Community</string>
     <string name="help_item_anki_forums">Anki-forum</string>
     <string name="help_item_discord">Discord</string>
@@ -215,13 +214,13 @@
     <string name="help_item_ankiweb_terms_and_conditions">AnikWeb Användarvillkor</string>
     <string name="help_title_send_exception">Skicka felsökningsrapport</string>
     <string name="help_dialog_exception_report_debounce">Rapporten har redan skickats</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Rapporten har skickats!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">En automatisk synkronisering kan utlösas om %d sekund</item>
         <item quantity="other">En automatisk synkronisering kan utlösas om %d sekunder</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">Din internetleverantör kan ta ut pengar för dataanvändning</string>
     <string name="deck_picker_new">Antal nya kort att se idag i denna kortlek.</string>
     <string name="deck_picker_rev">Antal kort som förfaller idag i denna kortlek.</string>
     <string name="deck_picker_lrn">Antal kort i inlärning i denna kortlek.</string>
@@ -231,19 +230,20 @@
     <string name="deck_picker_counts">Öppna översiktssidan som innehåller antalet kort att se idag.</string>
     <string name="import_deck_package">Kortlekspaket (.apkg)</string>
     <string name="import_collection_package">Samlingspaket (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">Textfil (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Du kan inte skapa en underkortlek för alla kortlekar</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="backup_your_collection">Säkerhetskopiera din samling</string>
+    <string name="backup_collection_message">Du har inte säkerhetskopierat din samling på ett tag. Du bör göra detta nu för att förhindra dataförlust</string>
+    <string name="button_backup">Säkerhetskopiering</string>
+    <string name="button_disable_reminder">Inaktivera påminnelse</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Senare</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Visa inte igen</string>
+    <string name="dismiss_backup_warning_title">Varning för dataförlust</string>
+    <string name="dismiss_backup_warning_new_user">        På grund av Androids integritetsförändringar kommer dina data och automatiserade säkerhetskopior att raderas om appen avinstalleras
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        På grund av Androids integritetsförändringar kommer dina data och automatiserade säkerhetskopior att vara oåtkomliga om appen avinstalleras
     </string>
+    <string name="deck_already_exists">Kortlek finns redan</string>
 </resources>

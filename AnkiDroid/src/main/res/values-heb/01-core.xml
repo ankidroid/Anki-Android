@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">הרחב</string>
     <string name="collapse">צמצם</string>
+    <string name="study_more">מצב למידה</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">נותרה דקה %d</item>
         <item quantity="two">נותרו %d דקות</item>
@@ -145,6 +146,9 @@
     <string name="search_deck" comment="Deck search for selecting it">חיפוש חפיסה</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">חיפוש חפיסה</string>
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
+    <string name="studyoptions_limit_reached">הגעת למגבלת הלימוד היומית</string>
+    <string name="studyoptions_empty_schedule">אין קלפים מתוכננים ללמוד</string>
+    <string name="studyoptions_congrats_finished">אשריך! סיימת לעת עתה.</string>
     <string name="studyoptions_no_cards_due">אין כרטיסים נוספים</string>
     <string name="sd_card_not_mounted">התקן אחסון לא מחובר</string>
     <string name="button_sync" comment="Text of the sync button">סנכרון</string>
@@ -153,6 +157,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">המשך סנכרון</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">סנכרון בוטל</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">מבטל&#8230;\n אנא המתן.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">ייצוא חפיסה</string>
     <string name="nothing">ריק</string>
     <!-- Card template editor -->
@@ -177,7 +182,6 @@
         <item quantity="many">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
         <item quantity="other">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
     </plurals>
-    <string name="invalid_template">לא ניתן לייצר קלף</string>
     <string name="card_template_editor_would_delete_note">הסרת סוג קלף זה תוביל למחיקת רשומה אחת או יותר. נא ליצור ולשמור סוג קלף חדש תחילה.</string>
     <string name="card_template_editor_save_error">לא ניתן לשמור שינויים לתבנית הקלף: %s</string>
     <string name="template_for_current_card_deleted">סוג הקלף של הקלף הנוכחי נמחק.</string>
@@ -249,6 +253,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">המשך המרה</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">אין גישה לאוסף</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">לא נוכל לגשת לאוסף שלך לאחר הסרת ההתקנה של AnkiDroid עקב שינוי במדיניות של חנות Play\n\nהנתונים שלך בטוחים וניתן לשחזר אותם. הוא ממוקם ב-\n%s\n\nבחר אפשרות למטה לשחזור:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">אנדרואיד הסירה את ההרשאה %1$s של AnkiDroid עקב חוסר פעילות באפליקציה.\n\nהנתונים שלך בטוחים וניתן לשחזר אותם. הוא ממוקם ב-\n%2$s\n\nבחר אפשרות למטה לשחזור:</string>
     <string name="restore_data_from_ankiweb">שחזור מ-AnkiWeb (מומלץ)</string>
     <string name="install_non_play_store_ankidroid_recommended">שחזר גישה לתיקייה (מומלץ)</string>
     <string name="install_non_play_store_ankidroid">שחזר גישה לתיקייה (מתקדם)</string>

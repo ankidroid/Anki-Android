@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Laajenna</string>
     <string name="collapse">Pienennä</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuutti jäljellä</item>
         <item quantity="other">%d minuuttia jäljellä</item>
@@ -138,6 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Hae pakkaa</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Hae pakkaa</string>
     <string name="invalid_deck_name">Virheellinen pakan nimi</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Kortteja ei tarvitse vielä kerrata</string>
     <string name="sd_card_not_mounted">Laitteen tallennustilaa ei ole kiinnitetty</string>
     <string name="button_sync" comment="Text of the sync button">Synkronoi</string>
@@ -146,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Jatka synkronointia</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronointi peruutettu</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Peruutetaan&#8230;\nTämä voi kestää jonkin aikaa.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Vie pakka</string>
     <string name="nothing">Ei mitään</string>
     <!-- Card template editor -->
@@ -166,7 +171,6 @@
         <item quantity="one">Poista ”%2$s” korttityyppi ja sen %1$d. kortti?</item>
         <item quantity="other">Poista ”%2$s” korttityyppi ja sen %1$d. kortit?</item>
     </plurals>
-    <string name="invalid_template">Korttia ei voitu luoda</string>
     <string name="card_template_editor_would_delete_note">Korttityypin poistaminen aiheuttaisi yhden tai useamman kortin poistamisen. Luo sekä tallenna uusikorttityyppi ensin.</string>
     <string name="card_template_editor_save_error">Korttimallin muutoksia ei voitu tallentaa: %s</string>
     <string name="template_for_current_card_deleted">Tämän kortin korttityyppi poistettiin.</string>
@@ -239,6 +243,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Jatka siirtämistä</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Kokoelma ei ole saavutettavissa</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Emme pääse käsiksi kokoelmiisi sen jälkeen, kun AnkiDroid on poistettu Play Storen käytäntöjen muutoksen vuoksi\n\nTietosi ovat turvassa ja ne voidaan palauttaa. Ne sijaitsevat polussa\n%s\n\n\nPalauta valitsemalla alla olevista vaihtoehdoista:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Palauta AnkiWebistä (suositellaan)</string>
     <string name="install_non_play_store_ankidroid_recommended">Palauta kansion käyttöoikeus (suositellaan)</string>
     <string name="install_non_play_store_ankidroid">Palauta kansion käyttöoikeus (edistyneille käyttäjille)</string>

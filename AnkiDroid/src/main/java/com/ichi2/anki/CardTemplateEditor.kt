@@ -17,6 +17,7 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -48,6 +49,9 @@ import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.notetype.RenameCardTemplateDialog
+import com.ichi2.anki.notetype.RepositionCardTemplateDialog
+import com.ichi2.anki.previewer.TemplatePreviewerArguments
+import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.annotations.NeedsTest
@@ -59,6 +63,7 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.jsonObjectIterable
 import org.json.JSONArray
 import org.json.JSONException
@@ -219,7 +224,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         val template = tempModel!!.getTemplate(ordinal)
         val templateName = template.getString("name")
 
-        if (deck != null && getColUnsafe.decks.isDyn(deck.deckId)) {
+        if (deck != null && getColUnsafe.decks.isFiltered(deck.deckId)) {
             Timber.w("Attempted to set default deck of %s to dynamic deck %s", templateName, deck.name)
             showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
@@ -439,6 +444,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
         }
 
+        private fun showRepositionDialog() {
+            RepositionCardTemplateDialog.showInstance(requireContext(), templateEditor.viewPager.adapter!!.itemCount) { newPosition ->
+                val currentPosition = templateEditor.viewPager.currentItem
+                Timber.w("moving card template %d to %d", currentPosition, newPosition)
+                TODO("CardTemplateNotetype is a complex class and requires significant testing")
+            }
+        }
+
         @Suppress("unused")
         private fun insertField(fieldName: String) {
             val start = max(editorEditText.selectionStart, 0)
@@ -541,7 +554,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                 confirmAddCards(tempModel.notetype, numAffectedCards)
                                 return true
                             }
+                            R.id.action_reposition -> showRepositionDialog()
                             R.id.action_rename -> showRenameDialog()
+                            R.id.action_copy_as_markdown -> copyMarkdownTemplateToClipboard()
                             R.id.action_insert_field -> showInsertFieldDialog()
                             R.id.action_delete -> {
                                 Timber.i("CardTemplateEditor:: Delete template button pressed")
@@ -615,6 +630,33 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             )
         }
 
+        private val currentTemplate: CardTemplate?
+            get() = try {
+                val tempModel = templateEditor.tempModel
+                val template: JSONObject = tempModel!!.getTemplate(templateEditor.viewPager.currentItem)
+                CardTemplate(
+                    front = template.getString("qfmt"),
+                    back = template.getString("afmt"),
+                    style = tempModel.css
+                )
+            } catch (e: Exception) {
+                Timber.w(e, "Exception loading template in CardTemplateFragment. Probably stale fragment.")
+                null
+            }
+
+        /** Copies the template to clipboard in markdown format */
+        private fun copyMarkdownTemplateToClipboard() {
+            // A number of users who post their templates to Reddit/Discord have these badly formatted
+            // It makes it much easier for people to understand if these are provided as markdown
+            val template = currentTemplate ?: return
+
+            context?.let { ctx ->
+                ctx.copyToClipboard(
+                    template.toMarkdown(ctx)
+                )
+            }
+        }
+
         private fun onModelSaved() {
             Timber.d("saveModelAndExitHandler::postExecute called")
             val button = templateEditor.findViewById<View>(R.id.action_confirm)
@@ -625,29 +667,28 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             templateEditor.finish()
         }
 
-        fun performPreview() {
-            val col = templateEditor.getColUnsafe
-            val tempModel = templateEditor.tempModel
-            Timber.i("CardTemplateEditor:: Preview on tab %s", templateEditor.viewPager.currentItem)
-            // Create intent for the previewer and add some arguments
-            val i = Intent(templateEditor, CardTemplatePreviewer::class.java)
-            val ordinal = templateEditor.viewPager.currentItem
-            val noteId = requireArguments().getLong("noteId")
-            i.putExtra("ordinal", ordinal)
-            i.putExtra("cardListIndex", 0)
+        private fun getNote(col: Collection): Note? {
+            val nid = requireArguments().getLong(EDITOR_NOTE_ID)
+            return if (nid != -1L) col.getNote(nid) else null
+        }
 
-            // If we have a card for this position, send it, otherwise an empty card list signals to show a blank
-            if (noteId != -1L) {
-                val cids = col.getNote(noteId).cardIds(col)
-                if (ordinal < cids.size) {
-                    i.putExtra("cardList", longArrayOf(cids[ordinal]))
-                }
+        fun performPreview() {
+            launchCatchingTask {
+                val notetype = templateEditor.tempModel!!.notetype
+                val notetypeFile = NotetypeFile(requireContext(), notetype)
+                val ord = templateEditor.viewPager.currentItem
+                val note = withCol { getNote(this) ?: Note.fromNotetypeId(notetype.id) }
+                val args = TemplatePreviewerArguments(
+                    notetypeFile = notetypeFile,
+                    id = note.id,
+                    ord = ord,
+                    fields = note.fields,
+                    tags = note.tags,
+                    fillEmpty = true
+                )
+                val intent = TemplatePreviewerFragment.getIntent(requireContext(), args)
+                startActivity(intent)
             }
-            // Save the model and pass the filename if updated
-            tempModel!!.editedModelFileName =
-                CardTemplateNotetype.saveTempModel(templateEditor, tempModel.notetype)
-            i.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModel.editedModelFileName)
-            onRequestPreviewResult.launch(i)
         }
 
         private fun displayDeckOverrideDialog(tempModel: CardTemplateNotetype) = launchCatchingTask {
@@ -907,13 +948,26 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // If the starting point for name already exists, iteratively increase n until we find a unique name
             while (true) {
                 // Get new name
-                val name = resources.getString(R.string.card_n_name, n)
+                val name = CollectionManager.TR.cardTemplatesCard(n)
                 // Cycle through all templates checking if new name exists
                 if (templates.jsonObjectIterable().all { name != it.getString("name") }) {
                     return name
                 }
                 n += 1
             }
+        }
+
+        data class CardTemplate(val front: String, val back: String, val style: String) {
+            fun toMarkdown(context: Context) =
+                // backticks are not supported by old reddit
+                buildString {
+                    appendLine("**${context.getString(R.string.card_template_editor_front)}**\n")
+                    appendLine("```html\n$front\n```\n")
+                    appendLine("**${context.getString(R.string.card_template_editor_back)}**\n")
+                    appendLine("```html\n$back\n```\n")
+                    appendLine("**${context.getString(R.string.card_template_editor_styling)}**\n")
+                    append("```css\n$style\n```")
+                }
         }
 
         companion object {

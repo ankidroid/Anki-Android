@@ -30,6 +30,7 @@ import com.ichi2.anki.dialogs.CardSideSelectionDialog
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils.onGestureChanged
 import com.ichi2.anki.dialogs.KeySelectionDialogUtils
+import com.ichi2.anki.dialogs.WarningDisplay
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
@@ -127,12 +128,7 @@ class ControlPreference : ListPreference {
                     customView(view = gesturePicker)
 
                     gesturePicker.onGestureChanged { gesture ->
-                        showToastIfBindingIsUsed(
-                            fromGesture(
-                                gesture,
-                                screenBuilder
-                            )
-                        )
+                        warnIfBindingIsUsed(fromGesture(gesture, screenBuilder), gesturePicker)
                     }
                 }
             }
@@ -145,12 +141,11 @@ class ControlPreference : ListPreference {
 
                     // When the user presses a key
                     keyPicker.setBindingChangedListener { binding ->
-                        showToastIfBindingIsUsed(
-                            MappableBinding(
-                                binding,
-                                screenBuilder(CardSide.BOTH)
-                            )
+                        val mappableBinding = MappableBinding(
+                            binding,
+                            screenBuilder(CardSide.BOTH)
                         )
+                        warnIfBindingIsUsed(mappableBinding, keyPicker)
                     }
 
                     positiveButton(R.string.dialog_ok) {
@@ -214,6 +209,14 @@ class ControlPreference : ListPreference {
      */
     private fun bindingIsUsedOnAnotherCommand(binding: MappableBinding): Boolean {
         return getCommandWithBindingExceptThis(binding) != null
+    }
+
+    private fun warnIfBindingIsUsed(binding: MappableBinding, warningDisplay: WarningDisplay) {
+        getCommandWithBindingExceptThis(binding)?.let {
+            val name = context.getString(it.resourceId)
+            val warning = context.getString(R.string.bindings_already_bound, name)
+            warningDisplay.setWarning(warning)
+        } ?: warningDisplay.clearWarning()
     }
 
     /** Displays a warning to the user if the provided binding couldn't be used */

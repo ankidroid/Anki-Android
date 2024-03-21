@@ -48,6 +48,11 @@
         <attr name="summaryEntries" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="ExtendedPreferenceCategory">
+        <!-- Adds a help button that opens the provided link when tapped -->
+        <attr name="helpLink" format="string"/>
+    </declare-styleable>
+
     <declare-styleable name="SliderPreference">
         <!-- Format string to be used as template to display the value
              There must be ONLY ONE placeholder, which will be replaced by the preference value -->
@@ -111,17 +116,11 @@
     <!-- Reviewer other colors -->
     <attr name="topBarColor" format="color"/>
     <attr name="maxTimerColor" format="color"/>
+    <attr name="alternativeBackgroundColor" format="color"/>
     <!-- Browser colors -->
     <attr name="suspendedColor" format="color"/>
     <attr name="selectedColor" format="color"/>
     <attr name="markedColor" format="color"/>
-    <attr name="flagRed" format="color"/>
-    <attr name="flagOrange" format="color"/>
-    <attr name="flagGreen" format="color"/>
-    <attr name="flagBlue" format="color"/>
-    <attr name="flagPink" format="color"/>
-    <attr name="flagTurquoise" format="color"/>
-    <attr name="flagPurple" format="color"/>
     <!-- Note editor colors -->
     <attr name="duplicateColor" format="color"/>
     <attr name="editTextBackgroundColor" format="color"/>

@@ -2,7 +2,7 @@
 
 ## Rationale
 
-`@Contract` annotations for Android methods allow the removal of tautotlogical lint checks. 
+`@Contract` annotations for Android methods allow the removal of tautological lint checks.
 
 For example: if `TextUtils.isEmpty(str)` returns `false`, then `str` is non-null. `@Contract` allows us to specify this invariant to the linter, which reduces lint warnings and/or unnecessary code.
 
@@ -22,11 +22,11 @@ See: https://www.jetbrains.com/help/idea/contract-annotations.html
 
 Annotations should now appear
 
-## Modificiation Instructions
+## Modification Instructions
 
 * In Android Studio Settings: `jdk.table.xml`
-* You can find the element under one of the `<jdk>` elements as a `file://` URL: 
-* Removing this line will allow the selection of another annotations root.
+* You can find the element under one of the `<jdk>` elements as a `file://` URL:
+* Removing this line will allow the selection of another annotation root.
 
 Sample:
 ```xml

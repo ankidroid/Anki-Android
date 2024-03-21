@@ -133,7 +133,7 @@ class ContentProviderTest : InstrumentedTest() {
             )
         }
         // delete test decks
-        col.decks.removeDecks(testDeckIds)
+        col.decks.remove(testDeckIds)
         assertEquals(
             "Check that all created decks have been deleted",
             numDecksBeforeTest,
@@ -1297,7 +1297,7 @@ class ContentProviderTest : InstrumentedTest() {
             fields: Array<String>,
             tag: String
         ): Uri {
-            val newNote = Note.fromNotetypeId(col, mid)
+            val newNote = col.run { Note.fromNotetypeId(mid) }
             for (idx in fields.indices) {
                 newNote.setField(idx, fields[idx])
             }

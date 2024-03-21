@@ -139,10 +139,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid कार्ड</string>
     <string name="note_editor_copy_note">नोट कॉपी करें</string>
-    <string name="card_editor_reposition_card">स्थानांतरित करे </string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">स्थानांतरित करे </string>
     <string name="card_editor_reset_card">प्रगति को रीसेट</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">पुनः शेड्यूल करें</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">पूर्वावलोकन</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d का %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">का नाम बदलें</string>
     <string name="checks_action">जांचें</string>
@@ -203,7 +204,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">सिस्टम में कोई ऐप इंस्टॉल नहीं है जो इस क्रिया को कर सके।</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[कैमरे के चित्र बड़े हो सकते हैं। आप मीडिया फ़ोल्डर में छवियों को संपीड़ित और आकार देना चाह सकते हैं]]></string>
-    <string name="no_browser_notification">कोई ब्राउज़र नहीं मिला, कृपया कंप्यूटर या मोबाइल द्वारा वेब पेज पर जाएँ:</string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">पृष्ठ लोड करने में त्रुटि: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -212,9 +213,6 @@
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">पहले जैसा कर देना</string>
-    <string name="cloze_sample_text">यह एक {{%1$s::sample}} क्लोज़ विलोपन है।</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">एक दाहरण</string>
-    <string name="basic_answer_sample_text">एक उदाहरण</string>
     <string name="reviewer_tts_cloze_spoken_replacement">रिक्त</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">श्वेतपट्ट छवि को सहेजने में विफल। %s</string>
@@ -306,7 +304,7 @@
     <string name="migration_part_1_done_resume">आप अंकीड्रॉइड का उपयोग फिर से शुरू कर सकते हैं.
 \nस्टोरेज माइग्रेशन पृष्ठभूमि में जारी रहेगा.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s एक वैध जावास्क्रिप्ट एडऑन पैकेज नहीं है</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">निर्देशिका नहीं बन सका %s</string>
     <string name="malicious_archive_entry_outside">दुर्भावनापूर्ण संग्रह. लक्ष्य निर्देशिका के बाहर प्रविष्टि शामिल है: %s</string>
     <string name="malicious_archive_exceeds_limit">दुर्भावनापूर्ण ढंग से संग्रहीत दस्तावेज़. आकार %1$s से अधिक है या इसमें %2$d से अधिक फ़ाइलें हैं।</string>
@@ -321,6 +319,8 @@
     <string name="intro_short_ankidroid_explanation">अंकी का कार्ड शेड्यूलर आपकी सबसे कमजोर यादों को मजबूत करके और आपकी सबसे मजबूत यादों को संरक्षित करके समय बचाता है</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">शुरू करें</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb से सिंक करें</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">पहले से ही लॉगिन है</string>
     <!-- Deck Creation -->
     <string name="deck_created">बनाया गया डेक</string>
@@ -356,4 +356,5 @@
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
 </resources>
