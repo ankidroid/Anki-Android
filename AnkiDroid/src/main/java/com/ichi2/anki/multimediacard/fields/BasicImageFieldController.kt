@@ -61,7 +61,6 @@ import com.ichi2.anki.DrawingActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.*
 import timber.log.Timber
@@ -95,7 +94,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
             return min(height * 0.4, width * 0.6).toInt()
         }
-    private lateinit var cropImageRequest: ActivityResultLauncher<CropImageContractOptions>
 
     @VisibleForTesting
     lateinit var registryToUse: ActivityResultRegistry
@@ -229,30 +227,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     override fun setEditingActivity(activity: MultimediaEditFieldActivity) {
         super.setEditingActivity(activity)
-        val registryToUse = if (this::registryToUse.isInitialized) registryToUse else this._activity.activityResultRegistry
-        @NeedsTest("check the happy/failure path for the crop action")
-        cropImageRequest = registryToUse.register(CROP_IMAGE_LAUNCHER_KEY, CropImageContract()) { cropResult ->
-            if (cropResult.isSuccessful) {
-                imageFileSizeWarning.visibility = View.GONE
-                if (cropResult != null) {
-                    handleCropResult(cropResult)
-                }
-                setPreviewImage(viewModel.imagePath, maxImageSize)
-            } else {
-                if (!previousImagePath.isNullOrEmpty()) {
-                    revertToPreviousImage()
-                }
-                // cropImage can give us more information. Not sure it is actionable so for now just log it.
-                val error: String = cropResult.error?.toString() ?: "Error info not available"
-                Timber.w(error, "cropImage threw an error")
-                // condition can be removed if #12768 get fixed by Canhub
-                if (cropResult.error is CropException.Cancellation) {
-                    Timber.i("CropException caught, seemingly nothing to do ", error)
-                } else {
-                    CrashReportService.sendExceptionReport(error, "cropImage threw an error")
-                }
-            }
-        }
 
         takePictureLauncher = registryToUse.register(
             TAKE_PICTURE_LAUNCHER_KEY,
@@ -555,9 +529,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     override fun onDone() {
         deletePreviousImage()
-        if (::cropImageRequest.isInitialized) {
-            cropImageRequest.unregister()
-        }
         if (::takePictureLauncher.isInitialized) {
             takePictureLauncher.unregister()
         }
@@ -694,13 +665,27 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         ret = viewModel.beforeCrop(imagePath, imageUri)
         setTemporaryMedia(imagePath)
         Timber.d("requestCrop()  destination image has path/uri %s/%s", ret.imagePath, ret.imageUri)
-        if (this::cropImageRequest.isInitialized) {
-            cropImageRequest.launch(
-                CropImageContractOptions(
-                    viewModel.imageUri,
-                    CropImageOptions()
-                )
-            )
+        viewModel.imageUri?.let {
+            ImageUtils.cropImage(_activity.activityResultRegistry, it) { cropResult ->
+                if (cropResult != null) {
+                    if (cropResult.isSuccessful) {
+                        imageFileSizeWarning.visibility = View.GONE
+                        handleCropResult(cropResult)
+                        setPreviewImage(viewModel.imagePath, maxImageSize)
+                    } else {
+                        if (!previousImagePath.isNullOrEmpty()) {
+                            revertToPreviousImage()
+                        }
+                        val error: String = cropResult.error?.toString() ?: "Error info not available"
+                        Timber.w(error, "cropImage threw an error")
+                        if (cropResult.error is CropException.Cancellation) {
+                            Timber.i("CropException caught, seemingly nothing to do ", error)
+                        } else {
+                            CrashReportService.sendExceptionReport(error, "cropImage threw an error")
+                        }
+                    }
+                }
+            }
         }
         return ret
     }
