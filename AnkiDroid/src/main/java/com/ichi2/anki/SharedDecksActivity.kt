@@ -191,6 +191,7 @@ class SharedDecksActivity : AnkiActivity() {
 
         val searchView = menu.findItem(R.id.search)?.actionView as SearchView
         searchView.queryHint = getString(R.string.search_using_deck_name)
+        searchView.setMaxWidth(Integer.MAX_VALUE)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 webView.loadUrl(resources.getString(R.string.shared_decks_url) + query)

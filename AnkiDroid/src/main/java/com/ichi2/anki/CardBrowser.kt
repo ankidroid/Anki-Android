@@ -749,6 +749,7 @@ open class CardBrowser :
                 }
             })
             searchView = searchItem!!.actionView as CardBrowserSearchView
+            searchView!!.setMaxWidth(Integer.MAX_VALUE)
             searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (searchView!!.shouldIgnoreValueChange()) {
