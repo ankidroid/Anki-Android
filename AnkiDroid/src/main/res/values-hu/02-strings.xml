@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Szűkítés címkékre</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Jegyzet szerkesztése</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Elvetés</string>
     <string name="note_editor_no_cards_created">A kártyák nem lettek létrehozva. Kérjük töltsön ki több mezőt</string>
     <string name="note_editor_no_first_field">Az első mező üres</string>
     <string name="note_editor_no_cloze_delations">Ennek a jegyzet típusnak részleges törléseket kell tartalmaznia</string>
@@ -140,7 +140,7 @@
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid Kártya</string>
     <string name="note_editor_copy_note">Jegyzet másolása</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Áthelyezés</string>
-    <string name="card_editor_reset_card">Reset folyamat</string>
+    <string name="card_editor_reset_card">Folyamat visszaállítása</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Átütemezés</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Előnézet</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
@@ -350,7 +350,7 @@
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Letöltés</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">A felolvasás beállítások megnyitása sikertelen</string>
     <string name="shared_decks_login_required">Több pakli letöltéséhez jelentkezz be</string>
-    <string name="deck_description_field_hint">Description</string>
+    <string name="deck_description_field_hint">Megjegyzés</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>

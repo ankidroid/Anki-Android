@@ -150,7 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continuer la synchronisation</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronisation annulée</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Annulation...\nCeci peut prendre un certain temps.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Synchronisation des médias</string>
     <string name="export_deck">Exporter le paquet</string>
     <string name="nothing">Rien</string>
     <!-- Card template editor -->
