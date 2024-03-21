@@ -227,6 +227,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     override fun setEditingActivity(activity: MultimediaEditFieldActivity) {
         super.setEditingActivity(activity)
+        val registryToUse = if (this::registryToUse.isInitialized) registryToUse else _activity.activityResultRegistry
 
         takePictureLauncher = registryToUse.register(
             TAKE_PICTURE_LAUNCHER_KEY,
