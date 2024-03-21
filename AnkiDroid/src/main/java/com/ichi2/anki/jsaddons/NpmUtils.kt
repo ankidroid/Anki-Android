@@ -83,6 +83,7 @@ object NpmUtils {
             val arr = name.split('/')
             val scope = arr[0].removePrefix("@")
             val isValidScopeName = validateName(scope)
+            if (!isValidScopeName) return isValidScopeName
 
             // validate name again
             return validateName(arr[1])
