@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Colletzione noa</string>
     <string name="backup_del_collection">Iscantzella sa colletzione e crea·nde una noa</string>
     <string name="backup_del_collection_question">Cheres iscantzellare sa colletzione e creare una colletzione noa? Custu t\'at a fàghere pèrdere totu su progressu de imparòngiu tuo e at a iscantzellare totu sas cartas.</string>
-    <string name="backup_full_sync_from_server">Sincronizatzione totale dae su serbidore</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Cheres subraiscrìere sa colletzione tua cun cussa dae AnkiWeb? Custu t\'at a fàghere pèrdere totu su progressu de imparòngiu tuo e sas informatziones annànghidas dae s\'ùrtima sincronizatzione tua.</string>
     <string name="error_handling_title">Gestione de sos errores</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Optziones</string>

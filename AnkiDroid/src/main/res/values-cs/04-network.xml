@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Místní</string>
     <string name="sync_sanity_remote">Vzdálený</string>
-    <string name="force_full_sync_title">Vynutit úplnou synchronizaci</string>
-    <string name="force_full_sync_summary">Při příští synchronizaci vynutit změny v jednom směru</string>
-    <string name="force_full_sync_confirmation">Vynucena úplná synchronizace</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">Požadovaná změna způsobí kompletní nahrání databáze na server při příští synchronizaci kolekce. Máte-li opakování nebo jiné změny na jiném zařízení, které ještě nebyly synchronizovány, budou ztraceny. Chcete pokračovat?</string>
     <string name="full_sync_confirmation_upgrade">Kvůli chybě v dříve nainstalované verzi AnkiDroid doporučujeme vynutit úplnou synchronizaci.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Synchronizace (úplná)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Synchronizovat (přihlásit se)</string>
 </resources>

@@ -50,7 +50,7 @@
     <string name="backup_new_collection">ᱱᱟᱶᱟ ᱴᱩᱢᱟᱹᱞ</string>
     <string name="backup_del_collection">ᱴᱩᱢᱟᱹᱞ ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ ᱟᱨ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="backup_del_collection_question">ᱴᱩᱢᱟᱹᱞ ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ ᱟᱨ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱢᱮ? ᱱᱚᱶᱟ ᱟᱢᱟᱜ ᱪᱮᱫᱚᱜ ᱴᱷᱚᱞᱨᱟᱣᱟᱭ, ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱢᱮᱴᱟᱣᱼᱜ ᱛᱟᱢᱟ ᱾ ᱾</string>
-    <string name="backup_full_sync_from_server">ᱥᱚᱨᱵᱷᱚᱨ ᱠᱷᱚᱱ ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">ᱟᱢᱟᱜ ᱴᱩᱢᱟᱞ ᱟᱨ ᱢᱤᱫᱴᱟᱝ AnkiWeb ᱴᱩᱢᱟᱹᱞ ᱥᱟᱞᱟᱜ ᱫᱩᱦᱰᱟ ᱚᱞᱟᱭ? ᱱᱚᱶᱟ ᱟᱢᱟᱜ ᱪᱮᱫᱚᱜ ᱴᱷᱚᱠᱨᱟᱣᱟᱭ ᱟᱨ ᱞᱟᱹᱭ ᱥᱚᱫᱚᱨ ᱠᱚ ᱢᱮᱴᱮᱣᱚᱜ ᱛᱟᱢᱟ ᱢᱟᱲᱟᱝ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱦᱟᱹᱵᱤᱡ ᱾</string>
     <string name="error_handling_title">ᱵᱮᱵᱦᱟᱨ ᱵᱷᱩᱞ</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ᱟᱯᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱠ</string>

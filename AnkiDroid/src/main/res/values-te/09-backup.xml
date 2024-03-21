@@ -50,7 +50,7 @@
     <string name="backup_new_collection">సరికొత్త సేకరణ</string>
     <string name="backup_del_collection">సేకరణను తీసివేసి, క్రొత్తదాన్ని సృష్టించండి</string>
     <string name="backup_del_collection_question">సేకరణను తొలగించి, క్రొత్తదాన్ని సృష్టించాలా? ఇది అన్ని మీ అభ్యాస పురోగతిని వదలండి మరియు అన్ని కార్డులను తొలగించండి.</string>
-    <string name="backup_full_sync_from_server">సర్వర్ నుండి పూర్తి సమకాలీకరణ</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb నుండి మీ సేకరణని ఓవర్రైట్ చేయాలా? ఇది మీ అభ్యాస పురోగతిని తగ్గిస్తుంది మరియు మీ చివరి సమకాలీకరణ నుండి సమాచారాన్ని జోడించవచ్చు.</string>
     <string name="error_handling_title">లోపం నిర్వహణ</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ఎంపికలు</string>

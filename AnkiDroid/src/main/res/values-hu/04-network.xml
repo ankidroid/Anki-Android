@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Helyi</string>
     <string name="sync_sanity_remote">Távoli</string>
-    <string name="force_full_sync_title">Teljes szinkronizáció erőltetése</string>
-    <string name="force_full_sync_summary">A következő szinkronizálás során felülírja a változásokat egy irányba</string>
-    <string name="force_full_sync_confirmation">Kényszerített teljes szinkronizálás</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">A módosítás után fel kell tölteni a teljes adatbázis gyűjteményt. Ezzel az eszközzel nem szinkronizált más eszközökkel kapcsolatos tanulási eredmények és módosítások elveszhetnek. Folytatod?</string>
     <string name="full_sync_confirmation_upgrade">Az AnkiDroid korábban telepített verziójának hibája miatt ajánlott teljes szinkronizálást elvégezni.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Szinkronizálás (teljes)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Szinkronizálás (bejelentkezés)</string>
 </resources>

@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Nová kolekce</string>
     <string name="backup_del_collection">Odstranit kolekci a vytvořit novou</string>
     <string name="backup_del_collection_question">Opravdu chcete odstranit kolekci a vytvořit novou? Budou odstraněny všechny karty a všechen pokrok v učení!</string>
-    <string name="backup_full_sync_from_server">Plná synchronizace ze serveru</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Opravdu chcete přepsat svou kolekci jinou z AnkiWeb? Tím se ztratí všechen váš pokrok v učení a přidané informace od poslední synchronizace!</string>
     <string name="error_handling_title">Ošetření chyb</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Možnosti</string>
