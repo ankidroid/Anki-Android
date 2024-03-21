@@ -154,7 +154,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         customStudyListener?.showDialogFragment(d)
                     }
                 }
-            }.show()
+            }.create()
     }
 
     @KotlinCleanup("make this use enum instead of Int")
@@ -280,7 +280,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             .negativeButton(R.string.dialog_cancel) {
                 customStudyListener?.dismissAllDialogFragments()
             }
-            .create()
+            .create() // Added .create() because we wanted to access alertDialog positive button enable state
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
