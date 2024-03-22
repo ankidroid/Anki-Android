@@ -15,9 +15,6 @@
  */
 package com.ichi2.anki.worker
 
-import com.ichi2.annotations.NeedsTest
-
-@NeedsTest("constant values are unique")
 object UniqueWorkNames {
     const val SYNC_MEDIA = "syncMedia"
 }
