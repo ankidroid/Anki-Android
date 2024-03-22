@@ -15,9 +15,6 @@
  */
 package com.ichi2.anki.notifications
 
-import com.ichi2.annotations.NeedsTest
-
-@NeedsTest("ensure the values are unique")
 object NotificationId {
     const val SYNC_MEDIA = 123
 }
