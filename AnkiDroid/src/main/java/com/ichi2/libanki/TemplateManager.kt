@@ -364,8 +364,17 @@ fun parseSourcesToFileScheme(content: String, mediaDir: String): String {
             }
             if (attrUri.scheme != null) continue
 
-            val path = Paths.get(mediaDir, attrUri.path).toString()
-            val newUri = getFileUri(path)
+            // For "legacy reasons" (https://forums.ankiweb.net/t/ankiweb-and-ankidroid-do-not-display-images-containing-pound-hashtag-sharp-symbol/42444/5)
+            // anki accepts unencoded `#` in paths.
+            val path = buildString {
+                append(attrUri.path)
+                attrUri.fragment?.let {
+                    append("#")
+                    append(it)
+                }
+            }
+            val filePath = Paths.get(mediaDir, path).toString()
+            val newUri = getFileUri(filePath)
 
             elem.attr(attr, newUri.toString())
             madeChanges = true
