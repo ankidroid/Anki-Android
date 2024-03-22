@@ -14,6 +14,15 @@ body:
         - label: This issue is not a duplicate
           required: true
 
+  - type: checkboxes
+    id: desktop-check
+    attributes:
+      label: Does it happen in the desktop version?
+      description: If not, please report it in the [forums](https://github.com/ankidroid/Anki-Android/issues) instead
+      options:
+        - label: I confirmed that the bug does not occur in the desktop version of Anki
+          required: false
+
   - type: textarea
     id: steps
     attributes:
