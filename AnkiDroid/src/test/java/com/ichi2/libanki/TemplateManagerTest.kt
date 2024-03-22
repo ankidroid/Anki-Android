@@ -135,6 +135,12 @@ class TemplateManagerTest {
     }
 
     @Test
+    fun `parseSourcesToFileScheme - path with unencoded #`() {
+        val result = parseSourcesToFileScheme("<img src='C#4.png'>", "storage/emulated/0/AnkiDroid/collection.media")
+        assertEquals("""<img src="file:///storage/emulated/0/AnkiDroid/collection.media/C%234.png">""", result)
+    }
+
+    @Test
     fun `parseSourcesToFileScheme - mixed script`() {
         @Language("HTML")
         val input = """
