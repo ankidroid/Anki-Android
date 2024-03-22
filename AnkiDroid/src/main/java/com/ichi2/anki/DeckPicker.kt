@@ -1896,8 +1896,8 @@ open class DeckPicker :
                 onDeckCompleted()
             }
             CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
-                showEmptyDeckSnackbar()
                 // If the deck is empty (& has no children) then show a message saying it's empty
+                showEmptyDeckSnackbar()
                 updateUi()
             }
         }
