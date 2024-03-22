@@ -145,9 +145,6 @@ open class CardBrowser :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var cardsAdapter: MultiColumnListAdapter
 
-    private var searchTerms
-        get() = viewModel.searchTerms
-        set(value) { viewModel.searchTerms = value }
     private lateinit var tagsDialogFactory: TagsDialogFactory
     private var searchItem: MenuItem? = null
     private var saveSearchItem: MenuItem? = null
@@ -259,12 +256,9 @@ open class CardBrowser :
         override fun onSelection(searchName: String) {
             Timber.d("OnSelection using search named: %s", searchName)
             launchCatchingTask {
-                viewModel.savedSearches()[searchName]?.apply {
-                    Timber.d("OnSelection using search terms: %s", this)
-                    searchTerms = this
-                    searchView!!.setQuery(this, false)
-                    searchItem!!.expandActionView()
-                    searchCards()
+                viewModel.savedSearches()[searchName]?.also { savedSearch ->
+                    Timber.d("OnSelection using search terms: %s", savedSearch)
+                    searchForQuery(savedSearch)
                 }
             }
         }
@@ -305,16 +299,13 @@ open class CardBrowser :
         }
     }
 
-    private fun onSearch() {
-        searchTerms = searchView!!.query.toString()
-        if (searchTerms.isEmpty()) {
-            searchView!!.queryHint = resources.getString(R.string.deck_conf_cram_search)
-        }
-        searchCards()
-    }
-
     private val selectedRowIds: List<CardId>
         get() = viewModel.selectedRowIds
+
+    private fun searchForQuery(query: String) {
+        searchView!!.setQuery(query, true)
+        searchItem!!.expandActionView()
+    }
 
     private fun canPerformCardInfo(): Boolean {
         return viewModel.selectedRowCount() == 1
@@ -386,15 +377,13 @@ open class CardBrowser :
 
         when (val options = launchOptions) {
             is CardBrowserLaunchOptions.DeepLink -> {
-                searchTerms = options.search
-                searchCards()
+                searchCards(options.search)
             }
             is CardBrowserLaunchOptions.SearchQueryJs -> {
-                searchTerms = options.search
                 if (options.allDecks) {
                     onDeckSelected(SelectableDeck(ALL_DECKS_ID, getString(R.string.card_browser_all_decks)))
                 }
-                searchCards()
+                searchCards(options.search)
             }
             else -> {} // Context Menu handled in onCreateOptionsMenu
         }
@@ -410,6 +399,9 @@ open class CardBrowser :
             }
         }
         onboarding.onCreate()
+
+        viewModel.flowOfSearchTerms
+            .launchCollectionInLifecycleScope { searchCards() }
 
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope { cardsAdapter.notifyDataSetChanged() }
 
@@ -438,12 +430,7 @@ open class CardBrowser :
             .launchCollectionInLifecycleScope { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
 
         viewModel.flowOfFilterQuery
-            .launchCollectionInLifecycleScope { filterQuery ->
-                searchView!!.setQuery("", false)
-                searchTerms = filterQuery
-                searchView!!.setQuery(searchTerms, true)
-                searchCards()
-            }
+            .launchCollectionInLifecycleScope { filterQuery -> searchForQuery(filterQuery) }
 
         viewModel.flowOfDeckId
             .launchCollectionInLifecycleScope { deckId ->
@@ -479,6 +466,9 @@ open class CardBrowser :
                 // reload the actionbar using the multi-select mode actionbar
                 invalidateOptionsMenu()
             }
+
+        viewModel.flowOfCardsUpdated
+            .launchCollectionInLifecycleScope { cardsAdapter.notifyDataSetChanged() }
 
         viewModel.flowOfInitCompleted
             .launchCollectionInLifecycleScope { completed -> if (completed) searchCards() }
@@ -644,11 +634,6 @@ open class CardBrowser :
         cardsAdapter.notifyDataSetChanged()
     }
 
-    @VisibleForTesting
-    suspend fun selectAllDecks() {
-        viewModel.setDeckId(ALL_DECKS_ID)
-    }
-
     /** Opens the note editor for a card.
      * We use the Card ID to specify the preview target  */
     @NeedsTest("note edits are saved")
@@ -742,39 +727,39 @@ open class CardBrowser :
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                     viewModel.setSearchQueryExpanded(false)
                     // SearchView doesn't support empty queries so we always reset the search when collapsing
-                    searchTerms = ""
-                    searchView!!.setQuery(searchTerms, false)
-                    searchCards()
+                    searchView!!.setQuery("", false)
+                    searchCards("")
                     return true
                 }
             })
-            searchView = searchItem!!.actionView as CardBrowserSearchView
-            searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextChange(newText: String): Boolean {
-                    if (searchView!!.shouldIgnoreValueChange()) {
+            searchView = (searchItem!!.actionView as CardBrowserSearchView).apply {
+                queryHint = resources.getString(R.string.deck_conf_cram_search)
+                setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        if (this@apply.shouldIgnoreValueChange()) {
+                            return true
+                        }
+                        viewModel.updateQueryText(newText)
                         return true
                     }
-                    viewModel.updateQueryText(newText)
-                    return true
-                }
 
-                override fun onQueryTextSubmit(query: String): Boolean {
-                    onSearch()
-                    searchView!!.clearFocus()
-                    return true
-                }
-            })
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        searchCards(query)
+                        searchView!!.clearFocus()
+                        return true
+                    }
+                })
+            }
             // Fixes #6500 - keep the search consistent if coming back from note editor
-            // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
-            if (!viewModel.tempSearchQuery.isNullOrEmpty() || searchTerms.isNotEmpty()) {
+            // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu (mTempSearchQuery)
+            if (!viewModel.tempSearchQuery.isNullOrEmpty() || viewModel.searchTerms.isNotEmpty()) {
                 searchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
-                val toUse =
-                    if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else searchTerms
+                val toUse = if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else viewModel.searchTerms
                 searchView!!.setQuery(toUse!!, false)
             }
             searchView!!.setOnSearchClickListener {
                 // Provide SearchView with the previous search terms
-                searchView!!.setQuery(searchTerms, false)
+                searchView!!.setQuery(viewModel.searchTerms, false)
             }
         } else {
             // multi-select mode
@@ -1255,7 +1240,7 @@ open class CardBrowser :
             if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
                 intent.putExtra(NoteEditor.EXTRA_DID, viewModel.lastDeckId)
             }
-            intent.putExtra(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, searchTerms)
+            intent.putExtra(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, viewModel.searchTerms)
             return intent
         }
 
@@ -1316,7 +1301,7 @@ open class CardBrowser :
 
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
         // Save current search terms
-        savedInstanceState.putString("mSearchTerms", searchTerms)
+        savedInstanceState.putString("mSearchTerms", viewModel.searchTerms)
         savedInstanceState.putLong("mOldCardId", oldCardId)
         savedInstanceState.putInt("mOldCardTopOffset", oldCardTopOffset)
         savedInstanceState.putBoolean("mShouldRestoreScroll", shouldRestoreScroll)
@@ -1328,13 +1313,12 @@ open class CardBrowser :
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        searchTerms = savedInstanceState.getString("mSearchTerms", "")
         oldCardId = savedInstanceState.getLong("mOldCardId")
         oldCardTopOffset = savedInstanceState.getInt("mOldCardTopOffset")
         shouldRestoreScroll = savedInstanceState.getBoolean("mShouldRestoreScroll")
         postAutoScroll = savedInstanceState.getBoolean("mPostAutoScroll")
         lastSelectedPosition = savedInstanceState.getInt("mLastSelectedPosition")
-        searchCards()
+        searchCards(savedInstanceState.getString("mSearchTerms", ""))
     }
 
     private fun invalidate() {
@@ -1343,9 +1327,10 @@ open class CardBrowser :
 
     private fun forceRefreshSearch(useSearchTextValue: Boolean = false) {
         if (useSearchTextValue && searchView != null) {
-            searchTerms = searchView!!.query.toString()
+            searchCards(searchView!!.query.toString())
+        } else {
+            searchCards()
         }
-        searchCards()
     }
 
     @RustCleanup("remove card cache; switch to RecyclerView and browserRowForId (#11889)")
@@ -1357,34 +1342,17 @@ open class CardBrowser :
         }
         // cancel the previous search & render tasks if still running
         invalidate()
-        if ("" != searchTerms && searchView != null) {
-            searchView!!.setQuery(searchTerms, false)
+        if ("" != viewModel.searchTerms && searchView != null) {
+            searchView!!.setQuery(viewModel.searchTerms, false)
             searchItem!!.expandActionView()
         }
-        val searchText: String? = if (searchTerms.contains("deck:")) {
-            "($searchTerms)"
-        } else {
-            if ("" != searchTerms) "${viewModel.restrictOnDeck}($searchTerms)" else viewModel.restrictOnDeck
-        }
-        // clear the existing card list
-        cards.reset()
-        cardsAdapter.notifyDataSetChanged()
-        val query = searchText!!
-        val order = viewModel.order.toSortOrder()
         launchCatchingTask {
-            Timber.d("performing search")
-            val cards = withProgress { searchForCards(query, order, viewModel.cardsOrNotes) }
-            Timber.d("Search returned %d cards", cards.size)
-            // Render the first few items
-            for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
-                cards[i].load(false, viewModel.column1Index, viewModel.column2Index)
-            }
-            redrawAfterSearch(cards)
+            withProgress { viewModel.searchForCards(numCardsToRender()) }
+            redrawAfterSearch()
         }
     }
 
-    fun redrawAfterSearch(cards: MutableList<CardCache>) {
-        this.cards.replaceWith(cards)
+    fun redrawAfterSearch() {
         Timber.i("CardBrowser:: Completed searchCards() Successfully")
         updateList()
         /*check whether mSearchView is initialized as it is lateinit property.*/
@@ -2142,8 +2110,7 @@ open class CardBrowser :
 
     @VisibleForTesting
     fun searchCards(searchQuery: String) {
-        searchTerms = searchQuery
-        searchCards()
+        viewModel.setSearchTerms(searchQuery)
     }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
@@ -2176,7 +2143,6 @@ open class CardBrowser :
 
         // Values related to persistent state data
         private const val ALL_DECKS_ID = 0L
-        const val CARD_NOT_AVAILABLE = -1
 
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
