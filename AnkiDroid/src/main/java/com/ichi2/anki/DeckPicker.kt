@@ -1856,6 +1856,10 @@ open class DeckPicker :
 
     @NeedsTest("14608: Ensure that the deck options refer to the selected deck")
     private suspend fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
+        fun showEmptyDeckSnackbar() = showSnackbar(R.string.empty_deck) {
+            setAction(R.string.menu_add) { addNote() }
+        }
+
         /** Check if we need to update the fragment or update the deck list */
         fun updateUi() {
             if (fragmented) {
@@ -1892,7 +1896,7 @@ open class DeckPicker :
                 onDeckCompleted()
             }
             CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
-                startActivity(CongratsPage.getIntent(this))
+                showEmptyDeckSnackbar()
                 // If the deck is empty (& has no children) then show a message saying it's empty
                 updateUi()
             }
