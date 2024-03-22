@@ -16,18 +16,15 @@
 
 package com.ichi2.anki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.worker.UniqueWorkNames
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.reflect.KClass
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 
-@RunWith(AndroidJUnit4::class)
 class ConstantUniquenessTest {
 
     @Test
@@ -50,7 +47,7 @@ class ConstantUniquenessTest {
                 }
                 // use .call() since clazz represents an object
                 val value = prop.call()
-                assertFalse(valueSet.contains(value), "Duplicate constant values in ${clazz.qualifiedName}")
+                assertFalse(valueSet.contains(value), "Duplicate value ('$value') for constant in ${clazz.qualifiedName}")
                 valueSet.add(value)
             }
         }
