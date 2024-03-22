@@ -99,6 +99,7 @@ import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
+import com.ichi2.anki.pages.CongratsPage.Companion.onDeckCompleted
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -1855,10 +1856,6 @@ open class DeckPicker :
 
     @NeedsTest("14608: Ensure that the deck options refer to the selected deck")
     private suspend fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
-        fun showEmptyDeckSnackbar() = showSnackbar(R.string.empty_deck) {
-            setAction(R.string.menu_add) { addNote() }
-        }
-
         /** Check if we need to update the fragment or update the deck list */
         fun updateUi() {
             if (fragmented) {
@@ -1892,7 +1889,7 @@ open class DeckPicker :
             CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY,
             CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED,
             CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED -> {
-                startActivity(CongratsPage.getIntent(this))
+                onDeckCompleted()
             }
             CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
                 startActivity(CongratsPage.getIntent(this))
