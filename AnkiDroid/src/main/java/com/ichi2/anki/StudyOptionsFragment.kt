@@ -33,12 +33,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
+import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.description
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.updateValuesFromDeck
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
@@ -50,7 +52,7 @@ import kotlinx.coroutines.Job
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
-class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
+class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMenuItemClickListener {
     /**
      * Preferences
      */
@@ -146,6 +148,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             configureToolbar()
         }
         refreshInterface()
+        ChangeManager.subscribe(this)
         return studyOptionsView
     }
 
@@ -683,5 +686,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             val withFixedNewlines = convertNewlinesToHtml(withStrippedTags)
             return HtmlCompat.fromHtml(withFixedNewlines!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
+    }
+
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        refreshInterface(true)
     }
 }
