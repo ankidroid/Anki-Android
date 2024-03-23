@@ -17,8 +17,8 @@ body:
   - type: checkboxes
     id: desktop-check
     attributes:
-      label: Does it happen in the desktop version?
-      description: If not, please report it in the [forums](https://github.com/ankidroid/Anki-Android/issues) instead
+      label: Does it also happen in the desktop version?
+      description: If so, please report it in [Anki Forums](https://forums.ankiweb.net) instead
       options:
         - label: This bug does not occur in the latest version of Anki Desktop
           required: false
