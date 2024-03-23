@@ -144,7 +144,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 }
                 return false
             }
-            val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.sCurrentJsApiVersion)
+            val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.currentJsApiVersion)
             val versionSupplied = Version.parse(apiVer)
 
             /*
@@ -160,7 +160,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                     activity.runOnUiThread {
                         activity.showSnackbar(context.getString(R.string.update_js_api_version, apiDevContact))
                     }
-                    versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.sMinimumJsApiVersion))
+                    versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.minimumJsApiVersion))
                 }
                 else -> {
                     activity.runOnUiThread {
@@ -415,9 +415,9 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     }
 
     open class CardDataForJsApi {
-        var newCardCount = ""
-        var lrnCardCount = ""
-        var revCardCount = ""
+        var newCardCount: Int = -1
+        var lrnCardCount: Int = -1
+        var revCardCount: Int = -1
         var eta = -1
         var nextTime1 = ""
         var nextTime2 = ""

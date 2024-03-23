@@ -1560,9 +1560,9 @@ open class Reviewer :
 
     override fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
         val cardDataForJsAPI = AnkiDroidJsAPI.CardDataForJsApi().apply {
-            newCardCount = newCount.toString()
-            lrnCardCount = lrnCount.toString()
-            revCardCount = revCount.toString()
+            newCardCount = queueState?.counts?.new ?: -1
+            lrnCardCount = queueState?.counts?.lrn ?: -1
+            revCardCount = queueState?.counts?.rev ?: -1
             nextTime1 = easeButton1!!.nextTime
             nextTime2 = easeButton2!!.nextTime
             nextTime3 = easeButton3!!.nextTime
