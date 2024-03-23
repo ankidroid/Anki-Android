@@ -193,6 +193,15 @@ class CreateDeckDialogTest : RobolectricTest() {
         assertEquals(deckPicker.optionsMenuState!!.searchIcon, true)
     }
 
+    @Test
+    fun positiveButtonEnabledOnMatchingDeckNames() {
+        val previousDeckName = "Deck Name"
+        testDialog(DeckDialogType.RENAME_DECK) {
+            input = previousDeckName
+            assertThat("Ok is enabled when deck names match", positiveButton.isEnabled, equalTo(true))
+        }
+    }
+
     /**
      * Executes [callback] on the [AlertDialog] created from [CreateDeckDialog]
      */
