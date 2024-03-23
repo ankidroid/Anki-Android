@@ -1362,7 +1362,7 @@ open class CardBrowser :
             searchView!!.setQuery(searchTerms, false)
             searchItem!!.expandActionView()
         }
-        val searchText: String? = if (searchTerms.contains("deck:")) {
+        val searchText: String = if (searchTerms.contains("deck:")) {
             "($searchTerms)"
         } else {
             if ("" != searchTerms) "${viewModel.restrictOnDeck}($searchTerms)" else viewModel.restrictOnDeck
