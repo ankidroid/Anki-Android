@@ -20,7 +20,7 @@ body:
       label: Does it also happen in the desktop version?
       description: If so, please report it in [Anki Forums](https://forums.ankiweb.net) instead
       options:
-        - label: This bug does not occur in the latest version of Anki Desktop
+        - label: This bug does not occur in the latest version of Anki
           required: false
 
   - type: textarea
