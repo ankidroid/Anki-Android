@@ -253,7 +253,7 @@ class PreviewerFragment :
                 CURRENT_INDEX_ARG to currentIndex,
                 CARD_IDS_FILE_ARG to previewerIdsFile
             )
-            return PreviewerActivity.getIntent(context, PreviewerFragment::class, arguments)
+            return CardViewerActivity.getIntent(context, PreviewerFragment::class, arguments)
         }
     }
 }

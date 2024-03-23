@@ -114,7 +114,7 @@ class TemplatePreviewerFragment :
         const val ARGS_KEY = "templatePreviewerArgs"
 
         fun getIntent(context: Context, arguments: TemplatePreviewerArguments): Intent {
-            return PreviewerActivity.getIntent(
+            return CardViewerActivity.getIntent(
                 context,
                 TemplatePreviewerFragment::class,
                 bundleOf(ARGS_KEY to arguments)
