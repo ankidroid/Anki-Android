@@ -27,10 +27,10 @@ import kotlin.reflect.jvm.jvmName
  * @see PreviewerFragment
  * @see TemplatePreviewerFragment
  */
-class PreviewerActivity : SingleFragmentActivity() {
+class CardViewerActivity : SingleFragmentActivity() {
     companion object {
         fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null): Intent {
-            return Intent(context, PreviewerActivity::class.java).apply {
+            return Intent(context, CardViewerActivity::class.java).apply {
                 putExtra(FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
                 putExtra(FRAGMENT_ARGS_EXTRA, arguments)
             }
