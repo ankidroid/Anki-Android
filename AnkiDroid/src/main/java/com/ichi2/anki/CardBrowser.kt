@@ -690,6 +690,7 @@ open class CardBrowser :
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         when {
             isDrawerOpen -> super.onBackPressed()
@@ -1370,7 +1371,7 @@ open class CardBrowser :
         // clear the existing card list
         cards.reset()
         cardsAdapter.notifyDataSetChanged()
-        val query = searchText!!
+        val query = searchText
         val order = viewModel.order.toSortOrder()
         launchCatchingTask {
             Timber.d("performing search")
@@ -1538,9 +1539,9 @@ open class CardBrowser :
 
     /**
      * Removes cards from view. Doesn't delete them in model (database).
-     * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
+     * @param this@removeNotesView Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
-    private fun removeNotesView(cardsIds: List<Long>, reorderCards: Boolean) {
+    private fun Boolean.removeNotesView(cardsIds: List<Long>) {
         val idToPos = viewModel.cardIdToPositionMap
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
         reloadRequired = reloadRequired || cardsIds.contains(reviewerCardId)
@@ -1549,7 +1550,7 @@ open class CardBrowser :
             .mapIndexed { i, c -> CardCache(c, i) }
             .toMutableList()
         cards.replaceWith(newMCards)
-        if (reorderCards) {
+        if (this) {
             // Suboptimal from a UX perspective, we should reorder
             // but this is only hit on a rare sad path and we'd need to rejig the data structures to allow an efficient
             // search
@@ -1622,7 +1623,7 @@ open class CardBrowser :
         try {
             if (cardsIdsToHide.isNotEmpty()) {
                 Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size)
-                removeNotesView(cardsIdsToHide, true)
+                true.removeNotesView(cardsIdsToHide)
             }
         } catch (e: Exception) {
             Timber.e(e, "failed to hide cards")
@@ -2177,7 +2178,6 @@ open class CardBrowser :
 
         // Values related to persistent state data
         private const val ALL_DECKS_ID = 0L
-        const val CARD_NOT_AVAILABLE = -1
 
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
