@@ -294,4 +294,9 @@
     <string name="all_files_access_title"
         comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <!-- Notification -->
+    <string name="notification_permission_message">Please grant notification permission. If denied, media will sync in the background without notification</string>
+    <string name="skip">Skip</string>
+    <string name="grant">Grant</string>
+    <string name="notification_permission_title">Notification Permission</string>
 </resources>

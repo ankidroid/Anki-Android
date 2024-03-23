@@ -97,6 +97,8 @@ import com.ichi2.anki.export.ExportDialogsFactoryProvider
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.notetype.ManageNotetypes
+import com.ichi2.anki.notifications.NotificationPermission
+import com.ichi2.anki.notifications.NotificationPermissionManager
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.CongratsPage.Companion.onDeckCompleted
@@ -390,6 +392,8 @@ open class DeckPicker :
         true
     }
 
+    private val notificationPermissionManager: NotificationPermissionManager = NotificationPermission()
+
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
@@ -423,6 +427,13 @@ open class DeckPicker :
 
         setContentView(R.layout.homescreen)
         handleStartup()
+        // let works fine here as we return early in method
+        Permissions.postNotification?.let {
+            notificationPermissionManager.registerForNotificationPermission(
+                this,
+                it
+            )
+        }
         val mainView = findViewById<View>(android.R.id.content)
 
         // check, if tablet layout
@@ -1685,6 +1696,10 @@ open class DeckPicker :
      */
     override fun sync(conflict: ConflictResolution?) {
         val preferences = baseContext.sharedPrefs()
+        if (!preferences.getBoolean("notification_permission", false)) {
+            Timber.i("Showing notification permission dialog")
+            notificationPermissionManager.showNotificationPermissionDialog(this)
+        }
 
         if (!canSync(this)) {
             warnNoSyncDuringMigration()
