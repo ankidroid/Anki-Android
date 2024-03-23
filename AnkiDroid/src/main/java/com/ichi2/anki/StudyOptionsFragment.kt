@@ -143,6 +143,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
         fragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
         initAllContentViews(studyOptionsView)
         toolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar)
+        ChangeManager.subscribe(this)
         if (toolbar != null) {
             toolbar!!.inflateMenu(R.menu.study_options_fragment)
             configureToolbar()
