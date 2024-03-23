@@ -113,14 +113,12 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     }
 
     private fun buildHierarchy(decks: List<SelectableDeck>) {
-        // TODO: attach the subdecks to the parents and change the parent visibility to true
         for (deck in decks) {
             if ("::" in deck.name) {
                 val parentName = deck.name.substringBeforeLast("::")
                 val parentDeck: SelectableDeck? = getDeckByName(decks, parentName)
                 parentDeck?.subDecks?.add(deck)
-            } else {
-                deck.isExpanded = true
+                deck.parent = parentDeck
             }
         }
     }
@@ -247,7 +245,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
             init {
                 deckTextView.setOnClickListener {
-                    selectDeckByNameAndClose(deckName)
+//                    selectDeckByNameAndClose(deckName)
+                    toggleExpansion(deckName)
                 }
                 deckTextView.setOnLongClickListener { // creating sub deck with parent deck path
                     if (deckID == DeckSpinnerSelection.ALL_DECKS_ID) {
@@ -257,8 +256,23 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                     }
                     true
                 }
-                // TODO: add the expand toggle listener here
-                // loop through all the sub deck and change var isExpanded to true
+            }
+            private fun toggleExpansion(deckName: String) {
+                val deck = allDecksList.firstOrNull { it.name == deckName }
+                if (deck != null) {
+                    deck.isExpanded = !deck.isExpanded
+                }
+                updateCurrentlyDisplayedDecks()
+                notifyDataSetChanged() // Update UI
+            }
+            private fun updateCurrentlyDisplayedDecks() {
+                currentlyDisplayedDecks.clear()
+                currentlyDisplayedDecks.addAll(
+                    allDecksList.mapNotNull { deckName ->
+                        if (isViewable(deckName)) deckName else null
+                    }
+                )
+                notifyDataSetChanged()
             }
         }
 
@@ -277,13 +291,11 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val v = LayoutInflater.from(parent.context)
                 .inflate(R.layout.deck_picker_dialog_list_item, parent, false)
             return ViewHolder(v.findViewById(R.id.deck_picker_dialog_list_item_value))
-//            val v = layoutInflater.inflate(R.layout.deck_item, parent, false)
-//            return ViewHolder(v)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val deck = currentlyDisplayedDecks[position]
-            if (deck.isExpanded) {
+            if (isViewable(deck)) {
                 holder.setDeck(deck)
                 holder.itemView.visibility = View.VISIBLE
             } else {
@@ -291,8 +303,13 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             }
         }
 
+        fun isViewable(deck: SelectableDeck): Boolean {
+            if (deck.parent == null) return true
+            if (!deck.parent!!.isExpanded) return false
+            return isViewable(deck.parent!!)
+        }
+
         override fun getItemCount(): Int {
-            // TODO: you need to change this to make the dialog size compatibel with the new feature
             return currentlyDisplayedDecks.size
         }
 
@@ -324,8 +341,11 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         init {
             allDecksList.addAll(deckNames)
-            currentlyDisplayedDecks.addAll(deckNames.filter { it.isExpanded })
-//            currentlyDisplayedDecks.addAll(deckNames)
+            currentlyDisplayedDecks.addAll(
+                deckNames.mapNotNull { deckName ->
+                    if (deckName.parent == null || deckName.parent!!.isExpanded) deckName else null
+                }
+            )
             currentlyDisplayedDecks.sort()
         }
     }
@@ -335,7 +355,13 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
      * @param name Name of the deck, or localization of "all decks"
      */
     @Parcelize
-    class SelectableDeck(val deckId: DeckId, val name: String, var subDecks: MutableList<SelectableDeck> = mutableListOf(), var isExpanded: Boolean = false) : Comparable<SelectableDeck>, Parcelable {
+    class SelectableDeck(
+        val deckId: DeckId,
+        val name: String,
+        var subDecks: MutableList<SelectableDeck> = mutableListOf(),
+        var isExpanded: Boolean = false,
+        var parent: SelectableDeck? = null
+    ) : Comparable<SelectableDeck>, Parcelable {
         /**
          * The name to be displayed to the user. Contains
          * only the sub-deck name with proper indentation
