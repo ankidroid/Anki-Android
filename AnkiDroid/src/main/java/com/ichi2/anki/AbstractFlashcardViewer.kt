@@ -101,8 +101,12 @@ import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.hashSetInit
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
 import com.squareup.seismic.ShakeDetector
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.*
 import java.net.URLDecoder
@@ -153,6 +157,7 @@ abstract class AbstractFlashcardViewer :
     private var doubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL
 
     // Android WebView
+    @Suppress("LeakingThis")
     var automaticAnswer = AutomaticAnswer.defaultInstance(this)
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -223,12 +228,17 @@ abstract class AbstractFlashcardViewer :
     /**
      * Gesture Allocation
      */
-    protected val gestureProcessor = GestureProcessor(this)
+    protected val gestureProcessor = createGestureProcessor()
+
+    private fun createGestureProcessor(): GestureProcessor {
+        return GestureProcessor(this)
+    }
 
     /** Handle joysticks/pedals */
     // needs to be lateinit due to a reliance on Context
     protected lateinit var motionEventHandler: MotionEventHandler
 
+    @Suppress("LeakingThis")
     val server = AnkiServer(this).also { it.start() }
 
     @get:VisibleForTesting
@@ -254,6 +264,7 @@ abstract class AbstractFlashcardViewer :
     private var exitViaDoubleTapBack = false
 
     @VisibleForTesting
+    @Suppress("LeakingThis")
     val onRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
     protected val tts = TTS()
 
@@ -323,6 +334,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     init {
+        @Suppress("LeakingThis")
         ChangeManager.subscribe(this)
     }
 
@@ -610,6 +622,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    @Deprecated("Use `onBackPressed` instead")
     override fun onBackPressed() {
         if (isDrawerOpen) {
             super.onBackPressed()
@@ -2520,11 +2533,15 @@ abstract class AbstractFlashcardViewer :
         get() = displayAnswer
 
     internal fun showTagsDialog() {
-        val tags = ArrayList(getColUnsafe.tags.all())
-        val selTags = ArrayList(currentCard!!.note(getColUnsafe).tags)
-        val dialog = tagsDialogFactory!!.newTagsDialog()
-            .withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
-        showDialogFragment(dialog)
+        CoroutineScope(Dispatchers.Main).launch {
+            val tags = withContext(Dispatchers.IO) {
+                ArrayList(getColUnsafe.tags.all())
+            }
+            val selTags = ArrayList(currentCard!!.note(getColUnsafe).tags)
+            val dialog = tagsDialogFactory!!.newTagsDialog()
+                .withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
+            showDialogFragment(dialog)
+        }
     }
 
     @NeedsTest("14656: adding tags does not flip the card")

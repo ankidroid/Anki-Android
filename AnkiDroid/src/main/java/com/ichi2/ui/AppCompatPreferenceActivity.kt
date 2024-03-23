@@ -56,7 +56,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     private var _delegate: AppCompatDelegate? = null
     fun isColInitialized() = ::col.isInitialized
     protected var prefChanged = false
-    lateinit var unmountReceiver: BroadcastReceiver
+    private lateinit var unmountReceiver: BroadcastReceiver
     protected lateinit var col: Collection
         private set
     protected lateinit var pref: PreferenceHack
@@ -67,8 +67,9 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         val summaries: MutableMap<String, String?> = HashMap()
         protected val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        @KotlinCleanup("scope function")
-        abstract fun cacheValues()
+        private fun cacheValues() {
+            // Provide a default implementation or leave it empty if it should be overridden
+        }
 
         abstract inner class Editor : SharedPreferences.Editor {
             protected var update = ContentValues()
