@@ -98,7 +98,7 @@ open class Card : Cloneable {
     private var desiredRetention: Float? = null
 
     var renderOutput: TemplateRenderOutput? = null
-    private var note: Note? = null
+    var note: Note? = null
 
     constructor(card: anki.cards.Card) {
         loadFromBackendCard(card)
@@ -291,10 +291,6 @@ open class Card : Cloneable {
         } catch (e: CloneNotSupportedException) {
             throw RuntimeException(e)
         }
-    }
-
-    fun setNote(note: Note) {
-        this.note = note
     }
 
     override fun toString(): String {
