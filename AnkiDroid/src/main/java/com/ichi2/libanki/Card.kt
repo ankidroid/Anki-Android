@@ -360,7 +360,7 @@ open class Card : Cloneable {
     }
 
     fun userFlag(): Int {
-        return intToFlag(flags)
+        return flags and 0b111
     }
 
     @VisibleForTesting
@@ -472,12 +472,6 @@ open class Card : Cloneable {
                 "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"
             )
         )
-
-        fun intToFlag(flags: Int): Int {
-            // setting all bits to 0, except the three first one.
-            // equivalent to `mFlags % 8`. Used this way to copy Anki.
-            return flags and 7
-        }
 
         fun setFlagInInt(flags: Int, flag: Int): Int {
             Assert.that(0 <= flag, "flag to set is negative")
