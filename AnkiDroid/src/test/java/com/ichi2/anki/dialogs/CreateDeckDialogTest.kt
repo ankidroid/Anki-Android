@@ -198,7 +198,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         val previousDeckName = "Deck Name"
         testDialog(DeckDialogType.RENAME_DECK) {
             input = previousDeckName
-            assertThat("Ok is enabled when deck names match", positiveButton.isEnabled, equalTo(true))
+            assertThat("Ok is enabled when deck names match", positiveButton.isEnabled)
         }
     }
 
