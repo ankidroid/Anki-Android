@@ -548,6 +548,11 @@ class CardBrowserViewModel(
 
     fun setSearchTerms(searchQuery: String) = flowOfSearchTerms.update { searchQuery }
 
+    /** @see com.ichi2.anki.searchForCards */
+    suspend fun searchForCards(query: String): MutableList<CardBrowser.CardCache> {
+        return com.ichi2.anki.searchForCards(query, order.toSortOrder(), cardsOrNotes)
+    }
+
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
