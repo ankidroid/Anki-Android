@@ -14,6 +14,15 @@ body:
         - label: This issue is not a duplicate
           required: true
 
+  - type: checkboxes
+    id: desktop-check
+    attributes:
+      label: Does it also happen in the desktop version?
+      description: If so, please report it in [Anki Forums](https://forums.ankiweb.net) instead
+      options:
+        - label: This bug does not occur in the latest version of Anki
+          required: false
+
   - type: textarea
     id: steps
     attributes:
