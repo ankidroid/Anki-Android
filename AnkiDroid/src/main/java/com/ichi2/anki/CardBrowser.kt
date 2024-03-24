@@ -75,6 +75,7 @@ import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
 import com.ichi2.anki.servicelayer.rescheduleCards
@@ -1987,7 +1988,7 @@ open class CardBrowser :
         }
 
         private fun getAvgEaseForNotes(): String {
-            val avgEase = card.avgEaseOfNote(col)
+            val avgEase = NoteService.avgEase(col, card.note(col))
 
             return if (avgEase == null) {
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
