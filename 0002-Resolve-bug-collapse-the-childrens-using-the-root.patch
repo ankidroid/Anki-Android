@@ -1,7 +1,7 @@
 From d185ccc0ca7b7be70de5d72c52b68ca29b20d7c4 Mon Sep 17 00:00:00 2001
 From: josephShokry <josephshokry9@gmail.com>
 Date: Sat, 23 Mar 2024 02:22:48 +0200
-Subject: [PATCH 2/2] Resolve bug: collapse the childrens using the root
+Subject: [PATCH 2/3] Resolve bug: collapse the childrens using the root
 
 ---
  .../ichi2/anki/dialogs/DeckSelectionDialog.kt | 52 ++++++++++++++-----

@@ -48,11 +48,13 @@ import com.ichi2.libanki.*
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
+import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.time.times
 
 /**
  * "Deck Search": A dialog allowing the user to select a deck from a list of decks.
@@ -115,8 +117,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val dividerItemDecoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(dividerItemDecoration)
         val decks: List<SelectableDeck> = getDeckNames(arguments)
-        // build the hierarchy
-//        buildHierarchy(decks)
         val adapter = DecksArrayAdapter(decks)
         recyclerView.adapter = adapter
         adjustToolbar(dialogView, adapter)
@@ -136,17 +136,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
         return dialog!!
     }
-
-//    private fun buildHierarchy(decks: List<SelectableDeck>) {
-//        for (deck in decks) {
-//            if ("::" in deck.name) {
-//                val parentName = deck.name.substringBeforeLast("::")
-//                val parentDeck: SelectableDeck? = getDeckByName(decks, parentName)
-//                parentDeck?.subDecks?.add(deck)
-//                deck.parent = parentDeck
-//            }
-//        }
-//    }
 
     private fun findParentNode(node: SelectableDeck, decks: List<SelectableDeck>): SelectableDeck? {
         if ("::" in node.name) {
@@ -270,8 +259,9 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             var deckName: String = ""
             private var deckID: Long = -1L
 
-            val deckTextView: TextView = deckHolder.findViewById(R.id.deck_picker_dialog_list_item_value)
+            val deckTextView: TextView = deckHolder.findViewById(R.id.deckpicker_name)
             val expander: ImageButton = deckHolder.findViewById(R.id.deckpicker_expander)
+            val indentView: ImageButton = deckHolder.findViewById(R.id.deckpicker_indent)
             fun setDeck(deck: SelectableDeck) {
                 deckName = deck.name
                 deckTextView.text = deck.displayName
@@ -280,8 +270,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
             init {
                 deckTextView.setOnClickListener {
-//                    selectDeckByNameAndClose(deckName)
-                    toggleExpansion(deckName)
+                    selectDeckByNameAndClose(deckName)
                 }
                 expander.setOnClickListener {
                     toggleExpansion(deckName)
@@ -340,28 +329,43 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             } else {
                 holder.itemView.visibility = View.GONE
             }
-//            runBlocking { setDeckExpander(holder.expander, deck) }
+            runBlocking { setDeckExpander(holder.expander, holder.indentView, deck) }
         }
-//        private fun setDeckExpander(expander: ImageButton, node: SelectableDeck) {
-//            // Apply the correct expand/collapse drawable
-//            if (node.subDecks.isNotEmpty()) {
-//                expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
-//                if (!node.isExpanded) {
-//                    expander.setImageDrawable(expandImage)
-//                    expander.contentDescription = expander.context.getString(R.string.expand)
-//                } else {
-//                    expander.setImageDrawable(collapseImage)
-//                    expander.contentDescription = expander.context.getString(R.string.collapse)
-//                }
-//            } else {
-//                expander.visibility = View.INVISIBLE
-//                expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-//            }
-//        }
+        private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: SelectableDeck) {
+            if (hasSubDecks(node)) {
+                expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                if (!node.isExpanded) {
+                    expander.setImageDrawable(expandImage)
+                    expander.contentDescription = expander.context.getString(R.string.expand)
+                } else {
+                    expander.setImageDrawable(collapseImage)
+                    expander.contentDescription = expander.context.getString(R.string.collapse)
+                }
+                expander.visibility = View.VISIBLE
+                Timber.d("has Expander!")
+            } else {
+                expander.visibility = View.INVISIBLE
+                expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+            }
+            val width = indent.resources.getDimension(R.dimen.keyline_1).toInt() * findNodeLevel(node)
+            indent.minimumWidth = width
+        }
 
+        private fun hasSubDecks(node: SelectableDeck): Boolean {
+            var counter = 0
+            for (deck in allDecksList) {
+                if (deck.name.contains(node.name)) {
+                    counter++
+                }
+                if (counter > 1)return true
+            }
+            return false
+        }
+        private fun findNodeLevel(node: SelectableDeck): Int {
+            return node.name.split("::").size
+        }
         fun isViewable(deck: SelectableDeck): Boolean {
-            val parentNode = findParentNode(deck, allDecksList)
-            if (parentNode == null) return true
+            val parentNode = findParentNode(deck, allDecksList) ?: return true
             if (!parentNode.isExpanded) return false
             return isViewable(parentNode)
         }
@@ -400,7 +404,11 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             allDecksList.addAll(deckNames)
             currentlyDisplayedDecks.addAll(
                 deckNames.mapNotNull { deckName ->
-                    if (findParentNode(deckName, allDecksList) == null || findParentNode(deckName, allDecksList)!!.isExpanded) deckName else null
+                    if (isViewable(deckName)) {
+                        deckName
+                    } else {
+                        null
+                    }
                 }
             )
             currentlyDisplayedDecks.sort()
@@ -412,23 +420,16 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
      * @param name Name of the deck, or localization of "all decks"
      */
     @Parcelize
-    class SelectableDeck(
-        val deckId: DeckId,
-        val name: String,
-//        var subDecks: MutableList<SelectableDeck> = mutableListOf(),
-        var isExpanded: Boolean = false
-//        var parent: SelectableDeck? = null
-    ) : Comparable<SelectableDeck>, Parcelable {
+    class SelectableDeck(val deckId: DeckId, val name: String, var isExpanded: Boolean = false) : Comparable<SelectableDeck>, Parcelable {
         /**
-         * The name to be displayed to the user. Contains
-         * only the sub-deck name with proper indentation
-         * rather than the entire deck name.
-         * Eg: foo::bar -> \t\tbar
+         * The name to be displayed to the user. Contains only
+         * the sub-deck name rather than the entire deck name.
+         * Eg: foo::bar -> bar
          */
         @IgnoredOnParcel
         val displayName: String by lazy {
             val nameArr = name.split("::")
-            "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
+            nameArr[nameArr.size - 1]
         }
 
         constructor(d: DeckNameId) : this(d.id, d.name)
