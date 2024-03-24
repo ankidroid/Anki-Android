@@ -84,8 +84,9 @@ open class Card : Cloneable {
     var due: Int = 0
     var ivl = 0
     var factor = 0
+
+    @set:VisibleForTesting
     var reps = 0
-        private set
     var lapses = 0
     var left = 0
     var oDue: Int = 0
@@ -268,11 +269,6 @@ open class Card : Cloneable {
     @NotInLibAnki
     fun resumeTimer() {
         timerStarted = TimeManager.time.intTimeMS() - elapsedTime
-    }
-
-    @VisibleForTesting
-    fun setReps(reps: Int): Int {
-        return reps.also { this.reps = it }
     }
 
     @LibAnkiAlias("should_show_timer")

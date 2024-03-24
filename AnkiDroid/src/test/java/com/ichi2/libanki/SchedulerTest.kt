@@ -448,7 +448,7 @@ open class SchedulerTest : JvmTest() {
             queue = QUEUE_TYPE_REV
             due = (col.sched.today - 8)
             factor = STARTING_FACTOR
-            setReps(3)
+            reps = 3
             lapses = 1
             ivl = 100
         }
@@ -523,7 +523,7 @@ open class SchedulerTest : JvmTest() {
             type = CARD_TYPE_REV
             queue = QUEUE_TYPE_REV
             due = col.sched.today
-            setReps(1)
+            reps = 1
             ivl = 1
             startTimer()
         }
@@ -1266,7 +1266,7 @@ open class SchedulerTest : JvmTest() {
             queue = QUEUE_TYPE_REV
             due = 0
             factor = STARTING_FACTOR
-            setReps(3)
+            reps = 3
             lapses = 1
             ivl = 100
             startTimer()
@@ -1289,7 +1289,7 @@ open class SchedulerTest : JvmTest() {
             ivl = 100
             due = (col.sched.today - ivl)
             factor = STARTING_FACTOR
-            setReps(3)
+            reps = 3
             lapses = 1
             startTimer()
         }
