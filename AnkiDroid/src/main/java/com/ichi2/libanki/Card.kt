@@ -47,8 +47,8 @@ import java.util.*
  * - Recording the results of review (answer chosen, time taken, etc)
  *
  * It does not:
- * - Generate new cards (see Collection)
- * - Store the templates or the style sheet (see Models)
+ * - Generate new cards (see [Collection])
+ * - Store the templates or the style sheet (see [NotetypeJson])
  *
  * Type: 0=new, 1=learning, 2=due
  * Queue: same as above, and:
