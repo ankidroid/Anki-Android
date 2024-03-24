@@ -353,10 +353,6 @@ open class Card : Cloneable {
     val isInDynamicDeck: Boolean
         get() = // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
             oDid != 0L
-    val isReview: Boolean
-        get() = this.type == Consts.CARD_TYPE_REV && queue == Consts.QUEUE_TYPE_REV
-    val isNew: Boolean
-        get() = this.type == Consts.CARD_TYPE_NEW
 
     /** A cache represents an intermediary step between a card id and a card object. Creating a Card has some fixed cost
      * in term of database access. Using an id has an unknown cost: none if the card is never accessed, heavy if the
