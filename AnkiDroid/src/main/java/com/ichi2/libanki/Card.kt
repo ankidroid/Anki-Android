@@ -18,6 +18,7 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
+import anki.cards.FsrsMemoryState
 import com.ichi2.anki.utils.ext.ifZero
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
@@ -59,15 +60,14 @@ open class Card : Cloneable {
     /**
      * Time in MS when timer was started
      */
-    var timerStarted: Long
+    var timerStarted: Long = 0L
 
     // Record time spent reviewing in MS in order to restore when resuming.
     @NotInLibAnki
     private var elapsedTime: Long = 0
 
-    // BEGIN SQL table entries
     @set:VisibleForTesting
-    var id: Long
+    var id: Long = 0
     var nid: NoteId = 0
     var did: DeckId = 0
     var ord = 0
@@ -93,49 +93,22 @@ open class Card : Cloneable {
     private var customData: String = ""
     private var originalPosition: Int? = null
     private var flags = 0
+    private var memoryState: FsrsMemoryState? = null
+    private var desiredRetention: Float? = null
 
-    // END SQL table entries
-    var renderOutput: TemplateRenderOutput?
-    private var note: Note?
+    var renderOutput: TemplateRenderOutput? = null
+    private var note: Note? = null
 
-    constructor(col: Collection) {
-        timerStarted = 0L
-        renderOutput = null
-        note = null
-        // to flush, set nid, ord, and due
-        this.id = TimeManager.time.timestampID(col.db, "cards")
-        did = 1
-        this.type = Consts.CARD_TYPE_NEW
-        queue = Consts.QUEUE_TYPE_NEW
-        ivl = 0
-        factor = 0
-        reps = 0
-        lapses = 0
-        left = 0
-        oDue = 0
-        oDid = 0
-        flags = 0
-    }
-
-    /** Construct an instance from a backend Card */
     constructor(card: anki.cards.Card) {
-        timerStarted = 0L
-        renderOutput = null
-        note = null
-        id = card.id
         loadFromBackendCard(card)
     }
 
-    constructor(col: Collection, id: Long?) {
-        timerStarted = 0L
-        renderOutput = null
-        note = null
+    constructor(col: Collection, id: Long? = null) {
         if (id != null) {
             this.id = id
             load(col)
         } else {
-            // ephemeral card
-            this.id = 0
+            loadFromBackendCard(anki.cards.Card.getDefaultInstance())
         }
     }
 
@@ -166,6 +139,8 @@ open class Card : Cloneable {
         flags = card.flags
         originalPosition = if (card.hasOriginalPosition()) card.originalPosition else null
         customData = card.customData
+        memoryState = if (card.hasMemoryState()) card.memoryState else null
+        desiredRetention = if (card.hasDesiredRetention()) card.desiredRetention else null
     }
 
     fun toBackendCard(): anki.cards.Card {
@@ -187,6 +162,8 @@ open class Card : Cloneable {
             .setFlags(flags)
             .setCustomData(customData)
         originalPosition?.let { builder.setOriginalPosition(it) }
+        memoryState?.let { builder.setMemoryState(it) }
+        desiredRetention?.let { builder.setDesiredRetention(it) }
         return builder.build()
     }
 
