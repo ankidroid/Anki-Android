@@ -194,11 +194,8 @@ open class Card : Cloneable {
         return renderOutput!!
     }
 
-    open fun note(col: Collection): Note {
-        return note(col, false)
-    }
-
-    open fun note(col: Collection, reload: Boolean): Note {
+    @LibAnkiAlias("note")
+    open fun note(col: Collection, reload: Boolean = false): Note {
         if (note == null || reload) {
             note = col.getNote(nid)
         }
