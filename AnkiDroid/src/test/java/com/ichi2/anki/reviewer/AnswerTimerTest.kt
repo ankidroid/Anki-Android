@@ -52,7 +52,7 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val card: Card = mock {
-            on { showTimer(any()) } doReturn false
+            on { shouldShowTimer(any()) } doReturn false
         }
 
         timer.setupForCard(col, card)
@@ -71,7 +71,7 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val card: Card = mock {
-            on { showTimer(any()) } doReturn true
+            on { shouldShowTimer(any()) } doReturn true
             on { timeLimit(any()) } doReturn 12
         }
 
@@ -97,11 +97,11 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer(any()) } doReturn true
+            on { shouldShowTimer(any()) } doReturn true
         }
 
         val nonTimerCard: Card = mock {
-            on { showTimer(any()) } doReturn false
+            on { shouldShowTimer(any()) } doReturn false
         }
 
         timer.setupForCard(col, timerCard)
@@ -132,7 +132,7 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer(col) } doReturn true
+            on { shouldShowTimer(col) } doReturn true
             on { timeLimit(col) } doReturn 1000
         }
 
@@ -150,7 +150,7 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer(any()) } doReturn true
+            on { shouldShowTimer(any()) } doReturn true
             on { timeLimit(any()) } doReturn 1000
             on { timeTaken(any()) } doReturn 1001
         }
@@ -172,7 +172,7 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val nonTimerCard: Card = mock {
-            on { showTimer(any()) } doReturn false
+            on { shouldShowTimer(any()) } doReturn false
         }
 
         timer.setupForCard(col, nonTimerCard)

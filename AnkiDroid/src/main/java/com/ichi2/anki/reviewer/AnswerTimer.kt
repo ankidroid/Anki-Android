@@ -58,7 +58,7 @@ class AnswerTimer(private val cardTimer: Chronometer) {
         private set
 
     /**
-     * Changes the timer visibility based on [Card.showTimer],
+     * Changes the timer visibility based on [Card.shouldShowTimer],
      * resets the timer to an initial state and starts it
      *
      * This may also change the limit, based on [Card.timeLimit]
@@ -66,7 +66,7 @@ class AnswerTimer(private val cardTimer: Chronometer) {
     @MainThread // resetTimerUI
     fun setupForCard(col: Collection, newCard: Card) {
         currentCard = newCard
-        showTimer = newCard.showTimer(col)
+        showTimer = newCard.shouldShowTimer(col)
         if (showTimer && cardTimer.visibility == View.INVISIBLE) {
             cardTimer.visibility = View.VISIBLE
         } else if (!showTimer && cardTimer.visibility != View.INVISIBLE) {

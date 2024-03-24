@@ -25,6 +25,7 @@ import com.ichi2.anki.utils.ext.ifZero
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
@@ -301,8 +302,9 @@ open class Card : Cloneable {
         return reps.also { this.reps = it }
     }
 
-    fun showTimer(col: Collection): Boolean {
-        val options = col.decks.configDictForDeckId(if (!isInDynamicDeck) did else oDid)
+    @LibAnkiAlias("should_show_timer")
+    fun shouldShowTimer(col: Collection): Boolean {
+        val options = col.decks.configDictForDeckId(currentDeckId().did)
         return DeckConfig.parseTimerOpt(options, true)
     }
 
