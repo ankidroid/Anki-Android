@@ -27,6 +27,7 @@ import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
+import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 
 /**
@@ -113,11 +114,13 @@ open class Card : Cloneable {
         }
     }
 
+    @LibAnkiAlias("load")
     fun load(col: Collection) {
         val card = col.backend.getCard(id)
         loadFromBackendCard(card)
     }
 
+    @LibAnkiAlias("_load_from_backend_card")
     private fun loadFromBackendCard(card: anki.cards.Card) {
         renderOutput = null
         note = null
@@ -144,6 +147,7 @@ open class Card : Cloneable {
         desiredRetention = if (card.hasDesiredRetention()) card.desiredRetention else null
     }
 
+    @LibAnkiAlias("_to_backend_card")
     fun toBackendCard(): anki.cards.Card {
         val builder = anki.cards.Card.newBuilder()
             .setId(id)
@@ -168,18 +172,22 @@ open class Card : Cloneable {
         return builder.build()
     }
 
+    @LibAnkiAlias("question")
     fun question(col: Collection, reload: Boolean = false, browser: Boolean = false): String {
         return renderOutput(col, reload, browser).questionAndStyle()
     }
 
+    @LibAnkiAlias("answer")
     fun answer(col: Collection): String {
         return renderOutput(col).answerAndStyle()
     }
 
+    @LibAnkiAlias("question_av_tags")
     fun questionAvTags(col: Collection): List<AvTag> {
         return renderOutput(col).questionAvTags
     }
 
+    @LibAnkiAlias("answer_av_tags")
     fun answerAvTags(col: Collection): List<AvTag> {
         return renderOutput(col).answerAvTags
     }
@@ -187,6 +195,7 @@ open class Card : Cloneable {
     /**
      * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
      */
+    @LibAnkiAlias("render_output")
     open fun renderOutput(col: Collection, reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
         if (renderOutput == null || reload) {
             renderOutput = TemplateManager.TemplateRenderContext.fromExistingCard(col, this, browser).render(col)
@@ -207,6 +216,7 @@ open class Card : Cloneable {
         return note(col).notetype
     }
 
+    @LibAnkiAlias("template")
     fun template(col: Collection): JSONObject {
         val m = noteType(col)
         return if (m.isStd) {
@@ -216,10 +226,12 @@ open class Card : Cloneable {
         }
     }
 
+    @LibAnkiAlias("start_timer")
     fun startTimer() {
         timerStarted = TimeManager.time.intTimeMS()
     }
 
+    @LibAnkiAlias("current_deck_id")
     fun currentDeckId(): anki.decks.DeckId {
         return anki.decks.DeckId.newBuilder()
             .setDid(oDid.ifZero { did })
@@ -238,6 +250,7 @@ open class Card : Cloneable {
     /*
      * Time taken to answer card, in integer MS.
      */
+    @LibAnkiAlias("time_taken")
     fun timeTaken(col: Collection): Int {
         // Indeed an int. Difference between two big numbers is still small.
         val total = (TimeManager.time.intTimeMS() - timerStarted).toInt()
@@ -285,6 +298,7 @@ open class Card : Cloneable {
         return col.decks.configDictForDeckId(currentDeckId().did).getBoolean("autoplay")
     }
 
+    @NotInLibAnki
     public override fun clone(): Card {
         return try {
             super.clone() as Card
@@ -325,6 +339,7 @@ open class Card : Cloneable {
         return (this.id xor (this.id ushr 32)).toInt()
     }
 
+    @LibAnkiAlias("user_flag")
     fun userFlag(): Int {
         return flags and 0b111
     }
@@ -334,11 +349,13 @@ open class Card : Cloneable {
         flags = flag
     }
 
+    @RustCleanup("deprecated in Anki: use col.set_user_flag_for_cards() instead")
+    @LibAnkiAlias("set_user_flag")
     fun setUserFlag(flag: Int) {
         flags = setFlagInInt(flags, flag)
     }
 
-    /** Non libAnki  */
+    @NotInLibAnki
     val isInDynamicDeck: Boolean
         get() = // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
             oDid != 0L
@@ -370,6 +387,7 @@ open class Card : Cloneable {
      * cache.reload();
      * Card card2 = cache.getCard();
      */
+    @NotInLibAnki
     open class Cache : Cloneable {
         val col: Collection
         val id: Long
