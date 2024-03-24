@@ -81,14 +81,14 @@ open class Card : Cloneable {
     @get:CARD_QUEUE
     @CARD_QUEUE
     var queue = 0
-    var due: Long = 0
+    var due: Int = 0
     var ivl = 0
     var factor = 0
     var reps = 0
         private set
     var lapses = 0
     var left = 0
-    var oDue: Long = 0
+    var oDue: Int = 0
     var oDid: DeckId = 0
     private var customData: String = ""
     private var originalPosition: Int? = null
@@ -128,13 +128,13 @@ open class Card : Cloneable {
         usn = card.usn
         type = card.ctype
         queue = card.queue
-        due = card.due.toLong() // TODO due should be an int
+        due = card.due
         ivl = card.interval
         factor = card.easeFactor
         reps = card.reps
         lapses = card.lapses
         left = card.remainingSteps
-        oDue = card.originalDue.toLong() // TODO due should be an int
+        oDue = card.originalDue
         oDid = card.originalDeckId
         flags = card.flags
         originalPosition = if (card.hasOriginalPosition()) card.originalPosition else null
@@ -151,13 +151,13 @@ open class Card : Cloneable {
             .setTemplateIdx(ord)
             .setCtype(type)
             .setQueue(queue)
-            .setDue(due.toInt())
+            .setDue(due)
             .setInterval(ivl)
             .setEaseFactor(factor)
             .setReps(reps)
             .setLapses(lapses)
             .setRemainingSteps(left)
-            .setOriginalDue(oDue.toInt())
+            .setOriginalDue(oDue)
             .setOriginalDeckId(oDid)
             .setFlags(flags)
             .setCustomData(customData)

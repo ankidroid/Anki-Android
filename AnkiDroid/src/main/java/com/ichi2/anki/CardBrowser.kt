@@ -2239,9 +2239,9 @@ open class CardBrowser :
             date = if (card.isInDynamicDeck) {
                 return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
             } else if (card.queue == Consts.QUEUE_TYPE_LRN) {
-                due
+                due.toLong()
             } else if (card.queue == Consts.QUEUE_TYPE_NEW || card.type == Consts.CARD_TYPE_NEW) {
-                return java.lang.Long.valueOf(due).toString()
+                return due.toString()
             } else if (card.queue == Consts.QUEUE_TYPE_REV || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.type == Consts.CARD_TYPE_REV && card.queue < 0) {
                 val time = TimeManager.time.intTime()
                 val nbDaySinceCreation = due - col.sched.today

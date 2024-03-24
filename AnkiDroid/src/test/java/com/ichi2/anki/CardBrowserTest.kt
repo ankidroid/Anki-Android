@@ -1077,11 +1077,11 @@ class CardBrowserTest : RobolectricTest() {
         val decks = col.decks
         val cal = Calendar.getInstance()
         cal[2021, 2, 19, 7, 42] = 42
-        val id = cal.timeInMillis / 1000
+        val id = (cal.timeInMillis / 1000).toInt()
 
         // Not filtered
         c.type = Consts.CARD_TYPE_NEW
-        c.due = 27L
+        c.due = 27
         c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
         Assert.assertEquals("27", nextDue(col, c))
         Assert.assertEquals("(27)", dueString(col, c))
@@ -1092,7 +1092,7 @@ class CardBrowserTest : RobolectricTest() {
         Assert.assertEquals("27", nextDue(col, c))
         Assert.assertEquals("(27)", dueString(col, c))
         c.queue = Consts.QUEUE_TYPE_NEW
-        c.due = 27L
+        c.due = 27
         Assert.assertEquals("27", nextDue(col, c))
         Assert.assertEquals("27", dueString(col, c))
         c.queue = Consts.QUEUE_TYPE_PREVIEW

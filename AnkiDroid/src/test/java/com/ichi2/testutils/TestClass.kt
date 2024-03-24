@@ -55,7 +55,7 @@ interface TestClass {
         val card = note.firstCard()
         card.queue = Consts.QUEUE_TYPE_REV
         card.type = Consts.CARD_TYPE_REV
-        card.due = col.sched.today.toLong()
+        card.due = col.sched.today
         return note
     }
 
