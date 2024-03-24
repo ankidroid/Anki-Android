@@ -31,7 +31,6 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
 import com.ichi2.utils.LanguageUtil
 import org.json.JSONObject
-import java.util.*
 
 /**
  * A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
@@ -77,7 +76,7 @@ open class Card : Cloneable {
     var did: DeckId = 0
     var ord = 0
     var mod: Long = 0
-    var usn = 0
+    private var usn = 0
 
     @get:CARD_TYPE
     @CARD_TYPE
@@ -271,7 +270,7 @@ open class Card : Cloneable {
     fun timeTaken(col: Collection): Int {
         // Indeed an int. Difference between two big numbers is still small.
         val total = (TimeManager.time.intTimeMS() - timerStarted).toInt()
-        return Math.min(total, timeLimit(col))
+        return kotlin.math.min(total, timeLimit(col))
     }
 
     /**
