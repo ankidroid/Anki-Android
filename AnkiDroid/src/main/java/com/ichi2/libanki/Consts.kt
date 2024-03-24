@@ -67,9 +67,6 @@ object Consts {
     @IntDef(MODEL_STD, MODEL_CLOZE)
     annotation class MODEL_TYPE
 
-    // deck types
-    const val DECK_DYN = 1
-
     const val STARTING_FACTOR = 2500
 
     /** Only used by the dialog shown to user */
