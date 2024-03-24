@@ -18,6 +18,7 @@ package com.ichi2.anki.ui.internationalization
 
 import android.app.Activity
 import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 
 // Functions for handling a move from 'Title Case' in Anki Desktop to 'Sentence case' in AnkiDroid
 
@@ -29,6 +30,14 @@ import androidx.annotation.StringRes
  * ```
  */
 context (Activity)
+fun String.toSentenceCase(@StringRes resId: Int): String {
+    val resString = getString(resId)
+    // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
+    if (this.lowercase() == resString.lowercase()) return resString
+    return this
+}
+
+context (Fragment)
 fun String.toSentenceCase(@StringRes resId: Int): String {
     val resString = getString(resId)
     // lowercase both for the comparison: sentence case doesn't mean all words are lowercase

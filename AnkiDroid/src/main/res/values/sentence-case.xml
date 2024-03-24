@@ -28,4 +28,5 @@ undoActionUndone()
 -->
 <resources>
     <string name="sentence_toggle_suspend">Toggle suspend</string>
+    <string name="sentence_set_due_date">Set due date</string>
 </resources>

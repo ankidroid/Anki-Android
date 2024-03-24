@@ -113,6 +113,7 @@ fun Activity.showSnackbar(
         view.showSnackbar(text, duration) {
             baseSnackbarBuilder?.invoke(this)
             snackbarBuilder?.invoke(this)
+            Timber.d("displayed snackbar: '%s'", text)
         }
     } else {
         val errorMessage = "While trying to show a snackbar, " +
@@ -241,6 +242,7 @@ fun Fragment.showSnackbar(
     requireActivity().showSnackbar(text, duration) {
         baseSnackbarBuilder?.invoke(this)
         snackbarBuilder?.invoke(this)
+        Timber.d("displayed snackbar: '%s'", text)
     }
 }
 
