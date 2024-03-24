@@ -304,6 +304,12 @@ open class Card : Cloneable {
         return DeckConfig.parseTimerOpt(options, true)
     }
 
+    @LibAnkiAlias("replay_question_audio_on_answer_side")
+    fun replayQuestionAudioOnAnswerSide(col: Collection): Boolean {
+        val conf = col.decks.configDictForDeckId(currentDeckId().did)
+        return conf.optBoolean("replayq", true)
+    }
+
     public override fun clone(): Card {
         return try {
             super.clone() as Card

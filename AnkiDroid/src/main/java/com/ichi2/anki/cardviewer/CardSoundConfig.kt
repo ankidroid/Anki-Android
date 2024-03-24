@@ -45,7 +45,7 @@ class CardSoundConfig(val replayQuestion: Boolean, val autoplay: Boolean, val de
 
             val autoPlay = deckConfig.optBoolean("autoplay", false)
 
-            val replayQuestion: Boolean = deckConfig.optBoolean("replayq", true)
+            val replayQuestion: Boolean = card.replayQuestionAudioOnAnswerSide(this@Collection)
 
             return CardSoundConfig(replayQuestion, autoPlay, card.did).apply {
                 Timber.d("loaded SoundConfig: %s", this)
