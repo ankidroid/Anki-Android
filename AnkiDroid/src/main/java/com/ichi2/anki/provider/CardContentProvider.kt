@@ -1237,3 +1237,18 @@ private fun TemplateRenderOutput.questionWithFixedSoundTags() =
 /** replaces [anki:play...] with [sound:] */
 private fun TemplateRenderOutput.answerWithFixedSoundTags() =
     replaceWithSoundTags(answerText, this)
+
+/**
+ * Returns the answer with anything before the `<hr id=answer>` tag removed
+ * TODO inline once the legacy TTS mechanism is removed
+ */
+fun Card.pureAnswer(col: Collection): String {
+    val s = renderOutput(col).answerText
+    for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
+        val pos = s.indexOf(target)
+        if (pos == -1) continue
+        return s.substring(pos + target.length).trim { it <= ' ' }
+    }
+    // neither found
+    return s
+}

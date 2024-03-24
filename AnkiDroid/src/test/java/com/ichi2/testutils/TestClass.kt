@@ -196,7 +196,6 @@ interface TestClass {
     fun Card.load() = this.load(col)
     fun Card.nextDue() = this.nextDue(col)
     fun Card.dueString() = this.dueString(col)
-    fun Card.pureAnswer() = this.pureAnswer(col)
 
     fun Note.load() = this.load(col)
     fun Note.cards() = this.cards(col)

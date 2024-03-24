@@ -271,20 +271,6 @@ open class Card : Cloneable {
     }
 
     /**
-     * Returns the answer with anything before the `<hr id=answer>` tag removed
-     */
-    fun pureAnswer(col: Collection): String {
-        val s = renderOutput(col).answerText
-        for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
-            val pos = s.indexOf(target)
-            if (pos == -1) continue
-            return s.substring(pos + target.length).trim { it <= ' ' }
-        }
-        // neither found
-        return s
-    }
-
-    /**
      * Save the currently elapsed reviewing time so it can be restored on resume.
      *
      * Use this method whenever a review session (activity) has been paused. Use the resumeTimer()

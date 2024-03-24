@@ -22,6 +22,7 @@ import android.content.Context
 import com.ichi2.anki.CardUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
+import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
