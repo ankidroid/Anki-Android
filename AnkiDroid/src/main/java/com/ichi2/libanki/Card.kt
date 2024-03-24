@@ -270,15 +270,6 @@ open class Card : Cloneable {
         return Math.min(total, timeLimit(col))
     }
 
-    /*
-     * ***********************************************************
-     * The methods below are not in LibAnki.
-     * ***********************************************************
-     */
-    fun qSimple(col: Collection): String {
-        return renderOutput(col).questionText
-    }
-
     /**
      * Returns the answer with anything before the `<hr id=answer>` tag removed
      */
