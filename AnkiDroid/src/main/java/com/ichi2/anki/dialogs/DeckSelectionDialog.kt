@@ -77,23 +77,16 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         isCancelable = true
 
         val attrs = intArrayOf(
-            R.attr.zeroCountColor,
-            R.attr.newCountColor,
-            R.attr.learnCountColor,
-            R.attr.reviewCountColor,
-            R.attr.currentDeckBackground,
-            android.R.attr.textColor,
-            R.attr.dynDeckColor,
             R.attr.expandRef,
             R.attr.collapseRef
         )
         val ta = context?.obtainStyledAttributes(attrs)
         if (ta != null) {
-            expandImage = ta.getDrawable(7)
+            expandImage = ta.getDrawable(0)
         }
         expandImage!!.isAutoMirrored = true
         if (ta != null) {
-            collapseImage = ta.getDrawable(8)
+            collapseImage = ta.getDrawable(1)
         }
         collapseImage!!.isAutoMirrored = true
     }
@@ -136,20 +129,15 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
         return dialog!!
     }
-
     private fun findParentNode(node: SelectableDeck, decks: List<SelectableDeck>): SelectableDeck? {
-        if ("::" in node.name) {
-            val parentName = node.name.substringBeforeLast("::")
-            return getDeckByName(decks, parentName)
-        }
-        return null
+        val parentName = node.name.substringBeforeLast("::", missingDelimiterValue = "")
+        return if (parentName.isNotEmpty()) getDeckByName(decks, parentName) else null
     }
+
     private fun getDeckByName(decks: List<SelectableDeck>, name: String): SelectableDeck? {
-        for (deck in decks) {
-            if (deck.name == name)return deck
-        }
-        return null
+        return decks.find { it.name == name }
     }
+
     private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>) =
         decks.indexOfFirst { it.deckId == did }
 
@@ -286,21 +274,16 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             }
 
             private fun toggleExpansion(deckName: String) {
-                val deck = allDecksList.firstOrNull { it.name == deckName }
-                if (deck != null) {
-                    deck.isExpanded = !deck.isExpanded
+                getDeckByName(allDecksList, deckName)?.apply {
+                    isExpanded = !isExpanded
+                    updateCurrentlyDisplayedDecks()
+                    notifyDataSetChanged() // Update UI
                 }
-                updateCurrentlyDisplayedDecks()
-                notifyDataSetChanged() // Update UI
             }
             private fun updateCurrentlyDisplayedDecks() {
                 currentlyDisplayedDecks.clear()
-                currentlyDisplayedDecks.addAll(
-                    allDecksList.mapNotNull { deckName ->
-                        if (isViewable(deckName)) deckName else null
-                    }
-                )
-                notifyDataSetChanged()
+                currentlyDisplayedDecks.addAll(allDecksList.filter(::isViewable))
+                notifyDataSetChanged() // Update UI
             }
         }
 
@@ -334,40 +317,31 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: SelectableDeck) {
             if (hasSubDecks(node)) {
                 expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
-                if (!node.isExpanded) {
-                    expander.setImageDrawable(expandImage)
-                    expander.contentDescription = expander.context.getString(R.string.expand)
-                } else {
-                    expander.setImageDrawable(collapseImage)
-                    expander.contentDescription = expander.context.getString(R.string.collapse)
+                expander.apply {
+                    setImageDrawable(if (!node.isExpanded) expandImage else collapseImage)
+                    contentDescription = context.getString(if (!node.isExpanded) R.string.expand else R.string.collapse)
+                    visibility = View.VISIBLE
                 }
-                expander.visibility = View.VISIBLE
-                Timber.d("has Expander!")
             } else {
-                expander.visibility = View.INVISIBLE
-                expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                expander.apply {
+                    visibility = View.INVISIBLE
+                    importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                }
             }
             val width = indent.resources.getDimension(R.dimen.keyline_1).toInt() * findNodeLevel(node)
             indent.minimumWidth = width
         }
 
         private fun hasSubDecks(node: SelectableDeck): Boolean {
-            var counter = 0
-            for (deck in allDecksList) {
-                if (deck.name.contains(node.name)) {
-                    counter++
-                }
-                if (counter > 1)return true
-            }
-            return false
+            return allDecksList.any { it.name.startsWith("${node.name}::") }
         }
+
         private fun findNodeLevel(node: SelectableDeck): Int {
             return node.name.split("::").size
         }
         fun isViewable(deck: SelectableDeck): Boolean {
             val parentNode = findParentNode(deck, allDecksList) ?: return true
-            if (!parentNode.isExpanded) return false
-            return isViewable(parentNode)
+            return parentNode.isExpanded && isViewable(parentNode)
         }
 
         override fun getItemCount(): Int {
@@ -402,15 +376,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         init {
             allDecksList.addAll(deckNames)
-            currentlyDisplayedDecks.addAll(
-                deckNames.mapNotNull { deckName ->
-                    if (isViewable(deckName)) {
-                        deckName
-                    } else {
-                        null
-                    }
-                }
-            )
+            currentlyDisplayedDecks.addAll(deckNames.filter(::isViewable))
             currentlyDisplayedDecks.sort()
         }
     }
