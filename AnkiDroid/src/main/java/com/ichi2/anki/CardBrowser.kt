@@ -1966,7 +1966,7 @@ open class CardBrowser :
                 CardBrowserColumn.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note(col).mod)
                 CardBrowserColumn.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
                 CardBrowserColumn.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote(col)).toString()
-                CardBrowserColumn.NOTE_TYPE -> card.model(col).optString("name")
+                CardBrowserColumn.NOTE_TYPE -> card.noteType(col).optString("name")
                 CardBrowserColumn.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote(col).toString()
                 CardBrowserColumn.QUESTION -> {
                     updateSearchItemQA()

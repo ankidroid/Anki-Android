@@ -227,17 +227,17 @@ open class Card : Cloneable {
         return note!!
     }
 
-    // not in upstream
-    open fun model(col: Collection): NotetypeJson {
+    @LibAnkiAlias("note_type")
+    open fun noteType(col: Collection): NotetypeJson {
         return note(col).notetype
     }
 
     fun template(col: Collection): JSONObject {
-        val m = model(col)
+        val m = noteType(col)
         return if (m.isStd) {
             m.getJSONArray("tmpls").getJSONObject(ord)
         } else {
-            model(col).getJSONArray("tmpls").getJSONObject(0)
+            noteType(col).getJSONArray("tmpls").getJSONObject(0)
         }
     }
 

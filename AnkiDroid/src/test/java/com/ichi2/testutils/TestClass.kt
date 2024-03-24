@@ -188,7 +188,7 @@ interface TestClass {
 
     fun Card.note() = this.note(col)
     fun Card.note(reload: Boolean) = this.note(col, reload)
-    fun Card.model() = this.model(col)
+    fun Card.noteType() = this.noteType(col)
     fun Card.template() = this.template(col)
     fun Card.question() = this.question(col)
     fun Card.question(reload: Boolean = false, browser: Boolean = false) = this.question(col, reload, browser)

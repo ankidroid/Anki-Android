@@ -45,7 +45,7 @@ class TTS {
      * @return The card ordinal. If it's a Cloze card, returns 0.
      */
     private fun getOrdUsingCardType(card: Card, col: Collection): Int {
-        return if (card.model(col).isCloze) {
+        return if (card.noteType(col).isCloze) {
             0
         } else {
             card.ord

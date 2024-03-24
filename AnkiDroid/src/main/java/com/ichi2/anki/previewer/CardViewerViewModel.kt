@@ -175,7 +175,7 @@ abstract class CardViewerViewModel(
                 }
             }
 
-            val fields = withCol { card.model(this).flds }
+            val fields = withCol { card.noteType(this).flds }
             for (i in 0 until fields.length()) {
                 val field = fields.get(i) as JSONObject
                 if (field.getString("name") == typeAnsFieldName) {
