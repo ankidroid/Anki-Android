@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Отфильтровать по меткам</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Править запись</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Отменить</string>
     <string name="note_editor_no_cards_created">Карточки не созданы. Заполните больше полей</string>
     <string name="note_editor_no_first_field">Первое поле пусто</string>
     <string name="note_editor_no_cloze_delations">Этот тип записи должен содержать задание с пропусками</string>
@@ -125,7 +125,7 @@
     <string name="select">Выбрать</string>
     <string name="field_remapping">%1$s (из «%2$s»)</string>
     <string name="confirm_map_cards_to_nothing">Несопоставленные карты будут удалены. Записи, оставшиеся без карт, будут утеряны. Продолжить?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">Такого типа заметок не найдено</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Достигнут лимит учебного блока</string>
     <plurals name="timebox_reached">
@@ -147,7 +147,7 @@
     <string name="card_editor_reset_card">Сбросить прогресс</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перепланировать</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Предпросмотр</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Скопировать как Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d из %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Переименовать</string>
     <string name="checks_action">Проверить</string>
