@@ -40,7 +40,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
-import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.packageManager
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
@@ -89,7 +88,7 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
             }
 
             loadDataWithBaseURL(
-                "http://${AnkiServer.LOCALHOST}/",
+                viewModel.baseUrl(),
                 stdHtml(requireContext(), Themes.currentTheme.isNightMode),
                 "text/html",
                 null,
