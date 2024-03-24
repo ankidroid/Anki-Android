@@ -259,8 +259,9 @@ open class Card : Cloneable {
     /**
      * Time limit for answering in milliseconds.
      */
+    @LibAnkiAlias("time_limit")
     fun timeLimit(col: Collection): Int {
-        val conf = col.decks.configDictForDeckId(if (!isInDynamicDeck) did else oDid)
+        val conf = col.decks.configDictForDeckId(currentDeckId().did)
         return conf.getInt("maxTaken") * 1000
     }
 
