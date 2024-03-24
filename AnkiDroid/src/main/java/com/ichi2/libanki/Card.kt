@@ -25,6 +25,7 @@ import com.ichi2.anki.utils.ext.ifZero
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
 import com.ichi2.utils.LanguageUtil
@@ -64,7 +65,8 @@ open class Card : Cloneable {
      */
     var timerStarted: Long
 
-    // Not in LibAnki. Record time spent reviewing in MS in order to restore when resuming.
+    // Record time spent reviewing in MS in order to restore when resuming.
+    @NotInLibAnki
     private var elapsedTime: Long = 0
 
     // BEGIN SQL table entries
@@ -276,6 +278,7 @@ open class Card : Cloneable {
      * Use this method whenever a review session (activity) has been paused. Use the resumeTimer()
      * method when the session resumes to start counting review time again.
      */
+    @NotInLibAnki
     fun stopTimer() {
         elapsedTime = TimeManager.time.intTimeMS() - timerStarted
     }
@@ -288,6 +291,7 @@ open class Card : Cloneable {
      * the reviewer and *must* be called on resume before any calls to timeTaken(col) take place
      * or the result of timeTaken(col) will be wrong.
      */
+    @NotInLibAnki
     fun resumeTimer() {
         timerStarted = TimeManager.time.intTimeMS() - elapsedTime
     }
