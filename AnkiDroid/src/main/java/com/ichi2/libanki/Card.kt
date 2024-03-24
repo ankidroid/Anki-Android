@@ -18,9 +18,6 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.R
-import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.utils.ext.ifZero
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
@@ -29,7 +26,6 @@ import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
-import com.ichi2.utils.LanguageUtil
 import org.json.JSONObject
 
 /**
@@ -364,36 +360,6 @@ open class Card : Cloneable {
     fun setUserFlag(flag: Int) {
         flags = setFlagInInt(flags, flag)
     }
-
-    // not in Anki.
-    fun dueString(col: Collection): String {
-        var t = nextDue(col)
-        if (queue < 0) {
-            t = "($t)"
-        }
-        return t
-    }
-
-    // as in Anki aqt/browser.py
-    @VisibleForTesting
-    fun nextDue(col: Collection): String {
-        val date: Long
-        val due = due
-        date = if (isInDynamicDeck) {
-            return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
-        } else if (queue == Consts.QUEUE_TYPE_LRN) {
-            due
-        } else if (queue == Consts.QUEUE_TYPE_NEW || type == Consts.CARD_TYPE_NEW) {
-            return java.lang.Long.valueOf(due).toString()
-        } else if (queue == Consts.QUEUE_TYPE_REV || queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || type == Consts.CARD_TYPE_REV && queue < 0) {
-            val time = TimeManager.time.intTime()
-            val nbDaySinceCreation = due - col.sched.today
-            time + nbDaySinceCreation * SECONDS_PER_DAY
-        } else {
-            return ""
-        }
-        return LanguageUtil.getShortDateFormatFromS(date)
-    } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
 
     /** Non libAnki  */
     val isInDynamicDeck: Boolean

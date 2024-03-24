@@ -194,8 +194,6 @@ interface TestClass {
     fun Card.question(reload: Boolean = false, browser: Boolean = false) = this.question(col, reload, browser)
     fun Card.answer() = this.answer(col)
     fun Card.load() = this.load(col)
-    fun Card.nextDue() = this.nextDue(col)
-    fun Card.dueString() = this.dueString(col)
 
     fun Note.load() = this.load(col)
     fun Note.cards() = this.cards(col)

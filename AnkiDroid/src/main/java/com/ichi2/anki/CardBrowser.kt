@@ -92,6 +92,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
@@ -1958,7 +1959,7 @@ open class CardBrowser :
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
                 CardBrowserColumn.TAGS -> card.note(col).stringTags(col)
                 CardBrowserColumn.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards(col)}"
-                CardBrowserColumn.DUE -> card.dueString(col)
+                CardBrowserColumn.DUE -> dueString(col, card)
                 CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note(col).mod.toLong())
                 CardBrowserColumn.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
@@ -2222,6 +2223,34 @@ open class CardBrowser :
         }
 
         const val CARD_NOT_AVAILABLE = -1
+
+        fun dueString(col: Collection, card: Card): String {
+            var t = nextDue(col, card)
+            if (card.queue < 0) {
+                t = "($t)"
+            }
+            return t
+        }
+
+        @VisibleForTesting
+        fun nextDue(col: Collection, card: Card): String {
+            val date: Long
+            val due = card.due
+            date = if (card.isInDynamicDeck) {
+                return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
+            } else if (card.queue == Consts.QUEUE_TYPE_LRN) {
+                due
+            } else if (card.queue == Consts.QUEUE_TYPE_NEW || card.type == Consts.CARD_TYPE_NEW) {
+                return java.lang.Long.valueOf(due).toString()
+            } else if (card.queue == Consts.QUEUE_TYPE_REV || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.type == Consts.CARD_TYPE_REV && card.queue < 0) {
+                val time = TimeManager.time.intTime()
+                val nbDaySinceCreation = due - col.sched.today
+                time + nbDaySinceCreation * SECONDS_PER_DAY
+            } else {
+                return ""
+            }
+            return LanguageUtil.getShortDateFormatFromS(date)
+        } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
     }
 
     private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
