@@ -20,7 +20,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntroductionActivity
@@ -195,7 +194,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     /**
-     * Executes [callback] on the [MaterialDialog] created from [CreateDeckDialog]
+     * Executes [callback] on the [AlertDialog] created from [CreateDeckDialog]
      */
     private fun testDialog(deckDialogType: DeckDialogType, parentId: DeckId? = null, callback: (AlertDialog.() -> Unit)) {
         activityScenario.onActivity { activity: DeckPicker ->
