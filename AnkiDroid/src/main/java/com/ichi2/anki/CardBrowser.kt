@@ -1539,9 +1539,9 @@ open class CardBrowser :
 
     /**
      * Removes cards from view. Doesn't delete them in model (database).
-     * @param this@removeNotesView Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
+     * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
-    private fun Boolean.removeNotesView(cardsIds: List<Long>) {
+    private fun removeNotesView(cardsIds: List<Long>, reorderCards: Boolean) {
         val idToPos = viewModel.cardIdToPositionMap
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
         reloadRequired = reloadRequired || cardsIds.contains(reviewerCardId)
@@ -1550,7 +1550,7 @@ open class CardBrowser :
             .mapIndexed { i, c -> CardCache(c, i) }
             .toMutableList()
         cards.replaceWith(newMCards)
-        if (this) {
+        if (reorderCards) {
             // Suboptimal from a UX perspective, we should reorder
             // but this is only hit on a rare sad path and we'd need to rejig the data structures to allow an efficient
             // search
@@ -1623,7 +1623,7 @@ open class CardBrowser :
         try {
             if (cardsIdsToHide.isNotEmpty()) {
                 Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size)
-                true.removeNotesView(cardsIdsToHide)
+                removeNotesView(cardsIdsToHide, true)
             }
         } catch (e: Exception) {
             Timber.e(e, "failed to hide cards")
@@ -2219,6 +2219,8 @@ open class CardBrowser :
             s = s.trim { it <= ' ' }
             return s
         }
+
+        const val CARD_NOT_AVAILABLE = -1
     }
 
     private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
