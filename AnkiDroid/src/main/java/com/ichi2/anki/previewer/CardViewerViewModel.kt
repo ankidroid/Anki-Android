@@ -32,6 +32,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.TtsPlayer
 import com.ichi2.libanki.note
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -55,7 +56,7 @@ abstract class CardViewerViewModel(
     protected val soundPlayer = soundPlayer.apply {
         setSoundErrorListener(createSoundErrorListener())
     }
-    protected lateinit var currentCard: Card
+    abstract var currentCard: Deferred<Card>
 
     @CallSuper
     override fun onCleared() {
@@ -80,7 +81,7 @@ abstract class CardViewerViewModel(
 
     fun playSoundFromUrl(url: String) {
         launchCatchingIO {
-            Sound.getAvTag(currentCard, url)?.let {
+            Sound.getAvTag(currentCard.await(), url)?.let {
                 soundPlayer.playOneSound(it)
             }
         }
@@ -92,7 +93,7 @@ abstract class CardViewerViewModel(
 
     protected abstract suspend fun typeAnsFilter(text: String): String
 
-    private fun bodyClass(): String = bodyClassForCardOrd(currentCard.ord)
+    private suspend fun bodyClass(): String = bodyClassForCardOrd(currentCard.await().ord)
 
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L358) */
     private suspend fun mungeQA(text: String): String =
@@ -106,10 +107,11 @@ abstract class CardViewerViewModel(
         Timber.v("showQuestion()")
         showingAnswer.emit(false)
 
-        val questionData = withCol { currentCard.question(this) }
+        val card = currentCard.await()
+        val questionData = withCol { card.question(this) }
         val question = mungeQA(questionData)
         val answer =
-            withCol { media.escapeMediaFilenames(currentCard.answer(this)) }
+            withCol { media.escapeMediaFilenames(card.answer(this)) }
 
         eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '${bodyClass()}');")
     }
@@ -117,8 +119,11 @@ abstract class CardViewerViewModel(
     protected open suspend fun showAnswerInternal() {
         Timber.v("showAnswer()")
         showingAnswer.emit(true)
-        val answerData = withCol { currentCard.answer(this) }
+
+        val card = currentCard.await()
+        val answerData = withCol { card.answer(this) }
         val answer = mungeQA(answerData)
+
         eval.emit("_showAnswer(${Json.encodeToString(answer)}, '${bodyClass()}');")
     }
 

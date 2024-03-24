@@ -221,8 +221,10 @@ class PreviewerFragment :
     }
 
     private fun editCard() {
-        val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
-        editCardLauncher.launch(intent)
+        lifecycleScope.launch {
+            val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
+            editCardLauncher.launch(intent)
+        }
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {

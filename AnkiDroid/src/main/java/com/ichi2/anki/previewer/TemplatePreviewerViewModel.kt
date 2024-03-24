@@ -28,6 +28,7 @@ import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import kotlinx.coroutines.CompletableDeferred
@@ -57,6 +58,7 @@ class TemplatePreviewerViewModel(
     private val note: Deferred<Note>
     private val templateNames: Deferred<List<String>>
     private val clozeOrds: Deferred<List<Int>>?
+    override var currentCard: Deferred<Card>
 
     init {
         note = asyncIO {
@@ -69,6 +71,17 @@ class TemplatePreviewerViewModel(
             }.apply {
                 fields = arguments.fields
                 tags = arguments.tags
+            }
+        }
+        currentCard = asyncIO {
+            val note = note.await()
+            withCol {
+                note.ephemeralCard(
+                    col = this,
+                    ord = ordFlow.value,
+                    customNoteType = notetype,
+                    fillEmpty = fillEmpty
+                )
             }
         }
         if (isCloze) {
@@ -101,16 +114,7 @@ class TemplatePreviewerViewModel(
             return
         }
         launchCatchingIO {
-            val note = note.await()
             ordFlow.collectLatest {
-                currentCard = withCol {
-                    note.ephemeralCard(
-                        col = this,
-                        ord = ordFlow.value,
-                        customNoteType = notetype,
-                        fillEmpty = fillEmpty
-                    )
-                }
                 showQuestion()
                 loadAndPlaySounds(CardSide.QUESTION)
             }
@@ -159,15 +163,15 @@ class TemplatePreviewerViewModel(
     ********************************************************************************************* */
 
     private suspend fun loadAndPlaySounds(side: CardSide) {
-        soundPlayer.loadCardSounds(currentCard)
+        soundPlayer.loadCardSounds(currentCard.await())
         soundPlayer.playAllSoundsForSide(side)
     }
 
     // https://github.com/ankitects/anki/blob/df70564079f53e587dc44f015c503fdf6a70924f/qt/aqt/clayout.py#L579
     override suspend fun typeAnsFilter(text: String): String {
-        val typeAnswerField = getTypeAnswerField(currentCard, text)
+        val typeAnswerField = getTypeAnswerField(currentCard.await(), text)
         val expectedAnswer = typeAnswerField?.let {
-            getExpectedTypeInAnswer(currentCard, typeAnswerField)
+            getExpectedTypeInAnswer(currentCard.await(), typeAnswerField)
         }.ifNullOrEmpty { "sample" }
 
         val repl = if (showingAnswer.value) {
