@@ -41,9 +41,8 @@ class CardSoundConfig(val replayQuestion: Boolean, val autoplay: Boolean, val de
         @CheckResult
         fun create(card: Card): CardSoundConfig {
             Timber.v("start loading SoundConfig")
-            val deckConfig = this@Collection.decks.configDictForDeckId(CardUtils.getDeckIdForCard(card))
 
-            val autoPlay = deckConfig.optBoolean("autoplay", false)
+            val autoPlay = card.autoplay(this@Collection)
 
             val replayQuestion: Boolean = card.replayQuestionAudioOnAnswerSide(this@Collection)
 

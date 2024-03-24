@@ -310,6 +310,11 @@ open class Card : Cloneable {
         return conf.optBoolean("replayq", true)
     }
 
+    @LibAnkiAlias("autoplay")
+    fun autoplay(col: Collection): Boolean {
+        return col.decks.configDictForDeckId(currentDeckId().did).getBoolean("autoplay")
+    }
+
     public override fun clone(): Card {
         return try {
             super.clone() as Card
