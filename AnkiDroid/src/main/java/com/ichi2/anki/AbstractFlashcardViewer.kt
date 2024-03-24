@@ -610,6 +610,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (isDrawerOpen) {
             super.onBackPressed()

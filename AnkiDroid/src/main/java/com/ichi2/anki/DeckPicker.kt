@@ -2425,7 +2425,7 @@ open class DeckPicker :
         }
 
         var userCheckedDoNotShowAgain = false
-        var dialog = AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
             .setTitle(R.string.scoped_storage_title)
             .setMessage(message)
             .setPositiveButton(
