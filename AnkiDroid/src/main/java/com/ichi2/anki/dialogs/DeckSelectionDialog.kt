@@ -277,13 +277,13 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 getDeckByName(allDecksList, deckName)?.apply {
                     isExpanded = !isExpanded
                     updateCurrentlyDisplayedDecks()
-                    notifyDataSetChanged() // Update UI
+                    notifyDataSetChanged()
                 }
             }
             private fun updateCurrentlyDisplayedDecks() {
                 currentlyDisplayedDecks.clear()
                 currentlyDisplayedDecks.addAll(allDecksList.filter(::isViewable))
-                notifyDataSetChanged() // Update UI
+                notifyDataSetChanged()
             }
         }
 

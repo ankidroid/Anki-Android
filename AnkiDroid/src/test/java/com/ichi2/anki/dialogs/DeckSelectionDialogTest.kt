@@ -26,7 +26,7 @@ class DeckSelectionDialogTest {
     @Test
     fun verifyDeckDisplayName() {
         val input = "deck::sub-deck::sub-deck2::sub-deck3"
-        val expected = "\t\t\t\t\t\tsub-deck3"
+        val expected = "sub-deck3"
 
         val deck = SelectableDeck(1234, input)
         val actual: String = deck.displayName
