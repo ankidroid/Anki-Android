@@ -22,6 +22,7 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.core.content.edit
+import anki.config.preferences
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
@@ -29,6 +30,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.SyncErrorDialog
+import com.ichi2.anki.preferences.get
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
@@ -41,7 +43,9 @@ import com.ichi2.libanki.syncLogin
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
 import com.ichi2.utils.NetworkUtils
+import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 
@@ -51,6 +55,9 @@ object SyncPreferences {
     const val CURRENT_SYNC_URI = "currentSyncUri"
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
+
+    const val CUSTOM_CERTIFICATE: String = "customCertificate"
+    const val CUSTOM_CERTIFICATE_ENABLED: String = CUSTOM_CERTIFICATE + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
 
     // Used in the legacy schema path
     const val HOSTNUM = "hostNum"
@@ -129,12 +136,33 @@ fun millisecondsSinceLastSync(preferences: SharedPreferences) = TimeManager.time
 
 fun canSync(context: Context) = !ScopedStorageService.mediaMigrationIsInProgress(context)
 
+/**
+ * Check the currently set custom root certificate in the backend.
+ * If it differs from what we have set in the app, then reload the backend with this new certificate.
+ */
+fun checkCurrentCert(prefs: SharedPreferences) {
+    var customCert: String? = null
+    val currentCert: String? = BackendFactory.getCustomCert()
+
+    if (prefs.getBoolean(SyncPreferences.CUSTOM_CERTIFICATE_ENABLED, false)) {
+        customCert = prefs.get(SyncPreferences.CUSTOM_CERTIFICATE)?.toString()
+    }
+
+    if (currentCert != customCert) {
+        BackendFactory.setCustomCert(customCert)
+        runBlocking { CollectionManager.discardBackend() }
+    }
+}
+
 fun DeckPicker.handleNewSync(
     conflict: ConflictResolution?,
     syncMedia: Boolean
 ) {
     val auth = this.syncAuth() ?: return
     val deckPicker = this
+
+    checkCurrentCert(this.sharedPrefs())
+
     launchCatchingTask {
         try {
             when (conflict) {
@@ -156,6 +184,9 @@ fun DeckPicker.handleNewSync(
 
 fun MyAccount.handleNewLogin(username: String, password: String) {
     val endpoint = getEndpoint(this)
+
+    checkCurrentCert(this.sharedPrefs())
+
     launchCatchingTask {
         val auth = try {
             withProgress(
