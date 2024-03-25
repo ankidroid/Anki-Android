@@ -43,7 +43,7 @@ class Deck : JSONObject {
     private constructor() : super()
 
     val isFiltered: Boolean
-        get() = getInt("dyn") == Consts.DECK_DYN
+        get() = getInt("dyn") != 0
 
     val isNormal: Boolean
         get() = !isFiltered

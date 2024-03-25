@@ -1046,7 +1046,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.DECK_ID -> rb.add(currentCard.did)
                 FlashCardsContract.Card.QUESTION -> rb.add(question)
                 FlashCardsContract.Card.ANSWER -> rb.add(answer)
-                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple(col))
+                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.renderOutput(col).questionText)
                 FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(col, false).answerText)
                 FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer(col))
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
@@ -1237,3 +1237,18 @@ private fun TemplateRenderOutput.questionWithFixedSoundTags() =
 /** replaces [anki:play...] with [sound:] */
 private fun TemplateRenderOutput.answerWithFixedSoundTags() =
     replaceWithSoundTags(answerText, this)
+
+/**
+ * Returns the answer with anything before the `<hr id=answer>` tag removed
+ * TODO inline once the legacy TTS mechanism is removed
+ */
+fun Card.pureAnswer(col: Collection): String {
+    val s = renderOutput(col).answerText
+    for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
+        val pos = s.indexOf(target)
+        if (pos == -1) continue
+        return s.substring(pos + target.length).trim { it <= ' ' }
+    }
+    // neither found
+    return s
+}
