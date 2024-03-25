@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">స్థానిక</string>
     <string name="sync_sanity_remote">రిమోట్</string>
-    <string name="force_full_sync_title">పూర్తి సమకాలీకరణను బలవంతం చేయండి</string>
-    <string name="force_full_sync_summary">తదుపరి సమకాలీకరణలో, ఒక దిశలో మార్పులను మార్చండి</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">మీ సేకరణ సమకాలీకరించినప్పుడు అభ్యర్థించిన మార్పుకు మీ డేటాబేస్ యొక్క పూర్తి అప్లోడ్ అవసరం అవుతుంది. ఇప్పటికీ సమీక్షలు లేదా ఇతర మార్పులు ఇప్పటికీ ఇక్కడ సమకాలీకరించబడకపోతే, అవి పోతాయి. కొనసాగించు?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid గతంలో సంస్థాపించిన సంస్కరణలో బగ్, ఇది పూర్తి సమకాలీకరణను బలపరచటానికి మద్దతిస్తుంది.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

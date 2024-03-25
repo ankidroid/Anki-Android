@@ -466,7 +466,7 @@ object UsageAnalytics {
         "automaticSyncMode", // Automatic synchronization
         "showSyncStatusBadge", // Display synchronization status
         "allowMetered", // Allow sync on metered connections
-        "force_full_sync", // Force full sync
+        "one_way_sync", // One-way sync
         // Backup
         "minutes_between_automatic_backups",
         "daily_backups_to_keep",

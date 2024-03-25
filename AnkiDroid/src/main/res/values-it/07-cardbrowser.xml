@@ -55,19 +55,19 @@
     </plurals>
     <string name="card_browser_all_decks">Tutti i mazzi</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">Elimina carta</item>
+        <item quantity="other">Elimina carte</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Elimina nota</item>
+        <item quantity="other">Elimina note</item>
     </plurals>
     <string name="card_browser_change_deck">Cambia mazzo</string>
     <string name="delete_card_title">Elimina nota</string>
     <string name="card_browser_show_marked">Filtra contrassegnate</string>
     <string name="card_browser_show_suspended">Filtra sospese</string>
     <string name="card_browser_search_by_tag">Filtra per etichetta</string>
-    <string name="card_browser_search_by_flag">Filtra per contrassegno</string>
+    <string name="card_browser_search_by_flag">Filtra per bandiera</string>
     <string name="card_browser_list_my_searches">Le mie ricerche</string>
     <string name="card_browser_list_my_searches_save">Salva ricerca</string>
     <string name="card_browser_list_my_searches_title">Scegli una ricerca salvata</string>
@@ -93,10 +93,10 @@
     <string name="card_browser_select_all">Seleziona tutto</string>
     <string name="card_browser_select_none">Deseleziona tutto</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nuova)</string>
-    <string name="card_browser_due_filtered_card">(filtrato)</string>
-    <string name="card_browser_interval_learning_card">(apprendimento)</string>
+    <string name="card_browser_due_filtered_card">(filtrata)</string>
+    <string name="card_browser_interval_learning_card">(in apprendimento)</string>
     <string name="card_browser_no_cards_in_deck">Nessuna carta trovata nel mazzo «%s»</string>
-    <string name="card_browser_search_all_decks">Cerca tutti i mazzi</string>
+    <string name="card_browser_search_all_decks">Cerca in tutti i mazzi</string>
     <string name="card_browser_unknown_deck_name">Sconosciuto</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Tronca contenuto</string>
     <plurals name="card_browser_export_cards">

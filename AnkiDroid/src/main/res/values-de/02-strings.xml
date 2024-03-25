@@ -143,7 +143,7 @@
     <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Umplanen</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Vorschau</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Als Markdown kopieren</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d von %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Umbenennen</string>
     <string name="checks_action">Prüfen</string>
@@ -304,7 +304,7 @@
     <string name="migration_part_1_done_resume">Du kannst jetzt AnkiDroid weiterverwenden.
 \nDie Speichermigration wird im Hintergrund fortfahren.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s ist kein gültiges JavaScript-Erweiterungspaket.</string>
     <string name="could_not_create_dir">Verzeichnis %s konnte nicht erstellt werden </string>
     <string name="malicious_archive_entry_outside">Schädliches Archiv. Enthält Eintrag außerhalb des Zielverzeichnisses: %s</string>
     <string name="malicious_archive_exceeds_limit">Schädliches Archiv. Größe überschreitet %1$s oder enthält mehr als %2$d Dateien</string>
@@ -320,7 +320,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Los geht\'s</string>
     <string name="intro_sync_from_ankiweb">Mit AnkiWeb synchronisieren</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">AnkiDroid ist noch nicht initialisiert. Bitte öffne die App nochmal und versuche erneut.</string>
     <string name="already_logged_in">Bereits angemeldet</string>
     <!-- Deck Creation -->
     <string name="deck_created">Stapel wurde erstellt</string>

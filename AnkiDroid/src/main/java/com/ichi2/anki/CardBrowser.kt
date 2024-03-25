@@ -690,6 +690,7 @@ open class CardBrowser :
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         when {
             isDrawerOpen -> super.onBackPressed()
@@ -749,6 +750,7 @@ open class CardBrowser :
                 }
             })
             searchView = searchItem!!.actionView as CardBrowserSearchView
+            searchView!!.setMaxWidth(Integer.MAX_VALUE)
             searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (searchView!!.shouldIgnoreValueChange()) {
@@ -1361,7 +1363,7 @@ open class CardBrowser :
             searchView!!.setQuery(searchTerms, false)
             searchItem!!.expandActionView()
         }
-        val searchText: String? = if (searchTerms.contains("deck:")) {
+        val searchText: String = if (searchTerms.contains("deck:")) {
             "($searchTerms)"
         } else {
             if ("" != searchTerms) "${viewModel.restrictOnDeck}($searchTerms)" else viewModel.restrictOnDeck
@@ -1369,7 +1371,7 @@ open class CardBrowser :
         // clear the existing card list
         cards.reset()
         cardsAdapter.notifyDataSetChanged()
-        val query = searchText!!
+        val query = searchText
         val order = viewModel.order.toSortOrder()
         launchCatchingTask {
             Timber.d("performing search")
@@ -2176,7 +2178,6 @@ open class CardBrowser :
 
         // Values related to persistent state data
         private const val ALL_DECKS_ID = 0L
-        const val CARD_NOT_AVAILABLE = -1
 
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
@@ -2218,6 +2219,8 @@ open class CardBrowser :
             s = s.trim { it <= ' ' }
             return s
         }
+
+        const val CARD_NOT_AVAILABLE = -1
     }
 
     private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {

@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Nova colección</string>
     <string name="backup_del_collection">Eliminar a colección e crear unha nova</string>
     <string name="backup_del_collection_question">Eliminar a colección e crear unha nova? Isto eliminará todos os teus progresos e todos os cartóns.</string>
-    <string name="backup_full_sync_from_server">Sincronización completa dende o servidor</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Sobrescribir a túa colección coa de AnkiWeb? Eliminarase todo o teu progreso de aprendizaxe e a información engadida dende a última sincronización.</string>
     <string name="error_handling_title">Xestión dos erros</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opcións</string>

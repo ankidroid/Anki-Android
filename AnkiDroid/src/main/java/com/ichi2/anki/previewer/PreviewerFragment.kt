@@ -40,6 +40,7 @@ import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
@@ -61,7 +62,7 @@ class PreviewerFragment :
             "$CARD_IDS_FILE_ARG is required"
         } as PreviewerIdsFile
         val currentIndex = requireArguments().getInt(CURRENT_INDEX_ARG, 0)
-        PreviewerViewModel.factory(previewerIdsFile, currentIndex)
+        PreviewerViewModel.factory(previewerIdsFile, currentIndex, SoundPlayer())
     }
     override val webView: WebView
         get() = requireView().findViewById(R.id.webview)
@@ -220,8 +221,10 @@ class PreviewerFragment :
     }
 
     private fun editCard() {
-        val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
-        editCardLauncher.launch(intent)
+        lifecycleScope.launch {
+            val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
+            editCardLauncher.launch(intent)
+        }
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
@@ -252,7 +255,7 @@ class PreviewerFragment :
                 CURRENT_INDEX_ARG to currentIndex,
                 CARD_IDS_FILE_ARG to previewerIdsFile
             )
-            return PreviewerActivity.getIntent(context, PreviewerFragment::class, arguments)
+            return CardViewerActivity.getIntent(context, PreviewerFragment::class, arguments)
         }
     }
 }

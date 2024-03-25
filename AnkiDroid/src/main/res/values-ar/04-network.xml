@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">محلي</string>
     <string name="sync_sanity_remote">بعيد</string>
-    <string name="force_full_sync_title">فرض مزامنة كاملة</string>
-    <string name="force_full_sync_summary">عند المزامنة التالية، افرض التغييرات في جانب واحد</string>
-    <string name="force_full_sync_confirmation">مزامنة كاملة مفروضة</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">يتطلب التغيير المطلوب رفعًا كاملًا لقاعدة البيانات عند مزامنة مجموعتك مجددًا. إذا كانت لديك مراجعات وتغييرات أخرى في جهاز آخر غير مُزامَنة هنا ، ستفقدها. هل تريد الاستمرار؟</string>
     <string name="full_sync_confirmation_upgrade">بسبب عطل في إصدار أنكيدرويد المنصب سابقًا، يُنصح بفرض مزامنة كاملة.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">مزامنة (كاملة)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">مزامنة (تسجيل دخول)</string>
 </resources>

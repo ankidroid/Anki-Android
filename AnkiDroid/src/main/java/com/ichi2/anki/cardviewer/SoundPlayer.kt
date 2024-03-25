@@ -92,7 +92,7 @@ class SoundPlayer : Closeable {
 
     private val soundTagPlayer: SoundTagPlayer
     private val ttsPlayer: Deferred<TtsPlayer>
-    private val soundErrorListener: SoundErrorListener
+    private var soundErrorListener: SoundErrorListener? = null
 
     constructor(soundTagPlayer: SoundTagPlayer, ttsPlayer: Deferred<TtsPlayer>, soundErrorListener: SoundErrorListener) {
         this.soundTagPlayer = soundTagPlayer
@@ -100,10 +100,9 @@ class SoundPlayer : Closeable {
         this.soundErrorListener = soundErrorListener
     }
 
-    constructor(soundErrorListener: SoundErrorListener) {
+    constructor() {
         this.soundTagPlayer = SoundTagPlayer(getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance).path))
         this.ttsPlayer = scope.async { AndroidTtsPlayer.createInstance(AnkiDroidApp.instance, scope) }
-        this.soundErrorListener = soundErrorListener
     }
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -128,11 +127,16 @@ class SoundPlayer : Closeable {
         onSoundGroupCompleted = listener
     }
 
+    fun setSoundErrorListener(soundErrorListener: SoundErrorListener) {
+        this.soundErrorListener = soundErrorListener
+    }
+
     suspend fun loadCardSounds(card: Card) {
         Timber.i("loading sounds for card %d", card.id)
         stopSounds()
-        this.questions = withCol { card.renderOutput(this).questionAvTags }
-        this.answers = withCol { card.renderOutput(this).answerAvTags }
+        val renderOutput = withCol { card.renderOutput(this) }
+        this.questions = renderOutput.questionAvTags
+        this.answers = renderOutput.answerAvTags
 
         if (!this::config.isInitialized || !config.appliesTo(card)) {
             config = withCol { CardSoundConfig.create(card) }
@@ -248,7 +252,7 @@ class SoundPlayer : Closeable {
                 is SoundOrVideoTag -> soundTagPlayer.play(tag, soundErrorListener)
                 is TTSTag -> {
                     awaitTtsPlayer(isAutomaticPlayback)?.play(tag)?.error?.let {
-                        soundErrorListener.onTtsError(it, isAutomaticPlayback)
+                        soundErrorListener?.onTtsError(it, isAutomaticPlayback)
                     }
                 }
                 else -> Timber.w("unknown audio: ${tag.javaClass}")
@@ -308,7 +312,7 @@ class SoundPlayer : Closeable {
         if (player == null) {
             Timber.v("timeout waiting for TTS Player")
             val error = AndroidTtsError(TtsErrorCode.APP_TTS_INIT_TIMEOUT)
-            soundErrorListener.onTtsError(error, isAutomaticPlayback)
+            soundErrorListener?.onTtsError(error, isAutomaticPlayback)
         }
         return player
     }

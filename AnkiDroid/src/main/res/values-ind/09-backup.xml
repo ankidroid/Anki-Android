@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Koleksi baru</string>
     <string name="backup_del_collection">Hapus koleksi dan buat baru</string>
     <string name="backup_del_collection_question">Yakin menghapus koleksi dan membuat baru? Ini akan menghapus semua kemajuan belajar dan semua kartu Anda.</string>
-    <string name="backup_full_sync_from_server">Sinkronisasi penuh dari server</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Timpa koleksi Anda dengan yang dari AnkiWeb? Ini akan menghapus semua kemajuan pembelajaran Anda dan menambahkan informasi sejak sinkronisasi terakhir.</string>
     <string name="error_handling_title">Penanganan galat</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Pilihan</string>

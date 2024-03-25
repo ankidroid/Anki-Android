@@ -145,9 +145,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Пошук колоди</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук колоди</string>
     <string name="invalid_deck_name">Некоректна назва колоди</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_limit_reached">Досягнуто денної межі навчання</string>
     <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
     <string name="button_sync" comment="Text of the sync button">Синхронізувати</string>
@@ -156,6 +156,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Продовжити синхронізацію</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронізацію скасовано</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Скасування&#8230;\nЦе триватиме деякий час.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Експортувати колоду</string>
     <string name="nothing">Нічого</string>
     <!-- Card template editor -->

@@ -22,7 +22,7 @@
     <string name="sync_account_key">syncAccount</string>
     <string name="sync_fetch_media_key">syncFetchMedia</string>
     <string name="automatic_sync_choice_key">automaticSyncMode</string>
-    <string name="force_full_sync_key">force_full_sync</string>
+    <string name="one_way_sync_key">one_way_sync</string>
     <string name="sync_status_badge_key">showSyncStatusBadge</string>
     <string name="metered_sync_key">allowMetered</string>
     <string name="custom_sync_server_key">custom_sync_server_link</string>

@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Bagong koleksyon</string>
     <string name="backup_del_collection">Burahin ang koleksyon at gumawa ng bago</string>
     <string name="backup_del_collection_question">Tanggalin ang koleksyon at lumikha ng bago? Buburahin nito ang lahat ng iyong progreso sa pag-aaral at tanggalin ang lahat ng baraha.</string>
-    <string name="backup_full_sync_from_server">Buong pag-sync mula sa server</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">I-overwrite ang iyong koleksyon sa isa mula sa AnkiWeb? Ibababa nito ang lahat ng iyong progreso sa pag-aaral at idinagdag ang impormasyon mula noong huling pag-sync mo.</string>
     <string name="error_handling_title">Error handling</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Mga opsyon</string>

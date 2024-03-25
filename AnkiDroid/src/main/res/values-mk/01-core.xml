@@ -150,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Продолжете со синхронизација</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизацијата е откажана</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Откажување&#8230;\nОва може да потрае некое време.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Извозна deck</string>
     <string name="nothing">Ништо</string>
     <!-- Card template editor -->

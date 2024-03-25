@@ -326,6 +326,7 @@ dependencies {
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
     implementation 'com.squareup:seismic:1.0.3'
+    implementation "androidx.work:work-runtime-ktx:2.9.0"
 
     // Backend libraries
 

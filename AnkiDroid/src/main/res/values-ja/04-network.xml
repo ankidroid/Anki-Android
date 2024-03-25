@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ローカル</string>
     <string name="sync_sanity_remote">クラウド</string>
-    <string name="force_full_sync_title">完全同期を強制する</string>
-    <string name="force_full_sync_summary">次回の同期で、一方向の変更を強制実行します</string>
-    <string name="force_full_sync_confirmation">完全同期の設定が完了しました</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">要求した変更を行うには、次回のコレクションの同期の際にデータベースの完全なアップロードが必要です。他の端末で学習やその他の変更を行ってまだ同期が済んでいない場合、それらの変更は失われます。処理を続けますか？</string>
     <string name="full_sync_confirmation_upgrade">以前のバージョンのバグの修正を反映させるため、完全同期をおすすめします。</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">同期 (完全同期)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">同期 (ログイン)</string>
 </resources>

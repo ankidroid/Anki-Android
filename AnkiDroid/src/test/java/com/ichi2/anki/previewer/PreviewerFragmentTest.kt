@@ -40,7 +40,7 @@ class PreviewerFragmentTest : RobolectricTest() {
             currentIndex = 0
         )
 
-        ActivityScenario.launch<PreviewerActivity>(intent).use { scenario ->
+        ActivityScenario.launch<CardViewerActivity>(intent).use { scenario ->
             scenario.moveToState(Lifecycle.State.RESUMED)
             scenario.onActivity { previewer ->
                 assertThat("Activity is not finishing", !previewer.isFinishing)

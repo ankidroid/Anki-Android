@@ -59,18 +59,18 @@
     <!-- DeckPicker.kt -->
     <string name="expand">გაშლა</string>
     <string name="collapse">ჩაკეცვა</string>
-    <string name="study_more">Study more</string>
+    <string name="study_more">მეტის სწავლა</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">დარჩენილია %d წუთი</item>
+        <item quantity="other">დარჩენილია %d წუთი</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">დარჩენილია %1$d საათი და %2$d წუთი</item>
+        <item quantity="other">დარჩენილია %1$d საათი და %2$d წუთი</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">დარჩენილია %1$d დღე და %2$d საათი</item>
+        <item quantity="other">დარჩენილია %1$d დღე და %2$d საათი</item>
     </plurals>
     <string name="no_cards_placeholder_title">კოლექცია ცარიელია</string>
     <string name="no_cards_placeholder_description">ატვირთეთ ბარათები\n+ნიშნით</string>
@@ -92,7 +92,7 @@
     <string name="rename_deck">დასტის სახელის შეცვლა</string>
     <string name="create_shortcut">სწრაფი ბმულის შექმნა</string>
     <string name="browse_cards">ბარათების ძიება</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">აღწერის რედაქტირება</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">დამატება</string>
     <string name="menu_add_note">დაამატე შენიშვნა</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ანგარიშის სინქრონიზაცია</string>
@@ -139,9 +139,9 @@
     <string name="search_deck" comment="Deck search for selecting it">დასტის ძებნა</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">დასტის ძიება</string>
     <string name="invalid_deck_name">დასტის სახელი არასწორია</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_limit_reached">ყოველდღიური სწავლის ლიმიტამდე ახვედით</string>
     <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_finished">გილოცავთ! დღეისთვის სულ ეს იყო.</string>
     <string name="studyoptions_no_cards_due">ჯერ ბარათები არ არის</string>
     <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
     <string name="button_sync" comment="Text of the sync button">სინქრონიზაცია</string>
@@ -150,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">სინქრონიზაციის გაგრძელება</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">სინქრონიზაცია გაუქმებულია</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">გაუქმება\&#8230;\nამან შეიძლება ცოტა დრო წაიღოს.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">დასტის ექსპორტი</string>
     <string name="nothing">არაფერი</string>
     <!-- Card template editor -->
@@ -254,5 +255,5 @@
     <string name="storage_access_title">წვდომა მეხსიერებაზე</string>
     <string name="storage_access_summary">თქვენი კოლექცია შეინახება უსაფრთხო ადგილას, რომელიც აპლიკაციის დეინსტალაციის შემთხვევაში არ წაიშლება</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">წვდომა ყველა ფაილზე</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">სასურათე საფარველები</string>
 </resources>

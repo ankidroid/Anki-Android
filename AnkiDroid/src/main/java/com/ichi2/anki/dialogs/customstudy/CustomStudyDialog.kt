@@ -451,7 +451,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         } else {
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck)
             dyn = try {
-                decks.get(decks.newDyn(customStudyDeck))!!
+                decks.get(decks.newFiltered(customStudyDeck))!!
             } catch (ex: BackendDeckIsFilteredException) {
                 showThemedToast(requireActivity(), ex.localizedMessage ?: ex.message ?: "", true)
                 return

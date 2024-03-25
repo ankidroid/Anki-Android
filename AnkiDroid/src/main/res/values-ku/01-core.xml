@@ -46,22 +46,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Kom</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">گەڕین بۆ کارت</string>
     <string name="statistics">Statîstîk</string>
     <string name="settings">Eyar</string>
     <string name="help">Alîkarî</string>
-    <string name="drawing">Drawing</string>
-    <string name="send_feedback">Send feedback</string>
+    <string name="drawing">وێنەکێشان</string>
+    <string name="send_feedback">ناردنی تێبینی</string>
     <string name="studyoptions_due_today">بۆ ئەمڕۆ:</string>
     <string name="studyoptions_new_total">هەموو کارتە نوێکان:</string>
     <string name="studyoptions_total_cards">هەموو کارتەکان:</string>
     <string name="studyoptions_start">Niha fêr bibe</string>
     <!-- DeckPicker.kt -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">درێژکردنەوە</string>
+    <string name="collapse">ڕۆخان</string>
+    <string name="study_more">زیاتر بخوێنەوە</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
+        <item quantity="one">١ خولەک ماوە</item>
         <item quantity="other">%d minutes left</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
@@ -72,26 +72,26 @@
         <item quantity="one">%1$d day %2$d left</item>
         <item quantity="other">%1$d days %2$d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">کۆکردنەوەکە بەتاڵە</string>
+    <string name="no_cards_placeholder_description">بۆ زیادکردنی کارتێک دوگمەی + بەکاربهێنە</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Bersivê binivîse</string>
     <string name="show_answer">Bersivê nîşan bide</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">وەڵام بشارەوە</string>
     <string name="ease_button_again">دووبارە</string>
     <string name="ease_button_hard">دژوار</string>
     <string name="ease_button_good">باش</string>
     <string name="ease_button_easy">ئاسان</string>
-    <string name="menu_import">Import</string>
+    <string name="menu_import">هاوردەکردن</string>
     <string name="undo">Paşve bîne</string>
-    <string name="redo">Redo</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
-    <string name="move_all_to_deck">Move all to deck</string>
-    <string name="unbury">Unbury</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="redo">دووبارە بیکەرەوە</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">پاشەکشە بکە</string>
+    <string name="move_all_to_deck">هەموو کارتەکان پیشان بدە</string>
+    <string name="unbury">ناشتن</string>
+    <string name="rename_deck">ناوی کارتەکان بگۆڕە</string>
+    <string name="create_shortcut">دروستکردنی کورتە ڕێگایەک</string>
+    <string name="browse_cards">گەڕان بەدوای کارتەکاندا</string>
     <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Lê zêde bike</string>
     <string name="menu_add_note">Add note</string>
@@ -150,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continue sync</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sync cancelled</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis may take some time.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Export deck</string>
     <string name="nothing">Nothing</string>
     <!-- Card template editor -->

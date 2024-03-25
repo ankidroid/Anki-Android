@@ -235,7 +235,7 @@ open class Collection(
         )
     }
 
-    /** Mark schema modified to force a full sync.
+    /** Mark schema modified to cause a one-way sync.
      * ConfirmModSchemaException will be thrown if the user needs to be prompted to confirm the action.
      * If the user chooses to confirm then modSchemaNoCheck should be called, after which the exception can
      * be safely ignored, and the outer code called again.
@@ -247,7 +247,7 @@ open class Collection(
         if (!schemaChanged()) {
             /* In Android we can't show a dialog which blocks the main UI thread
              Therefore we can't wait for the user to confirm if they want to do
-             a full sync here, and we instead throw an exception asking the outer
+             a one-way sync here, and we instead throw an exception asking the outer
              code to handle the user's choice */
             throw ConfirmModSchemaException()
         }

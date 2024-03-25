@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Yeni kolleksiya</string>
     <string name="backup_del_collection">Toplama sil və yenisini yaradın</string>
     <string name="backup_del_collection_question">Kolleksiyanı silmək və yenisini yaratmaq?Bu, bütün öyrənmə tərzinizi düşəcək və bütün kartları siləcək.</string>
-    <string name="backup_full_sync_from_server">Full sync from server</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb-dən kolleksiyamızın üstünə yazmaq?Bu,son sinxronizasiya etdiyinizdən sonra bütün öyrənmə tərəqqinizi və əlavə məlumatı azaldacaq.</string>
     <string name="error_handling_title">Error handling</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Options</string>

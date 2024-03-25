@@ -413,14 +413,30 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     companion object {
         fun jsApiContract(data: String = ""): ByteArray {
             return JSONObject().apply {
-                put("version", "0.0.2")
+                put("version", "0.0.3")
                 put("developer", "test@example.com")
                 put("data", data)
             }.toString().toByteArray()
         }
 
         fun formatApiResult(res: Any): String {
-            return "{\"success\":true,\"value\":\"$res\"}"
+            return JSONObject().apply {
+                put("success", true)
+                when (res) {
+                    is Boolean -> {
+                        put("value", res)
+                    }
+                    is Int -> {
+                        put("value", res)
+                    }
+                    is Long -> {
+                        put("value", res)
+                    }
+                    else -> {
+                        put("value", res.toString())
+                    }
+                }
+            }.toString()
         }
 
         suspend fun getDataFromRequest(

@@ -39,7 +39,7 @@ class FilteredDeckOptionsTest : InstrumentedTest() {
     @Test
     fun canOpenDeckOptions() {
         ActivityScenario.launch(DeckPicker::class.java).onActivity { deckPicker ->
-            val deckId = col.decks.newDyn("Filtered Testing")
+            val deckId = col.decks.newFiltered("Filtered Testing")
             deckPicker.showContextMenuDeckOptions(deckId)
         }.close()
     }

@@ -51,4 +51,22 @@ class TranslationTypoTest {
 
         TranslationTypo.ISSUE.assertXmlStringsHasError(invalidLowerCase, "should be 'JavaScript'")
     }
+
+    @Test
+    fun `vandalism fails`() {
+        val stringRemoved = """<resources>
+           <string name="hello"></string>
+        </resources>"""
+
+        TranslationTypo.ISSUE.assertXmlStringsHasError(stringRemoved, "should not be empty")
+    }
+
+    @Test
+    fun `vandalism passes with empty_string key`() {
+        val stringRemoved = """<resources>
+           <string name="empty_string"></string>
+        </resources>"""
+
+        TranslationTypo.ISSUE.assertXmlStringsNoIssues(stringRemoved)
+    }
 }

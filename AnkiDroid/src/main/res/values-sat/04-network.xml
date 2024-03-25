@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ᱱᱚᱰᱮᱱᱟᱜ</string>
     <string name="sync_sanity_remote">ᱥᱟᱝᱜᱤᱧ ᱨᱮᱭᱟᱜ</string>
-    <string name="force_full_sync_title">ᱫᱟᱲᱮ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
-    <string name="force_full_sync_summary">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱟᱹᱭᱩᱨ ᱢᱤᱫ, ᱢᱤᱫ ᱱᱟᱜᱷᱟ ᱨᱮ ᱫᱚᱲᱮ ᱵᱚᱫᱚᱞᱮᱱᱟ </string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">ᱵᱚᱫᱚᱞᱠᱟᱱ ᱫᱚᱨᱠᱷᱥᱛᱚ ᱟᱢᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱞᱟᱹᱜᱤᱫ ᱯᱩᱨᱟ ᱞᱟᱫᱮ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ ᱾  ᱚᱞᱜᱟ ᱰᱤᱵᱷᱟᱤᱥ ᱵᱟᱭ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱠᱚᱜ ᱠᱷᱟᱱ ᱰᱟᱴᱟ ᱟᱫᱚᱜ ᱛᱟᱢᱮ, ᱞᱮᱛᱟᱲ ᱟᱢ?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid ᱨᱮᱭᱟᱜ ᱢᱟᱲᱟᱝ ᱵᱷᱚᱨᱥᱚᱱ ᱨᱮ ᱰᱤᱜᱟᱹᱣ ᱧᱟᱢ ᱮᱱᱟ , ᱡᱩᱨ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">ᱥᱭᱸᱠ (ᱯᱩᱨᱟᱹ)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">ᱥᱭᱸᱠ (ᱵᱚᱞᱚᱱ ᱢᱮ)</string>
 </resources>

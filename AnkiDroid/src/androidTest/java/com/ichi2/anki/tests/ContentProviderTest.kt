@@ -133,7 +133,7 @@ class ContentProviderTest : InstrumentedTest() {
             )
         }
         // delete test decks
-        col.decks.removeDecks(testDeckIds)
+        col.decks.remove(testDeckIds)
         assertEquals(
             "Check that all created decks have been deleted",
             numDecksBeforeTest,

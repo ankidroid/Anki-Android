@@ -57,8 +57,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
-import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
-import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
+import com.ichi2.anki.cardviewer.AndroidCardRenderContext.Companion.createInstance
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -160,7 +159,7 @@ abstract class AbstractFlashcardViewer :
     internal var typeAnswer: TypeAnswer? = null
 
     /** Generates HTML content  */
-    private var htmlGenerator: HtmlGenerator? = null
+    private var cardRenderContext: AndroidCardRenderContext? = null
 
     // Default short animation duration, provided by Android framework
     private var shortAnimDuration = 0
@@ -537,7 +536,7 @@ abstract class AbstractFlashcardViewer :
         registerExternalStorageListener()
         restoreCollectionPreferences(col)
         initLayout()
-        htmlGenerator = createInstance(this, col, typeAnswer!!)
+        cardRenderContext = createInstance(this, col, typeAnswer!!)
 
         // Initialize text-to-speech. This is an asynchronous operation.
         tts.initialize(this, ReadTextListener())
@@ -611,6 +610,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (isDrawerOpen) {
             super.onBackPressed()
@@ -793,7 +793,7 @@ abstract class AbstractFlashcardViewer :
             message(
                 text = resources.getString(
                     R.string.delete_note_message,
-                    Utils.stripHTML(currentCard!!.question(getColUnsafe, true))
+                    Utils.stripHTMLAndSpecialFields(currentCard!!.question(getColUnsafe, true)).trim()
                 )
             )
             positiveButton(R.string.dialog_positive_delete) {
@@ -1269,7 +1269,7 @@ abstract class AbstractFlashcardViewer :
 
     private suspend fun automaticAnswerShouldWaitForAudio(): Boolean {
         return withCol {
-            decks.confForDid(currentCard!!.did).optBoolean("waitForAudio", true)
+            decks.configDictForDeckId(currentCard!!.did).optBoolean("waitForAudio", true)
         }
     }
 
@@ -1294,7 +1294,7 @@ abstract class AbstractFlashcardViewer :
         } else {
             answerField?.visibility = View.GONE
         }
-        val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
+        val content = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
         automaticAnswer.onDisplayQuestion()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForAudio()) {
@@ -1340,7 +1340,7 @@ abstract class AbstractFlashcardViewer :
             typeAnswer!!.input = answerField!!.text.toString()
         }
         isSelecting = false
-        val answerContent = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.BACK)
+        val answerContent = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.BACK)
         automaticAnswer.onDisplayAnswer()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForAudio()) {
@@ -1397,13 +1397,13 @@ abstract class AbstractFlashcardViewer :
     internal val isInNightMode: Boolean
         get() = Themes.currentTheme.isNightMode
 
-    private fun updateCard(content: CardHtml) {
+    private fun updateCard(content: RenderedCard) {
         Timber.d("updateCard()")
         // TODO: This doesn't need to be blocking
         runBlocking {
             soundPlayer.loadCardSounds(currentCard!!)
         }
-        cardContent = content.getTemplateHtml()
+        cardContent = content.html
         fillFlashcard()
         playSounds(false) // Play sounds if appropriate
     }
@@ -1865,7 +1865,7 @@ abstract class AbstractFlashcardViewer :
             } else {
                 answerField?.visibility = View.GONE
             }
-            val content = htmlGenerator!!.generateHtml(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
+            val content = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
             automaticAnswer.onDisplayQuestion()
             updateCard(content)
             hideEaseButtons()

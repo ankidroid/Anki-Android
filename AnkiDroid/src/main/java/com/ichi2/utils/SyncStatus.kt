@@ -31,11 +31,9 @@ import timber.log.Timber
 
 // TODO Remove BADGE_DISABLED from this enum, it doesn't belong here
 enum class SyncStatus {
-    NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, FULL_SYNC, BADGE_DISABLED, ERROR;
+    NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, ONE_WAY, BADGE_DISABLED, ERROR;
 
     companion object {
-        private var sPauseCheckingDatabase = false
-        private var sMarkedInMemory = false
 
         suspend fun getSyncStatus(context: Context, auth: SyncAuth?): SyncStatus {
             if (isDisabled) {
@@ -66,7 +64,7 @@ enum class SyncStatus {
             return when (required) {
                 SyncStatusResponse.Required.NO_CHANGES -> NO_CHANGES
                 SyncStatusResponse.Required.NORMAL_SYNC -> HAS_CHANGES
-                SyncStatusResponse.Required.FULL_SYNC -> FULL_SYNC
+                SyncStatusResponse.Required.FULL_SYNC -> ONE_WAY
                 SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
             }
         }
@@ -76,19 +74,5 @@ enum class SyncStatus {
                 val preferences = AnkiDroidApp.sharedPrefs()
                 return !preferences.getBoolean("showSyncStatusBadge", true)
             }
-
-        /** To be converted to Rust  */
-        fun markDataAsChanged() {
-            if (sPauseCheckingDatabase) {
-                return
-            }
-            sMarkedInMemory = true
-            AnkiDroidApp.sharedPrefs().edit { putBoolean("changesSinceLastSync", true) }
-        }
-
-        /** Whether a change in data has been detected - used as a heuristic to stop slow operations  */
-        fun hasBeenMarkedAsChangedInMemory(): Boolean {
-            return sMarkedInMemory
-        }
     }
 }

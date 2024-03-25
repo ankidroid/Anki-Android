@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">Esate neprisijungę</string>
     <string name="sync_error">Susinchronizuoti nepavyko</string>
-    <string name="vague_error" comment="Network error dialog title">Klaida</string>
+    <string name="vague_error" comment="Network error dialog title">Įvyko klaida</string>
     <string name="retry">Bandyti dar kartą</string>
     <string name="menu_get_shared_decks">Gauti pasidalintų rinkinių</string>
     <string name="connection_error_message">Atsirado tinklo klaida</string>
@@ -63,8 +63,8 @@
     <string name="logged_as">Esate prisijungę kaip</string>
     <string name="log_out">Atsijungti</string>
     <string name="reset_password">Atkurti slaptažodį</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="lost_mail_instructions">Pamiršote elektroninį paštą?</string>
+    <string name="sign_in">Vyksta prisijungimas</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX parinktys</string>
     <string name="sync_title">Sinchronizavimas</string>
@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Įrenginio</string>
     <string name="sync_sanity_remote">Nuotolinis</string>
-    <string name="force_full_sync_title">Atlikti išsamų sinchronizavimą</string>
-    <string name="force_full_sync_summary">Sinchronizuojant sekantį kartą vienoje iš versijų bus atlikti pakeitimai</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">Norint atlikti pageidaujamą pakeitimą, sekantį kartą sinchronizuojant jūsų kolekciją, reikės įkelti visą duomenų bazę. Jei kitame įrenginyje turite dar nesusinchronizuotų peržiūrų ar kitokių pakeitimų, jie bus panaikinti. Ar norite tęsti?</string>
     <string name="full_sync_confirmation_upgrade">Kadangi praeitą kartą įdiegtoje „AnkiDroid“ versijoje atsirado pranešimas apie klaidą, rekomenduojame atlikti išsamų sinchronizavimą.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_no_account">Sinchronizuojamas prisijungimas</string>
 </resources>

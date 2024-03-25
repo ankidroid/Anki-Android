@@ -150,6 +150,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continue sync</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinchronisasie gakanselleer</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis may take some time.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Voer pak uit</string>
     <string name="nothing">Niks</string>
     <!-- Card template editor -->

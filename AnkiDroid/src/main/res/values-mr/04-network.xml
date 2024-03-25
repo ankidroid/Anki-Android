@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">स्थानिक</string>
     <string name="sync_sanity_remote">रिमोट</string>
-    <string name="force_full_sync_title">पूर्ण समक्रमण सक्ती करा</string>
-    <string name="force_full_sync_summary">पुढील समक्रमण वर, बल एका दिशेने बदल करा</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">आपण पुढील वेळी आपला संग्रह संकालित करता तेव्हा विनंती केलेल्या बदलास डेटाबेसचे संपूर्ण अपलोड आवश्यक असेल. आपल्याकडे पुनरावलोकने किंवा अन्य बदल येथे असल्यास ज्याचे अद्याप येथे संकालन केले नाही अशा दुसर्‍या डिव्हाइसची वाट पाहत असाल तर ते गमावतील. सुरू?</string>
     <string name="full_sync_confirmation_upgrade">पूर्वी स्थापित केलेल्या आवृत्तीत अँकीड्रोइडच्या बगमुळे, पूर्ण संकालनास भाग पाडण्याची शिफारस केली जाते.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">समक्रमित (पूर्ण)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">समक्रमण (लॉग इन)</string>
 </resources>

@@ -50,7 +50,7 @@
     <string name="backup_new_collection">ახალი კოლექცია</string>
     <string name="backup_del_collection">კოლექციის წაშლა და ახლის შექმნა</string>
     <string name="backup_del_collection_question">გსურთ კოლექციის წაშლა და ახლის შექმნა? დადასტურების შემთხვევაში წაიშლება როგორც მთელი სწავლის პროგრესი, ასევე ყველა ბარათი.</string>
-    <string name="backup_full_sync_from_server">სრული სინქრონიზაცია სერვერიდან</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">ჩანაცვლდეს კოლექცია AnkiWeb-ზე შენახული ვერსიით? დადასტურების შემთხვევაში წაიშლება როგორც მთელი სწავლის პროგრესი, ასევე ბოლო სინქრონიზაციის შემდეგ დამატებული ინფორმაცია.</string>
     <string name="error_handling_title">შეცდომის გამართვა</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">პარამეტრები</string>
