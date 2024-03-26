@@ -120,7 +120,12 @@ import kotlin.math.roundToInt
  */
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
-class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, TagsDialogListener, BaseSnackbarBuilderProvider {
+class NoteEditor :
+    AnkiActivity(),
+    DeckSelectionListener,
+    SubtitleListener,
+    TagsDialogListener,
+    BaseSnackbarBuilderProvider {
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
     private var changed = false
     private var isTagsEdited = false
@@ -203,7 +208,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 val col = getColUnsafe
                 val extras = result.data!!.extras ?: return@NoteEditorActivityResultCallback
                 val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
-                val field = extras.getSerializableCompat<IField>(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD) ?: return@NoteEditorActivityResultCallback
+                val field =
+                    extras.getSerializableCompat<IField>(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD)
+                        ?: return@NoteEditorActivityResultCallback
                 if (field.type != EFieldType.TEXT && (field.imagePath == null && field.audioPath == null)) {
                     Timber.i("field imagePath and audioPath are both null")
                     return@NoteEditorActivityResultCallback
@@ -279,7 +286,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     )
 
-    private inner class NoteEditorActivityResultCallback(private val callback: (result: ActivityResult) -> Unit) : ActivityResultCallback<ActivityResult> {
+    private inner class NoteEditorActivityResultCallback(private val callback: (result: ActivityResult) -> Unit) :
+        ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
             Timber.d("onActivityResult() with result: %s", result.resultCode)
             if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -486,20 +494,25 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 finish()
                 return
             }
+
             CALLER_EDIT -> {
-                val cardId = requireNotNull(intent.extras?.getLong(EXTRA_CARD_ID)) { "EXTRA_CARD_ID" }
+                val cardId =
+                    requireNotNull(intent.extras?.getLong(EXTRA_CARD_ID)) { "EXTRA_CARD_ID" }
                 currentEditedCard = col.getCard(cardId)
                 editorNote = currentEditedCard!!.note(col)
                 addNote = false
             }
+
             CALLER_PREVIEWER_EDIT -> {
                 val id = intent.extras?.getLong(EXTRA_EDIT_FROM_CARD_ID)
                     ?: throw IllegalArgumentException("null EXTRA_EDIT_FROM_CARD_ID")
                 currentEditedCard = col.getCard(id)
                 editorNote = currentEditedCard!!.note(getColUnsafe)
             }
+
             CALLER_STUDYOPTIONS, CALLER_DECKPICKER, CALLER_REVIEWER_ADD, CALLER_CARDBROWSER_ADD, CALLER_NOTEEDITOR ->
                 addNote = true
+
             CALLER_NOTEEDITOR_INTENT_ADD -> {
                 fetchIntentInformation(intent)
                 if (sourceText == null) {
@@ -517,6 +530,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             CALLER_IMG_OCCLUSION, CALLER_ADD_IMAGE -> {
                 addNote = true
             }
+
             else -> {}
         }
 
@@ -650,7 +664,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // set focus to FieldEditText 'first' on startup like Anki desktop
         if (editFields != null && !editFields!!.isEmpty()) {
             // EXTRA_TEXT_FROM_SEARCH_VIEW takes priority over other intent inputs
-            if (getTextFromSearchView != null && getTextFromSearchView.isNotEmpty()) {
+            if (!getTextFromSearchView.isNullOrEmpty()) {
                 editFields!!.first!!.setText(getTextFromSearchView)
             }
             editFields!!.first!!.requestFocus()
@@ -658,7 +672,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         if (caller == CALLER_IMG_OCCLUSION) {
             // val saveImageUri = ImageIntentManager.getImageUri()
-            val saveImageUri = IntentCompat.getParcelableExtra(intent, EXTRA_IMG_OCCLUSION, Uri::class.java)
+            val saveImageUri =
+                IntentCompat.getParcelableExtra(intent, EXTRA_IMG_OCCLUSION, Uri::class.java)
             if (saveImageUri != null) {
                 ImportUtils.getFileCachedCopy(this, saveImageUri)?.let { path ->
                     setupImageOcclusionEditor(path)
@@ -712,19 +727,24 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     launchCatchingTask { saveNote() }
                 }
             }
+
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
                     launchCatchingTask { deckSpinnerSelection!!.displayDeckSelectionDialog() }
                 }
+
             KeyEvent.KEYCODE_L -> if (event.isCtrlPressed) {
                 showCardTemplateEditor()
             }
+
             KeyEvent.KEYCODE_N -> if (event.isCtrlPressed && noteTypeSpinner != null) {
                 noteTypeSpinner!!.performClick()
             }
+
             KeyEvent.KEYCODE_T -> if (event.isCtrlPressed && event.isShiftPressed) {
                 showTagsDialog()
             }
+
             KeyEvent.KEYCODE_C -> {
                 if (event.isCtrlPressed && event.isShiftPressed) {
                     insertCloze(if (event.isAltPressed) AddClozeType.SAME_NUMBER else AddClozeType.INCREMENT_NUMBER)
@@ -734,6 +754,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     }
                 }
             }
+
             KeyEvent.KEYCODE_P -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
@@ -742,15 +763,18 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     }
                 }
             }
+
             else -> {}
         }
 
         // 7573: Ctrl+Shift+[Num] to select a field
-        if (event.isCtrlPressed && event.isShiftPressed && KeyUtils.isDigit(event)) {
+        if (event.isCtrlPressed && event.isShiftPressed && KeyUtils.getDigit(event) != null) {
             val digit = KeyUtils.getDigit(event)
             // map: '0' -> 9; '1' to 0
-            val indexBase10 = ((digit - 1) % 10 + 10) % 10
-            selectFieldIndex(indexBase10)
+            digit?.let {
+                val indexBase10 = ((digit - 1) % 10 + 10) % 10
+                selectFieldIndex(indexBase10)
+            }
         }
         return super.onKeyUp(keyCode, event)
     }
@@ -955,7 +979,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         } else {
             // Check whether note type has been changed
             val newModel = currentlySelectedNotetype
-            val oldModel = if (currentEditedCard == null) null else currentEditedCard!!.noteType(getColUnsafe)
+            val oldModel =
+                if (currentEditedCard == null) null else currentEditedCard!!.noteType(getColUnsafe)
             if (newModel != oldModel) {
                 reloadRequired = true
                 if (modelChangeCardMap!!.size < editorNote!!.numberOfCards(getColUnsafe) || modelChangeCardMap!!.containsValue(
@@ -1029,18 +1054,25 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      * Change the note type from oldModel to newModel, handling the case where a full sync will be required
      */
     @NeedsTest("test changing note type")
-    private fun changeNoteType(oldNotetype: NotetypeJson, newNotetype: NotetypeJson) = launchCatchingTask {
-        if (!userAcceptsSchemaChange()) return@launchCatchingTask
+    private fun changeNoteType(oldNotetype: NotetypeJson, newNotetype: NotetypeJson) =
+        launchCatchingTask {
+            if (!userAcceptsSchemaChange()) return@launchCatchingTask
 
-        val noteId = editorNote!!.id
-        undoableOp {
-            notetypes.change(oldNotetype, noteId, newNotetype, modelChangeFieldMap!!, modelChangeCardMap!!)
+            val noteId = editorNote!!.id
+            undoableOp {
+                notetypes.change(
+                    oldNotetype,
+                    noteId,
+                    newNotetype,
+                    modelChangeFieldMap!!,
+                    modelChangeCardMap!!
+                )
+            }
+            // refresh the note object to reflect the database changes
+            withCol { editorNote!!.load() }
+            // close note editor
+            closeNoteEditor()
         }
-        // refresh the note object to reflect the database changes
-        withCol { editorNote!!.load() }
-        // close note editor
-        closeNoteEditor()
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -1101,6 +1133,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 closeCardEditorWithCheck()
                 return true
             }
+
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
                 if (allowSaveAndPreview()) {
@@ -1108,6 +1141,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 return true
             }
+
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
                 if (allowSaveAndPreview()) {
@@ -1115,16 +1149,19 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 return true
             }
+
             R.id.action_add_note_from_note_editor -> {
                 Timber.i("NoteEditor:: Add Note button pressed")
                 addNewNote()
                 return true
             }
+
             R.id.action_copy_note -> {
                 Timber.i("NoteEditor:: Copy Note button pressed")
                 copyNote()
                 return true
             }
+
             R.id.action_font_size -> {
                 Timber.i("NoteEditor:: Font Size button pressed")
                 val repositionDialog = IntegerDialog()
@@ -1133,6 +1170,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 showDialogFragment(repositionDialog)
                 return true
             }
+
             R.id.action_show_toolbar -> {
                 item.isChecked = !item.isChecked
                 this.sharedPrefs().edit {
@@ -1140,12 +1178,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 updateToolbar()
             }
+
             R.id.action_capitalize -> {
                 Timber.i("NoteEditor:: Capitalize button pressed. New State: %b", !item.isChecked)
                 item.isChecked = !item.isChecked // Needed for Android 9
                 toggleCapitalize(item.isChecked)
                 return true
             }
+
             R.id.action_scroll_toolbar -> {
                 item.isChecked = !item.isChecked
                 this.sharedPrefs().edit {
@@ -1220,8 +1260,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     @NeedsTest("clozes that don't start at '1' are correctly displayed")
     suspend fun performPreview() {
         val convertNewlines = shouldReplaceNewlines()
-        fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
-        val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toFieldText() } ?: mutableListOf()
+        fun String?.toFieldText(): String =
+            NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
+
+        val fields =
+            editFields?.mapTo(mutableListOf()) { it!!.fieldText.toFieldText() } ?: mutableListOf()
         val tags = selectedTags ?: mutableListOf()
 
         val ord = if (editorNote!!.notetype.isCloze) {
@@ -1534,16 +1577,19 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                             startMultimediaFieldEditorForField(index, AudioRecordingField())
                             return@setOnMenuItemClickListener true
                         }
+
                         R.id.menu_multimedia_audio_clip, R.id.menu_multimedia_video_clip -> {
                             Timber.i("NoteEditor:: Add audio clip button pressed")
                             startMultimediaFieldEditorForField(index, MediaClipField())
                             return@setOnMenuItemClickListener true
                         }
+
                         R.id.menu_multimedia_photo -> {
                             Timber.i("NoteEditor:: Add image button pressed")
                             startMultimediaFieldEditorForField(index, ImageField())
                             return@setOnMenuItemClickListener true
                         }
+
                         R.id.menu_multimedia_text -> {
                             Timber.i("NoteEditor:: Advanced editor button pressed")
                             startAdvancedTextEditor(index)
@@ -1665,11 +1711,18 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     }
 
-    private fun startMultimediaFieldEditor(index: Int, note: IMultimediaEditableNote?, imageUri: Uri? = null) {
+    private fun startMultimediaFieldEditor(
+        index: Int,
+        note: IMultimediaEditableNote?,
+        imageUri: Uri? = null
+    ) {
         val field = note!!.getField(index)!!
         val editCard = Intent(this@NoteEditor, MultimediaEditFieldActivity::class.java)
         editCard.putExtra(MultimediaEditFieldActivity.INTENT_IMAGE_URI, imageUri)
-        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY, MultimediaEditFieldActivityExtra(index, field, note))
+        editCard.putExtra(
+            MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY,
+            MultimediaEditFieldActivityExtra(index, field, note)
+        )
         requestMultiMediaEditLauncher.launch(editCard)
     }
 
@@ -1840,7 +1893,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         updateFieldsFromStickyText()
     }
 
-    private fun addClozeButton(@DrawableRes drawableRes: Int, description: String, type: AddClozeType) {
+    private fun addClozeButton(
+        @DrawableRes drawableRes: Int,
+        description: String,
+        type: AddClozeType
+    ) {
         val drawable = ResourcesCompat.getDrawable(resources, drawableRes, null)!!.apply {
             setTint(MaterialColors.getColor(this@NoteEditor, R.attr.toolbarIconColor, 0))
         }
@@ -2035,7 +2092,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         tagsButton!!.text = resources.getString(
             R.string.CardEditorTags,
-            getColUnsafe.tags.join(getColUnsafe.tags.canonify(selectedTags!!)).trim { it <= ' ' }.replace(" ", ", ")
+            getColUnsafe.tags.join(getColUnsafe.tags.canonify(selectedTags!!)).trim { it <= ' ' }
+                .replace(" ", ", ")
         )
     }
 
@@ -2049,7 +2107,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         for (i in 0 until tmpls.length()) {
             var name = tmpls.getJSONObject(i).optString("name")
             // If more than one card, and we have an existing card, underline existing card
-            if (!addNote && tmpls.length() > 1 && model === editorNote!!.notetype && currentEditedCard != null && currentEditedCard!!.template(getColUnsafe)
+            if (!addNote && tmpls.length() > 1 && model === editorNote!!.notetype && currentEditedCard != null && currentEditedCard!!.template(
+                    getColUnsafe
+                )
                 .optString("name") == name
             ) {
                 name = "<u>$name</u>"
@@ -2071,7 +2131,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun updateField(field: FieldEditText?): Boolean {
         val fieldContent = field!!.text?.toString() ?: ""
-        val correctedFieldContent = NoteService.convertToHtmlNewline(fieldContent, shouldReplaceNewlines())
+        val correctedFieldContent =
+            NoteService.convertToHtmlNewline(fieldContent, shouldReplaceNewlines())
         if (editorNote!!.values()[field.ord] != correctedFieldContent) {
             editorNote!!.values()[field.ord] = correctedFieldContent
             return true
@@ -2094,7 +2155,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
      */
     private fun updateFieldsFromMap(newNotetype: NotetypeJson?) {
-        val type = FieldChangeType.refreshWithMap(newNotetype, modelChangeFieldMap, shouldReplaceNewlines())
+        val type = FieldChangeType.refreshWithMap(
+            newNotetype,
+            modelChangeFieldMap,
+            shouldReplaceNewlines()
+        )
         populateEditFields(type, true)
         updateCards(newNotetype)
     }
@@ -2120,7 +2185,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         if (addNote) {
             kind = "add"
             // if opened from an intent, the selected note type may not be suitable for IO
-            id = if (currentNotetypeIsImageOcclusion()) { currentlySelectedNotetype!!.id } else 0
+            id = if (currentNotetypeIsImageOcclusion()) {
+                currentlySelectedNotetype!!.id
+            } else {
+                0
+            }
         } else {
             kind = "edit"
             id = editorNote?.id!!
@@ -2360,6 +2429,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 setDuplicateFieldStyles()
             }
         }
+
         override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {
             // do nothing
         }
