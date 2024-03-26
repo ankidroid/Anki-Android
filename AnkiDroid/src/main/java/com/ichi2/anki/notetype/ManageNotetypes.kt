@@ -103,7 +103,6 @@ class ManageNotetypes : AnkiActivity() {
         menuInflater.inflate(R.menu.locale_dialog_search_bar, menu)
 
         val searchItem = menu.findItem(R.id.locale_dialog_action_search)
-
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = searchItem?.actionView as? SearchView
         searchView?.maxWidth = Integer.MAX_VALUE
