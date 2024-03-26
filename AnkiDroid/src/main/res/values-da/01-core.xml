@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Udvid</string>
     <string name="collapse">Minimér</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minut tilbage</item>
         <item quantity="other">%d minutes left</item>
@@ -135,12 +134,10 @@
     <string name="empty_filtered_deck">Tømmer filtreret dæk... </string>
     <string name="custom_study_deck_name">Tilpasset studiesession</string>
     <string name="custom_study_deck_exists">Omdøb det eksisterende tilpassede dæk først </string>
-    <string name="empty_deck">Dette kortsæt er tomt</string>
     <string name="search_deck" comment="Deck search for selecting it">Søgning</string>
+    <string name="empty_deck">Dette kortsæt er tomt</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Ugyldigt dæknavn</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Ingen kort i kø </string>
     <string name="sd_card_not_mounted">Enhedslagring er ikke monteret</string>

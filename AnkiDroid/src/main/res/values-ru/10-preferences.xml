@@ -47,7 +47,7 @@
     <!-- generic strings -->
     <string name="disabled">Выкл.</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d мин.</item>
+        <item quantity="one">%d мин</item>
         <item quantity="few">%d мин</item>
         <item quantity="many">%d мин</item>
         <item quantity="other">%d мин</item>

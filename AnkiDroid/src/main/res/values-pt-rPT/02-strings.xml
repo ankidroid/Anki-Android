@@ -76,7 +76,7 @@
     <string name="webview_crash_unknwon_detailed">Isto foi causado por um erro interno na WebView</string>
     <string name="webview_crash_oom">Sem memória</string>
     <string name="webview_crash_oom_details">A WebView foi destruída pelo sistema. Isto normalmente acontece quando a aplicação fica sem memória, muitas das vezes por causa do uso de tipos de letra grande ou ficheiros de multimédia grande.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_nonfatal">O renderizador do WebView falhou. Causa: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>

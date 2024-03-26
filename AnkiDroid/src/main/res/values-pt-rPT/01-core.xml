@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Expandir</string>
     <string name="collapse">Recolher</string>
-    <string name="study_more">Estudar mais</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuto restante</item>
         <item quantity="other">%d minutos restantes</item>
@@ -135,12 +134,10 @@
     <string name="empty_filtered_deck">A esvaziar baralho filtrado&#8230;</string>
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
     <string name="custom_study_deck_exists">Renomear primeiro o baralho de estudo personalizado existente</string>
-    <string name="empty_deck">Este baralho está vazio</string>
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralhos</string>
+    <string name="empty_deck">Este baralho está vazio</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralhos</string>
     <string name="invalid_deck_name">Nome inválido do baralho</string>
-    <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
-    <string name="studyoptions_empty_schedule">Sem fichas agendadas para estudar</string>
     <string name="studyoptions_congrats_finished">Parabéns! Terminou por agora.</string>
     <string name="studyoptions_no_cards_due">Não há fichas vencidas ainda</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>

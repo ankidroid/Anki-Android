@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Vergroot</string>
     <string name="collapse">Verklein</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -135,12 +134,10 @@
     <string name="empty_filtered_deck">Besig om die gefilterde pak leeg te maak...</string>
     <string name="custom_study_deck_name">Pasmaak studie sessie</string>
     <string name="custom_study_deck_exists">Hernoem die bestaande pasmaak kaartpak eers</string>
-    <string name="empty_deck">Hierdie pak is leeg</string>
     <string name="search_deck" comment="Deck search for selecting it">Pak Soek</string>
+    <string name="empty_deck">Hierdie pak is leeg</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pak Soek</string>
     <string name="invalid_deck_name">Ongeldige pak naam</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Geen kaarte is al verskulding nie</string>
     <string name="sd_card_not_mounted">Toestel bergplek is nie heg nie</string>
