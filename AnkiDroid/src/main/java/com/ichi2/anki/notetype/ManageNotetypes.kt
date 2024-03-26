@@ -98,6 +98,7 @@ class ManageNotetypes : AnkiActivity() {
         }
         launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.locale_dialog_search_bar, menu)
 
@@ -105,6 +106,7 @@ class ManageNotetypes : AnkiActivity() {
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = searchItem?.actionView as? SearchView
+        searchView?.maxWidth = Integer.MAX_VALUE
         searchView?.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
