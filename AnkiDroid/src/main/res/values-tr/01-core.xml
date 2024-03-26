@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Genişlet</string>
     <string name="collapse">Daralt</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d dakika kaldı</item>
         <item quantity="other">%d dakika kaldı</item>
@@ -135,12 +134,10 @@
     <string name="empty_filtered_deck">Filtreli deste boşaltılıyor...</string>
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
     <string name="custom_study_deck_exists">Önce mevcut özel çalışma destesini yeniden adlandırın.</string>
-    <string name="empty_deck">Bu deste boş</string>
     <string name="search_deck" comment="Deck search for selecting it">Deste Ara</string>
+    <string name="empty_deck">Bu deste boş</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deste Ara</string>
     <string name="invalid_deck_name">Geçersiz deste adı</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Henüz sırası gelmiş kart yok</string>
     <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>

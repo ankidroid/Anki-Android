@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ᱣᱤᱥᱛᱟᱨ ᱢᱮ</string>
     <string name="collapse">ᱦᱚᱯᱚᱱ ᱢᱮ</string>
-    <string name="study_more">ᱟᱨᱦᱚᱸ ᱯᱟᱰᱦᱣ ᱢᱮ</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d ᱴᱤᱡ ᱥᱟᱨᱮᱡ ᱠᱟᱱᱟ</item>
         <item quantity="other">%d ᱴᱤᱡ ᱥᱟᱨᱮᱡ ᱠᱟᱱᱟ</item>
@@ -135,12 +134,10 @@
     <string name="empty_filtered_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱠᱷᱟᱹᱞᱤᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="custom_study_deck_name">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣᱜ ᱥᱚᱢᱚᱭ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="custom_study_deck_exists">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ ᱰᱮᱠ ᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
-    <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="search_deck" comment="Deck search for selecting it">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
+    <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱷᱩᱞ</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">ᱱᱤᱛᱚᱜ ᱫᱚ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <string name="sd_card_not_mounted">ᱥᱟᱫᱷᱚᱱ ᱜᱚᱫᱟᱢ ᱫᱚ ᱵᱟᱭ ᱢᱟᱩᱱᱴ ᱟᱠᱟᱱᱟ</string>

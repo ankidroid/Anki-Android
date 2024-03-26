@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Expandera</string>
     <string name="collapse">Minimera</string>
-    <string name="study_more">Studera mer</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minut kvar</item>
         <item quantity="other">%d minuter kvar</item>
@@ -135,12 +134,10 @@
     <string name="empty_filtered_deck">Tömmer filtrerad kortlek...</string>
     <string name="custom_study_deck_name">Anpassad studiesession</string>
     <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
-    <string name="empty_deck">Den här kortleken är tom</string>
     <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>
+    <string name="empty_deck">Den här kortleken är tom</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kortlekssökning</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
-    <string name="studyoptions_limit_reached">Den dagliga studiegränsen har nåtts</string>
-    <string name="studyoptions_empty_schedule">Inga kort finns schemalagda</string>
     <string name="studyoptions_congrats_finished">Grattis! Du är klar för stunden.</string>
     <string name="studyoptions_no_cards_due">Inga kort i kö.</string>
     <string name="sd_card_not_mounted">Lagringsenhet ej monterad</string>
@@ -150,7 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Fortsätt synkronisering</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronisering avbruten</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Avbryter&#8230;\nDetta kan ta en stund.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Synkroniserar media</string>
     <string name="export_deck">Exportera kortlek</string>
     <string name="nothing">Inget</string>
     <!-- Card template editor -->

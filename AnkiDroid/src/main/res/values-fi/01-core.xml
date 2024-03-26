@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Laajenna</string>
     <string name="collapse">Pienennä</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuutti jäljellä</item>
         <item quantity="other">%d minuuttia jäljellä</item>
@@ -135,12 +134,10 @@
     <string name="empty_filtered_deck">Tyhjennetään suodatettu pakka&#8230;</string>
     <string name="custom_study_deck_name">Mukautettu istunto</string>
     <string name="custom_study_deck_exists">Nimeä olemassa oleva mukautettu pakka ensin</string>
-    <string name="empty_deck">Tämä pakka on tyhjä</string>
     <string name="search_deck" comment="Deck search for selecting it">Hae pakkaa</string>
+    <string name="empty_deck">Tämä pakka on tyhjä</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Hae pakkaa</string>
     <string name="invalid_deck_name">Virheellinen pakan nimi</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Kortteja ei tarvitse vielä kerrata</string>
     <string name="sd_card_not_mounted">Laitteen tallennustilaa ei ole kiinnitetty</string>

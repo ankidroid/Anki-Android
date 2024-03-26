@@ -59,9 +59,8 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Развернуть</string>
     <string name="collapse">Свернуть</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
+        <item quantity="one">Осталась %d минута</item>
         <item quantity="few">%d minutes left</item>
         <item quantity="many">Осталось %d минут</item>
         <item quantity="other">%d minutes left</item>
@@ -98,7 +97,7 @@
     <string name="rename_deck">Переименовать колоду</string>
     <string name="create_shortcut">Создать ярлык</string>
     <string name="browse_cards">Показать список</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Редактировать описание</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Добавить</string>
     <string name="menu_add_note">Добавить запись</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Учётная запись синхронизации</string>
@@ -141,12 +140,10 @@
     <string name="empty_filtered_deck">Фильтрованная колода очищается&#8230;</string>
     <string name="custom_study_deck_name">Допзанятие</string>
     <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
-    <string name="empty_deck">Эта колода пуста</string>
     <string name="search_deck" comment="Deck search for selecting it">Поиск колод</string>
+    <string name="empty_deck">Эта колода пуста</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Поиск колоды</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Нет карточек на сегодня</string>
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>
@@ -156,7 +153,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Продолжить синхронизацию</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизация отменена</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Отмена...\nЭто может занять некоторое время.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Синхронизация медиафайлов</string>
     <string name="export_deck">Экспортировать колоду</string>
     <string name="nothing">Ничего</string>
     <!-- Card template editor -->

@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">پھیلائیں</string>
     <string name="collapse">بند کریں</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -135,12 +134,10 @@
     <string name="empty_filtered_deck">فلٹر شدہ ڈیک کو خالی کیا جا رہا ہے&#8230;</string>
     <string name="custom_study_deck_name">اپنی مرضی کے مطابق تعلیمی سیشن</string>
     <string name="custom_study_deck_exists">پہلے موجودہ مخصوص مطالعہ ڈیک کو نیا نام دیں</string>
-    <string name="empty_deck">یہ ڈیک خالی ہے</string>
     <string name="search_deck" comment="Deck search for selecting it">ڈیک تلاش</string>
+    <string name="empty_deck">یہ ڈیک خالی ہے</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ڈیک تلاش</string>
     <string name="invalid_deck_name">ڈیک کا نام غلط ہے</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">ابھی تک کوئی کارڈ باقی نہیں ہے</string>
     <string name="sd_card_not_mounted">ڈیوائس اسٹوریج نصب نہیں ہے</string>

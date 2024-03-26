@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Розгорнути</string>
     <string name="collapse">Згорнути</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Залишилася %d хвилина</item>
         <item quantity="few">Залишилося %d хвилини</item>
@@ -141,12 +140,10 @@
     <string name="empty_filtered_deck">Очищення фільтрованої колоди&#8230;</string>
     <string name="custom_study_deck_name">Сесія індивідуального навчання</string>
     <string name="custom_study_deck_exists">Спочатку перейменуйте колоду індивідуального навчання</string>
-    <string name="empty_deck">Ця колода порожня</string>
     <string name="search_deck" comment="Deck search for selecting it">Пошук колоди</string>
+    <string name="empty_deck">Ця колода порожня</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук колоди</string>
     <string name="invalid_deck_name">Некоректна назва колоди</string>
-    <string name="studyoptions_limit_reached">Досягнуто денної межі навчання</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>

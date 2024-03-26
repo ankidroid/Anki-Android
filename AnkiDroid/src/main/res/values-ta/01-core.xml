@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">விரிவாக்கு</string>
     <string name="collapse">சரிவு</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -135,12 +134,10 @@
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">தனிப்பயன் ஆய்வு கூட்டம்</string>
     <string name="custom_study_deck_exists">தற்போதுள்ள விருப்ப ஆய்வு கட்டு முதலில் மறுபெயரிடு</string>
-    <string name="empty_deck">இந்த கட்டு காலியாக உள்ளது</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
+    <string name="empty_deck">இந்த கட்டு காலியாக உள்ளது</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">இல்லை அட்டைகள் இன்னும் காரணமாக உள்ளன</string>
     <string name="sd_card_not_mounted">சாதன சேமிப்பகம் பொருத்தப்படவில்லை</string>
