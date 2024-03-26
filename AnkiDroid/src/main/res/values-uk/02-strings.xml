@@ -101,7 +101,7 @@
         <item>Створено</item>
         <item>Запис змінено</item>
     </string-array>
-    <string name="filter_by_flags">Прапори</string>
+    <string name="filter_by_flags">Прапорці</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>
     <string name="custom_study_increase_review_limit">Змінити сьогоднішній ліміт на повторення карток</string>
@@ -312,7 +312,7 @@
     <string name="migration_part_1_done_resume">Ви можете продовжити використовувати AnkiDroid.
 \nПеренесення сховища буде відбуватись у фоновому режимі.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s не є дійсним пакетом доповнення javascript</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Не вдалося створити каталог %s</string>
     <string name="malicious_archive_entry_outside">Шкідливий архів. Містить запис за межами цільового каталогу: %s</string>
     <string name="malicious_archive_exceeds_limit">Шкідливий архів. Розмір перевищує %1$s або містить більше ніж %2$d файлів</string>

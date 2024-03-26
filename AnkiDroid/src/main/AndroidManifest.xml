@@ -40,6 +40,7 @@
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" android:maxSdkVersion="25" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <!-- Disabled on Play Store -->
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
     <permission android:name="${applicationId}.permission.READ_WRITE_DATABASE"
@@ -229,13 +230,13 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.SEND"/>
                 <data android:mimeType="application/apkg"/>
                 <data android:mimeType="application/colpkg"/>
                 <data android:mimeType="application/vnd.anki"/>
                 <data android:mimeType="application/x-apkg"/>
                 <data android:mimeType="application/x-colpkg"/>
                 <data android:mimeType="application/octet-stream"/>
-                <data android:mimeType="application/zip"/>
                 <data android:mimeType="text/tab-separated-values"/>
                 <data android:mimeType="text/comma-separated-values"/>
             </intent-filter>
@@ -427,7 +428,7 @@
             android:configChanges="orientation|screenSize"
             />
         <activity
-            android:name="com.ichi2.anki.previewer.PreviewerActivity"
+            android:name="com.ichi2.anki.previewer.CardViewerActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize"
             />
@@ -469,7 +470,10 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:configChanges="keyboardHidden|screenSize" />
 
-
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
             android:enabled="false"
@@ -516,6 +520,13 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider_add_note"
                 />
+        </receiver>
+
+        <receiver android:name="com.ichi2.widget.WidgetPermissionReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.ichi2.widget.UPDATE_WIDGET" />
+            </intent-filter>
         </receiver>
 
         <receiver

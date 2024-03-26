@@ -24,7 +24,7 @@ import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.previewer.PreviewerActivity
+import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.assertFalse
 import org.hamcrest.MatcherAssert
@@ -108,7 +108,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         val startedIntent = shadowTestEditor.nextStartedActivity
         val shadowIntent = shadowOf(startedIntent)
         advanceRobolectricLooperWithSleep()
-        assertEquals("Previewer not started?", PreviewerActivity::class.java.name, shadowIntent.intentClass.name)
+        assertEquals("Previewer not started?", CardViewerActivity::class.java.name, shadowIntent.intentClass.name)
         assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
         shadowTestEditor.receiveResult(startedIntent, Activity.RESULT_OK, Intent())
 
@@ -195,7 +195,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_preview))
         val startedIntent = shadowTestEditor.nextStartedActivity
         val shadowIntent = shadowOf(startedIntent)
-        assertEquals("Previewer not started?", PreviewerActivity::class.java.name, shadowIntent.intentClass.name)
+        assertEquals("Previewer not started?", CardViewerActivity::class.java.name, shadowIntent.intentClass.name)
         assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
 
         // Save the change to the database and make sure there are two templates after

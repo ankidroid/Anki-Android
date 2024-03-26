@@ -43,15 +43,15 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">Always report</string>
-    <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_always_report">Uvijek prijavi</string>
+    <string name="error_reporting_choice_never_report">Nikad ne prijavljuj</string>
+    <string name="error_reporting_choice_ask_user">Pitaj me</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_random">Random</string>
+    <string name="cram_deck_conf_order_random">Nasumično</string>
     <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
     <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
@@ -74,16 +74,16 @@
     <string name="html_size_code_xx_small">xx-small</string>
     <string name="html_size_code_x_small">x-small</string>
     <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_medium">srednje</string>
+    <string name="html_size_code_large">veliko</string>
+    <string name="html_size_code_x_large">XL</string>
+    <string name="html_size_code_xx_large">XXL</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
-    <string name="gesture_play">Play media</string>
+    <string name="answer_again">Odgovori ponovo</string>
+    <string name="answer_hard">Teško</string>
+    <string name="answer_good">Dobro</string>
+    <string name="answer_easy">Lagano</string>
+    <string name="gesture_play">Reproduciraj medij</string>
     <string name="gesture_abort_learning">Abort learning</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>
     <string name="gesture_flag_orange">Toggle Orange Flag</string>
@@ -93,13 +93,13 @@
     <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
     <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
+    <string name="gesture_page_up">Stranica gore</string>
+    <string name="gesture_page_down">Stranica dolje</string>
     <string name="gesture_abort_sync">Abort Learning and Sync</string>
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">Record Voice</string>
+    <string name="gesture_show_hint">Pokaži savjet</string>
+    <string name="gesture_show_all_hints">Pokaži sve savjete</string>
+    <string name="record_voice">Snimi glas</string>
     <string name="replay_voice">Replay Voice</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="save_voice">Spremi snimku</string>
 </resources>

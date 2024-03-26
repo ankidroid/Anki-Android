@@ -48,10 +48,11 @@ class TemplateManagerTest {
     }
 
     @Test
-    fun `parseSourcesToFileScheme - object`() {
+    fun `parseSourcesToFileScheme - object isn't parsed`() {
         val mediaDir = "storage/emulated/0/AnkiDroid/collection.media"
-        val result = parseSourcesToFileScheme("<object data=\"ben.mov\"></object>", mediaDir)
-        assertEquals("""<object data="file:///$mediaDir/ben.mov"></object>""", result)
+        val content = "<object data=\"ben.mov\"></object>"
+        val result = parseSourcesToFileScheme(content, mediaDir)
+        assertEquals(content, result)
     }
 
     @Test
@@ -131,6 +132,12 @@ class TemplateManagerTest {
     fun `parseSourcesToFileScheme - path with special characters`() {
         val result = parseSourcesToFileScheme("<img src=magenta.png>", "storage/emulated/0/AnkiDroid@#$%/collection.media")
         assertEquals("""<img src="file:///storage/emulated/0/AnkiDroid@%23$%25/collection.media/magenta.png">""", result)
+    }
+
+    @Test
+    fun `parseSourcesToFileScheme - path with unencoded #`() {
+        val result = parseSourcesToFileScheme("<img src='C#4.png'>", "storage/emulated/0/AnkiDroid/collection.media")
+        assertEquals("""<img src="file:///storage/emulated/0/AnkiDroid/collection.media/C%234.png">""", result)
     }
 
     @Test

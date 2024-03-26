@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Navina saṅgraha</string>
     <string name="backup_del_collection">Saṅgraha haṭavā āṇi navīna tayāra karā</string>
     <string name="backup_del_collection_question">Saṅgraha haṭavāyacē āṇi ēka navīna tayāra karāyacē? Hē āpalyā sarva śikṣaṇa pragatī ḍrŏpa karēla āṇi sarva kārḍa haṭavēla.</string>
-    <string name="backup_full_sync_from_server">Sarvharavarūna pūrṇa samakramaṇa</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb madhūna āpalē saṅgraha adhilikhita karā hē āpalē antima saṅkālana jhālyāpāsūna āpalyā sarva śikaṇyācyā pragatī āṇi jōḍalēlyā māhitī khālī sōḍēla.</string>
     <string name="error_handling_title">Truṭī hātāḷaṇī</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Paryāya</string>

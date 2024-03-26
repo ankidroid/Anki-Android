@@ -300,7 +300,7 @@
     <string name="migration_part_1_done_resume">您可以继续使用 AnkiDroid 了。
 \n存储迁移将在后台继续。</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s 不是一个有效的 JavaScript 附加组件包</string>
+    <string name="not_valid_js_addon_package">%s 不是一个有效的 JavaScript 附加组件包</string>
     <string name="could_not_create_dir">无法创建目录 %s</string>
     <string name="malicious_archive_entry_outside">恶意压缩文件。包含目标目录外的条目： %s</string>
     <string name="malicious_archive_exceeds_limit">恶意压缩文件。大小超过 %1$s 或包含超过 %2$d 个文件</string>

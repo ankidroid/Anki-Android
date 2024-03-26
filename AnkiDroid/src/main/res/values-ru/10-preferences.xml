@@ -52,7 +52,7 @@
         <item quantity="many">%d мин</item>
         <item quantity="other">%d мин</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s мс</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Не найдено</string>
     <!-- preferences.xml categories-->
@@ -139,7 +139,7 @@
     <string name="metered_sync_title" maxLength="41">Разрешить синхронизацию в тарифицируемых сетях</string>
     <string name="metered_sync_summary">Если отключено, предупреждает, если вы синхронизируетесь через тарифицированную сеть</string>
     <string name="backup_limits_frequency">Частота</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_lifetime">Время хранения</string>
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Дневная тема</string>
     <string name="night_theme" maxLength="41">Ночная тема</string>
@@ -176,8 +176,8 @@
     <string name="show_top_bar_summ">Показывает счётчик карточек и кнопки «Флажок» и «Отметить»</string>
     <string name="show_progress" maxLength="41">Показать оставшиеся</string>
     <string name="show_progress_summ">Показывает число оставшихся карточек</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Показывать оценку времени</string>
+    <string name="show_eta_summ">Показать оставшееся время</string>
     <string name="use_current" maxLength="41">Колода для новых карточек</string>
     <string name="learn_cutoff" maxLength="41">Лимит опережения</string>
     <string name="time_limit" maxLength="41">Лимит учебного блока</string>
@@ -203,8 +203,6 @@
     <string name="reset">Сброс</string>
     <string name="thirdparty_apps_title" maxLength="41">Сторонние приложения</string>
     <string name="thirdparty_apps_summary">Покажет список приложений, которые используют API AnkiDroid, например, словари</string>
-    <string name="html_javascript_debugging" maxLength="41">Отладка HTML и JavaScript</string>
-    <string name="html_javascript_debugging_summ">Включает удалённые соединения WebView и сохраняет HTML карточек в директорию AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Повторение</string>
     <string name="show_deck_title" maxLength="41">Показать название колоды</string>
@@ -247,7 +245,7 @@
     <string name="deck_conf_cram_reschedule_summ">Перепланировать карточки в зависимости от ответов</string>
     <string name="deck_conf_cram_filter_2_check">Включить второй фильтр</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Задать свои шаги</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Задержка предварительного просмотра</string>
     <string name="deck_conf_cram_preview_delays_summ">Задержки в секундах. 0 возвращает карту в исходную колоду.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Помогите сделать AnkiDroid лучше!</string>
@@ -271,19 +269,19 @@
     <string name="binding_add_key">Добавить кнопку</string>
     <string name="binding_replace_key">Заменить клавишу</string>
     <string name="key_picker_default_press_key">Нажмите кнопку</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="binding_add_axis">Добавить джойстик/контроллер движения</string>
+    <string name="axis_picker_move_joystick">Переместить джойстик/контроллер движения</string>
+    <string name="user_actions" maxLength="41">Пользовательские действия</string>
+    <string name="user_actions_summary" maxLength="41">Запустить JavaScript на экране проверки</string>
+    <string name="user_action_1" maxLength="41">Пользовательское действие 1</string>
+    <string name="user_action_2" maxLength="41">Пользовательское действие 2</string>
+    <string name="user_action_3" maxLength="41">Пользовательское действие 3</string>
+    <string name="user_action_4" maxLength="41">Пользовательское действие 4</string>
+    <string name="user_action_5" maxLength="41">Пользовательское действие 5</string>
+    <string name="user_action_6" maxLength="41">Пользовательское действие 6</string>
+    <string name="user_action_7" maxLength="41">Пользовательское действие 7</string>
+    <string name="user_action_8" maxLength="41">Пользовательское действие 8</string>
+    <string name="user_action_9" maxLength="41">Пользовательское действие 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберите сторону карточки</string>
     <string name="card_side_question">Вопрос</string>
@@ -297,8 +295,8 @@
     <string name="bindings_already_bound">Уже назначено на «%s»</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Экспериментальная</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">У AnkiDroid появился более совершенный механизм TTS, который совместим с другими клиентами Anki и содержит больше голосов и улучшения в воспроизведении языков.\n\nПожалуйста, обновитесь как можно скорее, так как эта настройка скоро будет удалена.</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Пожалуйста, обновитесь до нового формата преобразования текста в речь</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Настройки разработчика</string>
     <string name="dev_options_enabled_pref" maxLength="41">Включить параметры для разработчиков</string>

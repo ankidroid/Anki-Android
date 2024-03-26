@@ -46,10 +46,10 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Çewtiya moda gilîkirinê</string>
-    <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
+    <string name="error_reporting_choice">جۆری هەڵە</string>
+    <string name="feedback_disclaimer">ڕەتکردنەوەی بەرپرسیاریەتی: ئێمە هیچ زانیارییەکی کەسی وەک ناونیشانی ئیمەیڵ، ژمارەی تەلەفۆن، یان مۆبایلەکەت کۆناکەینەوە. ئێمە هەندێک زانیاری دەربارەی ئامێرەکەت کۆدەکەینەوە وەک بەرهەمهێنەر و مۆدێل و وەشانی ئەندرۆید، هەروەها سروشتی هەڵە ڕاپۆرتکراوەکان خۆیان و ئەو هەنگاوانەی کە بوونەتە هۆی ڕوودانی.</string>
     <string name="feedback_title">AnkiDroid Feedback</string>
-    <string name="feedback_default_text">Enter your feedback or information about the nature of any errors you’re reporting.</string>
+    <string name="feedback_default_text">فیدباک یان زانیارییەکانی خۆت سەبارەت بە سروشتی هەر هەڵەیەک کە ڕاپۆرت دەکەیت بنووسە.</string>
     <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
     <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
     <string name="feedback_copy_debug">Copy debug info</string>

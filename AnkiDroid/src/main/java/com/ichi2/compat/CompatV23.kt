@@ -185,8 +185,12 @@ open class CompatV23 : Compat {
     }
 
     // Until API 29
-    override fun hasVideoThumbnail(path: String): Boolean {
-        return ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND) != null
+    override fun hasVideoThumbnail(path: String): Boolean? {
+        return try {
+            ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND) != null
+        } catch (e: Exception) {
+            null
+        }
     }
 
     // Until API31 the MediaRecorder constructor was default, ignoring the Context

@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ସ୍ଥାନୀୟ</string>
     <string name="sync_sanity_remote">ସୁଦୂର</string>
-    <string name="force_full_sync_title">ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ ବାଧ୍ୟ କରିବା</string>
-    <string name="force_full_sync_summary">ପରବର୍ତ୍ତୀ ସୀଙ୍କ୍‌ରେ, ଗୋଟିଏ ଦିଗରେ ପରିବର୍ତ୍ତନକୁ ବାଧ୍ୟ କରିବା</string>
-    <string name="force_full_sync_confirmation">ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ ବାଧ୍ୟ କରାଗଲା</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">ଯେତେବେଳେ ଆପଣ ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ପରବର୍ତ୍ତୀ ସମୟରେ ସୀଙ୍କ୍ କରନ୍ତି ତେବେ ଅନୁରୋଧିତ ପରିବର୍ତ୍ତନଟି ଡାଟାବେସ୍‌ର ସମ୍ପୂର୍ଣ୍ଣ ଅପଲୋଡ୍ ଲୋଡ଼ିବ। ଯଦି ଆପଣଙ୍କର ଅନ୍ୟ ଡିଵାଇସ୍‌ରେ ଏପର୍ଯ୍ୟନ୍ତ ସମୀକ୍ଷା କିମ୍ବା ଅନ୍ୟାନ୍ୟ ପରିବର୍ତ୍ତନସବୁ ଏଠାକୁ ସୀଙ୍କ୍ ଅପେକ୍ଷାରେ ରହିଥାଏ, ସେଗୁଡ଼ିକ ହଜିଯିବ। ଜାରି ରଖିବେ ତ?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroidର ପୂର୍ବ ଅଧିସ୍ଥାପିତ ସଂସ୍କରଣରେ ଗୋଟେ ବଗ୍ ରହିଥିବାରୁ, ଏକ ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ ବାଧ୍ୟ କରାଇନେବା ଲାଗି ପରାମର୍ଶ ଦିଆଯାଉଛି।</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">ସୀଙ୍କ୍ (ପୂର୍ଣ୍ଣ)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">ସୀଙ୍କ୍ (ଲଗ୍ ଇନ୍)</string>
 </resources>

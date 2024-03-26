@@ -243,5 +243,5 @@
     <string name="dismiss_backup_warning_title">Warnung wegen Datenverlust</string>
     <string name="dismiss_backup_warning_new_user">Aufgrund von Änderungen in den Privatsphäreeinstellungen von Android, werden deine Daten und automatische Backups gelöscht, sobald du die App deinstallierst.</string>
     <string name="dismiss_backup_warning_upgrade">Aufgrund von Änderungen in den Privatsphäreeinstellungen von Android, werden deine Daten und automatische Backups nicht mehr zugreifbar sein, falls du die App deinstallierst.</string>
-    <string name="deck_already_exists">Deck already exists</string>
+    <string name="deck_already_exists">Stapel bereits vorhanden</string>
 </resources>

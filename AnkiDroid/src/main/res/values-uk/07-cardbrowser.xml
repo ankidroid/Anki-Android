@@ -46,16 +46,16 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d картки/ок показано</item>
-        <item quantity="few">%d картки/ок показано</item>
-        <item quantity="many">%d картки/ок показано</item>
-        <item quantity="other">%d карт показано</item>
+        <item quantity="one">Показано %d картку</item>
+        <item quantity="few">Показано %d картки</item>
+        <item quantity="many">Показано %d карток</item>
+        <item quantity="other">Показано %d карток</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d Запис показано </item>
-        <item quantity="few">%d Записів показано </item>
-        <item quantity="many">%d карт показано</item>
-        <item quantity="other">%d карт показано</item>
+        <item quantity="one">Показано %d запис</item>
+        <item quantity="few">Показано %d записи</item>
+        <item quantity="many">Показано %d записів</item>
+        <item quantity="other">Показано %d записів</item>
     </plurals>
     <string name="card_browser_all_decks">Всі колоди</string>
     <plurals name="card_browser_delete_cards">

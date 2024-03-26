@@ -304,7 +304,7 @@
     <string name="migration_part_1_done_resume">Você pode continuar usando o AnkiDroid.
 \nA migração do armazenamento continuará em segundo plano.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s Não é um pacote de addon javascript válido</string>
+    <string name="not_valid_js_addon_package">%s não é um pacote de addon JavaScript válido</string>
     <string name="could_not_create_dir">Não foi possível criar a pasta %s</string>
     <string name="malicious_archive_entry_outside">Arquivo malicioso. Contém entrada fora da pasta alvo: %s</string>
     <string name="malicious_archive_exceeds_limit">Arquivo malicioso. O tamanho excede %1$s ou contém mais de %2$d arquivos</string>

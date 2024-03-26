@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Nieuwe collectie</string>
     <string name="backup_del_collection">Verwijder collectie en maak een nieuwe aan</string>
     <string name="backup_del_collection_question">Weet u zeker dat u de collectie wenst te verwijderen en een nieuwe wenst te creëren? Al uw leervooruitgang zal ongedaan gemaakt worden en alle kaarten worden verwijderd!</string>
-    <string name="backup_full_sync_from_server">Volledige synchronisatie vanaf de server</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Weet u zeker dat u uw collectie wil overschrijven met die van AnkiWeb? Dit zal al uw leervooruitgang en toegevoegde informatie sinds uw laatste synchronisatie ongedaan maken!</string>
     <string name="error_handling_title">Foutafhandeling</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opties</string>

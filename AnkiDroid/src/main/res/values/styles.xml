@@ -156,10 +156,10 @@
     </style>
 
     <!-- Snackbars -->
-    <style name="SnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
+    <style name="SnackbarStyle" parent="Widget.Material3.Snackbar">
         <item name="android:backgroundTint">?attr/snackbarBackgroundTintColor</item>
     </style>
-    <style name="SnackbarButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+    <style name="SnackbarButtonStyle" parent="Widget.Material3.Button.TextButton.Snackbar">
         <item name="android:textColor">?attr/snackbarButtonTextColor</item>
     </style>
 
@@ -207,6 +207,10 @@
 
     <style name="AlertDialogCheckBox.Style" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
         <item name="buttonTint">@color/material_blue_500</item>
+    </style>
+
+    <style name="CardView.PreviewerStyle" parent="Widget.Material3.CardView.Elevated">
+        <item name="android:elevation">0.8dp</item>
     </style>
 
 </resources>

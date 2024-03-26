@@ -43,7 +43,7 @@ class DecksTest : JvmTest() {
         val c = note.cards()[0]
         assertEquals(deck1, c.did)
         assertEquals(1, col.cardCount().toLong())
-        col.decks.removeDecks(listOf(deck1))
+        col.decks.remove(listOf(deck1))
         assertEquals(0, col.cardCount().toLong())
         // if we try to get it, we get the default
         assertEquals("[no deck]", col.decks.name(c.did))

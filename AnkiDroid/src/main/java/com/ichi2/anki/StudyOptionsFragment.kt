@@ -33,12 +33,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
+import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.description
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.updateValuesFromDeck
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
@@ -50,7 +52,7 @@ import kotlinx.coroutines.Job
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
-class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
+class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMenuItemClickListener {
     /**
      * Preferences
      */
@@ -146,6 +148,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             configureToolbar()
         }
         refreshInterface()
+        ChangeManager.subscribe(this)
         return studyOptionsView
     }
 
@@ -230,7 +233,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             R.id.action_deck_or_study_options -> {
                 Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
-                if (col!!.decks.isDyn(col!!.decks.selected())) {
+                if (col!!.decks.isFiltered(col!!.decks.selected())) {
                     openFilteredDeckOptions()
                 } else {
                     val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col!!.decks.current().id)
@@ -315,7 +318,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             toolbar!!.setOnMenuItemClickListener(this)
             val menu = toolbar!!.menu
             // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
-            if (col != null && col!!.decks.isDyn(col!!.decks.selected())) {
+            if (col != null && col!!.decks.isFiltered(col!!.decks.selected())) {
                 menu.findItem(R.id.action_rebuild).isVisible = true
                 menu.findItem(R.id.action_empty).isVisible = true
                 menu.findItem(R.id.action_custom_study).isVisible = false
@@ -683,5 +686,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             val withFixedNewlines = convertNewlinesToHtml(withStrippedTags)
             return HtmlCompat.fromHtml(withFixedNewlines!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
+    }
+
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        refreshInterface(true)
     }
 }

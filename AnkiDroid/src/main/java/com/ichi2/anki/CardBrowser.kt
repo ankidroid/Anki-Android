@@ -75,6 +75,7 @@ import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
 import com.ichi2.anki.servicelayer.rescheduleCards
@@ -91,6 +92,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
@@ -690,6 +692,7 @@ open class CardBrowser :
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         when {
             isDrawerOpen -> super.onBackPressed()
@@ -749,6 +752,7 @@ open class CardBrowser :
                 }
             })
             searchView = searchItem!!.actionView as CardBrowserSearchView
+            searchView!!.setMaxWidth(Integer.MAX_VALUE)
             searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (searchView!!.shouldIgnoreValueChange()) {
@@ -1361,7 +1365,7 @@ open class CardBrowser :
             searchView!!.setQuery(searchTerms, false)
             searchItem!!.expandActionView()
         }
-        val searchText: String? = if (searchTerms.contains("deck:")) {
+        val searchText: String = if (searchTerms.contains("deck:")) {
             "($searchTerms)"
         } else {
             if ("" != searchTerms) "${viewModel.restrictOnDeck}($searchTerms)" else viewModel.restrictOnDeck
@@ -1369,7 +1373,7 @@ open class CardBrowser :
         // clear the existing card list
         cards.reset()
         cardsAdapter.notifyDataSetChanged()
-        val query = searchText!!
+        val query = searchText
         val order = viewModel.order.toSortOrder()
         launchCatchingTask {
             Timber.d("performing search")
@@ -1955,14 +1959,14 @@ open class CardBrowser :
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
                 CardBrowserColumn.TAGS -> card.note(col).stringTags(col)
                 CardBrowserColumn.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards(col)}"
-                CardBrowserColumn.DUE -> card.dueString(col)
+                CardBrowserColumn.DUE -> dueString(col, card)
                 CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note(col).mod.toLong())
                 CardBrowserColumn.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
                 CardBrowserColumn.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note(col).mod)
                 CardBrowserColumn.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
                 CardBrowserColumn.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote(col)).toString()
-                CardBrowserColumn.NOTE_TYPE -> card.model(col).optString("name")
+                CardBrowserColumn.NOTE_TYPE -> card.noteType(col).optString("name")
                 CardBrowserColumn.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote(col).toString()
                 CardBrowserColumn.QUESTION -> {
                     updateSearchItemQA()
@@ -1985,7 +1989,7 @@ open class CardBrowser :
         }
 
         private fun getAvgEaseForNotes(): String {
-            val avgEase = card.avgEaseOfNote(col)
+            val avgEase = NoteService.avgEase(col, card.note(col))
 
             return if (avgEase == null) {
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
@@ -2176,7 +2180,6 @@ open class CardBrowser :
 
         // Values related to persistent state data
         private const val ALL_DECKS_ID = 0L
-        const val CARD_NOT_AVAILABLE = -1
 
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
@@ -2218,6 +2221,36 @@ open class CardBrowser :
             s = s.trim { it <= ' ' }
             return s
         }
+
+        const val CARD_NOT_AVAILABLE = -1
+
+        fun dueString(col: Collection, card: Card): String {
+            var t = nextDue(col, card)
+            if (card.queue < 0) {
+                t = "($t)"
+            }
+            return t
+        }
+
+        @VisibleForTesting
+        fun nextDue(col: Collection, card: Card): String {
+            val date: Long
+            val due = card.due
+            date = if (card.isInDynamicDeck) {
+                return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
+            } else if (card.queue == Consts.QUEUE_TYPE_LRN) {
+                due.toLong()
+            } else if (card.queue == Consts.QUEUE_TYPE_NEW || card.type == Consts.CARD_TYPE_NEW) {
+                return due.toString()
+            } else if (card.queue == Consts.QUEUE_TYPE_REV || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.type == Consts.CARD_TYPE_REV && card.queue < 0) {
+                val time = TimeManager.time.intTime()
+                val nbDaySinceCreation = due - col.sched.today
+                time + nbDaySinceCreation * SECONDS_PER_DAY
+            } else {
+                return ""
+            }
+            return LanguageUtil.getShortDateFormatFromS(date)
+        } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
     }
 
     private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {

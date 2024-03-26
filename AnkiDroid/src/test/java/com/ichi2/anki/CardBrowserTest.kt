@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -27,6 +28,8 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
+import com.ichi2.anki.CardBrowser.Companion.dueString
+import com.ichi2.anki.CardBrowser.Companion.nextDue
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.browser.CardBrowserColumn
@@ -54,14 +57,15 @@ import io.mockk.unmockkObject
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
+import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.any
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import timber.log.Timber
+import java.util.Calendar
 import java.util.Locale
 import java.util.Random
 import kotlin.test.assertEquals
@@ -1061,6 +1065,102 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat("3 rows are still selected", viewModel.selectedRows.size, equalTo(3))
         assertThat("selection is now marked", viewModel.selectedRows.all { it.isMarked })
+    }
+
+    @SuppressLint("DirectCalendarInstanceUsage")
+    @Test
+    @Config(qualifiers = "en")
+    fun nextDueTest() {
+        // Test runs as the 7th of august 2020, 9h00
+        val n = addNoteUsingBasicModel("Front", "Back")
+        val c = n.firstCard()
+        val decks = col.decks
+        val cal = Calendar.getInstance()
+        cal[2021, 2, 19, 7, 42] = 42
+        val id = (cal.timeInMillis / 1000).toInt()
+
+        // Not filtered
+        c.type = Consts.CARD_TYPE_NEW
+        c.due = 27
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("(27)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("(27)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("(27)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_NEW
+        c.due = 27
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("27", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("27", dueString(col, c))
+        c.type = Consts.CARD_TYPE_LRN
+        c.due = id
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_LRN
+        Assert.assertEquals("3/19/21", nextDue(col, c))
+        Assert.assertEquals("3/19/21", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("", dueString(col, c))
+        c.type = Consts.CARD_TYPE_REV
+        c.due = 20
+        //  Since tests run the 7th of august, in 20 days we are the 27th of august 2020
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals("8/27/20", nextDue(col, c))
+        Assert.assertEquals("(8/27/20)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("8/27/20", nextDue(col, c))
+        Assert.assertEquals("(8/27/20)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals("8/27/20", nextDue(col, c))
+        Assert.assertEquals("(8/27/20)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_REV
+        Assert.assertEquals("8/27/20", nextDue(col, c))
+        Assert.assertEquals("8/27/20", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("", dueString(col, c))
+        c.type = Consts.CARD_TYPE_RELEARNING
+        c.due = id
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_LRN
+        c.due = id
+        Assert.assertEquals("3/19/21", nextDue(col, c))
+        Assert.assertEquals("3/19/21", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("", dueString(col, c))
+
+        // Dynamic deck
+        val dyn = decks.newFiltered("dyn")
+        c.oDid = c.did
+        c.did = dyn
+        Assert.assertEquals("(filtered)", nextDue(col, c))
+        Assert.assertEquals("(filtered)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("(filtered)", nextDue(col, c))
+        Assert.assertEquals("((filtered))", dueString(col, c))
     }
 
     @Suppress("SameParameterValue")

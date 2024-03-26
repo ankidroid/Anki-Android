@@ -50,7 +50,7 @@
     <string name="statistics">Statistik</string>
     <string name="settings">Inställningar</string>
     <string name="help">Hjälp</string>
-    <string name="drawing">Ritning</string>
+    <string name="drawing">Teckning</string>
     <string name="send_feedback">Skicka feedback</string>
     <string name="studyoptions_due_today">Aktuella idag:</string>
     <string name="studyoptions_new_total">Totalt antal nya kort:</string>
@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Expandera</string>
     <string name="collapse">Minimera</string>
+    <string name="study_more">Studera mer</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minut kvar</item>
         <item quantity="other">%d minuter kvar</item>
@@ -88,7 +89,7 @@
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Ångra penseldrag</string>
     <string name="move_all_to_deck">Flytta alla till kortlek</string>
     <string name="unbury">Sluta dölja</string>
-    <string name="rename_deck">Byt namn på lek</string>
+    <string name="rename_deck">Byt namn på kortlek</string>
     <string name="create_shortcut">Skapa genväg</string>
     <string name="browse_cards">Bläddra kort</string>
     <string name="edit_deck_description" comment="edit the deck description">Ändra beskrivning</string>
@@ -126,7 +127,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Vänligen ge AnkiDroid behörigheten \'Lagring\' för att fortsätta</string>
+    <string name="startup_no_storage_permission">Vänligen ge AnkiDroid behörigheten \"Lagring\" för att fortsätta</string>
     <string name="rebuild_filtered_deck">Bygger om filtrerad kortlek...</string>
     <string name="rebuild_cram_label">Bygg om</string>
     <string name="empty_cram_label">Töm</string>
@@ -134,18 +135,22 @@
     <string name="empty_filtered_deck">Tömmer filtrerad kortlek...</string>
     <string name="custom_study_deck_name">Anpassad studiesession</string>
     <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
-    <string name="empty_deck">Den här leken är tom</string>
+    <string name="empty_deck">Den här kortleken är tom</string>
     <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kortlekssökning</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
+    <string name="studyoptions_limit_reached">Den dagliga studiegränsen har nåtts</string>
+    <string name="studyoptions_empty_schedule">Inga kort finns schemalagda</string>
+    <string name="studyoptions_congrats_finished">Grattis! Du är klar för stunden.</string>
     <string name="studyoptions_no_cards_due">Inga kort i kö.</string>
-    <string name="sd_card_not_mounted">Lagringsenheten inte monterad</string>
+    <string name="sd_card_not_mounted">Lagringsenhet ej monterad</string>
     <string name="button_sync" comment="Text of the sync button">Synkronisera</string>
     <string name="button_upgrade" comment="Text of the sync button">Flytta till avgränsad lagring</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Vill du avbryta synkroniseringen?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Fortsätt synkronisering</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronisering avbruten</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Avbryter&#8230;\nDetta kan ta en stund.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Exportera kortlek</string>
     <string name="nothing">Inget</string>
     <!-- Card template editor -->
@@ -153,7 +158,7 @@
     <string name="card_template_editor_front">Kortmall för framsida</string>
     <string name="card_template_editor_back">Kortmall för baksida</string>
     <string name="card_template_editor_styling">Formgivning</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Visning i kortbläddrare</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Utseende i kortbläddrare</string>
     <string name="card_template_editor_deck_override">Åsidosätt kortlek</string>
     <string name="card_template_editor_insert_field">Lägg till fält</string>
     <string name="card_template_editor_select_field">Välj fält</string>
@@ -166,13 +171,13 @@
         <item quantity="one">Ta bort korttypen \"%2$s\" och dess %1$d kort?</item>
         <item quantity="other">Ta bort korttypen \"%2$s\" och dess %1$d kort?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Att ta bort den här korttypen skulle göra att en eller flera anteckningar tas bort. Vänligen skapa en ny korttyp först.</string>
+    <string name="card_template_editor_would_delete_note">Att ta bort den här korttypen skulle göra att en eller flera noter tas bort. Vänligen skapa en ny korttyp först.</string>
     <string name="card_template_editor_save_error">Det går inte att spara ändringar i kortmallen: %s</string>
     <string name="template_for_current_card_deleted">Korttypen för det aktuella kortet har tagits bort.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Läsarens utseende</string>
     <!-- card Info -->
-    <string name="card_info_title">Kort information</string>
+    <string name="card_info_title">Kortinformation</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Läs och skriv till AnkiDroid-databasen</string>
     <string name="read_write_permission_description">åtkomst till befintliga noter, kort, nottyper och kortlekar, samt att skapa nya</string>
@@ -237,6 +242,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Återuppta överföring</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Otillgänglig samling</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Vi kan inte komma åt din samling efter att AnkiDroid har avinstallerats på grund av en ändring i Play Store-policyn\n\nDin data är säker och kan återställas. Den ligger på\n%s\n\nVälj ett alternativ nedan för att återställa:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android har tagit bort AnkiDroids %1$s tillstånd på grund av appinaktivitet.\n\nDina data är säkra och kan återställas. Den ligger på\n%2$s\n\nVälj ett alternativ nedan för att återställa:</string>
     <string name="restore_data_from_ankiweb">Återställ från AnkiWeb (rekommenderas)</string>
     <string name="install_non_play_store_ankidroid_recommended">Återställ mappåtkomst (rekommenderas)</string>
     <string name="install_non_play_store_ankidroid">Återställ mappåtkomst (avancerat)</string>

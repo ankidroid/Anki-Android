@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Malayo</string>
-    <string name="force_full_sync_title">Pilitin ang buong pagsisingkronisa</string>
-    <string name="force_full_sync_summary">Sa sususnod na pagsisingkronisa, pilitin ang mga pagbabago sa isang direksyon</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">Ang ninanais na pagbabago ay mangangailangan ng isang buong pag-upload ng talahanayan ng datos sa susunod na pagsisingkronisa ng iyong koleksyon. Kung mayroon kang mga balik-aral o iba pang mga pagbabago na naghihintay sa iba pang mga aparato na hindi pa naka-singkronisa dito, mawawala ang mga ito. Magpatuloy?</string>
     <string name="full_sync_confirmation_upgrade">Dahil sa isang bug sa naunang naka-install na bersyon ng AnkiDroid, iminumungkahi ang isang buong pag-sisingkronisa.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

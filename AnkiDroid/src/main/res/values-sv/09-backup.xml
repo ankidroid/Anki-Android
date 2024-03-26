@@ -44,14 +44,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="backup_deck_no_storage_left">Säkerhetskopiering kunde inte utföras på grund av otillräckligt lagringsutrymme. Frigör utrymme eller minska djupet på säkerhetskopian.</string>
+    <string name="storage_warning">Mindre än %d MB lagringsutrymme kvar.\nFrigör utrymme för att undvika dataförlust.</string>
     <string name="backup_restore">Återställ från säkerhetskopia</string>
     <string name="backup_new_collection">Ny samling</string>
     <string name="backup_del_collection">Ta bort samling och skapa en ny</string>
-    <string name="backup_del_collection_question">Är du säker att du vill ta bort denna samling och skapa en ny? Detta kommer ta bort alla inlärningsdata samt radera alla kort!</string>
-    <string name="backup_full_sync_from_server">Fullständig synkronisering från servern</string>
-    <string name="backup_full_sync_from_server_question">Är du säker att du vill skriva över din samling med den från AnkiWeb? Detta kommer ta bort alla inlärningsdata och ändrad information sedan din senaste synkning!</string>
+    <string name="backup_del_collection_question">Är du säker att du vill ta bort denna samling och skapa en ny? Detta kommer ta bort alla framsteg samt radera alla kort!</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
+    <string name="backup_full_sync_from_server_question">Är du säker att du vill skriva över din samling med den från AnkiWeb? Detta kommer ta bort alla framsteg och ändrad information sedan din senaste synkning!</string>
     <string name="error_handling_title">Felhantering</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Alternativ</string>
     <string name="backup_retry_opening">Prova att öppna igen</string>

@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Lokalno</string>
     <string name="sync_sanity_remote">Oddaljeno</string>
-    <string name="force_full_sync_title">Vsili polno sinhronizacijo</string>
-    <string name="force_full_sync_summary">Ob naslednji sinhronizaciji vsili spremembe v eno smer</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">Zahtevana sprememba bo potrebovala poln prejem podatkovne zbirke ob naslednji sinhronizaciji zbirke. Če imate čakajoče preglede ali druge spremembe na drugi napravi, ki še niso bile sinhronizirane, bodo izgubljene. Nadaljuj?</string>
     <string name="full_sync_confirmation_upgrade">Zaradi hrošča v prej nameščeni različici AnkiDroida je priporočljivo, da vsilite polno sinhronizacijo.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

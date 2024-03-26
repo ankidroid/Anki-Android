@@ -59,6 +59,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Perluas</string>
     <string name="collapse">Tutup</string>
+    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">%d menit lagi</item>
     </plurals>
@@ -135,6 +136,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Mencari Dek</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pencarian Dek</string>
     <string name="invalid_deck_name">Nama dek tidak valid</string>
+    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
     <string name="sd_card_not_mounted">Penyimpanan perangkat tidak terpasang</string>
     <string name="button_sync" comment="Text of the sync button">Sinkronisasi</string>
@@ -143,6 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Lanjutkan sinkronisasi</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinkronisasi dibatalkan</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Membatalkan&#8230;\nIni dapat memakan waktu lama.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Ekspor dek</string>
     <string name="nothing">Tidak ada</string>
     <!-- Card template editor -->
@@ -233,6 +238,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Lanjutkan migrasi</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Koleksi tidak dapat diakses</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Kami tidak dapat mengakses koleksi Anda setelah AnkiDroid dihapus akibat perubahan Kebijakan Play Store\n\nData Anda aman dan dapat dipulihkan. Data Anda berada di\n%s\n\nPilih salah satu opsi berikut untuk memulihkan:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Pulihkan dari AnkiWeb (disarankan)</string>
     <string name="install_non_play_store_ankidroid_recommended">Pulihkan akses folder (disarankan)</string>
     <string name="install_non_play_store_ankidroid">Pulihkan akses folder (lanjutan)</string>

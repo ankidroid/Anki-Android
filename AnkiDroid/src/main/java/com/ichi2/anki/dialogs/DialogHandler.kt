@@ -112,7 +112,7 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
                 WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG -> SyncErrorDialog.SyncErrorDialogMessageHandler.fromMessage(message)
                 WhichDialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG -> MediaCheckDialog.MediaCheckCompleteDialog.fromMessage(message)
                 WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG -> DatabaseErrorDialog.ShowDatabaseErrorDialog.fromMessage(message)
-                WhichDialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG -> ForceFullSyncDialog.fromMessage(message)
+                WhichDialogHandler.MSG_SHOW_ONE_WAY_SYNC_DIALOG -> OneWaySyncDialog.fromMessage(message)
                 WhichDialogHandler.MSG_DO_SYNC -> IntentHandler.Companion.DoSync()
                 WhichDialogHandler.MSG_MIGRATE_ON_SYNC_SUCCESS -> MigrateStorageOnSyncSuccess.MigrateOnSyncSuccessHandler()
                 WhichDialogHandler.MSG_EXPORT_READY -> ExportReadyDialog.ExportReadyDialogMessage.fromMessage(message)
@@ -129,7 +129,7 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
         MSG_SHOW_SYNC_ERROR_DIALOG(3),
         MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG(5),
         MSG_SHOW_DATABASE_ERROR_DIALOG(6),
-        MSG_SHOW_FORCE_FULL_SYNC_DIALOG(7),
+        MSG_SHOW_ONE_WAY_SYNC_DIALOG(7),
         MSG_DO_SYNC(8),
         MSG_MIGRATE_ON_SYNC_SUCCESS(9),
         MSG_EXPORT_READY(10)

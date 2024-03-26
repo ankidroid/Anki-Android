@@ -305,7 +305,7 @@
     <string name="migration_part_1_done_resume">آپ AnkiDroid کا استعمال دوبارہ شروع کر سکتے ہیں۔
 \nذخیرہ کی منتقلی پس منظر میں جاری رہے گی۔</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s ایک درست جاوا اسکرپٹ ایڈون پیکج نہیں ہے۔</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">ڈائرکٹری %s نہیں بن سکی</string>
     <string name="malicious_archive_entry_outside">بدنیتی پر مبنی محفوظ شدہ دستاویزات۔ ہدف سے باہر اندراج پر مشتمل ہے: %s</string>
     <string name="malicious_archive_exceeds_limit">بدنیتی پر مبنی محفوظ شدہ دستاویزات۔ سائز %1$s سے زیادہ ہے یا %2$d سے زیادہ فائلوں پر مشتمل ہے۔</string>

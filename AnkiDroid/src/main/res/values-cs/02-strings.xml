@@ -312,7 +312,7 @@
     <string name="migration_part_1_done_resume">Můžete pokračovat v používání AnkiDroid.
 \nPřesun úložiště bude pokračovat na pozadí.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s není platný balíček javascript doplňku</string>
+    <string name="not_valid_js_addon_package">%s není platný balíček JavaScript doplňku</string>
     <string name="could_not_create_dir">Nepodařilo se vytvořit adresář %s</string>
     <string name="malicious_archive_entry_outside">Škodlivý archiv. Obsahuje záznam mimo cílový adresář: %s</string>
     <string name="malicious_archive_exceeds_limit">Škodlivý archiv. Velikost přesahuje %1$s nebo obsahuje více než %2$d souborů</string>

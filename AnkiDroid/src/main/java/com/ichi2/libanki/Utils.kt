@@ -41,6 +41,8 @@ object Utils {
     private val scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>")
     private val tagPattern = Pattern.compile("(?s)<.*?>")
     private val imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>")
+    private val typePattern = Pattern.compile("(?s)\\[\\[type:.+?]]")
+    private val avRefPattern = Pattern.compile("(?s)\\[anki:play:.:\\d+?]")
     private val htmlEntitiesPattern = Pattern.compile("&#?\\w+;")
     private const val ALL_CHARACTERS =
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -109,6 +111,26 @@ object Utils {
         }
         htmlEntities.appendTail(sb)
         return sb.toString()
+    }
+
+    /**
+     * Strip special fields like `[[type:...]]` and `[anki:play...]` from a string.
+     * @param input The text to be cleaned.
+     * @return The text without special fields.
+     */
+    fun stripSpecialFields(input: String): String {
+        val s = typePattern.matcher(input).replaceAll("")
+        return avRefPattern.matcher(s).replaceAll("")
+    }
+
+    /**
+     * Strip HTML and special fields from a string.
+     * @param input The text to be cleaned.
+     * @return The text without HTML and special fields.
+     */
+    fun stripHTMLAndSpecialFields(input: String): String {
+        val s = stripHTML(input)
+        return stripSpecialFields(s)
     }
 
     /*

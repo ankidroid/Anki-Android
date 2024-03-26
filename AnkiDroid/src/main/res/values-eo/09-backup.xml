@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Nova kolekto</string>
     <string name="backup_del_collection">Forigi kolekton kaj krei novan</string>
     <string name="backup_del_collection_question">Ĉu forigi la kolekton kaj krei novan? Tio ĉi forviŝos vian lernadan progreson kaj forigos ĉiujn kartojn.</string>
-    <string name="backup_full_sync_from_server">Plena samtempigo el la servilo</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Ĉu anstataŭigi vian kolekton per tiu de AnkiWeb. Tio ĉi forviŝos vian lernadan progreson kaj informojn aldonitajn ekde la antaŭa samtempigado.</string>
     <string name="error_handling_title">Pritraktado de eraroj</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Agordoj</string>

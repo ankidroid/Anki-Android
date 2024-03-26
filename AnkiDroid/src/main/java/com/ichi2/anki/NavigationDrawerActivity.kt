@@ -176,6 +176,8 @@ abstract class NavigationDrawerActivity :
         drawerLayout.addDrawerListener(drawerToggle)
 
         enablePostShortcut(this)
+        val intent = Intent("com.ichi2.widget.UPDATE_WIDGET")
+        this.sendBroadcast(intent)
     }
 
     /**
@@ -274,7 +276,7 @@ abstract class NavigationDrawerActivity :
      * Called, when navigation button of the action bar is pressed.
      * Design pattern: template method. Subclasses can override this to define their own behaviour.
      */
-    public open fun onNavigationPressed() {
+    open fun onNavigationPressed() {
         if (navButtonGoesBack) {
             finish()
         } else {

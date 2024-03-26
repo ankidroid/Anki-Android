@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Paikallinen</string>
     <string name="sync_sanity_remote">Etä</string>
-    <string name="force_full_sync_title">Pakota täysi synkronointi</string>
-    <string name="force_full_sync_summary">Pakota muutokset yhteen suuntaan seuraavan synkronoinnin yhteydessä</string>
-    <string name="force_full_sync_confirmation">Pakotettu täysi synkronointi</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">Pyytämäsi muutos vaatii tietokannan täyden lähetyksen AnkiWebiin kun synkronoit kokoelmasi seuraavan kerran. Jos sinulla on kertauksia tai muita muutoksia odottamassa toisessa laitteessa, jota ei ole vielä synkronoitu tänne, nämä synkronoimattomat tiedot katoavat. Haluatko jatkaa?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroidin edellisessä versiossa olleen bugin takia, täydellinen syknronointi on suositeltavaa.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Synkronointi (täysi)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Synkronointi (vaatii kirjautumisen)</string>
 </resources>

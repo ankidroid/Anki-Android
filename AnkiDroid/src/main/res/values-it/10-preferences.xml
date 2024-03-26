@@ -48,7 +48,7 @@
     <string name="disabled">Disabilitato</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="other">%d min</item>
     </plurals>
     <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
@@ -59,7 +59,7 @@
     <string name="pref_cat_system_wide" maxLength="41">A livello di sistema</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetizioni</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronizzazione</string>
-    <string name="pref_cat_scheduling" maxLength="41">Ripianifica</string>
+    <string name="pref_cat_scheduling" maxLength="41">Pianificazione</string>
     <string name="pref_cat_whiteboard" maxLength="41">Lavagna</string>
     <string name="pref_cat_appearance" maxLength="41">Aspetto</string>
     <string name="pref_cat_themes" maxLength="41">Temi</string>
@@ -115,7 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tocca al centro</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocca in basso a sinistra</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocca in basso a destra</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Agita il dispositivo</string>
     <string name="card_browser_enable_external_context_menu">Menù «%s»</string>
     <string name="card_browser_enable_external_context_menu_summary">Abilita il menù contestuale «%s» globalmente</string>
     <string name="double_scrolling_gap" maxLength="41">Doppio scorrimento</string>
@@ -136,8 +136,8 @@
     <string name="sync_status_badge_summ">Cambia l\'icona di sincronizzazione quando le modifiche possono essere caricate</string>
     <string name="metered_sync_title" maxLength="41">Consenti sincronizzazione con connessione a consumo.</string>
     <string name="metered_sync_summary">Se disabilitato, verrai avvisato se provi a sincronizzare quando usi una connessione a consumo</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Frequenza</string>
+    <string name="backup_limits_lifetime">Ciclo di vita</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema di giorno</string>
     <string name="night_theme" maxLength="41">Tema notturno</string>
@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibra</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lampeggia</string>
     <string name="timeout_answer_text" maxLength="41">Mostra automaticamente la risposta</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Mostrare la risposta automaticamente senza l\'intervento dell\'utente. Configurare dalle opzioni del mazzo.</string>
     <string name="select_locale_title">Scegli la lingua</string>
     <string name="software_render" maxLength="41">Disabilita il rendering hardware scheda</string>
     <string name="software_render_summ">Il rendering hardware è più veloce, ma può avere problemi, in particolare su Android 8/8.1. Se non riesci a vedere parti dell\'interfaccia utente di revisione della carta, prova questa impostazione.</string>
@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Centra verticalmente il contenuto delle carte</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervallo di tempo doppio tocco (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un secondo tocco dei pulsanti di risposta verrà ignorato se questo tempo non è trascorso. Questo impedisce doppi tocchi accidentali</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Durata pressione prolungata per mostrare la risposta (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Tempo minimo di pressione prolungata prima che il pulsante di risposta riscontri un tocco. Può ridurre la probabilità di pressioni accidentali aggiuntive. Il valore predefinito è 0ms</string>
     <string name="show_estimates" maxLength="41">Mostra scadenza pulsanti</string>
     <string name="show_estimates_summ">Mostra la prossima scadenza sopra i pulsanti di risposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostra pulsanti risposta grandi</string>
@@ -174,16 +174,16 @@
     <string name="show_top_bar_summ">Mostra il conteggio delle carte, il contrassegno e la marca nella barra superiore</string>
     <string name="show_progress" maxLength="41">Mostra rimanenti</string>
     <string name="show_progress_summ">Visualizza il conteggio delle carte rimanenti</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Mostra tempo stimato rimanente</string>
+    <string name="show_eta_summ">Visualizza il tempo rimanente</string>
     <string name="use_current" maxLength="41">Mazzo per carte nuove</string>
     <string name="learn_cutoff" maxLength="41">Impara oltre il limite</string>
     <string name="time_limit" maxLength="41">Limite di tempo per sessione</string>
     <string name="new_timezone" maxLength="41">Nuova gestione fuso orario</string>
     <string name="day_offset_with_description" maxLength="41">Inizio del giorno successivo (0 è mezzanotte, 23 è 23 ore)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d ora dopo mezzanotte</item>
+        <item quantity="other">%d ore dopo mezzanotte</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Mantieni schermo acceso</string>
     <string name="pref_keep_screen_on_summ">Disabilita il timeout dello schermo</string>
@@ -199,11 +199,9 @@
     <string name="reset">Reimposta</string>
     <string name="thirdparty_apps_title" maxLength="41">Applicazioni API di terze parti</string>
     <string name="thirdparty_apps_summary">Vedi un elenco di applicazioni che utilizzano l\'API AnkiDroid come dizionari, utilities.</string>
-    <string name="html_javascript_debugging" maxLength="41">Debug HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Abilita connessioni WebView remote e salva l\'HTML della carta nella cartella AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Revisore</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Visualizza titolo del mazzo</string>
     <string name="accessibility" maxLength="41">Accessibilità</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Incolla le immagini degli appunti in PNG</string>
@@ -225,12 +223,12 @@
     <!-- Key Bindings -->
     <string name="keyboard">Tastiera</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="answer_buttons" maxLength="41">Pulsanti di risposta</string>
+    <string name="card" maxLength="41">Carta</string>
+    <string name="note" maxLength="41">Nota</string>
+    <string name="navigation" maxLength="41">Navigazione</string>
     <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="misc" maxLength="41">Miscellanea</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Seleziona etichette</string>
     <!-- Deck configurations -->
@@ -244,8 +242,8 @@
     <string name="deck_conf_cram_reschedule_summ">Ripianifica le carte considerando le mie risposte in questo mazzo</string>
     <string name="deck_conf_cram_filter_2_check">Abilita il secondo filtro</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definisci passi personalizzati</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Anteprima intervalli</string>
+    <string name="deck_conf_cram_preview_delays_summ">Gli intervalli sono espressi in secondi. 0 fa tornare la carta nel suo mazzo originario.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Aiuta a migliorare AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Condividi l\'utilizzo delle funzionalità</string>
@@ -268,19 +266,19 @@
     <string name="binding_add_key">Aggiungi un tasto</string>
     <string name="binding_replace_key">Sostituisci chiave</string>
     <string name="key_picker_default_press_key">Premi un tasto</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="binding_add_axis">Aggiungi joystick/controller di movimento</string>
+    <string name="axis_picker_move_joystick">Muovere joystick/controller di movimento</string>
+    <string name="user_actions" maxLength="41">Azioni utente</string>
+    <string name="user_actions_summary" maxLength="41">Esegue JavaScript dalla schermata di ripetizione</string>
+    <string name="user_action_1" maxLength="41">Azione utente 1</string>
+    <string name="user_action_2" maxLength="41">Azione utente 2</string>
+    <string name="user_action_3" maxLength="41">Azione utente 3</string>
+    <string name="user_action_4" maxLength="41">Azione utente 4</string>
+    <string name="user_action_5" maxLength="41">Azione utente 5</string>
+    <string name="user_action_6" maxLength="41">Azione utente 6</string>
+    <string name="user_action_7" maxLength="41">Azione utente 7</string>
+    <string name="user_action_8" maxLength="41">Azione utente 8</string>
+    <string name="user_action_9" maxLength="41">Azione utente 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Seleziona il lato della carta</string>
     <string name="card_side_question">Domanda</string>
@@ -294,8 +292,8 @@
     <string name="bindings_already_bound">Già associato a %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Sperimentale</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">In AnkiDroid è stato introdotto un meccanismo di TTS migliore e compatibile con gli altri client Anki che include più voci e migliora la riproduzione delle lingue!\n\nÈ consigliato effettuare l\'aggiornamento il prima possibile, in quanto questa impostazione verrà presto rimossa</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">È consigliato effettuare l\'upgrade al nuovo formato di sintesi vocale</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opzioni sviluppatore</string>
     <string name="dev_options_enabled_pref" maxLength="41">Abilita le opzioni sviluppatore</string>

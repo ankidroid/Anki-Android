@@ -25,9 +25,13 @@ import android.view.WindowManager.BadTokenException
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.TTSTag
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
@@ -36,7 +40,6 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
 import timber.log.Timber
 import java.lang.ref.WeakReference
-import java.util.*
 
 object ReadText {
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -343,4 +346,12 @@ object ReadText {
     interface ReadTextListener {
         fun onDone(playedSide: CardSide?)
     }
+}
+
+fun legacyGetTtsTags(col: Collection, card: Card, cardSide: SingleCardSide, context: Context): List<TTSTag> {
+    val cardSideContent: String = when (cardSide) {
+        SingleCardSide.FRONT -> card.question(col)
+        SingleCardSide.BACK -> card.pureAnswer(col)
+    }
+    return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
 }
