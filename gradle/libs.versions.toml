@@ -67,7 +67,7 @@ seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
 slf4jTimber = "3.1"
 timber = "5.0.1"
-triplet = "3.9.0"
+triplet = "3.9.1"
 workRuntimeKtx = "2.9.0"
 
 [libraries]
