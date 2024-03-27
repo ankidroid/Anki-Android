@@ -62,6 +62,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
+import anki.sync.SyncStatusResponse
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -113,6 +114,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.widgets.DeckAdapter
+import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -1203,7 +1205,27 @@ open class DeckPicker :
         }
     }
 
-    private fun automaticSync() {
+    private suspend fun automaticSync() {
+        /**
+         * @return whether there are collection changes to be sync.
+         *
+         * It DOES NOT include if there are media to be synced.
+         */
+        suspend fun areThereChangesToSync(): Boolean {
+            val auth = syncAuth() ?: return false
+            val status = withContext(Dispatchers.IO) {
+                CollectionManager.getBackend().syncStatus(auth)
+            }.required
+
+            return when (status) {
+                SyncStatusResponse.Required.NO_CHANGES,
+                SyncStatusResponse.Required.UNRECOGNIZED,
+                null -> false
+                SyncStatusResponse.Required.FULL_SYNC,
+                SyncStatusResponse.Required.NORMAL_SYNC -> true
+            }
+        }
+
         fun syncIntervalPassed(): Boolean {
             val lastSyncTime = sharedPrefs().getLong("lastSyncTime", 0)
             val automaticSyncIntervalInMS = AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES * 60 * 1000
@@ -1222,6 +1244,14 @@ open class DeckPicker :
             !syncIntervalPassed() -> Timber.d("autoSync: sync interval not passed")
             !isLoggedIn() -> Timber.d("autoSync: not logged in")
             mediaMigrationIsInProgress(this) -> Timber.d("autoSync: migrating storage")
+            !areThereChangesToSync() -> {
+                Timber.d("autoSync: no collection changes to sync. Syncing media if set")
+                if (shouldFetchMedia(sharedPrefs())) {
+                    val auth = syncAuth() ?: return
+                    SyncMediaWorker.start(this, auth)
+                }
+                setLastSyncTimeToNow()
+            }
             else -> {
                 Timber.i("autoSync: start")
                 sync()
@@ -1244,8 +1274,11 @@ open class DeckPicker :
                         false
                     ) || backButtonPressedToExit
                 ) {
-                    automaticSync()
-                    finish()
+                    launchCatchingTask {
+                        automaticSync()
+                    }.invokeOnCompletion {
+                        finish()
+                    }
                 } else {
                     showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
                 }
@@ -1325,7 +1358,9 @@ open class DeckPicker :
                 dialogHandler.sendMessage(OneWaySyncDialog(message).toMessage())
             }
         }
-        automaticSync()
+        launchCatchingTask {
+            automaticSync()
+        }
     }
 
     private fun showCollectionErrorDialog() {
