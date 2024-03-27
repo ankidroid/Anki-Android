@@ -1204,23 +1204,28 @@ open class DeckPicker :
     }
 
     private fun automaticSync() {
-        val preferences = baseContext.sharedPrefs()
+        fun syncIntervalPassed(): Boolean {
+            val lastSyncTime = sharedPrefs().getLong("lastSyncTime", 0)
+            val automaticSyncIntervalInMS = AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES * 60 * 1000
+            return TimeManager.time.intTimeMS() - lastSyncTime > automaticSyncIntervalInMS
+        }
 
-        // Check whether the option is selected, the user is signed in, last sync was AUTOMATIC_SYNC_TIME ago
-        // (currently 10 minutes), and is not under a metered connection (if not allowed by preference)
-        val lastSyncTime = preferences.getLong("lastSyncTime", 0)
-        val autoSyncIsEnabled = preferences.getBoolean("automaticSyncMode", false)
-        val automaticSyncIntervalInMS = AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES * 60 * 1000
-        val syncIntervalPassed =
-            TimeManager.time.intTimeMS() - lastSyncTime > automaticSyncIntervalInMS
-        val isNotBlockedByMeteredConnection = preferences.getBoolean(
-            getString(R.string.metered_sync_key),
-            false
-        ) || !isActiveNetworkMetered()
-        val isMigratingStorage = mediaMigrationIsInProgress(this)
-        if (isLoggedIn() && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection && !isMigratingStorage) {
-            Timber.i("Triggering Automatic Sync")
-            sync()
+        val isAutoSyncEnabled = sharedPrefs().getBoolean("automaticSyncMode", false)
+
+        val isBlockedByMeteredConnection = !sharedPrefs().getBoolean(getString(R.string.metered_sync_key), false) &&
+            isActiveNetworkMetered()
+
+        when {
+            !isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
+            isBlockedByMeteredConnection -> Timber.d("autoSync: blocked by metered connection")
+            !NetworkUtils.isOnline -> Timber.d("autoSync: offline")
+            !syncIntervalPassed() -> Timber.d("autoSync: sync interval not passed")
+            !isLoggedIn() -> Timber.d("autoSync: not logged in")
+            mediaMigrationIsInProgress(this) -> Timber.d("autoSync: migrating storage")
+            else -> {
+                Timber.i("autoSync: start")
+                sync()
+            }
         }
     }
 
