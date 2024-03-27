@@ -18,6 +18,8 @@ package com.ichi2.anki.notetype
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -48,7 +50,7 @@ import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.libanki.utils.set
 import com.ichi2.utils.*
 
-class ManageNotetypes : AnkiActivity() {
+class ManageNotetypes : AnkiActivity(), NotetypesAdapter.NotetypeAdapterCallback {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
     private val notetypesAdapter: NotetypesAdapter by lazy {
@@ -64,7 +66,8 @@ class ManageNotetypes : AnkiActivity() {
             },
             onEditCards = { launchForChanges<CardTemplateEditor>(mapOf("modelId" to it.id)) },
             onRename = ::renameNotetype,
-            onDelete = ::deleteNotetype
+            onDelete = ::deleteNotetype,
+            callback = this
         )
     }
     private val outsideChangesLauncher =
@@ -89,6 +92,25 @@ class ManageNotetypes : AnkiActivity() {
             launchCatchingTask { addNewNotetype() }
         }
         launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_manage_notes, menu)
+        launchCatchingTask {
+            menu.findItem(R.id.action_delete_notes).isVisible =
+                notetypesAdapter.getSelectedItems().isNotEmpty()
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_delete_notes -> {
+                deleteSelectedNotetype()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -129,6 +151,26 @@ class ManageNotetypes : AnkiActivity() {
         }
     }
 
+    private fun deleteSelectedNotetype() {
+        val selectedItems = notetypesAdapter.getSelectedItems()
+        AlertDialog.Builder(this@ManageNotetypes).show {
+            title(R.string.model_browser_delete)
+            message(R.string.model_delete_warning)
+            positiveButton(R.string.dialog_positive_delete) {
+                launchCatchingTask {
+                    withProgress {
+                        withCol {
+                            selectedItems.forEach { item ->
+                                removeNotetype(item.id)
+                            }
+                        }
+                    }
+                    runAndRefreshAfter()
+                }
+            }
+            negativeButton(R.string.dialog_cancel)
+        }
+    }
     private fun deleteNotetype(noteTypeUiModel: NoteTypeUiModel) {
         launchCatchingTask {
             val messageResourceId: Int? = if (userAcceptsSchemaChange()) {
@@ -303,5 +345,8 @@ class ManageNotetypes : AnkiActivity() {
      */
     private fun randomizeName(currentName: String): String {
         return "$currentName-${Utils.checksum(time.intTimeMS().toString()).substring(0, 5)}"
+    }
+    override fun onItemLongClicked() {
+        invalidateOptionsMenu()
     }
 }
