@@ -35,11 +35,11 @@ import kotlin.contracts.contract
 interface DialogFragmentProvider {
 
     /**
-     * @return A DialogFragment to show.
+     * @return A DialogFragment to show or `null` to use the parent fragment
      *   The dialog must have a zero-parameter constructor.
      *   Any arguments set via [Fragment.setArguments] may get overridden.
      */
-    fun makeDialogFragment(): DialogFragment
+    fun makeDialogFragment(): DialogFragment?
 }
 
 /**
