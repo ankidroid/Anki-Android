@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.database.sqlite.SQLiteFullException
 import android.os.Build
 import android.os.Environment
 import android.os.Parcelable
@@ -34,7 +35,9 @@ import com.ichi2.anki.ui.windows.permissions.TiramisuPermissionsFragment
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import kotlinx.parcelize.Parcelize
+import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
+import java.lang.Exception
 
 /** Utilities for launching the first activity (currently the DeckPicker)  */
 object InitialActivity {
@@ -46,26 +49,31 @@ object InitialActivity {
             return StartupFailure.WEBVIEW_FAILED
         }
 
-        // If we're OK, return null
-        if (CollectionHelper.instance.tryGetColUnsafe(reportException = false) != null) {
+        val failure = try {
+            CollectionManager.getColUnsafe()
             return null
+        } catch (e: BackendException.BackendDbException.BackendDbLockedException) {
+            Timber.w(e)
+            StartupFailure.DATABASE_LOCKED
+        } catch (e: BackendException.BackendDbException.BackendDbFileTooNewException) {
+            Timber.w(e)
+            StartupFailure.FUTURE_ANKIDROID_VERSION
+        } catch (e: SQLiteFullException) {
+            Timber.w(e)
+            StartupFailure.DISK_FULL
+        } catch (e: Exception) {
+            Timber.w(e)
+            CrashReportService.sendExceptionReport(e, "InitialActivity::getStartupFailureType")
+            StartupFailure.DB_ERROR
         }
+
         if (!AnkiDroidApp.isSdCardMounted) {
             return StartupFailure.SD_CARD_NOT_MOUNTED
         } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
             return StartupFailure.DIRECTORY_NOT_ACCESSIBLE
         }
 
-        return when (CollectionHelper.lastOpenFailure) {
-            CollectionHelper.CollectionOpenFailure.FILE_TOO_NEW -> StartupFailure.FUTURE_ANKIDROID_VERSION
-            CollectionHelper.CollectionOpenFailure.CORRUPT -> StartupFailure.DB_ERROR
-            CollectionHelper.CollectionOpenFailure.LOCKED -> StartupFailure.DATABASE_LOCKED
-            CollectionHelper.CollectionOpenFailure.DISK_FULL -> StartupFailure.DISK_FULL
-            null -> {
-                // if getColSafe returned null, this should never happen
-                null
-            }
-        }
+        return failure
     }
 
     /** @return Whether any preferences were upgraded
