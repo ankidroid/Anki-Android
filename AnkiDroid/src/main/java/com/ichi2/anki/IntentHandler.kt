@@ -32,6 +32,7 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
@@ -71,7 +72,12 @@ class IntentHandler : Activity() {
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
         val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
-        when (getLaunchType(intent)) {
+        val launchType = getLaunchType(intent)
+        // TODO block the UI with some kind of ProgressDialog instead of cancelling the sync work
+        if (requiresCollectionAccess(launchType)) {
+            SyncWorker.cancel(this)
+        }
+        when (launchType) {
             LaunchType.FILE_IMPORT -> runIfStoragePermissions {
                 handleFileImport(fileIntent, reloadIntent, action)
                 finish()
@@ -317,6 +323,18 @@ class IntentHandler : Activity() {
                 // 25000 * 2 (bytes per char) = 50,000 bytes <<< 500KB
                 it.putExtra(CLIPBOARD_INTENT_EXTRA_DATA, textToCopy.trimToLength(25000))
             }
+
+        fun requiresCollectionAccess(launchType: LaunchType): Boolean {
+            return when (launchType) {
+                LaunchType.SYNC,
+                LaunchType.REVIEW,
+                LaunchType.DEFAULT_START_APP_IF_NEW,
+                LaunchType.FILE_IMPORT,
+                LaunchType.TEXT_IMPORT,
+                LaunchType.IMAGE_IMPORT -> true
+                LaunchType.COPY_DEBUG_INFO -> false
+            }
+        }
 
         class DoSync : DialogHandlerMessage(
             which = WhichDialogHandler.MSG_DO_SYNC,
