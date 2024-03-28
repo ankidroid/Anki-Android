@@ -2129,6 +2129,7 @@ open class DeckPicker :
                     decks.remove(listOf(did))
                 }
             }
+            focusedDeck = 1
             showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT) {
                 setAction(R.string.undo) { undo() }
             }
