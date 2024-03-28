@@ -44,7 +44,6 @@ Sample:
         </annotationsPath>
       </roots>
 </jdk>
-
 ```
 
 ## Future Goals
