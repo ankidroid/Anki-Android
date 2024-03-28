@@ -317,7 +317,6 @@ open class RobolectricTest : AndroidTest {
 
     /** Restore regular collection behavior  */
     protected fun disableNullCollection() {
-        CollectionHelper.setInstanceForTesting(CollectionHelper())
         CollectionManager.emulateOpenFailure = false
     }
 

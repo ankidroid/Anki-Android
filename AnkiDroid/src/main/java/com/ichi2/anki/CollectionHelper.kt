@@ -45,14 +45,6 @@ import kotlin.Throws
 open class CollectionHelper {
 
     companion object {
-        var instance: CollectionHelper = CollectionHelper()
-            private set
-
-        @VisibleForTesting
-        internal fun setInstanceForTesting(newInstance: CollectionHelper) {
-            instance = newInstance
-        }
-
         // Name of anki2 file
         const val COLLECTION_FILENAME = "collection.anki2"
 
