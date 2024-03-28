@@ -228,25 +228,24 @@ fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
 fun checkWebviewVersion(packageManager: PackageManager, context: AnkiActivity, fragmentManager: FragmentManager) {
     val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager) ?: return
     val webviewOlder = checkOlderWebView(packageManager)
-
+    val versionCode = webviewPackageInfo.versionName.split(".").get(0).toInt()
+    if (versionCode >= OLDEST_WORKING_WEBVIEW_VERSION) {
+        // To avoid blocking users with com.android.webview with a valid version
+        Timber.d("WebView is up to date. %s: %s", webviewPackageInfo.packageName, webviewPackageInfo.versionName)
+        return
+    }
+    // Invalid version. Checking for package
     if (webviewOlder == null) {
         // com.google.android.webview found
-        val versionCode = webviewPackageInfo.versionName.split(".").get(0).toInt()
-        if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
-            Timber.w("WebView is outdated. %s: %s", webviewPackageInfo.packageName, webviewPackageInfo.versionName)
-            showOutdatedWebViewDialog(context, fragmentManager, webviewPackageInfo)
-            return
-        }
+        Timber.w("WebView is outdated. %s: %s", webviewPackageInfo.packageName, webviewPackageInfo.versionName)
+        showOutdatedWebViewDialog(context, fragmentManager, webviewPackageInfo)
+        return
     } else {
-        val versionCode = webviewOlder.versionName.split(".").get(0).toInt()
-        if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) { // To avoid blocking users with com.android.webview with a valid version
-            Timber.w("WebView is outdated. %s: %s", webviewOlder.packageName, webviewOlder.versionName)
-            showNativeOutdatedWebViewDialog(context, fragmentManager, webviewOlder)
-            return
-            // For older Android Devices having com.android.webview instead of com.google.android.webview
-        }
+        Timber.w("WebView is outdated. %s: %s", webviewOlder.packageName, webviewOlder.versionName)
+        showNativeOutdatedWebViewDialog(context, fragmentManager, webviewOlder)
+        return
+        // For older Android Devices having com.android.webview instead of com.google.android.webview
     }
-    Timber.d("WebView is up to date. %s: %s", webviewPackageInfo.packageName, webviewPackageInfo.versionName)
 }
 
 private fun showOutdatedWebViewDialog(context: AnkiActivity, fragmentManager: FragmentManager, webview: PackageInfo) {
