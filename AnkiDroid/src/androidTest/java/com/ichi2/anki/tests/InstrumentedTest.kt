@@ -24,7 +24,6 @@ import androidx.test.espresso.ViewInteraction
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.utils.EnsureAllFilesAccessRule
 import com.ichi2.annotations.DuplicatedCode
@@ -129,7 +128,6 @@ abstract class InstrumentedTest {
 
     /** Restore regular collection behavior  */
     private fun disableNullCollection() {
-        CollectionHelper.setInstanceForTesting(CollectionHelper())
         CollectionManager.emulateOpenFailure = false
     }
 
