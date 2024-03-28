@@ -24,6 +24,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.libanki.Collection
@@ -66,12 +67,12 @@ class ReminderService : BroadcastReceiver() {
         val col: Collection?
         try {
             colHelper = CollectionHelper.instance
-            col = colHelper.getColUnsafe(context)
+            col = CollectionManager.getColUnsafe()
         } catch (t: Throwable) {
             Timber.w(t, "onReceive - unexpectedly unable to get collection. Returning.")
             return
         }
-        if (null == col || !colHelper.colIsOpenUnsafe()) {
+        if (!colHelper.colIsOpenUnsafe()) {
             Timber.w("onReceive - null or closed collection, unable to process reminders")
             return
         }

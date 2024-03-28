@@ -2619,7 +2619,7 @@ class OneWaySyncDialog(val message: String?) : DialogHandlerMessage(
         val dialog = ConfirmationDialog()
         val confirm = Runnable {
             // Bypass the check once the user confirms
-            CollectionHelper.instance.getColUnsafe(AnkiDroidApp.instance)!!.modSchemaNoCheck()
+            CollectionManager.getColUnsafe().modSchemaNoCheck()
         }
         dialog.setConfirm(confirm)
         dialog.setArgs(message)

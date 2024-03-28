@@ -28,7 +28,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.libanki.Collection
@@ -183,12 +183,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         delegate.installViewFactory()
         delegate.onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
-        val col = CollectionHelper.instance.getColUnsafe(this)
-        if (col != null) {
-            this.col = col
-        } else {
-            finish()
-        }
+        this.col = CollectionManager.getColUnsafe()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

@@ -16,8 +16,8 @@
 
 package com.ichi2.testutils
 
-import android.content.Context
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -47,8 +47,8 @@ object CollectionDBCorruption {
      * Closes and corrupts [CollectionHelper]'s collection
      */
     @NeedsTest("test with a new collection")
-    fun closeAndCorrupt(context: Context): String {
-        val col = CollectionHelper.instance.getColUnsafe(context)!!
+    fun closeAndCorrupt(): String {
+        val col = CollectionManager.getColUnsafe()
         val path = col.path
         col.close()
         corrupt(path)

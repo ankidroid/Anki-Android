@@ -192,8 +192,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("query", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
+        val col = CollectionManager.getColUnsafe()
         Timber.d(getLogMessage("query", uri))
 
         // Find out what data the user is requesting
@@ -390,8 +389,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceUpdateSecurity(uri)) {
             throwSecurityException("update", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
+        val col = CollectionManager.getColUnsafe()
         col.log(getLogMessage("update", uri))
 
         // Find out what data the user is requesting
@@ -582,7 +580,10 @@ class CardContentProvider : ContentProvider() {
                         FlashCardsContract.ReviewInfo.NOTE_ID -> noteID = values.getAsLong(key)
                         FlashCardsContract.ReviewInfo.CARD_ORD -> cardOrd = values.getAsInteger(key)
                         FlashCardsContract.ReviewInfo.EASE -> ease = values.getAsInteger(key)
-                        FlashCardsContract.ReviewInfo.TIME_TAKEN -> timeTaken = values.getAsLong(key)
+                        FlashCardsContract.ReviewInfo.TIME_TAKEN ->
+                            timeTaken =
+                                values.getAsLong(key)
+
                         FlashCardsContract.ReviewInfo.BURY -> bury = values.getAsInteger(key)
                         FlashCardsContract.ReviewInfo.SUSPEND -> suspend = values.getAsInteger(key)
                     }
@@ -634,8 +635,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission()) {
             throwSecurityException("delete", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
+        val col = CollectionManager.getColUnsafe()
         col.log(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
             NOTES_ID -> {
@@ -691,8 +691,7 @@ class CardContentProvider : ContentProvider() {
         if (valuesArr == null || valuesArr.isEmpty()) {
             return 0
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
+        val col = CollectionManager.getColUnsafe()
         if (col.decks.isFiltered(deckId)) {
             throw IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes")
         }
@@ -740,8 +739,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("insert", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
+        val col = CollectionManager.getColUnsafe()
         col.log(getLogMessage("insert", uri))
 
         // Find out what data the user is requesting

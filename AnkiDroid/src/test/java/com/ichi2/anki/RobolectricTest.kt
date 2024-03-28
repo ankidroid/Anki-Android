@@ -144,7 +144,7 @@ open class RobolectricTest : AndroidTest {
 
         try {
             if (CollectionHelper.instance.colIsOpenUnsafe()) {
-                CollectionHelper.instance.getColUnsafe(targetContext)!!.debugEnsureNoOpenPointers()
+                CollectionManager.getColUnsafe().debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
             CollectionHelper.instance.closeCollection("RobolectricTest: End")
@@ -303,7 +303,7 @@ open class RobolectricTest : AndroidTest {
      * we don't get two equal time. */
     override val col: Collection
         get() = try {
-            CollectionHelper.instance.getColUnsafe(targetContext)!!
+            CollectionManager.getColUnsafe()
         } catch (e: UnsatisfiedLinkError) {
             throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
         }
@@ -314,10 +314,7 @@ open class RobolectricTest : AndroidTest {
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {
         CollectionManager.closeCollectionBlocking()
-        CollectionHelper.setInstanceForTesting(object : CollectionHelper() {
-            @Synchronized
-            override fun getColUnsafe(context: Context?): Collection? = null
-        })
+        CollectionManager.setColForTests(null)
         CollectionManager.emulateOpenFailure = true
     }
 
