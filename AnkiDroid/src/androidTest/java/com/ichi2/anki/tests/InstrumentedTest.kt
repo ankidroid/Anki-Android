@@ -108,7 +108,7 @@ abstract class InstrumentedTest {
     @After
     fun runAfterEachTest() {
         try {
-            if (CollectionHelper.instance.colIsOpenUnsafe()) {
+            if (CollectionManager.isOpenUnsafe()) {
                 InstrumentationRegistry.getInstrumentation().targetContext
                 CollectionManager.getColUnsafe()
                     .debugEnsureNoOpenPointers()
