@@ -143,7 +143,8 @@ open class RobolectricTest : AndroidTest {
                 CollectionManager.getColUnsafe().debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            CollectionHelper.instance.closeCollection("RobolectricTest: End")
+            Timber.i("closeCollection: %s", "RobolectricTest: End")
+            CollectionManager.closeCollectionBlocking()
         } catch (ex: BackendException) {
             if ("CollectionNotOpen" == ex.message) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
