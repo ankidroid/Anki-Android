@@ -20,7 +20,6 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.servicelayer.DestFolderOverride
@@ -38,7 +37,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.*
 import org.robolectric.shadows.ShadowStatFs
 import java.io.File
 import kotlin.io.path.Path
@@ -62,7 +60,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
     @Before
     override fun setUp() {
         // had interference between two tests
-        CollectionHelper.instance.setColForTests(null)
+        CollectionManager.setColForTests(null)
         super.setUp()
         defaultCollectionSourcePath = getMigrationSourcePath()
         // arbitrary large values
