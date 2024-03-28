@@ -365,7 +365,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
                 toolbar!!.setNavigationOnClickListener { (activity as AnkiActivity).finish() }
             }
         } catch (e: IllegalStateException) {
-            if (!CollectionHelper.instance.colIsOpenUnsafe()) {
+            if (!CollectionManager.isOpenUnsafe()) {
                 if (recur) {
                     Timber.i(e, "Database closed while working. Probably auto-sync. Will re-try after sleep.")
                     try {
@@ -493,7 +493,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
     private val col: Collection?
         get() {
             try {
-                return CollectionHelper.instance.getColUnsafe(context)
+                return CollectionManager.getColUnsafe()
             } catch (e: Exception) {
                 // This may happen if the backend is locked or similar.
             }

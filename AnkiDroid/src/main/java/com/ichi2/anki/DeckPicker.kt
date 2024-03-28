@@ -1923,7 +1923,7 @@ open class DeckPicker :
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     fun updateDeckList() {
-        if (CollectionHelper.lastOpenFailure != null) {
+        if (!CollectionManager.isOpenUnsafe()) {
             return
         }
         if (Build.FINGERPRINT != "robolectric") {
@@ -2619,7 +2619,7 @@ class OneWaySyncDialog(val message: String?) : DialogHandlerMessage(
         val dialog = ConfirmationDialog()
         val confirm = Runnable {
             // Bypass the check once the user confirms
-            CollectionHelper.instance.getColUnsafe(AnkiDroidApp.instance)!!.modSchemaNoCheck()
+            CollectionManager.getColUnsafe().modSchemaNoCheck()
         }
         dialog.setConfirm(confirm)
         dialog.setArgs(message)

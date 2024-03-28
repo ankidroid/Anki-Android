@@ -47,7 +47,7 @@ import kotlin.test.fail
 
 abstract class InstrumentedTest {
     internal val col: Collection
-        get() = CollectionHelper.instance.getColUnsafe(testContext)!!
+        get() = CollectionManager.getColUnsafe()
 
     @get:Throws(IOException::class)
     protected val emptyCol: Collection
@@ -102,16 +102,15 @@ abstract class InstrumentedTest {
     fun runBeforeEachTest() {
         closeAndroidNotRespondingDialog()
         // resolved issues with the collection being reused if useInMemoryDatabase is false
-        CollectionHelper.instance.setColForTests(null)
+        CollectionManager.setColForTests(null)
     }
 
     @After
     fun runAfterEachTest() {
         try {
-            if (CollectionHelper.instance.colIsOpenUnsafe()) {
-                CollectionHelper
-                    .instance
-                    .getColUnsafe(InstrumentationRegistry.getInstrumentation().targetContext)!!
+            if (CollectionManager.isOpenUnsafe()) {
+                InstrumentationRegistry.getInstrumentation().targetContext
+                CollectionManager.getColUnsafe()
                     .debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections

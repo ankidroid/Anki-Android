@@ -18,7 +18,6 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.database.sqlite.SQLiteFullException
 import android.os.Environment
 import android.text.format.Formatter
 import androidx.annotation.CheckResult
@@ -34,8 +33,6 @@ import com.ichi2.libanki.DB
 import com.ichi2.preferences.getOrSetString
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbFileTooNewException
-import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -49,51 +46,6 @@ import kotlin.Throws
 @KotlinCleanup("convert to object")
 open class CollectionHelper {
     /**
-     * Get the single instance of the [Collection], creating it if necessary  (lazy initialization).
-     * @param context is no longer used, as the global AnkidroidApp instance is used instead
-     * @return instance of the Collection
-     */
-    @Synchronized
-    open fun getColUnsafe(context: Context?): Collection? {
-        return CollectionManager.getColUnsafe()
-    }
-
-    /**
-     * Calls [getColUnsafe] inside a try / catch statement.
-     * Send exception report if [reportException] is set and return null if there was an exception.
-     * @param context
-     * @param reportException Whether to send a crash report if an [Exception] was thrown when opening the collection (excluding
-     * [BackendDbLockedException] and [BackendDbFileTooNewException]).
-     * @return the [Collection] if it could be obtained, `null` otherwise.
-     */
-    @Synchronized
-    fun tryGetColUnsafe(context: Context?, reportException: Boolean = true): Collection? {
-        lastOpenFailure = null
-        return try {
-            getColUnsafe(context)
-        } catch (e: BackendDbLockedException) {
-            lastOpenFailure = CollectionOpenFailure.LOCKED
-            Timber.w(e)
-            null
-        } catch (e: BackendDbFileTooNewException) {
-            lastOpenFailure = CollectionOpenFailure.FILE_TOO_NEW
-            Timber.w(e)
-            null
-        } catch (e: SQLiteFullException) {
-            lastOpenFailure = CollectionOpenFailure.DISK_FULL
-            Timber.w(e)
-            null
-        } catch (e: Exception) {
-            lastOpenFailure = CollectionOpenFailure.CORRUPT
-            Timber.w(e)
-            if (reportException) {
-                CrashReportService.sendExceptionReport(e, "CollectionHelper.getColSafe")
-            }
-            null
-        }
-    }
-
-    /**
      * Close the [Collection], optionally saving
      * @param save whether or not save before closing
      */
@@ -101,13 +53,6 @@ open class CollectionHelper {
     fun closeCollection(reason: String?) {
         Timber.i("closeCollection: %s", reason)
         CollectionManager.closeCollectionBlocking()
-    }
-
-    /**
-     * @return Whether or not [Collection] and its child database are open.
-     */
-    fun colIsOpenUnsafe(): Boolean {
-        return CollectionManager.isOpenUnsafe()
     }
 
     /**
@@ -224,16 +169,6 @@ open class CollectionHelper {
         }
     }
 
-    enum class CollectionOpenFailure {
-        FILE_TOO_NEW, CORRUPT, LOCKED, DISK_FULL
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    @KotlinCleanup("maybe: call CollectionManager directly then remove method")
-    fun setColForTests(col: Collection?) {
-        CollectionManager.setColForTests(col)
-    }
-
     companion object {
         var instance: CollectionHelper = CollectionHelper()
             private set
@@ -258,17 +193,6 @@ open class CollectionHelper {
          * The path also defines the collection that the AnkiDroid API accesses
          */
         const val PREF_COLLECTION_PATH = "deckPath"
-        /**
-         * If the last call to getColSafe() failed, this contains the error type.
-         */
-        /**
-         * If the last call to getColSafe() failed, this stores the error type. This only exists
-         * to enable better error reporting during startup; in the future it would be better if
-         * callers check the exception themselves via a helper routine, instead of relying on a null
-         * return.
-         */
-        var lastOpenFailure: CollectionOpenFailure? = null
-            private set
 
         fun getCollectionSize(context: Context): Long? {
             return try {
