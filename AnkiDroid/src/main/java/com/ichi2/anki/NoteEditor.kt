@@ -256,7 +256,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     )
 
-    private val ioEditorLauncher = registerForActivityResult(
+    private var ioEditorLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
         if (uri != null) {
@@ -555,6 +555,21 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             editOcclusionsButton?.text = resources.getString(R.string.edit_occlusions)
             editOcclusionsButton?.setOnClickListener {
                 setupImageOcclusionEditor()
+            }
+        }
+        fun startCrop(imageUri: Uri) {
+            ImageUtils.cropImage(activityResultRegistry, imageUri) { result ->
+                if (result != null && result.isSuccessful) {
+                    val uriFilePath = result.getUriFilePath(this)
+                    uriFilePath?.let { setupImageOcclusionEditor(it) }
+                } else {
+                    Timber.v("Failed to crop the image")
+                }
+            }
+        }
+        ioEditorLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let { imageUri ->
+                startCrop(imageUri)
             }
         }
 
@@ -1189,7 +1204,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return sp.roundToInt().toString()
         }
 
-    fun addNewNote() {
+    private fun addNewNote() {
         openNewNoteEditor { }
     }
 
