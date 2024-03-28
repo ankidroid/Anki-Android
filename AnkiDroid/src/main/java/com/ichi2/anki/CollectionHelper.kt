@@ -210,12 +210,6 @@ open class CollectionHelper {
         FILE_TOO_NEW, CORRUPT, LOCKED, DISK_FULL
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    @KotlinCleanup("maybe: call CollectionManager directly then remove method")
-    fun setColForTests(col: Collection?) {
-        CollectionManager.setColForTests(col)
-    }
-
     companion object {
         var instance: CollectionHelper = CollectionHelper()
             private set

@@ -89,7 +89,7 @@ open class RobolectricTest : AndroidTest {
         ChangeManager.clearSubscribers()
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
-        CollectionHelper.instance.setColForTests(null)
+        CollectionManager.setColForTests(null)
 
         maybeSetupBackend()
 
