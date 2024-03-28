@@ -503,9 +503,8 @@ open class DeckPicker :
         Onboarding.DeckPicker(this, recyclerViewLayoutManager).onCreate()
 
         launchShowingHidingEssentialFileMigrationProgressDialog()
-        if (BuildConfig.DEBUG) {
-            checkWebviewVersion()
-        }
+
+        checkWebviewVersion(packageManager, this, supportFragmentManager)
 
         supportFragmentManager.setFragmentResultListener(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, this) { requestKey, arguments ->
             when (requestKey) {
@@ -596,27 +595,6 @@ open class DeckPicker :
                 Timber.i("Editing deck description for deck '%d'", deckId)
                 showDialogFragment(EditDeckDescriptionDialog.newInstance(deckId))
             }
-        }
-    }
-
-    /**
-     * Check if the current WebView version is older than the last supported version and if it is,
-     * inform the developer with a snackbar.
-     */
-    private fun checkWebviewVersion() {
-        // Doesn't need to be translated as it's debug only
-        val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager)
-        if (webviewPackageInfo == null) {
-            val snackbarMessage = "No Android System WebView found"
-            showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
-            return
-        }
-
-        val versionCode = webviewPackageInfo.versionName.split(".")[0].toInt()
-        if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
-            val snackbarMessage =
-                "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION)."
-            showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
         }
     }
 
@@ -1136,6 +1114,9 @@ open class DeckPicker :
             refreshState()
         }
         message?.let { dialogHandler.sendStoredMessage(it) }
+        checkWebviewVersion(packageManager, this, supportFragmentManager)
+        // In case the user returns to the App without making the required updates to WebView
+        // As without a "onResume()" , the dialog box is removed on resume.
     }
 
     fun refreshState() {
