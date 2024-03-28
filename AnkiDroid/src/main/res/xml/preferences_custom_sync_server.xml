@@ -16,4 +16,8 @@
         android:title="@string/custom_sync_server_base_url_title"
         android:inputType="textUri"
         app:useSimpleSummaryProvider="true" />
+    <com.ichi2.preferences.VersatileTextWithASwitchPreference
+        android:key="@string/custom_certificate_key"
+        android:title="@string/custom_certificate_title"
+        android:inputType="textMultiLine" />
 </PreferenceScreen>
