@@ -313,6 +313,7 @@
     <string name="expand_tag">\'%s\' ଟ୍ୟାଗଟିକୁ ପ୍ରସାରିବା</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">ସଂଗ୍ରହକୁ ପ୍ରବେଶ କରିବାରେ ବିଫଳ। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ!</string>
+    <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ଅଳ୍ପ ପଢ଼ିକରି</string>
     <string name="intro_ankidroid_tagline_two">ଅଧିକ ମନେ ରଖନ୍ତୁ</string>
