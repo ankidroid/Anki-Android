@@ -74,7 +74,7 @@
 
             <TextView
                 android:id="@+id/valueDisplay"
-                android:minWidth="40sp"
+                android:minWidth="64sp"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
                 android:layout_width="wrap_content"
