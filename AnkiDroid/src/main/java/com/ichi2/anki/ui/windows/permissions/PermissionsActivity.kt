@@ -26,7 +26,6 @@ import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.themes.Themes
 import com.ichi2.themes.setTransparentStatusBar
 
@@ -62,7 +61,6 @@ class PermissionsActivity : AnkiActivity() {
             replace(R.id.fragment_container, permissionsFragment)
         }
         // only close the activity by tapping the continue button
-        @NeedsTest("activity can only be closed by tapping the continue button")
         onBackPressedDispatcher.addCallback {}
     }
 

@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.ui.windows.permissions
 
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.commitNow
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -28,6 +29,21 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PermissionsActivityTest : RobolectricTest() {
+    @Test
+    fun testActivityCantBeClosedByBackButton() {
+        ActivityScenario.launch(PermissionsActivity::class.java).onActivity { activity ->
+            activity.onBackPressedDispatcher.onBackPressed()
+            assertThat("activity is not destroyed", !activity.isDestroyed)
+        }
+    }
+
+    @Test
+    fun testActivityCanBeClosedByContinueButton() {
+        ActivityScenario.launch(PermissionsActivity::class.java).onActivity { activity ->
+            activity.findViewById<AppCompatButton>(R.id.continue_button).performClick()
+            assertThat("activity is finishing", activity.isFinishing)
+        }
+    }
 
     @Test
     fun `Each screen starts normally and has the same permissions of a PermissionSet`() {
