@@ -85,7 +85,7 @@ class DeckSpinnerSelection(
 
     @MainThread // spinner.adapter
     fun initializeNoteEditorDeckSpinner(col: Collection) {
-        dropDownDecks = computeDropDownDecks(col, includeFiltered = false).toMutableList()
+        dropDownDecks = computeDropDownDecks(col, includeFiltered = showFilteredDecks).toMutableList()
         val deckNames = dropDownDecks.map { it.name }
         val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {

@@ -574,7 +574,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 findViewById(R.id.note_deck_spinner),
                 showAllDecks = false,
                 alwaysShowDefault = true,
-                showFilteredDecks = false
+                showFilteredDecks = true
             )
         deckSpinnerSelection!!.initializeNoteEditorDeckSpinner(col)
         deckId = intent.getLongExtra(EXTRA_DID, deckId)
