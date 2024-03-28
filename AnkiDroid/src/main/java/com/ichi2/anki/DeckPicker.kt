@@ -1242,7 +1242,7 @@ open class DeckPicker :
             !isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
             isBlockedByMeteredConnection -> Timber.d("autoSync: blocked by metered connection")
             !NetworkUtils.isOnline -> Timber.d("autoSync: offline")
-            !syncIntervalPassed() -> Timber.d("autoSync: sync interval not passed")
+            !runInBackground && !syncIntervalPassed() -> Timber.d("autoSync: interval not passed")
             !isLoggedIn() -> Timber.d("autoSync: not logged in")
             mediaMigrationIsInProgress(this) -> Timber.d("autoSync: migrating storage")
             !areThereChangesToSync() -> {
