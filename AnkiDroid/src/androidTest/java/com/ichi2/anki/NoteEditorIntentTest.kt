@@ -24,8 +24,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.NoteEditor.Companion.intentLaunchedWithImage
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
-import com.ichi2.testutils.Flaky
-import com.ichi2.testutils.OS
 import junit.framework.TestCase.assertFalse
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -46,11 +44,10 @@ class NoteEditorIntentTest : InstrumentedTest() {
     )
 
     @Test
-    @Flaky(OS.ALL, "Issue 15707 - java.lang.ArrayIndexOutOfBoundsException: length=0; index=0")
     fun launchActivityWithIntent() {
         col
         val scenario = activityRuleIntent!!.scenario
-        scenario.moveToState(Lifecycle.State.RESUMED)
+        scenario.moveToState(Lifecycle.State.CREATED)
 
         onActivity(scenario) { editor ->
             val currentFieldStrings = editor.currentFieldStrings
