@@ -2037,7 +2037,7 @@ open class DeckPicker :
             Timber.e(e, "RuntimeException setting time remaining")
         }
         val current = withCol { decks.current().optLong("id") }
-        if (focusedDeck != current) {
+        if (focusedDeck != current && focusedDeck != 0L) {
             scrollDecklistToDeck(current)
             focusedDeck = current
         }
@@ -2131,7 +2131,6 @@ open class DeckPicker :
                     decks.removeDecks(listOf(did))
                 }
             }
-            focusedDeck = 1
             showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT) {
                 setAction(R.string.undo) { undo() }
             }
