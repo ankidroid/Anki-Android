@@ -27,7 +27,7 @@ import com.ichi2.anki.AndroidTtsError
 import com.ichi2.anki.AndroidTtsError.TtsErrorCode
 import com.ichi2.anki.AndroidTtsPlayer
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CollectionHelper.Companion.getMediaDirectory
+import com.ichi2.anki.CollectionHelper.getMediaDirectory
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.ReadText
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
