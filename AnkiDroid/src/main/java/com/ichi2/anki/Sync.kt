@@ -190,7 +190,7 @@ private fun updateLogin(context: Context, username: String, hkey: String?) {
     }
 }
 
-private fun cancelSync(backend: Backend) {
+fun cancelSync(backend: Backend) {
     backend.setWantsAbort()
     backend.abortSync()
 }

@@ -115,6 +115,7 @@ import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.worker.SyncMediaWorker
+import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -1205,7 +1206,7 @@ open class DeckPicker :
         }
     }
 
-    private suspend fun automaticSync() {
+    private suspend fun automaticSync(runInBackground: Boolean = false) {
         /**
          * @return whether there are collection changes to be sync.
          *
@@ -1253,8 +1254,14 @@ open class DeckPicker :
                 setLastSyncTimeToNow()
             }
             else -> {
-                Timber.i("autoSync: start")
-                sync()
+                if (runInBackground) {
+                    Timber.i("autoSync: starting background")
+                    val auth = syncAuth() ?: return
+                    SyncWorker.start(this, auth, shouldFetchMedia(sharedPrefs()))
+                } else {
+                    Timber.i("autoSync: starting foreground")
+                    sync()
+                }
             }
         }
     }
@@ -1274,8 +1281,10 @@ open class DeckPicker :
                         false
                     ) || backButtonPressedToExit
                 ) {
-                    launchCatchingTask {
-                        automaticSync()
+                    // can't use launchCatchingTask because any errors
+                    // would need to be shown in the UI
+                    lifecycleScope.launch {
+                        automaticSync(runInBackground = true)
                     }.invokeOnCompletion {
                         finish()
                     }
