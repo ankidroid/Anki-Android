@@ -19,8 +19,7 @@ package com.ichi2.async
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Collection
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +38,7 @@ object CollectionLoader {
                 // load collection
                 try {
                     Timber.d("CollectionLoader accessing collection")
-                    val col = CollectionHelper.instance.getColUnsafe(AnkiDroidApp.instance.applicationContext)
+                    val col = CollectionManager.getColUnsafe()
                     Timber.i("CollectionLoader obtained collection")
                     col
                 } catch (e: RuntimeException) {
