@@ -47,7 +47,7 @@ import kotlin.test.fail
 
 abstract class InstrumentedTest {
     internal val col: Collection
-        get() = CollectionHelper.instance.getColUnsafe(testContext)!!
+        get() = CollectionManager.getColUnsafe()
 
     @get:Throws(IOException::class)
     protected val emptyCol: Collection
@@ -109,9 +109,8 @@ abstract class InstrumentedTest {
     fun runAfterEachTest() {
         try {
             if (CollectionHelper.instance.colIsOpenUnsafe()) {
-                CollectionHelper
-                    .instance
-                    .getColUnsafe(InstrumentationRegistry.getInstrumentation().targetContext)!!
+                InstrumentationRegistry.getInstrumentation().targetContext
+                CollectionManager.getColUnsafe()
                     .debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections

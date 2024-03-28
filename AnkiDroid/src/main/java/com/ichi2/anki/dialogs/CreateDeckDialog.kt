@@ -21,7 +21,7 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -65,7 +65,7 @@ class CreateDeckDialog(
     }
 
     private val getColUnsafe
-        get() = CollectionHelper.instance.getColUnsafe(context)!!
+        get() = CollectionManager.getColUnsafe()
 
     suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")

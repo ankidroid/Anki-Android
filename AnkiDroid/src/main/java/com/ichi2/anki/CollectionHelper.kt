@@ -49,28 +49,17 @@ import kotlin.Throws
 @KotlinCleanup("convert to object")
 open class CollectionHelper {
     /**
-     * Get the single instance of the [Collection], creating it if necessary  (lazy initialization).
-     * @param context is no longer used, as the global AnkidroidApp instance is used instead
-     * @return instance of the Collection
-     */
-    @Synchronized
-    open fun getColUnsafe(context: Context?): Collection? {
-        return CollectionManager.getColUnsafe()
-    }
-
-    /**
      * Calls [getColUnsafe] inside a try / catch statement.
      * Send exception report if [reportException] is set and return null if there was an exception.
-     * @param context
      * @param reportException Whether to send a crash report if an [Exception] was thrown when opening the collection (excluding
      * [BackendDbLockedException] and [BackendDbFileTooNewException]).
      * @return the [Collection] if it could be obtained, `null` otherwise.
      */
     @Synchronized
-    fun tryGetColUnsafe(context: Context?, reportException: Boolean = true): Collection? {
+    fun tryGetColUnsafe(reportException: Boolean = true): Collection? {
         lastOpenFailure = null
         return try {
-            getColUnsafe(context)
+            CollectionManager.getColUnsafe()
         } catch (e: BackendDbLockedException) {
             lastOpenFailure = CollectionOpenFailure.LOCKED
             Timber.w(e)

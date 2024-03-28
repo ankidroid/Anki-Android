@@ -139,7 +139,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
     @Test
     fun exception_thrown_if_database_corrupt() = runTest {
         checkCollectionAfter = false
-        val collectionAnki2Path = CollectionDBCorruption.closeAndCorrupt(targetContext)
+        val collectionAnki2Path = CollectionDBCorruption.closeAndCorrupt()
 
         val collectionSourcePath = File(collectionAnki2Path).parent!!
 

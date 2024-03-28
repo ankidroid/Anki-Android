@@ -493,7 +493,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
     private val col: Collection?
         get() {
             try {
-                return CollectionHelper.instance.getColUnsafe(context)
+                return CollectionManager.getColUnsafe()
             } catch (e: Exception) {
                 // This may happen if the backend is locked or similar.
             }
