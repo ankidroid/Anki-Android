@@ -20,7 +20,6 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.servicelayer.DestFolderOverride
@@ -38,7 +37,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.*
 import org.robolectric.shadows.ShadowStatFs
 import java.io.File
 import kotlin.io.path.Path
@@ -62,7 +60,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
     @Before
     override fun setUp() {
         // had interference between two tests
-        CollectionHelper.instance.setColForTests(null)
+        CollectionManager.setColForTests(null)
         super.setUp()
         defaultCollectionSourcePath = getMigrationSourcePath()
         // arbitrary large values
@@ -98,11 +96,27 @@ class MigrateEssentialFilesTest : RobolectricTest() {
 
         // assert that the preferences are updated
         val prefs = getPreferences()
-        assertThat("The deck path should be updated", prefs.getString(DECK_PATH, ""), equalTo(outPath.canonicalPath))
-        assertThat("The migration source should be the original deck path", prefs.getString(ScopedStorageService.PREF_MIGRATION_SOURCE, ""), equalTo(oldDeckPath))
-        assertThat("The migration destination should be the deck path", prefs.getString(ScopedStorageService.PREF_MIGRATION_DESTINATION, ""), equalTo(outPath.canonicalPath))
+        assertThat(
+            "The deck path should be updated",
+            prefs.getString(DECK_PATH, ""),
+            equalTo(outPath.canonicalPath)
+        )
+        assertThat(
+            "The migration source should be the original deck path",
+            prefs.getString(ScopedStorageService.PREF_MIGRATION_SOURCE, ""),
+            equalTo(oldDeckPath)
+        )
+        assertThat(
+            "The migration destination should be the deck path",
+            prefs.getString(ScopedStorageService.PREF_MIGRATION_DESTINATION, ""),
+            equalTo(outPath.canonicalPath)
+        )
 
-        assertThat(".nomedia should be copied", File(outPath.canonicalPath, ".nomedia"), FileMatchers.anExistingFile())
+        assertThat(
+            ".nomedia should be copied",
+            File(outPath.canonicalPath, ".nomedia"),
+            FileMatchers.anExistingFile()
+        )
 
         assertThat("The added card should still exists", col.cardCount(), equalTo(1))
     }
@@ -111,7 +125,10 @@ class MigrateEssentialFilesTest : RobolectricTest() {
     fun exception_thrown_if_migration_is_started_while_in_process() {
         getPreferences().edit {
             putString(ScopedStorageService.PREF_MIGRATION_SOURCE, defaultCollectionSourcePath)
-            putString(ScopedStorageService.PREF_MIGRATION_DESTINATION, createTransientDirectory().path)
+            putString(
+                ScopedStorageService.PREF_MIGRATION_DESTINATION,
+                createTransientDirectory().path
+            )
         }
         assertMigrationInProgress()
 
@@ -131,7 +148,12 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         }
 
         val exception = assertFailsWith<IllegalStateException> {
-            prepareAndValidateSourceAndDestinationFolders(targetContext, sourceOverride = File(source), destOverride = DestFolderOverride.Subfolder(nonEmptyDestination), checkSourceDir = false)
+            prepareAndValidateSourceAndDestinationFolders(
+                targetContext,
+                sourceOverride = File(source),
+                destOverride = DestFolderOverride.Subfolder(nonEmptyDestination),
+                checkSourceDir = false
+            )
         }
         assertThat(exception.message, containsString("not empty"))
     }
@@ -143,7 +165,12 @@ class MigrateEssentialFilesTest : RobolectricTest() {
 
         val collectionSourcePath = File(collectionAnki2Path).parent!!
 
-        assertFailsWith<SQLiteDatabaseCorruptException> { migrateEssentialFilesForTest(targetContext, collectionSourcePath) }
+        assertFailsWith<SQLiteDatabaseCorruptException> {
+            migrateEssentialFilesForTest(
+                targetContext,
+                collectionSourcePath
+            )
+        }
 
         assertMigrationNotInProgress()
     }
@@ -154,7 +181,11 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         // if this check fails, we want to revert the changes to preferences that we made
         val collectionSourcePath = getMigrationSourcePath()
 
-        val prefKeys = listOf(ScopedStorageService.PREF_MIGRATION_SOURCE, ScopedStorageService.PREF_MIGRATION_DESTINATION, DECK_PATH)
+        val prefKeys = listOf(
+            ScopedStorageService.PREF_MIGRATION_SOURCE,
+            ScopedStorageService.PREF_MIGRATION_DESTINATION,
+            DECK_PATH
+        )
         val oldPrefValues = prefKeys
             .associateWith { getPreferences().getString(it, null) }
 
@@ -165,7 +196,11 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         CollectionManager.emulateOpenFailure = false
 
         oldPrefValues.forEach {
-            assertThat("Pref ${it.key} should be unchanged", getPreferences().getString(it.key, null), equalTo(it.value))
+            assertThat(
+                "Pref ${it.key} should be unchanged",
+                getPreferences().getString(it.key, null),
+                equalTo(it.value)
+            )
         }
 
         assertMigrationNotInProgress()

@@ -91,7 +91,7 @@ open class RobolectricTest : AndroidTest {
         ChangeManager.clearSubscribers()
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
-        CollectionHelper.instance.setColForTests(null)
+        CollectionManager.setColForTests(null)
 
         maybeSetupBackend()
 
@@ -171,7 +171,10 @@ open class RobolectricTest : AndroidTest {
     /**
      * Click on a dialog button for an AlertDialog dialog box. Replaces the above helper.
      */
-    protected fun clickAlertDialogButton(button: Int, @Suppress("SameParameterValue") checkDismissed: Boolean) {
+    protected fun clickAlertDialogButton(
+        button: Int,
+        @Suppress("SameParameterValue") checkDismissed: Boolean
+    ) {
         val dialog = ShadowDialog.getLatestDialog() as AlertDialog
 
         dialog.getButton(button).performClick()
@@ -253,7 +256,11 @@ open class RobolectricTest : AndroidTest {
         }
 
         @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
-        protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(testClass: RobolectricTest, clazz: Class<T>?, i: Intent?): T {
+        protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
+            testClass: RobolectricTest,
+            clazz: Class<T>?,
+            i: Intent?
+        ): T {
             if (AbstractFlashcardViewer::class.java.isAssignableFrom(clazz!!)) {
                 // fixes 'Don't know what to do with dataSource...' inside Sounds.kt
                 // solution from https://github.com/robolectric/robolectric/issues/4673
@@ -330,7 +337,10 @@ open class RobolectricTest : AndroidTest {
         return NotetypeJson(collectionModels.byName(modelName).toString().trim { it <= ' ' })
     }
 
-    internal fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {
+    internal fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
+        clazz: Class<T>?,
+        i: Intent?
+    ): T {
         return startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
     }
 
@@ -396,13 +406,19 @@ open class RobolectricTest : AndroidTest {
     }
 
     fun equalFirstField(expected: Card, obtained: Card) {
-        MatcherAssert.assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
+        MatcherAssert.assertThat(
+            obtained.note().fields[0],
+            Matchers.equalTo(expected.note().fields[0])
+        )
     }
 
     @CheckResult
     protected fun openDialogFragmentUsingActivity(menu: DialogFragment): FragmentTestActivity {
         val startActivityIntent = Intent(targetContext, FragmentTestActivity::class.java)
-        val activity = startActivityNormallyOpenCollectionWithIntent(FragmentTestActivity::class.java, startActivityIntent)
+        val activity = startActivityNormallyOpenCollectionWithIntent(
+            FragmentTestActivity::class.java,
+            startActivityIntent
+        )
         activity.showDialogFragment(menu)
         return activity
     }
