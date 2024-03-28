@@ -540,7 +540,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
     fun closeCollectionAndFinish() {
         Timber.i("closeCollectionAndFinish()")
-        CollectionHelper.instance.closeCollection("AnkiActivity:closeCollectionAndFinish()")
+        Timber.i("closeCollection: %s", "AnkiActivity:closeCollectionAndFinish()")
+        CollectionManager.closeCollectionBlocking()
         finish()
     }
 

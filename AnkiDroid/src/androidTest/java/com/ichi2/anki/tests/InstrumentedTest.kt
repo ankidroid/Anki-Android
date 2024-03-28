@@ -112,7 +112,8 @@ abstract class InstrumentedTest {
                 CollectionManager.getColUnsafe().debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            CollectionHelper.instance.closeCollection("InstrumentedTest: End")
+            Timber.i("closeCollection: %s", "InstrumentedTest: End")
+            CollectionManager.closeCollectionBlocking()
         } catch (ex: BackendException) {
             if ("CollectionNotOpen" == ex.message) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")

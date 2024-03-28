@@ -24,7 +24,7 @@ import android.content.ContentValues
 import android.database.CursorWindow
 import android.net.Uri
 import com.ichi2.anki.AbstractFlashcardViewer
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
@@ -1273,7 +1273,8 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     private fun reopenCol(): com.ichi2.libanki.Collection {
-        CollectionHelper.instance.closeCollection("ContentProviderTest: reopenCol")
+        Timber.i("closeCollection: %s", "ContentProviderTest: reopenCol")
+        CollectionManager.closeCollectionBlocking()
         return col
     }
 

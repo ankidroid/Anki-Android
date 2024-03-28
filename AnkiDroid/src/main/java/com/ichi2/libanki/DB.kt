@@ -26,7 +26,7 @@ import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import androidx.annotation.WorkerThread
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.utils.KotlinCleanup
@@ -70,7 +70,8 @@ class DB(val database: SupportSQLiteDatabase) {
                 "DB.MyDbErrorHandler.onCorruption",
                 "Db has been corrupted: " + db.path
             )
-            CollectionHelper.instance.closeCollection("Database corrupted")
+            Timber.i("closeCollection: %s", "Database corrupted")
+            CollectionManager.closeCollectionBlocking()
             DatabaseErrorDialog.databaseCorruptFlag = true
         }
     }

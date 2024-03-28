@@ -45,15 +45,6 @@ import kotlin.Throws
  */
 @KotlinCleanup("convert to object")
 open class CollectionHelper {
-    /**
-     * Close the [Collection], optionally saving
-     * @param save whether or not save before closing
-     */
-    @Synchronized
-    fun closeCollection(reason: String?) {
-        Timber.i("closeCollection: %s", reason)
-        CollectionManager.closeCollectionBlocking()
-    }
 
     /**
      * This currently stores either:
