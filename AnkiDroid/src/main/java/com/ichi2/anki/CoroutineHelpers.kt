@@ -401,7 +401,9 @@ private suspend fun monitorProgress(
 ) {
     val state = ProgressContext(Progress.getDefaultInstance())
     while (true) {
-        state.progress = backend.latestProgress()
+        state.progress = withContext(Dispatchers.IO) {
+            backend.latestProgress()
+        }
         state.extractProgress()
         // on main thread, so op can update UI
         withContext(Dispatchers.Main) {
