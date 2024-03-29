@@ -260,6 +260,6 @@
     </string>
 
     <string name="deck_already_exists">Deck already exists</string>
-    <string name="webview_update_message">Android System WebView is out of date\n\n%1$s: %2$s</string>
-    <string name="older_native_webview_found_alert">Android System WebView is out of date. You may need to use com.google.android.webview\n\n%1$s: %2$s</string>
+    <string name="webview_update_message" comment="The First Parameter represents the package name of the outdated WebView(com.google.android.webview) and the second parameter represents the outdated version">Android System WebView is out of date\n\n%1$s: %2$s</string>
+    <string name="older_native_webview_found_alert" comment="The First Parameter represents the package name of the outdated WebView(com.android.webview) and the second parameter represents the outdated version">Android System WebView is out of date. You may need to use com.google.android.webview\n\n%1$s: %2$s</string>
 </resources>

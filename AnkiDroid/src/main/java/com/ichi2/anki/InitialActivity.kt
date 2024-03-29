@@ -28,7 +28,6 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
@@ -37,7 +36,6 @@ import com.ichi2.anki.ui.windows.permissions.Full30and31PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
 import com.ichi2.anki.ui.windows.permissions.TiramisuPermissionsFragment
-import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.cancelable
@@ -225,7 +223,7 @@ fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
  * Check if the current WebView version is older than the last supported version and if it is,
  * inform the user with a dialog box containing further instructions.
  */
-fun checkWebviewVersion(packageManager: PackageManager, context: AnkiActivity, fragmentManager: FragmentManager) {
+fun checkWebviewVersion(packageManager: PackageManager, context: AnkiActivity) {
     val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager) ?: return
     val webviewOlder = checkOlderWebView(packageManager)
     val versionCode = webviewPackageInfo.versionName.split(".").get(0).toInt()
@@ -238,47 +236,43 @@ fun checkWebviewVersion(packageManager: PackageManager, context: AnkiActivity, f
     if (webviewOlder == null) {
         // com.google.android.webview found
         Timber.w("WebView is outdated. %s: %s", webviewPackageInfo.packageName, webviewPackageInfo.versionName)
-        showOutdatedWebViewDialog(context, fragmentManager, webviewPackageInfo)
+        showOutdatedWebViewDialog(context, webviewPackageInfo)
         return
     } else {
         Timber.w("WebView is outdated. %s: %s", webviewOlder.packageName, webviewOlder.versionName)
-        showNativeOutdatedWebViewDialog(context, fragmentManager, webviewOlder)
+        showNativeOutdatedWebViewDialog(context, webviewOlder)
         return
         // For older Android Devices having com.android.webview instead of com.google.android.webview
     }
 }
 
-private fun showOutdatedWebViewDialog(context: AnkiActivity, fragmentManager: FragmentManager, webview: PackageInfo) {
+private fun showOutdatedWebViewDialog(context: AnkiActivity, webview: PackageInfo) {
     val message = String.format(context.getString(R.string.webview_update_message), webview.packageName, webview.versionName)
     AlertDialog.Builder(context).show {
         title(R.string.ankidroid_init_failed_webview_title)
-        message(
-            text = message
-        )
+        message(text = message)
         positiveButton(R.string.scoped_storage_learn_more) {
             context.openUrl(Uri.parse(context.getString(R.string.webview_update_link)))
         }
         neutralButton(R.string.help) {
             val helpDialog = HelpDialog.newHelpInstance()
-            helpDialog.show(fragmentManager, "HelpDialog")
+            context.showDialogFragment(helpDialog)
         }
         cancelable(false)
     }
 }
 
-private fun showNativeOutdatedWebViewDialog(context: AnkiActivity, fragmentManager: FragmentManager, webview: PackageInfo) {
+private fun showNativeOutdatedWebViewDialog(context: AnkiActivity, webview: PackageInfo) {
     AlertDialog.Builder(context).show {
         title(R.string.ankidroid_init_failed_webview_title)
         val message = String.format(context.getString(R.string.older_native_webview_found_alert), webview.packageName, webview.versionName)
-        message(
-            text = message
-        )
+        message(text = message)
         positiveButton(R.string.scoped_storage_learn_more) {
             context.openUrl(Uri.parse(context.getString(R.string.native_webview_update_link)))
         }
         neutralButton(R.string.help) {
             val helpDialog = HelpDialog.newHelpInstance()
-            helpDialog.show(fragmentManager, "HelpDialog")
+            context.showDialogFragment(helpDialog)
         }
         cancelable(false)
     }
