@@ -255,9 +255,7 @@ object ReadText {
                     Timber.d("TTS initialized and available languages found")
                     (context as AbstractFlashcardViewer).ttsInitialized()
                 } else {
-                    if (ankiActivityContext != null) {
-                        ankiActivityContext.showSnackbar(R.string.no_tts_available_message)
-                    }
+                    ankiActivityContext?.showSnackbar(R.string.no_tts_available_message)
                     Timber.w("TTS initialized but no available languages found")
                 }
                 textToSpeech!!.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
