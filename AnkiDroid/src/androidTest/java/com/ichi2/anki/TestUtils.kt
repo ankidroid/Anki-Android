@@ -17,13 +17,13 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.content.res.Configuration
 import android.view.View
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
-import com.ichi2.anki.test.R
 import org.hamcrest.Matcher
 
 object TestUtils {
@@ -48,10 +48,15 @@ object TestUtils {
         }
 
     /**
-     * Returns true if device is a tablet
+     * Returns true if device is a tablet - tablet layout is in 'xlarge' values overlay,
+     * so test for that screen layout in our resources configuration
      */
-    val isScreenSw600dp: Boolean
-        get() = activityInstance!!.resources.getBoolean(R.bool.is_big_screen)
+    val isTablet: Boolean
+        get() = (
+            activityInstance!!.resources.configuration.screenLayout and
+                Configuration.SCREENLAYOUT_SIZE_MASK
+            ) ==
+            Configuration.SCREENLAYOUT_SIZE_XLARGE
 
     /**
      * Click on a view using its ID inside a RecyclerView item
