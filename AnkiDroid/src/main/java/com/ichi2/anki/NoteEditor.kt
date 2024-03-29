@@ -1788,7 +1788,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         fun calculateDeckId(): DeckId {
             if (deckId != 0L) return deckId
             if (note != null && !addNote && currentEditedCard != null) {
-                return currentEditedCard!!.did
+                return CardUtils.getDeckIdForCard(currentEditedCard!!)
             }
 
             if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
