@@ -108,6 +108,7 @@ import java.util.*
 import java.util.function.Consumer
 import kotlin.math.abs
 import kotlin.math.ceil
+import kotlin.math.min
 
 @Suppress("LeakingThis")
 // The class is only 'open' due to testing
@@ -1379,7 +1380,7 @@ open class CardBrowser :
             val cards = withProgress { searchForCards(searchText, order, viewModel.cardsOrNotes) }
             Timber.d("Search returned %d cards", cards.size)
             // Render the first few items
-            for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
+            for (i in 0 until min(numCardsToRender(), cards.size)) {
                 cards[i].load(false, viewModel.column1Index, viewModel.column2Index)
             }
             redrawAfterSearch(cards)

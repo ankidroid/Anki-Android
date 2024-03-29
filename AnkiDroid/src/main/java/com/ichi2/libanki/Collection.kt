@@ -580,7 +580,7 @@ open class Collection(
         val methodName = outerTraceElement.methodName
 
         val objectsString = objects
-            .map { if (it is LongArray) Arrays.toString(it) else it }
+            .map { if (it is LongArray) it.contentToString() else it }
             .joinToString(", ")
 
         writeLog("[$unixTime] $fileName:$methodName() $objectsString")
