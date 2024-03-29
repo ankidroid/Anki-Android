@@ -40,6 +40,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.cancelMediaSync
 import com.ichi2.anki.notifications.NotificationId
+import com.ichi2.anki.utils.ext.trySetForeground
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import timber.log.Timber
@@ -54,7 +55,7 @@ class SyncMediaWorker(
 
     override suspend fun doWork(): Result {
         Timber.v("SyncMediaWorker::doWork")
-        setForeground(getForegroundInfo())
+        trySetForeground(getForegroundInfo())
 
         try {
             val syncAuth = syncAuth {
