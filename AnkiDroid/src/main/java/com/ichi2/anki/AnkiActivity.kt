@@ -331,7 +331,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
             .setToolbarColor(toolbarColor)
             .setNavigationBarColor(navBarColor)
             .build()
-        val builder = CustomTabsIntent.Builder(customTabActivityHelper.session)
+        val builder = Builder(customTabActivityHelper.session)
             .setShowTitle(true)
             .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
             .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
