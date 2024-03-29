@@ -226,7 +226,7 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
      * @param sourceFileName The name of the source file: "file.ext"
      * @param content The content of the source file
      */
-    private class InputParameters constructor(
+    private class InputParameters(
         private vararg val directoryComponents: String,
         val sourceFileName: String,
         val content: String = "source content"
