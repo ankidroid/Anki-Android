@@ -56,7 +56,6 @@ class SyncMediaWorker(
 
     override suspend fun doWork(): Result {
         Timber.v("SyncMediaWorker::doWork")
-        trySetForeground(getForegroundInfo())
 
         try {
             val auth = syncAuth {
@@ -69,7 +68,12 @@ class SyncMediaWorker(
             val backend = CollectionManager.getBackend()
             backend.syncMedia(auth)
 
-            monitorProgress(backend)
+            delay(1000) // avoid notifications if sync occurs too quickly
+            if (backend.mediaSyncStatus().active) {
+                Timber.i("Showing SyncMediaWorker's notification")
+                trySetForeground(getForegroundInfo())
+                monitorProgress(backend)
+            }
         } catch (cancellationException: CancellationException) {
             Timber.w(cancellationException)
             cancelMediaSync(CollectionManager.getBackend())
@@ -115,7 +119,7 @@ class SyncMediaWorker(
             setOngoing(true)
             setProgress(0, 0, true)
             addAction(R.drawable.close_icon, cancelTitle, cancelIntent)
-            foregroundServiceBehavior = NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE
+            foregroundServiceBehavior = NotificationCompat.FOREGROUND_SERVICE_DEFERRED
         }
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ForegroundInfo(NotificationId.SYNC_MEDIA, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
