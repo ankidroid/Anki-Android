@@ -108,10 +108,13 @@ class SyncMediaWorker(
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
+        val title = applicationContext.getString(R.string.syncing_media)
+        val cancelTitle = applicationContext.getString(R.string.dialog_cancel)
         val notification = buildNotification {
-            setContentTitle(applicationContext.getString(R.string.syncing_media))
+            setContentTitle(title)
             setOngoing(true)
             setProgress(0, 0, true)
+            addAction(R.drawable.close_icon, cancelTitle, cancelIntent)
             foregroundServiceBehavior = NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE
         }
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
