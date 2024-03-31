@@ -2311,7 +2311,7 @@ open class DeckPicker :
         }
     }
 
-    override fun opExecuted(changes: OpChanges, handler: Any?) {
+    override suspend fun opExecuted(changes: OpChanges, handler: Any?) {
         if (changes.studyQueues && handler !== this) {
             invalidateOptionsMenu()
             updateDeckList()

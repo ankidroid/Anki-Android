@@ -2546,7 +2546,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    override fun opExecuted(changes: OpChanges, handler: Any?) {
+    override suspend fun opExecuted(changes: OpChanges, handler: Any?) {
         if (handler === this) return
         refreshRequired = ViewerRefresh.updateState(refreshRequired, changes)
         refreshIfRequired()

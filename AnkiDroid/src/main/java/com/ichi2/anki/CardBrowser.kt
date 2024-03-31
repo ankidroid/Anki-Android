@@ -2150,7 +2150,7 @@ open class CardBrowser :
         searchCards()
     }
 
-    override fun opExecuted(changes: OpChanges, handler: Any?) {
+    override suspend fun opExecuted(changes: OpChanges, handler: Any?) {
         if (handler === this || handler === viewModel) {
             return
         }

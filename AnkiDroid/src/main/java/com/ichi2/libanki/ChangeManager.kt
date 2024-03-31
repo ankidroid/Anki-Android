@@ -46,7 +46,7 @@ object ChangeManager {
          * has modified the collection. Subscriber should inspect the changes, and update
          * the UI if necessary.
          */
-        fun opExecuted(changes: OpChanges, handler: Any?)
+        suspend fun opExecuted(changes: OpChanges, handler: Any?)
     }
 
     private val subscribers = mutableListOf<WeakReference<Subscriber>>()
@@ -55,7 +55,7 @@ object ChangeManager {
         subscribers.add(WeakReference(subscriber))
     }
 
-    private fun notifySubscribers(changes: OpChanges, handler: Any?) {
+    private suspend fun notifySubscribers(changes: OpChanges, handler: Any?) {
         val expired = mutableListOf<WeakReference<Subscriber>>()
         for (subscriber in subscribers) {
             val ref = subscriber.get()
@@ -75,7 +75,7 @@ object ChangeManager {
         subscribers.clear()
     }
 
-    internal fun <T> notifySubscribers(changes: T, initiator: Any?) {
+    internal suspend fun <T> notifySubscribers(changes: T, initiator: Any?) {
         val opChanges = when (changes) {
             is OpChanges -> changes
             is OpChangesWithCount -> changes.changes

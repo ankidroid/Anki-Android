@@ -64,7 +64,7 @@ class CongratsPage :
         ChangeManager.subscribe(this)
     }
 
-    override fun opExecuted(changes: OpChanges, handler: Any?) {
+    override suspend fun opExecuted(changes: OpChanges, handler: Any?) {
         // typically due to 'day rollover'
         if (changes.studyQueues) {
             Timber.i("refreshing: study queues updated")
