@@ -83,12 +83,12 @@ public class AddContentApi(context: Context) {
         val cardsUri = Uri.withAppendedPath(newNoteUri, "cards")
         val cardsQuery = resolver.query(cardsUri, null, null, null, null) ?: return null
         cardsQuery.use { cardsCursor ->
-                while (cardsCursor.moveToNext()) {
+            while (cardsCursor.moveToNext()) {
                 val ord = cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_ORD))
-                    val cardValues = ContentValues().apply { put(Card.DECK_ID, deckId) }
-                    val cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri, "cards"), ord)
-                    resolver.update(cardUri, cardValues, null, null)
-                }
+                val cardValues = ContentValues().apply { put(Card.DECK_ID, deckId) }
+                val cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri, "cards"), ord)
+                resolver.update(cardUri, cardValues, null, null)
+            }
         }
         return newNoteUri
     }
@@ -284,16 +284,16 @@ public class AddContentApi(context: Context) {
         val cardsQuery = resolver.query(cardsUri, null, null, null, null) ?: return null
         cardsQuery.use { cardsCursor ->
             while (cardsCursor.moveToNext()) {
-                    // add question and answer for each card to map
+                // add question and answer for each card to map
                 val n = cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_NAME))
                 val q = cardsCursor.getString(cardsCursor.getColumnIndex(Card.QUESTION))
                 val a = cardsCursor.getString(cardsCursor.getColumnIndex(Card.ANSWER))
-                    cards[n] = hashMapOf(
-                        "q" to q,
-                        "a" to a
-                    )
-                }
+                cards[n] = hashMapOf(
+                    "q" to q,
+                    "a" to a
+                )
             }
+        }
             // Delete the note
             resolver.delete(newNoteUri!!, null, null)
             return cards
@@ -413,7 +413,7 @@ public class AddContentApi(context: Context) {
         val modelQuery = resolver.query(uri, null, null, null, null) ?: return null
         var splitFlds: Array<String>? = null
         modelQuery.use { modelCursor ->
-                if (modelCursor.moveToNext()) {
+            if (modelCursor.moveToNext()) {
                 splitFlds = Utils.splitFields(
                     modelCursor.getString(modelCursor.getColumnIndex(Model.FIELD_NAMES))
                 )
@@ -441,16 +441,16 @@ public class AddContentApi(context: Context) {
                 ?: return null
         val models: MutableMap<Long, String> = HashMap()
         allModelsQuery.use { allModelsCursor ->
-                while (allModelsCursor.moveToNext()) {
+            while (allModelsCursor.moveToNext()) {
                 val modelId = allModelsCursor.getLong(allModelsCursor.getColumnIndex(Model._ID))
                 val name = allModelsCursor.getString(allModelsCursor.getColumnIndex(Model.NAME))
                 val flds =
                     allModelsCursor.getString(allModelsCursor.getColumnIndex(Model.FIELD_NAMES))
-                    val numFlds: Int = Utils.splitFields(flds).size
-                    if (numFlds >= minNumFields) {
-                        models[modelId] = name
-                    }
+                val numFlds: Int = Utils.splitFields(flds).size
+                if (numFlds >= minNumFields) {
+                    models[modelId] = name
                 }
+            }
         }
         return models
     }
@@ -511,12 +511,12 @@ public class AddContentApi(context: Context) {
                 resolver.query(Deck.CONTENT_ALL_URI, null, null, null, null) ?: return null
             val decks: MutableMap<Long, String> = HashMap()
             allDecksQuery.use { allDecksCursor ->
-                    while (allDecksCursor.moveToNext()) {
+                while (allDecksCursor.moveToNext()) {
                     val deckId = allDecksCursor.getLong(allDecksCursor.getColumnIndex(Deck.DECK_ID))
                     val name =
                         allDecksCursor.getString(allDecksCursor.getColumnIndex(Deck.DECK_NAME))
-                        decks[deckId] = name
-                    }
+                    decks[deckId] = name
+                }
             }
             return decks
         }
