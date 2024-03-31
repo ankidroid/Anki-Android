@@ -18,20 +18,13 @@
 package com.ichi2.anki.pages
 
 import fi.iki.elonen.NanoHTTPD
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
-const val PORT = 0
-// const val PORT = 40001
-
-// local debugging:
-// ~/Local/Android/Sdk/platform-tools/adb forward tcp:40001 tcp:40001
-
 open class AnkiServer(
     private val postHandler: PostRequestHandler
-) : NanoHTTPD(LOCALHOST, PORT) {
+) : NanoHTTPD(LOCALHOST, 0) {
 
     fun baseUrl(): String {
         return "http://$LOCALHOST:$listeningPort/"
@@ -47,26 +40,35 @@ open class AnkiServer(
                 val uri = session.uri
                 Timber.d("POST: Requested %s", uri)
                 val inputBytes = getSessionBytes(session)
-                buildResponse {
-                    postHandler.handlePostRequest(uri, inputBytes)
+
+                try {
+                    val data = runBlocking { postHandler.handlePostRequest(uri, inputBytes) }
+                    buildResponse(data)
+                } catch (exception: Exception) {
+                    Timber.w(exception, "buildResponse failure")
+                    buildResponse(exception.localizedMessage?.encodeToByteArray(), status = Response.Status.INTERNAL_ERROR)
                 }
             }
             Method.GET -> newFixedLengthResponse(Response.Status.NOT_FOUND, null, null)
+            Method.OPTIONS -> buildResponse(null)
             else -> newFixedLengthResponse(null)
         }
     }
 
     private fun buildResponse(
-        block: suspend CoroutineScope.() -> ByteArray
+        data: ByteArray?,
+        mimeType: String = "application/binary",
+        status: Response.IStatus = Response.Status.OK
     ): Response {
-        return try {
-            val data = runBlocking {
-                block()
-            }
-            newChunkedResponse(data)
-        } catch (exc: Exception) {
-            Timber.w(exc, "buildResponse failure")
-            newChunkedResponse(exc.localizedMessage?.encodeToByteArray(), status = Response.Status.INTERNAL_ERROR)
+        return if (data == null) {
+            newFixedLengthResponse(null)
+        } else {
+            newChunkedResponse(status, mimeType, ByteArrayInputStream(data))
+        }.apply {
+            addHeader("Access-Control-Allow-Origin", "*")
+            addHeader("Access-Control-Allow-Headers", "Content-Type")
+            addHeader("Access-Control-Allow-Methods", "POST")
+            addHeader("Access-Control-Max-Age", "7200")
         }
     }
 
@@ -82,18 +84,6 @@ open class AnkiServer(
             val bytes = ByteArray(contentLength)
             session.inputStream.read(bytes, 0, contentLength)
             return bytes
-        }
-
-        fun newChunkedResponse(
-            data: ByteArray?,
-            mimeType: String = "application/binary",
-            status: Response.IStatus = Response.Status.OK
-        ): Response {
-            return if (data == null) {
-                newFixedLengthResponse(null)
-            } else {
-                newChunkedResponse(status, mimeType, ByteArrayInputStream(data))
-            }
         }
     }
 }
