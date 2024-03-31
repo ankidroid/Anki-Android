@@ -65,7 +65,6 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.noteeditor.EditCardDestination
 import com.ichi2.anki.noteeditor.toIntent
 import com.ichi2.anki.pages.AnkiServer
-import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.anki.preferences.sharedPrefs
@@ -232,9 +231,8 @@ abstract class AbstractFlashcardViewer :
     @get:VisibleForTesting
     var cardContent: String? = null
         private set
-    private val baseUrl get() = server.baseUrl()
-    private val webviewDomain
-        get() = "$LOCALHOST:${server.listeningPort}"
+    private val baseUrl
+        get() = getMediaBaseUrl(CollectionHelper.getMediaDirectory(this).path)
 
     private var viewerUrl: String? = null
     private val fadeDuration = 300
@@ -994,7 +992,6 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun createWebView(): WebView {
-        val resourceHandler = ViewerResourceHandler(this, webviewDomain)
         val webView: WebView = MyWebView(this).apply {
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
@@ -1012,7 +1009,7 @@ abstract class AbstractFlashcardViewer :
             isScrollbarFadingEnabled = true
             // Set transparent color to prevent flashing white when night mode enabled
             setBackgroundColor(Color.argb(1, 0, 0, 0))
-            CardViewerWebClient(resourceHandler, this@AbstractFlashcardViewer).apply {
+            CardViewerWebClient(this@AbstractFlashcardViewer).apply {
                 webViewClient = this
                 this@AbstractFlashcardViewer.webViewClient = this
             }
@@ -2235,7 +2232,6 @@ abstract class AbstractFlashcardViewer :
     }
 
     inner class CardViewerWebClient internal constructor(
-        private val loader: ViewerResourceHandler?,
         private val onPageFinishedCallback: OnPageFinishedCallback? = null
     ) : WebViewClient(), JavascriptEvaluator {
         private var pageFinishedFired = true
@@ -2256,6 +2252,9 @@ abstract class AbstractFlashcardViewer :
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             pageRenderStopwatch.reset()
             pageFinishedFired = false
+            val script = "globalThis.ankidroid = globalThis.ankidroid || {};" +
+                "ankidroid.postBaseUrl = `${server.baseUrl()}`"
+            view?.evaluateJavascript(script, null)
         }
 
         override fun shouldInterceptRequest(
@@ -2263,7 +2262,6 @@ abstract class AbstractFlashcardViewer :
             request: WebResourceRequest
         ): WebResourceResponse? {
             val url = request.url
-            loader!!.shouldInterceptRequest(request)?.let { return it }
             if (url.toString().startsWith("file://")) {
                 url.path?.let { path -> migrationService?.migrateFileImmediately(File(path)) }
             }
