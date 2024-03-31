@@ -20,7 +20,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
@@ -34,10 +36,17 @@ class Statistics : PageFragment() {
         get() = resources.getString(R.string.statistics)
 
     override val pageName = "graphs"
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.statistics, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<MaterialToolbar>(R.id.toolbar)?.apply {
+        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
             inflateMenu(R.menu.statistics)
             menu.findItem(R.id.action_export_stats).title = CollectionManager.TR.statisticsSavePdf()
             setOnMenuItemClickListener { item ->
