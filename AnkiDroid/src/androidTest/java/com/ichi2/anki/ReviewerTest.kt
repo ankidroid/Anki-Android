@@ -109,16 +109,6 @@ class ReviewerTest : InstrumentedTest() {
         ensureAnswerButtonsAreDisplayed()
     }
 
-    private fun closeGetStartedScreenIfExists() {
-        onView(withId(R.id.get_started)).withFailureHandler { _, _ -> }.perform(click())
-    }
-
-    private fun closeBackupCollectionDialogIfExists() {
-        onView(withText(R.string.button_backup_later))
-            .withFailureHandler { _, _ -> }
-            .perform(click())
-    }
-
     private fun clickOnDeckWithName(deckName: String) {
         onView(withId(R.id.files)).checkWithTimeout(matches(hasDescendant(withText(deckName))))
         onView(withId(R.id.files)).perform(
@@ -174,3 +164,13 @@ class ReviewerTest : InstrumentedTest() {
 private var Collection.cardStateCustomizer: String?
     get() = config.get("cardStateCustomizer")
     set(value) { config.set("cardStateCustomizer", value) }
+
+fun closeGetStartedScreenIfExists() {
+    onView(withId(R.id.get_started)).withFailureHandler { _, _ -> }.perform(click())
+}
+
+fun closeBackupCollectionDialogIfExists() {
+    onView(withText(R.string.button_backup_later))
+        .withFailureHandler { _, _ -> }
+        .perform(click())
+}
