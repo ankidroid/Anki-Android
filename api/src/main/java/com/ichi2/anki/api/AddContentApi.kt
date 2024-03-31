@@ -294,10 +294,10 @@ public class AddContentApi(context: Context) {
                 )
             }
         }
-            // Delete the note
-            resolver.delete(newNoteUri!!, null, null)
-            return cards
-        }
+        // Delete the note
+        resolver.delete(newNoteUri!!, null, null)
+        return cards
+    }
 
     /**
      * Insert a new basic front/back model with two fields and one card
