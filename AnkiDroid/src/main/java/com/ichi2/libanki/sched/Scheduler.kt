@@ -42,6 +42,7 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
+import kotlin.math.max
 
 data class CurrentQueueState(
     val topCard: Card,
@@ -599,7 +600,7 @@ open class Scheduler(val col: Collection) {
 
         // Cap the lower end of the success rate to ensure the loop ends (it could be 0 if no revlog history, or
         // negative for other reasons). 5% seems reasonable to ensure the loop doesn't iterate too much.
-        relrnRate = kotlin.math.max(relrnRate, 0.05)
+        relrnRate = max(relrnRate, 0.05)
         var futureReps = 0
         do {
             // Truncation ensures the failure rate always decreases
