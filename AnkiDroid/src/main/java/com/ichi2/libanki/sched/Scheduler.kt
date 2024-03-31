@@ -42,6 +42,7 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
+import kotlin.math.ceil
 import kotlin.math.max
 
 data class CurrentQueueState(
@@ -591,8 +592,8 @@ open class Scheduler(val col: Collection) {
 
         // Every queue has a failure rate, and each failure will become a relrn
         var toRelrn = counts.new // Assume every new card becomes 1 relrn
-        toRelrn += kotlin.math.ceil((1 - relrnRate) * counts.lrn).toInt()
-        toRelrn += kotlin.math.ceil((1 - revRate) * counts.rev).toInt()
+        toRelrn += ceil((1 - relrnRate) * counts.lrn).toInt()
+        toRelrn += ceil((1 - revRate) * counts.rev).toInt()
 
         // Use the accuracy rate of the relrn queue to estimate how many reps we will end up with if the cards
         // currently in relrn continue to fail at that rate. Loop through the failures of the failures until we end up
