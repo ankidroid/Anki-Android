@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.app.Activity
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionHelper
@@ -103,6 +104,14 @@ class CreateDeckDialog(
             }
             dialog.getInputTextLayout().error = null
             dialog.positiveButton.isEnabled = true
+
+            // Users expect the ordering [1, 2, 10], but get [1, 10, 2]
+            // To fix: they need [01, 02, 10]. Show a hint to help them
+            dialog.getInputTextLayout().helperText = if (text.containsNumberLargerThanNine()) {
+                context.getString(R.string.create_deck_numeric_hint)
+            } else {
+                null
+            }
         }
         shownDialog = dialog
         return dialog
@@ -221,3 +230,6 @@ class CreateDeckDialog(
         }
     }
 }
+
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+fun CharSequence.containsNumberLargerThanNine(): Boolean = Regex("""[1-9]\d+""").find(this) != null
