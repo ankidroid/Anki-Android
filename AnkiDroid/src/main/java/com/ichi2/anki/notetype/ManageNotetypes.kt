@@ -127,9 +127,7 @@ class ManageNotetypes : AnkiActivity(), NotetypesAdapter.NotetypeAdapterCallback
                 return true
             }
         })
-        return true
-    }
-
+        // Menu for deleting multiple notes
         menuInflater.inflate(R.menu.menu_manage_notes, menu)
         launchCatchingTask {
             menu.findItem(R.id.action_delete_notes).isVisible =
