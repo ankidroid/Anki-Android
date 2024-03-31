@@ -28,10 +28,13 @@ package com.ichi2.libanki
 import android.text.TextUtils
 import anki.config.ConfigKey
 import com.ichi2.anki.CollectionManager
+import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NotInLibAnki
 import org.intellij.lang.annotations.Language
+import org.jetbrains.annotations.VisibleForTesting
 import java.io.File
+import java.net.URI
 import java.nio.file.Paths
 import java.util.regex.Pattern
 
@@ -269,4 +272,37 @@ data class AvRef(val side: String, val index: Int) {
 
         val REGEX = Regex("\\[anki:(play:(.):(\\d+))]")
     }
+}
+
+/** Similar to [File.toURI], but doesn't use the absolute file to simplify testing */
+@NotInLibAnki
+@VisibleForTesting
+fun getFileUri(path: String): URI {
+    var p = path
+    if (File.separatorChar != '/') p = p.replace(File.separatorChar, '/')
+    if (!p.startsWith("/")) p = "/$p"
+    if (!p.startsWith("//")) p = "//$p"
+    return URI("file", p, null)
+}
+
+/**
+ * Whether a video file only contains an audio stream
+ *
+ * @return `null` - file is not a video, or not found
+ */
+@NotInLibAnki
+@VisibleForTesting
+fun isAudioFileInVideoContainer(file: File): Boolean? {
+    if (file.extension !in Sound.VIDEO_ONLY_EXTENSIONS && file.extension !in Sound.AUDIO_OR_VIDEO_EXTENSIONS) {
+        return null
+    }
+
+    if (file.extension in Sound.VIDEO_ONLY_EXTENSIONS) return false
+
+    // file.extension is in AUDIO_OR_VIDEO_EXTENSIONS
+    if (!file.exists()) return null
+
+    // Also check that there is a video thumbnail, as some formats like mp4 can be audio only
+    val isVideo = CompatHelper.compat.hasVideoThumbnail(file.absolutePath) ?: return null
+    return !isVideo
 }

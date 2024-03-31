@@ -23,25 +23,14 @@
 package com.ichi2.libanki
 
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.CompatHelper
-import com.ichi2.libanki.Sound.AUDIO_OR_VIDEO_EXTENSIONS
-import com.ichi2.libanki.Sound.VIDEO_ONLY_EXTENSIONS
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote
-import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
 import com.ichi2.utils.deepClone
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
-import org.jetbrains.annotations.VisibleForTesting
 import org.json.JSONObject
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document.OutputSettings
-import java.io.File
-import java.net.URI
-import java.net.URISyntaxException
-import java.nio.file.Paths
 
 private typealias Union<A, B> = Pair<A, B>
 private typealias TemplateReplacementList = MutableList<Union<String?, TemplateManager.TemplateReplacement?>>
@@ -184,26 +173,21 @@ class TemplateManager {
                 )
             }
 
-            val mediaDir = col.media.dir
-            val qtext = applyCustomFilters(partial.qnodes, this, frontSide = null)
-
+            var qtext = applyCustomFilters(partial.qnodes, this, frontSide = null)
             val qout = col.backend.extractAvTags(text = qtext, questionSide = true)
-            var qoutText = parseSourcesToFileScheme(qout.text, mediaDir)
 
-            val atext = applyCustomFilters(partial.anodes, this, frontSide = qout.text)
-
+            var atext = applyCustomFilters(partial.anodes, this, frontSide = qout.text)
             val aout = col.backend.extractAvTags(text = atext, questionSide = false)
-            var aoutText = parseSourcesToFileScheme(aout.text, mediaDir)
 
             if (!_browser) {
                 val svg = noteType.optBoolean("latexsvg", false)
-                qoutText = LaTeX.mungeQA(qoutText, col, svg)
-                aoutText = LaTeX.mungeQA(aoutText, col, svg)
+                qtext = LaTeX.mungeQA(qout.text, col, svg)
+                atext = LaTeX.mungeQA(aout.text, col, svg)
             }
 
             return TemplateRenderOutput(
-                questionText = qoutText,
-                answerText = aoutText,
+                questionText = qtext,
+                answerText = atext,
                 questionAvTags = avTagsToNative(qout.avTagsList),
                 answerAvTags = avTagsToNative(aout.avTagsList),
                 css = noteType().getString("css")
@@ -295,130 +279,4 @@ class TemplateManager {
     companion object {
         val fieldFilters: MutableMap<String, FieldFilter> = mutableMapOf()
     }
-}
-
-/**
- * The desktop version handles videos in an external player (mpv)
- * because of old webview codecs in python, and to allow extending the video player.
- * To simplify things and deliver a better result,
- * we use the webview player, like AnkiMobile does
- *
- * `file:///` is used to enable seeking the video
- */
-@NotInLibAnki
-@VisibleForTesting
-fun parseVideos(text: String, mediaDir: String): String {
-    fun toVideoTag(path: String): String {
-        val uri = getFileUri(path)
-        return """<video src="$uri" controls controlsList="nodownload"></video>"""
-    }
-
-    return SOUND_RE.replace(text) { match ->
-        val fileName = match.groupValues[1]
-        val extension = fileName.substringAfterLast(".", "")
-        when (extension) {
-            in VIDEO_ONLY_EXTENSIONS -> {
-                val path = Paths.get(mediaDir, fileName).toString()
-                toVideoTag(path)
-            }
-            in AUDIO_OR_VIDEO_EXTENSIONS -> {
-                val file = File(mediaDir, fileName)
-                if (isAudioFileInVideoContainer(file) == true) {
-                    match.value
-                } else {
-                    toVideoTag(file.path)
-                }
-            }
-            else -> match.value
-        }
-    }
-}
-
-/**
- * Parses the sources of the `<img>`, `<video>`, `<audio>` and `<source>` tags
- * to use the `file:///` scheme, which allows seeking audio and videos,
- * and loads faster than using HTTP.
- *
- * Only attribute values that don't have an Uri scheme (http, file, etc) are parsed.
- */
-@NotInLibAnki
-@VisibleForTesting
-fun parseSourcesToFileScheme(content: String, mediaDir: String): String {
-    val doc = Jsoup.parseBodyFragment(content)
-    doc.outputSettings(OutputSettings().prettyPrint(false))
-
-    fun replaceWithFileScheme(tag: String, attr: String): Boolean {
-        var madeChanges = false
-        for (elem in doc.select(tag)) {
-            val attrValue = elem.attr(attr)
-            if (attrValue.isEmpty()) continue
-
-            val attrUri = try {
-                URI(attrValue)
-            } catch (_: URISyntaxException) {
-                continue
-            }
-            if (attrUri.scheme != null) continue
-
-            // For "legacy reasons" (https://forums.ankiweb.net/t/ankiweb-and-ankidroid-do-not-display-images-containing-pound-hashtag-sharp-symbol/42444/5)
-            // anki accepts unencoded `#` in paths.
-            val path = buildString {
-                append(attrUri.path)
-                attrUri.fragment?.let {
-                    append("#")
-                    append(it)
-                }
-            }
-            val filePath = Paths.get(mediaDir, path).toString()
-            val newUri = getFileUri(filePath)
-
-            elem.attr(attr, newUri.toString())
-            madeChanges = true
-        }
-        return madeChanges
-    }
-
-    val hasMadeChanges =
-        replaceWithFileScheme("img", "src") ||
-            replaceWithFileScheme("video", "src") ||
-            replaceWithFileScheme("audio", "src") ||
-            replaceWithFileScheme("source", "src")
-
-    return if (hasMadeChanges) {
-        doc.body().html()
-    } else {
-        content
-    }
-}
-
-/** Similar to [File.toURI], but doesn't use the absolute file to simplify testing */
-@NotInLibAnki
-@VisibleForTesting
-fun getFileUri(path: String): URI {
-    var p = path
-    if (File.separatorChar != '/') p = p.replace(File.separatorChar, '/')
-    if (!p.startsWith("/")) p = "/$p"
-    if (!p.startsWith("//")) p = "//$p"
-    return URI("file", p, null)
-}
-
-/**
- * Whether a video file only contains an audio stream
- *
- * @return `null` - file is not a video, or not found
- */
-@VisibleForTesting
-fun isAudioFileInVideoContainer(file: File): Boolean? {
-    if (file.extension !in VIDEO_ONLY_EXTENSIONS && file.extension !in AUDIO_OR_VIDEO_EXTENSIONS) {
-        return null
-    }
-
-    if (file.extension in VIDEO_ONLY_EXTENSIONS) return false
-
-    // file.extension is in AUDIO_OR_VIDEO_EXTENSIONS
-    if (!file.exists()) return null
-
-    // Also check that there is a video thumbnail, as some formats like mp4 can be audio only
-    val isVideo = CompatHelper.compat.hasVideoThumbnail(file.absolutePath) ?: return null
-    return !isVideo
 }
