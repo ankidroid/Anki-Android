@@ -62,6 +62,5 @@
         android:title="@string/pref_show_answer_long_press"
         android:valueFrom="0"
         android:valueTo="2000"
-        android:stepSize="100"
         app:displayFormat="@string/pref_milliseconds"/>
 </PreferenceScreen>
