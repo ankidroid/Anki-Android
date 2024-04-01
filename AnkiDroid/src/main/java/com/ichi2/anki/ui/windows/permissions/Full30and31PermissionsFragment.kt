@@ -38,7 +38,11 @@ class Full30and31PermissionsFragment : PermissionsFragment(R.layout.permissions_
 
     private val accessAllFilesLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) {}
+    ) {
+        if (hasAllPermissions()) {
+            requireActivity().finish()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.findViewById<PermissionItem>(R.id.all_files_permission).setOnSwitchClickListener {
