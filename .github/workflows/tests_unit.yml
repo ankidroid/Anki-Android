@@ -67,9 +67,6 @@ jobs:
           # Comment this and the with: above out for performance testing on a branch
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
           gradle-home-cache-cleanup: true
-          # All runners have cache pollution issues, disable all caches
-          # https://github.com/gradle/actions/issues/47
-          cache-disabled: true
 
       - name: Clear Caches Optionally
         if: "${{ github.event.inputs.clearCaches != '' }}"
