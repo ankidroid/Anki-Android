@@ -150,6 +150,9 @@ fun DeckPicker.handleNewSync(
             throw exc
         }
         withCol { notetypes._clear_cache() }
+        sharedPrefs().edit {
+            putLong("lastSyncTime", TimeManager.time.intTimeMS())
+        }
         refreshState()
     }
 }
