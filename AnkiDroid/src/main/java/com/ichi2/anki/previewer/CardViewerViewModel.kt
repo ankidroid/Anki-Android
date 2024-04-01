@@ -130,6 +130,10 @@ abstract class CardViewerViewModel(
     private fun createSoundErrorListener(): SoundErrorListener {
         return object : SoundErrorListener {
             override fun onError(uri: Uri): SoundErrorBehavior {
+                if (uri.scheme != "file") {
+                    return SoundErrorBehavior.CONTINUE_AUDIO
+                }
+
                 val file = uri.toFile()
                 // There is a multitude of transient issues with the MediaPlayer.
                 // Retrying fixes most of these
