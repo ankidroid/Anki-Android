@@ -20,9 +20,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
@@ -31,18 +29,11 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.libanki.utils.TimeManager
 
-class Statistics : PageFragment() {
+class Statistics : PageFragment(R.layout.statistics) {
     override val title: String
         get() = resources.getString(R.string.statistics)
 
     override val pageName = "graphs"
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.statistics, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
