@@ -650,7 +650,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // set focus to FieldEditText 'first' on startup like Anki desktop
         if (editFields != null && !editFields!!.isEmpty()) {
             // EXTRA_TEXT_FROM_SEARCH_VIEW takes priority over other intent inputs
-            if (getTextFromSearchView != null && getTextFromSearchView.isNotEmpty()) {
+            if (!getTextFromSearchView.isNullOrEmpty()) {
                 editFields!!.first!!.setText(getTextFromSearchView)
             }
             editFields!!.first!!.requestFocus()

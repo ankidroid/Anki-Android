@@ -36,7 +36,7 @@ class BackendEmulatingOpenConflict : Backend() {
 
     companion object {
         fun enable() {
-            BackendFactory.setOverride() { BackendEmulatingOpenConflict() }
+            BackendFactory.setOverride { BackendEmulatingOpenConflict() }
         }
 
         fun disable() {
