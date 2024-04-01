@@ -103,7 +103,6 @@ open class Reviewer :
     private val customSchedulingKey = TimeManager.time.intTimeMS().toString()
     private var hasDrawerSwipeConflicts = false
     private var showWhiteboard = true
-    private var prefFullscreenReview = false
     private lateinit var colorPalette: LinearLayout
     private var toggleStylus = false
 
@@ -196,17 +195,6 @@ open class Reviewer :
     override fun onPause() {
         answerTimer.pause()
         super.onPause()
-    }
-
-    override fun onResume() {
-        when {
-            stopTimerOnAnswer && isDisplayingAnswer -> {}
-            else -> launchCatchingTask { answerTimer.resume() }
-        }
-        super.onResume()
-        if (typeAnswer?.autoFocusEditText() == true) {
-            answerField?.focusWithKeyboard()
-        }
     }
 
     override fun onDestroy() {
@@ -1344,6 +1332,32 @@ open class Reviewer :
         }
     }
 
+    override fun onResume() {
+        if (prefFullscreenReview) {
+            val toolbarTemp = findViewById<Toolbar>(R.id.toolbar)
+            val answerButtonsTemp = findViewById<View>(R.id.answer_options_layout)
+            val topbarTemp = findViewById<View>(R.id.top_bar)
+
+            hideViewWithAnimation(toolbarTemp)
+            if (fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE) {
+                hideViewWithAnimation(topbarTemp)
+                hideViewWithAnimation(answerButtonsTemp)
+            }
+        }
+
+        when {
+            stopTimerOnAnswer && isDisplayingAnswer -> {}
+            else -> launchCatchingTask { answerTimer.resume() }
+        }
+        super.onResume()
+        if (typeAnswer?.autoFocusEditText() == true) {
+            answerField?.focusWithKeyboard()
+        }
+
+        Timber.d("System UI visibility change.  on resume called")
+        Timber.d("System UI visibility change.  pref full screen : $prefFullscreenReview")
+    }
+
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
     private fun setFullScreen(a: AbstractFlashcardViewer) {
         // Set appropriate flags to enable Sticky Immersive mode.
@@ -1576,6 +1590,9 @@ open class Reviewer :
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val ANIMATION_DURATION = 200
         private const val TRANSPARENCY = 0.90f
+
+        @JvmStatic
+        var prefFullscreenReview = false
 
         /** Default (500ms) time for action snackbars, such as undo, bury and suspend */
         const val ACTION_SNACKBAR_TIME = 500
