@@ -404,6 +404,10 @@ fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
         }
 
         override fun onError(uri: Uri): SoundErrorBehavior {
+            if (uri.scheme != "file") {
+                return CONTINUE_AUDIO
+            }
+
             try {
                 val file = uri.toFile()
                 // There is a multitude of transient issues with the MediaPlayer. (1, -1001) for example
