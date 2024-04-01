@@ -16,11 +16,13 @@
 
 package com.ichi2.anki.browser
 
+import android.os.Bundle
 import androidx.core.content.edit
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.savedstate.SavedStateRegistryOwner
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
@@ -74,6 +76,7 @@ import kotlin.math.min
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
     private val cacheDir: File,
+    private val state: SavedStateHandle,
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
@@ -87,6 +90,13 @@ class CardBrowserViewModel(
     var currentFlag = Flag.NONE
 
     val flowOfFilterQuery = MutableSharedFlow<String>()
+
+    val scrollPosition: Int
+        get() = state["SCROLL_POSITION"] ?: 0
+
+    fun saveScrollPosition(position: Int) {
+        state["SCROLL_POSITION"] = position
+    }
 
     /**
      * Whether the browser is working in Cards mode or Notes mode.
@@ -548,13 +558,21 @@ class CardBrowserViewModel(
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
-        fun factory(lastDeckIdRepository: LastDeckIdRepository, cacheDir: File, preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
-            initializer {
-                CardBrowserViewModel(
-                    lastDeckIdRepository,
-                    cacheDir,
-                    preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider
-                )
+        fun factory(lastDeckIdRepository: LastDeckIdRepository, cacheDir: File, preferencesProvider: SharedPreferencesProvider? = null): (SavedStateRegistryOwner, Bundle?) -> AbstractSavedStateViewModelFactory {
+            return { owner, defaultArgs ->
+                object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+                    @Suppress("UNCHECKED_CAST")
+                    override fun <T : ViewModel> create(
+                        key: String,
+                        modelClass: Class<T>,
+                        handle: SavedStateHandle
+                    ) = CardBrowserViewModel(
+                        lastDeckIdRepository,
+                        cacheDir,
+                        handle,
+                        preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider
+                    ) as T
+                }
             }
         }
     }
