@@ -77,7 +77,7 @@
     <string name="webview_crash_oom">Sem memória</string>
     <string name="webview_crash_oom_details">A WebView foi destruída pelo sistema. Isto normalmente acontece quando a aplicação fica sem memória, muitas das vezes por causa do uso de tipos de letra grande ou ficheiros de multimédia grande.</string>
     <string name="webview_crash_nonfatal">O renderizador do WebView falhou. Causa: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_fatal">Erro fatal: o renderizador do WebView falhou. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
@@ -99,12 +99,12 @@
         <item>Data limite</item>
         <item>Ficha modificada</item>
         <item>Criada</item>
-        <item>Note Modified</item>
+        <item>Data de Modificação da Nota</item>
     </string-array>
-    <string name="filter_by_flags">Bandeiras</string>
+    <string name="filter_by_flags">Sinalização</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Modificar o limite de novas fichas para hoje</string>
+    <string name="custom_study_increase_review_limit">Modificar o limite de revisões para hoje</string>
     <string name="custom_study_review_forgotten">Rever fichas esquecidas</string>
     <string name="custom_study_review_ahead">Rever antecipadamente</string>
     <string name="custom_study_random_selection">Estudar uma seleção aleatória de fichas</string>
@@ -113,19 +113,19 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Editar nota</string>
     <string name="discard">Descartar</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_no_cards_created">Nenhuma ficha criada. Por favor, preencha mais campos</string>
+    <string name="note_editor_no_first_field">O primeiro campo está vazio</string>
+    <string name="note_editor_no_cloze_delations">Este tipo de nota tem de conter omissões</string>
+    <string name="note_editor_no_cards_created_all_fields">O tipo de nota actual não produziu nenhuma ficha.\nPor favor, escolha outro tipo de nota, ou seleccione \"Fichas\" e adicione um campo de substituição</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Omissões só funcionam em notas do tipo Omissão</string>
     <string name="saving_facts">A guardar nota</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">A guardar tipo de nota</string>
     <string name="save">Guardar</string>
     <string name="close">Fechar</string>
     <string name="select">Selecionar</string>
     <string name="field_remapping">%1$s (de \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Serão eliminadas quaisquer fichas mapeadas para nada. Se uma nota não tiver fichas restantes, esta estará perdida. Tem certeza que deseja continuar?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">Tipo de nota não encontrado</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
@@ -134,8 +134,8 @@
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="one">%1$d minuto</item>
+        <item quantity="other">%1$d minutos</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Ficha AnkiDroid</string>
     <string name="note_editor_copy_note">Copiar a nota</string>
@@ -150,19 +150,19 @@
     <string name="check_db">Verificar base de dados</string>
     <string name="check_media">Verificar multimédia</string>
     <string name="empty_cards">Fichas vazias</string>
-    <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+    <string name="empty_card_warning">Esta ficha está vazia. Utilize a opção \"Fichas vazias\" no menu da janela com a lista de baralhos.</string>
     <string name="unknown_type_field_warning">Escrever resposta: campo desconhecido %s</string>
     <string name="delete_deck">A eliminar o baralho&#8230;</string>
     <string name="info_rate">Classificar AnkiDroid</string>
     <string name="import_title">A importar</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adicionar</string>
     <string name="import_message_replace_confirm">Isto irá apagar a sua coleção existente substituindo-a pelos dados do ficheiro %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_dialog_message_add">Adicionar “%s” à colecção? Isto pode demorar bastante tempo.</string>
+    <string name="import_log_no_apkg">Isto não é um ficheiro de Anki válido.</string>
+    <string name="import_title_error" comment="Title of error dialog">Erro</string>
+    <string name="import_error_handle_exception">Falha ao importar ficheiro\n\n%s</string>
+    <string name="import_error_not_apkg_extension">Ficheiro \"%s\" não tem nenhuma das extensões .apkg, nem .colpkg</string>
+    <string name="import_error_load_imported_database">Substitutos para a Base de Dados Anki (.anki2) ainda não são suportados. Por favor, consulte o manual para seguir as instruções relativas à substituição.</string>
     <string name="import_error_content_provider">Não foi possível importar automaticamente o ficheiro selecionado com AnkiDroid. Por favor, consulte o manual do utilizador para saber como importar manualmente os ficheiros anki: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
@@ -188,7 +188,7 @@
     <string name="select_tts">Set TTS language</string>
     <string name="custom_study">Estudo personalizado</string>
     <string name="more_options">Mais</string>
-    <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas serão automaticamente devolvidas para os seus baralhos originais depois de os rever. Ao eliminar este baralho da lista de baralhos irá enviar devolver todas as fichas restantes para o seu baralho original.</string>
+    <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas serão automaticamente devolvidas aos seus baralhos originais depois das rever. Ao eliminar este baralho da lista de baralhos irá devolver todas as fichas restantes ao seu baralho original.</string>
     <string name="steps_error">Número de passos deve ser maior que 0</string>
     <string name="steps_min_error">É necessário pelo menos um passo</string>
     <string name="tag_editor_add_feedback">Toque em \"%2$s\" para confirmar a adição de \"%1$s\"</string>
@@ -209,11 +209,11 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Select image</string>
+    <string name="choose_an_image">Selecionar imagem</string>
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default">Restaurar predefinições</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Em branco</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
@@ -286,10 +286,10 @@
     <string name="home">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Ficha enterrada</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d ficha suspensa.</item>
+        <item quantity="other">%d fichas suspensas.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
@@ -341,7 +341,7 @@
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
     <string name="audio_saved">Recording saved</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
+    <string name="deleting_selected_notes">Apagar as notas selecionadas</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
     </string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
@@ -352,7 +352,7 @@
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
     </string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Instalar
     </string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
     </string>
@@ -360,5 +360,5 @@
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposicionar</string>
 </resources>

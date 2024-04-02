@@ -47,8 +47,8 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
-    <string name="CardEditorCardDeck">Card deck:</string>
-    <string name="CardEditorNoteDeck">Deck:</string>
+    <string name="CardEditorCardDeck">Kortstak:</string>
+    <string name="CardEditorNoteDeck">Stak:</string>
     <string name="CardEditorModel">Type:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Cards: %1$s</string>
@@ -88,7 +88,7 @@
     <string-array name="browser_column2_headings">
         <item>Svar</item>
         <item>Kort</item>
-        <item>Sæt</item>
+        <item>Stak</item>
         <item>Note</item>
         <item>Question</item>
         <item>Tags</item>
@@ -152,7 +152,7 @@
     <string name="empty_cards">Empty cards</string>
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck">Deleting deck&#8230;</string>
+    <string name="delete_deck">Sletter stak&#8230;</string>
     <string name="info_rate">Rate AnkiDroid</string>
     <string name="import_title">Importing</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
@@ -183,7 +183,7 @@
     <string name="export_choice_share">Share</string>
     <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
-    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__deck_options">Stakindstillinger</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Set TTS language</string>
     <string name="custom_study">Custom study</string>
