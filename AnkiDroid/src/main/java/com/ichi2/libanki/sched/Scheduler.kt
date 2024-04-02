@@ -19,7 +19,6 @@ package com.ichi2.libanki.sched
 import android.app.Activity
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
-import anki.ankidroid.schedTimingTodayLegacyRequest
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.config.OptionalStringConfigKey
@@ -423,69 +422,8 @@ open class Scheduler(val col: Collection) {
     open val dayCutoff: EpochSeconds
         get() = timingToday().nextDayAt
 
-    /* internal */
-    fun timingToday(): SchedTimingTodayResponse {
-        return if (true) { // (BackendFactory.defaultLegacySchema) {
-            val request = schedTimingTodayLegacyRequest {
-                createdSecs = col.crt
-                col.config.get<Int?>("creationOffset")?.let {
-                    createdMinsWest = it
-                }
-                nowSecs = time.intTime()
-                nowMinsWest = currentTimezoneOffset()
-                rolloverHour = rolloverHour()
-            }
-            return col.backend.schedTimingTodayLegacy(request)
-        } else {
-            // this currently breaks a bunch of unit tests that assume a mocked time,
-            // as it uses the real time to calculate daysElapsed
-            col.backend.schedTimingToday()
-        }
-    }
-
-    fun rolloverHour(): Int {
-        return col.config.get("rollover") ?: 4
-    }
-
-    open fun currentTimezoneOffset(): Int {
-        return localMinutesWest(time.intTime())
-    }
-
-    /**
-     * For the given timestamp, return minutes west of UTC in the local timezone.
-     *
-     * eg, Australia at +10 hours is -600.
-     * Includes the daylight savings offset if applicable.
-     *
-     * @param timestampSeconds The timestamp in seconds
-     * @return minutes west of UTC in the local timezone
-     */
-    fun localMinutesWest(timestampSeconds: Long): Int {
-        return col.backend.localMinutesWestLegacy(timestampSeconds)
-    }
-
-    /**
-     * Save the UTC west offset at the time of creation into the DB.
-     * Once stored, this activates the new timezone handling code.
-     */
-    fun setCreationOffset() {
-        val minsWest = localMinutesWest(col.crt)
-        col.config.set("creationOffset", minsWest)
-    }
-
-    // New timezone handling
-    // ////////////////////////////////////////////////////////////////////////
-
-    fun newTimezoneEnabled(): Boolean {
-        return col.config.get<Int?>("creationOffset") != null
-    }
-
-    fun useNewTimezoneCode() {
-        setCreationOffset()
-    }
-
-    fun clearCreationOffset() {
-        col.config.remove("creationOffset")
+    private fun timingToday(): SchedTimingTodayResponse {
+        return col.backend.schedTimingToday()
     }
 
     /** true if there are any rev cards due.  */

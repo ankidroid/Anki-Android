@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.preferences
 
-import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
@@ -58,21 +57,6 @@ class ReviewingSettingsFragment : SettingsFragment() {
             launchCatchingTask { value = getDayOffset() }
             setOnPreferenceChangeListener { newValue ->
                 launchCatchingTask { setDayOffset(requireContext(), newValue as Int) }
-            }
-        }
-
-        // New timezone handling
-        requirePreference<SwitchPreferenceCompat>(R.string.new_timezone_handling_preference).apply {
-            launchCatchingTask {
-                isChecked = withCol { sched.newTimezoneEnabled() }
-                isEnabled = withCol { schedVer() > 1 }
-            }
-            setOnPreferenceChangeListener { newValue ->
-                if (newValue == true) {
-                    launchCatchingTask { withCol { sched.setCreationOffset() } }
-                } else {
-                    launchCatchingTask { withCol { sched.clearCreationOffset() } }
-                }
             }
         }
     }
