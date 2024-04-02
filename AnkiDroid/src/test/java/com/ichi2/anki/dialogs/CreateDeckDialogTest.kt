@@ -28,9 +28,11 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.libanki.DeckId
+import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.positiveButton
 import okhttp3.internal.closeQuietly
 import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -191,6 +193,15 @@ class CreateDeckDialogTest : RobolectricTest() {
         }
         deckPicker.updateMenuState()
         assertEquals(deckPicker.optionsMenuState!!.searchIcon, true)
+    }
+
+    @Test
+    fun positiveButtonEnabledOnMatchingDeckNames() {
+        val previousDeckName = "Deck Name"
+        testDialog(DeckDialogType.RENAME_DECK) {
+            input = previousDeckName
+            assertThat("no error is displayed", getInputTextLayout().error, nullValue())
+        }
     }
 
     /**
