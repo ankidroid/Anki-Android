@@ -245,5 +245,5 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Android gizlilik değişikliklerinden dolayı, uygulama kaldırılırsa veriniz ve otomatik yedekleriniz erişilemez hâle gelecek
     </string>
-    <string name="deck_already_exists">Deck already exists</string>
+    <string name="deck_already_exists">Deste hâlihazırda var</string>
 </resources>

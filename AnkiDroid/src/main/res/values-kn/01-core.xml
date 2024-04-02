@@ -91,7 +91,7 @@
     <string name="rename_deck">ಸಂಗ್ರಹಣೆಗೆ ಮರುಹೆಸರಿಸಿ</string>
     <string name="create_shortcut">ಕಿರುದಾರಿ ರಚಿಸಿ</string>
     <string name="browse_cards">ಕಾರ್ಡ್‌ಗಳನ್ನು ಬ್ರೌಸ್ ಮಾಡಿ</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">ವಿವರಣೆಯನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ಸೇರಿಸಿ </string>
     <string name="menu_add_note">ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ಖಾತೆಯನ್ನು ಸಿಂಕ್ ಮಾಡಿ</string>
@@ -138,7 +138,7 @@
     <string name="empty_deck">ಈ ಡೆಕ್ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ಡೆಕ್ ಹುಡುಕಾಟ</string>
     <string name="invalid_deck_name">ಅಮಾನ್ಯ ಡೆಕ್ ಹೆಸರು</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_finished">ಅಭಿನಂದನೆಗಳು! ನೀವು ಸದ್ಯಕ್ಕೆ ಮುಗಿಸಿದ್ದೀರಿ.</string>
     <string name="studyoptions_no_cards_due">ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳು ಇನ್ನೂ ಬಾಕಿ ಉಳಿದಿಲ್ಲ</string>
     <string name="sd_card_not_mounted">ಸಾಧನ ಸಂಗ್ರಹಣೆಯನ್ನು ಆರೋಹಿಸಲಾಗಿಲ್ಲ</string>
     <string name="button_sync" comment="Text of the sync button">ಸಿಂಕ್</string>
@@ -147,7 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ಸಿಂಕ್ ಮುಂದುವರಿಸಿ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ಸಿಂಕ್ ರದ್ದುಗೊಂಡಿದೆ</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ರದ್ದುಮಾಡಲಾಗುತ್ತಿದೆ &#8230;\n ಇದಕ್ಕೆ ಸ್ವಲ್ಪ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳಬಹುದು.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">ಮಾಧ್ಯಮವನ್ನು ಸಿಂಕ್ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="export_deck">ರಫ್ತು ಡೆಕ್</string>
     <string name="nothing">ಏನೂ ಇಲ್ಲ</string>
     <!-- Card template editor -->
@@ -198,19 +198,19 @@
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"ಬಹು ದೋಷಗಳು, ತೀರಾ ಇತ್ತೀಚಿನದು: %s"</string>
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">ಪ್ರಗತಿಯಿಲ್ಲದೆ ಹಲವಾರು ಸತತ ದೋಷಗಳು, ತೀರಾ ಇತ್ತೀಚಿನದು: %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">ಡೇಟಾಬೇಸ್ ಫೈಲ್‌ಗಳನ್ನು ಸ್ಥಳಾಂತರಿಸಲಾಗುತ್ತಿದೆ</string>
     <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">ನಕಲಿಸಲಾಗುತ್ತಿದೆ...</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">ಮಾಧ್ಯಮ ರಫ್ತು</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">ವರ್ಗಾವಣೆ ಗಾತ್ರವನ್ನು ಲೆಕ್ಕಾಚಾರ ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migration successful</string>
+    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">ವಲಸೆ ಯಶಸ್ವಿಯಾಗಿದೆ</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
         AnkiDroid is fully functional again, and you can sync.
         \n
         \nNote that your collection is now located in a folder that is removed when uninstalling the app.
         Please make sure that your data is safe by regularly syncing or exporting backups.
     </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migration failed</string>
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">ವಲಸೆ ವಿಫಲವಾಗಿದೆ</string>
     <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
         <br><br>
         The changes were reverted.
@@ -237,18 +237,18 @@
         <br><br>
         <a href="%2$s">Learn more and get help</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">ವಲಸೆಯನ್ನು ಪುನರಾರಂಭಿಸಿ</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ಪ್ರವೇಶಿಸಲಾಗದ ಸಂಗ್ರಹ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
+    <string name="install_non_play_store_ankidroid">ಫೋಲ್ಡರ್ ಪ್ರವೇಶವನ್ನು ಮರುಸ್ಥಾಪಿಸಿ (ಸುಧಾರಿತ)</string>
     <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
     <string name="create_new_collection">ಹೊಸ ಸಂಗ್ರಹವನ್ನು ರಚಿಸಿ</string>
     <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
+    <string name="permissions_screen_headline">AnkiDroid ಕೆಲಸ ಮಾಡಲು ಕೆಲವು ಅನುಮತಿಗಳ ಅಗತ್ಯವಿದೆ</string>
     <string name="storage_access_title">Storage access</string>
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ಎಲ್ಲಾ ಫೈಲ್‌ಗಳ ಪ್ರವೇಶ</string>
