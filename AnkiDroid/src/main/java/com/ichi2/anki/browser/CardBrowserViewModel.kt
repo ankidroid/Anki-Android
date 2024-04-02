@@ -91,12 +91,13 @@ class CardBrowserViewModel(
 
     val flowOfFilterQuery = MutableSharedFlow<String>()
 
-    val scrollPosition: Int
-        get() = state["SCROLL_POSITION"] ?: 0
-
-    fun saveScrollPosition(position: Int) {
-        state["SCROLL_POSITION"] = position
+    fun saveScrollState(position: Int, offset: Int) {
+        state[SCROLL_POSITION_KEY] = position
+        state[SCROLL_OFFSET_KEY] = offset
     }
+
+    fun getScrollPosition(): Int? = state[SCROLL_POSITION_KEY]
+    fun getScrollOffset(): Int? = state[SCROLL_OFFSET_KEY]
 
     /**
      * Whether the browser is working in Cards mode or Notes mode.
@@ -558,6 +559,8 @@ class CardBrowserViewModel(
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
+        private const val SCROLL_POSITION_KEY = "scroll_position"
+        private const val SCROLL_OFFSET_KEY = "scroll_offset"
         fun factory(lastDeckIdRepository: LastDeckIdRepository, cacheDir: File, preferencesProvider: SharedPreferencesProvider? = null): (SavedStateRegistryOwner, Bundle?) -> AbstractSavedStateViewModelFactory {
             return { owner, defaultArgs ->
                 object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {

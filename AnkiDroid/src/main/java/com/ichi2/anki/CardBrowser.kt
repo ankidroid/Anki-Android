@@ -715,11 +715,25 @@ open class CardBrowser :
         if (postAutoScroll) {
             postAutoScroll = false
         }
+
+        val card = viewModel.findCardById(oldCardId)
+        if (card != null) {
+            viewModel.saveScrollState(card.position, oldCardTopOffset)
+        }
     }
 
     override fun onResume() {
         super.onResume()
         selectNavigationItem(R.id.nav_browser)
+
+        val scrollOffset = viewModel.getScrollOffset()
+        val scrollPosition = viewModel.getScrollPosition()
+        val cardPosition = viewModel.findCardById(oldCardId)?.position
+        if (scrollPosition != null && ((cardPosition == null) || cardPosition != scrollPosition)) {
+            oldCardTopOffset = scrollOffset ?: 0
+            autoScrollTo(scrollPosition)
+            shouldRestoreScroll = true
+        }
     }
 
     @KotlinCleanup("Add a few variables to get rid of the !!")
