@@ -392,7 +392,7 @@ class CardContentProvider : ContentProvider() {
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("update", uri))
+        Timber.d(getLogMessage("update", uri))
 
         // Find out what data the user is requesting
         val match = sUriMatcher.match(uri)
@@ -636,7 +636,7 @@ class CardContentProvider : ContentProvider() {
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("delete", uri))
+        Timber.d(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
             NOTES_ID -> {
                 col.removeNotes(nids = listOf(uri.pathSegments[1].toLong()))
@@ -696,7 +696,7 @@ class CardContentProvider : ContentProvider() {
         if (col.decks.isFiltered(deckId)) {
             throw IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes")
         }
-        col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null)))
+        Timber.d("bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null))
 
         var result = 0
         for (i in valuesArr.indices) {
@@ -742,7 +742,7 @@ class CardContentProvider : ContentProvider() {
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("insert", uri))
+        Timber.d(getLogMessage("insert", uri))
 
         // Find out what data the user is requesting
         return when (sUriMatcher.match(uri)) {

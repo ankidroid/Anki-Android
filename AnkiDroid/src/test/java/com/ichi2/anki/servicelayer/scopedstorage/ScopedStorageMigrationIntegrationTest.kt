@@ -50,9 +50,6 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
     override fun useInMemoryDatabase() = false
 
-    // we want collection.log to be tested
-    override val disableCollectionLogFile: Boolean = false
-
     @After
     override fun tearDown() {
         try {
@@ -86,7 +83,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         // close collection again so -wal doesn't end up in the list
         CollectionManager.ensureClosed()
 
-        // 5 files remain: [collection.log, collection.media.ad.db2, collection.anki2-journal, collection.anki2, .nomedia]
+        // 2 files remain: [collection.anki2, .nomedia]
         underTest.integrationAssertOnlyIntendedFilesRemain()
         assertThat(underTest.migratedFilesCount, equalTo(underTest.filesToMigrateCount))
 
@@ -246,7 +243,7 @@ private constructor(source: Directory, destination: Directory, val filesToMigrat
         if (sourceFilesCount == INTEGRATION_INTENDED_REMAINING_FILE_COUNT) {
             return
         }
-        fail("expected directory with 5 files, got: " + source.directory.listFiles()!!.map { it.name })
+        fail("expected directory with $INTEGRATION_INTENDED_REMAINING_FILE_COUNT files, got: " + source.directory.listFiles()!!.map { it.name })
     }
 
     private val conflictDirectory = File(source.directory, "conflict")
@@ -276,7 +273,8 @@ private constructor(source: Directory, destination: Directory, val filesToMigrat
 
     companion object {
         // media DB created on demand, and no -journal file in new backend
-        val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = 3
+        // collection.log no longer exists
+        val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = 2
 
         /**
          * A MigrateUserDataTest from inputSource to inputDestination (or transient directories if not provided)
