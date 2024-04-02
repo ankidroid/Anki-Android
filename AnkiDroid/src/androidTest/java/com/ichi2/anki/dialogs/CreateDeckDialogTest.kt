@@ -15,11 +15,11 @@
  ****************************************************************************************/
 package com.ichi2.anki.dialogs
 
-import android.view.View
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.RootMatchers
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -30,14 +30,10 @@ import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
-import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.not
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 class CreateDeckDialogTest : InstrumentedTest() {
-    private lateinit var decorView: View
 
     @get:Rule
     val activityRule = ActivityScenarioRule(DeckPicker::class.java)
@@ -45,26 +41,18 @@ class CreateDeckDialogTest : InstrumentedTest() {
     @get:Rule
     val runtimePermissionRule = grantPermissions(GrantStoragePermission.storagePermission, notificationPermission)
 
-    @Before
-    fun setup() {
-        activityRule.scenario.onActivity {
-            decorView = it.window.decorView
-        }
-    }
-
     @Test
-    fun createDeckShowToast() {
+    fun createDeckShowSnackbar() {
         // Creates new Deck
-        onView(withId(R.id.fab_main)).perform(ViewActions.click())
-        onView(withId(R.id.add_deck_action)).perform(ViewActions.click())
+        onView(withId(R.id.fab_main)).perform(click())
+        onView(withId(R.id.add_deck_action)).perform(click())
         onView(withId(R.id.dialog_text_input))
             .perform(ViewActions.typeText("TestDeck"))
-        // closeSoftKeyboard()
-        onView(withText(R.string.dialog_ok)).perform(ViewActions.click())
+        onView(withText(R.string.dialog_ok)).perform(click())
+        closeSoftKeyboard()
 
-        // Check Toast
+        // Check Snackbar is displayed after successful action
         onView(withText(R.string.deck_created))
-            .inRoot(RootMatchers.withDecorView(not(`is`(decorView))))
-            .check(ViewAssertions.matches(isDisplayed()))
+            .check(matches(isDisplayed()))
     }
 }
