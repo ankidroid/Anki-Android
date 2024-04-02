@@ -27,6 +27,9 @@ import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
+import anki.config.Preferences
+import anki.config.copy
+import anki.config.preferences
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
@@ -137,7 +140,6 @@ open class Collection(
         startTime = 0
         _loadScheduler()
         if (created) {
-            sched.useNewTimezoneCode()
             config.set("schedVer", 2)
             // we need to reload the scheduler: this was previously loaded as V1
             _loadScheduler()
@@ -167,12 +169,17 @@ open class Collection(
         val ver = schedVer()
         if (ver == 1) {
             sched = DummyScheduler(this)
-        } else {
+        } else if (ver == 2) {
             if (!backend.getConfigBool(ConfigKey.Bool.SCHED_2021)) {
                 backend.setConfigBool(ConfigKey.Bool.SCHED_2021, true, undoable = false)
             }
             sched = Scheduler(this)
-            config.set("localOffset", sched.currentTimezoneOffset())
+            if (config.get<Int>("creationOffset") == null) {
+                val prefs = getPreferences().copy {
+                    scheduling = scheduling.copy { newTimezone = true }
+                }
+                setPreferences(prefs)
+            }
         }
     }
 
@@ -691,5 +698,13 @@ open class Collection(
     fun defaultsForAdding(currentReviewCard: Card? = null): anki.notes.DeckAndNotetype {
         val homeDeck = currentReviewCard?.currentDeckId()?.did ?: 0L
         return backend.defaultsForAdding(homeDeckOfCurrentReviewCard = homeDeck)
+    }
+
+    fun getPreferences(): Preferences {
+        return backend.getPreferences()
+    }
+
+    fun setPreferences(preferences: Preferences): OpChanges {
+        return backend.setPreferences(preferences)
     }
 }

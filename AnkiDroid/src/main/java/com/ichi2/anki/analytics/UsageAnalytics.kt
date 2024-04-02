@@ -459,7 +459,6 @@ object UsageAnalytics {
         "timeLimit", // Timebox time limit
         "timeoutAnswer", // Automatic display answer
         "keepScreenOn", // Disable screen timeout
-        "newTimezoneHandling", // New timezone handling
         "doubleTapTimeInterval", // Double tap time interval (milliseconds)
         // Sync
         "syncFetchMedia", // Fetch media on sync

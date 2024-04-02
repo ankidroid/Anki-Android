@@ -561,7 +561,7 @@ class CardBrowserTest : RobolectricTest() {
         }
 
         val b = browserWithNoNewCards
-
+        TimeManager.reset()
         b.selectRowsWithPositions(0)
 
         val card = getCheckedCard(b)
@@ -1083,6 +1083,7 @@ class CardBrowserTest : RobolectricTest() {
         c.type = Consts.CARD_TYPE_NEW
         c.due = 27
         c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        TimeManager.reset()
         Assert.assertEquals("27", nextDue(col, c))
         Assert.assertEquals("(27)", dueString(col, c))
         c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED

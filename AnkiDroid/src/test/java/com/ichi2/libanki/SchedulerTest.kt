@@ -34,7 +34,6 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.Consts.STARTING_FACTOR
-import com.ichi2.libanki.Consts.SYNC_VER
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.utils.TimeManager
@@ -73,43 +72,6 @@ open class SchedulerTest : JvmTest() {
         val c = col.sched.card
         MatcherAssert.assertThat(c, Matchers.notNullValue())
         col.sched.answerCard(c!!, BUTTON_ONE)
-    }
-
-    @Test
-    fun newTimezoneHandling() {
-        // #5805
-        MatcherAssert.assertThat(
-            "Sync ver should be updated if we have a valid Rust collection",
-            SYNC_VER,
-            Matchers.equalTo(10)
-        )
-        MatcherAssert.assertThat(
-            "localOffset should be set if using V2 Scheduler",
-            col.config.get<Int?>("localOffset") != null,
-            Matchers.equalTo(true)
-        )
-        val sched = col.sched
-        MatcherAssert.assertThat(
-            "new timezone should be enabled by default",
-            sched.newTimezoneEnabled(),
-            Matchers.equalTo(true)
-        )
-
-        // a second call should be fine
-        sched.setCreationOffset()
-        MatcherAssert.assertThat(
-            "new timezone should still be enabled",
-            sched.newTimezoneEnabled(),
-            Matchers.equalTo(true)
-        )
-        // we can obtain the offset from "crt" without an issue - do not test the return as it depends on the local timezone
-        sched.currentTimezoneOffset()
-        sched.clearCreationOffset()
-        MatcherAssert.assertThat(
-            "new timezone should be disabled after clear",
-            sched.newTimezoneEnabled(),
-            Matchers.equalTo(false)
-        )
     }
 
     @Test
