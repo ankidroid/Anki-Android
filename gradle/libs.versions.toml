@@ -22,7 +22,7 @@ androidxUiautomator = "2.3.0"
 androidxViewpager2 = "1.0.0"
 androidxWebkit = "1.10.0"
 annotations = "24.1.0"
-ankidroidBackend = '0.1.36-anki24.04'
+ankiBackend = '0.1.36-anki24.04'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 colorpicker = "1.2.0"
@@ -104,8 +104,8 @@ materialDialogs-input = { module = "com.afollestad.material-dialogs:input", vers
 desugar-jdk-libs-nio = { module = "com.android.tools:desugar_jdk_libs_nio", version.ref = "desugar-jdk-libs-nio" }
 drakeet-drawer = { module = "com.drakeet.drawer:drawer", version.ref = "drawer" }
 mikehardy-google-analytics-java7 = { module = "net.mikehardy:google-analytics-java7", version.ref = "mikehardyGoogleAnalyticsJava7" }
-ankiBackend-backend = { module = "io.github.david-allison:anki-android-backend", version.ref = "ankidroidBackend" }
-ankiBackend-testing = { module = "io.github.david-allison:anki-android-backend-testing", version.ref = "ankidroidBackend" }
+ankiBackend-backend = { module = "io.github.david-allison:anki-android-backend", version.ref = "ankiBackend" }
+ankiBackend-testing = { module = "io.github.david-allison:anki-android-backend-testing", version.ref = "ankiBackend" }
 java-semver = { module = "com.github.zafarkhaja:java-semver", version.ref = "javaSemver" }
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
