@@ -41,7 +41,7 @@ class Statistics : PageFragment(R.layout.statistics) {
 
         view.findViewById<AppBarLayout>(R.id.app_bar)
             .addLiftOnScrollListener { _, backgroundColor ->
-                activity?.window!!.statusBarColor = backgroundColor
+                activity?.window?.statusBarColor = backgroundColor
             }
 
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
