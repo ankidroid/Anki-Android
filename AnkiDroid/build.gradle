@@ -46,7 +46,7 @@ android {
         applicationId "com.ichi2.anki"
         buildConfigField "Boolean", "CI", (System.getenv("CI") == "true").toString()
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
-        buildConfigField "String", "BACKEND_VERSION", "\"${libs.versions.ankidroidBackend}\""
+        buildConfigField "String", "BACKEND_VERSION", "\"${libs.versions.ankidroidBackend.get()}\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
         buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
         buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash()}\""
