@@ -21,6 +21,17 @@ import org.junit.Test
 import kotlin.test.assertFailsWith
 
 // explicitly missing @RunWith(AndroidJUnit4.class)
+//
+// NOTE - this earned us a friendly warning from robolectric upstream when investigated, I quote:
+// ----
+// a word of caution: invoking Robolectric APIs outside of the context of a Robolectric ClassLoader
+// is very unlikely to work :) Robolectric APIs often invoke underlying Android framework APIs,
+// and those will not be available outside of Robolectric.
+// ----
+//
+// ...so, this class may not work in the future as no test runner means no classloader, means
+// referencing `RobolectricTest` may try to reference missing android APIs.
+// See https://github.com/robolectric/robolectric/issues/8957#issuecomment-2032413796
 class RobolectricTestAnnotationTest : RobolectricTest() {
     @Test
     fun readableErrorIfNotAnnotated() {
