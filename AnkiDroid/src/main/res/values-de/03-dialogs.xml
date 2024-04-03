@@ -244,4 +244,5 @@
     <string name="dismiss_backup_warning_new_user">Aufgrund von Änderungen in den Privatsphäreeinstellungen von Android, werden deine Daten und automatische Backups gelöscht, sobald du die App deinstallierst.</string>
     <string name="dismiss_backup_warning_upgrade">Aufgrund von Änderungen in den Privatsphäreeinstellungen von Android, werden deine Daten und automatische Backups nicht mehr zugreifbar sein, falls du die App deinstallierst.</string>
     <string name="deck_already_exists">Stapel bereits vorhanden</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
 </resources>

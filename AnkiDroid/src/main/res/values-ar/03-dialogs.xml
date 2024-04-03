@@ -274,4 +274,5 @@
     <string name="dismiss_backup_warning_upgrade">        بسبب تغييرات خصوصية الأندرويد، سيتم حذف بياناتك والنسخ الاحتياطية الآلية من هاتفك إذا تم إلغاء تثبيت التطبيق
     </string>
     <string name="deck_already_exists">Deck already exists</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
 </resources>

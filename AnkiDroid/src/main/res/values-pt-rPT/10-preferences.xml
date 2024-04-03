@@ -154,8 +154,8 @@
     <string name="timeout_answer_text" maxLength="41">Mostrar automaticamente a resposta</string>
     <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Selecionar Idioma</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render" maxLength="41">Desactivar processamento de fichas por \"hardware\"</string>
+    <string name="software_render_summ">O processamento por \"hardware\" é mais rápido, mas pode causar problemas, principalmente em Android 8/8.1. Se não conseguir ver partes da “interface” aquando da revisão de fichas, experimente esta opção.</string>
     <string name="safe_display" maxLength="41">Modo de visualização segura</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
     <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
