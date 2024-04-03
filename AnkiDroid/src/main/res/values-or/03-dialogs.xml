@@ -246,4 +246,5 @@
     <string name="dismiss_backup_warning_upgrade">        ଆଣ୍ଡ୍ରଏଡ୍ ଗୋପନୀୟତା ପରିଵର୍ତ୍ତନ ହେତୁ, ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ହେଲେ ଆପଣଙ୍କ ଡାଟା ଏଵଂ ସ୍ୱଚାଳିତ ବ୍ୟାକଅପ୍ ଅଗମ୍ୟ ପାଲଟିବ
     </string>
     <string name="deck_already_exists">Deck already exists</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
 </resources>
