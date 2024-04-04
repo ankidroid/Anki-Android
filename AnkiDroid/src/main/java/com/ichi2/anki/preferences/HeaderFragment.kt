@@ -113,6 +113,8 @@ class HeaderFragment : PreferenceFragmentCompat() {
             if (!CompatHelper.hasScrollKeys()) {
                 searchConfiguration.ignorePreference(activity.getString(R.string.double_scrolling_gap_key))
             }
+
+            searchConfiguration.ignorePreference(activity.getString(R.string.user_actions_controls_category_key))
         }
     }
 }
