@@ -15,18 +15,16 @@
  ****************************************************************************************/
 package com.ichi2.anki.notetype
 
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import anki.notetypes.StockNotetype
 import anki.notetypes.copy
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.getActionButton
-import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
@@ -40,9 +38,14 @@ import com.ichi2.libanki.getNotetypeNames
 import com.ichi2.libanki.getStockNotetypeLegacy
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.set
+import com.ichi2.utils.customView
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 
 class AddNewNotesType(private val activity: ManageNotetypes) {
+    private lateinit var dialogView: View
     suspend fun showAddNewNotetypeDialog() {
+        dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_new_note_type, null)
         val optionsToDisplay = activity.withProgress {
             withCol {
                 val standardNotetypesModels = StockNotetype.Kind.entries
@@ -61,13 +64,13 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                 }
             }
         }
-        val dialog = MaterialDialog(activity).show {
-            customView(R.layout.dialog_new_note_type, horizontalPadding = true)
-            positiveButton(R.string.dialog_ok) { dialog ->
+        val dialog = AlertDialog.Builder(activity).apply {
+            customView(dialogView, paddingLeft = 32, paddingRight = 32, paddingTop = 64, paddingBottom = 64)
+            positiveButton(R.string.dialog_ok) { _ ->
                 val newName =
-                    dialog.view.findViewById<EditText>(R.id.notetype_new_name).text.toString()
+                    dialogView.findViewById<EditText>(R.id.notetype_new_name).text.toString()
                 val selectedPosition =
-                    dialog.view.findViewById<Spinner>(R.id.notetype_new_type).selectedItemPosition
+                    dialogView.findViewById<Spinner>(R.id.notetype_new_type).selectedItemPosition
                 if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
                 val selectedOption = optionsToDisplay[selectedPosition]
                 if (selectedOption.isStandard) {
@@ -77,20 +80,20 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                 }
             }
             negativeButton(R.string.dialog_cancel)
-        }
+        }.show()
         dialog.initializeViewsWith(optionsToDisplay)
     }
 
-    private fun MaterialDialog.initializeViewsWith(optionsToDisplay: List<NotetypeBasicUiModel>) {
+    private fun AlertDialog.initializeViewsWith(optionsToDisplay: List<NotetypeBasicUiModel>) {
         val addPrefixStr = context.resources.getString(R.string.model_browser_add_add)
         val clonePrefixStr = context.resources.getString(R.string.model_browser_add_clone)
-        val nameInput = view.findViewById<EditText>(R.id.notetype_new_name)
+        val nameInput = dialogView.findViewById<EditText>(R.id.notetype_new_name)
         nameInput.addTextChangedListener { editableText ->
             val currentName = editableText?.toString() ?: ""
-            getActionButton(WhichButton.POSITIVE).isEnabled =
+            positiveButton.isEnabled =
                 currentName.isNotEmpty() && !optionsToDisplay.map { it.name }.contains(currentName)
         }
-        view.findViewById<Spinner>(R.id.notetype_new_type).apply {
+        dialogView.findViewById<Spinner>(R.id.notetype_new_type).apply {
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(av: AdapterView<*>?, rv: View?, index: Int, id: Long) {
                     val selectedNotetype = optionsToDisplay[index]
