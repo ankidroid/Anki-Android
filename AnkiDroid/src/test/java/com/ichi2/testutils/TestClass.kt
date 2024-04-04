@@ -55,7 +55,7 @@ interface TestClass {
         val card = note.firstCard()
         card.queue = Consts.QUEUE_TYPE_REV
         card.type = Consts.CARD_TYPE_REV
-        card.due = col.sched.today.toLong()
+        card.due = col.sched.today
         return note
     }
 
@@ -188,15 +188,12 @@ interface TestClass {
 
     fun Card.note() = this.note(col)
     fun Card.note(reload: Boolean) = this.note(col, reload)
-    fun Card.model() = this.model(col)
+    fun Card.noteType() = this.noteType(col)
     fun Card.template() = this.template(col)
     fun Card.question() = this.question(col)
     fun Card.question(reload: Boolean = false, browser: Boolean = false) = this.question(col, reload, browser)
     fun Card.answer() = this.answer(col)
     fun Card.load() = this.load(col)
-    fun Card.nextDue() = this.nextDue(col)
-    fun Card.dueString() = this.dueString(col)
-    fun Card.pureAnswer() = this.pureAnswer(col)
 
     fun Note.load() = this.load(col)
     fun Note.cards() = this.cards(col)

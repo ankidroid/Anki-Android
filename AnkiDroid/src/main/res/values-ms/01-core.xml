@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Perluaskan</string>
     <string name="collapse">Sembunyikan</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">%d minutes left</item>
     </plurals>
@@ -132,12 +131,10 @@
     <string name="empty_filtered_deck">Mengosongkan dek ditapis&#8230;</string>
     <string name="custom_study_deck_name">Sesi ulang kaji tersuai</string>
     <string name="custom_study_deck_exists">Nama semula dek ulang kaji tersuai sedia ada dahulu</string>
-    <string name="empty_deck">Dek kosong</string>
     <string name="search_deck" comment="Deck search for selecting it">Carian Dek</string>
+    <string name="empty_deck">Dek kosong</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Carian Dek</string>
     <string name="invalid_deck_name">Nama dek tidak sah</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Tiada kad tertunggak lagi</string>
     <string name="sd_card_not_mounted">Peranti storan tidak dipasang</string>

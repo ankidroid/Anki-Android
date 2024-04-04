@@ -22,6 +22,7 @@ import android.content.Context
 import com.ichi2.anki.CardUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
+import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
@@ -44,7 +45,7 @@ class TTS {
      * @return The card ordinal. If it's a Cloze card, returns 0.
      */
     private fun getOrdUsingCardType(card: Card, col: Collection): Int {
-        return if (card.model(col).isCloze) {
+        return if (card.noteType(col).isCloze) {
             0
         } else {
             card.ord

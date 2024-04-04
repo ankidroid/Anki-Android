@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Тулысынча күрсәтү</string>
     <string name="collapse">Борып ябу</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">%d minutes left</item>
     </plurals>
@@ -132,12 +131,10 @@
     <string name="empty_filtered_deck">Фильтрлы колода бушатыла...</string>
     <string name="custom_study_deck_name">Шәхси өйрәнү сессиясе</string>
     <string name="custom_study_deck_exists">Башта булган артык өйрәнү колода исемен үзгәртегез</string>
-    <string name="empty_deck">Бу колода буш</string>
     <string name="search_deck" comment="Deck search for selecting it">Колода эзләү</string>
+    <string name="empty_deck">Бу колода буш</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Колода эзләү</string>
     <string name="invalid_deck_name">Шундый колода исеме була алмый</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Хәзерге вакытка кәртләр юк</string>
     <string name="sd_card_not_mounted">Хәтер картасы куелмаган</string>

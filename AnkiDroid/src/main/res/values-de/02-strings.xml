@@ -313,6 +313,7 @@
     <string name="expand_tag">Tag \'%s\' erweitern</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Zugriff auf die Sammlung fehlgeschlagen. Bitte versuchen Sie es erneut!</string>
+    <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Lerne weniger</string>
     <string name="intro_ankidroid_tagline_two">Merke dir mehr</string>

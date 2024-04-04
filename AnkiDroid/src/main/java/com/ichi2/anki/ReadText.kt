@@ -26,6 +26,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
@@ -198,7 +199,7 @@ object ReadText {
         Timber.d("ReadText.textToSpeech() method started for string '%s', locale '%s'", tag.fieldText, tag.lang)
         var localeCode = tag.lang
         val originalLocaleCode = localeCode
-        if (!localeCode.isEmpty()) {
+        if (localeCode.isNotEmpty()) {
             if (!isLanguageAvailable(localeCode)) {
                 localeCode = ""
             }
@@ -212,13 +213,13 @@ object ReadText {
             // user has chosen not to read the text
             return false
         }
-        if (!localeCode.isEmpty() && isLanguageAvailable(localeCode)) {
+        if (localeCode.isNotEmpty() && isLanguageAvailable(localeCode)) {
             speak(textToSpeak, localeCode, queueMode)
             return true
         }
 
         // Otherwise ask the user what language they want to use
-        if (!originalLocaleCode.isEmpty()) {
+        if (originalLocaleCode.isNotEmpty()) {
             // (after notifying them first that no TTS voice was found for the locale
             // they originally requested)
             showThemedToast(
@@ -254,9 +255,7 @@ object ReadText {
                     Timber.d("TTS initialized and available languages found")
                     (context as AbstractFlashcardViewer).ttsInitialized()
                 } else {
-                    if (ankiActivityContext != null) {
-                        ankiActivityContext.showSnackbar(R.string.no_tts_available_message)
-                    }
+                    ankiActivityContext?.showSnackbar(R.string.no_tts_available_message)
                     Timber.w("TTS initialized but no available languages found")
                 }
                 textToSpeech!!.setOnUtteranceProgressListener(object : UtteranceProgressListener() {

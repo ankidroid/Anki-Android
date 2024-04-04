@@ -1869,12 +1869,12 @@ open class DeckPicker :
             return
         }
 
-        when (val completedDeckStatus = queryCompletedDeckCustomStudyAction(did)) {
+        when (queryCompletedDeckCustomStudyAction(did)) {
             CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED,
             CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY,
             CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED,
             CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED -> {
-                onDeckCompleted(did, completedDeckStatus, ::updateUi)
+                onDeckCompleted()
             }
             CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
                 // If the deck is empty (& has no children) then show a message saying it's empty

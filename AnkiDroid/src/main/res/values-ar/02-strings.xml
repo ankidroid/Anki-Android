@@ -52,7 +52,7 @@
     <string name="CardEditorModel">النوع:</string>
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
-    <string name="edit_occlusions">تحرير الأحرف</string>
+    <string name="edit_occlusions">تحرير الصور المعماة</string>
     <string name="tag_name">اسم الوسم</string>
     <string name="add_new_filter_tags">إضافة/فلترة الوسوم</string>
     <string name="add_tag">إضافة وسم</string>
@@ -328,6 +328,7 @@
     <string name="expand_tag">إسدال الوسم \"%s\"</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">فشل الوصول إلى المجموعة. يرجى المحاولة مجددًا!</string>
+    <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ادرس أقل</string>
     <string name="intro_ankidroid_tagline_two">تذكر أكثر</string>

@@ -30,6 +30,7 @@ import com.ichi2.anki.*
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
@@ -126,11 +127,12 @@ object ImportUtils {
             }
         }
 
+        @NeedsTest("Check file name is absolute")
         fun getFileCachedCopy(context: Context, uri: Uri): String? {
             val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
-            val tempPath = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
-            return if (copyFileToCache(context, uri, tempPath)) {
-                tempPath
+            val tempFile = File(context.cacheDir, filename)
+            return if (copyFileToCache(context, uri, tempFile.absolutePath)) {
+                tempFile.absolutePath
             } else {
                 null
             }

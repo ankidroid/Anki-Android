@@ -73,13 +73,13 @@ class RescheduleDialog : IntegerDialog() {
         }
 
         private fun getContentString(resources: Resources, currentCard: Card): String? {
-            if (currentCard.isNew) {
+            if (currentCard.type == Consts.CARD_TYPE_NEW) {
                 return resources.getString(R.string.reschedule_card_dialog_new_card_warning)
             }
 
             // #5595 - Help a user reschedule cards by showing them the current interval.
             // DEFECT: We should be able to calculate this for all card types - not yet performed for non-review or dynamic cards
-            if (!currentCard.isReview) {
+            if (!(currentCard.type == Consts.CARD_TYPE_REV && currentCard.queue == Consts.QUEUE_TYPE_REV)) {
                 return null
             }
             val message = resources.getString(

@@ -313,6 +313,7 @@
     <string name="expand_tag">Разгъване на етикета \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Провал на получаването на достъп до колекцията. Опитайте пак!</string>
+    <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Учете по-малко</string>
     <string name="intro_ankidroid_tagline_two">Remember more</string>

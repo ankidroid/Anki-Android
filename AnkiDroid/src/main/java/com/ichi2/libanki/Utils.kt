@@ -141,7 +141,7 @@ object Utils {
     fun ids2str(ids: IntArray?): String = StringBuilder().apply {
         append("(")
         if (ids != null) {
-            val s = Arrays.toString(ids)
+            val s = ids.contentToString()
             append(s.substring(1, s.length - 1))
         }
         append(")")
@@ -151,7 +151,7 @@ object Utils {
     fun ids2str(ids: LongArray?): String = StringBuilder().apply {
         append("(")
         if (ids != null) {
-            val s = Arrays.toString(ids)
+            val s = ids.contentToString()
             append(s.substring(1, s.length - 1))
         }
         append(")")

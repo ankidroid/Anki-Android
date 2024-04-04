@@ -130,6 +130,10 @@ abstract class CardViewerViewModel(
     private fun createSoundErrorListener(): SoundErrorListener {
         return object : SoundErrorListener {
             override fun onError(uri: Uri): SoundErrorBehavior {
+                if (uri.scheme != "file") {
+                    return SoundErrorBehavior.CONTINUE_AUDIO
+                }
+
                 val file = uri.toFile()
                 // There is a multitude of transient issues with the MediaPlayer.
                 // Retrying fixes most of these
@@ -175,7 +179,7 @@ abstract class CardViewerViewModel(
                 }
             }
 
-            val fields = withCol { card.model(this).flds }
+            val fields = withCol { card.noteType(this).flds }
             for (i in 0 until fields.length()) {
                 val field = fields.get(i) as JSONObject
                 if (field.getString("name") == typeAnsFieldName) {

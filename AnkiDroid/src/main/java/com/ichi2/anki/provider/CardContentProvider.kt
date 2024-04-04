@@ -108,7 +108,7 @@ class CardContentProvider : ContentProvider() {
         private const val COL_NULL_ERROR_MSG = "AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong."
 
         private fun sanitizeNoteProjection(projection: Array<String>?): Array<String> {
-            if (projection == null || projection.isEmpty()) {
+            if (projection.isNullOrEmpty()) {
                 return sDefaultNoteProjectionDBAccess
             }
             val sanitized = ArrayList<String>(projection.size)
@@ -392,7 +392,7 @@ class CardContentProvider : ContentProvider() {
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("update", uri))
+        Timber.d(getLogMessage("update", uri))
 
         // Find out what data the user is requesting
         val match = sUriMatcher.match(uri)
@@ -636,7 +636,7 @@ class CardContentProvider : ContentProvider() {
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("delete", uri))
+        Timber.d(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
             NOTES_ID -> {
                 col.removeNotes(nids = listOf(uri.pathSegments[1].toLong()))
@@ -688,7 +688,7 @@ class CardContentProvider : ContentProvider() {
      * This implementation optimizes for when the notes are grouped according to model.
      */
     private fun bulkInsertNotes(valuesArr: Array<ContentValues>?, deckId: DeckId): Int {
-        if (valuesArr == null || valuesArr.isEmpty()) {
+        if (valuesArr.isNullOrEmpty()) {
             return 0
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
@@ -696,7 +696,7 @@ class CardContentProvider : ContentProvider() {
         if (col.decks.isFiltered(deckId)) {
             throw IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes")
         }
-        col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null)))
+        Timber.d("bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null))
 
         var result = 0
         for (i in valuesArr.indices) {
@@ -742,7 +742,7 @@ class CardContentProvider : ContentProvider() {
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("insert", uri))
+        Timber.d(getLogMessage("insert", uri))
 
         // Find out what data the user is requesting
         return when (sUriMatcher.match(uri)) {
@@ -1046,7 +1046,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.DECK_ID -> rb.add(currentCard.did)
                 FlashCardsContract.Card.QUESTION -> rb.add(question)
                 FlashCardsContract.Card.ANSWER -> rb.add(answer)
-                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple(col))
+                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.renderOutput(col).questionText)
                 FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(col, false).answerText)
                 FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer(col))
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
@@ -1237,3 +1237,18 @@ private fun TemplateRenderOutput.questionWithFixedSoundTags() =
 /** replaces [anki:play...] with [sound:] */
 private fun TemplateRenderOutput.answerWithFixedSoundTags() =
     replaceWithSoundTags(answerText, this)
+
+/**
+ * Returns the answer with anything before the `<hr id=answer>` tag removed
+ * TODO inline once the legacy TTS mechanism is removed
+ */
+fun Card.pureAnswer(col: Collection): String {
+    val s = renderOutput(col).answerText
+    for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
+        val pos = s.indexOf(target)
+        if (pos == -1) continue
+        return s.substring(pos + target.length).trim { it <= ' ' }
+    }
+    // neither found
+    return s
+}

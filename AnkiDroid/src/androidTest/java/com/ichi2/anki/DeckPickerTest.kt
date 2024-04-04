@@ -28,7 +28,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.ichi2.anki.TestUtils.activityInstance
 import com.ichi2.anki.TestUtils.clickChildViewWithId
-import com.ichi2.anki.TestUtils.isScreenSw600dp
+import com.ichi2.anki.TestUtils.isTablet
 import com.ichi2.anki.TestUtils.wasBuiltOnCI
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
@@ -58,7 +58,7 @@ class DeckPickerTest : InstrumentedTest() {
         assumeFalse("Test flaky in CI - #9282, skipping", wasBuiltOnCI())
 
         // For mobile. If it is not a mobile, then test will be ignored.
-        assumeTrue(!isScreenSw600dp)
+        assumeTrue(!isTablet)
         val testString = System.currentTimeMillis().toString() + ""
         createDeckWithCard(testString)
 
@@ -88,7 +88,7 @@ class DeckPickerTest : InstrumentedTest() {
         assumeFalse("Test flaky in CI - #9282, skipping", wasBuiltOnCI())
 
         // For tablet. If it is not a tablet, then test will be ignored.
-        assumeTrue(isScreenSw600dp)
+        assumeTrue(isTablet)
         val testString = System.currentTimeMillis().toString() + ""
         createDeckWithCard(testString)
 
