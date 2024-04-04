@@ -54,6 +54,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         "appearance_preference_group",
         "category_plugins",
         "category_workarounds",
+        "userActionsControls",
         // Preferences that only click: don't have a value
         "tts",
         "resetLanguages",

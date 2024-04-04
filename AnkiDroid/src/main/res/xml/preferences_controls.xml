@@ -257,6 +257,7 @@
     </PreferenceCategory>
 
     <com.ichi2.anki.preferences.ExtendedPreferenceCategory
+        android:key="@string/user_actions_controls_category_key"
         android:title="@string/user_actions"
         android:summary="@string/user_actions_summary"
         app:helpLink="@string/link_user_actions_help">

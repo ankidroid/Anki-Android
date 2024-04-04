@@ -22,6 +22,7 @@ import android.print.PrintAttributes
 import android.print.PrintManager
 import android.view.View
 import androidx.core.content.ContextCompat.getSystemService
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
@@ -37,6 +38,12 @@ class Statistics : PageFragment(R.layout.statistics) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<AppBarLayout>(R.id.app_bar)
+            .addLiftOnScrollListener { _, backgroundColor ->
+                activity?.window?.statusBarColor = backgroundColor
+            }
+
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
             inflateMenu(R.menu.statistics)
             menu.findItem(R.id.action_export_stats).title = CollectionManager.TR.statisticsSavePdf()
