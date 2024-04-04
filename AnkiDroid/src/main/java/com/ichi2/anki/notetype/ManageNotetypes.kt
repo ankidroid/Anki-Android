@@ -28,11 +28,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.copy
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.getActionButton
-import com.afollestad.materialdialogs.input.getInputField
-import com.afollestad.materialdialogs.input.input
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
@@ -126,32 +121,32 @@ class ManageNotetypes : AnkiActivity() {
                     withCol { getNotetypeNames().map { it.toUiModel() } }
                 }
             )
-            val dialog = MaterialDialog(this@ManageNotetypes).show {
+            val dialog = AlertDialog.Builder(this@ManageNotetypes).show {
                 title(R.string.rename_model)
-                input(
-                    prefill = noteTypeUiModel.name,
-                    waitForPositiveButton = false,
-                    callback = { dialog, text ->
-                        dialog.getActionButton(WhichButton.POSITIVE).isEnabled =
-                            text.isNotEmpty() && !allNotetypes.map { it.name }
-                            .contains(text.toString())
-                    }
-                )
                 positiveButton(R.string.rename) {
                     launchCatchingTask {
                         runAndRefreshAfter {
                             val initialNotetype = getNotetype(noteTypeUiModel.id)
                             val renamedNotetype = initialNotetype.copy {
-                                this.name = it.getInputField().text.toString()
+                                this.name = (it as AlertDialog).getInputField().text.toString()
                             }
                             updateNotetype(renamedNotetype)
                         }
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
-            }
+                setView(R.layout.dialog_generic_text_input)
+            }.input(
+                prefill = noteTypeUiModel.name,
+                waitForPositiveButton = false,
+                callback = { dialog, text ->
+                    dialog.positiveButton.isEnabled =
+                        text.isNotEmpty() && !allNotetypes.map { it.name }
+                        .contains(text.toString())
+                }
+            )
             // start with the button disabled as dialog shows the initial name
-            dialog.getActionButton(WhichButton.POSITIVE).isEnabled = false
+            dialog.positiveButton.isEnabled = false
         }
     }
 
