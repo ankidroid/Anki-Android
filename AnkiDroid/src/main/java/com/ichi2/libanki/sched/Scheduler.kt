@@ -536,7 +536,7 @@ open class Scheduler(val col: Collection) {
         var revTime: Double
         var relrnRate: Double
         var relrnTime: Double
-        if (reload || etaCache.get(0) == -1.0) {
+        if (reload || etaCache[0] == -1.0) {
             col
                 .db
                 .query(
@@ -574,12 +574,12 @@ open class Scheduler(val col: Collection) {
             etaCache[4] = relrnRate
             etaCache[5] = relrnTime
         } else {
-            newRate = etaCache.get(0)
-            newTime = etaCache.get(1)
-            revRate = etaCache.get(2)
-            revTime = etaCache.get(3)
-            relrnRate = etaCache.get(4)
-            relrnTime = etaCache.get(5)
+            newRate = etaCache[0]
+            newTime = etaCache[1]
+            revRate = etaCache[2]
+            revTime = etaCache[3]
+            relrnRate = etaCache[4]
+            relrnTime = etaCache[5]
         }
 
         // Calculate the total time for each queue based on the historical average duration per rep

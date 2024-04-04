@@ -18,7 +18,6 @@ package com.ichi2.utils
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
-import junit.framework.TestCase.*
 import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Before

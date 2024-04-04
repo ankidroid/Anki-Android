@@ -52,7 +52,7 @@ class PeripheralKeymapTest : InstrumentedTest() {
         )
     }
 
-    protected fun getNumpadEvent(keycode: Int): KeyEvent {
+    private fun getNumpadEvent(keycode: Int): KeyEvent {
         return KeyEvent(0, 0, KeyEvent.ACTION_UP, keycode, 0, KeyEvent.META_NUM_LOCK_ON)
     }
 }
