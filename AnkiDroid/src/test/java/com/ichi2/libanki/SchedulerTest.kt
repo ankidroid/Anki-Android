@@ -982,7 +982,7 @@ open class SchedulerTest : JvmTest() {
         note2.setItem("Back", "two")
         col.addNote(note2)
         Assert.assertEquals(Counts(2, 0, 0), col.sched.counts())
-        var c = col.sched.card!!
+        val c = col.sched.card!!
         // getCard does not decrement counts
         Assert.assertEquals(Counts(2, 0, 0), col.sched.counts())
         Assert.assertEquals(Counts.Queue.NEW, col.sched.countIdx())

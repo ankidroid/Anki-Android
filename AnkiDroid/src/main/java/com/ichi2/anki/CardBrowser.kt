@@ -2222,8 +2222,6 @@ open class CardBrowser :
             return s
         }
 
-        const val CARD_NOT_AVAILABLE = -1
-
         fun dueString(col: Collection, card: Card): String {
             var t = nextDue(col, card)
             if (card.queue < 0) {
