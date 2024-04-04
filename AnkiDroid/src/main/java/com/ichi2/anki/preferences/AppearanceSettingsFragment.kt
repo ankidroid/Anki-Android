@@ -20,7 +20,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.preference.ListPreference
-import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import anki.config.ConfigKey
 import com.ichi2.anki.CollectionManager
@@ -41,24 +40,17 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import timber.log.Timber
 
-class AppearanceSettingsFragment : SettingsFragment() {
-    private var backgroundImage: Preference? = null
+class AppearanceSettingsFragment : SettingsFragment(), PreferenceSelectBackgroundImageListener {
     override val preferenceResource: Int
         get() = R.xml.preferences_appearance
     override val analyticsScreenNameConstant: String
         get() = "prefs.appearance"
+    private lateinit var preferenceSelectBackgroundImage: PreferenceSelectBackgroundImage
 
     override fun initSubscreen() {
-        // Configure background
-        backgroundImage = requirePreference<Preference>("deckPickerBackground")
-        backgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            try {
-                backgroundImageResultLauncher.launch("image/*")
-            } catch (ex: Exception) {
-                Timber.w(ex)
-            }
-            true
-        }
+        // Configure background preference listener
+        preferenceSelectBackgroundImage = findPreference("deckPickerBackground")!!
+        preferenceSelectBackgroundImage.preferenceSelectBackgroundImageListener(this)
 
         val appThemePref = requirePreference<ListPreference>(R.string.app_theme_key)
         val dayThemePref = requirePreference<ListPreference>(R.string.day_theme_key)
@@ -142,6 +134,18 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 launchCatchingTask { withCol { config.setBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS, !(newValue as Boolean)) } }
             }
         }
+    }
+
+    override fun onImageSelectClicked() {
+        try {
+            backgroundImageResultLauncher.launch("image/*")
+        } catch (ex: Exception) {
+            Timber.w(ex)
+        }
+    }
+
+    override fun onImageRemoveClicked() {
+        showRemoveBackgroundImageDialog()
     }
 
     private fun showRemoveBackgroundImageDialog() {
