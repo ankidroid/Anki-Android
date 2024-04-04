@@ -131,3 +131,36 @@ scale up, but not down.  */
 .night_mode .replay-button svg {
   fill: white;
 }
+
+/* Make sure the image occlusion cards fit to width in
+landscape mode, even if made in Desktop version*/
+#image-occlusion-canvas {
+  --inactive-shape-color: #ffeba2;
+  --active-shape-color: #ff8e8e;
+  --inactive-shape-border: 1px #212121;
+  --active-shape-border: 1px #212121;
+
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 100vw !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+.card {
+  font-family: arial;
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  background-color: white;
+}
+
+#image-occlusion-container img {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 100vw !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
