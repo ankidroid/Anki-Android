@@ -223,7 +223,7 @@ fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
  * Check if the current WebView version is older than the last supported version and if it is,
  * inform the user with a dialog box containing further instructions.
  */
-fun checkWebviewVersion(packageManager: PackageManager, context: AnkiActivity) {
+fun checkWebviewVersion(packageManager: PackageManager, activity: AnkiActivity) {
     val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager) ?: return
     val webviewOlder = checkOlderWebView(packageManager)
     val versionCode = webviewPackageInfo.versionName.split(".").get(0).toInt()
@@ -236,43 +236,43 @@ fun checkWebviewVersion(packageManager: PackageManager, context: AnkiActivity) {
     if (webviewOlder == null) {
         // com.google.android.webview found
         Timber.w("WebView is outdated. %s: %s", webviewPackageInfo.packageName, webviewPackageInfo.versionName)
-        showOutdatedWebViewDialog(context, webviewPackageInfo)
+        showOutdatedWebViewDialog(activity, webviewPackageInfo)
         return
     } else {
         Timber.w("WebView is outdated. %s: %s", webviewOlder.packageName, webviewOlder.versionName)
-        showNativeOutdatedWebViewDialog(context, webviewOlder)
+        showNativeOutdatedWebViewDialog(activity, webviewOlder)
         return
         // For older Android Devices having com.android.webview instead of com.google.android.webview
     }
 }
 
-private fun showOutdatedWebViewDialog(context: AnkiActivity, webview: PackageInfo) {
-    val message = String.format(context.getString(R.string.webview_update_message), webview.packageName, webview.versionName)
-    AlertDialog.Builder(context).show {
+private fun showOutdatedWebViewDialog(activity: AnkiActivity, webview: PackageInfo) {
+    val message = String.format(activity.getString(R.string.webview_update_message), webview.packageName, webview.versionName)
+    AlertDialog.Builder(activity).show {
         title(R.string.ankidroid_init_failed_webview_title)
         message(text = message)
         positiveButton(R.string.scoped_storage_learn_more) {
-            context.openUrl(Uri.parse(context.getString(R.string.webview_update_link)))
+            activity.openUrl(Uri.parse(activity.getString(R.string.webview_update_link)))
         }
         neutralButton(R.string.help) {
             val helpDialog = HelpDialog.newHelpInstance()
-            context.showDialogFragment(helpDialog)
+            activity.showDialogFragment(helpDialog)
         }
         cancelable(false)
     }
 }
 
-private fun showNativeOutdatedWebViewDialog(context: AnkiActivity, webview: PackageInfo) {
-    AlertDialog.Builder(context).show {
+private fun showNativeOutdatedWebViewDialog(activity: AnkiActivity, webview: PackageInfo) {
+    AlertDialog.Builder(activity).show {
         title(R.string.ankidroid_init_failed_webview_title)
-        val message = String.format(context.getString(R.string.older_native_webview_found_alert), webview.packageName, webview.versionName)
+        val message = String.format(activity.getString(R.string.older_native_webview_found_alert), webview.packageName, webview.versionName)
         message(text = message)
         positiveButton(R.string.scoped_storage_learn_more) {
-            context.openUrl(Uri.parse(context.getString(R.string.native_webview_update_link)))
+            activity.openUrl(Uri.parse(activity.getString(R.string.native_webview_update_link)))
         }
         neutralButton(R.string.help) {
             val helpDialog = HelpDialog.newHelpInstance()
-            context.showDialogFragment(helpDialog)
+            activity.showDialogFragment(helpDialog)
         }
         cancelable(false)
     }

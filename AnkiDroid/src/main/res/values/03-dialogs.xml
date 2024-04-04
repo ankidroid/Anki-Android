@@ -61,7 +61,7 @@
     <string name="answering_error_title">Database error</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Report error</string>
-   <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
     <string name="intent_aedict_empty">Category “default” is empty</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
@@ -260,6 +260,9 @@
     </string>
 
     <string name="deck_already_exists">Deck already exists</string>
+
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+
     <string name="webview_update_message" comment="The First Parameter represents the package name of the outdated WebView(com.google.android.webview) and the second parameter represents the outdated version">Android System WebView is out of date\n\n%1$s: %2$s</string>
     <string name="older_native_webview_found_alert" comment="The First Parameter represents the package name of the outdated WebView(com.android.webview) and the second parameter represents the outdated version">Android System WebView is out of date. You may need to use com.google.android.webview\n\n%1$s: %2$s</string>
 </resources>

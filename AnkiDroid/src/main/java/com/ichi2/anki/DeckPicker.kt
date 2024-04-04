@@ -1114,9 +1114,9 @@ open class DeckPicker :
             refreshState()
         }
         message?.let { dialogHandler.sendStoredMessage(it) }
-        checkWebviewVersion(packageManager, this)
         // In case the user returns to the App without making the required updates to WebView
         // As without a "onResume()" , the dialog box is removed on resume.
+        checkWebviewVersion(packageManager, this)
     }
 
     fun refreshState() {
