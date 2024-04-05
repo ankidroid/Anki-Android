@@ -444,7 +444,7 @@
             android:label="@string/title_activity_template_editor"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             >
         </activity>
         <activity
