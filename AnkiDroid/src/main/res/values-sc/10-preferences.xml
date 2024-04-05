@@ -199,8 +199,6 @@
     <string name="reset">Reseta</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplicatziones API esternas (de tertzas partes)</string>
     <string name="thirdparty_apps_summary">Pòmpia·ti una lista de aplicatziones chi impreant s\'API de AnkiDroid che a ditzionàrios o àteras ainas.</string>
-    <string name="html_javascript_debugging" maxLength="41">Depuratzione de còdighe HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Abìlita sas connessiones remotas WebView, e sarva s\'HTML de sa carta in sa cartella de AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Revisore</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

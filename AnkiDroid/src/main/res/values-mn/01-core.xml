@@ -134,10 +134,11 @@
     <string name="empty_filtered_deck">Хоосон багцыг ангилж байна&#8230;</string>
     <string name="custom_study_deck_name">Тусгай суралцах горим</string>
     <string name="custom_study_deck_exists">Аль хэдийн эхлүүлсэн \"Тусгай судлах хэсэг\"-ийнхээ нэрээ эхэлж өөрчилнө үү</string>
-    <string name="empty_deck">Энэ багц хоосон байна</string>
     <string name="search_deck" comment="Deck search for selecting it">Багц хайх</string>
+    <string name="empty_deck">Энэ багц хоосон байна</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Интернетээс багц хайх</string>
     <string name="invalid_deck_name">Ингэж нэрлэх боломжгүй байна</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Одоохондоо сурах, давтах карт алга байна</string>
     <string name="sd_card_not_mounted">Багтаамжийн  хэрэгсэл холбогдоогүй байна</string>
     <string name="button_sync" comment="Text of the sync button">Зэрэгцүүлэх</string>
@@ -146,6 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Зэрэгцүүлэлтийг үргэлжлүүлэх</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Зэрэгцүүлэлтийг зогсоолоо</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Цуцалж байна&#8230;\n Бага зэрэг удаж магадгүй</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Багцыг экспортлох</string>
     <string name="nothing">Юу ч үгүй</string>
     <!-- Card template editor -->
@@ -166,7 +168,6 @@
         <item quantity="one">“%2$s\" энэ төрлийн картыг, мөн үүний %1$d картыг устгах уу?</item>
         <item quantity="other">“%2$s\" энэ төрлийн картыг, мөн үүний %1$d картыг устгах уу?</item>
     </plurals>
-    <string name="invalid_template">Картыг үүсгэх боломжгүй байна</string>
     <string name="card_template_editor_would_delete_note">Энэ картын төрлийн хасах нь нэг болон түүнээс олон картны хэсгүүдийг устгана. Эхлээд шинэ картны төрөл үүсгэнэ үү.</string>
     <string name="card_template_editor_save_error">Картны загварын өөрчлөлтүүдийг хадгалах боломжгүй байна:%s</string>
     <string name="template_for_current_card_deleted">Энэ картны төрөл нь устгагдсан байна</string>
@@ -238,6 +239,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Шилжүүлэх үйл явцыг үргэлжлүүлэх</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Орох боломжгүй цуглуулга</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store - ын Ашиглалтын Журамд өөрчлөлт орсны улмаас, таны цуглуулгыг, AnkiDroid - ыг устгасны дараа ашиглах боломжгүй. \n\n Таны мэдээлэл аюулгүй ба дахин сэргээж болно. Тэгэхийн тулд та \n%s\n\n - дээр очоод доор \"to restore\" гэх сонголтыг нь дарахад болно:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Сервэрээс мэдээллээ сэргээх ()</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>

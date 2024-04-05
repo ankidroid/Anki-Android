@@ -143,7 +143,7 @@
     <string name="card_editor_reset_card">Redefinir progresso</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reagendar</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pré-visualizar</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copiar como Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renomear</string>
     <string name="checks_action">Verificar</string>
@@ -213,9 +213,6 @@
     <string name="remove_background_image">Remover fundo?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restaurar Padrões</string>
-    <string name="cloze_sample_text">Esse é um {{%1$s::exemplo}} ocultado.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">ezemplo</string>
-    <string name="basic_answer_sample_text">um exemplo</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vazio</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Falha ao salvar imagem do quadro. %s</string>
@@ -307,7 +304,7 @@
     <string name="migration_part_1_done_resume">Você pode continuar usando o AnkiDroid.
 \nA migração do armazenamento continuará em segundo plano.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s Não é um pacote de addon javascript válido</string>
+    <string name="not_valid_js_addon_package">%s não é um pacote de addon JavaScript válido</string>
     <string name="could_not_create_dir">Não foi possível criar a pasta %s</string>
     <string name="malicious_archive_entry_outside">Arquivo malicioso. Contém entrada fora da pasta alvo: %s</string>
     <string name="malicious_archive_exceeds_limit">Arquivo malicioso. O tamanho excede %1$s ou contém mais de %2$d arquivos</string>
@@ -316,6 +313,7 @@
     <string name="expand_tag">Expandir tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Não foi possível acessar a coleção. Tente novamente!</string>
+    <string name="cd_manage_notetypes_add">Adicionar um novo modelo</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Estude menos</string>
     <string name="intro_ankidroid_tagline_two">Lembre mais</string>
@@ -323,7 +321,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Comece Agora</string>
     <string name="intro_sync_from_ankiweb">Sincronizar do AnkiWeb</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">O AnkiDroid ainda não foi inicializado.  Por favor, abra o AnkiDroid e tente novamente</string>
     <string name="already_logged_in">Já está logado</string>
     <!-- Deck Creation -->
     <string name="deck_created">Baralho criado</string>

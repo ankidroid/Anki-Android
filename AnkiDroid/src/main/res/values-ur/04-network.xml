@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">مقامی</string>
     <string name="sync_sanity_remote">ریموٹ</string>
-    <string name="force_full_sync_title">مکمل مطابقت پذیری کو مجبور کریں۔</string>
-    <string name="force_full_sync_summary">اگلی مطابقت پذیری پر، ایک سمت میں زبردستی تبدیلیاں کریں۔</string>
-    <string name="force_full_sync_confirmation">زبردستی مکمل مطابقت پذیری۔</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">درخواست کردہ تبدیلی کے لیے ڈیٹابیس کے مکمل اپ لوڈ کی ضرورت ہوگی جب آپ اگلی بار اپنے مجموعہ کو ہم آہنگ کریں گے۔ اگر آپ کے پاس کسی دوسرے آلے پر جائزے یا دیگر تبدیلیاں ہیں جو ابھی تک یہاں مطابقت پذیر نہیں ہوئی ہیں، تو وہ ضائع ہو جائیں گی۔ جاری رہے؟</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid کے پہلے سے انسٹال کردہ ورژن میں ایک بگ کی وجہ سے، مکمل مطابقت پذیری پر مجبور کرنے کی سفارش کی جاتی ہے۔</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">مطابقت پذیری (مکمل)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">مطابقت پذیری (لاگ ان)</string>
 </resources>

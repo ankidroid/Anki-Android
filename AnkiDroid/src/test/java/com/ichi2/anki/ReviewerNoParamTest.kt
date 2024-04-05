@@ -133,6 +133,12 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(
+        OS.ALL,
+        "Hide should be called after answering a card" +
+            "    Expected: a value greater than <2>" +
+            "         but: <2> was equal to <2>"
+    )
     fun showingCardHidesFullScreen() {
         addNoteUsingBasicModel("Hello", "World")
         val reviewer = startReviewerFullScreen()
@@ -149,6 +155,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.ALL, "Expected: a value greater than <2> but: <2> was equal to <2>")
     fun undoingCardHidesFullScreen() = runTest {
         addNoteUsingBasicModel("Hello", "World")
         val reviewer = startReviewerFullScreen()

@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Синтез речи недоступен</string>
     <string name="tts_no_tts">Не произносить</string>
     <string name="unused_strings">\n\nНеиспользуемые файлы:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Предпросмотр</string>
     <string name="reposition_card_dialog_title">Переместить новую карточку</string>
     <string name="reposition_card_dialog_message">Начальная позиция:</string>
     <string name="reposition_card_not_new_error">Можно переместить только новые карточки</string>
@@ -119,8 +118,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Подтвердить</string>
     <string name="dialog_no">Нет</string>
     <string name="dialog_yes">Да</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Оставить</string>
+    <string name="dialog_remove">Удалить</string>
     <string name="dialog_continue">Продолжить</string>
     <string name="dialog_processing">Обработка...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Создать</string>
@@ -190,7 +189,7 @@
     <string name="failed_to_apply_background_image">Не удалось установить фоновое изображение %s</string>
     <string name="background_image_too_large">Фоновое изображение слишком большое</string>
     <string name="image_max_size_allowed">Максимальный размер изображения – %d МБ</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">Размер изображения слишком велик (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Нет разрешения на доступ к хранилищу. Предоставьте разрешение «Хранилище» и попробуйте снова.</string>
@@ -228,7 +227,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">Условия использования AnkiWeb</string>
     <string name="help_title_send_exception">Отправить отчёт о неполадках</string>
     <string name="help_dialog_exception_report_debounce">Отчёт уже отправлен</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Отчёт отправлен!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Автоматическая синхронизация может быть запущена через %d секунду</item>
@@ -261,4 +260,6 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        В связи с изменениями конфиденциальности Android, после удалении приложения ваши данные и автоматизированные резервные копии будут недоступны
     </string>
+    <string name="deck_already_exists">Колода уже существует</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
 </resources>

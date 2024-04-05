@@ -108,7 +108,7 @@ class CardContentProvider : ContentProvider() {
         private const val COL_NULL_ERROR_MSG = "AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong."
 
         private fun sanitizeNoteProjection(projection: Array<String>?): Array<String> {
-            if (projection == null || projection.isEmpty()) {
+            if (projection.isNullOrEmpty()) {
                 return sDefaultNoteProjectionDBAccess
             }
             val sanitized = ArrayList<String>(projection.size)
@@ -392,7 +392,7 @@ class CardContentProvider : ContentProvider() {
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("update", uri))
+        Timber.d(getLogMessage("update", uri))
 
         // Find out what data the user is requesting
         val match = sUriMatcher.match(uri)
@@ -454,7 +454,7 @@ class CardContentProvider : ContentProvider() {
                     isDeckUpdate = key == FlashCardsContract.Card.DECK_ID
                     did = values.getAsLong(key)
                 }
-                require(!col.decks.isDyn(did)) { "Cards cannot be moved to a filtered deck" }
+                require(!col.decks.isFiltered(did)) { "Cards cannot be moved to a filtered deck" }
                 /* now update the card
                  */if (isDeckUpdate && did >= 0) {
                     Timber.d("CardContentProvider: Moving card to other deck...")
@@ -495,7 +495,7 @@ class CardContentProvider : ContentProvider() {
                         updated++
                     }
                     if (newDid != null) {
-                        if (col.decks.isDyn(newDid.toLong())) {
+                        if (col.decks.isFiltered(newDid.toLong())) {
                             throw IllegalArgumentException("Cannot set a filtered deck as default deck for a model")
                         }
                         model!!.put("did", newDid)
@@ -636,7 +636,7 @@ class CardContentProvider : ContentProvider() {
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("delete", uri))
+        Timber.d(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
             NOTES_ID -> {
                 col.removeNotes(nids = listOf(uri.pathSegments[1].toLong()))
@@ -688,15 +688,15 @@ class CardContentProvider : ContentProvider() {
      * This implementation optimizes for when the notes are grouped according to model.
      */
     private fun bulkInsertNotes(valuesArr: Array<ContentValues>?, deckId: DeckId): Int {
-        if (valuesArr == null || valuesArr.isEmpty()) {
+        if (valuesArr.isNullOrEmpty()) {
             return 0
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        if (col.decks.isDyn(deckId)) {
+        if (col.decks.isFiltered(deckId)) {
             throw IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes")
         }
-        col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null)))
+        Timber.d("bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null))
 
         var result = 0
         for (i in valuesArr.indices) {
@@ -742,7 +742,7 @@ class CardContentProvider : ContentProvider() {
         }
         val col = CollectionHelper.instance.getColUnsafe(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("insert", uri))
+        Timber.d(getLogMessage("insert", uri))
 
         // Find out what data the user is requesting
         return when (sUriMatcher.match(uri)) {
@@ -792,7 +792,7 @@ class CardContentProvider : ContentProvider() {
                 if (modelName == null || fieldNames == null || numCards == null) {
                     throw IllegalArgumentException("Model name, field_names, and num_cards can't be empty")
                 }
-                if (did != null && col.decks.isDyn(did)) {
+                if (did != null && col.decks.isFiltered(did)) {
                     throw IllegalArgumentException("Cannot set a filtered deck as default deck for a model")
                 }
                 // Create a new model
@@ -807,7 +807,7 @@ class CardContentProvider : ContentProvider() {
                     // Add some empty card templates
                     var idx = 0
                     while (idx < numCards) {
-                        val cardName = context!!.resources.getString(R.string.card_n_name, idx + 1)
+                        val cardName = CollectionManager.TR.cardTemplatesCard(idx + 1)
                         val t = Notetypes.newTemplate(cardName)
                         t.put("qfmt", "{{${allFields[0]}}}")
                         var answerField: String? = allFields[0]
@@ -1046,7 +1046,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.DECK_ID -> rb.add(currentCard.did)
                 FlashCardsContract.Card.QUESTION -> rb.add(question)
                 FlashCardsContract.Card.ANSWER -> rb.add(answer)
-                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple(col))
+                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.renderOutput(col).questionText)
                 FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(col, false).answerText)
                 FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer(col))
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
@@ -1132,10 +1132,10 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Deck.DECK_ID -> rb.add(id)
                 FlashCardsContract.Deck.DECK_COUNTS -> rb.add(deckCounts)
                 FlashCardsContract.Deck.OPTIONS -> {
-                    val config = col.decks.confForDid(id).toString()
+                    val config = col.decks.configDictForDeckId(id).toString()
                     rb.add(config)
                 }
-                FlashCardsContract.Deck.DECK_DYN -> rb.add(col.decks.isDyn(id))
+                FlashCardsContract.Deck.DECK_DYN -> rb.add(col.decks.isFiltered(id))
                 FlashCardsContract.Deck.DECK_DESC -> {
                     val desc = col.decks.current().description
                     rb.add(desc)
@@ -1237,3 +1237,18 @@ private fun TemplateRenderOutput.questionWithFixedSoundTags() =
 /** replaces [anki:play...] with [sound:] */
 private fun TemplateRenderOutput.answerWithFixedSoundTags() =
     replaceWithSoundTags(answerText, this)
+
+/**
+ * Returns the answer with anything before the `<hr id=answer>` tag removed
+ * TODO inline once the legacy TTS mechanism is removed
+ */
+fun Card.pureAnswer(col: Collection): String {
+    val s = renderOutput(col).answerText
+    for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
+        val pos = s.indexOf(target)
+        if (pos == -1) continue
+        return s.substring(pos + target.length).trim { it <= ' ' }
+    }
+    // neither found
+    return s
+}

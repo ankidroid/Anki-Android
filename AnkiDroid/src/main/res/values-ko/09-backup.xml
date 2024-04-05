@@ -50,7 +50,7 @@
     <string name="backup_new_collection">새 컬렉션</string>
     <string name="backup_del_collection">컬렉션 삭제 후 새 컬렉션 만들기</string>
     <string name="backup_del_collection_question">정말로 컬렉션을 삭제하고 새 컬렉션을 만드시겠습니까? 모든 학습 진행 상황과 카드들이 삭제됩니다.</string>
-    <string name="backup_full_sync_from_server">서버로부터 전체 동기화</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">정말로 AnkiWeb의 컬렉션으로 지금 컬렉션을 덮어쓸까요? 지난 동기화로부터의 모든 학습 진행 상황과 추가된 정보를 잃게 됩니다!</string>
     <string name="error_handling_title">오류 처리</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">옵션</string>

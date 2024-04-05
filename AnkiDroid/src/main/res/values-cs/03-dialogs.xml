@@ -51,7 +51,6 @@
     <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
     <string name="tts_no_tts">Nemluv</string>
     <string name="unused_strings">\n\nNepoužité soubory:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Náhled</string>
     <string name="reposition_card_dialog_title">Změnit pořadí nové karty</string>
     <string name="reposition_card_dialog_message">Počáteční pozice:</string>
     <string name="reposition_card_not_new_error">Změnit pořadí lze pouze u nových karet</string>
@@ -260,4 +259,6 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        V důsledku změn ochrany osobních údajů systému Android budou vaše data a automatické zálohy nedostupné, pokud bude aplikace odinstalována
     </string>
+    <string name="deck_already_exists">Balíček již existuje</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
 </resources>

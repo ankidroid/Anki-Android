@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.app.Activity
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionHelper
@@ -26,10 +27,12 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.getOrCreateFilteredDeck
 import com.ichi2.utils.getInputField
+import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -94,11 +97,30 @@ class CreateDeckDialog(
                 dialog.positiveButton.isEnabled = false
                 return@input
             }
+            if (maybeDeckName != initialDeckName && deckExists(getColUnsafe, maybeDeckName)) {
+                dialog.getInputTextLayout().error = context.getString(R.string.deck_already_exists)
+                dialog.positiveButton.isEnabled = false
+                return@input
+            }
+            dialog.getInputTextLayout().error = null
             dialog.positiveButton.isEnabled = true
+
+            // Users expect the ordering [1, 2, 10], but get [1, 10, 2]
+            // To fix: they need [01, 02, 10]. Show a hint to help them
+            dialog.getInputTextLayout().helperText = if (text.containsNumberLargerThanNine()) {
+                context.getString(R.string.create_deck_numeric_hint)
+            } else {
+                null
+            }
         }
         shownDialog = dialog
         return dialog
     }
+
+    /**
+     * @return true if the collection contains a deck with the given name
+     */
+    private fun deckExists(col: Collection, name: String): Boolean = col.decks.byName(name) != null
 
     /**
      * Returns the fully qualified deck name for the provided input
@@ -132,7 +154,7 @@ class CreateDeckDialog(
         try {
             // create filtered deck
             Timber.i("CreateDeckDialog::createFilteredDeck...")
-            val newDeckId = getColUnsafe.decks.newDyn(deckName)
+            val newDeckId = getColUnsafe.decks.newFiltered(deckName)
             Timber.d("Created filtered deck '%s'; id: %d", deckName, newDeckId)
             onNewDeckCreated(newDeckId)
         } catch (ex: BackendDeckIsFilteredException) {
@@ -208,3 +230,6 @@ class CreateDeckDialog(
         }
     }
 }
+
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+fun CharSequence.containsNumberLargerThanNine(): Boolean = Regex("""[1-9]\d+""").find(this) != null

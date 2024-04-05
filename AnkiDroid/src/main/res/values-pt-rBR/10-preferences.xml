@@ -199,8 +199,6 @@
     <string name="reset">Redefinir</string>
     <string name="thirdparty_apps_title" maxLength="41">Apps de terceiros</string>
     <string name="thirdparty_apps_summary">Veja uma lista de aplicativos que usam a API do AnkiDroid, como dicionários, ferramentas.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Ativar conexões remotas WebView, salvar HTML do card para o diretório do AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Revisor</string>
     <string name="show_deck_title" maxLength="41">Mostrar título do baralho</string>
@@ -271,7 +269,7 @@
     <string name="binding_add_axis">Adicionar controle</string>
     <string name="axis_picker_move_joystick">Movimente o controle</string>
     <string name="user_actions" maxLength="41">Ações do usuário</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
+    <string name="user_actions_summary" maxLength="41">Acionar JavaScript a partir da tela de revisão</string>
     <string name="user_action_1" maxLength="41">Ação do usuário 1</string>
     <string name="user_action_2" maxLength="41">Ação do usuário 2</string>
     <string name="user_action_3" maxLength="41">Ação do usuário 3</string>

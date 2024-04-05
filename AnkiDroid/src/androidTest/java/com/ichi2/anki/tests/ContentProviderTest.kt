@@ -26,6 +26,7 @@ import android.net.Uri
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.FlashCardsContract
+import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
@@ -133,7 +134,7 @@ class ContentProviderTest : InstrumentedTest() {
             )
         }
         // delete test decks
-        col.decks.removeDecks(testDeckIds)
+        col.decks.remove(testDeckIds)
         assertEquals(
             "Check that all created decks have been deleted",
             numDecksBeforeTest,
@@ -1221,6 +1222,19 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     @Test
+    fun pureAnswerHandledQuotedHtmlElement() {
+        // <hr id="answer"> is also used
+        val modelName = addNonClozeModel("Test", arrayOf("One", "Two"), "{{One}}", "{{One}}<hr id=\"answer\">{{Two}}")
+        val note = col.newNote(col.notetypes.byName(modelName)!!)
+        note.setItem("One", "1")
+        note.setItem("Two", "2")
+        col.addNote(note)
+        val card = note.cards(col)[0]
+
+        assertThat(card.pureAnswer(col), equalTo("2"))
+    }
+
+    @Test
     fun testRenderCardWithAudio() {
         // issue 14866 - regression from 2.16
         val sound = "[sound:ankidroid_audiorec3272438736816461323.3gp]"
@@ -1316,6 +1330,19 @@ class ContentProviderTest : InstrumentedTest() {
                 newNote.id.toString()
             )
         }
+    }
+
+    fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
+        val model = col.notetypes.new(name)
+        for (field in fields) {
+            col.notetypes.addFieldInNewModel(model, col.notetypes.newField(field))
+        }
+        val t = Notetypes.newTemplate("Card 1")
+        t.put("qfmt", qfmt)
+        t.put("afmt", afmt)
+        col.notetypes.addTemplateInNewModel(model, t)
+        col.notetypes.add(model)
+        return name
     }
 }
 

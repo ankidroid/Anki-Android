@@ -49,7 +49,7 @@
     <plurals name="pref_summ_minutes">
         <item quantity="other">%d 分钟</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s毫秒</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">无结果</string>
     <!-- preferences.xml categories-->
@@ -197,8 +197,6 @@
     <string name="reset">重置</string>
     <string name="thirdparty_apps_title" maxLength="41">第三方 API 应用</string>
     <string name="thirdparty_apps_summary">查看使用 AnkiDroid API 的应用程序清单，如字典、实用工具。</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript 调试</string>
-    <string name="html_javascript_debugging_summ">启用远程 WebView 连接，并将卡片 HTML 保存到 AnkiDroid 目录</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">复习界面</string>
     <string name="show_deck_title" maxLength="41">显示牌组标题</string>

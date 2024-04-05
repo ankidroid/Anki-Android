@@ -45,11 +45,11 @@
 
 -->
 <resources>
-    <string name="youre_offline">Tu ne li xetê yî</string>
-    <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Çewtî</string>
-    <string name="retry">Dîsa biceribîne</string>
-    <string name="menu_get_shared_decks">Get shared decks</string>
+    <string name="youre_offline">تۆ له دەرەوەی هێلیت</string>
+    <string name="sync_error">هەڵەی هاوکاتکردن</string>
+    <string name="vague_error" comment="Network error dialog title">هەڵە</string>
+    <string name="retry">دووبارە هەوڵبدەرەوە</string>
+    <string name="menu_get_shared_decks">کارتی هاوبەش بەدەست بهێنە</string>
     <string name="connection_error_message">A network error has occurred</string>
     <string name="not_logged_in_title">Têkeve AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remote</string>
-    <string name="force_full_sync_title">Force full sync</string>
-    <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
     <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

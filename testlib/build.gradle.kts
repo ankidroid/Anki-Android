@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -44,9 +44,9 @@ android {
 
 dependencies {
     implementation(project(":AnkiDroid"))
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    compileOnly("org.hamcrest:hamcrest:" + rootProject.ext["hamcrest_version"])
-    compileOnly("org.junit.jupiter:junit-jupiter:" + rootProject.ext["junit_version"])
-    compileOnly("org.junit.jupiter:junit-jupiter-params:" + rootProject.ext["junit_version"])
-    compileOnly("org.junit.vintage:junit-vintage-engine:" + rootProject.ext["junit_version"])
+    compileOnly(libs.kotlinx.coroutines.core)
+    compileOnly(libs.hamcrest)
+    compileOnly(libs.junit.jupiter)
+    compileOnly(libs.junit.jupiter.params)
+    compileOnly(libs.junit.vintage.engine)
 }

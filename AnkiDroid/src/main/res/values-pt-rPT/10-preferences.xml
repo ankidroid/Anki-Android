@@ -154,13 +154,13 @@
     <string name="timeout_answer_text" maxLength="41">Mostrar automaticamente a resposta</string>
     <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Selecionar Idioma</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render" maxLength="41">Desactivar processamento de fichas por \"hardware\"</string>
+    <string name="software_render_summ">O processamento por \"hardware\" é mais rápido, mas pode causar problemas, principalmente em Android 8/8.1. Se não conseguir ver partes da “interface” aquando da revisão de fichas, experimente esta opção.</string>
     <string name="safe_display" maxLength="41">Modo de visualização segura</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
     <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Activa a opção \"Omitir\" no menu de contexto, no modo horizontal</string>
     <string name="vertical_centering" maxLength="41">Alinhar ao centro</string>
     <string name="vertical_centering_summ">Centrar o conteúdo das fichas verticalmente</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
@@ -172,7 +172,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Mostrar barra superior</string>
-    <string name="show_top_bar_summ">Mostrar contagem de cartões, bandeiras e marcas na barra superior</string>
+    <string name="show_top_bar_summ">Mostrar contagem de fichas, sinalizações e marcas na barra superior</string>
     <string name="show_progress" maxLength="41">Mostrar restantes</string>
     <string name="show_progress_summ">Mostrar o contador de fichas restantes</string>
     <string name="show_eta" maxLength="41">Show ETA</string>
@@ -200,8 +200,6 @@
     <string name="reset">Redefinir</string>
     <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

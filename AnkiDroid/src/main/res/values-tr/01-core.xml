@@ -134,10 +134,11 @@
     <string name="empty_filtered_deck">Filtreli deste boşaltılıyor...</string>
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
     <string name="custom_study_deck_exists">Önce mevcut özel çalışma destesini yeniden adlandırın.</string>
-    <string name="empty_deck">Bu deste boş</string>
     <string name="search_deck" comment="Deck search for selecting it">Deste Ara</string>
+    <string name="empty_deck">Bu deste boş</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deste Ara</string>
     <string name="invalid_deck_name">Geçersiz deste adı</string>
+    <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
     <string name="studyoptions_no_cards_due">Henüz sırası gelmiş kart yok</string>
     <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
     <string name="button_sync" comment="Text of the sync button">Senkronize et</string>
@@ -146,6 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Senkronizasyona devam et</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Senkronizasyon iptal edildi</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">İptal ediliyor&#8230;\nBu biraz zaman alabilir.</string>
+    <string name="syncing_media">Medya senkronize ediliyor</string>
     <string name="export_deck">Desteyi dışa aktar</string>
     <string name="nothing">Hiçbir şey</string>
     <!-- Card template editor -->
@@ -166,7 +168,6 @@
         <item quantity="one">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
         <item quantity="other">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
     </plurals>
-    <string name="invalid_template">Bir kart oluşturulamadı</string>
     <string name="card_template_editor_would_delete_note">Bu kart türünü kaldırmak bir veya daha fazla notun silinmesine neden olacaktır. Lütfen önce yeni bir kart türü oluşturup kaydediniz.</string>
     <string name="card_template_editor_save_error">Kart şablon değişiklikleri kaydedilemiyor: %s</string>
     <string name="template_for_current_card_deleted">Geçerli kart için kart türü silindi.</string>
@@ -239,6 +240,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Taşımaya devam edin</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Koleksiyona erişilemiyor</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store İlkesindeki bir değişiklikten dolayı AnkiDroid kaldırıldıktan sonra koleksiyonunuza erişemiyoruz\n\nVerileriniz güvende ve geri getirilebilir.\n%s\nadresinden erişim sağlayabilirsiniz.\n\nGeri getirmek için aşağıdakilerden birini seçiniz:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android uygulama kullanılmadığından dolayı AnkiDroid\'in %1$s iznini kaldırmış.\n\nVeriniz güvende ve geri yüklenebilir.\n%2$s adresinde bulunuyor.\n\nGeri yüklemek için aşağıdaki seçeneklerden birini seçin:</string>
     <string name="restore_data_from_ankiweb">AnkiWeb\'den geri getir (önerilir)</string>
     <string name="install_non_play_store_ankidroid_recommended">Klasör erişimini geri getir (önerilir)</string>
     <string name="install_non_play_store_ankidroid">Klasör erişimini geri getir (ileri düzey)</string>

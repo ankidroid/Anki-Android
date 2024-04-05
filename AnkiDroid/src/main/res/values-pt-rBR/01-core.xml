@@ -134,10 +134,11 @@
     <string name="empty_filtered_deck">Esvaziando baralho filtrado&#8230;</string>
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
     <string name="custom_study_deck_exists">Renomeie o baralho de estudo personalizado existente primeiro</string>
-    <string name="empty_deck">Este baralho está vazio</string>
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralho</string>
+    <string name="empty_deck">Este baralho está vazio</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralho</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
+    <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
     <string name="studyoptions_no_cards_due">Sem cartões programados por enquanto.</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
@@ -146,6 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Continuar a sincronização</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronização cancelada</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelando...\nPode levar algum tempo.</string>
+    <string name="syncing_media">Sincronizando mídia</string>
     <string name="export_deck">Exportar baralho</string>
     <string name="nothing">Nada</string>
     <!-- Card template editor -->
@@ -166,7 +168,6 @@
         <item quantity="one">Excluir o tipo de cartão %2$s e seu %1$d cartão?</item>
         <item quantity="other">Excluir o tipo de cartão %2$s e seus %1$d cartões?</item>
     </plurals>
-    <string name="invalid_template">Não foi possível gerar o card</string>
     <string name="card_template_editor_would_delete_note">Excluir este tipo de card resultará na remoção de uma ou mais notas. Por favor, primeiro crie um novo tipo de card.</string>
     <string name="card_template_editor_save_error">Não é possível salvar as alterações no modelo de card: %s</string>
     <string name="template_for_current_card_deleted">O modelo para o card atual foi excluído.</string>
@@ -239,6 +240,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Retomar migração</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Coleção inacessível</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Não podemos acessar sua coleção após a desinstalação do AnkiDroid devido a uma mudança na Política da Play Store.\n\nSeus dados estão seguros e podem ser restaurados. Eles estão localizados em\n%s\n\nSelecione uma opção abaixo para restaurar:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">O Android removeu a permissão %1$s do AnkiDroid devido a inatividade do app.\n\nSeus dados são seguros e podem ser restaurados. Está localizado em\n%2$s\n\nSelecione uma opção abaixo para restaurar:</string>
     <string name="restore_data_from_ankiweb">Restaurar do AnkiWeb (recomendado)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restaurar acesso à pasta (recomendado)</string>
     <string name="install_non_play_store_ankidroid">Restaurar acesso à pasta (avançado)</string>

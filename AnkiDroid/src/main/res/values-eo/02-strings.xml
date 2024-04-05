@@ -213,9 +213,6 @@
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restarigi implicitajn</string>
-    <string name="cloze_sample_text">Tio ĉi estas {{%1$s::ekzempla}} truteksto.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">egzemplo</string>
-    <string name="basic_answer_sample_text">ekzemplo</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Malplena</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Fiaskis konservi bildon de skribtabulo. %s</string>
@@ -307,7 +304,7 @@
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
 \nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s ne estas ĝusta JavaScript-aldonaĵ-pakaĵo</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Ne povis krei dosierujon %s</string>
     <string name="malicious_archive_entry_outside">Erara arĥivo: ĝi enhavas elementon ekster la alcela dosierujo: %s</string>
     <string name="malicious_archive_exceeds_limit">Erara arĥivo: ĝia grando superas %1$s aŭ ĝi enhavas pli ol %2$d dosieroj</string>
@@ -316,6 +313,7 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studu malpli</string>
     <string name="intro_ankidroid_tagline_two">Rememoru pli</string>

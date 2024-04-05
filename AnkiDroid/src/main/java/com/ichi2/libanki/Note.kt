@@ -132,7 +132,7 @@ class Note : Cloneable {
             fillEmpty = fillEmpty
         ).render(col)
         card.renderOutput = output
-        card.setNote(this)
+        card.note = this
         return card
     }
 
@@ -246,7 +246,8 @@ class Note : Cloneable {
         return col.backend.noteFieldsCheck(this.toBackendNote()).state
     }
 
-    fun sFld(col: Collection): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
+    fun sFld(col: Collection): String =
+        col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
     fun setField(index: Int, value: String) {
         fields[index] = value

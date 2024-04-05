@@ -1,5 +1,5 @@
 <p align="center">
-<img src="docs/graphics/logos/banner_readme.png"/>
+<img alt="" src="docs/graphics/logos/banner_readme.png"/>
 </p>
 
 <a href="https://github.com/ankidroid/Anki-Android/releases"><img src="https://img.shields.io/github/v/release/ankidroid/Anki-Android" alt="release"/></a>
@@ -89,7 +89,7 @@ Thanks to these awesome code contributors who keep this project going
 
 ### [Sponsors](https://opencollective.com/ankidroid#sponsor)
 <a href="https://opencollective.com/ankidroid#sponsor" target="_blank">
-  <img src="https://opencollective.com/Ankidroid/sponsors.svg?width=890" />
+  <img alt="AnkiDroid Sponsors" src="https://opencollective.com/Ankidroid/sponsors.svg?width=890" />
 </a>
 
 ### [Backers](https://opencollective.com/ankidroid#backer)
@@ -100,7 +100,7 @@ A big thank you to each of our backers 🙏
 <p>Your generous donations mean the world to us, and we can't express our gratitude enough. Your support fuels our mission and helps us make a real difference</p>
 
 <a href="https://opencollective.com/Ankidroid/donate" target="_blank">
-  <img src="https://opencollective.com/Ankidroid/donate/button@2x.png?color=blue" width=200 />
+  <img alt="Donate to AnkiDroid" src="https://opencollective.com/Ankidroid/donate/button@2x.png?color=blue" width=200 />
 </a>
 
 ### [Translators](https://crowdin.com/project/ankidroid/activity-stream)

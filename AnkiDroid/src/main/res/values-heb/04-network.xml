@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">מקומי</string>
     <string name="sync_sanity_remote">מרוחק</string>
-    <string name="force_full_sync_title">כפיית סנכרון מלא</string>
-    <string name="force_full_sync_summary">בסנכרון הבא, כפה שינויים בצד אחד</string>
-    <string name="force_full_sync_confirmation">כפיית סנכרון מלא</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">השינוי שביקשת לבצע יחייב העלאה של כל מסד הנתונים בסנכרון הבא של אוסף החפיסות. אם יש שינונים או שינויים אחרים במכשיר אחר שלא סונכרנו עדיין, הם יאבדו. להמשיך?</string>
     <string name="full_sync_confirmation_upgrade">עקב באג בגרסת AnkiDroid קודמת שהותקנה מומלץ לבצע סינכרון מלא.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">סנכרון (מלא)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">סנכרון (מתחבר)</string>
 </resources>

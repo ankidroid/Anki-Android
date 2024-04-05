@@ -26,6 +26,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.copyToClipboard
 
 /**
  * Acquire a wake lock and release it after running [block].
@@ -56,7 +57,11 @@ fun Context.openUrl(uri: Uri) {
     if (!AdaptionUtil.hasWebBrowser(this)) {
         val noBrowserMessage = getString(R.string.no_browser_msg, uri.toString())
         if (this is FragmentActivity) {
-            showSnackbar(noBrowserMessage)
+            showSnackbar(noBrowserMessage) {
+                setAction(android.R.string.copyUrl) {
+                    copyToClipboard(uri.toString())
+                }
+            }
         } else {
             UIUtils.showThemedToast(this, noBrowserMessage, shortLength = false)
         }

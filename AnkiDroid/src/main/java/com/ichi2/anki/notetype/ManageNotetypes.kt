@@ -16,8 +16,11 @@
 package com.ichi2.anki.notetype
 
 import android.annotation.SuppressLint
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -27,6 +30,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.StockNotetype
@@ -51,6 +55,9 @@ import com.ichi2.utils.*
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
+
+    private var currentNotetypes: List<NoteTypeUiModel> = emptyList()
+
     private val notetypesAdapter: NotetypesAdapter by lazy {
         NotetypesAdapter(
             this@ManageNotetypes,
@@ -78,6 +85,7 @@ class ManageNotetypes : AnkiActivity() {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
+
         super.onCreate(savedInstanceState)
         setTitle(R.string.model_browser_label)
         setContentView(R.layout.activity_manage_note_types)
@@ -89,6 +97,35 @@ class ManageNotetypes : AnkiActivity() {
             launchCatchingTask { addNewNotetype() }
         }
         launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.locale_dialog_search_bar, menu)
+
+        val searchItem = menu.findItem(R.id.locale_dialog_action_search)
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = searchItem?.actionView as? SearchView
+        searchView?.maxWidth = Integer.MAX_VALUE
+        searchView?.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filteredList = if (newText.isNullOrEmpty()) {
+                    currentNotetypes
+                } else {
+                    currentNotetypes.filter {
+                        it.name.lowercase().contains(newText.lowercase())
+                    }
+                }
+                notetypesAdapter.submitList(filteredList)
+                return true
+            }
+        })
+        return true
     }
 
     @SuppressLint("CheckResult")
@@ -274,6 +311,9 @@ class ManageNotetypes : AnkiActivity() {
                 getNotetypeNameIdUseCount().map { it.toUiModel() }
             }
         }
+
+        currentNotetypes = updatedNotetypes
+
         notetypesAdapter.submitList(updatedNotetypes)
         actionBar.subtitle = resources.getQuantityString(
             R.plurals.model_browser_types_available,

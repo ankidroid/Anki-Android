@@ -174,8 +174,8 @@
     <string name="show_top_bar_summ">Afficher le nombre de cartes, la balise et la marque dans la barre supérieure</string>
     <string name="show_progress" maxLength="41">Afficher le nombre restant de révision</string>
     <string name="show_progress_summ">Montrer le nombre de cartes restantes</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Afficher le temps restant</string>
+    <string name="show_eta_summ">Afficher le temps restant</string>
     <string name="use_current" maxLength="41">Paquet pour les nouvelles cartes</string>
     <string name="learn_cutoff" maxLength="41">Limite d’apprentissage</string>
     <string name="time_limit" maxLength="41">Limite de temps</string>
@@ -199,8 +199,6 @@
     <string name="reset">Réinitialiser</string>
     <string name="thirdparty_apps_title" maxLength="41">Applications API tierces</string>
     <string name="thirdparty_apps_summary">Voir la liste des applications qui utilisent l\'API AnkiDroid comme les dictionnaires, les outils.</string>
-    <string name="html_javascript_debugging" maxLength="41">Débogage HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Activer les connexions WebView distantes et enregistrer la carte HTML dans le répertoire AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Réviseur</string>
     <string name="show_deck_title" maxLength="41">Afficher le titre du deck</string>
@@ -268,19 +266,19 @@
     <string name="binding_add_key">Ajouter une touche</string>
     <string name="binding_replace_key">Remplacer la clé</string>
     <string name="key_picker_default_press_key">Appuyer sur une touche</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="binding_add_axis">Ajouter un joystick/contrôleur de mouvement</string>
+    <string name="axis_picker_move_joystick">Déplacer un joystick/contrôleur de mouvement</string>
+    <string name="user_actions" maxLength="41">Actions utilisateur</string>
+    <string name="user_actions_summary" maxLength="41">Exécute du JavaScript lors de la révision</string>
+    <string name="user_action_1" maxLength="41">Action utilisateur 1</string>
+    <string name="user_action_2" maxLength="41">Action utilisateur 2</string>
+    <string name="user_action_3" maxLength="41">Action utilisateur 3</string>
+    <string name="user_action_4" maxLength="41">Action utilisateur 4</string>
+    <string name="user_action_5" maxLength="41">Action utilisateur 5</string>
+    <string name="user_action_6" maxLength="41">Action utilisateur 6</string>
+    <string name="user_action_7" maxLength="41">Action utilisateur 7</string>
+    <string name="user_action_8" maxLength="41">Action utilisateur 8</string>
+    <string name="user_action_9" maxLength="41">Action utilisateur 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Sélectionner le côté de la carte</string>
     <string name="card_side_question">Question</string>
@@ -294,8 +292,8 @@
     <string name="bindings_already_bound">Déjà lié à %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Expérimental</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid a introduit un meilleur mécanisme de synthèse vocale qui est compatible avec d\'autres clients Anki et inclut plus de voix et des améliorations à la lecture de la langue !\n\nVeuillez mettre à jour dès que possible, car ce paramètre sera bientôt supprimé</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Veuillez mettre à jour vers le nouveau format de synthèse vocale</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Options de développement</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activer les options de développement</string>

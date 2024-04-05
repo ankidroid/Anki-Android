@@ -199,8 +199,6 @@
     <string name="reset">Restablecer</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplicaciones API de terceros</string>
     <string name="thirdparty_apps_summary">Vea una lista de aplicaciones que hacen uso de la API de AnkiDroid como diccionarios, utilidades.</string>
-    <string name="html_javascript_debugging" maxLength="41">Depuración de HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Habilitar conexiones remotas de WebView y guardar el HTML de la tarjeta en el directorio AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Revisor</string>
     <string name="show_deck_title" maxLength="41">Mostrar el título del mazo</string>
@@ -270,17 +268,17 @@
     <string name="key_picker_default_press_key">Presione una tecla</string>
     <string name="binding_add_axis">Añadir joystick/controlador de movimiento</string>
     <string name="axis_picker_move_joystick">Mueve un joystick/controlador de movimiento</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_actions" maxLength="41">Acciones del usuario</string>
+    <string name="user_actions_summary" maxLength="41">Activar JavaScript desde la pantalla de revisión</string>
+    <string name="user_action_1" maxLength="41">Acción del usuario 1</string>
+    <string name="user_action_2" maxLength="41">Acción del usuario 2</string>
+    <string name="user_action_3" maxLength="41">Acción del usuario 3</string>
+    <string name="user_action_4" maxLength="41">Acción del usuario 4</string>
+    <string name="user_action_5" maxLength="41">Acción del usuario 5</string>
+    <string name="user_action_6" maxLength="41">Acción del usuario 6</string>
+    <string name="user_action_7" maxLength="41">Acción del usuario 7</string>
+    <string name="user_action_8" maxLength="41">Acción del usuario 8</string>
+    <string name="user_action_9" maxLength="41">Acción del usuario 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecciona el lado de la tarjeta</string>
     <string name="card_side_question">Pregunta</string>

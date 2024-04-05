@@ -14,16 +14,19 @@
 
         <include layout="@layout/toolbar" />
 
+        <!-- RecyclerView for displaying note types -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/note_types_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:clipToPadding="false"
             android:paddingBottom="104dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_manage_note_type" />
     </LinearLayout>
 
+    <!-- Floating Action Button for adding new note types -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/note_type_add"
         android:layout_width="wrap_content"
@@ -33,6 +36,7 @@
         android:layout_marginEnd="32dp"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_add_white"
+        android:contentDescription="@string/cd_manage_notetypes_add"
         app:backgroundTint="?attr/fab_normal"
         tools:ignore="HardcodedText" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

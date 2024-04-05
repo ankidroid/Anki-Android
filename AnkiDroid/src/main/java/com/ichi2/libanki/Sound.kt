@@ -64,7 +64,10 @@ fun stripAvRefs(text: String, replacement: String = "") = Sound.AV_REF_RE.replac
 
 // not in libAnki
 object Sound {
-    val VIDEO_EXTENSIONS = setOf("mp4", "mov", "mpg", "mpeg", "mkv", "avi")
+    val VIDEO_ONLY_EXTENSIONS = setOf("mov", "mkv")
+
+    /** Extensions that can be audio-only using a video wrapper */
+    val AUDIO_OR_VIDEO_EXTENSIONS = setOf("mp4", "mpg", "mpeg", "webm")
 
     /**
      * expandSounds takes content with embedded sound file placeholders and expands them to reference the actual media

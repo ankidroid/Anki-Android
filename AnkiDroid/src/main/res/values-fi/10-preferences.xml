@@ -199,8 +199,6 @@
     <string name="reset">Palauta</string>
     <string name="thirdparty_apps_title" maxLength="41">Kolmannen osapuolen API-sovellukset</string>
     <string name="thirdparty_apps_summary">Listaa sovellukset jotka käyttävät AnkiDroid API:ta, kuten kansioita ja työkaluja.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript vianmääritys</string>
-    <string name="html_javascript_debugging_summ">Salli WebView-etäyhteydet ja tallenna kortin HTML AnkiDroid-hakemistoon</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Kertaaminen</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

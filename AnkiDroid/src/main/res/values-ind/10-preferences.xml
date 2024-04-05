@@ -47,23 +47,23 @@
     <!-- generic strings -->
     <string name="disabled">Nonaktif</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="other">%d mins</item>
+        <item quantity="other">%d menit</item>
     </plurals>
     <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Tidak ada hasil</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Umum</string>
+    <string name="pref_cat_studying" maxLength="41">Pembelajaran</string>
+    <string name="pref_cat_system_wide" maxLength="41">Seluruh sistem</string>
     <string name="pref_cat_reviewing" maxLength="41">Mengulas</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sinkronisasi</string>
+    <string name="pref_cat_scheduling" maxLength="41">Penjadwalan</string>
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
     <string name="pref_cat_appearance" maxLength="41">Tampilan</string>
     <string name="pref_cat_themes" maxLength="41">Tema</string>
     <string name="pref_cat_gestures" maxLength="41">Gestur</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls" maxLength="41">Kontrol</string>
     <string name="pref_cat_advanced" maxLength="41">Tingkat lanjut</string>
     <string name="pref_cat_workarounds" maxLength="41">Solusi</string>
     <string name="pref_cat_plugins" maxLength="41">Pengaya</string>
@@ -90,7 +90,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Atas</item>
         <item>Bawah</item>
-        <item>None</item>
+        <item>Tidak ada</item>
     </string-array>
     <string name="gestures" maxLength="41">Aktifkan gestur</string>
     <string name="gestures_summ">Menerapkan gestur sebagai tindakan untuk menjawab dan mengedit kartu.</string>
@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">Perbolehkan gestur sentuhan di bagian pojok layar</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigasi laci layar penuh</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Buka laci navigasi ketika menggeser kanan layar dari mana saja</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Tidak ada</string>
     <string name="gestures_swipe_up" maxLength="41">Usap ke atas</string>
     <string name="gestures_swipe_down" maxLength="41">Usap ke bawah</string>
     <string name="gestures_swipe_left" maxLength="41">Usap ke kiri</string>
@@ -114,7 +114,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Sentuh bagian pas di tengah</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Sentuh bagian bawah kiri</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Sentuh bagian bawah kanan</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Goyangkan perangkat</string>
     <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Mengaktifkan konteks menu ‘%s’ secara global</string>
     <string name="double_scrolling_gap" maxLength="41">Guliran ganda</string>
@@ -129,16 +129,16 @@
     <string name="automatic_sync_choice" maxLength="41">Sinkronisasi otomatis</string>
     <string name="automatic_sync_choice_summ">Sinkronkan secara otomatis saat masuk/keluar aplikasi jika sinkronisasi terakhir lebih dari 10
          menit yang lalu.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Selalu</string>
+    <string name="sync_media_only_unmetered">Hanya untuk sambungan internet yang tidak diukur</string>
+    <string name="sync_media_never">Tidak pernah</string>
     <string name="sync_status_badge" maxLength="41">Tampilkan status sinkronisasi</string>
     <string name="sync_status_badge_summ">Ubah ikon sinkronisasi saat perubahan dapat diunggah</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="metered_sync_title" maxLength="41">Sinkronisasi di koneksi terukur</string>
+    <string name="metered_sync_summary">Jika dinonaktifkan, Anda akan diperingatkan jika mencoba untuk menyinkronkan pada koneksi terukur</string>
+    <string name="backup_limits_frequency">Frekuensi</string>
+    <string name="backup_limits_lifetime">Jangka waktu</string>
+    <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema siang</string>
     <string name="night_theme" maxLength="41">Tema malam</string>
     <string name="language" maxLength="41">Bahasa</string>
@@ -151,10 +151,10 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Getar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Berkedip</string>
     <string name="timeout_answer_text" maxLength="41">Otomatis tampilkan jawaban</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Tampilkan jawaban secara otomatis tanpa masukan pengguna. Atur dari opsi dek.</string>
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="software_render" maxLength="41">Matikan perangkat keras pe-render kartu</string>
-    <string name="software_render_summ">Render menggunakan perangkat keras lebih cepat namun dapat mengakibatkan masalah, terutama pada Android 8/8.1. Jika Anda tidak dapat melihat bagian review kartu dari antarmuka pengguna, coba pengaturan berikut ini.</string>
+    <string name="software_render_summ">Render menggunakan perangkat keras lebih cepat namun dapat mengakibatkan masalah, terutama pada Android 8/8.1. Jika Anda tidak dapat melihat bagian peninjauan kartu dari antarmuka pengguna, coba pengaturan berikut ini.</string>
     <string name="safe_display" maxLength="41">Mode tampilan aman</string>
     <string name="safe_display_summ">Nonaktifkan semua animasi dan gunakan metode yang lebih aman untuk menggambar kartu. Perangkat E-ink mungkin memerlukan ini.</string>
     <string name="disable_extended_text_ui" maxLength="41">Nonaktifkan mode edit kolom tunggal</string>
@@ -164,72 +164,70 @@
     <string name="vertical_centering_summ">Ratakan tengah isi kartu secara vertikal</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Interval sentuhan dua kali (milisekon)</string>
     <string name="pref_double_tap_time_interval_summary">Menyentuh tombol jawaban untuk kedua kalinya akan dihiraukan jika jumlah waktu ini belum terlewati. Hal ini akan mencegah melakukan sentuhan dua kali tanpa sengaja</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Waktu lama ketukan tampilkan jawaban (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Waktu pengetukan lama minimum sebelum tombol tampilkan jawaban akan mendaftar ketukan. Dapat mengurangi ketukan tombol tambahan yang tidak disengaja. Bawaan adalah 0 ms</string>
     <string name="show_estimates" maxLength="41">Tampilkan waktu di tombol</string>
     <string name="show_estimates_summ">Tampilkan waktu ulasan berikutnya di tombol jawab</string>
     <string name="show_large_answer_buttons" maxLength="41">Tunjukkan tombol jawaban berukuran besar</string>
     <string name="show_large_answer_buttons_summ">Tunjukkan tombol jawaban dalam 2 baris</string>
     <string name="show_top_bar" maxLength="41">Tampilkan bar atas</string>
-    <string name="show_top_bar_summ">Tampilkan jumlah kartu, panji dan tanda di bar atas</string>
+    <string name="show_top_bar_summ">Tampilkan jumlah kartu, bendera dan tanda di bilah atas</string>
     <string name="show_progress" maxLength="41">Tampilkan kartu yang tersisa</string>
     <string name="show_progress_summ">Tampilkan jumlah kartu yang tersisa</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Tampilkan perkiraan waktu</string>
+    <string name="show_eta_summ">Tampilkan sisa waktu</string>
     <string name="use_current" maxLength="41">Dek untuk kartu baru</string>
     <string name="learn_cutoff" maxLength="41">Batas belajar duluan</string>
     <string name="time_limit" maxLength="41">Batas waktu Timebox</string>
     <string name="new_timezone" maxLength="41">Penanganan baru zona waktu</string>
     <string name="day_offset_with_description" maxLength="41">Dimulainya hari esok</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="other">%d jam lewat tengah malam</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Layar tetap menyala</string>
     <string name="pref_keep_screen_on_summ">Nonaktifkan batas waktu layar mati</string>
     <string name="enable_api_title" maxLength="41">Aktifkan API AnkiDroid</string>
-    <string name="enable_api_summary">Biarkan aplikasi lain terhubung ke AnkiDroid dan baca / tulis data tanpa intervensimu</string>
+    <string name="enable_api_summary">Biarkan aplikasi lain terhubung ke AnkiDroid dan baca / tulis data tanpa intervensi Anda</string>
     <string name="custom_buttons" maxLength="41">Bar tombol aplikasi</string>
     <string name="custom_buttons_summary">Sesuaikan tindakan mana yang muncul di bar aplikasi</string>
     <string name="custom_buttons_setting_always_show">Selalu tampilkan</string>
     <string name="custom_buttons_setting_if_room">Tampilkan jika muat</string>
     <string name="custom_buttons_setting_menu_only">Menu saja</string>
     <string name="reset_custom_buttons" maxLength="41">Setel ulang ke awal</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">Atur ulang pengaturan ke bawaan</string>
+    <string name="reset">Atur ulang</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplikasi API pihak ketiga</string>
     <string name="thirdparty_apps_summary">Lihat daftar aplikasi yang menggunakan API AnkiDroid seperti kamus, alat.</string>
-    <string name="html_javascript_debugging" maxLength="41">Pengawakutuan HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Aktifkan koneksi WebView jarak jauh, dan simpan kartu HTML ke direktori AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">Peninjau</string>
+    <string name="show_deck_title" maxLength="41">Tampilkan judul dek</string>
+    <string name="accessibility" maxLength="41">Aksesibilitas</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Tempel gambar di papan klip sebagai PNG</string>
     <string name="paste_as_png_summary">Anki menempel gambar papan klip berbentuk file JPG agar hemat penyimpanan. Gunakan opsi ini untuk menempel gambar sebagai file PNG.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Ketuk kembali dua kali utk kembali/keluar</string>
+    <string name="exit_via_double_tap_back_summ">Untuk mencegah meninggalkan peninjau atau aplikasi secara tidak sengaja</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Perbolehkan semua berkas dlm impor media</string>
+    <string name="media_import_allow_all_files_summ">Jika Android tidak mendeteksi sebuah berkas media</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Server sinkronisasi kustom</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Tidak digunakan</string>
+    <string name="custom_sync_server_help2"><![CDATA[        Sebagai alternatif untuk sinkronisasi dengan AnkiWeb,
+        Anda dapat menggunakan server Anda sendiri untuk sinkronisasi.
+        Jika tidak diatur, server AnkiWeb akan digunakan saja.
+        <a href="%s">Pelajari lebih lanjut</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Sinkronisasi url</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Papan ketik</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="answer_buttons" maxLength="41">Tombol jawaban</string>
+    <string name="card" maxLength="41">Kartu</string>
+    <string name="note" maxLength="41">Catatan</string>
+    <string name="navigation" maxLength="41">Navigasi</string>
     <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="misc" maxLength="41">Lainnya</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Pilih tag</string>
     <!-- Deck configurations -->
@@ -241,10 +239,10 @@
     <string name="deck_conf_cram_order" maxLength="41">kartu dipilih menurut </string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Jadwalkan ulang</string>
     <string name="deck_conf_cram_reschedule_summ">Jadwalkan ulang kartu berdasarkan jawabanku di dek ini</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Aktifkan filter kedua</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Tentukan langkah kustom</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Penundaan pratinjau</string>
+    <string name="deck_conf_cram_preview_delays_summ">Penundaan dalam detik. 0 mengembalikan kartu ke dek asli.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Bantu AnkiDroid jadi lebih baik!</string>
     <string name="analytics_title" maxLength="41">Bagikan data penggunaan fitur</string>
@@ -255,109 +253,109 @@
     <string name="type_in_answer_focus_summ">Fokuskan bagian \'ketik di jawaban\' secara otomatis di reviewer</string>
     <!-- About -->
     <string name="open_changelog">Buka Changelog</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="pref_cat_about_title" maxLength="41">Tentang</string>
+    <string name="contributors_title">Kontributor</string>
+    <string name="about_contributors_description"><![CDATA[Ini merupakan <a href=\"%1$s\">para kontributor</a> keren kami. Anda dapat membantu AnkiDroid juga dengan pemrograman, penerjemahan, donasi, dan <a href=\"%2$s\">masih banyak lagi</a>!]]></string>
+    <string name="license">Lisensi</string>
+    <string name="license_description"><![CDATA[AnkiDroid dirilis di bawah lisensi <a href=\"%1$s\">GPL-3.0</a> dan <a href=\"%2$s\">AGPL-3.0</a>, dengan kode sumbernya tersedia <a href=\"%3$s\">di GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[Anda dapat mendukung pengembangan AnkiDroid dengan <a href=\"%1$s\">berdonasi</a>. Berapa pun jumlahnya akan sangat kami hargai.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="binding_replace_key">Replace key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="binding_add_gesture">Tambahkan gestur</string>
+    <string name="binding_replace_gesture">Ganti gestur</string>
+    <string name="binding_add_key">Tambahkan tombol</string>
+    <string name="binding_replace_key">Ganti tombol</string>
+    <string name="key_picker_default_press_key">Tekan tombol</string>
+    <string name="binding_add_axis">Tambahkan pengendali joystick/gerakan</string>
+    <string name="axis_picker_move_joystick">Gerakkan pengendali joystick/gerakan</string>
+    <string name="user_actions" maxLength="41">Tindakan pengguna</string>
+    <string name="user_actions_summary" maxLength="41">Picu JavaScript dari layar peninjauan</string>
+    <string name="user_action_1" maxLength="41">Tindakan pengguna 1</string>
+    <string name="user_action_2" maxLength="41">Tindakan pengguna 2</string>
+    <string name="user_action_3" maxLength="41">Tindakan pengguna 3</string>
+    <string name="user_action_4" maxLength="41">Tindakan pengguna 4</string>
+    <string name="user_action_5" maxLength="41">Tindakan pengguna 5</string>
+    <string name="user_action_6" maxLength="41">Tindakan pengguna 6</string>
+    <string name="user_action_7" maxLength="41">Tindakan pengguna 7</string>
+    <string name="user_action_8" maxLength="41">Tindakan pengguna 8</string>
+    <string name="user_action_9" maxLength="41">Tindakan pengguna 9</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="card_side_selection_title">Pilih sisi kartu</string>
+    <string name="card_side_question">Pertanyaan</string>
+    <string name="card_side_answer">Jawaban</string>
+    <string name="card_side_both">Pertanyaan &amp; Jawaban</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">T: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">J: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Hapus \'%s\'</string>
+    <string name="bindings_already_bound">Sudah terikat ke \'%s\'</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperimental</string>
+    <string name="readtext_deprecation_warn">AnkiDroid telah memperkenalkan mekanisme teks ke suara yang lebih baik, kompatibel dengan klien Anki lainnya, dan memiliki lebih banyak suara dan peningkatan pada pemutaran bahasa!\n\nSilakan meningkatkan segera mungkin karena pengaturan ini akan dihapus dalam waktu mendatang</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Silakan meningkatkan ke format teks ke suara baru</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="pref_cat_dev_options" maxLength="41">Opsi pengembang</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Aktifkan opsi pengembang</string>
+    <string name="disable_dev_options">Nonaktifkan opsi pengembang</string>
+    <string name="dev_options_warning">        Pastikan sebelum mengaktifkan opsi pengembang. Opsi ini berbahaya dan dapat merusak aplikasi atau merusak koleksi Anda.\n\nPerhatikan bahwa opsi-opsi ini tidak cocok untuk sebagian besar pengguna dan oleh karena itu tidak diterjemahkan, jadi opsi-opsi ini dalam bahasa Inggris.
     </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid mencadangkan koleksi Anda secara berkala.
+        Setelah cadangannya tersimpan lebih dari dua hari,
+        AnkiDroid akan menghapus beberapa cadangan untuk membebaskan ruang penyimpanan.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        Dicatat bahwa berkas media tidak dicadangkan.
+        Untuk berjaga-jaga, silakan sinkronisasikan koleksi Anda secara berkala, atau buat cadangan pengeksporannya.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        Anda dapat memulihkan dari sebuah cadangan dan mengekspor koleksi Anda dalam menu daftar dek.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Menit antara pencadangan otomatis</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Cadangan harian untuk disimpan</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Cadangan mingguan untuk disimpan</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Cadangan bulanan untuk disimpan</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Kelola penyimpanan</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Eror</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Menghitung&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="other">%1$d berkas\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Hapus berkas media yang tidak digunakan</string>
+    <string name="pref__delete_unused_media_files__summary">Hapus gambar dari media lain yang tidak diawali dengan _ dan tidak direferensikan oleh catatan apa pun</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Hapus berkas media yang tidak digunakan</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Hapus cadangan</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Hapus cadangan</string>
+    <string name="progress__deleting_backups">Menghapus cadangan&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Hapus koleksi</string>
+    <string name="pref__delete_collection__summary">Hapus koleksi, media, dan cadangan. Pengaturan aplikasi tidak dihapus</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Hapus koleksi</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Apakah Anda yakin ingin menghapus koleksi, media, dan cadangan Anda?\n\nCatatan: tindakan ini akan menutup jendela ini.</string>
+    <string name="progress__deleting_collection">Menghapus koleksi&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Hapus semuanya</string>
+    <string name="pref__delete_everything__summary">Hapus koleksi, media, cadangan, dan pengaturan</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Hapus semuanya</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Apakah Anda yakin ingin menghapus semua aplikasi? Ini termasuk koleksi, media, cadangan, dan preferensi Anda.\n\nCatatan: tindakan ini akan menutup jendela ini.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Hapus data aplikasi</string>
+    <string name="pref__delete_app_data__summary">Hapus pengaturan dan data aplikasi lainnya</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Hapus data aplikasi</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Apakah Anda yakin ingin menghapus data aplikasi? Ini termasuk pengaturan dan data aplikasi lainnya.\n\nCatatan: tindakan ini akan menutup jendela ini.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Tidak ada koleksi</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Eror</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Mengambil&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Menghitung&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Koleksi tidak ada</string>
 </resources>

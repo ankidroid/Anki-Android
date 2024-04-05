@@ -58,13 +58,13 @@
     <string name="password">Palavra-passe</string>
     <string name="log_in">Iniciar sessão</string>
     <string name="sign_up_description">Não tem uma conta AnkiWeb? É grátis!</string>
-    <string name="sign_up_not_affiliated">Nota: AnkiWeb não é afiliado com AnkiDroid</string>
+    <string name="sign_up_not_affiliated">Nota: AnkiWeb não é afiliado ao AnkiDroid</string>
     <string name="sign_up">Registar</string>
     <string name="logged_as">Iniciou sessão como</string>
     <string name="log_out">Terminar sessão</string>
     <string name="reset_password">Repor palavra-passe</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="lost_mail_instructions">Esqueceu-se do e-mail?</string>
+    <string name="sign_in">A iniciar sessão</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opções para XXX</string>
     <string name="sync_title">Sincronização</string>
@@ -74,12 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remota</string>
-    <string name="force_full_sync_title">Forçar sincronização completa</string>
-    <string name="force_full_sync_summary">Na próxima vez, força a sincronização numa direção</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">Sincronização unidirecional</string>
+    <string name="one_way_sync_confirmation">Sincronização unidirecional solicitada</string>
     <string name="full_sync_confirmation">A alteração solicitada requer um upload completo da base de dados na próxima vez que sincronizar a coleção. Se tiver revisões ou outras alterações pendentes noutro dispositivo que ainda não tenham sido sincronizadas, elas serão perdidas. Deseja continuar?</string>
     <string name="full_sync_confirmation_upgrade">Devido a um erro na versão anterior do AnkiDroid, é recomendado fazer uma sincronização integral.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">Sincronização (unidirecional)</string>
+    <string name="sync_menu_title_no_account">Sincronização (iniciar sessão)</string>
 </resources>

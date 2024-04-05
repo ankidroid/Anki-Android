@@ -47,7 +47,7 @@ class ConfigTest : JvmTest() {
         assertThat(col.config.get("int"), equalTo(5))
         // explicitly nulled key should work
         col.config.set("null", JSONObject.NULL)
-        var b: Int? = null
+        val b: Int? = null
         assertThat(col.config.get("null"), equalTo(b))
         // missing key should be the same
         assertThat(col.config.get("missing"), equalTo(b))

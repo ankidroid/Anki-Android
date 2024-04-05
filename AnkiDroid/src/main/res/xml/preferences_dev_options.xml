@@ -30,8 +30,8 @@
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="@string/html_javascript_debugging_key"
-        android:summary="@string/html_javascript_debugging_summ"
-        android:title="@string/html_javascript_debugging"/>
+        android:summary="Enable remote WebView connections, and save card HTML to AnkiDroid directory"
+        android:title="HTML / JavaScript Debugging"/>
     <Preference
         android:title="Trigger test crash"
         android:summary="Touch here for an immediate test crash"
@@ -45,8 +45,8 @@
         android:summary="Touch here to lock the database (all threads block in-process, exception if using second process)"
         android:key="@string/pref_lock_database_key"/>
     <SwitchPreferenceCompat
-        android:title="New previewer"
-        android:key="@string/new_previewer_pref_key"
+        android:title="New congrats screen"
+        android:key="@string/new_congrats_screen_pref_key"
         android:defaultValue="false"/>
     <SwitchPreferenceCompat
         android:title="@string/show_onboarding"
