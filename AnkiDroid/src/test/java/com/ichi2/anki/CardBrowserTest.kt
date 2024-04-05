@@ -15,7 +15,7 @@
  */
 package com.ichi2.anki
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -28,11 +28,13 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
+import com.ichi2.anki.CardBrowser.Companion.dueString
+import com.ichi2.anki.CardBrowser.Companion.nextDue
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
+import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
-import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.servicelayer.NoteService
@@ -48,12 +50,14 @@ import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.OS
 import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.AdaptionUtil
 import io.mockk.every
-import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
+import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -61,6 +65,7 @@ import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import timber.log.Timber
+import java.util.Calendar
 import java.util.Locale
 import java.util.Random
 import kotlin.test.assertEquals
@@ -383,36 +388,21 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     fun startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
-        val inputIntent = Intent("android.intent.action.PROCESS_TEXT")
-
-        val mockedMethod = AnkiActivity::hasCollectionStoragePermissions
         try {
-            mockkStatic(mockedMethod)
+            mockkObject(AdaptionUtil)
+            mockkObject(IntentHandler)
 
-            every { any<AnkiActivity>().hasCollectionStoragePermissions() } returns false
+            every { grantedStoragePermissions(any(), any()) } returns false
+            every { AdaptionUtil.isRunningAsUnitTest } returns false
 
-            val browserController =
-                Robolectric.buildActivity(CardBrowser::class.java, inputIntent).create()
+            val browserController = Robolectric.buildActivity(CardBrowser::class.java).create()
             val cardBrowser = browserController.get()
             saveControllerForCleanup(browserController)
 
-            val shadowActivity = shadowOf(cardBrowser)
-            val outputIntent = shadowActivity.nextStartedActivity
-            val component = assertNotNull(outputIntent.component)
-
-            assertThat(
-                "Deck Picker currently handles permissions, so should be called",
-                component.className,
-                equalTo("com.ichi2.anki.DeckPicker")
-            )
             assertThat("Activity should be finishing", cardBrowser.isFinishing)
-            assertThat(
-                "Activity should be cancelled as it did nothing",
-                shadowActivity.resultCode,
-                equalTo(Activity.RESULT_CANCELED)
-            )
         } finally {
-            unmockkStatic(mockedMethod)
+            unmockkObject(AdaptionUtil)
+            unmockkObject(IntentHandler)
         }
     }
 
@@ -459,7 +449,7 @@ class CardBrowserTest : RobolectricTest() {
 
         b.selectRowsWithPositions(0)
         val previewIntent = b.viewModel.previewIntentData
-        assertThat("before: index", previewIntent.index, equalTo(0))
+        assertThat("before: index", previewIntent.currentIndex, equalTo(0))
         assertThat(
             "before: cards",
             previewIntent.previewerIdsFile.getCardIds(),
@@ -474,7 +464,7 @@ class CardBrowserTest : RobolectricTest() {
 
         b.replaceSelectionWith(intArrayOf(0))
         val intentAfterReverse = b.viewModel.previewIntentData
-        assertThat("after: index", intentAfterReverse.index, equalTo(0))
+        assertThat("after: index", intentAfterReverse.currentIndex, equalTo(0))
         assertThat(
             "after: cards",
             intentAfterReverse.previewerIdsFile.getCardIds(),
@@ -1075,6 +1065,102 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat("3 rows are still selected", viewModel.selectedRows.size, equalTo(3))
         assertThat("selection is now marked", viewModel.selectedRows.all { it.isMarked })
+    }
+
+    @SuppressLint("DirectCalendarInstanceUsage")
+    @Test
+    @Config(qualifiers = "en")
+    fun nextDueTest() {
+        // Test runs as the 7th of august 2020, 9h00
+        val n = addNoteUsingBasicModel("Front", "Back")
+        val c = n.firstCard()
+        val decks = col.decks
+        val cal = Calendar.getInstance()
+        cal[2021, 2, 19, 7, 42] = 42
+        val id = (cal.timeInMillis / 1000).toInt()
+
+        // Not filtered
+        c.type = Consts.CARD_TYPE_NEW
+        c.due = 27
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("(27)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("(27)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("(27)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_NEW
+        c.due = 27
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("27", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("27", dueString(col, c))
+        c.type = Consts.CARD_TYPE_LRN
+        c.due = id
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_LRN
+        Assert.assertEquals("3/19/21", nextDue(col, c))
+        Assert.assertEquals("3/19/21", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("", dueString(col, c))
+        c.type = Consts.CARD_TYPE_REV
+        c.due = 20
+        //  Since tests run the 7th of august, in 20 days we are the 27th of august 2020
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals("8/27/20", nextDue(col, c))
+        Assert.assertEquals("(8/27/20)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("8/27/20", nextDue(col, c))
+        Assert.assertEquals("(8/27/20)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals("8/27/20", nextDue(col, c))
+        Assert.assertEquals("(8/27/20)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_REV
+        Assert.assertEquals("8/27/20", nextDue(col, c))
+        Assert.assertEquals("8/27/20", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("", dueString(col, c))
+        c.type = Consts.CARD_TYPE_RELEARNING
+        c.due = id
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_LRN
+        c.due = id
+        Assert.assertEquals("3/19/21", nextDue(col, c))
+        Assert.assertEquals("3/19/21", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("", dueString(col, c))
+
+        // Dynamic deck
+        val dyn = decks.newFiltered("dyn")
+        c.oDid = c.did
+        c.did = dyn
+        Assert.assertEquals("(filtered)", nextDue(col, c))
+        Assert.assertEquals("(filtered)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("(filtered)", nextDue(col, c))
+        Assert.assertEquals("((filtered))", dueString(col, c))
     }
 
     @Suppress("SameParameterValue")

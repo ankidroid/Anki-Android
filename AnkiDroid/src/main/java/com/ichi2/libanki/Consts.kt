@@ -67,9 +67,6 @@ object Consts {
     @IntDef(MODEL_STD, MODEL_CLOZE)
     annotation class MODEL_TYPE
 
-    // deck types
-    const val DECK_DYN = 1
-
     const val STARTING_FACTOR = 2500
 
     /** Only used by the dialog shown to user */
@@ -93,7 +90,7 @@ object Consts {
     // The labels defined in consts.py are in AnkiDroid's resources files.
     const val DEFAULT_DECK_ID: Long = 1
 
-    val FIELD_SEPARATOR = Character.toString('\u001f')
+    val FIELD_SEPARATOR = "${'\u001f'}"
 
     /** Time duration for toast **/
     const val SHORT_TOAST_DURATION: Long = 2000

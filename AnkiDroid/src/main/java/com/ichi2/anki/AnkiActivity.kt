@@ -544,6 +544,23 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         finish()
     }
 
+    /**
+     * If storage permissions are not granted, shows a toast message and finishes the activity.
+     *
+     * This should be called AFTER a call to `super.`[onCreate]
+     *
+     * @return `true`: activity may continue to start, `false`: [onCreate] should stop executing
+     * as storage permissions are mot granted
+     */
+    fun ensureStoragePermissions(): Boolean {
+        if (IntentHandler.grantedStoragePermissions(this, showToast = true)) {
+            return true
+        }
+        Timber.w("finishing activity. No storage permission")
+        finish()
+        return false
+    }
+
     companion object {
         const val DIALOG_FRAGMENT_TAG = "dialog"
 

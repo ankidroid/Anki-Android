@@ -197,8 +197,6 @@
     <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">타사 API 앱</string>
     <string name="thirdparty_apps_summary">Ankidroid API를 사용하는 어플 목록 보기 (사전, 편집기 등)</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML 자바스크립트 디버깅</string>
-    <string name="html_javascript_debugging_summ">원격 WebView 연결을 활성화하고, 카드 HTML을 AnkiDroid 디렉토리에 저장하기</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>

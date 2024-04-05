@@ -29,6 +29,7 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil.getKeyByValue
 import org.json.JSONObject
 import java.util.*
+import kotlin.math.min
 
 /** Responsible for recreating EditFieldLines after NoteEditor operations
  * This primarily exists so we can use saved instance state to repopulate the dynamically created FieldEditLine
@@ -58,7 +59,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
         }
         if (type.type == Type.CHANGE_FIELD_COUNT) {
             val currentFieldStrings = editor.currentFieldStrings
-            for (i in 0 until Math.min(currentFieldStrings.size, fieldEditLines.size)) {
+            for (i in 0 until min(currentFieldStrings.size, fieldEditLines.size)) {
                 fieldEditLines[i].setContent(currentFieldStrings[i], type.replaceNewlines)
             }
         }

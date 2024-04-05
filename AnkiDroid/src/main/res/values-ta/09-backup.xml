@@ -50,7 +50,7 @@
     <string name="backup_new_collection">புதிய தொகுப்பு</string>
     <string name="backup_del_collection">சேகரிப்பை நீக்கி புதிய ஒன்றை உருவாக்குங்கள்</string>
     <string name="backup_del_collection_question">சேகரிப்பை நீக்கி புதிய ஒன்றை உருவாக்குங்கள்? இது உங்கள் கற்றல் முன்னேற்றத்தை கைவிட்டு அனைத்து கார்டுகளையும் நீக்கும்.</string>
-    <string name="backup_full_sync_from_server">சேவையகத்திலிருந்து முழு ஒத்திசைவு</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb இலிருந்து உங்கள் சேகரிப்பை மேலெழுதவா? இது உங்கள் கற்றல் முன்னேற்றத்தை கைவிட்டு, உங்கள் கடைசி ஒத்திசைவின் பின்னர் தகவல்களை சேர்த்தது.</string>
     <string name="error_handling_title">பிழை கையாளுதல்</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">விருப்பங்கள்</string>

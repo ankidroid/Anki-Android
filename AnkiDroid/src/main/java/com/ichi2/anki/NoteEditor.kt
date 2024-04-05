@@ -354,6 +354,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         mediaRegistration = MediaRegistration(this)
         super.onCreate(savedInstanceState)
+        if (!ensureStoragePermissions()) {
+            return
+        }
         fieldState.setInstanceState(savedInstanceState)
         setContentView(R.layout.note_editor)
         val intent = intent
@@ -647,7 +650,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // set focus to FieldEditText 'first' on startup like Anki desktop
         if (editFields != null && !editFields!!.isEmpty()) {
             // EXTRA_TEXT_FROM_SEARCH_VIEW takes priority over other intent inputs
-            if (getTextFromSearchView != null && getTextFromSearchView.isNotEmpty()) {
+            if (!getTextFromSearchView.isNullOrEmpty()) {
                 editFields!!.first!!.setText(getTextFromSearchView)
             }
             editFields!!.first!!.requestFocus()
@@ -735,7 +738,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
                     if (allowSaveAndPreview()) {
-                        performPreview()
+                        launchCatchingTask { performPreview() }
                     }
                 }
             }
@@ -844,7 +847,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // changed note type?
         if (!addNote && currentEditedCard != null) {
             val newModel: JSONObject? = currentlySelectedNotetype
-            val oldModel: JSONObject = currentEditedCard!!.model(getColUnsafe)
+            val oldModel: JSONObject = currentEditedCard!!.noteType(getColUnsafe)
             if (newModel != oldModel) {
                 return true
             }
@@ -952,7 +955,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         } else {
             // Check whether note type has been changed
             val newModel = currentlySelectedNotetype
-            val oldModel = if (currentEditedCard == null) null else currentEditedCard!!.model(getColUnsafe)
+            val oldModel = if (currentEditedCard == null) null else currentEditedCard!!.noteType(getColUnsafe)
             if (newModel != oldModel) {
                 reloadRequired = true
                 if (modelChangeCardMap!!.size < editorNote!!.numberOfCards(getColUnsafe) || modelChangeCardMap!!.containsValue(
@@ -1101,7 +1104,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
                 if (allowSaveAndPreview()) {
-                    performPreview()
+                    launchCatchingTask { performPreview() }
                 }
                 return true
             }
@@ -1211,42 +1214,39 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
-    private fun openNewPreviewer() {
-        val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toString() } ?: mutableListOf()
+    @VisibleForTesting
+    @NeedsTest("previewing newlines")
+    @NeedsTest("cards with a cloze notetype but no cloze in fields are previewed as empty card")
+    @NeedsTest("clozes that don't start at '1' are correctly displayed")
+    suspend fun performPreview() {
+        val convertNewlines = shouldReplaceNewlines()
+        fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
+        val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toFieldText() } ?: mutableListOf()
         val tags = selectedTags ?: mutableListOf()
+
+        val ord = if (editorNote!!.notetype.isCloze) {
+            val tempNote = withCol { Note.fromNotetypeId(editorNote!!.notetype.id) }
+            tempNote.fields = fields // makes possible to get the cloze numbers from the fields
+            val clozeNumbers = withCol { clozeNumbersInNote(tempNote) }
+            if (clozeNumbers.isNotEmpty()) {
+                clozeNumbers.first() - 1
+            } else {
+                0
+            }
+        } else {
+            currentEditedCard?.ord ?: 0
+        }
+
         val args = TemplatePreviewerArguments(
             notetypeFile = NotetypeFile(this, editorNote!!.notetype),
             fields = fields,
             tags = tags,
             id = editorNote!!.id,
-            ord = currentEditedCard?.ord ?: 0,
+            ord = ord,
             fillEmpty = false
         )
         val intent = TemplatePreviewerFragment.getIntent(this, args)
         startActivity(intent)
-    }
-
-    @VisibleForTesting
-    fun performPreview() {
-        if (sharedPrefs().getBoolean("new_previewer", false)) {
-            openNewPreviewer()
-            return
-        }
-        val previewer = Intent(this@NoteEditor, CardTemplatePreviewer::class.java)
-        if (currentEditedCard != null) {
-            previewer.putExtra("ordinal", currentEditedCard!!.ord)
-        }
-        previewer.putExtra(
-            CardTemplateNotetype.INTENT_MODEL_FILENAME,
-            CardTemplateNotetype.saveTempModel(this, editorNote!!.notetype)
-        )
-
-        // Send the previewer all our current editing information
-        val noteEditorBundle = Bundle()
-        addInstanceStateToBundle(noteEditorBundle)
-        noteEditorBundle.putBundle("editFields", fieldsAsBundleForPreview)
-        previewer.putExtra("noteEditorBundle", noteEditorBundle)
-        startActivity(previewer)
     }
 
     /**
@@ -1796,7 +1796,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
 
             val currentDeckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1L
-            return if (getColUnsafe.decks.isDyn(currentDeckId)) {
+            return if (getColUnsafe.decks.isFiltered(currentDeckId)) {
                 /*
                  * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
                  * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been
@@ -2179,7 +2179,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private inner class EditNoteTypeListener : OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
             // Get the current model
-            val noteModelId = currentEditedCard!!.model(getColUnsafe).getLong("id")
+            val noteModelId = currentEditedCard!!.noteType(getColUnsafe).getLong("id")
             // Get new model
             val newModel = getColUnsafe.notetypes.get(allModelIds!![pos])
             if (newModel == null) {
@@ -2223,7 +2223,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 updateFieldsFromStickyText()
             } else {
                 populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false)
-                updateCards(currentEditedCard!!.model(getColUnsafe))
+                updateCards(currentEditedCard!!.noteType(getColUnsafe))
                 findViewById<View>(R.id.CardEditorTagButton).isEnabled = true
                 // ((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
                 deckSpinnerSelection!!.setEnabledActionBarSpinner(true)

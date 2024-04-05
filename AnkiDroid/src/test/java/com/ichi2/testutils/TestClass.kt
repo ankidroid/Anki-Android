@@ -17,6 +17,7 @@
 package com.ichi2.testutils
 
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.ioDispatcher
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -54,7 +55,7 @@ interface TestClass {
         val card = note.firstCard()
         card.queue = Consts.QUEUE_TYPE_REV
         card.type = Consts.CARD_TYPE_REV
-        card.due = col.sched.today.toLong()
+        card.due = col.sched.today
         return note
     }
 
@@ -131,7 +132,7 @@ interface TestClass {
 
     fun addDynamicDeck(name: String?): DeckId {
         return try {
-            col.decks.newDyn(name!!)
+            col.decks.newFiltered(name!!)
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             throw RuntimeException(filteredAncestor)
         }
@@ -153,7 +154,7 @@ interface TestClass {
 
     /** helper method to update deck config */
     fun updateDeckConfig(deckId: DeckId, function: DeckConfig.() -> Unit) {
-        val deckConfig = col.decks.confForDid(deckId)
+        val deckConfig = col.decks.configDictForDeckId(deckId)
         function(deckConfig)
         col.decks.save(deckConfig)
     }
@@ -187,15 +188,12 @@ interface TestClass {
 
     fun Card.note() = this.note(col)
     fun Card.note(reload: Boolean) = this.note(col, reload)
-    fun Card.model() = this.model(col)
+    fun Card.noteType() = this.noteType(col)
     fun Card.template() = this.template(col)
     fun Card.question() = this.question(col)
     fun Card.question(reload: Boolean = false, browser: Boolean = false) = this.question(col, reload, browser)
     fun Card.answer() = this.answer(col)
     fun Card.load() = this.load(col)
-    fun Card.nextDue() = this.nextDue(col)
-    fun Card.dueString() = this.dueString(col)
-    fun Card.pureAnswer() = this.pureAnswer(col)
 
     fun Note.load() = this.load(col)
     fun Note.cards() = this.cards(col)
@@ -228,7 +226,9 @@ interface TestClass {
         times: Int = 1,
         testBody: suspend TestScope.() -> Unit
     ) {
-        Dispatchers.setMain(UnconfinedTestDispatcher())
+        val dispatcher = UnconfinedTestDispatcher()
+        Dispatchers.setMain(dispatcher)
+        ioDispatcher = dispatcher
         repeat(times) {
             if (times != 1) Timber.d("------ Executing test $it/$times ------")
             kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs.milliseconds) {

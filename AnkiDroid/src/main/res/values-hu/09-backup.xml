@@ -46,11 +46,11 @@
 <resources>
     <string name="backup_deck_no_storage_left">Biztonsági mentés nem lett elmentve. Nincsen elég hely a tárhelyen. Csökkentse a biztonsági mentés mélységét vagy távolítson el pár más fájlt.</string>
     <string name="storage_warning">Kevesebb, mint %d MB hely maradt a tárhelyen.\n Szabadíts fel helyet az adatvesztés elkerülése érdekében.</string>
-    <string name="backup_restore">Visszaállítás a biztonsági másolatból</string>
+    <string name="backup_restore">Visszaállítás biztonsági másolatból</string>
     <string name="backup_new_collection">Új gyűjtemény</string>
     <string name="backup_del_collection">Törölje a gyűjteményt, és hozzon létre egy újat</string>
     <string name="backup_del_collection_question">Valóban törölni szeretnéd a gyűjteményt és egy újat szeretnél létrehozni? Ezzel elveszted az összes kártyádat és tanulási információdat!</string>
-    <string name="backup_full_sync_from_server">Teljes szinkronizáció a szerverről</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Valóban felül szeretnéd írni a gyűjteményedet az AnkiWeben levővel? Ezzel elvesztesz az utolsó szinkronizálás óta minden tanulási információt és módosítást!</string>
     <string name="error_handling_title">Hibakezelés</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Beállítások</string>

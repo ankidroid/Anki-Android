@@ -12,7 +12,6 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
     - uses: actions/github-script@v7
       with:
         script: |
@@ -66,7 +65,7 @@ jobs:
                 }
 
                 // add post merge comments for 'strings' labeled PR
-                if (label.name == "strings") {
+                if (label.name == "Strings") {
                   addPostMergeComments();
                 }
             }
@@ -102,7 +101,7 @@ jobs:
                 "ankidroid-titles",
             ];
 
-            let stringsLabel = "strings";
+            let stringsLabel = "Strings";
 
             async function addLabel(labels) {
               await github.rest.issues.addLabels({

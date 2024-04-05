@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">Limiter à certaines étiquettes</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Modifier la note</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Jeter</string>
     <string name="note_editor_no_cards_created">Aucune carte créée. Veuillez remplir plus de champs</string>
     <string name="note_editor_no_first_field">Le premier champ est vide</string>
     <string name="note_editor_no_cloze_delations">Ce type de note doit contenir des textes à trous</string>
@@ -125,7 +125,7 @@
     <string name="select">Sélectionner</string>
     <string name="field_remapping">%1$s (de « %2$s »)</string>
     <string name="confirm_map_cards_to_nothing">Toute carte sans connexion sera effacée. Si une note n’a aucune carte restante, elle sera perdue. Êtes-vous sûr de vouloir continuer ?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">Aucun type de note trouvé</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Le temps imparti est écoulé</string>
     <plurals name="timebox_reached">
@@ -143,7 +143,7 @@
     <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Replanifier</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Aperçu</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copier en tant que Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d sur %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renommer</string>
     <string name="checks_action">Vérifier</string>
@@ -204,18 +204,15 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Le système ne dispose pas d\'une application qui peut effectuer cette action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Les photos d\'appareils sont potentiellement lourdes. Envisager les compresser et redimensionner dans le dossier "media"]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">Aucun navigateur trouvé pour ouvrir le lien : %s</string>
     <string name="web_page_error">Erreur lors du chargement de la page : %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Arrière-plan</string>
     <string name="choose_an_image">Sélectionner une image</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">Retirer l\'arrière-plan ?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Rétablir par défaut</string>
-    <string name="cloze_sample_text">Ceci est un {{%1$s::sample}} de suppression des trous</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">un exemple</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vide</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Impossible d\'enregistrer l\'image du tableau blanc. %s</string>
@@ -307,7 +304,7 @@
     <string name="migration_part_1_done_resume">Vous pouvez continuer à utiliser AnkiDroid.
 \nLa migration du stockage continuera en arrière-plan.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s n\'est pas un package d\'extension javascript valide</string>
+    <string name="not_valid_js_addon_package">%s n\'est pas un package d\'extension JavaScript valide</string>
     <string name="could_not_create_dir">Impossible de créer le répertoire %s</string>
     <string name="malicious_archive_entry_outside">Archive malveillante. Contient une entrée en dehors du répertoire cible : %s</string>
     <string name="malicious_archive_exceeds_limit">Archive malveillante. La taille dépasse %1$s ou contient plus de %2$d fichiers</string>
@@ -316,6 +313,7 @@
     <string name="expand_tag">Développer l\'étiquette « %s »</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Impossible d\'accéder à la collection. Veuillez réessayer !</string>
+    <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Réviser moins</string>
     <string name="intro_ankidroid_tagline_two">Souvenez-vous de plus</string>
@@ -323,7 +321,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Commencer</string>
     <string name="intro_sync_from_ankiweb">Synchroniser avec AnkiWeb</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">AnkiDroid n\'est pas encore initialisé. Veuillez ouvrir AnkiDroid et réessayer</string>
     <string name="already_logged_in">Déjà connecté</string>
     <!-- Deck Creation -->
     <string name="deck_created">Paquet créé</string>
@@ -359,7 +357,7 @@
     </string>
     <string name="shared_decks_login_required">Veuillez vous connecter pour télécharger plus de decks</string>
     <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="failed_to_copy">Échec de la copie</string>
+    <string name="card_browser_unavailable_when_notes_mode">Non disponible en mode \"Notes\"</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Repositionner</string>
 </resources>

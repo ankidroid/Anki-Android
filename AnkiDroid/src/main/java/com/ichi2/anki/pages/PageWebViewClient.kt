@@ -16,6 +16,7 @@
 package com.ichi2.anki.pages
 
 import android.graphics.Bitmap
+import android.webkit.ValueCallback
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -59,9 +60,10 @@ open class PageWebViewClient : WebViewClient() {
         super.onPageStarted(view, url, favicon)
         view?.let { webView ->
             val bgColor = MaterialColors.getColor(webView, android.R.attr.colorBackground).toRGBHex()
-            webView.evaluateJavascript("""document.body.style.setProperty("background-color", "$bgColor", "important")""") {
-                Timber.v("backgroundColor set")
-            }
+            webView.evaluateAfterDOMContentLoaded(
+                """document.body.style.setProperty("background-color", "$bgColor", "important");
+                    console.log("Background color set");"""
+            )
         }
     }
 
@@ -81,13 +83,46 @@ open class PageWebViewClient : WebViewClient() {
         }
     }
 
+    @Suppress("DEPRECATION") // still needed for API 23
+    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+        if (view == null || url == null) return super.shouldOverrideUrlLoading(view, url)
+        if (handleUrl(view, url)) {
+            return true
+        }
+        return super.shouldOverrideUrlLoading(view, url)
+    }
+
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         if (view == null || request == null) return super.shouldOverrideUrlLoading(view, request)
-        if (request.url.toString() == "page-fully-loaded:") {
-            Timber.v("displaying WebView after '$promiseToWaitFor' executed")
-            view.isVisible = true
+        if (handleUrl(view, request.url.toString())) {
             return true
         }
         return super.shouldOverrideUrlLoading(view, request)
     }
+
+    private fun handleUrl(view: WebView, url: String): Boolean {
+        if (url == "page-fully-loaded:") {
+            Timber.v("displaying WebView after '$promiseToWaitFor' executed")
+            view.isVisible = true
+            return true
+        }
+        return false
+    }
+}
+
+fun WebView.evaluateAfterDOMContentLoaded(script: String, resultCallback: ValueCallback<String>? = null) {
+    evaluateJavascript(
+        """
+                var codeToRun = function() { 
+                    $script
+                }
+                
+                if (document.readyState === "loading") {
+                  document.addEventListener("DOMContentLoaded", codeToRun);
+                } else {
+                  codeToRun();
+                }
+        """.trimIndent(),
+        resultCallback
+    )
 }

@@ -47,8 +47,8 @@
     <!-- generic strings -->
     <string name="disabled">ಅಂಗವಿಕಲ</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="one">%d ನಿಮಿಷ</item>
+        <item quantity="other">%d ನಿಮಿಷಗಳು</item>
     </plurals>
     <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
@@ -69,7 +69,7 @@
     <string name="pref_cat_workarounds" maxLength="41">ಪರಿಹಾರೋಪಾಯಗಳು</string>
     <string name="pref_cat_plugins" maxLength="41">ಪ್ಲಗಿನ್‌ಗಳು</string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
+    <string name="whiteboard_stroke_width" maxLength="41">ಸ್ಟ್ರೋಕ್ ಅಗಲ</string>
     <string name="use_input_tag" maxLength="41">ಕಾರ್ಡ್‌ನಲ್ಲಿ ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="reset_languages" maxLength="41">ಭಾಷೆಗಳನ್ನು ಮರುಹೊಂದಿಸಿ</string>
@@ -86,7 +86,7 @@
     <string name="fullscreen_review" maxLength="41">ಪೂರ್ಣಪರದೆ ಮೋಡ್</string>
     <string name="full_screen_off">Off</string>
     <string name="full_screen_system">ಸಿಸ್ಟಮ್ ಬಾರ್ಗಳನ್ನು ಮರೆಮಾಡಿ</string>
-    <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+    <string name="full_screen_complete">ಸಿಸ್ಟಮ್ ಬಾರ್‌ಗಳು ಮತ್ತು ಉತ್ತರ ಬಟನ್‌ಗಳನ್ನು ಮರೆಮಾಡಿ</string>
     <string name="answer_buttons_position" maxLength="41">ಉತ್ತರ ಬಟನ್‌ಗಳ ಸ್ಥಾನ</string>
     <string-array name="answer_buttons_position_labels">
         <item>ಟಾಪ್</item>
@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch" maxLength="41">9-ಪಾಯಿಂಟ್ ಸ್ಪರ್ಶ</string>
     <string name="gestures_corner_touch_summary">ಪರದೆಯ ಮೂಲೆಗಳಲ್ಲಿ ಸ್ಪರ್ಶ ಗೆಸ್ಚರ್‌ಗಳನ್ನು ಅನುಮತಿಸಿ</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">ಪೂರ್ಣ ಪರದೆಯ ನ್ಯಾವಿಗೇಷನ್ ಡ್ರಾಯರ್</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">ಪರದೆಯ ಮೇಲೆ ಎಲ್ಲಿಂದಲಾದರೂ ಬಲಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡುವಾಗ ನ್ಯಾವಿಗೇಷನ್ ಡ್ರಾಯರ್ ತೆರೆಯಿರಿ</string>
     <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">ಮೇಲಕ್ಕೆ ಎಳಿ</string>
     <string name="gestures_swipe_down" maxLength="41">ಕೆಳಗೆ ಸ್ವೈಪ್ ಮಾಡಿ</string>
@@ -132,7 +132,7 @@
         minutes ago.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">ಯಾವಾಗಲೂ</string>
     <string name="sync_media_only_unmetered">ಮೀಟರ್ ಇಲ್ಲದ ಸಂಪರ್ಕಗಳಲ್ಲಿ ಮಾತ್ರ</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_never">ಎಂದಿಗೂ</string>
     <string name="sync_status_badge" maxLength="41">ಸಿಂಕ್ರೊನೈಸೇಶನ್ ಸ್ಥಿತಿಯನ್ನು ಪ್ರದರ್ಶಿಸಿ</string>
     <string name="sync_status_badge_summ">ಬದಲಾವಣೆಗಳನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿದಾಗ ಸಿಂಕ್ ಐಕಾನ್ ಅನ್ನು ಬದಲಾಯಿಸಿ</string>
     <string name="metered_sync_title" maxLength="41">ಮೀಟರ್ ಸಂಪರ್ಕಗಳಲ್ಲಿ ಸಿಂಕ್ ಮಾಡಲು ಅನುಮತಿಸಿ</string>
@@ -150,7 +150,7 @@
     <string name="notify_when_pending">ಬಾಕಿ ಇರುವ ಸಂದೇಶಗಳು ಲಭ್ಯವಿವೆ</string>
     <string name="notification_minimum_cards_due">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">ವೈಬ್ರೇಟ್</string>
-    <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">ಮಿಟುಕಿಸುವ ಬೆಳಕು</string>
     <string name="timeout_answer_text" maxLength="41">ಸ್ವಯಂಚಾಲಿತ ಪ್ರದರ್ಶನ ಉತ್ತರ</string>
     <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">ಒಂದು ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
@@ -169,15 +169,15 @@
     <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">ಸಮಯ ಬಟನ್ ತೋರಿಸು</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons" maxLength="41">ದೊಡ್ಡ ಉತ್ತರ ಬಟನ್‌ಗಳನ್ನು ತೋರಿಸಿ</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Show top bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Show remaining</string>
     <string name="show_progress_summ">Show remaining card count</string>
     <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
-    <string name="use_current" maxLength="41">Deck for new cards</string>
+    <string name="show_eta_summ">ಉಳಿದ ಸಮಯವನ್ನು ತೋರಿಸಿ</string>
+    <string name="use_current" maxLength="41">ಹೊಸ ಕಾರ್ಡ್‌ಗಳಿಗಾಗಿ ಡೆಕ್</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="new_timezone" maxLength="41">New timezone handling</string>
@@ -190,7 +190,7 @@
     <string name="pref_keep_screen_on_summ">ಪರದೆಯ ಕಾಲಾವಧಿಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
-    <string name="custom_buttons" maxLength="41">App bar buttons</string>
+    <string name="custom_buttons" maxLength="41">ಅಪ್ಲಿಕೇಶನ್ ಬಾರ್ ಬಟನ್‌ಗಳು</string>
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
     <string name="custom_buttons_setting_always_show">ಯಾವಾಗಲೂ ಕಾಣಿಸಿಕೊಳ್ಳಿ</string>
     <string name="custom_buttons_setting_if_room">ಕೊಠಡಿ ಇದ್ದರೆ ತೋರಿಸಿ</string>
@@ -198,10 +198,8 @@
     <string name="reset_custom_buttons" maxLength="41">ಡೀಫಾಲ್ಟ್‌ಗೆ ಮರುಹೊಂದಿಸಿ</string>
     <string name="reset_settings_to_default">ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಡೀಫಾಲ್ಟ್‌ಗೆ ಮರುಹೊಂದಿಸಿ</string>
     <string name="reset">ಮರುಹೊಂದಿಸಿ</string>
-    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
+    <string name="thirdparty_apps_title" maxLength="41">ಮೂರನೇ ವ್ಯಕ್ತಿಯ API ಅಪ್ಲಿಕೇಶನ್‌ಗಳು</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಡೀಬಗ್ ಮಾಡುವಿಕೆ</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
     <string name="show_deck_title" maxLength="41">ಡೆಕ್ ಶೀರ್ಷಿಕೆಯನ್ನು ತೋರಿಸಿ</string>
@@ -209,14 +207,14 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">ಕ್ಲಿಪ್‌ಬೋರ್ಡ್ ಚಿತ್ರಗಳನ್ನು PNG ನಂತೆ ಅಂಟಿಸಿ</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="exit_via_double_tap_back" maxLength="41">ಹಿಂತಿರುಗಲು/ನಿರ್ಗಮಿಸಲು ಎರಡು ಬಾರಿ ಹಿಂದಕ್ಕೆ ಒತ್ತಿರಿ</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files" maxLength="41">ಮಾಧ್ಯಮ ಆಮದುಗಳಲ್ಲಿ ಎಲ್ಲಾ ಫೈಲ್‌ಗಳನ್ನು ಅನುಮತಿಸಿ</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ಬಳಸಲಾಗುವುದಿಲ್ಲ</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
@@ -237,26 +235,26 @@
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">ಜ್ಞಾಪನೆಗಳು</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
+    <string name="deck_conf_cram_filter" maxLength="41">ಫಿಲ್ಟರ್</string>
     <string name="deck_conf_cram_search" maxLength="41">Search</string>
     <string name="deck_conf_cram_limit" maxLength="41">ಗೆ ಮಿತಿ</string>
     <string name="deck_conf_cram_order" maxLength="41">ಆಯ್ದ ಕಾರ್ಡ್‌ಗಳು</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">ಎರಡನೇ ಫಿಲ್ಟರ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">ಕಸ್ಟಮ್ ಹಂತಗಳನ್ನು ವಿವರಿಸಿ</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">ಪೂರ್ವವೀಕ್ಷಣೆ ವಿಳಂಬಗಳು</string>
+    <string name="deck_conf_cram_preview_delays_summ">ವಿಳಂಬಗಳು ಸೆಕೆಂಡುಗಳಲ್ಲಿ. 0 ಕಾರ್ಡ್ ಅನ್ನು ಮೂಲ ಡೆಕ್‌ಗೆ ಹಿಂತಿರುಗಿಸುತ್ತದೆ.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid ಅನ್ನು ಉತ್ತಮಗೊಳಿಸಲು ಸಹಾಯ ಮಾಡಿ!</string>
     <string name="analytics_title" maxLength="41">ವೈಶಿಷ್ಟ್ಯದ ಬಳಕೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
+    <string name="analytics_summ">ಜನರು ಯಾವ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಬಳಸುತ್ತಾರೆ ಎಂಬುದನ್ನು ನೋಡಲು ಅಭಿವೃದ್ಧಿ ತಂಡಕ್ಕೆ ಸಹಾಯ ಮಾಡುವ ಮೂಲಕ ನೀವು AnkiDroid ಗೆ ಕೊಡುಗೆ ನೀಡಬಹುದು</string>
+    <string name="note_editor_replace_newlines" maxLength="41">ಹೊಸ ಸಾಲುಗಳನ್ನು HTML ನೊಂದಿಗೆ ಬದಲಾಯಿಸಿ</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus" maxLength="41">\'ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ\' ಮೇಲೆ ಕೇಂದ್ರೀಕರಿಸಿ</string>
+    <string name="type_in_answer_focus_summ">ವಿಮರ್ಶಕರಲ್ಲಿ \'ಉತ್ತರದಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ\' ಕ್ಷೇತ್ರವನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಕೇಂದ್ರೀಕರಿಸಿ</string>
     <!-- About -->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">ಚೇಂಜ್ಲಾಗ್ ತೆರೆಯಿರಿ</string>
     <string name="pref_cat_about_title" maxLength="41">ಸುಮಾರು</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
@@ -269,19 +267,19 @@
     <string name="binding_add_key">ಕೀ ಸೇರಿಸಿ</string>
     <string name="binding_replace_key">ಕೀಲಿಯನ್ನು ಬದಲಾಯಿಸಿ</string>
     <string name="key_picker_default_press_key">ಒಂದು ಕೀಲಿಯನ್ನು ಒತ್ತಿರಿ</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="binding_add_axis">ಜಾಯ್ಸ್ಟಿಕ್/ಚಲನೆಯ ನಿಯಂತ್ರಕವನ್ನು ಸರಿಸಿ</string>
+    <string name="axis_picker_move_joystick">ಜಾಯ್ಸ್ಟಿಕ್/ಚಲನೆಯ ನಿಯಂತ್ರಕವನ್ನು ಸರಿಸಿ</string>
+    <string name="user_actions" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆಗಳು</string>
+    <string name="user_actions_summary" maxLength="41">ವಿಮರ್ಶೆ ಪರದೆಯಿಂದ JavaScript ಅನ್ನು ಟ್ರಿಗರ್ ಮಾಡಿ</string>
+    <string name="user_action_1" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 1</string>
+    <string name="user_action_2" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 2</string>
+    <string name="user_action_3" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 3</string>
+    <string name="user_action_4" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 4</string>
+    <string name="user_action_5" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 5</string>
+    <string name="user_action_6" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 6</string>
+    <string name="user_action_7" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 7</string>
+    <string name="user_action_8" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 8</string>
+    <string name="user_action_9" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">ಕಾರ್ಡ್ ಬದಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="card_side_question">ಪ್ರಶ್ನೆ</string>
@@ -296,7 +294,7 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">ದಯವಿಟ್ಟು ಹೊಸ ಪಠ್ಯವನ್ನು ಸ್ಪೀಚ್ ಫಾರ್ಮ್ಯಾಟ್‌ಗೆ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
@@ -315,7 +313,7 @@
         <br><br>
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">ಸ್ವಯಂಚಾಲಿತ ಬ್ಯಾಕಪ್‌ಗಳ ನಡುವಿನ ನಿಮಿಷಗಳು</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">ಇರಿಸಿಕೊಳ್ಳಲು ದೈನಂದಿನ ಬ್ಯಾಕಪ್‌ಗಳು</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">ಇರಿಸಿಕೊಳ್ಳಲು ಸಾಪ್ತಾಹಿಕ ಬ್ಯಾಕಪ್‌ಗಳು</string>
     <string name="pref__monthly_backups_to_keep__title" maxLength="41">ಇರಿಸಿಕೊಳ್ಳಲು ಮಾಸಿಕ ಬ್ಯಾಕಪ್‌ಗಳು</string>
@@ -345,7 +343,7 @@
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
     <string name="progress__deleting_collection">Deleting collection&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">ಎಲ್ಲಾ ಅಳಿಸಿ</string>
     <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">ಎಲ್ಲಾ ಅಳಿಸಿ</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>

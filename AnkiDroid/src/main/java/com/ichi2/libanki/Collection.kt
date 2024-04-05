@@ -40,7 +40,6 @@ import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.VersionUtils
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
@@ -60,7 +59,6 @@ open class Collection(
      *  The path to the collection.anki2 database. Must be unicode and openable with [File].
      */
     val path: String,
-    private var debugLog: Boolean, // Not in libAnki.
     /**
      * Outside of libanki, you should not access the backend directly for collection operations.
      * Operations that work on a closed collection (eg importing), or do not require a collection
@@ -131,13 +129,10 @@ open class Collection(
     var ls: Long = 0
     // END: SQL table columns
 
-    private var logHnd: PrintWriter? = null
-
     init {
         media = Media(this)
         tags = Tags(this)
         val created = reopen()
-        log(path, VersionUtils.pkgVersionName)
         startReps = 0
         startTime = 0
         _loadScheduler()
@@ -193,7 +188,6 @@ open class Collection(
                 backend.closeCollection(downgrade)
             }
             dbInternal = null
-            _closeLog()
             Timber.i("Collection closed")
         }
     }
@@ -205,7 +199,6 @@ open class Collection(
             val (db_, created) = Storage.openDB(path, backend, afterFullSync)
             dbInternal = db_
             load()
-            _openLog()
             if (afterFullSync) {
                 _loadScheduler()
             }
@@ -235,7 +228,7 @@ open class Collection(
         )
     }
 
-    /** Mark schema modified to force a full sync.
+    /** Mark schema modified to cause a one-way sync.
      * ConfirmModSchemaException will be thrown if the user needs to be prompted to confirm the action.
      * If the user chooses to confirm then modSchemaNoCheck should be called, after which the exception can
      * be safely ignored, and the outer code called again.
@@ -247,7 +240,7 @@ open class Collection(
         if (!schemaChanged()) {
             /* In Android we can't show a dialog which blocks the main UI thread
              Therefore we can't wait for the user to confirm if they want to do
-             a full sync here, and we instead throw an exception asking the outer
+             a one-way sync here, and we instead throw an exception asking the outer
              code to handle the user's choice */
             throw ConfirmModSchemaException()
         }
@@ -568,62 +561,6 @@ open class Collection(
             }
         }
         return true
-    }
-
-    fun log(vararg objects: Any?) {
-        if (!debugLog) return
-
-        val unixTime = TimeManager.time.intTime()
-
-        val outerTraceElement = Thread.currentThread().stackTrace[3]
-        val fileName = outerTraceElement.fileName
-        val methodName = outerTraceElement.methodName
-
-        val objectsString = objects
-            .map { if (it is LongArray) Arrays.toString(it) else it }
-            .joinToString(", ")
-
-        writeLog("[$unixTime] $fileName:$methodName() $objectsString")
-    }
-
-    private fun writeLog(s: String) {
-        logHnd?.let {
-            try {
-                it.println(s)
-            } catch (e: Exception) {
-                Timber.w(e, "Failed to write to collection log")
-            }
-        }
-        Timber.d(s)
-    }
-
-    private fun _openLog() {
-        if (!debugLog) {
-            return
-        }
-        Timber.i("Opening Collection Log")
-        try {
-            val lpath = File(path.replaceFirst("\\.anki2$".toRegex(), ".log"))
-            if (lpath.exists() && lpath.length() > 10 * 1024 * 1024) {
-                val lpath2 = File("$lpath.old")
-                if (lpath2.exists()) {
-                    lpath2.delete()
-                }
-                lpath.renameTo(lpath2)
-            }
-            logHnd = PrintWriter(BufferedWriter(FileWriter(lpath, true)), true)
-        } catch (e: IOException) {
-            // turn off logging if we can't open the log file
-            Timber.e("Failed to open collection.log file - disabling logging")
-            debugLog = false
-        }
-    }
-
-    private fun _closeLog() {
-        if (!debugLog) return
-        Timber.i("Closing Collection Log")
-        logHnd?.close()
-        logHnd = null
     }
 
     /**

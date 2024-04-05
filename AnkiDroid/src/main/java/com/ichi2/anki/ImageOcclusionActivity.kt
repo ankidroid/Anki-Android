@@ -18,7 +18,9 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
@@ -29,6 +31,15 @@ import kotlin.reflect.jvm.jvmName
  * to avoid unwanted activity recreations
  */
 class ImageOcclusionActivity : SingleFragmentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        onBackPressedDispatcher.addCallback(this) {
+            DiscardChangesDialog.showDialog(this@ImageOcclusionActivity) {
+                finish()
+            }
+        }
+    }
 
     companion object {
 

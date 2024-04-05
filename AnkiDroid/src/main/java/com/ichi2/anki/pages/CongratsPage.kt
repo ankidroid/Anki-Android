@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.pages
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -30,14 +31,18 @@ import anki.collection.OpChanges
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
+import com.ichi2.anki.UIUtils
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
@@ -174,6 +179,35 @@ class CongratsPage :
         fun getIntent(context: Context): Intent {
             return SingleFragmentActivity.getIntent(context, CongratsPage::class)
         }
+
+        private fun displayNewCongratsScreen(context: Context): Boolean =
+            context.sharedPrefs().getBoolean("new_congrats_screen", false)
+
+        fun display(activity: Activity) {
+            if (displayNewCongratsScreen(activity)) {
+                activity.startActivity(getIntent(activity))
+            } else {
+                UIUtils.showThemedToast(activity, R.string.studyoptions_congrats_finished, false)
+            }
+        }
+
+        fun onReviewsCompleted(activity: Activity, cardsInDeck: Boolean) {
+            if (displayNewCongratsScreen(activity)) {
+                activity.startActivity(getIntent(activity))
+                return
+            }
+
+            // Show a message when reviewing has finished
+            if (cardsInDeck) {
+                activity.showSnackbar(R.string.studyoptions_congrats_finished)
+            } else {
+                activity.showSnackbar(R.string.studyoptions_no_cards_due)
+            }
+        }
+
+        fun DeckPicker.onDeckCompleted() {
+            startActivity(getIntent(this))
+        }
     }
 }
 
@@ -194,7 +228,7 @@ class CongratsViewModel : ViewModel(), OnErrorListener {
     fun onDeckOptions() {
         launchCatchingIO {
             val deckId = withCol { decks.getCurrentId() }
-            val isFiltered = withCol { decks.isDyn(deckId) }
+            val isFiltered = withCol { decks.isFiltered(deckId) }
             deckOptionsDestination.emit(DeckOptionsDestination(deckId, isFiltered))
         }
     }

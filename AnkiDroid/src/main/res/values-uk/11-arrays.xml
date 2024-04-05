@@ -83,7 +83,7 @@
     <string name="answer_hard">Відповідь: важко</string>
     <string name="answer_good">Відповідь: добре</string>
     <string name="answer_easy">Відповідь: легко</string>
-    <string name="gesture_play">Програти медіа</string>
+    <string name="gesture_play">Відтворити медіа</string>
     <string name="gesture_abort_learning">Перервати навчання</string>
     <string name="gesture_flag_red">Переключити червоний прапорець</string>
     <string name="gesture_flag_orange">Переключити помаранчевий прапорець</string>

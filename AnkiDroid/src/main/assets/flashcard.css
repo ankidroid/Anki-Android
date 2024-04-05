@@ -148,14 +148,6 @@ landscape mode, even if made in Desktop version*/
   object-fit: contain !important;
 }
 
-.card {
-  font-family: arial;
-  font-size: 20px;
-  text-align: center;
-  color: black;
-  background-color: white;
-}
-
 #image-occlusion-container img {
   position: absolute !important;
   left: 50% !important;

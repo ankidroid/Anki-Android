@@ -68,4 +68,26 @@ class UtilsTest {
             )
         }
     }
+
+    @Test
+    fun test_stripSpecialFields_will_remove_type() {
+        val input = "test\n\n[[type:Back]]"
+        val output = Utils.stripSpecialFields(input)
+        assertEquals(
+            "type field should be removed",
+            "test\n\n",
+            output
+        )
+    }
+
+    @Test
+    fun test_stripSpecialFields_will_remove_avRef() {
+        val input = "test\n\n[anki:play:q:0]"
+        val output = Utils.stripSpecialFields(input)
+        assertEquals(
+            "avRef field should be removed",
+            "test\n\n",
+            output
+        )
+    }
 }

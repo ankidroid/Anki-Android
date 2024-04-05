@@ -50,7 +50,7 @@
     <string name="backup_new_collection">नया संग्रह</string>
     <string name="backup_del_collection">संग्रह हटाएँ और नया संग्रह बनाएँ</string>
     <string name="backup_del_collection_question">संग्रह हटाएँ और नया संग्रह बनाएँ? यह आपके सीखने की प्रगति को हटा देगा और सभी पत्तों को मिटा देगा।</string>
-    <string name="backup_full_sync_from_server">परिसेवक से पूर्ण समकालन</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb के संग्रह से अपने संग्रह को अधिलेखित करें? यह पिछले समकालन के बाद से आपके सीखने की प्रगति और जोड़े जानकारी को मिटा देगा।</string>
     <string name="error_handling_title">त्रुटि प्रबंधन</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">विकल्प</string>

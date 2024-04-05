@@ -31,10 +31,9 @@
                     android:id="@+id/ankidroid_logo"
                     android:layout_width="200dp"
                     app:srcCompat="@drawable/ankidroid_logo"
-                    android:layout_marginBottom="0dp"
+                    android:layout_marginBottom="@dimen/input_layout_padding"
                     android:layout_gravity="center"
-                    android:layout_height="200dp"
-                    />
+                    android:layout_height="200dp" />
 
                 <!--<com.ichi2.ui.FixedTextView-->
                 <!--android:id="@+id/sign_in"-->
@@ -55,7 +54,7 @@
                     android:hint="@string/username"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
-                    android:layout_margin="@dimen/content_vertical_padding">
+                    android:layout_marginHorizontal="@dimen/input_layout_padding">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/username"
@@ -75,7 +74,7 @@
                     android:hint="@string/password"
                     app:endIconMode="password_toggle"
                     app:errorEnabled="true"
-                    android:layout_margin="@dimen/content_vertical_padding">
+                    android:layout_marginHorizontal="@dimen/input_layout_padding">
 
                     <com.ichi2.ui.TextInputEditField
                         android:id="@+id/password"

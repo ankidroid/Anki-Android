@@ -134,10 +134,11 @@
     <string name="empty_filtered_deck">Gefilterter Stapel wird geleert &#8230;</string>
     <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
     <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel »Benutzerdefinierte Sitzung« um</string>
-    <string name="empty_deck">Dieser Stapel ist leer</string>
     <string name="search_deck" comment="Deck search for selecting it">Stapelsuche</string>
+    <string name="empty_deck">Dieser Stapel ist leer</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Stapelsuche</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
+    <string name="studyoptions_congrats_finished">Glückwunsch! Das war alles für heute.</string>
     <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
     <string name="sd_card_not_mounted">Gerätespeicher nicht eingebunden</string>
     <string name="button_sync" comment="Text of the sync button">Synchronisieren</string>
@@ -146,6 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Synchronisierung fortsetzen</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronisation abgebrochen</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Breche ab&#8230;\nDies kann einige Zeit dauern.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Stapel exportieren</string>
     <string name="nothing">Nichts</string>
     <!-- Card template editor -->
@@ -166,7 +168,6 @@
         <item quantity="one">Kartentyp »%2$s« und seine %1$d Karte löschen?</item>
         <item quantity="other">Kartentyp »%2$s« und seine %1$d Karten löschen?</item>
     </plurals>
-    <string name="invalid_template">Es konnte keine Karte erzeugt werden</string>
     <string name="card_template_editor_would_delete_note">Durch Entfernen dieses Kartentyps würde mindestens eine Notiz gelöscht werden. Bitte erstellen und speichern Sie zuerst einen neuen Kartentyp.</string>
     <string name="card_template_editor_save_error">Änderungen an Kartenvorlagen konnten nicht gespeichert werden: %s</string>
     <string name="template_for_current_card_deleted">Der Kartentyp der aktuellen Karte wurde gelöscht.</string>
@@ -239,6 +240,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Migration fortsetzen </string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Unzugängliche Sammlung</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Wir können, aufgrund einer Änderung der Play Store-Richtlinie, nachdem AnkiDroid deinstalliert wurde, auf Ihre Sammlung nicht zugreifen.\n\nIhre Daten sind sicher und können wiederhergestellt werden. Es befindet sich unter\n%s\n\nWählen Sie eine Option unten, um sie wiederherzustellen:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android hat den Zugriff auf %1$s entfernt wegen App-Aktivität. \n\nDeine Daten sind sicher und können wiederhergestellt werden. Die befinden sich bei \n%2$s\n\nWähle eine Option unten, um sie wiederherzustellen. </string>
     <string name="restore_data_from_ankiweb">von AnkiWeb wiederherstellen (empfohlen)</string>
     <string name="install_non_play_store_ankidroid_recommended">Ordnerzugriff wiederherstellen (empfohlen)</string>
     <string name="install_non_play_store_ankidroid">Ordnerzugriff wiederherstellen (erfahren)</string>

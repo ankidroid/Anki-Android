@@ -18,11 +18,13 @@ package com.ichi2.anki.previewer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -31,29 +33,36 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
+import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.utils.performClickIfEnabled
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class PreviewerFragment :
     CardViewerFragment(R.layout.previewer),
     Toolbar.OnMenuItemClickListener,
-    BaseSnackbarBuilderProvider {
+    BaseSnackbarBuilderProvider,
+    DispatchKeyEventListener {
 
     override val viewModel: PreviewerViewModel by viewModels {
         val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(CARD_IDS_FILE_ARG)) {
             "$CARD_IDS_FILE_ARG is required"
         } as PreviewerIdsFile
         val currentIndex = requireArguments().getInt(CURRENT_INDEX_ARG, 0)
-        PreviewerViewModel.factory(previewerIdsFile, currentIndex)
+        PreviewerViewModel.factory(previewerIdsFile, currentIndex, SoundPlayer())
     }
     override val webView: WebView
         get() = requireView().findViewById(R.id.webview)
@@ -134,7 +143,7 @@ class PreviewerFragment :
                     override fun onStartTrackingTouch(slider: Slider) {}
 
                     override fun onStopTrackingTouch(slider: Slider) {
-                        viewModel.currentIndex.tryEmit(slider.value.toInt() - 1)
+                        viewModel.onSliderChange(slider.value.toInt())
                     }
                 }
             )
@@ -163,6 +172,18 @@ class PreviewerFragment :
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
             setOnMenuItemClickListener(this@PreviewerFragment)
             setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
+        }
+
+        if (sharedPrefs().getBoolean("safeDisplay", false)) {
+            view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
+        }
+
+        with(requireActivity()) {
+            // use the screen background color if the nav bar doesn't need a scrim when using a
+            // transparent background. e.g. when navigation gestures are enabled
+            if (!navBarNeedsScrim) {
+                window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
+            }
         }
     }
 
@@ -200,8 +221,26 @@ class PreviewerFragment :
     }
 
     private fun editCard() {
-        val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
-        editCardLauncher.launch(intent)
+        lifecycleScope.launch {
+            val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
+            editCardLauncher.launch(intent)
+        }
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (event.action != KeyEvent.ACTION_DOWN) return false
+
+        when (event.keyCode) {
+            KeyEvent.KEYCODE_DPAD_LEFT -> {
+                requireView().findViewById<MaterialButton>(R.id.show_previous).performClickIfEnabled()
+            }
+            KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                requireView().findViewById<MaterialButton>(R.id.show_next).performClickIfEnabled()
+            }
+            KeyEvent.KEYCODE_R -> viewModel.replayAudios()
+            else -> return false
+        }
+        return true
     }
 
     companion object {
@@ -216,7 +255,7 @@ class PreviewerFragment :
                 CURRENT_INDEX_ARG to currentIndex,
                 CARD_IDS_FILE_ARG to previewerIdsFile
             )
-            return PreviewerActivity.getIntent(context, PreviewerFragment::class, arguments)
+            return CardViewerActivity.getIntent(context, PreviewerFragment::class, arguments)
         }
     }
 }

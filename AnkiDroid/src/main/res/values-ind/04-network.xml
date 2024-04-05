@@ -45,14 +45,14 @@
 
 -->
 <resources>
-    <string name="youre_offline">Kamu sedang offline</string>
+    <string name="youre_offline">Anda sedang luring</string>
     <string name="sync_error">Gagal mensinkronisasi</string>
     <string name="vague_error" comment="Network error dialog title">Gagal</string>
     <string name="retry">Coba Lagi</string>
     <string name="menu_get_shared_decks">Cari dek yang telah dibagi</string>
     <string name="connection_error_message">Telah terjadi masalah jaringan</string>
     <string name="not_logged_in_title">Masuk ke AnkiWeb</string>
-    <string name="login_create_account_message">Kamu harus masuk ke akun pihak ketiga untuk menggunakan layanan sinkronisasi awan. Kamu bisa membuatnya di langkah berikutnya.</string>
+    <string name="login_create_account_message">Anda harus masuk ke akun pihak ketiga untuk menggunakan layanan sinkronisasi awan. Anda dapat membuatnya di langkah berikutnya.</string>
     <!-- MyAccount.kt -->
     <string name="username">Alamat surel</string>
     <string name="password">Kata Sandi</string>
@@ -63,23 +63,22 @@
     <string name="logged_as">Login sebagai</string>
     <string name="log_out">Log keluar</string>
     <string name="reset_password">Reset kata sandi</string>
-    <string name="lost_mail_instructions">Lupa tentang surel elektronik?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="lost_mail_instructions">Lupa Surel?</string>
+    <string name="sign_in">Memasuki akun</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opsi untuk XXX</string>
     <string name="sync_title">Sinkronisasi</string>
     <string name="sync_log_uploading_message">Sinkronisasi penuh dari lokal</string>
     <string name="sync_database_acknowledge">Koleksi disinkronkan</string>
-    <string name="sync_corrupt_database">Basisdatamu rusak. Perbaiki sebelum mencoba sinkronisasi lagi.\n\n Lihat %s untuk informasi tentang memperbaiki basisdatamu.</string>
+    <string name="sync_corrupt_database">Basis data Anda rusak. Perbaiki sebelum mencoba sinkronisasi lagi.\n\n Lihat %s untuk informasi tentang memperbaiki basis data Anda.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Jarak jauh</string>
-    <string name="force_full_sync_title">Paksa sinkronisasi penuh</string>
-    <string name="force_full_sync_summary">Pada sinkronisasi selanjutnya, paksa perubahan dalam satu arah</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
-    <string name="full_sync_confirmation">Perubahan yang diminta mengharuskan basisdata diunggah seluruhnya saat kamu melakukan sinkronisasi koleksimu. Jika kamu memiliki ulasan atau perubahan lainnya yang menunggu di perangkat lain yang belum disinkronkan di sini, mereka akan hilang. Lanjutkan?</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="full_sync_confirmation">Perubahan yang diminta mengharuskan basis data diunggah seluruhnya saat Anda melakukan sinkronisasi koleksi Anda. Jika Anda memiliki ulasan atau perubahan lainnya yang menunggu di perangkat lain yang belum disinkronkan di sini, mereka akan hilang. Lanjutkan?</string>
     <string name="full_sync_confirmation_upgrade">Karena adanya bug pada versi AnkiDroid sebelumnya, disarankan untuk melakukan sinkronisasi penuh.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sinkronisasi (penuh)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Sinkronisasi (masuk)</string>
 </resources>

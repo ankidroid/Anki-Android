@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
@@ -59,6 +60,16 @@ open class SingleFragmentActivity : AnkiActivity() {
             replace(R.id.fragment_container, fragment)
         }
     }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)!!
+        return if (fragment is DispatchKeyEventListener) {
+            fragment.dispatchKeyEvent(event) || super.dispatchKeyEvent(event)
+        } else {
+            super.dispatchKeyEvent(event)
+        }
+    }
+
     companion object {
         const val FRAGMENT_NAME_EXTRA = "fragmentName"
         const val FRAGMENT_ARGS_EXTRA = "fragmentArgs"
@@ -70,4 +81,8 @@ open class SingleFragmentActivity : AnkiActivity() {
             }
         }
     }
+}
+
+interface DispatchKeyEventListener {
+    fun dispatchKeyEvent(event: KeyEvent): Boolean
 }

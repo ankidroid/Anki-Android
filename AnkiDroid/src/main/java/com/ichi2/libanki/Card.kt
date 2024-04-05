@@ -18,19 +18,17 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.R
-import com.ichi2.anki.servicelayer.NoteService.avgEase
-import com.ichi2.anki.utils.SECONDS_PER_DAY
+import anki.cards.FsrsMemoryState
 import com.ichi2.anki.utils.ext.ifZero
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.utils.LibAnkiAlias
+import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
-import com.ichi2.utils.LanguageUtil
+import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
-import java.util.*
 
 /**
  * A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
@@ -47,8 +45,8 @@ import java.util.*
  * - Recording the results of review (answer chosen, time taken, etc)
  *
  * It does not:
- * - Generate new cards (see Collection)
- * - Store the templates or the style sheet (see Models)
+ * - Generate new cards (see [Collection])
+ * - Store the templates or the style sheet (see [NotetypeJson])
  *
  * Type: 0=new, 1=learning, 2=due
  * Queue: same as above, and:
@@ -63,19 +61,19 @@ open class Card : Cloneable {
     /**
      * Time in MS when timer was started
      */
-    var timerStarted: Long
+    var timerStarted: Long = 0L
 
-    // Not in LibAnki. Record time spent reviewing in MS in order to restore when resuming.
+    // Record time spent reviewing in MS in order to restore when resuming.
+    @NotInLibAnki
     private var elapsedTime: Long = 0
 
-    // BEGIN SQL table entries
     @set:VisibleForTesting
-    var id: Long
+    var id: Long = 0
     var nid: NoteId = 0
     var did: DeckId = 0
     var ord = 0
     var mod: Long = 0
-    var usn = 0
+    private var usn = 0
 
     @get:CARD_TYPE
     @CARD_TYPE
@@ -84,69 +82,45 @@ open class Card : Cloneable {
     @get:CARD_QUEUE
     @CARD_QUEUE
     var queue = 0
-    var due: Long = 0
+    var due: Int = 0
     var ivl = 0
     var factor = 0
+
+    @set:VisibleForTesting
     var reps = 0
-        private set
     var lapses = 0
     var left = 0
-    var oDue: Long = 0
+    var oDue: Int = 0
     var oDid: DeckId = 0
     private var customData: String = ""
     private var originalPosition: Int? = null
     private var flags = 0
+    private var memoryState: FsrsMemoryState? = null
+    private var desiredRetention: Float? = null
 
-    // END SQL table entries
-    var renderOutput: TemplateRenderOutput?
-    private var note: Note?
+    var renderOutput: TemplateRenderOutput? = null
+    var note: Note? = null
 
-    constructor(col: Collection) {
-        timerStarted = 0L
-        renderOutput = null
-        note = null
-        // to flush, set nid, ord, and due
-        this.id = TimeManager.time.timestampID(col.db, "cards")
-        did = 1
-        this.type = Consts.CARD_TYPE_NEW
-        queue = Consts.QUEUE_TYPE_NEW
-        ivl = 0
-        factor = 0
-        reps = 0
-        lapses = 0
-        left = 0
-        oDue = 0
-        oDid = 0
-        flags = 0
-    }
-
-    /** Construct an instance from a backend Card */
     constructor(card: anki.cards.Card) {
-        timerStarted = 0L
-        renderOutput = null
-        note = null
-        id = card.id
         loadFromBackendCard(card)
     }
 
-    constructor(col: Collection, id: Long?) {
-        timerStarted = 0L
-        renderOutput = null
-        note = null
+    constructor(col: Collection, id: Long? = null) {
         if (id != null) {
             this.id = id
             load(col)
         } else {
-            // ephemeral card
-            this.id = 0
+            loadFromBackendCard(anki.cards.Card.getDefaultInstance())
         }
     }
 
+    @LibAnkiAlias("load")
     fun load(col: Collection) {
         val card = col.backend.getCard(id)
         loadFromBackendCard(card)
     }
 
+    @LibAnkiAlias("_load_from_backend_card")
     private fun loadFromBackendCard(card: anki.cards.Card) {
         renderOutput = null
         note = null
@@ -158,19 +132,22 @@ open class Card : Cloneable {
         usn = card.usn
         type = card.ctype
         queue = card.queue
-        due = card.due.toLong() // TODO due should be an int
+        due = card.due
         ivl = card.interval
         factor = card.easeFactor
         reps = card.reps
         lapses = card.lapses
         left = card.remainingSteps
-        oDue = card.originalDue.toLong() // TODO due should be an int
+        oDue = card.originalDue
         oDid = card.originalDeckId
         flags = card.flags
         originalPosition = if (card.hasOriginalPosition()) card.originalPosition else null
         customData = card.customData
+        memoryState = if (card.hasMemoryState()) card.memoryState else null
+        desiredRetention = if (card.hasDesiredRetention()) card.desiredRetention else null
     }
 
+    @LibAnkiAlias("_to_backend_card")
     fun toBackendCard(): anki.cards.Card {
         val builder = anki.cards.Card.newBuilder()
             .setId(id)
@@ -179,32 +156,38 @@ open class Card : Cloneable {
             .setTemplateIdx(ord)
             .setCtype(type)
             .setQueue(queue)
-            .setDue(due.toInt())
+            .setDue(due)
             .setInterval(ivl)
             .setEaseFactor(factor)
             .setReps(reps)
             .setLapses(lapses)
             .setRemainingSteps(left)
-            .setOriginalDue(oDue.toInt())
+            .setOriginalDue(oDue)
             .setOriginalDeckId(oDid)
             .setFlags(flags)
             .setCustomData(customData)
         originalPosition?.let { builder.setOriginalPosition(it) }
+        memoryState?.let { builder.setMemoryState(it) }
+        desiredRetention?.let { builder.setDesiredRetention(it) }
         return builder.build()
     }
 
+    @LibAnkiAlias("question")
     fun question(col: Collection, reload: Boolean = false, browser: Boolean = false): String {
         return renderOutput(col, reload, browser).questionAndStyle()
     }
 
+    @LibAnkiAlias("answer")
     fun answer(col: Collection): String {
         return renderOutput(col).answerAndStyle()
     }
 
+    @LibAnkiAlias("question_av_tags")
     fun questionAvTags(col: Collection): List<AvTag> {
         return renderOutput(col).questionAvTags
     }
 
+    @LibAnkiAlias("answer_av_tags")
     fun answerAvTags(col: Collection): List<AvTag> {
         return renderOutput(col).answerAvTags
     }
@@ -212,6 +195,7 @@ open class Card : Cloneable {
     /**
      * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
      */
+    @LibAnkiAlias("render_output")
     open fun renderOutput(col: Collection, reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
         if (renderOutput == null || reload) {
             renderOutput = TemplateManager.TemplateRenderContext.fromExistingCard(col, this, browser).render(col)
@@ -219,35 +203,35 @@ open class Card : Cloneable {
         return renderOutput!!
     }
 
-    open fun note(col: Collection): Note {
-        return note(col, false)
-    }
-
-    open fun note(col: Collection, reload: Boolean): Note {
+    @LibAnkiAlias("note")
+    open fun note(col: Collection, reload: Boolean = false): Note {
         if (note == null || reload) {
             note = col.getNote(nid)
         }
         return note!!
     }
 
-    // not in upstream
-    open fun model(col: Collection): NotetypeJson {
+    @LibAnkiAlias("note_type")
+    open fun noteType(col: Collection): NotetypeJson {
         return note(col).notetype
     }
 
+    @LibAnkiAlias("template")
     fun template(col: Collection): JSONObject {
-        val m = model(col)
+        val m = noteType(col)
         return if (m.isStd) {
             m.getJSONArray("tmpls").getJSONObject(ord)
         } else {
-            model(col).getJSONArray("tmpls").getJSONObject(0)
+            noteType(col).getJSONArray("tmpls").getJSONObject(0)
         }
     }
 
+    @LibAnkiAlias("start_timer")
     fun startTimer() {
         timerStarted = TimeManager.time.intTimeMS()
     }
 
+    @LibAnkiAlias("current_deck_id")
     fun currentDeckId(): anki.decks.DeckId {
         return anki.decks.DeckId.newBuilder()
             .setDid(oDid.ifZero { did })
@@ -257,41 +241,20 @@ open class Card : Cloneable {
     /**
      * Time limit for answering in milliseconds.
      */
+    @LibAnkiAlias("time_limit")
     fun timeLimit(col: Collection): Int {
-        val conf = col.decks.confForDid(if (!isInDynamicDeck) did else oDid)
+        val conf = col.decks.configDictForDeckId(currentDeckId().did)
         return conf.getInt("maxTaken") * 1000
     }
 
     /*
      * Time taken to answer card, in integer MS.
      */
+    @LibAnkiAlias("time_taken")
     fun timeTaken(col: Collection): Int {
         // Indeed an int. Difference between two big numbers is still small.
         val total = (TimeManager.time.intTimeMS() - timerStarted).toInt()
-        return Math.min(total, timeLimit(col))
-    }
-
-    /*
-     * ***********************************************************
-     * The methods below are not in LibAnki.
-     * ***********************************************************
-     */
-    fun qSimple(col: Collection): String {
-        return renderOutput(col).questionText
-    }
-
-    /**
-     * Returns the answer with anything before the `<hr id=answer>` tag removed
-     */
-    fun pureAnswer(col: Collection): String {
-        val s = renderOutput(col).answerText
-        for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
-            val pos = s.indexOf(target)
-            if (pos == -1) continue
-            return s.substring(pos + target.length).trim { it <= ' ' }
-        }
-        // neither found
-        return s
+        return kotlin.math.min(total, timeLimit(col))
     }
 
     /**
@@ -300,6 +263,7 @@ open class Card : Cloneable {
      * Use this method whenever a review session (activity) has been paused. Use the resumeTimer()
      * method when the session resumes to start counting review time again.
      */
+    @NotInLibAnki
     fun stopTimer() {
         elapsedTime = TimeManager.time.intTimeMS() - timerStarted
     }
@@ -312,30 +276,35 @@ open class Card : Cloneable {
      * the reviewer and *must* be called on resume before any calls to timeTaken(col) take place
      * or the result of timeTaken(col) will be wrong.
      */
+    @NotInLibAnki
     fun resumeTimer() {
         timerStarted = TimeManager.time.intTimeMS() - elapsedTime
     }
 
-    @VisibleForTesting
-    fun setReps(reps: Int): Int {
-        return reps.also { this.reps = it }
-    }
-
-    fun showTimer(col: Collection): Boolean {
-        val options = col.decks.confForDid(if (!isInDynamicDeck) did else oDid)
+    @LibAnkiAlias("should_show_timer")
+    fun shouldShowTimer(col: Collection): Boolean {
+        val options = col.decks.configDictForDeckId(currentDeckId().did)
         return DeckConfig.parseTimerOpt(options, true)
     }
 
+    @LibAnkiAlias("replay_question_audio_on_answer_side")
+    fun replayQuestionAudioOnAnswerSide(col: Collection): Boolean {
+        val conf = col.decks.configDictForDeckId(currentDeckId().did)
+        return conf.optBoolean("replayq", true)
+    }
+
+    @LibAnkiAlias("autoplay")
+    fun autoplay(col: Collection): Boolean {
+        return col.decks.configDictForDeckId(currentDeckId().did).getBoolean("autoplay")
+    }
+
+    @NotInLibAnki
     public override fun clone(): Card {
         return try {
             super.clone() as Card
         } catch (e: CloneNotSupportedException) {
             throw RuntimeException(e)
         }
-    }
-
-    fun setNote(note: Note) {
-        this.note = note
     }
 
     override fun toString(): String {
@@ -370,8 +339,9 @@ open class Card : Cloneable {
         return (this.id xor (this.id ushr 32)).toInt()
     }
 
+    @LibAnkiAlias("user_flag")
     fun userFlag(): Int {
-        return intToFlag(flags)
+        return flags and 0b111
     }
 
     @VisibleForTesting
@@ -379,50 +349,16 @@ open class Card : Cloneable {
         flags = flag
     }
 
+    @RustCleanup("deprecated in Anki: use col.set_user_flag_for_cards() instead")
+    @LibAnkiAlias("set_user_flag")
     fun setUserFlag(flag: Int) {
         flags = setFlagInInt(flags, flag)
     }
 
-    // not in Anki.
-    fun dueString(col: Collection): String {
-        var t = nextDue(col)
-        if (queue < 0) {
-            t = "($t)"
-        }
-        return t
-    }
-
-    // as in Anki aqt/browser.py
-    @VisibleForTesting
-    fun nextDue(col: Collection): String {
-        val date: Long
-        val due = due
-        date = if (isInDynamicDeck) {
-            return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
-        } else if (queue == Consts.QUEUE_TYPE_LRN) {
-            due
-        } else if (queue == Consts.QUEUE_TYPE_NEW || type == Consts.CARD_TYPE_NEW) {
-            return java.lang.Long.valueOf(due).toString()
-        } else if (queue == Consts.QUEUE_TYPE_REV || queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || type == Consts.CARD_TYPE_REV && queue < 0) {
-            val time = TimeManager.time.intTime()
-            val nbDaySinceCreation = due - col.sched.today
-            time + nbDaySinceCreation * SECONDS_PER_DAY
-        } else {
-            return ""
-        }
-        return LanguageUtil.getShortDateFormatFromS(date)
-    } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
-
-    fun avgEaseOfNote(col: Collection) = avgEase(col, note(col))
-
-    /** Non libAnki  */
+    @NotInLibAnki
     val isInDynamicDeck: Boolean
         get() = // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
             oDid != 0L
-    val isReview: Boolean
-        get() = this.type == Consts.CARD_TYPE_REV && queue == Consts.QUEUE_TYPE_REV
-    val isNew: Boolean
-        get() = this.type == Consts.CARD_TYPE_NEW
 
     /** A cache represents an intermediary step between a card id and a card object. Creating a Card has some fixed cost
      * in term of database access. Using an id has an unknown cost: none if the card is never accessed, heavy if the
@@ -451,6 +387,7 @@ open class Card : Cloneable {
      * cache.reload();
      * Card card2 = cache.getCard();
      */
+    @NotInLibAnki
     open class Cache : Cloneable {
         val col: Collection
         val id: Long
@@ -515,12 +452,6 @@ open class Card : Cloneable {
                 "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"
             )
         )
-
-        fun intToFlag(flags: Int): Int {
-            // setting all bits to 0, except the three first one.
-            // equivalent to `mFlags % 8`. Used this way to copy Anki.
-            return flags and 7
-        }
 
         fun setFlagInInt(flags: Int, flag: Int): Int {
             Assert.that(0 <= flag, "flag to set is negative")

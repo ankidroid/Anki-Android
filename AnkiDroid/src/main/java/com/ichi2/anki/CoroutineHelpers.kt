@@ -41,10 +41,13 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -55,11 +58,17 @@ import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
+import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+/** Overridable reference to [Dispatchers.IO]. Useful if tests can't use it */
+// COULD_BE_BETTER: this shouldn't be necessary, but TestClass::runWith needs it
+@VisibleForTesting
+var ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 
 /**
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
@@ -94,10 +103,18 @@ interface OnErrorListener {
 
 fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel, T : OnErrorListener {
     return viewModelScope.launchCatching(
-        Dispatchers.IO,
+        ioDispatcher,
         { onError.emit(it) },
         { block() }
     )
+}
+
+fun <T> CoroutineScope.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
+    return async(ioDispatcher, block = block)
+}
+
+fun <T> ViewModel.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
+    return viewModelScope.asyncIO(block)
 }
 
 /**
@@ -418,7 +435,7 @@ private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
 }
 
 /**
- * If a full sync is not already required, confirm the user wishes to proceed.
+ * If a one-way sync is not already required, confirm the user wishes to proceed.
  * If the user agrees, the schema is bumped and the routine will return true.
  * On false, calling routine should abort.
  */

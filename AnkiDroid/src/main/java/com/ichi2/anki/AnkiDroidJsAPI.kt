@@ -76,15 +76,15 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private val speechRecognizer = JavaScriptSTT(context)
 
     open fun convertToByteArray(apiContract: ApiContract, boolean: Boolean): ByteArray {
-        return ApiResult(apiContract.isValid, boolean.toString()).toString().toByteArray()
+        return ApiResult(apiContract.isValid, boolean).toString().toByteArray()
     }
 
     open fun convertToByteArray(apiContract: ApiContract, int: Int): ByteArray {
-        return ApiResult(apiContract.isValid, int.toString()).toString().toByteArray()
+        return ApiResult(apiContract.isValid, int).toString().toByteArray()
     }
 
     open fun convertToByteArray(apiContract: ApiContract, long: Long): ByteArray {
-        return ApiResult(apiContract.isValid, long.toString()).toString().toByteArray()
+        return ApiResult(apiContract.isValid, long).toString().toByteArray()
     }
 
     open fun convertToByteArray(apiContract: ApiContract, string: String): ByteArray {
@@ -144,7 +144,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 }
                 return false
             }
-            val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.sCurrentJsApiVersion)
+            val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.currentJsApiVersion)
             val versionSupplied = Version.parse(apiVer)
 
             /*
@@ -160,7 +160,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                     activity.runOnUiThread {
                         activity.showSnackbar(context.getString(R.string.update_js_api_version, apiDevContact))
                     }
-                    versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.sMinimumJsApiVersion))
+                    versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.minimumJsApiVersion))
                 }
                 else -> {
                     activity.runOnUiThread {
@@ -390,7 +390,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         for (s in cards) {
             val jsonObject = JSONObject()
             val fieldsData = s.card.note(getColUnsafe).fields
-            val fieldsName = s.card.model(getColUnsafe).fieldsNames
+            val fieldsName = s.card.noteType(getColUnsafe).fieldsNames
 
             val noteId = s.card.nid
             val cardId = s.card.id
@@ -415,9 +415,9 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     }
 
     open class CardDataForJsApi {
-        var newCardCount = ""
-        var lrnCardCount = ""
-        var revCardCount = ""
+        var newCardCount: Int = -1
+        var lrnCardCount: Int = -1
+        var revCardCount: Int = -1
         var eta = -1
         var nextTime1 = ""
         var nextTime2 = ""
@@ -425,11 +425,24 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         var nextTime4 = ""
     }
 
-    class ApiResult(private val status: Boolean, private val value: String) {
+    class ApiResult(private val status: Boolean, private val value: Any) {
         override fun toString(): String {
             return JSONObject().apply {
                 put("success", status)
-                put("value", value)
+                when (value) {
+                    is Boolean -> {
+                        put("value", value)
+                    }
+                    is Int -> {
+                        put("value", value)
+                    }
+                    is Long -> {
+                        put("value", value)
+                    }
+                    else -> {
+                        put("value", value.toString())
+                    }
+                }
             }.toString()
         }
     }

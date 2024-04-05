@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Nová zbierka</string>
     <string name="backup_del_collection">Odstrániť zbierku a vytvoriť novú</string>
     <string name="backup_del_collection_question">Skutočne chcete odstrániť zbierku a vytvoriť novú? Týmto zrušíte celý proces učenia a vymažete všetky kartičky.</string>
-    <string name="backup_full_sync_from_server">Úplná synchronizácia zo serveru</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Skutočne chcete prepísať vašu zbierku tou z AnkiWeb? Prídete tak o všetky zmeny a informácie zaznamenané od poslednej synchronizácie.</string>
     <string name="error_handling_title">Spracovanie chýb</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Možnosti</string>

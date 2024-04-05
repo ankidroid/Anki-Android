@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Nouvelle collection</string>
     <string name="backup_del_collection">Supprimer la collection, en créer une autre</string>
     <string name="backup_del_collection_question">Êtes-vous bien certain de supprimer la collection et d’en créer une autre ? C’est-à-dire effacer toute mémoire de vos progrès et toutes les cartes !</string>
-    <string name="backup_full_sync_from_server">Synchronisation complète depuis la version serveur</string>
+    <string name="backup_one_way_sync_from_server">Synchronisation à sens unique depuis le serveur</string>
     <string name="backup_full_sync_from_server_question">Écraser votre collection en local avec celle sur AnkiWeb ? C’est-à-dire effacer tous vos progrès, cartes et autres infos depuis la dernière synchro !</string>
     <string name="error_handling_title">Gestion des erreurs</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Options</string>

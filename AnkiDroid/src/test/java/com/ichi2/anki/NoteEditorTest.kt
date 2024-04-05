@@ -38,6 +38,7 @@ import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
@@ -56,21 +57,6 @@ class NoteEditorTest : RobolectricTest() {
     fun verifyCardsList() {
         val n = getNoteEditorEditingExistingBasicNote("Test", "Note", DECK_LIST)
         assertThat("Cards list is correct", (n.findViewById<TextView>(R.id.CardEditorCardsButton)).text.toString(), equalTo("Cards: Card 1"))
-    }
-
-    @Test
-    fun verifyPreviewAddingNote() {
-        val n = getNoteEditorAdding(NoteType.BASIC).withFirstField("Preview Test").build()
-        n.performPreview()
-        val intent = shadowOf(n).nextStartedActivityForResult
-        val noteEditorBundle = intent.intent.getBundleExtra("noteEditorBundle")
-        assertThat("Bundle set to add note style", noteEditorBundle!!.getBoolean("addNote"), equalTo(true))
-        val fieldsBundle = noteEditorBundle.getBundle("editFields")
-        assertThat("Bundle has fields", fieldsBundle, notNullValue())
-        assertThat("Bundle has fields edited value", fieldsBundle!!.getString("0"), equalTo("Preview Test"))
-        assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), equalTo(ArrayList<Any>()))
-        assertThat("Bundle has no ordinal for ephemeral preview", intent.intent.hasExtra("ordinal"), equalTo(false))
-        assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME), equalTo(true))
     }
 
     @Test
@@ -249,7 +235,7 @@ class NoteEditorTest : RobolectricTest() {
     fun previewWorksWithNoError() {
         // #6923 regression test - Low value - Could not make this fail as onSaveInstanceState did not crash under Robolectric.
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
-        assertDoesNotThrow { editor.performPreview() }
+        assertDoesNotThrow { runBlocking { editor.performPreview() } }
     }
 
     @Test

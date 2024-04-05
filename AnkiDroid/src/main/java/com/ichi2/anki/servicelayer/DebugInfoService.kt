@@ -19,10 +19,13 @@ package com.ichi2.anki.servicelayer
 import android.content.Context
 import android.os.Build
 import android.webkit.WebView
+import androidx.annotation.MainThread
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.utils.VersionUtils.pkgVersionName
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.acra.util.Installation
 import timber.log.Timber
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
@@ -35,7 +38,7 @@ object DebugInfoService {
      * Note that the `FSRS` parameter can be null if the collection doesn't exist or the config is not set.
      */
     suspend fun getDebugInfo(info: Context): String {
-        val webviewUserAgent = getWebviewUserAgent(info)
+        val webviewUserAgent = withContext(Dispatchers.Main) { getWebviewUserAgent(info) }
         // isFSRSEnabled is null on startup
         val isFSRSEnabled = getFSRSStatus()
         return """
@@ -63,6 +66,7 @@ object DebugInfoService {
         """.trimIndent()
     }
 
+    @MainThread
     private fun getWebviewUserAgent(context: Context): String? {
         try {
             return WebView(context).settings.userAgentString

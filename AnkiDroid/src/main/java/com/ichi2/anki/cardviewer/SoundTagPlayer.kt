@@ -58,7 +58,7 @@ class SoundTagPlayer(private val soundUriBase: String) {
      */
     suspend fun play(
         tag: SoundOrVideoTag,
-        soundErrorListener: SoundErrorListener
+        soundErrorListener: SoundErrorListener?
     ) = suspendCancellableCoroutine { continuation ->
         Timber.d("Playing SoundOrVideoTag")
         requireNewMediaPlayer().apply {
@@ -74,13 +74,18 @@ class SoundTagPlayer(private val soundUriBase: String) {
                     continuation.resume(Unit)
                 }
             }
-            val soundUri = Uri.parse(soundUriBase + Uri.encode(tag.filename))
+            val tagUri = Uri.parse(tag.filename)
+            val soundUri = if (tagUri.scheme != null) {
+                tagUri
+            } else {
+                Uri.parse(soundUriBase + Uri.encode(tag.filename))
+            }
             setAudioAttributes(music)
             setOnErrorListener { mp, what, extra ->
                 Timber.w("Media error %d", what)
                 abandonAudioFocus()
                 val continuationBehavior =
-                    soundErrorListener.onMediaPlayerError(mp, what, extra, soundUri)
+                    soundErrorListener?.onMediaPlayerError(mp, what, extra, soundUri) ?: SoundErrorBehavior.CONTINUE_AUDIO
                 // 15103: setOnErrorListener can be invoked after task cancellation
                 if (!continuation.isCompleted) {
                     continuation.resumeWithException(SoundException(continuationBehavior))
@@ -89,10 +94,10 @@ class SoundTagPlayer(private val soundUriBase: String) {
             }
 
             try {
-                awaitSetDataSource(soundUri)
+                awaitSetDataSource(soundUri.toString())
             } catch (e: Exception) {
                 continuation.ensureActive()
-                val continuationBehavior = soundErrorListener.onError(soundUri)
+                val continuationBehavior = soundErrorListener?.onError(soundUri) ?: SoundErrorBehavior.CONTINUE_AUDIO
                 val exception = SoundException(continuationBehavior, e)
                 return@suspendCancellableCoroutine continuation.resumeWithException(exception)
             }
@@ -149,8 +154,8 @@ class SoundTagPlayer(private val soundUriBase: String) {
      * @throws java.io.FileNotFoundException file is not found
      * @throws java.io.IOException: Prepare failed.: status=0x1
      */
-    private fun MediaPlayer.awaitSetDataSource(uri: Uri) {
-        setDataSource(uri.path)
+    private fun MediaPlayer.awaitSetDataSource(uri: String) {
+        setDataSource(uri)
         prepare()
     }
 

@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Nova zbirka</string>
     <string name="backup_del_collection">Izbriši zbirko in ustvari novo</string>
     <string name="backup_del_collection_question">Izbriši zbirko in ustvari novo? To bo opustilo ves vaš napredek pri učenju in izbrisalo vse kartice.</string>
-    <string name="backup_full_sync_from_server">Polna sinhronizacija iz strežnika</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Prepiši zbirko z zbirko iz AnkiWeba? To bo opustilo ves vaš napredek pri učenju in dodane informacije od zadnje sinhronizacije.</string>
     <string name="error_handling_title">Napaka ravnanja</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Možnosti</string>

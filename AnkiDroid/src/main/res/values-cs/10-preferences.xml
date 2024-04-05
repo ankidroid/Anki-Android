@@ -203,8 +203,6 @@
     <string name="reset">Obnovit</string>
     <string name="thirdparty_apps_title" maxLength="41">API aplikace třetích stran</string>
     <string name="thirdparty_apps_summary">Zobrazit seznam aplikací, které používají AnkiDroid API, jako jsou slovníky, nástroje</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Umožnit vzdálené připojení k WebView a uložit HTML karet do adresáře AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Opakování karet</string>
     <string name="show_deck_title" maxLength="41">Zobrazit název balíčku</string>

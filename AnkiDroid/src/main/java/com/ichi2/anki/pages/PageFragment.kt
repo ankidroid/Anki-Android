@@ -21,6 +21,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.CallSuper
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
@@ -31,7 +32,10 @@ import timber.log.Timber
  * Base class for displaying Anki HTML pages
  */
 @Suppress("LeakingThis")
-abstract class PageFragment : Fragment(R.layout.page_fragment), PostRequestHandler {
+abstract class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment) :
+    Fragment(contentLayoutId),
+    PostRequestHandler {
+
     abstract val title: String
     abstract val pageName: String
 

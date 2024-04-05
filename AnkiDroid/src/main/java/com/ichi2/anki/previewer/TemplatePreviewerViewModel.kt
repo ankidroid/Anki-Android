@@ -16,41 +16,53 @@
 package com.ichi2.anki.previewer
 
 import android.os.Parcelable
+import androidx.annotation.CheckResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NotetypeFile
+import com.ichi2.anki.asyncIO
+import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.parcelize.Parcelize
 import org.intellij.lang.annotations.Language
+import org.jetbrains.annotations.VisibleForTesting
 
-class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardViewerViewModel() {
+class TemplatePreviewerViewModel(
+    arguments: TemplatePreviewerArguments,
+    soundPlayer: SoundPlayer
+) : CardViewerViewModel(soundPlayer) {
     private val notetype = arguments.notetype
     private val fillEmpty = arguments.fillEmpty
+    private val isCloze = notetype.isCloze
 
     /**
      * identifies which of the card templates or cloze deletions it corresponds to
      * * for card templates, values are from 0 to the number of templates minus 1
      * * for cloze deletions, values are from 0 to max cloze index minus 1
      */
-    private val ordFlow = MutableStateFlow(arguments.ord)
+    @VisibleForTesting
+    val ordFlow = MutableStateFlow(arguments.ord)
 
-    private lateinit var note: Note
-    private lateinit var templateNames: List<String>
-    private var initJob: Job? = null
+    private val note: Deferred<Note>
+    private val templateNames: Deferred<List<String>>
+    private val clozeOrds: Deferred<List<Int>>?
+    override var currentCard: Deferred<Card>
 
     init {
-        initJob = launchCatchingIO {
-            note = withCol {
+        note = asyncIO {
+            withCol {
                 if (arguments.id != 0L) {
                     Note(this, arguments.id)
                 } else {
@@ -60,17 +72,33 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
                 fields = arguments.fields
                 tags = arguments.tags
             }
-
-            templateNames = if (notetype.isCloze) {
+        }
+        currentCard = asyncIO {
+            val note = note.await()
+            withCol {
+                note.ephemeralCard(
+                    col = this,
+                    ord = ordFlow.value,
+                    customNoteType = notetype,
+                    fillEmpty = fillEmpty
+                )
+            }
+        }
+        if (isCloze) {
+            val clozeNumbers = asyncIO {
+                val note = note.await()
+                withCol { clozeNumbersInNote(note) }
+            }
+            clozeOrds = asyncIO {
+                clozeNumbers.await().map { it - 1 }
+            }
+            templateNames = asyncIO {
                 val tr = CollectionManager.TR
-                withCol { clozeNumbersInNote(note) }.map { tr.cardTemplatesCloze(it) }
-            } else {
-                notetype.templatesNames
+                clozeNumbers.await().map { tr.cardTemplatesCard(it) }
             }
-        }.also {
-            it.invokeOnCompletion {
-                initJob = null
-            }
+        } else {
+            clozeOrds = null
+            templateNames = CompletableDeferred(notetype.templatesNames)
         }
     }
 
@@ -81,21 +109,12 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
     override fun onPageFinished(isAfterRecreation: Boolean) {
         if (isAfterRecreation) {
             launchCatchingIO {
-                if (showingAnswer.value) showAnswer() else showQuestion()
+                if (showingAnswer.value) showAnswerInternal() else showQuestion()
             }
             return
         }
         launchCatchingIO {
-            initJob?.join()
             ordFlow.collectLatest {
-                currentCard = withCol {
-                    note.ephemeralCard(
-                        col = this,
-                        ord = ordFlow.value,
-                        customNoteType = notetype,
-                        fillEmpty = fillEmpty
-                    )
-                }
                 showQuestion()
                 loadAndPlaySounds(CardSide.QUESTION)
             }
@@ -108,37 +127,51 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
                 showQuestion()
                 loadAndPlaySounds(CardSide.QUESTION)
             } else {
-                showAnswer()
+                showAnswerInternal()
                 loadAndPlaySounds(CardSide.ANSWER)
             }
         }
     }
 
+    @CheckResult
     suspend fun getTemplateNames(): List<String> {
-        initJob?.join()
-        return templateNames
+        return templateNames.await()
     }
 
-    fun onTabSelected(ord: Int) {
-        launchCatchingIO { ordFlow.emit(ord) }
+    fun onTabSelected(position: Int) {
+        launchCatchingIO {
+            val ord = if (isCloze) {
+                clozeOrds!!.await()[position]
+            } else {
+                position
+            }
+            ordFlow.emit(ord)
+        }
     }
 
-    fun getCurrentTabIndex(): Int = ordFlow.value
+    @CheckResult
+    suspend fun getCurrentTabIndex(): Int {
+        return if (isCloze) {
+            clozeOrds!!.await().indexOf(ordFlow.value)
+        } else {
+            ordFlow.value
+        }
+    }
 
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
     ********************************************************************************************* */
 
     private suspend fun loadAndPlaySounds(side: CardSide) {
-        soundPlayer.loadCardSounds(currentCard)
+        soundPlayer.loadCardSounds(currentCard.await())
         soundPlayer.playAllSoundsForSide(side)
     }
 
     // https://github.com/ankitects/anki/blob/df70564079f53e587dc44f015c503fdf6a70924f/qt/aqt/clayout.py#L579
     override suspend fun typeAnsFilter(text: String): String {
-        val typeAnswerField = getTypeAnswerField(currentCard, text)
+        val typeAnswerField = getTypeAnswerField(currentCard.await(), text)
         val expectedAnswer = typeAnswerField?.let {
-            getExpectedTypeInAnswer(currentCard, typeAnswerField)
+            getExpectedTypeInAnswer(currentCard.await(), typeAnswerField)
         }.ifNullOrEmpty { "sample" }
 
         val repl = if (showingAnswer.value) {
@@ -164,10 +197,10 @@ class TemplatePreviewerViewModel(arguments: TemplatePreviewerArguments) : CardVi
     }
 
     companion object {
-        fun factory(arguments: TemplatePreviewerArguments): ViewModelProvider.Factory {
+        fun factory(arguments: TemplatePreviewerArguments, soundPlayer: SoundPlayer): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
-                    TemplatePreviewerViewModel(arguments)
+                    TemplatePreviewerViewModel(arguments, soundPlayer)
                 }
             }
         }

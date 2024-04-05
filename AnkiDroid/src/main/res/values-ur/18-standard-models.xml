@@ -26,17 +26,15 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
-    <string name="extra_field_name_new">Back Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
-    <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="front_field_name">سامنے والا</string>
+    <string name="back_field_name">پیچھے</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">متن</string>
+    <string name="extra_field_name_new">واپس اضافی</string>
+    <string name="field_to_ask_front_name">ریورس شامل کریں</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
-    <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_model_name">بنیادی</string>
+    <string name="cloze_model_name">بند کرنا</string>
+    <string name="basic_typing_model_name">بنیادی (جواب میں ٹائپ کریں)</string>
+    <string name="forward_reverse_model_name">بنیادی (اور الٹ کارڈ)</string>
+    <string name="forward_optional_reverse_model_name">بنیادی (اختیاری الٹ کارڈ)</string>
 </resources>

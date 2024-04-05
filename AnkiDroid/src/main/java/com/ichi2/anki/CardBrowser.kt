@@ -40,8 +40,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.Previewer.Companion.toIntent
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN1_KEYS
 import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN2_KEYS
@@ -67,7 +65,6 @@ import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.export.ExportDialogsFactory
 import com.ichi2.anki.export.ExportDialogsFactoryProvider
-import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
@@ -78,6 +75,7 @@ import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
 import com.ichi2.anki.servicelayer.rescheduleCards
@@ -86,6 +84,7 @@ import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.BasicItemSelectedListener
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
@@ -93,6 +92,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
@@ -108,6 +108,7 @@ import java.util.*
 import java.util.function.Consumer
 import kotlin.math.abs
 import kotlin.math.ceil
+import kotlin.math.min
 
 @Suppress("LeakingThis")
 // The class is only 'open' due to testing
@@ -348,23 +349,15 @@ open class CardBrowser :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        // must be called after showedActivityFailedScreen
-        viewModel = createViewModel()
-
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         exportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
         super.onCreate(savedInstanceState)
-        if (wasLoadedFromExternalTextActionItem() && !hasCollectionStoragePermissions()) {
-            // we need to do this as DeckPicker still contains app init logic/upgrade logic
-            Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
-            showThemedToast(
-                this,
-                getString(R.string.intent_handler_failed_no_storage_permission),
-                false
-            )
-            displayDeckPickerForPermissionsDialog()
+        if (!ensureStoragePermissions()) {
             return
         }
+        // must be called once we have an accessible collection
+        viewModel = createViewModel()
+
         launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
         setContentView(R.layout.card_browser)
         initNavigationDrawer(findViewById(android.R.id.content))
@@ -700,6 +693,7 @@ open class CardBrowser :
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         when {
             isDrawerOpen -> super.onBackPressed()
@@ -759,6 +753,7 @@ open class CardBrowser :
                 }
             })
             searchView = searchItem!!.actionView as CardBrowserSearchView
+            searchView!!.setMaxWidth(Integer.MAX_VALUE)
             searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (searchView!!.shouldIgnoreValueChange()) {
@@ -819,23 +814,6 @@ open class CardBrowser :
         }
     }
 
-    private fun displayDeckPickerForPermissionsDialog() {
-        // TODO: Combine this with class: IntentHandler after both are well-tested
-        val deckPicker = Intent(this, DeckPicker::class.java)
-        deckPicker.action = Intent.ACTION_MAIN
-        deckPicker.addCategory(Intent.CATEGORY_LAUNCHER)
-        deckPicker.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(deckPicker)
-        finish()
-        this.setResult(RESULT_CANCELED)
-    }
-
-    private fun wasLoadedFromExternalTextActionItem(): Boolean {
-        val intent = this.intent ?: return false
-        // API 23: Replace with Intent.ACTION_PROCESS_TEXT
-        return "android.intent.action.PROCESS_TEXT".equals(intent.action, ignoreCase = true)
-    }
-
     private fun updatePreviewMenuItem() {
         previewItem?.isVisible = viewModel.rowCount > 0
     }
@@ -847,7 +825,7 @@ open class CardBrowser :
         }
         if (viewModel.hasSelectedAnyRows()) {
             actionBarMenu!!.findItem(R.id.action_suspend_card).apply {
-                title = TR.browsingToggleSuspend()
+                title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
                 setIcon(R.drawable.ic_suspend)
             }
             actionBarMenu!!.findItem(R.id.action_mark_card).apply {
@@ -1217,15 +1195,11 @@ open class CardBrowser :
 
     private fun onPreview() {
         val intentData = viewModel.previewIntentData
-        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.index, intentData.previewerIdsFile))
+        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.previewerIdsFile))
     }
 
     private fun getPreviewIntent(index: Int, previewerIdsFile: PreviewerIdsFile): Intent {
-        return if (sharedPrefs().getBoolean("new_previewer", false)) {
-            Previewer2Destination(index, previewerIdsFile).toIntent(this)
-        } else {
-            PreviewDestination(index, previewerIdsFile).toIntent(this)
-        }
+        return PreviewerDestination(index, previewerIdsFile).toIntent(this)
     }
 
     private fun rescheduleSelectedCards() {
@@ -1392,7 +1366,7 @@ open class CardBrowser :
             searchView!!.setQuery(searchTerms, false)
             searchItem!!.expandActionView()
         }
-        val searchText: String? = if (searchTerms.contains("deck:")) {
+        val searchText: String = if (searchTerms.contains("deck:")) {
             "($searchTerms)"
         } else {
             if ("" != searchTerms) "${viewModel.restrictOnDeck}($searchTerms)" else viewModel.restrictOnDeck
@@ -1400,14 +1374,13 @@ open class CardBrowser :
         // clear the existing card list
         cards.reset()
         cardsAdapter.notifyDataSetChanged()
-        val query = searchText!!
         val order = viewModel.order.toSortOrder()
         launchCatchingTask {
             Timber.d("performing search")
-            val cards = withProgress { searchForCards(query, order, viewModel.cardsOrNotes) }
+            val cards = withProgress { searchForCards(searchText, order, viewModel.cardsOrNotes) }
             Timber.d("Search returned %d cards", cards.size)
             // Render the first few items
-            for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
+            for (i in 0 until min(numCardsToRender(), cards.size)) {
                 cards[i].load(false, viewModel.column1Index, viewModel.column2Index)
             }
             redrawAfterSearch(cards)
@@ -1491,7 +1464,7 @@ open class CardBrowser :
 
     // convenience method for updateCardsInList(...)
     private fun updateCardInList(card: Card) {
-        val cards: MutableList<Card> = java.util.ArrayList(1)
+        val cards: MutableList<Card> = ArrayList(1)
         cards.add(card)
         updateCardsInList(cards)
     }
@@ -1774,7 +1747,6 @@ open class CardBrowser :
             return v
         }
 
-        @Suppress("UNCHECKED_CAST")
         @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
@@ -1987,14 +1959,14 @@ open class CardBrowser :
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
                 CardBrowserColumn.TAGS -> card.note(col).stringTags(col)
                 CardBrowserColumn.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards(col)}"
-                CardBrowserColumn.DUE -> card.dueString(col)
+                CardBrowserColumn.DUE -> dueString(col, card)
                 CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note(col).mod.toLong())
                 CardBrowserColumn.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
                 CardBrowserColumn.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note(col).mod)
                 CardBrowserColumn.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
                 CardBrowserColumn.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote(col)).toString()
-                CardBrowserColumn.NOTE_TYPE -> card.model(col).optString("name")
+                CardBrowserColumn.NOTE_TYPE -> card.noteType(col).optString("name")
                 CardBrowserColumn.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote(col).toString()
                 CardBrowserColumn.QUESTION -> {
                     updateSearchItemQA()
@@ -2017,7 +1989,7 @@ open class CardBrowser :
         }
 
         private fun getAvgEaseForNotes(): String {
-            val avgEase = card.avgEaseOfNote(col)
+            val avgEase = NoteService.avgEase(col, card.note(col))
 
             return if (avgEase == null) {
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
@@ -2208,7 +2180,6 @@ open class CardBrowser :
 
         // Values related to persistent state data
         private const val ALL_DECKS_ID = 0L
-        const val CARD_NOT_AVAILABLE = -1
 
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
@@ -2250,6 +2221,36 @@ open class CardBrowser :
             s = s.trim { it <= ' ' }
             return s
         }
+
+        const val CARD_NOT_AVAILABLE = -1
+
+        fun dueString(col: Collection, card: Card): String {
+            var t = nextDue(col, card)
+            if (card.queue < 0) {
+                t = "($t)"
+            }
+            return t
+        }
+
+        @VisibleForTesting
+        fun nextDue(col: Collection, card: Card): String {
+            val date: Long
+            val due = card.due
+            date = if (card.isInDynamicDeck) {
+                return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
+            } else if (card.queue == Consts.QUEUE_TYPE_LRN) {
+                due.toLong()
+            } else if (card.queue == Consts.QUEUE_TYPE_NEW || card.type == Consts.CARD_TYPE_NEW) {
+                return due.toString()
+            } else if (card.queue == Consts.QUEUE_TYPE_REV || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.type == Consts.CARD_TYPE_REV && card.queue < 0) {
+                val time = TimeManager.time.intTime()
+                val nbDaySinceCreation = due - col.sched.today
+                time + nbDaySinceCreation * SECONDS_PER_DAY
+            } else {
+                return ""
+            }
+            return LanguageUtil.getShortDateFormatFromS(date)
+        } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
     }
 
     private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
@@ -2276,8 +2277,8 @@ private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<C
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
 
-class Previewer2Destination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
+class PreviewerDestination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
 
 @CheckResult
-fun Previewer2Destination.toIntent(context: Context) =
+fun PreviewerDestination.toIntent(context: Context) =
     PreviewerFragment.getIntent(context, previewerIdsFile, currentIndex)

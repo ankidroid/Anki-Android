@@ -318,6 +318,8 @@ val AlertDialog.positiveButton: Button
 
 /**
  * Extension function for AlertDialog.Builder to set a list of items.
+ * Items are not displayed if [AlertDialog.Builder.setMessage] has been called
+ *
  * @param items The items to display in the list.
  * @param onClick A lambda function that is invoked when an item is clicked.
  */

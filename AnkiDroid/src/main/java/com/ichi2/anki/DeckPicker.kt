@@ -99,6 +99,7 @@ import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
+import com.ichi2.anki.pages.CongratsPage.Companion.onDeckCompleted
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -136,7 +137,6 @@ import timber.log.Timber
 import java.io.File
 import java.lang.Runnable
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
@@ -212,7 +212,7 @@ open class DeckPicker :
     private lateinit var floatingActionMenu: DeckPickerFloatingActionMenu
 
     // flag asking user to do a full sync which is used in upgrade path
-    private var recommendFullSync = false
+    private var recommendOneWaySync = false
 
     var activeSnackBar: Snackbar? = null
     private val activeSnackbarCallback = object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
@@ -264,7 +264,7 @@ open class DeckPicker :
     var importColpkgListener: ImportColpkgListener? = null
 
     private var toolbarSearchView: SearchView? = null
-    private lateinit var customStudyDialogFactory: CustomStudyDialogFactory
+    internal lateinit var customStudyDialogFactory: CustomStudyDialogFactory
 
     override val permissionScreenLauncher = recreateActivityResultLauncher()
 
@@ -373,7 +373,7 @@ open class DeckPicker :
                 decks.select(deckId)
                 Triple(
                     decks.name(deckId),
-                    decks.isDyn(deckId),
+                    decks.isFiltered(deckId),
                     sched.haveBuriedInCurrentDeck()
                 )
             }
@@ -956,7 +956,7 @@ open class DeckPicker :
             menuItem.setTitle(
                 when (state.syncIcon) {
                     SyncIconState.Normal, SyncIconState.PendingChanges -> R.string.button_sync
-                    SyncIconState.FullSync -> R.string.sync_menu_title_full_sync
+                    SyncIconState.OneWay -> R.string.sync_menu_title_one_way_sync
                     SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
                 }
             )
@@ -970,7 +970,7 @@ open class DeckPicker :
                         .withColor(getColor(R.color.badge_warning))
                         .replaceBadge(menuItem)
                 }
-                SyncIconState.FullSync, SyncIconState.NotLoggedIn -> {
+                SyncIconState.OneWay, SyncIconState.NotLoggedIn -> {
                     BadgeDrawableBuilder(this)
                         .withText('!')
                         .withColor(getColor(R.color.badge_error))
@@ -1014,7 +1014,7 @@ open class DeckPicker :
             SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.ERROR -> SyncIconState.Normal
             SyncStatus.HAS_CHANGES -> SyncIconState.PendingChanges
             SyncStatus.NO_ACCOUNT -> SyncIconState.NotLoggedIn
-            SyncStatus.FULL_SYNC -> SyncIconState.FullSync
+            SyncStatus.ONE_WAY -> SyncIconState.OneWay
         }
     }
 
@@ -1118,7 +1118,7 @@ open class DeckPicker :
 
     private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-            startActivity(CongratsPage.getIntent(this))
+            CongratsPage.onReviewsCompleted(this, getColUnsafe.sched.totalCount() == 0)
         } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
             Timber.i("Obtained Abort and Sync result")
             sync()
@@ -1221,7 +1221,6 @@ open class DeckPicker :
         }
     }
 
-    @Suppress("DEPRECATION") // onBackPressed
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val preferences = baseContext.sharedPrefs()
@@ -1298,15 +1297,15 @@ open class DeckPicker :
             }
         }
 
-        // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
-        if (recommendFullSync) {
-            recommendFullSync = false
+        // Force a one-way sync if flag was set in upgrade path, asking the user to confirm if necessary
+        if (recommendOneWaySync) {
+            recommendOneWaySync = false
             try {
                 getColUnsafe.modSchema()
             } catch (e: ConfirmModSchemaException) {
-                Timber.w("Forcing full sync")
+                Timber.w("Forcing one-way sync")
                 e.log()
-                // If libanki determines it's necessary to confirm the full sync then show a confirmation dialog
+                // If libanki determines it's necessary to confirm the one-way sync then show a confirmation dialog
                 // We have to show the dialog via the DialogHandler since this method is called via an async task
                 val res = resources
                 val message = """
@@ -1315,7 +1314,7 @@ open class DeckPicker :
      ${res.getString(R.string.full_sync_confirmation)}
                 """.trimIndent()
 
-                dialogHandler.sendMessage(ForceFullSyncDialog(message).toMessage())
+                dialogHandler.sendMessage(OneWaySyncDialog(message).toMessage())
             }
         }
         automaticSync()
@@ -1397,7 +1396,7 @@ open class DeckPicker :
             // Recommend the user to do a full-sync if they're upgrading from before 2.3.1beta8
             if (previous < 20301208) {
                 Timber.i("Recommend the user to do a full-sync")
-                recommendFullSync = true
+                recommendOneWaySync = true
             }
 
             // Fix "font-family" definition in templates created by AnkiDroid before 2.6alpha23
@@ -1800,7 +1799,7 @@ open class DeckPicker :
         startActivity(intent)
     }
 
-    private fun openStudyOptions(@Suppress("SameParameterValue") withDeckOptions: Boolean) {
+    internal fun openStudyOptions(@Suppress("SameParameterValue") withDeckOptions: Boolean) {
         if (fragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions)
@@ -1848,7 +1847,6 @@ open class DeckPicker :
             }
             negativeButton(R.string.dialog_cancel)
             if (AdaptionUtil.hasWebBrowser(this@DeckPicker)) {
-                @Suppress("DEPRECATION")
                 neutralButton(text = getColUnsafe.tr.schedulingUpdateMoreInfoButton()) {
                     this@DeckPicker.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
                 }
@@ -1895,7 +1893,7 @@ open class DeckPicker :
             CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY,
             CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED,
             CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED -> {
-                startActivity(CongratsPage.getIntent(this))
+                onDeckCompleted()
             }
             CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
                 // If the deck is empty (& has no children) then show a message saying it's empty
@@ -2046,7 +2044,7 @@ open class DeckPicker :
     // Callback to show study options for currently selected deck
     fun showContextMenuDeckOptions(did: DeckId) {
         // open deck options
-        if (getColUnsafe.decks.isDyn(did)) {
+        if (getColUnsafe.decks.isFiltered(did)) {
             // open cram options if filtered deck
             val i = Intent(this@DeckPicker, FilteredDeckOptions::class.java)
             i.putExtra("did", did)
@@ -2128,7 +2126,7 @@ open class DeckPicker :
         return launchCatchingTask {
             val changes = withProgress(resources.getString(R.string.delete_deck)) {
                 undoableOp {
-                    decks.removeDecks(listOf(did))
+                    decks.remove(listOf(did))
                 }
             }
             showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT) {
@@ -2344,7 +2342,6 @@ open class DeckPicker :
         MigrationService.start(baseContext)
     }
 
-    @OptIn(ExperimentalTime::class)
     private fun launchShowingHidingEssentialFileMigrationProgressDialog() = lifecycleScope.launch {
         while (true) {
             MigrationService.flowOfProgress
@@ -2428,7 +2425,7 @@ open class DeckPicker :
         }
 
         var userCheckedDoNotShowAgain = false
-        var dialog = AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
             .setTitle(R.string.scoped_storage_title)
             .setMessage(message)
             .setPositiveButton(
@@ -2546,7 +2543,7 @@ open class DeckPicker :
         when {
             sched.hasCardsTodayAfterStudyAheadLimit() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
             sched.newDue() || sched.revDue() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
-            decks.isDyn(did) -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
+            decks.isFiltered(did) -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
             deckListAdapter.getNodeByDid(did).children.isEmpty() && isEmptyDeck(did) -> CompletedDeckStatus.EMPTY_REGULAR_DECK
             else -> CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY
         }
@@ -2597,7 +2594,7 @@ data class OptionsMenuState(
 enum class SyncIconState {
     Normal,
     PendingChanges,
-    FullSync,
+    OneWay,
     NotLoggedIn
 }
 
@@ -2613,12 +2610,12 @@ class CollectionLoadingErrorDialog : DialogHandlerMessage(
     override fun toMessage() = emptyMessage(this.what)
 }
 
-class ForceFullSyncDialog(val message: String?) : DialogHandlerMessage(
-    which = WhichDialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG,
-    analyticName = "ForceFullSyncDialog"
+class OneWaySyncDialog(val message: String?) : DialogHandlerMessage(
+    which = WhichDialogHandler.MSG_SHOW_ONE_WAY_SYNC_DIALOG,
+    analyticName = "OneWaySyncDialog"
 ) {
     override fun handleAsyncMessage(deckPicker: DeckPicker) {
-        // Confirmation dialog for forcing full sync
+        // Confirmation dialog for one-way sync
         val dialog = ConfirmationDialog()
         val confirm = Runnable {
             // Bypass the check once the user confirms
@@ -2630,13 +2627,13 @@ class ForceFullSyncDialog(val message: String?) : DialogHandlerMessage(
     }
 
     override fun toMessage(): Message = Message.obtain().apply {
-        what = this@ForceFullSyncDialog.what
+        what = this@OneWaySyncDialog.what
         data = bundleOf("message" to message)
     }
 
     companion object {
         fun fromMessage(message: Message): DialogHandlerMessage =
-            ForceFullSyncDialog(message.data.getString("message"))
+            OneWaySyncDialog(message.data.getString("message"))
     }
 }
 

@@ -17,6 +17,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.StringRes
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 
 // TODO remove this file. Only used in tests.
@@ -72,7 +73,7 @@ class StdModels(
                 val backName = AnkiDroidApp.appResources.getString(R.string.back_field_name)
                 fm = mm.newField(backName)
                 mm.addFieldInNewModel(m, fm)
-                val cardOneName = AnkiDroidApp.appResources.getString(R.string.card_n_name, 1)
+                val cardOneName = CollectionManager.TR.cardTemplatesCard(1)
                 val t = Notetypes.newTemplate(cardOneName)
                 t.put("qfmt", "{{$frontName}}")
                 t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{$backName}}")
@@ -98,7 +99,7 @@ class StdModels(
                 val m = BASIC_MODEL._new(mm, name)
                 val frontName = m.getJSONArray("flds").getJSONObject(0).getString("name")
                 val backName = m.getJSONArray("flds").getJSONObject(1).getString("name")
-                val cardTwoName = AnkiDroidApp.appResources.getString(R.string.card_n_name, 2)
+                val cardTwoName = CollectionManager.TR.cardTemplatesCard(2)
                 val t = Notetypes.newTemplate(cardTwoName)
                 t.put("qfmt", "{{$backName}}")
                 t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{$frontName}}")

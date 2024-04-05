@@ -22,7 +22,7 @@ import kotlin.test.assertNull
 internal class ApiUtilsTest {
     @Test
     fun joinFieldsShouldJoinWhenListIsValid() {
-        val fieldList = arrayOf<String>("A", "B", "C")
+        val fieldList = arrayOf("A", "B", "C")
         assertEquals("A" + delimiter + "B" + delimiter + "C", Utils.joinFields(fieldList))
     }
 

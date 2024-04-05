@@ -18,17 +18,33 @@ package com.ichi2.anki.pages
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebView
 import androidx.core.os.bundleOf
+import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.ImageOcclusionActivity
+import com.ichi2.anki.R
 import org.json.JSONObject
+import timber.log.Timber
 
-class ImageOcclusion : PageFragment() {
+class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
 
     override val title: String
         get() = TR.notetypesImageOcclusionName()
     override val pageName = "image-occlusion"
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<MaterialToolbar>(R.id.toolbar).setOnMenuItemClickListener {
+            if (it.itemId == R.id.action_save) {
+                Timber.i("save item selected")
+                webView.evaluateJavascript("anki.imageOcclusion.addNote()", null)
+            }
+            return@setOnMenuItemClickListener true
+        }
+    }
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         val kind = arguments?.getString(ARG_KEY_KIND) ?: throw Exception("missing kind")

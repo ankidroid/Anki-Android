@@ -15,8 +15,8 @@
   -->
 
 
-<com.google.android.material.textfield.TextInputLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dialog_text_input_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -24,7 +24,8 @@
     android:paddingLeft="32dp"
     android:paddingRight="32dp"
     android:paddingBottom="4dp"
-    android:paddingTop="16dp" >
+    app:errorEnabled="true"
+    android:paddingTop="16dp">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/dialog_text_input"

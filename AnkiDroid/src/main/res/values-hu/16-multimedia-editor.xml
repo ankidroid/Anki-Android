@@ -81,7 +81,7 @@
     <string name="multimedia_editor_audio_view_playing_failed">Lejátszás sikertelen</string>
     <string name="multimedia_editor_audio_view_create_failed">Nem lehet hangfelvevő eszköztárat létrehozni</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Szerkesztési mező</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Mező szerkesztése</string>
     <!-- Crop function-->
     <string name="crop_image">Meg akarod vágni ezt a képet?</string>
     <string name="crop_button">Kép megvágása</string>

@@ -31,8 +31,6 @@
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Тэкст</string>
     <string name="extra_field_name_new">Зваротны бок (дадаткова)</string>
     <string name="field_to_ask_front_name">Дадаць адваротны бок</string>
-    <!--Card type-->
-    <string name="card_n_name">Картка %d</string>
     <!--Note type-->
     <string name="basic_model_name">Асноўны</string>
     <string name="cloze_model_name">З пропускамі</string>

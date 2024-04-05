@@ -50,7 +50,7 @@
     <string name="backup_new_collection">Nowa kolekcja</string>
     <string name="backup_del_collection">Usuń kolekcje i utworz nową</string>
     <string name="backup_del_collection_question">Czy na pewno chcesz usunąć tą kolekcję i utworzyć nową? Spowoduje to usunięcie całego Twojego postępu oraz wszystkich kart!</string>
-    <string name="backup_full_sync_from_server">Pełna synchronizacja z serwera</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Nadpisać kolekcję wersją z AnkiWeb? Twój postęp i informacje dodane od ostatniej synchronizacji zostaną utracone!</string>
     <string name="error_handling_title">Obsługa błędów</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opcje</string>
