@@ -1878,7 +1878,14 @@ open class DeckPicker :
             return
         }
 
-        withCol { decks.select(did) }
+        withCol {
+            // Force backend to reload the selected deck,
+            // to avoid a bug when moving start of next day to the past
+            if (focusedDeck == did) {
+                decks.select(0)
+            }
+            decks.select(did)
+        }
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId()
         focusedDeck = did
