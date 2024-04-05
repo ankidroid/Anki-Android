@@ -48,7 +48,6 @@
             android:layout_gravity="start"
             android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorSecondary"
-            android:maxLines="4"
             style="@style/PreferenceSummaryTextStyle"
             tools:text="Summary"/>
         </RelativeLayout>
