@@ -48,7 +48,15 @@ body.ankidroid_dark_mode {
 
 #typeans {
   width: 100%;
+  /* https://anki.tenderapp.com/discussions/beta-testing/1854-using-margin-auto-causes-horizontal-scrollbar-on-typesomething */
+  box-sizing: border-box;
+  /* #15535 - Not in libAnki - Android's Droid Sans Mono is insufficient for IPA */
   font-family: "Free Mono";
+}
+
+code#typeans {
+  white-space: pre-wrap;
+  font-variant-ligatures: none;
 }
 
 .typePrompt {
