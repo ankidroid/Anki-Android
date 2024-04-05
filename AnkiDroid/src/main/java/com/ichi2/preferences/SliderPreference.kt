@@ -72,7 +72,7 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
 
         override fun onStopTrackingTouch(slider: Slider) {
             val sliderValue = slider.value.toInt()
-            if (callChangeListener(sliderValue)) {
+            if (sliderValue != value && callChangeListener(sliderValue)) {
                 value = sliderValue
             }
         }
