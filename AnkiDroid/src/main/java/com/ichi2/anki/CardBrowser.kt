@@ -108,7 +108,6 @@ import java.util.*
 import java.util.function.Consumer
 import kotlin.math.abs
 import kotlin.math.ceil
-import kotlin.math.min
 
 @Suppress("LeakingThis")
 // The class is only 'open' due to testing
@@ -305,9 +304,11 @@ open class CardBrowser :
     private val selectedRowIds: List<CardId>
         get() = viewModel.selectedRowIds
 
+    @NeedsTest("search bar is set after selecting a saved search as first action")
     private fun searchForQuery(query: String) {
-        searchView!!.setQuery(query, true)
+        // setQuery before expand does not set the view's value
         searchItem!!.expandActionView()
+        searchView!!.setQuery(query, true)
     }
 
     private fun canPerformCardInfo(): Boolean {
