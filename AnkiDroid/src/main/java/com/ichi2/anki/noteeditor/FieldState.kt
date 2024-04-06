@@ -79,7 +79,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
         return editLines
     }
 
-    protected fun createFields(type: FieldChangeType): List<FieldEditLine> {
+    private fun createFields(type: FieldChangeType): List<FieldEditLine> {
         val fields = getFields(type)
         val editLines: MutableList<FieldEditLine> = ArrayList(fields.size)
         for (i in fields.indices) {

@@ -67,7 +67,7 @@ open class JvmTest : TestClass {
                     return
                 }
                 // use println(): Timber may not work under the Jvm
-                System.out.println(tag + ": " + message)
+                println("$tag: $message")
                 t?.printStackTrace()
             }
         })

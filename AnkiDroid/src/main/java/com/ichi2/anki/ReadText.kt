@@ -131,7 +131,7 @@ object ReadText {
         showDialogAfterDelay(dialog, 500)
     }
 
-    internal fun showDialogAfterDelay(dialog: AlertDialog.Builder, delayMillis: Int) {
+    private fun showDialogAfterDelay(dialog: AlertDialog.Builder, delayMillis: Int) {
         postDelayedOnNewHandler({
             try {
                 dialog.show()
