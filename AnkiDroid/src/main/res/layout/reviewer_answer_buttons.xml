@@ -46,47 +46,6 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/preview_buttons_layout"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:background="?attr/hardButtonRef"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <com.ichi2.ui.FixedTextView
-            android:id="@+id/preview_flip_flashcard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="?attr/answerButtonTextColor"
-            android:text="@string/show_answer"
-            style="@style/FooterButton" />
-
-        <ImageView
-            android:id="@+id/preview_previous_flashcard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:padding="12dp"
-            android:focusable="true"
-            android:background="?attr/hardButtonRef"
-            app:srcCompat="@drawable/ic_baseline_chevron_left_24"
-            app:tint="?attr/hardButtonTextColor" />
-
-        <ImageView
-            android:id="@+id/preview_next_flashcard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:padding="12dp"
-            android:focusable="true"
-            android:background="?attr/hardButtonRef"
-            app:srcCompat="@drawable/ic_baseline_chevron_right_24"
-            app:tint="?attr/hardButtonTextColor" />
-    </FrameLayout>
-
-    <FrameLayout
         android:id="@+id/answer_options_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
