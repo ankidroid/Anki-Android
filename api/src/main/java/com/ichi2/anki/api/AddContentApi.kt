@@ -27,6 +27,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Process
 import android.util.SparseArray
+import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.FlashCardsContract.AnkiMedia
 import com.ichi2.anki.FlashCardsContract.Card
 import com.ichi2.anki.FlashCardsContract.CardTemplate
@@ -35,7 +36,6 @@ import com.ichi2.anki.FlashCardsContract.Model
 import com.ichi2.anki.FlashCardsContract.Note
 import java.io.File
 import java.util.*
-import com.ichi2.anki.FlashCardsContract as FlashCardsContract
 
 /**
  * API which can be used to add and query notes,cards,decks, and models to AnkiDroid
