@@ -97,8 +97,8 @@ interface OperationTest {
          * The [MoveDirectoryContent] that performs the action mentioned in the class description.
          */
         val spy: MoveDirectoryContent
-            get() = spy(moveDirectoryContent) { it ->
-                doAnswer { toMoveOperation(it) }.whenever(it).toMoveOperation(any())
+            get() = spy(moveDirectoryContent) { moveDirectoryContent ->
+                doAnswer { toMoveOperation(it) }.whenever(moveDirectoryContent).toMoveOperation(any())
             }
     }
 }
