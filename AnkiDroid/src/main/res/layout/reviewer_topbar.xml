@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +17,9 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="?attr/newCountColor"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="13"
+            />
         <com.ichi2.ui.FixedTextView
             android:id="@+id/learn_number"
             android:layout_width="wrap_content"
@@ -25,7 +28,9 @@
             android:paddingStart="8dp"
             android:text=""
             android:textColor="?attr/learnCountColor"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="3"
+            />
 
         <com.ichi2.ui.FixedTextView
             android:id="@+id/review_number"
@@ -35,7 +40,9 @@
             android:paddingStart="8dp"
             android:text=""
             android:textColor="?attr/reviewCountColor"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="7"
+            />
 
         <com.ichi2.ui.FixedTextView
             android:id="@+id/chosen_answer"
@@ -46,7 +53,10 @@
             android:minEms="4"
             android:gravity="center"
             android:text=""
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="•••"
+            tools:textColor="@color/material_green_500"
+            />
 
 
 
@@ -65,6 +75,8 @@
             android:layout_height="wrap_content"
             android:visibility="invisible"
             android:layout_gravity="center"
+            tools:src="@drawable/ic_flag_red"
+            tools:visibility="visible"
             />
         <ImageView
             android:id="@+id/mark_icon"
@@ -72,6 +84,8 @@
             android:layout_height="wrap_content"
             android:visibility="invisible"
             android:layout_gravity="center"
+            tools:src="@drawable/ic_star_white_bordered_24dp"
+            tools:visibility="visible"
             />
         </LinearLayout>
         <Chronometer
@@ -81,5 +95,7 @@
             android:layout_alignParentEnd="true"
             android:gravity="end"
             android:textSize="14sp"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            tools:visibility="visible"
+            />
 </RelativeLayout>
