@@ -15,7 +15,7 @@
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/card_sfld"
-        android:layout_width="0dip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:paddingLeft="3dp"
@@ -32,10 +32,10 @@
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/card_column2"
-        android:layout_width="0dip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingStart="4dp"
+        android:paddingStart="8dp"
         android:paddingEnd="2dp"
         android:paddingVertical="1dp"
         android:gravity="top"/>
