@@ -272,5 +272,8 @@ class CreateDeckDialogNonAndroidTest {
         assertLargerThanNine("Ten or greater", "10. - Chemicals", true)
         assertLargerThanNine("Ten or greater", "99. - Chemicals", true)
         assertLargerThanNine("zero prefix", "09. - Chemicals", false)
+        assertLargerThanNine("time", "10:50:59", false)
+        assertLargerThanNine("time", "Filtered Deck 22:34", false)
+        assertLargerThanNine("suffix", "Deck 34", true)
     }
 }

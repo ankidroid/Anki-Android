@@ -231,5 +231,8 @@ class CreateDeckDialog(
     }
 }
 
+// to not match times. Example: "12:34:56"
+// we use (?:[^:]|^) to ensure ":56" doesn't match
+// we use (?:[^:]|$) to ensure "12:" doesn't match
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-fun CharSequence.containsNumberLargerThanNine(): Boolean = Regex("""[1-9]\d+""").find(this) != null
+fun CharSequence.containsNumberLargerThanNine(): Boolean = Regex("""(?:[^:]|^)[1-9]\d+(?:[^:]|$)""").find(this) != null
