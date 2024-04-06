@@ -183,6 +183,7 @@
 
     <!-- Temporarily allows obsolete lint until https://issuetracker.google.com/issues/206855622 is resolved upstream -->
     <issue id="ObsoleteLintCustomCheck" severity="ignore" />
+    <issue id="VisibleForTests" severity="error" />
 
     <issue id="UseCompatTextViewDrawableXml" severity="ignore" />
     <issue id="AcceptsUserCertificates" severity="ignore" />
