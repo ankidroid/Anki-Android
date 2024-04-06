@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Rozwiń</string>
     <string name="collapse">Zwiń</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="few">%d minutes left</item>
@@ -141,12 +140,10 @@
     <string name="empty_filtered_deck">Opróżnienie filtrowanej talii&#8230;</string>
     <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
     <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
-    <string name="empty_deck">Ta talia jest pusta</string>
     <string name="search_deck" comment="Deck search for selecting it">Przeszukaj talię</string>
+    <string name="empty_deck">Ta talia jest pusta</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Wyszukiwanie talii</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
     <string name="sd_card_not_mounted">Urządzenie pamięci masowej nie zostało zamontowane</string>

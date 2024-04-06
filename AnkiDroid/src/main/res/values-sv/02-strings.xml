@@ -314,6 +314,7 @@
     <string name="expand_tag">Expandera etiketten \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Det gick inte att komma åt samlingen. Försök igen!</string>
+    <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studera mindre</string>
     <string name="intro_ankidroid_tagline_two">Kom ihåg mer</string>
@@ -332,7 +333,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kort</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Noter</string>
     <string name="toggle_cards_notes">Växla kort/noter</string>
-    <string name="toggle_browser_mode_help">Växla Visar kort eller noter i bläddraren</string>
+    <string name="toggle_browser_mode_help">Växla mellan Visar kort eller noter i fönstret</string>
     <string name="truncate_content_help">Justera höjden på varje rad i webbläsaren för att endast visa de första 3 radernas innehåll</string>
     <string name="browser_options_dialog_heading">Inställningar för webbläsare</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Den här funktionen är otillgänglig medan lagringsförflyttning pågår

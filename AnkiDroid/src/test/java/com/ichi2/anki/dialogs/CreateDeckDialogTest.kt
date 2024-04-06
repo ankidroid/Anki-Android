@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>                        *
+ * Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>                      *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -28,10 +29,13 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.libanki.DeckId
+import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.positiveButton
 import okhttp3.internal.closeQuietly
 import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.CoreMatchers.nullValue
+import org.hamcrest.Matcher
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -115,6 +119,28 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     @Test
+    fun `deck ordering hint`() {
+        // The correct way to order a deck is ['01', '02', '10']
+        val expectedText = "If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’"
+        testDialog(DeckDialogType.DECK) {
+            fun assertHelperText(reason: String?, matcher: Matcher<in CharSequence?>) =
+                assertThat(reason, getInputTextLayout().helperText, matcher)
+
+            input = "test"
+            assertHelperText("no number suggestion if text-only", nullValue())
+            input = "1. Cheese"
+            assertHelperText("no number suggestion if number is less than 10", nullValue())
+            input = "10. Cheese"
+            assertHelperText(
+                "Number suggestion if number is greater than or equal to 10",
+                equalTo(expectedText)
+            )
+            input = "1. Cheese"
+            assertHelperText("hint is removed if the number is removed", nullValue())
+        }
+    }
+
+    @Test
     fun nameMayNotBeZeroLength() {
         testDialog(DeckDialogType.DECK) {
             assertThat("Ok is disabled if zero length input", positiveButton.isEnabled, equalTo(false))
@@ -193,6 +219,15 @@ class CreateDeckDialogTest : RobolectricTest() {
         assertEquals(deckPicker.optionsMenuState!!.searchIcon, true)
     }
 
+    @Test
+    fun positiveButtonEnabledOnMatchingDeckNames() {
+        val previousDeckName = "Deck Name"
+        testDialog(DeckDialogType.RENAME_DECK) {
+            input = previousDeckName
+            assertThat("no error is displayed", getInputTextLayout().error, nullValue())
+        }
+    }
+
     /**
      * Executes [callback] on the [AlertDialog] created from [CreateDeckDialog]
      */
@@ -221,5 +256,21 @@ class CreateDeckDialogTest : RobolectricTest() {
     private fun deckTreeName(start: Int, end: Int, prefix: String): String {
         return List(end - start + 1) { "${prefix}${it + start}" }
             .joinToString("::")
+    }
+}
+
+/** Test of [CreateDeckDialog] */
+class CreateDeckDialogNonAndroidTest {
+    @Test
+    fun `number larger than nine detection`() {
+        fun assertLargerThanNine(reason: String?, input: String, result: Boolean) =
+            assertThat(reason, input.containsNumberLargerThanNine(), equalTo(result))
+
+        assertLargerThanNine("empty string", "", false)
+        assertLargerThanNine("text", "deck name", false)
+        assertLargerThanNine("less than ten", "9. - Chemicals", false)
+        assertLargerThanNine("Ten or greater", "10. - Chemicals", true)
+        assertLargerThanNine("Ten or greater", "99. - Chemicals", true)
+        assertLargerThanNine("zero prefix", "09. - Chemicals", false)
     }
 }

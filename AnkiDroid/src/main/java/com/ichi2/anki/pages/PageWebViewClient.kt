@@ -83,14 +83,30 @@ open class PageWebViewClient : WebViewClient() {
         }
     }
 
+    @Suppress("DEPRECATION") // still needed for API 23
+    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+        if (view == null || url == null) return super.shouldOverrideUrlLoading(view, url)
+        if (handleUrl(view, url)) {
+            return true
+        }
+        return super.shouldOverrideUrlLoading(view, url)
+    }
+
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         if (view == null || request == null) return super.shouldOverrideUrlLoading(view, request)
-        if (request.url.toString() == "page-fully-loaded:") {
+        if (handleUrl(view, request.url.toString())) {
+            return true
+        }
+        return super.shouldOverrideUrlLoading(view, request)
+    }
+
+    private fun handleUrl(view: WebView, url: String): Boolean {
+        if (url == "page-fully-loaded:") {
             Timber.v("displaying WebView after '$promiseToWaitFor' executed")
             view.isVisible = true
             return true
         }
-        return super.shouldOverrideUrlLoading(view, request)
+        return false
     }
 }
 

@@ -251,6 +251,6 @@ enum class Axis(val motionEventValue: Int) {
 
     companion object {
         /** @throws NoSuchElementException if [value] is invalid */
-        fun fromInt(value: Int): Axis = Axis.entries.single { it.motionEventValue == value }
+        fun fromInt(value: Int): Axis = entries.single { it.motionEventValue == value }
     }
 }

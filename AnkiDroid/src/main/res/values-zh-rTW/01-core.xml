@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">收回</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">%d minutes left</item>
     </plurals>
@@ -133,12 +132,10 @@
     <string name="empty_filtered_deck">清除已篩選牌組中&#8230;</string>
     <string name="custom_study_deck_name">自訂學程</string>
     <string name="custom_study_deck_exists">請先重新命名現有的「自訂學習」牌組。</string>
-    <string name="empty_deck">這個牌組是空的</string>
     <string name="search_deck" comment="Deck search for selecting it">牌組搜尋</string>
+    <string name="empty_deck">這個牌組是空的</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">牌組搜尋</string>
     <string name="invalid_deck_name">無效牌組名稱</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">尚無到期的卡片。</string>
     <string name="sd_card_not_mounted">儲存裝置未掛載</string>

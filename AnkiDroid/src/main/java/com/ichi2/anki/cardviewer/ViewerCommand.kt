@@ -91,7 +91,7 @@ enum class ViewerCommand(val resourceId: Int) {
                 .flatMap { x: ViewerCommand -> x.defaultValue.stream() }
                 .collect(Collectors.toList())
 
-        fun fromPreferenceKey(key: String) = ViewerCommand.entries.first { it.preferenceKey == key }
+        fun fromPreferenceKey(key: String) = entries.first { it.preferenceKey == key }
     }
 
     val preferenceKey: String

@@ -300,7 +300,7 @@
     <string name="migration_part_1_done_resume">AnkiDroidの使用を再開できます。
 \nストレージの移行はバックグラウンドで続行されます。</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s は有効なJavaScriptアドオンパッケージではありません</string>
     <string name="could_not_create_dir">%s というディレクトリを作成できませんでした</string>
     <string name="malicious_archive_entry_outside">不正なアーカイブです。ターゲットディレクトリ (%s) 外のエントリが含まれています。</string>
     <string name="malicious_archive_exceeds_limit">不正なアーカイブです。サイズが%1$sを超えるか、 ファイル数が%2$d個を超えています</string>
@@ -309,6 +309,7 @@
     <string name="expand_tag">タグ \'%s \' を展開</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">コレクションにアクセスできませんでした。もう一度試してみてください</string>
+    <string name="cd_manage_notetypes_add">新しいノートタイプを追加</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">負担は小さく</string>
     <string name="intro_ankidroid_tagline_two">成果は大きく</string>

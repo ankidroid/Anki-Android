@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Розгорнути</string>
     <string name="collapse">Згорнути</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Залишилася %d хвилина</item>
         <item quantity="few">Залишилося %d хвилини</item>
@@ -141,12 +140,10 @@
     <string name="empty_filtered_deck">Очищення фільтрованої колоди&#8230;</string>
     <string name="custom_study_deck_name">Сесія індивідуального навчання</string>
     <string name="custom_study_deck_exists">Спочатку перейменуйте колоду індивідуального навчання</string>
-    <string name="empty_deck">Ця колода порожня</string>
     <string name="search_deck" comment="Deck search for selecting it">Пошук колоди</string>
+    <string name="empty_deck">Ця колода порожня</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук колоди</string>
     <string name="invalid_deck_name">Некоректна назва колоди</string>
-    <string name="studyoptions_limit_reached">Досягнуто денної межі навчання</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
@@ -156,7 +153,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Продовжити синхронізацію</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронізацію скасовано</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Скасування&#8230;\nЦе триватиме деякий час.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Синхронізація медіа</string>
     <string name="export_deck">Експортувати колоду</string>
     <string name="nothing">Нічого</string>
     <!-- Card template editor -->
@@ -254,7 +251,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Продовжити перенесення файлів</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недоступна колекція</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Ми не можемо отримати доступ до вашої колекції після видалення AnkiDroid через зміну політики Play Store\n\nВаші дані в безпеці і можуть бути відновлені. Місцезнаходження даних \n%s\n\nВиберіть опцію нижче для відновлення:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android видалив дозвіл AnkiDroid %1$s через неактивність додатку.\n\nВаші дані в безпеці та можуть бути відновлені. Вони знаходяться в\n%2$s\n\nВиберіть опцію нижче, щоб їх відновити:</string>
     <string name="restore_data_from_ankiweb">Відновити з AnkiWeb (рекомендовано)</string>
     <string name="install_non_play_store_ankidroid_recommended">Відновлення доступу до теки (рекомендовано)</string>
     <string name="install_non_play_store_ankidroid">Відновлення доступу до теки (розширено)</string>

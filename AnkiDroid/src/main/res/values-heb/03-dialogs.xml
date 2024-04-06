@@ -259,4 +259,5 @@
     <string name="dismiss_backup_warning_new_user">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך יימחקו מהטלפון שלך אם האפליקציה תוסר</string>
     <string name="dismiss_backup_warning_upgrade">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך לא יהיו נגישים אם האפליקציה תוסר</string>
     <string name="deck_already_exists">החפיסה כבר קיימת</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
 </resources>

@@ -244,4 +244,5 @@
     <string name="dismiss_backup_warning_new_user">Android-ի գաղտնիության փոփոխությունների պատճառով ձեր տվյալները և նրանց` ավտոմատ կերպով ստեղծված պատճենները կջնջվեն` ծրագրի ապատեղադրման ժամանակ։</string>
     <string name="dismiss_backup_warning_upgrade">Android-ի գաղտնիության փոփոխությունների պատճառով ձեր տվյալները և նրանց` ավտոմատ կերպով ստեղծված պատճենները անհասանելի կլինեն` ծրագրի ապատեղադրման ժամանակ։</string>
     <string name="deck_already_exists">Deck already exists</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
 </resources>

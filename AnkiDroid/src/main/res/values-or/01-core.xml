@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ପ୍ରସାରଣ</string>
     <string name="collapse">ସଙ୍କୋଚନ</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d ମିନିଟ୍ ବାକି ଅଛି</item>
         <item quantity="other">%d ମିନିଟ୍ ବାକି ଅଛି</item>
@@ -135,12 +134,10 @@
     <string name="empty_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ଖାଲି ହଉଛି&#8230;</string>
     <string name="custom_study_deck_name">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
     <string name="custom_study_deck_exists">ପ୍ରଥମେ ଵିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ର ନାମ ବଦଳାନ୍ତୁ</string>
-    <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
     <string name="search_deck" comment="Deck search for selecting it">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
+    <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
     <string name="sd_card_not_mounted">ଡିଵାଇସ୍ ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>

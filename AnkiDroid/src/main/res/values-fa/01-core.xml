@@ -59,7 +59,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand">گسترش</string>
     <string name="collapse">بستن</string>
-    <string name="study_more">Study more</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
@@ -135,12 +134,10 @@
     <string name="empty_filtered_deck">درحال تخلیه دسته‌ی کارت فیلتر شده...</string>
     <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
     <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
-    <string name="empty_deck">این دسته خالی است</string>
     <string name="search_deck" comment="Deck search for selecting it">جستجوی دسته‌ها </string>
+    <string name="empty_deck">این دسته خالی است</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">جستجوی دسته‌ها </string>
     <string name="invalid_deck_name">نام دسته نامعتبر است</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_no_cards_due">هیچ کارتی هنوز موعد نیست</string>
     <string name="sd_card_not_mounted">حافظۀ دستگاه یافت نشد</string>

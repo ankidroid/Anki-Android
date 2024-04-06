@@ -50,7 +50,7 @@ data class MoveDirectory(val source: Directory, val destination: File) : Operati
      * Create an empty directory at destination.
      * Return whether it was successful.
      */
-    internal fun createDirectory(context: MigrationContext): Boolean {
+    private fun createDirectory(context: MigrationContext): Boolean {
         Timber.d("creating directory '$destination'")
         createDirectory(destination)
 

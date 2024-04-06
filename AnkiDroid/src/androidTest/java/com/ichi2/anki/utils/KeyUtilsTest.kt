@@ -23,6 +23,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class KeyUtilsTest {
@@ -52,14 +53,14 @@ class KeyUtilsTest {
     }
 
     @Test
-    fun testGetDigitWithNonDigitShouldReturnItsCode() {
+    fun testGetDigitWithNonDigitShouldReturnNull() {
         val keyEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_A)
-        assertEquals(49, KeyUtils.getDigit(keyEvent))
+        assertNull(KeyUtils.getDigit(keyEvent))
     }
 
     @Test
-    fun testGetDigitWithNonLanguageKeyShouldReturnItsCode() {
+    fun testGetDigitWithNonLanguageKeyShouldReturnNull() {
         val keyEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK)
-        assertEquals(-48, KeyUtils.getDigit(keyEvent))
+        assertNull(KeyUtils.getDigit(keyEvent))
     }
 }

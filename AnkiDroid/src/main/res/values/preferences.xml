@@ -124,6 +124,7 @@
     <string name="show_all_hints_command_key">binding_SHOW_ALL_HINTS</string>
     <string name="add_note_command_key">binding_ADD_NOTE</string>
     <string name="reschedule_command_key">binding_RESCHEDULE_NOTE</string>
+    <string name="user_actions_controls_category_key">userActionsControls</string>
     <string name="user_action_1_key">binding_USER_ACTION_1</string>
     <string name="user_action_2_key">binding_USER_ACTION_2</string>
     <string name="user_action_3_key">binding_USER_ACTION_3</string>

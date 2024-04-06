@@ -146,6 +146,13 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                     )
                     return
                 }
+            } else if (mediaClipFullNameParts.size > 2) {
+                // there's at least one extra point in the filename besides the point delimiter for extension
+                val lastPointIndex = mediaClipFullName.lastIndexOf(".")
+                mediaClipFullNameParts = arrayOf(
+                    mediaClipFullName.substring(0 until lastPointIndex),
+                    mediaClipFullName.substring(lastPointIndex + 1)
+                )
             }
         }
 

@@ -30,6 +30,7 @@ import android.widget.FrameLayout
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
@@ -133,7 +134,19 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-                val urlString = request.url.toString()
+                return handleUrl(request.url)
+            }
+
+            @Suppress("DEPRECATION") // necessary in API 23
+            @Deprecated("Deprecated in Java")
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                if (view == null || url == null) return super.shouldOverrideUrlLoading(view, url)
+                return handleUrl(url.toUri())
+            }
+
+            private fun handleUrl(url: Uri): Boolean {
+                val urlString = url.toString()
+
                 if (urlString.startsWith("playsound:")) {
                     viewModel.playSoundFromUrl(urlString)
                     return true
@@ -142,13 +155,13 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                     TtsVoicesDialogFragment().show(childFragmentManager, null)
                     return true
                 }
-                try {
-                    openUrl(request.url)
-                    return true
-                } catch (_: Exception) {
+                return try {
+                    openUrl(url)
+                    true
+                } catch (_: Throwable) {
                     Timber.w("Could not open url")
+                    false
                 }
-                return false
             }
 
             override fun onReceivedError(
