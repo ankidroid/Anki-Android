@@ -181,7 +181,6 @@
     <string name="use_current" maxLength="41">Balíček pro nové karty</string>
     <string name="learn_cutoff" maxLength="41">Limit učení se napřed</string>
     <string name="time_limit" maxLength="41">Časové omezení</string>
-    <string name="new_timezone" maxLength="41">Nové zpracování časového pásma</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">%d hodina po půlnoci</item>

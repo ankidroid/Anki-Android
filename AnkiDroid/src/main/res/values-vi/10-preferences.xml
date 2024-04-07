@@ -178,7 +178,6 @@
     <string name="use_current" maxLength="41">Bộ thẻ cho thẻ mới</string>
     <string name="learn_cutoff" maxLength="41">Tìm hiểu trước giới hạn</string>
     <string name="time_limit" maxLength="41">Giới hạn thời gian của hộp thời gian</string>
-    <string name="new_timezone" maxLength="41">Xử lý múi giờ mới</string>
     <string name="day_offset_with_description" maxLength="41">Bắt đầu ngày hôm sau (0 là nửa đêm, 23 là 11 giờ tối)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="other">%d hours past midnight</item>

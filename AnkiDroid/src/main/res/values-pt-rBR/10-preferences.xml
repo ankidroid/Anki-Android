@@ -179,7 +179,6 @@
     <string name="use_current" maxLength="41">Baralho para novos cards</string>
     <string name="learn_cutoff" maxLength="41">Aprender antes do limite</string>
     <string name="time_limit" maxLength="41">Limite de tempo de Timebox</string>
-    <string name="new_timezone" maxLength="41">Processando novo fuso horário</string>
     <string name="day_offset_with_description" maxLength="41">Início do dia seguinte</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">%d hora depois da meia-noite</item>

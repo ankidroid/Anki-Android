@@ -179,7 +179,6 @@
     <string name="use_current" maxLength="41">ନୂଆ ପତ୍ର ପାଇଁ ତାସଖଣ୍ଡ</string>
     <string name="learn_cutoff" maxLength="41">ଆଗୁଆ ଶିଖିବା ସମୟସୀମା</string>
     <string name="time_limit" maxLength="41">ଟାଇମ୍ ବକ୍ସ ସମୟ ସୀମା</string>
-    <string name="new_timezone" maxLength="41">ନୂତନ ସମୟମଣ୍ଡଳ ପରିଚାଳନା</string>
     <string name="day_offset_with_description" maxLength="41">ପରଵର୍ତ୍ତୀ ଦିନର ଆରମ୍ଭ</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">ମଧ୍ୟରାତ୍ରିରୁ %d ଘଣ୍ଟା ପରେ</item>
