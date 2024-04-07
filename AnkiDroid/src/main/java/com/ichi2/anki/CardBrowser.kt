@@ -19,6 +19,7 @@
 package com.ichi2.anki
 
 import android.content.*
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.TextUtils
@@ -375,6 +376,9 @@ open class CardBrowser :
         cardsListView.adapter = cardsAdapter
         // make the items (e.g. question & answer) render dynamically when scrolling
         cardsListView.setOnScrollListener(RenderOnScroll())
+
+        updateNumCardsToRender()
+
         startLoadingCollection()
 
         when (val options = launchOptions) {
@@ -706,6 +710,12 @@ open class CardBrowser :
     override fun onResume() {
         super.onResume()
         selectNavigationItem(R.id.nav_browser)
+        updateNumCardsToRender()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        updateNumCardsToRender()
     }
 
     @KotlinCleanup("Add a few variables to get rid of the !!")
@@ -1314,7 +1324,7 @@ open class CardBrowser :
             searchItem!!.expandActionView()
         }
         launchCatchingTask {
-            withProgress { viewModel.searchForCards(numCardsToRender()) }
+            withProgress { viewModel.searchForCards() }
             redrawAfterSearch()
         }
     }
@@ -1360,8 +1370,8 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    protected open fun numCardsToRender(): Int {
-        return ceil(
+    protected open fun updateNumCardsToRender() {
+        viewModel.numCardsToRender = ceil(
             (
                 cardsListView.height /
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, resources.displayMetrics)

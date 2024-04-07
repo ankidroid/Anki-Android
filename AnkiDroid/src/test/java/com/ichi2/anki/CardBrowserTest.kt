@@ -832,8 +832,8 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     private class CardBrowserSizeOne : CardBrowser() {
-        override fun numCardsToRender(): Int {
-            return 1
+        override fun updateNumCardsToRender() {
+            viewModel.numCardsToRender = 1
         }
     }
 

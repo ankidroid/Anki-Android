@@ -77,6 +77,11 @@ class CardBrowserViewModel(
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
 
+    // Set by the UI to determine the number of cards to preload before returning search results
+    // This is a hack, but will be removed soon when we move to the backend for card rendering
+    // so isn't worth refactoring further
+    var numCardsToRender: Int? = null
+
     // temporary flow for refactoring - called when cards are cleared
     val flowOfCardsUpdated = MutableSharedFlow<Unit>()
 
@@ -555,7 +560,7 @@ class CardBrowserViewModel(
     /**
      * @see com.ichi2.anki.searchForCards
      */
-    suspend fun searchForCards(numCardsToRender: Int): MutableList<CardBrowser.CardCache> {
+    suspend fun searchForCards(): MutableList<CardBrowser.CardCache> {
         // update the UI while we're searching
         clearCardsList()
 
@@ -569,7 +574,7 @@ class CardBrowserViewModel(
         val cards = com.ichi2.anki.searchForCards(query, order.toSortOrder(), cardsOrNotes)
         Timber.d("Search returned %d cards", cards.size)
         // Render the first few items
-        for (i in 0 until min(numCardsToRender, cards.size)) {
+        for (i in 0 until min((numCardsToRender ?: 0), cards.size)) {
             cards[i].load(false, column1Index, column2Index)
         }
         this.cards.replaceWith(cards)
