@@ -30,6 +30,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
+import androidx.work.Configuration
+import androidx.work.testing.SynchronousExecutor
+import androidx.work.testing.WorkManagerTestInitHelper
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.preferences.sharedPrefs
@@ -95,6 +98,12 @@ open class RobolectricTest : AndroidTest {
         ChangeManager.clearSubscribers()
 
         validateRunWithAnnotationPresent()
+
+        val config = Configuration.Builder()
+            .setExecutor(SynchronousExecutor())
+            .build()
+
+        WorkManagerTestInitHelper.initializeTestWorkManager(targetContext, config)
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
         CollectionManager.setColForTests(null)

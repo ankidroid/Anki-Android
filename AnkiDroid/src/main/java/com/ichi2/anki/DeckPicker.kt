@@ -53,6 +53,8 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
+import androidx.core.view.MenuItemCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -61,10 +63,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import anki.collection.OpChanges
 import anki.sync.SyncStatusResponse
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
@@ -116,6 +121,7 @@ import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
+import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -129,6 +135,7 @@ import com.ichi2.utils.*
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import makeLinksClickable
@@ -229,6 +236,8 @@ open class DeckPicker :
         anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
         addCallback(activeSnackbarCallback)
     }
+
+    private var syncMediaProgressJob: Job? = null
 
     // flag keeping track of when the app has been paused
     var activityPaused = false
@@ -791,6 +800,7 @@ open class DeckPicker :
         floatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
         menuInflater.inflate(R.menu.deck_picker, menu)
         menu.findItem(R.id.action_export)?.title = TR.exportingExport()
+        setupMediaSyncMenuItem(menu)
         setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
         toolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as SearchView
         toolbarSearchView?.maxWidth = Integer.MAX_VALUE
@@ -809,6 +819,31 @@ open class DeckPicker :
 
     private var migrationProgressPublishingJob: Job? = null
     private var cachedMigrationProgressMenuItemActionView: View? = null
+
+    private fun setupMediaSyncMenuItem(menu: Menu) {
+        // shouldn't be necessary, but `invalidateOptionsMenu()` is called way more than necessary
+        syncMediaProgressJob?.cancel()
+
+        val syncItem = menu.findItem(R.id.action_sync)
+        val progressIndicator = syncItem.actionView
+            ?.findViewById<LinearProgressIndicator>(R.id.progress_indicator)
+
+        val workManager = WorkManager.getInstance(this)
+        val flow = workManager.getWorkInfosForUniqueWorkFlow(UniqueWorkNames.SYNC_MEDIA)
+
+        syncMediaProgressJob = lifecycleScope.launch {
+            flow.flowWithLifecycle(lifecycle).collectLatest {
+                val workInfo = it.lastOrNull()
+                if (workInfo?.state == WorkInfo.State.RUNNING && progressIndicator?.isVisible == false) {
+                    Timber.i("DeckPicker: Showing media sync progress indicator")
+                    progressIndicator.isVisible = true
+                } else if (progressIndicator?.isVisible == true) {
+                    Timber.i("DeckPicker: Hiding media sync progress indicator")
+                    progressIndicator.isVisible = false
+                }
+            }
+        }
+    }
 
     /**
      * Set up the menu item that shows circular progress of storage migration.
@@ -1040,7 +1075,14 @@ open class DeckPicker :
             }
             R.id.action_sync -> {
                 Timber.i("DeckPicker:: Sync button pressed")
-                sync()
+                val actionProvider = MenuItemCompat.getActionProvider(item) as? SyncActionProvider
+                if (actionProvider?.isProgressShown == true) {
+                    launchCatchingTask {
+                        monitorMediaSync(this@DeckPicker)
+                    }
+                } else {
+                    sync()
+                }
                 return true
             }
             R.id.action_scoped_storage_migrate -> {

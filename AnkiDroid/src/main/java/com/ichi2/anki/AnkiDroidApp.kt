@@ -33,6 +33,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
+import androidx.work.Configuration
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
@@ -69,7 +70,7 @@ import java.util.Locale
  */
 @KotlinCleanup("lots to do")
 @KotlinCleanup("IDE Lint")
-open class AnkiDroidApp : Application() {
+open class AnkiDroidApp : Application(), Configuration.Provider {
     /** An exception if the WebView subsystem fails to load  */
     private var webViewError: Throwable? = null
     private val notifications = MutableLiveData<Void?>()
@@ -79,6 +80,9 @@ open class AnkiDroidApp : Application() {
 
     /** Used to avoid showing extra progress dialogs when one already shown. */
     var progressDialogShown = false
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder().build()
 
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     /**
