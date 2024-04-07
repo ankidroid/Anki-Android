@@ -792,6 +792,7 @@ open class DeckPicker :
         menu.findItem(R.id.action_export)?.title = TR.exportingExport()
         setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
         toolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as SearchView
+        toolbarSearchView?.maxWidth = Integer.MAX_VALUE
         // redraw menu synchronously to avoid flicker
         updateMenuFromState(menu)
         // ...then launch a task to possibly update the visible icons.
