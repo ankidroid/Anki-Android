@@ -61,11 +61,11 @@
     <string name="no_tags">Ainda não adicionou quaisquer etiquetas.</string>
     <string name="updated_version">Atualizada para a versão %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Guardar o quadro branco</string>
+    <string name="save_whiteboard">Guardar o quadro de escrita</string>
     <string name="enable_stylus">Activar a escrita com caneta</string>
     <string name="disable_stylus">Desactivar a escrita com caneta</string>
-    <string name="enable_whiteboard">Activar quadro</string>
-    <string name="disable_whiteboard">Desactivar quadro</string>
+    <string name="enable_whiteboard">Activar quadro de escrita</string>
+    <string name="disable_whiteboard">Desactivar quadro de escrita</string>
     <string name="show_whiteboard">Mostrar quadro</string>
     <string name="hide_whiteboard">Esconder quadro</string>
     <string name="clear_whiteboard">Limpar quadro</string>
@@ -164,19 +164,19 @@
     <string name="import_error_not_apkg_extension">Ficheiro \"%s\" não tem nenhuma das extensões .apkg, nem .colpkg</string>
     <string name="import_error_load_imported_database">Substitutos para a Base de Dados Anki (.anki2) ainda não são suportados. Por favor, consulte o manual para seguir as instruções relativas à substituição.</string>
     <string name="import_error_content_provider">Não foi possível importar automaticamente o ficheiro selecionado com AnkiDroid. Por favor, consulte o manual do utilizador para saber como importar manualmente os ficheiros anki: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="import_error_copy_to_cache">Falhou ao armazenar um ficheiro de \"cache\" (possivelmente está sem espaço)</string>
+    <string name="import_interrupted">Importação interrompida: o AnkiDroid foi fechado</string>
+    <string name="export_preparation_in_progress">A preparar exportação&#8230;</string>
+    <string name="export_ready_title">Exportação pronta</string>
+    <string name="export_send_no_handlers">Não tem nenhuma aplicação para lidar com ficheiros .apkg. A guardar...</string>
+    <string name="export_save_apkg_successful">Ficheiro Anki guardado com sucesso</string>
+    <string name="export_save_apkg_unsuccessful">Falha ao guardar ficheiro Anki</string>
+    <string name="export_share_title">Enviar ficheiro Anki utilizando</string>
     <string name="export_email_subject">AnkiDroid exportou fichas: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Olá!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Isto é um baralho de fichas enviado a partir do AnkiDroid[1].
+        Tente abri-lo utilizando uma das aplicações Anki[2] e disfrute duma aprendizagem fácil e eficiente!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -185,7 +185,7 @@
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opções</string>
     <string name="menu__deck_options">Opções de baralho</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opções de estudo</string>
-    <string name="select_tts">Set TTS language</string>
+    <string name="select_tts">Definir língua do \"TTS\" (Texto para Fala)</string>
     <string name="custom_study">Estudo personalizado</string>
     <string name="more_options">Mais</string>
     <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas serão automaticamente devolvidas aos seus baralhos originais depois das rever. Ao eliminar este baralho da lista de baralhos irá devolver todas as fichas restantes ao seu baralho original.</string>
@@ -196,40 +196,40 @@
     <!-- Time spans -->
     <string name="reminder_title">Não se esqueça de estudar hoje!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d ficha a rever em %1$s</item>
+        <item quantity="other">%2$d fichas a rever em %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Erro ao partilhar ficheiro apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="activity_start_failed">O sistema não tem nenhuma aplicação instalada para executar esta acção.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[As imagens captadas pela câmara podem corresponder a ficheiros grandes. Talvez deva comprimir e ajustar o tamanho das imagens na pasta de multimédia]]></string>
+    <string name="no_browser_msg">Não foi encontrado nenhum navegador (\"browser\") para abrir o endereço: %s</string>
+    <string name="web_page_error">Erro ao carregar a página: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
+    <string name="background_image_title">Fundo</string>
     <string name="choose_an_image">Selecionar imagem</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">Remover imagem de fundo?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restaurar predefinições</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Em branco</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="white_board_image_save_failed">Falha ao guardar a imagem do quadro de escrita. %s</string>
+    <string name="white_board_image_saved">Imagem do quadro de escrita guardado em %s</string>
+    <string name="title_whiteboard_pen_color">Cor da caneta do quadro de escrita</string>
+    <string name="title_whiteboard_editor">Editor do quadro de escrita</string>
+    <string name="user_is_a_robot">Detectado teste automático. Se é um humano, por favor contacto o apoio do AnkiDroid.</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
+    <string name="api_version_developer_contact">Esta ficha utiliza funcionalidades que não são suportadas pelo AnkiDroid. Contacte o programador %1$s, ou consulte a wiki. %2$s</string>
+    <string name="invalid_json_data">A ficha forneceu dados inválidos. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
     <string name="anki_js_error_code">(Error Code: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copiado para a área de transferência</string>
+    <string name="about_ankidroid_error_copy_debug_info">Erro ao copiar informação de depuração para a área de transferência</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <!-- Deck Picker -->
