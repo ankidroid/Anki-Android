@@ -179,7 +179,6 @@
     <string name="use_current" maxLength="41">Pakka uusille korteille</string>
     <string name="learn_cutoff" maxLength="41">Ennalta oppimisen aikaraja</string>
     <string name="time_limit" maxLength="41">Edistymisen näyttämisen aikaväli</string>
-    <string name="new_timezone" maxLength="41">Uusi aikavyöhykkeiden käsittely</string>
     <string name="day_offset_with_description" maxLength="41">Seuraava päivä alkaa</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">%d tunti keskiyön jälkeen</item>

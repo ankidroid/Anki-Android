@@ -179,7 +179,6 @@
     <string name="use_current" maxLength="41">Set voor nieuwe kaarten</string>
     <string name="learn_cutoff" maxLength="41">Max vooruit leren</string>
     <string name="time_limit" maxLength="41">Stel een tijdslimiet in</string>
-    <string name="new_timezone" maxLength="41">Nieuwe tijdzone afhandeling</string>
     <string name="day_offset_with_description" maxLength="41">Begin van de volgende dag (0 is middernacht, 23 is 11PM)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">%d uur na middernacht</item>
