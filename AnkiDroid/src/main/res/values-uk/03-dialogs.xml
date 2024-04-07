@@ -260,5 +260,5 @@
     <string name="dismiss_backup_warning_upgrade">        У зв\'язку зі зміною політики конфіденційності Android, ваші дані та автоматизовані резервні копії стануть недоступними, якщо додаток буде видалено
     </string>
     <string name="deck_already_exists">Колода вже існує</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="create_deck_numeric_hint">Якщо у вас є проблеми з порядком колод (наприклад, \'10\' стоїть перед \'2\') - замініть \'2\' на \'02\'</string>
 </resources>
