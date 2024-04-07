@@ -165,13 +165,6 @@ interface TestClass {
         return this
     }
 
-    /** Helper method to update a card */
-    fun Card.update(update: Card.() -> Unit): Card {
-        update(this)
-        this@TestClass.col.updateCard(this, skipUndoEntry = true)
-        return this
-    }
-
     fun NotetypeJson.createClone(): NotetypeJson {
         val targetNotetype = requireNotNull(col.notetypes.byName(name)) { "could not find note type '$name'" }
         val newNotetype = targetNotetype.deepClone().apply {
@@ -203,6 +196,13 @@ interface TestClass {
 
     // TODO remove this. not in libanki
     fun Note.flush() { col.updateNote(this) }
+
+    /** Helper method to update a card */
+    fun Card.update(update: Card.() -> Unit): Card {
+        update(this)
+        this@TestClass.col.updateCard(this, skipUndoEntry = true)
+        return this
+    }
 
     /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
      * takes care of updating the dispatcher used by CollectionManager as well.

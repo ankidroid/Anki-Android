@@ -62,13 +62,20 @@ open class JvmTest : TestClass {
         plant(object : Timber.DebugTree() {
             @SuppressLint("PrintStackTraceUsage")
             override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-                // This is noisy in test environments
-                if (tag == "Backend\$checkMainThreadOp") {
-                    return
+                when (tag) {
+                    "Backend\$checkMainThreadOp" -> return
+                    // mockk-related
+                    "JvmStaticMockFactory", "JvmMockKAgentFactory", "CommonCallRecorder",
+                    "BootJarLoader", "JvmMockKGateway", "ChainedCallDetector",
+                    "JvmInlineInstrumentation", "JvmInstantiator", "ObjenesisInstantiator",
+                    "ProxyMaker", "SignatureMatcherDetector", "PermanentMocker",
+                    "AbstractMockFactory", "RecordingState", "AnsweringState", "StaticProxyMaker" -> return
+                    else -> {
+                        // use println(): Timber may not work under the JVM
+                        println("$tag: $message")
+                        t?.printStackTrace()
+                    }
                 }
-                // use println(): Timber may not work under the Jvm
-                println("$tag: $message")
-                t?.printStackTrace()
             }
         })
 

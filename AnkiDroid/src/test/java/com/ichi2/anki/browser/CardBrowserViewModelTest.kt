@@ -18,6 +18,7 @@ package com.ichi2.anki.browser
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.viewmodel.invokeInitialSearch
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.MatcherAssert.assertThat
@@ -25,6 +26,7 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 
+// TODO: Combine classes
 @RunWith(AndroidJUnit4::class)
 class CardBrowserViewModelTest : JvmTest() {
     @Test
@@ -43,7 +45,9 @@ class CardBrowserViewModelTest : JvmTest() {
             lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
             cacheDir = createTransientDirectory(),
             preferences = AnkiDroidApp.sharedPreferencesProvider
-        )
+        ).apply {
+            invokeInitialSearch()
+        }
         testBody(viewModel)
     }
 }
