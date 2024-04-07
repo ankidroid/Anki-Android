@@ -61,6 +61,18 @@
     </style>
 
     <!-- Styles for each of the 4 answer buttons -->
+    <style name="AgainButton">
+        <item name="answerButtonBackground">?attr/againButtonBackground</item>
+    </style>
+    <style name="HardButton">
+        <item name="answerButtonBackground">?attr/hardButtonBackground</item>
+    </style>
+    <style name="GoodButton">
+        <item name="answerButtonBackground">?attr/goodButtonBackground</item>
+    </style>
+    <style name="EasyButton">
+        <item name="answerButtonBackground">?attr/easyButtonBackground</item>
+    </style>
     <!-- Ease text -->
     <style name="AgainButtonEaseStyle" parent="FooterButtonEaseText">
         <item name="android:textColor">?attr/againButtonTextColor</item>
