@@ -95,6 +95,7 @@
     <attr name="reviewCountColor" format="color"/>
     <attr name="zeroCountColor" format="color"/>
     <!-- Reviewer button backgrounds -->
+    <attr name="answerButtonBackground" format="color"/>
     <attr name="showAnswerColor" format="reference"/>
     <attr name="againButtonRef" format="reference"/>
     <attr name="hardButtonRef" format="reference"/>
