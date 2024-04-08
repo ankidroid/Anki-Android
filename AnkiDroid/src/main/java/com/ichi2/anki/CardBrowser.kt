@@ -309,7 +309,7 @@ open class CardBrowser :
     private fun searchForQuery(query: String) {
         // setQuery before expand does not set the view's value
         searchItem!!.expandActionView()
-        searchView!!.setQuery(query, true)
+        searchView!!.setQuery(query, submit = true)
     }
 
     private fun canPerformCardInfo(): Boolean {
