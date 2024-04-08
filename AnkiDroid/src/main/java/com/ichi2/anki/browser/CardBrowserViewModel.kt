@@ -588,7 +588,7 @@ class CardBrowserViewModel(
      */
     fun endMultiSelectMode() = selectNone()
 
-    suspend fun launchSearchForCards(searchQuery: String): Job {
+    suspend fun launchSearchForCards(searchQuery: String): Job? {
         searchTerms = searchQuery
         return launchSearchForCards()
     }
@@ -597,7 +597,8 @@ class CardBrowserViewModel(
      * @see com.ichi2.anki.searchForCards
      */
     @NeedsTest("Invalid searches are handled. For instance: 'and'")
-    suspend fun launchSearchForCards(): Job {
+    suspend fun launchSearchForCards(): Job? {
+        if (!initCompleted) return null
         // update the UI while we're searching
         clearCardsList()
 

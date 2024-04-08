@@ -1330,13 +1330,9 @@ open class CardBrowser :
     @RustCleanup("remove card cache; switch to RecyclerView and browserRowForId (#11889)")
     @VisibleForTesting
     fun searchCards() {
-        if (!viewModel.initCompleted) {
-            Timber.d("!initCompleted, not searching")
-            return
-        }
         launchCatchingTask {
             // TODO: Move this to a LinearProgressIndicator and remove withProgress
-            withProgress { viewModel.launchSearchForCards().join() }
+            withProgress { viewModel.launchSearchForCards()?.join() }
         }
     }
 
@@ -2100,7 +2096,7 @@ open class CardBrowser :
 
     @VisibleForTesting
     fun searchCards(searchQuery: String) {
-        launchCatchingTask { withProgress { viewModel.launchSearchForCards(searchQuery).join() } }
+        launchCatchingTask { withProgress { viewModel.launchSearchForCards(searchQuery)?.join() } }
     }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
