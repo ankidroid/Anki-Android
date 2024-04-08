@@ -241,15 +241,9 @@ open class CardBrowser :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    fun changeCardOrder(which: SortType) {
-        when (viewModel.changeCardOrder(which)) {
-            ChangeCardOrderResult.OrderChange -> { searchCards() }
-            ChangeCardOrderResult.DirectionChange -> {
-                cards.reverse()
-                updateList()
-            }
-            null -> {}
-        }
+    fun changeCardOrder(sortType: SortType) = launchCatchingTask {
+        // TODO: remove withProgress and replace with search progress bar
+        withProgress { viewModel.changeCardOrder(sortType)?.join() }
     }
 
     @VisibleForTesting

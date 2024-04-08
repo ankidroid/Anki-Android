@@ -384,19 +384,29 @@ class CardBrowserViewModel(
 
     fun selectedRowCount(): Int = selectedRows.size
 
-    fun changeCardOrder(which: SortType): ChangeCardOrderResult? {
-        if (which != order) {
-            Timber.i("updating order to %s", which)
-            sortTypeFlow.update { which }
-            reverseDirectionFlow.update { ReverseDirection(orderAsc = false) }
-            return ChangeCardOrderResult.OrderChange
-        } else if (which != SortType.NO_SORTING) {
-            Timber.i("reversing search order")
+    suspend fun changeCardOrder(which: SortType): Job? {
+        val changeType = when {
+            which != order -> ChangeCardOrder.OrderChange(which)
             // if the same element is selected again, reverse the order
-            reverseDirectionFlow.update { ReverseDirection(orderAsc = !orderAsc) }
-            return ChangeCardOrderResult.DirectionChange
+            which != SortType.NO_SORTING -> ChangeCardOrder.DirectionChange
+            else -> null
+        } ?: return null
+
+        Timber.i("updating order: %s", changeType)
+
+        return when (changeType) {
+            is ChangeCardOrder.OrderChange -> {
+                sortTypeFlow.update { which }
+                reverseDirectionFlow.update { ReverseDirection(orderAsc = false) }
+                launchSearchForCards()
+            }
+            ChangeCardOrder.DirectionChange -> {
+                reverseDirectionFlow.update { ReverseDirection(orderAsc = !orderAsc) }
+                cards.reverse()
+                flowOfSearchState.emit(SearchState.Completed)
+                null
+            }
         }
-        return null
     }
 
     fun setColumn1Index(value: Int) = flowOfColumnIndex1.update { value }
@@ -664,10 +674,9 @@ class CardBrowserViewModel(
         }
     }
 
-    /** temporary result class for [changeCardOrder] */
-    enum class ChangeCardOrderResult {
-        OrderChange,
-        DirectionChange
+    private sealed interface ChangeCardOrder {
+        data class OrderChange(val sortType: SortType) : ChangeCardOrder
+        data object DirectionChange : ChangeCardOrder
     }
 
     /** Whether [CardBrowserViewModel] is processing a search */
