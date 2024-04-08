@@ -20,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -46,9 +47,20 @@ internal class NotetypesAdapter(
     private val onShowFields: (NoteTypeUiModel) -> Unit,
     private val onEditCards: (NoteTypeUiModel) -> Unit,
     private val onRename: (NoteTypeUiModel) -> Unit,
-    private val onDelete: (NoteTypeUiModel) -> Unit
+    private val onDelete: (NoteTypeUiModel) -> Unit,
+    private val callback: NotetypeAdapterCallback
 ) : ListAdapter<NoteTypeUiModel, NotetypeViewHolder>(notetypeNamesAndCountDiff) {
     private val layoutInflater = LayoutInflater.from(context)
+    interface NotetypeAdapterCallback {
+        fun onItemLongClicked()
+    }
+
+    fun getSelectedItems(): List<NoteTypeUiModel> {
+        val selectedItems = currentList.filter { it.isSelected }
+        println("Count :" + selectedItems.count() + "\n")
+        println("Get -->\n$selectedItems")
+        return selectedItems
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotetypeViewHolder {
         return NotetypeViewHolder(
@@ -56,7 +68,8 @@ internal class NotetypesAdapter(
             onDelete = onDelete,
             onRename = onRename,
             onEditCards = onEditCards,
-            onShowFields = onShowFields
+            onShowFields = onShowFields,
+            callback = callback
         )
     }
 
@@ -70,10 +83,12 @@ internal class NotetypeViewHolder(
     onShowFields: (NoteTypeUiModel) -> Unit,
     onEditCards: (NoteTypeUiModel) -> Unit,
     onRename: (NoteTypeUiModel) -> Unit,
-    onDelete: (NoteTypeUiModel) -> Unit
+    onDelete: (NoteTypeUiModel) -> Unit,
+    private val callback: NotetypesAdapter.NotetypeAdapterCallback
 ) : RecyclerView.ViewHolder(rowView) {
     val name: TextView = rowView.findViewById(R.id.note_name)
     val useCount: TextView = rowView.findViewById(R.id.note_use_count)
+    private val selected_item_checkbox: CheckBox = rowView.findViewById(R.id.selected_item_checkbox)
     private val btnDelete: Button = rowView.findViewById(R.id.note_delete)
     private val btnRename: Button = rowView.findViewById(R.id.note_rename)
     private val btnEditCards: Button = rowView.findViewById(R.id.note_edit_cards)
@@ -95,5 +110,45 @@ internal class NotetypeViewHolder(
             noteTypeUiModel.useCount,
             noteTypeUiModel.useCount
         )
+        if (noteTypeUiModel.isSelected) {
+            showCheckBox(selected_item_checkbox)
+        } else {
+            hideCheckBox(selected_item_checkbox)
+        }
+
+        // Since this is a checkbox if uncheck (not normal long tap)
+        selected_item_checkbox.setOnClickListener {
+            val isSelected = !noteTypeUiModel.isSelected
+            noteTypeUiModel.isSelected = isSelected
+            hideCheckBox(selected_item_checkbox)
+            callback.onItemLongClicked()
+        }
+
+        // perform long click on item view
+        itemView.setOnLongClickListener {
+            val position = bindingAdapterPosition
+            if (position == RecyclerView.NO_POSITION) {
+                return@setOnLongClickListener false
+            }
+            val isSelected = !noteTypeUiModel.isSelected
+            noteTypeUiModel.isSelected = isSelected
+
+            if (isSelected) {
+                showCheckBox(selected_item_checkbox)
+            } else {
+                hideCheckBox(selected_item_checkbox)
+            }
+            selected_item_checkbox.isChecked = isSelected
+
+            // callback to know that item was clicked
+            callback.onItemLongClicked()
+            true
+        }
+    }
+    private fun hideCheckBox(checkBox: CheckBox) {
+        checkBox.visibility = View.GONE
+    }
+    private fun showCheckBox(checkBox: CheckBox) {
+        checkBox.visibility = View.VISIBLE
     }
 }
