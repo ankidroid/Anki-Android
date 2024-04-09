@@ -94,6 +94,8 @@ open class RobolectricTest : AndroidTest {
 
         ChangeManager.clearSubscribers()
 
+        validateRunWithAnnotationPresent()
+
         // resolved issues with the collection being reused if useInMemoryDatabase is false
         CollectionManager.setColForTests(null)
 
@@ -275,17 +277,7 @@ open class RobolectricTest : AndroidTest {
     }
 
     val targetContext: Context
-        get() {
-            return try {
-                ApplicationProvider.getApplicationContext()
-            } catch (e: IllegalStateException) {
-                if (e.message != null && e.message!!.startsWith("No instrumentation registered!")) {
-                    // Explicitly ignore the inner exception - generates line noise
-                    throw IllegalStateException("Annotate class: '${javaClass.simpleName}' with '@RunWith(AndroidJUnit4.class)'")
-                }
-                throw e
-            }
-        }
+        get() = ApplicationProvider.getApplicationContext()
 
     /**
      * Returns an instance of [SharedPreferences] using the test context
@@ -421,6 +413,18 @@ open class RobolectricTest : AndroidTest {
     @Suppress("MemberVisibilityCanBePrivate")
     fun editPreferences(action: SharedPreferences.Editor.() -> Unit) =
         getPreferences().edit(action = action)
+
+    private fun validateRunWithAnnotationPresent() {
+        try {
+            ApplicationProvider.getApplicationContext()
+        } catch (e: IllegalStateException) {
+            if (e.message != null && e.message!!.startsWith("No instrumentation registered!")) {
+                // Explicitly ignore the inner exception - generates line noise
+                throw IllegalStateException("Annotate class: '${javaClass.simpleName}' with '@RunWith(AndroidJUnit4.class)'")
+            }
+            throw e
+        }
+    }
 
     private fun maybeSetupBackend() {
         try {
