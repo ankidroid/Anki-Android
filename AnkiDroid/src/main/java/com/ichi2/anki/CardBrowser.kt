@@ -35,7 +35,6 @@ import androidx.appcompat.widget.ThemeUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
-import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
@@ -86,6 +85,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.SECONDS_PER_DAY
+import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
