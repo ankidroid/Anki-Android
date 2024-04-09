@@ -611,7 +611,7 @@ open class DeckPicker :
         val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager)
         if (webviewPackageInfo == null) {
             val snackbarMessage = "No Android System WebView found"
-            showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
+            postSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
             return
         }
 
@@ -619,7 +619,7 @@ open class DeckPicker :
         if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
             val snackbarMessage =
                 "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION)."
-            showSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
+            postSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
         }
     }
 
@@ -1427,7 +1427,7 @@ open class DeckPicker :
             // Specifying a checkpoint in the future is not supported, please don't do it!
             if (current < upgradeDbVersion) {
                 Timber.e("Invalid value for CHECK_DB_AT_VERSION")
-                showSnackbar("Invalid value for CHECK_DB_AT_VERSION")
+                postSnackbar("Invalid value for CHECK_DB_AT_VERSION")
                 onFinishedStartup()
                 return
             }
@@ -1477,13 +1477,28 @@ open class DeckPicker :
                 // Don't show new features dialog for development builds
                 InitialActivity.setUpgradedToLatestVersion(preferences)
                 val ver = resources.getString(R.string.updated_version, VersionUtils.pkgVersionName)
-                showSnackbar(ver, Snackbar.LENGTH_SHORT)
+                postSnackbar(ver, Snackbar.LENGTH_SHORT)
                 showStartupScreensAndDialogs(preferences, 2)
             }
         } else {
             // This is the main call when there is nothing special required
             Timber.i("No startup screens required")
             onFinishedStartup()
+        }
+    }
+
+    // #16061. We have to queue snackbar to avoid the misaligned snackbar showed from onCreate()
+    private fun postSnackbar(
+        text: CharSequence,
+        duration: Int = Snackbar.LENGTH_LONG
+    ) {
+        val view: View? = findViewById(R.id.root_layout)
+        if (view != null) {
+            view.post {
+                showSnackbar(text, duration)
+            }
+        } else {
+            showSnackbar(text, duration)
         }
     }
 
