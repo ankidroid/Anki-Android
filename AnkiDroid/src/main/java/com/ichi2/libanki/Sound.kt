@@ -25,9 +25,11 @@
 
 package com.ichi2.libanki
 
+import android.text.TextUtils
 import anki.config.ConfigKey
 import com.ichi2.anki.CollectionManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.utils.NotInLibAnki
 import org.intellij.lang.annotations.Language
 import java.io.File
 import java.nio.file.Paths
@@ -53,7 +55,31 @@ data class TTSTag(
 /**
  * Contains the filename inside a `[sound:...]` tag.
  */
-data class SoundOrVideoTag(val filename: String) : AvTag()
+data class SoundOrVideoTag(val filename: String) : AvTag() {
+
+    @NotInLibAnki
+    fun getType(mediaDir: String): Type {
+        val extension = filename.substringAfterLast(".", "")
+        return when (extension) {
+            in Sound.VIDEO_ONLY_EXTENSIONS -> Type.VIDEO
+            in Sound.AUDIO_OR_VIDEO_EXTENSIONS -> {
+                val file = File(mediaDir, filename)
+                if (isAudioFileInVideoContainer(file) == true) {
+                    Type.AUDIO
+                } else {
+                    Type.VIDEO
+                }
+            }
+            // assume audio if we don't know. Our audio code is more resilient than HTML video
+            else -> Type.AUDIO
+        }
+    }
+
+    enum class Type {
+        AUDIO,
+        VIDEO
+    }
+}
 
 /** In python, this is a union of [TTSTag] and [SoundOrVideoTag] */
 open class AvTag
@@ -102,32 +128,30 @@ object Sound {
                     </span></a>"""
             return result
         }
-
         fun asVideo(tag: SoundOrVideoTag): String {
             val path = Paths.get(mediaDir, tag.filename).toString()
             val uri = getFileUri(path)
 
+            val playsound = "${playTag.side}:${playTag.index}"
+
+            // TODO: Make the loading screen nicer if the video doesn't autoplay
             @Language("HTML")
             val result =
-                """<video src="$uri" controls controlsList="nodownload"></video>"""
+                """<video
+                    | src="$uri"
+                    | controls
+                    | data-file="${TextUtils.htmlEncode(tag.filename)}"
+                    | data-play="$playsound" controlsList="nodownload"></video>
+                """.trimMargin()
             return result
         }
 
         when (tag) {
             is TTSTag -> asAudio()
             is SoundOrVideoTag -> {
-                val extension = tag.filename.substringAfterLast(".", "")
-                when (extension) {
-                    in VIDEO_ONLY_EXTENSIONS -> asVideo(tag)
-                    in AUDIO_OR_VIDEO_EXTENSIONS -> {
-                        val file = File(mediaDir, tag.filename)
-                        if (isAudioFileInVideoContainer(file) == true) {
-                            asAudio()
-                        } else {
-                            asVideo(tag)
-                        }
-                    }
-                    else -> asAudio()
+                when (tag.getType(mediaDir)) {
+                    SoundOrVideoTag.Type.AUDIO -> asAudio()
+                    SoundOrVideoTag.Type.VIDEO -> asVideo(tag)
                 }
             }
             else -> throw IllegalStateException("unrecognised tag")
