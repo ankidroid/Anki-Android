@@ -2131,7 +2131,9 @@ open class DeckPicker :
                     decks.removeDecks(listOf(did))
                 }
             }
-            focusedDeck = 1
+            // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
+            // to match and avoid unnecessary scrolls in `renderPage()`.
+            focusedDeck = Consts.DEFAULT_DECK_ID
             showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT) {
                 setAction(R.string.undo) { undo() }
             }
