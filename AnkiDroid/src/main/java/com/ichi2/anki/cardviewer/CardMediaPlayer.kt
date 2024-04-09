@@ -88,11 +88,13 @@ import java.io.File
  * This uses [com.ichi2.anki.MetaDB], and may either read `<tts>` or all text on a card
  *
  */
+@NeedsTest("Integration test: A video is autoplayed if it's the first media on a card")
 class CardMediaPlayer : Closeable {
 
     private val soundTagPlayer: SoundTagPlayer
     private val ttsPlayer: Deferred<TtsPlayer>
     private var soundErrorListener: SoundErrorListener? = null
+    var javascriptEvaluator: () -> JavascriptEvaluator? = { null }
 
     constructor(soundTagPlayer: SoundTagPlayer, ttsPlayer: Deferred<TtsPlayer>, soundErrorListener: SoundErrorListener) {
         this.soundTagPlayer = soundTagPlayer
@@ -101,7 +103,8 @@ class CardMediaPlayer : Closeable {
     }
 
     constructor() {
-        this.soundTagPlayer = SoundTagPlayer(getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance).path))
+        // javascriptEvaluator is wrapped in a lambda so the value in this class propagates down
+        this.soundTagPlayer = SoundTagPlayer(getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance).path), VideoPlayer { javascriptEvaluator() })
         this.ttsPlayer = scope.async { AndroidTtsPlayer.createInstance(AnkiDroidApp.instance, scope) }
     }
 
@@ -340,7 +343,7 @@ class CardMediaPlayer : Closeable {
             // tts can take a long time to init, this defers the operation until it's needed
             val tts = scope.async(Dispatchers.IO) { AndroidTtsPlayer.createInstance(viewer, viewer.lifecycleScope) }
 
-            val soundPlayer = SoundTagPlayer(soundUriBase)
+            val soundPlayer = SoundTagPlayer(soundUriBase, VideoPlayer { viewer.webViewClient!! })
 
             return CardMediaPlayer(
                 soundTagPlayer = soundPlayer,

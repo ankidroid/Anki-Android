@@ -176,7 +176,7 @@ abstract class AbstractFlashcardViewer :
         private set
 
     /** Accessor for [WebView.getWebViewClient] before API 26 */
-    private var webViewClient: CardViewerWebClient? = null
+    var webViewClient: CardViewerWebClient? = null
 
     private var cardFrame: FrameLayout? = null
     private var touchLayer: FrameLayout? = null
@@ -2234,10 +2234,10 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    protected inner class CardViewerWebClient internal constructor(
+    inner class CardViewerWebClient internal constructor(
         private val loader: ViewerResourceHandler?,
         private val onPageFinishedCallback: OnPageFinishedCallback? = null
-    ) : WebViewClient() {
+    ) : WebViewClient(), JavascriptEvaluator {
         private var pageFinishedFired = true
         private val pageRenderStopwatch = Stopwatch.init("page render")
 
@@ -2479,6 +2479,12 @@ abstract class AbstractFlashcardViewer :
         @TargetApi(Build.VERSION_CODES.O)
         override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
             return onRenderProcessGoneDelegate.onRenderProcessGone(view, detail)
+        }
+
+        override fun eval(js: String) {
+            // WARNING: it is not guaranteed that card.js has loaded at this point
+            // even if `evaluateAfterDOMContentLoaded` is called
+            runOnUiThread { webView!!.evaluateJavascript(js, null) }
         }
     }
 
