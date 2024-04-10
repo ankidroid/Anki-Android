@@ -9,6 +9,10 @@ import androidx.annotation.StringRes
 import com.ichi2.libanki.utils.Time
 import java.util.*
 
+fun getDensityAdjustedValue(context: Context, value: Float): Float {
+    return context.resources.displayMetrics.density * value
+}
+
 fun getDayStart(time: Time): Long {
     val cal = time.calendar()
     if (cal[Calendar.HOUR_OF_DAY] < 4) {
@@ -43,9 +47,5 @@ object UIUtils {
 
     fun showThemedToast(context: Context, @StringRes textResource: Int, shortLength: Boolean) {
         Toast.makeText(context, textResource, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
-    }
-
-    fun getDensityAdjustedValue(context: Context, value: Float): Float {
-        return context.resources.displayMetrics.density * value
     }
 }
