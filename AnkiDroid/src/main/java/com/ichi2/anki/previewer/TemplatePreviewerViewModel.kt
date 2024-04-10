@@ -58,7 +58,7 @@ class TemplatePreviewerViewModel(
     private val note: Deferred<Note>
     private val templateNames: Deferred<List<String>>
     private val clozeOrds: Deferred<List<Int>>?
-    override var currentCard: Deferred<Card>
+    override lateinit var currentCard: Deferred<Card>
 
     init {
         note = asyncIO {
@@ -73,17 +73,7 @@ class TemplatePreviewerViewModel(
                 tags = arguments.tags
             }
         }
-        currentCard = asyncIO {
-            val note = note.await()
-            withCol {
-                note.ephemeralCard(
-                    col = this,
-                    ord = ordFlow.value,
-                    customNoteType = notetype,
-                    fillEmpty = fillEmpty
-                )
-            }
-        }
+
         if (isCloze) {
             val clozeNumbers = asyncIO {
                 val note = note.await()
@@ -114,7 +104,18 @@ class TemplatePreviewerViewModel(
             return
         }
         launchCatchingIO {
-            ordFlow.collectLatest {
+            ordFlow.collectLatest { ord ->
+                currentCard = asyncIO {
+                    val note = note.await()
+                    withCol {
+                        note.ephemeralCard(
+                            col = this,
+                            ord = ord,
+                            customNoteType = notetype,
+                            fillEmpty = fillEmpty
+                        )
+                    }
+                }
                 showQuestion()
                 loadAndPlaySounds(CardSide.QUESTION)
             }
