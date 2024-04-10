@@ -25,6 +25,7 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
+import kotlin.test.assertNotEquals
 
 @RunWith(AndroidJUnit4::class)
 class TemplatePreviewerViewModelTest : JvmTest() {
@@ -45,6 +46,17 @@ class TemplatePreviewerViewModelTest : JvmTest() {
             onTabSelected(0) // 0 will be c4 (ord 3), 1: c7 (ord 6), 2: c9 (ord 8)
             assertThat(ordFlow.value, equalTo(3))
         }
+
+    @Test
+    fun `card ords are changed`() {
+        runClozeTest(fields = mutableListOf("{{c1::one}} {{c2::bar}}")) {
+            onPageFinished(false)
+            val ord1 = currentCard.await().ord
+            onTabSelected(1)
+            val ord2 = currentCard.await().ord
+            assertNotEquals(ord1, ord2)
+        }
+    }
 
     private fun runClozeTest(ord: Int = 0, fields: MutableList<String>? = null, block: suspend TemplatePreviewerViewModel.() -> Unit) = runTest {
         val notetype = col.notetypes.byName("Cloze")!!
