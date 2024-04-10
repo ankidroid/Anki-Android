@@ -47,5 +47,3 @@ fun getDayStart(time: Time): Long {
 fun convertDpToPixel(dp: Float, context: Context): Float {
     return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
 }
-
-object UIUtils
