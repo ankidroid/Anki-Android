@@ -24,7 +24,7 @@ import androidx.appcompat.view.menu.MenuItemImpl
 import androidx.core.view.forEach
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.convertDpToPixel
+import com.ichi2.anki.convertDpToPixel
 
 private fun Menu.forEachOverflowItemRecursive(block: (MenuItem) -> Unit) {
     (this as? MenuBuilder)?.flagActionItems()

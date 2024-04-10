@@ -9,6 +9,17 @@ import androidx.annotation.StringRes
 import com.ichi2.libanki.utils.Time
 import java.util.*
 
+/**
+ * This method converts dp unit to equivalent pixels, depending on device density.
+ *
+ * @param dp A value in dp (density independent pixels) unit.
+ * @param context Context to get resources and device specific display metrics.
+ * @return A float value to represent px value which is equivalent to the passed dp value.
+ */
+fun convertDpToPixel(dp: Float, context: Context): Float {
+    return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+}
+
 object UIUtils {
     fun showThemedToast(context: Context, text: String, shortLength: Boolean) {
         Toast.makeText(context, text, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
@@ -36,16 +47,5 @@ object UIUtils {
         cal[Calendar.SECOND] = 0
         cal[Calendar.MILLISECOND] = 0
         return cal.timeInMillis
-    }
-
-    /**
-     * This method converts dp unit to equivalent pixels, depending on device density.
-     *
-     * @param dp A value in dp (density independent pixels) unit.
-     * @param context Context to get resources and device specific display metrics.
-     * @return A float value to represent px value which is equivalent to the passed dp value.
-     */
-    fun convertDpToPixel(dp: Float, context: Context): Float {
-        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 }
