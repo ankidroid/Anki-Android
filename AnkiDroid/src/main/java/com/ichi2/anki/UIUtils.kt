@@ -9,6 +9,18 @@ import androidx.annotation.StringRes
 import com.ichi2.libanki.utils.Time
 import java.util.*
 
+fun showThemedToast(context: Context, text: String, shortLength: Boolean) {
+    Toast.makeText(context, text, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
+}
+
+fun showThemedToast(context: Context, text: CharSequence, shortLength: Boolean) {
+    showThemedToast(context, text.toString(), shortLength)
+}
+
+fun showThemedToast(context: Context, @StringRes textResource: Int, shortLength: Boolean) {
+    Toast.makeText(context, textResource, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
+}
+
 fun getDensityAdjustedValue(context: Context, value: Float): Float {
     return context.resources.displayMetrics.density * value
 }
@@ -36,16 +48,4 @@ fun convertDpToPixel(dp: Float, context: Context): Float {
     return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
 }
 
-object UIUtils {
-    fun showThemedToast(context: Context, text: String, shortLength: Boolean) {
-        Toast.makeText(context, text, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
-    }
-
-    fun showThemedToast(context: Context, text: CharSequence, shortLength: Boolean) {
-        showThemedToast(context, text.toString(), shortLength)
-    }
-
-    fun showThemedToast(context: Context, @StringRes textResource: Int, shortLength: Boolean) {
-        Toast.makeText(context, textResource, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
-    }
-}
+object UIUtils

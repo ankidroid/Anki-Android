@@ -23,7 +23,6 @@ import android.util.AttributeSet
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.ListPreference
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.CardSideSelectionDialog
@@ -38,6 +37,7 @@ import com.ichi2.anki.reviewer.MappableBinding.*
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromGesture
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.screenBuilder
+import com.ichi2.anki.showThemedToast
 import com.ichi2.ui.AxisPicker
 import com.ichi2.ui.KeyPicker
 import com.ichi2.utils.*
@@ -226,7 +226,7 @@ class ControlPreference : ListPreference {
 
         val commandName = context.getString(bindingCommand.resourceId)
         val text = context.getString(R.string.bindings_already_bound, commandName)
-        UIUtils.showThemedToast(context, text, true)
+        showThemedToast(context, text, true)
     }
 
     /** @return command where the binding is mapped excluding the current command */

@@ -118,10 +118,10 @@ class DevOptionsFragment : SettingsFragment() {
                         media.addFile(f)
                     }
                     if (i % 1000 == 0) {
-                        UIUtils.showThemedToast(requireContext(), "$i files added.", true)
+                        showThemedToast(requireContext(), "$i files added.", true)
                     }
                 }
-                UIUtils.showThemedToast(requireContext(), "$numberOfFiles files added successfully", false)
+                showThemedToast(requireContext(), "$numberOfFiles files added successfully", false)
             }
         }
     }

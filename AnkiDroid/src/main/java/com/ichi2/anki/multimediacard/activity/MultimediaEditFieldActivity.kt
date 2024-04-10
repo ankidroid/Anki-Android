@@ -36,9 +36,9 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.anki.showThemedToast
 import com.ichi2.audio.AudioRecordingController
 import com.ichi2.audio.AudioRecordingController.Companion.isAudioRecordingSaved
 import com.ichi2.audio.AudioRecordingController.Companion.isRecording
@@ -94,7 +94,7 @@ class MultimediaEditFieldActivity :
         val intent = this.intent
         val extras = getFieldFromIntent(intent)
         if (extras == null) {
-            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_failed), false)
+            showThemedToast(this, getString(R.string.multimedia_editor_failed), false)
             finishCancel()
             return
         }
@@ -320,7 +320,7 @@ class MultimediaEditFieldActivity :
                 recreateEditingUIUsingCachedRequest()
                 return
             }
-            UIUtils.showThemedToast(
+            showThemedToast(
                 this,
                 resources.getString(R.string.multimedia_editor_audio_permission_refused),
                 true
@@ -329,7 +329,7 @@ class MultimediaEditFieldActivity :
         }
         if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.size == 1) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                UIUtils.showThemedToast(
+                showThemedToast(
                     this,
                     resources.getString(R.string.multimedia_editor_camera_permission_refused),
                     true
@@ -343,7 +343,7 @@ class MultimediaEditFieldActivity :
 
     private fun cancelActivityWithAssertionFailure(logMessage: String) {
         Timber.e(logMessage)
-        UIUtils.showThemedToast(this, getString(R.string.mutimedia_editor_assertion_failed), false)
+        showThemedToast(this, getString(R.string.mutimedia_editor_assertion_failed), false)
         finishCancel()
     }
 

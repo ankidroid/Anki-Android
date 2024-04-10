@@ -310,7 +310,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 val text = jsonObject.getString("text")
                 val shortLength = jsonObject.optBoolean("shortLength", true)
                 val msgDecode = activity.decodeUrl(text)
-                UIUtils.showThemedToast(context, msgDecode, shortLength)
+                showThemedToast(context, msgDecode, shortLength)
                 convertToByteArray(apiContract, true)
             }
             "showAnswer" -> {

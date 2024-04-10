@@ -24,7 +24,6 @@ import android.speech.tts.UtteranceProgressListener
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.reviewer.CardSide

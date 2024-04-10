@@ -19,7 +19,7 @@ import android.content.Intent
 import android.net.Uri
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.showThemedToast
 import com.ichi2.compat.customtabs.CustomTabActivityHelper.CustomTabFallback
 
 /**
