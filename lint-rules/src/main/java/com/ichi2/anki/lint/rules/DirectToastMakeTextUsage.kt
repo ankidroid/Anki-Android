@@ -56,7 +56,7 @@ class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
-        if (!LintUtils.isAnAllowedClass(foundClasses, "UIUtils") && evaluator.isMemberInClass(method, "android.widget.Toast")) {
+        if (!LintUtils.isAnAllowedClass(foundClasses, "UIUtilsKt") && evaluator.isMemberInClass(method, "android.widget.Toast")) {
             context.report(
                 ISSUE,
                 node,

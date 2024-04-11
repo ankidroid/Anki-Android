@@ -55,7 +55,7 @@ package com.ichi2.anki.lint.rules;
                                                                
 import android.widget.Toast;                                   
                                                                
-public class UIUtils {                                         
+public class UIUtilsKt {
                                                                
     public static void main(String[] args) {                   
         Toast.makeText();                                      
