@@ -17,6 +17,7 @@
 package com.ichi2.anki.scheduling
 
 import android.app.Dialog
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ import android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
 import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 import android.widget.TextView
 import androidx.annotation.CheckResult
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
@@ -77,11 +79,30 @@ import kotlin.math.min
 class SetDueDateDialog : DialogFragment() {
     val viewModel: SetDueDateViewModel by activityViewModels<SetDueDateViewModel>()
 
+    // used to determine if a rotation has taken place
+    private var initialRotation: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val cardIds = requireNotNull(requireArguments().getLongArray(ARG_CARD_IDS)) { ARG_CARD_IDS }
         viewModel.init(cardIds)
         Timber.d("Set due date dialog: %d card(s)", cardIds.size)
+        this.initialRotation = getScreenRotation()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // HACK: After significant effort, I was unable to properly handle the interaction
+        // between the ViewPager and `android:configChanges="orientation"`
+        // (the window size & position was incorrectly calculated)
+
+        // There was a minor bug in Reviewer (timer is reset), which meant that
+        // generally we could not remove the configChanges, we probably can with the CardBrowser
+        // For now, only recreate the activity if this dialog is open
+        if (getScreenRotation() != initialRotation) {
+            Timber.d("recreating activity: orientation changed with 'Set due date' open")
+            requireAnkiActivity().recreate()
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -133,13 +154,13 @@ class SetDueDateDialog : DialogFragment() {
 
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
-        // this is required for the keyboard to appear
+        // this is required for the keyboard to appear: https://stackoverflow.com/a/10133603/
         dialog.window?.clearFlags(FLAG_NOT_FOCUSABLE or FLAG_ALT_FOCUSABLE_IM)
 
         // The dialog is too wide on tablets
         // Select either 450dp (tablets)
         // or 100% of the screen width (smaller phones)
-        val intendedWidth = min(450.dpToPx, resources.displayMetrics.widthPixels)
+        val intendedWidth = min(MAX_WIDTH_DP.dpToPx, resources.displayMetrics.widthPixels)
         Timber.d("updating width to %d", intendedWidth)
         this.dialog?.window?.setLayout(
             intendedWidth,
@@ -147,10 +168,13 @@ class SetDueDateDialog : DialogFragment() {
         )
     }
 
+    private fun getScreenRotation() = ContextCompat.getDisplayOrDefault(requireContext()).rotation
+
     private fun launchUpdateDueDate() = requireAnkiActivity().updateDueDate(viewModel)
 
     companion object {
         const val ARG_CARD_IDS = "ARGS_CARD_IDS"
+        const val MAX_WIDTH_DP = 450
 
         @CheckResult
         fun newInstance(cardIds: List<CardId>) = SetDueDateDialog().apply {
