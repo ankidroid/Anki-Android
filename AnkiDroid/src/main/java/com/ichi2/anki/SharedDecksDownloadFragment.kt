@@ -420,7 +420,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         try {
             context?.startActivity(fileIntent)
         } catch (e: ActivityNotFoundException) {
-            context?.let { UIUtils.showThemedToast(it, R.string.something_wrong, false) }
+            context?.let { showThemedToast(it, R.string.something_wrong, false) }
             Timber.w(e)
         }
     }
@@ -436,12 +436,12 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         if (isVisible && !isSuccessful) {
             if (isInvalidDeckFile) {
                 Timber.i("File is not a valid deck, hence return from the download screen")
-                context?.let { UIUtils.showThemedToast(it, R.string.import_log_no_apkg, false) }
+                context?.let { showThemedToast(it, R.string.import_log_no_apkg, false) }
                 // Go back if file is not a deck and cannot be imported
                 activity?.onBackPressed()
             } else {
                 Timber.i("Download failed, update UI and provide option to retry")
-                context?.let { UIUtils.showThemedToast(it, R.string.something_wrong, false) }
+                context?.let { showThemedToast(it, R.string.something_wrong, false) }
                 // Update UI if download could not be successful
                 tryAgainButton.visibility = View.VISIBLE
                 cancelButton.visibility = View.GONE

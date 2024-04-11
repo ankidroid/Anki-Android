@@ -26,10 +26,10 @@ import anki.config.ConfigKey
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.BackgroundImage.FileSizeResult
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
@@ -171,10 +171,10 @@ class AppearanceSettingsFragment : SettingsFragment() {
         try {
             when (val sizeResult = BackgroundImage.validateBackgroundImageFileSize(selectedImage)) {
                 is FileSizeResult.FileTooLarge -> {
-                    UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, sizeResult.maxMB), false)
+                    showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, sizeResult.maxMB), false)
                 }
                 is FileSizeResult.UncompressedBitmapTooLarge -> {
-                    UIUtils.showThemedToast(requireContext(), getString(R.string.image_dimensions_too_large, sizeResult.width, sizeResult.height), false)
+                    showThemedToast(requireContext(), getString(R.string.image_dimensions_too_large, sizeResult.width, sizeResult.height), false)
                 }
                 is FileSizeResult.OK -> {
                     BackgroundImage.import(selectedImage)

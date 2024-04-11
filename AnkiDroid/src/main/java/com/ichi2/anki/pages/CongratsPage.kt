@@ -38,10 +38,10 @@ import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.DeckId
@@ -187,7 +187,7 @@ class CongratsPage :
             if (displayNewCongratsScreen(activity)) {
                 activity.startActivity(getIntent(activity))
             } else {
-                UIUtils.showThemedToast(activity, R.string.studyoptions_congrats_finished, false)
+                showThemedToast(activity, R.string.studyoptions_congrats_finished, false)
             }
         }
 

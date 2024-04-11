@@ -47,7 +47,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         super.onCreate(savedInstanceState)
         val bundle = savedInstanceState ?: intent.extras
         if (bundle == null) {
-            UIUtils.showThemedToast(this, getString(R.string.card_template_editor_card_browser_appearance_failed), true)
+            showThemedToast(this, getString(R.string.card_template_editor_card_browser_appearance_failed), true)
             finish()
             return
         }

@@ -59,8 +59,8 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DrawingActivity
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.showThemedToast
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.*
@@ -119,7 +119,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
                 // Some apps send this back with app-specific data, direct the user to another app
                 if (result.resultCode >= Activity.RESULT_FIRST_USER) {
-                    UIUtils.showThemedToast(_activity, _activity.getString(R.string.activity_result_unexpected), true)
+                    showThemedToast(_activity, _activity.getString(R.string.activity_result_unexpected), true)
                 }
                 return
             }
@@ -432,7 +432,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     private fun showSomethingWentWrong() {
         try {
-            UIUtils.showThemedToast(_activity, _activity.resources.getString(R.string.multimedia_editor_something_wrong), false)
+            showThemedToast(_activity, _activity.resources.getString(R.string.multimedia_editor_something_wrong), false)
         } catch (e: Exception) {
             // ignore. A NullPointerException may occur in Robolectric
             Timber.w(e, "Failed to display toast")
@@ -440,7 +440,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     private fun showSVGPreviewToast() {
-        UIUtils.showThemedToast(_activity, _activity.resources.getString(R.string.multimedia_editor_svg_preview), false)
+        showThemedToast(_activity, _activity.resources.getString(R.string.multimedia_editor_svg_preview), false)
     }
 
     private fun handleSelectImageIntent(data: Intent?) {
@@ -764,7 +764,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         Timber.d("getImageUri for data %s", data)
         val uri = data.data
         if (uri == null) {
-            UIUtils.showThemedToast(context, context.getString(R.string.select_image_failed), false)
+            showThemedToast(context, context.getString(R.string.select_image_failed), false)
         }
         return uri
     }

@@ -22,7 +22,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import androidx.lifecycle.Lifecycle
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.annotations.NeedsTest
 import timber.log.Timber

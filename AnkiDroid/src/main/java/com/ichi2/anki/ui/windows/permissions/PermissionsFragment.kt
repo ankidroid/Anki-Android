@@ -25,7 +25,7 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
-import com.ichi2.anki.UIUtils
+import com.ichi2.anki.showThemedToast
 import timber.log.Timber
 
 /**
@@ -64,7 +64,7 @@ abstract class PermissionsFragment(@LayoutRes contentLayoutId: Int) : Fragment(c
     }
 
     protected fun showToastAndOpenAppSettingsScreen(@StringRes message: Int) {
-        UIUtils.showThemedToast(requireContext(), message, false)
+        showThemedToast(requireContext(), message, false)
         openAppSettingsScreen()
     }
 
