@@ -746,11 +746,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
 
         // 7573: Ctrl+Shift+[Num] to select a field
-        if (event.isCtrlPressed && event.isShiftPressed && KeyUtils.isDigit(event)) {
-            val digit = KeyUtils.getDigit(event)
+        if (event.isCtrlPressed && event.isShiftPressed) {
             // map: '0' -> 9; '1' to 0
-            val indexBase10 = ((digit - 1) % 10 + 10) % 10
-            selectFieldIndex(indexBase10)
+            KeyUtils.getDigit(event)?.let { digit ->
+                val indexBase10 = ((digit - 1) % 10 + 10) % 10
+                selectFieldIndex(indexBase10)
+            }
         }
         return super.onKeyUp(keyCode, event)
     }
