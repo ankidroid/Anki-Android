@@ -19,6 +19,7 @@ package com.ichi2.anki.scheduling
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
 import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 import android.widget.TextView
@@ -57,6 +58,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import kotlin.math.min
 
 /**
  * Dialog for [Scheduler.setDueDate], containing two tabs: [Tab.SINGLE_DAY] and [Tab.DATE_RANGE]
@@ -131,8 +133,18 @@ class SetDueDateDialog : DialogFragment() {
 
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
-        // this is required for the keyboard to appear: https://stackoverflow.com/a/10133603/
+        // this is required for the keyboard to appear
         dialog.window?.clearFlags(FLAG_NOT_FOCUSABLE or FLAG_ALT_FOCUSABLE_IM)
+
+        // The dialog is too wide on tablets
+        // Select either 450dp (tablets)
+        // or 100% of the screen width (smaller phones)
+        val intendedWidth = min(450.dpToPx, resources.displayMetrics.widthPixels)
+        Timber.d("updating width to %d", intendedWidth)
+        this.dialog?.window?.setLayout(
+            intendedWidth,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
     }
 
     private fun launchUpdateDueDate() = requireAnkiActivity().updateDueDate(viewModel)
@@ -249,3 +261,7 @@ private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) = this@An
         Snackbar.LENGTH_SHORT
     )
 }
+
+context (DialogFragment)
+val Int.dpToPx: Int
+    get() = (this * requireContext().resources.displayMetrics.density + 0.5f).toInt()
