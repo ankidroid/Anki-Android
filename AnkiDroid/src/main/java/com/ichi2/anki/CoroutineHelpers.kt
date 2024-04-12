@@ -70,6 +70,10 @@ import kotlin.coroutines.suspendCoroutine
 @VisibleForTesting
 var ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 
+/** Whether [showError] should throw an exception on failure */
+@VisibleForTesting
+var throwOnShowError = false
+
 /**
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
@@ -229,6 +233,7 @@ fun Fragment.launchCatchingTask(
 }
 
 private fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
+    if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg", exception)
     try {
         AlertDialog.Builder(context).show {
             title(R.string.vague_error)
