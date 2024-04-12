@@ -273,6 +273,8 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     fun `change deck does not work for dynamic decks`() = runTest {
+        throwOnShowError = false
+
         val dynId = addDynamicDeck("World")
         selectDefaultDeck()
         val b = getBrowserWithNotes(5)

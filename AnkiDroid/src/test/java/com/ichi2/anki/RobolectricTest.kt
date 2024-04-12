@@ -85,6 +85,7 @@ open class RobolectricTest : AndroidTest {
     @CallSuper
     open fun setUp() {
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
+        throwOnShowError = true
 
         ChangeManager.clearSubscribers()
 
@@ -126,6 +127,7 @@ open class RobolectricTest : AndroidTest {
     @After
     @CallSuper
     open fun tearDown() {
+        throwOnShowError = false
         // If you don't clean up your ActivityControllers you will get OOM errors
         for (controller in controllersForCleanup) {
             Timber.d("Calling destroy on controller %s", controller.get().toString())
