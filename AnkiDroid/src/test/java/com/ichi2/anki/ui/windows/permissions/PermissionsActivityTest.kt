@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.ui.windows.permissions
 
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.commitNow
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -22,16 +23,37 @@ import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
+import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertTrue
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PermissionsActivityTest : RobolectricTest() {
+    private lateinit var scenario: ActivityScenario<PermissionsActivity>
+
+    @Before
+    fun launchActivity() {
+        scenario = ActivityScenario.launch(PermissionsActivity::class.java)
+    }
+
+    @Test
+    fun `Activity can only be closed by tapping the continue button`() {
+        scenario.onActivity { activity ->
+            activity.onBackPressedDispatcher.onBackPressed()
+            assertFalse(activity.isDestroyed)
+        }
+        scenario.onActivity { activity ->
+            activity.findViewById<AppCompatButton>(R.id.continue_button).performClick()
+            assertTrue(activity.isFinishing)
+        }
+    }
 
     @Test
     fun `Each screen starts normally and has the same permissions of a PermissionSet`() {
-        ActivityScenario.launch(PermissionsActivity::class.java).onActivity { activity ->
+        scenario.onActivity { activity ->
             for (permissionSet in PermissionSet.entries) {
                 val fragment = permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance() ?: continue
                 activity.supportFragmentManager.commitNow {
