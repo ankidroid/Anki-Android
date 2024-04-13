@@ -60,7 +60,7 @@
     <string name="expand">Mở rộng</string>
     <string name="collapse">Thu gọn</string>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">còn %d phút</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="other">%1$d hours %2$d left</item>
@@ -88,7 +88,7 @@
     <string name="rename_deck">Đổi tên bộ thẻ</string>
     <string name="create_shortcut">Tạo lối tắt</string>
     <string name="browse_cards">Xem tất cả thẻ</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Chỉnh sửa mô tả</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Thêm</string>
     <string name="menu_add_note">Thêm ghi chú</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Tài khoản đồng bộ</string>
@@ -144,7 +144,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Tiếp tục đồng bộ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Đã huỷ đồng bộ</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Đang huỷ&#8230;\nCó thể hơi lâu.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Đồng bộ hóa đa phương tiện</string>
     <string name="export_deck">Xuất bộ thẻ</string>
     <string name="nothing">Không có gì</string>
     <!-- Card template editor -->

@@ -103,8 +103,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Xác nhận</string>
     <string name="dialog_no">Không</string>
     <string name="dialog_yes">Đồng ý</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Giữ</string>
+    <string name="dialog_remove">Loại bỏ</string>
     <string name="dialog_continue">Tiếp tục</string>
     <string name="dialog_processing">Đang xử lý...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Tạo</string>
@@ -180,7 +180,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Không thể lên lịch lời nhắc</string>
     <string name="boot_service_too_many_notifications">Có quá nhiều lời nhắc được lên lịch. Một số sẽ không xuất hiện</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">Cài ngôn ngữ</string>
     <string name="locale_selection_dialog_summary">Một số bàn phím đa ngôn ngữ, chẳng hạn như GBoard hỗ trợ thay đổi ngôn ngữ khi soạn thảo văn bản\n\nVui lòng yêu cầu tính năng “setImeHintLocales” từ nhà sản xuất bàn phím nếu bàn phím của bạn không thay đổi ngôn ngữ.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Sử dụng AnkiDroid</string>
@@ -208,7 +208,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
     <string name="help_title_send_exception">Gửi báo cáo khắc phục sự cố</string>
     <string name="help_dialog_exception_report_debounce">Báo cáo đã được gửi</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Báo cáo đã được gửi!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Đồng bộ hóa tự động có thể được kích hoạt sau %d giây</item>

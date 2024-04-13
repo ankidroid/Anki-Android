@@ -114,7 +114,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Chạm vào chính giữa</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Chạm vào dưới cùng bên trái</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Chạm vào dưới cùng bên phải</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Lắc thiết bị</string>
     <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Bật menu ngữ cảnh ‘%s’ trên toàn cầu</string>
     <string name="double_scrolling_gap" maxLength="41">Bấm phím scrolling (chuột giữa) hai lần</string>
@@ -174,7 +174,7 @@
     <string name="show_progress" maxLength="41">Hiển thị còn lại</string>
     <string name="show_progress_summ">Hiển thị số thẻ còn lại</string>
     <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta_summ">Hiển thị thời gian còn lại</string>
     <string name="use_current" maxLength="41">Bộ thẻ cho thẻ mới</string>
     <string name="learn_cutoff" maxLength="41">Tìm hiểu trước giới hạn</string>
     <string name="time_limit" maxLength="41">Giới hạn thời gian của hộp thời gian</string>
@@ -198,7 +198,7 @@
     <string name="thirdparty_apps_summary">Xem danh sách các ứng dụng sử dụng AnkiDroid API như từ điển, tiện ích.</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Người xem xét</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Hiển thị tiêu đề bộ thẻ</string>
     <string name="accessibility" maxLength="41">Trợ năng</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
