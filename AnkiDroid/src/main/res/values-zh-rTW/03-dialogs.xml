@@ -63,18 +63,9 @@
         <item quantity="other">%d 卡片已重設</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">重設 %d 張卡牌學習進度</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">當前間期：%d 天</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">重置 x 天內複習的進度：</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d 卡片已重置</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">一張新卡片正在重新排程。重新排程也會將新卡片變為複習卡。使用選項「變更位置」來變更一張新卡片的新排序位置</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">重新排程也會重設排程對卡片未來的影響改變 (間格倍數會被設為 %d%%)</string>
     <string name="answering_error_title">資料庫錯誤</string>
     <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的集合或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>
     <string name="answering_error_report">回報錯誤</string>
@@ -240,4 +231,16 @@
     </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

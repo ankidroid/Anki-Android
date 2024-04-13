@@ -65,21 +65,10 @@
         <item quantity="other">%d resetar cards</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reagendar %d cartão</item>
-        <item quantity="other">Reagendar %d cartões</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Intervalo atual: %d dia</item>
-        <item quantity="other">Intervalo atual: %d dias</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Remarcar para revisão em x dias:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d card reagendado</item>
         <item quantity="other">%d cards reagendados</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Um novo card está sendo reagendado. O reagendamento também transforma os novos cards em cards de revisão. Usar a opção \'reposicionar o card\' para mudar a posição do novo card dentro da nova fila.</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">O reagendamento também redefine como o agendador lida com o card no futuro (a retenção será configurada para %d%%)</string>
     <string name="answering_error_title">Erro de banco de dados</string>
     <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Isso pode estar relacionado a um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso ocorrer frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso pode ser um bug do AnkiDroid; relate o erro para que possamos verificar o problema.</string>
     <string name="answering_error_report">Reportar erro</string>
@@ -247,4 +236,19 @@
     </string>
     <string name="deck_already_exists">Baralho já existe</string>
     <string name="create_deck_numeric_hint">Se você tem problemas com a ordem dos baralhos (ex: ‘10’ aparecendo antes de ‘2’), troque o ‘2’ por ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

@@ -69,27 +69,12 @@
         <item quantity="other">%d карточек сброшены</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Перепланировать %d карточку</item>
-        <item quantity="few">Перепланировать %d карточки</item>
-        <item quantity="many">Перепланировать %d карточек</item>
-        <item quantity="other">Перепланировать %d карточек</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Текущий интервал: %d день</item>
-        <item quantity="few">Текущий интервал: %d дня</item>
-        <item quantity="many">Текущий интервал: %d дней</item>
-        <item quantity="other">Текущий интервал: %d дней</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Через сколько дней запланировать повторение:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d карточка перепланирована</item>
         <item quantity="few">%d карточки перепланированы</item>
         <item quantity="many">%d карточек перепланированы</item>
         <item quantity="other">%d карточек перепланированы</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Новая карточка перепланирована и стала повторяемой. Чтобы изменить номер карточки в очереди, используйте «Переместить карточку»</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Планировщик учтёт, что карточка была перепланирована (лёгкость установлена на %d%%)</string>
     <string name="answering_error_title">Ошибка в базе данных</string>
     <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибкой в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>
@@ -262,4 +247,25 @@
     </string>
     <string name="deck_already_exists">Колода уже существует</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="few">Show cards in</item>
+        <item quantity="many">Show cards in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="few">Show cards in range</item>
+        <item quantity="many">Show cards in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="few">days</item>
+        <item quantity="many">days</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>
