@@ -63,18 +63,9 @@
         <item quantity="other">%d 张卡牌已重置</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">重设 %d 张卡牌学习进度</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">当前间隔：%d 天</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">重新安排在x天后复习</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d 张卡牌已重新安排</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">正在重新安排新卡片。重新安排也会将新卡片转为复习卡片。请使用“更改卡片位置”选项来更改新卡片在新队列中的位置</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">重新安排计划还将重置调度器将来如何处理卡片（难度系数将设置为 %d%%）</string>
     <string name="answering_error_title">数据库错误</string>
     <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是 AnkiDroid 的 bug，请报告这个错误，我们会尽力解决。</string>
     <string name="answering_error_report">报告错误</string>
@@ -240,4 +231,16 @@
     </string>
     <string name="deck_already_exists">牌组已存在</string>
     <string name="create_deck_numeric_hint">如果您有牌组排序问题 (例如“10”出现在“2”之前)，用“02”替换“2”</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

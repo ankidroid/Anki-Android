@@ -65,21 +65,10 @@
         <item quantity="other">%d kártyák visszaállítva</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">%d kártya átütemezése</item>
-        <item quantity="other">%d kártya átütemezése</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Jelenlegi intervallum: %d nap</item>
-        <item quantity="other">Jelenlegi intervallum: %d nap</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Ismétléshez átütemezés x nap:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d kártya átütemezve</item>
         <item quantity="other">%d kártyák átütemezve</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Új kártya ütemezése. Az ütemezés az új kártyákat felülvizsgálja. A \"kártya átrendezése\" opcióval módosíthatod az új kártya helyzetét az új sorban</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Az ütemezés visszaállítja azt is, ahogyan az ütemező a jövőben kezeli a kártyát (az egyszerűséget %d%% -ra állítja)</string>
     <string name="answering_error_title">Adatbázis hiba</string>
     <string name="answering_error_message">A gyűjteménybe írás sikertelen. Az adatbázis lehet, hogy korrupt vagy nincs elég hely a lemezen.\n\n. Ha gyakrabban történik ilyen, akkor próbálja ellenőrizni az adatbázist, javítsa meg a gyűjteményt vagy állítsa azt vissza egy biztonsági másolatból. Ehhez nyomjon rá a \"beállításokra\".\n. Vagy lehet, hogy ez egy AnkiDroid bug; kérjük jelentse a hibát, hogy le tudjuk ellenőrizni.</string>
     <string name="answering_error_report">Hibák jelentése</string>
@@ -245,4 +234,19 @@
     <string name="dismiss_backup_warning_upgrade">Az Android adatvédelmi módosításai miatt az adatok és az automatikus biztonsági mentések is elérhetetlenné válnak, ha az alkalmazás eltávolításra kerül.</string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

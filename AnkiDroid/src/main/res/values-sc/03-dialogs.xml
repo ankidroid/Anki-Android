@@ -65,21 +65,10 @@
         <item quantity="other">%d cartas resetadas</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Torra a pranificare %d carta</item>
-        <item quantity="other">Torra a pranificare %d cartas</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Intervallu atuale: %d die</item>
-        <item quantity="other">Intervallu atuale: %d dies</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Torra a pranificare pro sa revisione in x dies</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d carta torrada a pranificare</item>
         <item quantity="other">%d cartas torradas a pranificare</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Una carta noes est in fase de ripranificatzione. Su de torrare a pranificare una carta trasformat fintzas sas cartas noas in cartas de revisione. also turns new cards into review cards. Imprea s\'optzione ‘torra a positzionare sa carta’ pro mudare sa positzione de una carta noa in sa lista noa</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Sa ripranificatzione resetat fintzas sa manera de tratare sas cartas chi su pranificadore at a impreare in su benidore (sa fatzilidade s\'at a impostare %d%%)</string>
     <string name="answering_error_title">Faddina de sa base de datos</string>
     <string name="answering_error_message">Iscritura in sa colletzione fallida. Sa base de datos diat pòdere èssere corrùmpida o bi diat pòdere no èssere logu bastante in su discu.\n
                                              \n
@@ -261,4 +250,19 @@
     </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

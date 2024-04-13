@@ -63,18 +63,9 @@
         <item quantity="other">%d kartu direset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">Jadwalkan ulang %d kartu</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">Interval Sekarang: %d hari</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Jadwalkan ulang untuk diulas dalam x hari</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d kartu dijadwalkan ulang</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Kartu baru sedang dijadwalkan ulang. Menjadwalkan ulang membuat kartu baru menjadi kartu ulasan. Gunakan opsi \'Pindah posisi kartu\' untuk mengubah posisi kartu baru dalam antrean baru</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Penjadwalan ulang juga mereset bagaimana algoritma menjadwalkan kartu kedepannya (renggang akan diatur ke %d%%)</string>
     <string name="answering_error_title">Galat basisdata</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Basisdata mungkin korup atau tidak cukup ruang pada penyimpanan. \ n \ n Jika ini sering terjadi, cobalah periksa database, perbaiki koleksi atau mengembalikan dari cadangan. Sentuh \"pengaturan\" untuk ini. \ n \ Atau bisa juga bug dari AnkiDroid; harap laporkan galatnya agar kami bisa mengeceknya.</string>
     <string name="answering_error_report">Laporkan galat</string>
@@ -240,4 +231,16 @@
     </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

@@ -73,23 +73,6 @@
         <item quantity="other">تم تصفير %d بطاقة</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="zero">إعادة جدولة %d بطاقة</item>
-        <item quantity="one">إعادة جدولة %d بطاقة</item>
-        <item quantity="two">إعادة جدولة %d بطاقة</item>
-        <item quantity="few">إعادة جدولة %d بطاقات</item>
-        <item quantity="many">إعادة جدولة %d بطاقة</item>
-        <item quantity="other">إعادة جدولة %d بطاقة</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="zero">الفاصل الزمني الحالي: %d يوم</item>
-        <item quantity="one">الفاصل الزمني الحالي: %d يوم</item>
-        <item quantity="two">الفاصل الزمني الحالي: %d يوم</item>
-        <item quantity="few">الفاصل الزمني الحالي: %d أيام</item>
-        <item quantity="many">الفاصل الزمني الحالي: %d يومًا</item>
-        <item quantity="other">الفاصل الزمني الحالي: %d يوم</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">إعادة الجدولة للمراجعة بعد س يوم</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="zero">تمت إعادة جدولة %d بطاقة</item>
         <item quantity="one">تمت إعادة جدولة %d بطاقة</item>
@@ -98,8 +81,6 @@
         <item quantity="many">تمت إعادة جدولة %d بطاقات</item>
         <item quantity="other">تمت إعادة جدولة %d بطاقة</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">تجري إعادة جدولة بطاقة جديدة. تحول إعادة الجدولة البطاقات الجديدة إلى بطاقات مراجعة. استخدم خيار «تغيير الموضع» لتغيير موضع بطاقة جديدة في صف البطاقات الجديدة</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">ستغير إعادة الجدولة طريقة المجدول في التعامل مع البطاقة في المستقبل (سيتم ضبط السهولة إلى %d%%)</string>
     <string name="answering_error_title">خطأ في قاعدة البيانات</string>
     <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا كان هذا يحدث غالبًا، جرب فحص قاعدة البيانات، أو إصلاح المجموعة، أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في أنكي درويد ربما؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
     <string name="answering_error_report">إبلاغ عن الخطأ</string>
@@ -275,4 +256,31 @@
     </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="zero">Show cards in</item>
+        <item quantity="one">Show card in</item>
+        <item quantity="two">Show cards in</item>
+        <item quantity="few">Show cards in</item>
+        <item quantity="many">Show cards in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="zero">Show cards in range</item>
+        <item quantity="one">Show card in range</item>
+        <item quantity="two">Show cards in range</item>
+        <item quantity="few">Show cards in range</item>
+        <item quantity="many">Show cards in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="zero">days</item>
+        <item quantity="one">day</item>
+        <item quantity="two">days</item>
+        <item quantity="few">days</item>
+        <item quantity="many">days</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

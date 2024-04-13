@@ -65,21 +65,10 @@
         <item quantity="other">%d कार्ड रीसेट हुआ</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">%d कार्ड फिर से शेड्यूल करें</item>
-        <item quantity="other">%d कार्डों को फिर से शेड्यूल करें</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">वर्तमान अंतराल: %d दिन</item>
-        <item quantity="other">वर्तमान अंतराल: %d दिन</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">X दिनों में समीक्षा के लिए पुनर्निर्धारित करें:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d पत्ता पुनर्निर्धारित</item>
         <item quantity="other">%d पत्ता पुनर्निर्धारित</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">एक नया कार्ड पुनर्निर्धारित किया जा रहा है। पुनर्निर्धारण भी नए कार्ड को समीक्षा कार्ड में बदल देता है। नई कतार में नए कार्ड की स्थिति बदलने के लिए new रिपोजिशन कार्ड ’विकल्प का उपयोग करें</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">पुनर्निर्धारण भी बताता है कि भविष्य में अनुसूचक कार्ड का व्यवहार कैसे करता है (आसानी से %d पर सेट किया जाएगा)</string>
     <string name="answering_error_title">डेटाबेस त्रुटि</string>
     <string name="answering_error_message">संग्रह में लेखन विफल रहा। डेटाबेस दूषित हो सकता है या डिस्क पर पर्याप्त खाली स्थान नहीं हो सकता है। \n\n यदि यह अधिक बार होता है, तो डेटाबेस की जाँच करने, संग्रह की मरम्मत करने या इसे बैकअप से पुनर्स्थापित करने का प्रयास करें। इसके लिए \"विकल्प\" स्पर्श करें। \n या यह एक एंकॉइड बग भी हो सकता है; कृपया त्रुटि रिपोर्ट करें ताकि हम इसकी जांच कर सकें।</string>
     <string name="answering_error_report">त्रुटि की सूचना दें</string>
@@ -247,4 +236,19 @@
     </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

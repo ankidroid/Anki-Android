@@ -65,21 +65,10 @@
         <item quantity="other">%d kaarten gereset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Herplannen %d kaart</item>
-        <item quantity="other">Plannen %d kaarten</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Huidige interval: %d dag</item>
-        <item quantity="other">Huidige interval: %d dagen</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Plannen voor overhoren over x dagen:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d kaart opnieuw ingepland</item>
         <item quantity="other">%d kaarten opnieuw ingepland</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Een nieuwe kaart wordt herpland. Herplannen verandert nieuwe kaarten ook in overhoringskaarten. Gebruik de optie \'kaart verplaatsen\' om de positie van een nieuwe kaart in de nieuwe wachtrij te wijzigen</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Herplannen stelt ook opnieuw in hoe de planner de kaart in de toekomst zal behandelen (gemakkelijkheid wordt ingesteld op %d%%)</string>
     <string name="answering_error_title">Fout in database</string>
     <string name="answering_error_message">Het schrijven naar de collectie is mislukt. De database kan corrupt zijn of er is onvoldoende opslagruimte op de schijf.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn. Gelieve de fout te melden zodat we dit kunnen controleren.</string>
     <string name="answering_error_report">Fout melden</string>
@@ -247,4 +236,19 @@
     </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

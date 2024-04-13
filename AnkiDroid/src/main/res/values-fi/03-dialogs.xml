@@ -65,21 +65,10 @@
         <item quantity="other">%d alusta kortit</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Aikatauluta uudelleen %d kortti</item>
-        <item quantity="other">Aikatauluta uudelleen %d korttia</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Nykyinen kertausväli: %d päivä</item>
-        <item quantity="other">Nykyinen kertausväli: %d päivää</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Toista uudestaan x päivän päästä:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d kortti ajastettu uudelleen</item>
         <item quantity="other">%d korttia ajastettu uudelleen</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Uutta korttia ollaan aikatauluttamassa uudelleen. Uusi aikataulutus muuttaa myös uudet kortit kerrattaviksi korteiksi. Voit muuttaa uuden kortin sijaintia uudessa jonossa käyttämällä \"Kortin uudelleensijoitus\" -toimintoa.</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Uusi aikataulutus nollaa myös sen, miten aikataulutusohjelma käsittelee korttia tulevaisuudessa (helppous asetetaan arvoon %d %%).</string>
     <string name="answering_error_title">Tietokantavirhe</string>
     <string name="answering_error_message">Kirjoittaminen kokoelmaan epäonnistui. Tietokanta voi olla vioittunut tai levyllä ei ole tarpeeksi tyhjää tilaa.\n\nJos näin tapahtuu useammin, tarkista tietokanta, korjaa kokoelma tai palauta se varmuuskopiosta. Löydät tämän asetuksista.\n\Mahdollisesti kyseessä voi olla myös AnkiDroidin virhe; ilmoita virheestä, jotta voimme tarkistaa sen.</string>
     <string name="answering_error_report">Ilmoita viasta</string>
@@ -247,4 +236,19 @@
     </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

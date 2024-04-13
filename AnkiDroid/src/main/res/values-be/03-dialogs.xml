@@ -69,27 +69,12 @@
         <item quantity="other">Скінуты %d картак</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Перапланаваць %d картку</item>
-        <item quantity="few">Перапланаваць %d карткі</item>
-        <item quantity="many">Перапланаваць %d картак</item>
-        <item quantity="other">Перапланаваць %d карткі</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Бягучы інтэрвал: %d дзень</item>
-        <item quantity="few">Бягучы інтэрвал: %d дні</item>
-        <item quantity="many">Бягучы інтэрвал: %d дзён</item>
-        <item quantity="other">Бягучы інтэрвал: %d дні</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Запланаваць паўтарэнне ў наступныя х дзён:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">Перапланавана %d картка</item>
         <item quantity="few">Перапланаваны %d карткі</item>
         <item quantity="many">Перапланаваны %d картак</item>
         <item quantity="other">Перапланаваны %d картак</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Новая картка перапланавана. Дадзеная аперацыя дадае новыя карткі ў паўтораныя. Скарыстайцеся параметрам \"перамясціць картку\" для змянення пазіцыі новай карткі ў чарзе.</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Перапланаванне таксама скіне налады таго, як планіроўшчык будзе апрацоўваць картку ў будучым (лёгкасць карткі будзе прызначаная на %d%%) </string>
     <string name="answering_error_title">Памылка базы даных</string>
     <string name="answering_error_message">Збой запісу ў калекцыю. Прычынаю можа быць пашкоджаная база даных або недахоп свабоднага месца на дыску.\n\nПаспрабуйце праверыць базу даных або аднавіць калекцыю з рэзервовай копіі. Для гэтага націсніце \"Параметры\". \n\Таксама гэта памылка можа быць выклікана самой праграмай; паведаміце пра гэта распрацоўшчыкам.</string>
     <string name="answering_error_report">Паведаміць пра памылку</string>
@@ -263,4 +248,25 @@
     </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="few">Show cards in</item>
+        <item quantity="many">Show cards in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="few">Show cards in range</item>
+        <item quantity="many">Show cards in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="few">days</item>
+        <item quantity="many">days</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

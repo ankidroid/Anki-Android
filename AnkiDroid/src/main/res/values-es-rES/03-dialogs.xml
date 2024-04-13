@@ -65,21 +65,10 @@
         <item quantity="other">%d tarjetas reiniciadas</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reprogramar %d tarjeta</item>
-        <item quantity="other">Reprogramar %d tarjetas</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Intervalo actual: %d día</item>
-        <item quantity="other">Intervalo actual: %d días</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Reprogramar para revisión en x días:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d tarjeta reprogramada</item>
         <item quantity="other">%d tarjetas reprogramadas</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Se está reprogramando una nueva tarjeta. Reprogramar también convierte nuevas tarjetas en tarjetas de revisión. Utilice la opción \'reposiciónar tarjetas\' para cambiar la posición de una nueva tarjeta dentro de la nueva cola</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Reprogramar también reinicia cómo el planificador trata la tarjeta en el futuro (la facilidad se establecerá en %d%%)</string>
     <string name="answering_error_title">Error en la base de datos</string>
     <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, presiona \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
     <string name="answering_error_report">Reportar error</string>
@@ -247,4 +236,19 @@
     </string>
     <string name="deck_already_exists">El mazo ya existe.</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>
