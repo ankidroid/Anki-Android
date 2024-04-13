@@ -86,7 +86,7 @@
     <string name="undo">Anular</string>
     <string name="redo">Refazer</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Desfazer traço</string>
-    <string name="move_all_to_deck">Mover todos para o baralho</string>
+    <string name="move_all_to_deck">Mover todas para o baralho</string>
     <string name="unbury">Mostrar</string>
     <string name="rename_deck">Renomear baralho</string>
     <string name="create_shortcut">Criar atalho</string>
@@ -103,7 +103,7 @@
     <string name="menu_bury">Enterrar</string>
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Eliminar nota</string>
-    <string name="menu_flag">Sinalizar</string>
+    <string name="menu_flag">Sinalização</string>
     <string name="menu_flag_card">Sinalizar ficha</string>
     <string name="menu_flag_card_zero">Sem sinalização</string>
     <string name="menu_flag_card_one">Sinalização vermelha</string>
@@ -126,7 +126,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Por favor, concede à AnkiDroid a permissão de \'Armazenamento\' para continuar</string>
+    <string name="startup_no_storage_permission">Por favor, conceda ao AnkiDroid a permissão de \'Armazenamento\' para continuar</string>
     <string name="rebuild_filtered_deck">A reconstruir o baralho filtrado&#8230;</string>
     <string name="rebuild_cram_label">Reconstruir</string>
     <string name="empty_cram_label">Esvaziar</string>
@@ -137,16 +137,16 @@
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralhos</string>
     <string name="empty_deck">Este baralho está vazio</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralhos</string>
-    <string name="invalid_deck_name">Nome inválido do baralho</string>
+    <string name="invalid_deck_name">Nome de baralho inválido</string>
     <string name="studyoptions_congrats_finished">Parabéns! Terminou por agora.</string>
-    <string name="studyoptions_no_cards_due">Não há fichas vencidas ainda</string>
+    <string name="studyoptions_no_cards_due">Nenhuma ficha por rever</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrar para o armazenamento restrito (scoped storage)</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Deseja cancelar a sincronização?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Continuar sincronização</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronização cancelada</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">A cancelar&#8230;\nPode levar algum tempo.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">A cancelar&#8230;\nPode demorar algum tempo.</string>
     <string name="syncing_media">A sincronizar ficheiros de multimédia</string>
     <string name="export_deck">Exportar baralho</string>
     <string name="nothing">Nada</string>
@@ -156,7 +156,7 @@
     <string name="card_template_editor_back">Modelo de trás</string>
     <string name="card_template_editor_styling">Estilo</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aparência do navegador de fichas</string>
-    <string name="card_template_editor_deck_override">Substituição do baralho</string>
+    <string name="card_template_editor_deck_override">Baralho por defeito</string>
     <string name="card_template_editor_insert_field">Inserir campo</string>
     <string name="card_template_editor_select_field">Selecionar campo</string>
     <string name="card_template_editor_cant_delete">Pelo menos um tipo de ficha é necessário</string>
@@ -166,11 +166,11 @@
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Eliminar o tipo de ficha \"%2$s\", e a sua %1$d ficha?</item>
-        <item quantity="other">Eliminar o tipo de ficha \"%2$s\", e a sua %1$d fichas?</item>
+        <item quantity="other">Eliminar o tipo de ficha \"%2$s\", e as suas %1$d fichas?</item>
     </plurals>
     <string name="card_template_editor_would_delete_note">A eliminação deste tipo de ficha faria com que uma ou mais notas fossem eliminadas. Por favor crie e grave um novo tipo de ficha primeiro.</string>
     <string name="card_template_editor_save_error">Incapaz de gravar alterações ao modelo das fichas: %s</string>
-    <string name="template_for_current_card_deleted">O tipo de ficha para a ficha atual foi eliminado.</string>
+    <string name="template_for_current_card_deleted">O tipo de ficha da ficha atual foi eliminado.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aparência do navegador</string>
     <!-- card Info -->
@@ -182,16 +182,16 @@
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de fichas</string>
     <string name="context_menu_anki_card_label">Ficha Anki</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">As coleções não podem ser combinadas.\nQue coleção quer conservar?</string>
+    <string name="sync_conflict_message_new">As colecções não podem ser combinadas.\nQue colecção quer manter?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Substituir a sua coleção na AnkiDroid pela sua coleção da AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Substituir a sua coleção na AnkiWeb pela sua coleção da AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Seleccione a coleção a conservar</string>
+    <string name="sync_conflict_remote_confirm_new">Substituir a sua colecção do AnkiDroid pela sua colecção do AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Substituir a sua coleção no AnkiWeb pela sua colecção do AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Seleccione a colecção a manter</string>
     <string name="sync_conflict_replace_title">Substituir coleção</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d ficha (0 ao vencimento)</item>
-        <item quantity="other">%1$d fichas (0 ao vencimento)</item>
+        <item quantity="one">%1$d ficha (0 a rever)</item>
+        <item quantity="other">%1$d fichas (0 a rever)</item>
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Não é possível criar ou escrever no ficheiro %s</string>

@@ -172,7 +172,7 @@
     <string name="export_save_apkg_successful">Ficheiro Anki guardado com sucesso</string>
     <string name="export_save_apkg_unsuccessful">Falha ao guardar ficheiro Anki</string>
     <string name="export_share_title">Enviar ficheiro Anki utilizando</string>
-    <string name="export_email_subject">AnkiDroid exportou fichas: %s</string>
+    <string name="export_email_subject">Fichas exportadas pelo AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Olá!
         <br/><br/>
         Isto é um baralho de fichas enviado a partir do AnkiDroid[1].
@@ -192,7 +192,7 @@
     <string name="steps_error">Número de passos deve ser maior que 0</string>
     <string name="steps_min_error">É necessário pelo menos um passo</string>
     <string name="tag_editor_add_feedback">Toque em \"%2$s\" para confirmar a adição de \"%1$s\"</string>
-    <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" selecionada</string>
+    <string name="tag_editor_add_feedback_existing">Etiqueta \"%1$s\" selecionada</string>
     <!-- Time spans -->
     <string name="reminder_title">Não se esqueça de estudar hoje!</string>
     <plurals name="reminder_text">
@@ -223,44 +223,44 @@
     <!-- JS api -->
     <string name="api_version_developer_contact">Esta ficha utiliza funcionalidades que não são suportadas pelo AnkiDroid. Contacte o programador %1$s, ou consulte a wiki. %2$s</string>
     <string name="invalid_json_data">A ficha forneceu dados inválidos. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="valid_js_api_version">Versão da API de JS do AnkiDroid inválida. Contacte o programador %s, ou consulte a wiki.</string>
+    <string name="update_js_api_version">Actualização da API de JS do AnkiDroid disponível. Contacte o programador %s, ou consulte a wiki.</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Verifique</string>
+    <string name="anki_js_error_code">(Código de Erro: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Copiado para a área de transferência</string>
     <string name="about_ankidroid_error_copy_debug_info">Erro ao copiar informação de depuração para a área de transferência</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image">Erro no conteúdo da ficha: Falhou ao carregar ‘%s’</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Search decks</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="search_decks">Procurar baralhos</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostrar progresso de migração</string>
+    <string name="ankidroid_init_failed_webview_title">Erro fatal</string>
+    <string name="ankidroid_init_failed_webview">O AnkiDroid depende da \"WebView\" de sistema, e esta encontra-se indisponível. Isto pode ocorrer durante a instalação de actualizações. Por favor, volte a tentar dentro de alguns minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_font_size">Tamanho da letra</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostrar barra de ferramentas</string>
+    <string name="format_insert_bold">Colocar em Negrito</string>
+    <string name="format_insert_italic">Colocar em Itálico</string>
+    <string name="format_insert_underline">Colocar como Sublinhado</string>
+    <string name="insert_horizontal_line">Inserir linha horizontal</string>
+    <string name="insert_heading">Inserir Cabeçalho</string>
+    <string name="format_font_size">Alterar o tamanho de letra</string>
+    <string name="insert_mathjax">Inserir equações MathJax</string>
+    <string name="note_editor_toolbar_icon">Texto do botão</string>
+    <string name="before_text">O HTML antes da selecção</string>
+    <string name="after_text">O HTML depois da selecção</string>
+    <string name="add_toolbar_item">Criar uma entrada para a Barra de Ferramentas</string>
+    <string name="edit_toolbar_item">Editar entrada para a Barra de Ferramentas</string>
+    <string name="toolbar_item_explain_edit_or_remove">Introduza o HTML a ser inserido antes e depois do texto seleccionado.\n\nPressione durante algum tempo sobre uma das entradas na Barra de Ferramentas para a editar ou remover.</string>
+    <string name="remove_toolbar_item">Remover entrada da Barra de Ferramentas?</string>
+    <string name="note_editor_paste_too_large">A imagem é demasiado grande para ser colada, por favor insira-a manualmente.</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Cópia de segurança do Android em progresso. Por favor, tente de novo.</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Pode precisar de utilizar o iManager para permitir que o AnkiDroid adicione atalhos.</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">O seu ecrã de início não permite que o AnkiDroid adicione atalhos.</string>
+    <string name="create_shortcut_error">Erro ao adicionar atalho: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Assegurar que as frases começam por maiúscula</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Permitir o \"scroll\" na Barra de Ferramentas</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -274,16 +274,16 @@
     <string name="download_deck">Transferir baralho</string>
     <string name="try_again">Tentar novamente</string>
     <string name="cancel_download">Cancelar transferência</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home">Home</string>
+    <string name="cancel_download_question_title">Cancelar transferência?</string>
+    <string name="downloading_file">A transferir %s</string>
+    <string name="import_deck">Importar Baralho</string>
+    <string name="something_wrong">Ocorreu um erro. Tente novamente</string>
+    <string name="download_failed">A transferência falhou</string>
+    <string name="deck_download_progress_message">Pode utilizar outras aplicações enquanto a transferência decorre.</string>
+    <string name="check_network">Por favor, verifique a sua ligação à rede</string>
+    <string name="search_using_deck_name">Pesquisar utilizando o nome do baralho</string>
+    <string name="external_storage_unavailable">Transferência cancelada, o armazenamento externo não está disponível.</string>
+    <string name="home">Página Inicial</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Ficha enterrada</string>
@@ -292,7 +292,7 @@
         <item quantity="other">%d fichas suspensas.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Manter o texto do campo %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Storage migration</string>
     <string name="scoped_storage_learn_more">Learn More</string>
@@ -334,7 +334,7 @@
     <string name="toggle_cards_notes">Toggle Cards/Notes</string>
     <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
+    <string name="browser_options_dialog_heading">Opções do Navegador (\"Browser\")</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
@@ -344,7 +344,7 @@
     <string name="deleting_selected_notes">Apagar as notas selecionadas</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Deve instalar esta \"Voz\", antes de a utilizar
     </string>
     <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
     </string>
@@ -356,7 +356,7 @@
     </string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
     </string>
-    <string name="shared_decks_login_required">Please log in to download more decks</string>
+    <string name="shared_decks_login_required">Por favor, inicie sessão para transferir mais baralhos</string>
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>

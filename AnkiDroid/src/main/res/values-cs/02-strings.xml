@@ -321,7 +321,7 @@
     <string name="expand_tag">Rozbalit štítek „%s“</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Přístup ke kolekci se nezdařil. Zkuste to prosím znovu!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">Přidat nový typ poznámky</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studujte méně</string>
     <string name="intro_ankidroid_tagline_two">Pamatujte si více</string>
@@ -368,5 +368,5 @@
     <string name="deck_description_field_hint">Popisek</string>
     <string name="failed_to_copy">Kopírování se nezdařilo</string>
     <string name="card_browser_unavailable_when_notes_mode">Nedostupné v režimu „Poznámky“</string>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Přemístit</string>
 </resources>
