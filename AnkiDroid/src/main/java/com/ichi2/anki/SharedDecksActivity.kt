@@ -45,6 +45,8 @@ class SharedDecksActivity : AnkiActivity() {
 
     private var shouldHistoryBeCleared = false
 
+    private var allowedHosts = listOf<String>("ankiweb.net", "ankiuser.net", "ankisrs.net", "apps.ankiweb.net")
+
     /**
      * Handle condition when page finishes loading and history needs to be cleared.
      * Currently, this condition arises when user presses the home button on the toolbar.
@@ -62,6 +64,23 @@ class SharedDecksActivity : AnkiActivity() {
                 shouldHistoryBeCleared = false
             }
             super.onPageFinished(view, url)
+        }
+
+        // Prevent the WebView from loading urls which arent needed for importing shared decks.
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+            // Check if the requested host is in the whitelist
+            if (request?.url?.host in allowedHosts) {
+                return super.shouldOverrideUrlLoading(view, request)
+            }
+
+            // Open website in default browser
+            val browserIntent = Intent(Intent.ACTION_VIEW, request?.url)
+            startActivity(browserIntent)
+
+            return true
         }
 
         override fun onReceivedHttpError(
