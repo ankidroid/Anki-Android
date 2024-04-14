@@ -197,6 +197,10 @@ export async function updateI18nFiles() {
                 androidLanguage = "heb";
                 break;
 
+            case "iw":
+                androidLanguage = "heb";
+                break;
+
             case "id":
                 androidLanguage = "ind";
                 break;
