@@ -29,7 +29,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
 import com.ichi2.anki.CardBrowser.Companion.dueString
 import com.ichi2.anki.CardBrowser.Companion.nextDue
-import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserViewModel
@@ -457,24 +456,6 @@ class CardBrowserTest : RobolectricTest() {
             intentAfterReverse.previewerIdsFile.getCardIds(),
             equalTo(listOf(cid2, cid1))
         )
-    }
-
-    /** 7420  */
-    @Test
-    fun addCardDeckIsNotSetIfAllDecksSelectedAfterLoad() = runTest {
-        addDeck("NotDefault")
-
-        val b = browserWithNoNewCards
-
-        assertThat("All decks should not be selected", b.hasSelectedAllDecks(), equalTo(false))
-
-        b.viewModel.setDeckId(ALL_DECKS_ID)
-
-        assertThat("All decks should be selected", b.hasSelectedAllDecks(), equalTo(true))
-
-        val addIntent = b.addNoteIntent
-
-        IntentAssert.doesNotHaveExtra(addIntent, NoteEditor.EXTRA_DID)
     }
 
     /** 7420  */

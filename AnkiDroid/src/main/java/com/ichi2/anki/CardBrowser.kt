@@ -1214,15 +1214,7 @@ open class CardBrowser :
 
     @get:VisibleForTesting
     val addNoteIntent: Intent
-        get() {
-            val intent = Intent(this@CardBrowser, NoteEditor::class.java)
-            intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD)
-            if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
-                intent.putExtra(NoteEditor.EXTRA_DID, viewModel.lastDeckId)
-            }
-            intent.putExtra(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, viewModel.searchTerms)
-            return intent
-        }
+        get() = createAddNoteIntent(this, viewModel)
 
     private fun addNoteFromCardBrowser() {
         onAddNoteActivityResult.launch(addNoteIntent)
@@ -1532,7 +1524,7 @@ open class CardBrowser :
         return v?.top ?: 0
     }
 
-    fun hasSelectedAllDecks(): Boolean = viewModel.lastDeckId == ALL_DECKS_ID
+    private fun hasSelectedAllDecks(): Boolean = viewModel.lastDeckId == ALL_DECKS_ID
 
     fun searchAllDecks() = launchCatchingTask {
         // all we need to do is select all decks
@@ -2117,6 +2109,17 @@ open class CardBrowser :
         private const val ALL_DECKS_ID = 0L
 
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
+
+        @VisibleForTesting
+        fun createAddNoteIntent(context: Context, viewModel: CardBrowserViewModel): Intent {
+            val intent = Intent(context, NoteEditor::class.java)
+            intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD)
+            if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
+                intent.putExtra(NoteEditor.EXTRA_DID, viewModel.lastDeckId)
+            }
+            intent.putExtra(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, viewModel.searchTerms)
+            return intent
+        }
 
         @CheckResult
         private fun formatQA(

@@ -18,9 +18,14 @@ package com.ichi2.anki.browser
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.DeckSpinnerSelection
+import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
+import io.mockk.mockk
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -65,6 +70,22 @@ class CardBrowserViewModelTest : JvmTest() {
         assertThat("some decks are unchanged", hasSomeDecksUnchanged)
     }
 
+    /** 7420  */
+    @Test
+    fun addCardDeckIsNotSetIfAllDecksSelectedAfterLoad() = runViewModelTest {
+        addDeck("NotDefault")
+
+        assertThat("All decks should not be selected", !hasSelectedAllDecks())
+
+        setDeckId(DeckSpinnerSelection.ALL_DECKS_ID)
+
+        assertThat("All decks should be selected", hasSelectedAllDecks())
+
+        val addIntent = CardBrowser.createAddNoteIntent(mockk(relaxed = true), this)
+
+        IntentAssert.doesNotHaveExtra(addIntent, NoteEditor.EXTRA_DID)
+    }
+
     private fun runViewModelTest(testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
         val viewModel = CardBrowserViewModel(
             lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
@@ -85,3 +106,5 @@ private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) 
 private suspend fun CardBrowserViewModel.waitForSearchResults() {
     searchJob?.join()
 }
+
+private fun CardBrowserViewModel.hasSelectedAllDecks() = lastDeckId == DeckSpinnerSelection.ALL_DECKS_ID
