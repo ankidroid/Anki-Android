@@ -26,7 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.onAttachedToWindow2
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.showThemedToast
 import timber.log.Timber
 
 typealias SnackbarBuilder = Snackbar.() -> Unit
@@ -113,6 +113,7 @@ fun Activity.showSnackbar(
         view.showSnackbar(text, duration) {
             baseSnackbarBuilder?.invoke(this)
             snackbarBuilder?.invoke(this)
+            Timber.d("displayed snackbar: '%s'", text)
         }
     } else {
         val errorMessage = "While trying to show a snackbar, " +
@@ -241,6 +242,7 @@ fun Fragment.showSnackbar(
     requireActivity().showSnackbar(text, duration) {
         baseSnackbarBuilder?.invoke(this)
         snackbarBuilder?.invoke(this)
+        Timber.d("displayed snackbar: '%s'", text)
     }
 }
 

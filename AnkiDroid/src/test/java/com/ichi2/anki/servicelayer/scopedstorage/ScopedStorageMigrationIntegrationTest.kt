@@ -274,7 +274,7 @@ private constructor(source: Directory, destination: Directory, val filesToMigrat
     companion object {
         // media DB created on demand, and no -journal file in new backend
         // collection.log no longer exists
-        val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = 2
+        const val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = 2
 
         /**
          * A MigrateUserDataTest from inputSource to inputDestination (or transient directories if not provided)

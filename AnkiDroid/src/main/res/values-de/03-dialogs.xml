@@ -65,21 +65,10 @@
         <item quantity="other">%d Karten zurücksetzen</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">%d Karte neu planen</item>
-        <item quantity="other">%d Karten neu planen</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Aktuelles Intervall: %d Tag</item>
-        <item quantity="other">Aktuelles Intervall: %d Tage</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Zur Wiederholung in x Tagen umplanen</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d Karte umgeplant</item>
         <item quantity="other">%d Karten umgeplant</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Eine neue Karte wird neu geplant. Umplanen macht auch neue Karten zu Review-Karten. Benutzen Sie die Option \'Nachpositionieren\' um die Position einer neuen Karte in der neuen Warteschlange zu ändern</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Die Neuplanung setzt auch zurück wie der Scheduler die Karte in Zukunft behandelt (Einfachheit wird auf %d%% gesetzt)</string>
     <string name="answering_error_title">Datenbankfehler</string>
     <string name="answering_error_message">Es konnte nicht in die Sammlung geschrieben werden. Dies kann an einer beschädigten Datenbank oder an unzureichendem Speicherplatz liegen.\n\nFalls dies häufiger vorkommt, versuchen Sie bitte, die Datenbank zu überprüfen, die Sammlung zu reparieren oder sie von einer Sicherung wiederherzustellen. Tippen Sie hierfür auf »Optionen«.\n\nEs könnte aber auch ein Fehler in AnkiDroid vorliegen. Damit wird dies überprüfen können, bitten wir Sie, den Fehler zu melden.</string>
     <string name="answering_error_report">Fehler melden</string>
@@ -245,4 +234,19 @@
     <string name="dismiss_backup_warning_upgrade">Aufgrund von Änderungen in den Privatsphäreeinstellungen von Android, werden deine Daten und automatische Backups nicht mehr zugreifbar sein, falls du die App deinstallierst.</string>
     <string name="deck_already_exists">Stapel bereits vorhanden</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

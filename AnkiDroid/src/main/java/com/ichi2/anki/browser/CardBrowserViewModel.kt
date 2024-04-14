@@ -76,14 +76,18 @@ class CardBrowserViewModel(
     private val cacheDir: File,
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
+
+    // temporary flow for refactoring - called when cards are cleared
+    val flowOfCardsUpdated = MutableSharedFlow<Unit>()
+
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
 
     /** The CardIds of all the cards in the results */
     val allCardIds get() = cards.map { c -> c.id }
 
-    var searchTerms: String = ""
-    var restrictOnDeck: String = ""
-        private set
+    val flowOfSearchTerms = MutableStateFlow("")
+    val searchTerms get() = flowOfSearchTerms.value
+    private var restrictOnDeck: String = ""
     var currentFlag = Flag.NONE
 
     val flowOfFilterQuery = MutableSharedFlow<String>()
@@ -544,6 +548,37 @@ class CardBrowserViewModel(
      * Turn off [Multi-Select Mode][isInMultiSelectMode] and return to normal state
      */
     fun endMultiSelectMode() = selectNone()
+
+    fun setSearchTerms(searchQuery: String) = flowOfSearchTerms.update { searchQuery }
+
+    /**
+     * @see com.ichi2.anki.searchForCards
+     */
+    suspend fun searchForCards(numCardsToRender: Int): MutableList<CardBrowser.CardCache> {
+        // update the UI while we're searching
+        clearCardsList()
+
+        val query: String = if (searchTerms.contains("deck:")) {
+            "($searchTerms)"
+        } else {
+            if ("" != searchTerms) "$restrictOnDeck($searchTerms)" else restrictOnDeck
+        }
+
+        Timber.d("performing search")
+        val cards = com.ichi2.anki.searchForCards(query, order.toSortOrder(), cardsOrNotes)
+        Timber.d("Search returned %d cards", cards.size)
+        // Render the first few items
+        for (i in 0 until min(numCardsToRender, cards.size)) {
+            cards[i].load(false, column1Index, column2Index)
+        }
+        this.cards.replaceWith(cards)
+        return cards
+    }
+
+    private suspend fun clearCardsList() {
+        cards.reset()
+        flowOfCardsUpdated.emit(Unit)
+    }
 
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"

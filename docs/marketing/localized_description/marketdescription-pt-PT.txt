@@ -20,7 +20,7 @@ Adicione material através da aplicação Anki para Pc ou diretamente através d
 
 ★ Funcionalidades adicionais:
 • gravar as respostas (opcional)
-• quadro branco para escrever/desenhar
+• quadro para escrever/desenhar
 • editor/criador de fichas
 • navegador de fichas
 • layout para tablet

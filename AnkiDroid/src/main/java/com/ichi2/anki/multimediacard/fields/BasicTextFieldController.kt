@@ -25,8 +25,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment
+import com.ichi2.anki.showThemedToast
 import com.ichi2.ui.FixedEditText
 
 /**

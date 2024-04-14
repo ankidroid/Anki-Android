@@ -67,14 +67,12 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
-import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.StartupFailure.*
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
@@ -388,6 +386,10 @@ open class DeckPicker :
             )
         }
         true
+    }
+
+    private val notificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        Timber.i("notification permission: %b", it)
     }
 
     // ----------------------------------------------------------------------------
@@ -766,6 +768,7 @@ open class DeckPicker :
         menu.findItem(R.id.action_export)?.title = TR.exportingExport()
         setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
         toolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as SearchView
+        toolbarSearchView?.maxWidth = Integer.MAX_VALUE
         // redraw menu synchronously to avoid flicker
         updateMenuFromState(menu)
         // ...then launch a task to possibly update the visible icons.
@@ -1404,7 +1407,7 @@ open class DeckPicker :
             // Specifying a checkpoint in the future is not supported, please don't do it!
             if (current < upgradeDbVersion) {
                 Timber.e("Invalid value for CHECK_DB_AT_VERSION")
-                showSnackbar("Invalid value for CHECK_DB_AT_VERSION")
+                postSnackbar("Invalid value for CHECK_DB_AT_VERSION")
                 onFinishedStartup()
                 return
             }
@@ -1454,13 +1457,28 @@ open class DeckPicker :
                 // Don't show new features dialog for development builds
                 InitialActivity.setUpgradedToLatestVersion(preferences)
                 val ver = resources.getString(R.string.updated_version, VersionUtils.pkgVersionName)
-                showSnackbar(ver, Snackbar.LENGTH_SHORT)
+                postSnackbar(ver, Snackbar.LENGTH_SHORT)
                 showStartupScreensAndDialogs(preferences, 2)
             }
         } else {
             // This is the main call when there is nothing special required
             Timber.i("No startup screens required")
             onFinishedStartup()
+        }
+    }
+
+    // #16061. We have to queue snackbar to avoid the misaligned snackbar showed from onCreate()
+    private fun postSnackbar(
+        text: CharSequence,
+        duration: Int = Snackbar.LENGTH_LONG
+    ) {
+        val view: View? = findViewById(R.id.root_layout)
+        if (view != null) {
+            view.post {
+                showSnackbar(text, duration)
+            }
+        } else {
+            showSnackbar(text, duration)
         }
     }
 
@@ -1679,6 +1697,8 @@ open class DeckPicker :
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
             return
         }
+
+        MyAccount.checkNotificationPermission(this, notificationPermissionLauncher)
 
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */
@@ -1904,7 +1924,7 @@ open class DeckPicker :
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     fun updateDeckList() {
-        if (CollectionHelper.lastOpenFailure != null) {
+        if (!CollectionManager.isOpenUnsafe()) {
             return
         }
         if (Build.FINGERPRINT != "robolectric") {
@@ -2110,6 +2130,9 @@ open class DeckPicker :
                     decks.remove(listOf(did))
                 }
             }
+            // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
+            // to match and avoid unnecessary scrolls in `renderPage()`.
+            focusedDeck = Consts.DEFAULT_DECK_ID
             showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT) {
                 setAction(R.string.undo) { undo() }
             }
@@ -2600,7 +2623,7 @@ class OneWaySyncDialog(val message: String?) : DialogHandlerMessage(
         val dialog = ConfirmationDialog()
         val confirm = Runnable {
             // Bypass the check once the user confirms
-            CollectionHelper.instance.getColUnsafe(AnkiDroidApp.instance)!!.modSchemaNoCheck()
+            CollectionManager.getColUnsafe().modSchemaNoCheck()
         }
         dialog.setConfirm(confirm)
         dialog.setArgs(message)

@@ -19,7 +19,7 @@ import android.content.Context
 import androidx.annotation.CheckResult
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
+import com.ichi2.anki.showThemedToast
 import java.io.PrintWriter
 import java.io.StringWriter
 
@@ -68,7 +68,7 @@ object ExceptionUtil {
             runnable.invoke()
         } catch (e: Exception) {
             CrashReportService.sendExceptionReport(e, origin)
-            UIUtils.showThemedToast(
+            showThemedToast(
                 context,
                 context.getString(R.string.multimedia_editor_something_wrong),
                 true

@@ -63,18 +63,9 @@
         <item quantity="other">đặt lại thẻ %d</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">Lên lịch lại thẻ %d</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">Khoảng thời gian hiện tại: %d ngày</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Lên lịch lại để ôn tập trong x ngày:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d thẻ được lên lịch lại</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Một thẻ mới đang được lên lịch lại. Việc đổi lịch cũng biến thẻ mới thành thẻ đánh giá. Sử dụng tùy chọn \'định vị lại thẻ\' để thay đổi vị trí của thẻ mới trong hàng đợi mới</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Việc lên lịch cũng đặt lại cách lên lịch xử lý thẻ trong tương lai (dễ dàng thiết lập thành %d %%)</string>
     <string name="answering_error_title">Lỗi cơ sở dữ liệu</string>
     <string name="answering_error_message">Ghi vào bộ sưu tập không thành công. Cơ sở dữ liệu có thể bị hỏng hoặc có thể không có đủ dung lượng trống.\n\nNếu điều này xảy ra thường xuyên hơn, hãy thử kiểm tra cơ sở dữ liệu, sửa chữa bộ sưu tập hoặc khôi phục nó từ bản sao lưu. Chạm vào “tùy chọn” cho điều đó. \n\Hoặc nó cũng có thể là lỗi AnkiDroid; vui lòng thông báo lỗi để chúng tôi có thể kiểm tra điều này.</string>
     <string name="answering_error_report">Báo cáo lỗi</string>
@@ -103,8 +94,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Xác nhận</string>
     <string name="dialog_no">Không</string>
     <string name="dialog_yes">Đồng ý</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Giữ</string>
+    <string name="dialog_remove">Loại bỏ</string>
     <string name="dialog_continue">Tiếp tục</string>
     <string name="dialog_processing">Đang xử lý...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Tạo</string>
@@ -180,7 +171,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Không thể lên lịch lời nhắc</string>
     <string name="boot_service_too_many_notifications">Có quá nhiều lời nhắc được lên lịch. Một số sẽ không xuất hiện</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">Cài ngôn ngữ</string>
     <string name="locale_selection_dialog_summary">Một số bàn phím đa ngôn ngữ, chẳng hạn như GBoard hỗ trợ thay đổi ngôn ngữ khi soạn thảo văn bản\n\nVui lòng yêu cầu tính năng “setImeHintLocales” từ nhà sản xuất bàn phím nếu bàn phím của bạn không thay đổi ngôn ngữ.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Sử dụng AnkiDroid</string>
@@ -208,7 +199,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
     <string name="help_title_send_exception">Gửi báo cáo khắc phục sự cố</string>
     <string name="help_dialog_exception_report_debounce">Báo cáo đã được gửi</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Báo cáo đã được gửi!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Đồng bộ hóa tự động có thể được kích hoạt sau %d giây</item>
@@ -240,4 +231,16 @@
     </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

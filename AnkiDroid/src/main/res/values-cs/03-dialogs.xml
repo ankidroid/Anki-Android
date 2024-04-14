@@ -69,27 +69,12 @@
         <item quantity="other">%d karet obnoveno</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Přeplánovat %d kartu</item>
-        <item quantity="few">Přeplánovat %d karty</item>
-        <item quantity="many">Přeplánovat %d karty</item>
-        <item quantity="other">Přeplánovat %d karet</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Současný interval: %d den</item>
-        <item quantity="few">Současný interval: %d dny</item>
-        <item quantity="many">Současný interval: %d dne</item>
-        <item quantity="other">Současný interval: %d dní</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Přeplánovat opakování za x dní</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d karta přeplánována</item>
         <item quantity="few">%d karty přeplánovány</item>
         <item quantity="many">%d karty přeplánováno</item>
         <item quantity="other">%d karet přeplánováno</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Přeplánovává se nová karta. Přeplánování také změní novou kartu na opakovanou kartu. Použijte volbu „změnit pořadí karty“, abyste změnili pořadí nové karty v rámci fronty nových karet</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Přeplánování také obnoví to, jak bude plánovač v budoucnu zacházet s kartou (snadnost bude nastavena na %d%%)</string>
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>
@@ -260,5 +245,26 @@
     <string name="dismiss_backup_warning_upgrade">        V důsledku změn ochrany osobních údajů systému Android budou vaše data a automatické zálohy nedostupné, pokud bude aplikace odinstalována
     </string>
     <string name="deck_already_exists">Balíček již existuje</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="create_deck_numeric_hint">Pokud máte problémy s pořadím balíčků (např. „10“ je před „2“), nahraďte „2“ číslem „02“</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="few">Show cards in</item>
+        <item quantity="many">Show cards in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="few">Show cards in range</item>
+        <item quantity="many">Show cards in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="few">days</item>
+        <item quantity="many">days</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

@@ -88,12 +88,11 @@ class TagsDialogTest {
             val returnedOption = AtomicReference<CardStateFilter>()
             f.parentFragmentManager.setFragmentResultListener(
                 TagsDialogListener.ON_SELECTED_TAGS_KEY,
-                mockLifecycleOwner(),
-                { _: String?, bundle: Bundle ->
-                    returnedList.set(bundle.getStringArrayList(TagsDialogListener.ON_SELECTED_TAGS__SELECTED_TAGS))
-                    returnedOption.set(bundle.getSerializableCompat<CardStateFilter>(TagsDialogListener.ON_SELECTED_TAGS__OPTION))
-                }
-            )
+                mockLifecycleOwner()
+            ) { _: String?, bundle: Bundle ->
+                returnedList.set(bundle.getStringArrayList(TagsDialogListener.ON_SELECTED_TAGS__SELECTED_TAGS))
+                returnedOption.set(bundle.getSerializableCompat<CardStateFilter>(TagsDialogListener.ON_SELECTED_TAGS__OPTION))
+            }
             val body = dialog!!.getCustomView()
             val optionsGroup = body.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
             Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())

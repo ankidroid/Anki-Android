@@ -20,6 +20,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
+import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import anki.sync.SyncAuth
@@ -157,7 +158,7 @@ fun DeckPicker.handleNewSync(
     }
 }
 
-fun MyAccount.handleNewLogin(username: String, password: String) {
+fun MyAccount.handleNewLogin(username: String, password: String, resultLauncher: ActivityResultLauncher<String>) {
     val endpoint = getEndpoint(this)
     launchCatchingTask {
         val auth = try {
@@ -178,6 +179,7 @@ fun MyAccount.handleNewLogin(username: String, password: String) {
         }
         updateLogin(baseContext, username, auth.hkey)
         setResult(RESULT_OK)
+        MyAccount.checkNotificationPermission(this@handleNewLogin, resultLauncher)
         finish()
     }
 }

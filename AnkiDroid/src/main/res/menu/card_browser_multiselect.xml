@@ -82,7 +82,7 @@
 
     <item
         android:id="@+id/action_reschedule_cards"
-        android:title="@string/card_editor_reschedule_card"/>
+        tools:title="Set due date" />
 
     <item
         android:id="@+id/action_edit_tags"

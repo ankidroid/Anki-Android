@@ -103,7 +103,7 @@ class Notetypes(val col: Collection) {
     }
 
     private fun _get_cached(ntid: int): NotetypeJson? {
-        return _cache.get(ntid)
+        return _cache[ntid]
     }
 
     @NeedsTest("14827: styles are updated after syncing style changes")

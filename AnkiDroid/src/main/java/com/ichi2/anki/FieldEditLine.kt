@@ -37,7 +37,6 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.os.ParcelCompat
 import androidx.core.view.ViewCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import com.ichi2.anki.UIUtils.getDensityAdjustedValue
 import com.ichi2.ui.AnimationUtil.collapseView
 import com.ichi2.ui.AnimationUtil.expandView
 import com.ichi2.utils.KotlinCleanup

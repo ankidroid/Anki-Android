@@ -32,6 +32,7 @@ import androidx.browser.customtabs.CustomTabsIntent.*
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -540,7 +541,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
     fun closeCollectionAndFinish() {
         Timber.i("closeCollectionAndFinish()")
-        CollectionHelper.instance.closeCollection("AnkiActivity:closeCollectionAndFinish()")
+        Timber.i("closeCollection: %s", "AnkiActivity:closeCollectionAndFinish()")
+        CollectionManager.closeCollectionBlocking()
         finish()
     }
 
@@ -588,4 +590,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
         private const val SIMPLE_NOTIFICATION_ID = 0
     }
+}
+
+fun Fragment.requireAnkiActivity(): AnkiActivity {
+    return requireActivity() as? AnkiActivity?
+        ?: throw java.lang.IllegalStateException("Fragment $this not attached to an AnkiActivity.")
 }

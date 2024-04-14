@@ -7,9 +7,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.*
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.showThemedToast
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
@@ -29,7 +29,7 @@ class BootService : BroadcastReceiver() {
             return
         }
         // There are cases where the app is installed, and we have access, but nothing exist yet
-        val col = getColSafe(context)
+        val col = getColSafe()
         if (col == null) {
             Timber.w("Boot Service did not execute - error loading collection")
             return
@@ -61,11 +61,11 @@ class BootService : BroadcastReceiver() {
         }
     }
 
-    private fun getColSafe(context: Context): Collection? {
+    private fun getColSafe(): Collection? {
         // #6239 - previously would crash if ejecting, we don't want a report if this happens so don't use
         // getInstance().getColSafe
         return try {
-            CollectionHelper.instance.getColUnsafe(context)
+            CollectionManager.getColUnsafe()
         } catch (e: Exception) {
             Timber.e(e, "Failed to get collection for boot service - possibly media ejecting")
             null
@@ -118,7 +118,7 @@ class BootService : BroadcastReceiver() {
             // TODO; We might want to use the BootService retry code here when called from preferences.
             val defValue = 4
             return try {
-                val col = CollectionHelper.instance.getColUnsafe(context)!!
+                val col = CollectionManager.getColUnsafe()
                 when (col.schedVer()) {
                     1 -> {
                         val sp = context.sharedPrefs()

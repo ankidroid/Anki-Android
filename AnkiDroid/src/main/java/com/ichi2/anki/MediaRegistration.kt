@@ -20,7 +20,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.annotation.CheckResult
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.exception.EmptyMediaException
@@ -163,7 +162,7 @@ class MediaRegistration(private val context: Context) {
         Timber.i("Adding media to collection: %s", imagePath)
         val f = File(imagePath)
         return try {
-            CollectionHelper.instance.getColUnsafe(context)!!.media.addFile(f)
+            CollectionManager.getColUnsafe().media.addFile(f)
             true
         } catch (e: IOException) {
             Timber.w(e, "Failed to add file")

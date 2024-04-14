@@ -85,11 +85,12 @@ open class RobolectricTest : AndroidTest {
     @CallSuper
     open fun setUp() {
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
+        throwOnShowError = true
 
         ChangeManager.clearSubscribers()
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
-        CollectionHelper.instance.setColForTests(null)
+        CollectionManager.setColForTests(null)
 
         maybeSetupBackend()
 
@@ -126,6 +127,7 @@ open class RobolectricTest : AndroidTest {
     @After
     @CallSuper
     open fun tearDown() {
+        throwOnShowError = false
         // If you don't clean up your ActivityControllers you will get OOM errors
         for (controller in controllersForCleanup) {
             Timber.d("Calling destroy on controller %s", controller.get().toString())
@@ -139,11 +141,12 @@ open class RobolectricTest : AndroidTest {
         controllersForCleanup.clear()
 
         try {
-            if (CollectionHelper.instance.colIsOpenUnsafe()) {
-                CollectionHelper.instance.getColUnsafe(targetContext)!!.debugEnsureNoOpenPointers()
+            if (CollectionManager.isOpenUnsafe()) {
+                CollectionManager.getColUnsafe().debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            CollectionHelper.instance.closeCollection("RobolectricTest: End")
+            Timber.i("closeCollection: %s", "RobolectricTest: End")
+            CollectionManager.closeCollectionBlocking()
         } catch (ex: BackendException) {
             if ("CollectionNotOpen" == ex.message) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
@@ -299,7 +302,7 @@ open class RobolectricTest : AndroidTest {
      * we don't get two equal time. */
     override val col: Collection
         get() = try {
-            CollectionHelper.instance.getColUnsafe(targetContext)!!
+            CollectionManager.getColUnsafe()
         } catch (e: UnsatisfiedLinkError) {
             throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
         }
@@ -310,16 +313,12 @@ open class RobolectricTest : AndroidTest {
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {
         CollectionManager.closeCollectionBlocking()
-        CollectionHelper.setInstanceForTesting(object : CollectionHelper() {
-            @Synchronized
-            override fun getColUnsafe(context: Context?): Collection? = null
-        })
+        CollectionManager.setColForTests(null)
         CollectionManager.emulateOpenFailure = true
     }
 
     /** Restore regular collection behavior  */
     protected fun disableNullCollection() {
-        CollectionHelper.setInstanceForTesting(CollectionHelper())
         CollectionManager.emulateOpenFailure = false
     }
 

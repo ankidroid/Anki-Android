@@ -65,21 +65,10 @@
         <item quantity="other">%dଟି ପତ୍ର ପୁନଃସେଟ୍ ହେଲା</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">%dଟିଏ ପତ୍ରର ପୁନଃନିର୍ଦ୍ଧାରଣ କର</item>
-        <item quantity="other">%dଟି ପତ୍ରର ପୁନଃନିର୍ଦ୍ଧାରଣ କର</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">ଚଳିତ ଅନ୍ତରାଳ: %d ଦିନ</item>
-        <item quantity="other">ଚଳିତ ଅନ୍ତରାଳ: %d ଦିନ</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">x ଦିନରେ ସମୀକ୍ଷା ପାଇଁ ପୁନଃନିର୍ଦ୍ଧାରିତ କରନ୍ତୁ</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%dଟିଏ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଗଲା</item>
         <item quantity="other">%dଟି ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଗଲା</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">ଏକ ନୂତନ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଯାଉଛି। ପୁନଃନିର୍ଦ୍ଧାରଣ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସମୀକ୍ଷା ପତ୍ରରେ ବି ପରିଣତ କରେ। ନୂତନ ଧାଡ଼ି ମଧ୍ୟରେ ଏକ ନୂତନ ପତ୍ରର ପୋଜିସନ୍ ପରିବର୍ତ୍ତନ କରିବାକୁ ‘ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା’ ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">ପୁନଃନିର୍ଦ୍ଧାରଣ କରିବା ଫଳରେ ଭବିଷ୍ୟତରେ ଅନୁସୂଚକ ପତ୍ରକୁ କିପରି ଵ୍ୟଵହାର କରିବ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ ହୋଇଯାଏ (ଅର୍ଥାତ୍ ସହଜତା %dକୁ ସେଟ୍ ହେବ)।</string>
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
     <string name="answering_error_message">ସଂଗ୍ରହରେ ଲିଖନ ବିଫଳ ହେଲା। ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ।\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ।\nକିମ୍ବା ଏହା ଏକ AnkiDroid ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ। ଦୟାକରି କୀଟ ପ୍ରତିବେଦନ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ।</string>
     <string name="answering_error_report">ତ୍ରୁଟି ପ୍ରତିବେଦନ କରିବା</string>
@@ -247,4 +236,19 @@
     </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

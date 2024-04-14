@@ -43,9 +43,9 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.AndroidTtsVoice
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.dialogs.viewmodel.TtsVoicesViewModel
 import com.ichi2.anki.localizedErrorMessage
+import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.TtsVoice
 import com.ichi2.themes.Themes
@@ -148,7 +148,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
             )
         } catch (e: ActivityNotFoundException) {
             Timber.w(e)
-            UIUtils.showThemedToast(requireContext(), R.string.tts_voices_failed_opening_tts_system_settings, shortLength = true)
+            showThemedToast(requireContext(), R.string.tts_voices_failed_opening_tts_system_settings, shortLength = true)
         }
     }
 

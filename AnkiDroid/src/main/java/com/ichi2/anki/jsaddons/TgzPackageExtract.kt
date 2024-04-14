@@ -37,7 +37,7 @@ package com.ichi2.anki.jsaddons
 import android.content.Context
 import android.text.format.Formatter
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
+import com.ichi2.anki.showThemedToast
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.utils.FileUtil
 import org.apache.commons.compress.archivers.ArchiveException
@@ -130,7 +130,7 @@ class TgzPackageExtract(private val context: Context) {
         try {
             compat.createDirectories(addonsPackageDir)
         } catch (e: IOException) {
-            UIUtils.showThemedToast(context, context.getString(R.string.could_not_create_dir, addonsPackageDir.absolutePath), false)
+            showThemedToast(context, context.getString(R.string.could_not_create_dir, addonsPackageDir.absolutePath), false)
             Timber.w(e)
             return
         }

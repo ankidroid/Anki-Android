@@ -46,13 +46,11 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.ConfirmationDialog
-import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKIDROID_JS_PREFIX
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKI_PREFIX
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
@@ -63,11 +61,12 @@ import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getTextColors
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.isFullScreenReview
+import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
-import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.remainingTime
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.audio.AudioRecordingController
@@ -91,7 +90,6 @@ import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import timber.log.Timber
 import java.io.File
-import java.util.function.Consumer
 
 @Suppress("LeakingThis")
 @KotlinCleanup("too many to count")
@@ -398,7 +396,7 @@ open class Reviewer :
             R.id.action_bury_note -> buryNote()
             R.id.action_suspend_card -> suspendCard()
             R.id.action_suspend_note -> suspendNote()
-            R.id.action_reschedule_card -> showRescheduleCardDialog()
+            R.id.action_reschedule_card -> showDueDateDialog()
             R.id.action_reset_card_progress -> showResetCardDialog()
             R.id.action_delete -> {
                 Timber.i("Reviewer:: Delete note button pressed")
@@ -649,14 +647,8 @@ open class Reviewer :
         }
     }
 
-    private fun showRescheduleCardDialog() {
-        val runnable = Consumer { days: Int ->
-            val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                rescheduleCards(cardIds, days)
-            }
-        }
-        val dialog = rescheduleSingleCard(resources, currentCard!!, runnable)
+    private fun showDueDateDialog() {
+        val dialog = SetDueDateDialog.newInstance(listOf(currentCardId!!))
         showDialogFragment(dialog)
     }
 
@@ -733,6 +725,10 @@ open class Reviewer :
             }
             flagIcon.iconAlpha = alpha
         }
+
+        // Anki Desktop Translations
+        menu.findItem(R.id.action_reschedule_card).title =
+            CollectionManager.TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
 
         // Undo button
         @DrawableRes val undoIconId: Int
@@ -1227,7 +1223,7 @@ open class Reviewer :
                 return true
             }
             ViewerCommand.RESCHEDULE_NOTE -> {
-                showRescheduleCardDialog()
+                showDueDateDialog()
                 return true
             }
             ViewerCommand.USER_ACTION_1 -> {

@@ -21,10 +21,10 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
@@ -65,7 +65,7 @@ class CreateDeckDialog(
     }
 
     private val getColUnsafe
-        get() = CollectionHelper.instance.getColUnsafe(context)!!
+        get() = CollectionManager.getColUnsafe()
 
     suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
@@ -231,5 +231,8 @@ class CreateDeckDialog(
     }
 }
 
+// to not match times. Example: "12:34:56"
+// we use (?:[^:]|^) to ensure ":56" doesn't match
+// we use (?:[^:]|$) to ensure "12:" doesn't match
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-fun CharSequence.containsNumberLargerThanNine(): Boolean = Regex("""[1-9]\d+""").find(this) != null
+fun CharSequence.containsNumberLargerThanNine(): Boolean = Regex("""(?:[^:]|^)[1-9]\d+(?:[^:]|$)""").find(this) != null

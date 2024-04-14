@@ -25,7 +25,7 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
-import com.ichi2.anki.UIUtils
+import com.ichi2.anki.showThemedToast
 import timber.log.Timber
 
 /**
@@ -41,11 +41,13 @@ abstract class PermissionsFragment(@LayoutRes contentLayoutId: Int) : Fragment(c
     val permissionItems: List<PermissionItem>
         by lazy { view?.allViews?.filterIsInstance<PermissionItem>()?.toList() ?: emptyList() }
 
+    protected fun hasAllPermissions() = permissionItems.all { it.isGranted }
+
     override fun onResume() {
         super.onResume()
         permissionItems.forEach { it.updateSwitchCheckedStatus() }
         (activity as? PermissionsActivity)?.setContinueButtonEnabled(
-            permissionItems.all { it.isGranted }
+            hasAllPermissions()
         )
     }
 
@@ -64,7 +66,7 @@ abstract class PermissionsFragment(@LayoutRes contentLayoutId: Int) : Fragment(c
     }
 
     protected fun showToastAndOpenAppSettingsScreen(@StringRes message: Int) {
-        UIUtils.showThemedToast(requireContext(), message, false)
+        showThemedToast(requireContext(), message, false)
         openAppSettingsScreen()
     }
 

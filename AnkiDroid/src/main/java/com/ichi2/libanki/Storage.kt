@@ -15,7 +15,7 @@
  */
 package com.ichi2.libanki
 
-import com.ichi2.anki.UIUtils.getDayStart
+import com.ichi2.anki.getDayStart
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.Backend

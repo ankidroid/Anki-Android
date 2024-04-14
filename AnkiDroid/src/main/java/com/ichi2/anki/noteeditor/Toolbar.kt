@@ -40,7 +40,7 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.convertDpToPixel
+import com.ichi2.anki.convertDpToPixel
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.ViewGroupUtils

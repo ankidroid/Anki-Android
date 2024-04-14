@@ -24,7 +24,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.showThemedToast
 import com.ichi2.libanki.CardId
 import com.ichi2.utils.*
 import timber.log.Timber

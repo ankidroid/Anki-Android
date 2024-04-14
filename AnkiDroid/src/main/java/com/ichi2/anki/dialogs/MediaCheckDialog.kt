@@ -83,6 +83,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
                     fileListTextView.append(unused.joinToString("\n"))
                     fileListTextView.isScrollbarFadingEnabled = unused.size <= fileListTextView.maxLines
                     fileListTextView.movementMethod = ScrollingMovementMethod.getInstance()
+                    fileListTextView.setTextIsSelectable(true)
                     dialog.setPositiveButton(R.string.check_media_delete_unused) { _, _ ->
                         (activity as MediaCheckDialogListener?)?.deleteUnused(unused)
                         dismissAllDialogFragments()

@@ -26,7 +26,7 @@ import org.jetbrains.uast.UCallExpression
 
 /**
  * This custom Lint rules will raise an error if a developer uses the {android.widget.Toast#makeText(...)} method instead
- * of using the method provided by the UIUtils class {com.ichi2.anki.UIUtils#showThemedToast(...)}.
+ * of using the top level method {com.ichi2.anki.showThemedToast(...)} provided by the UIUtils file.
  */
 class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
 
@@ -35,8 +35,8 @@ class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
         const val ID = "DirectToastMakeTextUsage"
 
         @VisibleForTesting
-        const val DESCRIPTION = "Use UIUtils.showThemedToast instead of Toast.makeText"
-        private const val EXPLANATION = "To improve code consistency within the codebase you should use UIUtils.showThemedToast in place" +
+        const val DESCRIPTION = "Use top level showThemedToast instead of Toast.makeText"
+        private const val EXPLANATION = "To improve code consistency within the codebase you should use showThemedToast in place" +
             " of the library Toast.makeText(...).show(). This ensures also that the toast is actually displayed after being created"
         private val implementation = Implementation(DirectToastMakeTextUsage::class.java, Scope.JAVA_FILE_SCOPE)
         val ISSUE: Issue = Issue.create(
@@ -56,7 +56,7 @@ class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
-        if (!LintUtils.isAnAllowedClass(foundClasses, "UIUtils") && evaluator.isMemberInClass(method, "android.widget.Toast")) {
+        if (!LintUtils.isAnAllowedClass(foundClasses, "UIUtilsKt") && evaluator.isMemberInClass(method, "android.widget.Toast")) {
             context.report(
                 ISSUE,
                 node,

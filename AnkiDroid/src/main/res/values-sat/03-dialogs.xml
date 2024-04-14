@@ -65,21 +65,10 @@
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱴ</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="other">Reschedule %d cards</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">ᱱᱤᱛᱚᱜᱟᱜ ᱚᱵᱫᱷᱤᱺ %d ᱫᱤᱱ</item>
-        <item quantity="other">ᱱᱤᱛᱚᱜᱟᱜ ᱚᱵᱫᱷᱤᱺ %d ᱫᱤᱱ</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">x ᱫᱤᱱ ᱧᱮᱞᱡᱚᱝ ᱞᱟᱹᱜᱤᱫ Reschedule ᱢᱮ</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">ᱱᱟᱶᱟ ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱠᱟᱱᱟ ᱾ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱞᱮᱠᱷᱟᱱ ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ ‌ᱛᱮ‌ ᱵᱚᱫᱚᱞᱚᱜᱼᱟ ᱾ ᱱᱟᱶᱟ ᱫᱷᱟᱲᱤ ᱨᱮ ᱱᱟᱶᱟ ᱡᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱟᱭᱜᱟ ᱵᱚᱫᱚᱞ‌ ᱞᱟᱹᱜᱤᱫ ᱨᱤᱯᱚᱡᱤᱥᱚᱱ ᱠᱟᱰ ᱵᱮᱵᱷᱟᱨ ᱢᱮ‌ᱸ</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱫᱚ ᱵᱷᱚᱵᱤᱥᱭᱚᱛ ᱨᱮ ᱚᱠᱟᱞᱠᱟᱛᱮ ᱠᱟᱰ ᱠᱚ ᱥᱮᱰᱭᱩᱞ ᱟ ᱚᱱᱟ ᱦᱚᱸ ᱨᱤᱥᱚᱴ ᱟᱭ (ᱮᱡᱽ ᱫᱚ %d%% ᱛᱮ ᱥᱮᱴᱚᱜᱼᱟ)</string>
     <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
     <string name="answering_error_message">ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱚᱞ ᱵᱷᱩᱞ ᱾ database ᱫᱚ ᱠᱦᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱰᱤᱥᱠ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱱᱩᱜᱟ ᱾ \n\nᱡᱚᱫᱤ ᱵᱟᱨᱚᱢᱵᱟᱨ ᱱᱚᱠᱟ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ, ᱮᱱᱰᱮᱠᱷᱟᱱ ᱟᱨ ᱢᱤᱫ ᱡᱮᱠᱷᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ backup ᱠᱷᱚᱱ ᱰᱟᱴᱟ restore ᱛᱟᱵᱚᱱ ᱯᱮ ᱾ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ \&quot;options\&quot; ᱨᱮ ᱚᱛᱟᱭ ᱯᱮ ᱾\n\ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱱᱚᱟ ᱫᱚ bug ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱟ; ᱫᱚᱭᱟᱠᱟᱛᱮ report ᱯᱮ ᱾ </string>
     <string name="answering_error_report">ᱦᱩᱰᱟᱜ ᱥᱚᱱᱫᱮᱥ</string>
@@ -247,4 +236,19 @@
     </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

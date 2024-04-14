@@ -22,7 +22,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.showThemedToast
 import com.ichi2.utils.stringIterable
 import org.json.JSONArray
 import org.json.JSONException

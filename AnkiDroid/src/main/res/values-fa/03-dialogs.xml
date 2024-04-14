@@ -65,21 +65,10 @@
         <item quantity="other">%d کارت تنظیم مجدد شدند</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">%d کارت را زمانبندی مجدد کن</item>
-        <item quantity="other">%d کارت را زمانبندی مجدد کن</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">بازۀ کنونی: %d روز</item>
-        <item quantity="other">بازه کنونی: %d روز</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">زمانبندی مجدد برای مرور در x روز:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d کارت زمان‌بندی مجدد شد</item>
         <item quantity="other">%d کارت زمان‌بندی مجدد شدند</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">یک کارت جدید در حال زمان‌بندی مجدد است. زمان‌بندی مجدد، کارت های جدید را هم به کارت های مروری تبدیل میکند. برای این که مکان این کارت جدید را در ترتیب کارت ها تغییر دهید، گزینه ی \'تغییر مکان کارت\' را انتخاب کنید</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">زمان‌بندی مجدد طوری که برنامه‌ریز با کارت در آینده رفتار میکند را هم مجددا تنظیم می‌کند (سادگی به %d%% تنظیم خواهد شد)</string>
     <string name="answering_error_title">خطای پایگاه داده</string>
     <string name="answering_error_message">ذخیرۀ مجموعه انجام نشد. دیتابیس ممکن است خراب باشد یا ممکن است فضای کافی نداشته باشید.\n\nاگر این اتفاق غالباً رخ می‌دهد، بررسی دیتابیس، تعمیر مجموعه یا بازنشانی مجموعه از یک فایل پشتیبان قبلی را برای حل کردن مشکل امتحان کنید. برای این کار به \"گزینه‌ها\" مراجعه کنید.\nاین خطا همچنین ممکن است به دلیل مشکل در آنکی‌دروید باشد؛ اگر هیچ یک از موارد بالا مشکل شما را حل نکرد، لطفاً خطا را به ما گزارش دهید تا ما بتوانیم به بررسی آن بپردازیم.</string>
     <string name="answering_error_report">گزارش خطا</string>
@@ -245,4 +234,19 @@
     <string name="dismiss_backup_warning_upgrade">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک، از دسترس خارج خواهند شد    </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>

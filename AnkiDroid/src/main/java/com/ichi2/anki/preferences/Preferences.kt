@@ -234,6 +234,7 @@ class Preferences :
                 config.set("rollover", hours)
                 scheduleNotification(TimeManager.time, context)
             }
+            Timber.i("set day offset: '%d'", hours)
         }
         suspend fun getDayOffset(): Int {
             return withCol { config.get("rollover") ?: 4 }

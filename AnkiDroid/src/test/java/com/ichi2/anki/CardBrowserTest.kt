@@ -51,6 +51,7 @@ import com.ichi2.testutils.OS
 import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.LanguageUtil
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
@@ -272,6 +273,8 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     fun `change deck does not work for dynamic decks`() = runTest {
+        throwOnShowError = false
+
         val dynId = addDynamicDeck("World")
         selectDefaultDeck()
         val b = getBrowserWithNotes(5)
@@ -553,15 +556,19 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "en")
+    @SuppressLint("DirectCalendarInstanceUsage")
     fun resetDataTest() = runTest {
+        TimeManager.reset()
         addNoteUsingBasicModel("Hello", "World").firstCard().update {
             due = 5
             queue = Consts.QUEUE_TYPE_REV
             type = Consts.CARD_TYPE_REV
         }
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.DATE, 5)
+        val expectedDate = LanguageUtil.getShortDateFormatFromMs(cal.timeInMillis)
 
         val b = browserWithNoNewCards
-
         b.selectRowsWithPositions(0)
 
         val card = getCheckedCard(b)
@@ -569,7 +576,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(
             "Initial due of checked card",
             card.getColumnHeaderText(CardBrowserColumn.DUE),
-            equalTo("8/12/20")
+            equalTo(expectedDate)
         )
 
         b.resetProgressNoConfirm(listOf(card.id))
@@ -581,29 +588,6 @@ class CardBrowserTest : RobolectricTest() {
             card.getColumnHeaderText(CardBrowserColumn.DUE),
             equalTo("2")
         )
-    }
-
-    @Test
-    @Config(qualifiers = "en")
-    fun rescheduleDataTest() = runTest {
-        TimeManager.reset()
-        val b = getBrowserWithNotes(1)
-
-        b.selectRowsWithPositions(0)
-
-        val card = getCheckedCard(b)
-
-        assertThat(
-            "Initial position of checked card",
-            card.getColumnHeaderText(CardBrowserColumn.DUE),
-            equalTo("1")
-        )
-
-        b.rescheduleWithoutValidation(listOf(card.id), 5)
-
-        card.reload()
-
-        assertThat(card.card.due, equalTo(5))
     }
 
     @Test
@@ -636,20 +620,6 @@ class CardBrowserTest : RobolectricTest() {
             card.getColumnHeaderText(CardBrowserColumn.DUE),
             equalTo("1")
         )
-    }
-
-    @Test
-    @Ignore("FLAKY: Robolectric getOptionsMenu does not require invalidateOptionsMenu - so would not fail")
-    fun rescheduleUndoTest() {
-        val b = getBrowserWithNotes(1)
-
-        assertUndoDoesNotContain(b, R.string.deck_conf_cram_reschedule)
-
-        b.selectRowsWithPositions(0)
-
-        b.rescheduleWithoutValidation(listOf(getCheckedCard(b).id), 2)
-
-        assertUndoContains(b, R.string.deck_conf_cram_reschedule)
     }
 
     @Test
@@ -1071,13 +1041,14 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
     fun nextDueTest() {
-        // Test runs as the 7th of august 2020, 9h00
+        TimeManager.reset()
         val n = addNoteUsingBasicModel("Front", "Back")
         val c = n.firstCard()
         val decks = col.decks
         val cal = Calendar.getInstance()
-        cal[2021, 2, 19, 7, 42] = 42
+        val expectedDate = LanguageUtil.getShortDateFormatFromMs(cal.timeInMillis)
         val id = (cal.timeInMillis / 1000).toInt()
+        cal.add(Calendar.DATE, 27)
 
         // Not filtered
         c.type = Consts.CARD_TYPE_NEW
@@ -1110,26 +1081,29 @@ class CardBrowserTest : RobolectricTest() {
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("()", dueString(col, c))
         c.queue = Consts.QUEUE_TYPE_LRN
-        Assert.assertEquals("3/19/21", nextDue(col, c))
-        Assert.assertEquals("3/19/21", dueString(col, c))
+        Assert.assertEquals(expectedDate, nextDue(col, c))
+        Assert.assertEquals(expectedDate, dueString(col, c))
         c.queue = Consts.QUEUE_TYPE_PREVIEW
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("", dueString(col, c))
         c.type = Consts.CARD_TYPE_REV
+
+        val cal2 = Calendar.getInstance()
+        cal2.add(Calendar.DATE, 20)
+        val expectedDate2 = LanguageUtil.getShortDateFormatFromMs(cal2.timeInMillis)
         c.due = 20
-        //  Since tests run the 7th of august, in 20 days we are the 27th of august 2020
         c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
-        Assert.assertEquals("8/27/20", nextDue(col, c))
-        Assert.assertEquals("(8/27/20)", dueString(col, c))
+        Assert.assertEquals(expectedDate2, nextDue(col, c))
+        Assert.assertEquals("($expectedDate2)", dueString(col, c))
         c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
-        Assert.assertEquals("8/27/20", nextDue(col, c))
-        Assert.assertEquals("(8/27/20)", dueString(col, c))
+        Assert.assertEquals(expectedDate2, nextDue(col, c))
+        Assert.assertEquals("($expectedDate2)", dueString(col, c))
         c.queue = Consts.QUEUE_TYPE_SUSPENDED
-        Assert.assertEquals("8/27/20", nextDue(col, c))
-        Assert.assertEquals("(8/27/20)", dueString(col, c))
+        Assert.assertEquals(expectedDate2, nextDue(col, c))
+        Assert.assertEquals("($expectedDate2)", dueString(col, c))
         c.queue = Consts.QUEUE_TYPE_REV
-        Assert.assertEquals("8/27/20", nextDue(col, c))
-        Assert.assertEquals("8/27/20", dueString(col, c))
+        Assert.assertEquals(expectedDate2, nextDue(col, c))
+        Assert.assertEquals(expectedDate2, dueString(col, c))
         c.queue = Consts.QUEUE_TYPE_PREVIEW
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("", dueString(col, c))
@@ -1146,8 +1120,8 @@ class CardBrowserTest : RobolectricTest() {
         Assert.assertEquals("()", dueString(col, c))
         c.queue = Consts.QUEUE_TYPE_LRN
         c.due = id
-        Assert.assertEquals("3/19/21", nextDue(col, c))
-        Assert.assertEquals("3/19/21", dueString(col, c))
+        Assert.assertEquals(expectedDate, nextDue(col, c))
+        Assert.assertEquals(expectedDate, dueString(col, c))
         c.queue = Consts.QUEUE_TYPE_PREVIEW
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("", dueString(col, c))

@@ -13,6 +13,8 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
@@ -25,13 +27,17 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.Permissions
 import timber.log.Timber
 
 /**
@@ -72,6 +78,10 @@ open class MyAccount : AnkiActivity() {
         }
     }
 
+    private val notificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        Timber.i("notification permission: %b", it)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -103,7 +113,7 @@ open class MyAccount : AnkiActivity() {
             return
         }
         Timber.i("Attempting auto-login")
-        handleNewLogin(username, password)
+        handleNewLogin(username, password, notificationPermissionLauncher)
     }
 
     private fun login() {
@@ -112,7 +122,7 @@ open class MyAccount : AnkiActivity() {
         inputMethodManager.hideSoftInputFromWindow(username.windowToken, 0)
         val username = username.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
         val password = password.text.toString()
-        handleNewLogin(username, password)
+        handleNewLogin(username, password, notificationPermissionLauncher)
     }
 
     private fun logout() {
@@ -249,5 +259,32 @@ open class MyAccount : AnkiActivity() {
         @KotlinCleanup("change to enum")
         internal const val STATE_LOG_IN = 1
         internal const val STATE_LOGGED_IN = 2
+
+        /**
+         * Displays a system prompt: "Allow AnkiDroid to send you notifications"
+         *
+         * [launcher] receives a callback result (`boolean`) unless:
+         *  * Permissions were already granted
+         *  * We are < API 33
+         *
+         * Permissions may permanently be denied, in which case [launcher] immediately
+         * receives a failure result
+         */
+        fun checkNotificationPermission(
+            context: Context,
+            launcher: ActivityResultLauncher<String>
+        ) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                return
+            }
+            val permission = Permissions.postNotification
+            if (permission != null && ContextCompat.checkSelfPermission(
+                    context,
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                launcher.launch(permission)
+            }
+        }
     }
 }

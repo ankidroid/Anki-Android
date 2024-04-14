@@ -47,7 +47,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
-import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
 import anki.collection.OpChanges
 import com.drakeet.drawer.FullDraggableContainer
@@ -55,7 +54,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext.Companion.createInstance
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
@@ -1746,9 +1744,7 @@ abstract class AbstractFlashcardViewer :
     override val baseSnackbarBuilder: SnackbarBuilder = {
         // Configure the snackbar to avoid the bottom answer buttons
         if (answerButtonsPosition == "bottom") {
-            val easeButtons = findViewById<View>(R.id.answer_options_layout)
-            val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
-            anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
+            anchorView = findViewById<View>(R.id.answer_options_layout)
         }
     }
 
