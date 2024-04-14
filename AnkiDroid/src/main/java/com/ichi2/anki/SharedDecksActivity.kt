@@ -80,8 +80,7 @@ class SharedDecksActivity : AnkiActivity() {
             }
 
             // Open website in default browser
-            val browserIntent = Intent(Intent.ACTION_VIEW, request?.url)
-            startActivity(browserIntent)
+            request?.url?.let { super@SharedDecksActivity.openUrl(it) }
 
             return true
         }
