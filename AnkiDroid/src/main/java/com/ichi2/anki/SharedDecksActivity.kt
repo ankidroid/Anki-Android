@@ -45,7 +45,7 @@ class SharedDecksActivity : AnkiActivity() {
 
     private var shouldHistoryBeCleared = false
 
-    private var allowedHosts = listOf<String>("ankiweb.net", "ankiuser.net", "ankisrs.net", "apps.ankiweb.net")
+    private val allowedHosts = listOf<Regex>(Regex("(.*\\W)?ankiweb\\.net\$"), Regex("ankiuser.net"), Regex("ankisrs.net"))
 
     /**
      * Handle condition when page finishes loading and history needs to be cleared.
@@ -71,9 +71,12 @@ class SharedDecksActivity : AnkiActivity() {
             view: WebView?,
             request: WebResourceRequest?
         ): Boolean {
-            // Check if the requested host is in the whitelist
-            if (request?.url?.host in allowedHosts) {
-                return super.shouldOverrideUrlLoading(view, request)
+            // Check if the requested host is whitelisted
+            val host = request?.url?.host
+            if (host != null) {
+                if (allowedHosts.any { regex -> regex.matches(host) }) {
+                    return super.shouldOverrideUrlLoading(view, request)
+                }
             }
 
             // Open website in default browser
