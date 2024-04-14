@@ -18,6 +18,7 @@ package com.ichi2.anki.browser
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.MatcherAssert.assertThat
@@ -38,6 +39,32 @@ class CardBrowserViewModelTest : JvmTest() {
         assertThat("filters should be empty after removing", savedSearches().size, equalTo(0))
     }
 
+    @Test
+    fun `change deck in notes mode 15444`() = runViewModelTest {
+        val newDeck = addDeck("World")
+        selectDefaultDeck()
+
+        for (i in 0 until 5) {
+            addNoteUsingBasicAndReversedModel()
+        }
+        setCardsOrNotes(CardsOrNotes.NOTES)
+        waitForSearchResults()
+
+        selectRowsWithPositions(0, 2)
+
+        val allCardIds = queryAllSelectedCardIds()
+        assertThat(allCardIds.size, equalTo(4))
+
+        moveSelectedCardsToDeck(newDeck).join()
+
+        for (cardId in allCardIds) {
+            assertThat("Deck should be changed", col.getCard(cardId).did, equalTo(newDeck))
+        }
+
+        val hasSomeDecksUnchanged = cards.any { row -> row.card.did != newDeck }
+        assertThat("some decks are unchanged", hasSomeDecksUnchanged)
+    }
+
     private fun runViewModelTest(testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
         val viewModel = CardBrowserViewModel(
             lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
@@ -46,4 +73,15 @@ class CardBrowserViewModelTest : JvmTest() {
         )
         testBody(viewModel)
     }
+}
+
+@Suppress("SameParameterValue")
+private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) {
+    for (pos in positions) {
+        selectRowAtPosition(pos)
+    }
+}
+
+private suspend fun CardBrowserViewModel.waitForSearchResults() {
+    searchJob?.join()
 }

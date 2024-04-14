@@ -322,12 +322,7 @@ open class CardBrowser :
     @VisibleForTesting
     fun moveSelectedCardsToDeck(did: DeckId): Job {
         return launchCatchingTask {
-            val changed = withProgress {
-                val selectedCardIds = viewModel.queryAllSelectedCardIds()
-                undoableOp {
-                    setDeck(selectedCardIds, did)
-                }
-            }
+            val changed = withProgress { viewModel.moveSelectedCardsToDeck(did).await() }
             showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
         }
     }

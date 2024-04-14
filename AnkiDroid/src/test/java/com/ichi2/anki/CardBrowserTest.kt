@@ -294,28 +294,6 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
-    @Test
-    fun `change deck in notes mode 15444`() = runTest {
-        val newDeck = addDeck("World")
-        selectDefaultDeck()
-        val b = getBrowserWithNotes(5, reversed = true)
-        b.viewModel.setCardsOrNotesSync(NOTES)
-
-        b.selectRowsWithPositions(0, 2)
-
-        val allCardIds = b.viewModel.queryAllSelectedCardIds()
-        assertThat(allCardIds.size, equalTo(4))
-
-        b.moveSelectedCardsToDeck(newDeck).join()
-
-        for (cardId in allCardIds) {
-            assertThat("Deck should be changed", col.getCard(cardId).did, equalTo(newDeck))
-        }
-
-        val hasSomeDecksUnchanged = b.viewModel.cards.any { row -> row.card.did != newDeck }
-        assertThat("some decks are unchanged", hasSomeDecksUnchanged)
-    }
-
     @Test // see #13391
     fun newlyCreatedDeckIsShownAsOptionInBrowser() = runTest {
         val deckOneId = addDeck("one")
@@ -787,10 +765,6 @@ class CardBrowserTest : RobolectricTest() {
         n.firstCard().update {
             setUserFlag(flag)
         }
-    }
-
-    private fun selectDefaultDeck() {
-        col.decks.select(1)
     }
 
     private fun deleteCardAtPosition(browser: CardBrowser, positionToCorrupt: Int) {

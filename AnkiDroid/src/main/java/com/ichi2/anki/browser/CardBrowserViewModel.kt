@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import anki.collection.OpChangesWithCount
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
@@ -44,8 +45,10 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.undoableOp
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -580,6 +583,13 @@ class CardBrowserViewModel(
 
     fun removeUnsubmittedInput() {
         searchQueryInputFlow.update { null }
+    }
+
+    fun moveSelectedCardsToDeck(deckId: DeckId): Deferred<OpChangesWithCount> = viewModelScope.async {
+        val selectedCardIds = queryAllSelectedCardIds()
+        return@async undoableOp {
+            setDeck(selectedCardIds, deckId)
+        }
     }
 
     suspend fun updateSelectedCardsFlag(flag: Flag): List<Card> {
