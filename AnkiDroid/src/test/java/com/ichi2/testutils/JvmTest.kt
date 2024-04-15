@@ -32,10 +32,15 @@ import org.hamcrest.Matcher
 import org.junit.After
 import org.junit.Assume
 import org.junit.Before
+import org.junit.Rule
+import org.junit.rules.TestName
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
 open class JvmTest : TestClass {
+    @get:Rule
+    val testName = TestName()
+
     private fun maybeSetupBackend() {
         RustBackendLoader.ensureSetup()
     }
@@ -53,6 +58,7 @@ open class JvmTest : TestClass {
     @Before
     @CallSuper
     open fun setUp() {
+        println("""-- executing test "${testName.methodName}"""")
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
 
         ChangeManager.clearSubscribers()
@@ -94,6 +100,7 @@ open class JvmTest : TestClass {
         Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
         Timber.uprootAll()
+        println("""-- executing test "${testName.methodName}"""")
     }
 
     fun <T> assumeThat(actual: T, matcher: Matcher<T>?) {
