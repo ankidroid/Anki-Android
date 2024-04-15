@@ -22,7 +22,6 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.ListView
 import android.widget.Spinner
-import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
@@ -35,7 +34,8 @@ import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
-import com.ichi2.anki.model.CardsOrNotes.*
+import com.ichi2.anki.model.CardsOrNotes.CARDS
+import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.CardId
@@ -57,7 +57,12 @@ import io.mockk.mockkObject
 import io.mockk.unmockkObject
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
+import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.nullValue
 import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
@@ -67,7 +72,6 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import timber.log.Timber
 import java.util.Calendar
-import java.util.Locale
 import java.util.Random
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -770,23 +774,6 @@ class CardBrowserTest : RobolectricTest() {
                 equalTo(true)
             )
         }
-    }
-
-    private fun assertUndoDoesNotContain(browser: CardBrowser, @StringRes resId: Int) {
-        val shadowActivity = shadowOf(browser)
-        val item = shadowActivity.optionsMenu.findItem(R.id.action_undo)
-        val expected = browser.getString(resId)
-        assertThat(
-            item.title.toString(),
-            not(containsString(expected.lowercase(Locale.getDefault())))
-        )
-    }
-
-    private fun assertUndoContains(browser: CardBrowser, @StringRes resId: Int) {
-        val shadowActivity = shadowOf(browser)
-        val item = shadowActivity.optionsMenu.findItem(R.id.action_undo)
-        val expected = browser.getString(resId)
-        assertThat(item.title.toString(), containsString(expected.lowercase(Locale.getDefault())))
     }
 
     private fun getCheckedCard(b: CardBrowser): CardCache {
