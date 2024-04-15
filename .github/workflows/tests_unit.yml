@@ -91,6 +91,22 @@ jobs:
         with:
           arguments: jacocoUnitTestReport --daemon
 
+      - name: Store Logcat as Artifact
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: logcat-${{ matrix.name }}
+          # look for the `<system-out>` element in the XML files in `test-results`
+          # The folder contains far too much data:
+          # * .bin files
+          # * XML rather than TXT
+          # * Files are mostly JaCoCo issues logged to stderr (#16180)
+          # * All tests are logged, rather than just failures
+          # despite this, it's a great start
+          # look to see if there's a dependency we can use, arther than improving this
+          path: |
+            **/build/test-results/
+
       - name: Stop Gradle
         if: contains(matrix.os, 'windows')
         uses: gradle/gradle-build-action@v3
