@@ -66,12 +66,16 @@ class SharedDecksActivity : AnkiActivity() {
             super.onPageFinished(view, url)
         }
 
-        // Prevent the WebView from loading urls which arent needed for importing shared decks.
+        /**
+         * Prevent the WebView from loading urls which arent needed for importing shared decks.
+         * This is to prevent potential misuse, such as bypassing content restrictions or
+         * using the AnkiDroid WebView as a regular browser to bypass browser blocks,
+         * which could lead to procrastination.
+         */
         override fun shouldOverrideUrlLoading(
             view: WebView?,
             request: WebResourceRequest?
         ): Boolean {
-            // Check if the requested host is whitelisted
             val host = request?.url?.host
             if (host != null) {
                 if (allowedHosts.any { regex -> regex.matches(host) }) {
@@ -79,7 +83,6 @@ class SharedDecksActivity : AnkiActivity() {
                 }
             }
 
-            // Open website in default browser
             request?.url?.let { super@SharedDecksActivity.openUrl(it) }
 
             return true
