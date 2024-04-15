@@ -100,6 +100,7 @@ import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
@@ -407,22 +408,22 @@ open class CardBrowser :
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope { cardsAdapter.notifyDataSetChanged() }
 
         viewModel.flowOfCardsOrNotes
-            .launchCollectionInLifecycleScope { runOnUiThread { searchCards() } }
+            .launchCollectionInLifecycleScope { searchCards() }
 
         viewModel.flowOfSearchQueryExpanded
             .launchCollectionInLifecycleScope { searchQueryExpanded ->
                 Timber.d("query expansion changed: %b", searchQueryExpanded)
                 if (searchQueryExpanded) {
-                    runOnUiThread { searchItem?.expandActionView() }
+                    searchItem?.expandActionView()
                 } else {
-                    runOnUiThread { searchItem?.collapseActionView() }
+                    searchItem?.collapseActionView()
                     // invalidate options menu so that disappeared icons would appear again
                     invalidateOptionsMenu()
                 }
             }
 
         viewModel.flowOfSelectedRows
-            .launchCollectionInLifecycleScope { runOnUiThread { onSelectionChanged() } }
+            .launchCollectionInLifecycleScope { onSelectionChanged() }
 
         viewModel.flowOfColumnIndex1
             .launchCollectionInLifecycleScope { index -> cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] } }
@@ -442,9 +443,7 @@ open class CardBrowser :
             }
 
         viewModel.flowOfCanSearch
-            .launchCollectionInLifecycleScope { canSave ->
-                runOnUiThread { saveSearchItem?.isVisible = canSave }
-            }
+            .launchCollectionInLifecycleScope { canSave -> saveSearchItem?.isVisible = canSave }
 
         viewModel.flowOfIsInMultiSelectMode
             .launchCollectionInLifecycleScope { inMultiSelect ->
@@ -2211,7 +2210,16 @@ open class CardBrowser :
 
     private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
         lifecycleScope.launch {
-            this@launchCollectionInLifecycleScope.collect { block(it) }
+            this@launchCollectionInLifecycleScope.collect {
+                if (isRobolectric) {
+                    // hack: lifecycleScope/runOnUiThread do not handle our
+                    // test dispatcher overriding both IO and Main
+                    // in tests, waitForAsyncTasksToComplete may be required.
+                    HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                } else {
+                    block(it)
+                }
+            }
         }
     }
 }

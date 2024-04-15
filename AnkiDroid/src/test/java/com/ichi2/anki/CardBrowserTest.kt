@@ -434,6 +434,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val b = browserWithNoNewCards
         b.viewModel.setFlagFilter(Flag.RED)
+        waitForAsyncTasksToComplete()
 
         assertThat("Flagged cards should be returned", b.viewModel.rowCount, equalTo(2))
     }
@@ -718,6 +719,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val cardBrowser = browserWithNoNewCards
         cardBrowser.searchCards("Hello")
+        waitForAsyncTasksToComplete()
         assertThat(
             "Card browser should have Test Deck as the selected deck",
             cardBrowser.selectedDeckNameForUi,
@@ -726,6 +728,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat("Result should be empty", cardBrowser.viewModel.rowCount, equalTo(0))
 
         cardBrowser.searchAllDecks()
+        waitForAsyncTasksToComplete()
         assertThat("Result should contain one card", cardBrowser.viewModel.rowCount, equalTo(1))
     }
 
@@ -736,10 +739,11 @@ class CardBrowserTest : RobolectricTest() {
         addNoteUsingBasicAndReversedModel("Hello", "Anki")
 
         browserWithNoNewCards.apply {
-            searchAllDecks()
+            searchAllDecks().join()
             with(viewModel) {
                 assertThat("Result should contain 4 cards", rowCount, equalTo(4))
-                setCardsOrNotes(NOTES)
+                setCardsOrNotes(NOTES).join()
+                waitForAsyncTasksToComplete()
                 assertThat("Result should contain 2 cards (one per note)", rowCount, equalTo(2))
             }
         }
