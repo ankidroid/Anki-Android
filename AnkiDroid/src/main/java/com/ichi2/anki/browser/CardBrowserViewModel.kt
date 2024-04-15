@@ -282,6 +282,7 @@ class CardBrowserViewModel(
         undoableOp { removeNotes(cids = selectedRowIds) }.count
 
     fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch {
+        Timber.i("setting mode to %s", newValue)
         withCol {
             // Change this to only change the preference on a state change
             newValue.saveToCollection()
