@@ -50,6 +50,7 @@ import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.json.JSONException
 import org.junit.*
+import org.junit.rules.TestName
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
@@ -81,9 +82,13 @@ open class RobolectricTest : AndroidTest {
     @get:Rule
     val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
 
+    @get:Rule
+    val testName = TestName()
+
     @Before
     @CallSuper
     open fun setUp() {
+        println("""-- executing test "${testName.methodName}"""")
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
         throwOnShowError = true
 
@@ -165,6 +170,7 @@ open class RobolectricTest : AndroidTest {
         }
         Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
+        println("""-- completed test "${testName.methodName}"""")
     }
 
     /**
