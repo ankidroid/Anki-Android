@@ -574,7 +574,6 @@ abstract class AbstractFlashcardViewer :
      *
      * If the activity is NOT [RESUMED], wait until [onResume]
      */
-    @NeedsTest("if opExecuted is called while activity is in the background, audio plays onResume")
     fun refreshIfRequired(isResuming: Boolean = false) {
         // Defer the execution of `opExecuted` until the user is looking at the screen.
         // This ensures that audio/timers are not accidentally started
