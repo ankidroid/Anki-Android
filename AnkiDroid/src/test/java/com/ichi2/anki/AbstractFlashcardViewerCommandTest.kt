@@ -18,15 +18,19 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.cardviewer.ViewerCommand.*
+import com.ichi2.anki.cardviewer.ViewerRefresh
 import com.ichi2.libanki.Card
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.notNullValue
+import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.*
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.kotlin.whenever
+import org.robolectric.Robolectric
 
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerCommandTest : RobolectricTest() {
@@ -94,6 +98,36 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(TOGGLE_FLAG_ORANGE)
 
         assertThat(viewer.lastFlag, equalTo(Flag.ORANGE.code))
+    }
+
+    @Test
+    fun testRefreshIfRequired() {
+        // Create an ActivityController instance for AbstractFlashcardViewer
+        val controller = Robolectric.buildActivity(AbstractFlashcardViewerTest.NonAbstractFlashcardViewer::class.java)
+
+        // Case 1: Activity is resuming, refreshRequired is not null
+        var viewer = controller.create().start().get()
+        viewer.refreshRequired = ViewerRefresh.UpdateCard
+        controller.resume() // Ensure the activity is resumed before calling refreshIfRequired
+        viewer.refreshIfRequired(isResuming = true)
+        // Assert that refreshRequired is set to null
+        assertThat(viewer.refreshRequired, nullValue())
+
+        // Case 2: Activity is not resuming, lifecycle is at least RESUMED, refreshRequired is not null
+        viewer = controller.get()
+        viewer.refreshRequired = ViewerRefresh.UpdateCard
+        controller.resume() // Ensure the activity is resumed before calling refreshIfRequired
+        viewer.refreshIfRequired(isResuming = false)
+        // Assert that refreshRequired is set to null
+        assertThat(viewer.refreshRequired, nullValue())
+
+        // Case 3: Activity is not resuming, lifecycle is not at least RESUMED, refreshRequired is not null
+        viewer = controller.get()
+        viewer.refreshRequired = ViewerRefresh.UpdateCard
+        controller.pause() // Ensure the activity is paused before calling refreshIfRequired
+        viewer.refreshIfRequired(isResuming = false)
+        // Assert that refreshRequired is not set to null
+        assertThat(viewer.refreshRequired, notNullValue())
     }
 
     @Test
