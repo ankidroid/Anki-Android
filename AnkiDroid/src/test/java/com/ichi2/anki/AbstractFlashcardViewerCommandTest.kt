@@ -100,34 +100,40 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         assertThat(viewer.lastFlag, equalTo(Flag.ORANGE.code))
     }
 
+    companion object {
+        val updateCard: ViewerRefresh = ViewerRefresh(queues = true, note = true, card = true)
+    }
     @Test
     fun testRefreshIfRequired() {
         // Create an ActivityController instance for AbstractFlashcardViewer
-        val controller = Robolectric.buildActivity(AbstractFlashcardViewerTest.NonAbstractFlashcardViewer::class.java)
+        Robolectric.buildActivity(AbstractFlashcardViewerTest.NonAbstractFlashcardViewer::class.java).use { controller ->
+            // Case 1: Activity is resuming, refreshRequired is not null
+            with(controller.create().start().get()) {
+                refreshRequired = updateCard
+                controller.resume() // Ensure the activity is resumed before calling refreshIfRequired
+                refreshIfRequired(isResuming = true)
+                // Assert that refreshRequired is set to null
+                assertThat(refreshRequired, nullValue())
+            }
 
-        // Case 1: Activity is resuming, refreshRequired is not null
-        var viewer = controller.create().start().get()
-        viewer.refreshRequired = ViewerRefresh.UpdateCard
-        controller.resume() // Ensure the activity is resumed before calling refreshIfRequired
-        viewer.refreshIfRequired(isResuming = true)
-        // Assert that refreshRequired is set to null
-        assertThat(viewer.refreshRequired, nullValue())
+            // Case 2: Activity is not resuming, lifecycle is at least RESUMED, refreshRequired is not null
+            with(controller.get()) {
+                refreshRequired = updateCard
+                controller.resume() // Ensure the activity is resumed before calling refreshIfRequired
+                refreshIfRequired(isResuming = false)
+                // Assert that refreshRequired is set to null
+                assertThat(refreshRequired, nullValue())
+            }
 
-        // Case 2: Activity is not resuming, lifecycle is at least RESUMED, refreshRequired is not null
-        viewer = controller.get()
-        viewer.refreshRequired = ViewerRefresh.UpdateCard
-        controller.resume() // Ensure the activity is resumed before calling refreshIfRequired
-        viewer.refreshIfRequired(isResuming = false)
-        // Assert that refreshRequired is set to null
-        assertThat(viewer.refreshRequired, nullValue())
-
-        // Case 3: Activity is not resuming, lifecycle is not at least RESUMED, refreshRequired is not null
-        viewer = controller.get()
-        viewer.refreshRequired = ViewerRefresh.UpdateCard
-        controller.pause() // Ensure the activity is paused before calling refreshIfRequired
-        viewer.refreshIfRequired(isResuming = false)
-        // Assert that refreshRequired is not set to null
-        assertThat(viewer.refreshRequired, notNullValue())
+            // Case 3: Activity is not resuming, lifecycle is not at least RESUMED, refreshRequired is not null
+            with(controller.get()) {
+                refreshRequired = updateCard
+                controller.pause() // Ensure the activity is paused before calling refreshIfRequired
+                refreshIfRequired(isResuming = false)
+                // Assert that refreshRequired is not set to null
+                assertThat(refreshRequired, notNullValue())
+            }
+        }
     }
 
     @Test
