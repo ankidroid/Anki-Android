@@ -23,6 +23,8 @@ jobs:
     name: Android Emulator Test
     runs-on: ubuntu-latest
     timeout-minutes: 75
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     strategy:
       fail-fast: false
       matrix:

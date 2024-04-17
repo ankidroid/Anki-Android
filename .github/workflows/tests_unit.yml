@@ -22,6 +22,8 @@ jobs:
   unit:
     name: JUnit Tests (${{ matrix.name }})
     timeout-minutes: 40
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     strategy:
       fail-fast: false
       matrix:
