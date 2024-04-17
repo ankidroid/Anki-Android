@@ -34,7 +34,6 @@ import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
-import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.servicelayer.NoteService
@@ -665,7 +664,7 @@ class CardBrowserTest : RobolectricTest() {
         }
 
         val cardBrowser = browserWithNoNewCards
-        cardBrowser.searchCards("Hello")
+        cardBrowser.searchCards("Hello").join()
         waitForAsyncTasksToComplete()
         assertThat(
             "Card browser should have Test Deck as the selected deck",
@@ -674,7 +673,7 @@ class CardBrowserTest : RobolectricTest() {
         )
         assertThat("Result should be empty", cardBrowser.viewModel.rowCount, equalTo(0))
 
-        cardBrowser.searchAllDecks()
+        cardBrowser.searchAllDecks().join()
         waitForAsyncTasksToComplete()
         assertThat("Result should contain one card", cardBrowser.viewModel.rowCount, equalTo(1))
     }
@@ -687,6 +686,7 @@ class CardBrowserTest : RobolectricTest() {
 
         browserWithNoNewCards.apply {
             searchAllDecks().join()
+            waitForAsyncTasksToComplete()
             with(viewModel) {
                 assertThat("Result should contain 4 cards", rowCount, equalTo(4))
                 setCardsOrNotes(NOTES).join()
@@ -1126,11 +1126,6 @@ suspend fun CardBrowser.searchCardsSync(query: String) {
 suspend fun CardBrowser.filterByTagSync(vararg tags: String) {
     filterByTag(*tags)
     viewModel.searchJob?.join()
-}
-
-suspend fun CardBrowserViewModel.setCardsOrNotesSync(cardsOrNotes: CardsOrNotes) {
-    setCardsOrNotes(cardsOrNotes)
-    searchJob?.join()
 }
 
 suspend fun CardBrowserViewModel.setFlagFilterSync(flag: Flag) {

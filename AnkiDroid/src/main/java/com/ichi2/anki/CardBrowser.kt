@@ -2077,9 +2077,10 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun searchCards(searchQuery: String) {
-        launchCatchingTask { withProgress { viewModel.launchSearchForCards(searchQuery)?.join() } }
-    }
+    fun searchCards(searchQuery: String) =
+        launchCatchingTask {
+            withProgress { viewModel.launchSearchForCards(searchQuery)?.join() }
+        }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
         if (handler === this || handler === viewModel) {
