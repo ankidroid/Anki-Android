@@ -103,6 +103,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     companion object {
         val updateCard: ViewerRefresh = ViewerRefresh(queues = true, note = true, card = true)
     }
+
     @Test
     fun testRefreshIfRequired() {
         // Create an ActivityController instance for AbstractFlashcardViewer
