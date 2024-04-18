@@ -281,7 +281,8 @@ abstract class AbstractFlashcardViewer :
      * @see opExecuted
      * @see refreshIfRequired
      */
-    private var refreshRequired: ViewerRefresh? = null
+    @VisibleForTesting
+    internal var refreshRequired: ViewerRefresh? = null
 
     private val editCurrentCardLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
@@ -574,8 +575,8 @@ abstract class AbstractFlashcardViewer :
      *
      * If the activity is NOT [RESUMED], wait until [onResume]
      */
-    @NeedsTest("if opExecuted is called while activity is in the background, audio plays onResume")
-    private fun refreshIfRequired(isResuming: Boolean = false) {
+    @VisibleForTesting
+    internal fun refreshIfRequired(isResuming: Boolean = false) {
         // Defer the execution of `opExecuted` until the user is looking at the screen.
         // This ensures that audio/timers are not accidentally started
         if (isResuming || lifecycle.currentState.isAtLeast(RESUMED)) {
