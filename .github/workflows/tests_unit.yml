@@ -22,8 +22,6 @@ jobs:
   unit:
     name: JUnit Tests (${{ matrix.name }})
     timeout-minutes: 40
-    env:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     strategy:
       fail-fast: false
       matrix:
@@ -89,7 +87,9 @@ jobs:
           command: ./gradlew robolectricSdkDownload --daemon
 
       - name: Run Unit Tests
-        run: ./gradlew jacocoUnitTestReport --daemon
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: jacocoUnitTestReport --daemon
 
       - name: Store Logcat as Artifact
         if: failure()
@@ -109,8 +109,10 @@ jobs:
 
       - name: Stop Gradle
         if: contains(matrix.os, 'windows')
-        run: ./gradlew --stop
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: --stop
 
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v3
         with:
           verbose: true
