@@ -29,7 +29,7 @@ import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
 import com.ichi2.anki.export.ExportDialogFragment
-import com.ichi2.anki.launchCatching
+import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
@@ -46,7 +46,6 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.ensureActive
@@ -632,8 +631,7 @@ class CardBrowserViewModel(
         }
 
         searchJob?.cancel()
-        searchJob = viewModelScope.launchCatching(
-            Dispatchers.IO,
+        searchJob = launchCatchingIO(
             errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) }
         ) {
             flowOfSearchState.emit(SearchState.Searching)
