@@ -51,7 +51,6 @@ import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKIDROID_JS_PREFIX
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKI_PREFIX
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
@@ -62,10 +61,10 @@ import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getTextColors
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.isFullScreenReview
+import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
-import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.remainingTime
@@ -629,21 +628,8 @@ open class Reviewer :
     }
 
     private fun showResetCardDialog() {
-        // Show confirmation dialog before resetting card progress
         Timber.i("showResetCardDialog() Reset progress button pressed")
-        // Show confirmation dialog before resetting card progress
-        val dialog = ConfirmationDialog()
-        val title = resources.getString(R.string.reset_card_dialog_title)
-        val message = resources.getString(R.string.reset_card_dialog_message)
-        dialog.setArgs(title, message)
-        val confirm = Runnable {
-            Timber.i("NoteEditor:: ResetProgress button pressed")
-            val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                resetCards(cardIds)
-            }
-        }
-        dialog.setConfirm(confirm)
+        val dialog = ForgetCardsDialog.newInstance(listOf(currentCardId!!))
         showDialogFragment(dialog)
     }
 
