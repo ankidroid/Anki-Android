@@ -217,6 +217,11 @@ class SetDueDateDialog : DialogFragment() {
             view.findViewById<TextView>(R.id.date_single_label).text =
                 resources.getQuantityString(R.plurals.set_due_date_single_day_label, viewModel.cardCount)
         }
+
+        override fun onResume() {
+            super.onResume()
+            this.requireView().requestLayout() // update the height of the ViewPager
+        }
     }
 
     /**
@@ -258,7 +263,7 @@ class SetDueDateDialog : DialogFragment() {
 
         override fun onResume() {
             super.onResume()
-            this.requireView().requestLayout() // fix the height not being changed
+            this.requireView().requestLayout() // update the height of the ViewPager
         }
     }
 }
