@@ -61,6 +61,9 @@ async function replacechars(fileName: string): Promise<boolean> {
             line = line.replace(/\\\\\'/g, "\\'");
             line = line.replace(/\n\s/g, "\\n");
             line = line.replace(/…/g, "&#8230;");
+            // remove 'comment="test\"comment"' from translations
+            // these use a lot of space and are only necessary for lint in /values/
+            line = line.replace(/ comment=".*?(?<!\\)"/g, "");
         }
 
         fs.appendFileSync(newfilename, line + "\n");
