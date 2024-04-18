@@ -110,13 +110,15 @@ class SetDueDateDialog : DialogFragment() {
             title(text = CollectionManager.TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date))
             positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
             negativeButton(R.string.dialog_cancel)
-            neutralButton(R.string.help) {
-                openUrl(R.string.link_set_due_date_help)
-            }
-
+            neutralButton(R.string.help)
             setView(R.layout.dialog_set_due_date)
         }.apply {
             show()
+
+            // This onClickListener stops the dialog from closing when the button is clicked.
+            getButton(Dialog.BUTTON_NEUTRAL).setOnClickListener {
+                openUrl(R.string.link_set_due_date_help)
+            }
 
             lifecycleScope.launch {
                 viewModel.isValidFlow.collect { isValid -> positiveButton.isEnabled = isValid }
