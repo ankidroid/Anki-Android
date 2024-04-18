@@ -25,8 +25,8 @@ import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.SingleCardSide
-import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
@@ -44,8 +44,8 @@ import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 
-class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, soundPlayer: SoundPlayer) :
-    CardViewerViewModel(soundPlayer),
+class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, cardMediaPlayer: CardMediaPlayer) :
+    CardViewerViewModel(cardMediaPlayer),
     OnErrorListener {
 
     val currentIndex = MutableStateFlow(firstIndex)
@@ -91,10 +91,10 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, so
             backSideOnly.emit(!backSideOnly.value)
             if (!backSideOnly.value && showingAnswer.value) {
                 showQuestion()
-                soundPlayer.playAllSoundsForSide(CardSide.QUESTION)
+                cardMediaPlayer.playAllSoundsForSide(CardSide.QUESTION)
             } else if (backSideOnly.value && !showingAnswer.value) {
                 showAnswerInternal()
-                soundPlayer.playAllSoundsForSide(CardSide.ANSWER)
+                cardMediaPlayer.playAllSoundsForSide(CardSide.ANSWER)
             }
         }
     }
@@ -126,7 +126,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, so
         launchCatchingIO {
             if (!showingAnswer.value && !backSideOnly.value) {
                 showAnswerInternal()
-                soundPlayer.playAllSoundsForSide(CardSide.ANSWER)
+                cardMediaPlayer.playAllSoundsForSide(CardSide.ANSWER)
             } else {
                 currentIndex.update { it + 1 }
             }
@@ -164,7 +164,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, so
     fun replayAudios() {
         launchCatchingIO {
             val side = if (showingAnswer.value) SingleCardSide.BACK else SingleCardSide.FRONT
-            soundPlayer.replayAllSounds(side)
+            cardMediaPlayer.replayAllSounds(side)
         }
     }
 
@@ -205,8 +205,8 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, so
             showingAnswer.value -> CardSide.ANSWER
             else -> CardSide.QUESTION
         }
-        soundPlayer.loadCardSounds(currentCard.await())
-        soundPlayer.playAllSoundsForSide(side)
+        cardMediaPlayer.loadCardSounds(currentCard.await())
+        cardMediaPlayer.playAllSoundsForSide(side)
     }
 
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L671) */
@@ -219,10 +219,10 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, so
     }
 
     companion object {
-        fun factory(previewerIdsFile: PreviewerIdsFile, currentIndex: Int, soundPlayer: SoundPlayer): ViewModelProvider.Factory {
+        fun factory(previewerIdsFile: PreviewerIdsFile, currentIndex: Int, cardMediaPlayer: CardMediaPlayer): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
-                    PreviewerViewModel(previewerIdsFile, currentIndex, soundPlayer)
+                    PreviewerViewModel(previewerIdsFile, currentIndex, cardMediaPlayer)
                 }
             }
         }

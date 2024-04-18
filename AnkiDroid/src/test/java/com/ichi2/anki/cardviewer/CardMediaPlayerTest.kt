@@ -40,7 +40,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class SoundPlayerTest : JvmTest() {
+class CardMediaPlayerTest : JvmTest() {
     internal val tagPlayer: SoundTagPlayer = mockk<SoundTagPlayer>()
     internal val ttsPlayer: TtsPlayer = mockk<TtsPlayer>()
     internal val onSoundGroupCompleted: () -> Unit = mockk<() -> Unit>().also {
@@ -196,19 +196,19 @@ class SoundPlayerTest : JvmTest() {
         verify(exactly = 1) { onSoundGroupCompleted.invoke() }
     }
 
-    private suspend fun SoundPlayer.playAllSoundsAndWait(side: SingleCardSide = SingleCardSide.FRONT) {
+    private suspend fun CardMediaPlayer.playAllSoundsAndWait(side: SingleCardSide = SingleCardSide.FRONT) {
         this.playAllSounds(side)?.join()
     }
 
-    private suspend fun SoundPlayer.replayAllSoundsAndWait(side: SingleCardSide) {
+    private suspend fun CardMediaPlayer.replayAllSoundsAndWait(side: SingleCardSide) {
         this.replayAllSounds(side)?.join()
     }
 
-    private suspend fun SoundPlayer.playOneSoundAndWait(tag: AvTag) {
+    private suspend fun CardMediaPlayer.playOneSoundAndWait(tag: AvTag) {
         playOneSound(tag)?.join()
     }
 
-    suspend fun SoundPlayer.setup(
+    suspend fun CardMediaPlayer.setup(
         questions: List<AvTag>,
         answers: List<AvTag>,
         replayQuestion: Boolean?,
@@ -247,21 +247,21 @@ class SoundPlayerTest : JvmTest() {
  * @param autoplay [CardSoundConfig.autoplay]
  * @param replayQuestion [CardSoundConfig.replayQuestion]
  */
-fun SoundPlayerTest.runSoundPlayerTest(
+fun CardMediaPlayerTest.runSoundPlayerTest(
     questions: List<AvTag> = emptyList(),
     answers: List<AvTag> = emptyList(),
     replayQuestion: Boolean? = null,
     autoplay: Boolean? = null,
-    testBody: suspend SoundPlayer.() -> Unit
+    testBody: suspend CardMediaPlayer.() -> Unit
 ) =
     runTest {
-        val soundPlayer = SoundPlayer(
+        val cardMediaPlayer = CardMediaPlayer(
             soundTagPlayer = tagPlayer,
             ttsPlayer = CompletableDeferred(ttsPlayer),
             soundErrorListener = mockk()
         )
-        soundPlayer.setOnSoundGroupCompletedListener(onSoundGroupCompleted)
-        assertThat("can play sounds", soundPlayer.isEnabled)
-        soundPlayer.setup(questions, answers, replayQuestion, autoplay)
-        testBody(soundPlayer)
+        cardMediaPlayer.setOnSoundGroupCompletedListener(onSoundGroupCompleted)
+        assertThat("can play sounds", cardMediaPlayer.isEnabled)
+        cardMediaPlayer.setup(questions, answers, replayQuestion, autoplay)
+        testBody(cardMediaPlayer)
     }
