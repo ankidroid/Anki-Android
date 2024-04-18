@@ -17,7 +17,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingHorizontal="16dp"
+    android:paddingHorizontal="24dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,7 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:layout_marginStart="8dp"
         style="@style/TextAppearance.Material3.LabelLarge"
         tools:text="Show card in range"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +69,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:minEms="6"
         app:expandedHintEnabled="false"
         app:suffixText="days"
