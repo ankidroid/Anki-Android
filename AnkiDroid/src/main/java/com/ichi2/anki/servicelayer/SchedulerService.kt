@@ -40,10 +40,14 @@ suspend fun FragmentActivity.rescheduleCards(cardIds: List<CardId>, newDays: Int
     )
 }
 
-suspend fun FragmentActivity.resetCards(cardIds: List<CardId>) {
+suspend fun FragmentActivity.resetCards(
+    cardIds: List<CardId>,
+    restorePosition: Boolean = false,
+    resetCounts: Boolean = false
+) {
     withProgress {
         undoableOp {
-            sched.forgetCards(cardIds)
+            sched.forgetCards(cardIds, restorePosition, resetCounts)
         }
     }
     val count = cardIds.size

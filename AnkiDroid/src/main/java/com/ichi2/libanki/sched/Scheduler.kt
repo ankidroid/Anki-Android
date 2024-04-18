@@ -305,12 +305,16 @@ open class Scheduler(val col: Collection) {
     /**
      * @param ids Ids of cards to put at the end of the new queue.
      */
-    open fun forgetCards(ids: List<CardId>): OpChanges {
+    open fun forgetCards(
+        ids: List<CardId>,
+        restorePosition: Boolean = false,
+        resetCounts: Boolean = false
+    ): OpChanges {
         val request = scheduleCardsAsNewRequest {
             cardIds.addAll(ids)
             log = true
-            restorePosition = false
-            resetCounts = false
+            this.restorePosition = restorePosition
+            this.resetCounts = resetCounts
         }
         return col.backend.scheduleCardsAsNew(request)
     }
