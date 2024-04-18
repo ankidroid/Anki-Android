@@ -72,11 +72,11 @@ import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
-import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
@@ -1145,24 +1145,8 @@ open class CardBrowser :
 
     private fun onResetProgress() {
         if (warnUserIfInNotesOnlyMode()) return
-        // Show confirmation dialog before resetting card progress
-        val dialog = ConfirmationDialog()
-        val title = getString(R.string.reset_card_dialog_title)
-        val message = getString(R.string.reset_card_dialog_message)
-        dialog.setArgs(title, message)
-        val confirm = Runnable {
-            Timber.i("CardBrowser:: ResetProgress button pressed")
-            resetProgressNoConfirm(selectedRowIds)
-        }
-        dialog.setConfirm(confirm)
+        val dialog = ForgetCardsDialog.newInstance(viewModel.selectedRowIds)
         showDialogFragment(dialog)
-    }
-
-    @VisibleForTesting
-    fun resetProgressNoConfirm(cardIds: List<Long>) {
-        launchCatchingTask {
-            resetCards(cardIds)
-        }
     }
 
     @VisibleForTesting

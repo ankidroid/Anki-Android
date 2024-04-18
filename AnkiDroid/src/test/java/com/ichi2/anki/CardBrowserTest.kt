@@ -37,6 +37,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KE
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
+import com.ichi2.anki.scheduling.ForgetCardsViewModel
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
@@ -584,7 +585,10 @@ class CardBrowserTest : RobolectricTest() {
             equalTo(expectedDate)
         )
 
-        b.resetProgressNoConfirm(listOf(card.id))
+        ForgetCardsViewModel().apply {
+            init(listOf(card.id))
+            resetCardsAsync().await()
+        }
 
         card.reload()
 
