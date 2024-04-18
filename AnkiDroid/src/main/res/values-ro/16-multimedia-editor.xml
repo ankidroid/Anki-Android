@@ -48,11 +48,11 @@
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
+    <string name="multimedia_editor_field_editing_text">Text</string>
     <string name="multimedia_editor_field_editing_image">Imagine</string>
     <string name="multimedia_editor_field_editing_audio">Înregistrare audio</string>
     <string name="multimedia_editor_field_editing_audio_clip">Clip audio</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Done</string>
+    <string name="multimedia_editor_field_editing_done">Done</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">Clear</string>
@@ -73,7 +73,7 @@
     <string name="multimedia_editor_something_wrong">Something went wrong</string>
     <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
     <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
+    <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
     <string name="multimedia_editor_attach_media">Attach media</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editare câmp</string>
+    <string name="title_activity_edit_text">Editare câmp</string>
     <!-- Crop function-->
     <string name="crop_image">Dorești să decupezi această imagine?</string>
     <string name="crop_button">Decupează imaginea</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
     <string name="select_image_failed">"Selectarea imaginii a eșuat. Vă rugăm reîncercați"</string>
     <string name="activity_result_unexpected">Aplicația a returnat o valoare neașteptată. S-ar putea să fie nevoie să utilizați o aplicație diferită</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Conținutul câmpului</string>
+    <string name="audio_recording_field_list">Conținutul câmpului</string>
 </resources>

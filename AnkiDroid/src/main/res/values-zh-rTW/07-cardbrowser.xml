@@ -88,13 +88,13 @@
     </string-array>
     <string name="card_browser_select_all">全選</string>
     <string name="card_browser_select_none">全不選</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(新增)</string>
+    <string name="card_browser_interval_new_card">(新增)</string>
     <string name="card_browser_due_filtered_card">(已過濾)</string>
     <string name="card_browser_interval_learning_card">(學習中)</string>
     <string name="card_browser_no_cards_in_deck">牌組 ‘%s’ 中未找到任何卡片</string>
     <string name="card_browser_search_all_decks">搜尋所有牌組</string>
     <string name="card_browser_unknown_deck_name">未知</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">截斷內容</string>
+    <string name="card_browser_truncate">截斷內容</string>
     <plurals name="card_browser_export_cards">
         <item quantity="other">匯出卡片</item>
     </plurals>

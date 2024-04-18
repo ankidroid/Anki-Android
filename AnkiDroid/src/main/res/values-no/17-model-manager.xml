@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Administrert notattyper</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Administrer felter</string>
+    <string name="model_browser_label">Administrert notattyper</string>
+    <string name="model_editor_label">Administrer felter</string>
     <!--Toasts-->
     <string name="toast_last_model">Du kan ikke slette din siste notattype</string>
     <string name="toast_last_field">Notattyper må ha minst ett felt</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Slett notattype</string>
-    <string name="model_browser_rename" comment="Rename a note type">Endre navn</string>
+    <string name="model_browser_rename">Endre navn</string>
     <string name="model_browser_template">Rediger kort</string>
     <!--Rename-->
     <string name="rename_model">Gi nytt navn til notattype</string>

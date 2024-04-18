@@ -54,11 +54,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Sin resultados</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
+    <string name="pref_cat_general" maxLength="41">General</string>
     <string name="pref_cat_studying" maxLength="41">Estudiando</string>
     <string name="pref_cat_system_wide" maxLength="41">Todo el sistema</string>
     <string name="pref_cat_reviewing" maxLength="41">Repasando</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronización</string>
+    <string name="pref_cat_sync" maxLength="41">Sincronización</string>
     <string name="pref_cat_scheduling" maxLength="41">Programación</string>
     <string name="pref_cat_whiteboard" maxLength="41">Pizarra</string>
     <string name="pref_cat_appearance" maxLength="41">Apariencia</string>
@@ -129,7 +129,7 @@
     <string name="sync_account_summ_logged_out">No ha iniciado sesión</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronización automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automáticamente al abrir / cerrar la aplicación si la última sincronización fue hace más de 10 minutos.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Siempre</string>
+    <string name="sync_media_always">Siempre</string>
     <string name="sync_media_only_unmetered">Sólo en conexiones ilimitadas</string>
     <string name="sync_media_never">Nunca</string>
     <string name="sync_status_badge" maxLength="41">Mostrar estado de sincronización</string>
@@ -180,7 +180,7 @@
     <string name="learn_cutoff" maxLength="41">Aprender antes del límite</string>
     <string name="time_limit" maxLength="41">Límite de tiempo para Timebox</string>
     <string name="day_offset_with_description" maxLength="41">Comienzo del día siguiente (0 es medianoche, 23 es 11PM)</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="one">%d hora después de medianoche</item>
         <item quantity="other">%d horas después de medianoche</item>
     </plurals>
@@ -212,7 +212,7 @@
     <string name="media_import_allow_all_files_summ">Si Android no reconoce un archivo multimedia</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Servidor de sincronización personalizado</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">No en uso</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">No en uso</string>
     <string name="custom_sync_server_help2"><![CDATA[        Como alternativa a la sincronización con AnkiWeb,
         puedes utilizar tu propio servidor para la sincronización.
         Si no lo estableces, se utilizará el servidor AnkiWeb predeterminado.
@@ -231,13 +231,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
+    <string name="deck_conf_general" maxLength="41">General</string>
     <string name="deck_conf_reminders" maxLength="41">Recordatorios</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtro</string>
     <string name="deck_conf_cram_search" maxLength="41">Buscar</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limitar a</string>
     <string name="deck_conf_cram_order" maxLength="41">Tarjetas seleccionadas por</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reprogramar</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">Reprogramar</string>
     <string name="deck_conf_cram_reschedule_summ">Reprogramar las tarjetas basándose en mis respuestas en este mazo</string>
     <string name="deck_conf_cram_filter_2_check">Activar segundo filtro</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definir pasos personalizados</string>
@@ -283,11 +283,11 @@
     <string name="card_side_question">Pregunta</string>
     <string name="card_side_answer">Respuesta</string>
     <string name="card_side_both">Preguntas y respuestas</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">P: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <string name="display_binding_card_side_question">P: %s</string>
+    <string name="display_binding_card_side_answer">R: %s</string>
+    <string name="display_binding_card_side_both">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Eliminar ‘%s’</string>
+    <string name="binding_remove_binding">Eliminar ‘%s’</string>
     <string name="bindings_already_bound">Ya vinculado a %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
@@ -319,43 +319,43 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Administrar espacio</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlando&#8230;</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">Error</string>
+    <string name="pref__widget_text__calculating">Calcu-\nlando&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="one">%1$d archivo\n%2$s</item>
         <item quantity="other">%1$d archivos\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Elimina archivos multimedia inutilizados</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">Elimina archivos multimedia inutilizados</string>
     <string name="pref__delete_unused_media_files__summary">Elimina imágenes y otros archivos multimedia que no empiezen por _ y no sean referenciadas por ninguna nota.</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Eliminar archivos multimedia inutilizados</string>
+    <string name="dialog__delete_unused_media_files__title">Eliminar archivos multimedia inutilizados</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Eliminar copias de seguridad</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Eliminar copias de seguridad</string>
+    <string name="pref__delete_backups__title" maxLength="41">Eliminar copias de seguridad</string>
+    <string name="dialog__delete_backups__title">Eliminar copias de seguridad</string>
     <string name="progress__deleting_backups">Eliminando copias de seguridad...</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Eliminar colección</string>
+    <string name="pref__delete_collection__title" maxLength="41">Eliminar colección</string>
     <string name="pref__delete_collection__summary">Eliminar colección, archivos multimedia y copias de seguridad. Los ajustes no se eliminarán</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Eliminar colección</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">¿Estás seguro de que quieres eliminar tu colección, tus archivos multimedia y tus copias de seguridad?\n\nTen en cuenta: esta acción cerrará la ventana.</string>
+    <string name="dialog__delete_collection__title">Eliminar colección</string>
+    <string name="dialog__delete_collection__message">¿Estás seguro de que quieres eliminar tu colección, tus archivos multimedia y tus copias de seguridad?\n\nTen en cuenta: esta acción cerrará la ventana.</string>
     <string name="progress__deleting_collection">Eliminando colección...</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Eliminar todo</string>
+    <string name="pref__delete_everything__title" maxLength="41">Eliminar todo</string>
     <string name="pref__delete_everything__summary">Eliminar colección, archivos multimedia, copias de seguridad y ajustes</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Eliminar todo</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">¿Estás seguro de que quieres eliminar todos los datos? Esto incluye tu colección, archivos multimedia, copias de seguridad y preferencias.\n\nTen en cuenta: esta acción cerrará la ventana.</string>
+    <string name="dialog__delete_everything__title">Eliminar todo</string>
+    <string name="dialog__delete_everything__message">¿Estás seguro de que quieres eliminar todos los datos? Esto incluye tu colección, archivos multimedia, copias de seguridad y preferencias.\n\nTen en cuenta: esta acción cerrará la ventana.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Eliminar datos de la aplicación</string>
+    <string name="pref__delete_app_data__title" maxLength="41">Eliminar datos de la aplicación</string>
     <string name="pref__delete_app_data__summary">Eliminar los ajustos y otros datos de la aplicación</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Eliminar datos de la aplicación</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">¿Estás seguro de que quieres eliminar los datos de la aplicación? Esto incluye tus preferencias y otros datos.\n\nTen en cuenta: esta acción cerrará la ventana.</string>
+    <string name="dialog__delete_app_data__title">Eliminar datos de la aplicación</string>
+    <string name="dialog__delete_app_data__message">¿Estás seguro de que quieres eliminar los datos de la aplicación? Esto incluye tus preferencias y otros datos.\n\nTen en cuenta: esta acción cerrará la ventana.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No hay colección</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Obteniendo&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculando&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">La colección no existe</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">No hay colección</string>
+    <string name="pref__etc__summary__error">Error</string>
+    <string name="pref__etc__snackbar__fetching">Obteniendo&#8230;</string>
+    <string name="pref__etc__snackbar__calculating">Calculando&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection">La colección no existe</string>
 </resources>

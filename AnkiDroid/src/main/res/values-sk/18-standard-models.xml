@@ -28,7 +28,7 @@
     <!--Fields-->
     <string name="front_field_name">Predná strana</string>
     <string name="back_field_name">Zadná strana</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
+    <string name="text_field_name">Text</string>
     <string name="extra_field_name_new">Zadná strana (poznámky)</string>
     <string name="field_to_ask_front_name">Pridať obrátenú stranu kartičky</string>
     <!--Note type-->

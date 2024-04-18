@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Керування типами записів</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Керувати полями</string>
+    <string name="model_browser_label">Керування типами записів</string>
+    <string name="model_editor_label">Керувати полями</string>
     <!--Toasts-->
     <string name="toast_last_model">Ви не можете видалити останній тип примітки</string>
     <string name="toast_last_field">Типи записів повинні містити хоча б одне поле</string>
@@ -49,7 +49,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Видалити тип запису</string>
-    <string name="model_browser_rename" comment="Rename a note type">Перейменувати</string>
+    <string name="model_browser_rename">Перейменувати</string>
     <string name="model_browser_template">Редагувати картки</string>
     <!--Rename-->
     <string name="rename_model">Перейменувати тип запису</string>

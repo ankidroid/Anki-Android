@@ -52,7 +52,7 @@
         <item quantity="many">Laukia %d „AnkiDroid“ kortelių</item>
         <item quantity="other">Laukia %d „AnkiDroid“ kort.</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">Mažas „AnkiDroid“</string>
+    <string name="widget_small">Mažas „AnkiDroid“</string>
     <plurals name="widget_cards_due">
         <item quantity="one">Laukia %d kortelė</item>
         <item quantity="few">Laukia %d kortelės</item>

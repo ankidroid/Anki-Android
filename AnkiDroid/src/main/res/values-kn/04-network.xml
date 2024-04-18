@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">ನೀವು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿರುವಿರಿ</string>
     <string name="sync_error">ಸಿಂಕ್ ದೋಷ</string>
-    <string name="vague_error" comment="Network error dialog title">ದೋಷ</string>
+    <string name="vague_error">ದೋಷ</string>
     <string name="retry">ಮರುಪ್ರಯತ್ನಿಸಿ</string>
     <string name="menu_get_shared_decks">ಹಂಚಿದ ಡೆಕ್‌ಗಳನ್ನು ಪಡೆಯಿರಿ</string>
     <string name="connection_error_message">ನೆಟ್‌ವರ್ಕ್ ದೋಷ ಸಂಭವಿಸಿದೆ</string>

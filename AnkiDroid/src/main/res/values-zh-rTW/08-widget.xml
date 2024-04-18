@@ -49,7 +49,7 @@
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="other">%d AnkiDroid 卡片到期</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid 小型</string>
+    <string name="widget_small">AnkiDroid 小型</string>
     <plurals name="widget_cards_due">
         <item quantity="other">%d 張卡片待複習</item>
     </plurals>

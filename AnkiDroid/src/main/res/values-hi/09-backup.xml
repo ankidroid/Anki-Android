@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb के संग्रह से अपने संग्रह को अधिलेखित करें? यह पिछले समकालन के बाद से आपके सीखने की प्रगति और जोड़े जानकारी को मिटा देगा।</string>
     <string name="error_handling_title">त्रुटि प्रबंधन</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">विकल्प</string>
+    <string name="error_handling_options">विकल्प</string>
     <string name="backup_retry_opening">खोलने का पुनः प्रयास करें</string>
     <string name="backup_error_menu_repair">डेटाबेस की मरम्मत करें</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

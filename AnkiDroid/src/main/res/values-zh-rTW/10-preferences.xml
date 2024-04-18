@@ -53,11 +53,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">無結果</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">一般</string>
+    <string name="pref_cat_general" maxLength="41">一般</string>
     <string name="pref_cat_studying" maxLength="41">學習中</string>
     <string name="pref_cat_system_wide" maxLength="41">系統範圍</string>
     <string name="pref_cat_reviewing" maxLength="41">複習</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同步</string>
+    <string name="pref_cat_sync" maxLength="41">同步</string>
     <string name="pref_cat_scheduling" maxLength="41">計畫任務</string>
     <string name="pref_cat_whiteboard" maxLength="41">白板</string>
     <string name="pref_cat_appearance" maxLength="41">外觀</string>
@@ -128,7 +128,7 @@
     <string name="sync_account_summ_logged_out">未登入</string>
     <string name="automatic_sync_choice" maxLength="41">自動同步</string>
     <string name="automatic_sync_choice_summ">如果距離上次同步超過 10 分鐘，則在開啟/關閉程式時自動同步。</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">總是</string>
+    <string name="sync_media_always">總是</string>
     <string name="sync_media_only_unmetered">只在非計費連線時</string>
     <string name="sync_media_never">從不</string>
     <string name="sync_status_badge" maxLength="41">顯示同步狀態</string>
@@ -179,7 +179,7 @@
     <string name="learn_cutoff" maxLength="41">提早學習上限</string>
     <string name="time_limit" maxLength="41">時間盒的時間上限</string>
     <string name="day_offset_with_description" maxLength="41">下一天開始的時間</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="other">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">保持螢幕開啟</string>
@@ -210,7 +210,7 @@
     <string name="media_import_allow_all_files_summ">如果 Android 無法辨識媒體檔案</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">自訂同步伺服器</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">未使用</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">未使用</string>
     <string name="custom_sync_server_help2"><![CDATA[        作為與 AnkiWeb 同步的替代方案，
         你可以選擇用自己的伺服器進行同步。
         如果未設定，預設的 AnkiWeb 伺服器將被使用。
@@ -229,13 +229,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">選擇標籤</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
+    <string name="deck_conf_general" maxLength="41">一般</string>
     <string name="deck_conf_reminders" maxLength="41">提醒</string>
     <string name="deck_conf_cram_filter" maxLength="41">篩選器</string>
     <string name="deck_conf_cram_search" maxLength="41">搜尋</string>
     <string name="deck_conf_cram_limit" maxLength="41">上限為</string>
     <string name="deck_conf_cram_order" maxLength="41">依條件選擇卡片</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新排程</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">重新排程</string>
     <string name="deck_conf_cram_reschedule_summ">依據我在本牌組的回答狀況來重新排程卡片</string>
     <string name="deck_conf_cram_filter_2_check">開啟第二個過濾器</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">設定自訂步數</string>
@@ -281,11 +281,11 @@
     <string name="card_side_question">問題</string>
     <string name="card_side_answer">答案</string>
     <string name="card_side_both">問與答</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">問：%s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">答：%s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <string name="display_binding_card_side_question">問：%s</string>
+    <string name="display_binding_card_side_answer">答：%s</string>
+    <string name="display_binding_card_side_both">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">移除%s</string>
+    <string name="binding_remove_binding">移除%s</string>
     <string name="bindings_already_bound">已經和%s關聯</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">實驗性功能</string>
@@ -318,42 +318,42 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">管理空間</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">錯誤</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">正在計算&#8230;</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">錯誤</string>
+    <string name="pref__widget_text__calculating">正在計算&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="other">%1$d 個檔案\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">刪除未使用的媒體檔案</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">刪除未使用的媒體檔案</string>
     <string name="pref__delete_unused_media_files__summary">刪除前置不是 _ 以及不被任何筆記引用的圖像和其它媒體</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">刪除未使用的媒體檔案</string>
+    <string name="dialog__delete_unused_media_files__title">刪除未使用的媒體檔案</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">刪除備份</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">刪除備份</string>
+    <string name="pref__delete_backups__title" maxLength="41">刪除備份</string>
+    <string name="dialog__delete_backups__title">刪除備份</string>
     <string name="progress__deleting_backups">正在刪除備份&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">刪除集合</string>
+    <string name="pref__delete_collection__title" maxLength="41">刪除集合</string>
     <string name="pref__delete_collection__summary">刪除集合、媒體和備份。應用程式設定將不會被刪除</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">刪除集合</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">確定要刪除你的集合、媒體和備份嗎？\n\n注意：此操作將關閉視窗。</string>
+    <string name="dialog__delete_collection__title">刪除集合</string>
+    <string name="dialog__delete_collection__message">確定要刪除你的集合、媒體和備份嗎？\n\n注意：此操作將關閉視窗。</string>
     <string name="progress__deleting_collection">刪除集合中&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">刪除所有內容</string>
+    <string name="pref__delete_everything__title" maxLength="41">刪除所有內容</string>
     <string name="pref__delete_everything__summary">刪除集合、媒體、備份和設定</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">刪除所有內容</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">確定要刪除所有資料嗎？這包括你的集合、媒體、備份和設定。\n\n注意：此操作將關閉視窗。</string>
+    <string name="dialog__delete_everything__title">刪除所有內容</string>
+    <string name="dialog__delete_everything__message">確定要刪除所有資料嗎？這包括你的集合、媒體、備份和設定。\n\n注意：此操作將關閉視窗。</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">刪除應用程式資料</string>
+    <string name="pref__delete_app_data__title" maxLength="41">刪除應用程式資料</string>
     <string name="pref__delete_app_data__summary">刪除設定和其它應用程式資料</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">刪除應用程式資料</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">確定要刪除應用程式資料嗎？這包括設定和其它應用程式資料。\n\n注意：此操作將關閉視窗。</string>
+    <string name="dialog__delete_app_data__title">刪除應用程式資料</string>
+    <string name="dialog__delete_app_data__message">確定要刪除應用程式資料嗎？這包括設定和其它應用程式資料。\n\n注意：此操作將關閉視窗。</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">沒有集合</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">錯誤</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">正在擷取&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">正在計算&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">集合不存在</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">沒有集合</string>
+    <string name="pref__etc__summary__error">錯誤</string>
+    <string name="pref__etc__snackbar__fetching">正在擷取&#8230;</string>
+    <string name="pref__etc__snackbar__calculating">正在計算&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection">集合不存在</string>
 </resources>

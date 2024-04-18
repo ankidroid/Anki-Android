@@ -52,7 +52,7 @@
         <item quantity="many">%d kart do przejrzenia</item>
         <item quantity="other">%d kart do przejrzenia</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid Mały</string>
+    <string name="widget_small">AnkiDroid Mały</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d karta do przejrzenia</item>
         <item quantity="few">%d karty do przejrzenia</item>

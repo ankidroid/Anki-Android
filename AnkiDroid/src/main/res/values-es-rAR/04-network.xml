@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">No estás en línea</string>
     <string name="sync_error">Error de sincronización</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
+    <string name="vague_error">Error</string>
     <string name="retry">Intentar nuevamente</string>
     <string name="menu_get_shared_decks">Obtener mazos compartidos</string>
     <string name="connection_error_message">Ha ocurrido un error de red.</string>

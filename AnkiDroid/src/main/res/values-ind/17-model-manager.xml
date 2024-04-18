@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Kelola tipe catatan</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Kelola kolom</string>
+    <string name="model_browser_label">Kelola tipe catatan</string>
+    <string name="model_editor_label">Kelola kolom</string>
     <!--Toasts-->
     <string name="toast_last_model">Kamu tidak bisa mengapus tipe catatan terakhirmu</string>
     <string name="toast_last_field">Tipe catatan harus memiliki setidaknya satu kolom</string>
@@ -43,7 +43,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Hapus tipe catatan</string>
-    <string name="model_browser_rename" comment="Rename a note type">Ubah nama</string>
+    <string name="model_browser_rename">Ubah nama</string>
     <string name="model_browser_template">Edit kartu</string>
     <!--Rename-->
     <string name="rename_model">Ubah nama tipe catatan</string>

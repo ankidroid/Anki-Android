@@ -50,7 +50,7 @@
         <item quantity="one">%d AnkiDroid കാർഡ് കാരണം</item>
         <item quantity="other">%d അങ്കിഡ്രോയിഡ് കാർഡുകൾ കാരണം</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">Ankidroid ചെറുത്</string>
+    <string name="widget_small">Ankidroid ചെറുത്</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d കാർഡ് അടയ്ക്കണം</item>
         <item quantity="other">അടയ്‌ക്കേണ്ട %d കാർഡുകൾ</item>

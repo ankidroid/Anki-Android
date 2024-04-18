@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Cheres subraiscrìere sa colletzione tua cun cussa dae AnkiWeb? Custu t\'at a fàghere pèrdere totu su progressu de imparòngiu tuo e sas informatziones annànghidas dae s\'ùrtima sincronizatzione tua.</string>
     <string name="error_handling_title">Gestione de sos errores</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Optziones</string>
+    <string name="error_handling_options">Optziones</string>
     <string name="backup_retry_opening">Torra a proare a abèrrere</string>
     <string name="backup_error_menu_repair">Acontza sa base de datos</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

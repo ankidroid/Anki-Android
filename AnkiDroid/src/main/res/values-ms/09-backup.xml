@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Ganti tulis koleksi anda dengan yang dari AnkiWeb? Ini akan buang semua kemajuan pembelajaran dan maklumat yang ditambah sejak penyegerakan terakhir.</string>
     <string name="error_handling_title">Pengendalian ralat</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Pilihan</string>
+    <string name="error_handling_options">Pilihan</string>
     <string name="backup_retry_opening">Cuba buka semula</string>
     <string name="backup_error_menu_repair">Baiki pangkalan data</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

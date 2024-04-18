@@ -92,13 +92,13 @@
     </string-array>
     <string name="card_browser_select_all">Seleziona tutto</string>
     <string name="card_browser_select_none">Deseleziona tutto</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nuova)</string>
+    <string name="card_browser_interval_new_card">(nuova)</string>
     <string name="card_browser_due_filtered_card">(filtrata)</string>
     <string name="card_browser_interval_learning_card">(in apprendimento)</string>
     <string name="card_browser_no_cards_in_deck">Nessuna carta trovata nel mazzo «%s»</string>
     <string name="card_browser_search_all_decks">Cerca in tutti i mazzi</string>
     <string name="card_browser_unknown_deck_name">Sconosciuto</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Tronca contenuto</string>
+    <string name="card_browser_truncate">Tronca contenuto</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Esporta carta</item>
         <item quantity="other">Esporta carte</item>

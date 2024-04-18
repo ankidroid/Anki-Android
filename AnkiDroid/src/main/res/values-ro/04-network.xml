@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">Ești deconectat</string>
     <string name="sync_error">Eroare de sincronizare</string>
-    <string name="vague_error" comment="Network error dialog title">Eroare</string>
+    <string name="vague_error">Eroare</string>
     <string name="retry">Reincearca</string>
     <string name="menu_get_shared_decks">Obţinerea punţilor comune</string>
     <string name="connection_error_message">A network error has ocurred.</string>

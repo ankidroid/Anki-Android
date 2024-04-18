@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">ניהול סוגי הרשומות</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ניהול שדות</string>
+    <string name="model_browser_label">ניהול סוגי הרשומות</string>
+    <string name="model_editor_label">ניהול שדות</string>
     <!--Toasts-->
     <string name="toast_last_model">אין לך אפשרות למחוק את סוג ההערה האחרון שלך</string>
     <string name="toast_last_field">סוגי פתקים צריכים לפחות תחום אחד</string>
@@ -49,7 +49,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">מחיקת סוג רשומה</string>
-    <string name="model_browser_rename" comment="Rename a note type">שינוי שם</string>
+    <string name="model_browser_rename">שינוי שם</string>
     <string name="model_browser_template">עריכת קלפים</string>
     <!--Rename-->
     <string name="rename_model">שנה את שם סוג פתק</string>

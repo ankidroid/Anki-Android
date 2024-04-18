@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Перазапісаць вашу калекцыю той, якая атрымана з AnkiWeb? Вы згубіце ўсе звесткі пра свае дасягненні і час апошняй сінхранізацыі.</string>
     <string name="error_handling_title">Апрацоўка памылак</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Параметры</string>
+    <string name="error_handling_options">Параметры</string>
     <string name="backup_retry_opening">Адкрыць паўторна</string>
     <string name="backup_error_menu_repair">Аднавіць базу даных</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

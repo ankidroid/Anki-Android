@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Pamahalaan ang mga uri ng tala</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Pamahalaan ang mga patlang</string>
+    <string name="model_browser_label">Pamahalaan ang mga uri ng tala</string>
+    <string name="model_editor_label">Pamahalaan ang mga patlang</string>
     <!--Toasts-->
     <string name="toast_last_model">Hindi mo maaaring tanggalin o burahin ang iyong huling uri ng tala.</string>
     <string name="toast_last_field">Ang mga uri ng tala ay dapat magkaroon ng hindi bababa sa isang larangan</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Tanggalin ang uri ng tala</string>
-    <string name="model_browser_rename" comment="Rename a note type">Palitan ang pangalan</string>
+    <string name="model_browser_rename">Palitan ang pangalan</string>
     <string name="model_browser_template">I-edit ang mga card</string>
     <!--Rename-->
     <string name="rename_model">Palitan ang pangalan ng uri ng tala.</string>

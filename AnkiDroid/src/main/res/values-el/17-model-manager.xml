@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Διαχείριση τύπων σημειώσεων</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Διαχείριση πεδίων</string>
+    <string name="model_browser_label">Διαχείριση τύπων σημειώσεων</string>
+    <string name="model_editor_label">Διαχείριση πεδίων</string>
     <!--Toasts-->
     <string name="toast_last_model">Δεν μπορείτε να διαγράψετε τον τύπο της τελευταίας σημείωσης</string>
     <string name="toast_last_field">Οι τύποι σημειώσεων πρέπει να έχουν τουλάχιστον ένα πεδίο</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Διαγραφή τύπου σημείωσης</string>
-    <string name="model_browser_rename" comment="Rename a note type">Μετονομασία</string>
+    <string name="model_browser_rename">Μετονομασία</string>
     <string name="model_browser_template">Επεξεργασία καρτών</string>
     <!--Rename-->
     <string name="rename_model">Μετονομασία τύπου σημείωσης</string>

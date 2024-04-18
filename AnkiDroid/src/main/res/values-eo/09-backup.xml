@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Ĉu anstataŭigi vian kolekton per tiu de AnkiWeb. Tio ĉi forviŝos vian lernadan progreson kaj informojn aldonitajn ekde la antaŭa samtempigado.</string>
     <string name="error_handling_title">Pritraktado de eraroj</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Agordoj</string>
+    <string name="error_handling_options">Agordoj</string>
     <string name="backup_retry_opening">Reprovi malfermi</string>
     <string name="backup_error_menu_repair">Ripari datumbazon</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

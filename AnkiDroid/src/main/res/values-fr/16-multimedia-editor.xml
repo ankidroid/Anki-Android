@@ -48,11 +48,11 @@
     <string name="multimedia_editor_popup_cloze">Texte à trou</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Texte</string>
+    <string name="multimedia_editor_field_editing_text">Texte</string>
     <string name="multimedia_editor_field_editing_image">Image</string>
     <string name="multimedia_editor_field_editing_audio">Enregistrement audio</string>
     <string name="multimedia_editor_field_editing_audio_clip">Extrait audio</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Terminé</string>
+    <string name="multimedia_editor_field_editing_done">Terminé</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">Effacer</string>
@@ -73,7 +73,7 @@
     <string name="multimedia_editor_something_wrong">Quelque chose s’est mal passé</string>
     <string name="multimedia_editor_svg_preview">Les SVG ne sont pas disponibles pour l\'aperçu</string>
     <string name="multimedia_editor_png_paste_error">Erreur lors de la convertion de l\'image du presse-papier au format PNG: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Joindre le contenu multimédia au %1$s champ</string>
+    <string name="multimedia_editor_attach_mm_content">Joindre le contenu multimédia au %1$s champ</string>
     <string name="multimedia_editor_attach_media">Ajouter un média</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">Échec de la lecture</string>
     <string name="multimedia_editor_audio_view_create_failed">Impossible de créer la barre d\'outils de l\'enregistreur</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Champ d\'édition</string>
+    <string name="title_activity_edit_text">Champ d\'édition</string>
     <!-- Crop function-->
     <string name="crop_image">Voulez-vous rogner cette image ?</string>
     <string name="crop_button">Rogner l\'image</string>
     <string name="save_dialog_content">La taille actuelle de l\'image est de %s Mo. La taille de l\'image par défaut est de 1 Mo. Voulez-vous la rogner ?</string>
     <string name="select_image_failed">"La sélection de l\'image a échoué, veuillez réessayer"</string>
     <string name="activity_result_unexpected">L\'application a renvoyé une valeur inattendue. Vous devriez peut-être utiliser une autre application</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contenus du champ</string>
+    <string name="audio_recording_field_list">Contenus du champ</string>
 </resources>

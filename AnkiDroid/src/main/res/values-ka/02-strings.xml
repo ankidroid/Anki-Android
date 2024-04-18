@@ -137,15 +137,15 @@
         <item quantity="one">%1$d წუთში</item>
         <item quantity="other">%1$d წუთში</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ბარათი</string>
+    <string name="fact_adder_intent_title">AnkiDroid ბარათი</string>
     <string name="note_editor_copy_note">შენიშვნის კოპირება</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">გადაადგილება</string>
+    <string name="card_editor_reposition_card">გადაადგილება</string>
     <string name="card_editor_reset_card">პროგრესის წაშლა</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">გადადება</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">წინასწარ ნახვა</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Markdown-ად კოპირება</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ბარათი %2$d-დან</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">გადარქმევა</string>
+    <string name="card_editor_reschedule_card">გადადება</string>
+    <string name="card_editor_preview_card">წინასწარ ნახვა</string>
+    <string name="copy_as_markdown">Markdown-ად კოპირება</string>
+    <string name="preview_progress_bar_text">%1$d ბარათი %2$d-დან</string>
+    <string name="rename">გადარქმევა</string>
     <string name="checks_action">შემოწმება</string>
     <string name="check_db">მონაცემთა ბაზის შემოწმება</string>
     <string name="check_media">მედიაფაილების შემოწმება</string>
@@ -155,11 +155,11 @@
     <string name="delete_deck">იშლება დასტა&#8230;</string>
     <string name="info_rate">შეაფასეთ AnkiDroid</string>
     <string name="import_title">იმპორტირება</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">დამატება</string>
+    <string name="import_message_add">დამატება</string>
     <string name="import_message_replace_confirm">არსებული კოლექცია წაიშლება და ჩანაცვლდება არჩეული ფაილის მონაცემებით %s</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">ეს არ არის მოქმედი Anki-პაკეტის ფაილი</string>
-    <string name="import_title_error" comment="Title of error dialog">შეცდომა</string>
+    <string name="import_title_error">შეცდომა</string>
     <string name="import_error_handle_exception">ფაილის იმპორტირება ვერ მოხერხდა\n\n%s</string>
     <string name="import_error_not_apkg_extension">ფაილის სახელს „%s“ არ აქვს .apkg ან .colpkg დაბოლოება</string>
     <string name="import_error_load_imported_database">Anki მონაცემთა ბაზის შემცვლელი ფაილები (.anki2)  ჯერ არ არის მხარდაჭერილი. იხილეთ ინსტრუქცია შესაბამისი მითითებებისთვის</string>
@@ -182,9 +182,9 @@
         ]]></string>
     <string name="export_choice_share">გაზიარება</string>
     <string name="export_choice_save_to">შენახვა</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">პარამეტრები</string>
+    <string name="study_options">პარამეტრები</string>
     <string name="menu__deck_options">დასტის პარამეტრები</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">სწავლის პარამეტრები</string>
+    <string name="menu__study_options">სწავლის პარამეტრები</string>
     <string name="select_tts">ხმოვანი წამკითხველის ენის არჩევა</string>
     <string name="custom_study">ინდივიდუალური სწავლა</string>
     <string name="more_options">მეტი</string>
@@ -234,12 +234,12 @@
     <string name="card_viewer_could_not_find_image">ბარათის შიგთავსის შეცდომა: „%s“ ვერ ჩაიტვირთა</string>
     <!-- Deck Picker -->
     <string name="search_decks">დასტების მოძიება</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">მიგრაციის პროგრესის ჩვენება</string>
+    <string name="show_migration_progress">მიგრაციის პროგრესის ჩვენება</string>
     <string name="ankidroid_init_failed_webview_title">ფატალური შეცდომა</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">ტექსტის ზომა</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ინსტრუმენტების პანელის ჩვენება</string>
+    <string name="menu_show_toolbar">ინსტრუმენტების პანელის ჩვენება</string>
     <string name="format_insert_bold">ტექსტის გასქელება</string>
     <string name="format_insert_italic">ტექსტის წაქცევა</string>
     <string name="format_insert_underline">ტექსტის გახაზვა</string>
@@ -255,15 +255,15 @@
     <string name="toolbar_item_explain_edit_or_remove">შეიყვანეთ მონიშნული ტექსტის ორივე ბოლოს ჩასასმელი HTML-კოდი\n\nხელსაწყოთა ზოლს დიდი ხნით დააჭირეთ, რათა დაარედაქტიროთ ან წაშალოთ</string>
     <string name="remove_toolbar_item">ამოიშალოს ხელსაწყოთა ზოლის ელემენტი?</string>
     <string name="note_editor_paste_too_large">სურათი ზედმეტად დიდია ჩასასმელად, გთხოვთ სურათი ხელით ჩაამატოთ</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        მიმდინარეობს Android-ის სარეზერვო ასლის შექმნა. გთხოვთ, ხელახლა სცადოთ</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">შესაძლოა iManager-ის გამოყენება დაგჭირდეთ, რათა AnkiDroid-ით სწრაფი ბმულის დამატება შეძლოთ</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">თქვენი საწყისი ეკრანი არ აძლევს AnkiDroid-ს სწრაფი ბმულის დამატების უფლებას</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again">        მიმდინარეობს Android-ის სარეზერვო ასლის შექმნა. გთხოვთ, ხელახლა სცადოთ</string>
+    <string name="create_shortcut_error_vivo">შესაძლოა iManager-ის გამოყენება დაგჭირდეთ, რათა AnkiDroid-ით სწრაფი ბმულის დამატება შეძლოთ</string>
+    <string name="create_shortcut_failed">თქვენი საწყისი ეკრანი არ აძლევს AnkiDroid-ს სწრაფი ბმულის დამატების უფლებას</string>
     <string name="create_shortcut_error">შეცდომა სწრაფი ბმულის დამატებისას: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">წინადადებების მთავრულით დაწყება</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">გადაადგილების ხელსაწყოთა ზოლი</string>
+    <string name="note_editor_capitalize">წინადადებების მთავრულით დაწყება</string>
+    <string name="menu_scroll_toolbar">გადაადგილების ხელსაწყოთა ზოლი</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
-    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
-    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="plus_sign">+</string>
+    <string name="minus_sign">-</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">მოქმედი ელ-ფოსტა შეიყვანეთ</string>
     <string name="password_empty">პაროლი საჭიროა</string>
@@ -318,7 +318,7 @@
     <string name="intro_ankidroid_tagline_one">ნაკლები მეცადინეობა</string>
     <string name="intro_ankidroid_tagline_two">მეტის დამახსოვრება</string>
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">დაწყება</string>
+    <string name="intro_get_started">დაწყება</string>
     <string name="intro_sync_from_ankiweb">სინქრონიზაცია AnkiWeb-თან</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
@@ -329,35 +329,35 @@
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">დასტა წაიშალა. გთხოვთ მოაშოროთ სწრაფი ბმული</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ბარათები</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">შენიშვნები</string>
+    <string name="show_cards">ბარათები</string>
+    <string name="show_notes">შენიშვნები</string>
     <string name="toggle_cards_notes">ბარათების/შენიშვნების ნახვა/დამალვა</string>
     <string name="toggle_browser_mode_help">ბარათების ან შენიშვნების საძიებოში ჩვენების გადართვა</string>
     <string name="truncate_content_help">ბარათების საძიებოს თითო მწკრივის სიმაღლის ისე დამოკლება, რომ მხოლოდ შიგთავსის პირველი 3 სტრიქონი აჩვენოს</string>
     <string name="browser_options_dialog_heading">ბარათების საძიებოს პარამეტრები</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        ეს ფუნქცია მიუწვდომელია საცავის მიგრაციისას
+    <string name="functionality_disabled_during_storage_migration">        ეს ფუნქცია მიუწვდომელია საცავის მიგრაციისას
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">შეეხეთ საცავის მიგრაციისათვის</string>
+    <string name="storage_migration_sync_notification">შეეხეთ საცავის მიგრაციისათვის</string>
     <string name="media_sync_required_title">საჭიროა მედიაფაილების სინქრონიზაცია</string>
     <string name="media_sync_unavailable_message">მედიაფაილების სინქრონიზაცია გამორთულია პარამეტრებში. გთხოვთ დაასინქრონოთ და სარეზერვო ფაილად შეინახოთ ყველა მედიაფაილი, რომელიც ჯერ არაა სინქრონიზებული</string>
     <string name="audio_saved">ჩანაწერი შენახულია</string>
     <string name="deleting_selected_notes">მონიშნული შენიშვნების წაშლა</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        მოსასმენად შეეხეთ ხმას
+    <string name="tts_voices_default_text">        მოსასმენად შეეხეთ ხმას
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">უმჯობესია, ხმა გამოყენებამდე გადმოიწეროთ
+    <string name="tts_voices_selected_voice_should_be_installed">უმჯობესია, ხმა გამოყენებამდე გადმოიწეროთ
     </string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">მაინც გამოყენება</string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">ხმოვანი წამკითხველის შეცდომა (%s)</string>
+    <string name="tts_voices_use_selected_voice_without_install">მაინც გამოყენება</string>
+    <string name="tts_voices_playback_error_new">ხმოვანი წამკითხველის შეცდომა (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
-    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        ინტერნეტი
+    <string name="tts_voices_chip_filter_to_internet">        ინტერნეტი
     </string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        დაყენება
+    <string name="tts_voices_chip_filter_to_installable_audio">        დაყენება
     </string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        ხმოვანი წამკითხველის პარამეტრები ვერ გაიხსნა
+    <string name="tts_voices_failed_opening_tts_system_settings">        ხმოვანი წამკითხველის პარამეტრები ვერ გაიხსნა
     </string>
     <string name="shared_decks_login_required">მეტი დასტის გადმოსაწერად, გთხოვთ, გაიაროთ ავტორიზაცია</string>
     <string name="deck_description_field_hint">აღწერა</string>
     <string name="failed_to_copy">კოპირება ვერ მოხერხდა</string>
     <string name="card_browser_unavailable_when_notes_mode">„შენიშვნების“ რეჟიმში ვერ გამოიყენებთ</string>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">გადაადგილება</string>
+    <string name="card_template_reposition_template">გადაადგილება</string>
 </resources>

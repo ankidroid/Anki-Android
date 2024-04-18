@@ -48,11 +48,11 @@
     <string name="multimedia_editor_popup_cloze">Auslassung erzeugen</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
+    <string name="multimedia_editor_field_editing_text">Text</string>
     <string name="multimedia_editor_field_editing_image">Bild</string>
     <string name="multimedia_editor_field_editing_audio">Audioaufnahme</string>
     <string name="multimedia_editor_field_editing_audio_clip">Audioclip</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Fertig</string>
+    <string name="multimedia_editor_field_editing_done">Fertig</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">Zurücksetzen</string>
@@ -73,7 +73,7 @@
     <string name="multimedia_editor_something_wrong">Etwas ist schiefgelaufen</string>
     <string name="multimedia_editor_svg_preview">SVGs sind für die Vorschau nicht verfügbar</string>
     <string name="multimedia_editor_png_paste_error">Fehler beim Konvertieren des Bildes aus der Zwischenablage in PNG: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Multimedia-Inhalt zum %1$s-Feld hinzufügen</string>
+    <string name="multimedia_editor_attach_mm_content">Multimedia-Inhalt zum %1$s-Feld hinzufügen</string>
     <string name="multimedia_editor_attach_media">Medien anhängen</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">Abspielen fehlgeschlagen</string>
     <string name="multimedia_editor_audio_view_create_failed">Aufnahme-Werkzeugleiste konnte nicht erstellt werden</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Bearbeite Feld</string>
+    <string name="title_activity_edit_text">Bearbeite Feld</string>
     <!-- Crop function-->
     <string name="crop_image">Wollen Sie dieses Bild zuschneiden?</string>
     <string name="crop_button">Bild zuschneiden</string>
     <string name="save_dialog_content">Die aktuelle Bildgröße beträgt %s MB. Die Standardgröße des Bildes beträgt 1 MB. Wollen Sie es zuschneiden?</string>
     <string name="select_image_failed">"Bildauswahl fehlgeschlagen, bitte erneut versuchen"</string>
     <string name="activity_result_unexpected">Die Anwendung hat einen unerwarteten Wert zurückgegeben. Möglicherweise müssen Sie eine andere Anwendung verwenden</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Feldinhalte</string>
+    <string name="audio_recording_field_list">Feldinhalte</string>
 </resources>

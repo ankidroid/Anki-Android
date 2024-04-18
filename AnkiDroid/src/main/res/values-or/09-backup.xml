@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWebରୁ ଆସୁଥିବା ସଂଗ୍ରହ ସହିତ ଆପଣଙ୍କର ଗଚ୍ଛିତ ସଂଗ୍ରହକୁ ଅପଲେଖିତ କରିବେ ତ? ଏହା ଆପଣଙ୍କ ଗତ ସୀଙ୍କ୍ ପରଠାରୁ ଆପଣଙ୍କର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତି ଓ ଯୋଡ଼ାଯାଇଥିବା ସୂଚନାକୁ ଅଧିଲିଖିତ କରିବ।</string>
     <string name="error_handling_title">ତ୍ରୁଟି ପରିଚାଳନା</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ଵିକଳ୍ପ</string>
+    <string name="error_handling_options">ଵିକଳ୍ପ</string>
     <string name="backup_retry_opening">ଖୋଲିବାକୁ ପୁନଃ ଚେଷ୍ଟା କରିବା</string>
     <string name="backup_error_menu_repair">ଡାଟାବେସ୍ ମରାମତି କରନ୍ତୁ</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">टीप प्रकार व्यवस्थापित करा</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">फील्ड व्यवस्थापित करा</string>
+    <string name="model_browser_label">टीप प्रकार व्यवस्थापित करा</string>
+    <string name="model_editor_label">फील्ड व्यवस्थापित करा</string>
     <!--Toasts-->
     <string name="toast_last_model">आपण आपला शेवटचा नोट प्रकार हटवू शकत नाही</string>
     <string name="toast_last_field">टीप प्रकारात कमीतकमी एक फील्ड असणे आवश्यक आहे</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">टीप प्रकार हटवा</string>
-    <string name="model_browser_rename" comment="Rename a note type">नाव बदला</string>
+    <string name="model_browser_rename">नाव बदला</string>
     <string name="model_browser_template">कार्ड संपादित करा</string>
     <!--Rename-->
     <string name="rename_model">टीप प्रकार पुनर्नामित करा</string>

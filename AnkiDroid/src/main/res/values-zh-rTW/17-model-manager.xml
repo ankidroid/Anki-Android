@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">管理筆記類型</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">管理欄位</string>
+    <string name="model_browser_label">管理筆記類型</string>
+    <string name="model_editor_label">管理欄位</string>
     <!--Toasts-->
     <string name="toast_last_model">無法刪除最後一個筆記類型</string>
     <string name="toast_last_field">筆記類型至少需要包含一個字段</string>
@@ -43,7 +43,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">刪除筆記類型</string>
-    <string name="model_browser_rename" comment="Rename a note type">重新命名</string>
+    <string name="model_browser_rename">重新命名</string>
     <string name="model_browser_template">編輯卡片</string>
     <!--Rename-->
     <string name="rename_model">重新命名筆記類型</string>

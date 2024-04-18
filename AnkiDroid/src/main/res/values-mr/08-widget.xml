@@ -50,7 +50,7 @@
         <item quantity="one">%d AnkiDroid कार्ड मुळे</item>
         <item quantity="other">%d AnkiDroid कार्ड मुळे</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid लहान</string>
+    <string name="widget_small">AnkiDroid लहान</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d कार्ड देय</item>
         <item quantity="other">%d कार्ड देय</item>

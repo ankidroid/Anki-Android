@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">Vi estas eksterrete</string>
     <string name="sync_error">Eraro dum samtempigado</string>
-    <string name="vague_error" comment="Network error dialog title">Eraro</string>
+    <string name="vague_error">Eraro</string>
     <string name="retry">Reprovi</string>
     <string name="menu_get_shared_decks">Elŝuti publikajn kartarojn</string>
     <string name="connection_error_message">Reta eraro okazis</string>

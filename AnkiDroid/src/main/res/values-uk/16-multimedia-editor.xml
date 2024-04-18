@@ -48,11 +48,11 @@
     <string name="multimedia_editor_popup_cloze">Завдання з пропусками</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Текст</string>
+    <string name="multimedia_editor_field_editing_text">Текст</string>
     <string name="multimedia_editor_field_editing_image">Зображення</string>
     <string name="multimedia_editor_field_editing_audio">Запис звуку</string>
     <string name="multimedia_editor_field_editing_audio_clip">Аудіокліп</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Зроблено</string>
+    <string name="multimedia_editor_field_editing_done">Зроблено</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">Очистити</string>
@@ -73,7 +73,7 @@
     <string name="multimedia_editor_something_wrong">Щось пішло не так</string>
     <string name="multimedia_editor_svg_preview">SVG формат недоступний для попереднього перегляду</string>
     <string name="multimedia_editor_png_paste_error">Помилка перетворення зображення з буферу обміну в png: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Прикріпити мультимедійний вміст до %1$s поля</string>
+    <string name="multimedia_editor_attach_mm_content">Прикріпити мультимедійний вміст до %1$s поля</string>
     <string name="multimedia_editor_attach_media">Прикріпити медіа</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">Не вдалося відтворити</string>
     <string name="multimedia_editor_audio_view_create_failed">Не вдається створити панель інструментів аудіозапису</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Поле для редагування</string>
+    <string name="title_activity_edit_text">Поле для редагування</string>
     <!-- Crop function-->
     <string name="crop_image">Обрізати це зображення?</string>
     <string name="crop_button">Обрізати зображення</string>
     <string name="save_dialog_content">Поточний розмір зображення %sМБ. За звмовчуванням розмір зображення обмежено до 1 МБ. Ви бажаєте обробити його?</string>
     <string name="select_image_failed">"Не вдалося обрати зображення. Будь ласка, спробуйте ще"</string>
     <string name="activity_result_unexpected">Додаток повернув неочікуване значення. Можливо, потрібне використання іншого додатку</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Вміст поля</string>
+    <string name="audio_recording_field_list">Вміст поля</string>
 </resources>

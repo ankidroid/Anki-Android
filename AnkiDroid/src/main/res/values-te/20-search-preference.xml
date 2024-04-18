@@ -60,6 +60,6 @@
     the key names MUST NOT be changed due to this
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string tools:ignore="UnusedResources" name="searchpreference_search" comment="By submitting this string, you license it under the MIT License">వెతకండి&#8230;</string>
-    <string tools:ignore="UnusedResources" name="searchpreference_clear_history" comment="By submitting this string, you license it under the MIT License">చరిత్రను క్లియర్ చేయండి</string>
+    <string tools:ignore="UnusedResources" name="searchpreference_search">వెతకండి&#8230;</string>
+    <string tools:ignore="UnusedResources" name="searchpreference_clear_history">చరిత్రను క్లియర్ చేయండి</string>
 </resources>

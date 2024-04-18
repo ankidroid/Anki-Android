@@ -53,11 +53,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Tidak ada hasil</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Umum</string>
+    <string name="pref_cat_general" maxLength="41">Umum</string>
     <string name="pref_cat_studying" maxLength="41">Pembelajaran</string>
     <string name="pref_cat_system_wide" maxLength="41">Seluruh sistem</string>
     <string name="pref_cat_reviewing" maxLength="41">Mengulas</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sinkronisasi</string>
+    <string name="pref_cat_sync" maxLength="41">Sinkronisasi</string>
     <string name="pref_cat_scheduling" maxLength="41">Penjadwalan</string>
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
     <string name="pref_cat_appearance" maxLength="41">Tampilan</string>
@@ -129,7 +129,7 @@
     <string name="automatic_sync_choice" maxLength="41">Sinkronisasi otomatis</string>
     <string name="automatic_sync_choice_summ">Sinkronkan secara otomatis saat masuk/keluar aplikasi jika sinkronisasi terakhir lebih dari 10
          menit yang lalu.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Selalu</string>
+    <string name="sync_media_always">Selalu</string>
     <string name="sync_media_only_unmetered">Hanya untuk sambungan internet yang tidak diukur</string>
     <string name="sync_media_never">Tidak pernah</string>
     <string name="sync_status_badge" maxLength="41">Tampilkan status sinkronisasi</string>
@@ -180,7 +180,7 @@
     <string name="learn_cutoff" maxLength="41">Batas belajar duluan</string>
     <string name="time_limit" maxLength="41">Batas waktu Timebox</string>
     <string name="day_offset_with_description" maxLength="41">Dimulainya hari esok</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="other">%d jam lewat tengah malam</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Layar tetap menyala</string>
@@ -211,7 +211,7 @@
     <string name="media_import_allow_all_files_summ">Jika Android tidak mendeteksi sebuah berkas media</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Server sinkronisasi kustom</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Tidak digunakan</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">Tidak digunakan</string>
     <string name="custom_sync_server_help2"><![CDATA[        Sebagai alternatif untuk sinkronisasi dengan AnkiWeb,
         Anda dapat menggunakan server Anda sendiri untuk sinkronisasi.
         Jika tidak diatur, server AnkiWeb akan digunakan saja.
@@ -230,13 +230,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Pilih tag</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Umum</string>
+    <string name="deck_conf_general" maxLength="41">Umum</string>
     <string name="deck_conf_reminders" maxLength="41">Pengingat</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
     <string name="deck_conf_cram_search" maxLength="41">Cari</string>
     <string name="deck_conf_cram_limit" maxLength="41">Batasi ke</string>
     <string name="deck_conf_cram_order" maxLength="41">kartu dipilih menurut </string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Jadwalkan ulang</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">Jadwalkan ulang</string>
     <string name="deck_conf_cram_reschedule_summ">Jadwalkan ulang kartu berdasarkan jawabanku di dek ini</string>
     <string name="deck_conf_cram_filter_2_check">Aktifkan filter kedua</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Tentukan langkah kustom</string>
@@ -282,11 +282,11 @@
     <string name="card_side_question">Pertanyaan</string>
     <string name="card_side_answer">Jawaban</string>
     <string name="card_side_both">Pertanyaan &amp; Jawaban</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">T: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">J: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <string name="display_binding_card_side_question">T: %s</string>
+    <string name="display_binding_card_side_answer">J: %s</string>
+    <string name="display_binding_card_side_both">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Hapus \'%s\'</string>
+    <string name="binding_remove_binding">Hapus \'%s\'</string>
     <string name="bindings_already_bound">Sudah terikat ke \'%s\'</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperimental</string>
@@ -319,42 +319,42 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Kelola penyimpanan</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Eror</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Menghitung&#8230;</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">Eror</string>
+    <string name="pref__widget_text__calculating">Menghitung&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="other">%1$d berkas\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Hapus berkas media yang tidak digunakan</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">Hapus berkas media yang tidak digunakan</string>
     <string name="pref__delete_unused_media_files__summary">Hapus gambar dari media lain yang tidak diawali dengan _ dan tidak direferensikan oleh catatan apa pun</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Hapus berkas media yang tidak digunakan</string>
+    <string name="dialog__delete_unused_media_files__title">Hapus berkas media yang tidak digunakan</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Hapus cadangan</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Hapus cadangan</string>
+    <string name="pref__delete_backups__title" maxLength="41">Hapus cadangan</string>
+    <string name="dialog__delete_backups__title">Hapus cadangan</string>
     <string name="progress__deleting_backups">Menghapus cadangan&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Hapus koleksi</string>
+    <string name="pref__delete_collection__title" maxLength="41">Hapus koleksi</string>
     <string name="pref__delete_collection__summary">Hapus koleksi, media, dan cadangan. Pengaturan aplikasi tidak dihapus</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Hapus koleksi</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Apakah Anda yakin ingin menghapus koleksi, media, dan cadangan Anda?\n\nCatatan: tindakan ini akan menutup jendela ini.</string>
+    <string name="dialog__delete_collection__title">Hapus koleksi</string>
+    <string name="dialog__delete_collection__message">Apakah Anda yakin ingin menghapus koleksi, media, dan cadangan Anda?\n\nCatatan: tindakan ini akan menutup jendela ini.</string>
     <string name="progress__deleting_collection">Menghapus koleksi&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Hapus semuanya</string>
+    <string name="pref__delete_everything__title" maxLength="41">Hapus semuanya</string>
     <string name="pref__delete_everything__summary">Hapus koleksi, media, cadangan, dan pengaturan</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Hapus semuanya</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Apakah Anda yakin ingin menghapus semua aplikasi? Ini termasuk koleksi, media, cadangan, dan preferensi Anda.\n\nCatatan: tindakan ini akan menutup jendela ini.</string>
+    <string name="dialog__delete_everything__title">Hapus semuanya</string>
+    <string name="dialog__delete_everything__message">Apakah Anda yakin ingin menghapus semua aplikasi? Ini termasuk koleksi, media, cadangan, dan preferensi Anda.\n\nCatatan: tindakan ini akan menutup jendela ini.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Hapus data aplikasi</string>
+    <string name="pref__delete_app_data__title" maxLength="41">Hapus data aplikasi</string>
     <string name="pref__delete_app_data__summary">Hapus pengaturan dan data aplikasi lainnya</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Hapus data aplikasi</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Apakah Anda yakin ingin menghapus data aplikasi? Ini termasuk pengaturan dan data aplikasi lainnya.\n\nCatatan: tindakan ini akan menutup jendela ini.</string>
+    <string name="dialog__delete_app_data__title">Hapus data aplikasi</string>
+    <string name="dialog__delete_app_data__message">Apakah Anda yakin ingin menghapus data aplikasi? Ini termasuk pengaturan dan data aplikasi lainnya.\n\nCatatan: tindakan ini akan menutup jendela ini.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Tidak ada koleksi</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Eror</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Mengambil&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Menghitung&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Koleksi tidak ada</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">Tidak ada koleksi</string>
+    <string name="pref__etc__summary__error">Eror</string>
+    <string name="pref__etc__snackbar__fetching">Mengambil&#8230;</string>
+    <string name="pref__etc__snackbar__calculating">Menghitung&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection">Koleksi tidak ada</string>
 </resources>

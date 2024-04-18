@@ -92,13 +92,13 @@
     </string-array>
     <string name="card_browser_select_all">Նշել բոլորը</string>
     <string name="card_browser_select_none">Select none</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(նոր)</string>
+    <string name="card_browser_interval_new_card">(նոր)</string>
     <string name="card_browser_due_filtered_card">(զտված)</string>
     <string name="card_browser_interval_learning_card">(սովորելու)</string>
     <string name="card_browser_no_cards_in_deck">%s-ում ոչ մի քարտ չի գտնվել</string>
     <string name="card_browser_search_all_decks">Որոնել բոլոր կապուկներում</string>
     <string name="card_browser_unknown_deck_name">Անհայտ</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Կրճատել պարունակությունը</string>
+    <string name="card_browser_truncate">Կրճատել պարունակությունը</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Արտահանել քարտը</item>
         <item quantity="other">Արտահանել քարտերը</item>

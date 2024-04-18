@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">ಟಿಪ್ಪಣಿ ಪ್ರಕಾರಗಳನ್ನು ನಿರ್ವಹಿಸಿ</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ಕ್ಷೇತ್ರಗಳನ್ನು ನಿರ್ವಹಿಸಿ</string>
+    <string name="model_browser_label">ಟಿಪ್ಪಣಿ ಪ್ರಕಾರಗಳನ್ನು ನಿರ್ವಹಿಸಿ</string>
+    <string name="model_editor_label">ಕ್ಷೇತ್ರಗಳನ್ನು ನಿರ್ವಹಿಸಿ</string>
     <!--Toasts-->
     <string name="toast_last_model">ನಿಮ್ಮ ಕೊನೆಯ ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವನ್ನು ನೀವು ಅಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
     <string name="toast_last_field">ಟಿಪ್ಪಣಿ ಪ್ರಕಾರಗಳು ಕನಿಷ್ಠ ಒಂದು ಕ್ಷೇತ್ರವನ್ನು ಹೊಂದಿರಬೇಕು</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವನ್ನು ಅಳಿಸಿ</string>
-    <string name="model_browser_rename" comment="Rename a note type">ಮರುಹೆಸರಿಸು</string>
+    <string name="model_browser_rename">ಮರುಹೆಸರಿಸು</string>
     <string name="model_browser_template">ಕಾರ್ಡ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <!--Rename-->
     <string name="rename_model">ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವನ್ನು ಮರುಹೆಸರಿಸಿ</string>

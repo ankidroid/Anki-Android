@@ -92,13 +92,13 @@
     </string-array>
     <string name="card_browser_select_all">Select all</string>
     <string name="card_browser_select_none">काहीही निवडा</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(नवीन)</string>
+    <string name="card_browser_interval_new_card">(नवीन)</string>
     <string name="card_browser_due_filtered_card">(फिल्टर केलेले)</string>
     <string name="card_browser_interval_learning_card">(शिकत आहे)</string>
     <string name="card_browser_no_cards_in_deck">डेक ‘%s’ मध्ये कोणतीही कार्डे आढळली नाहीत</string>
     <string name="card_browser_search_all_decks">सर्व डेक शोधा</string>
     <string name="card_browser_unknown_deck_name">अज्ञात</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate">Truncate content</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Export card</item>
         <item quantity="other">Export cards</item>

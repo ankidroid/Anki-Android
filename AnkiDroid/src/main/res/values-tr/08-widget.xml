@@ -50,7 +50,7 @@
         <item quantity="one">%d AnkiDroid kartının sırası geldi</item>
         <item quantity="other">%d AnkiDroid kartının sırası geldi</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid Küçük</string>
+    <string name="widget_small">AnkiDroid Küçük</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d kartın sırası geldi</item>
         <item quantity="other">%d kartın sırası geldi</item>

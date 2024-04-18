@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">I-overwrite ang iyong koleksyon sa isa mula sa AnkiWeb? Ibababa nito ang lahat ng iyong progreso sa pag-aaral at idinagdag ang impormasyon mula noong huling pag-sync mo.</string>
     <string name="error_handling_title">Maling paghawak</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Mga Opsyon</string>
+    <string name="error_handling_options">Mga Opsyon</string>
     <string name="backup_retry_opening">Muling subukan ang pagbubukas</string>
     <string name="backup_error_menu_repair">Pag-ayos ng database</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

@@ -54,11 +54,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">कोई परिणाम नहीं </string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">सामान्य</string>
+    <string name="pref_cat_general" maxLength="41">सामान्य</string>
     <string name="pref_cat_studying" maxLength="41">पढा जा रहा है </string>
     <string name="pref_cat_system_wide" maxLength="41">विस्तृत - प्रणाली</string>
     <string name="pref_cat_reviewing" maxLength="41">समीक्षा</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">साथ साथ करना</string>
+    <string name="pref_cat_sync" maxLength="41">साथ साथ करना</string>
     <string name="pref_cat_scheduling" maxLength="41">निर्धारण </string>
     <string name="pref_cat_whiteboard" maxLength="41">श्वेतपट्ट</string>
     <string name="pref_cat_appearance" maxLength="41">दिखावट</string>
@@ -129,7 +129,7 @@
     <string name="sync_account_summ_logged_out">लॉगिन नहीं हैं</string>
     <string name="automatic_sync_choice" maxLength="41">स्वचालित सिंक्रनाइज़ेशन</string>
     <string name="automatic_sync_choice_summ">यदि अंतिम सिंक्रनाइज़ेशन 10 मिनट पहले से अधिक था, तो अनुप्रयोग प्रारंभ/निकास पर स्वचालित रूप से सिंक्रनाइज़ करें ।</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">हमेशा </string>
+    <string name="sync_media_always">हमेशा </string>
     <string name="sync_media_only_unmetered">केवल बिना जांचे गए कनेक्शन पर</string>
     <string name="sync_media_never">कभीं नहीं</string>
     <string name="sync_status_badge" maxLength="41">सिंक्रनाइज़ेशन स्थिति को दिखाएं</string>
@@ -180,7 +180,7 @@
     <string name="learn_cutoff" maxLength="41">आगे की सीमा जानें</string>
     <string name="time_limit" maxLength="41">Timebox समय सीमा</string>
     <string name="day_offset_with_description" maxLength="41">अगले दिन की शुरुआत (0 आधी रात है, 23 11PM है)</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="one">आधी रात से %d घंटा पहले</item>
         <item quantity="other">आधी रात से %d घंटे पहले</item>
     </plurals>
@@ -212,7 +212,7 @@
     <string name="media_import_allow_all_files_summ">यदि एंड्रॉइड किसी मीडिया फ़ाइल को नहीं पहचानता है</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">कस्टम सिंक्रनाइज़ेशन सर्वर</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">उपयोग नहीं किया</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">उपयोग नहीं किया</string>
     <string name="custom_sync_server_help2"><![CDATA[एंकीवेब के साथ सिंक्रोनाइज़ करने के विकल्प के रूप में, आप सिंक्रोनाइज़ेशन के लिए अपने स्वयं के सर्वर का उपयोग कर सकते हैं।
 यदि सेट नहीं किया गया है, तो इसके स्थान पर डिफ़ॉल्ट एंकीवेब सर्वर का उपयोग किया जाएगा।<a href=\'%s\'>और जानें</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">सिंक्रनाइज़ेशन url</string>
@@ -228,13 +228,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">टैग का चयन करें</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">सामान्य</string>
+    <string name="deck_conf_general" maxLength="41">सामान्य</string>
     <string name="deck_conf_reminders" maxLength="41">रिमाइंडर्स</string>
     <string name="deck_conf_cram_filter" maxLength="41">फ़िल्टर</string>
     <string name="deck_conf_cram_search" maxLength="41">खोज</string>
     <string name="deck_conf_cram_limit" maxLength="41">करने के लिए सीमा</string>
     <string name="deck_conf_cram_order" maxLength="41">द्वारा चयनित कार्ड</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">पुनः शेड्यूल करें</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">पुनः शेड्यूल करें</string>
     <string name="deck_conf_cram_reschedule_summ">इस डेक में मेरे जवाब के आधार पर कार्ड पुनर्निर्धारित</string>
     <string name="deck_conf_cram_filter_2_check">दूसरा फ़िल्टर सक्षम करें</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">कस्टम चरणों को परिभाषित करें</string>
@@ -280,11 +280,11 @@
     <string name="card_side_question">प्रश्न</string>
     <string name="card_side_answer">उत्तर</string>
     <string name="card_side_both">प्रश्न और उत्तर</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">प्र: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">उ: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <string name="display_binding_card_side_question">प्र: %s</string>
+    <string name="display_binding_card_side_answer">उ: %s</string>
+    <string name="display_binding_card_side_both">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">%s हटाएँ</string>
+    <string name="binding_remove_binding">%s हटाएँ</string>
     <string name="bindings_already_bound">पहले से ही \'%s\' से बंधा हुआ है</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">प्रयोगात्मक</string>
@@ -309,44 +309,44 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">स्थान प्रबंधित करें</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">एरर</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">गणना \nप्रगति पर है...</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">एरर</string>
+    <string name="pref__widget_text__calculating">गणना \nप्रगति पर है...</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="one">%1$d फ़ाइलें\n%2$s</item>
         <item quantity="other">%1$d फ़ाइलें\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">अनावश्यक मीडिया फ़ाइलें हटाएँ</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">अनावश्यक मीडिया फ़ाइलें हटाएँ</string>
     <string name="pref__delete_unused_media_files__summary">उन इमेज और अन्य मीडिया को हटा दें जिनके उपसर्ग में _ नहीं लगा है और किसी भी नोट द्वारा संदर्भित नहीं किया गया है</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">अप्रयुक्त मीडिया फ़ाइलें  को हटाएँ</string>
+    <string name="dialog__delete_unused_media_files__title">अप्रयुक्त मीडिया फ़ाइलें  को हटाएँ</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">बैकअप हटाएँ</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">बैकअप हटाएँ</string>
+    <string name="pref__delete_backups__title" maxLength="41">बैकअप हटाएँ</string>
+    <string name="dialog__delete_backups__title">बैकअप हटाएँ</string>
     <string name="progress__deleting_backups">बैकअप हटाया जा रहा है...</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">संग्रह को हटाएँ</string>
+    <string name="pref__delete_collection__title" maxLength="41">संग्रह को हटाएँ</string>
     <string name="pref__delete_collection__summary">संग्रह, मीडिया और बैकअप हटाएँ। ऐप सेटिंग हटाई नहीं जातीं</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">संग्रह  को हटाएँ</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">क्या आप वाकई अपने संग्रह, मीडिया और बैकअप हटाना चाहते हैं? \n\nध्यान दें: यह ऑपरेशन इस सेटिंग स्क्रीन को बंद कर देगा।</string>
+    <string name="dialog__delete_collection__title">संग्रह  को हटाएँ</string>
+    <string name="dialog__delete_collection__message">क्या आप वाकई अपने संग्रह, मीडिया और बैकअप हटाना चाहते हैं? \n\nध्यान दें: यह ऑपरेशन इस सेटिंग स्क्रीन को बंद कर देगा।</string>
     <string name="progress__deleting_collection">संग्रह  को हटाया जा रहा है...</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">सब कुछ मिटा दो</string>
+    <string name="pref__delete_everything__title" maxLength="41">सब कुछ मिटा दो</string>
     <string name="pref__delete_everything__summary">संग्रह, मीडिया, बैकअप और सेटिंग्स को हटाएं</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">सब कुछ हटा दो</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">क्या आप वाकई ऐप डेटा हटाना चाहते हैं? इसमें आपका संग्रह, मीडिया, बैकअप और   प्रैफरेंसेज
+    <string name="dialog__delete_everything__title">सब कुछ हटा दो</string>
+    <string name="dialog__delete_everything__message">क्या आप वाकई ऐप डेटा हटाना चाहते हैं? इसमें आपका संग्रह, मीडिया, बैकअप और   प्रैफरेंसेज
 शामिल हैं। \n\nध्यान दें: यह ऑपरेशन इस सेटिंग स्क्रीन को बंद कर देगा।</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">ऐप डेटा को हटाएं</string>
+    <string name="pref__delete_app_data__title" maxLength="41">ऐप डेटा को हटाएं</string>
     <string name="pref__delete_app_data__summary">सेटिंग्स और अन्य ऐप डेटा को हटाएं</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">ऐप डेटा को हटाएं</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">क्या आप वाकई ऐप डेटा हटाना चाहते हैं? हटाने के लक्ष्य में इन-ऐप सेटिंग्स और अन्य डेटा भी शामिल हैं। \n\nध्यान दें: यह ऑपरेशन इस सेटिंग स्क्रीन को बंद कर देगा।</string>
+    <string name="dialog__delete_app_data__title">ऐप डेटा को हटाएं</string>
+    <string name="dialog__delete_app_data__message">क्या आप वाकई ऐप डेटा हटाना चाहते हैं? हटाने के लक्ष्य में इन-ऐप सेटिंग्स और अन्य डेटा भी शामिल हैं। \n\nध्यान दें: यह ऑपरेशन इस सेटिंग स्क्रीन को बंद कर देगा।</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">कोई संग्रह नहीं है</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">एरर</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">जानकारी प्राप्त हो रही है...</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">गणना हो रही है...</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">संग्रह मौजूद नहीं है</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">कोई संग्रह नहीं है</string>
+    <string name="pref__etc__summary__error">एरर</string>
+    <string name="pref__etc__snackbar__fetching">जानकारी प्राप्त हो रही है...</string>
+    <string name="pref__etc__snackbar__calculating">गणना हो रही है...</string>
+    <string name="pref__etc__snackbar__no_collection">संग्रह मौजूद नहीं है</string>
 </resources>

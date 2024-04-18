@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">Naka - offline ka</string>
     <string name="sync_error">Mali sa pag-sync</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
+    <string name="vague_error">Error</string>
     <string name="retry">Muling subukan</string>
     <string name="menu_get_shared_decks">Kumuha ng nakabahaging mga deck</string>
     <string name="connection_error_message">May network error na nangyari</string>

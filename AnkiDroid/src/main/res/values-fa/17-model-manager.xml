@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">مدیریت نوع یادداشت‌ها</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">مدیریت فیلدها</string>
+    <string name="model_browser_label">مدیریت نوع یادداشت‌ها</string>
+    <string name="model_editor_label">مدیریت فیلدها</string>
     <!--Toasts-->
     <string name="toast_last_model">شما نمی‌توانید آخرین نوع یادداشت خود را حذف کنید</string>
     <string name="toast_last_field">نوع یادداشت حداقل باید یک فیلد داشته باشد</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">حذف نوع یادداشت</string>
-    <string name="model_browser_rename" comment="Rename a note type">تغییر نام</string>
+    <string name="model_browser_rename">تغییر نام</string>
     <string name="model_browser_template">ویرایش کارتها</string>
     <!--Rename-->
     <string name="rename_model">تغییر نام نوع یادداشت</string>

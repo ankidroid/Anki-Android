@@ -28,7 +28,7 @@
     <!--Fields-->
     <string name="front_field_name">Etupuoli</string>
     <string name="back_field_name">Kääntöpuoli</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Teksti</string>
+    <string name="text_field_name">Teksti</string>
     <string name="extra_field_name_new">Kääntöpuolen lisäteksti</string>
     <string name="field_to_ask_front_name">Lisää käänteinen</string>
     <!--Note type-->

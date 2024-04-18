@@ -48,11 +48,11 @@
     <string name="multimedia_editor_popup_cloze">عبارة ملء فراغات</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">نص</string>
+    <string name="multimedia_editor_field_editing_text">نص</string>
     <string name="multimedia_editor_field_editing_image">صورة</string>
     <string name="multimedia_editor_field_editing_audio">تسجيل الصوت</string>
     <string name="multimedia_editor_field_editing_audio_clip">مقطع صوتي</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">تم</string>
+    <string name="multimedia_editor_field_editing_done">تم</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">مسح</string>
@@ -73,7 +73,7 @@
     <string name="multimedia_editor_something_wrong">حدث خطأ ما</string>
     <string name="multimedia_editor_svg_preview">لا يمكن معاينة ملفات SVG</string>
     <string name="multimedia_editor_png_paste_error">حدث خطأ عند تحويل صورة الحافظة إلى PNG: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">إرفاق محتوى الوسائط المتعددة إلى الحقل %1$s</string>
+    <string name="multimedia_editor_attach_mm_content">إرفاق محتوى الوسائط المتعددة إلى الحقل %1$s</string>
     <string name="multimedia_editor_attach_media">أرفق وسائط</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">فشل التشغيل</string>
     <string name="multimedia_editor_audio_view_create_failed">تعذر إنشاء شريط أدوات المسجل</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">تحرير الحقل</string>
+    <string name="title_activity_edit_text">تحرير الحقل</string>
     <!-- Crop function-->
     <string name="crop_image">هل تريد قص هذه الصورة؟</string>
     <string name="crop_button">قص الصورة</string>
     <string name="save_dialog_content">حجم الصورة الحالي هو %s ميغابايت. حد الحجم الافتراضي هو 1 ميغابايت. هل تريد قصها؟</string>
     <string name="select_image_failed">"فشل تحديد الصورة، الرجاء إعادة المحاولة"</string>
     <string name="activity_result_unexpected">أعاد التطبيق قيمة غير متوقعة. قد تحتاج إلى استخدام تطبيق مختلف</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">محتويات الحقل</string>
+    <string name="audio_recording_field_list">محتويات الحقل</string>
 </resources>

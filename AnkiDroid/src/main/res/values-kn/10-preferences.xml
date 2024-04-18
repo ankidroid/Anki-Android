@@ -54,11 +54,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">ಯಾವುದೇ ಫಲಿತಾಂಶಗಳಿಲ್ಲ</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">ಸಾಮಾನ್ಯ</string>
+    <string name="pref_cat_general" maxLength="41">ಸಾಮಾನ್ಯ</string>
     <string name="pref_cat_studying" maxLength="41">ಅಧ್ಯಯನ ಮಾಡುತ್ತಿದ್ದಾರೆ</string>
     <string name="pref_cat_system_wide" maxLength="41">ವ್ಯವಸ್ಥೆಯಾದ್ಯಂತ</string>
     <string name="pref_cat_reviewing" maxLength="41">ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ಸಿಂಕ್ ಮಾಡಿ</string>
+    <string name="pref_cat_sync" maxLength="41">ಸಿಂಕ್ ಮಾಡಿ</string>
     <string name="pref_cat_scheduling" maxLength="41">ವೇಳಾಪಟ್ಟಿ</string>
     <string name="pref_cat_whiteboard" maxLength="41">ವೈಟ್‌ಬೋರ್ಡ್</string>
     <string name="pref_cat_appearance" maxLength="41">ಗೋಚರತೆ</string>
@@ -130,7 +130,7 @@
     <string name="automatic_sync_choice" maxLength="41">ಸ್ವಯಂಚಾಲಿತ ಸಿಂಕ್ರೊನೈಸೇಶನ್</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">ಯಾವಾಗಲೂ</string>
+    <string name="sync_media_always">ಯಾವಾಗಲೂ</string>
     <string name="sync_media_only_unmetered">ಮೀಟರ್ ಇಲ್ಲದ ಸಂಪರ್ಕಗಳಲ್ಲಿ ಮಾತ್ರ</string>
     <string name="sync_media_never">ಎಂದಿಗೂ</string>
     <string name="sync_status_badge" maxLength="41">ಸಿಂಕ್ರೊನೈಸೇಶನ್ ಸ್ಥಿತಿಯನ್ನು ಪ್ರದರ್ಶಿಸಿ</string>
@@ -181,7 +181,7 @@
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="day_offset_with_description" maxLength="41">ಮರುದಿನ ಪ್ರಾರಂಭಿಸಿ</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="one">%d hour past midnight</item>
         <item quantity="other">%d hours past midnight</item>
     </plurals>
@@ -213,7 +213,7 @@
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ಬಳಸಲಾಗುವುದಿಲ್ಲ</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">ಬಳಸಲಾಗುವುದಿಲ್ಲ</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
@@ -232,13 +232,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
+    <string name="deck_conf_general" maxLength="41">General</string>
     <string name="deck_conf_reminders" maxLength="41">ಜ್ಞಾಪನೆಗಳು</string>
     <string name="deck_conf_cram_filter" maxLength="41">ಫಿಲ್ಟರ್</string>
     <string name="deck_conf_cram_search" maxLength="41">Search</string>
     <string name="deck_conf_cram_limit" maxLength="41">ಗೆ ಮಿತಿ</string>
     <string name="deck_conf_cram_order" maxLength="41">ಆಯ್ದ ಕಾರ್ಡ್‌ಗಳು</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">ಎರಡನೇ ಫಿಲ್ಟರ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">ಕಸ್ಟಮ್ ಹಂತಗಳನ್ನು ವಿವರಿಸಿ</string>
@@ -284,11 +284,11 @@
     <string name="card_side_question">ಪ್ರಶ್ನೆ</string>
     <string name="card_side_answer">ಉತ್ತರ</string>
     <string name="card_side_both">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <string name="display_binding_card_side_question">Q: %s</string>
+    <string name="display_binding_card_side_answer">A: %s</string>
+    <string name="display_binding_card_side_both">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="binding_remove_binding">Remove ‘%s’</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
@@ -321,43 +321,43 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">ಜಾಗವನ್ನು ನಿರ್ವಹಿಸಿ</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">ದೋಷ</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">ದೋಷ</string>
+    <string name="pref__widget_text__calculating">Calcu-\nlating&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="one">%1$d file\n%2$s</item>
         <item quantity="other">%1$d files\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">ಬಳಕೆಯಾಗದ ಮಾಧ್ಯಮ ಫೈಲ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">ಬಳಕೆಯಾಗದ ಮಾಧ್ಯಮ ಫೈಲ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">ಬಳಕೆಯಾಗದ ಮಾಧ್ಯಮ ಫೈಲ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
+    <string name="dialog__delete_unused_media_files__title">ಬಳಕೆಯಾಗದ ಮಾಧ್ಯಮ ಫೈಲ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">ಬ್ಯಾಕ್‌ಅಪ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">ಬ್ಯಾಕ್‌ಅಪ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
+    <string name="pref__delete_backups__title" maxLength="41">ಬ್ಯಾಕ್‌ಅಪ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
+    <string name="dialog__delete_backups__title">ಬ್ಯಾಕ್‌ಅಪ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
     <string name="progress__deleting_backups">ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತಿದೆ...</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
+    <string name="pref__delete_collection__title" maxLength="41">Delete collection</string>
     <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_collection__title">Delete collection</string>
+    <string name="dialog__delete_collection__message">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
     <string name="progress__deleting_collection">Deleting collection&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">ಎಲ್ಲಾ ಅಳಿಸಿ</string>
+    <string name="pref__delete_everything__title" maxLength="41">ಎಲ್ಲಾ ಅಳಿಸಿ</string>
     <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">ಎಲ್ಲಾ ಅಳಿಸಿ</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__title">ಎಲ್ಲಾ ಅಳಿಸಿ</string>
+    <string name="dialog__delete_everything__message">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾವನ್ನು ಅಳಿಸಿ</string>
+    <string name="pref__delete_app_data__title" maxLength="41">ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾವನ್ನು ಅಳಿಸಿ</string>
     <string name="pref__delete_app_data__summary">ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಮತ್ತು ಇತರ ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾವನ್ನು ಅಳಿಸಿ</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾ ಅಳಿಸುವುದೇ</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_app_data__title">ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾ ಅಳಿಸುವುದೇ</string>
+    <string name="dialog__delete_app_data__message">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">ಸಂಗ್ರಹವಿಲ್ಲ</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">ದೋಷ</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">ಲೆಕ್ಕಾಚಾರ ಮಾಡಲಾಗುತ್ತಿದೆ...</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">ಸಂಗ್ರಹವಿಲ್ಲ</string>
+    <string name="pref__etc__summary__error">ದೋಷ</string>
+    <string name="pref__etc__snackbar__fetching">Fetching&#8230;</string>
+    <string name="pref__etc__snackbar__calculating">ಲೆಕ್ಕಾಚಾರ ಮಾಡಲಾಗುತ್ತಿದೆ...</string>
+    <string name="pref__etc__snackbar__no_collection">Collection does not exist</string>
 </resources>

@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Weet u zeker dat u uw collectie wil overschrijven met die van AnkiWeb? Dit zal al uw leervooruitgang en toegevoegde informatie sinds uw laatste synchronisatie ongedaan maken!</string>
     <string name="error_handling_title">Foutafhandeling</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opties</string>
+    <string name="error_handling_options">Opties</string>
     <string name="backup_retry_opening">Opnieuw openen</string>
     <string name="backup_error_menu_repair">Herstel database</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

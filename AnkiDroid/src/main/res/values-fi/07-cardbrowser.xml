@@ -92,13 +92,13 @@
     </string-array>
     <string name="card_browser_select_all">Valitse kaikki</string>
     <string name="card_browser_select_none">Poista kaikki valinnat</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(uusi)</string>
+    <string name="card_browser_interval_new_card">(uusi)</string>
     <string name="card_browser_due_filtered_card">(suodatettu)</string>
     <string name="card_browser_interval_learning_card">(opittava)</string>
     <string name="card_browser_no_cards_in_deck">Pakasta \"%s\" ei löytynyt kortteja</string>
     <string name="card_browser_search_all_decks">Etsi kaikista pakoista</string>
     <string name="card_browser_unknown_deck_name">Tuntematon</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Katkaise sisältö</string>
+    <string name="card_browser_truncate">Katkaise sisältö</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Vie kortti</item>
         <item quantity="other">Vie kortteja</item>

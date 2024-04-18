@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">Anda diluar talian</string>
     <string name="sync_error">Ralat penyegerakan</string>
-    <string name="vague_error" comment="Network error dialog title">Ralat</string>
+    <string name="vague_error">Ralat</string>
     <string name="retry">Cuba semula</string>
     <string name="menu_get_shared_decks">Dapatkan dek kongsian</string>
     <string name="connection_error_message">Ralat rangkaian telah berlaku</string>

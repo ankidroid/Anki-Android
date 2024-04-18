@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Nadpisać kolekcję wersją z AnkiWeb? Twój postęp i informacje dodane od ostatniej synchronizacji zostaną utracone!</string>
     <string name="error_handling_title">Obsługa błędów</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opcje</string>
+    <string name="error_handling_options">Opcje</string>
     <string name="backup_retry_opening">Ponów próbę otwarcia</string>
     <string name="backup_error_menu_repair">Napraw bazę danych</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

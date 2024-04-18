@@ -56,11 +56,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Žádné výsledky</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Obecné</string>
+    <string name="pref_cat_general" maxLength="41">Obecné</string>
     <string name="pref_cat_studying" maxLength="41">Studium</string>
     <string name="pref_cat_system_wide" maxLength="41">Celosystémový</string>
     <string name="pref_cat_reviewing" maxLength="41">Opakování</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronizace</string>
+    <string name="pref_cat_sync" maxLength="41">Synchronizace</string>
     <string name="pref_cat_scheduling" maxLength="41">Plánování</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tabule</string>
     <string name="pref_cat_appearance" maxLength="41">Vzhled</string>
@@ -131,7 +131,7 @@
     <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
     <string name="automatic_sync_choice" maxLength="41">Automatická synchronizace</string>
     <string name="automatic_sync_choice_summ">Automaticky synchronizovat při spuštění/ukončení aplikace, jestliže od poslední synchronizace uplynulo více než 10 minut</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Vždy</string>
+    <string name="sync_media_always">Vždy</string>
     <string name="sync_media_only_unmetered">Pouze na neměřeném připojení</string>
     <string name="sync_media_never">Nikdy</string>
     <string name="sync_status_badge" maxLength="41">Zobrazit stav synchronizace</string>
@@ -182,7 +182,7 @@
     <string name="learn_cutoff" maxLength="41">Limit učení se napřed</string>
     <string name="time_limit" maxLength="41">Časové omezení</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="one">%d hodina po půlnoci</item>
         <item quantity="few">%d hodiny po půlnoci</item>
         <item quantity="many">%d hodiny po půlnoci</item>
@@ -216,7 +216,7 @@
     <string name="media_import_allow_all_files_summ">Pokud Android nerozpozná multimediální soubor</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Vlastní synchronizační server</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nepoužívá se</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">Nepoužívá se</string>
     <string name="custom_sync_server_help2"><![CDATA[        Jako alternativu k synchronizaci s AnkiWeb
         můžete k synchronizaci použít vlastní server.
         Pokud není nastaven, bude místo toho použit výchozí AnkiWeb server.
@@ -235,13 +235,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Výběr štítků</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Obecné</string>
+    <string name="deck_conf_general" maxLength="41">Obecné</string>
     <string name="deck_conf_reminders" maxLength="41">Upomínky</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtr</string>
     <string name="deck_conf_cram_search" maxLength="41">Hledat</string>
     <string name="deck_conf_cram_limit" maxLength="41">Omezit na</string>
     <string name="deck_conf_cram_order" maxLength="41">karty vybrané podle</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Přeplánovat</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">Přeplánovat</string>
     <string name="deck_conf_cram_reschedule_summ">Přeplánovat karty podle mých odpovědí v tomto balíčku</string>
     <string name="deck_conf_cram_filter_2_check">Povolit druhý filtr</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definovat vlastní kroky</string>
@@ -287,11 +287,11 @@
     <string name="card_side_question">Otázka</string>
     <string name="card_side_answer">Odpověď</string>
     <string name="card_side_both">Otázka a odpověď</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Ot: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">Od: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <string name="display_binding_card_side_question">Ot: %s</string>
+    <string name="display_binding_card_side_answer">Od: %s</string>
+    <string name="display_binding_card_side_both">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Odstranit „%s“</string>
+    <string name="binding_remove_binding">Odstranit „%s“</string>
     <string name="bindings_already_bound">Již přiřazeno k %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimentální</string>
@@ -323,45 +323,45 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Správa úložiště</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Chyba</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Vypočí-\ntává se&#8230;</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">Chyba</string>
+    <string name="pref__widget_text__calculating">Vypočí-\ntává se&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="one">%1$d soubor\n%2$s</item>
         <item quantity="few">%1$d soubory\n%2$s</item>
         <item quantity="many">%1$d souboru\n%2$s</item>
         <item quantity="other">%1$d souborů\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Odstranit nepoužívané multimediální soubory</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">Odstranit nepoužívané multimediální soubory</string>
     <string name="pref__delete_unused_media_files__summary">Odstranit obrázky a další multimédia, která nemají předponu _ a na které neodkazují žádné poznámky </string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Odstranit nepoužívané multimediální soubory</string>
+    <string name="dialog__delete_unused_media_files__title">Odstranit nepoužívané multimediální soubory</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Odstranit zálohy</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Odstranit zálohy</string>
+    <string name="pref__delete_backups__title" maxLength="41">Odstranit zálohy</string>
+    <string name="dialog__delete_backups__title">Odstranit zálohy</string>
     <string name="progress__deleting_backups">Odstraňují se zálohy&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Odstranit kolekci</string>
+    <string name="pref__delete_collection__title" maxLength="41">Odstranit kolekci</string>
     <string name="pref__delete_collection__summary">Odstranit kolekci, multimédia a zálohy. Nastavení aplikace není odstraněno</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Odstranit kolekci</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Opravdu chcete odstranit vaši kolekci, multimédia a zálohy?\n\nPoznámka: tato akce zavře okno.</string>
+    <string name="dialog__delete_collection__title">Odstranit kolekci</string>
+    <string name="dialog__delete_collection__message">Opravdu chcete odstranit vaši kolekci, multimédia a zálohy?\n\nPoznámka: tato akce zavře okno.</string>
     <string name="progress__deleting_collection">Odstraňuje se kolekce&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Odstranit vše</string>
+    <string name="pref__delete_everything__title" maxLength="41">Odstranit vše</string>
     <string name="pref__delete_everything__summary">Odstranit kolekci, multimédia, zálohy a nastavení</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Odstranit vše</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Opravdu chcete odstranit všechna data? To zahrnuje vaši kolekci, multimédia, zálohy a nastavení.\n\nPoznámka: tato akce zavře okno.</string>
+    <string name="dialog__delete_everything__title">Odstranit vše</string>
+    <string name="dialog__delete_everything__message">Opravdu chcete odstranit všechna data? To zahrnuje vaši kolekci, multimédia, zálohy a nastavení.\n\nPoznámka: tato akce zavře okno.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Odstranit data aplikace</string>
+    <string name="pref__delete_app_data__title" maxLength="41">Odstranit data aplikace</string>
     <string name="pref__delete_app_data__summary">Odstranit nastavení a další data aplikace</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Odstranit data aplikace</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Opravdu chcete odstranit data aplikace? To zahrnuje nastavení a další data aplikace.\n\nPoznámka: tato akce zavře okno.</string>
+    <string name="dialog__delete_app_data__title">Odstranit data aplikace</string>
+    <string name="dialog__delete_app_data__message">Opravdu chcete odstranit data aplikace? To zahrnuje nastavení a další data aplikace.\n\nPoznámka: tato akce zavře okno.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Žádná kolekce</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Chyba</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Načítání&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Vypočítává se&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolekce neexistuje</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">Žádná kolekce</string>
+    <string name="pref__etc__summary__error">Chyba</string>
+    <string name="pref__etc__snackbar__fetching">Načítání&#8230;</string>
+    <string name="pref__etc__snackbar__calculating">Vypočítává se&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection">Kolekce neexistuje</string>
 </resources>

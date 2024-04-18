@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Ar norite pakeisti turimą kolekciją esančia „AnkiWeb“ svetainėje? Dėl to sumažės jūsų mokymosi pažanga ir po paskutinio sinchronizavimo pridėta nauja informacija.</string>
     <string name="error_handling_title">Klaida</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Parinktys</string>
+    <string name="error_handling_options">Parinktys</string>
     <string name="backup_retry_opening">Atidaryti dar kartą</string>
     <string name="backup_error_menu_repair">Taisyti duomenų bazę</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

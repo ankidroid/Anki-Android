@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">Сез челтәрдә түгел</string>
     <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Хата</string>
+    <string name="vague_error">Хата</string>
     <string name="retry">Кабатлау</string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">A network error has occurred</string>

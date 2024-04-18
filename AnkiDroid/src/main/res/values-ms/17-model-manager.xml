@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Uruskan jenis nota</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Uruskan medan</string>
+    <string name="model_browser_label">Uruskan jenis nota</string>
+    <string name="model_editor_label">Uruskan medan</string>
     <!--Toasts-->
     <string name="toast_last_model">Anda tidak boleh padam jenis nota terakhir</string>
     <string name="toast_last_field">Jenis nota hendaklah mengandungi sekurang-kurangnya satu medan</string>
@@ -43,7 +43,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Padam jenis nota</string>
-    <string name="model_browser_rename" comment="Rename a note type">Nama semula</string>
+    <string name="model_browser_rename">Nama semula</string>
     <string name="model_browser_template">Sunting kad</string>
     <!--Rename-->
     <string name="rename_model">Nama semula jenis nota</string>

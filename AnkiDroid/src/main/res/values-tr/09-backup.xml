@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">Sunucudan tek yönlü senkronizasyon</string>
     <string name="backup_full_sync_from_server_question">Koleksiyonunuzun AnkiWeb\'dekiyle değiştirilmesini gerçekten istiyor musunuz? Bu son eşitlemenizden bu yana öğrendiklerinizi ve eklediğiniz bilgileri silecek!</string>
     <string name="error_handling_title">Hatâ denetimi</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Seçenekler</string>
+    <string name="error_handling_options">Seçenekler</string>
     <string name="backup_retry_opening">Açmayı yeniden dene</string>
     <string name="backup_error_menu_repair">Veritabanını onar</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

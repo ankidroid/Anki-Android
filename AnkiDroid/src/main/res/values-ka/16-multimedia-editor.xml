@@ -48,11 +48,11 @@
     <string name="multimedia_editor_popup_cloze">გამოტოვებული ადგილი</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ტექსტი</string>
+    <string name="multimedia_editor_field_editing_text">ტექსტი</string>
     <string name="multimedia_editor_field_editing_image">სურათი</string>
     <string name="multimedia_editor_field_editing_audio">აუდიოჩანაწერი</string>
     <string name="multimedia_editor_field_editing_audio_clip">აუდიოკლიპი</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">მზადაა</string>
+    <string name="multimedia_editor_field_editing_done">მზადაა</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">გასუფთავება</string>
@@ -73,7 +73,7 @@
     <string name="multimedia_editor_something_wrong">რაღაც შეცდომა მოხდა</string>
     <string name="multimedia_editor_svg_preview">SVG ფაილების წინასწარი გადახედვა შეუძლებელია</string>
     <string name="multimedia_editor_png_paste_error">შეცდომა გაცვლის ბუფერში არსებული სურათის PNG-დ გარდაქმნისას: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">მულტიმედია შიგთავსის მიმაგრება %1$s ველთან</string>
+    <string name="multimedia_editor_attach_mm_content">მულტიმედია შიგთავსის მიმაგრება %1$s ველთან</string>
     <string name="multimedia_editor_attach_media">მედიაფაილების დართვა</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">დაკვრა ვერ შესრულდა</string>
     <string name="multimedia_editor_audio_view_create_failed">ჩამწერის ხელსაწყოთა ზოლი ვერ შეიქმნა</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">ველის რედაქტირება</string>
+    <string name="title_activity_edit_text">ველის რედაქტირება</string>
     <!-- Crop function-->
     <string name="crop_image">გსურთ ამ სურათის ჩამოჭრა?</string>
     <string name="crop_button">სურათის ჩამოჭრა</string>
     <string name="save_dialog_content">სურათის ზომა %sMB არის. ნაგულისხმევი სურათის ზომის ლიმიტი 1MB არის. გსურთ მისი ჩამოჭრა?</string>
     <string name="select_image_failed">"სურათი ვერ მოინიშნა, გთხოვთ ხელახლა სცადოთ"</string>
     <string name="activity_result_unexpected">აპლიკაციამ მოულოდნელი მნიშვნელობა დააბრუნა. შესაძლოა დაგჭირდეთ სხვა აპლიკაციის გამოყენება</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ველის შიგთავსი</string>
+    <string name="audio_recording_field_list">ველის შიგთავსი</string>
 </resources>

@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">آپ آف لائن ہیں۔</string>
     <string name="sync_error">نقص ہم وقت سازی</string>
-    <string name="vague_error" comment="Network error dialog title">غلطی</string>
+    <string name="vague_error">غلطی</string>
     <string name="retry">دوبارہ کوشش کریں</string>
     <string name="menu_get_shared_decks">مشترکہ ڈیک حاصل کریں۔</string>
     <string name="connection_error_message">نیٹ ورک کی خرابی پیش آگئی ہے۔</string>

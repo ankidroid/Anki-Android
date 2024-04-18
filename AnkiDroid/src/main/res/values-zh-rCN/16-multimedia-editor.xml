@@ -48,11 +48,11 @@
     <string name="multimedia_editor_popup_cloze">创建填空</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">文字</string>
+    <string name="multimedia_editor_field_editing_text">文字</string>
     <string name="multimedia_editor_field_editing_image">图片</string>
     <string name="multimedia_editor_field_editing_audio">音频录制</string>
     <string name="multimedia_editor_field_editing_audio_clip">音频素材</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">完成</string>
+    <string name="multimedia_editor_field_editing_done">完成</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">清空</string>
@@ -73,7 +73,7 @@
     <string name="multimedia_editor_something_wrong">出错了</string>
     <string name="multimedia_editor_svg_preview">SVG 不可预览</string>
     <string name="multimedia_editor_png_paste_error">将剪贴板图像转换为 png 时出错：%s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">将多媒体内容添加到 %1$s 字段</string>
+    <string name="multimedia_editor_attach_mm_content">将多媒体内容添加到 %1$s 字段</string>
     <string name="multimedia_editor_attach_media">附加媒体</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">播放失败</string>
     <string name="multimedia_editor_audio_view_create_failed">无法创建录音工具栏</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">编辑字段</string>
+    <string name="title_activity_edit_text">编辑字段</string>
     <!-- Crop function-->
     <string name="crop_image">您想裁剪此图像吗？</string>
     <string name="crop_button">裁剪图像</string>
     <string name="save_dialog_content">当前图像大小是 %sMB。默认图像大小限制是 1MB。您想裁剪它吗？</string>
     <string name="select_image_failed">"选择图像失败，请重试"</string>
     <string name="activity_result_unexpected">应用返回了意外的值。您可能需要使用另一个应用程序</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">字段目录</string>
+    <string name="audio_recording_field_list">字段目录</string>
 </resources>

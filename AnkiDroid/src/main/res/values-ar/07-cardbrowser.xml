@@ -108,13 +108,13 @@
     </string-array>
     <string name="card_browser_select_all">تحديد الكل</string>
     <string name="card_browser_select_none">إلغاء التحديد</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(جديدة)</string>
+    <string name="card_browser_interval_new_card">(جديدة)</string>
     <string name="card_browser_due_filtered_card">(مفلترة)</string>
     <string name="card_browser_interval_learning_card">(في طور التعلم)</string>
     <string name="card_browser_no_cards_in_deck">لا توجد بطاقات في الرزمة ‘%s’</string>
     <string name="card_browser_search_all_decks">البحث في كل الرزم</string>
     <string name="card_browser_unknown_deck_name">غير معروف</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">اقتطاع المحتوى</string>
+    <string name="card_browser_truncate">اقتطاع المحتوى</string>
     <plurals name="card_browser_export_cards">
         <item quantity="zero">تصدير البطاقة</item>
         <item quantity="one">تصدير البطاقة</item>

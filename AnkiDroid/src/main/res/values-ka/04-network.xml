@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">ხაზგარეშე რეჟიმში ხართ</string>
     <string name="sync_error">შეცდომა სინქრონიზაციისას</string>
-    <string name="vague_error" comment="Network error dialog title">შეცდომა</string>
+    <string name="vague_error">შეცდომა</string>
     <string name="retry">ხელახლა ცდა</string>
     <string name="menu_get_shared_decks">გაზიარებული დასტების დამატება</string>
     <string name="connection_error_message">ქსელის შეცდომა მოხდა</string>

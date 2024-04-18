@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">Du er frakoblet</string>
     <string name="sync_error">Synkroniseringsfeil</string>
-    <string name="vague_error" comment="Network error dialog title">Feil</string>
+    <string name="vague_error">Feil</string>
     <string name="retry">Prøv på nytt</string>
     <string name="menu_get_shared_decks">Få delte kortstokker</string>
     <string name="connection_error_message">Det har oppstått en nettverksfeil</string>

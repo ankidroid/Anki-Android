@@ -137,15 +137,15 @@
         <item quantity="one">%1$d मिनट</item>
         <item quantity="other">मिनट %1$d</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid कार्ड</string>
+    <string name="fact_adder_intent_title">AnkiDroid कार्ड</string>
     <string name="note_editor_copy_note">नोट कॉपी करें</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">स्थानांतरित करे </string>
+    <string name="card_editor_reposition_card">स्थानांतरित करे </string>
     <string name="card_editor_reset_card">प्रगति को रीसेट</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">पुनः शेड्यूल करें</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">पूर्वावलोकन</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d का %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">का नाम बदलें</string>
+    <string name="card_editor_reschedule_card">पुनः शेड्यूल करें</string>
+    <string name="card_editor_preview_card">पूर्वावलोकन</string>
+    <string name="copy_as_markdown">Copy as Markdown</string>
+    <string name="preview_progress_bar_text">%1$d का %2$d</string>
+    <string name="rename">का नाम बदलें</string>
     <string name="checks_action">जांचें</string>
     <string name="check_db">डेटाबेस की जाँच करें</string>
     <string name="check_media">मीडिया जांचें</string>
@@ -155,11 +155,11 @@
     <string name="delete_deck">हटाने deck...\nPlease रुको।</string>
     <string name="info_rate">दर AnkiDroid</string>
     <string name="import_title">आयात</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">जोड़ें</string>
+    <string name="import_message_add">जोड़ें</string>
     <string name="import_message_replace_confirm">यह अपने मौजूदा संग्रह को हटाने और यह फ़ाइल %s का डेटा के साथ बदलना होगा। क्या आपको यकीन है?</string>
     <string name="import_dialog_message_add">संग्रह में \"%s\" को जोड़ें? इसमें काफी समय लग सकता है</string>
     <string name="import_log_no_apkg">यह एक मान्य Anki पैकेज फ़ाइल नहीं है</string>
-    <string name="import_title_error" comment="Title of error dialog">त्रुटि</string>
+    <string name="import_title_error">त्रुटि</string>
     <string name="import_error_handle_exception">फ़ाइल आयात करने में विफल\n\n%s</string>
     <string name="import_error_not_apkg_extension">फ़ाइल नाम \"%s\" में .apkg या .colpkg एक्सटेंशन नहीं है</string>
     <string name="import_error_load_imported_database">अन्कि डाटाबेस (.anki2) प्रतिस्थापन अभीतक सहारा नहीं दिया जाता हैं । कृपया पुस्तिका प्रतिस्थापन के शिक्षण के लिये देखिये ।</string>
@@ -182,9 +182,9 @@
         ]]></string>
     <string name="export_choice_share">शेयर करें</string>
     <string name="export_choice_save_to">यहां सेव करें</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">विकल्प</string>
+    <string name="study_options">विकल्प</string>
     <string name="menu__deck_options">डेक विकल्प</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">अध्ययन के विकल्प</string>
+    <string name="menu__study_options">अध्ययन के विकल्प</string>
     <string name="select_tts">टीटीएस भाषा सेट करता है</string>
     <string name="custom_study">कस्टम अध्ययन</string>
     <string name="more_options">अधिक</string>
@@ -234,12 +234,12 @@
     <string name="card_viewer_could_not_find_image">कार्ड सामग्री त्रुटि: ‘%s’ लोड करने में विफल</string>
     <!-- Deck Picker -->
     <string name="search_decks">खोज डेक</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">माइग्रेशन प्रगति दिखाएं</string>
+    <string name="show_migration_progress">माइग्रेशन प्रगति दिखाएं</string>
     <string name="ankidroid_init_failed_webview_title">फ़ॉन्ट आकार</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid सिस्टम WebView पर निर्भर करता है जो अनुपलब्ध है। यह तब हो सकता है जब सिस्टम अपडेट स्थापित कर रहा है। कृपया कुछ मिनटों में पुन: प्रयास करें। \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">फ़ॉन्ट आकार</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">टूलबार दिखाएं</string>
+    <string name="menu_show_toolbar">टूलबार दिखाएं</string>
     <string name="format_insert_bold">बोल्ड के रूप में प्रारूपित करें</string>
     <string name="format_insert_italic">इटैलिक के रूप में प्रारूपित करें</string>
     <string name="format_insert_underline">रेखांकन के रूप में प्रारूपित करें</string>
@@ -255,15 +255,15 @@
     <string name="toolbar_item_explain_edit_or_remove">चयनित टेक्स्ट के पहले और बाद में डालने के लिए हटम्ल दर्ज करें\n\nकिसी टूलबार आइटम को संपादित करने या हटाने के लिए उसे देर तक दबाएँ.</string>
     <string name="remove_toolbar_item">टूलबार आइटम हटाएं?</string>
     <string name="note_editor_paste_too_large">चित्र चिपकाने के लिए बहुत बड़ा है, कृपया चित्र को मैन्युअल रूप से डालें</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">एन्ड्रॉयड बैकप प्रगति पर है। कृपया पुन: प्रयास करें</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">अंकीड्रॉइड को शॉर्टकट जोड़ने की अनुमति देने के लिए आपको  आईमैनेजर का उपयोग करने की आवश्यकता हो सकती है</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">आपकी होम स्क्रीन अंकीड्रॉइड को शॉर्टकट जोड़ने की अनुमति नहीं देती है</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again">एन्ड्रॉयड बैकप प्रगति पर है। कृपया पुन: प्रयास करें</string>
+    <string name="create_shortcut_error_vivo">अंकीड्रॉइड को शॉर्टकट जोड़ने की अनुमति देने के लिए आपको  आईमैनेजर का उपयोग करने की आवश्यकता हो सकती है</string>
+    <string name="create_shortcut_failed">आपकी होम स्क्रीन अंकीड्रॉइड को शॉर्टकट जोड़ने की अनुमति नहीं देती है</string>
     <string name="create_shortcut_error">शॉर्टकट जोड़ने में त्रुटि: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">वाक्यों को बड़े अक्षरों में लिखें</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">स्क्रॉल टूलबार</string>
+    <string name="note_editor_capitalize">वाक्यों को बड़े अक्षरों में लिखें</string>
+    <string name="menu_scroll_toolbar">स्क्रॉल टूलबार</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
-    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
-    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="plus_sign">+</string>
+    <string name="minus_sign">-</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">एक मान्य ईमेल दर्ज करें।</string>
     <string name="password_empty">पासवर्ड की आवश्यकता है</string>
@@ -318,7 +318,7 @@
     <string name="intro_ankidroid_tagline_one">कम पढ़ें</string>
     <string name="intro_ankidroid_tagline_two">अधिक याद करें</string>
     <string name="intro_short_ankidroid_explanation">अंकी का कार्ड शेड्यूलर आपकी सबसे कमजोर यादों को मजबूत करके और आपकी सबसे मजबूत यादों को संरक्षित करके समय बचाता है</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">शुरू करें</string>
+    <string name="intro_get_started">शुरू करें</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb से सिंक करें</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid अभी प्रारंभ नहीं हुआ है। कृपया AnkiDroid खोलें और पुनः प्रयास करें</string>
@@ -329,33 +329,33 @@
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">डेक हटाया गया। कृपया शॉर्टकट हटा दें</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">कार्ड्ज़</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">नोट्स</string>
+    <string name="show_cards">कार्ड्ज़</string>
+    <string name="show_notes">नोट्स</string>
     <string name="toggle_cards_notes">टॉगल कार्ड्ज़/नोट्स</string>
     <string name="toggle_browser_mode_help">ब्राउज़र में कार्ड्ज़ और नोट्स दिखाना टॉगल करें</string>
     <string name="truncate_content_help">सामग्री की केवल पहली 3 पंक्तियाँ दिखाने के लिए ब्राउज़र की प्रत्येक पंक्ति की ऊँचाई को छोटा करें</string>
     <string name="browser_options_dialog_heading">ब्राउज़र विकल्प</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        स्टोरेज माइग्रेशन के दौरान यह कार्यक्षमता अनुपलब्ध है
+    <string name="functionality_disabled_during_storage_migration">        स्टोरेज माइग्रेशन के दौरान यह कार्यक्षमता अनुपलब्ध है
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">संग्रहण माइग्रेशन प्रारंभ करने के लिए टैप करें</string>
+    <string name="storage_migration_sync_notification">संग्रहण माइग्रेशन प्रारंभ करने के लिए टैप करें</string>
     <string name="media_sync_required_title">मीडिया सिंक आवश्यक</string>
     <string name="media_sync_unavailable_message">सेटिंग्स में मीडिया सिंक अक्षम है। जारी रखने से पहले जो भी मीडिया सिंक नहीं हुआ है उसे सिंक और बैकअप करें</string>
     <string name="audio_saved">रिकॉर्डिंग को सहेजा गया</string>
     <string name="deleting_selected_notes">चयनित नोट्स हटाये जा रहे हैं</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">सुनने के लिए किसी आवाज़ पर टैप करें
+    <string name="tts_voices_default_text">सुनने के लिए किसी आवाज़ पर टैप करें
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">उपयोग से पहले वॉइस इंस्टॉल किया जाना चाहिए</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">कैसे भी प्रयोग करें
+    <string name="tts_voices_selected_voice_should_be_installed">उपयोग से पहले वॉइस इंस्टॉल किया जाना चाहिए</string>
+    <string name="tts_voices_use_selected_voice_without_install">कैसे भी प्रयोग करें
 
     </string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">पाठ से वाक् त्रुटि (%s)</string>
+    <string name="tts_voices_playback_error_new">पाठ से वाक् त्रुटि (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
-    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">इंटरनेट</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">इनस्टॉल</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">टेक्स्ट टू स्पीच सेटिंग खोलने में विफल</string>
+    <string name="tts_voices_chip_filter_to_internet">इंटरनेट</string>
+    <string name="tts_voices_chip_filter_to_installable_audio">इनस्टॉल</string>
+    <string name="tts_voices_failed_opening_tts_system_settings">टेक्स्ट टू स्पीच सेटिंग खोलने में विफल</string>
     <string name="shared_decks_login_required">कृपया अधिक डेक डाउनलोड करने के लिए लॉग इन करें</string>
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template">Reposition</string>
 </resources>

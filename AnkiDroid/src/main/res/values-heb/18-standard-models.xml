@@ -28,7 +28,7 @@
     <!--Fields-->
     <string name="front_field_name">חזית</string>
     <string name="back_field_name">גב</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">טקסט</string>
+    <string name="text_field_name">טקסט</string>
     <string name="extra_field_name_new">אחורי - תוספת</string>
     <string name="field_to_ask_front_name">להוסיף רוורס</string>
     <!--Note type-->

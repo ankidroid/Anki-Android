@@ -54,11 +54,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">ვერაფერი მოიძებნა</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">ზოგადი</string>
+    <string name="pref_cat_general" maxLength="41">ზოგადი</string>
     <string name="pref_cat_studying" maxLength="41">სწავლა</string>
     <string name="pref_cat_system_wide" maxLength="41">მთელი სისტემის მასშტაბით</string>
     <string name="pref_cat_reviewing" maxLength="41">გადახედვა</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">სინქრონიზაცია</string>
+    <string name="pref_cat_sync" maxLength="41">სინქრონიზაცია</string>
     <string name="pref_cat_scheduling" maxLength="41">სწავლის განრიგი</string>
     <string name="pref_cat_whiteboard" maxLength="41">დაფა</string>
     <string name="pref_cat_appearance" maxLength="41">იერსახე</string>
@@ -129,7 +129,7 @@
     <string name="sync_account_summ_logged_out">არ ხართ შესული</string>
     <string name="automatic_sync_choice" maxLength="41">ავტომატური სინქრონიზაცია</string>
     <string name="automatic_sync_choice_summ">ავტომატური სინქრონიზაცია აპლიკაციის გახსნისას/აპლიკაციიდან გამოსვლისას, თუკი ბოლო სინქრონიზაცია 10-ზე მეტი წუთის წინ იყო.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">ყოველთვის</string>
+    <string name="sync_media_always">ყოველთვის</string>
     <string name="sync_media_only_unmetered">მხოლოდ ულიმიტო ინტერნეტ-კავშირის ქონისას</string>
     <string name="sync_media_never">არასდროს</string>
     <string name="sync_status_badge" maxLength="41">სინქრონიზაციის სტატუსის ჩვენება</string>
@@ -180,7 +180,7 @@
     <string name="learn_cutoff" maxLength="41">წინასწარი სწავლის ლიმიტი</string>
     <string name="time_limit" maxLength="41">განკუთვნილი დროის ლიმიტი</string>
     <string name="day_offset_with_description" maxLength="41">ახალი დღის დასაწყისი</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="one">ნაშუაღამევის %d საათზე</item>
         <item quantity="other">ნაშუაღამევის %d საათზე</item>
     </plurals>
@@ -212,7 +212,7 @@
     <string name="media_import_allow_all_files_summ">შემთხვევებისთვის, როცა AnkiDroid ვერ ცნობს გარკვეულ მედიაფაილებს</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">სინქრონიზაციის სხვა სერვერი</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">არ არის გამოყენებაში</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">არ არის გამოყენებაში</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
@@ -231,13 +231,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">იარლიყების მონიშვნა</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">ზოგადი</string>
+    <string name="deck_conf_general" maxLength="41">ზოგადი</string>
     <string name="deck_conf_reminders" maxLength="41">შეხსენებები</string>
     <string name="deck_conf_cram_filter" maxLength="41">ფილტრი</string>
     <string name="deck_conf_cram_search" maxLength="41">ძებნა</string>
     <string name="deck_conf_cram_limit" maxLength="41">ლიმიტი</string>
     <string name="deck_conf_cram_order" maxLength="41">ბარათების არჩევის კრიტერიუმი</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">გადადება</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">გადადება</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">მეორე ფილტრის გააქტიურება</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">ინდივიდუალური ნაბიჯების განსაზღვრა</string>
@@ -283,11 +283,11 @@
     <string name="card_side_question">კითხვა</string>
     <string name="card_side_answer">პასუხი</string>
     <string name="card_side_both">კითხვა &amp; პასუხი</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">კ: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">პ: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <string name="display_binding_card_side_question">კ: %s</string>
+    <string name="display_binding_card_side_answer">პ: %s</string>
+    <string name="display_binding_card_side_both">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\"%s-ს\" წაშლა</string>
+    <string name="binding_remove_binding">\"%s-ს\" წაშლა</string>
     <string name="bindings_already_bound">უკვე მიბმულია „%s-ზე“</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">ექსპერიმენტალური</string>
@@ -320,43 +320,43 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">მეხსიერების სივრცის მართვა</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">შეცდომა</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">გამო-\nთვლა&#8230;</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">შეცდომა</string>
+    <string name="pref__widget_text__calculating">გამო-\nთვლა&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="one">%1$d ფაილი\n%2$s</item>
         <item quantity="other">%1$d ფაილი\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">უხმარი მედიაფაილების წაშლა</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">უხმარი მედიაფაილების წაშლა</string>
     <string name="pref__delete_unused_media_files__summary">სურათებისა და სხვა მედიაფაილების წაშლა, რომლებსაც პრეფიქსად არ ახლავთ _ ნიშანი და რომლებიც არ გამოიყენება რომელიმე შენიშვნაში</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">უხმარი მედიაფაილების წაშლა</string>
+    <string name="dialog__delete_unused_media_files__title">უხმარი მედიაფაილების წაშლა</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">სარეზერვო ასლების წაშლა</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">სარეზერვო ასლების წაშლა</string>
+    <string name="pref__delete_backups__title" maxLength="41">სარეზერვო ასლების წაშლა</string>
+    <string name="dialog__delete_backups__title">სარეზერვო ასლების წაშლა</string>
     <string name="progress__deleting_backups">მიმდინარეობს სარეზერვო ასლების წაშლა&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">კოლექციის წაშლა</string>
+    <string name="pref__delete_collection__title" maxLength="41">კოლექციის წაშლა</string>
     <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">კოლექციის წაშლა</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ნამდვილად გსურთ თქვენი კოლექციის, მედიაფაილებისა და სარეზერვო ასლების წაშლა?\n\nშენიშვნა: ამ ოპერაციის შედეგად ფანჯარა დაიხურება.</string>
+    <string name="dialog__delete_collection__title">კოლექციის წაშლა</string>
+    <string name="dialog__delete_collection__message">ნამდვილად გსურთ თქვენი კოლექციის, მედიაფაილებისა და სარეზერვო ასლების წაშლა?\n\nშენიშვნა: ამ ოპერაციის შედეგად ფანჯარა დაიხურება.</string>
     <string name="progress__deleting_collection">მიმდინარეობს კოლექციის წაშლა&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">ყველაფრის წაშლა</string>
+    <string name="pref__delete_everything__title" maxLength="41">ყველაფრის წაშლა</string>
     <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">ყველაფრის წაშლა</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__title">ყველაფრის წაშლა</string>
+    <string name="dialog__delete_everything__message">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">აპლიკაციის მონაცემების წაშლა</string>
+    <string name="pref__delete_app_data__title" maxLength="41">აპლიკაციის მონაცემების წაშლა</string>
     <string name="pref__delete_app_data__summary">პარამეტრებისა და აპლიკაციის სხვა მონაცემების წაშლა</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">აპლიკაციის მონაცემების წაშლა</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ნამდვილად გსურთ აპლიკაციის მონაცემების წაშლა? ამაში შედის პარამეტრები და აპლიკაციის სხვა მონაცემებიც.\n\nშენიშვნა: ამ ოპერაციის შედეგად ფანჯარა დაიხურება.</string>
+    <string name="dialog__delete_app_data__title">აპლიკაციის მონაცემების წაშლა</string>
+    <string name="dialog__delete_app_data__message">ნამდვილად გსურთ აპლიკაციის მონაცემების წაშლა? ამაში შედის პარამეტრები და აპლიკაციის სხვა მონაცემებიც.\n\nშენიშვნა: ამ ოპერაციის შედეგად ფანჯარა დაიხურება.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">კოლექცია არ არსებობს</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">შეცდომა</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">მიმდინარეობს ამორჩევა&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">მიმდინარეობს გამოთვლა&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">კოლექცია არ არსებობს</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">კოლექცია არ არსებობს</string>
+    <string name="pref__etc__summary__error">შეცდომა</string>
+    <string name="pref__etc__snackbar__fetching">მიმდინარეობს ამორჩევა&#8230;</string>
+    <string name="pref__etc__snackbar__calculating">მიმდინარეობს გამოთვლა&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection">კოლექცია არ არსებობს</string>
 </resources>

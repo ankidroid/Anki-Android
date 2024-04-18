@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱛᱩᱠᱟᱣ ᱢᱮ</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ᱡᱟᱭᱜᱟ ᱛᱩᱞᱟᱣ</string>
+    <string name="model_browser_label">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱛᱩᱠᱟᱣ ᱢᱮ</string>
+    <string name="model_editor_label">ᱡᱟᱭᱜᱟ ᱛᱩᱞᱟᱣ</string>
     <!--Toasts-->
     <string name="toast_last_model">ᱟᱢ ᱢᱟᱲᱟᱝᱼᱟᱜ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱵᱟᱝ ᱢᱮᱴᱟᱣ ᱫᱟᱲᱮᱟᱜᱼᱟ</string>
     <string name="toast_last_field">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱢᱤᱫᱴᱟᱝ ᱠᱷᱚᱱ ᱡᱟᱹᱥᱛᱤ ᱡᱟᱭᱜᱟ ᱛᱟᱦᱮᱱ ᱠᱟᱛᱷᱟ</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
-    <string name="model_browser_rename" comment="Rename a note type">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
+    <string name="model_browser_rename">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
     <string name="model_browser_template">ᱠᱟᱰ ᱠᱚ ᱥᱟᱯᱰᱟᱣ</string>
     <!--Rename-->
     <string name="rename_model">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱫᱩᱦᱰᱟ ᱧᱩᱛᱩᱢ</string>

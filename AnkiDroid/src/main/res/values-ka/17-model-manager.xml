@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">შენიშვნის ტიპების მართვა</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ველების მართვა</string>
+    <string name="model_browser_label">შენიშვნის ტიპების მართვა</string>
+    <string name="model_editor_label">ველების მართვა</string>
     <!--Toasts-->
     <string name="toast_last_model">ბოლო შენიშვნის ტიპის წაშლა შეუძლებელია</string>
     <string name="toast_last_field">შენიშვნის ტიპს უნდა ჰქონდეს ერთი ველი მაინც</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">შენიშვნის ტიპის წაშლა</string>
-    <string name="model_browser_rename" comment="Rename a note type">გადარქმევა</string>
+    <string name="model_browser_rename">გადარქმევა</string>
     <string name="model_browser_template">ბარათების რედაქტირება</string>
     <!--Rename-->
     <string name="rename_model">შენიშვნის ტიპის სახელის შეცვლა</string>

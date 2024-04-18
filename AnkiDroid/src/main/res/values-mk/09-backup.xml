@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Презапишете ја вашата колекција со онаа од AnkiWeb? Ова ќе го отфрли целокупниот напредок во учењето и додаде информации од последната синхронизација.</string>
     <string name="error_handling_title">Грешка при ракување</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Опции</string>
+    <string name="error_handling_options">Опции</string>
     <string name="backup_retry_opening">Повторете го отворањето</string>
     <string name="backup_error_menu_repair">Поправка на базата на податоци</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

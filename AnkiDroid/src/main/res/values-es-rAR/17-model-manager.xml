@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Gestionar tipos de nota</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Gestionar campos</string>
+    <string name="model_browser_label">Gestionar tipos de nota</string>
+    <string name="model_editor_label">Gestionar campos</string>
     <!--Toasts-->
     <string name="toast_last_model">No puede eliminar su último tipo de nota</string>
     <string name="toast_last_field">Los tipos de nota deben tener por lo menos un campo</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Eliminar tipo de nota</string>
-    <string name="model_browser_rename" comment="Rename a note type">Renombrar</string>
+    <string name="model_browser_rename">Renombrar</string>
     <string name="model_browser_template">Editar tarjetas</string>
     <!--Rename-->
     <string name="rename_model">Renombrar tipo de nota</string>

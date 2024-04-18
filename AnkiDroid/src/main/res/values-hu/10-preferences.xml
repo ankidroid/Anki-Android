@@ -54,11 +54,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Nincs találat</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Általános</string>
+    <string name="pref_cat_general" maxLength="41">Általános</string>
     <string name="pref_cat_studying" maxLength="41">Tanulás</string>
     <string name="pref_cat_system_wide" maxLength="41">Rendszerszintű</string>
     <string name="pref_cat_reviewing" maxLength="41">Ismétlés</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Szinkronizálás</string>
+    <string name="pref_cat_sync" maxLength="41">Szinkronizálás</string>
     <string name="pref_cat_scheduling" maxLength="41">Ütemezés</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tábla</string>
     <string name="pref_cat_appearance" maxLength="41">Kinézet</string>
@@ -130,7 +130,7 @@
     <string name="automatic_sync_choice" maxLength="41">Automatikus szinkronizálás</string>
     <string name="automatic_sync_choice_summ">Automatikus szinkronizálás az applikáció indításakor/kilépéskor, ha az utolsó több mint 10
         perce volt.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Mindig</string>
+    <string name="sync_media_always">Mindig</string>
     <string name="sync_media_only_unmetered">Csak forgalmi díj mentes kapcsolat esetén</string>
     <string name="sync_media_never">Soha</string>
     <string name="sync_status_badge" maxLength="41">Szinkronizálás állapotának megjelenítése</string>
@@ -181,7 +181,7 @@
     <string name="learn_cutoff" maxLength="41">Korai tanulás korlátai</string>
     <string name="time_limit" maxLength="41">Időkorlát érték</string>
     <string name="day_offset_with_description" maxLength="41">Nap kezdete</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="one">%d hour past midnight</item>
         <item quantity="other">%d hours past midnight</item>
     </plurals>
@@ -213,7 +213,7 @@
     <string name="media_import_allow_all_files_summ">Ha az Android nem ismeri fel egy média fájl</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Egyéni szinkronizáló kiszolgáló</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nem használt</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">Nem használt</string>
     <string name="custom_sync_server_help2"><![CDATA[        AnkiWeb-es szinkronizálás helyett használsz saját szervert is.
         Ha nincs beállítva, akkor az AnkiWeb lesz használva.
         <a href="%s">További információk</a>
@@ -231,13 +231,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Válassz címkét</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Általános</string>
+    <string name="deck_conf_general" maxLength="41">Általános</string>
     <string name="deck_conf_reminders" maxLength="41">Emlékeztetők</string>
     <string name="deck_conf_cram_filter" maxLength="41">Szűrő</string>
     <string name="deck_conf_cram_search" maxLength="41">Keresés</string>
     <string name="deck_conf_cram_limit" maxLength="41">Határ</string>
     <string name="deck_conf_cram_order" maxLength="41">kártyák kiválasztása után</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Átütemezés</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">Átütemezés</string>
     <string name="deck_conf_cram_reschedule_summ">A telepített kártyák átütemezése adott válaszaim alapján</string>
     <string name="deck_conf_cram_filter_2_check">Második szűrő engedélyezése</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Add meg az egyéni lépéseket</string>
@@ -283,11 +283,11 @@
     <string name="card_side_question">Kérdés</string>
     <string name="card_side_answer">Válasz</string>
     <string name="card_side_both">Kérdések és válaszok</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">K: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">V: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <string name="display_binding_card_side_question">K: %s</string>
+    <string name="display_binding_card_side_answer">V: %s</string>
+    <string name="display_binding_card_side_both">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ törlése</string>
+    <string name="binding_remove_binding">‘%s’ törlése</string>
     <string name="bindings_already_bound">Már össze van kötve: %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Kísérleti</string>
@@ -319,43 +319,43 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Tárhely kezelése</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Hiba</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Számol&#8230;</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">Hiba</string>
+    <string name="pref__widget_text__calculating">Számol&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="one">%1$d fájl\n%2$s</item>
         <item quantity="other">%1$d fájl\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Nem használt média fájlok törlése</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">Nem használt média fájlok törlése</string>
     <string name="pref__delete_unused_media_files__summary">Törölje azokat a képeket és egyéb médiát, amelyek nem rendelkeznek _ előtaggal, és amelyekre nem hivatkozik jegyzet</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Nem használt média fájlok törlése</string>
+    <string name="dialog__delete_unused_media_files__title">Nem használt média fájlok törlése</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Biztonsági mentések törlése</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Biztonsági mentések törlése</string>
+    <string name="pref__delete_backups__title" maxLength="41">Biztonsági mentések törlése</string>
+    <string name="dialog__delete_backups__title">Biztonsági mentések törlése</string>
     <string name="progress__deleting_backups">Mentések törlése..</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Gyűjtemény törlése</string>
+    <string name="pref__delete_collection__title" maxLength="41">Gyűjtemény törlése</string>
     <string name="pref__delete_collection__summary">Gyűjtemény, média fájlok és biztonsági másolatok törlése. Alkalmazás beállításai maradnak</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Gyűjtemény törlése</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Biztos, hogy törölni szeretnéd a gyűjteményt, a média fájlokokat és a biztonsági másolatokat?\n\nMegjegyzés: ez a művelet bezárja az ablakot.</string>
+    <string name="dialog__delete_collection__title">Gyűjtemény törlése</string>
+    <string name="dialog__delete_collection__message">Biztos, hogy törölni szeretnéd a gyűjteményt, a média fájlokokat és a biztonsági másolatokat?\n\nMegjegyzés: ez a művelet bezárja az ablakot.</string>
     <string name="progress__deleting_collection">Gyűjtemény törlése&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Minden törlése</string>
+    <string name="pref__delete_everything__title" maxLength="41">Minden törlése</string>
     <string name="pref__delete_everything__summary">Gyűjtemény, média fájlok, biztonsági másolatok és beállítások törlése</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Minden törlése</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Biztos, hogy törölni szeretnéd az összes adatot? (gyűjteményt, média fájlokokat, biztonsági másolatokat és beállításokat)\n\nMegjegyzés: ez a művelet bezárja az ablakot.</string>
+    <string name="dialog__delete_everything__title">Minden törlése</string>
+    <string name="dialog__delete_everything__message">Biztos, hogy törölni szeretnéd az összes adatot? (gyűjteményt, média fájlokokat, biztonsági másolatokat és beállításokat)\n\nMegjegyzés: ez a művelet bezárja az ablakot.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Alkalmazás adatainak törlése</string>
+    <string name="pref__delete_app_data__title" maxLength="41">Alkalmazás adatainak törlése</string>
     <string name="pref__delete_app_data__summary">Beállítások és egyéb alkalmazásadatok törlése</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Akalmazásadatok törlése</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Biztos, hogy törölni szeretnéd az alkalmazás adatokat? (beállításokat és egyéb alkalmazásadatokat)\n\nMegjegyzés: ez a művelet bezárja az ablakot.</string>
+    <string name="dialog__delete_app_data__title">Akalmazásadatok törlése</string>
+    <string name="dialog__delete_app_data__message">Biztos, hogy törölni szeretnéd az alkalmazás adatokat? (beállításokat és egyéb alkalmazásadatokat)\n\nMegjegyzés: ez a művelet bezárja az ablakot.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Nincs gyűjtemény.</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Hiba</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Letöltés&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Számolás&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Gyűjtemény nem létezik</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">Nincs gyűjtemény.</string>
+    <string name="pref__etc__summary__error">Hiba</string>
+    <string name="pref__etc__snackbar__fetching">Letöltés&#8230;</string>
+    <string name="pref__etc__snackbar__calculating">Számolás&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection">Gyűjtemény nem létezik</string>
 </resources>

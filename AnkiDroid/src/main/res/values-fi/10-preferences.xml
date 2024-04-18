@@ -54,11 +54,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Ei tuloksia</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Yleiset</string>
+    <string name="pref_cat_general" maxLength="41">Yleiset</string>
     <string name="pref_cat_studying" maxLength="41">Opiskelu</string>
     <string name="pref_cat_system_wide" maxLength="41">Järjestelmäasetukset</string>
     <string name="pref_cat_reviewing" maxLength="41">Läpikäynti</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synkronointi</string>
+    <string name="pref_cat_sync" maxLength="41">Synkronointi</string>
     <string name="pref_cat_scheduling" maxLength="41">Aikataulutus</string>
     <string name="pref_cat_whiteboard" maxLength="41">Valkotaulu</string>
     <string name="pref_cat_appearance" maxLength="41">Ulkoasu</string>
@@ -129,7 +129,7 @@
     <string name="sync_account_summ_logged_out">Ei kirjautuneena</string>
     <string name="automatic_sync_choice" maxLength="41">Automaattinen synkronointi</string>
     <string name="automatic_sync_choice_summ">Synkronoi automaattisesti sovelluksen auetessa tai suljetessam, jos viimeistä synkronoinnista on enemmän kuin 10         minuuttia.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Aina</string>
+    <string name="sync_media_always">Aina</string>
     <string name="sync_media_only_unmetered">Vain yhteyksillä, joita ei laskuteta käytön mukaan</string>
     <string name="sync_media_never">Ei koskaan</string>
     <string name="sync_status_badge" maxLength="41">Näytä synkronoinnin tila</string>
@@ -180,7 +180,7 @@
     <string name="learn_cutoff" maxLength="41">Ennalta oppimisen aikaraja</string>
     <string name="time_limit" maxLength="41">Edistymisen näyttämisen aikaväli</string>
     <string name="day_offset_with_description" maxLength="41">Seuraava päivä alkaa</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="one">%d tunti keskiyön jälkeen</item>
         <item quantity="other">%d tuntia keskiyön jälkeen</item>
     </plurals>
@@ -212,7 +212,7 @@
     <string name="media_import_allow_all_files_summ">Jos Android ei tunnista mediatiedostoja</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Oma synkronointipalvelin</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Ei käytössä</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">Ei käytössä</string>
     <string name="custom_sync_server_help2"><![CDATA[        Voit käyttää omaa palvelintasi synkronointiin
         vaihtoehtona AnkiWebin synkronoinnille.
         Jos tämä jätetään tyhjäksi, AnkiWebin palvelinta käytetään.
@@ -231,13 +231,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Valitse tunnisteet</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Yleistä</string>
+    <string name="deck_conf_general" maxLength="41">Yleistä</string>
     <string name="deck_conf_reminders" maxLength="41">Muistutukset</string>
     <string name="deck_conf_cram_filter" maxLength="41">Suodatin</string>
     <string name="deck_conf_cram_search" maxLength="41">Haku</string>
     <string name="deck_conf_cram_limit" maxLength="41">Rajoita</string>
     <string name="deck_conf_cram_order" maxLength="41">korttiin, jotka valitaan käyttäen sääntöä</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Aikatauluta uudelleen</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">Aikatauluta uudelleen</string>
     <string name="deck_conf_cram_reschedule_summ">Aikatauluta kortit tämän pakan vastausten perusteella</string>
     <string name="deck_conf_cram_filter_2_check">Ota käyttöön toinen suodatin</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Määritä mukautetut oppimisaskeleet</string>
@@ -283,11 +283,11 @@
     <string name="card_side_question">Kysymys</string>
     <string name="card_side_answer">Vastaus</string>
     <string name="card_side_both">Kysymys ja vastaus</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">K: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">V: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <string name="display_binding_card_side_question">K: %s</string>
+    <string name="display_binding_card_side_answer">V: %s</string>
+    <string name="display_binding_card_side_both">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Poista ”%s”</string>
+    <string name="binding_remove_binding">Poista ”%s”</string>
     <string name="bindings_already_bound">Jo käytössä kohteessa \"%s\"</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Kokeellinen</string>
@@ -320,43 +320,43 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Hallitse tallennustilaa</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Virhe</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Hetki...</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">Virhe</string>
+    <string name="pref__widget_text__calculating">Hetki...</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="one">%1$d tiedosto\n%2$s</item>
         <item quantity="other">%1$d tiedostoa\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Poista käyttämättömät mediatiedostot</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">Poista käyttämättömät mediatiedostot</string>
     <string name="pref__delete_unused_media_files__summary">Poista kuvat ja muut mediatiedostot, joiden nimi ei ala merkillä _ ja jotka eivät ole käytössä missään muistiinpanossa.</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Poista käyttämättömät mediatiedostot</string>
+    <string name="dialog__delete_unused_media_files__title">Poista käyttämättömät mediatiedostot</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Poista varmuuskopioita</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Poista varmuuskopioita</string>
+    <string name="pref__delete_backups__title" maxLength="41">Poista varmuuskopioita</string>
+    <string name="dialog__delete_backups__title">Poista varmuuskopioita</string>
     <string name="progress__deleting_backups">Poistetaan varmuuskopioita&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Poista kokoelma</string>
+    <string name="pref__delete_collection__title" maxLength="41">Poista kokoelma</string>
     <string name="pref__delete_collection__summary">Poista kokoelma, mediatiedostot ja varmuuskopiot. Sovellusasetuksia ei poisteta</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Poista kokoelma</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Haluatko varmasti poistaa kokoelman, mediatiedostot ja varmuuskopiot?\n\nHuomautus: tämä toiminto sulkee ikkunan.</string>
+    <string name="dialog__delete_collection__title">Poista kokoelma</string>
+    <string name="dialog__delete_collection__message">Haluatko varmasti poistaa kokoelman, mediatiedostot ja varmuuskopiot?\n\nHuomautus: tämä toiminto sulkee ikkunan.</string>
     <string name="progress__deleting_collection">Poistetaan kokoelmaa...</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Poista kaikki</string>
+    <string name="pref__delete_everything__title" maxLength="41">Poista kaikki</string>
     <string name="pref__delete_everything__summary">Poista kokoelma, mediatiedostot, varmuuskopiot ja asetukset</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Poista kaikki</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Haluatko varmasti poistaa kaikki tiedot? Tämä sisältää kokoelmasi, mediatiedostot, varmuuskopiot ja asetukset.\n\Huomautus: tämä toiminto sulkee ikkunan.</string>
+    <string name="dialog__delete_everything__title">Poista kaikki</string>
+    <string name="dialog__delete_everything__message">Haluatko varmasti poistaa kaikki tiedot? Tämä sisältää kokoelmasi, mediatiedostot, varmuuskopiot ja asetukset.\n\Huomautus: tämä toiminto sulkee ikkunan.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Poista sovelluksen tiedot</string>
+    <string name="pref__delete_app_data__title" maxLength="41">Poista sovelluksen tiedot</string>
     <string name="pref__delete_app_data__summary">Poista asetukset ja muut sovelluksen tiedot</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Poista sovelluksen tiedot</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Haluatko varmasti poistaa sovelluksen tiedot? Tämä sisältää asetukset ja muut sovelluksen tiedot.\n\nHuomautus: tämä toiminto sulkee ikkunan.</string>
+    <string name="dialog__delete_app_data__title">Poista sovelluksen tiedot</string>
+    <string name="dialog__delete_app_data__message">Haluatko varmasti poistaa sovelluksen tiedot? Tämä sisältää asetukset ja muut sovelluksen tiedot.\n\nHuomautus: tämä toiminto sulkee ikkunan.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Ei kokoelmaa</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Virhe</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Haetaan&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Lasketaan&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kokoelmaa ei ole olemassa</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">Ei kokoelmaa</string>
+    <string name="pref__etc__summary__error">Virhe</string>
+    <string name="pref__etc__snackbar__fetching">Haetaan&#8230;</string>
+    <string name="pref__etc__snackbar__calculating">Lasketaan&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection">Kokoelmaa ei ole olemassa</string>
 </resources>

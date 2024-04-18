@@ -28,7 +28,7 @@
     <!--Fields-->
     <string name="front_field_name">Vorderseite</string>
     <string name="back_field_name">Rückseite</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
+    <string name="text_field_name">Text</string>
     <string name="extra_field_name_new">Rückseite extra</string>
     <string name="field_to_ask_front_name">Gegenrichtung hinzufügen</string>
     <!--Note type-->

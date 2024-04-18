@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb இலிருந்து உங்கள் சேகரிப்பை மேலெழுதவா? இது உங்கள் கற்றல் முன்னேற்றத்தை கைவிட்டு, உங்கள் கடைசி ஒத்திசைவின் பின்னர் தகவல்களை சேர்த்தது.</string>
     <string name="error_handling_title">பிழை கையாளுதல்</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">விருப்பங்கள்</string>
+    <string name="error_handling_options">விருப்பங்கள்</string>
     <string name="backup_retry_opening">மீண்டும் திறக்க</string>
     <string name="backup_error_menu_repair">பழுதுபார்க்கும் தரவுத்தளம்</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

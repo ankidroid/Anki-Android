@@ -54,11 +54,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Κανένα αποτέλεσμα</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Γενικά</string>
+    <string name="pref_cat_general" maxLength="41">Γενικά</string>
     <string name="pref_cat_studying" maxLength="41">Μελέτη</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Επανάληψη</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Συγχρονισμός</string>
+    <string name="pref_cat_sync" maxLength="41">Συγχρονισμός</string>
     <string name="pref_cat_scheduling" maxLength="41">Προγραμματισμός</string>
     <string name="pref_cat_whiteboard" maxLength="41">Πίνακας</string>
     <string name="pref_cat_appearance" maxLength="41">Εμφάνιση</string>
@@ -130,7 +130,7 @@
     <string name="automatic_sync_choice" maxLength="41">Αυτόματος συγχρονισμός</string>
     <string name="automatic_sync_choice_summ">Αυτόματος συγχρονισμός κατά την εκκίνηση/έξοδο της εφαρμογής, αν ο τελευταίος συγχρονισμός ήταν πάνω από 10
         λεπτά πριν.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Πάντα</string>
+    <string name="sync_media_always">Πάντα</string>
     <string name="sync_media_only_unmetered">Only on unmetered connections</string>
     <string name="sync_media_never">Ποτέ</string>
     <string name="sync_status_badge" maxLength="41">Εμφάνιση κατάστασης συγχρονισμού</string>
@@ -181,7 +181,7 @@
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="day_offset_with_description" maxLength="41">Έναρξη επόμενης ημέρας</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="one">%d hour past midnight</item>
         <item quantity="other">%d hours past midnight</item>
     </plurals>
@@ -213,7 +213,7 @@
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">Not used</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
@@ -232,13 +232,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Επιλογή Ετικετών</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Γενικά</string>
+    <string name="deck_conf_general" maxLength="41">Γενικά</string>
     <string name="deck_conf_reminders" maxLength="41">Υπενθυμίσεις</string>
     <string name="deck_conf_cram_filter" maxLength="41">Φίλτρο</string>
     <string name="deck_conf_cram_search" maxLength="41">Αναζήτηση</string>
     <string name="deck_conf_cram_limit" maxLength="41">Περιορισμός κατά</string>
     <string name="deck_conf_cram_order" maxLength="41">Επιλογή καρτών κατά</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Επαναπρογραμματισμός</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">Επαναπρογραμματισμός</string>
     <string name="deck_conf_cram_reschedule_summ">Επαναπρογραμματισμός καρτών με βάση τις απαντήσεις μου σε αυτή την τράπουλα</string>
     <string name="deck_conf_cram_filter_2_check">Ενεργοποίηση δεύτερου φίλτρου</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Ορισμός προσαρμοσμένων βημάτων</string>
@@ -284,11 +284,11 @@
     <string name="card_side_question">Ερώτηση</string>
     <string name="card_side_answer">Απάντηση</string>
     <string name="card_side_both">Ερώτηση &amp; Απάντηση</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Ε: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">Α: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s </string>
+    <string name="display_binding_card_side_question">Ε: %s</string>
+    <string name="display_binding_card_side_answer">Α: %s</string>
+    <string name="display_binding_card_side_both">%s </string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Αφαίρεση ‘%s’</string>
+    <string name="binding_remove_binding">Αφαίρεση ‘%s’</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
@@ -321,43 +321,43 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Διαχείριση χώρου</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Σφάλμα</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">Σφάλμα</string>
+    <string name="pref__widget_text__calculating">Calcu-\nlating&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="one">%1$dαρχείο\n%2$s</item>
         <item quantity="other">%1$dαρχεία\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Διαγραφή αχρησιμοποίητων αρχείων πολυμέσων</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">Διαγραφή αχρησιμοποίητων αρχείων πολυμέσων</string>
     <string name="pref__delete_unused_media_files__summary">Διαγραφή εικόνων και άλλων πολυμέσων που δεν έχουν το πρόθεμα  _ και δεν αναφέρονται από καμία σημείωση</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Διαγραφή αχρησιμοποίητων αρχείων πολυμέσων</string>
+    <string name="dialog__delete_unused_media_files__title">Διαγραφή αχρησιμοποίητων αρχείων πολυμέσων</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Διαγραφή αντιγράφων ασφαλείας</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Διαγραφή αντιγράφων ασφαλείας</string>
+    <string name="pref__delete_backups__title" maxLength="41">Διαγραφή αντιγράφων ασφαλείας</string>
+    <string name="dialog__delete_backups__title">Διαγραφή αντιγράφων ασφαλείας</string>
     <string name="progress__deleting_backups">Διαγραφή αντιγράφων...</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Διαγραφή συλλογής</string>
+    <string name="pref__delete_collection__title" maxLength="41">Διαγραφή συλλογής</string>
     <string name="pref__delete_collection__summary">Διαγραφή συλλογής, πολυμέσων και αντιγράφων ασφαλείας. Οι ρυθμίσεις εφαρμογής δεν διαγράφονται</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Διαγραφή συλλογής</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Είστε βέβαιοι ότι θέλετε να διαγράψετε τη συλλογή, τα πολυμέσα και τα αντίγραφα ασφαλείας;\n\nΣημείωση: αυτή η ενέργεια θα κλείσει το παράθυρο.</string>
+    <string name="dialog__delete_collection__title">Διαγραφή συλλογής</string>
+    <string name="dialog__delete_collection__message">Είστε βέβαιοι ότι θέλετε να διαγράψετε τη συλλογή, τα πολυμέσα και τα αντίγραφα ασφαλείας;\n\nΣημείωση: αυτή η ενέργεια θα κλείσει το παράθυρο.</string>
     <string name="progress__deleting_collection">Διαγραφή συλλογής...</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Διαγραφή όλων</string>
+    <string name="pref__delete_everything__title" maxLength="41">Διαγραφή όλων</string>
     <string name="pref__delete_everything__summary">Διαγραφή συλλογής, πολυμέσων, αντιγράφων ασφαλείας και ρυθμίσεων</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Διαγραφή όλων</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Είστε βέβαιοι ότι θέλετε να διαγράψετε όλα τα δεδομένα; Αυτό περιλαμβάνει τη συλλογή, τα πολυμέσα, τα αντίγραφα και τις προτιμήσεις.\n\nΣημείωση: αυτή η ενέργεια θα κλείσει το παράθυρο.</string>
+    <string name="dialog__delete_everything__title">Διαγραφή όλων</string>
+    <string name="dialog__delete_everything__message">Είστε βέβαιοι ότι θέλετε να διαγράψετε όλα τα δεδομένα; Αυτό περιλαμβάνει τη συλλογή, τα πολυμέσα, τα αντίγραφα και τις προτιμήσεις.\n\nΣημείωση: αυτή η ενέργεια θα κλείσει το παράθυρο.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Διαγραφή δεδομένων εφαρμογής</string>
+    <string name="pref__delete_app_data__title" maxLength="41">Διαγραφή δεδομένων εφαρμογής</string>
     <string name="pref__delete_app_data__summary">Διαγραφή ρυθμίσεων και άλλων δεδομένων εφαρμογής</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Διαγραφή δεδομένων εφαρμογής;</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Είστε βέβαιοι ότι θέλετε να διαγράψετε δεδομένα εφαρμογής; Αυτό περιλαμβάνει τις ρυθμίσεις και άλλα δεδομένα εφαρμογής.\n\nΣημείωση: αυτή η ενέργεια θα κλείσει το παράθυρο.</string>
+    <string name="dialog__delete_app_data__title">Διαγραφή δεδομένων εφαρμογής;</string>
+    <string name="dialog__delete_app_data__message">Είστε βέβαιοι ότι θέλετε να διαγράψετε δεδομένα εφαρμογής; Αυτό περιλαμβάνει τις ρυθμίσεις και άλλα δεδομένα εφαρμογής.\n\nΣημείωση: αυτή η ενέργεια θα κλείσει το παράθυρο.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Καμία συλλογή</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Σφάλμα</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Λήψη&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Υπολογισμός&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Η συλλογή δεν υπάρχει</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">Καμία συλλογή</string>
+    <string name="pref__etc__summary__error">Σφάλμα</string>
+    <string name="pref__etc__snackbar__fetching">Λήψη&#8230;</string>
+    <string name="pref__etc__snackbar__calculating">Υπολογισμός&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection">Η συλλογή δεν υπάρχει</string>
 </resources>

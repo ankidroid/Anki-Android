@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">ノートタイプを管理</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">フィールドを管理</string>
+    <string name="model_browser_label">ノートタイプを管理</string>
+    <string name="model_editor_label">フィールドを管理</string>
     <!--Toasts-->
     <string name="toast_last_model">残り1つのノートタイプは削除できません</string>
     <string name="toast_last_field">ノートタイプにはフィールドが少なくとも1つ必要です</string>
@@ -43,7 +43,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">削除</string>
-    <string name="model_browser_rename" comment="Rename a note type">名前を変更</string>
+    <string name="model_browser_rename">名前を変更</string>
     <string name="model_browser_template">カードを編集</string>
     <!--Rename-->
     <string name="rename_model">ノートタイプの名前を変更</string>

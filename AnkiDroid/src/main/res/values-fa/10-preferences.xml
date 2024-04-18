@@ -54,11 +54,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">بدون نتیجه</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">عمومی</string>
+    <string name="pref_cat_general" maxLength="41">عمومی</string>
     <string name="pref_cat_studying" maxLength="41">مطالعه کردن</string>
     <string name="pref_cat_system_wide" maxLength="41">در کل سیستم</string>
     <string name="pref_cat_reviewing" maxLength="41">مرور</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">همگام سازی</string>
+    <string name="pref_cat_sync" maxLength="41">همگام سازی</string>
     <string name="pref_cat_scheduling" maxLength="41">زمان‌بندی</string>
     <string name="pref_cat_whiteboard" maxLength="41">تخته سفید</string>
     <string name="pref_cat_appearance" maxLength="41">ظاهر</string>
@@ -129,7 +129,7 @@
     <string name="sync_account_summ_logged_out">هنوز وارد سایت نشده</string>
     <string name="automatic_sync_choice" maxLength="41">همگام سازی خودکار</string>
     <string name="automatic_sync_choice_summ">همگام سازی خودکار موقع ورود و خروج از برنامه اگر از آخرین همگام سازی بیشتر از 10 دقیقه گذشته باشد.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">همیشه</string>
+    <string name="sync_media_always">همیشه</string>
     <string name="sync_media_only_unmetered">فقط بر روی اتصال‌های بدون محدودیت</string>
     <string name="sync_media_never">هرگز</string>
     <string name="sync_status_badge" maxLength="41">وضعیت همگام سازی را نشان بده</string>
@@ -180,7 +180,7 @@
     <string name="learn_cutoff" maxLength="41">محدودیت های پیش رو را یاد بگیرید</string>
     <string name="time_limit" maxLength="41">محدوده زمانی جعبه زمان</string>
     <string name="day_offset_with_description" maxLength="41">شروع روز بعد</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="one">%d ساعت پس از نیمه شب</item>
         <item quantity="other">%d ساعت پس از نیمه شب</item>
     </plurals>
@@ -212,7 +212,7 @@
     <string name="media_import_allow_all_files_summ">اگر Android یک فایل مدیا ای را نمی شناسد</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">سرور همگام سازی سفارشی</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">استفاده نشده</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">استفاده نشده</string>
     <string name="custom_sync_server_help2"><![CDATA[        به عنوان جایگزین برای سینک کردن با انکی‌وب،
         شما می‌توانید از سرور خودتان برا سینک استفاده کنید.
         اگر سرور شما تعریف نشده باشد سرور پیشفرض انکی‌وب، استفاده خواهد شد.
@@ -231,13 +231,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">انتخاب برچسبها</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">عمومی</string>
+    <string name="deck_conf_general" maxLength="41">عمومی</string>
     <string name="deck_conf_reminders" maxLength="41">یادآورها</string>
     <string name="deck_conf_cram_filter" maxLength="41">فیلتر</string>
     <string name="deck_conf_cram_search" maxLength="41">جستجو</string>
     <string name="deck_conf_cram_limit" maxLength="41">محدود به</string>
     <string name="deck_conf_cram_order" maxLength="41">کارتهای انتخاب شده بوسیله</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">برنا مه ریزی مجدد</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">برنا مه ریزی مجدد</string>
     <string name="deck_conf_cram_reschedule_summ">برنامه ریزی مجدد کارتها براساس جوابهای من در این دسته</string>
     <string name="deck_conf_cram_filter_2_check">فیلتر دوم را فعال کن</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">تعریف مراحل سفارشی</string>
@@ -283,11 +283,11 @@
     <string name="card_side_question">سوال</string>
     <string name="card_side_answer">پاسخ</string>
     <string name="card_side_both">سوال و جواب</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">سؤال: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">جواب: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <string name="display_binding_card_side_question">سؤال: %s</string>
+    <string name="display_binding_card_side_answer">جواب: %s</string>
+    <string name="display_binding_card_side_both">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\' را حذف کن</string>
+    <string name="binding_remove_binding">\'%s\' را حذف کن</string>
     <string name="bindings_already_bound">قبلا به ‘%s’ وابسته بود</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">آزمایشی</string>
@@ -319,43 +319,43 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">مدیریت فضا</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">خطا</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">در حال\nمحاسبه&#8230;</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">خطا</string>
+    <string name="pref__widget_text__calculating">در حال\nمحاسبه&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="one">%1$dفایل\n%2$s</item>
         <item quantity="other">%1$dفایل\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">پاک‌کردن فایل‌های مدیا استفاده نشده</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">پاک‌کردن فایل‌های مدیا استفاده نشده</string>
     <string name="pref__delete_unused_media_files__summary">پاک‌کردن تصاویر و سایر مدیاهای با پیشوند _ و یا مواردی که در هیچ یادداشتی به آن‌ها ارجاع نشده است</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">پاک کردن فایل‌های استفاده نشده</string>
+    <string name="dialog__delete_unused_media_files__title">پاک کردن فایل‌های استفاده نشده</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">پاک کردن پشتیبان‌ها</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">پاک کردن پشتیبان‌ها</string>
+    <string name="pref__delete_backups__title" maxLength="41">پاک کردن پشتیبان‌ها</string>
+    <string name="dialog__delete_backups__title">پاک کردن پشتیبان‌ها</string>
     <string name="progress__deleting_backups">در حال پاک کردن پشتیبان‌ها&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">پاک کردن مجموعه</string>
+    <string name="pref__delete_collection__title" maxLength="41">پاک کردن مجموعه</string>
     <string name="pref__delete_collection__summary">پاک کردن مجموعه، مدیا و پشتیبان‌ها. تنظیمات اپلیکیشن پاک نمی‌شود.</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">پاک کردن مجموعه</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">آیا مطمئن هستید که می‌خواهید مجموعه‌ها، مدیاها و پشتیبان‌های خود را پاک کنید؟\n\nتوجه: این عملیات پنجره‌ فعلی را خواهد بست.</string>
+    <string name="dialog__delete_collection__title">پاک کردن مجموعه</string>
+    <string name="dialog__delete_collection__message">آیا مطمئن هستید که می‌خواهید مجموعه‌ها، مدیاها و پشتیبان‌های خود را پاک کنید؟\n\nتوجه: این عملیات پنجره‌ فعلی را خواهد بست.</string>
     <string name="progress__deleting_collection">در حال پاک کردن مجموعه&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">پاک کردن همه چیز</string>
+    <string name="pref__delete_everything__title" maxLength="41">پاک کردن همه چیز</string>
     <string name="pref__delete_everything__summary">پاک کردن مجموعه، مدیا، پشتیبان و تنظیمات</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">پاک کردن همه چیز</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">آیا مطمئن هستید که می‌خواهید همه داده‌ها را پاک کنید؟ این عملیات شامل پاک کردن مجموعه، مدیا، پشتیبان و تنظیمات خواهد بود.\n\nتوجه:‌این عملیات پنجره فعلی را خواهد بست.</string>
+    <string name="dialog__delete_everything__title">پاک کردن همه چیز</string>
+    <string name="dialog__delete_everything__message">آیا مطمئن هستید که می‌خواهید همه داده‌ها را پاک کنید؟ این عملیات شامل پاک کردن مجموعه، مدیا، پشتیبان و تنظیمات خواهد بود.\n\nتوجه:‌این عملیات پنجره فعلی را خواهد بست.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">پاک کردن داده‌های اپلیکیشن</string>
+    <string name="pref__delete_app_data__title" maxLength="41">پاک کردن داده‌های اپلیکیشن</string>
     <string name="pref__delete_app_data__summary">پاک کردن تنظیمات و سایر داده‌های اپلیکیشن</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">پاک کردن داده‌های اپلیکیشن</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">آیا مطمئن هستید که می‌خواهید داده‌های اپلیکیشن را پاک کنید؟ ای عملیات شامل تنظیمات و سایر داده‌های اپلیکیشن خواهد بود.\n\nتوجه: این عملیات پنجره فعلی را خواهد بست.</string>
+    <string name="dialog__delete_app_data__title">پاک کردن داده‌های اپلیکیشن</string>
+    <string name="dialog__delete_app_data__message">آیا مطمئن هستید که می‌خواهید داده‌های اپلیکیشن را پاک کنید؟ ای عملیات شامل تنظیمات و سایر داده‌های اپلیکیشن خواهد بود.\n\nتوجه: این عملیات پنجره فعلی را خواهد بست.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">بدون مجموعه</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">خطا</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">دریافت کردن&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">محاسبه کردن...</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">مجموعه وجود ندارد</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">بدون مجموعه</string>
+    <string name="pref__etc__summary__error">خطا</string>
+    <string name="pref__etc__snackbar__fetching">دریافت کردن&#8230;</string>
+    <string name="pref__etc__snackbar__calculating">محاسبه کردن...</string>
+    <string name="pref__etc__snackbar__no_collection">مجموعه وجود ندارد</string>
 </resources>

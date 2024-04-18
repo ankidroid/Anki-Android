@@ -100,13 +100,13 @@
     </string-array>
     <string name="card_browser_select_all">Zaznacz wszystko</string>
     <string name="card_browser_select_none">Anuluj wybór</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nowa)</string>
+    <string name="card_browser_interval_new_card">(nowa)</string>
     <string name="card_browser_due_filtered_card">(filtrowane)</string>
     <string name="card_browser_interval_learning_card">(uczona)</string>
     <string name="card_browser_no_cards_in_deck">Nie znaleziono kart w talii „%s”</string>
     <string name="card_browser_search_all_decks">Szukaj w wszystkich taliach</string>
     <string name="card_browser_unknown_deck_name">Nieznany</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Przytnij zawartość</string>
+    <string name="card_browser_truncate">Przytnij zawartość</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Eksportuj kartę</item>
         <item quantity="few">Eksportuj karty</item>

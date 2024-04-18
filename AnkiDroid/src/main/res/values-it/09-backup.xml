@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">Sincronizzazione unidirezionale dal server</string>
     <string name="backup_full_sync_from_server_question">Vuoi veramente sovrascrivere la tua collezione con quella su AnkiWeb? Tutti i tuoi progressi di apprendimento e le informazioni aggiunte dopo l\'ultima sincronizzazione andranno persi!</string>
     <string name="error_handling_title">Gestione errori</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opzioni</string>
+    <string name="error_handling_options">Opzioni</string>
     <string name="backup_retry_opening">Riprova ad aprire</string>
     <string name="backup_error_menu_repair">Ripara database</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

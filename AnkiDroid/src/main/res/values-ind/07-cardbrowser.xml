@@ -88,13 +88,13 @@
     </string-array>
     <string name="card_browser_select_all">Pilih semua</string>
     <string name="card_browser_select_none">Batalkan pilihan</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(baru)</string>
+    <string name="card_browser_interval_new_card">(baru)</string>
     <string name="card_browser_due_filtered_card">(difilter)</string>
     <string name="card_browser_interval_learning_card">(masih belajar)</string>
     <string name="card_browser_no_cards_in_deck">Tidak ada kartu ditemukan di dek ‘%s’</string>
     <string name="card_browser_search_all_decks">Cari seluruh dek</string>
     <string name="card_browser_unknown_deck_name">Tak diketahui</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Tutup konten</string>
+    <string name="card_browser_truncate">Tutup konten</string>
     <plurals name="card_browser_export_cards">
         <item quantity="other">Ekspor kartu</item>
     </plurals>

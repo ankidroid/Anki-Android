@@ -50,7 +50,7 @@
         <item quantity="one">%d AnkiDroid-kort i kö</item>
         <item quantity="other">%d AnkiDroid-kort i kö</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid Liten</string>
+    <string name="widget_small">AnkiDroid Liten</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d kort i kö</item>
         <item quantity="other">%d kort i kö</item>

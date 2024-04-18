@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Administri nototipojn</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Administri kampojn</string>
+    <string name="model_browser_label">Administri nototipojn</string>
+    <string name="model_editor_label">Administri kampojn</string>
     <!--Toasts-->
     <string name="toast_last_model">Vi ne povas forigi vian lastan nototipon</string>
     <string name="toast_last_field">Nototipoj devas havi almenaŭ unu kampon</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Forigi nototipon</string>
-    <string name="model_browser_rename" comment="Rename a note type">Alinomi</string>
+    <string name="model_browser_rename">Alinomi</string>
     <string name="model_browser_template">Redakti kartojn</string>
     <!--Rename-->
     <string name="rename_model">Alinomi nototipon</string>

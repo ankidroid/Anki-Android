@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">ᱟᱢᱟᱜ ᱴᱩᱢᱟᱞ ᱟᱨ ᱢᱤᱫᱴᱟᱝ AnkiWeb ᱴᱩᱢᱟᱹᱞ ᱥᱟᱞᱟᱜ ᱫᱩᱦᱰᱟ ᱚᱞᱟᱭ? ᱱᱚᱶᱟ ᱟᱢᱟᱜ ᱪᱮᱫᱚᱜ ᱴᱷᱚᱠᱨᱟᱣᱟᱭ ᱟᱨ ᱞᱟᱹᱭ ᱥᱚᱫᱚᱨ ᱠᱚ ᱢᱮᱴᱮᱣᱚᱜ ᱛᱟᱢᱟ ᱢᱟᱲᱟᱝ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱦᱟᱹᱵᱤᱡ ᱾</string>
     <string name="error_handling_title">ᱵᱮᱵᱦᱟᱨ ᱵᱷᱩᱞ</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ᱟᱯᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱠ</string>
+    <string name="error_handling_options">ᱟᱯᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱠ</string>
     <string name="backup_retry_opening">ᱫᱚᱦᱲᱟ ᱡᱷᱤᱡ ᱢᱮ</string>
     <string name="backup_error_menu_repair">ᱰᱟᱴᱟᱵᱮᱥ ᱡᱚᱛᱨᱟᱣ</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

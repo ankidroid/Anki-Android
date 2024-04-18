@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Quản lý các loại ghi chú</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Quản lý các trường</string>
+    <string name="model_browser_label">Quản lý các loại ghi chú</string>
+    <string name="model_editor_label">Quản lý các trường</string>
     <!--Toasts-->
     <string name="toast_last_model">Bạn không thể xóa loại ghi chú cuối cùng của mình</string>
     <string name="toast_last_field">Các loại ghi chú phải có ít nhất một trường</string>
@@ -43,7 +43,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Xóa loại ghi chú</string>
-    <string name="model_browser_rename" comment="Rename a note type">Đổi tên</string>
+    <string name="model_browser_rename">Đổi tên</string>
     <string name="model_browser_template">Chỉnh sửa thẻ</string>
     <!--Rename-->
     <string name="rename_model">Đổi tên loại ghi chú</string>

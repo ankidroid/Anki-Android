@@ -48,11 +48,11 @@
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Κείμενο</string>
+    <string name="multimedia_editor_field_editing_text">Κείμενο</string>
     <string name="multimedia_editor_field_editing_image">Εικόνα</string>
     <string name="multimedia_editor_field_editing_audio">Ηχογράφηση</string>
     <string name="multimedia_editor_field_editing_audio_clip">Κλιπ ήχου</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Τέλος</string>
+    <string name="multimedia_editor_field_editing_done">Τέλος</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">Εκκαθάριση</string>
@@ -73,7 +73,7 @@
     <string name="multimedia_editor_something_wrong">Κάτι πήγε στραβά</string>
     <string name="multimedia_editor_svg_preview">Τα SVG δεν είναι διαθέσιμα για προεπισκόπηση</string>
     <string name="multimedia_editor_png_paste_error">Σφάλμα κατά τη μετατροπή της εικόνας του προχείρου σε png: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Επισύναψη περιεχομένου πολυμέσων στο πεδίο %1$s</string>
+    <string name="multimedia_editor_attach_mm_content">Επισύναψη περιεχομένου πολυμέσων στο πεδίο %1$s</string>
     <string name="multimedia_editor_attach_media">Επισύναψη πολυμέσων</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">Αποτυχία αναπαραγωγής</string>
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Επεξεργασία πεδίου</string>
+    <string name="title_activity_edit_text">Επεξεργασία πεδίου</string>
     <!-- Crop function-->
     <string name="crop_image">Θέλετε να περικόψετε αυτή την εικόνα;</string>
     <string name="crop_button">Περικοπή εικόνας</string>
     <string name="save_dialog_content">Το τρέχον μέγεθος εικόνας είναι %sMB. Το προεπιλεγμένο όριο μεγέθους εικόνας είναι 1MB. Θέλετε να την περικόψετε;</string>
     <string name="select_image_failed">"Η επιλογή εικόνας απέτυχε, Παρακαλώ προσπαθήστε ξανά"</string>
     <string name="activity_result_unexpected">Η εφαρμογή επέστρεψε μια μη αναμενόμενη τιμή. Μπορεί να χρειαστεί να χρησιμοποιήσετε μια διαφορετική εφαρμογή</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Περιεχόμενα Πεδίου</string>
+    <string name="audio_recording_field_list">Περιεχόμενα Πεδίου</string>
 </resources>

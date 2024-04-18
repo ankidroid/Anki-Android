@@ -100,13 +100,13 @@
     </string-array>
     <string name="card_browser_select_all">Выбраць усё</string>
     <string name="card_browser_select_none">Адмяніць выбар</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(новыя)</string>
+    <string name="card_browser_interval_new_card">(новыя)</string>
     <string name="card_browser_due_filtered_card">(фільтраваныя)</string>
     <string name="card_browser_interval_learning_card">(вывучаюцца)</string>
     <string name="card_browser_no_cards_in_deck">У калодзе \'%s\' не знойдзена картак</string>
     <string name="card_browser_search_all_decks">Шукаць ва ўсіх калодах</string>
     <string name="card_browser_unknown_deck_name">Невядома</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Скарачаць змест</string>
+    <string name="card_browser_truncate">Скарачаць змест</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Экспартаваць картку</item>
         <item quantity="few">Экспартаваць карткі</item>

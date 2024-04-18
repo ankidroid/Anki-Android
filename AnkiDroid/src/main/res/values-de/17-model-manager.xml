@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Notiztypen verwalten</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Felder verwalten</string>
+    <string name="model_browser_label">Notiztypen verwalten</string>
+    <string name="model_editor_label">Felder verwalten</string>
     <!--Toasts-->
     <string name="toast_last_model">Sie können Ihren letzten Notiztyp nicht löschen</string>
     <string name="toast_last_field">Notizypen müssen mindestens ein Feld haben</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Notiztyp löschen</string>
-    <string name="model_browser_rename" comment="Rename a note type">Umbenennen</string>
+    <string name="model_browser_rename">Umbenennen</string>
     <string name="model_browser_template">Karten bearbeiten</string>
     <!--Rename-->
     <string name="rename_model">Notiztyp umbenennen</string>

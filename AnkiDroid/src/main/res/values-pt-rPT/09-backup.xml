@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Substituir a sua coleção pela da AnkiWeb? Isto irá eliminar todo o seu progresso de aprendizagem e informação adicionada, desde a sua última sincronização.</string>
     <string name="error_handling_title">Erro ao manipular</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opções</string>
+    <string name="error_handling_options">Opções</string>
     <string name="backup_retry_opening">Repetir abertura</string>
     <string name="backup_error_menu_repair">Reparar base de dados</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

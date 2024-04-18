@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb madhūna āpalē saṅgraha adhilikhita karā hē āpalē antima saṅkālana jhālyāpāsūna āpalyā sarva śikaṇyācyā pragatī āṇi jōḍalēlyā māhitī khālī sōḍēla.</string>
     <string name="error_handling_title">Truṭī hātāḷaṇī</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Paryāya</string>
+    <string name="error_handling_options">Paryāya</string>
     <string name="backup_retry_opening">Ughaḍaṇyācā prayatna punhā karā</string>
     <string name="backup_error_menu_repair">Ḍēṭābēsacī durustī karā</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

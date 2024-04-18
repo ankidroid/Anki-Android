@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">정말로 AnkiWeb의 컬렉션으로 지금 컬렉션을 덮어쓸까요? 지난 동기화로부터의 모든 학습 진행 상황과 추가된 정보를 잃게 됩니다!</string>
     <string name="error_handling_title">오류 처리</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">옵션</string>
+    <string name="error_handling_options">옵션</string>
     <string name="backup_retry_opening">열기 재시도</string>
     <string name="backup_error_menu_repair">데이터베이스 복구</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

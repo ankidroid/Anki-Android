@@ -28,7 +28,7 @@
     <!--Fields-->
     <string name="front_field_name">سامنے والا</string>
     <string name="back_field_name">پیچھے</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">متن</string>
+    <string name="text_field_name">متن</string>
     <string name="extra_field_name_new">واپس اضافی</string>
     <string name="field_to_ask_front_name">ریورس شامل کریں</string>
     <!--Note type-->

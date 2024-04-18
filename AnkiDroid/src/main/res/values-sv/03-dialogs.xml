@@ -101,7 +101,7 @@
     <string name="dialog_remove">Ta bort</string>
     <string name="dialog_continue">Fortsätt</string>
     <string name="dialog_processing">Bearbetar...</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Skapa</string>
+    <string name="dialog_positive_create">Skapa</string>
     <string name="dialog_positive_delete">Radera</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Inaktivera</string>
@@ -129,7 +129,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Alla kort</string>
     <string name="tags_dialog_option_new_cards">Ny</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Kö</string>
+    <string name="tags_dialog_option_due_cards">Kö</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Hittar tomma kort&#8230;</string>
     <string name="empty_cards_count">Kort att ta bort: %d</string>
@@ -227,8 +227,8 @@
     <string name="backup_collection_message">Du har inte säkerhetskopierat din samling på ett tag. Du bör göra detta nu för att förhindra dataförlust</string>
     <string name="button_backup">Säkerhetskopiering</string>
     <string name="button_disable_reminder">Inaktivera påminnelse</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Senare</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Visa inte igen</string>
+    <string name="button_backup_later">Senare</string>
+    <string name="button_do_not_show_again">Visa inte igen</string>
     <string name="dismiss_backup_warning_title">Varning för dataförlust</string>
     <string name="dismiss_backup_warning_new_user">        På grund av Androids integritetsförändringar kommer dina data och automatiserade säkerhetskopior att raderas om appen avinstalleras
     </string>
@@ -237,18 +237,18 @@
     <string name="deck_already_exists">Kortlek finns redan</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
-    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+    <string name="set_due_date_match_interval">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label">
         <item quantity="one">Show card in</item>
         <item quantity="other">Show cards in</item>
     </plurals>
-    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+    <plurals name="set_due_date_range_label">
         <item quantity="one">Show card in range</item>
         <item quantity="other">Show cards in range</item>
     </plurals>
-    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+    <plurals name="set_due_date_label_suffix">
         <item quantity="one">day</item>
         <item quantity="other">days</item>
     </plurals>
-    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="range_delimiter">–</string>
 </resources>

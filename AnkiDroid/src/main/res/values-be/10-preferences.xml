@@ -56,11 +56,11 @@
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Вынікі адсутнічаюць</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Агульныя</string>
+    <string name="pref_cat_general" maxLength="41">Агульныя</string>
     <string name="pref_cat_studying" maxLength="41">Навучанне</string>
     <string name="pref_cat_system_wide" maxLength="41">Згодна сістэме</string>
     <string name="pref_cat_reviewing" maxLength="41">Паўтарэнне</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Сінхранізацыя</string>
+    <string name="pref_cat_sync" maxLength="41">Сінхранізацыя</string>
     <string name="pref_cat_scheduling" maxLength="41">Расклад</string>
     <string name="pref_cat_whiteboard" maxLength="41">Дошка</string>
     <string name="pref_cat_appearance" maxLength="41">Знешні выгляд</string>
@@ -132,7 +132,7 @@
     <string name="automatic_sync_choice" maxLength="41">Аўтаматычная сінхранізацыя</string>
     <string name="automatic_sync_choice_summ">Аўтаматычна сінхранізаваць, калі адбываецца адкрыццё/закрыццё праграмы,
         калі з часу апошняй сінхранізацыі мінула больш чым 10 хвілін.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Заўсёды</string>
+    <string name="sync_media_always">Заўсёды</string>
     <string name="sync_media_only_unmetered">Толькі на злучэннях без уліку трафіку</string>
     <string name="sync_media_never">Ніколі</string>
     <string name="sync_status_badge" maxLength="41">Адлюстроўваць статус сінхранізацыі</string>
@@ -183,7 +183,7 @@
     <string name="learn_cutoff" maxLength="41">Вучыць наперад</string>
     <string name="time_limit" maxLength="41">Абмежаванне навучальнага блока</string>
     <string name="day_offset_with_description" maxLength="41">Пачатак наступнага дня</string>
-    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+    <plurals name="day_offset_summ">
         <item quantity="one">%d гадзіна пасля поўначы</item>
         <item quantity="few">%d гадзін пасля поўначы</item>
         <item quantity="many">%d гадзін пасля поўначы</item>
@@ -217,7 +217,7 @@
     <string name="media_import_allow_all_files_summ">Калі Android не распазнае файл з медыя</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Старонні сервер для сінхранізацыі</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не выкарыстоўваецца</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used">Не выкарыстоўваецца</string>
     <string name="custom_sync_server_help2"><![CDATA[        Замест сінхранізацыі з серверам AnkiWeb,
         вы можаце выкарыстоўваць старонні сервер.
         Калі не зададзена, то прадвызначана выкарыстоўваецца сервер AnkiWeb.
@@ -236,13 +236,13 @@
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Выберыце меткі</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Агульныя</string>
+    <string name="deck_conf_general" maxLength="41">Агульныя</string>
     <string name="deck_conf_reminders" maxLength="41">Напаміны</string>
     <string name="deck_conf_cram_filter" maxLength="41">Фільтр</string>
     <string name="deck_conf_cram_search" maxLength="41">Пошук</string>
     <string name="deck_conf_cram_limit" maxLength="41">Абмежаваць да</string>
     <string name="deck_conf_cram_order" maxLength="41">карткі выбраныя па</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перапланаваць</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41">Перапланаваць</string>
     <string name="deck_conf_cram_reschedule_summ">Перапланаваць карткі на падставе маіх адказаў у гэтай калодзе</string>
     <string name="deck_conf_cram_filter_2_check">Уключыць другі фільтр</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Вызначыць карыстальніцкія крокі</string>
@@ -288,11 +288,11 @@
     <string name="card_side_question">Пытанне</string>
     <string name="card_side_answer">Адказ</string>
     <string name="card_side_both">Пытанне і адказ</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">П: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">А: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <string name="display_binding_card_side_question">П: %s</string>
+    <string name="display_binding_card_side_answer">А: %s</string>
+    <string name="display_binding_card_side_both">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Выдаліць “%s”</string>
+    <string name="binding_remove_binding">Выдаліць “%s”</string>
     <string name="bindings_already_bound">Ужо прызначана \"%s\"</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Эксперыментальныя</string>
@@ -326,45 +326,45 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Кіраванне прасторай</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Памылка</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Падлік&#8230;</string>
-    <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
+    <string name="pref__widget_text__error">Памылка</string>
+    <string name="pref__widget_text__calculating">Падлік&#8230;</string>
+    <plurals name="pref__widget_text__n_files_n_bytes">
         <item quantity="one">%1$d файл\n%2$s</item>
         <item quantity="few">%1$d файлы\n%2$s</item>
         <item quantity="many">%1$d файлаў\n%2$s</item>
         <item quantity="other">%1$d файлаў\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Выдаліць медыяфайлы, якія не выкарыстоўваюцца</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41">Выдаліць медыяфайлы, якія не выкарыстоўваюцца</string>
     <string name="pref__delete_unused_media_files__summary">Выдаліць відарысы і іншыя мультымедыйныя файлы ў якіх адсутнічае прэфікс _ і якія не спасылаюцца на ніякія нататкі</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Выдаліць медыяфайлы, якія не выкарыстоўваюцца</string>
+    <string name="dialog__delete_unused_media_files__title">Выдаліць медыяфайлы, якія не выкарыстоўваюцца</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Выдаліць рэзервовыя копіі</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Выдаліць рэзервовыя копіі</string>
+    <string name="pref__delete_backups__title" maxLength="41">Выдаліць рэзервовыя копіі</string>
+    <string name="dialog__delete_backups__title">Выдаліць рэзервовыя копіі</string>
     <string name="progress__deleting_backups">Выдаленне рэзервовых копій&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Выдаліць калекцыю</string>
+    <string name="pref__delete_collection__title" maxLength="41">Выдаліць калекцыю</string>
     <string name="pref__delete_collection__summary">Выдаліць калекцыю, мультымедыйныя файлы і рэзервовыя копіі. Налады праграмы не будуць выдалены</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Выдаліць калекцыю</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Вы сапраўды хочаце выдаліць сваю калекцыю, медыя і рэзервовыя копіі?\n\nЗаўвага: гэта дзеянне прывядзе да закрыцця акна.</string>
+    <string name="dialog__delete_collection__title">Выдаліць калекцыю</string>
+    <string name="dialog__delete_collection__message">Вы сапраўды хочаце выдаліць сваю калекцыю, медыя і рэзервовыя копіі?\n\nЗаўвага: гэта дзеянне прывядзе да закрыцця акна.</string>
     <string name="progress__deleting_collection">Выдаленне калекцыі...</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Выдаліць усё</string>
+    <string name="pref__delete_everything__title" maxLength="41">Выдаліць усё</string>
     <string name="pref__delete_everything__summary">Выдаліць калекцыю, медыя, рэзервовыя копіі і налады</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Выдаліць усё</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Вы сапраўды хочаце выдаліць усе даныя? Яны ўключаюць вашы калекцыі, мультымедыйныя файлы, рэзервовыя копіі і налады праграмы\n\nНататка: гэта дзеянне прывядзе да закрыцця акна.</string>
+    <string name="dialog__delete_everything__title">Выдаліць усё</string>
+    <string name="dialog__delete_everything__message">Вы сапраўды хочаце выдаліць усе даныя? Яны ўключаюць вашы калекцыі, мультымедыйныя файлы, рэзервовыя копіі і налады праграмы\n\nНататка: гэта дзеянне прывядзе да закрыцця акна.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Выдаліць даныя праграмы</string>
+    <string name="pref__delete_app_data__title" maxLength="41">Выдаліць даныя праграмы</string>
     <string name="pref__delete_app_data__summary">Выдаліць налады і іншыя даныя праграмы</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Выдаліць даныя праграмы</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Вы сапраўды хочаце выдаліць даныя праграмы? Яны ўключаюць налады і іншыя даныя праграмы.\n\nЗаўвага: гэта дзеянне прывядзе да закрыцця акна.</string>
+    <string name="dialog__delete_app_data__title">Выдаліць даныя праграмы</string>
+    <string name="dialog__delete_app_data__message">Вы сапраўды хочаце выдаліць даныя праграмы? Яны ўключаюць налады і іншыя даныя праграмы.\n\nЗаўвага: гэта дзеянне прывядзе да закрыцця акна.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
-    <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Няма калекцыі</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Памылка</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Атрыманне&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Падлік&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Калекцыя не існуе</string>
+    <string name="pref__etc__summary__fetching">&#8230;</string>
+    <string name="pref__etc__summary__no_collection">Няма калекцыі</string>
+    <string name="pref__etc__summary__error">Памылка</string>
+    <string name="pref__etc__snackbar__fetching">Атрыманне&#8230;</string>
+    <string name="pref__etc__snackbar__calculating">Падлік&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection">Калекцыя не існуе</string>
 </resources>

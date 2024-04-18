@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">آیا شما واقعا می خواهید مجموعتان با یکی دیگر از طریق وب سایت آنکی بازنویسی شود؟ این عمل سبب از بین رفتن تمام اطلاعات پیشرفت یادگیری تان خواهد شد و اطلاعات از آخرین همگام سازی اضافه می شود!</string>
     <string name="error_handling_title">در حال بررسی خطا</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">گزینه ها</string>
+    <string name="error_handling_options">گزینه ها</string>
     <string name="backup_retry_opening">دوباره بازکردن</string>
     <string name="backup_error_menu_repair">تعمیر پایگاه داده</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb నుండి మీ సేకరణని ఓవర్రైట్ చేయాలా? ఇది మీ అభ్యాస పురోగతిని తగ్గిస్తుంది మరియు మీ చివరి సమకాలీకరణ నుండి సమాచారాన్ని జోడించవచ్చు.</string>
     <string name="error_handling_title">లోపం నిర్వహణ</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ఎంపికలు</string>
+    <string name="error_handling_options">ఎంపికలు</string>
     <string name="backup_retry_opening">దీన్ని తెరవడానికి మళ్ళీ ప్రయత్నించండి</string>
     <string name="backup_error_menu_repair">రిపేర్ డేటాబేస్</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

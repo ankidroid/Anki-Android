@@ -28,7 +28,7 @@
     <!--Fields-->
     <string name="front_field_name">ସାମ୍ନା</string>
     <string name="back_field_name">ପଛ</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">ଲେଖା</string>
+    <string name="text_field_name">ଲେଖା</string>
     <string name="extra_field_name_new">ପଛ ଅତିରିକ୍ତ</string>
     <string name="field_to_ask_front_name">ଓଲଟା ଯୋଡ଼ନ୍ତୁ</string>
     <!--Note type-->

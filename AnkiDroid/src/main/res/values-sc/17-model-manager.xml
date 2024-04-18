@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Amministra sas castas de nota</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Amministra sos campos</string>
+    <string name="model_browser_label">Amministra sas castas de nota</string>
+    <string name="model_editor_label">Amministra sos campos</string>
     <!--Toasts-->
     <string name="toast_last_model">Non podes iscantzellare s\'ùrtima casta de nota tua</string>
     <string name="toast_last_field">Sas castas de notas depent tènnere a su nessi unu campu</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Iscantzella una casta de nota</string>
-    <string name="model_browser_rename" comment="Rename a note type">Muda de nùmene</string>
+    <string name="model_browser_rename">Muda de nùmene</string>
     <string name="model_browser_template">Modìfica sas cartas</string>
     <!--Rename-->
     <string name="rename_model">Càmbia nùmene a sa casta de nota</string>

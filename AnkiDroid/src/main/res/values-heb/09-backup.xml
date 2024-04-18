@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">להחליף את האוסף המקומי בזה שב־AnkiWeb? פעולה זו תאפס את כל ההתקדמות שלך ותגרום לאובדן כל מידע שנוסף מאז הסנכרון הקודם.</string>
     <string name="error_handling_title">טיפול בשגיאות</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">אפשרויות</string>
+    <string name="error_handling_options">אפשרויות</string>
     <string name="backup_retry_opening">לנסות לפתוח מחדש</string>
     <string name="backup_error_menu_repair">תיקון מסד נתונים</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

@@ -104,7 +104,7 @@
     <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_processing">Processing...</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
+    <string name="dialog_positive_create">Create</string>
     <string name="dialog_positive_delete">Delete</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
@@ -133,7 +133,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">All cards</string>
     <string name="tags_dialog_option_new_cards">New</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
+    <string name="tags_dialog_option_due_cards">Due</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
     <string name="empty_cards_count">Cards to delete: %d</string>
@@ -232,8 +232,8 @@
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
     <string name="button_backup">Backup</string>
     <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Mai târziu</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
+    <string name="button_backup_later">Mai târziu</string>
+    <string name="button_do_not_show_again">Don\'t show again</string>
     <string name="dismiss_backup_warning_title">Data loss warning</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
@@ -242,21 +242,21 @@
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
-    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+    <string name="set_due_date_match_interval">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label">
         <item quantity="one">Show card in</item>
         <item quantity="few">Show cards in</item>
         <item quantity="other">Show cards in</item>
     </plurals>
-    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+    <plurals name="set_due_date_range_label">
         <item quantity="one">Show card in range</item>
         <item quantity="few">Show cards in range</item>
         <item quantity="other">Show cards in range</item>
     </plurals>
-    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+    <plurals name="set_due_date_label_suffix">
         <item quantity="one">day</item>
         <item quantity="few">days</item>
         <item quantity="other">days</item>
     </plurals>
-    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="range_delimiter">–</string>
 </resources>

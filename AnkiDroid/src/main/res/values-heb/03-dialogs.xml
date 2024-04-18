@@ -108,7 +108,7 @@
     <string name="dialog_remove">הסר</string>
     <string name="dialog_continue">המשך</string>
     <string name="dialog_processing">מעבד...</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">יצירה</string>
+    <string name="dialog_positive_create">יצירה</string>
     <string name="dialog_positive_delete">מחיקה</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">השבתה</string>
@@ -138,7 +138,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">כל הכרטיסים</string>
     <string name="tags_dialog_option_new_cards">חדש</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">מיועד</string>
+    <string name="tags_dialog_option_due_cards">מיועד</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">מתבצע איתור כרטיסים ריקים&#8230;</string>
     <string name="empty_cards_count">כרטיסים למחיקה: %d</string>
@@ -238,32 +238,32 @@
     <string name="backup_collection_message">לא גיבית את האוסף שלך זמן מה.  עליך לעשות זאת כעת כדי למנוע אובדן נתונים</string>
     <string name="button_backup">גיבוי</string>
     <string name="button_disable_reminder">בטל תזכורת</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">מאוחר יותר</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">אל תציג שוב</string>
+    <string name="button_backup_later">מאוחר יותר</string>
+    <string name="button_do_not_show_again">אל תציג שוב</string>
     <string name="dismiss_backup_warning_title">אזהרת אובדן נתונים</string>
     <string name="dismiss_backup_warning_new_user">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך יימחקו מהטלפון שלך אם האפליקציה תוסר</string>
     <string name="dismiss_backup_warning_upgrade">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך לא יהיו נגישים אם האפליקציה תוסר</string>
     <string name="deck_already_exists">החפיסה כבר קיימת</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
-    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+    <string name="set_due_date_match_interval">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label">
         <item quantity="one">Show card in</item>
         <item quantity="two">Show cards in</item>
         <item quantity="many">Show cards in</item>
         <item quantity="other">Show cards in</item>
     </plurals>
-    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+    <plurals name="set_due_date_range_label">
         <item quantity="one">Show card in range</item>
         <item quantity="two">Show cards in range</item>
         <item quantity="many">Show cards in range</item>
         <item quantity="other">Show cards in range</item>
     </plurals>
-    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+    <plurals name="set_due_date_label_suffix">
         <item quantity="one">day</item>
         <item quantity="two">days</item>
         <item quantity="many">days</item>
         <item quantity="other">days</item>
     </plurals>
-    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="range_delimiter">–</string>
 </resources>

@@ -47,7 +47,7 @@
 <resources>
     <string name="youre_offline">تۆ له دەرەوەی هێلیت</string>
     <string name="sync_error">هەڵەی هاوکاتکردن</string>
-    <string name="vague_error" comment="Network error dialog title">هەڵە</string>
+    <string name="vague_error">هەڵە</string>
     <string name="retry">دووبارە هەوڵبدەرەوە</string>
     <string name="menu_get_shared_decks">کارتی هاوبەش بەدەست بهێنە</string>
     <string name="connection_error_message">A network error has occurred</string>

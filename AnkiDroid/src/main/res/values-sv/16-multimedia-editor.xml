@@ -48,11 +48,11 @@
     <string name="multimedia_editor_popup_cloze">Textlucka</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
+    <string name="multimedia_editor_field_editing_text">Text</string>
     <string name="multimedia_editor_field_editing_image">Bild</string>
     <string name="multimedia_editor_field_editing_audio">Ljudinspelning</string>
     <string name="multimedia_editor_field_editing_audio_clip">Ljudklipp</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Klar</string>
+    <string name="multimedia_editor_field_editing_done">Klar</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">Rensa</string>
@@ -73,7 +73,7 @@
     <string name="multimedia_editor_something_wrong">Någonting gick fel</string>
     <string name="multimedia_editor_svg_preview">SVG:er är inte tillgängliga för förhandsgranskning</string>
     <string name="multimedia_editor_png_paste_error">Fel vid konvertering av urklippsbild till PNG: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Lägg till multimedia-innehåll till fältet %1$s</string>
+    <string name="multimedia_editor_attach_mm_content">Lägg till multimedia-innehåll till fältet %1$s</string>
     <string name="multimedia_editor_attach_media">Bifoga media</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">Uppspelning misslyckades</string>
     <string name="multimedia_editor_audio_view_create_failed">Kan inte skapa verktygsfältet för inspelaren</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Redigeringsfält</string>
+    <string name="title_activity_edit_text">Redigeringsfält</string>
     <!-- Crop function-->
     <string name="crop_image">Vill du beskära den här bilden?</string>
     <string name="crop_button">Beskär bild</string>
     <string name="save_dialog_content">Nuvarande bildstorlek är %sMB. Standardgränsen för bildstorlek är 1MB. Vill du beskära den?</string>
     <string name="select_image_failed">"Det gick inte att välja bild. Försök igen"</string>
     <string name="activity_result_unexpected">Appen returnerade ett oväntat värde. Du kan behöva använda en annan app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Fältinnehåll</string>
+    <string name="audio_recording_field_list">Fältinnehåll</string>
 </resources>

@@ -50,7 +50,7 @@
         <item quantity="one">مرور %d کارت در آنکی‌دروید باقی‌مانده است</item>
         <item quantity="other">مرور %d کارت در آنکی دروید باقی مانده است</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">آنکی دروید کوچک</string>
+    <string name="widget_small">آنکی دروید کوچک</string>
     <plurals name="widget_cards_due">
         <item quantity="one">موعد مرور %d کارت</item>
         <item quantity="other">موعد مرور %d کارت</item>

@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Notitietypes beheren</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Velden beheren</string>
+    <string name="model_browser_label">Notitietypes beheren</string>
+    <string name="model_editor_label">Velden beheren</string>
     <!--Toasts-->
     <string name="toast_last_model">U kunt uw laatste memotype niet verwijderen</string>
     <string name="toast_last_field">Notitietypes moeten ten minste één veld hebben</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Notitietype verwijderen</string>
-    <string name="model_browser_rename" comment="Rename a note type">Naam wijzigen</string>
+    <string name="model_browser_rename">Naam wijzigen</string>
     <string name="model_browser_template">Bewerk kaarten</string>
     <!--Rename-->
     <string name="rename_model">Memotype hernoemen</string>

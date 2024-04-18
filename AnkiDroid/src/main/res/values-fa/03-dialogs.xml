@@ -101,7 +101,7 @@
     <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">ادامه</string>
     <string name="dialog_processing">در حال پردازش...</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ایجاد</string>
+    <string name="dialog_positive_create">ایجاد</string>
     <string name="dialog_positive_delete">حذف</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">غیر فعال کردن</string>
@@ -129,7 +129,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">همه کارتها</string>
     <string name="tags_dialog_option_new_cards">جدید</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">موعد</string>
+    <string name="tags_dialog_option_due_cards">موعد</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">در حال پیدا کردن کارت های خالی&#8230;</string>
     <string name="empty_cards_count">کارتها برای اینکه حذف شوند: %d</string>
@@ -227,26 +227,26 @@
     <string name="backup_collection_message">شما مدتی است که از مجموعه خود پشتیبانی نگرفته‌اید. بهتر است برای از دست ندادن داده‌ها، این کار را انجام دهید</string>
     <string name="button_backup">پشتیبان‌گیری</string>
     <string name="button_disable_reminder">غیرفعال کردن یادآوری</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">بعداً</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">دوباره نشان نده</string>
+    <string name="button_backup_later">بعداً</string>
+    <string name="button_do_not_show_again">دوباره نشان نده</string>
     <string name="dismiss_backup_warning_title">خطر از دست رفتن داده‌ها</string>
     <string name="dismiss_backup_warning_new_user">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک نیز حذف خواهند شد    </string>
     <string name="dismiss_backup_warning_upgrade">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک، از دسترس خارج خواهند شد    </string>
     <string name="deck_already_exists">Deck already exists</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
-    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+    <string name="set_due_date_match_interval">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label">
         <item quantity="one">Show card in</item>
         <item quantity="other">Show cards in</item>
     </plurals>
-    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+    <plurals name="set_due_date_range_label">
         <item quantity="one">Show card in range</item>
         <item quantity="other">Show cards in range</item>
     </plurals>
-    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+    <plurals name="set_due_date_label_suffix">
         <item quantity="one">day</item>
         <item quantity="other">days</item>
     </plurals>
-    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="range_delimiter">–</string>
 </resources>

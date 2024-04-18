@@ -141,15 +141,15 @@
         <item quantity="many">%1$d минут</item>
         <item quantity="other">%1$d минут</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Карточка AnkiDroid</string>
+    <string name="fact_adder_intent_title">Карточка AnkiDroid</string>
     <string name="note_editor_copy_note">Копировать запись</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Переместить</string>
+    <string name="card_editor_reposition_card">Переместить</string>
     <string name="card_editor_reset_card">Сбросить прогресс</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перепланировать</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Предпросмотр</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Скопировать как Markdown</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d из %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Переименовать</string>
+    <string name="card_editor_reschedule_card">Перепланировать</string>
+    <string name="card_editor_preview_card">Предпросмотр</string>
+    <string name="copy_as_markdown">Скопировать как Markdown</string>
+    <string name="preview_progress_bar_text">%1$d из %2$d</string>
+    <string name="rename">Переименовать</string>
     <string name="checks_action">Проверить</string>
     <string name="check_db">Проверить базу данных</string>
     <string name="check_media">Проверить медиафайлы</string>
@@ -159,11 +159,11 @@
     <string name="delete_deck">Колода удаляется&#8230;</string>
     <string name="info_rate">Оценить AnkiDroid</string>
     <string name="import_title">Импорт</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добавить</string>
+    <string name="import_message_add">Добавить</string>
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
     <string name="import_dialog_message_add">Добавить \"%s\" в коллекцию? Может потребоваться немало времени </string>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
-    <string name="import_title_error" comment="Title of error dialog">Ошибка</string>
+    <string name="import_title_error">Ошибка</string>
     <string name="import_error_handle_exception">Не удалось импортировать файл\n\n%s</string>
     <string name="import_error_not_apkg_extension">У файла “%s” должно быть расширение .apkg или .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы данных Anki (.anki2) пока не поддерживается. Смотрите руководство для инструкций по замене.</string>
@@ -186,9 +186,9 @@
         ]]></string>
     <string name="export_choice_share">Поделиться</string>
     <string name="export_choice_save_to">Сохранить в</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
+    <string name="study_options">Параметры</string>
     <string name="menu__deck_options">Параметры колоды</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры учёбы</string>
+    <string name="menu__study_options">Параметры учёбы</string>
     <string name="select_tts">Язык синтеза речи</string>
     <string name="custom_study">Учить ещё</string>
     <string name="more_options">Ещё</string>
@@ -240,12 +240,12 @@
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
     <!-- Deck Picker -->
     <string name="search_decks">Найти колоду</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Показать прогресс переноса файлов</string>
+    <string name="show_migration_progress">Показать прогресс переноса файлов</string>
     <string name="ankidroid_init_failed_webview_title">Критическая ошибка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid использует системный WebView, который сейчас не доступен. Это может произойти, если система устанавливает обновления. Повторите попытку через несколько минут.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Размер шрифта</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Показать панель инструментов</string>
+    <string name="menu_show_toolbar">Показать панель инструментов</string>
     <string name="format_insert_bold">Жирным</string>
     <string name="format_insert_italic">Курсивом</string>
     <string name="format_insert_underline">Подчеркнуть</string>
@@ -261,15 +261,15 @@
     <string name="toolbar_item_explain_edit_or_remove">Введите HTML, который будет вставлен до и после выделенного текста.\n\nНажмите и удерживайте элемент панели инструментов, чтобы изменить или удалить его.</string>
     <string name="remove_toolbar_item">Удалить элемент панели инструментов?</string>
     <string name="note_editor_paste_too_large">Изображение слишком велико для вставки, пожалуйста, вставьте изображение вручную</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Выполняется резервное копирование Android. Попробуйте еще раз</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Возможно, вам потребуется iManager, чтобы AnkiDroid мог добавлять ярлыки</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again">        Выполняется резервное копирование Android. Попробуйте еще раз</string>
+    <string name="create_shortcut_error_vivo">Возможно, вам потребуется iManager, чтобы AnkiDroid мог добавлять ярлыки</string>
+    <string name="create_shortcut_failed">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>
     <string name="create_shortcut_error">Ошибка при добавлении ярлыка: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Предложение с заглавной буквы</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели</string>
+    <string name="note_editor_capitalize">Предложение с заглавной буквы</string>
+    <string name="menu_scroll_toolbar">Прокрутка панели</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
-    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
-    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="plus_sign">+</string>
+    <string name="minus_sign">-</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Введите допустимую почту</string>
     <string name="password_empty">Требуется пароль</string>
@@ -326,7 +326,7 @@
     <string name="intro_ankidroid_tagline_one">Учиться эффективнее</string>
     <string name="intro_ankidroid_tagline_two">Запоминать больше</string>
     <string name="intro_short_ankidroid_explanation">Планировщик Anki экономит ваше время, помогая запомнить сложное и не забыть простое</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Начать</string>
+    <string name="intro_get_started">Начать</string>
     <string name="intro_sync_from_ankiweb">Синхронизировать с AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
@@ -337,31 +337,31 @@
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Колода удалена — удалите ссылку</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карточки</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>
+    <string name="show_cards">Карточки</string>
+    <string name="show_notes">Записи</string>
     <string name="toggle_cards_notes">Переключить карточки/заметки</string>
     <string name="toggle_browser_mode_help">Показывать карточки или записи в списке</string>
     <string name="truncate_content_help">Показывать в списке только первые 3 строки</string>
     <string name="browser_options_dialog_heading">Параметры списка карточек</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Эта функция недоступна во время переноса хранилища
+    <string name="functionality_disabled_during_storage_migration">        Эта функция недоступна во время переноса хранилища
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Нажмите, чтобы начать перенос хранилища</string>
+    <string name="storage_migration_sync_notification">Нажмите, чтобы начать перенос хранилища</string>
     <string name="media_sync_required_title">Требуется синхронизация медиафайлов</string>
     <string name="media_sync_unavailable_message">Синхронизация медиафайлов отключена в настройках. Пожалуйста, перед продолжением синхронизируйте и сделайте резервную копию всех медиафайлов, которые не были синхронизированы</string>
     <string name="audio_saved">Запись сохранена </string>
     <string name="deleting_selected_notes">Выбранные записи удаляются</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Нажмите на голосе, чтобы послушать
+    <string name="tts_voices_default_text">        Нажмите на голосе, чтобы послушать
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Нужно установить голос</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Все равно использовать </string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <string name="tts_voices_selected_voice_should_be_installed">Нужно установить голос</string>
+    <string name="tts_voices_use_selected_voice_without_install">Все равно использовать </string>
+    <string name="tts_voices_playback_error_new">Text to speech error (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
-    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Интернет</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Установить</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Не удалось открыть настроки синтеза</string>
+    <string name="tts_voices_chip_filter_to_internet">Интернет</string>
+    <string name="tts_voices_chip_filter_to_installable_audio">Установить</string>
+    <string name="tts_voices_failed_opening_tts_system_settings">Не удалось открыть настроки синтеза</string>
     <string name="shared_decks_login_required">Пожалуйста, войдите, чтобы скачать больше колод</string>
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template">Reposition</string>
 </resources>

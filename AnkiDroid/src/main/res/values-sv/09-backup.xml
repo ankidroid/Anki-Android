@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">Envägssynkning från servern</string>
     <string name="backup_full_sync_from_server_question">Är du säker att du vill skriva över din samling med den från AnkiWeb? Detta kommer ta bort alla framsteg och ändrad information sedan din senaste synkning!</string>
     <string name="error_handling_title">Felhantering</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Alternativ</string>
+    <string name="error_handling_options">Alternativ</string>
     <string name="backup_retry_opening">Prova att öppna igen</string>
     <string name="backup_error_menu_repair">Reparera databas</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

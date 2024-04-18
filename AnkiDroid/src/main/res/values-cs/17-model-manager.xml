@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Spravovat typy poznámek</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Správa polí</string>
+    <string name="model_browser_label">Spravovat typy poznámek</string>
+    <string name="model_editor_label">Správa polí</string>
     <!--Toasts-->
     <string name="toast_last_model">Nelze odstranit poslední typ poznámky</string>
     <string name="toast_last_field">Typ poznámky musí mít alespoň jedno pole</string>
@@ -49,7 +49,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Odstranit typ poznámky</string>
-    <string name="model_browser_rename" comment="Rename a note type">Přejmenovat</string>
+    <string name="model_browser_rename">Přejmenovat</string>
     <string name="model_browser_template">Upravit karty</string>
     <!--Rename-->
     <string name="rename_model">Přejmenovat typ poznámky</string>

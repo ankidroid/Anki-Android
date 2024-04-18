@@ -88,13 +88,13 @@
     </string-array>
     <string name="card_browser_select_all">Chọn tất cả</string>
     <string name="card_browser_select_none">Không chọn</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(Mới)</string>
+    <string name="card_browser_interval_new_card">(Mới)</string>
     <string name="card_browser_due_filtered_card">(đã lọc)</string>
     <string name="card_browser_interval_learning_card">(đang học)</string>
     <string name="card_browser_no_cards_in_deck">Không tìm thấy thẻ nào trong bộ thẻ ‘%s’</string>
     <string name="card_browser_search_all_decks">Tìm kiếm tất cả các bộ thẻ</string>
     <string name="card_browser_unknown_deck_name">không xác định</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Cắt ngắn nội dung</string>
+    <string name="card_browser_truncate">Cắt ngắn nội dung</string>
     <plurals name="card_browser_export_cards">
         <item quantity="other">Xuất thẻ</item>
     </plurals>

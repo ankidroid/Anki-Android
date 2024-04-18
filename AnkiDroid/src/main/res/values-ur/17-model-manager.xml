@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">نوٹ کی اقسام کا نظم کریں</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Manage fields</string>
+    <string name="model_browser_label">نوٹ کی اقسام کا نظم کریں</string>
+    <string name="model_editor_label">Manage fields</string>
     <!--Toasts-->
     <string name="toast_last_model">آپ اپنے آخری نوٹ کی قسم کو حذف نہیں کر سکتے</string>
     <string name="toast_last_field">نوٹ کی قسم میں کم از کم ایک فیلڈ ہونا ضروری ہے</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">نوٹ کی قسم کو حذف کریں۔</string>
-    <string name="model_browser_rename" comment="Rename a note type">نام بدلیں</string>
+    <string name="model_browser_rename">نام بدلیں</string>
     <string name="model_browser_template">کارڈز میں ترمیم کریں</string>
     <!--Rename-->
     <string name="rename_model">نوٹ کی قسم کا نام تبدیل کریں۔</string>

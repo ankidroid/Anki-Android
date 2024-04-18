@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">从服务器进行单向同步</string>
     <string name="backup_full_sync_from_server_question">确定要从AnkiWeb下载并覆盖您的本地集合吗？这将删除自您上次同步以来的所有学习进度及增加的信息！</string>
     <string name="error_handling_title">错误处理</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">选项</string>
+    <string name="error_handling_options">选项</string>
     <string name="backup_retry_opening">重新尝试打开</string>
     <string name="backup_error_menu_repair">修复数据库</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

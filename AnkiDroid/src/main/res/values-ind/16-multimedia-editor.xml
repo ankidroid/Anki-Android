@@ -48,11 +48,11 @@
     <string name="multimedia_editor_popup_cloze">Deletasi kloza (titik-titik)</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Teks</string>
+    <string name="multimedia_editor_field_editing_text">Teks</string>
     <string name="multimedia_editor_field_editing_image">Gambar</string>
     <string name="multimedia_editor_field_editing_audio">Rekaman audio</string>
     <string name="multimedia_editor_field_editing_audio_clip">Klip Audio</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Selesai</string>
+    <string name="multimedia_editor_field_editing_done">Selesai</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">Bersihkan</string>
@@ -73,7 +73,7 @@
     <string name="multimedia_editor_something_wrong">Ada yang salah</string>
     <string name="multimedia_editor_svg_preview">SVG tidak tersedia untuk ditampilkan</string>
     <string name="multimedia_editor_png_paste_error">Gagal mengkonversi gambar di papan klip ke png: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Lampirkan isi multimedia ke kolom %1$s</string>
+    <string name="multimedia_editor_attach_mm_content">Lampirkan isi multimedia ke kolom %1$s</string>
     <string name="multimedia_editor_attach_media">Lampirkan media</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">Memutar media gagal</string>
     <string name="multimedia_editor_audio_view_create_failed">Tidak dapat membuat tool bar perekam</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Mengedit kolom</string>
+    <string name="title_activity_edit_text">Mengedit kolom</string>
     <!-- Crop function-->
     <string name="crop_image">Apa kamu ingin memangkas gambar ini?</string>
     <string name="crop_button">Pangkas gambar</string>
     <string name="save_dialog_content">Saat ini gambar berukuran %sMB. Batas ukuran gambar adalah 1MB. Apa kamu ingin memangkasnya?</string>
     <string name="select_image_failed">"Memilih gambar gagal, coba lagi"</string>
     <string name="activity_result_unexpected">Aplikasi mengembalikan nilai tak terduga. Kamu bisa menggunakan aplikasi lain</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Konten Kolom</string>
+    <string name="audio_recording_field_list">Konten Kolom</string>
 </resources>

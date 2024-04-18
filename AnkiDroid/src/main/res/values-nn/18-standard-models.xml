@@ -28,7 +28,7 @@
     <!--Fields-->
     <string name="front_field_name">Framside</string>
     <string name="back_field_name">Bakside</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Tekst</string>
+    <string name="text_field_name">Tekst</string>
     <string name="extra_field_name_new">Ekstra baksiden </string>
     <string name="field_to_ask_front_name">Legg til revers</string>
     <!--Note type-->

@@ -48,11 +48,11 @@
     <string name="multimedia_editor_popup_cloze">זיהוי cloze</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">טקסט</string>
+    <string name="multimedia_editor_field_editing_text">טקסט</string>
     <string name="multimedia_editor_field_editing_image">תמונה</string>
     <string name="multimedia_editor_field_editing_audio">הקלטת שמע</string>
     <string name="multimedia_editor_field_editing_audio_clip">מקטע שמע</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">בוצע</string>
+    <string name="multimedia_editor_field_editing_done">בוצע</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">ניקוי</string>
@@ -73,7 +73,7 @@
     <string name="multimedia_editor_something_wrong">משהו השתבש</string>
     <string name="multimedia_editor_svg_preview">קבצי SVG אינם זמינים לתצוגה מקדימה</string>
     <string name="multimedia_editor_png_paste_error">שגיאה בהמרת תמונת הלוח ל-png: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">צרף קובץ מולטימדיה לשדה %1$s</string>
+    <string name="multimedia_editor_attach_mm_content">צרף קובץ מולטימדיה לשדה %1$s</string>
     <string name="multimedia_editor_attach_media">הוספת מדיה</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -81,12 +81,12 @@
     <string name="multimedia_editor_audio_view_playing_failed">ההשמעה נכשלה</string>
     <string name="multimedia_editor_audio_view_create_failed">לא ניתן ליצור סרגל כלים של הקלטה</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">עריכת שדה</string>
+    <string name="title_activity_edit_text">עריכת שדה</string>
     <!-- Crop function-->
     <string name="crop_image">לחתוך את התמונה הזאת?</string>
     <string name="crop_button">חיתוך תמונה</string>
     <string name="save_dialog_content">גודל התמונה הנוכחי הוא %sMB. מגבלת ברירת המחדל של גודל התמונה היא 1MB. האם ברצונך לחתוך אותו?</string>
     <string name="select_image_failed">"בחירת התמונה נכשלה, אנא נסה שוב"</string>
     <string name="activity_result_unexpected">האפליקציה החזירה ערך לא צפוי. ייתכן שתצטרך להשתמש באפליקציה אחרת</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">תוכן השדה</string>
+    <string name="audio_recording_field_list">תוכן השדה</string>
 </resources>

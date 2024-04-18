@@ -28,7 +28,7 @@
     <!--Fields-->
     <string name="front_field_name">წინა მხარე</string>
     <string name="back_field_name">უკანა მხარე</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">ტექსტი</string>
+    <string name="text_field_name">ტექსტი</string>
     <string name="extra_field_name_new">უკანა მხარე (დამატებითი)</string>
     <string name="field_to_ask_front_name">გადმობრუნებული ბარათის დამატება</string>
     <!--Note type-->

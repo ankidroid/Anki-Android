@@ -92,13 +92,13 @@
     </string-array>
     <string name="card_browser_select_all">Alle auswählen</string>
     <string name="card_browser_select_none">Keine auswählen</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(neu)</string>
+    <string name="card_browser_interval_new_card">(neu)</string>
     <string name="card_browser_due_filtered_card">(gefiltert)</string>
     <string name="card_browser_interval_learning_card">(lernen)</string>
     <string name="card_browser_no_cards_in_deck">Keine Karten im Stapel »%s« gefunden</string>
     <string name="card_browser_search_all_decks">In allen Stapeln suchen</string>
     <string name="card_browser_unknown_deck_name">Unbekannt</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Inhalt kürzen</string>
+    <string name="card_browser_truncate">Inhalt kürzen</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Karte exportieren</item>
         <item quantity="other">Karten exportieren</item>

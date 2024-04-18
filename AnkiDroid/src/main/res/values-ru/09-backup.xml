@@ -53,7 +53,7 @@
     <string name="backup_one_way_sync_from_server">Односторонняя синхронизация с сервером</string>
     <string name="backup_full_sync_from_server_question">Перезаписать локальную коллекцию версией с AnkiWeb? Все новые данные и статистика обучения со времени последней синхронизации будут удалены.</string>
     <string name="error_handling_title">Обработка ошибки</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Параметры</string>
+    <string name="error_handling_options">Параметры</string>
     <string name="backup_retry_opening">Открыть снова</string>
     <string name="backup_error_menu_repair">Исправить базу данных</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

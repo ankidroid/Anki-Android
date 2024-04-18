@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Управление на видове бележки</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Управление на полета</string>
+    <string name="model_browser_label">Управление на видове бележки</string>
+    <string name="model_editor_label">Управление на полета</string>
     <!--Toasts-->
     <string name="toast_last_model">Не може да изтривате последния си тип бележка</string>
     <string name="toast_last_field">Типът на бележката трябва да има поне едно поле</string>
@@ -45,7 +45,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Изтриване тип на бележка</string>
-    <string name="model_browser_rename" comment="Rename a note type">Преименуване</string>
+    <string name="model_browser_rename">Преименуване</string>
     <string name="model_browser_template">Редактиране на карти</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>

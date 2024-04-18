@@ -28,7 +28,7 @@
     <!--Fields-->
     <string name="front_field_name">پێشەوە</string>
     <string name="back_field_name">پشتەوە</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">نوسین</string>
+    <string name="text_field_name">نوسین</string>
     <string name="extra_field_name_new">زیادی پشتەوە</string>
     <string name="field_to_ask_front_name">پێچەوانە زیادبکە</string>
     <!--Note type-->

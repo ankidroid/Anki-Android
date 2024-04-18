@@ -52,7 +52,7 @@
         <item quantity="many">%d карточек AnkiDroid к просмотру</item>
         <item quantity="other">%d карточек AnkiDroid к просмотру</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">Малый AnkiDroid</string>
+    <string name="widget_small">Малый AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">На сегодня %d карточка</item>
         <item quantity="few">На сегодня %d карточки</item>

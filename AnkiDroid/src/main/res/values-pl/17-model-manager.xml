@@ -26,8 +26,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Zarządzaj typami notatek</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Zarządzaj polami</string>
+    <string name="model_browser_label">Zarządzaj typami notatek</string>
+    <string name="model_editor_label">Zarządzaj polami</string>
     <!--Toasts-->
     <string name="toast_last_model">Nie możesz usunąć ostatniego typu notatki</string>
     <string name="toast_last_field">Typy notatek muszą mieć co najmniej jedno pole</string>
@@ -49,7 +49,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Usuń typ notatki</string>
-    <string name="model_browser_rename" comment="Rename a note type">Zmień nazwę</string>
+    <string name="model_browser_rename">Zmień nazwę</string>
     <string name="model_browser_template">Edytuj karty</string>
     <!--Rename-->
     <string name="rename_model">Zmień nazwę typu notatki</string>
