@@ -23,10 +23,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnErrorListener
+import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.MediaErrorHandler
 import com.ichi2.anki.cardviewer.SoundErrorBehavior
 import com.ichi2.anki.cardviewer.SoundErrorListener
-import com.ichi2.anki.cardviewer.SoundPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
@@ -43,7 +43,7 @@ import org.json.JSONObject
 import timber.log.Timber
 
 abstract class CardViewerViewModel(
-    soundPlayer: SoundPlayer
+    cardMediaPlayer: CardMediaPlayer
 ) : ViewModel(), OnErrorListener {
     override val onError = MutableSharedFlow<String>()
     val onMediaError = MutableSharedFlow<String>()
@@ -53,7 +53,7 @@ abstract class CardViewerViewModel(
     val eval = MutableSharedFlow<String>()
 
     val showingAnswer = MutableStateFlow(false)
-    protected val soundPlayer = soundPlayer.apply {
+    protected val cardMediaPlayer = cardMediaPlayer.apply {
         setSoundErrorListener(createSoundErrorListener())
     }
     abstract var currentCard: Deferred<Card>
@@ -61,7 +61,7 @@ abstract class CardViewerViewModel(
     @CallSuper
     override fun onCleared() {
         super.onCleared()
-        soundPlayer.close()
+        cardMediaPlayer.close()
     }
 
     /* *********************************************************************************************
@@ -76,13 +76,13 @@ abstract class CardViewerViewModel(
     abstract fun onPageFinished(isAfterRecreation: Boolean)
 
     fun setSoundPlayerEnabled(isEnabled: Boolean) {
-        soundPlayer.isEnabled = isEnabled
+        cardMediaPlayer.isEnabled = isEnabled
     }
 
     fun playSoundFromUrl(url: String) {
         launchCatchingIO {
             Sound.getAvTag(currentCard.await(), url)?.let {
-                soundPlayer.playOneSound(it)
+                cardMediaPlayer.playOneSound(it)
             }
         }
     }

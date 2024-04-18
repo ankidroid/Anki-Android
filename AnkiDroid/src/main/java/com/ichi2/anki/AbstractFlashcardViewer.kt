@@ -241,7 +241,7 @@ abstract class AbstractFlashcardViewer :
     private val fadeDuration = 300
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal lateinit var soundPlayer: SoundPlayer
+    internal lateinit var cardMediaPlayer: CardMediaPlayer
 
     /** Reference to the parent of the cardFrame to allow regeneration of the cardFrame in case of crash  */
     private var cardFrameParent: ViewGroup? = null
@@ -531,7 +531,7 @@ abstract class AbstractFlashcardViewer :
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         val mediaDir = col.media.dir
-        soundPlayer = SoundPlayer.newInstance(this, getMediaBaseUrl(mediaDir))
+        cardMediaPlayer = CardMediaPlayer.newInstance(this, getMediaBaseUrl(mediaDir))
         registerExternalStorageListener()
         restoreCollectionPreferences(col)
         initLayout()
@@ -548,8 +548,8 @@ abstract class AbstractFlashcardViewer :
         super.onPause()
         automaticAnswer.disable()
         gestureDetectorImpl.stopShakeDetector()
-        if (this::soundPlayer.isInitialized) {
-            soundPlayer.isEnabled = false
+        if (this::cardMediaPlayer.isInitialized) {
+            cardMediaPlayer.isEnabled = false
         }
         longClickHandler.removeCallbacks(startLongClickAction)
         // Prevent loss of data in Cookies
@@ -560,8 +560,8 @@ abstract class AbstractFlashcardViewer :
         super.onResume()
         automaticAnswer.enable()
         gestureDetectorImpl.startShakeDetector()
-        if (this::soundPlayer.isInitialized) {
-            soundPlayer.isEnabled = true
+        if (this::cardMediaPlayer.isInitialized) {
+            cardMediaPlayer.isEnabled = true
         }
         // Reset the activity title
         updateActionBar()
@@ -604,8 +604,8 @@ abstract class AbstractFlashcardViewer :
             cardFrame!!.removeAllViews()
         }
         destroyWebView(webView) // OK to do without a lock
-        if (this::soundPlayer.isInitialized) {
-            soundPlayer.close()
+        if (this::cardMediaPlayer.isInitialized) {
+            cardMediaPlayer.close()
         }
     }
 
@@ -800,7 +800,7 @@ abstract class AbstractFlashcardViewer :
                     "AbstractFlashcardViewer:: OK button pressed to delete note %d",
                     currentCard!!.nid
                 )
-                launchCatchingTask { soundPlayer.stopSounds() }
+                launchCatchingTask { cardMediaPlayer.stopSounds() }
                 deleteNoteWithoutConfirmation()
             }
             negativeButton(R.string.dialog_cancel)
@@ -839,7 +839,7 @@ abstract class AbstractFlashcardViewer :
             }
             // Temporarily sets the answer indicator dots appearing below the toolbar
             previousAnswerIndicator?.displayAnswerIndicator(ease)
-            soundPlayer.stopSounds()
+            cardMediaPlayer.stopSounds()
             currentEase = ease
 
             answerCardInner(ease)
@@ -1400,7 +1400,7 @@ abstract class AbstractFlashcardViewer :
         Timber.d("updateCard()")
         // TODO: This doesn't need to be blocking
         runBlocking {
-            soundPlayer.loadCardSounds(currentCard!!)
+            cardMediaPlayer.loadCardSounds(currentCard!!)
         }
         cardContent = content.html
         fillFlashcard()
@@ -1420,22 +1420,22 @@ abstract class AbstractFlashcardViewer :
             Timber.w("sounds are not played as the activity is inactive")
             return
         }
-        if (!soundPlayer.config.autoplay && !doAudioReplay) return
+        if (!cardMediaPlayer.config.autoplay && !doAudioReplay) return
         // Use TTS if TTS preference enabled and no other sound source
-        val useTTS = tts.enabled && !soundPlayer.hasSounds(displayAnswer)
+        val useTTS = tts.enabled && !cardMediaPlayer.hasSounds(displayAnswer)
         // We need to play the sounds from the proper side of the card
         if (!useTTS) {
             launchCatchingTask {
                 val side = if (displayAnswer) SingleCardSide.BACK else SingleCardSide.FRONT
                 when (doAudioReplay) {
-                    true -> soundPlayer.replayAllSounds(side)
-                    false -> soundPlayer.playAllSounds(side)
+                    true -> cardMediaPlayer.replayAllSounds(side)
+                    false -> cardMediaPlayer.playAllSounds(side)
                 }
             }
             return
         }
 
-        val replayQuestion = soundPlayer.config.replayQuestion
+        val replayQuestion = cardMediaPlayer.config.replayQuestion
         // Text to speech is in effect here
         // If the question is displayed or if the question should be replayed, read the question
         if (ttsInitialized) {
@@ -1457,7 +1457,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     /**
-     * @see SoundPlayer.onSoundGroupCompleted
+     * @see CardMediaPlayer.onSoundGroupCompleted
      */
     open fun onSoundGroupCompleted() {
         Timber.v("onSoundGroupCompleted")
@@ -1501,7 +1501,7 @@ abstract class AbstractFlashcardViewer :
 
     private fun loadContentIntoCard(card: WebView?, content: String) {
         if (card != null) {
-            card.settings.mediaPlaybackRequiresUserGesture = !soundPlayer.config.autoplay
+            card.settings.mediaPlaybackRequiresUserGesture = !cardMediaPlayer.config.autoplay
             card.loadDataWithBaseURL(
                 baseUrl,
                 content,
@@ -1534,7 +1534,7 @@ abstract class AbstractFlashcardViewer :
                     sched.buryCards(listOf(currentCard!!.id))
                 }
             }
-            soundPlayer.stopSounds()
+            cardMediaPlayer.stopSounds()
             showSnackbar(R.string.card_buried, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1548,7 +1548,7 @@ abstract class AbstractFlashcardViewer :
                     sched.suspendCards(listOf(currentCard!!.id))
                 }
             }
-            soundPlayer.stopSounds()
+            cardMediaPlayer.stopSounds()
             showSnackbar(TR.studyingCardSuspended(), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1564,7 +1564,7 @@ abstract class AbstractFlashcardViewer :
             }
             val count = changed.count
             val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, count, count)
-            soundPlayer.stopSounds()
+            cardMediaPlayer.stopSounds()
             showSnackbar(noteSuspended, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1578,7 +1578,7 @@ abstract class AbstractFlashcardViewer :
                     sched.buryNotes(listOf(currentCard!!.nid))
                 }
             }
-            soundPlayer.stopSounds()
+            cardMediaPlayer.stopSounds()
             showSnackbar(TR.studyingCardsBuried(changed.count), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -2455,7 +2455,7 @@ abstract class AbstractFlashcardViewer :
                 // not currently supported
                 else -> return
             }
-            soundPlayer.playOneSound(avTag)
+            cardMediaPlayer.playOneSound(avTag)
         }
 
         // Run any post-load events in javascript that rely on the window being completely loaded.

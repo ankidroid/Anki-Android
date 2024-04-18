@@ -24,7 +24,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NotetypeFile
 import com.ichi2.anki.asyncIO
-import com.ichi2.anki.cardviewer.SoundPlayer
+import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
@@ -41,8 +41,8 @@ import org.jetbrains.annotations.VisibleForTesting
 
 class TemplatePreviewerViewModel(
     arguments: TemplatePreviewerArguments,
-    soundPlayer: SoundPlayer
-) : CardViewerViewModel(soundPlayer) {
+    cardMediaPlayer: CardMediaPlayer
+) : CardViewerViewModel(cardMediaPlayer) {
     private val notetype = arguments.notetype
     private val fillEmpty = arguments.fillEmpty
     private val isCloze = notetype.isCloze
@@ -163,8 +163,8 @@ class TemplatePreviewerViewModel(
     ********************************************************************************************* */
 
     private suspend fun loadAndPlaySounds(side: CardSide) {
-        soundPlayer.loadCardSounds(currentCard.await())
-        soundPlayer.playAllSoundsForSide(side)
+        cardMediaPlayer.loadCardSounds(currentCard.await())
+        cardMediaPlayer.playAllSoundsForSide(side)
     }
 
     // https://github.com/ankitects/anki/blob/df70564079f53e587dc44f015c503fdf6a70924f/qt/aqt/clayout.py#L579
@@ -197,10 +197,10 @@ class TemplatePreviewerViewModel(
     }
 
     companion object {
-        fun factory(arguments: TemplatePreviewerArguments, soundPlayer: SoundPlayer): ViewModelProvider.Factory {
+        fun factory(arguments: TemplatePreviewerArguments, cardMediaPlayer: CardMediaPlayer): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
-                    TemplatePreviewerViewModel(arguments, soundPlayer)
+                    TemplatePreviewerViewModel(arguments, cardMediaPlayer)
                 }
             }
         }

@@ -88,7 +88,7 @@ import java.io.File
  * This uses [com.ichi2.anki.MetaDB], and may either read `<tts>` or all text on a card
  *
  */
-class SoundPlayer : Closeable {
+class CardMediaPlayer : Closeable {
 
     private val soundTagPlayer: SoundTagPlayer
     private val ttsPlayer: Deferred<TtsPlayer>
@@ -334,7 +334,7 @@ class SoundPlayer : Closeable {
          * @param soundUriBase The base path to the sound directory as a `file://` URI
          */
         @NeedsTest("ensure the lifecycle is subscribed to in a Reviewer")
-        fun newInstance(viewer: AbstractFlashcardViewer, soundUriBase: String): SoundPlayer {
+        fun newInstance(viewer: AbstractFlashcardViewer, soundUriBase: String): CardMediaPlayer {
             val scope = viewer.lifecycleScope
             val soundErrorListener = viewer.createSoundErrorListener()
             // tts can take a long time to init, this defers the operation until it's needed
@@ -342,7 +342,7 @@ class SoundPlayer : Closeable {
 
             val soundPlayer = SoundTagPlayer(soundUriBase)
 
-            return SoundPlayer(
+            return CardMediaPlayer(
                 soundTagPlayer = soundPlayer,
                 ttsPlayer = tts,
                 soundErrorListener = soundErrorListener
