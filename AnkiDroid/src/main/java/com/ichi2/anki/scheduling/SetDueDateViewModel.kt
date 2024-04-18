@@ -34,6 +34,9 @@ import timber.log.Timber
  */
 typealias NumberOfDaysInFuture = Int
 
+/**
+ * [ViewModel] for [SetDueDateDialog]
+ */
 class SetDueDateViewModel : ViewModel() {
     /** Whether the value may be submitted */
     val isValidFlow = MutableStateFlow(false)
