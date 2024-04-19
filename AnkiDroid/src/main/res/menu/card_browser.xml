@@ -38,37 +38,7 @@
         android:id="@+id/action_search_by_flag"
         android:title="@string/card_browser_search_by_flag">
         <menu>
-            <item
-                android:id="@+id/action_select_flag_zero"
-                android:title="@string/menu_flag_card_zero"/>
-            <item
-                android:id="@+id/action_select_flag_one"
-                android:title="@string/menu_flag_card_one"
-                android:icon="@drawable/ic_flag_red"/>
-            <item
-                android:id="@+id/action_select_flag_two"
-                android:title="@string/menu_flag_card_two"
-                android:icon="@drawable/ic_flag_orange"/>
-            <item
-                android:id="@+id/action_select_flag_three"
-                android:title="@string/menu_flag_card_three"
-                android:icon="@drawable/ic_flag_green"/>
-            <item
-                android:id="@+id/action_select_flag_four"
-                android:title="@string/menu_flag_card_four"
-                android:icon="@drawable/ic_flag_blue"/>
-            <item
-                android:id="@+id/action_select_flag_five"
-                android:title="@string/menu_flag_card_five"
-                android:icon="@drawable/ic_flag_pink"/>
-            <item
-                android:id="@+id/action_select_flag_six"
-                android:title="@string/menu_flag_card_six"
-                android:icon="@drawable/ic_flag_turquoise"/>
-            <item
-                android:id="@+id/action_select_flag_seven"
-                android:title="@string/menu_flag_card_seven"
-                android:icon="@drawable/ic_flag_purple"/>
+            <!-- flags are dynamically added -->
         </menu>
     </item>
 

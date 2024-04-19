@@ -123,6 +123,14 @@ class PreviewerFragment :
         }
 
         lifecycleScope.launch {
+            val submenu = menu.findItem(R.id.action_flag).subMenu
+            for (flag in Flag.entries) {
+                val title = flag.getName(resources)
+                submenu?.add(Menu.NONE, flag.ordinal, Menu.NONE, title)?.setIcon(flag.drawableRes)
+            }
+        }
+
+        lifecycleScope.launch {
             viewModel.flagCode
                 .flowWithLifecycle(lifecycle)
                 .collectLatest { flagCode ->
@@ -188,18 +196,15 @@ class PreviewerFragment :
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
+        val flag = Flag.entries.find { it.ordinal == item.itemId }
+        flag?.let {
+            viewModel.setFlag(it)
+            return true
+        }
         when (item.itemId) {
             R.id.action_edit -> editCard()
             R.id.action_mark -> viewModel.toggleMark()
             R.id.action_back_side_only -> viewModel.toggleBackSideOnly()
-            R.id.action_flag_zero -> viewModel.setFlag(Flag.NONE)
-            R.id.action_flag_one -> viewModel.setFlag(Flag.RED)
-            R.id.action_flag_two -> viewModel.setFlag(Flag.ORANGE)
-            R.id.action_flag_three -> viewModel.setFlag(Flag.GREEN)
-            R.id.action_flag_four -> viewModel.setFlag(Flag.BLUE)
-            R.id.action_flag_five -> viewModel.setFlag(Flag.PINK)
-            R.id.action_flag_six -> viewModel.setFlag(Flag.TURQUOISE)
-            R.id.action_flag_seven -> viewModel.setFlag(Flag.PURPLE)
         }
         return true
     }
