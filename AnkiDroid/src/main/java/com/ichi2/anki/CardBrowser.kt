@@ -402,76 +402,79 @@ open class CardBrowser :
         }
         onboarding.onCreate()
 
-        viewModel.flowOfSearchTerms
-            .launchCollectionInLifecycleScope { searchCards() }
+        setupFlows()
+    }
 
-        viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope { cardsAdapter.notifyDataSetChanged() }
-
-        viewModel.flowOfCardsOrNotes
-            .launchCollectionInLifecycleScope { searchCards() }
-
-        viewModel.flowOfSearchQueryExpanded
-            .launchCollectionInLifecycleScope { searchQueryExpanded ->
-                Timber.d("query expansion changed: %b", searchQueryExpanded)
-                if (searchQueryExpanded) {
-                    searchItem?.expandActionView()
-                } else {
-                    searchItem?.collapseActionView()
-                    // invalidate options menu so that disappeared icons would appear again
-                    invalidateOptionsMenu()
-                }
-            }
-
-        viewModel.flowOfSelectedRows
-            .launchCollectionInLifecycleScope { onSelectionChanged() }
-
-        viewModel.flowOfColumnIndex1
-            .launchCollectionInLifecycleScope { index -> cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] } }
-
-        viewModel.flowOfColumnIndex2
-            .launchCollectionInLifecycleScope { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
-
-        viewModel.flowOfFilterQuery
-            .launchCollectionInLifecycleScope { filterQuery -> searchForQuery(filterQuery) }
-
-        viewModel.flowOfDeckId
-            .launchCollectionInLifecycleScope { deckId ->
-                if (deckId == null) return@launchCollectionInLifecycleScope
-                // this handles ALL_DECKS_ID
-                deckSpinnerSelection!!.selectDeckById(deckId, false)
-                searchCards()
-            }
-
-        viewModel.flowOfCanSearch
-            .launchCollectionInLifecycleScope { canSave -> saveSearchItem?.isVisible = canSave }
-
-        viewModel.flowOfIsInMultiSelectMode
-            .launchCollectionInLifecycleScope { inMultiSelect ->
-                if (inMultiSelect) {
-                    // Turn on Multi-Select Mode so that the user can select multiple cards at once.
-                    Timber.d("load multiselect mode")
-                    // show title and hide spinner
-                    actionBarTitle.visibility = View.VISIBLE
-                    deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
-                } else {
-                    Timber.d("end multiselect mode")
-                    // If view which was originally selected when entering multi-select is visible then maintain its position
-                    val view = cardsListView.getChildAt(lastSelectedPosition - cardsListView.firstVisiblePosition)
-                    view?.let { recenterListView(it) }
-                    // update adapter to remove check boxes
-                    cardsAdapter.notifyDataSetChanged()
-                    deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
-                    actionBarTitle.visibility = View.GONE
-                }
-                // reload the actionbar using the multi-select mode actionbar
+    @Suppress("UNUSED_PARAMETER")
+    private fun setupFlows() {
+        // provides a name for each flow receiver to improve stack traces
+        fun onSearchTermsChanged(terms: String) = searchCards()
+        fun onIsTruncatedChanged(isTruncated: Boolean) = cardsAdapter.notifyDataSetChanged()
+        fun onCardsOrNotesChanged(cardsOrNotes: CardsOrNotes) = searchCards()
+        fun onSearchQueryExpanded(searchQueryExpanded: Boolean) {
+            Timber.d("query expansion changed: %b", searchQueryExpanded)
+            if (searchQueryExpanded) {
+                searchItem?.expandActionView()
+            } else {
+                searchItem?.collapseActionView()
+                // invalidate options menu so that disappeared icons would appear again
                 invalidateOptionsMenu()
             }
+        }
+        fun onSelectedRowsChanged(rows: Set<CardCache>) = onSelectionChanged()
+        fun onColumnIndex1Changed(index: Int) =
+            cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] }
+        fun onColumnIndex2Changed(index: Int) =
+            cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] }
+        fun onFilterQueryChanged(filterQuery: String) = searchForQuery(filterQuery)
+        suspend fun onDeckIdChanged(deckId: DeckId?) {
+            if (deckId == null) return
+            // this handles ALL_DECKS_ID
+            deckSpinnerSelection!!.selectDeckById(deckId, false)
+            searchCards()
+        }
+        fun onCanSaveChanged(canSave: Boolean) {
+            saveSearchItem?.isVisible = canSave
+        }
+        fun isInMultiSelectModeChanged(inMultiSelect: Boolean) {
+            if (inMultiSelect) {
+                // Turn on Multi-Select Mode so that the user can select multiple cards at once.
+                Timber.d("load multiselect mode")
+                // show title and hide spinner
+                actionBarTitle.visibility = View.VISIBLE
+                deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
+            } else {
+                Timber.d("end multiselect mode")
+                // If view which was originally selected when entering multi-select is visible then maintain its position
+                val view = cardsListView.getChildAt(lastSelectedPosition - cardsListView.firstVisiblePosition)
+                view?.let { recenterListView(it) }
+                // update adapter to remove check boxes
+                cardsAdapter.notifyDataSetChanged()
+                deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
+                actionBarTitle.visibility = View.GONE
+            }
+            // reload the actionbar using the multi-select mode actionbar
+            invalidateOptionsMenu()
+        }
+        fun cardsUpdatedChanged(unit: Unit) = cardsAdapter.notifyDataSetChanged()
+        fun initCompletedChanged(completed: Boolean) {
+            if (completed) searchCards()
+        }
 
-        viewModel.flowOfCardsUpdated
-            .launchCollectionInLifecycleScope { cardsAdapter.notifyDataSetChanged() }
-
-        viewModel.flowOfInitCompleted
-            .launchCollectionInLifecycleScope { completed -> if (completed) searchCards() }
+        viewModel.flowOfSearchTerms.launchCollectionInLifecycleScope(::onSearchTermsChanged)
+        viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
+        viewModel.flowOfCardsOrNotes.launchCollectionInLifecycleScope(::onCardsOrNotesChanged)
+        viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
+        viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
+        viewModel.flowOfColumnIndex1.launchCollectionInLifecycleScope(::onColumnIndex1Changed)
+        viewModel.flowOfColumnIndex2.launchCollectionInLifecycleScope(::onColumnIndex2Changed)
+        viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
+        viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
+        viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
+        viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
+        viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
+        viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
+        viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
     }
 
     fun searchWithFilterQuery(filterQuery: String) = launchCatchingTask {
