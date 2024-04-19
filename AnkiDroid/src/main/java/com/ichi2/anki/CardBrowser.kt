@@ -713,6 +713,7 @@ open class CardBrowser :
             // restore drawer click listener and icon
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
+            addFlags(menu.findItem(R.id.action_search_by_flag).subMenu, Mode.SINGLE_SELECT)
             saveSearchItem = menu.findItem(R.id.action_save_search)
             saveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mySearchesItem = menu.findItem(R.id.action_list_my_searches)
@@ -766,6 +767,7 @@ open class CardBrowser :
         } else {
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
+            addFlags(menu.findItem(R.id.action_flag).subMenu, Mode.MULTI_SELECT)
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         }
@@ -789,6 +791,28 @@ open class CardBrowser :
         onSelectionChanged()
         updatePreviewMenuItem()
         return super.onCreateOptionsMenu(menu)
+    }
+
+    /**
+     * Representing different selection modes.
+     */
+    enum class Mode(val value: Int) {
+        SINGLE_SELECT(1000),
+        MULTI_SELECT(1001)
+    }
+
+    private fun addFlags(subMenu: SubMenu?, mode: Mode) {
+        lifecycleScope.launch {
+            val groupId = when (mode) {
+                Mode.SINGLE_SELECT -> mode.value
+                Mode.MULTI_SELECT -> mode.value
+            }
+
+            for (flag in Flag.entries) {
+                val title = flag.getName(resources)
+                subMenu?.add(groupId, flag.ordinal, Menu.NONE, title)?.setIcon(flag.drawableRes)
+            }
+        }
     }
 
     override fun onNavigationPressed() {
@@ -900,6 +924,16 @@ open class CardBrowser :
             undoSnackbar != null && undoSnackbar!!.isShown -> undoSnackbar!!.dismiss()
         }
 
+        val flag = Flag.entries.find { it.ordinal == item.itemId }
+        flag?.let {
+            when (item.groupId) {
+                Mode.SINGLE_SELECT.value -> filterByFlag(it)
+                Mode.MULTI_SELECT.value -> updateFlagForSelectedRows(it)
+                else -> return@let
+            }
+            return true
+        }
+
         when (item.itemId) {
             android.R.id.home -> {
                 viewModel.endMultiSelectMode()
@@ -960,70 +994,6 @@ open class CardBrowser :
             }
             R.id.action_search_by_tag -> {
                 showFilterByTagsDialog()
-                return true
-            }
-            R.id.action_flag_zero -> {
-                updateFlagForSelectedRows(Flag.NONE)
-                return true
-            }
-            R.id.action_flag_one -> {
-                updateFlagForSelectedRows(Flag.RED)
-                return true
-            }
-            R.id.action_flag_two -> {
-                updateFlagForSelectedRows(Flag.ORANGE)
-                return true
-            }
-            R.id.action_flag_three -> {
-                updateFlagForSelectedRows(Flag.GREEN)
-                return true
-            }
-            R.id.action_flag_four -> {
-                updateFlagForSelectedRows(Flag.BLUE)
-                return true
-            }
-            R.id.action_flag_five -> {
-                updateFlagForSelectedRows(Flag.PINK)
-                return true
-            }
-            R.id.action_flag_six -> {
-                updateFlagForSelectedRows(Flag.TURQUOISE)
-                return true
-            }
-            R.id.action_flag_seven -> {
-                updateFlagForSelectedRows(Flag.PURPLE)
-                return true
-            }
-            R.id.action_select_flag_zero -> {
-                filterByFlag(Flag.NONE)
-                return true
-            }
-            R.id.action_select_flag_one -> {
-                filterByFlag(Flag.RED)
-                return true
-            }
-            R.id.action_select_flag_two -> {
-                filterByFlag(Flag.ORANGE)
-                return true
-            }
-            R.id.action_select_flag_three -> {
-                filterByFlag(Flag.GREEN)
-                return true
-            }
-            R.id.action_select_flag_four -> {
-                filterByFlag(Flag.BLUE)
-                return true
-            }
-            R.id.action_select_flag_five -> {
-                filterByFlag(Flag.PINK)
-                return true
-            }
-            R.id.action_select_flag_six -> {
-                filterByFlag(Flag.TURQUOISE)
-                return true
-            }
-            R.id.action_select_flag_seven -> {
-                filterByFlag(Flag.PURPLE)
                 return true
             }
             R.id.action_delete_card -> {
