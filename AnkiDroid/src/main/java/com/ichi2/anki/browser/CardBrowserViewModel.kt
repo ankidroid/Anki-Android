@@ -28,6 +28,7 @@ import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
 import com.ichi2.anki.export.ExportDialogFragment
+import com.ichi2.anki.launchCatching
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
@@ -61,7 +62,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import java.io.DataInputStream
@@ -71,7 +71,6 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.Collections
 import java.util.HashMap
-import java.util.concurrent.CancellationException
 import kotlin.math.max
 import kotlin.math.min
 
@@ -202,7 +201,7 @@ class CardBrowserViewModel(
             return CardInfoDestination(firstSelectedCard)
         }
 
-    suspend fun getInitialDeck(): DeckId {
+    private suspend fun getInitialDeck(): DeckId {
         // TODO: Handle the launch intent
         val lastDeckId = lastDeckId
         if (lastDeckId == ALL_DECKS_ID) {
@@ -619,38 +618,24 @@ class CardBrowserViewModel(
         }
 
         searchJob?.cancel()
-        searchJob = viewModelScope.launch(Dispatchers.IO) {
-            try {
-                flowOfSearchState.emit(SearchState.Searching)
-                Timber.d("performing search: '%s'", query)
-                val cards = com.ichi2.anki.searchForCards(query, order.toSortOrder(), cardsOrNotes)
-                Timber.d("Search returned %d card(s)", cards.size)
+        searchJob = viewModelScope.launchCatching(
+            Dispatchers.IO,
+            errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) }
+        ) {
+            flowOfSearchState.emit(SearchState.Searching)
+            Timber.d("performing search: '%s'", query)
+            val cards = com.ichi2.anki.searchForCards(query, order.toSortOrder(), cardsOrNotes)
+            Timber.d("Search returned %d card(s)", cards.size)
 
-                // Render the first few items
-                val cardsToRender = min((numCardsToRender ?: 0), cards.size)
-                for (i in 0 until cardsToRender) {
-                    ensureActive()
-                    cards[i].load(false, column1Index, column2Index)
-                }
+            // Render the first few items
+            val cardsToRender = min((numCardsToRender ?: 0), cards.size)
+            for (i in 0 until cardsToRender) {
                 ensureActive()
-                this@CardBrowserViewModel.cards.replaceWith(cards)
-                flowOfSearchState.emit(SearchState.Completed)
-            } catch (e: Exception) {
-                val error = when (e) {
-                    // CancellationException should be re-thrown to propagate it to the parent coroutine
-                    is CancellationException -> throw e
-                    is BackendInterruptedException -> {
-                        Timber.w(e)
-                        null
-                    }
-                    else -> {
-                        Timber.w(e)
-                        e
-                    }
-                }
-
-                flowOfSearchState.emit(SearchState.Error(error))
+                cards[i].load(false, column1Index, column2Index)
             }
+            ensureActive()
+            this@CardBrowserViewModel.cards.replaceWith(cards)
+            flowOfSearchState.emit(SearchState.Completed)
         }
         return searchJob!!
     }
@@ -698,7 +683,7 @@ class CardBrowserViewModel(
          * Invalid search: an `and` was found but it is not connecting two search terms.
          * If you want to search for the word itself, wrap it in double quotes: `"and"`.
          */
-        data class Error(val error: Exception?) : SearchState
+        data class Error(val error: String) : SearchState
     }
 }
 

@@ -467,10 +467,7 @@ open class CardBrowser :
                 }
                 SearchState.Completed -> redrawAfterSearch()
                 is SearchState.Error -> {
-                    searchState.error?.let { error ->
-                        if (error.localizedMessage == null) return@let
-                        showError(this, error.localizedMessage!!, error, crashReport = false)
-                    }
+                    showError(this, searchState.error)
                 }
             }
         }

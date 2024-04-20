@@ -82,7 +82,7 @@ var throwOnShowError = false
 fun CoroutineScope.launchCatching(
     context: CoroutineContext = EmptyCoroutineContext,
     errorMessageHandler: suspend (String) -> Unit,
-    block: suspend () -> Unit
+    block: suspend CoroutineScope.() -> Unit
 ): Job {
     return launch(context) {
         try {
@@ -229,6 +229,20 @@ fun Fragment.launchCatchingTask(
 ): Job {
     return lifecycle.coroutineScope.launch {
         requireActivity().runCatching(errorMessage) { block() }
+    }
+}
+
+fun showError(context: Context, msg: String) {
+    if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg")
+    try {
+        AlertDialog.Builder(context).show {
+            title(R.string.vague_error)
+            message(text = msg)
+            positiveButton(R.string.dialog_ok)
+        }
+    } catch (ex: BadTokenException) {
+        // issue 12718: activity provided by `context` was not running
+        Timber.w(ex, "unable to display error dialog")
     }
 }
 
