@@ -414,7 +414,6 @@ open class CardBrowser :
     @Suppress("UNUSED_PARAMETER")
     private fun setupFlows() {
         // provides a name for each flow receiver to improve stack traces
-        fun onSearchTermsChanged(terms: String) = searchCards()
         fun onIsTruncatedChanged(isTruncated: Boolean) = cardsAdapter.notifyDataSetChanged()
         fun onCardsOrNotesChanged(cardsOrNotes: CardsOrNotes) = searchCards()
         fun onSearchQueryExpanded(searchQueryExpanded: Boolean) {
@@ -487,7 +486,6 @@ open class CardBrowser :
             if (completed) searchCards()
         }
 
-        viewModel.flowOfSearchTerms.launchCollectionInLifecycleScope(::onSearchTermsChanged)
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfCardsOrNotes.launchCollectionInLifecycleScope(::onCardsOrNotesChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
@@ -2105,7 +2103,7 @@ open class CardBrowser :
 
     @VisibleForTesting
     fun searchCards(searchQuery: String) {
-        viewModel.setSearchTerms(searchQuery)
+        launchCatchingTask { withProgress { viewModel.launchSearchForCards(searchQuery).join() } }
     }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {

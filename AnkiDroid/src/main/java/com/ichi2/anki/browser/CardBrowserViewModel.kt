@@ -101,8 +101,8 @@ class CardBrowserViewModel(
     /** The CardIds of all the cards in the results */
     val allCardIds get() = cards.map { c -> c.id }
 
-    val flowOfSearchTerms = MutableStateFlow("")
-    val searchTerms get() = flowOfSearchTerms.value
+    var searchTerms = ""
+        private set
     private var restrictOnDeck: String = ""
     var currentFlag = Flag.NONE
 
@@ -566,7 +566,10 @@ class CardBrowserViewModel(
      */
     fun endMultiSelectMode() = selectNone()
 
-    fun setSearchTerms(searchQuery: String) = flowOfSearchTerms.update { searchQuery }
+    suspend fun launchSearchForCards(searchQuery: String): Job {
+        searchTerms = searchQuery
+        return launchSearchForCards()
+    }
 
     /**
      * @see com.ichi2.anki.searchForCards
