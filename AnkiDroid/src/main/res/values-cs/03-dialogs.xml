@@ -247,24 +247,24 @@
     <string name="deck_already_exists">Balíček již existuje</string>
     <string name="create_deck_numeric_hint">Pokud máte problémy s pořadím balíčků (např. „10“ je před „2“), nahraďte „2“ číslem „02“</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Nastavit interval na stejnou hodnotu</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="few">Show cards in</item>
-        <item quantity="many">Show cards in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">Zobrazit kartu za</item>
+        <item quantity="few">Zobrazit karty za</item>
+        <item quantity="many">Zobrazit karty za</item>
+        <item quantity="other">Zobrazit karty za</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="few">Show cards in range</item>
-        <item quantity="many">Show cards in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">Zobrazit kartu v rozmezí</item>
+        <item quantity="few">Zobrazit karty v rozmezí</item>
+        <item quantity="many">Zobrazit karty v rozmezí</item>
+        <item quantity="other">Zobrazit karty v rozmezí</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="few">days</item>
-        <item quantity="many">days</item>
-        <item quantity="other">days</item>
+        <item quantity="one">den</item>
+        <item quantity="few">dny</item>
+        <item quantity="many">dní</item>
+        <item quantity="other">dní</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
 </resources>
