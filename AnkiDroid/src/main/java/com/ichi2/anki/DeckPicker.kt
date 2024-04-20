@@ -991,32 +991,32 @@ open class DeckPicker :
     private fun updateSyncIconFromState(menuItem: MenuItem, state: OptionsMenuState) {
         if (state.mediaMigrationState is MediaMigrationState.Ongoing) {
             menuItem.isVisible = false
-        } else {
-            menuItem.isVisible = true
+            return
+        }
+        menuItem.isVisible = true
 
-            menuItem.setTitle(
-                when (state.syncIcon) {
-                    SyncIconState.Normal, SyncIconState.PendingChanges -> R.string.button_sync
-                    SyncIconState.OneWay -> R.string.sync_menu_title_one_way_sync
-                    SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
-                }
-            )
-
+        menuItem.setTitle(
             when (state.syncIcon) {
-                SyncIconState.Normal -> {
-                    BadgeDrawableBuilder.removeBadge(menuItem)
-                }
-                SyncIconState.PendingChanges -> {
-                    BadgeDrawableBuilder(this)
-                        .withColor(getColor(R.color.badge_warning))
-                        .replaceBadge(menuItem)
-                }
-                SyncIconState.OneWay, SyncIconState.NotLoggedIn -> {
-                    BadgeDrawableBuilder(this)
-                        .withText('!')
-                        .withColor(getColor(R.color.badge_error))
-                        .replaceBadge(menuItem)
-                }
+                SyncIconState.Normal, SyncIconState.PendingChanges -> R.string.button_sync
+                SyncIconState.OneWay -> R.string.sync_menu_title_one_way_sync
+                SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
+            }
+        )
+        val provider = MenuItemCompat.getActionProvider(menuItem) as? SyncActionProvider ?: return
+        when (state.syncIcon) {
+            SyncIconState.Normal -> {
+                BadgeDrawableBuilder.removeBadge(provider)
+            }
+            SyncIconState.PendingChanges -> {
+                BadgeDrawableBuilder(this)
+                    .withColor(getColor(R.color.badge_warning))
+                    .replaceBadge(provider)
+            }
+            SyncIconState.OneWay, SyncIconState.NotLoggedIn -> {
+                BadgeDrawableBuilder(this)
+                    .withText('!')
+                    .withColor(getColor(R.color.badge_error))
+                    .replaceBadge(provider)
             }
         }
     }

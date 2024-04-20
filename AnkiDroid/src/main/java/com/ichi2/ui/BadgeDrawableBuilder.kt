@@ -18,9 +18,9 @@ package com.ichi2.ui
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
+import com.ichi2.anki.SyncActionProvider
 import timber.log.Timber
 
 class BadgeDrawableBuilder(private val context: Context) {
@@ -36,9 +36,9 @@ class BadgeDrawableBuilder(private val context: Context) {
         return this
     }
 
-    fun replaceBadge(menuItem: MenuItem) {
+    fun replaceBadge(provider: SyncActionProvider) {
         Timber.d("Adding badge")
-        var originalIcon = menuItem.icon
+        var originalIcon = provider.icon
         if (originalIcon is BadgeDrawable) {
             originalIcon = originalIcon.current
         }
@@ -55,15 +55,15 @@ class BadgeDrawableBuilder(private val context: Context) {
             val mutableDrawable = badgeDrawable.mutate()
             mutableDrawable.setTint(color!!)
             badge.setBadgeDrawable(mutableDrawable)
-            menuItem.icon = badge
+            provider.icon = badge
         }
     }
 
     companion object {
-        fun removeBadge(menuItem: MenuItem) {
-            val icon = menuItem.icon
+        fun removeBadge(provider: SyncActionProvider) {
+            val icon = provider.icon
             if (icon is BadgeDrawable) {
-                menuItem.icon = icon.drawable
+                provider.icon = icon.drawable
                 Timber.d("Badge removed")
             }
         }
