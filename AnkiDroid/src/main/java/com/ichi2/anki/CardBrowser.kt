@@ -435,7 +435,6 @@ open class CardBrowser :
             if (deckId == null) return
             // this handles ALL_DECKS_ID
             deckSpinnerSelection!!.selectDeckById(deckId, false)
-            searchCards()
         }
         fun onCanSaveChanged(canSave: Boolean) {
             saveSearchItem?.isVisible = canSave

@@ -231,7 +231,7 @@ class CardBrowserViewModel(
     /**
      * A search should be triggered if these properties change
      */
-    private val searchRequested = flowOf(flowOfCardsOrNotes)
+    private val searchRequested = flowOf(flowOfCardsOrNotes, flowOfDeckId)
         .flattenMerge()
 
     /**
