@@ -38,6 +38,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
+import java.util.concurrent.CopyOnWriteArrayList
 
 object ChangeManager {
     interface Subscriber {
@@ -49,7 +50,8 @@ object ChangeManager {
         fun opExecuted(changes: OpChanges, handler: Any?)
     }
 
-    private val subscribers = mutableListOf<WeakReference<Subscriber>>()
+    // Maybe fixes #16217 - CopyOnWriteArrayList makes this object thread-safe
+    private val subscribers = CopyOnWriteArrayList(mutableListOf<WeakReference<Subscriber>>())
 
     fun subscribe(subscriber: Subscriber) {
         subscribers.add(WeakReference(subscriber))
