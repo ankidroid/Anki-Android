@@ -232,7 +232,7 @@ fun Fragment.launchCatchingTask(
     }
 }
 
-private fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
+fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
     if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg", exception)
     try {
         AlertDialog.Builder(context).show {

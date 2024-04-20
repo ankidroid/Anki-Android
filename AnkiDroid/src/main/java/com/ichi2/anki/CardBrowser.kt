@@ -30,6 +30,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
+import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
@@ -303,6 +304,7 @@ open class CardBrowser :
     private val selectedRowIds: List<CardId>
         get() = viewModel.selectedRowIds
 
+    @MainThread
     @NeedsTest("search bar is set after selecting a saved search as first action")
     private fun searchForQuery(query: String) {
         // setQuery before expand does not set the view's value
@@ -461,6 +463,26 @@ open class CardBrowser :
             invalidateOptionsMenu()
         }
         fun cardsUpdatedChanged(unit: Unit) = cardsAdapter.notifyDataSetChanged()
+        fun searchStateChanged(searchState: SearchState) {
+            Timber.d("search state: %s", searchState)
+            when (searchState) {
+                SearchState.Initializing -> { }
+                SearchState.Searching -> {
+                    invalidate()
+                    if ("" != viewModel.searchTerms && searchView != null) {
+                        searchView!!.setQuery(viewModel.searchTerms, false)
+                        searchItem!!.expandActionView()
+                    }
+                }
+                SearchState.Completed -> redrawAfterSearch()
+                is SearchState.Error -> {
+                    searchState.error?.let { error ->
+                        if (error.localizedMessage == null) return@let
+                        showError(this, error.localizedMessage!!, error, crashReport = false)
+                    }
+                }
+            }
+        }
         fun initCompletedChanged(completed: Boolean) {
             if (completed) searchCards()
         }
@@ -477,7 +499,7 @@ open class CardBrowser :
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
-        viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
+        viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
     }
 
@@ -1317,19 +1339,14 @@ open class CardBrowser :
             Timber.d("!initCompleted, not searching")
             return
         }
-        // cancel the previous search & render tasks if still running
-        invalidate()
-        if ("" != viewModel.searchTerms && searchView != null) {
-            searchView!!.setQuery(viewModel.searchTerms, false)
-            searchItem!!.expandActionView()
-        }
         launchCatchingTask {
-            withProgress { viewModel.searchForCards() }
-            redrawAfterSearch()
+            // TODO: Move this to a LinearProgressIndicator and remove withProgress
+            withProgress { viewModel.launchSearchForCards().join() }
         }
     }
 
-    fun redrawAfterSearch() {
+    @MainThread
+    private fun redrawAfterSearch() {
         Timber.i("CardBrowser:: Completed searchCards() Successfully")
         updateList()
         /*check whether mSearchView is initialized as it is lateinit property.*/
@@ -1379,6 +1396,7 @@ open class CardBrowser :
         ).toInt() + 5
     }
 
+    @MainThread
     private fun updateList() {
         if (colIsOpenUnsafe()) {
             cardsAdapter.notifyDataSetChanged()

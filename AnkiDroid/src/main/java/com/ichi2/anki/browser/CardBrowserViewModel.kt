@@ -43,6 +43,9 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.undoableOp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -56,6 +59,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import java.io.DataInputStream
@@ -65,6 +69,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.Collections
 import java.util.HashMap
+import java.util.concurrent.CancellationException
 import kotlin.math.max
 import kotlin.math.min
 
@@ -82,10 +87,16 @@ class CardBrowserViewModel(
     // so isn't worth refactoring further
     var numCardsToRender: Int? = null
 
+    /** A job which ensures that parallel searches do not occur */
+    var searchJob: Job? = null
+        private set
+
     // temporary flow for refactoring - called when cards are cleared
     val flowOfCardsUpdated = MutableSharedFlow<Unit>()
 
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
+
+    val flowOfSearchState = MutableSharedFlow<SearchState>()
 
     /** The CardIds of all the cards in the results */
     val allCardIds get() = cards.map { c -> c.id }
@@ -560,7 +571,8 @@ class CardBrowserViewModel(
     /**
      * @see com.ichi2.anki.searchForCards
      */
-    suspend fun searchForCards(): MutableList<CardBrowser.CardCache> {
+    @NeedsTest("Invalid searches are handled. For instance: 'and'")
+    suspend fun launchSearchForCards(): Job {
         // update the UI while we're searching
         clearCardsList()
 
@@ -570,15 +582,41 @@ class CardBrowserViewModel(
             if ("" != searchTerms) "$restrictOnDeck($searchTerms)" else restrictOnDeck
         }
 
-        Timber.d("performing search")
-        val cards = com.ichi2.anki.searchForCards(query, order.toSortOrder(), cardsOrNotes)
-        Timber.d("Search returned %d cards", cards.size)
-        // Render the first few items
-        for (i in 0 until min((numCardsToRender ?: 0), cards.size)) {
-            cards[i].load(false, column1Index, column2Index)
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch(Dispatchers.IO) {
+            try {
+                flowOfSearchState.emit(SearchState.Searching)
+                Timber.d("performing search: '%s'", query)
+                val cards = com.ichi2.anki.searchForCards(query, order.toSortOrder(), cardsOrNotes)
+                Timber.d("Search returned %d card(s)", cards.size)
+
+                // Render the first few items
+                val cardsToRender = min((numCardsToRender ?: 0), cards.size)
+                for (i in 0 until cardsToRender) {
+                    ensureActive()
+                    cards[i].load(false, column1Index, column2Index)
+                }
+                ensureActive()
+                this@CardBrowserViewModel.cards.replaceWith(cards)
+                flowOfSearchState.emit(SearchState.Completed)
+            } catch (e: Exception) {
+                val error = when (e) {
+                    // CancellationException should be re-thrown to propagate it to the parent coroutine
+                    is CancellationException -> throw e
+                    is BackendInterruptedException -> {
+                        Timber.w(e)
+                        null
+                    }
+                    else -> {
+                        Timber.w(e)
+                        e
+                    }
+                }
+
+                flowOfSearchState.emit(SearchState.Error(error))
+            }
         }
-        this.cards.replaceWith(cards)
-        return cards
+        return searchJob!!
     }
 
     private suspend fun clearCardsList() {
@@ -604,6 +642,28 @@ class CardBrowserViewModel(
     enum class ChangeCardOrderResult {
         OrderChange,
         DirectionChange
+    }
+
+    /** Whether [CardBrowserViewModel] is processing a search */
+    sealed interface SearchState {
+        /** The class is initializing */
+        data object Initializing : SearchState
+
+        /** A search is in progress */
+        data object Searching : SearchState
+
+        /** A search has been completed */
+        data object Completed : SearchState
+
+        /**
+         * A search error, for instance:
+         *
+         * [net.ankiweb.rsdroid.BackendException.BackendSearchException]
+         *
+         * Invalid search: an `and` was found but it is not connecting two search terms.
+         * If you want to search for the word itself, wrap it in double quotes: `"and"`.
+         */
+        data class Error(val error: Exception?) : SearchState
     }
 }
 

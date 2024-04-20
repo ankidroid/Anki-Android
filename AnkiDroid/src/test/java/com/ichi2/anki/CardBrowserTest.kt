@@ -32,10 +32,11 @@ import com.ichi2.anki.CardBrowser.Companion.nextDue
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.browser.CardBrowserColumn
+import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
-import com.ichi2.anki.model.CardsOrNotes.CARDS
-import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.CardId
@@ -298,7 +299,7 @@ class CardBrowserTest : RobolectricTest() {
         val newDeck = addDeck("World")
         selectDefaultDeck()
         val b = getBrowserWithNotes(5, reversed = true)
-        b.viewModel.setCardsOrNotes(NOTES)
+        b.viewModel.setCardsOrNotesSync(NOTES)
 
         b.selectRowsWithPositions(0, 2)
 
@@ -420,7 +421,7 @@ class CardBrowserTest : RobolectricTest() {
         n.flush()
 
         val b = browserWithNoNewCards
-        b.filterByTag("sketchy::(1)")
+        b.filterByTagSync("sketchy::(1)")
 
         assertThat("tagged card should be returned", b.viewModel.rowCount, equalTo(1))
     }
@@ -652,7 +653,7 @@ class CardBrowserTest : RobolectricTest() {
         }
 
         val cardBrowser = browserWithNoNewCards
-        cardBrowser.searchCards("world or hello")
+        cardBrowser.searchCardsSync("world or hello")
 
         assertThat(
             "Cardbrowser has Deck 1 as selected deck",
@@ -1185,3 +1186,17 @@ val CardBrowser.lastDeckId
 
 val CardBrowser.validDecksForChangeDeck
     get() = runBlocking { getValidDecksForChangeDeck() }
+
+suspend fun CardBrowser.searchCardsSync(query: String) {
+    searchCards(query)
+    viewModel.searchJob?.join()
+}
+suspend fun CardBrowser.filterByTagSync(vararg tags: String) {
+    filterByTag(*tags)
+    viewModel.searchJob?.join()
+}
+
+suspend fun CardBrowserViewModel.setCardsOrNotesSync(cardsOrNotes: CardsOrNotes) {
+    setCardsOrNotes(cardsOrNotes)
+    searchJob?.join()
+}
