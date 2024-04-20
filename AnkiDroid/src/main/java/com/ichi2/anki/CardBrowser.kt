@@ -415,7 +415,6 @@ open class CardBrowser :
     private fun setupFlows() {
         // provides a name for each flow receiver to improve stack traces
         fun onIsTruncatedChanged(isTruncated: Boolean) = cardsAdapter.notifyDataSetChanged()
-        fun onCardsOrNotesChanged(cardsOrNotes: CardsOrNotes) = searchCards()
         fun onSearchQueryExpanded(searchQueryExpanded: Boolean) {
             Timber.d("query expansion changed: %b", searchQueryExpanded)
             if (searchQueryExpanded) {
@@ -487,7 +486,6 @@ open class CardBrowser :
         }
 
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
-        viewModel.flowOfCardsOrNotes.launchCollectionInLifecycleScope(::onCardsOrNotesChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         viewModel.flowOfColumnIndex1.launchCollectionInLifecycleScope(::onColumnIndex1Changed)

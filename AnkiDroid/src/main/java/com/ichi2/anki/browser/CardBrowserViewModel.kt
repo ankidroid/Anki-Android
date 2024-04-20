@@ -51,7 +51,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -112,7 +114,7 @@ class CardBrowserViewModel(
      * Whether the browser is working in Cards mode or Notes mode.
      * default: [CARDS]
      * */
-    val flowOfCardsOrNotes = MutableStateFlow(CARDS)
+    private val flowOfCardsOrNotes = MutableStateFlow(CARDS)
     val cardsOrNotes get() = flowOfCardsOrNotes.value
 
     // card that was clicked (not marked)
@@ -226,6 +228,24 @@ class CardBrowserViewModel(
     @get:VisibleForTesting
     val initCompleted get() = flowOfInitCompleted.value
 
+    /**
+     * A search should be triggered if these properties change
+     */
+    private val searchRequested = flowOf(flowOfCardsOrNotes)
+        .flattenMerge()
+
+    /**
+     * Emits an item when:
+     * * [initCompleted] is true
+     * * A property which defines the search has been changed ([searchRequested])
+     *
+     * @see launchSearchForCards
+     */
+    private val performSearchFlow = flowOfInitCompleted.combineTransform(searchRequested) { init, _ ->
+        if (!init) return@combineTransform
+        emit(Unit)
+    }
+
     init {
         Timber.d("CardBrowserViewModel::init")
         flowOfColumnIndex1
@@ -235,6 +255,10 @@ class CardBrowserViewModel(
         flowOfColumnIndex2
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) } }
             .launchIn(viewModelScope)
+
+        performSearchFlow.onEach {
+            launchSearchForCards()
+        }.launchIn(viewModelScope)
 
         reverseDirectionFlow
             .ignoreValuesFromViewModelLaunch()
