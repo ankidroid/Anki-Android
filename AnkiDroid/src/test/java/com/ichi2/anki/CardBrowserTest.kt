@@ -48,6 +48,7 @@ import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.OS
+import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.AdaptionUtil
@@ -404,24 +405,6 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun filterByFlagDisplaysProperly() = runTest {
-        val cardWithRedFlag = addNoteUsingBasicModel("Card with red flag", "Reverse")
-        flagCardForNote(cardWithRedFlag, Flag.RED)
-
-        val cardWithGreenFlag = addNoteUsingBasicModel("Card with green flag", "Reverse")
-        flagCardForNote(cardWithGreenFlag, Flag.GREEN)
-
-        val anotherCardWithRedFlag = addNoteUsingBasicModel("Second card with red flag", "Reverse")
-        flagCardForNote(anotherCardWithRedFlag, Flag.RED)
-
-        val b = browserWithNoNewCards
-        b.viewModel.setFlagFilter(Flag.RED)
-        waitForAsyncTasksToComplete()
-
-        assertThat("Flagged cards should be returned", b.viewModel.rowCount, equalTo(2))
-    }
-
-    @Test
     @Flaky(os = OS.WINDOWS, "IllegalStateException: Card '1596783600440' not found")
     fun previewWorksAfterSort() {
         // #7286
@@ -740,12 +723,6 @@ class CardBrowserTest : RobolectricTest() {
         val ids = b.viewModel.selectedRowIds
         assertThat("only one card expected to be checked", ids, hasSize(1))
         return b.getPropertiesForCardId(ids[0])
-    }
-
-    private fun flagCardForNote(n: Note, flag: Flag) {
-        n.firstCard().update {
-            setUserFlag(flag)
-        }
     }
 
     private fun deleteCardAtPosition(browser: CardBrowser, positionToCorrupt: Int) {
@@ -1154,4 +1131,15 @@ suspend fun CardBrowser.filterByTagSync(vararg tags: String) {
 suspend fun CardBrowserViewModel.setCardsOrNotesSync(cardsOrNotes: CardsOrNotes) {
     setCardsOrNotes(cardsOrNotes)
     searchJob?.join()
+}
+
+suspend fun CardBrowserViewModel.setFlagFilterSync(flag: Flag) {
+    setFlagFilter(flag)
+    searchJob?.join()
+}
+
+fun TestClass.flagCardForNote(n: Note, flag: Flag) {
+    n.firstCard().update {
+        setUserFlag(flag)
+    }
 }

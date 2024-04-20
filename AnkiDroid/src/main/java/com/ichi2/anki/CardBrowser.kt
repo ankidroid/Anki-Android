@@ -419,7 +419,11 @@ open class CardBrowser :
             cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] }
         fun onColumnIndex2Changed(index: Int) =
             cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] }
-        fun onFilterQueryChanged(filterQuery: String) = searchForQuery(filterQuery)
+        fun onFilterQueryChanged(filterQuery: String) {
+            // setQuery before expand does not set the view's value
+            searchItem!!.expandActionView()
+            searchView!!.setQuery(filterQuery, submit = false)
+        }
         suspend fun onDeckIdChanged(deckId: DeckId?) {
             if (deckId == null) return
             // this handles ALL_DECKS_ID
@@ -1524,7 +1528,7 @@ open class CardBrowser :
         return v?.top ?: 0
     }
 
-    private fun hasSelectedAllDecks(): Boolean = viewModel.lastDeckId == ALL_DECKS_ID
+    fun hasSelectedAllDecks(): Boolean = viewModel.lastDeckId == ALL_DECKS_ID
 
     fun searchAllDecks() = launchCatchingTask {
         // all we need to do is select all decks

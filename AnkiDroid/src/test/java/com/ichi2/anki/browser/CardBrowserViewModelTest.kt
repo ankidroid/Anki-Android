@@ -20,12 +20,15 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.DeckSpinnerSelection
+import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
-import io.mockk.mockk
+import com.ichi2.testutils.mockIt
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -81,9 +84,25 @@ class CardBrowserViewModelTest : JvmTest() {
 
         assertThat("All decks should be selected", hasSelectedAllDecks())
 
-        val addIntent = CardBrowser.createAddNoteIntent(mockk(relaxed = true), this)
+        val addIntent = CardBrowser.createAddNoteIntent(mockIt(), this)
 
         IntentAssert.doesNotHaveExtra(addIntent, NoteEditor.EXTRA_DID)
+    }
+
+    @Test
+    fun filterByFlagDisplaysProperly() = runViewModelTest {
+        val cardWithRedFlag = addNoteUsingBasicModel("Card with red flag", "Reverse")
+        flagCardForNote(cardWithRedFlag, Flag.RED)
+
+        val cardWithGreenFlag = addNoteUsingBasicModel("Card with green flag", "Reverse")
+        flagCardForNote(cardWithGreenFlag, Flag.GREEN)
+
+        val anotherCardWithRedFlag = addNoteUsingBasicModel("Second card with red flag", "Reverse")
+        flagCardForNote(anotherCardWithRedFlag, Flag.RED)
+
+        setFlagFilterSync(Flag.RED)
+
+        assertThat("Flagged cards should be returned", rowCount, equalTo(2))
     }
 
     private fun runViewModelTest(testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {

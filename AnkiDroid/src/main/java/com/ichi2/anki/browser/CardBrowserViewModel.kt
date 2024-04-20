@@ -109,6 +109,8 @@ class CardBrowserViewModel(
         private set
     private var restrictOnDeck: String = ""
 
+    /** text in the search box (potentially unsubmitted) */
+    // this does not currently bind to the value in the UI and is only used for posting
     val flowOfFilterQuery = MutableSharedFlow<String>()
 
     /**
@@ -515,12 +517,14 @@ class CardBrowserViewModel(
 
     suspend fun setFilterQuery(filterQuery: String) {
         this.flowOfFilterQuery.emit(filterQuery)
+        launchSearchForCards(filterQuery)
     }
 
     suspend fun searchForMarkedNotes() = setFilterQuery("tag:marked")
 
     suspend fun searchForSuspendedCards() = setFilterQuery("is:suspended")
     suspend fun setFlagFilter(flag: Flag) {
+        Timber.i("filtering to flag: %s", flag)
         val flagSearchTerm = "flag:${flag.code}"
         val searchTerms = when {
             searchTerms.contains("flag:") -> searchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
