@@ -212,6 +212,11 @@ class SetDueDateDialog : DialogFragment() {
                         suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, currentValue ?: 0)
                     }
                     suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
+                    helperText = getString(
+                        R.string.set_due_date_hintText,
+                        resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0), // 0 days
+                        resources.getQuantityString(R.plurals.set_due_date_label_suffix, 1) // 1 day
+                    )
                 }
             }
             view.findViewById<TextView>(R.id.date_single_label).text =
