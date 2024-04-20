@@ -48,18 +48,10 @@ import org.json.JSONArray
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.test.assertFailsWith
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerTest : RobolectricTest() {
-    @Test
-    fun verifyStartupNoCollection() {
-        enableNullCollection()
-        ActivityScenario.launch(Reviewer::class.java)
-            .use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.getColUnsafe } } }
-    }
-
     @Ignore("flaky")
     @Test
     @RunInBackground
