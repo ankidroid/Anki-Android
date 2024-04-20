@@ -354,6 +354,7 @@ open class Reviewer :
         }
         val flag = Flag.entries.find { it.ordinal == item.itemId }
         flag?.let {
+            Timber.i("Reviewer:: onOptionItemSelected Flag - $it clicked")
             onFlag(currentCard, it)
             return true
         }
