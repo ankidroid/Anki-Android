@@ -158,27 +158,35 @@ class AudioRecordingController :
 
         audioTimer = AudioTimer(this, this)
         recordButton.setOnClickListener {
+            Timber.i("primary 'record' button clicked")
             controlAudioRecorder()
         }
 
         saveButton.setOnClickListener {
+            Timber.i("'save' button clicked")
             isAudioRecordingSaved = false
             toggleSave()
         }
 
         playAudioButton.setOnClickListener {
+            Timber.i("play/pause clicked")
             playPausePlayer()
         }
 
         cancelAudioRecordingButton.setOnClickListener {
+            // a recording is in progress and is cancelled
+            Timber.i("'clear recording' clicked")
             clearRecording()
         }
 
         discardRecordingButton.setOnClickListener {
+            // a recording has been completed, but we want to remake it
+            Timber.i("'discard recording' clicked")
             discardAudio()
         }
         orientationEventListener = object : OrientationEventListener(context) {
             override fun onOrientationChanged(orientation: Int) {
+                // BUG: Executes on trivial orientation changes, not just portrait <-> landscape
                 when (context.resources.configuration.orientation) {
                     Configuration.ORIENTATION_LANDSCAPE -> {
                         audioFileView.visibility = View.GONE
@@ -243,6 +251,7 @@ class AudioRecordingController :
     }
 
     fun onViewFocusChanged() {
+        Timber.i("activity paused: stopping recording/resetting player")
         if (isRecording || isPaused) {
             clearRecording()
         }
@@ -299,6 +308,7 @@ class AudioRecordingController :
     }
 
     fun toggleSave() {
+        Timber.i("recording completed")
         CompatHelper.compat.vibrate(context, 20)
         stopAndSaveRecording()
         playAudioButtonLayout.visibility = View.VISIBLE
@@ -309,6 +319,7 @@ class AudioRecordingController :
     }
 
     fun toggleToRecorder() {
+        Timber.i("recorder requested")
         if (audioPlayer!!.isPlaying) {
             audioPlayer?.stop()
         }
@@ -317,6 +328,7 @@ class AudioRecordingController :
         controlAudioRecorder()
     }
 
+    /** When the 'primary' button of the audio recorder is pressed */
     private fun controlAudioRecorder() {
         if (!canRecordAudio(context)) {
             Timber.w("Audio recording permission denied.")
@@ -339,6 +351,7 @@ class AudioRecordingController :
     fun playPausePlayer() {
         audioProgressBar.max = audioPlayer?.duration ?: 0
         if (!audioPlayer!!.isPlaying) {
+            Timber.i("saved recording: playing ")
             isPlaying = true
             try {
                 audioPlayer!!.start()
@@ -355,6 +368,7 @@ class AudioRecordingController :
                 strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
             }
         } else {
+            Timber.i("saved recording: pausing")
             rewindAudioButton.isEnabled = false
             forwardAudioButton.isEnabled = false
             isPlaying = false
@@ -368,6 +382,7 @@ class AudioRecordingController :
         }
         val shortAudioDuration = 5000
         rewindAudioButton.setOnClickListener {
+            Timber.i("'back' pressed")
             val audioDuration = audioPlayer?.duration ?: 0
             if (audioDuration < shortAudioDuration) {
                 audioPlayer?.seekTo(0)
@@ -379,6 +394,7 @@ class AudioRecordingController :
             }
         }
         forwardAudioButton.setOnClickListener {
+            Timber.i("'forward' pressed")
             val audioDuration = audioPlayer?.duration ?: 0
             if (audioDuration < shortAudioDuration) {
                 audioPlayer?.seekTo(audioDuration)
@@ -391,6 +407,7 @@ class AudioRecordingController :
         }
 
         audioPlayer!!.setOnCompletionListener {
+            Timber.i("saved recording: completed")
             audioTimer.stop()
             rewindAudioButton.isEnabled = false
             forwardAudioButton.isEnabled = false
@@ -405,6 +422,7 @@ class AudioRecordingController :
     }
 
     private fun startRecording(context: Context, audioPath: String) {
+        Timber.i("starting recording")
         try {
             audioRecorder.startRecording(context, audioPath)
             isRecording = true
@@ -444,6 +462,7 @@ class AudioRecordingController :
     }
 
     private fun pauseRecorder() {
+        Timber.i("pausing recording")
         audioRecorder.pause()
         isPaused = true
         recordButton.setIconResource(R.drawable.ic_record)
@@ -451,6 +470,7 @@ class AudioRecordingController :
     }
 
     private fun resumeRecording() {
+        Timber.i("resuming recording")
         audioRecorder.resume()
         isPaused = false
         audioTimer.start()
@@ -487,6 +507,7 @@ class AudioRecordingController :
 
     // when answer button is clicked in reviewer
     fun updateUIForNewCard() {
+        Timber.i("resetting audio recorder: new card shown")
         try {
             if (isPlaying) {
                 discardAudio()

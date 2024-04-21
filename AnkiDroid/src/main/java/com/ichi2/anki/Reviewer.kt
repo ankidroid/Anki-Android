@@ -138,6 +138,8 @@ open class Reviewer :
 
     // Record Audio
     private var isMicToolBarVisible = false
+
+    /** Controller for 'Check Pronunciation' feature */
     private var audioRecordingController: AudioRecordingController? = null
     private var isAudioUIInitialized = false
     private lateinit var micToolBarLayer: LinearLayout
