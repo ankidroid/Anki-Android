@@ -136,6 +136,7 @@ androidx-test-junit = { module = "androidx.test.ext:junit", version.ref = "andro
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidxRunner" }
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidxTextCore" }
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTextCore" }
+androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "workRuntimeKtx" }
 commons-exec = { module = "org.apache.commons:commons-exec", version.ref = "commonsExec" }
 hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
 hamcrest-library = { module = "org.hamcrest:hamcrest-library", version.ref = "hamcrest" }

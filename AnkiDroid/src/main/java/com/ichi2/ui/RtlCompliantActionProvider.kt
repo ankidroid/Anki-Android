@@ -60,7 +60,7 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
          * @param context a context that may be of type [ContextWrapper]
          * @return The activity of the passed context
          */
-        private fun unwrapContext(context: Context): Activity {
+        fun unwrapContext(context: Context): Activity {
             var unwrappedContext: Context? = context
             while (unwrappedContext !is Activity && unwrappedContext is ContextWrapper) {
                 unwrappedContext = unwrappedContext.baseContext

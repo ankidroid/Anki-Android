@@ -30,6 +30,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
+import androidx.work.Configuration
+import androidx.work.testing.SynchronousExecutor
+import androidx.work.testing.WorkManagerTestInitHelper
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.preferences.sharedPrefs
@@ -93,6 +96,14 @@ open class RobolectricTest : AndroidTest {
         throwOnShowError = true
 
         ChangeManager.clearSubscribers()
+
+        validateRunWithAnnotationPresent()
+
+        val config = Configuration.Builder()
+            .setExecutor(SynchronousExecutor())
+            .build()
+
+        WorkManagerTestInitHelper.initializeTestWorkManager(targetContext, config)
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
         CollectionManager.setColForTests(null)
@@ -275,17 +286,7 @@ open class RobolectricTest : AndroidTest {
     }
 
     val targetContext: Context
-        get() {
-            return try {
-                ApplicationProvider.getApplicationContext()
-            } catch (e: IllegalStateException) {
-                if (e.message != null && e.message!!.startsWith("No instrumentation registered!")) {
-                    // Explicitly ignore the inner exception - generates line noise
-                    throw IllegalStateException("Annotate class: '${javaClass.simpleName}' with '@RunWith(AndroidJUnit4.class)'")
-                }
-                throw e
-            }
-        }
+        get() = ApplicationProvider.getApplicationContext()
 
     /**
      * Returns an instance of [SharedPreferences] using the test context
@@ -421,6 +422,18 @@ open class RobolectricTest : AndroidTest {
     @Suppress("MemberVisibilityCanBePrivate")
     fun editPreferences(action: SharedPreferences.Editor.() -> Unit) =
         getPreferences().edit(action = action)
+
+    private fun validateRunWithAnnotationPresent() {
+        try {
+            ApplicationProvider.getApplicationContext()
+        } catch (e: IllegalStateException) {
+            if (e.message != null && e.message!!.startsWith("No instrumentation registered!")) {
+                // Explicitly ignore the inner exception - generates line noise
+                throw IllegalStateException("Annotate class: '${javaClass.simpleName}' with '@RunWith(AndroidJUnit4.class)'")
+            }
+            throw e
+        }
+    }
 
     private fun maybeSetupBackend() {
         try {
