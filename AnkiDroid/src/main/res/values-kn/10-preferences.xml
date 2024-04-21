@@ -174,23 +174,23 @@
     <string name="show_top_bar" maxLength="41">Show top bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Show remaining</string>
-    <string name="show_progress_summ">Show remaining card count</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_progress_summ">ಉಳಿದ ಕಾರ್ಡ್ ಎಣಿಕೆಯನ್ನು ತೋರಿಸಿ</string>
+    <string name="show_eta" maxLength="41">ETA ತೋರಿಸಿ</string>
     <string name="show_eta_summ">ಉಳಿದ ಸಮಯವನ್ನು ತೋರಿಸಿ</string>
     <string name="use_current" maxLength="41">ಹೊಸ ಕಾರ್ಡ್‌ಗಳಿಗಾಗಿ ಡೆಕ್</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="day_offset_with_description" maxLength="41">ಮರುದಿನ ಪ್ರಾರಂಭಿಸಿ</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">ಮಧ್ಯರಾತ್ರಿ ಕಳೆದ %d ಗಂಟೆ</item>
+        <item quantity="other">ಮಧ್ಯರಾತ್ರಿ ಕಳೆದ %d ಗಂಟೆಗಳು</item>
     </plurals>
-    <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
+    <string name="pref_keep_screen_on" maxLength="41">ಪರದೆಯನ್ನು ಆನ್ ಮಾಡಿ</string>
     <string name="pref_keep_screen_on_summ">ಪರದೆಯ ಕಾಲಾವಧಿಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
-    <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+    <string name="enable_api_summary">ಇತರ ಅಪ್ಲಿಕೇಶನ್‌ಗಳನ್ನು AnkiDroid ಗೆ ಸಂಪರ್ಕಿಸಲು ಮತ್ತು ನಿಮ್ಮ ಹಸ್ತಕ್ಷೇಪವಿಲ್ಲದೆ ಡೇಟಾವನ್ನು ಓದಲು/ಬರೆಯಲು ಅನುಮತಿಸಿ</string>
     <string name="custom_buttons" maxLength="41">ಅಪ್ಲಿಕೇಶನ್ ಬಾರ್ ಬಟನ್‌ಗಳು</string>
-    <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
+    <string name="custom_buttons_summary">ಅಪ್ಲಿಕೇಶನ್ ಬಾರ್‌ನಲ್ಲಿ ಯಾವ ಕ್ರಿಯೆಗಳು ಗೋಚರಿಸುತ್ತವೆ ಎಂಬುದನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ</string>
     <string name="custom_buttons_setting_always_show">ಯಾವಾಗಲೂ ಕಾಣಿಸಿಕೊಳ್ಳಿ</string>
     <string name="custom_buttons_setting_if_room">ಕೊಠಡಿ ಇದ್ದರೆ ತೋರಿಸಿ</string>
     <string name="custom_buttons_setting_menu_only">ಮೆನು ಮಾತ್ರ</string>
@@ -212,7 +212,7 @@
     <string name="media_import_allow_all_files" maxLength="41">ಮಾಧ್ಯಮ ಆಮದುಗಳಲ್ಲಿ ಎಲ್ಲಾ ಫೈಲ್‌ಗಳನ್ನು ಅನುಮತಿಸಿ</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
+    <string name="custom_sync_server_title" maxLength="41">ಕಸ್ಟಮ್ ಸಿಂಕ್ ಸರ್ವರ್</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ಬಳಸಲಾಗುವುದಿಲ್ಲ</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
@@ -235,7 +235,7 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">ಜ್ಞಾಪನೆಗಳು</string>
     <string name="deck_conf_cram_filter" maxLength="41">ಫಿಲ್ಟರ್</string>
-    <string name="deck_conf_cram_search" maxLength="41">Search</string>
+    <string name="deck_conf_cram_search" maxLength="41">ಇದಕ್ಕಾಗಿ ಹುಡುಕು </string>
     <string name="deck_conf_cram_limit" maxLength="41">ಗೆ ಮಿತಿ</string>
     <string name="deck_conf_cram_order" maxLength="41">ಆಯ್ದ ಕಾರ್ಡ್‌ಗಳು</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
@@ -288,7 +288,7 @@
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\' ತೆಗೆದುಹಾಕಿ</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>

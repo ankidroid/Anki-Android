@@ -231,17 +231,17 @@
     <string name="deck_already_exists">同じ名前のデッキがすでにあります</string>
     <string name="create_deck_numeric_hint">デッキは名前の文字列順に並べられるため、たとえばデッキ「10」はデッキ「2」よりも上に配置されます。この場合、「2」を「02」に変更すれば、それより下に「10」を配置できます。</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">復習間隔も同じ日数にする</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="other">Show cards in</item>
+        <item quantity="other">この日を期日に指定</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="other">Show cards in range</item>
+        <item quantity="other">この期間の日のどれかを期日に指定（ランダム）</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="other">days</item>
+        <item quantity="other">日後</item>
     </plurals>
-    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">～</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">最短</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">最長</string>
 </resources>

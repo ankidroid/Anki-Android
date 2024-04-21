@@ -60,16 +60,16 @@
     <string name="expand">ವಿಸ್ತರಿಸಿ </string>
     <string name="collapse">ಬೀಳಿಸಿ</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">%d ನಿಮಿಷಗಳು ಉಳಿದಿವೆ</item>
+        <item quantity="other">%d ನಿಮಿಷಗಳು ಉಳಿದಿವೆ</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d ಗಂಟೆಗಳು %2$d ಉಳಿದಿವೆ</item>
+        <item quantity="other">%1$d ಗಂಟೆಗಳು %2$d ಉಳಿದಿವೆ</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d ದಿನ %2$d ಉಳಿದಿದೆ</item>
+        <item quantity="other">%1$d ದಿನಗಳು %2$d ಉಳಿದಿವೆ</item>
     </plurals>
     <string name="no_cards_placeholder_title">ಸಂಗ್ರಹ ಖಾಲಿಯಾಗಿದೆ </string>
     <string name="no_cards_placeholder_description">ಕಾರ್ಡ್‌ಗಳನ್ನು ಸೇರಿಸಲು ಪ್ರಾರಂಭಿಸಿ \n  + ಐಕಾನ್ ಬಳಸಿ</string>
@@ -202,7 +202,7 @@
     <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">ನಕಲಿಸಲಾಗುತ್ತಿದೆ...</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">ಮಾಧ್ಯಮ ರಫ್ತು</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">ವರ್ಗಾವಣೆ ಗಾತ್ರವನ್ನು ಲೆಕ್ಕಾಚಾರ ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>
+    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%2$s ರಲ್ಲಿ %1$s ಅನ್ನು ಸರಿಸಲಾಗಿದೆ</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">ವಲಸೆ ಯಶಸ್ವಿಯಾಗಿದೆ</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
         AnkiDroid is fully functional again, and you can sync.
@@ -241,16 +241,16 @@
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ಪ್ರವೇಶಿಸಲಾಗದ ಸಂಗ್ರಹ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
+    <string name="restore_data_from_ankiweb">AnkiWeb ನಿಂದ ಮರುಸ್ಥಾಪಿಸಿ (ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ)</string>
+    <string name="install_non_play_store_ankidroid_recommended">ಫೋಲ್ಡರ್ ಪ್ರವೇಶವನ್ನು ಮರುಸ್ಥಾಪಿಸಿ (ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ)</string>
     <string name="install_non_play_store_ankidroid">ಫೋಲ್ಡರ್ ಪ್ರವೇಶವನ್ನು ಮರುಸ್ಥಾಪಿಸಿ (ಸುಧಾರಿತ)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
+    <string name="restore_data_from_backup">ಬ್ಯಾಕಪ್‌ನಿಂದ .colpkg ಮರುಸ್ಥಾಪನೆ (ಸುಧಾರಿತ)</string>
     <string name="create_new_collection">ಹೊಸ ಸಂಗ್ರಹವನ್ನು ರಚಿಸಿ</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="new_unsafe_collection">ನೀವು AnkiDroid ಅನ್ನು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದರೆ ಹೊಸ ಸಂಗ್ರಹವನ್ನು ನಿಮ್ಮ ಫೋನ್‌ನಿಂದ ಅಳಿಸಲಾಗುತ್ತದೆ</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid ಕೆಲಸ ಮಾಡಲು ಕೆಲವು ಅನುಮತಿಗಳ ಅಗತ್ಯವಿದೆ</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
+    <string name="storage_access_title">ಶೇಖರಣಾ ಪ್ರವೇಶ</string>
+    <string name="storage_access_summary">ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಸುರಕ್ಷಿತ ಸ್ಥಳದಲ್ಲಿ ಉಳಿಸುತ್ತದೆ, ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದರೆ ಅದನ್ನು ಅಳಿಸಲಾಗುವುದಿಲ್ಲ</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ಎಲ್ಲಾ ಫೈಲ್‌ಗಳ ಪ್ರವೇಶ</string>
     <string name="image_occlusion">Image Occlusion</string>
 </resources>
