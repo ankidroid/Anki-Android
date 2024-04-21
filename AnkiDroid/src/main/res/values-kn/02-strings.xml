@@ -101,7 +101,7 @@
         <item>ರಚಿಸಲಾಗಿದೆ</item>
         <item>ಟಿಪ್ಪಣಿ ಮಾರ್ಪಡಿಸಲಾಗಿದೆ</item>
     </string-array>
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags">ಧ್ವಜಗಳು</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ಇಂದಿನ ಹೊಸ ಕಾರ್ಡ್ ಮಿತಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
     <string name="custom_study_increase_review_limit">ಇಂದಿನ ವಿಮರ್ಶೆ ಕಾರ್ಡ್ ಮಿತಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
@@ -112,7 +112,7 @@
     <string name="custom_study_limit_tags">ನಿರ್ದಿಷ್ಟ ಟ್ಯಾಗ್‌ಗಳಿಗೆ ಮಿತಿಗೊಳಿಸಿ</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ಟಿಪ್ಪಣಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
-    <string name="discard">Discard</string>
+    <string name="discard">ಧ್ವಜಗಳು</string>
     <string name="note_editor_no_cards_created">ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ರಚಿಸಲಾಗಿಲ್ಲ. ದಯವಿಟ್ಟು ಹೆಚ್ಚಿನ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ</string>
     <string name="note_editor_no_first_field">ಮೊದಲ ಕ್ಷೇತ್ರ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="note_editor_no_cloze_delations">ಈ ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವು ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆಗಳನ್ನು ಹೊಂದಿರಬೇಕು</string>
@@ -125,7 +125,7 @@
     <string name="select">ಆರಿಸಿ</string>
     <string name="field_remapping">%1$s (“%2$s” ನಿಂದ)</string>
     <string name="confirm_map_cards_to_nothing">ಯಾವುದಕ್ಕೂ ಮ್ಯಾಪ್ ಮಾಡದ ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತದೆ. ಟಿಪ್ಪಣಿಯಲ್ಲಿ ಉಳಿದ ಕಾರ್ಡ್‌ಗಳಿಲ್ಲದಿದ್ದರೆ, ಅದು ಕಳೆದುಹೋಗುತ್ತದೆ. ನೀವು ಮುಂದುವರಿಯಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">ಯಾವುದೇ ಟಿಪ್ಪಣಿ ಪ್ರಕಾರ ಕಂಡುಬಂದಿಲ್ಲ</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">ಟೈಮ್‌ಬಾಕ್ಸ್ ತಲುಪಿದೆ</string>
     <plurals name="timebox_reached">
@@ -143,8 +143,8 @@
     <string name="card_editor_reset_card">ಪ್ರಗತಿಯನ್ನು ಮರುಹೊಂದಿಸಿ</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ಮರುಹೊಂದಿಸಿ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ಮುನ್ನೋಟ</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">ಮಾರ್ಕ್‌ಡೌನ್‌ನಂತೆ ನಕಲಿಸಿ</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d ರಲ್ಲಿ %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">ಮರುಹೆಸರಿಸಿ</string>
     <string name="checks_action">ಪರಿಶೀಲಿಸಿ</string>
     <string name="check_db">ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಿ</string>
@@ -160,14 +160,14 @@
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">ಇದು ಮಾನ್ಯ ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಫೈಲ್ ಅಲ್ಲ</string>
     <string name="import_title_error" comment="Title of error dialog">ದೋಷ</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">ಫೈಲ್\n\n%s ಆಮದು ಮಾಡಲು ವಿಫಲವಾಗಿದೆ</string>
     <string name="import_error_not_apkg_extension">“%s” ಫೈಲ್ ಹೆಸರು .apkg ಅಥವಾ .colpkg ವಿಸ್ತರಣೆಯನ್ನು ಹೊಂದಿಲ್ಲ</string>
     <string name="import_error_load_imported_database">ಅಂಕಿ ಡೇಟಾಬೇಸ್ (.anki2) ಬದಲಿಗಳನ್ನು ಇನ್ನೂ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ. ಬದಲಿ ಸೂಚನೆಗಳಿಗಾಗಿ ದಯವಿಟ್ಟು ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ.</string>
     <string name="import_error_content_provider">ಆಯ್ದ ಫೈಲ್ ಅನ್ನು ಆಂಕಿಡ್ರಾಯ್ಡ್ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡಲಾಗುವುದಿಲ್ಲ. ಆಂಕಿ ಫೈಲ್‌ಗಳನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡುವುದು ಹೇಗೆ ಎಂದು ದಯವಿಟ್ಟು ಬಳಕೆದಾರರ ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">ಆಮದು ಅಡ್ಡಿಪಡಿಸಲಾಗಿದೆ: ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ಮುಚ್ಚಲಾಗಿದೆ</string>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">ರಫ್ತು ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ...</string>
+    <string name="export_ready_title">ರಫ್ತು ಸಿದ್ಧವಾಗಿದೆ</string>
     <string name="export_send_no_handlers">ಎಪಿಕೆಜಿ ನಿರ್ವಹಿಸಲು ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್‌ಗಳು ಲಭ್ಯವಿಲ್ಲ. ಉಳಿಸಲಾಗುತ್ತಿದೆ ...</string>
     <string name="export_save_apkg_successful">ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ</string>
     <string name="export_save_apkg_unsuccessful">ಉಳಿಸಿ ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ವಿಫಲವಾಗಿದೆ</string>
@@ -180,7 +180,7 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
+    <string name="export_choice_share">ಹಂಚಿರಿ</string>
     <string name="export_choice_save_to">ಗೆ ಉಳಿಸಿ</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ಆಯ್ಕೆಗಳು</string>
     <string name="menu__deck_options">ಡೆಕ್ ಆಯ್ಕೆಗಳು</string>
@@ -210,7 +210,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">ಹಿನ್ನೆಲೆ</string>
     <string name="choose_an_image">ಚಿತ್ರವನ್ನು ಆರಿಸಿ</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">ಹಿನ್ನೆಲೆ ತೆಗೆದುಹಾಕುವುದೇ?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ಡೀಫಾಲ್ಟ್ ಅನ್ನು ಮರುಸ್ಥಾಪಿಸಿ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ಖಾಲಿ</string>
@@ -228,13 +228,13 @@
     <string name="reviewer_invalid_api_version_visit_documentation">ವೀಕ್ಷಣೆ</string>
     <string name="anki_js_error_code">(ದೋಷ ಕೋಡ್:%d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ಗೆ ನಕಲಿಸಲಾಗಿದೆ</string>
     <string name="about_ankidroid_error_copy_debug_info">ಡೀಬಗ್ ಮಾಹಿತಿಯನ್ನು ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ಗೆ ನಕಲಿಸುವಲ್ಲಿ ದೋಷ</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ಕಾರ್ಡ್ ವಿಷಯ ದೋಷ: ‘%s’ ಲೋಡ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ</string>
     <!-- Deck Picker -->
     <string name="search_decks">ಹುಡುಕಾಟ ಡೆಕ್‌ಗಳು</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">ವಲಸೆಯ ಪ್ರಗತಿಯನ್ನು ತೋರಿಸಿ</string>
     <string name="ankidroid_init_failed_webview_title">ಗಂಭೀರವಾದ ತಪ್ಪು</string>
     <string name="ankidroid_init_failed_webview">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಸಿಸ್ಟಮ್ ವೆಬ್‌ವೀಕ್ಷಣೆಯನ್ನು ಅವಲಂಬಿಸಿದೆ, ಅದು ಲಭ್ಯವಿಲ್ಲ. ಸಿಸ್ಟಮ್ ನವೀಕರಣಗಳನ್ನು ಸ್ಥಾಪಿಸುತ್ತಿದ್ದರೆ ಇದು ಸಂಭವಿಸಬಹುದು. ದಯವಿಟ್ಟು ಕೆಲವು ನಿಮಿಷಗಳಲ್ಲಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -247,11 +247,11 @@
     <string name="insert_heading">ಶಿರೋನಾಮೆ ಸೇರಿಸಿ</string>
     <string name="format_font_size">ಫಾಂಟ್ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸಿ</string>
     <string name="insert_mathjax">ಮ್ಯಾಥ್‌ಜಾಕ್ಸ್ ಸಮೀಕರಣವನ್ನು ಸೇರಿಸಿ</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">ಬಟನ್ ಪಠ್ಯ</string>
     <string name="before_text">ಆಯ್ಕೆಗೆ ಮೊದಲು HTML</string>
     <string name="after_text">ಆಯ್ಕೆಯ ನಂತರ HTML</string>
     <string name="add_toolbar_item">ಟೂಲ್‌ಬಾರ್ ಐಟಂ ರಚಿಸಿ</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="edit_toolbar_item">ಪರಿಕರಪಟ್ಟಿ ಐಟಂ ಅನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">ಟೂಲ್‌ಬಾರ್ ಐಟಂ ಅನ್ನು ತೆಗೆದುಹಾಕುವುದೇ?</string>
     <string name="note_editor_paste_too_large">ಚಿತ್ರ ಅಂಟಿಸಲು ತುಂಬಾ ದೊಡ್ಡದಾಗಿದೆ, ದಯವಿಟ್ಟು ಚಿತ್ರವನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ಸೇರಿಸಿ</string>
@@ -260,26 +260,26 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">ಶಾರ್ಟ್‌ಕಟ್‌ಗಳನ್ನು ಸೇರಿಸಲು ನಿಮ್ಮ ಮುಖಪುಟವು ಆಂಕಿಡ್ರಾಯ್ಡ್‌ಗೆ ಅನುಮತಿಸುವುದಿಲ್ಲ</string>
     <string name="create_shortcut_error">ಶಾರ್ಟ್‌ಕಟ್ ಸೇರಿಸುವಲ್ಲಿ ದೋಷ:%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ವಾಕ್ಯಗಳನ್ನು ದೊಡ್ಡಕ್ಷರಗೊಳಿಸಿ</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ಸ್ಕ್ರಾಲ್ ಟೂಲ್ಬಾರ್</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">ಮಾನ್ಯವಾದ ಇಮೇಲ್ ಅನ್ನು ನಮೂದಿಸಿ</string>
     <string name="password_empty">ಗುಪ್ತಪದದ ಅಗತ್ಯವಿದೆ</string>
     <string name="back_pressed_once">ನಿರ್ಗಮಿಸಲು ಮತ್ತೆ ಒತ್ತಿರಿ</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="back_pressed_once_reviewer">ಹಿಂತಿರುಗಲು ಮತ್ತೆ ಹಿಂದಕ್ಕೆ ಒತ್ತಿರಿ</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">ಡೆಕ್ ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</string>
-    <string name="try_again">Try Again</string>
+    <string name="try_again">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸು</string>
     <string name="cancel_download">ಡೌನ್‌ಲೋಡ್ ರದ್ದುಮಾಡಿ</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="cancel_download_question_title">ಡೌನ್‌ಲೋಡ್ ರದ್ದು ಮಾಡುವುದೇ?</string>
+    <string name="downloading_file">%s ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
+    <string name="import_deck">ಆಮದು ಡೆಕ್</string>
+    <string name="something_wrong">ಏನೋ ತಪ್ಪಾಗಿದೆ, ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="download_failed">ಡೌನ್‌ಲೋಡ್ ವಿಫಲವಾಗಿದೆ</string>
+    <string name="deck_download_progress_message">ಡೌನ್‌ಲೋಡ್ ಚಾಲನೆಯಲ್ಲಿರುವಾಗ ನೀವು ಇತರ ಅಪ್ಲಿಕೇಶನ್‌ಗಳನ್ನು ಬಳಸಬಹುದು</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>

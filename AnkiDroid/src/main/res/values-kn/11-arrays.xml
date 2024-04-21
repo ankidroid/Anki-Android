@@ -50,18 +50,18 @@
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">ಹಿಂದೆ ನೋಡಿದ ಅತ್ಯಂತ ಹಳೆಯದು</string>
     <string name="cram_deck_conf_order_random">ಯಾದೃಚ್ಛಿಕ</string>
     <string name="cram_deck_conf_order_increasing_intervals">ಹೆಚ್ಚುತ್ತಿರುವ ಮಧ್ಯಂತರಗಳು</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
     <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
     <string name="cram_deck_conf_order_order_added">ಆರ್ಡರ್ ಸೇರಿಸಲಾಗಿದೆ</string>
     <string name="cram_deck_conf_order_order_due">ಆದೇಶ ಬಾಕಿ ಇದೆ</string>
-    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
+    <string name="cram_deck_conf_order_latest_added_first">ತೀರಾ ಇತ್ತೀಚಿನದನ್ನು ಮೊದಲು ಸೇರಿಸಲಾಗುತ್ತದೆ</string>
     <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">ಪ್ರಸ್ತುತ ಡೆಕ್ ಬಳಸಿ</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_decide_by_note_type">ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವನ್ನು ನಿರ್ಧರಿಸಿ</string>
     <!-- theme labels -->
     <string name="theme_follow_system">ವ್ಯವಸ್ಥೆಯನ್ನು ಅನುಸರಿಸಿ</string>
     <!-- day_theme_labels -->
