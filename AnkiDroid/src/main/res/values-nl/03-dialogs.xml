@@ -59,7 +59,6 @@
         <item quantity="other">%d kaarten verplaatst</item>
     </plurals>
     <string name="reset_card_dialog_title">Herstel leervoortgang</string>
-    <string name="reset_card_dialog_message">Deze kaart zal worden geplaatst aan het einde van de wachtrij voor nieuwe kaarten</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d kaart gereset</item>
         <item quantity="other">%d kaarten gereset</item>

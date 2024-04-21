@@ -58,7 +58,6 @@
         <item quantity="other">%d thẻ được định vị lại</item>
     </plurals>
     <string name="reset_card_dialog_title">Đặt lại tiến trình thẻ</string>
-    <string name="reset_card_dialog_message">Thẻ này sẽ được đặt ở cuối hàng đợi thẻ mới</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">đặt lại thẻ %d</item>
     </plurals>

@@ -61,7 +61,6 @@
         <item quantity="other">%d cards repositioned</item>
     </plurals>
     <string name="reset_card_dialog_title">Ponastavi napredek kartice</string>
-    <string name="reset_card_dialog_message">Ta kartica bo postavljena na konec čakalne vrste novih kartic</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="two">%d cards reset</item>

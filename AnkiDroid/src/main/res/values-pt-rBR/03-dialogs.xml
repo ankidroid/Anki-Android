@@ -59,7 +59,6 @@
         <item quantity="other">%d cards reposicionados</item>
     </plurals>
     <string name="reset_card_dialog_title">Redefinir progresso do card</string>
-    <string name="reset_card_dialog_message">Este card será colocado no fim da fila de novos cards.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d resetar card</item>
         <item quantity="other">%d resetar cards</item>

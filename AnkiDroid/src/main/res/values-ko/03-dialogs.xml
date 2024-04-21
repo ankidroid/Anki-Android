@@ -58,7 +58,6 @@
         <item quantity="other">%d개의 카드를 옮겼습니다.</item>
     </plurals>
     <string name="reset_card_dialog_title">카드 학습 진행 재설정</string>
-    <string name="reset_card_dialog_message">이 카드는 새 카드 대기열의 맨 마지막에 배치됩니다.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d개의 카드를 초기화했습니다.</item>
     </plurals>

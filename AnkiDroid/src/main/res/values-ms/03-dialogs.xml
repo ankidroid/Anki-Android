@@ -58,7 +58,6 @@
         <item quantity="other">%d kad telah alih posisi</item>
     </plurals>
     <string name="reset_card_dialog_title">Tetap semula kemajuan kad</string>
-    <string name="reset_card_dialog_message">Kad ini akan diletakkan pada hujung aturan kad baru</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d kad ditetap semula</item>
     </plurals>

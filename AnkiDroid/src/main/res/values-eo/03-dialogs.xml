@@ -59,7 +59,6 @@
         <item quantity="other">%d kartoj estas repoziciitaj</item>
     </plurals>
     <string name="reset_card_dialog_title">Nuligi progreson de karto</string>
-    <string name="reset_card_dialog_message">Tiu ĉi karto estos movita al la fino de vico de novaj kartoj</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d karto estas nuligita</item>
         <item quantity="other">%d kartoj estas nuligitaj</item>

@@ -59,7 +59,6 @@
         <item quantity="other">%d കാർഡുകൾ സ്ഥാനം മാറ്റി</item>
     </plurals>
     <string name="reset_card_dialog_title">കാർഡ് പുരോഗതി പുന Res സജ്ജമാക്കുക</string>
-    <string name="reset_card_dialog_message">ഈ കാർഡ് പുതിയ കാർഡ് ക്യൂവിന്റെ അവസാനം സ്ഥാപിക്കും</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%dകാർഡ് പുന സജ്ജമാക്കുക</item>
         <item quantity="other">%dകാർഡുകൾ പുന സജ്ജമാക്കുക</item>

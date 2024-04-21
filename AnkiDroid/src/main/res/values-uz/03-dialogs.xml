@@ -59,7 +59,6 @@
         <item quantity="other">%d ta kartalar qayta joylandi</item>
     </plurals>
     <string name="reset_card_dialog_title">Reset card progress</string>
-    <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d karta restart qilindi</item>
         <item quantity="other">%d kartalar restart qilindi</item>

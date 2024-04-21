@@ -61,7 +61,6 @@
         <item quantity="other">Pakeistas %d kort. išdėstymas</item>
     </plurals>
     <string name="reset_card_dialog_title">Atkurti kortelių eigą</string>
-    <string name="reset_card_dialog_message">Ši kortelė bus įdėta į naujų kortelių eilės pabaigą</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d kortelės atkūrimas</item>
         <item quantity="few">%d kortelių atkūrimas</item>

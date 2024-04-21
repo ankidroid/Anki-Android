@@ -58,7 +58,6 @@
         <item quantity="other">%d posisi kartu dipindah</item>
     </plurals>
     <string name="reset_card_dialog_title">Reset kemajuan kartu</string>
-    <string name="reset_card_dialog_message">Kartu ini akan ditaruh di akhir antrean kartu baru</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d kartu direset</item>
     </plurals>

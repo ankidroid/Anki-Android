@@ -59,7 +59,6 @@
         <item quantity="other">%d कार्डों का स्थान बदल दिया गया है</item>
     </plurals>
     <string name="reset_card_dialog_title">पत्ता प्रगति रीसेट करें</string>
-    <string name="reset_card_dialog_message">इस पत्ते को नए पत्तों के कतार के अंत में रखा जाएगा</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d कार्ड रीसेट हुआ</item>
         <item quantity="other">%d कार्ड रीसेट हुआ</item>

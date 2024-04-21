@@ -62,7 +62,6 @@
         <item quantity="other">%d (g)cinn de chártaí athlonnaithe </item>
     </plurals>
     <string name="reset_card_dialog_title">Glan stair an chárta maidir le do dhul ar aghaidh? </string>
-    <string name="reset_card_dialog_message">Cuirfear an cárta seo ar chúl na scuaine</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="two">%d cards reset</item>

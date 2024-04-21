@@ -59,7 +59,6 @@
         <item quantity="other">%d kartın yeri değiştirildi</item>
     </plurals>
     <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>
-    <string name="reset_card_dialog_message">Bu kart yeni kart sırasının sonuna koyulacak</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d kart sıfırlandı</item>
         <item quantity="other">%d kart sıfırlandı</item>

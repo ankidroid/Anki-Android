@@ -59,7 +59,6 @@
         <item quantity="other">%d cards repositioned</item>
     </plurals>
     <string name="reset_card_dialog_title">Kartın tərəqqisini bərpa edin</string>
-    <string name="reset_card_dialog_message">Bu kart yeni kart növbəsinin sonunda yerləşdiriləcək</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="other">%d cards reset</item>

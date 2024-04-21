@@ -59,7 +59,6 @@
         <item quantity="other">%d tarjetas reposicionadas</item>
     </plurals>
     <string name="reset_card_dialog_title">Resetear el progreso de la tarjeta</string>
-    <string name="reset_card_dialog_message">Esta tarjeta se colocará al final de la nueva cola de tarjetas.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d tarjeta reiniciada</item>
         <item quantity="other">%d tarjetas reiniciadas</item>
