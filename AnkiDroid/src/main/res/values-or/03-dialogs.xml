@@ -59,7 +59,6 @@
         <item quantity="other">%dଟି ପତ୍ର ପୁନଃଅଵସ୍ଥିତ କରାଗଲା</item>
     </plurals>
     <string name="reset_card_dialog_title">ପତ୍ରର ପ୍ରଗତି ପୁନଃସେଟ୍ କର</string>
-    <string name="reset_card_dialog_message">ଏହି ପତ୍ରକୁ ନୂତନ ପତ୍ର ଧାଡ଼ି ଶେଷରେ ରଖାଯିବ</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%dଟିଏ ପତ୍ର ପୁନଃସେଟ୍ ହେଲା</item>
         <item quantity="other">%dଟି ପତ୍ର ପୁନଃସେଟ୍ ହେଲା</item>

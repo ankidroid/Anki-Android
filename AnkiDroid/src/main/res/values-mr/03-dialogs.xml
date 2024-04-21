@@ -59,7 +59,6 @@
         <item quantity="other">%d कार्ड पुनर्स्थित केली</item>
     </plurals>
     <string name="reset_card_dialog_title">कार्ड प्रगती रीसेट करा</string>
-    <string name="reset_card_dialog_message">हे कार्ड नवीन कार्ड रांगेच्या शेवटी ठेवले जाईल</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="other">%d कार्डे रीसेट केली</item>

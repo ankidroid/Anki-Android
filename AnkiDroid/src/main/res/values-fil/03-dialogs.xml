@@ -59,7 +59,6 @@
         <item quantity="other">%d mga card ang pinosisyon muli</item>
     </plurals>
     <string name="reset_card_dialog_title">I-reset ang progreso ng kard</string>
-    <string name="reset_card_dialog_message">Ang kard na ito ay ilalagay sa dulo ng bagong queue kard</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card ang na-reset</item>
         <item quantity="other">%d mga card ang na-reset</item>

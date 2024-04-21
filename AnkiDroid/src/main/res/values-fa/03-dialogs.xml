@@ -59,7 +59,6 @@
         <item quantity="other">%d کارت جابه‌جا شدند</item>
     </plurals>
     <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
-    <string name="reset_card_dialog_message">این کارت در انتهاي ردیف کارت جدید قرار خواهد گرفت</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d کارت تنظیم مجدد شد</item>
         <item quantity="other">%d کارت تنظیم مجدد شدند</item>

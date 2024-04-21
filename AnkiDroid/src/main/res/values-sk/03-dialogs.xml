@@ -61,7 +61,6 @@
         <item quantity="other">%d premiestnených kartičiek</item>
     </plurals>
     <string name="reset_card_dialog_title">Vynulovať zaznamenaný priebeh v učení kartičky</string>
-    <string name="reset_card_dialog_message">Táto kartička bude umiestnená na posledné miesto v poradí nových kartičiek</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d resetovaná kartička</item>
         <item quantity="few">%d resetované kartičky</item>

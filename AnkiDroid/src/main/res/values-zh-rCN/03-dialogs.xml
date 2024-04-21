@@ -58,7 +58,6 @@
         <item quantity="other">%d 张卡牌已更改位置</item>
     </plurals>
     <string name="reset_card_dialog_title">重设卡片进度</string>
-    <string name="reset_card_dialog_message">这张卡片将被置于新卡片队列的末尾。</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d 张卡牌已重置</item>
     </plurals>

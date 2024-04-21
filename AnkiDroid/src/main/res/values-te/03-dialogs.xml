@@ -59,7 +59,6 @@
         <item quantity="other">%d cards repositioned</item>
     </plurals>
     <string name="reset_card_dialog_title">కార్డ్ పురోగతిని రీసెట్ చేయండి</string>
-    <string name="reset_card_dialog_message">ఈ కార్డు కొత్త కార్డు క్యూ చివరిలో ఉంచబడుతుంది</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d కార్డ్ రీసెట్</item>
         <item quantity="other">%d cards reset</item>

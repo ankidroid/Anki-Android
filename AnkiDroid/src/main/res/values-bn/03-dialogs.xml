@@ -59,7 +59,6 @@
         <item quantity="other">%d টি কার্ড পুনঃস্থাপিত</item>
     </plurals>
     <string name="reset_card_dialog_title">অগ্ৰগতি মুছে ফেলুন</string>
-    <string name="reset_card_dialog_message">এ কার্ডটি কে নতুন কার্ডের সারির সর্বশেষে স্থাপন করা হবে</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d টি কার্ড রিসেট হয়েছে</item>
         <item quantity="other">%d টি কার্ড রিসেট হয়েছে</item>

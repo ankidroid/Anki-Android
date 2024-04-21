@@ -59,7 +59,6 @@
         <item quantity="other">Επανατοποθετήθηκαν %d κάρτες</item>
     </plurals>
     <string name="reset_card_dialog_title">Επαναφορά προόδου κάρτας</string>
-    <string name="reset_card_dialog_message">Αυτή η κάρτα θα τοποθετηθεί στο τέλος της ουράς νέων καρτών</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="other">Επαναφορά %d καρτών</item>

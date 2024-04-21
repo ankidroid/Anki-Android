@@ -59,7 +59,6 @@
         <item quantity="other">%d korttia siirretty</item>
     </plurals>
     <string name="reset_card_dialog_title">Nollaa kortin edistyminen</string>
-    <string name="reset_card_dialog_message">Tämä kortti laitetaan uusien korttien jonon viimeiseksi.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d alusta kortti</item>
         <item quantity="other">%d alusta kortit</item>

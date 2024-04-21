@@ -61,7 +61,6 @@
         <item quantity="other">%d карточек перемещены</item>
     </plurals>
     <string name="reset_card_dialog_title">Сбросить состояние карточек</string>
-    <string name="reset_card_dialog_message">Эта карточка будет помещена в конец очереди новых карт</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d карточка сброшена</item>
         <item quantity="few">%d карточки сброшены</item>

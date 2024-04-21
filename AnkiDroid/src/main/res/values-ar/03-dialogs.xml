@@ -63,7 +63,6 @@
         <item quantity="other">تم تغيير موضع %d بطاقة</item>
     </plurals>
     <string name="reset_card_dialog_title">تصفير تقدم البطاقة</string>
-    <string name="reset_card_dialog_message">ستوضع هذه البطاقة في نهاية صف البطاقات الجديدة</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="zero">تم تصفير %d بطاقة</item>
         <item quantity="one">تم تصفير %d بطاقة</item>

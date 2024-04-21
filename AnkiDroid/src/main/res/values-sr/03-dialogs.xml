@@ -60,7 +60,6 @@
         <item quantity="other">%d cards repositioned</item>
     </plurals>
     <string name="reset_card_dialog_title">Ресетовање прогреса учења карте</string>
-    <string name="reset_card_dialog_message">Ова картице ће бити постављена на крај реда нових картица.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="few">%d cards reset</item>

@@ -58,7 +58,6 @@
         <item quantity="other">%d枚のカードの表示順序が変更されました</item>
     </plurals>
     <string name="reset_card_dialog_title">カードの学習進度をリセット</string>
-    <string name="reset_card_dialog_message">このカードを新規カードの最後に配置します</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d枚のカードの学習履歴をリセットしました</item>
     </plurals>

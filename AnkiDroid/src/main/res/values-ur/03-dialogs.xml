@@ -59,7 +59,6 @@
         <item quantity="other">%d cards repositioned</item>
     </plurals>
     <string name="reset_card_dialog_title">کارڈ کی پیشرفت کو دوبارہ ترتیب دیں۔</string>
-    <string name="reset_card_dialog_message">یہ کارڈ نئے کارڈ کی قطار کے آخر میں رکھا جائے گا۔</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d کارڈ ری سیٹ</item>
         <item quantity="other">%d cards reset</item>

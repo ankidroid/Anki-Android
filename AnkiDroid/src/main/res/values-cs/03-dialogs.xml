@@ -61,7 +61,6 @@
         <item quantity="other">%d karet přesunuto</item>
     </plurals>
     <string name="reset_card_dialog_title">Obnovit proces učení karty</string>
-    <string name="reset_card_dialog_message">Tato karta bude umístěna na konec fronty s novými kartami.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d karta obnovena</item>
         <item quantity="few">%d karty obnoveny</item>

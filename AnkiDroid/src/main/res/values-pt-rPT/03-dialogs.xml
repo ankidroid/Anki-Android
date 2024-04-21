@@ -59,7 +59,6 @@
         <item quantity="other">%d fichas reposicionadas</item>
     </plurals>
     <string name="reset_card_dialog_title">Reiniciar progresso da ficha</string>
-    <string name="reset_card_dialog_message">Esta ficha será colocada no fim da fila das fichas novas.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="other">%d cards reset</item>

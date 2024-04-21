@@ -59,7 +59,6 @@
         <item quantity="other">%d kort ompositionerade</item>
     </plurals>
     <string name="reset_card_dialog_title">Återställ kortets framsteg</string>
-    <string name="reset_card_dialog_message">Detta kort kommer att placeras sist i kön för nya kort.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d kort återställt</item>
         <item quantity="other">%d kort återställda</item>

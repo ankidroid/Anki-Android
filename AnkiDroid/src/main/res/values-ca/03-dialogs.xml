@@ -59,7 +59,6 @@
         <item quantity="other">%d cartes recol·locades</item>
     </plurals>
     <string name="reset_card_dialog_title">Reinicia el progrés de les fitxes</string>
-    <string name="reset_card_dialog_message">Aquesta carta es posarà al final de la cua de les cartes noves.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d carta reiniciada</item>
         <item quantity="other">%d cartes reiniciades</item>

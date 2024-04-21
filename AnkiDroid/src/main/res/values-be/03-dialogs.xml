@@ -61,7 +61,6 @@
         <item quantity="other">Перамешчаны %d картак</item>
     </plurals>
     <string name="reset_card_dialog_title">Скінуць дасягненні па картцы</string>
-    <string name="reset_card_dialog_message">Гэтая картка будзе змешчана ў канец чаргі новых картак</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">Скінута %d картка</item>
         <item quantity="few">Скінуты %d карткі</item>

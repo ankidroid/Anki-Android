@@ -61,7 +61,6 @@
         <item quantity="other">%d כרטיסים הושמו מחדש</item>
     </plurals>
     <string name="reset_card_dialog_title">איפוס התקדמות הקלף</string>
-    <string name="reset_card_dialog_message">כרטיס זה יוצב בסוף תור של הכרטיסים החדשים.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">כרטיס אחד אופס</item>
         <item quantity="two">%d כרטיסים אופסו</item>

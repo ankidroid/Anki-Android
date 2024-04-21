@@ -59,7 +59,6 @@
         <item quantity="other">%d cartas torradas a positzionare</item>
     </plurals>
     <string name="reset_card_dialog_title">Reseta su progressu de sa carta</string>
-    <string name="reset_card_dialog_message">Custa carta s\'at a pònnere a sa fine de sa lista de cartas noa</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d carta resetada</item>
         <item quantity="other">%d cartas resetadas</item>
