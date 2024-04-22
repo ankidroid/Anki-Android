@@ -57,6 +57,16 @@ enum class Flag(val code: Int, @DrawableRes val drawableRes: Int, @ColorRes val 
         PURPLE -> TR.actionsFlagPurple()
     }
 
+    /**
+     * Renames the flag
+     *
+     * @param newName The new name for the flag.
+     */
+    suspend fun rename(newName: String) {
+        val labels = FlagLabels.loadFromColConfig()
+        labels.updateName(this, newName)
+    }
+
     companion object {
         fun fromCode(code: Int): Flag {
             return entries.first { it.code == code }
@@ -85,6 +95,12 @@ private value class FlagLabels(val value: JSONObject) {
      * This is not supported for [Flag.NONE] and is validated outside this method
      */
     fun getLabel(flag: Flag): String? = value.getStringOrNull(flag.code.toString())
+    suspend fun updateName(flag: Flag, newName: String) {
+        value.put(flag.ordinal.toString(), newName)
+        withCol {
+            config.set("flagLabels", value)
+        }
+    }
 
     companion object {
         suspend fun loadFromColConfig() =
