@@ -125,5 +125,6 @@
     <!-- Audio Recorder Colors -->
     <color name="audio_recorder_red">#FF4747</color>
     <color name="audio_recorder_green">#6FF06F</color>
+    <color name="audio_recorder_grey">#444444</color>
 </resources>
 

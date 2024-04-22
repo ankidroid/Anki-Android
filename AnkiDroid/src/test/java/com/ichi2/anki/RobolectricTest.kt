@@ -16,6 +16,8 @@
 
 package com.ichi2.anki
 
+import android.Manifest
+import android.app.Application
 import android.content.Context
 import android.content.DialogInterface.*
 import android.content.Intent
@@ -425,6 +427,12 @@ open class RobolectricTest : AndroidTest {
     @Suppress("MemberVisibilityCanBePrivate")
     fun editPreferences(action: SharedPreferences.Editor.() -> Unit) =
         getPreferences().edit(action = action)
+
+    protected fun grantRecordAudioPermission() {
+        val application = ApplicationProvider.getApplicationContext<Application>()
+        val app = Shadows.shadowOf(application)
+        app.grantPermissions(Manifest.permission.RECORD_AUDIO)
+    }
 
     private fun validateRunWithAnnotationPresent() {
         try {
