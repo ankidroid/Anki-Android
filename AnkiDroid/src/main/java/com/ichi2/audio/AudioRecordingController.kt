@@ -42,6 +42,7 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.elapsed
 import com.ichi2.anki.utils.formatAsString
+import com.ichi2.audio.AudioRecordingController.RecordingState.AppendToRecording
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.Permissions.canRecordAudio
@@ -58,6 +59,7 @@ class AudioRecordingController :
     AudioTimer.OnTimerTickListener,
     AudioTimer.OnAudioTickListener {
     private lateinit var audioRecorder: AudioRecorder
+    private var state: RecordingState = AppendToRecording.CLEARED
 
     /**
      * It's Nullable and that it is set only if a sound is playing or paused, otherwise it is null.
@@ -74,9 +76,9 @@ class AudioRecordingController :
     private lateinit var audioWaveform: AudioWaveform
     private lateinit var audioProgressBar: LinearProgressIndicator
     lateinit var context: Context
-    private var isCleared = false
-    private var isPaused = false
-    private var isPlaying = false
+    private val isCleared get() = state == AppendToRecording.CLEARED
+    private val isRecordingPaused get() = state == AppendToRecording.RECORDING_PAUSED
+    private val isPlaying get() = state == AppendToRecording.PLAYBACK_PLAYING
     private lateinit var cancelAudioRecordingButton: MaterialButton
     private lateinit var playAudioButtonLayout: LinearLayout
     private lateinit var recordAudioButtonLayout: LinearLayout
@@ -140,7 +142,6 @@ class AudioRecordingController :
         recordButton = layout.findViewById(R.id.action_start_recording)
         audioTimeView = layout.findViewById(R.id.audio_time_track)
         audioWaveform = layout.findViewById(R.id.audio_waveform_view)
-        saveButton = layout.findViewById(R.id.action_save_recording)
         cancelAudioRecordingButton = layout.findViewById(R.id.action_cancel_recording)
         playAudioButton = layout.findViewById(R.id.action_play_recording)
         forwardAudioButton = layout.findViewById(R.id.action_forward)
@@ -150,9 +151,16 @@ class AudioRecordingController :
         val audioFileView = layout.findViewById<ShapeableImageView>(R.id.audio_file_imageview)
         discardRecordingButton = layout.findViewById(R.id.action_discard_recording)
         cancelAudioRecordingButton.isEnabled = false
-        saveButton.isEnabled = false
 
-        saveButton.setIconResource(if (!inEditField) R.drawable.ic_done_white else R.drawable.ic_save_white)
+        saveButton = layout.findViewById<MaterialButton>(R.id.action_save_recording).apply {
+            isEnabled = false
+            setIconResource(R.drawable.ic_save_white)
+            setOnClickListener {
+                Timber.i("'save' button clicked")
+                isAudioRecordingSaved = false
+                toggleSave()
+            }
+        }
 
         setUpMediaPlayer()
 
@@ -160,12 +168,6 @@ class AudioRecordingController :
         recordButton.setOnClickListener {
             Timber.i("primary 'record' button clicked")
             controlAudioRecorder()
-        }
-
-        saveButton.setOnClickListener {
-            Timber.i("'save' button clicked")
-            isAudioRecordingSaved = false
-            toggleSave()
         }
 
         playAudioButton.setOnClickListener {
@@ -252,7 +254,7 @@ class AudioRecordingController :
 
     fun onViewFocusChanged() {
         Timber.i("activity paused: stopping recording/resetting player")
-        if (isRecording || isPaused) {
+        if (isRecording || isRecordingPaused) {
             clearRecording()
         }
         if (isPlaying) {
@@ -260,28 +262,85 @@ class AudioRecordingController :
         }
     }
 
+    private fun setUiState(state: AppendToRecording) {
+        this.state = state
+        when (state) {
+            AppendToRecording.CLEARED -> {
+                recordButton.apply {
+                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    setIconResource(R.drawable.ic_record)
+                }
+                playAudioButton.apply {
+                    setIconResource(R.drawable.round_play_arrow_24)
+                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                }
+                cancelAudioRecordingButton.isEnabled = false
+                audioTimeView.text = DEFAULT_TIME
+                saveButton.isEnabled = false
+                playAudioButtonLayout.visibility = View.GONE
+                recordAudioButtonLayout.visibility = View.VISIBLE
+                audioWaveform.clear()
+            }
+            AppendToRecording.RECORDING_IN_PROGRESS -> {
+                cancelAudioRecordingButton.isEnabled = true
+                saveButton.isEnabled = true
+                recordButton.setIconResource(R.drawable.round_pause_24)
+                playAudioButtonLayout.visibility = View.GONE
+                recordAudioButtonLayout.visibility = View.VISIBLE
+            }
+            AppendToRecording.RECORDING_PAUSED -> {
+                recordButton.setIconResource(R.drawable.ic_record)
+                playAudioButtonLayout.visibility = View.GONE
+                recordAudioButtonLayout.visibility = View.VISIBLE
+            }
+            AppendToRecording.PLAYBACK_ENDED -> {
+                audioWaveform.clear()
+                saveButton.isEnabled = false
+                cancelAudioRecordingButton.isEnabled = false
+                audioTimeView.text = DEFAULT_TIME
+                playAudioButtonLayout.visibility = View.VISIBLE
+                recordAudioButtonLayout.visibility = View.GONE
+                rewindAudioButton.isEnabled = false
+                forwardAudioButton.isEnabled = false
+                audioProgressBar.progress = 0
+                playAudioButton.apply {
+                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    setIconResource(R.drawable.round_play_arrow_24)
+                }
+            }
+            AppendToRecording.PLAYBACK_PAUSED -> {
+                rewindAudioButton.isEnabled = false
+                forwardAudioButton.isEnabled = false
+                playAudioButton.apply {
+                    setIconResource(R.drawable.round_play_arrow_24)
+                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                }
+            }
+            AppendToRecording.PLAYBACK_PLAYING -> {
+                rewindAudioButton.isEnabled = true
+                forwardAudioButton.isEnabled = true
+                playAudioButton.apply {
+                    setIconResource(R.drawable.round_pause_24)
+                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
+                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
+                }
+            }
+        }
+    }
+
     private fun discardAudio() {
         CompatHelper.compat.vibrate(context, 20)
-        recordButton.apply {
-            iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-            strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-            setIconResource(R.drawable.ic_record)
-        }
-        playAudioButton.apply {
-            setIconResource(R.drawable.round_play_arrow_24)
-            iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-            strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-        }
-        cancelAudioRecordingButton.isEnabled = false
+        setUiState(AppendToRecording.CLEARED)
         tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
-        audioTimeView.text = DEFAULT_TIME
         stopAudioPlayer()
     }
 
     private fun stopAudioPlayer() {
         audioWaveform.clear()
-        isPaused = false
-        isCleared = true
         isRecording = false
         try {
             audioTimer.stop()
@@ -291,9 +350,6 @@ class AudioRecordingController :
             Timber.w(e)
         }
         audioTimer = AudioTimer(this, this)
-        saveButton.isEnabled = false
-        playAudioButtonLayout.visibility = View.GONE
-        recordAudioButtonLayout.visibility = View.VISIBLE
     }
 
     private fun prepareAudioPlayer() {
@@ -310,9 +366,8 @@ class AudioRecordingController :
     fun toggleSave() {
         Timber.i("recording completed")
         CompatHelper.compat.vibrate(context, 20)
+        setUiState(AppendToRecording.PLAYBACK_ENDED)
         stopAndSaveRecording()
-        playAudioButtonLayout.visibility = View.VISIBLE
-        recordAudioButtonLayout.visibility = View.GONE
         // show this snackbar only in the edit field/multimedia activity
         if (inEditField) (context as Activity).showSnackbar(context.resources.getString(R.string.audio_saved))
         prepareAudioPlayer()
@@ -323,8 +378,6 @@ class AudioRecordingController :
         if (audioPlayer!!.isPlaying) {
             audioPlayer?.stop()
         }
-        playAudioButtonLayout.visibility = View.GONE
-        recordAudioButtonLayout.visibility = View.VISIBLE
         controlAudioRecorder()
     }
 
@@ -340,7 +393,7 @@ class AudioRecordingController :
             return
         }
         when {
-            isPaused -> resumeRecording()
+            isRecordingPaused -> resumeRecording()
             isRecording -> pauseRecorder()
             isCleared -> startRecording(context, tempAudioPath!!)
             else -> startRecording(context, tempAudioPath!!)
@@ -352,7 +405,6 @@ class AudioRecordingController :
         audioProgressBar.max = audioPlayer?.duration ?: 0
         if (!audioPlayer!!.isPlaying) {
             Timber.i("saved recording: playing ")
-            isPlaying = true
             try {
                 audioPlayer!!.start()
             } catch (e: Exception) {
@@ -360,25 +412,12 @@ class AudioRecordingController :
                 showThemedToast(context, context.resources.getString(R.string.multimedia_editor_audio_view_playing_failed), true)
             }
             audioTimer.start()
-            rewindAudioButton.isEnabled = true
-            forwardAudioButton.isEnabled = true
-            playAudioButton.apply {
-                setIconResource(R.drawable.round_pause_24)
-                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
-            }
+            setUiState(AppendToRecording.PLAYBACK_PLAYING)
         } else {
             Timber.i("saved recording: pausing")
-            rewindAudioButton.isEnabled = false
-            forwardAudioButton.isEnabled = false
-            isPlaying = false
+            setUiState(AppendToRecording.PLAYBACK_PAUSED)
             audioTimer.pause()
             audioPlayer?.pause()
-            playAudioButton.apply {
-                setIconResource(R.drawable.round_play_arrow_24)
-                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-            }
         }
         val shortAudioDuration = 5000
         rewindAudioButton.setOnClickListener {
@@ -409,15 +448,7 @@ class AudioRecordingController :
         audioPlayer!!.setOnCompletionListener {
             Timber.i("saved recording: completed")
             audioTimer.stop()
-            rewindAudioButton.isEnabled = false
-            forwardAudioButton.isEnabled = false
-            audioProgressBar.progress = 0
-            playAudioButton.apply {
-                iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                setIconResource(R.drawable.round_play_arrow_24)
-            }
-            audioTimeView.text = DEFAULT_TIME
+            setUiState(AppendToRecording.PLAYBACK_ENDED)
         }
     }
 
@@ -426,12 +457,8 @@ class AudioRecordingController :
         try {
             audioRecorder.startRecording(context, audioPath)
             isRecording = true
-            isPaused = false
-            isCleared = false
             audioTimer.start()
-            cancelAudioRecordingButton.isEnabled = true
-            saveButton.isEnabled = true
-            recordButton.setIconResource(R.drawable.round_pause_24)
+            setUiState(AppendToRecording.RECORDING_IN_PROGRESS)
         } catch (e: Exception) {
             Timber.e(e, "Failed to start recording")
         }
@@ -450,12 +477,7 @@ class AudioRecordingController :
             Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start")
             showThemedToast(context, context.resources.getString(R.string.multimedia_editor_audio_view_recording_failed), true)
         }
-        isPaused = false
         isRecording = false
-        saveButton.isEnabled = false
-        cancelAudioRecordingButton.isEnabled = false
-        audioTimeView.text = DEFAULT_TIME
-        audioWaveform.clear()
         isAudioRecordingSaved = true
         // save recording only in the edit field not in the reviewer but save it temporarily
         if (inEditField) saveRecording()
@@ -464,32 +486,24 @@ class AudioRecordingController :
     private fun pauseRecorder() {
         Timber.i("pausing recording")
         audioRecorder.pause()
-        isPaused = true
-        recordButton.setIconResource(R.drawable.ic_record)
+        setUiState(AppendToRecording.RECORDING_PAUSED)
         audioTimer.pause()
     }
 
     private fun resumeRecording() {
         Timber.i("resuming recording")
         audioRecorder.resume()
-        isPaused = false
         audioTimer.start()
-        recordButton.setIconResource(R.drawable.round_pause_24)
+        setUiState(AppendToRecording.RECORDING_IN_PROGRESS)
     }
 
     private fun clearRecording() {
         CompatHelper.compat.vibrate(context, 20)
-        isCleared = true
         audioTimer.stop()
-        recordButton.setIconResource(R.drawable.ic_record)
-        cancelAudioRecordingButton.isEnabled = false
+        setUiState(AppendToRecording.CLEARED)
         audioRecorder.stopRecording()
         tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
-        audioTimeView.text = DEFAULT_TIME
-        audioWaveform.clear()
-        isPaused = false
         isRecording = false
-        saveButton.isEnabled = false
     }
 
     override fun onDone() {
@@ -512,7 +526,7 @@ class AudioRecordingController :
             if (isPlaying) {
                 discardAudio()
             }
-            if (isRecording || isPaused) {
+            if (isRecording || isRecordingPaused) {
                 clearRecording()
             }
         } catch (e: Exception) {
@@ -566,5 +580,33 @@ class AudioRecordingController :
 
         /** File of the temporary mic record  */
         var tempAudioPath: String? = null
+    }
+
+    sealed interface RecordingState {
+        /**
+         * The primary button is responsible for 'record', 'pause', 'append to recording'
+         * A 'save' button is required before playback is enabled
+         *
+         * Designed for longer recordings of content to be saved on a note
+         */
+        enum class AppendToRecording : RecordingState {
+            /** No recording has been made, or the recording was cleared */
+            CLEARED,
+
+            /** A recording is in progress */
+            RECORDING_IN_PROGRESS,
+
+            /** A recording has been made, and can be appended to */
+            RECORDING_PAUSED,
+
+            /** A recording has been completed, and can be listened to */
+            PLAYBACK_PAUSED,
+
+            /** A completed recording is being listened to */
+            PLAYBACK_PLAYING,
+
+            /** A completed recording is being listened to */
+            PLAYBACK_ENDED;
+        }
     }
 }
