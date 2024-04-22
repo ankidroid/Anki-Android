@@ -523,11 +523,14 @@ class AudioRecordingController :
     fun updateUIForNewCard() {
         Timber.i("resetting audio recorder: new card shown")
         try {
-            if (isPlaying) {
-                discardAudio()
+            // transition to the 'CLEARED' state
+            if (state == AppendToRecording.CLEARED) {
+                return
             }
             if (isRecording || isRecordingPaused) {
                 clearRecording()
+            } else {
+                discardAudio()
             }
         } catch (e: Exception) {
             Timber.d("Unable to reset the audio recorder", e)
