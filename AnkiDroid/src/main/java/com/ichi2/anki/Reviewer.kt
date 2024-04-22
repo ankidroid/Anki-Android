@@ -74,6 +74,7 @@ import com.ichi2.audio.AudioRecordingController.Companion.isAudioRecordingSaved
 import com.ichi2.audio.AudioRecordingController.Companion.isRecording
 import com.ichi2.audio.AudioRecordingController.Companion.setEditorStatus
 import com.ichi2.audio.AudioRecordingController.Companion.tempAudioPath
+import com.ichi2.audio.AudioRecordingController.RecordingState
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
@@ -621,7 +622,12 @@ open class Reviewer :
             if (!isAudioUIInitialized) {
                 try {
                     audioRecordingController = AudioRecordingController()
-                    audioRecordingController?.createUI(this, micToolBarLayer)
+                    audioRecordingController?.createUI(
+                        this,
+                        micToolBarLayer,
+                        initialState = RecordingState.ImmediatePlayback.CLEARED,
+                        R.layout.activity_audio_recording_reviewer
+                    )
                 } catch (e: Exception) {
                     Timber.w(e, "unable to add the audio recorder to toolbar")
                     CrashReportService.sendExceptionReport(e, "Unable to create recorder tool bar")
