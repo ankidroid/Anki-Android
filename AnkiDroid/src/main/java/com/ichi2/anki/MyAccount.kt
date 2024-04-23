@@ -59,18 +59,16 @@ open class MyAccount : AnkiActivity() {
             STATE_LOGGED_IN -> {
                 val username = baseContext.sharedPrefs().getString("username", "")
                 usernameLoggedIn.text = username
-                toolbar = loggedIntoMyAccountView.findViewById(R.id.toolbar)
-                if (toolbar != null) {
-                    toolbar!!.title =
+                toolbar = loggedIntoMyAccountView.findViewById<Toolbar?>(R.id.toolbar)?.also { toolbar ->
+                    toolbar.title =
                         getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
                     setSupportActionBar(toolbar)
                 }
                 setContentView(loggedIntoMyAccountView)
             }
             STATE_LOG_IN -> {
-                toolbar = loginToMyAccountView.findViewById(R.id.toolbar)
-                if (toolbar != null) {
-                    toolbar!!.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                toolbar = loginToMyAccountView.findViewById<Toolbar?>(R.id.toolbar)?.also { toolbar ->
+                    toolbar.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
                     setSupportActionBar(toolbar)
                 }
                 setContentView(loginToMyAccountView)
@@ -211,13 +209,14 @@ open class MyAccount : AnkiActivity() {
         val lostEmail = loginToMyAccountView.findViewById<Button>(R.id.lost_mail_instructions)
         val lostMailUrl = Uri.parse(resources.getString(R.string.link_ankiweb_lost_email_instructions))
         lostEmail.setOnClickListener { openUrl(lostMailUrl) }
-        loggedIntoMyAccountView = layoutInflater.inflate(R.layout.my_account_logged_in, null)
-        usernameLoggedIn = loggedIntoMyAccountView.findViewById(R.id.username_logged_in)
-        val logoutButton = loggedIntoMyAccountView.findViewById<Button>(R.id.logout_button)
-        loggedIntoMyAccountView.let {
-            ankidroidLogo = it.findViewById(R.id.ankidroid_logo)
+        loggedIntoMyAccountView = layoutInflater.inflate(R.layout.my_account_logged_in, null).apply {
+            usernameLoggedIn = findViewById(R.id.username_logged_in)
+            findViewById<Button>(R.id.logout_button).apply {
+                setOnClickListener { logout() }
+            }
+            ankidroidLogo = findViewById(R.id.ankidroid_logo)
         }
-        logoutButton.setOnClickListener { logout() }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             password.setAutoFillListener {
                 // disable "show password".
@@ -244,15 +243,6 @@ open class MyAccount : AnkiActivity() {
         } else {
             ankidroidLogo.visibility = View.VISIBLE
         }
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
-            Timber.i("MyAccount - onBackPressed()")
-            finish()
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
     }
 
     companion object {
