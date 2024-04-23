@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
     <RelativeLayout
+        android:id="@+id/logged_in_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:foregroundGravity="center">
@@ -74,5 +75,13 @@
 
         </LinearLayout>
     </RelativeLayout>
+    <!-- opens a WebView for 'remove account', replaces the layout above -->
+    <FrameLayout
+        android:id="@+id/remove_account_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:context=".pages.RemoveAccountFragment"
+        />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
