@@ -65,7 +65,7 @@
     <string name="card_browser_change_deck">Փոխել կապուկը</string>
     <string name="delete_card_title">Ջնջե՞լ գրառումը:</string>
     <string name="card_browser_show_marked">Զտել նշվածները</string>
-    <string name="card_browser_show_suspended">Filter suspended</string>
+    <string name="card_browser_show_suspended">Ցուցադրել հեռացվածները</string>
     <string name="card_browser_search_by_tag">Զտել ըստ պիտակի</string>
     <string name="card_browser_search_by_flag">Զտել ըստ դրոշի</string>
     <string name="card_browser_list_my_searches">Իմ որոնումները</string>
@@ -84,14 +84,14 @@
         <item>Ըստ ստեղծման ամսաթվի</item>
         <item>Ըստ գրառման խմբագրման ամսաթվի</item>
         <item>Ըստ քարտի խմբագրման ամսաթվի</item>
-        <item>By due time</item>
-        <item>By interval</item>
+        <item>Ըստ կրկնության ամսաթվի</item>
+        <item>Ըստ ժամանակամիջոցի</item>
         <item>Ըստ հեշտության</item>
         <item>Ըստ վերանայումների</item>
-        <item>By lapses</item>
+        <item>Ըստ մոռացված լինելու</item>
     </string-array>
     <string name="card_browser_select_all">Նշել բոլորը</string>
-    <string name="card_browser_select_none">Select none</string>
+    <string name="card_browser_select_none">Ոչինչ չնշել</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(նոր)</string>
     <string name="card_browser_due_filtered_card">(զտված)</string>
     <string name="card_browser_interval_learning_card">(սովորելու)</string>
