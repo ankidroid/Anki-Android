@@ -27,13 +27,17 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.ichi2.anki.pages.RemoveAccountFragment
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.utils.ext.removeFragmentFromContainer
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
@@ -54,6 +58,14 @@ open class MyAccount : AnkiActivity() {
     var toolbar: Toolbar? = null
     private lateinit var passwordLayout: TextInputLayout
     private lateinit var ankidroidLogo: ImageView
+
+    // if the 'remove account' fragment is open, close it first
+    private val onRemoveAccountBackCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            closeRemoveAccountScreen()
+        }
+    }
+
     open fun switchToState(newState: Int) {
         when (newState) {
             STATE_LOGGED_IN -> {
@@ -101,6 +113,7 @@ open class MyAccount : AnkiActivity() {
         } else {
             ankidroidLogo.visibility = View.VISIBLE
         }
+        onBackPressedDispatcher.addCallback(this, onRemoveAccountBackCallback)
     }
 
     private fun attemptLogin() {
@@ -132,12 +145,28 @@ open class MyAccount : AnkiActivity() {
 
     /**
      * Opens the AnkiWeb 'remove account' WebView
+     * @see RemoveAccountFragment
      * @see R.string.remove_account_url
      */
     private fun openRemoveAccountScreen() {
-        // BUG: custom sync server doesn't use this URL
-        // BUG: this redirects to the decks screen after login
-        openUrl(getString(R.string.remove_account_url))
+        Timber.i("opening 'remove account'")
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.remove_account_frame, RemoveAccountFragment())
+            .commit()
+        findViewById<View>(R.id.remove_account_frame).isVisible = true
+        findViewById<View>(R.id.logged_in_layout).isVisible = false
+        onRemoveAccountBackCallback.isEnabled = true
+    }
+
+    private fun closeRemoveAccountScreen() {
+        Timber.i("closing 'remove account'")
+        // remove the fragment - this resets the navigation
+        // in case of user error
+        supportFragmentManager.removeFragmentFromContainer(R.id.remove_account_frame)
+        findViewById<View>(R.id.remove_account_frame).isVisible = false
+        findViewById<View>(R.id.logged_in_layout).isVisible = true
+        onRemoveAccountBackCallback.isEnabled = false
     }
 
     private fun resetPassword() {
