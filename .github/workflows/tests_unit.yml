@@ -92,7 +92,9 @@ jobs:
           arguments: jacocoUnitTestReport --daemon
 
       - name: Store Logcat as Artifact
-        if: failure()
+        # cancelled() handles test timeouts
+        # remove when test timeouts cause a failure()
+        if: failure() || cancelled()
         uses: actions/upload-artifact@v3
         with:
           name: logcat-${{ matrix.name }}
