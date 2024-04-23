@@ -686,6 +686,23 @@ open class Reviewer :
         }
         markCardIcon.iconAlpha = alpha
 
+        val flagIcon = menu.findItem(R.id.action_flag)
+        if (flagIcon != null) {
+            if (currentCard != null) {
+                when (currentCard!!.userFlag()) {
+                    1 -> flagIcon.setIcon(R.drawable.ic_flag_red)
+                    2 -> flagIcon.setIcon(R.drawable.ic_flag_orange)
+                    3 -> flagIcon.setIcon(R.drawable.ic_flag_green)
+                    4 -> flagIcon.setIcon(R.drawable.ic_flag_blue)
+                    5 -> flagIcon.setIcon(R.drawable.ic_flag_pink)
+                    6 -> flagIcon.setIcon(R.drawable.ic_flag_turquoise)
+                    7 -> flagIcon.setIcon(R.drawable.ic_flag_purple)
+                    else -> flagIcon.setIcon(R.drawable.ic_flag_transparent)
+                }
+            }
+            flagIcon.iconAlpha = alpha
+        }
+
         // Anki Desktop Translations
         menu.findItem(R.id.action_reschedule_card).title =
             CollectionManager.TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
