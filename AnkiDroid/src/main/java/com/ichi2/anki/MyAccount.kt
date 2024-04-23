@@ -35,6 +35,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.pages.RemoveAccountFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.removeFragmentFromContainer
@@ -183,7 +184,9 @@ open class MyAccount : AnkiActivity() {
             ankidroidLogo = it.findViewById(R.id.ankidroid_logo)
         }
         val loginButton = loginToMyAccountView.findViewById<Button>(R.id.login_button)
-
+        loginToMyAccountView.findViewById<Button>(R.id.privacy_policy_button).apply {
+            setOnClickListener { openAnkiDroidPrivacyPolicy() }
+        }
         username.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 val email = username.text.toString().trim()
@@ -256,6 +259,9 @@ open class MyAccount : AnkiActivity() {
             findViewById<Button>(R.id.remove_account_button).apply {
                 setOnClickListener { openRemoveAccountScreen() }
             }
+            findViewById<Button>(R.id.privacy_policy_button).apply {
+                setOnClickListener { openAnkiDroidPrivacyPolicy() }
+            }
             ankidroidLogo = findViewById(R.id.ankidroid_logo)
         }
 
@@ -285,6 +291,11 @@ open class MyAccount : AnkiActivity() {
         } else {
             ankidroidLogo.visibility = View.VISIBLE
         }
+    }
+
+    private fun openAnkiDroidPrivacyPolicy() {
+        Timber.i("Opening 'Privacy policy'")
+        showDialogFragment(HelpDialog.newPrivacyPolicyInstance())
     }
 
     companion object {
