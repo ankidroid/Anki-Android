@@ -22,15 +22,28 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import com.ichi2.anki.R
+
 // TODO : Middle blue line should move left->mid https://github.com/ankidroid/Anki-Android/pull/14591#issuecomment-1791037102
 /**This class represents a custom View used for creating audio waveforms when recording audio.
  * It loops over each spike and add it on the screen and the height of the spike is determined by the
  * amplitude that is returned by the audio recorder while recording audio. **/
 class AudioWaveform(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
 
-    private var spikePaint = Paint()
-    private var linePaint = Paint()
-    private var bgPaint = Paint()
+    private var spikePaint = Paint().apply {
+        color = Color.rgb(244, 81, 30)
+    }
+
+    private var verticalLinePaint = Paint().apply {
+        color = Color.rgb(33, 150, 243)
+        style = Paint.Style.STROKE
+        strokeWidth = 5f
+    }
+
+    private var backgroundPaint = Paint().apply {
+        color = Color.argb(20, 229, 228, 226)
+    }
+
     private var amplitudes = ArrayList<Float>()
     private var audioSpikes = ArrayList<RectF>()
 
@@ -40,19 +53,30 @@ class AudioWaveform(context: Context, attrs: AttributeSet? = null) : View(contex
     private var w = 6f
 
     /** Screen width, it's updated according to the actual screen width **/
-    private var sw = 0f
-
-    /** Screen height **/
-    private var sh = 300f
+    private val sw get() = width
 
     /** Gap between each spike **/
     private var d = 4f
-    private var maxSpike = 0
+
+    private val displayVerticalLine: Boolean
+
+    /**
+     * If the vertical line is displayed, the waveform is drawn up to the line
+     * Otherwise, the waveform takes up the full width of the control
+     */
+    private val percentageOfWidthToFill: Float
+        get() = if (displayVerticalLine) 0.5f else 1f
+
+    private val spikeCount
+        get() =
+            (sw / (w + d) * percentageOfWidthToFill)
+                .toInt()
 
     init {
-        spikePaint.color = Color.rgb(244, 81, 30)
-        sw = (resources.displayMetrics.widthPixels / 2).toFloat()
-        maxSpike = (sw / (w + d)).toInt()
+        val customAttrs = context.obtainStyledAttributes(attrs, R.styleable.AudioWaveform, 0, 0)
+        displayVerticalLine = customAttrs.getBoolean(R.styleable.AudioWaveform_display_vertical_line, true)
+        backgroundPaint.color = customAttrs.getColor(R.styleable.AudioWaveform_android_background, backgroundPaint.color)
+        customAttrs.recycle()
     }
 
     fun addAmplitude(amp: Float) {
@@ -60,12 +84,12 @@ class AudioWaveform(context: Context, attrs: AttributeSet? = null) : View(contex
         val norm = (amp.toInt() / 7).coerceAtMost(300).coerceAtLeast(6).toFloat()
         amplitudes.add(norm)
         audioSpikes.clear()
-        val amps = amplitudes.takeLast(maxSpike)
-        for (a in amps.indices) {
-            val left = a * (w + d)
-            val top = sh / 2 - amps[a] / 2
+        val amps = amplitudes.takeLast(spikeCount)
+        for ((index, amplitude) in amps.withIndex()) {
+            val left = index * (w + d)
+            val top = height / 2 - amplitude / 2
             val right = left + w
-            val bottom = top + amps[a]
+            val bottom = top + amplitude
             audioSpikes.add(RectF(left, top, right, bottom))
         }
         invalidate()
@@ -81,23 +105,18 @@ class AudioWaveform(context: Context, attrs: AttributeSet? = null) : View(contex
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val backgroundPaint = bgPaint.apply {
-            color = Color.argb(20, 229, 228, 226)
-        }
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backgroundPaint)
 
         audioSpikes.forEach {
             canvas.drawRoundRect(it, radius, radius, spikePaint)
         }
-        // mid blue vertical line
-        val centerX = width / 2f
-        val startY = 0f
-        val endY = height.toFloat()
-        val verticalLine = linePaint.apply {
-            color = Color.rgb(33, 150, 243)
-            style = Paint.Style.STROKE
-            strokeWidth = 5f
+
+        if (displayVerticalLine) {
+            // mid blue vertical line
+            val centerX = width / 2f
+            val startY = 0f
+            val endY = height.toFloat()
+            canvas.drawLine(centerX, startY, centerX, endY, verticalLinePaint)
         }
-        canvas.drawLine(centerX, startY, centerX, endY, verticalLine)
     }
 }

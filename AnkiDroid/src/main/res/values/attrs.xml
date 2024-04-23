@@ -162,6 +162,11 @@
         <attr name="cycle_indeterminate_to_checked" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="AudioWaveform">
+        <attr name="display_vertical_line" format="boolean" />
+        <attr name="android:background" />
+    </declare-styleable>
+
     <!-- Background color for Tab layout. It is essentially the color of the toolbar.
          The latter is set by colorPrimary, but theme overlay can't use it,
          as it itself overrides colorPrimary, which is used by the view directly. -->
