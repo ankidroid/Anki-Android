@@ -130,6 +130,16 @@ open class MyAccount : AnkiActivity() {
         }
     }
 
+    /**
+     * Opens the AnkiWeb 'remove account' WebView
+     * @see R.string.remove_account_url
+     */
+    private fun openRemoveAccountScreen() {
+        // BUG: custom sync server doesn't use this URL
+        // BUG: this redirects to the decks screen after login
+        openUrl(getString(R.string.remove_account_url))
+    }
+
     private fun resetPassword() {
         super.openUrl(Uri.parse(resources.getString(R.string.resetpw_url)))
     }
@@ -213,6 +223,9 @@ open class MyAccount : AnkiActivity() {
             usernameLoggedIn = findViewById(R.id.username_logged_in)
             findViewById<Button>(R.id.logout_button).apply {
                 setOnClickListener { logout() }
+            }
+            findViewById<Button>(R.id.remove_account_button).apply {
+                setOnClickListener { openRemoveAccountScreen() }
             }
             ankidroidLogo = findViewById(R.id.ankidroid_logo)
         }
