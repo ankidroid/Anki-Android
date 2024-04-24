@@ -20,13 +20,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import androidx.annotation.StringRes
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItems
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem
+import com.ichi2.utils.cancelable
+import com.ichi2.utils.listItemsAndMessage
+import com.ichi2.utils.show
 import timber.log.Timber
 
 /**
@@ -51,10 +53,8 @@ object AndroidPermanentlyRevokedPermissionsDialog {
             "WRITE_EXTERNAL_STORAGE",
             getCurrentAnkiDroidDirectory(context)
         )
-        MaterialDialog(context).show {
-            // AlertDialog does not allow message and listItems
-            message(text = message)
-            listItems(items = listItemData.map { context.getString(it.stringRes) }) { dialog: DialogInterface, index: Int, _: CharSequence ->
+        AlertDialog.Builder(context).show {
+            listItemsAndMessage(message = message, listItemData.map { context.getString(it.stringRes) }) { dialog: DialogInterface, index: Int ->
                 val listItem = listItemData[index]
                 listItem.onClick(context)
                 if (listItem.dismissesDialog) {
