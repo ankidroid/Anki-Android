@@ -120,6 +120,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     implementation(libs.kotlin.reflect)
                     implementation(libs.kotlin.test)
                     implementation(libs.search.preference)
+                    implementation(libs.androidx.work.testing)
 
                     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
                     // and there's no no-op version for release build. Usage has been disabled for release
@@ -135,6 +136,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     testImplementation(libs.mockito.inline)
                     testImplementation(libs.mockito.kotlin)
                     testImplementation(libs.hamcrest)
+                    testImplementation(libs.androidx.work.testing)
                     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
                     testImplementation(libs.robolectric)
                     testImplementation(libs.androidx.test.core)
