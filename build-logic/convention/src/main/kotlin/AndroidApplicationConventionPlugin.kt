@@ -19,6 +19,7 @@ import com.ichi2.anki.annotationProcessor
 import com.ichi2.anki.api
 import com.ichi2.anki.compileOnly
 import com.ichi2.anki.configureCommonFeaturesForApplicationPlugin
+import com.ichi2.anki.configureFlavors
 import com.ichi2.anki.coreLibraryDesugaring
 import com.ichi2.anki.debugImplementation
 import com.ichi2.anki.implementation

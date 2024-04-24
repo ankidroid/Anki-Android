@@ -18,6 +18,15 @@ package com.ichi2.anki
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.ProductFlavor
 
+
+/**
+ * Product Flavors are used for Amazon App Store and Google Play Store.
+ * This is because we cannot use Camera Permissions in Amazon App Store (for FireTv etc...)
+ * Therefore, different AndroidManifest for Camera Permissions is used in Amazon flavor.
+ *
+ * This flavor block must stay in sync with the same block in testlib/build.gradle.kts
+ */
+
 @Suppress("EnumEntryName")
 enum class FlavorDimension {
     appStore
@@ -30,18 +39,13 @@ enum class AnkiFlavor(val dimension: FlavorDimension) {
     full(FlavorDimension.appStore),
 }
 
-fun configureFlavors(
-    commonExtension: CommonExtension<*, *, *, *, *>,
-    flavorConfigurationBlock: ProductFlavor.(flavor: AnkiFlavor) -> Unit = {}
+internal fun CommonExtension<*, *, *, *, *>.configureFlavors(
 ) {
-    commonExtension.apply {
-        flavorDimensions += FlavorDimension.appStore.name
-        productFlavors {
-            AnkiFlavor.values().forEach {
-                create(it.name) {
-                    dimension = it.dimension.name
-                    flavorConfigurationBlock(this, it)
-                }
+    flavorDimensions += FlavorDimension.appStore.name
+    productFlavors {
+        AnkiFlavor.values().forEach {
+            create(it.name) {
+                dimension = FlavorDimension.appStore.name
             }
         }
     }

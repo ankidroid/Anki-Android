@@ -47,10 +47,9 @@ internal fun Project.configureCommonFeaturesForApplicationPlugin(
         configureKotlin()
         configurePackaging()
         configureDefaultConfig()
-        configureProductFlavors()
+        configureFlavors()
         configureSplitLogic()
         configureBuildVariants()
-        configureBuildTypes()
     }
 }
 
@@ -125,102 +124,6 @@ internal fun KotlinCompile.configureJvmTarget() {
 }
 
 
-internal fun Project.configureBuildTypes() {
-    extensions.configure<ApplicationExtension> {
-        buildTypes {
-            debug {
-                versionNameSuffix = "-debug"
-                isDebuggable = true
-                applicationIdSuffix = ".debug"
-                splits.abi.isUniversalApk = true // Build universal APK for debug always
-                // Check Crash Reports page on developer wiki for info on ACRA testing
-                // buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
-                if (project.rootProject.file("local.properties").exists()) {
-                    val localProperties = Properties()
-                    localProperties.load(
-                        project.rootProject.file("local.properties").inputStream()
-                    )
-                    // #6009 Allow optional disabling of JaCoCo for general build (assembleDebug).
-                    // jacocoDebug task was slow, hung, and wasn't required unless I wanted coverage
-                    enableUnitTestCoverage = localProperties["enable_coverage"] != "false"
-                    // not profiled: optimization for build times
-                    if (localProperties["enable_languages"] == "false") {
-                        defaultConfig.resourceConfigurations += "en"
-                    }
-                    // allows the scoped storage migration when the user is not logged in
-                    if (localProperties["allow_unsafe_migration"] != null) {
-                        buildConfigField(
-                            "Boolean",
-                            "ALLOW_UNSAFE_MIGRATION",
-                            localProperties["allow_unsafe_migration"].toString()
-                        )
-                    }
-                    // allow disabling leak canary
-                    if (localProperties["enable_leak_canary"] != null) {
-                        buildConfigField(
-                            "Boolean",
-                            "ENABLE_LEAK_CANARY",
-                            localProperties["enable_leak_canary"].toString()
-                        )
-                    } else {
-                        buildConfigField("Boolean", "ENABLE_LEAK_CANARY", "true")
-                    }
-                } else {
-                    enableUnitTestCoverage = true
-                }
-
-                // make the icon red if in debug mode
-                resValue("color", "anki_foreground_icon_color_0", "#FFFF0000")
-                resValue("color", "anki_foreground_icon_color_1", "#FFFF0000")
-                resValue(
-                    "string",
-                    "applicationId",
-                    "${defaultConfig.applicationId}${applicationIdSuffix}"
-                )
-            }
-            release {
-                isMinifyEnabled = true
-                splits.abi.isUniversalApk = "true" == System.getProperty(
-                    "universal-apk",
-                    "false"
-                ) // Build universal APK for release with `-Duniversal-apk=true`
-                proguardFiles(
-                    getDefaultProguardFile("proguard-android.txt"),
-                    "proguard-rules.pro"
-                )
-                signingConfig = signingConfigs.getByName("release")
-
-                // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
-                if (project.hasProperty("customSuffix")) {
-                    // the suffix needs a '.' at the start
-                    applicationIdSuffix =
-                        project.property("customSuffix").toString()
-                            .replaceFirst("""/^\.*/""".toRegex(), ".")
-                    resValue(
-                        "string",
-                        "applicationId",
-                        "${defaultConfig.applicationId}${applicationIdSuffix}"
-                    )
-                } else {
-                    resValue("string", "applicationId", defaultConfig.applicationId!!)
-                }
-                if (project.hasProperty("customName")) {
-                    resValue(
-                        "string",
-                        "app_name",
-                        project.property("customName").toString()
-                    )
-                }
-
-                resValue("color", "anki_foreground_icon_color_0", "#FF29B6F6")
-                resValue("color", "anki_foreground_icon_color_1", "#FF0288D1")
-            }
-        }
-    }
-
-}
-
-
 internal fun Project.configureSigningConfigs() {
     extensions.configure<ApplicationExtension>
     {
@@ -231,32 +134,6 @@ internal fun Project.configureSigningConfigs() {
                 keyAlias = "nrkeystorealias"
                 storePassword = System.getenv("KSTOREPWD")
                 keyPassword = System.getenv("KEYPWD")
-            }
-        }
-    }
-}
-
-internal fun Project.configureProductFlavors() {
-    extensions.configure<ApplicationExtension>
-    {
-        /**
-         * Product Flavors are used for Amazon App Store and Google Play Store.
-         * This is because we cannot use Camera Permissions in Amazon App Store (for FireTv etc...)
-         * Therefore, different AndroidManifest for Camera Permissions is used in Amazon flavor.
-         *
-         * This flavor block must stay in sync with the same block in testlib/build.gradle.kts
-         */
-        flavorDimensions += "appStore"
-        productFlavors {
-            create("play") {
-                dimension = "appStore"
-            }
-            create("amazon") {
-                dimension = "appStore"
-            }
-            // A 'full' build has no restrictions on storage/camera. Distributed on GitHub/F-Droid
-            create("full") {
-                dimension = "appStore"
             }
         }
     }
