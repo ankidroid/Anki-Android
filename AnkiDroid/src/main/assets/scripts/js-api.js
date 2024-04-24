@@ -85,7 +85,7 @@ class AnkiDroidJS {
     }
 
     handleRequest = async (endpoint, data) => {
-        const url = `/jsapi/${endpoint}`;
+        const url = `${ankidroid.postBaseUrl}jsapi/${endpoint}`;
         try {
             const response = await fetch(url, {
                 method: "POST",
