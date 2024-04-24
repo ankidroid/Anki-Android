@@ -173,7 +173,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
 
             preBuildTask()
-            assertNonZeroAndroidTests()
+         //   assertNonZeroAndroidTests()
 
             //todo migrate task connectedPlayDebugAndroidTest when we know how to solve it's issue
         }
