@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.dokka)
+    alias(libs.plugins.anki.library.lint.plugin)
     id("maven-publish")
 }
 
@@ -63,8 +64,6 @@ android {
         }
     }
 }
-
-apply(from = "../lint.gradle")
 
 dependencies {
     implementation(libs.androidx.annotation)
