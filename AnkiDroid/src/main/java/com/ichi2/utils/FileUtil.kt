@@ -66,20 +66,20 @@ object FileUtil {
      * @return String file path to cache directory or null if error
      */
     fun getAnkiCacheDirectory(context: Context, subdirectoryName: String? = null): String? {
-        val externalCacheDirRoot = context.externalCacheDir
-        if (externalCacheDirRoot == null) {
-            Timber.e("createUI() unable to get external cache directory")
+        val cacheDirRoot = context.cacheDir
+        if (cacheDirRoot == null) {
+            Timber.e("createUI() unable to get cache directory")
             return null
         }
-        var externalCacheDir = externalCacheDirRoot
+        var cacheDir = cacheDirRoot
         if (subdirectoryName != null) {
-            externalCacheDir = File(externalCacheDir.absolutePath + "/" + subdirectoryName)
-            if (!externalCacheDir.exists() && !externalCacheDir.mkdir()) {
+            cacheDir = File(cacheDir.absolutePath + "/" + subdirectoryName)
+            if (!cacheDir.exists() && !cacheDir.mkdir()) {
                 Timber.e("$subdirectoryName did not exist in cache dir and could not be created")
                 return null
             }
         }
-        return externalCacheDir.absolutePath
+        return cacheDir.absolutePath
     }
 
     /**
