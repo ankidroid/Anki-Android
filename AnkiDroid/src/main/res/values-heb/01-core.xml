@@ -263,4 +263,5 @@
     <string name="storage_access_summary">שומר את האוסף שלך במקום בטוח כך שלא יימחק אם האפליקציה תוסר</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">גישה לכל הקבצים</string>
     <string name="image_occlusion">חסימת תמונה</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

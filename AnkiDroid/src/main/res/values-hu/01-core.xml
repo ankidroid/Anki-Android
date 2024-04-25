@@ -252,4 +252,5 @@
     <string name="storage_access_summary">Biztonságos helyre menti a gyűjteményed, amely nem törlődik, ha az alkalmazást eltávolítják.</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Hozzáférés minden fájlhoz</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

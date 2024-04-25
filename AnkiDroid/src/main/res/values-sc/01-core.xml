@@ -257,4 +257,5 @@
     <string name="storage_access_summary">Sarvat sa colletzione tua in unu logu seguru chi non s\'at a iscantzellare si as a disinstallare s\'aplicatzione</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Atzessu a totu sos archìvios</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

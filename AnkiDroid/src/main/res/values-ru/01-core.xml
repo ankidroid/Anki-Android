@@ -263,4 +263,5 @@
     <string name="storage_access_summary">Сохраняет вашу коллекцию в безопасном месте, чтобы она не исчезла при удалении приложения</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Доступ ко всем файлам</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

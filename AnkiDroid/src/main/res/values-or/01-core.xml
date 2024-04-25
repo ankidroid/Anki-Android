@@ -253,4 +253,5 @@
     <string name="storage_access_summary">ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ଏକ ସୁରକ୍ଷିତ ସ୍ଥାନରେ ସଂରକ୍ଷଣ କରେ ଯାହା ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ହେଲେ ବିଲୋପ ହେବ ନାହିଁ</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ସମସ୍ତ ଫାଇଲ୍ ପ୍ରବେଶାଧିକାର</string>
     <string name="image_occlusion">ପ୍ରତିଛବି ଅନ୍ତର୍ଦ୍ଧାନ</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

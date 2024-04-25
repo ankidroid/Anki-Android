@@ -253,4 +253,5 @@
     <string name="storage_access_summary">Koleksiyonunuzu uygulama kaldırılırsa silinmeyecek güvenli bir yerde saklar</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Bütün dosyalara erişim</string>
     <string name="image_occlusion">Resim Örtüsü</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

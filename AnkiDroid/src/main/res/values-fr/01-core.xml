@@ -252,4 +252,5 @@ ou reconnecter le support amovible qui contient votre collection.
     <string name="storage_access_summary">Enregistre votre collection dans un endroit sûr qui ne sera pas supprimé si l\'application est désinstallée</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Accès à tous les fichiers</string>
     <string name="image_occlusion">Schéma à remplir</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>
