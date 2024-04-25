@@ -22,6 +22,7 @@ import com.android.resources.ResourceFolderType
 import com.android.tools.lint.detector.api.*
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
+import com.ichi2.anki.lint.utils.ext.isRightToLeftLanguage
 import org.w3c.dom.Element
 
 /**
@@ -86,6 +87,12 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
         // Only check <string> or <plurals><item>, not the container
         if ("resources" == element.tagName) {
             return
+        }
+
+        // use the unicode character instead of three dots for ellipsis
+        // ignore RTL to reduce maintenance: GitHub incorrectly displays ellipsis, so hard to review
+        if (element.textContent.contains("...") && !context.isRightToLeftLanguage()) {
+            context.report(ISSUE, context.getElementLocation(element), "should use unicode '&#8230;' instead of three dots for ellipsis")
         }
 
         // casing of 'JavaScript'
