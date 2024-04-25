@@ -247,4 +247,5 @@
     <string name="storage_access_summary">将牌组集合保存在一个即使卸载了应用也不会被删除的安全所在</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">所有文件访问权限</string>
     <string name="image_occlusion">图片遮挡</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

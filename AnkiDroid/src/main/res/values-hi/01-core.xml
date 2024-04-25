@@ -256,4 +256,5 @@ Back - बैक</string>
     <string name="storage_access_summary">आपके संग्रह को एक सुरक्षित स्थान पर संग्रहीत करता है जिसे ऐप अनइंस्टॉल होने पर हटाया नहीं जाएगा</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">सभी फ़ाइलों का एक्सेस</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

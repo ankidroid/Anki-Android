@@ -248,4 +248,5 @@
     <string name="storage_access_summary">Menyimpan koleksi Anda dalam tempat yang aman yang tidak akan terhapus jika aplikasi dicopot pemasangannya</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Akses semua berkas</string>
     <string name="image_occlusion">Oklusi Gambar</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

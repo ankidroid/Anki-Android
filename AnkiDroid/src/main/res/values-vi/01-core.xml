@@ -247,4 +247,5 @@
     <string name="storage_access_summary">Lưu bộ sưu tập của bạn ở nơi an toàn sẽ không bị xóa nếu gỡ cài đặt ứng dụng</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Quyền truy cập vào mọi tệp</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>
