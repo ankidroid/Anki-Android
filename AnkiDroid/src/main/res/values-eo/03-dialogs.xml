@@ -49,7 +49,7 @@
     <string name="contextmenu_deckpicker_delete_deck">Forigi kartaron</string>
     <string name="delete_deck_title">Ĉu forigi kartaron?</string>
     <string name="no_tts_available_message">Neniu parol-sintezilo disponebla</string>
-    <string name="tts_no_tts">ne paroli</string>
+    <string name="tts_no_tts">Ne paroli</string>
     <string name="unused_strings">\n\nNeuzataj dosieroj:\n</string>
     <string name="reposition_card_dialog_title">Repozicii novan karton</string>
     <string name="reposition_card_dialog_message">Komenca pozicio:</string>
@@ -96,10 +96,10 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Konfirmi</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_yes">Jes</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Konservi</string>
+    <string name="dialog_remove">Forigi</string>
     <string name="dialog_continue">Pluigi</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Traktado...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Krei</string>
     <string name="dialog_positive_delete">Forigi</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -174,7 +174,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Fiaskis plani memorigaĵojn</string>
     <string name="boot_service_too_many_notifications">Tro multe da memorigaĵoj planitaj. Iuj ne aperos</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">Difini lingvon</string>
     <string name="locale_selection_dialog_summary">Iuj plurlingvaj klavaroj – ekzemple GBoard – ebligas ŝanĝi lingvon dum enigi tekston\n\nSe via klavaro aŭtomate ne ŝanĝas lingvon, provu peti ĝiajn programistojn pri aldoni la eblaĵon “setImeHintLocales”.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Uzado de AnkiDroid</string>
@@ -247,9 +247,9 @@
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
         <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="other">tagoj</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">De post</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Ĝis</string>
 </resources>

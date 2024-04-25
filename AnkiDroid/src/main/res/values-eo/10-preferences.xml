@@ -136,8 +136,8 @@
     <string name="sync_status_badge_summ">Ŝanĝi la emblemon de samtempigo kiam povas alŝuti ŝanĝojn</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Ofteco</string>
+    <string name="backup_limits_lifetime">Daŭro de konservado</string>
     <string name="app_theme" maxLength="41">Temo</string>
     <string name="day_theme" maxLength="41">Taga etoso</string>
     <string name="night_theme" maxLength="41">Nokta etoso</string>
@@ -223,8 +223,8 @@
     <string name="keyboard">Klavaro</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
+    <string name="card" maxLength="41">Karto</string>
+    <string name="note" maxLength="41">Noto</string>
     <string name="navigation" maxLength="41">Navigation</string>
     <string name="media" maxLength="41">Media</string>
     <string name="misc" maxLength="41">Misc</string>
