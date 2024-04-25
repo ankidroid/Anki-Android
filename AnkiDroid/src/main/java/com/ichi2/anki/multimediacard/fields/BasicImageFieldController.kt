@@ -156,19 +156,13 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         viewModel = viewModel.replaceNullValues(_field, _activity)
 
         imagePreview = ImageView(_activity)
-        val externalCacheDirRoot = context.externalCacheDir
-        if (externalCacheDirRoot == null) {
-            Timber.e("createUI() unable to get external cache directory")
+
+        ankiCacheDirectory = FileUtil.getAnkiCacheDirectory(context, "temp-photos")
+        if (ankiCacheDirectory == null) {
             showSomethingWentWrong()
+            Timber.e("createUI() failed to get cache directory")
             return
         }
-        val externalCacheDir = File(externalCacheDirRoot.absolutePath + "/temp-photos")
-        if (!externalCacheDir.exists() && !externalCacheDir.mkdir()) {
-            Timber.e("createUI() externalCacheDir did not exist and could not be created")
-            showSomethingWentWrong()
-            return
-        }
-        ankiCacheDirectory = externalCacheDir.absolutePath
 
         val p = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
