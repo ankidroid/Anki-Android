@@ -4,9 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       clearCaches:
-        description: "Clear workflow caches where possible"
+        description: "Clear workflow caches where possible, empty means false"
         required: false
         type: string
+      iterations:
+        description: "Number of iterations on each chosen operating system. Default 1. Max 85."
+        required: true
+        default: 1
+        type: number
       operatingSystems:
         description: "Which operating systems to run tests on"
         required: true
@@ -48,12 +53,24 @@ jobs:
             // if you alter this, also alter it above in the workflow_dispatch options list
             let osArray = ["ubuntu-latest", "macos-14", "windows-latest"]
             
+            // by default, we will run one iteration on each selected system
+            let iterationArray = [1]
+            
             // workflow dispatch will be a drop-down of different options
             if (context.eventName === "workflow_dispatch") {
               const inputs = ${{ toJSON(inputs) }}
               osArray = JSON.parse(inputs['operatingSystems'])
               console.log('inputs is: ' + JSON.stringify(inputs))
               console.log('osArray is: ' + osArray)
+              
+              const iterationInput = inputs.iterations
+              console.log('iterations input is: ' + iterationInput)
+              // this will expand for example with input 5 => [1, 2, 3, 4, 5]
+              iterationArray = []
+              for (let i = 1; i <= iterationInput; i++) {
+                iterationArray.push(i);
+              }
+              console.log('iterationArray is: ' + iterationArray)
             }
 
             let includeArray = [];
@@ -67,7 +84,8 @@ jobs:
             }
             return {
               "os": osArray,
-              "include": includeArray
+              "include": includeArray,
+              "iteration": iterationArray
             }
       - name: Debug Output
         run: echo "${{ steps.build-matrix.outputs.result }}"
@@ -75,7 +93,7 @@ jobs:
   # This uses the matrix generated from the matrix-prep stage
   # it will run unit tests on whatever OS combinations are desired
   unit:
-    name: JUnit Tests (${{ matrix.name }})
+    name: JUnit Tests (${{ matrix.name }} run ${{ matrix.iteration }})
     needs: matrix_prep
     timeout-minutes: 40
     strategy:
@@ -142,7 +160,7 @@ jobs:
         if: failure() || cancelled()
         uses: actions/upload-artifact@v3
         with:
-          name: logcat-${{ matrix.name }}
+          name: logcat-${{ matrix.name }}-${{ matrix.iteration }}
           # look for the `<system-out>` element in the XML files in `test-results`
           # The folder contains far too much data:
           # * .bin files
