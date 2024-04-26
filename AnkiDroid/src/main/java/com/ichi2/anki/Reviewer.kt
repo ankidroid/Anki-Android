@@ -40,7 +40,6 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
@@ -88,7 +87,6 @@ import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.widget.WidgetStatus.updateInBackground
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 
@@ -351,12 +349,6 @@ open class Reviewer :
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true
         }
-        val flag = Flag.entries.find { it.ordinal == item.itemId }
-        flag?.let {
-            Timber.i("Reviewer:: onOptionItemSelected Flag - $it clicked")
-            onFlag(currentCard, it)
-            return true
-        }
         when (item.itemId) {
             android.R.id.home -> {
                 Timber.i("Reviewer:: Home button pressed")
@@ -455,6 +447,38 @@ open class Reviewer :
             R.id.action_add_note_reviewer -> {
                 Timber.i("Reviewer:: Add note button pressed")
                 addNote()
+            }
+            R.id.action_flag_zero -> {
+                Timber.i("Reviewer:: No flag")
+                onFlag(currentCard, Flag.NONE)
+            }
+            R.id.action_flag_one -> {
+                Timber.i("Reviewer:: Flag one")
+                onFlag(currentCard, Flag.RED)
+            }
+            R.id.action_flag_two -> {
+                Timber.i("Reviewer:: Flag two")
+                onFlag(currentCard, Flag.ORANGE)
+            }
+            R.id.action_flag_three -> {
+                Timber.i("Reviewer:: Flag three")
+                onFlag(currentCard, Flag.GREEN)
+            }
+            R.id.action_flag_four -> {
+                Timber.i("Reviewer:: Flag four")
+                onFlag(currentCard, Flag.BLUE)
+            }
+            R.id.action_flag_five -> {
+                Timber.i("Reviewer:: Flag five")
+                onFlag(currentCard, Flag.PINK)
+            }
+            R.id.action_flag_six -> {
+                Timber.i("Reviewer:: Flag six")
+                onFlag(currentCard, Flag.TURQUOISE)
+            }
+            R.id.action_flag_seven -> {
+                Timber.i("Reviewer:: Flag seven")
+                onFlag(currentCard, Flag.PURPLE)
             }
             R.id.action_card_info -> {
                 Timber.i("Card Viewer:: Card Info")
@@ -654,27 +678,12 @@ open class Reviewer :
         startActivityWithAnimation(intent, animation)
     }
 
-    private val flagItemIds = mutableSetOf<Int>()
-
-    private fun addFlags(subMenu: SubMenu?) {
-        lifecycleScope.launch {
-            for (flag in Flag.entries) {
-                val title = flag.getName(resources)
-                val menuItem = subMenu?.add(Menu.NONE, flag.ordinal, Menu.NONE, title)?.setIcon(flag.drawableRes)
-                menuItem?.let {
-                    flagItemIds.add(it.itemId)
-                }
-            }
-        }
-    }
-
     // Related to https://github.com/ankidroid/Anki-Android/pull/11061#issuecomment-1107868455
     @NeedsTest("Order of operations needs Testing around Menu (Overflow) Icons and their colors.")
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
         // NOTE: This is called every time a new question is shown via invalidate options menu
         menuInflater.inflate(R.menu.reviewer, menu)
-        addFlags(menu.findItem(R.id.action_flag).subMenu)
         displayIcons(menu)
         actionButtons.setCustomButtonsStatus(menu)
         val alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
@@ -685,6 +694,23 @@ open class Reviewer :
             markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)
         }
         markCardIcon.iconAlpha = alpha
+
+        val flagIcon = menu.findItem(R.id.action_flag)
+        if (flagIcon != null) {
+            if (currentCard != null) {
+                when (currentCard!!.userFlag()) {
+                    1 -> flagIcon.setIcon(R.drawable.ic_flag_red)
+                    2 -> flagIcon.setIcon(R.drawable.ic_flag_orange)
+                    3 -> flagIcon.setIcon(R.drawable.ic_flag_green)
+                    4 -> flagIcon.setIcon(R.drawable.ic_flag_blue)
+                    5 -> flagIcon.setIcon(R.drawable.ic_flag_pink)
+                    6 -> flagIcon.setIcon(R.drawable.ic_flag_turquoise)
+                    7 -> flagIcon.setIcon(R.drawable.ic_flag_purple)
+                    else -> flagIcon.setIcon(R.drawable.ic_flag_transparent)
+                }
+            }
+            flagIcon.iconAlpha = alpha
+        }
 
         // Anki Desktop Translations
         menu.findItem(R.id.action_reschedule_card).title =
@@ -809,12 +835,9 @@ open class Reviewer :
         onboarding.onCreate()
 
         increaseHorizontalPaddingOfOverflowMenuIcons(menu)
-        tintOverflowMenuIcons(menu, skipIf = { isFlagItem(it) })
-        return super.onCreateOptionsMenu(menu)
-    }
+        tintOverflowMenuIcons(menu, skipIf = { isFlagResource(it.itemId) })
 
-    private fun isFlagItem(menuItem: MenuItem): Boolean {
-        return flagItemIds.contains(menuItem.itemId)
+        return super.onCreateOptionsMenu(menu)
     }
 
     @SuppressLint("RestrictedApi")
@@ -828,6 +851,10 @@ open class Reviewer :
         } catch (e: Error) {
             Timber.w(e, "Failed to display icons in Over flow menu")
         }
+    }
+
+    private fun isFlagResource(itemId: Int): Boolean {
+        return itemId == R.id.action_flag_seven || itemId == R.id.action_flag_six || itemId == R.id.action_flag_five || itemId == R.id.action_flag_four || itemId == R.id.action_flag_three || itemId == R.id.action_flag_two || itemId == R.id.action_flag_one
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
