@@ -7,6 +7,18 @@ on:
         description: "Clear workflow caches where possible"
         required: false
         type: string
+      operatingSystems:
+        description: "Which operating systems to run tests on"
+        required: true
+        type: choice
+        # If you alter system names in default + options here, also alter osArray below to match
+        default: '["windows-latest", "macos-14", "ubuntu-latest"]'
+        options:
+          - '["windows-latest", "macos-14", "ubuntu-latest"]'
+          - '["windows-latest"]'
+          - '["macos-14"]'
+          - '["ubuntu-latest"]'
+
   pull_request:
   push:
     # Ignore merge queue branches on push; avoids merge_group+push concurrency race since ref is same
@@ -29,20 +41,33 @@ jobs:
       - id: build-matrix
         uses: actions/github-script@v7
         with:
-          # Notes:
-          # 1) 'os'
-          #   - https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
-          #   - macOS 14 is in beta and runs on Apple Silicon [M1]
-          # 2) 'include'
-          #   - define 'name' so we don't need to update branch protection rules if the os changes
           script: |
+            // by default, we will include all 3 platforms we test on
+            // "latest" would be easy everywhere, but "macos-14" doesn't always happen if you choose "latest"
+            // and we want macos-14 because it has Apple Silicon and is faster
+            // if you alter this, also alter it above in the workflow_dispatch options list
+            let osArray = ["ubuntu-latest", "macos-14", "windows-latest"]
+            
+            // workflow dispatch will be a drop-down of different options
+            if (context.eventName === "workflow_dispatch") {
+              const inputs = ${{ toJSON(inputs) }}
+              osArray = JSON.parse(inputs['operatingSystems'])
+              console.log('inputs is: ' + JSON.stringify(inputs))
+              console.log('osArray is: ' + osArray)
+            }
+
+            let includeArray = [];
+            for(const os of osArray) {
+              // we do this work to define 'name' so we don't need to update branch protection rules
+              // if the os changes, the name is used in the expanded workflow run name, which is then
+              // used as a "required check" on branch protection merge rules, this keeps it stable
+              // even if "macos-14" changes to "macos-15" in the future so we just change the list here
+              // but don't have to go into organization settings / protection rules etc etc
+              includeArray.push({"os": os, "name": os.split('-')[0]});
+            }
             return {
-              "os": ["ubuntu-latest", "macos-14", "windows-latest"],
-              "include": [
-                {"os": "ubuntu-latest", "name": "ubuntu"},
-                {"os": "macos-14", "name": "macos"},
-                {"os": "windows-latest", "name": "windows"}
-              ]
+              "os": osArray,
+              "include": includeArray
             }
       - name: Debug Output
         run: echo "${{ steps.build-matrix.outputs.result }}"
