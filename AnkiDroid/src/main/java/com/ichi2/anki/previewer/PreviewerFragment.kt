@@ -50,7 +50,6 @@ import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.performClickIfEnabled
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class PreviewerFragment :
     CardViewerFragment(R.layout.previewer),
@@ -199,7 +198,6 @@ class PreviewerFragment :
     override fun onMenuItemClick(item: MenuItem): Boolean {
         val flag = Flag.entries.find { it.ordinal == item.itemId }
         flag?.let {
-            Timber.i("PreviewerFragment:: onMenuItemClick Flag - $it clicked")
             viewModel.setFlag(it)
             return true
         }
