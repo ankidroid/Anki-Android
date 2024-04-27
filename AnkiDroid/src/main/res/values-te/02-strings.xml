@@ -168,7 +168,7 @@
     <string name="import_interrupted">దిగుమతికి అంతరాయం ఏర్పడింది: AnkiDroid మూసివేయబడింది</string>
     <string name="export_preparation_in_progress">ఎగుమతి చేయడానికి సిద్ధమవుతోంది&#8230;</string>
     <string name="export_ready_title">ఎగుమతి సిద్ధంగా ఉంది</string>
-    <string name="export_send_no_handlers">apkkని నిర్వహించడానికి అప్లికేషన్‌లు ఏవీ అందుబాటులో లేవు. సేవ్ చేస్తోంది...</string>
+    <string name="export_send_no_handlers">apkkని నిర్వహించడానికి అప్లికేషన్‌లు ఏవీ అందుబాటులో లేవు. సేవ్ చేస్తోంది&#8230;</string>
     <string name="export_save_apkg_successful">Anki ప్యాకేజీ విజయవంతంగా సేవ్ చేయబడింది</string>
     <string name="export_save_apkg_unsuccessful">Anki ప్యాకేజీని సేవ్ చేయడంలో విఫలమైంది</string>
     <string name="export_share_title">ఉపయోగించి Anki ప్యాకేజీని పంపండి</string>
