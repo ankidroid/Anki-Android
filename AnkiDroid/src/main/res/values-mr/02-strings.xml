@@ -168,7 +168,7 @@
     <string name="import_interrupted">आयात व्यत्यय: अंकीड्रोइड बंद होता</string>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">एपीकेजी हाताळण्यासाठी कोणतेही अनुप्रयोग उपलब्ध नाहीत. बचत...</string>
+    <string name="export_send_no_handlers">एपीकेजी हाताळण्यासाठी कोणतेही अनुप्रयोग उपलब्ध नाहीत. बचत&#8230;</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_share_title">Send Anki package using</string>

@@ -166,7 +166,7 @@
     <string name="import_interrupted">Impor terganggu</string>
     <string name="export_preparation_in_progress">Mempersiapkan ekspor&#8230;</string>
     <string name="export_ready_title">Ekspor siap</string>
-    <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan...</string>
+    <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan&#8230;</string>
     <string name="export_save_apkg_successful">Berhasil menyimpan paket Anki</string>
     <string name="export_save_apkg_unsuccessful">Paket Anki gagal disimpan</string>
     <string name="export_share_title">Kirim paket Anki menggunakan</string>

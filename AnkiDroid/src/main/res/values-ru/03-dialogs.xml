@@ -105,7 +105,7 @@
     <string name="dialog_keep">Оставить</string>
     <string name="dialog_remove">Удалить</string>
     <string name="dialog_continue">Продолжить</string>
-    <string name="dialog_processing">Обработка...</string>
+    <string name="dialog_processing">Обработка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Создать</string>
     <string name="dialog_positive_delete">Удалить</string>
     <!-- Currently unsued, should be useful in the future -->

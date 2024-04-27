@@ -172,7 +172,7 @@
     <string name="import_interrupted">Импорт прерван</string>
     <string name="export_preparation_in_progress">Подготовка экспорта&#8230;</string>
     <string name="export_ready_title">Экспорт готов</string>
-    <string name="export_send_no_handlers">Нет приложений для чтения файлов apkg. Сохраняется...</string>
+    <string name="export_send_no_handlers">Нет приложений для чтения файлов apkg. Сохраняется&#8230;</string>
     <string name="export_save_apkg_successful">Пакет Anki успешно сохранён</string>
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
     <string name="export_share_title">Отправить пакет Anki с помощью</string>

@@ -99,7 +99,7 @@
     <string name="dialog_keep">Behåll</string>
     <string name="dialog_remove">Ta bort</string>
     <string name="dialog_continue">Fortsätt</string>
-    <string name="dialog_processing">Bearbetar...</string>
+    <string name="dialog_processing">Bearbetar&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Skapa</string>
     <string name="dialog_positive_delete">Radera</string>
     <!-- Currently unsued, should be useful in the future -->

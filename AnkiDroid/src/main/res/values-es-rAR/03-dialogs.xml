@@ -99,7 +99,7 @@
     <string name="dialog_keep">Conservar</string>
     <string name="dialog_remove">Quitar</string>
     <string name="dialog_continue">Continuar</string>
-    <string name="dialog_processing">Procesando...</string>
+    <string name="dialog_processing">Procesando&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crear</string>
     <string name="dialog_positive_delete">Eliminar</string>
     <!-- Currently unsued, should be useful in the future -->

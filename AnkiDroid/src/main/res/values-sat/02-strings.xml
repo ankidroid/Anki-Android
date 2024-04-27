@@ -168,7 +168,7 @@
     <string name="import_interrupted">ᱨᱮᱫ ᱟᱠᱚᱴ ᱮᱱᱟ</string>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">ᱪᱚᱫ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱟᱹᱱᱩᱜᱼᱟ apkg ᱦᱮᱱᱰᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱾ ᱥᱟᱝᱪᱟᱣ ᱪᱟᱹᱞᱩ ᱟᱠᱟᱱᱟ...</string>
+    <string name="export_send_no_handlers">ᱪᱚᱫ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱟᱹᱱᱩᱜᱼᱟ apkg ᱦᱮᱱᱰᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱾ ᱥᱟᱝᱪᱟᱣ ᱪᱟᱹᱞᱩ ᱟᱠᱟᱱᱟ&#8230;</string>
     <string name="export_save_apkg_successful">Anki ᱯᱮᱠᱮᱡ ᱵᱮᱥ ᱪᱚᱨᱚᱠ ᱥᱟᱝᱪᱟᱣ ᱮᱱᱟ</string>
     <string name="export_save_apkg_unsuccessful">Anki ᱯᱮᱠᱮᱡ ᱥᱟᱝᱪᱟᱣ ᱵᱷᱩᱞ</string>
     <string name="export_share_title">Send Anki package using</string>

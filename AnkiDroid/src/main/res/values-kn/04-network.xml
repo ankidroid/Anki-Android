@@ -52,7 +52,7 @@
     <string name="menu_get_shared_decks">ಹಂಚಿದ ಡೆಕ್‌ಗಳನ್ನು ಪಡೆಯಿರಿ</string>
     <string name="connection_error_message">ನೆಟ್‌ವರ್ಕ್ ದೋಷ ಸಂಭವಿಸಿದೆ</string>
     <string name="not_logged_in_title">ಅಂಕಿವೆಬ್‌ಗೆ ಲಾಗ್ ಇನ್ ಮಾಡಿ</string>
-    <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+    <string name="login_create_account_message">ಕ್ಲೌಡ್ ಸಿಂಕ್ ಸೇವೆಯನ್ನು ಬಳಸಲು ನೀವು ಮೂರನೇ ವ್ಯಕ್ತಿಯ ಖಾತೆಗೆ ಲಾಗ್ ಇನ್ ಮಾಡಬೇಕು. ಮುಂದಿನ ಹಂತದಲ್ಲಿ ನೀವು ಒಂದನ್ನು ರಚಿಸಬಹುದು.</string>
     <!-- MyAccount.kt -->
     <string name="username">ಇಮೇಲ್ ವಿಳಾಸ</string>
     <string name="password">ಗುಪ್ತಪದ</string>

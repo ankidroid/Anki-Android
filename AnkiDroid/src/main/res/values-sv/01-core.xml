@@ -127,11 +127,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Vänligen ge AnkiDroid behörigheten \"Lagring\" för att fortsätta</string>
-    <string name="rebuild_filtered_deck">Bygger om filtrerad kortlek...</string>
+    <string name="rebuild_filtered_deck">Bygger om filtrerad kortlek&#8230;</string>
     <string name="rebuild_cram_label">Bygg om</string>
     <string name="empty_cram_label">Töm</string>
     <string name="create_subdeck">Skapa underkortlek</string>
-    <string name="empty_filtered_deck">Tömmer filtrerad kortlek...</string>
+    <string name="empty_filtered_deck">Tömmer filtrerad kortlek&#8230;</string>
     <string name="custom_study_deck_name">Anpassad studiesession</string>
     <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
     <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>

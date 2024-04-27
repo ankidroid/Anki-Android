@@ -133,11 +133,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Norėdami tęsti, suteikite AnkiDroid saugyklos teises.</string>
-    <string name="rebuild_filtered_deck">Perdaromas filtruotas rinkinys...</string>
+    <string name="rebuild_filtered_deck">Perdaromas filtruotas rinkinys&#8230;</string>
     <string name="rebuild_cram_label">Atkurti</string>
     <string name="empty_cram_label">Išvalyti</string>
     <string name="create_subdeck">Kurkite vidinį rinkinį</string>
-    <string name="empty_filtered_deck">Išvalomas filtruotas rinkinys...</string>
+    <string name="empty_filtered_deck">Išvalomas filtruotas rinkinys&#8230;</string>
     <string name="custom_study_deck_name">Individualus mokymosi seansas</string>
     <string name="custom_study_deck_exists">Prašome pirmiausiai pervadinti esamą individualaus mokymosi rinkinį</string>
     <string name="search_deck" comment="Deck search for selecting it">Rinkinio paieška</string>

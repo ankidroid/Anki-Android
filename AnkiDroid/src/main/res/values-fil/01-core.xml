@@ -146,7 +146,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Gusto mo bang kanselahin ang sync?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Ipagtuloy ang pagsync</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Nakansela ang sync</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Kinakansela...\nIto ay maaaring matagalan.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Kinakansela&#8230;\nIto ay maaaring matagalan.</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">I-export ang deck</string>
     <string name="nothing">Wala</string>

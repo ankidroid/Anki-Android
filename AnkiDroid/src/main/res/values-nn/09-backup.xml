@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">Prøv å opna på nytt</string>
     <string name="backup_error_menu_repair">Reparer database</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Reparerer databasen.\nVennligst vent...</string>
+    <string name="backup_repair_deck_progress">Reparerer databasen.\nVennligst vent&#8230;</string>
     <string name="backup_invalid_file_error">The selected backup file was invalid</string>
     <string name="backup_restore_select_title">Velg sikkerhetskopiering som skal gjenopprettes</string>
     <string name="backup_restore_no_backups">Ingen sikkerhetskopier for denne samlingen er tilgjengelige på denne enheten. Hvis du har sikkerhetskopier på datamaskinen din, vennligst kopier dem manuelt til AnkiDroid-mappen</string>

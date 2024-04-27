@@ -151,7 +151,7 @@
     <string name="empty_cards">빈 카드</string>
     <string name="empty_card_warning">이 카드는 비어 있습니다. 카드 묶음 목록 화면의 메뉴에서 \"빈 카드\" 옵션을 사용하세요.</string>
     <string name="unknown_type_field_warning">정답 입력: 알 수 없는 필드 %s</string>
-    <string name="delete_deck">카드 묶음 삭제 중...\n 잠시만 기다리세요.</string>
+    <string name="delete_deck">카드 묶음 삭제 중&#8230;\n 잠시만 기다리세요.</string>
     <string name="info_rate">AnkiDroid 평가하기</string>
     <string name="import_title">가져오는 중</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">추가</string>
@@ -167,7 +167,7 @@
     <string name="import_interrupted">불러오기 중단됨: AnkiDroid가 닫힘</string>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">apkg. 파일을 처리할 수 있는 응용 프로그램이 없습니다. 저장 중...</string>
+    <string name="export_send_no_handlers">apkg. 파일을 처리할 수 있는 응용 프로그램이 없습니다. 저장 중&#8230;</string>
     <string name="export_save_apkg_successful">Anki 패키지 저장 성공</string>
     <string name="export_save_apkg_unsuccessful">Anki 패키지 저장 실패</string>
     <string name="export_share_title">Send Anki package using</string>

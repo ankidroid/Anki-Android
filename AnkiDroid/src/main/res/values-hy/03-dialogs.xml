@@ -99,7 +99,7 @@
     <string name="dialog_keep">Keep</string>
     <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Շարունակել</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Processing&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Ստեղծել</string>
     <string name="dialog_positive_delete">Ջնջել</string>
     <!-- Currently unsued, should be useful in the future -->

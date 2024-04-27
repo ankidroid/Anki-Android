@@ -105,7 +105,7 @@
     <string name="dialog_keep">Ponechat</string>
     <string name="dialog_remove">Odebrat</string>
     <string name="dialog_continue">Pokračovat</string>
-    <string name="dialog_processing">Zpracovává se...</string>
+    <string name="dialog_processing">Zpracovává se&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Vytvořit</string>
     <string name="dialog_positive_delete">Odstranit</string>
     <!-- Currently unsued, should be useful in the future -->

@@ -64,7 +64,7 @@
     <string name="log_out">Դուրս գալ</string>
     <string name="reset_password">Reset password</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Մուտք...</string>
+    <string name="sign_in">Մուտք&#8230;</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Options for XXX</string>
     <string name="sync_title">Համաժամացում</string>

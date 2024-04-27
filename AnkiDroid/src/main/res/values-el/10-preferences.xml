@@ -334,13 +334,13 @@
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Διαγραφή αντιγράφων ασφαλείας</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Διαγραφή αντιγράφων ασφαλείας</string>
-    <string name="progress__deleting_backups">Διαγραφή αντιγράφων...</string>
+    <string name="progress__deleting_backups">Διαγραφή αντιγράφων&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Διαγραφή συλλογής</string>
     <string name="pref__delete_collection__summary">Διαγραφή συλλογής, πολυμέσων και αντιγράφων ασφαλείας. Οι ρυθμίσεις εφαρμογής δεν διαγράφονται</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Διαγραφή συλλογής</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Είστε βέβαιοι ότι θέλετε να διαγράψετε τη συλλογή, τα πολυμέσα και τα αντίγραφα ασφαλείας;\n\nΣημείωση: αυτή η ενέργεια θα κλείσει το παράθυρο.</string>
-    <string name="progress__deleting_collection">Διαγραφή συλλογής...</string>
+    <string name="progress__deleting_collection">Διαγραφή συλλογής&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Διαγραφή όλων</string>
     <string name="pref__delete_everything__summary">Διαγραφή συλλογής, πολυμέσων, αντιγράφων ασφαλείας και ρυθμίσεων</string>

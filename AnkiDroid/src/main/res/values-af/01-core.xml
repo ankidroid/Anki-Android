@@ -127,11 +127,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Voorsien asseblief vir AnkiDroid die \'Stoor\' toestemming om voort te gaan</string>
-    <string name="rebuild_filtered_deck">Herbouing van gefilterde pak...</string>
+    <string name="rebuild_filtered_deck">Herbouing van gefilterde pak&#8230;</string>
     <string name="rebuild_cram_label">Herbou</string>
     <string name="empty_cram_label">Maak leeg</string>
     <string name="create_subdeck">Skep subpak</string>
-    <string name="empty_filtered_deck">Besig om die gefilterde pak leeg te maak...</string>
+    <string name="empty_filtered_deck">Besig om die gefilterde pak leeg te maak&#8230;</string>
     <string name="custom_study_deck_name">Pasmaak studie sessie</string>
     <string name="custom_study_deck_exists">Hernoem die bestaande pasmaak kaartpak eers</string>
     <string name="search_deck" comment="Deck search for selecting it">Pak Soek</string>

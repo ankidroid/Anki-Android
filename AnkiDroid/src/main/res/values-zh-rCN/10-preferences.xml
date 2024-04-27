@@ -330,7 +330,7 @@
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">删除备份</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">删除备份</string>
-    <string name="progress__deleting_backups">正在删除备份...</string>
+    <string name="progress__deleting_backups">正在删除备份&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">删除集合</string>
     <string name="pref__delete_collection__summary">删除集合、媒体和备份。不会删除应用设置</string>

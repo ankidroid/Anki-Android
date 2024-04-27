@@ -168,7 +168,7 @@
     <string name="import_interrupted">Import avbruten: AnkiDroid stängdes</string>
     <string name="export_preparation_in_progress">Förbereder export&#8230;</string>
     <string name="export_ready_title">Export redo</string>
-    <string name="export_send_no_handlers">Inga program tillgängliga för att hantera apkg. Sparar...</string>
+    <string name="export_send_no_handlers">Inga program tillgängliga för att hantera apkg. Sparar&#8230;</string>
     <string name="export_save_apkg_successful">Anki-paketet sparades</string>
     <string name="export_save_apkg_unsuccessful">Anki-paketet kunde inte sparas</string>
     <string name="export_share_title">Skicka Anki-paketet med</string>

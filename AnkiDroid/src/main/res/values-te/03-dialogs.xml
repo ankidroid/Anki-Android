@@ -99,7 +99,7 @@
     <string name="dialog_keep">ఉంచు</string>
     <string name="dialog_remove">తొలగించు</string>
     <string name="dialog_continue">కొనసాగండి</string>
-    <string name="dialog_processing">ప్రాసెస్ చేస్తోంది...</string>
+    <string name="dialog_processing">ప్రాసెస్ చేస్తోంది&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">సృష్టించు</string>
     <string name="dialog_positive_delete">తొలగించు</string>
     <!-- Currently unsued, should be useful in the future -->

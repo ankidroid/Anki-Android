@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">Torneu a intentar l\'obertura</string>
     <string name="backup_error_menu_repair">Reparació de la base de dades</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">S\'està reparant la base de dades.\nUn moment si us plau...</string>
+    <string name="backup_repair_deck_progress">S\'està reparant la base de dades.\nUn moment si us plau&#8230;</string>
     <string name="backup_invalid_file_error">El fitxer backup seleccionat era invàlid</string>
     <string name="backup_restore_select_title">Seleccioneu la còpia de seguretat que voleu restaurar</string>
     <string name="backup_restore_no_backups">No hi ha còpies de seguretat disponibles d\'aquesta coŀlecció en aquest dispositiu. Si teniu més còpies a l\'ordinador, si us plau, copieu-les manualment a la carpeta d\'AnkiDroid</string>

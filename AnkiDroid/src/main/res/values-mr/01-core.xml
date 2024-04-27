@@ -127,7 +127,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">कृपया सुरू ठेवण्यासाठी अंकीड्रोइडला ‘स्टोरेज’ परवानगी द्या</string>
-    <string name="rebuild_filtered_deck">फिल्टर केलेले डेक पुन्हा तयार करीत आहे ...</string>
+    <string name="rebuild_filtered_deck">फिल्टर केलेले डेक पुन्हा तयार करीत आहे &#8230;</string>
     <string name="rebuild_cram_label">पुन्हा तयार करा</string>
     <string name="empty_cram_label">रिक्त</string>
     <string name="create_subdeck">सबडेक तयार करा</string>
@@ -146,7 +146,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">आपण संकालन रद्द करू इच्छिता?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">संकालन सुरू ठेवा</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">संकालन रद्द केले</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द करीत आहे... \n यास काही वेळ लागू शकेल.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द करीत आहे&#8230; \n यास काही वेळ लागू शकेल.</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">निर्यात डेक</string>
     <string name="nothing">काही नाही</string>

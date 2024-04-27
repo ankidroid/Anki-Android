@@ -146,7 +146,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">ነዚ ምውህሃድ ከተቋርጾ  ትደሊ ዲኻ?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">ምውህሃድ ቀጽል</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ምውህሃድ ተቋሪጹ ኣሎ</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">ይቋረጽ......\n ውሑድ ግዜ ክወስድ ይኽእል ኢዩ</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">ይቋረጽ&#8230;&#8230;\n ውሑድ ግዜ ክወስድ ይኽእል ኢዩ</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">ባይታ ስደድ</string>
     <string name="nothing">የለን</string>

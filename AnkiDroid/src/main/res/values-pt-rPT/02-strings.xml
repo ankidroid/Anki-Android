@@ -168,7 +168,7 @@
     <string name="import_interrupted">Importação interrompida: o AnkiDroid foi fechado</string>
     <string name="export_preparation_in_progress">A preparar exportação&#8230;</string>
     <string name="export_ready_title">Exportação pronta</string>
-    <string name="export_send_no_handlers">Não tem nenhuma aplicação para lidar com ficheiros .apkg. A guardar...</string>
+    <string name="export_send_no_handlers">Não tem nenhuma aplicação para lidar com ficheiros .apkg. A guardar&#8230;</string>
     <string name="export_save_apkg_successful">Ficheiro Anki guardado com sucesso</string>
     <string name="export_save_apkg_unsuccessful">Falha ao guardar ficheiro Anki</string>
     <string name="export_share_title">Enviar ficheiro Anki utilizando</string>

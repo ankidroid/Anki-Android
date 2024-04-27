@@ -166,7 +166,7 @@
     <string name="import_interrupted">Import tergendala: AnkiDroid telah ditutup</string>
     <string name="export_preparation_in_progress">Menyediakan eksport&#8230;</string>
     <string name="export_ready_title">Eksport sedia</string>
-    <string name="export_send_no_handlers">Tiada aplikasi tersedia mengendalikan apkg. Menyimpan...</string>
+    <string name="export_send_no_handlers">Tiada aplikasi tersedia mengendalikan apkg. Menyimpan&#8230;</string>
     <string name="export_save_apkg_successful">Berjaya simpan pakej Anki</string>
     <string name="export_save_apkg_unsuccessful">Gagal simpan pakej Anki</string>
     <string name="export_share_title">Hantar pakej Anki menggunakan</string>

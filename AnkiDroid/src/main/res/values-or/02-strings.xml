@@ -168,7 +168,7 @@
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଯାଇଥିଲା</string>
     <string name="export_preparation_in_progress">ରପ୍ତାନି ପ୍ରସ୍ତୁତି ଚାଲିଛି&#8230;</string>
     <string name="export_ready_title">ରପ୍ତାନି ପ୍ରସ୍ତୁତ ହୋଇଅଛି</string>
-    <string name="export_send_no_handlers">apkg ପରିଚାଳନା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ। ସଞ୍ଚୟ ହେଉଛି...</string>
+    <string name="export_send_no_handlers">apkg ପରିଚାଳନା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ। ସଞ୍ଚୟ ହେଉଛି&#8230;</string>
     <string name="export_save_apkg_successful">ସଫଳତାର ସହିତ Anki package ସଂରକ୍ଷିତ ହେଲା</string>
     <string name="export_save_apkg_unsuccessful">Anki package ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
     <string name="export_share_title">ଏହାର ଉପଯୋଗ କରି Anki package ପଠାଇବା</string>

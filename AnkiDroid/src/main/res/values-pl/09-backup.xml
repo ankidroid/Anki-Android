@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">Ponów próbę otwarcia</string>
     <string name="backup_error_menu_repair">Napraw bazę danych</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Naprawianie bazy danych.\nProszę czekać...</string>
+    <string name="backup_repair_deck_progress">Naprawianie bazy danych.\nProszę czekać&#8230;</string>
     <string name="backup_invalid_file_error">Wybrany plik kopii zapasowej był nieprawidłowy</string>
     <string name="backup_restore_select_title">Wybierz kopię do odtworzenia.</string>
     <string name="backup_restore_no_backups">Brak kopii zapasowych dla tej kolekcji na urządzeniu. Jeśli masz kopię zapasową na swoim komputerze stacjonarnym, przenieś ją ręcznie do folderu AnkiDroid.</string>

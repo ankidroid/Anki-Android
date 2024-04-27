@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">重新尝试打开</string>
     <string name="backup_error_menu_repair">修复数据库</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">修复数据库。 \n 请稍候...</string>
+    <string name="backup_repair_deck_progress">修复数据库。 \n 请稍候&#8230;</string>
     <string name="backup_invalid_file_error">选中的备份文件无效</string>
     <string name="backup_restore_select_title">选择要还原的备份文件</string>
     <string name="backup_restore_no_backups">此设备上没有本集合的可用备份。如果您在桌面计算机上有备份，请手动复制它们到 AnkiDroid 文件夹。</string>

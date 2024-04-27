@@ -96,7 +96,7 @@
     <string name="dialog_keep">Giữ</string>
     <string name="dialog_remove">Loại bỏ</string>
     <string name="dialog_continue">Tiếp tục</string>
-    <string name="dialog_processing">Đang xử lý...</string>
+    <string name="dialog_processing">Đang xử lý&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Tạo</string>
     <string name="dialog_positive_delete">Xoá</string>
     <!-- Currently unsued, should be useful in the future -->

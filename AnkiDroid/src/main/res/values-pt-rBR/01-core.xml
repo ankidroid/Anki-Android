@@ -146,7 +146,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Você quer cancelar a sincronização?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Continuar a sincronização</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronização cancelada</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelando...\nPode levar algum tempo.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelando&#8230;\nPode levar algum tempo.</string>
     <string name="syncing_media">Sincronizando mídia</string>
     <string name="export_deck">Exportar baralho</string>
     <string name="nothing">Nada</string>
@@ -201,7 +201,7 @@
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Movendo arquivos</string>
     <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copiando&#8230;</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Movendo mídia</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Calculando tamanho de transferência... </string>
+    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Calculando tamanho de transferência&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Movido %1$s de %2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migração bem sucedida</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Seus dados foram migrados com sucesso.

@@ -131,7 +131,7 @@
     <string name="rebuild_cram_label">Genopbyg</string>
     <string name="empty_cram_label">Tøm</string>
     <string name="create_subdeck">Opret understak</string>
-    <string name="empty_filtered_deck">Tømmer filtreret stak... </string>
+    <string name="empty_filtered_deck">Tømmer filtreret stak&#8230;</string>
     <string name="custom_study_deck_name">Tilpasset studiesession</string>
     <string name="custom_study_deck_exists">Omdøb den eksisterende tilpassede stak først </string>
     <string name="search_deck" comment="Deck search for selecting it">Staksøgning</string>

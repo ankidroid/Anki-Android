@@ -154,7 +154,7 @@
     <string name="empty_cards">Empty cards</string>
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Врста одговора: непознато поље %s</string>
-    <string name="delete_deck">Брисање шпила...\nМолим сачекајте.</string>
+    <string name="delete_deck">Брисање шпила&#8230;\nМолим сачекајте.</string>
     <string name="info_rate">Оцени AnkiDroid</string>
     <string name="import_title">Importing</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додај</string>
@@ -170,7 +170,7 @@
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
+    <string name="export_send_no_handlers">No applications available to handle apkg. Saving&#8230;</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_share_title">Send Anki package using</string>

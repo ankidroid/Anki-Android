@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">वाइब्रेट</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">पलक लाइट</string>
     <string name="timeout_answer_text" maxLength="41">स्वचालित उत्तर प्रदर्शन</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">उपयोगकर्ता इनपुट के बिना स्वचालित रूप से उत्तर दिखाएं। डेक विकल्पों से कॉन्फ़िगर करें.</string>
     <string name="select_locale_title">भाषा चुनें</string>
     <string name="software_render" maxLength="41">कार्ड हार्डवेयर रेंडर अक्षम करें</string>
     <string name="software_render_summ">हार्डवेयर रेंडर तेज़ है लेकिन इसमें समस्याएँ हो सकती हैं, विशेष रूप से Android 8/8.1 पर।  यदि आप कार्ड समीक्षा उपयोगकर्ता इंटरफ़ेस के कुछ हिस्सों को नहीं देख पा रहे हैं, तो इस सेटिंग को आज़माएँ।</string>
@@ -174,7 +174,7 @@
     <string name="show_top_bar_summ">शीर्ष बार में कार्ड की संख्या, ध्वज और चिह्न दिखाएं</string>
     <string name="show_progress" maxLength="41">शेष दिखाएं</string>
     <string name="show_progress_summ">शेष कार्ड गणना दिखाएं</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_eta" maxLength="41">ईटीए दिखाएँ</string>
     <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">नए कार्ड के लिए डेक</string>
     <string name="learn_cutoff" maxLength="41">आगे की सीमा जानें</string>
@@ -310,7 +310,7 @@
     <string name="pref__manage_space__screen_title">स्थान प्रबंधित करें</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">एरर</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">गणना \nप्रगति पर है...</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">गणना \nप्रगति पर है&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d फ़ाइलें\n%2$s</item>
         <item quantity="other">%1$d फ़ाइलें\n%2$s</item>
@@ -322,13 +322,13 @@
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">बैकअप हटाएँ</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">बैकअप हटाएँ</string>
-    <string name="progress__deleting_backups">बैकअप हटाया जा रहा है...</string>
+    <string name="progress__deleting_backups">बैकअप हटाया जा रहा है&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">संग्रह को हटाएँ</string>
     <string name="pref__delete_collection__summary">संग्रह, मीडिया और बैकअप हटाएँ। ऐप सेटिंग हटाई नहीं जातीं</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">संग्रह  को हटाएँ</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">क्या आप वाकई अपने संग्रह, मीडिया और बैकअप हटाना चाहते हैं? \n\nध्यान दें: यह ऑपरेशन इस सेटिंग स्क्रीन को बंद कर देगा।</string>
-    <string name="progress__deleting_collection">संग्रह  को हटाया जा रहा है...</string>
+    <string name="progress__deleting_collection">संग्रह  को हटाया जा रहा है&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">सब कुछ मिटा दो</string>
     <string name="pref__delete_everything__summary">संग्रह, मीडिया, बैकअप और सेटिंग्स को हटाएं</string>
@@ -346,7 +346,7 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">कोई संग्रह नहीं है</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">एरर</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">जानकारी प्राप्त हो रही है...</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">गणना हो रही है...</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">जानकारी प्राप्त हो रही है&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">गणना हो रही है&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">संग्रह मौजूद नहीं है</string>
 </resources>

@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">Спробувати відкрити повторно</string>
     <string name="backup_error_menu_repair">Відлагодити базу даних</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Відлагодження бази даних.\nБудь ласка, чекайте...</string>
+    <string name="backup_repair_deck_progress">Відлагодження бази даних.\nБудь ласка, чекайте&#8230;</string>
     <string name="backup_invalid_file_error">Вибраний резервний файл - помилковий</string>
     <string name="backup_restore_select_title">Виберіть резервну копію для відновлення</string>
     <string name="backup_restore_no_backups">На даному пристрої відсутні резервні копіх цієї колекції. Якщо ви маєте резервні копії на ПК, будь ласка, скопіюйте їх в ручному режимі в папку AnkiDroid</string>
