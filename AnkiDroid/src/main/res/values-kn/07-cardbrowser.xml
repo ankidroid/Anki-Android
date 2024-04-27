@@ -76,7 +76,7 @@
     <string name="card_browser_list_my_searches_new_search_error_dup">ಹೆಸರು ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" ಅಳಿಸುವುದೇ?</string>
     <string name="card_browser_change_display_order">ಪ್ರದರ್ಶನ ಕ್ರಮವನ್ನು ಬದಲಾಯಿಸಿ</string>
-    <string name="card_browser_change_display_order_title">Choose display order</string>
+    <string name="card_browser_change_display_order_title">ಪ್ರದರ್ಶನ ಮೋಡ್ ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="card_details_tags">ಟ್ಯಾಗ್ಗಳು</string>
     <string-array name="card_browser_order_labels">
         <item>ವಿಂಗಡಣೆ ಇಲ್ಲ (ವೇಗವಾಗಿ)</item>
@@ -99,7 +99,7 @@
     <string name="card_browser_search_all_decks">ಎಲ್ಲಾ ಡೆಕ್‌ಗಳನ್ನು ಹುಡುಕಿ</string>
     <string name="card_browser_unknown_deck_name">ಅಜ್ಞಾತ</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">ಇಂದು ‘0 %1$s’, ನಾಳೆ ‘1 %2$s’, ಇತ್ಯಾದಿ&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">ರಫ್ತು ಕಾರ್ಡ್</item>
         <item quantity="other">ಕಾರ್ಡ್‌ಗಳನ್ನು ರಫ್ತು ಮಾಡಿ</item>

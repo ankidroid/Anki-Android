@@ -76,10 +76,10 @@
     <string name="webview_crash_unknwon_detailed">WebViewలో అంతర్గత లోపం కారణంగా ఇది జరిగింది</string>
     <string name="webview_crash_oom">Out of Memory</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_nonfatal">WebView రెండరర్ క్రాష్ అయింది. కారణం: %s</string>
+    <string name="webview_crash_fatal">ఘోరమైన లోపం: WebView రెండరర్ క్రాష్ అయింది. కారణం: %s</string>
+    <string name="webview_crash_loop_dialog_title">సిస్టమ్ WebView రెండరింగ్ వైఫల్యం</string>
+    <string name="webview_crash_loop_dialog_content">\'%1$s\' కార్డ్‌ని రెండర్ చేయడంలో సిస్టమ్ WebView విఫలమైంది.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>ప్రశ్న</item>
@@ -144,7 +144,7 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">రీషెడ్యూల్ చేయండి</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ప్రత్యేక ప్రదర్శన</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">మార్క్‌డౌన్‌గా కాపీ చేయండి</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$dలో %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">పేరుమార్చు</string>
     <string name="checks_action">తనిఖీ</string>
     <string name="check_db">డేటాబేస్ను తనిఖీ చేయండి</string>
@@ -157,20 +157,20 @@
     <string name="import_title">దిగుమతి</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">చేర్చు</string>
     <string name="import_message_replace_confirm">ఇది మీ ప్రస్తుత సేకరణను తొలగిస్తుంది మరియు ఫైల్ యొక్క డేటాను భర్తీ చేస్తుంది %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_dialog_message_add">సేకరణకు \"%s\"ని జోడించాలా? దీనికి చాలా సమయం పట్టవచ్చు</string>
+    <string name="import_log_no_apkg">ఇది చెల్లుబాటు అయ్యే Anki ప్యాకేజీ ఫైల్ కాదు</string>
     <string name="import_title_error" comment="Title of error dialog">లోపం</string>
     <string name="import_error_handle_exception">ఫైల్\n\n%sని దిగుమతి చేయడంలో విఫలమైంది</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+    <string name="import_error_not_apkg_extension">ఫైల్ పేరు “%s”కి .apkg లేదా .colpkg పొడిగింపు లేదు</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">ఎంచుకున్న ఫైల్ AnkiDroid ద్వారా స్వయంచాలకంగా దిగుమతి కాలేదు. మాన్యువల్గా ఫైళ్లను ఎలా దిగుమతి చేయాలో యూజర్ మాన్యువల్ చూడండి: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
+    <string name="import_error_copy_to_cache">ఫైల్‌ను కాష్ చేయడంలో విఫలమైంది (బహుశా నిల్వ స్థలం లేదు)</string>
+    <string name="import_interrupted">దిగుమతికి అంతరాయం ఏర్పడింది: AnkiDroid మూసివేయబడింది</string>
     <string name="export_preparation_in_progress">ఎగుమతి చేయడానికి సిద్ధమవుతోంది&#8230;</string>
     <string name="export_ready_title">ఎగుమతి సిద్ధంగా ఉంది</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving&#8230;</string>
+    <string name="export_send_no_handlers">apkkని నిర్వహించడానికి అప్లికేషన్‌లు ఏవీ అందుబాటులో లేవు. సేవ్ చేస్తోంది...</string>
     <string name="export_save_apkg_successful">Anki ప్యాకేజీ విజయవంతంగా సేవ్ చేయబడింది</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
+    <string name="export_save_apkg_unsuccessful">Anki ప్యాకేజీని సేవ్ చేయడంలో విఫలమైంది</string>
     <string name="export_share_title">ఉపయోగించి Anki ప్యాకేజీని పంపండి</string>
     <string name="export_email_subject">AnkiDroid ఫ్లాష్ కార్డ్స్ ఎగుమతి:%s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -204,7 +204,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">లింక్‌ని తెరవడానికి బ్రౌజర్ కనుగొనబడలేదు: %s</string>
     <string name="web_page_error">Error loading page: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -219,19 +219,19 @@
     <string name="white_board_image_saved">వైట్‌బోర్డ్ చిత్రం %sకి సేవ్ చేయబడింది</string>
     <string name="title_whiteboard_pen_color">వైట్‌బోర్డ్ పెన్ రంగు</string>
     <string name="title_whiteboard_editor">వైట్‌బోర్డ్ ఎడిటర్</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">స్వయంచాలక పరీక్ష కనుగొనబడింది. మీరు మానవులైతే, AnkiDroid మద్దతును సంప్రదించండి</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
+    <string name="invalid_json_data">కార్డ్ చెల్లని డేటాను అందించింది. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="anki_js_error_code">(లోపం కోడ్: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">క్లిప్‌బోర్డ్‌కి కాపీ చేయబడింది</string>
+    <string name="about_ankidroid_error_copy_debug_info">డీబగ్ సమాచారాన్ని క్లిప్‌బోర్డ్‌కి కాపీ చేయడంలో లోపం</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image">కార్డ్ కంటెంట్ లోపం: \'%s\'ని లోడ్ చేయడంలో విఫలమైంది</string>
     <!-- Deck Picker -->
     <string name="search_decks">సెర్చ్ డెక్స్</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">వలస పురోగతిని చూపు</string>
@@ -247,14 +247,14 @@
     <string name="insert_heading">శీర్షికను చొప్పించండి</string>
     <string name="format_font_size">ఫాంట్ పరిమాణాన్ని మార్చండి</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">బటన్ టెక్స్ట్</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">ఎంపిక తర్వాత HTML</string>
     <string name="add_toolbar_item">టూల్‌బార్ అంశాన్ని సృష్టించండి</string>
     <string name="edit_toolbar_item">టూల్‌బార్ అంశాన్ని సవరించండి</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">ఎంచుకున్న వచనానికి ముందు మరియు తర్వాత ఇన్సర్ట్ చేయడానికి HTMLని నమోదు చేయండి\n\nటూల్‌బార్ అంశాన్ని సవరించడానికి లేదా తీసివేయడానికి ఎక్కువసేపు నొక్కండి</string>
     <string name="remove_toolbar_item">టూల్‌బార్ అంశాన్ని తీసివేయాలా?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="note_editor_paste_too_large">చిత్రం అతికించడానికి చాలా పెద్దది, దయచేసి చిత్రాన్ని మాన్యువల్‌గా చొప్పించండి</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">సత్వరమార్గాలను జోడించడానికి AnkiDroidని అనుమతించడానికి మీరు iManagerని ఉపయోగించాల్సి రావచ్చు</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">మీ హోమ్ స్క్రీన్‌కి సత్వరమార్గాలను జోడించడానికి AnkiDroid మిమ్మల్ని అనుమతించదు</string>
@@ -279,20 +279,20 @@
     <string name="import_deck">దిగుమతి డెక్</string>
     <string name="something_wrong">ఏదో తప్పు జరిగింది, దయచేసి మళ్లీ ప్రయత్నించండి</string>
     <string name="download_failed">డౌన్ లోడ్ విఫలం</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="deck_download_progress_message">డౌన్‌లోడ్ రన్ అవుతున్నప్పుడు మీరు ఇతర యాప్‌లను ఉపయోగించవచ్చు</string>
     <string name="check_network">దయచేసి మీ నెట్‌వర్క్ కనెక్షన్‌ని తనిఖీ చేయండి</string>
     <string name="search_using_deck_name">డెక్ పేరును ఉపయోగించి శోధించండి</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">డౌన్‌లోడ్ ఆగిపోయింది, బాహ్య నిల్వ అందుబాటులో లేదు</string>
     <string name="home">హోమ్</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d కార్డ్ తాత్కాలికంగా నిలిపివేయబడింది.</item>
+        <item quantity="other">%d కార్డ్‌లు తాత్కాలికంగా నిలిపివేయబడ్డాయి.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">ఫీల్డ్ %sని అంటుకునేలా చేయండి</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Storage migration</string>
     <string name="scoped_storage_learn_more">ఇంకా నేర్చుకో</string>
@@ -308,9 +308,9 @@
     <string name="could_not_create_dir">Could not create directory %s</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="file_extract_exceeds_storage_space">ఫైల్ ఎక్స్‌ట్రాక్ట్ నిల్వ స్థలాన్ని మించిపోయింది</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">\'%s\' ట్యాగ్‌ని విస్తరించండి</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
     <string name="cd_manage_notetypes_add">కొత్త నోట్ రకాన్ని జోడించండి</string>

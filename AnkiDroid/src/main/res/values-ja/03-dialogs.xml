@@ -218,7 +218,7 @@
     <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">コレクションのバックアップ</string>
-    <string name="backup_collection_message">しばらくの期間、コレクションのバックアップをアプリの外部に作成していません。デバイスの故障・紛失など、アプリ内のデータを失う万一の事態に備え、今すぐアプリ外部（かつ、デバイスの外部）にバックアップを作成することをおすすめします。</string>
+    <string name="backup_collection_message">しばらくの期間、このアプリ内ではない場所にコレクションのバックアップを作成していません。デバイスの故障・紛失など、アプリ内のコレクションを失う万一の事態に備え、今すぐアプリの外（かつ、デバイスの外）にバックアップを作成することをおすすめします。</string>
     <string name="button_backup">バックアップ</string>
     <string name="button_disable_reminder">リマインダーを無効にする</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">後で</string>

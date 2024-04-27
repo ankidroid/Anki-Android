@@ -175,7 +175,7 @@
     <string name="show_progress" maxLength="41">शेष दिखाएं</string>
     <string name="show_progress_summ">शेष कार्ड गणना दिखाएं</string>
     <string name="show_eta" maxLength="41">ईटीए दिखाएँ</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta_summ">शेष समय दिखाएँ</string>
     <string name="use_current" maxLength="41">नए कार्ड के लिए डेक</string>
     <string name="learn_cutoff" maxLength="41">आगे की सीमा जानें</string>
     <string name="time_limit" maxLength="41">Timebox समय सीमा</string>
@@ -200,7 +200,7 @@
     <string name="thirdparty_apps_summary">शब्दकोशों और उपयोगिताओं सहित AnkiDroid का उपयोग करने वाले ऐप्स की सूची देखने के लिए यहां टैप करें</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">समीक्षक</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">डेक शीर्षक दिखाएँ</string>
     <string name="accessibility" maxLength="41">सरल उपयोग</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">क्लिपबोर्ड इमेजेज को पीएनजी प्रारूप में चिपकाएँ</string>
@@ -238,8 +238,8 @@
     <string name="deck_conf_cram_reschedule_summ">इस डेक में मेरे जवाब के आधार पर कार्ड पुनर्निर्धारित</string>
     <string name="deck_conf_cram_filter_2_check">दूसरा फ़िल्टर सक्षम करें</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">कस्टम चरणों को परिभाषित करें</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">पूर्वावलोकन में देरी</string>
+    <string name="deck_conf_cram_preview_delays_summ">देरी सेकंडों में होती है. 0 कार्ड को मूल डेक पर लौटाता है।</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid को बेहतर बनाने में मदद करें!</string>
     <string name="analytics_title" maxLength="41">सुविधा उपयोग साझा करें</string>
@@ -264,17 +264,17 @@
     <string name="key_picker_default_press_key">कोई कुंजी दबाएं</string>
     <string name="binding_add_axis">जॉयस्टिक/मोशन कंट्रोलर को जोड़ें</string>
     <string name="axis_picker_move_joystick">जॉयस्टिक/मोशन कंट्रोलर को स्थानांतरित करें</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_actions" maxLength="41">उपयोगकर्ता क्रियाएं</string>
+    <string name="user_actions_summary" maxLength="41">समीक्षा स्क्रीन से जावास्क्रिप्ट ट्रिगर करें</string>
+    <string name="user_action_1" maxLength="41">उपयोगकर्ता क्रिया 1</string>
+    <string name="user_action_2" maxLength="41">उपयोगकर्ता क्रिया 2</string>
+    <string name="user_action_3" maxLength="41">उपयोगकर्ता क्रिया 3</string>
+    <string name="user_action_4" maxLength="41">उपयोगकर्ता क्रिया 4</string>
+    <string name="user_action_5" maxLength="41">उपयोगकर्ता क्रिया 5</string>
+    <string name="user_action_6" maxLength="41">उपयोगकर्ता क्रिया 6</string>
+    <string name="user_action_7" maxLength="41">उपयोगकर्ता क्रिया 7</string>
+    <string name="user_action_8" maxLength="41">उपयोगकर्ता क्रिया 8</string>
+    <string name="user_action_9" maxLength="41">उपयोगकर्ता क्रिया 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">कार्ड साइड चुनें</string>
     <string name="card_side_question">प्रश्न</string>
@@ -288,8 +288,8 @@
     <string name="bindings_already_bound">पहले से ही \'%s\' से बंधा हुआ है</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">प्रयोगात्मक</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid ने एक बेहतर TTS तंत्र पेश किया है जो अन्य Anki क्लाइंट के साथ संगत है और इसमें अधिक आवाजें और भाषा प्लेबैक में सुधार शामिल हैं!\n\nकृपया जितनी जल्दी हो सके अपग्रेड करें, क्योंकि यह सेटिंग जल्द ही हटा दी जाएगी</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">कृपया नए टेक्स्ट टू स्पीच प्रारूप में अपग्रेड करें</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">डेवलपर विकल्प</string>
     <string name="dev_options_enabled_pref" maxLength="41">डेवलपर विकल्प सक्षम करें</string>
