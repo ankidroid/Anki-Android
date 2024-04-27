@@ -26,4 +26,9 @@
         android:icon="@drawable/ic_mode_edit_white"
         android:title="@string/cardeditor_title_edit_card"
         app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_card_info"
+        android:icon="@drawable/ic_dialog_info"
+        android:title="@string/card_info_title"
+        app:showAsAction="collapseActionView"/>
 </menu>

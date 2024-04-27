@@ -37,11 +37,11 @@ import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
-import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
+import kotlinx.coroutines.launch
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
@@ -97,8 +97,10 @@ class ReviewerFragment :
     }
 
     // TODO
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        showSnackbar("Not implemented yet")
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_card_info -> launchCardInfo()
+        }
         return true
     }
 
@@ -132,6 +134,13 @@ class ReviewerFragment :
                 showAnswerButton.isVisible = true
                 answerButtonsLayout.isVisible = false
             }
+        }
+    }
+
+    private fun launchCardInfo() {
+        lifecycleScope.launch {
+            val intent = viewModel.getCardInfoDestination().toIntent(requireContext())
+            startActivity(intent)
         }
     }
 
