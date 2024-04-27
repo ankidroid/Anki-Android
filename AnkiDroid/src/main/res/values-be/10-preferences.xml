@@ -167,8 +167,8 @@
     <string name="vertical_centering_summ">Цэнтраваць змесціва картак вертыкальна</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Інтэрвал у падвойным дотыку (мілісек.)</string>
     <string name="pref_double_tap_time_interval_summary">Другі націск на кнопку адказу будзе праігнараваны, калі час яшчэ не мінуў. Гэта прадухіляе выпадковы двайны націск</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Працягласць націску для адказу (мс)</string>
-    <string name="pref_show_answer_long_press_summary">Мінімальны час працягласці націску перад тым, як кнопка \"Паказаць адказ\" зарэгіструе дотык. Гэта можа знізіць верагоднасць выпадковага націску кнопкі. Прадвызначанае значэнне - 0 мс</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Паказваць кнопку часу</string>
     <string name="show_estimates_summ">Паказваць наступны час паўтарэння над кнопкай адказу</string>
     <string name="show_large_answer_buttons" maxLength="41">Паказваць вялікія кнопкі адказу</string>

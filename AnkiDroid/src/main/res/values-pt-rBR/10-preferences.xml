@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Centralizar o conteúdo dos cards verticalmente</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de toque duplo (milissegundos)</string>
     <string name="pref_double_tap_time_interval_summary">Um segundo toque nos botões de resposta será ignorado se esse intervalo não tiver decorrido. Isso evita toques duplos acidentais</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Duração do toque para mostrar resposta (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Tempo mínimo de pressionamento até que o botão mostrar resposta registre o toque. Pode reduzir a  chance de pressionar acidentalmente os botões extras. O padrão é 0 ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Mostrar o tempo no botão</string>
     <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botões de resposta grandes</string>

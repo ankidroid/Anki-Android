@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Vertikal centrering av kortinnehåll</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Dubbeltryck tidsintervall (millisekunder)</string>
     <string name="pref_double_tap_time_interval_summary">En andra knapptryckning av svarsknappar kommer att ignoreras om den här tiden inte har förflutit. Detta förhindrar oavsiktliga dubbeltryck</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Visa svar fördröjning långt tryck (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minsta fördröjning för långt tryck innan visa svar-knappen registrerar ett tryck. Kan minska risken för oavsiktliga knapptryckningar. Standard är 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Visa tid på knappar</string>
     <string name="show_estimates_summ">Visa nästa repetitionstid på svarsknapparna</string>
     <string name="show_large_answer_buttons" maxLength="41">Visa stora svarsknappar</string>

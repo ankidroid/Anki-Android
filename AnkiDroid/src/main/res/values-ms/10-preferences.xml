@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Tengahkan kandungan kad secara menegak</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Selang sentuh dua kali (milisaat)</string>
     <string name="pref_double_tap_time_interval_summary">Sentuhan kedua butang jawapan akan diabaikan jika masa ini belum berlalu. Elakkan sentuh dua kali tanpa sengaja</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Masa tunjuk jawapan tekan lama (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Masa minimum tekan lama sebelum butang tunjuk jawapan akui tekanan. Mungkin kurangkan tekanan tanpa sengaja. Lalai kepada 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Tunjuk masa</string>
     <string name="show_estimates_summ">Tunjuk masa semakan seterusnya pada butang jawapan</string>
     <string name="show_large_answer_buttons" maxLength="41">Tunjuk butang jawapan besar</string>

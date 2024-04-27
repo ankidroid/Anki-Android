@@ -165,8 +165,8 @@
     <string name="vertical_centering_summ">ಕಾರ್ಡ್‌ಗಳ ವಿಷಯವನ್ನು ಲಂಬವಾಗಿ ಕೇಂದ್ರೀಕರಿಸಿ</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ಡಬಲ್ ಟ್ಯಾಪ್ ಸಮಯದ ಮಧ್ಯಂತರ (ಮಿಲಿಸೆಕೆಂಡುಗಳು)</string>
     <string name="pref_double_tap_time_interval_summary">ಈ ಸಮಯ ಮೀರದಿದ್ದರೆ ಉತ್ತರ ಬಟನ್‌ಗಳ ಎರಡನೇ ಟ್ಯಾಪ್ ಅನ್ನು ನಿರ್ಲಕ್ಷಿಸಲಾಗುತ್ತದೆ. ಇದು ಆಕಸ್ಮಿಕ ಡಬಲ್ ಟ್ಯಾಪ್‌ಗಳನ್ನು ತಡೆಯುತ್ತದೆ</string>
-    <string name="pref_show_answer_long_press" maxLength="41">ಉತ್ತರವನ್ನು ತೋರಿಸಿ ದೀರ್ಘ-ಒತ್ತಿ ಸಮಯ (ಮಿಸೆ)</string>
-    <string name="pref_show_answer_long_press_summary">ಪ್ರದರ್ಶನದ ಉತ್ತರ ಬಟನ್ ಸ್ಪರ್ಶವನ್ನು ನೋಂದಾಯಿಸುವ ಮೊದಲು ಕನಿಷ್ಠ ದೀರ್ಘ-ಒತ್ತುವ ಸಮಯ. ಆಕಸ್ಮಿಕ ಹೆಚ್ಚುವರಿ ಬಟನ್ ಪ್ರೆಸ್‌ಗಳ ಅವಕಾಶವನ್ನು ಕಡಿಮೆ ಮಾಡಬಹುದು. ಡೀಫಾಲ್ಟ್ 0ms ಆಗಿದೆ</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">ಸಮಯ ಬಟನ್ ತೋರಿಸು</string>
     <string name="show_estimates_summ">ಉತ್ತರ ಬಟನ್‌ಗಳಲ್ಲಿ ಮುಂದಿನ ವಿಮರ್ಶೆ ಸಮಯವನ್ನು ತೋರಿಸಿ</string>
     <string name="show_large_answer_buttons" maxLength="41">ದೊಡ್ಡ ಉತ್ತರ ಬಟನ್‌ಗಳನ್ನು ತೋರಿಸಿ</string>

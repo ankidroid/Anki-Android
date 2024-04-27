@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un segundo toque de los botones de respuesta será ignorado si este tiempo no ha transcurrido. Esto previene doble toque accidental.</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Mostrar respuesta - pulsación larga (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Tiempo mínimo de pulsación prolongada antes de que el botón Mostrar respuesta registre una pulsación. Puede reducir la posibilidad de pulsaciones adicionales accidentales. Por defecto es 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Mostar el botón tiempo</string>
     <string name="show_estimates_summ">Mostrar el tiempo para el próximo repaso encima de los botones de respuesta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botones de respuestas grandes</string>

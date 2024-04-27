@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Tzentra in verticale su cuntenutu de sas cartas</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervallu de tempus tocu dòpiu (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Su de duos tocos in sos butones de risposta s\'at a ignorare si custu tempus no at a èssere coladu. Custu prevenit tocos dòpios atzidentales</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Tempus de incarcada longa pro mustrare sa risposta (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Tempus mìnimu de incarcada longa in antis chi su butone pro mustrare sa risposta registret unu tocu. Diat pòdere minimare sa possibilidade de incarcadas de su butones additzionales. Su valore predefinidu est de 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Ammustra s\'iscadèntzia de sos butones</string>
     <string name="show_estimates_summ">Ammustra s\'iscadèntzia imbieniente in subra de sos butones de risposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Ammustra sos butones de risposta mannos</string>

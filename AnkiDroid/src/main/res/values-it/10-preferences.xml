@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Centra verticalmente il contenuto delle carte</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervallo di tempo doppio tocco (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un secondo tocco dei pulsanti di risposta verrà ignorato se questo tempo non è trascorso. Questo impedisce doppi tocchi accidentali</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Durata pressione prolungata per mostrare la risposta (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Tempo minimo di pressione prolungata prima che il pulsante di risposta riscontri un tocco. Può ridurre la probabilità di pressioni accidentali aggiuntive. Il valore predefinito è 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Mostra scadenza pulsanti</string>
     <string name="show_estimates_summ">Mostra la prossima scadenza sopra i pulsanti di risposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostra pulsanti risposta grandi</string>
