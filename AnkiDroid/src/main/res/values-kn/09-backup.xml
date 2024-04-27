@@ -44,12 +44,12 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="backup_deck_no_storage_left">ಬ್ಯಾಕಪ್ ಉಳಿಸಲಾಗಿಲ್ಲ. ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯಲ್ಲಿ ಸ್ಥಳಾವಕಾಶವಿಲ್ಲ. ಬ್ಯಾಕಪ್ ಆಳವನ್ನು ಕಡಿಮೆ ಮಾಡಿ ಅಥವಾ ಕೆಲವು ಇತರ ಫೈಲ್‌ಗಳನ್ನು ತೆಗೆದುಹಾಕಿ.</string>
+    <string name="storage_warning">ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯಲ್ಲಿ %d MB ಗಿಂತ ಕಡಿಮೆ ಸ್ಥಳಾವಕಾಶ ಉಳಿದಿದೆ.\nಡೇಟಾ ನಷ್ಟವನ್ನು ತಪ್ಪಿಸಲು ಸ್ವಲ್ಪ ಜಾಗವನ್ನು ಮುಕ್ತಗೊಳಿಸಿ.</string>
     <string name="backup_restore">ಬ್ಯಾಕಪ್‌ನಿಂದ ಮರುಸ್ಥಾಪಿಸಿ</string>
     <string name="backup_new_collection">ಹೊಸ ಸಂಗ್ರಹ</string>
     <string name="backup_del_collection">ಸಂಗ್ರಹವನ್ನು ಅಳಿಸಿ ಮತ್ತು ಹೊಸದನ್ನು ರಚಿಸಿ</string>
-    <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
+    <string name="backup_del_collection_question">ಸಂಗ್ರಹವನ್ನು ಅಳಿಸಿ ಮತ್ತು ಹೊಸದನ್ನು ರಚಿಸುವುದೇ? ಇದು ನಿಮ್ಮ ಎಲ್ಲಾ ಕಲಿಕೆಯ ಪ್ರಗತಿಯನ್ನು ಕೈಬಿಡುತ್ತದೆ ಮತ್ತು ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸುತ್ತದೆ.</string>
     <string name="backup_one_way_sync_from_server">ಸರ್ವರ್‌ನಿಂದ ಏಕಮುಖ ಸಿಂಕ್</string>
     <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
     <string name="error_handling_title">Error handling</string>
@@ -57,10 +57,10 @@
     <string name="backup_retry_opening">ತೆರೆಯಲು ಮರುಪ್ರಯತ್ನಿಸಿ</string>
     <string name="backup_error_menu_repair">ರಿಪೇರಿ ಡೇಟಾಬೇಸ್</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">ಡೇಟಾಬೇಸ್ ದುರಸ್ತಿ ಮಾಡಲಾಗುತ್ತಿದೆ...</string>
+    <string name="backup_repair_deck_progress">ಡೇಟಾಬೇಸ್ ದುರಸ್ತಿ ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="backup_invalid_file_error">ಆಯ್ಕೆಮಾಡಿದ ಬ್ಯಾಕಪ್ ಫೈಲ್ ಅಮಾನ್ಯವಾಗಿದೆ</string>
     <string name="backup_restore_select_title">ಮರುಸ್ಥಾಪಿಸಲು ಬ್ಯಾಕಪ್ ಆಯ್ಕೆಮಾಡಿ</string>
-    <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>
+    <string name="backup_restore_no_backups">ಈ ಸಾಧನದಲ್ಲಿ ಯಾವುದೇ ಬ್ಯಾಕಪ್‌ಗಳು ಲಭ್ಯವಿಲ್ಲ. ನಿಮ್ಮ ಡೆಸ್ಕ್‌ಟಾಪ್ ಕಂಪ್ಯೂಟರ್‌ನಲ್ಲಿ ನೀವು ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಹೊಂದಿದ್ದರೆ, ಅವುಗಳನ್ನು ನಿಮ್ಮ AnkiDroid ಫೋಲ್ಡರ್‌ಗೆ ಹಸ್ತಚಾಲಿತವಾಗಿ ನಕಲಿಸಿ.</string>
     <string name="open_collection_failed_title">ಸಂಗ್ರಹವನ್ನು ತೆರೆಯಲಾಗಿಲ್ಲ</string>
     <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
     <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>

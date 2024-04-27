@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">Riprova ad aprire</string>
     <string name="backup_error_menu_repair">Ripara database</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Riparazione database.\nAttendi...</string>
+    <string name="backup_repair_deck_progress">Riparazione database.\nAttendi&#8230;</string>
     <string name="backup_invalid_file_error">Il file di backup selezionato non è valido</string>
     <string name="backup_restore_select_title">Seleziona backup da ripristinare</string>
     <string name="backup_restore_no_backups">Nessun backup per questa collezione disponibile su questo dispositivo. Se hai dei backup sul tuo computer, copiali manualmente nella cartella AnkiDroid</string>

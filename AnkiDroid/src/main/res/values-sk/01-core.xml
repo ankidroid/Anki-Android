@@ -133,7 +133,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Pre pokračovanie, prosím, poskytnite Ankidroid povolenie na ukladanie dát</string>
-    <string name="rebuild_filtered_deck">Obnovujem filtrovaný balíček...</string>
+    <string name="rebuild_filtered_deck">Obnovujem filtrovaný balíček&#8230;</string>
     <string name="rebuild_cram_label">Znovu zostaviť</string>
     <string name="empty_cram_label">Vyprázdniť</string>
     <string name="create_subdeck">Vytvoriť podbalíček</string>

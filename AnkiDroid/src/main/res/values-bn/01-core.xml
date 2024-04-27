@@ -146,7 +146,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">আপনি সিঙ্ক বাতিল করতে চান?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">সিংক বজায় রাখুন</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">সিংক বাতিল করা হয়েছে</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling...\nThis কিছু সময় লাগতে পারে।</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis কিছু সময় লাগতে পারে।</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">ডেক রপ্তানি করুন</string>
     <string name="nothing">কিছুই না</string>
@@ -199,9 +199,9 @@
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">প্রগতি ছাড়া একাধিক ত্রুটি। সাম্প্রতিক: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">ডাটাবেজের ফাইলগুলি স্থানান্তর হচ্ছে</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">কপি চলছে...</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">কপি চলছে&#8230;</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">মিডিয়া স্থানান্তর</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">স্থানান্তরিত ডাটার সাইজ গণনা হচ্ছে...</string>
+    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">স্থানান্তরিত ডাটার সাইজ গণনা হচ্ছে&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%2$sএর মধ্যে %1$s স্থানান্তরিত</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">সরানোর কাজটি সফল হয়েছে</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        আপনার ডাটা সফলতাপূর্বক স্থানান্তরিত হয়েছে।

@@ -99,7 +99,7 @@
     <string name="dialog_keep">Manter</string>
     <string name="dialog_remove">Remover</string>
     <string name="dialog_continue">Continuar</string>
-    <string name="dialog_processing">Processando...</string>
+    <string name="dialog_processing">Processando&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Criar</string>
     <string name="dialog_positive_delete">Excluir</string>
     <!-- Currently unsued, should be useful in the future -->

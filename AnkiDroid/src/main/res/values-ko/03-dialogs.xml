@@ -96,7 +96,7 @@
     <string name="dialog_keep">Keep</string>
     <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">계속하기</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Processing&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">만들기</string>
     <string name="dialog_positive_delete">삭제</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -108,7 +108,7 @@
     <!-- Media checking -->
     <string name="check_media_title">미디어를 점검할까요?</string>
     <string name="check_media_warning">큰 미디어 컬렉션은 시간이 오래 걸릴 수 있습니다</string>
-    <string name="check_media_message">미디어 점검 중...</string>
+    <string name="check_media_message">미디어 점검 중&#8230;</string>
     <string name="check_media_acknowledge">미디어 점검됨</string>
     <string name="check_media_invalid">올바르지 않은 인코딩을 포함한 파일: %d</string>
     <string name="check_media_unused">미디어 폴더에 있지만 어떠한 카드에도 사용되지 않은 파일: %d</string>
@@ -126,7 +126,7 @@
     <string name="tags_dialog_option_new_cards">신규</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">예정</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">빈 카드를 찾는 중...</string>
+    <string name="emtpy_cards_finding">빈 카드를 찾는 중&#8230;</string>
     <string name="empty_cards_count">삭제할 카드: %d</string>
     <string name="empty_cards_deleted">삭제된 카드: %d</string>
     <!-- Multimedia - Edit Field Activity -->

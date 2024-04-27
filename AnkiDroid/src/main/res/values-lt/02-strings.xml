@@ -172,7 +172,7 @@
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">Nėra jokių programėlių, galinčių nuskaityti apkg. Išsaugoma...</string>
+    <string name="export_send_no_handlers">Nėra jokių programėlių, galinčių nuskaityti apkg. Išsaugoma&#8230;</string>
     <string name="export_save_apkg_successful">„Anki“ paketas sėkmingai išsaugotas</string>
     <string name="export_save_apkg_unsuccessful">Išsaugoti „Anki“ paketo nepavyko</string>
     <string name="export_share_title">Send Anki package using</string>

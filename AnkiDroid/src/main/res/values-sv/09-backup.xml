@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">Prova att öppna igen</string>
     <string name="backup_error_menu_repair">Reparera databas</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Reparerar databas.\nVar vänlig vänta...</string>
+    <string name="backup_repair_deck_progress">Reparerar databas.\nVar vänlig vänta&#8230;</string>
     <string name="backup_invalid_file_error">Den valda återställningsfilen var ogiltig</string>
     <string name="backup_restore_select_title">Välj säkerhetskopia att återställa</string>
     <string name="backup_restore_no_backups">Inga säkerhetskopior för samlingen finns på den här enheten. Om du har säkerhetskopior på din stationära dator, kopiera dem manuellt till din AnkiDroid-mapp</string>

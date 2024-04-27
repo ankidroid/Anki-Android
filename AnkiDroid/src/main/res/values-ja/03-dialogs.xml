@@ -96,7 +96,7 @@
     <string name="dialog_keep">維持</string>
     <string name="dialog_remove">削除</string>
     <string name="dialog_continue">続行</string>
-    <string name="dialog_processing">処理中です...</string>
+    <string name="dialog_processing">処理中です&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">作成</string>
     <string name="dialog_positive_delete">削除</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -108,7 +108,7 @@
     <!-- Media checking -->
     <string name="check_media_title">メディアをチェックしますか？</string>
     <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかる場合があります。</string>
-    <string name="check_media_message">メディアをチェックしています...</string>
+    <string name="check_media_message">メディアをチェックしています&#8230;</string>
     <string name="check_media_acknowledge">メディアのチェックの完了</string>
     <string name="check_media_invalid">エンコーディングが無効なファイル数: %d</string>
     <string name="check_media_unused">(*) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d個</string>

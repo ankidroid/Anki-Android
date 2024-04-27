@@ -152,7 +152,7 @@
     <string name="empty_cards">Targetes buides</string>
     <string name="empty_card_warning">Aquesta targeta està buida. Utilitza l\'opció del menú de \"Buit de targetes\" a la pantalla de llista de malls.</string>
     <string name="unknown_type_field_warning">Tipus de resposta: camp desconegut %s</string>
-    <string name="delete_deck">S\'està suprimint el paquet...\nUn moment si us plau.</string>
+    <string name="delete_deck">S\'està suprimint el paquet&#8230;\nUn moment si us plau.</string>
     <string name="info_rate">Valoreu l\'AnkiDroid</string>
     <string name="import_title">S\'està important</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Afegeix</string>
@@ -168,7 +168,7 @@
     <string name="import_interrupted">Importació interrompuda: AnkiDroid s\'ha tancat</string>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">No hi ha aplicacions disponibles per a gestionar apkg. Desant...</string>
+    <string name="export_send_no_handlers">No hi ha aplicacions disponibles per a gestionar apkg. Desant&#8230;</string>
     <string name="export_save_apkg_successful">Paquet Anki desat amb èxit</string>
     <string name="export_save_apkg_unsuccessful">Error al desar paquet Anki</string>
     <string name="export_share_title">Voleu enviar el paquet Anki?</string>

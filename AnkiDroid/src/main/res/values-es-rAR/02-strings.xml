@@ -152,7 +152,7 @@
     <string name="empty_cards">Tarjetas vacías</string>
     <string name="empty_card_warning">Esta tarjeta está vacía. Utilice la opción \"Tarjetas vacías\" del menú en la pantalla de la lista de mazos.</string>
     <string name="unknown_type_field_warning">Tipear respuesta: campo desconocido %s</string>
-    <string name="delete_deck">Eliminando mazo...\nPor favor aguarde.</string>
+    <string name="delete_deck">Eliminando mazo&#8230;\nPor favor aguarde.</string>
     <string name="info_rate">Puntúe AnkiDroid</string>
     <string name="import_title">Importando</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Añadir</string>
@@ -168,7 +168,7 @@
     <string name="import_interrupted">Importación interrumpida</string>
     <string name="export_preparation_in_progress">Preparando la exportación&#8230;</string>
     <string name="export_ready_title">Exportación preparada</string>
-    <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando...</string>
+    <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando&#8230;</string>
     <string name="export_save_apkg_successful">Paquete Anki guardado correctamente</string>
     <string name="export_save_apkg_unsuccessful">Error al guardar el paquete Anki</string>
     <string name="export_share_title">Enviar paquete Anki usando</string>

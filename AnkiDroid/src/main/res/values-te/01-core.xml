@@ -131,7 +131,7 @@
     <string name="rebuild_cram_label">పునర్నిర్మాణం</string>
     <string name="empty_cram_label">ఖాళీ</string>
     <string name="create_subdeck">సబ్‌డెక్‌ను సృష్టించండి</string>
-    <string name="empty_filtered_deck">ఫిల్టర్ చేసిన డెక్‌ను ఖాళీ చేస్తోంది...</string>
+    <string name="empty_filtered_deck">ఫిల్టర్ చేసిన డెక్‌ను ఖాళీ చేస్తోంది&#8230;</string>
     <string name="custom_study_deck_name">కస్టమ్ అధ్యయనం సెషన్</string>
     <string name="custom_study_deck_exists">మొదటి సానుకూల అధ్యయనం డెక్ యొక్క పేరు మార్చండి</string>
     <string name="search_deck" comment="Deck search for selecting it">డెక్ శోధన</string>
@@ -146,7 +146,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">మీరు సమకాలీకరణను రద్దు చేయాలనుకుంటున్నారా?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">సమకాలీకరించండి</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">సమకాలీకరణ రద్దు చేయబడింది</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">రద్దు...\nదీనికి కొంత సమయం పట్టవచ్చు.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">రద్దు&#8230;\nదీనికి కొంత సమయం పట్టవచ్చు</string>
     <string name="syncing_media">మీడియాను సమకాలీకరించడం</string>
     <string name="export_deck">ఎగుమతి డెక్</string>
     <string name="nothing">ఏమీ</string>
@@ -199,7 +199,7 @@
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">డేటాబేస్ ఫైళ్లను తరలిస్తోంది</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">కాపీ చేస్తోంది...</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">కాపీ చేస్తోంది&#8230;</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating media</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">బదిలీ పరిమాణాన్ని గణిస్తోంది&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>

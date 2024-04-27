@@ -168,7 +168,7 @@
     <string name="import_interrupted">ഇറക്കുമതി തടസ്സപ്പെട്ടു: അങ്കിഡ്രോയിഡ് അടച്ചു</string>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">apkg കൈകാര്യം ചെയ്യാൻ അപ്ലിക്കേഷനുകളൊന്നും ലഭ്യമല്ല. സംരക്ഷിക്കുന്നത്...</string>
+    <string name="export_send_no_handlers">apkg കൈകാര്യം ചെയ്യാൻ അപ്ലിക്കേഷനുകളൊന്നും ലഭ്യമല്ല. സംരക്ഷിക്കുന്നത്&#8230;</string>
     <string name="export_save_apkg_successful">അങ്കി പാക്കേജ് വിജയകരമായി സംരക്ഷിച്ചു</string>
     <string name="export_save_apkg_unsuccessful">അങ്കി പാക്കേജ് സംരക്ഷിക്കുന്നത് പരാജയപ്പെട്ടു</string>
     <string name="export_share_title">Send Anki package using</string>

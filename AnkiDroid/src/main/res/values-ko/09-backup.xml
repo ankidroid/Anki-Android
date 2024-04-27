@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">열기 재시도</string>
     <string name="backup_error_menu_repair">데이터베이스 복구</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">데이터베이스 복구중. \ n 잠시 기다려 주세요...</string>
+    <string name="backup_repair_deck_progress">데이터베이스 복구중. \ n 잠시 기다려 주세요&#8230;</string>
     <string name="backup_invalid_file_error">선택한 백업 파일이 올바르지 않습니다.</string>
     <string name="backup_restore_select_title">복원할 백업 파일 선택</string>
     <string name="backup_restore_no_backups">이 장치에는 사용 가능한 백업 파일이 없습니다. 데스크탑 컴퓨터에 백업 파일이 있다면 수동으로 AnkiDroid 폴더로 복사하세요.</string>

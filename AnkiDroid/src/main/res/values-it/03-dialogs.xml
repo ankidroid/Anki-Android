@@ -99,7 +99,7 @@
     <string name="dialog_keep">Mantieni</string>
     <string name="dialog_remove">Rimuovi</string>
     <string name="dialog_continue">Continua</string>
-    <string name="dialog_processing">Elaborazione...</string>
+    <string name="dialog_processing">Elaborazione&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crea</string>
     <string name="dialog_positive_delete">Elimina</string>
     <!-- Currently unsued, should be useful in the future -->

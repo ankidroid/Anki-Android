@@ -168,7 +168,7 @@
     <string name="import_interrupted">Importimine katkes: AnkiDroid suleti</string>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">Puudub rakendus apkg käsitsemiseks. Salvestamine...</string>
+    <string name="export_send_no_handlers">Puudub rakendus apkg käsitsemiseks. Salvestamine&#8230;</string>
     <string name="export_save_apkg_successful">Anki paki salvestamine õnnestus</string>
     <string name="export_save_apkg_unsuccessful">Anki paki salvestamine ebaõnnestus</string>
     <string name="export_share_title">Send Anki package using</string>

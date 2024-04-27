@@ -330,7 +330,7 @@
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">バックアップを削除</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">バックアップを削除</string>
-    <string name="progress__deleting_backups">バックアップを削除しています...</string>
+    <string name="progress__deleting_backups">バックアップを削除しています&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">コレクションを削除</string>
     <string name="pref__delete_collection__summary">コレクション、メディア（画像・音声・動画）、バックアップを削除します。アプリの設定は削除されません</string>

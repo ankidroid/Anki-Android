@@ -172,7 +172,7 @@
     <string name="import_interrupted">Import prerušený</string>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">Žiadna aplikácia na spracovanie apkg. Ukladanie...</string>
+    <string name="export_send_no_handlers">Žiadna aplikácia na spracovanie apkg. Ukladanie&#8230;</string>
     <string name="export_save_apkg_successful">Balík Anki úspešne uložený</string>
     <string name="export_save_apkg_unsuccessful">Uloženie Anki balíka zlyhalo</string>
     <string name="export_share_title">Send Anki package using</string>

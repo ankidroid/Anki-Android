@@ -150,7 +150,7 @@
     <string name="empty_cards">Буш кәртләр</string>
     <string name="empty_card_warning">Бу кәрт буш. Колода исемлеге менюсыннан \"Буш кәртләр\" опциясен кулланыгыз.</string>
     <string name="unknown_type_field_warning">Беленмәгән юл төре: %s</string>
-    <string name="delete_deck">Колода бетерелә...</string>
+    <string name="delete_deck">Колода бетерелә&#8230;</string>
     <string name="info_rate">AnkiDroidны бәяләгез</string>
     <string name="import_title">Импортлау</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Кушу</string>
@@ -166,7 +166,7 @@
     <string name="import_interrupted">Импорт бүленгән иде</string>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">apkg файлын укый ала торган кушымталар юк. Саклана... </string>
+    <string name="export_send_no_handlers">apkg файлын укый ала торган кушымталар юк. Саклана&#8230; </string>
     <string name="export_save_apkg_successful">Anki пакеты уңышлы итеп сакланды</string>
     <string name="export_save_apkg_unsuccessful">Anki пакеты саклана алмады</string>
     <string name="export_share_title">Send Anki package using</string>

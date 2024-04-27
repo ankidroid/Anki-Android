@@ -146,7 +146,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Vuoi annullare la sincronizzazione?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Continua la sincronizzazione</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronizzazione annullata</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Annullo...\nPotrebbe richiedere del tempo.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Annullo&#8230;\nPotrebbe richiedere del tempo.</string>
     <string name="syncing_media">Sincronizzazione media in corso</string>
     <string name="export_deck">Esporta il mazzo</string>
     <string name="nothing">Niente</string>

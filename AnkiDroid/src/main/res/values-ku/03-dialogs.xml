@@ -99,7 +99,7 @@
     <string name="dialog_keep">Keep</string>
     <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Bidomîne</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Processing&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Çêke</string>
     <string name="dialog_positive_delete">Jê bibe</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -111,7 +111,7 @@
     <!-- Media checking -->
     <string name="check_media_title">\?Medyayê kontrol bike</string>
     <string name="check_media_warning">Ev dê demekî dirêj hilde tev koleksiyonên medyayê</string>
-    <string name="check_media_message">...Medyayê kontrol dike</string>
+    <string name="check_media_message">&#8230;Medyayê kontrol dike</string>
     <string name="check_media_acknowledge">Medyayê kontrol kir</string>
     <string name="check_media_invalid">Pelên bi kodvekirinên çewt: %d</string>
     <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>

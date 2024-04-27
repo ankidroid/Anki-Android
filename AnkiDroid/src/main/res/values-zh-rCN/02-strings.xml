@@ -166,7 +166,7 @@
     <string name="import_interrupted">导入中断</string>
     <string name="export_preparation_in_progress">正在准备导出&#8230;</string>
     <string name="export_ready_title">已准备好导出</string>
-    <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>
+    <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存&#8230;</string>
     <string name="export_save_apkg_successful">已成功保存 apkg 文件</string>
     <string name="export_save_apkg_unsuccessful">保存 apkg 文件失败</string>
     <string name="export_share_title">选择如何发送 apkg 文件</string>

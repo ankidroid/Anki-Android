@@ -127,11 +127,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Jätkamiseks palun anna AnkiDroidile \"Mälu\" luba</string>
-    <string name="rebuild_filtered_deck">Taastan filtritud kaardipakki...</string>
+    <string name="rebuild_filtered_deck">Taastan filtritud kaardipakki&#8230;</string>
     <string name="rebuild_cram_label">Taasloo</string>
     <string name="empty_cram_label">Tühi</string>
     <string name="create_subdeck">Loo alakaardipakk</string>
-    <string name="empty_filtered_deck">Tühjendan filtritud kaardipakki...</string>
+    <string name="empty_filtered_deck">Tühjendan filtritud kaardipakki&#8230;</string>
     <string name="custom_study_deck_name">Kohandatud õppesessioon</string>
     <string name="custom_study_deck_exists">Esmalt nimeta ümber juba olemasolev täiendava õppe kaardipakk</string>
     <string name="search_deck" comment="Deck search for selecting it">Otsi kaardipakki</string>

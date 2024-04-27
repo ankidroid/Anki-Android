@@ -50,8 +50,8 @@
     <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
     <string name="feedback_title">AnkiDroid ಪ್ರತಿಕ್ರಿಯೆ</string>
     <string name="feedback_default_text">ನೀವು ವರದಿ ಮಾಡುತ್ತಿರುವ ಯಾವುದೇ ದೋಷಗಳ ಸ್ವರೂಪದ ಬಗ್ಗೆ ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ ಅಥವಾ ಮಾಹಿತಿಯನ್ನು ನಮೂದಿಸಿ.</string>
-    <string name="feedback_auto_toast_text">AnkiDroid ಸಮಸ್ಯೆಯನ್ನು ಎದುರಿಸಿದೆ; ಡೆವಲಪರ್‌ಗಳಿಗೆ ವರದಿಯನ್ನು ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ...</string>
-    <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
+    <string name="feedback_auto_toast_text">AnkiDroid ಸಮಸ್ಯೆಯನ್ನು ಎದುರಿಸಿದೆ; ಡೆವಲಪರ್‌ಗಳಿಗೆ ವರದಿಯನ್ನು ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
+    <string name="feedback_for_manual_toast_text">ಡೆವಲಪರ್‌ಗಳಿಗಾಗಿ ಬಗ್ ವರದಿಯನ್ನು ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="feedback_copy_debug">ಡೀಬಗ್ ಮಾಹಿತಿಯನ್ನು ನಕಲಿಸಿ</string>
     <string name="feedback_report">ವರದಿ</string>
     <string name="feedback_report_automatically">ದೋಷ ವರದಿಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಕಳುಹಿಸಿ</string>

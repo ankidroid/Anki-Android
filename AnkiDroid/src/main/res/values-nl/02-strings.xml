@@ -152,7 +152,7 @@
     <string name="empty_cards">Lege kaarten zoeken</string>
     <string name="empty_card_warning">Deze kaart is leeg. Gebruik de optie \"Lege kaarten zoeken\" in het menu op het scherm van de lijst met leersets.</string>
     <string name="unknown_type_field_warning">Type antwoord: onbekend veld %s</string>
-    <string name="delete_deck">Leerset verwijderen...\nEven wachten.</string>
+    <string name="delete_deck">Leerset verwijderen&#8230;\nEven wachten.</string>
     <string name="info_rate">Beoordeel AnkiDroid</string>
     <string name="import_title">Importeren</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Toevoegen</string>
@@ -168,7 +168,7 @@
     <string name="import_interrupted">Importeren onderbroken</string>
     <string name="export_preparation_in_progress">Export voorbereiden&#8230;</string>
     <string name="export_ready_title">Export klaar</string>
-    <string name="export_send_no_handlers">Geen applicaties beschikbaar om apkg te verwerken. Opslaan...</string>
+    <string name="export_send_no_handlers">Geen applicaties beschikbaar om apkg te verwerken. Opslaan&#8230;</string>
     <string name="export_save_apkg_successful">Anki-pakket succesvol opgeslagen</string>
     <string name="export_save_apkg_unsuccessful">Opslaan Anki-pakket mislukt</string>
     <string name="export_share_title">Stuur Anki-pakket met</string>

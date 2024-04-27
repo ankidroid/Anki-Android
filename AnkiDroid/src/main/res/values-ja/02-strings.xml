@@ -136,7 +136,7 @@
         <item quantity="other">%1$d分</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid カード</string>
-    <string name="note_editor_copy_note">ノートをコピー</string>
+    <string name="note_editor_copy_note">ノートを複製</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">導入順序を変更</string>
     <string name="card_editor_reset_card">学習履歴をリセット</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">スケジュールを変更</string>
@@ -150,7 +150,7 @@
     <string name="empty_cards">白紙カードをチェック</string>
     <string name="empty_card_warning">このカードは白紙カード（表側に表示する内容がないカード）です。このような白紙カードを一括削除するには、デッキリスト画面のメニューから「白紙カードをチェック」を選択してください。</string>
     <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
-    <string name="delete_deck">デッキを削除しています...</string>
+    <string name="delete_deck">デッキを削除しています&#8230;</string>
     <string name="info_rate">AnkiDroidを評価</string>
     <string name="import_title">インポート</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
@@ -164,9 +164,9 @@
     <string name="import_error_content_provider">選択されたファイルをAnkiDroidによって自動的にインポートできませんでした。Ankiファイルを手動でインポートする方法については、マニュアルをご覧ください: \n %s</string>
     <string name="import_error_copy_to_cache">一時ファイルの作成に失敗しました（ストレージ容量が不足している可能性があります）</string>
     <string name="import_interrupted">インポートが中断されました: AnkiDroidが閉じられました</string>
-    <string name="export_preparation_in_progress">エクスポートの準備中...</string>
+    <string name="export_preparation_in_progress">エクスポートの準備中&#8230;</string>
     <string name="export_ready_title">エクスポートの準備完了</string>
-    <string name="export_send_no_handlers">Ankiパッケージに対応する他のアプリがありません。ファイルを保存します...</string>
+    <string name="export_send_no_handlers">Ankiパッケージに対応する他のアプリがありません。ファイルを保存します&#8230;</string>
     <string name="export_save_apkg_successful">パッケージファイルを保存しました</string>
     <string name="export_save_apkg_unsuccessful">パッケージファイルの保存に失敗しました</string>
     <string name="export_share_title">Ankiパッケージを送信:</string>
