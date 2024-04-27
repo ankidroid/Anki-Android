@@ -155,7 +155,7 @@
     <string name="timeout_answer_summ2">ಬಳಕೆದಾರರ ಇನ್‌ಪುಟ್ ಇಲ್ಲದೆಯೇ ಉತ್ತರವನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ತೋರಿಸಿ. ಡೆಕ್ ಆಯ್ಕೆಗಳಿಂದ ಕಾನ್ಫಿಗರ್ ಮಾಡಿ.</string>
     <string name="select_locale_title">ಒಂದು ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="software_render" maxLength="41">ಕಾರ್ಡ್ ಹಾರ್ಡ್‌ವೇರ್ ರೆಂಡರ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render_summ">ಹಾರ್ಡ್‌ವೇರ್ ರೆಂಡರ್ ವೇಗವಾಗಿದೆ ಆದರೆ ವಿಶೇಷವಾಗಿ Android 8/8.1 ನಲ್ಲಿ ಸಮಸ್ಯೆಗಳನ್ನು ಹೊಂದಿರಬಹುದು. ಕಾರ್ಡ್ ವಿಮರ್ಶೆ ಬಳಕೆದಾರ ಇಂಟರ್ಫೇಸ್‌ನ ಭಾಗಗಳನ್ನು ನೀವು ನೋಡಲು ಸಾಧ್ಯವಾಗದಿದ್ದರೆ, ಈ ಸೆಟ್ಟಿಂಗ್ ಅನ್ನು ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="safe_display" maxLength="41">ಸುರಕ್ಷಿತ ಪ್ರದರ್ಶನ ಮೋಡ್</string>
     <string name="safe_display_summ">ಎಲ್ಲಾ ಅನಿಮೇಷನ್‌ಗಳನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ ಮತ್ತು ಕಾರ್ಡ್‌ಗಳನ್ನು ಸೆಳೆಯಲು ಸುರಕ್ಷಿತ ವಿಧಾನವನ್ನು ಬಳಸಿ. ಇ-ಇಂಕ್ ಸಾಧನಗಳಿಗೆ ಇದು ಅಗತ್ಯವಾಗಬಹುದು.</string>
     <string name="disable_extended_text_ui" maxLength="41">ಏಕ-ಕ್ಷೇತ್ರ ಸಂಪಾದನೆ ಮೋಡ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
@@ -164,9 +164,9 @@
     <string name="vertical_centering" maxLength="41">ಕೇಂದ್ರಕ್ಕೆ ಲಗತ್ತಿಸಿ</string>
     <string name="vertical_centering_summ">ಕಾರ್ಡ್‌ಗಳ ವಿಷಯವನ್ನು ಲಂಬವಾಗಿ ಕೇಂದ್ರೀಕರಿಸಿ</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ಡಬಲ್ ಟ್ಯಾಪ್ ಸಮಯದ ಮಧ್ಯಂತರ (ಮಿಲಿಸೆಕೆಂಡುಗಳು)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval_summary">ಈ ಸಮಯ ಮೀರದಿದ್ದರೆ ಉತ್ತರ ಬಟನ್‌ಗಳ ಎರಡನೇ ಟ್ಯಾಪ್ ಅನ್ನು ನಿರ್ಲಕ್ಷಿಸಲಾಗುತ್ತದೆ. ಇದು ಆಕಸ್ಮಿಕ ಡಬಲ್ ಟ್ಯಾಪ್‌ಗಳನ್ನು ತಡೆಯುತ್ತದೆ</string>
     <string name="pref_show_answer_long_press" maxLength="41">ಉತ್ತರವನ್ನು ತೋರಿಸಿ ದೀರ್ಘ-ಒತ್ತಿ ಸಮಯ (ಮಿಸೆ)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press_summary">ಪ್ರದರ್ಶನದ ಉತ್ತರ ಬಟನ್ ಸ್ಪರ್ಶವನ್ನು ನೋಂದಾಯಿಸುವ ಮೊದಲು ಕನಿಷ್ಠ ದೀರ್ಘ-ಒತ್ತುವ ಸಮಯ. ಆಕಸ್ಮಿಕ ಹೆಚ್ಚುವರಿ ಬಟನ್ ಪ್ರೆಸ್‌ಗಳ ಅವಕಾಶವನ್ನು ಕಡಿಮೆ ಮಾಡಬಹುದು. ಡೀಫಾಲ್ಟ್ 0ms ಆಗಿದೆ</string>
     <string name="show_estimates" maxLength="41">ಸಮಯ ಬಟನ್ ತೋರಿಸು</string>
     <string name="show_estimates_summ">ಉತ್ತರ ಬಟನ್‌ಗಳಲ್ಲಿ ಮುಂದಿನ ವಿಮರ್ಶೆ ಸಮಯವನ್ನು ತೋರಿಸಿ</string>
     <string name="show_large_answer_buttons" maxLength="41">ದೊಡ್ಡ ಉತ್ತರ ಬಟನ್‌ಗಳನ್ನು ತೋರಿಸಿ</string>
@@ -198,14 +198,14 @@
     <string name="reset_settings_to_default">ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಡೀಫಾಲ್ಟ್‌ಗೆ ಮರುಹೊಂದಿಸಿ</string>
     <string name="reset">ಮರುಹೊಂದಿಸಿ</string>
     <string name="thirdparty_apps_title" maxLength="41">ಮೂರನೇ ವ್ಯಕ್ತಿಯ API ಅಪ್ಲಿಕೇಶನ್‌ಗಳು</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
+    <string name="thirdparty_apps_summary">ನಿಘಂಟುಗಳು, ಉಪಯುಕ್ತತೆಗಳಂತಹ AnkiDroid API ಅನ್ನು ಬಳಸುವ ಅಪ್ಲಿಕೇಶನ್‌ಗಳ ಪಟ್ಟಿಯನ್ನು ನೋಡಿ.</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
     <string name="show_deck_title" maxLength="41">ಡೆಕ್ ಶೀರ್ಷಿಕೆಯನ್ನು ತೋರಿಸಿ</string>
     <string name="accessibility" maxLength="41">ಪ್ರವೇಶಿಸುವಿಕೆ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">ಕ್ಲಿಪ್‌ಬೋರ್ಡ್ ಚಿತ್ರಗಳನ್ನು PNG ನಂತೆ ಅಂಟಿಸಿ</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png_summary">ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ನಲ್ಲಿ ಡಿಸ್ಕ್ ಜಾಗವನ್ನು ಉಳಿಸಲು ಡೀಫಾಲ್ಟ್ ಆಗಿ ಅಂಕಿ ಚಿತ್ರಗಳನ್ನು JPG ಫೈಲ್‌ಗಳಾಗಿ ಅಂಟಿಸುತ್ತಾನೆ. ಬದಲಿಗೆ PNG ಚಿತ್ರಗಳನ್ನು ಅಂಟಿಸಲು ನೀವು ಈ ಆಯ್ಕೆಯನ್ನು ಬಳಸಬಹುದು.</string>
     <string name="exit_via_double_tap_back" maxLength="41">ಹಿಂತಿರುಗಲು/ನಿರ್ಗಮಿಸಲು ಎರಡು ಬಾರಿ ಹಿಂದಕ್ಕೆ ಒತ್ತಿರಿ</string>
     <string name="exit_via_double_tap_back_summ">ವಿಮರ್ಶಕರು ಅಥವಾ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಆಕಸ್ಮಿಕವಾಗಿ ತೊರೆಯುವುದನ್ನು ತಪ್ಪಿಸಲು</string>
     <!-- Allow all files in media imports -->
@@ -285,7 +285,7 @@
     <string name="card_side_answer">ಉತ್ತರ</string>
     <string name="card_side_both">ಪ್ರಶ್ನೆ &amp; ಉತ್ತರ</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">ಉ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\' ತೆಗೆದುಹಾಕಿ</string>
@@ -298,8 +298,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="disable_dev_options">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
-    </string>
+    <string name="dev_options_warning">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸುವ ಮೊದಲು ದಯವಿಟ್ಟು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ. ಈ ಆಯ್ಕೆಗಳು ಅಪಾಯಕಾರಿ ಮತ್ತು ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಒಡೆಯಬಹುದು ಅಥವಾ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಭ್ರಷ್ಟಗೊಳಿಸಬಹುದು.\n\nಈ ಆಯ್ಕೆಗಳು ಹೆಚ್ಚಿನ ಬಳಕೆದಾರರಿಗೆ ಸೂಕ್ತವಲ್ಲ ಮತ್ತು ಆದ್ದರಿಂದ ಅನುವಾದಿಸಲಾಗಿಲ್ಲ, ಆದ್ದರಿಂದ ಅವು ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿವೆ.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
@@ -329,7 +328,7 @@
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">ಬಳಕೆಯಾಗದ ಮಾಧ್ಯಮ ಫೈಲ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
+    <string name="pref__delete_unused_media_files__summary">_ ನೊಂದಿಗೆ ಪೂರ್ವಪ್ರತ್ಯಯವಿಲ್ಲದ ಮತ್ತು ಯಾವುದೇ ಟಿಪ್ಪಣಿಗಳಿಂದ ಉಲ್ಲೇಖಿಸದ ಚಿತ್ರಗಳು ಮತ್ತು ಇತರ ಮಾಧ್ಯಮವನ್ನು ಅಳಿಸಿ</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">ಬಳಕೆಯಾಗದ ಮಾಧ್ಯಮ ಫೈಲ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">ಬ್ಯಾಕ್‌ಅಪ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
@@ -337,9 +336,9 @@
     <string name="progress__deleting_backups">ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
+    <string name="pref__delete_collection__summary">ಸಂಗ್ರಹಣೆ, ಮಾಧ್ಯಮ ಮತ್ತು ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಅಳಿಸಿ. ಅಪ್ಲಿಕೇಶನ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗಿಲ್ಲ</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ನಿಮ್ಮ ಸಂಗ್ರಹಣೆ, ಮಾಧ್ಯಮ ಮತ್ತು ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಅಳಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?\n\nಗಮನಿಸಿ: ಈ ಕ್ರಿಯೆಯು ವಿಂಡೋವನ್ನು ಮುಚ್ಚುತ್ತದೆ.</string>
     <string name="progress__deleting_collection">Deleting collection&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">ಎಲ್ಲಾ ಅಳಿಸಿ</string>
