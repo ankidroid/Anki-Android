@@ -88,6 +88,9 @@ open class RobolectricTest : AndroidTest {
     @get:Rule
     val testName = TestName()
 
+    @get:Rule
+    val failOnUnhandledExceptions = FailOnUnhandledExceptionRule()
+
     @Before
     @CallSuper
     open fun setUp() {
