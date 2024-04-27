@@ -163,8 +163,8 @@
     <string name="vertical_centering_summ">Thiết lập nội dung chính của thẻ theo chiều dọc</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Hiển thị thời gian nhấn và giữ câu trả lời (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Thời gian nhấn và giữ tối thiểu trước khi hiển thị nút câu trả lời sẽ tiếp nhận thao tác bấm. Có thể giảm nguy cơ nhấn nhầm thêm các nút. Mặc định là 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Hiển thị nút thời gian</string>
     <string name="show_estimates_summ">Hiển thị thời gian đánh giá tiếp theo trên các nút trả lời</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>

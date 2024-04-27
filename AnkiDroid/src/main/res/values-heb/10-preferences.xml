@@ -167,8 +167,8 @@
     <string name="vertical_centering_summ">מרכז את תוכן הכרטיסים בצורה אנכית</string>
     <string name="pref_double_tap_time_interval" maxLength="41">מרווח זמן של לחיצה כפולה (מילישניות)</string>
     <string name="pref_double_tap_time_interval_summary">לחיצה שנייה על כפתורי התשובה תתעלם אם הזמן הזה לא חלף. זה מונע הקשה כפולה בשוגג</string>
-    <string name="pref_show_answer_long_press" maxLength="41">הצגת תשובה זמן לחיצה ארוכה (מ\"ש)</string>
-    <string name="pref_show_answer_long_press_summary">זמן הלחיצה הארוכה המינימלית לפני שכפתור הצגת התשובה ילחץ. עשוי להפחית את הסיכוי ללחיצות מקריות. ברירת המחדל היא 0 מ\"ש.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">הצג כפתורי זמן</string>
     <string name="show_estimates_summ">הצג את זמן הסקירה הבאה על כפתורי התשובה</string>
     <string name="show_large_answer_buttons" maxLength="41">לחצני תשובה גדולים</string>

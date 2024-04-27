@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Kaksoisnapautuksen aikaväli (millisekuntia)</string>
     <string name="pref_double_tap_time_interval_summary">Toista vastauspainikkeiden napauttamista ei oteta huomioon, jos näin kauan ei ole kulunut. Tämä estää vahingossa tapahtuvat kaksoisnapautukset</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Näytä vastaus: pitkän painalluksen aika (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimi pitkän painalluksen aika, ennen kuin näytä vastaus -painike rekisteröi kosketuksen. Voi vähentää vahingossa tapahtuvien ylimääräisten painallusten mahdollisuutta. Oletusarvo on 0 ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Näytä aika painikkeissa</string>
     <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
     <string name="show_large_answer_buttons" maxLength="41">Näytä suuret vastauspainikkeet</string>
