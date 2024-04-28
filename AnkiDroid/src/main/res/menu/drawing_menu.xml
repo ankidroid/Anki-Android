@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_undo"
+        android:icon="@drawable/eraser"
+        android:title="@string/undo_action_whiteboard_last_stroke"
+        ankidroid:showAsAction="always" />
+    <item
         android:id="@+id/action_whiteboard_edit"
         android:icon="@drawable/ic_mode_edit_white"
         android:title="@string/title_whiteboard_editor"
