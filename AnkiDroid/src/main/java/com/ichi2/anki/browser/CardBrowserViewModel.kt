@@ -86,6 +86,7 @@ import kotlin.math.min
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
     private val cacheDir: File,
+    options: CardBrowserLaunchOptions?,
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
 
@@ -254,6 +255,18 @@ class CardBrowserViewModel(
 
     init {
         Timber.d("CardBrowserViewModel::init")
+
+        var selectAllDecks = false
+        when (options) {
+            is CardBrowserLaunchOptions.SystemContextMenu -> { searchTerms = options.search.toString() }
+            is CardBrowserLaunchOptions.SearchQueryJs -> {
+                searchTerms = options.search
+                selectAllDecks = options.allDecks
+            }
+            is CardBrowserLaunchOptions.DeepLink -> { searchTerms = options.search }
+            null -> {}
+        }
+
         flowOfColumnIndex1
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
             .launchIn(viewModelScope)
@@ -277,8 +290,9 @@ class CardBrowserViewModel(
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
+            val initialDeckId = if (selectAllDecks) ALL_DECKS_ID else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
-            setDeckId(getInitialDeck())
+            setDeckId(initialDeckId)
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection() }
             flowOfCardsOrNotes.update { cardsOrNotes }
 
@@ -705,11 +719,17 @@ class CardBrowserViewModel(
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
-        fun factory(lastDeckIdRepository: LastDeckIdRepository, cacheDir: File, preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
+        fun factory(
+            lastDeckIdRepository: LastDeckIdRepository,
+            cacheDir: File,
+            preferencesProvider: SharedPreferencesProvider? = null,
+            options: CardBrowserLaunchOptions?
+        ) = viewModelFactory {
             initializer {
                 CardBrowserViewModel(
                     lastDeckIdRepository,
                     cacheDir,
+                    options,
                     preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider
                 )
             }
