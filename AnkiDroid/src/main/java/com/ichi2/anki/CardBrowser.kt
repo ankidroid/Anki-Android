@@ -134,8 +134,6 @@ open class CardBrowser :
 
     lateinit var viewModel: CardBrowserViewModel
 
-    private var launchOptions: CardBrowserLaunchOptions? = null
-
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
     private val cards get() = viewModel.cards
@@ -338,10 +336,10 @@ open class CardBrowser :
         if (!ensureStoragePermissions()) {
             return
         }
+        val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
         // must be called once we have an accessible collection
-        viewModel = createViewModel()
+        viewModel = createViewModel(launchOptions)
 
-        launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
         setContentView(R.layout.card_browser)
         initNavigationDrawer(findViewById(android.R.id.content))
         // initialize the lateinit variables
@@ -381,18 +379,6 @@ open class CardBrowser :
 
         startLoadingCollection()
 
-        when (val options = launchOptions) {
-            is CardBrowserLaunchOptions.DeepLink -> {
-                searchCards(options.search)
-            }
-            is CardBrowserLaunchOptions.SearchQueryJs -> {
-                if (options.allDecks) {
-                    onDeckSelected(SelectableDeck(ALL_DECKS_ID, getString(R.string.card_browser_all_decks)))
-                }
-                searchCards(options.search)
-            }
-            else -> {} // Context Menu handled in onCreateOptionsMenu
-        }
         exportingDelegate.onRestoreInstanceState(savedInstanceState)
 
         // Selected cards aren't restored on activity recreation,
@@ -802,14 +788,6 @@ open class CardBrowser :
 
         actionBarMenu?.findItem(R.id.action_reschedule_cards)?.title =
             TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
-
-        launchOptions?.let { options ->
-            if (options !is CardBrowserLaunchOptions.SystemContextMenu) return@let
-            // Fill in the search.
-            Timber.i("CardBrowser :: Called with search intent: %s", launchOptions.toString())
-            searchWithFilterQuery(options.search.toString())
-            launchOptions = null
-        }
 
         previewItem = menu.findItem(R.id.action_preview)
         onSelectionChanged()
@@ -1899,9 +1877,13 @@ open class CardBrowser :
      * @see showedActivityFailedScreen - we may not have AnkiDroidApp.instance and therefore can't
      * create the ViewModel
      */
-    private fun createViewModel() = ViewModelProvider(
+    private fun createViewModel(launchOptions: CardBrowserLaunchOptions?) = ViewModelProvider(
         viewModelStore,
-        CardBrowserViewModel.factory(AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository, cacheDir),
+        CardBrowserViewModel.factory(
+            lastDeckIdRepository = AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository,
+            cacheDir = cacheDir,
+            options = launchOptions
+        ),
         defaultViewModelCreationExtras
     )[CardBrowserViewModel::class.java]
 
