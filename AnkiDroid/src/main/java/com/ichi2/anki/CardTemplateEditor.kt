@@ -153,6 +153,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     @Suppress("deprecation") // onBackPressed
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (modelHasChanged()) {
             showDiscardChangesDialog()
