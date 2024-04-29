@@ -430,9 +430,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         startMultimediaFieldEditor(0, note, imageUri)
     }
 
-    override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        addInstanceStateToBundle(savedInstanceState)
-        super.onSaveInstanceState(savedInstanceState)
+    override fun onSaveInstanceState(outState: Bundle) {
+        addInstanceStateToBundle(outState)
+        super.onSaveInstanceState(outState)
     }
 
     private fun addInstanceStateToBundle(savedInstanceState: Bundle) {

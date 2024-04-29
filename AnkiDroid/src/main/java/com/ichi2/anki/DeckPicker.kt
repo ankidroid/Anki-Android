@@ -1201,17 +1201,17 @@ open class DeckPicker :
         invalidateOptionsMenu()
     }
 
-    public override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        super.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putBoolean("mIsFABOpen", floatingActionMenu.isFABOpen)
-        savedInstanceState.putBoolean("migrateStorageAfterMediaSyncCompleted", migrateStorageAfterMediaSyncCompleted)
+    public override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("mIsFABOpen", floatingActionMenu.isFABOpen)
+        outState.putBoolean("migrateStorageAfterMediaSyncCompleted", migrateStorageAfterMediaSyncCompleted)
         importColpkgListener?.let {
             if (it is DatabaseRestorationListener) {
-                savedInstanceState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
+                outState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
             }
         }
-        exportingDelegate.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
+        exportingDelegate.onSaveInstanceState(outState)
+        outState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
         floatingActionMenu.showFloatingActionButton()
     }
 

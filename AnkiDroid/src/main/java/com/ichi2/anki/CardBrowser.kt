@@ -1289,16 +1289,16 @@ open class CardBrowser :
         dialog.show(supportFragmentManager, "browserOptionsDialog")
     }
 
-    public override fun onSaveInstanceState(savedInstanceState: Bundle) {
+    public override fun onSaveInstanceState(outState: Bundle) {
         // Save current search terms
-        savedInstanceState.putString("mSearchTerms", viewModel.searchTerms)
-        savedInstanceState.putLong("mOldCardId", oldCardId)
-        savedInstanceState.putInt("mOldCardTopOffset", oldCardTopOffset)
-        savedInstanceState.putBoolean("mShouldRestoreScroll", shouldRestoreScroll)
-        savedInstanceState.putBoolean("mPostAutoScroll", postAutoScroll)
-        savedInstanceState.putInt("mLastSelectedPosition", lastSelectedPosition)
-        exportingDelegate.onSaveInstanceState(savedInstanceState)
-        super.onSaveInstanceState(savedInstanceState)
+        outState.putString("mSearchTerms", viewModel.searchTerms)
+        outState.putLong("mOldCardId", oldCardId)
+        outState.putInt("mOldCardTopOffset", oldCardTopOffset)
+        outState.putBoolean("mShouldRestoreScroll", shouldRestoreScroll)
+        outState.putBoolean("mPostAutoScroll", postAutoScroll)
+        outState.putInt("mLastSelectedPosition", lastSelectedPosition)
+        exportingDelegate.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
