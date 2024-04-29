@@ -2681,11 +2681,11 @@ open class DeckPicker :
         REGULAR_DECK_NO_MORE_CARDS_TODAY
     }
 
-    override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent?> {
+    override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent> {
         return apkgFileImportResultLauncher
     }
 
-    override fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent?> {
+    override fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent> {
         return csvImportResultLauncher
     }
 }

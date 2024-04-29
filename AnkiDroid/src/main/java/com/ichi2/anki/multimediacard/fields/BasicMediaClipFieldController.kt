@@ -45,7 +45,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
 
     private lateinit var tvAudioClip: FixedTextView
 
-    private lateinit var selectMediaLauncher: ActivityResultLauncher<Intent?>
+    private lateinit var selectMediaLauncher: ActivityResultLauncher<Intent>
 
     override fun createUI(context: Context, layout: LinearLayout) {
         ankiCacheDirectory = FileUtil.getAnkiCacheDirectory(context)
@@ -103,13 +103,14 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         super.setEditingActivity(activity)
         val registry = this._activity.activityResultRegistry
 
-        selectMediaLauncher = registry.register(SELECT_MEDIA_LAUNCHER_KEY, ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode != Activity.RESULT_CANCELED) {
-                executeSafe(this._activity, "handleMediaSelection:unhandled") {
-                    handleMediaSelection(result.data!!)
+        selectMediaLauncher =
+            registry.register(SELECT_MEDIA_LAUNCHER_KEY, ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode != Activity.RESULT_CANCELED && result.data != null) {
+                    executeSafe(this._activity, "handleMediaSelection:unhandled") {
+                        handleMediaSelection(result.data!!)
+                    }
                 }
             }
-        }
     }
 
     private fun handleMediaSelection(data: Intent) {

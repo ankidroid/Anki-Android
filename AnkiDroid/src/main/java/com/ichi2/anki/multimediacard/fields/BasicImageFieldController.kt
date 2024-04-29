@@ -101,12 +101,12 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     @VisibleForTesting
     lateinit var registryToUse: ActivityResultRegistry
 
-    private lateinit var takePictureLauncher: ActivityResultLauncher<Intent?>
+    private lateinit var takePictureLauncher: ActivityResultLauncher<Intent>
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    lateinit var selectImageLauncher: ActivityResultLauncher<Intent?>
+    lateinit var selectImageLauncher: ActivityResultLauncher<Intent>
 
-    private lateinit var drawingLauncher: ActivityResultLauncher<Intent?>
+    private lateinit var drawingLauncher: ActivityResultLauncher<Intent>
 
     private inner class BasicImageFieldControllerResultCallback(
         private val onSuccess: (result: ActivityResult) -> Unit,
@@ -229,9 +229,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         cropImageRequest = registryToUse.register(CROP_IMAGE_LAUNCHER_KEY, CropImageContract()) { cropResult ->
             if (cropResult.isSuccessful) {
                 imageFileSizeWarning.visibility = View.GONE
-                if (cropResult != null) {
-                    handleCropResult(cropResult)
-                }
+                handleCropResult(cropResult)
                 setPreviewImage(viewModel.imagePath, maxImageSize)
             } else {
                 if (!previousImagePath.isNullOrEmpty()) {
