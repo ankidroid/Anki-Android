@@ -835,7 +835,11 @@ open class CardBrowser :
         if (viewModel.hasSelectedAnyRows()) {
             actionBarMenu.findItem(R.id.action_suspend_card).apply {
                 title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
+                // TODO: I don't think this icon is necessary
                 setIcon(R.drawable.ic_suspend)
+            }
+            actionBarMenu.findItem(R.id.action_toggle_bury).apply {
+                title = TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury)
             }
             actionBarMenu.findItem(R.id.action_mark_card).apply {
                 title = TR.browsingToggleMark()
@@ -1060,6 +1064,10 @@ open class CardBrowser :
             }
             R.id.action_suspend_card -> {
                 suspendCards()
+                return true
+            }
+            R.id.action_toggle_bury -> {
+                toggleBury()
                 return true
             }
             R.id.action_change_deck -> {
@@ -1513,6 +1521,17 @@ open class CardBrowser :
     }
 
     private fun suspendCards() = launchCatchingTask { withProgress { viewModel.suspendCards() } }
+
+    /** @see CardBrowserViewModel.toggleBury */
+    private fun toggleBury() = launchCatchingTask {
+        val result = withProgress { viewModel.toggleBury() } ?: return@launchCatchingTask
+        // show a snackbar as there's currently no colored background for buried cards
+        val message = when (result.wasBuried) {
+            true -> TR.studyingCardsBuried(result.count)
+            false -> resources.getQuantityString(R.plurals.unbury_cards_feedback, result.count, result.count)
+        }
+        showUndoSnackbar(message)
+    }
 
     private fun showUndoSnackbar(message: CharSequence) {
         showSnackbar(message, Snackbar.LENGTH_LONG) {

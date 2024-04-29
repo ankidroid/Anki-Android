@@ -42,6 +42,8 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
+import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.undoableOp
@@ -434,6 +436,47 @@ class CardBrowserViewModel(
         }
     }
 
+    /**
+     * if all cards are buried, unbury all
+     * if no cards are buried, bury all
+     * if there is a mix, bury all
+     *
+     * if no cards are checked, do nothing
+     *
+     * @return Whether the operation was bury/unbury, and the number of affected cards.
+     * `null` if nothing happened
+     */
+    suspend fun toggleBury(): BuryResult? {
+        if (!hasSelectedAnyRows()) {
+            Timber.w("no cards to bury")
+            return null
+        }
+
+        // https://github.com/ankitects/anki/blob/074becc0cee1e9ae59be701ad6c26787f74b4594/qt/aqt/browser/browser.py#L896-L902
+        fun Card.isBuried(): Boolean =
+            queue == QUEUE_TYPE_MANUALLY_BURIED || queue == QUEUE_TYPE_SIBLING_BURIED
+
+        val cardIds = queryAllSelectedCardIds()
+
+        // this variable exists as `undoableOp` needs an OpChanges as return value
+        var wasBuried: Boolean? = null
+        undoableOp {
+            // this differs from Anki Desktop which uses the first selected card to determine the
+            // 'checked' status
+            val wantUnbury = cardIds.all { getCard(it).isBuried() }
+
+            wasBuried = !wantUnbury
+            if (wantUnbury) {
+                Timber.i("unburying %d cards", cardIds.size)
+                sched.unburyCards(cardIds)
+            } else {
+                Timber.i("burying %d cards", cardIds.size)
+                sched.buryCards(cardIds).changes
+            }
+        }
+        return BuryResult(wasBuried = wasBuried!!, count = cardIds.size)
+    }
+
     suspend fun getSelectionExportData(): Pair<ExportDialogFragment.ExportType, List<Long>>? {
         if (!isInMultiSelectMode) return null
         return when (cardsOrNotes) {
@@ -670,6 +713,12 @@ class CardBrowserViewModel(
             }
         }
     }
+
+    /**
+     * @param wasBuried `true` if all cards were buried, `false` if unburied
+     * @param count the number of affected cards
+     */
+    data class BuryResult(val wasBuried: Boolean, val count: Int)
 
     private sealed interface ChangeCardOrder {
         data class OrderChange(val sortType: SortType) : ChangeCardOrder

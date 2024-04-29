@@ -35,6 +35,7 @@ class SentenceCaseTest : RobolectricTest() {
     fun `English is converted to sentence case`() {
         with(super.startRegularActivity<IntroductionActivity>()) {
             assertThat(TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend), equalTo("Toggle suspend"))
+            assertThat(TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury), equalTo("Toggle bury"))
             assertThat(TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date), equalTo("Set due date"))
 
             assertThat("Toggle Suspend".toSentenceCase(R.string.sentence_toggle_suspend), equalTo("Toggle suspend"))

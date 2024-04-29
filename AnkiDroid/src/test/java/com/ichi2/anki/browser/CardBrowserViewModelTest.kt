@@ -25,14 +25,18 @@ import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.setFlagFilterSync
+import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
+import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.mockIt
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserViewModelTest : JvmTest() {
@@ -105,7 +109,77 @@ class CardBrowserViewModelTest : JvmTest() {
         assertThat("Flagged cards should be returned", rowCount, equalTo(2))
     }
 
-    private fun runViewModelTest(testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
+    @Test
+    fun `toggle bury - single selection`() = runViewModelTest(notes = 1) {
+        assertThat("bury with no cards selected does nothing", toggleBury(), nullValue())
+
+        selectRowAtPosition(0)
+
+        // bury & unbury
+        toggleBury().also {
+            assertNotNull(it)
+            assertThat("toggle bury initially buries", it.wasBuried)
+            assertThat("1 card is buried", it.count, equalTo(1))
+        }
+        toggleBury().also {
+            assertNotNull(it)
+            assertThat("toggle bury unburied on second press", !it.wasBuried)
+            assertThat("1 card is unburied", it.count, equalTo(1))
+        }
+    }
+
+    @Test
+    fun `toggle bury - mixed selection`() = runViewModelTest(notes = 2) {
+        selectRowAtPosition(0)
+        toggleBury()
+        selectRowAtPosition(1)
+
+        assertThat(selectedRowCount(), equalTo(2))
+
+        // 1 row is buried and 1 is unburied
+        toggleBury().also {
+            assertNotNull(it)
+            assertThat("toggle bury with mixed selection buried", it.wasBuried)
+            assertThat("2 cards are affected", it.count, equalTo(2))
+        }
+
+        assertThat(selectedRowCount(), equalTo(2))
+
+        toggleBury().also {
+            assertNotNull(it)
+            assertThat("toggle bury with all buried performs 'unbury'", !it.wasBuried)
+            assertThat("2 cards are affected", it.count, equalTo(2))
+        }
+
+        toggleBury().also {
+            assertNotNull(it)
+            assertThat("toggle bury with all unburied performs 'bury'", it.wasBuried)
+            assertThat("2 cards are affected", it.count, equalTo(2))
+        }
+
+        assertThat(selectedRowCount(), equalTo(2))
+    }
+
+    @Test
+    fun `toggle bury - queue changes`() = runViewModelTest(notes = 1) {
+        selectRowAtPosition(0)
+        fun getQueue() = col.getCard(selectedRowIds.single()).queue
+
+        assertThat("initial queue = NEW", getQueue(), equalTo(QUEUE_TYPE_NEW))
+
+        toggleBury()
+
+        assertThat("bury: queue -> MANUALLY_BURIED", getQueue(), equalTo(QUEUE_TYPE_MANUALLY_BURIED))
+
+        toggleBury()
+
+        assertThat("unbury: queue -> NEW", getQueue(), equalTo(QUEUE_TYPE_NEW))
+    }
+
+    private fun runViewModelTest(notes: Int = 0, testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
+        for (i in 0 until notes) {
+            addNoteUsingBasicModel()
+        }
         val viewModel = CardBrowserViewModel(
             lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
             cacheDir = createTransientDirectory(),
