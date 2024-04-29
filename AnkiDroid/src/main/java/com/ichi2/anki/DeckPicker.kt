@@ -1309,6 +1309,7 @@ open class DeckPicker :
     }
 
     @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
         val preferences = baseContext.sharedPrefs()
         if (isDrawerOpen) {

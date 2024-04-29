@@ -162,6 +162,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             onBackPressed()
