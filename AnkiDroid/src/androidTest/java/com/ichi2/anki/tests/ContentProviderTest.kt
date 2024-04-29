@@ -43,7 +43,6 @@ import org.json.JSONObject
 import org.junit.*
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
-import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Assume.*
@@ -1144,12 +1143,10 @@ class ContentProviderTest : InstrumentedTest() {
         val noteId = card.nid
         val cardOrd = card.ord
 
-        @KotlinCleanup("rename, while valid suspend is a kotlin soft keyword")
         val values = ContentValues().apply {
-            val suspend = 1
             put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
             put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-            put(FlashCardsContract.ReviewInfo.SUSPEND, suspend)
+            put(FlashCardsContract.ReviewInfo.SUSPEND, 1)
         }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount)

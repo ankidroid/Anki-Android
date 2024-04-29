@@ -68,7 +68,6 @@ class UniqueArrayListTest {
     }
 
     @Test
-    @KotlinCleanup("")
     fun test_Sorting() {
         val longs = mutableListOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
         val uniqueList = UniqueArrayList.from(longs)
