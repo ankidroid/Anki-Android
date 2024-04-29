@@ -73,6 +73,12 @@
         tools:title="Toggle suspend" />
 
     <item
+        ankidroid:showAsAction="ifRoom"
+        android:id="@+id/action_toggle_bury"
+        android:icon="@drawable/ic_flip_to_back_white"
+        tools:title="Toggle bury" />
+
+    <item
         android:id="@+id/action_change_deck"
         android:title="@string/card_browser_change_deck"/>
 

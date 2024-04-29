@@ -221,6 +221,13 @@ open class Scheduler(val col: Collection) {
     }
 
     /**
+     * @param cids Ids of cards to unbury
+     */
+    fun unburyCards(cids: Iterable<CardId>): OpChanges {
+        return col.backend.restoreBuriedAndSuspendedCards(cids)
+    }
+
+    /**
      * @param ids Id of cards to suspend
      */
     open fun suspendCards(ids: Iterable<CardId>): OpChangesWithCount {
