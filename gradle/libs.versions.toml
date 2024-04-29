@@ -2,7 +2,7 @@
 acra = '5.11.3'
 amazonappstorepublisher = "0.1.0"
 androidGradlePlugin = "8.4.0"
-androidxActivityKtx = "1.9.0"
+androidxActivity = "1.9.0"
 androidxAnnotation = "1.7.1"
 androidxAppCompat = "1.7.0-alpha03"
 androidxBrowser = "1.8.0"
@@ -83,7 +83,7 @@ androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidxBrowser" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
-androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivityKtx" }
+androidx-activity = { module = "androidx.activity:activity", version.ref = "androidxActivity" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreferenceKtx" }
 androidx-media = { module = "androidx.media:media", version.ref = "androidxMedia" }
 androidx-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidxUiautomator" }
