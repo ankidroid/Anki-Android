@@ -828,20 +828,21 @@ open class CardBrowser :
 
     private fun updateMultiselectMenu() {
         Timber.d("updateMultiselectMenu()")
-        if (actionBarMenu == null || actionBarMenu!!.findItem(R.id.action_suspend_card) == null) {
+        val actionBarMenu = actionBarMenu
+        if (actionBarMenu?.findItem(R.id.action_suspend_card) == null) {
             return
         }
         if (viewModel.hasSelectedAnyRows()) {
-            actionBarMenu!!.findItem(R.id.action_suspend_card).apply {
+            actionBarMenu.findItem(R.id.action_suspend_card).apply {
                 title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
                 setIcon(R.drawable.ic_suspend)
             }
-            actionBarMenu!!.findItem(R.id.action_mark_card).apply {
+            actionBarMenu.findItem(R.id.action_mark_card).apply {
                 title = TR.browsingToggleMark()
                 setIcon(R.drawable.ic_star_border_white)
             }
         }
-        actionBarMenu!!.findItem(R.id.action_export_selected).apply {
+        actionBarMenu.findItem(R.id.action_export_selected).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
                 resources.getQuantityString(
                     R.plurals.card_browser_export_cards,
@@ -854,7 +855,7 @@ open class CardBrowser :
                 )
             }
         }
-        actionBarMenu!!.findItem(R.id.action_delete_card).apply {
+        actionBarMenu.findItem(R.id.action_delete_card).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
                 resources.getQuantityString(
                     R.plurals.card_browser_delete_cards,
@@ -867,12 +868,12 @@ open class CardBrowser :
                 )
             }
         }
-        actionBarMenu!!.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
+        actionBarMenu.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
         // Note: Theoretically should not happen, as this should kick us back to the menu
-        actionBarMenu!!.findItem(R.id.action_select_none).isVisible =
+        actionBarMenu.findItem(R.id.action_select_none).isVisible =
             viewModel.hasSelectedAnyRows()
-        actionBarMenu!!.findItem(R.id.action_edit_note).isVisible = canPerformMultiSelectEditNote()
-        actionBarMenu!!.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
+        actionBarMenu.findItem(R.id.action_edit_note).isVisible = canPerformMultiSelectEditNote()
+        actionBarMenu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
     }
 
     private fun hasSelectedAllCards(): Boolean {
