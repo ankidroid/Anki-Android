@@ -33,6 +33,7 @@ import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.libanki.*
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.Scheduler
+import com.ichi2.testutils.assertThrows
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
@@ -64,7 +65,6 @@ class ContentProviderTest : InstrumentedTest() {
     // Whether tear down should be executed. I.e. if set up was not cancelled.
     private var tearDown = false
 
-    @KotlinCleanup("lateinit")
     private var numDecksBeforeTest = 0
 
     /* initialCapacity set to expected value when the test is written.
@@ -187,7 +187,6 @@ class ContentProviderTest : InstrumentedTest() {
      * Check that inserting and removing a note into default deck works as expected
      */
     @Test
-    @KotlinCleanup("assertThrows")
     fun testInsertAndRemoveNote() {
         // Get required objects for test
         val cr = contentResolver
@@ -216,11 +215,9 @@ class ContentProviderTest : InstrumentedTest() {
         assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.numberOfCards(col))
         // Now delete the note
         cr.delete(newNoteUri, null, null)
-        try {
+
+        assertThrows<RuntimeException>("RuntimeException is thrown when deleting note") {
             addedNote.load(col)
-            fail("Expected RuntimeException to be thrown when deleting note")
-        } catch (e: RuntimeException) {
-            // Expect RuntimeException to be thrown when loading deleted note
         }
     }
 
@@ -235,7 +232,7 @@ class ContentProviderTest : InstrumentedTest() {
             put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS))
             put(FlashCardsContract.Note.TAGS, TEST_TAG)
         }
-        assertThrows(BackendNotFoundException::class.java) {
+        assertThrows<BackendNotFoundException> {
             contentResolver.insert(FlashCardsContract.Note.CONTENT_URI, values)
         }
     }
