@@ -32,6 +32,7 @@ import android.hardware.camera2.CameraManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.CancellationSignal
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.text.format.Formatter
@@ -832,7 +833,8 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     private fun getImageNameFromContentResolver(context: Context, uri: Uri, selection: String?): String? {
         Timber.d("getImageNameFromContentResolver() %s", uri)
         val filePathColumns = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
-        ContentResolverCompat.query(context.contentResolver, uri, filePathColumns, selection, null, null, null).use { cursor ->
+        val signal: CancellationSignal? = null // needed to fix the type to non-deprecated android.os.CancellationSignal for use below
+        ContentResolverCompat.query(context.contentResolver, uri, filePathColumns, selection, null, null, signal).use { cursor ->
 
             if (cursor == null) {
                 Timber.w("getImageNameFromContentResolver() cursor was null")
