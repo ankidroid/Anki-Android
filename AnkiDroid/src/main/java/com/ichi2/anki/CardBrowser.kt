@@ -138,7 +138,7 @@ open class CardBrowser :
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
     private val cards get() = viewModel.cards
-    var deckSpinnerSelection: DeckSpinnerSelection? = null
+    private lateinit var deckSpinnerSelection: DeckSpinnerSelection
 
     @VisibleForTesting
     lateinit var cardsListView: ListView
@@ -368,6 +368,14 @@ open class CardBrowser :
         // make the items (e.g. question & answer) render dynamically when scrolling
         cardsListView.setOnScrollListener(RenderOnScroll())
 
+        deckSpinnerSelection = DeckSpinnerSelection(
+            this,
+            findViewById(R.id.toolbar_spinner),
+            showAllDecks = true,
+            alwaysShowDefault = false,
+            showFilteredDecks = true
+        )
+
         updateNumCardsToRender()
 
         startLoadingCollection()
@@ -427,7 +435,7 @@ open class CardBrowser :
         suspend fun onDeckIdChanged(deckId: DeckId?) {
             if (deckId == null) return
             // this handles ALL_DECKS_ID
-            deckSpinnerSelection!!.selectDeckById(deckId, false)
+            deckSpinnerSelection.selectDeckById(deckId, false)
         }
         fun onCanSaveChanged(canSave: Boolean) {
             saveSearchItem?.isVisible = canSave
@@ -438,7 +446,7 @@ open class CardBrowser :
                 Timber.d("load multiselect mode")
                 // show title and hide spinner
                 actionBarTitle.visibility = View.VISIBLE
-                deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
+                deckSpinnerSelection.setSpinnerVisibility(View.GONE)
             } else {
                 Timber.d("end multiselect mode")
                 // If view which was originally selected when entering multi-select is visible then maintain its position
@@ -446,7 +454,7 @@ open class CardBrowser :
                 view?.let { recenterListView(it) }
                 // update adapter to remove check boxes
                 cardsAdapter.notifyDataSetChanged()
-                deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
+                deckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)
                 actionBarTitle.visibility = View.GONE
             }
             // reload the actionbar using the multi-select mode actionbar
@@ -560,13 +568,7 @@ open class CardBrowser :
             true
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        deckSpinnerSelection = DeckSpinnerSelection(
-            this,
-            findViewById(R.id.toolbar_spinner),
-            showAllDecks = true,
-            alwaysShowDefault = false,
-            showFilteredDecks = true
-        ).apply {
+        deckSpinnerSelection.apply {
             initializeActionBarDeckSpinner(col, supportActionBar!!)
             launchCatchingTask { selectDeckById(viewModel.deckId ?: ALL_DECKS_ID, false) }
         }
@@ -1387,7 +1389,7 @@ open class CardBrowser :
     private fun updateList() {
         if (colIsOpenUnsafe()) {
             cardsAdapter.notifyDataSetChanged()
-            deckSpinnerSelection!!.notifyDataSetChanged()
+            deckSpinnerSelection.notifyDataSetChanged()
             onSelectionChanged()
             updatePreviewMenuItem()
         }
@@ -1417,7 +1419,7 @@ open class CardBrowser :
 
     /** Returns the decks which are valid targets for "Change Deck"  */
     suspend fun getValidDecksForChangeDeck(): List<DeckNameId> =
-        deckSpinnerSelection!!.computeDropDownDecks(includeFiltered = false)
+        deckSpinnerSelection.computeDropDownDecks(includeFiltered = false)
 
     @RustCleanup("this isn't how Desktop Anki does it")
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
