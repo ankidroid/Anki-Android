@@ -226,6 +226,7 @@ class CardMediaPlayer : Closeable {
      */
     private suspend fun playAllSoundsInternal(cardSide: CardSide, isAutomaticPlayback: Boolean) {
         if (!isEnabled) return
+        if (!isQuestionsAnswersInitialised()) return
         val soundList = when (cardSide) {
             CardSide.QUESTION -> questions
             CardSide.ANSWER -> answers
@@ -291,8 +292,13 @@ class CardMediaPlayer : Closeable {
         return@withContext true
     }
 
-    fun hasSounds(displayAnswer: Boolean): Boolean =
-        if (displayAnswer) answers.any() else questions.any()
+    fun hasSounds(displayAnswer: Boolean): Boolean {
+        if (!isQuestionsAnswersInitialised()) {
+            // Questions or Answers property not initialized, return false
+            return false
+        }
+        return if (displayAnswer) answers.any() else questions.any()
+    }
 
     /**
      * Plays all sounds for the current side, calling [onSoundGroupCompleted] when completed
@@ -341,6 +347,10 @@ class CardMediaPlayer : Closeable {
     fun onVideoPaused() {
         Timber.i("video paused")
         soundTagPlayer.videoPlayer.onVideoPaused()
+    }
+
+    private fun isQuestionsAnswersInitialised(): Boolean {
+        return (this::questions.isInitialized || this::answers.isInitialized)
     }
 
     companion object {
