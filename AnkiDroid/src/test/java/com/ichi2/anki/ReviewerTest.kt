@@ -86,22 +86,22 @@ class ReviewerTest : RobolectricTest() {
         // Assert that currentCard is not null before calling onSelectedTags
         assertNotNull("currentCard should not be null", viewer.currentCard)
 
-        Timber.d("Test", "Before first call to onSelectedTags")
+        Timber.d("Before first call to onSelectedTags")
 
         // Call onSelectedTags method
         viewer.onSelectedTags(tags, emptyList(), ARBITRARY_FILTER)
 
-        Timber.d("Test", "After first call to onSelectedTags")
+        Timber.d("After first call to onSelectedTags")
 
         // Assert that the card is not flipped
         assertFalse(viewer.isDisplayingAnswer)
 
-        Timber.d("Test", "Before second call to onSelectedTags")
+        Timber.d("Before second call to onSelectedTags")
 
         // Call onSelectedTags method again
         viewer.onSelectedTags(tags, emptyList(), ARBITRARY_FILTER)
 
-        Timber.d("Test", "After second call to onSelectedTags")
+        Timber.d("After second call to onSelectedTags")
 
         // Assert that the card is not flipped
         assertFalse(viewer.isDisplayingAnswer)
