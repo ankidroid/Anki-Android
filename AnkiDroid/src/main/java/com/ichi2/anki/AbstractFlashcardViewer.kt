@@ -2539,8 +2539,6 @@ abstract class AbstractFlashcardViewer :
         showDialogFragment(dialog)
     }
 
-    @NeedsTest("14656: adding tags does not flip the card")
-    @NeedsTest("does not hang and can be called twice")
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,

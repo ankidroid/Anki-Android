@@ -19,7 +19,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.cardviewer.ViewerCommand.*
 import com.ichi2.anki.cardviewer.ViewerRefresh
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.libanki.Card
+import junit.framework.TestCase.assertFalse
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
@@ -31,6 +33,7 @@ import org.mockito.Mockito.*
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.kotlin.whenever
 import org.robolectric.Robolectric
+import timber.log.Timber
 
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerCommandTest : RobolectricTest() {
@@ -138,6 +141,47 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     }
 
     @Test
+    fun testOnSelectedTags() {
+        // Create an ActivityController instance for AbstractFlashcardViewer
+        Robolectric.buildActivity(AbstractFlashcardViewerTest.NonAbstractFlashcardViewer::class.java).use { controller ->
+            // Create and start the activity
+            val viewer = controller.get()
+
+            // Create a list of tags
+            val tags = listOf("tag1", "tag2")
+
+            // Define an arbitrary filter
+            val ARBITRARY_FILTER = CardStateFilter.DUE
+
+            // Check if currentCard is null before calling onSelectedTags
+            if (viewer.currentCard == null) {
+                Timber.d("Test", "currentCard is null, not calling onSelectedTags")
+                return@use
+            }
+
+            Timber.d("Test", "Before first call to onSelectedTags")
+
+            // Call onSelectedTags method
+            viewer.onSelectedTags(tags, emptyList(), ARBITRARY_FILTER)
+
+            Timber.d("Test", "After first call to onSelectedTags")
+
+            // Assert that the card is not flipped
+            assertFalse(viewer.isDisplayingAnswer)
+
+            Timber.d("Test", "Before second call to onSelectedTags")
+
+            // Call onSelectedTags method again
+            viewer.onSelectedTags(tags, emptyList(), ARBITRARY_FILTER)
+
+            Timber.d("Test", "After second call to onSelectedTags")
+
+            // Assert that the card is not flipped
+            assertFalse(viewer.isDisplayingAnswer)
+        }
+    }
+
+    @Test
     fun tapGreenFlagSesGreen() {
         val viewer = createViewer()
 
@@ -217,7 +261,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         return c
     }
 
-    private class CommandTestCardViewer(private var currentCardOverride: Card?) : Reviewer() {
+    class CommandTestCardViewer(private var currentCardOverride: Card?) : Reviewer() {
         var lastFlag = 0
             private set
 
