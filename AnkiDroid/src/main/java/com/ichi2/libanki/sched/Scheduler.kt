@@ -17,6 +17,7 @@
 package com.ichi2.libanki.sched
 
 import android.app.Activity
+import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.collection.OpChanges
@@ -289,10 +290,9 @@ open class Scheduler(val col: Collection) {
     /**
      * @return Whether there are buried card is selected deck
      */
-    open fun haveBuriedInCurrentDeck(): Boolean {
-        return col.backend.congratsInfo().run {
-            haveUserBuried || haveSchedBuried
-        }
+    fun haveBuried(): Boolean {
+        val info = congratulationsInfo()
+        return info.haveUserBuried || info.haveSchedBuried
     }
 
     /** @return whether there are cards in learning, with review due the same
@@ -432,6 +432,27 @@ open class Scheduler(val col: Collection) {
 
     fun deckLimit(): String {
         return Utils.ids2str(col.decks.active())
+    }
+
+    fun congratulationsInfo(): CongratsInfoResponse {
+        return col.backend.congratsInfo()
+    }
+
+    fun haveManuallyBuried(): Boolean {
+        return congratulationsInfo().haveUserBuried
+    }
+
+    fun haveBuriedSiblings(): Boolean {
+        return congratulationsInfo().haveSchedBuried
+    }
+
+    @CheckResult
+    fun customStudy(request: CustomStudyRequest): OpChanges {
+        return col.backend.customStudy(request)
+    }
+
+    fun customStudyDefaults(deckId: DeckId): CustomStudyDefaultsResponse {
+        return col.backend.customStudyDefaults(deckId)
     }
 
     /**
