@@ -60,16 +60,16 @@
     </plurals>
     <string name="reset_card_dialog_title">Reiniciar progresso da ficha</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d ficha reinicializada</item>
+        <item quantity="other">%d fichas reinicializadas</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d ficha reagendada</item>
+        <item quantity="other">%d fichas reagendadas</item>
     </plurals>
     <string name="answering_error_title">Erro na base de dados</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Falha ao gravar na colecção. A base de dados pode estar corrompida ou pode não haver espaço suficiente no disco.\n\nSe isto acontecer frequentemente, tente \"Verificar a Base de Dados\", \"Reparar a Colecção\", ou \"Restaurar uma Cópia de Segurança\". Toque em \"opções\" para realizar uma destas acções.\n\nOu então pode ser um erro no AnkiDroid, reporte-o para que possa ser analisado.</string>
     <string name="answering_error_report">Comunicar erro</string>
     <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Realmente deseja tentar reparar a base de dados?\n\nAntes de iniciar a tentativa, será criada uma cópia na subpasta \'%s\'.</string>
@@ -151,10 +151,10 @@
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_title">Base de Dados Bloqueada</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
     <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_summary">A base de dados tem uma versão mais recente do que aquelas com que esta versão do AnkiDroid consegue trabalhar. Actualize o AnkiDroid ou converta a base de dados para uma versão mais antiga.\n\nVersões Suportadas: %1$d\nVersão da Base de Dados: %2$d\n\nAs seguintes opções de restauro vão substituir a actual colecção, provavelmente com uma versão de base de dados compatível:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Background image applied</string>
     <string name="background_image_removed">Background image removed</string>
@@ -216,7 +216,7 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
+    <string name="import_deck_package">Pacote de Baralhos (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
     <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->

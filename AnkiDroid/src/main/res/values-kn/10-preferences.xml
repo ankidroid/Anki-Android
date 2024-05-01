@@ -165,13 +165,13 @@
     <string name="vertical_centering_summ">ಕಾರ್ಡ್‌ಗಳ ವಿಷಯವನ್ನು ಲಂಬವಾಗಿ ಕೇಂದ್ರೀಕರಿಸಿ</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ಡಬಲ್ ಟ್ಯಾಪ್ ಸಮಯದ ಮಧ್ಯಂತರ (ಮಿಲಿಸೆಕೆಂಡುಗಳು)</string>
     <string name="pref_double_tap_time_interval_summary">ಈ ಸಮಯ ಮೀರದಿದ್ದರೆ ಉತ್ತರ ಬಟನ್‌ಗಳ ಎರಡನೇ ಟ್ಯಾಪ್ ಅನ್ನು ನಿರ್ಲಕ್ಷಿಸಲಾಗುತ್ತದೆ. ಇದು ಆಕಸ್ಮಿಕ ಡಬಲ್ ಟ್ಯಾಪ್‌ಗಳನ್ನು ತಡೆಯುತ್ತದೆ</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">ಉತ್ತರವನ್ನು ದೀರ್ಘ-ಒತ್ತುವ ಸಮಯವನ್ನು ತೋರಿಸಿ</string>
+    <string name="pref_show_answer_long_press_time_summary">ಪ್ರದರ್ಶನ ಉತ್ತರ ಬಟನ್ ಸ್ಪರ್ಶವನ್ನು ನೋಂದಾಯಿಸುವ ಮೊದಲು ಕನಿಷ್ಠ ಪತ್ರಿಕಾ ಸಮಯ.</string>
     <string name="show_estimates" maxLength="41">ಸಮಯ ಬಟನ್ ತೋರಿಸು</string>
     <string name="show_estimates_summ">ಉತ್ತರ ಬಟನ್‌ಗಳಲ್ಲಿ ಮುಂದಿನ ವಿಮರ್ಶೆ ಸಮಯವನ್ನು ತೋರಿಸಿ</string>
     <string name="show_large_answer_buttons" maxLength="41">ದೊಡ್ಡ ಉತ್ತರ ಬಟನ್‌ಗಳನ್ನು ತೋರಿಸಿ</string>
     <string name="show_large_answer_buttons_summ">ಉತ್ತರ ಬಟನ್ ಅನ್ನು 2 ಸಾಲುಗಳಲ್ಲಿ ತೋರಿಸಿ</string>
-    <string name="show_top_bar" maxLength="41">Show top bar</string>
+    <string name="show_top_bar" maxLength="41">ಮೇಲಿನ ಪಟ್ಟಿಯನ್ನು ತೋರಿಸಿ</string>
     <string name="show_top_bar_summ">ಕಾರ್ಡ್ ಎಣಿಕೆಗಳನ್ನು ತೋರಿಸಿ, ಮೇಲಿನ ಬಾರ್‌ನಲ್ಲಿ ಫ್ಲ್ಯಾಗ್ ಮತ್ತು ಗುರುತು ಮಾಡಿ</string>
     <string name="show_progress" maxLength="41">ಏನು ಉಳಿದಿದೆ ಎಂಬುದನ್ನು ತೋರಿಸಿ</string>
     <string name="show_progress_summ">ಉಳಿದ ಕಾರ್ಡ್ ಎಣಿಕೆಯನ್ನು ತೋರಿಸಿ</string>
@@ -249,7 +249,7 @@
     <string name="analytics_title" maxLength="41">ವೈಶಿಷ್ಟ್ಯದ ಬಳಕೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="analytics_summ">ಜನರು ಯಾವ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಬಳಸುತ್ತಾರೆ ಎಂಬುದನ್ನು ನೋಡಲು ಅಭಿವೃದ್ಧಿ ತಂಡಕ್ಕೆ ಸಹಾಯ ಮಾಡುವ ಮೂಲಕ ನೀವು AnkiDroid ಗೆ ಕೊಡುಗೆ ನೀಡಬಹುದು</string>
     <string name="note_editor_replace_newlines" maxLength="41">ಹೊಸ ಸಾಲುಗಳನ್ನು HTML ನೊಂದಿಗೆ ಬದಲಾಯಿಸಿ</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines_summ">ಟಿಪ್ಪಣಿ ಸಂಪಾದಕದಲ್ಲಿ, &lt;br&gt; ಕಾರ್ಡ್ ಅನ್ನು ಸಂಪಾದಿಸುವಾಗ ಯಾವುದೇ ನಿದರ್ಶನಗಳನ್ನು ಹೊಸ ಲೈನ್‌ಗಳಿಗೆ ಪರಿವರ್ತಿಸಿ.</string>
     <string name="type_in_answer_focus" maxLength="41">\'ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ\' ಮೇಲೆ ಕೇಂದ್ರೀಕರಿಸಿ</string>
     <string name="type_in_answer_focus_summ">ವಿಮರ್ಶಕರಲ್ಲಿ \'ಉತ್ತರದಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ\' ಕ್ಷೇತ್ರವನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಕೇಂದ್ರೀಕರಿಸಿ</string>
     <!-- About -->
@@ -323,8 +323,8 @@
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">ದೋಷ</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d ಫೈಲ್\n%2$s</item>
+        <item quantity="other">%1$d ಫೈಲ್‌ಗಳು\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">ಬಳಕೆಯಾಗದ ಮಾಧ್ಯಮ ಫೈಲ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>

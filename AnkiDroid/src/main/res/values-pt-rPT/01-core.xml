@@ -217,7 +217,7 @@
         <br><br>
         Por favor, tente executar a migração de novo.
         Para resolver o seu problema, pode precisar de libertar espaço no disco,
-        ou reconectar o espaço de armazenamento amovível onde está guardada a sua colecção.
+        ou voltar a ligar o espaço de armazenamento amovível onde está guardada a sua colecção.
         <br><br>
         <a href="%2$s">Descubra mais e obtenha ajuda</a>
     ]]></string>
@@ -229,11 +229,11 @@
         <br><br>
         Por favor, tente executar a migração de novo.
         Para resolver o seu problema, pode precisar de libertar espaço no disco,
-        ou reconectar o espaço de armazenamento amovível onde está guardada a sua colecção.
+        ou volte a ligar o espaço de armazenamento amovível onde está guardada a sua colecção.
         <br><br>
         <a href="%2$s">Descubra mais e obtenha ajuda</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        A migração de espaço de armazenamento está parada por ter sido obtido o erro: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        A migração dos dados está parada por ter sido obtido o erro: %1$s.
         <br><br>
         <a href="%2$s">Descubra mais e obtenha ajuda</a>
     ]]></string>
@@ -253,5 +253,5 @@
     <string name="storage_access_summary">Guarda a sua colecção num lugar seguro, que não é eliminado se a aplicação for desinstalada</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acesso a todos os ficheiros</string>
     <string name="image_occlusion">Oclusão de imagem</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Eliminar conta</string>
 </resources>

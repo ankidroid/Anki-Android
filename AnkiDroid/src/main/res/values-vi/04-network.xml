@@ -74,11 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Trên thiết bị</string>
     <string name="sync_sanity_remote">Từ xa</string>
-    <string name="one_way_sync_title">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title">Đồng bộ một chiều</string>
+    <string name="one_way_sync_confirmation">Đã yêu cầu đồng bộ một chiều</string>
     <string name="full_sync_confirmation">Thay đổi theo yêu cầu đòi hỏi tải lên đầy đủ CSDL trong lần đồng bộ bộ sưu tập tiếp theo. Nếu có thẻ ôn tập hoặc các thay đổi đang chờ trên thiết bị khác mà chưa được đồng bộ ở đây, chúng sẽ bị mất. Vẫn tiếp tục chứ?</string>
     <string name="full_sync_confirmation_upgrade">Do lỗi của phiên bản AnkiDroid đã cài đặt trước đó, đề nghị thực hiện đồng bộ hoàn toàn.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_one_way_sync">Đồng bộ (một chiều)</string>
     <string name="sync_menu_title_no_account">Đồng bộ (đăng nhập)</string>
 </resources>

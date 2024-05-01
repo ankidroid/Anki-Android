@@ -47,8 +47,8 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">కార్డులు కారణంగా</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d AnkiDroid కార్డ్ గడువు ముగిసింది</item>
+        <item quantity="other">%d AnkiDroid కార్డ్‌ల గడువు</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid చిన్న</string>
     <plurals name="widget_cards_due">

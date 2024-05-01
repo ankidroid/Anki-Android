@@ -163,8 +163,8 @@
     <string name="vertical_centering_summ">コンテンツを上下方向の中央に配置します</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔（ミリ秒）</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、意図せずに回答してしまう操作ミスを防ぎます</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">「解答を表示」ボタンが必要とする長押し時間</string>
+    <string name="pref_show_answer_long_press_time_summary">〈「解答を表示」ボタンが押された〉と判定するために必要とする長押し時間。デフォルトでは0ミリ秒（長押し必要なし）です。</string>
     <string name="show_estimates" maxLength="41">回答ボタンに学習間隔を表示</string>
     <string name="show_estimates_summ">次の学習までの時間の間隔を回答ボタンの中に表示します</string>
     <string name="show_large_answer_buttons" maxLength="41">回答ボタンを幅広に表示</string>

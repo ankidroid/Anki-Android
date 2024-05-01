@@ -224,7 +224,7 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Botões de resposta</string>
     <string name="card" maxLength="41">Carta</string>
-    <string name="note" maxLength="41">Notas</string>
+    <string name="note" maxLength="41">Nota</string>
     <string name="navigation" maxLength="41">Navegação </string>
     <string name="media" maxLength="41">Multimídia </string>
     <string name="misc" maxLength="41">Diversos</string>

@@ -163,8 +163,8 @@
     <string name="vertical_centering_summ">垂直居中卡片内容</string>
     <string name="pref_double_tap_time_interval" maxLength="41">双击时间间隔（毫秒）</string>
     <string name="pref_double_tap_time_interval_summary">如果指定的时间没有过去，那么应用将忽略回答按钮的第二次点击。这可以防止意外的双击</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">“显示回答”长按时间</string>
+    <string name="pref_show_answer_long_press_time_summary">显示回答按钮生效前的最短按压时间。</string>
     <string name="show_estimates" maxLength="41">显示回答按钮的时间</string>
     <string name="show_estimates_summ">在答案按钮上方显示下次复习的时间</string>
     <string name="show_large_answer_buttons" maxLength="41">显示大的回答按钮</string>
