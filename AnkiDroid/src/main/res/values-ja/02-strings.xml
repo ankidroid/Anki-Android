@@ -115,7 +115,7 @@
     <string name="discard">破棄</string>
     <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
     <string name="note_editor_no_first_field">最初のフィールドが空です</string>
-    <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め問題の箇所が含まれている必要があります</string>
+    <string name="note_editor_no_cloze_delations">このノートタイプのノートには穴埋め問題箇所が含まれている必要があります</string>
     <string name="note_editor_no_cards_created_all_fields">現在のノートタイプではカードを生成できませんでした。\n別のノートタイプを選択するか、「カード」をタップしてフィールドを挿入してください。</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">穴埋め問題箇所を示す文字列は、穴埋め問題型のノートタイプでのみ機能します</string>
     <string name="saving_facts">ノートを保存しています</string>

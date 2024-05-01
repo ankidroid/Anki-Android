@@ -76,8 +76,8 @@
     <string name="card_template_browser_appearance_restore_default_dialog">డిఫాల్ట్ విలువలను పునరుద్ధరించాలా?</string>
     <string name="card_template_browser_appearance_saving_note">కార్డ్ టెంప్లేట్ సేవ్ చేయబడినప్పుడు ఈ మార్పులు వర్తిస్తాయి</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck override (off)</string>
+    <string name="card_template_editor_deck_override_on">డెక్ ఓవర్‌రైడ్ (ఆన్)</string>
+    <string name="card_template_editor_deck_override_off">డెక్ ఓవర్‌రైడ్ (ఆఫ్)</string>
     <string name="model_manager_deck_override_added_message">\'%1$s\' డిఫాల్ట్ డెక్‌ని \'%2$s\'కి సెట్ చేయండి</string>
     <string name="model_manager_deck_override_removed_message">\'%s\' కోసం డిఫాల్ట్ డెక్ తీసివేయబడింది</string>
     <string name="deck_override_explanation">కొత్త \'%s\' కార్డ్‌లను ఉంచడానికి డెక్‌ను ఎంచుకోండి</string>

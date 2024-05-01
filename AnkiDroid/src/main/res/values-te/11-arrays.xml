@@ -75,9 +75,9 @@
     <string name="html_size_code_x_small">x-చిన్న</string>
     <string name="html_size_code_small">చిన్నది</string>
     <string name="html_size_code_medium">మధ్యస్థ</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_large">పెద్ద</string>
+    <string name="html_size_code_x_large">x-పెద్ద</string>
+    <string name="html_size_code_xx_large">xx-పెద్ద</string>
     <!-- gestures_labels -->
     <string name="answer_again">మళ్లీ సమాధానం చెప్పండి</string>
     <string name="answer_hard">Answer hard</string>
@@ -94,8 +94,8 @@
     <string name="gesture_flag_purple">ఊదా జెండాను టోగుల్ చేయండి</string>
     <string name="gesture_flag_remove">జెండాను తీసివేయండి</string>
     <string name="gesture_page_up">పేజీ పైకి</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_page_down">పేజీ డౌన్</string>
+    <string name="gesture_abort_sync">నేర్చుకోవడం మరియు సమకాలీకరించడం గురించి</string>
     <string name="gesture_toggle_whiteboard">వైట్‌బోర్డ్‌ని టోగుల్ చేయండి</string>
     <string name="gesture_show_hint">సూచనను చూపించు</string>
     <string name="gesture_show_all_hints">Show All Hints</string>

@@ -268,7 +268,7 @@
     <string name="binding_add_axis">Joystick/Motion Controller hinzufügen</string>
     <string name="axis_picker_move_joystick">Joystick/Motion Controller bewegen</string>
     <string name="user_actions" maxLength="41">Benutzerdefinierte Aktionen</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
+    <string name="user_actions_summary" maxLength="41">JavaScript vom Bewertungsbildschirm auslösen</string>
     <string name="user_action_1" maxLength="41">Benutzerdefinierte Aktion 1</string>
     <string name="user_action_2" maxLength="41">Benutzerdefinierte Aktion 2</string>
     <string name="user_action_3" maxLength="41">Benutzerdefinierte Aktion 3</string>
@@ -291,8 +291,8 @@
     <string name="bindings_already_bound">Bereits an %s gebunden</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimentell</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid hat einen besseren TTS-Mechanismus eingeführt, der mit anderen Anki-Clients kompatibel ist und mehr Stimmen und Verbesserungen bei der Sprachwiedergabe enthält!\n\nBitte aktualisieren Sie so bald wie möglich, da diese Einstellung bald entfernt wird</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Bitte upgraden Sie auf das neue Text-zu-Sprache-Format</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Entwickleroptionen</string>
     <string name="dev_options_enabled_pref" maxLength="41">Entwickleroptionen aktivieren</string>

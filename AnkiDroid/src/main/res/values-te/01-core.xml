@@ -142,7 +142,7 @@
     <string name="studyoptions_no_cards_due">ఎక్కువ కార్డులు లేవు</string>
     <string name="sd_card_not_mounted">పరికర నిల్వ మౌంట్ చేయబడలేదు</string>
     <string name="button_sync" comment="Text of the sync button">సమకాలీకరణ</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">స్కోప్డ్ స్టోరేజ్‌కి మైగ్రేట్ చేయండి</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">మీరు సమకాలీకరణను రద్దు చేయాలనుకుంటున్నారా?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">సమకాలీకరించండి</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">సమకాలీకరణ రద్దు చేయబడింది</string>
@@ -168,7 +168,7 @@
         <item quantity="one">తొలగించు \"%2$s\" కార్డు రకం, మరియు దాని %1$d కార్డు?</item>
         <item quantity="other">తొలగించు \"%2$s\" కార్డు రకం, మరియు దాని %1$d కార్డులు?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_would_delete_note">ఈ కార్డ్ రకాన్ని తీసివేయడం వలన ఒకటి లేదా అంతకంటే ఎక్కువ గమనికలు తీసివేయబడతాయి. దయచేసి ముందుగా కొత్త కార్డ్ రకాన్ని సృష్టించి, సేవ్ చేయండి.</string>
     <string name="card_template_editor_save_error">కార్డ్ టెంప్లేట్ మార్పులను సేవ్ చేయడం సాధ్యపడలేదు: %s</string>
     <string name="template_for_current_card_deleted">ప్రస్తుత కార్డ్ కోసం కార్డ్ రకం తొలగించబడింది.</string>
     <!-- Card Browser Appearance -->
@@ -182,7 +182,7 @@
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">కార్డ్ బ్రౌజర్</string>
     <string name="context_menu_anki_card_label">అంకీ కార్డ్</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">సేకరణలను కలపడం సాధ్యం కాదు.\nమీరు ఏ సేకరణను ఉంచాలనుకుంటున్నారు?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">అంకిడ్రాయిడ్</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">అంకివెబ్</string>
     <string name="sync_conflict_remote_confirm_new">AnkiDroidలో మీ సేకరణను AnkiWeb నుండి మీ సేకరణతో భర్తీ చేయాలా?</string>
@@ -200,7 +200,7 @@
     <!-- Scoped storage migration -->
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">డేటాబేస్ ఫైళ్లను తరలిస్తోంది</string>
     <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">కాపీ చేస్తోంది&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating media</string>
+    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">మీడియా వలస</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">బదిలీ పరిమాణాన్ని గణిస్తోంది&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%2$sలో %1$s తరలించబడింది</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">వలస విజయవంతమైంది</string>

@@ -214,10 +214,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        Como alternativa à sincronização com o AnkiWeb,
+        pode antes utilizar o seu próprio servidor.
+        Se este não estiver configurado, por padrão, é utilizado o servidor do AnkiWeb.
+        <a href="%s">Descubra mais</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Sincronizar url</string>
     <!-- Key Bindings -->

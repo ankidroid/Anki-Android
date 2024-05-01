@@ -95,7 +95,7 @@
     <string name="card_browser_search_all_decks">Tìm kiếm tất cả các bộ thẻ</string>
     <string name="card_browser_unknown_deck_name">không xác định</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Cắt ngắn nội dung</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Hôm nay là ‘0 %1$s’, ngày mai là ‘1 %2$s’, v.v&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="other">Xuất thẻ</item>
     </plurals>

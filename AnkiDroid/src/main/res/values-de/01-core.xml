@@ -147,7 +147,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Synchronisierung fortsetzen</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronisation abgebrochen</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Breche ab&#8230;\nDies kann einige Zeit dauern.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Synchronisiere Medien</string>
     <string name="export_deck">Stapel exportieren</string>
     <string name="nothing">Nichts</string>
     <!-- Card template editor -->
@@ -253,5 +253,5 @@
     <string name="storage_access_summary">Speichert Ihre Sammlung an einem sicheren Ort, der nicht gelöscht wird, wenn die App deinstalliert wird</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Zugang zu allen Daten</string>
     <string name="image_occlusion">Bildverdeckung</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Konto entfernen</string>
 </resources>

@@ -72,7 +72,7 @@
         <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">यह संग्रह खाली है</string>
-    <string name="no_cards_placeholder_description">नये कार्ड जोडने के लिए + आइकन का उपयोग करें।</string>
+    <string name="no_cards_placeholder_description">नये कार्ड जोडने के लिए \n+ आइकन का उपयोग करें।</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">उतर टाइप करें</string>
