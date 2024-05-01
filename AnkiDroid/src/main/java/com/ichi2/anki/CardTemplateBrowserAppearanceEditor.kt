@@ -82,6 +82,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     @Suppress("DEPRECATION", "Deprecated in API34+dependencies for predictive back feature")
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         Timber.i("Back Button Pressed")
         super.onBackPressed()

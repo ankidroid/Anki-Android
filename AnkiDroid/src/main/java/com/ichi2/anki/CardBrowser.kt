@@ -690,6 +690,7 @@ open class CardBrowser :
     }
 
     @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
         when {
             isDrawerOpen -> super.onBackPressed()

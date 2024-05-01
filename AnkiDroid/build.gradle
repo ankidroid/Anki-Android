@@ -306,7 +306,7 @@ dependencies {
     compileOnly libs.auto.service.annotations
     annotationProcessor libs.auto.service
 
-    implementation libs.androidx.activity.ktx
+    implementation libs.androidx.activity
     implementation libs.androidx.annotation
     implementation libs.androidx.appcompat
     implementation libs.androidx.browser

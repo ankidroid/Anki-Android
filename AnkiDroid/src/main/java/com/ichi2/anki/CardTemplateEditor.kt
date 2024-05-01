@@ -153,6 +153,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     @Suppress("deprecation") // onBackPressed
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (modelHasChanged()) {
             showDiscardChangesDialog()
@@ -161,6 +162,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             onBackPressed()

@@ -167,23 +167,23 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         return !animationDisabled()
     }
 
-    override fun setContentView(view: View) {
+    override fun setContentView(view: View?) {
         if (animationDisabled()) {
-            view.clearAnimation()
+            view?.clearAnimation()
         }
         super.setContentView(view)
     }
 
-    override fun setContentView(view: View, params: ViewGroup.LayoutParams) {
+    override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
         if (animationDisabled()) {
-            view.clearAnimation()
+            view?.clearAnimation()
         }
         super.setContentView(view, params)
     }
 
-    override fun addContentView(view: View, params: ViewGroup.LayoutParams) {
+    override fun addContentView(view: View?, params: ViewGroup.LayoutParams?) {
         if (animationDisabled()) {
-            view.clearAnimation()
+            view?.clearAnimation()
         }
         super.addContentView(view, params)
     }
