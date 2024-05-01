@@ -478,9 +478,9 @@ class DeckPickerTest : RobolectricTest() {
             getColUnsafe.sched.buryCards(listOf(card.id))
             updateDeckList()
             assertEquals(1, visibleDeckCount)
-            assertTrue(getColUnsafe.sched.haveBuriedInCurrentDeck(), "Deck should have buried cards")
+            assertTrue(getColUnsafe.sched.haveBuried(), "Deck should have buried cards")
             supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.UNBURY, deckId)
-            kotlin.test.assertFalse(getColUnsafe.sched.haveBuriedInCurrentDeck())
+            kotlin.test.assertFalse(getColUnsafe.sched.haveBuried())
         }
     }
 
@@ -674,7 +674,7 @@ class DeckPickerTest : RobolectricTest() {
 
         // select a deck with no cards
         col.decks.select(emptyDeck)
-        assertThat("unbury is not visible: deck has no cards", !col.sched.haveBuriedInCurrentDeck())
+        assertThat("unbury is not visible: deck has no cards", !col.sched.haveBuried())
 
         deckPicker {
             assertThat("deck focus is set", focusedDeck, equalTo(emptyDeck))
@@ -686,7 +686,7 @@ class DeckPickerTest : RobolectricTest() {
             deckToClick.performLongClick()
 
             // ASSERT
-            assertThat("unbury is visible: one card is buried", col.sched.haveBuriedInCurrentDeck())
+            assertThat("unbury is visible: one card is buried", col.sched.haveBuried())
             assertThat("deck focus has changed", focusedDeck, equalTo(deckWithCards))
         }
     }

@@ -384,7 +384,7 @@ open class DeckPicker :
                 Triple(
                     decks.name(deckId),
                     decks.isFiltered(deckId),
-                    sched.haveBuriedInCurrentDeck()
+                    sched.haveBuried()
                 )
             }
             updateDeckList() // focus has changed
