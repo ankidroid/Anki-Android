@@ -2635,9 +2635,14 @@ open class DeckPicker :
     }
 
     override fun onImportColpkg(colpkgPath: String?) {
-        invalidateOptionsMenu()
-        updateDeckList()
-        importColpkgListener?.onImportColpkg(colpkgPath)
+        launchCatchingTask {
+            // as the current collection is closed before importing a new collection, make sure the
+            // new collection is open before the code to update the DeckPicker ui runs
+            withCol { }
+            invalidateOptionsMenu()
+            updateDeckList()
+            importColpkgListener?.onImportColpkg(colpkgPath)
+        }
     }
 
     override fun onMediaSyncCompleted(data: SyncCompletion) {
