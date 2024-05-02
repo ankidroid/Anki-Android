@@ -1201,17 +1201,17 @@ open class DeckPicker :
         invalidateOptionsMenu()
     }
 
-    public override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        super.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putBoolean("mIsFABOpen", floatingActionMenu.isFABOpen)
-        savedInstanceState.putBoolean("migrateStorageAfterMediaSyncCompleted", migrateStorageAfterMediaSyncCompleted)
+    public override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("mIsFABOpen", floatingActionMenu.isFABOpen)
+        outState.putBoolean("migrateStorageAfterMediaSyncCompleted", migrateStorageAfterMediaSyncCompleted)
         importColpkgListener?.let {
             if (it is DatabaseRestorationListener) {
-                savedInstanceState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
+                outState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
             }
         }
-        exportingDelegate.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
+        exportingDelegate.onSaveInstanceState(outState)
+        outState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
         floatingActionMenu.showFloatingActionButton()
     }
 
@@ -1309,6 +1309,7 @@ open class DeckPicker :
     }
 
     @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
         val preferences = baseContext.sharedPrefs()
         if (isDrawerOpen) {
@@ -2681,11 +2682,11 @@ open class DeckPicker :
         REGULAR_DECK_NO_MORE_CARDS_TODAY
     }
 
-    override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent?> {
+    override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent> {
         return apkgFileImportResultLauncher
     }
 
-    override fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent?> {
+    override fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent> {
         return csvImportResultLauncher
     }
 }
