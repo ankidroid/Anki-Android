@@ -44,6 +44,7 @@ import com.ichi2.testutils.OS
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertTrue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.json.JSONArray
@@ -104,7 +105,7 @@ class ReviewerTest : RobolectricTest() {
         Timber.d("After second call to onSelectedTags")
 
         // Assert that the card is not flipped
-        assertFalse(viewer.isDisplayingAnswer)
+        assertTrue(!viewer.isDisplayingAnswer)
     }
 
     @Test
