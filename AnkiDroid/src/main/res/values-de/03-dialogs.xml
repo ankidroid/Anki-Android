@@ -240,8 +240,8 @@
         <item quantity="other">Karten anzeigen in</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">Karte im Bereich anzeigen</item>
+        <item quantity="other">Karten im Bereich anzeigen</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
         <item quantity="one">Tag</item>
