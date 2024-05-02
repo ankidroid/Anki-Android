@@ -31,6 +31,7 @@ import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.note
@@ -72,9 +73,19 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
     ********************************************************************************************* */
 
     /** Call this after the webView has finished loading the page */
+    @NeedsTest("16302 - a sound-only card on the back/flipped with 'don't keep activities'")
+    @NeedsTest("16302 - on config changes, sound continues to play")
     override fun onPageFinished(isAfterRecreation: Boolean) {
         if (isAfterRecreation) {
-            launchCatchingIO { showCard(showAnswerOnReload) }
+            launchCatchingIO {
+                showCard(showAnswerOnReload)
+                // isAfterRecreation can either mean:
+                // * after config change (ViewModel exists)
+                // * after recreation (ViewModel did not exist)
+                // if the ViewModel existed, we want to continue playing audio
+                // if not, we want to setup the sound player
+                cardMediaPlayer.ensureCardSoundsLoaded(currentCard.await())
+            }
             return
         }
         launchCatchingIO {

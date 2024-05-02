@@ -148,6 +148,24 @@ class CardMediaPlayer : Closeable {
         }
     }
 
+    /**
+     * Ensures that [questions] and [answers] are loaded
+     *
+     * Does not affect playback if they are
+     */
+    suspend fun ensureCardSoundsLoaded(card: Card) {
+        if (this::questions.isInitialized) return
+
+        Timber.i("loading sounds for card %d", card.id)
+        val renderOutput = withCol { card.renderOutput(this) }
+        this.questions = renderOutput.questionAvTags
+        this.answers = renderOutput.answerAvTags
+
+        if (!this::config.isInitialized || !config.appliesTo(card)) {
+            config = withCol { CardSoundConfig.create(card) }
+        }
+    }
+
     suspend fun playAllSoundsForSide(cardSide: CardSide): Job? {
         if (!isEnabled) return null
         playSoundsJob {
