@@ -97,13 +97,7 @@ class TemplatePreviewerViewModel(
     ********************************************************************************************* */
 
     override fun onPageFinished(isAfterRecreation: Boolean) {
-        if (isAfterRecreation) {
-            launchCatchingIO {
-                if (showingAnswer.value) showAnswerInternal() else showQuestion()
-            }
-            return
-        }
-        launchCatchingIO {
+        suspend fun setupCurrentCard() {
             ordFlow.collectLatest { ord ->
                 currentCard = asyncIO {
                     val note = note.await()
@@ -119,6 +113,23 @@ class TemplatePreviewerViewModel(
                 showQuestion()
                 loadAndPlaySounds(CardSide.QUESTION)
             }
+        }
+
+        if (isAfterRecreation) {
+            launchCatchingIO {
+                if (this::currentCard.isInitialized) {
+                    // this occurs on config change
+                    if (showingAnswer.value) showAnswerInternal() else showQuestion()
+                } else {
+                    // this occurs if 'Don't keep activities' is set
+                    // TODO: We should persist showingAnswer to SavedStateHandle
+                    setupCurrentCard()
+                }
+            }
+            return
+        }
+        launchCatchingIO {
+            setupCurrentCard()
         }
     }
 
