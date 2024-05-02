@@ -301,6 +301,7 @@ class AudioRecordingController :
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     setIconResource(R.drawable.ic_record)
+                    contentDescription = context.getString(R.string.start_recording)
                 }
                 audioWaveform.clear()
                 cancelAudioRecordingButton.isEnabled = false
@@ -311,6 +312,7 @@ class AudioRecordingController :
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     setIconResource(R.drawable.ic_stop)
+                    contentDescription = context.getString(R.string.stop_recording)
                 }
                 cancelAudioRecordingButton.isEnabled = true
                 audioProgressBar.isVisible = false
@@ -320,6 +322,7 @@ class AudioRecordingController :
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     setIconResource(R.drawable.ic_skip_next)
+                    contentDescription = context.getString(R.string.next_recording)
                 }
                 cancelAudioRecordingButton.isEnabled = true
                 audioProgressBar.isVisible = true
@@ -330,6 +333,7 @@ class AudioRecordingController :
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     setIconResource(R.drawable.ic_play)
+                    contentDescription = context.getString(R.string.play_recording)
                 }
                 cancelAudioRecordingButton.isEnabled = true
                 audioProgressBar.isVisible = true
