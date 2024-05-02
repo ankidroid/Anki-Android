@@ -86,6 +86,7 @@ class ReviewerTest : RobolectricTest() {
 
         // Assert that currentCard is not null before calling onSelectedTags
         assertNotNull("currentCard should not be null", viewer.currentCard)
+        assertTrue(!viewer.isDisplayingAnswer)
 
         Timber.d("Before first call to onSelectedTags")
 
