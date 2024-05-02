@@ -194,6 +194,8 @@ export async function updateI18nFiles() {
                 break;
 
             case "he":
+                // some Android phones use values-heb, some use values-iw - issue 9451
+                // the only way for Hebrew to work on all devices is to copy into both possible locations
                 androidLanguages = ["heb", "iw"];
                 break;
 
