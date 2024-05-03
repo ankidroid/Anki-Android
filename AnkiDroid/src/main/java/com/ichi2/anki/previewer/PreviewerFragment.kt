@@ -230,6 +230,27 @@ class PreviewerFragment :
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action != KeyEvent.ACTION_DOWN) return false
 
+        if (event.isCtrlPressed) {
+            when (event.keyCode) {
+                KeyEvent.KEYCODE_1 -> viewModel.toggleFlag(Flag.RED)
+                KeyEvent.KEYCODE_2 -> viewModel.toggleFlag(Flag.ORANGE)
+                KeyEvent.KEYCODE_3 -> viewModel.toggleFlag(Flag.GREEN)
+                KeyEvent.KEYCODE_4 -> viewModel.toggleFlag(Flag.BLUE)
+                KeyEvent.KEYCODE_5 -> viewModel.toggleFlag(Flag.PINK)
+                KeyEvent.KEYCODE_6 -> viewModel.toggleFlag(Flag.TURQUOISE)
+                KeyEvent.KEYCODE_7 -> viewModel.toggleFlag(Flag.PURPLE)
+                else -> return false
+            }
+            return true
+        }
+
+        when (event.unicodeChar.toChar()) {
+            '*' -> {
+                viewModel.toggleMark()
+                return true
+            }
+        }
+
         when (event.keyCode) {
             KeyEvent.KEYCODE_DPAD_LEFT -> {
                 requireView().findViewById<MaterialButton>(R.id.show_previous).performClickIfEnabled()
