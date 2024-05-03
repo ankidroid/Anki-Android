@@ -12,6 +12,7 @@
         android:layout_height="@dimen/touch_target"
         app:srcCompat="@drawable/ic_sync"
         style="@android:style/Widget.ActionButton"
+        android:tooltipText="@string/button_sync"
         android:tint="@color/white"
         tools:tint="?attr/colorControlNormal"
         />
