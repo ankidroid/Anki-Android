@@ -89,7 +89,7 @@ class TagsDialog : AnalyticsDialogFragment {
      * @param allTags all possible tags in the collection
      * @return Initialized instance of [TagsDialog]
      */
-    fun withArguments(type: DialogType, checkedTags: List<String?>, allTags: List<String?>): TagsDialog {
+    fun withArguments(type: DialogType, checkedTags: List<String>, allTags: List<String>): TagsDialog {
         return withArguments(type, checkedTags, null, allTags)
     }
 
@@ -104,9 +104,9 @@ class TagsDialog : AnalyticsDialogFragment {
      */
     fun withArguments(
         type: DialogType,
-        checkedTags: List<String?>,
+        checkedTags: List<String>,
         uncheckedTags: List<String>?,
-        allTags: List<String?>
+        allTags: List<String>
     ): TagsDialog {
         val args = this.arguments ?: Bundle()
         args.putInt(DIALOG_TYPE_KEY, type.ordinal)
