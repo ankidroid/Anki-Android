@@ -1793,6 +1793,16 @@ abstract class AbstractFlashcardViewer :
 
         private lateinit var customView: View
 
+        override fun onPermissionRequest(request: PermissionRequest) {
+            if (PermissionRequest.RESOURCE_AUDIO_CAPTURE in request.resources) {
+                Timber.i("Granting audio capture permission to WebView")
+                request.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
+            } else {
+                Timber.i("Denying permissions to WebView")
+                request.deny()
+            }
+        }
+
         // used for displaying `<video>` in fullscreen.
         // This implementation requires configChanges="orientation" in the manifest
         // to avoid destroying the View if the device is rotated
