@@ -98,7 +98,6 @@ jobs:
                 "18-standard-models",
                 "20-search-preference",
                 "marketdescription",
-                "ankidroid-titles",
             ];
 
             let stringsLabel = "Strings";
