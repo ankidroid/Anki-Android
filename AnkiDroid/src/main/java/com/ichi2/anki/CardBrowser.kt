@@ -1258,23 +1258,35 @@ open class CardBrowser :
             Timber.d("showEditTagsDialog: called with empty selection")
         }
         val allTags = getColUnsafe.tags.all()
-        val selectedNotes = selectedRowIds
-            .map { cardId: CardId? -> getColUnsafe.getCard(cardId!!).note(getColUnsafe) }
+        val selectedNoteIds = viewModel.queryAllSelectedNoteIds(getColUnsafe)
+
+        // TODO!! This is terribly slow on AnKing
+        val checkedTags = selectedNoteIds
+            .asSequence() // reduce memory pressure
+            .flatMap { nid -> getColUnsafe.getNote(nid).tags }
             .distinct()
-        val checkedTags = selectedNotes
-            .flatMap { note: Note -> note.tags }
-        if (selectedNotes.size == 1) {
+            .toList()
+
+        if (selectedNoteIds.size == 1) {
             Timber.d("showEditTagsDialog: edit tags for one note")
             tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
             val dialog = tagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, checkedTags, allTags)
             showDialogFragment(dialog)
             return
         }
-        val uncheckedTags = selectedNotes
-            .flatMap { note: Note ->
+        // TODO!! This is terribly slow on AnKing
+        // PERF: This MUST be combined with the above sequence - this becomes O(2n) on a
+        // database operation performed over 30k times
+        val uncheckedTags = selectedNoteIds
+            .asSequence() // reduce memory pressure
+            .flatMap { nid: NoteId ->
+                val note = getColUnsafe.getNote(nid)
                 val noteTags: List<String?> = note.tags
                 allTags.filter { t: String? -> !noteTags.contains(t) }
             }
+            .distinct()
+            .toList()
+
         Timber.d("showEditTagsDialog: edit tags for multiple note")
         tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
         val dialog = tagsDialogFactory.newTagsDialog().withArguments(

@@ -405,13 +405,16 @@ class TagsFile(path: String) : File(path), Parcelable {
      */
     constructor(directory: File, data: TagsData) : this(createTempFile("tagsDialog", ".tmp", directory).path) {
         DataOutputStream(FileOutputStream(this)).use { outputStream ->
-            // PERF: profile, then speed up if necessary
+            // PERF: Use an alternate format
             // https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/formats.md
-            outputStream.writeBytes(Json.encodeToString(data))
+            val string = Json.encodeToString(data)
+            Timber.d("persisting tags to disk, length: %d", string.length)
+            outputStream.writeBytes(string)
         }
     }
 
     fun getData() = DataInputStream(FileInputStream(this)).use { inputStream ->
+        // PERF!!: This takes ~2 seconds with AnKing
         Json.decodeFromString<TagsData>(inputStream.convertToString())
     }
 
