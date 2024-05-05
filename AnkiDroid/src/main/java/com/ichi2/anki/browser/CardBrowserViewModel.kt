@@ -43,7 +43,6 @@ import com.ichi2.anki.setUserFlag
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
@@ -179,7 +178,8 @@ class CardBrowserViewModel(
     }
 
     // TODO: move the tag computation to ViewModel
-    fun queryAllSelectedNoteIds(col: Collection): List<NoteId> = col.notesOfCards(selectedRowIds)
+    suspend fun queryAllSelectedNoteIds(): List<NoteId> =
+        withCol { notesOfCards(selectedRowIds) }
 
     var lastSelectedPosition = 0
 
