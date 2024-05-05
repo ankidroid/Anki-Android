@@ -1333,7 +1333,7 @@ open class CardBrowser :
                         .flatMap { nid: NoteId ->
                             progress++
                             val note = getNote(nid) // requires withCol
-                            val noteTags: List<String?> = note.tags
+                            val noteTags = note.tags.toSet()
                             allTags.filter { t: String? -> !noteTags.contains(t) }
                         }
                         .distinct()
