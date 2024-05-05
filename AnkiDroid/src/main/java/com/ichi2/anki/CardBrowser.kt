@@ -99,10 +99,12 @@ import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.updateInBackground
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
@@ -1280,45 +1282,81 @@ open class CardBrowser :
         if (selectedRowIds.isEmpty()) {
             Timber.d("showEditTagsDialog: called with empty selection")
         }
-        val allTags = getColUnsafe.tags.all()
-        val selectedNoteIds = viewModel.queryAllSelectedNoteIds(getColUnsafe)
 
-        // TODO!! This is terribly slow on AnKing
-        val checkedTags = selectedNoteIds
-            .asSequence() // reduce memory pressure
-            .flatMap { nid -> getColUnsafe.getNote(nid).tags }
-            .distinct()
-            .toList()
+        var progressMax: Int? = null // this can be made null to blank the dialog
+        var progress = 0
 
-        if (selectedNoteIds.size == 1) {
-            Timber.d("showEditTagsDialog: edit tags for one note")
-            tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
-            val dialog = tagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, checkedTags, allTags)
-            showDialogFragment(dialog)
-            return
-        }
-        // TODO!! This is terribly slow on AnKing
-        // PERF: This MUST be combined with the above sequence - this becomes O(2n) on a
-        // database operation performed over 30k times
-        val uncheckedTags = selectedNoteIds
-            .asSequence() // reduce memory pressure
-            .flatMap { nid: NoteId ->
-                val note = getColUnsafe.getNote(nid)
-                val noteTags: List<String?> = note.tags
-                allTags.filter { t: String? -> !noteTags.contains(t) }
+        fun onProgress(progressContext: ProgressContext) {
+            val max = progressMax
+            if (max == null) {
+                progressContext.amount = null
+                progressContext.text = getString(R.string.dialog_processing)
+            } else {
+                progressContext.amount = Pair(progress, max)
             }
-            .distinct()
-            .toList()
+        }
+        launchCatchingTask {
+            withProgress(extractProgress = ::onProgress) {
+                val allTags = withCol { tags.all() }
+                val selectedNoteIds = viewModel.queryAllSelectedNoteIds()
 
-        Timber.d("showEditTagsDialog: edit tags for multiple note")
-        tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
-        val dialog = tagsDialogFactory.newTagsDialog().withArguments(
-            TagsDialog.DialogType.EDIT_TAGS,
-            checkedTags,
-            uncheckedTags,
-            allTags
-        )
-        showDialogFragment(dialog)
+                progressMax = selectedNoteIds.size * 2
+                // TODO!! This is terribly slow on AnKing
+                val checkedTags = withCol {
+                    selectedNoteIds
+                        .asSequence() // reduce memory pressure
+                        .flatMap { nid ->
+                            progress++
+                            getNote(nid).tags // requires withCol
+                        }
+                        .distinct()
+                        .toList()
+                }
+
+                if (selectedNoteIds.size == 1) {
+                    Timber.d("showEditTagsDialog: edit tags for one note")
+                    tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
+                    val dialog = tagsDialogFactory.newTagsDialog().withArguments(
+                        type = TagsDialog.DialogType.EDIT_TAGS,
+                        checkedTags = checkedTags,
+                        allTags = allTags
+                    )
+                    showDialogFragment(dialog)
+                    return@withProgress
+                }
+                // TODO!! This is terribly slow on AnKing
+                // PERF: This MUST be combined with the above sequence - this becomes O(2n) on a
+                // database operation performed over 30k times
+                val uncheckedTags = withCol {
+                    selectedNoteIds
+                        .asSequence() // reduce memory pressure
+                        .flatMap { nid: NoteId ->
+                            progress++
+                            val note = getNote(nid) // requires withCol
+                            val noteTags: List<String?> = note.tags
+                            allTags.filter { t: String? -> !noteTags.contains(t) }
+                        }
+                        .distinct()
+                        .toList()
+                }
+
+                progressMax = null
+
+                Timber.d("showEditTagsDialog: edit tags for multiple note")
+                tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
+
+                // withArguments performs IO, can be 18 seconds
+                val dialog = withContext(Dispatchers.IO) {
+                    tagsDialogFactory.newTagsDialog().withArguments(
+                        type = TagsDialog.DialogType.EDIT_TAGS,
+                        checkedTags = checkedTags,
+                        uncheckedTags = uncheckedTags,
+                        allTags = allTags
+                    )
+                }
+                showDialogFragment(dialog)
+            }
+        }
     }
 
     private fun showFilterByTagsDialog() {
