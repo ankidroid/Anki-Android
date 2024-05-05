@@ -43,10 +43,12 @@ import com.ichi2.anki.setUserFlag
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
@@ -175,6 +177,9 @@ class CardBrowserViewModel(
             selectedRows
                 .flatMap { row -> withCol { cardIdsOfNote(nid = row.card.nid) } }
     }
+
+    // TODO: move the tag computation to ViewModel
+    fun queryAllSelectedNoteIds(col: Collection): List<NoteId> = col.notesOfCards(selectedRowIds)
 
     var lastSelectedPosition = 0
 
