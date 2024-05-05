@@ -46,7 +46,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.whenever
-import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(AndroidJUnit4::class)
@@ -58,7 +57,7 @@ class TagsDialogTest : RobolectricTest() {
         val type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS
         val allTags = listOf("1", "2", "3", "4")
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, ArrayList(), allTags)
+            .withTestArguments(type, ArrayList(), allTags)
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -82,7 +81,7 @@ class TagsDialogTest : RobolectricTest() {
         val type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS
         val allTags = listOf("1", "2", "3", "4")
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, ArrayList(), allTags)
+            .withTestArguments(type, ArrayList(), allTags)
             .arguments
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light)
         scenario.moveToState(Lifecycle.State.STARTED)
@@ -117,7 +116,7 @@ class TagsDialogTest : RobolectricTest() {
         val allTags = listOf("a", "b", "d", "e")
         val checkedTags = listOf("a", "b")
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
+            .withTestArguments(type, checkedTags, allTags)
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -152,7 +151,7 @@ class TagsDialogTest : RobolectricTest() {
         val allTags = listOf("a", "b", "d", "e")
         val checkedTags = listOf("a", "b")
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
+            .withTestArguments(type, checkedTags, allTags)
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -190,7 +189,7 @@ class TagsDialogTest : RobolectricTest() {
         val expectedUncheckedTags = listOf("d", "e")
         val expectedIndeterminate = listOf("b")
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, uncheckedTags, expectedAllTags)
+            .withTestArguments(type, checkedTags, uncheckedTags, expectedAllTags)
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -245,7 +244,7 @@ class TagsDialogTest : RobolectricTest() {
             "sport::tennis"
         )
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
+            .withTestArguments(type, checkedTags, allTags)
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -292,7 +291,7 @@ class TagsDialogTest : RobolectricTest() {
         val allTags = listOf("common::speak", "common::speak::daily", "common::sport::tennis", "common::sport::football")
         val checkedTags = listOf("common::speak::daily", "common::sport::tennis")
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
+            .withTestArguments(type, checkedTags, allTags)
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -346,7 +345,7 @@ class TagsDialogTest : RobolectricTest() {
         val allTags = listOf("common")
         val checkedTags = listOf("common")
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
+            .withTestArguments(type, checkedTags, allTags)
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -394,7 +393,7 @@ class TagsDialogTest : RobolectricTest() {
             "common::sport::football::small"
         )
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
+            .withTestArguments(type, checkedTags, allTags)
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -435,7 +434,7 @@ class TagsDialogTest : RobolectricTest() {
         val allTags = listOf("common::speak", "common::sport::tennis")
         val checkedTags = emptyList<String>()
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
+            .withTestArguments(type, checkedTags, allTags)
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -482,7 +481,7 @@ class TagsDialogTest : RobolectricTest() {
         )
         val checkedTags = emptyList<String>()
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
+            .withTestArguments(type, checkedTags, allTags)
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -601,7 +600,7 @@ class TagsDialogTest : RobolectricTest() {
         val allTags = listOf("hello::world")
         val checkedTags = emptyList<String>()
         val args = TagsDialog(ParametersUtils.whatever())
-            .withArguments(type, checkedTags, allTags)
+            .withTestArguments(type, checkedTags, allTags)
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -636,6 +635,32 @@ class TagsDialogTest : RobolectricTest() {
             Assert.assertEquals("Should not crash.", "::", editText.text.toString())
         }
     }
+
+    // these are called 'withTestArguments' due to "extension is shadowed by a member" warnings
+    // this is needed so we can pass in 'targetContext' for context.cacheDir
+    private fun TagsDialog.withTestArguments(
+        type: TagsDialog.DialogType,
+        checkedTags: List<String>,
+        allTags: List<String>
+    ) =
+        with(this@TagsDialogTest.targetContext) {
+            withArguments(type = type, checkedTags = checkedTags, allTags = allTags)
+        }
+
+    private fun TagsDialog.withTestArguments(
+        type: TagsDialog.DialogType,
+        checkedTags: List<String>,
+        uncheckedTags: List<String>?,
+        allTags: List<String>
+    ) =
+        with(this@TagsDialogTest.targetContext) {
+            withArguments(
+                type = type,
+                checkedTags = checkedTags,
+                uncheckedTags = uncheckedTags,
+                allTags = allTags
+            )
+        }
 
     companion object {
         private fun mockLifecycleOwner(): LifecycleOwner {
