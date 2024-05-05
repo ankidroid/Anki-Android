@@ -166,7 +166,7 @@ class CardBrowserViewModel(
      * * [CardsOrNotes.CARDS] all selected card Ids
      * * [CardsOrNotes.NOTES] one selected Id for every note
      */
-    val selectedRowIds: List<Long>
+    val selectedRowIds: List<CardId>
         get() = selectedRows.map { c -> c.id }
 
     suspend fun queryAllSelectedCardIds(): List<CardId> = when (cardsOrNotes) {
