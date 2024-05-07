@@ -15,6 +15,8 @@
  */
 package com.ichi2.anki
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.testutils.AnkiAssert
@@ -35,5 +37,11 @@ class AnkiDroidAppTest {
         // It's meant to be non-null, but it's developer-defined, and we don't want a crash in the reporting dialog
         //noinspection ConstantConditions
         AnkiAssert.assertDoesNotThrow { sendExceptionReport(message, "AnkiDroidAppTest") }
+    }
+
+    @Test
+    fun makeBackendUsableDoesNotThrowException() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        AnkiAssert.assertDoesNotThrow { AnkiDroidApp.makeBackendUsable(context) }
     }
 }

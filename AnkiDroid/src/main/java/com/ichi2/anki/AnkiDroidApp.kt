@@ -50,7 +50,6 @@ import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ExceptionUtil
@@ -370,7 +369,6 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
         }
 
         /** Load the libraries to allow access to Anki-Android-Backend */
-        @NeedsTest("Not calling this in the ContentProvider should have failed a test")
         fun makeBackendUsable(context: Context) {
             // Robolectric uses RustBackendLoader.ensureSetup()
             if (Build.FINGERPRINT == "robolectric") return
