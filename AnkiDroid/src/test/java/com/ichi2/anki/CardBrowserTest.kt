@@ -34,6 +34,7 @@ import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.scheduling.ForgetCardsViewModel
@@ -133,6 +134,26 @@ class CardBrowserTest : RobolectricTest() {
         val browser = browserWithMultipleNotes
         selectOneOfManyCards(browser)
         assertThat(browser.isShowingSelectAll, equalTo(true))
+    }
+
+    @Test
+    fun testOnDeckSelected() = runBlocking {
+        // Arrange
+        val deckId = 123L
+        val selectableDeck = DeckSelectionDialog.SelectableDeck(deckId, "Test Deck")
+        val cardBrowser = getBrowserWithNotes(1)
+
+        // Act
+        cardBrowser.onDeckSelected(selectableDeck)
+
+        // Assert
+        assertEquals(deckId, cardBrowser.lastDeckId)
+
+        // Act again: select the same deck
+        cardBrowser.onDeckSelected(selectableDeck)
+
+        // Assert again: the deck selection should not change
+        assertEquals(deckId, cardBrowser.lastDeckId)
     }
 
     @Test
