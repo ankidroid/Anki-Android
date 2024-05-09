@@ -164,6 +164,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
                     node.checkBoxState = UNCHECKED
                 }
                 node.updateCheckBoxCycleStyle(tags)
+                node.vh?.checkBoxView?.refreshDrawableState()
             }
             update(this)
             for (ancestor in iterateAncestorsOf(this)) {
@@ -257,6 +258,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
             } else {
                 // tapping on a leaf node toggles the checkbox
                 vh.checkBoxView.performClick()
+                vh.checkBoxView.refreshDrawableState()
             }
         }
         // long clicking a tag opens the add tag dialog with the current tag as the prefix
