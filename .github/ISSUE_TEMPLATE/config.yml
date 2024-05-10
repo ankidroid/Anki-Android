@@ -3,3 +3,11 @@ contact_links:
   - name: Anki Forums
     url: https://forums.ankiweb.net/
     about: If your issue also occurs in Anki Desktop, please report it in the forums
+
+  - name: Questions/Support
+    url: https://forums.ankiweb.net
+    about: If you have a question or need support, please post on the user forum.
+
+  - name: Feature Requests/Suggestions
+    url: https://forums.ankiweb.net/c/suggestions/17
+    about: Please post suggestions and feature requests on the user forum.
