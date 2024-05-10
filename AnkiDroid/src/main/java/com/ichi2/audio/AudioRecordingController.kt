@@ -213,7 +213,7 @@ class AudioRecordingController :
                 when (context.resources.configuration.orientation) {
                     Configuration.ORIENTATION_LANDSCAPE -> {
                         audioFileView.visibility = View.GONE
-                        audioWaveform.visibility = View.GONE
+                        audioWaveform.visibility = View.VISIBLE
                     }
                     Configuration.ORIENTATION_PORTRAIT -> {
                         audioFileView.visibility = View.VISIBLE
