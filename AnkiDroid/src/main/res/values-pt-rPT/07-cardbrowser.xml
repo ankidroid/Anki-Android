@@ -50,19 +50,19 @@
         <item quantity="other">%d fichas mostradas</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d nota apresentada</item>
+        <item quantity="other">%d notas apresentadas</item>
     </plurals>
     <string name="card_browser_all_decks">Todos os baralhos</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">Apagar ficha</item>
+        <item quantity="other">Apagar fichas</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Apagar nota</item>
+        <item quantity="other">Apagar notas</item>
     </plurals>
-    <string name="card_browser_change_deck">Change deck</string>
+    <string name="card_browser_change_deck">Mudar de baralho</string>
     <string name="delete_card_title">Apagar nota?</string>
     <string name="card_browser_show_marked">Filtro marcado</string>
     <string name="card_browser_show_suspended">Filtro suspenso</string>

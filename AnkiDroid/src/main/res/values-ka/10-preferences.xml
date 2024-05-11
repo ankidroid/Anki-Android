@@ -73,7 +73,7 @@
     <string name="use_input_tag" maxLength="41">პასუხის აკრეფა ბარათში</string>
     <string name="use_input_tag_summ">პასუხის ჩასაწერად ბარათში ტექსტის შესაყვანი ველის დამატება</string>
     <string name="reset_languages" maxLength="41">ენების გადატვირთვა</string>
-    <string name="reset_languages_summ">ყველა დასტისთვის (ხმოვანი წამკითხველისთვის და ლექსიკონებისთვის) მისადაგებული ენების დაყენება საწყის პარამეტრებზე</string>
+    <string name="reset_languages_summ">ყველა დასტისთვის (ხმოვანი წამკითხველისა და ლექსიკონისთვის) მისადაგებული ენების დაყენება საწყის პარამეტრებზე</string>
     <string name="reset_languages_question">დაყენდეს ყველა მისადაგებული ენა საწყის პარამეტრებზე?</string>
     <string name="reset_confirmation">დაყენდა ყველა საწყისი პარამეტრი</string>
     <string name="card_zoom" maxLength="41">ბარათის ზომა</string>
