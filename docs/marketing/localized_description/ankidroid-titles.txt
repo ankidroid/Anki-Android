@@ -5,7 +5,6 @@ az: AnkiDroid Flaş Kartları
 be: Карткі для запамінання AnkiDroid
 bg: AnkiDroid Флашкарти
 ca: AnkiDroid fitxes per memoritzar
-ckb: Naverokê Bixwaze
 cs: AnkiDroid kartičky
 de: AnkiDroid Karteikarten
 eo: AnkiDroid
@@ -25,7 +24,6 @@ hy-AM: AnkiDroid քարտեր
 id: Kartu Flash AnkiDroid
 ka: AnkiDroid: სამეცადინო ბარათები
 kk: AnkiDroid жаттау карталары
-ku: Naverokê Bixwaze
 ko: AnkiDroid 플래시 카드
 lt: „AnkiDroid“ atminties kortelės
 mr: अंकीड्रोएड फ़्लँशकार्डस्
