@@ -273,6 +273,7 @@ open class DeckPicker :
 
     var importColpkgListener: ImportColpkgListener? = null
 
+    private var toolbarSearchItem: MenuItem? = null
     private var toolbarSearchView: SearchView? = null
     internal lateinit var customStudyDialogFactory: CustomStudyDialogFactory
 
@@ -801,8 +802,11 @@ open class DeckPicker :
         menuInflater.inflate(R.menu.deck_picker, menu)
         menu.findItem(R.id.action_export)?.title = TR.exportingExport()
         setupMediaSyncMenuItem(menu)
-        setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
-        toolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as SearchView
+        menu.findItem(R.id.deck_picker_action_filter)?.let {
+            toolbarSearchItem = it
+            setupSearchIcon(it)
+            toolbarSearchView = it.actionView as SearchView
+        }
         toolbarSearchView?.maxWidth = Integer.MAX_VALUE
         // redraw menu synchronously to avoid flicker
         updateMenuFromState(menu)
@@ -1362,7 +1366,13 @@ open class DeckPicker :
                 Timber.i("Sync from keypress")
                 sync()
             }
-            KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_S -> {
+            KeyEvent.KEYCODE_SLASH -> {
+                Timber.d("Search from keypress")
+                if (toolbarSearchItem?.isVisible == true) {
+                    toolbarSearchItem?.expandActionView()
+                }
+            }
+            KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
                 launchCatchingTask {
                     handleDeckSelection(getColUnsafe.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
