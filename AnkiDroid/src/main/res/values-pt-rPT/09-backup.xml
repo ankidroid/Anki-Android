@@ -44,13 +44,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="backup_deck_no_storage_left">A cópia de segurança não foi guardada. Não há espaço suficiente para a guardar. Reduza o conteúdo da cópia ou remova outros ficheiros.</string>
+    <string name="storage_warning">Menos de %d MB de espaço disponíveis.\nLiberte espaço para evitar perda de dados.</string>
     <string name="backup_restore">Restaurar da cópia de segurança</string>
     <string name="backup_new_collection">Nova coleção</string>
     <string name="backup_del_collection">Eliminar coleção e criar uma nova</string>
     <string name="backup_del_collection_question">Eliminar a coleção e criar uma nova? Isto irá eliminar todo o seu progresso de aprendizagem e eliminar todas as fichas.</string>
-    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
+    <string name="backup_one_way_sync_from_server">Sincronização a partir do servidor</string>
     <string name="backup_full_sync_from_server_question">Substituir a sua coleção pela da AnkiWeb? Isto irá eliminar todo o seu progresso de aprendizagem e informação adicionada, desde a sua última sincronização.</string>
     <string name="error_handling_title">Erro ao manipular</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opções</string>

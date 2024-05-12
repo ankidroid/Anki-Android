@@ -10,8 +10,8 @@ de: AnkiDroid Karteikarten
 eo: AnkiDroid
 es-AR: Tarjetas flash AnkiDroid
 es-ES: Tarjetas AnkiDroid
-et: AnkiDroid mälukaardid
 fa: فلش کارتهای انکی دروید
+et: AnkiDroid mälukaardid
 fi: AnkiDroid-muistikortit
 fr: AnkiDroid (Cartes mémoire)
 fy-NL: AnkiDroid flitskaarten
