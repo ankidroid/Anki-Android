@@ -1,39 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/root_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/toolbar"/>
+
+        <include layout="@layout/toolbar" />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
-            android:fillViewport="true"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:id="@+id/MyAccountLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp"
                 android:gravity="top"
-                >
+                android:orientation="vertical"
+                android:padding="15dp">
                 <!-- TODO JS choose a standardized padding to use here -->
-                <ImageView
-                    android:id="@+id/ankidroid_logo"
-                    android:layout_width="200dp"
-                    app:srcCompat="@drawable/ankidroid_logo"
-                    android:layout_marginBottom="@dimen/input_layout_padding"
-                    android:layout_gravity="center"
-                    android:layout_height="200dp" />
 
                 <!--<com.ichi2.ui.FixedTextView-->
                 <!--android:id="@+id/sign_in"-->
@@ -47,123 +41,227 @@
                 <!--android:layout_margin="@dimen/content_vertical_padding"/>-->
                 <!--&lt;!&ndash; TODO JS - move into strings.xml &ndash;&gt;-->
 
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="400dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center"
+                    android:translationX="0dp"
+                    android:translationY="0dp"
+                    android:background="#FFFFFF"
+                    app:cardCornerRadius="0dp">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="start"
+                    android:translationX="50dp"
+                    android:translationY="0dp"
+                    android:background="#434748"
+                    app:cardCornerRadius="200dp"
+                    app:layout_constraintBottom_toTopOf="@+id/button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="#7A7979"
+                        android:rotationX="-360"
+                        android:scaleX="1.4"
+                        android:scaleY="1.5"
+                        android:translationX="2mm"
+                        android:translationY="0mm"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ankidroid_logo" />
+
+                </androidx.cardview.widget.CardView>
+
+                    <ImageView
+                        android:id="@+id/ankidroid_logo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:rotationX="-360"
+                        android:scaleX="0.5"
+                        android:scaleY="0.5"
+                        android:translationX="0mm"
+                        android:translationY="0mm"
+                        app:srcCompat="@drawable/dashed_line" />
+                    <ImageView
+                        android:id="@+id/ankidroid_logo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:rotationX="-360"
+                        android:scaleX="0.5"
+                        android:scaleY="0.5"
+                        android:translationX="0mm"
+                        android:translationY="0mm"
+                        app:srcCompat="@drawable/check" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="end"
+                    android:translationX="-50dp"
+                    android:translationY="0dp"
+                    android:background="#000000"
+                    app:cardCornerRadius="200dp"
+                    app:layout_constraintBottom_toTopOf="@+id/button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <ImageView
+                        android:id="@+id/ankidroid_logo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="#FFFFFF"
+                        android:rotationX="-360"
+                        android:scaleX="1"
+                        android:scaleY="1"
+                        android:translationX="0mm"
+                        android:translationY="0mm"
+                        app:srcCompat="@drawable/ankiweb_logo" />
+                </androidx.cardview.widget.CardView>
+
+                </androidx.cardview.widget.CardView>
+
+                <com.ichi2.ui.FixedTextView
+                    android:id="@+id/no_account_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Authorize AnkiWeb"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:textStyle="bold" />
+
+
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/username_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/input_layout_padding"
                     android:hint="@string/username"
                     app:endIconMode="clear_text"
-                    app:errorEnabled="true"
-                    android:layout_marginHorizontal="@dimen/input_layout_padding">
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_baseline_email_24"
                         android:drawablePadding="8dp"
-                        android:nextFocusForward="@id/password_layout"
+                        android:drawableStart="@drawable/ic_baseline_email_24"
                         android:inputType="textNoSuggestions|textEmailAddress"
-                        />
+                        android:nextFocusForward="@id/password_layout" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/password_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/input_layout_padding"
                     android:hint="@string/password"
                     app:endIconMode="password_toggle"
-                    app:errorEnabled="true"
-                    android:layout_marginHorizontal="@dimen/input_layout_padding">
+                    app:errorEnabled="true">
 
                     <com.ichi2.ui.TextInputEditField
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_baseline_lock_24"
                         android:drawablePadding="8dp"
-                        android:inputType="textPassword"
-                        />
+                        android:drawableStart="@drawable/ic_baseline_lock_24"
+                        android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/login_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="200dp"
                     android:layout_gravity="center"
-                    android:text="@string/log_in"
+                    android:layout_margin="@dimen/content_vertical_padding"
                     android:enabled="false"
-                    android:layout_margin="@dimen/content_vertical_padding"/>
+                    android:minWidth="200dp"
+                    android:text="@string/log_in" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/reset_password_button"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:textSize="@dimen/abc_text_size_button_material"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:singleLine="true"
-                    android:padding="3dp"
                     android:layout_gravity="center"
+                    android:background="@null"
+                    android:padding="3dp"
+                    android:singleLine="true"
                     android:text="@string/reset_password"
-                    />
+                    android:textSize="@dimen/abc_text_size_button_material" />
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/no_account_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sign_up_description"
                     android:layout_gravity="center"
+                    android:text="@string/sign_up_description"
                     android:textSize="@dimen/abc_text_size_button_material"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
+                <!-- Added new button for lost email -->
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/no_account_not_affiliated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sign_up_not_affiliated"
                     android:layout_gravity="center"
+                    android:text="@string/sign_up_not_affiliated"
                     android:textSize="@dimen/abc_text_size_button_material"
-                    android:textStyle="italic"/>
+                    android:textStyle="italic" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/sign_up_button"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:textSize="@dimen/abc_text_size_button_material"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:padding="3dp"
                     android:layout_gravity="center"
+                    android:background="@null"
+                    android:padding="3dp"
                     android:singleLine="true"
-                    android:text="@string/sign_up" />
+                    android:text="@string/sign_up"
+                    android:textSize="@dimen/abc_text_size_button_material" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/lost_mail_instructions"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="3dp"
+                    android:singleLine="true"
+                    android:text="@string/lost_mail_instructions"
+                    android:textSize="@dimen/abc_text_size_button_material" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/privacy_policy_button"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@null"
-                    android:textSize="@dimen/abc_text_size_button_material"
-                    style="@style/Widget.Material3.Button.TextButton"
                     android:padding="3dp"
-                    android:layout_gravity="center"
                     android:singleLine="true"
-                    android:text="@string/help_title_privacy" />
-
-                <!-- Added new button for lost email -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/lost_mail_instructions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/abc_text_size_button_material"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:padding="3dp"
-                    android:layout_gravity="center"
-                    android:singleLine="true"
-                    android:text="@string/lost_mail_instructions" />
+                    android:text="@string/help_title_privacy"
+                    android:textSize="@dimen/abc_text_size_button_material" />
             </LinearLayout>
         </ScrollView>
+
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!--    android:layout_marginBottom="16dp"-->
+<!--    android:layout_marginEnd="16dp"-->
+<!--    android:layout_marginStart="16dp"-->
+<!--    android:layout_marginTop="150dp"-->
