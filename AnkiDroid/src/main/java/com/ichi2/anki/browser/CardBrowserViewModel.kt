@@ -16,6 +16,8 @@
 
 package com.ichi2.anki.browser
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -706,13 +708,14 @@ enum class SaveSearchResult {
 
 /**
  * Temporary file containing the IDs of the cards to be displayed at the previewer
- *
- * @param directory parent directory of the file. Generally it should be the cache directory
- * @param cardIds ids of the cards to be displayed
  */
-class PreviewerIdsFile(directory: File, cardIds: List<CardId>) :
-    File(createTempFile("previewerIds", ".tmp", directory).absolutePath) {
-    init {
+class PreviewerIdsFile(path: String) : File(path), Parcelable {
+
+    /**
+     * @param directory parent directory of the file. Generally it should be the cache directory
+     * @param cardIds ids of the cards to be displayed
+     */
+    constructor(directory: File, cardIds: List<CardId>) : this(createTempFile("previewerIds", ".tmp", directory).path) {
         DataOutputStream(FileOutputStream(this)).use { outputStream ->
             outputStream.writeInt(cardIds.size)
             for (id in cardIds) {
@@ -724,5 +727,25 @@ class PreviewerIdsFile(directory: File, cardIds: List<CardId>) :
     fun getCardIds(): List<Long> = DataInputStream(FileInputStream(this)).use { inputStream ->
         val size = inputStream.readInt()
         List(size) { inputStream.readLong() }
+    }
+
+    override fun describeContents(): Int = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(path)
+    }
+
+    companion object {
+        @JvmField
+        @Suppress("unused")
+        val CREATOR = object : Parcelable.Creator<PreviewerIdsFile> {
+            override fun createFromParcel(source: Parcel?): PreviewerIdsFile {
+                return PreviewerIdsFile(source!!.readString()!!)
+            }
+
+            override fun newArray(size: Int): Array<PreviewerIdsFile> {
+                return arrayOf()
+            }
+        }
     }
 }

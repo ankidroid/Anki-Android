@@ -19,6 +19,8 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.core.os.bundleOf
 import com.ichi2.async.saveModel
 import com.ichi2.compat.CompatHelper.Companion.compat
@@ -454,17 +456,14 @@ class CardTemplateNotetype(val notetype: NotetypeJson) {
  * The notetype is written into a file because there is a
  * [limit of 1MB](https://developer.android.com/reference/android/os/TransactionTooLargeException.html)
  * for [Bundle] transactions, and notetypes can be bigger than that (#5600).
- *
- * @param directory parent directory of the file. Generally it should be the cache directory
- * @param notetype to be stored
  */
-class NotetypeFile(directory: File, notetype: NotetypeJson) :
-    File(createTempFile("notetype", ".tmp", directory).absolutePath) {
+class NotetypeFile(path: String) : File(path), Parcelable {
 
-    /** @param context for getting the cache directory */
-    constructor(context: Context, notetype: NotetypeJson) : this(context.cacheDir, notetype)
-
-    init {
+    /**
+     * @param directory where the file will be saved
+     * @param notetype to be stored
+     */
+    constructor(directory: File, notetype: NotetypeJson) : this(createTempFile("notetype", ".tmp", directory).absolutePath) {
         try {
             ByteArrayInputStream(notetype.toString().toByteArray()).use { source ->
                 compat.copyFile(source, this.absolutePath)
@@ -473,6 +472,12 @@ class NotetypeFile(directory: File, notetype: NotetypeJson) :
             Timber.w(ioe, "Unable to create+write temp file for model")
         }
     }
+
+    /**
+     * @param context for getting the cache directory
+     * @param notetype to be stored
+     */
+    constructor(context: Context, notetype: NotetypeJson) : this(context.cacheDir, notetype)
 
     fun getNotetype(): NotetypeJson {
         return try {
@@ -483,6 +488,26 @@ class NotetypeFile(directory: File, notetype: NotetypeJson) :
         } catch (e: IOException) {
             Timber.e(e, "Unable to read+parse tempModel from file %s", absolutePath)
             throw e
+        }
+    }
+
+    override fun describeContents(): Int = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(path)
+    }
+
+    companion object {
+        @JvmField
+        @Suppress("unused")
+        val CREATOR = object : Parcelable.Creator<NotetypeFile> {
+            override fun createFromParcel(source: Parcel?): NotetypeFile {
+                return NotetypeFile(source!!.readString()!!)
+            }
+
+            override fun newArray(size: Int): Array<NotetypeFile> {
+                return arrayOf()
+            }
         }
     }
 }
