@@ -528,12 +528,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             else -> {}
         }
 
-        launchCatchingTask {
-            withCol {
-                addImageOcclusionNotetype()
-            }
-        }
-
         if (addNote) {
             editOcclusionsButton?.visibility = View.GONE
             selectImageForOcclusionButton?.setOnClickListener {
