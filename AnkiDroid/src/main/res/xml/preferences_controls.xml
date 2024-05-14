@@ -248,6 +248,10 @@
             android:icon="@drawable/ic_redo"
             />
         <com.ichi2.preferences.ControlPreference
+            android:key="@string/toggle_auto_advance_command_key"
+            android:title="@string/toggle_auto_advance"
+            />
+        <com.ichi2.preferences.ControlPreference
             android:key="@string/show_hint_command_key"
             android:title="@string/gesture_show_hint"
             />

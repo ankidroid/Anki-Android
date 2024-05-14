@@ -1255,6 +1255,10 @@ open class Reviewer :
                 showDueDateDialog()
                 return true
             }
+            ViewerCommand.TOGGLE_AUTO_ADVANCE -> {
+                toggleAutoAdvance()
+                return true
+            }
             ViewerCommand.USER_ACTION_1 -> {
                 userAction(1)
                 return true
@@ -1531,6 +1535,21 @@ open class Reviewer :
         if (gestureProcessor.isBound(Gesture.SWIPE_UP, Gesture.SWIPE_DOWN, Gesture.SWIPE_RIGHT)) {
             hasDrawerSwipeConflicts = true
             super.disableDrawerSwipe()
+        }
+    }
+
+    private fun toggleAutoAdvance() {
+        if (automaticAnswer.isDisabled) {
+            Timber.i("Enabling auto advance")
+            automaticAnswer.enable()
+            if (isDisplayingAnswer) {
+                automaticAnswer.delayedShowQuestion(0)
+            } else {
+                automaticAnswer.delayedShowAnswer(0)
+            }
+        } else {
+            Timber.i("Disabling auto advance")
+            automaticAnswer.disable()
         }
     }
 
