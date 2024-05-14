@@ -1531,7 +1531,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             editLineView.setEnableAnimation(animationEnabled())
 
             // Use custom implementation of ActionMode.Callback customize selection and insert menus
-            editLineView.setActionModeCallbacks(ActionModeCallback(newEditText))
+            editLineView.setActionModeCallbacks(getActionModeCallback(newEditText, View.generateViewId()))
             editLineView.setHintLocale(getHintLocaleForField(editLineView.name))
             initFieldEditText(newEditText, i, !editModelMode)
             editFields!!.add(newEditText)
@@ -1574,6 +1574,23 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             editLineView.isVisible = i !in indicesToHide
             fieldsLayoutContainer!!.addView(editLineView)
         }
+    }
+
+    private fun getActionModeCallback(textBox: FieldEditText, clozeMenuId: Int): ActionMode.Callback {
+        return CustomActionModeCallback(
+            isClozeType,
+            getString(R.string.multimedia_editor_popup_cloze),
+            clozeMenuId,
+            onActionItemSelected = { mode, item ->
+                if (item.itemId == clozeMenuId) {
+                    convertSelectedTextToCloze(textBox, AddClozeType.INCREMENT_NUMBER)
+                    mode.finish()
+                    true
+                } else {
+                    false
+                }
+            }
+        )
     }
 
     private fun onImagePaste(editText: EditText, uri: Uri): Boolean {
@@ -2307,67 +2324,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
             // Do Nothing
-        }
-    }
-
-    /**
-     * Custom ActionMode.Callback implementation for adding and handling cloze deletion action
-     * button in the text selection menu.
-     */
-    private inner class ActionModeCallback(
-        private val textBox: FieldEditText
-    ) : ActionMode.Callback {
-        private val clozeMenuId = View.generateViewId()
-
-        @RequiresApi(Build.VERSION_CODES.N)
-        private val setLanguageId = View.generateViewId()
-        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            return true
-        }
-
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-            // Adding the cloze deletion floating context menu item, but only once.
-            if (menu.findItem(clozeMenuId) != null) {
-                return false
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(setLanguageId) != null) {
-                return false
-            }
-
-            // Removes paste as plain text from ContextMenu in NoteEditor
-            val item: MenuItem? = menu.findItem(android.R.id.pasteAsPlainText)
-            val platformPasteMenuItem: MenuItem? = menu.findItem(android.R.id.paste)
-            if (item != null && platformPasteMenuItem != null) {
-                item.isVisible = false
-            }
-
-            val initialSize = menu.size()
-            if (isClozeType) {
-                // 10644: Do not pass in a R.string as the final parameter as MIUI on Android 12 crashes.
-                menu.add(
-                    Menu.NONE,
-                    clozeMenuId,
-                    0,
-                    getString(R.string.multimedia_editor_popup_cloze)
-                )
-            }
-            return initialSize != menu.size()
-        }
-
-        @SuppressLint("SetTextI18n")
-        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            val itemId = item.itemId
-            return if (itemId == clozeMenuId) {
-                convertSelectedTextToCloze(textBox, AddClozeType.INCREMENT_NUMBER)
-                mode.finish()
-                true
-            } else {
-                false
-            }
-        }
-
-        override fun onDestroyActionMode(mode: ActionMode) {
-            // Left empty on purpose
         }
     }
 
