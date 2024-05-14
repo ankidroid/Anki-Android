@@ -29,6 +29,7 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
@@ -46,6 +47,7 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
@@ -58,6 +60,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.bottomsheet.ImageOcclusionBottomSheetFragment
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
@@ -90,6 +93,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.isImageOcclusion
+import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -98,12 +102,14 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
+import java.io.File
 import java.util.*
 import java.util.function.Consumer
 import kotlin.collections.ArrayList
@@ -151,6 +157,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     // non-null after onCollectionLoaded
     private var editorNote: Note? = null
+
+    private var currentImageOccPath: String? = null
 
     /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
     private var currentEditedCard: Card? = null
@@ -529,8 +537,23 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         if (addNote) {
             editOcclusionsButton?.visibility = View.GONE
             selectImageForOcclusionButton?.setOnClickListener {
-                ioEditorLauncher.launch("image/*")
+                val imageOcclusionBottomSheet = ImageOcclusionBottomSheetFragment()
+                imageOcclusionBottomSheet.listener =
+                    object : ImageOcclusionBottomSheetFragment.ImagePickerListener {
+                        override fun onCameraClicked() {
+                            dispatchCameraEvent()
+                        }
+
+                        override fun onGalleryClicked() {
+                            ioEditorLauncher.launch("image/*")
+                        }
+                    }
+                imageOcclusionBottomSheet.show(
+                    supportFragmentManager,
+                    "ImageOcclusionBottomSheetFragment"
+                )
             }
+
             pasteOcclusionImageButton?.text = TR.notetypesIoPasteImageFromClipboard()
             pasteOcclusionImageButton?.setOnClickListener {
                 // TODO: Support all extensions
@@ -666,6 +689,63 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             } else {
                 Timber.w("Image uri is null")
             }
+        }
+    }
+
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isPictureTaken ->
+            if (isPictureTaken) {
+                currentImageOccPath?.let { imagePath ->
+                    val photoFile = File(imagePath)
+                    val imageUri: Uri = FileProvider.getUriForFile(
+                        this,
+                        this.applicationContext.packageName + ".apkgfileprovider",
+                        photoFile
+                    )
+                    startCrop(imageUri)
+                }
+            } else {
+                Timber.d("Camera aborted or some interruption")
+            }
+        }
+
+    private fun startCrop(imageUri: Uri) {
+        ImageUtils.cropImage(activityResultRegistry, imageUri) { result ->
+            if (result != null && result.isSuccessful) {
+                val uriFilePath = result.getUriFilePath(this)
+                uriFilePath?.let { setupImageOcclusionEditor(it) }
+            } else {
+                Timber.v("Unable to crop the image")
+            }
+        }
+    }
+
+    private fun dispatchCameraEvent() {
+        val photoFile: File? = try {
+            createImageFile()
+        } catch (e: Exception) {
+            Timber.w("Error creating the file", e)
+            return
+        }
+        photoFile?.let {
+            val photoURI: Uri = FileProvider.getUriForFile(
+                this,
+                this.applicationContext.packageName + ".apkgfileprovider",
+                it
+            )
+            cameraLauncher.launch(photoURI)
+        }
+    }
+
+    private fun createImageFile(): File {
+        val currentDateTime = getTimestamp(TimeManager.time)
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "ANKIDROID_$currentDateTime",
+            ".jpg",
+            storageDir
+        ).apply {
+            currentImageOccPath = absolutePath
         }
     }
 
