@@ -138,23 +138,22 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun testOnDeckSelected() = runBlocking {
+    fun testOnDeckSelected() = withBrowser(noteCount = 1) {
         // Arrange
         val deckId = 123L
         val selectableDeck = DeckSelectionDialog.SelectableDeck(deckId, "Test Deck")
-        val cardBrowser = getBrowserWithNotes(1)
 
         // Act
-        cardBrowser.onDeckSelected(selectableDeck)
+        this.onDeckSelected(selectableDeck)
 
         // Assert
-        assertEquals(deckId, cardBrowser.lastDeckId)
+        assertEquals(deckId, this.lastDeckId)
 
         // Act again: select the same deck
-        cardBrowser.onDeckSelected(selectableDeck)
+        this.onDeckSelected(selectableDeck)
 
         // Assert again: the deck selection should not change
-        assertEquals(deckId, cardBrowser.lastDeckId)
+        assertEquals(deckId, this.lastDeckId)
     }
 
     @Test
