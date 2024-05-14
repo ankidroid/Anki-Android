@@ -133,6 +133,7 @@
     <string name="user_action_7_key">binding_USER_ACTION_7</string>
     <string name="user_action_8_key">binding_USER_ACTION_8</string>
     <string name="user_action_9_key">binding_USER_ACTION_9</string>
+    <string name="toggle_auto_advance_command_key">binding_TOGGLE_AUTO_ADVANCE</string>
     <!-- Accessibility -->
     <string name="pref_accessibility_screen_key">accessibilityScreen</string>
     <string name="card_zoom_preference">cardZoom</string>
