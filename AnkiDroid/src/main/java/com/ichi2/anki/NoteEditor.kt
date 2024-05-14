@@ -517,7 +517,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             CALLER_STUDYOPTIONS, CALLER_DECKPICKER, CALLER_REVIEWER_ADD, CALLER_CARDBROWSER_ADD, CALLER_NOTEEDITOR ->
                 addNote = true
-            CALLER_NOTEEDITOR_INTENT_ADD -> {
+            CALLER_NOTEEDITOR_INTENT_ADD, INSTANT_NOTE_EDITOR -> {
                 fetchIntentInformation(intent)
                 if (sourceText == null) {
                     finish()
@@ -2458,6 +2458,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         const val RESULT_UPDATED_IO_NOTE = 11
         const val CALLER_IMG_OCCLUSION = 12
         const val CALLER_ADD_IMAGE = 13
+        const val INSTANT_NOTE_EDITOR = 14
 
         // preferences keys
         const val PREF_NOTE_EDITOR_SCROLL_TOOLBAR = "noteEditorScrollToolbar"

@@ -595,12 +595,17 @@
          -->
         <activity
             android:name="com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/instant_card"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
         </activity>
 
 
