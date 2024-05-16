@@ -16,9 +16,13 @@
 package com.ichi2.anki.utils.ext
 
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.preferences.sharedPrefs
 
 fun Fragment.sharedPrefs(): SharedPreferences {
     return requireContext().sharedPrefs()
 }
+
+val Fragment.packageManager: PackageManager
+    get() = requireContext().packageManager

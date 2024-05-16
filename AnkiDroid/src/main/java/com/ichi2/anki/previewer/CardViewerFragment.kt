@@ -42,6 +42,8 @@ import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.packageManager
+import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.themes.Themes
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -164,6 +166,21 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 }
                 if (urlString.startsWith("tts-voices:")) {
                     TtsVoicesDialogFragment().show(childFragmentManager, null)
+                    return true
+                }
+                if (url.scheme == "android-app") {
+                    val intent = Intent.parseUri(urlString, Intent.URI_ANDROID_APP_SCHEME)
+                    if (packageManager.resolveActivityCompat(intent) != null) {
+                        startActivity(intent)
+                    } else {
+                        val packageName = intent.getPackage() ?: return true
+                        val marketUri = Uri.parse("market://details?id=$packageName")
+                        val marketIntent = Intent(Intent.ACTION_VIEW, marketUri)
+                        Timber.d("Trying to open market uri %s", marketUri)
+                        if (packageManager.resolveActivityCompat(marketIntent) != null) {
+                            startActivity(marketIntent)
+                        }
+                    }
                     return true
                 }
                 return try {
