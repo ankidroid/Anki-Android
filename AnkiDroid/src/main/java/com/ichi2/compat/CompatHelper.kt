@@ -161,7 +161,7 @@ class CompatHelper private constructor() {
          *  found and there is no default set, returns a [ResolveInfo] object
          *  containing something else, such as the activity resolver.
          */
-        fun PackageManager.resolveActivityCompat(intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo? {
+        fun PackageManager.resolveActivityCompat(intent: Intent, flags: ResolveInfoFlagsCompat = ResolveInfoFlagsCompat.EMPTY): ResolveInfo? {
             return compat.resolveActivity(this, intent, flags)
         }
     }
