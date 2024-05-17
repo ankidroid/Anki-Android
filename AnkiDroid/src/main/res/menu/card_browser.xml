@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
         android:id="@+id/action_add_note_from_card_browser"
@@ -40,34 +41,34 @@
         <menu>
             <item
                 android:id="@+id/action_select_flag_zero"
-                android:title="@string/menu_flag_card_zero"/>
+                tools:title="No Flag"/>
             <item
                 android:id="@+id/action_select_flag_one"
-                android:title="@string/menu_flag_card_one"
+                tools:title="Red"
                 android:icon="@drawable/ic_flag_red"/>
             <item
                 android:id="@+id/action_select_flag_two"
-                android:title="@string/menu_flag_card_two"
+                tools:title="Orange"
                 android:icon="@drawable/ic_flag_orange"/>
             <item
                 android:id="@+id/action_select_flag_three"
-                android:title="@string/menu_flag_card_three"
+                tools:title="Green"
                 android:icon="@drawable/ic_flag_green"/>
             <item
                 android:id="@+id/action_select_flag_four"
-                android:title="@string/menu_flag_card_four"
+                tools:title="Blue"
                 android:icon="@drawable/ic_flag_blue"/>
             <item
                 android:id="@+id/action_select_flag_five"
-                android:title="@string/menu_flag_card_five"
+                tools:title="Pink"
                 android:icon="@drawable/ic_flag_pink"/>
             <item
                 android:id="@+id/action_select_flag_six"
-                android:title="@string/menu_flag_card_six"
+                tools:title="Turquoise"
                 android:icon="@drawable/ic_flag_turquoise"/>
             <item
                 android:id="@+id/action_select_flag_seven"
-                android:title="@string/menu_flag_card_seven"
+                tools:title="Purple"
                 android:icon="@drawable/ic_flag_purple"/>
         </menu>
     </item>

@@ -97,6 +97,7 @@ class PreviewerFragment :
         }
         /* ************************************* Menu items ************************************* */
         val menu = view.findViewById<Toolbar>(R.id.toolbar).menu
+        setFlagTitles(menu)
 
         lifecycleScope.launch {
             viewModel.backSideOnly
@@ -202,6 +203,17 @@ class PreviewerFragment :
             R.id.action_flag_seven -> viewModel.setFlag(Flag.PURPLE)
         }
         return true
+    }
+
+    private fun setFlagTitles(menu: Menu) {
+        menu.findItem(R.id.action_flag_zero).title = Flag.NONE.displayName()
+        menu.findItem(R.id.action_flag_one).title = Flag.RED.displayName()
+        menu.findItem(R.id.action_flag_two).title = Flag.ORANGE.displayName()
+        menu.findItem(R.id.action_flag_three).title = Flag.GREEN.displayName()
+        menu.findItem(R.id.action_flag_four).title = Flag.BLUE.displayName()
+        menu.findItem(R.id.action_flag_five).title = Flag.PINK.displayName()
+        menu.findItem(R.id.action_flag_six).title = Flag.TURQUOISE.displayName()
+        menu.findItem(R.id.action_flag_seven).title = Flag.PURPLE.displayName()
     }
 
     private fun setBackSideOnlyButtonIcon(menu: Menu, isBackSideOnly: Boolean) {

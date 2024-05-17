@@ -735,6 +735,7 @@ open class CardBrowser :
             // restore drawer click listener and icon
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
+            setFlagTitles(menu)
             saveSearchItem = menu.findItem(R.id.action_save_search)
             saveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mySearchesItem = menu.findItem(R.id.action_list_my_searches)
@@ -788,6 +789,7 @@ open class CardBrowser :
         } else {
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
+            setMultiSelectFlagTitles(menu)
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         }
@@ -819,6 +821,28 @@ open class CardBrowser :
         } else {
             super.onNavigationPressed()
         }
+    }
+
+    private fun setFlagTitles(menu: Menu) {
+        menu.findItem(R.id.action_select_flag_zero).title = Flag.NONE.displayName()
+        menu.findItem(R.id.action_select_flag_one).title = Flag.RED.displayName()
+        menu.findItem(R.id.action_select_flag_two).title = Flag.ORANGE.displayName()
+        menu.findItem(R.id.action_select_flag_three).title = Flag.GREEN.displayName()
+        menu.findItem(R.id.action_select_flag_four).title = Flag.BLUE.displayName()
+        menu.findItem(R.id.action_select_flag_five).title = Flag.PINK.displayName()
+        menu.findItem(R.id.action_select_flag_six).title = Flag.TURQUOISE.displayName()
+        menu.findItem(R.id.action_select_flag_seven).title = Flag.PURPLE.displayName()
+    }
+
+    private fun setMultiSelectFlagTitles(menu: Menu) {
+        menu.findItem(R.id.action_flag_zero).title = Flag.NONE.displayName()
+        menu.findItem(R.id.action_flag_one).title = Flag.RED.displayName()
+        menu.findItem(R.id.action_flag_two).title = Flag.ORANGE.displayName()
+        menu.findItem(R.id.action_flag_three).title = Flag.GREEN.displayName()
+        menu.findItem(R.id.action_flag_four).title = Flag.BLUE.displayName()
+        menu.findItem(R.id.action_flag_five).title = Flag.PINK.displayName()
+        menu.findItem(R.id.action_flag_six).title = Flag.TURQUOISE.displayName()
+        menu.findItem(R.id.action_flag_seven).title = Flag.PURPLE.displayName()
     }
 
     private fun updatePreviewMenuItem() {
