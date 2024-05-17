@@ -150,46 +150,34 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
             }
 
             private fun handleUrl(url: Uri): Boolean {
-                val urlString = url.toString()
-
-                if (urlString.startsWith("playsound:")) {
-                    viewModel.playSoundFromUrl(urlString)
-                    return true
-                }
-                if (urlString.startsWith("videoended:")) {
-                    viewModel.onVideoFinished()
-                    return true
-                }
-                if (urlString.startsWith("videopause:")) {
-                    viewModel.onVideoPaused()
-                    return true
-                }
-                if (urlString.startsWith("tts-voices:")) {
-                    TtsVoicesDialogFragment().show(childFragmentManager, null)
-                    return true
-                }
-                if (url.scheme == "android-app") {
-                    val intent = Intent.parseUri(urlString, Intent.URI_ANDROID_APP_SCHEME)
-                    if (packageManager.resolveActivityCompat(intent) != null) {
-                        startActivity(intent)
-                    } else {
-                        val packageName = intent.getPackage() ?: return true
-                        val marketUri = Uri.parse("market://details?id=$packageName")
-                        val marketIntent = Intent(Intent.ACTION_VIEW, marketUri)
-                        Timber.d("Trying to open market uri %s", marketUri)
-                        if (packageManager.resolveActivityCompat(marketIntent) != null) {
-                            startActivity(marketIntent)
+                when (url.scheme) {
+                    "playsound" -> viewModel.playSoundFromUrl(url.toString())
+                    "videoended" -> viewModel.onVideoFinished()
+                    "videopause" -> viewModel.onVideoPaused()
+                    "tts-voices" -> TtsVoicesDialogFragment().show(childFragmentManager, null)
+                    "android-app" -> {
+                        val intent = Intent.parseUri(url.toString(), Intent.URI_ANDROID_APP_SCHEME)
+                        if (packageManager.resolveActivityCompat(intent) != null) {
+                            startActivity(intent)
+                        } else {
+                            val packageName = intent.getPackage() ?: return true
+                            val marketUri = Uri.parse("market://details?id=$packageName")
+                            val marketIntent = Intent(Intent.ACTION_VIEW, marketUri)
+                            Timber.d("Trying to open market uri %s", marketUri)
+                            if (packageManager.resolveActivityCompat(marketIntent) != null) {
+                                startActivity(marketIntent)
+                            }
+                        }
+                    } else -> {
+                        try {
+                            openUrl(url)
+                        } catch (_: Throwable) {
+                            Timber.w("Could not open url")
+                            return false
                         }
                     }
-                    return true
                 }
-                return try {
-                    openUrl(url)
-                    true
-                } catch (_: Throwable) {
-                    Timber.w("Could not open url")
-                    false
-                }
+                return true
             }
 
             override fun onReceivedError(
