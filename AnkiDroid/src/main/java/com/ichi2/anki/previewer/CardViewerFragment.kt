@@ -170,17 +170,21 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
             }
 
             private fun handleIntentUrl(url: Uri, flags: Int) {
-                val intent = Intent.parseUri(url.toString(), flags)
-                if (packageManager.resolveActivityCompat(intent) != null) {
-                    startActivity(intent)
-                } else {
-                    val packageName = intent.getPackage() ?: return
-                    val marketUri = Uri.parse("market://details?id=$packageName")
-                    val marketIntent = Intent(Intent.ACTION_VIEW, marketUri)
-                    Timber.d("Trying to open market uri %s", marketUri)
-                    if (packageManager.resolveActivityCompat(marketIntent) != null) {
-                        startActivity(marketIntent)
+                try {
+                    val intent = Intent.parseUri(url.toString(), flags)
+                    if (packageManager.resolveActivityCompat(intent) != null) {
+                        startActivity(intent)
+                    } else {
+                        val packageName = intent.getPackage() ?: return
+                        val marketUri = Uri.parse("market://details?id=$packageName")
+                        val marketIntent = Intent(Intent.ACTION_VIEW, marketUri)
+                        Timber.d("Trying to open market uri %s", marketUri)
+                        if (packageManager.resolveActivityCompat(marketIntent) != null) {
+                            startActivity(marketIntent)
+                        }
                     }
+                } catch (t: Throwable) {
+                    Timber.w("Unable to parse intent uri: %s because: %s", url, t.message)
                 }
             }
 
