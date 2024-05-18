@@ -19,6 +19,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -29,6 +30,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
@@ -42,6 +44,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
@@ -56,6 +59,7 @@ import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.isImageOcclusion
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.*
@@ -67,6 +71,11 @@ import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -315,6 +324,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             // Storing a reference to the templateEditor allows us to use member variables
             templateEditor = activity as CardTemplateEditor
+
             val mainView = inflater.inflate(R.layout.card_template_editor_item, container, false)
             val cardIndex = requireArguments().getInt(CARD_INDEX)
             val tempModel = templateEditor.tempModel
@@ -518,6 +528,36 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return noteType.isCloze || noteType.isImageOcclusion
         }
 
+        /** Checks if the front of the template is empty or not, and show a dialog if empty
+         * @return true if empty else false **/
+        fun isFrontTemplateEmpty(): Boolean {
+            if (currentTemplate?.front.isNullOrEmpty()) {
+                showEmptyTemplateDialog()
+                return true
+            }
+            return false
+        }
+
+        private fun showEmptyTemplateDialog() {
+            AlertDialog.Builder(templateEditor).show {
+                templateEditor.tempModel?.let { tempModel ->
+                    val templateCount = tempModel.templateCount
+                    val templateName = tempModel.notetype.name
+                    title(
+                        text = TR.cardTemplatesInvalidTemplateNumber(
+                            templateCount,
+                            templateName
+                        )
+                    )
+                }
+                message(text = TR.cardTemplatesNoFrontField())
+                positiveButton(R.string.help) {
+                    openUrl(Uri.parse("https://docs.ankiweb.net/templates/errors.html#no-field-replacement-on-front-side"))
+                }
+                negativeButton(R.string.dialog_ok)
+            }
+        }
+
         private fun setupMenu() {
             // Enable menu
             (requireActivity() as MenuHost).addMenuProvider(
@@ -611,6 +651,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                 Timber.i("CardTemplateEditor:: Save model button pressed")
                                 if (modelHasChanged()) {
                                     val confirmButton = templateEditor.findViewById<View>(R.id.action_confirm)
+                                    if (isFrontTemplateEmpty()) return true
                                     if (confirmButton != null) {
                                         if (!confirmButton.isEnabled) {
                                             Timber.d("CardTemplateEditor::discarding extra click after button disabled")
