@@ -48,7 +48,7 @@
     <string name="check_db_warning">Isto poderá demorar bastante tempo</string>
     <string name="contextmenu_deckpicker_delete_deck">Eliminar baralho</string>
     <string name="delete_deck_title">Eliminar baralho?</string>
-    <string name="no_tts_available_message">Nenhum idioma disponível para o texto para voz</string>
+    <string name="no_tts_available_message">Nenhuma língua disponível para o sistema de conversão de texto para fala</string>
     <string name="tts_no_tts">Não falar</string>
     <string name="unused_strings">\n\nFicheiros não utilizados:\n</string>
     <string name="reposition_card_dialog_title">Reposicionar a nova ficha</string>

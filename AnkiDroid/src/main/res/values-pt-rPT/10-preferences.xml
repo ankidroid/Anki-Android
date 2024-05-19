@@ -73,7 +73,7 @@
     <string name="use_input_tag" maxLength="41">Escrever a resposta na ficha</string>
     <string name="use_input_tag_summ">Utilize uma caixa de texto para introdução na ficha, para escrever a sua resposta</string>
     <string name="reset_languages" maxLength="41">Reiniciar idiomas</string>
-    <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+    <string name="reset_languages_summ">Reiniciar as associações entre baralhos e línguas, permitindo uma nova escolha (utilizado no sistema de texto para fala e dicionários)</string>
     <string name="reset_languages_question">Reiniciar todas as atribuições de idioma?</string>
     <string name="reset_confirmation">Reinicializar todos os estados</string>
     <string name="card_zoom" maxLength="41">Zoom da ficha</string>
@@ -242,8 +242,8 @@
     <string name="deck_conf_cram_reschedule_summ">Reagendar as fichas, com base nas minhas respostas neste baralho</string>
     <string name="deck_conf_cram_filter_2_check">Ativar segundo filtro</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definir passos personalizados</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Mostrar atrasos</string>
+    <string name="deck_conf_cram_preview_delays_summ">Os atrasos são apresentados em segundos. 0 (zero) faz com que a ficha volte para o baralho original.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Ajude a tornar o AnkiDroid melhor!</string>
     <string name="analytics_title" maxLength="41">Partilhar dados de utilização da funcionalidade</string>
@@ -268,17 +268,17 @@
     <string name="key_picker_default_press_key">Pressione uma tecla</string>
     <string name="binding_add_axis">Adicionar um \"joystick\"/comando de movimento</string>
     <string name="axis_picker_move_joystick">Mover um \"joystick\"/comando de movimento</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_actions" maxLength="41">Acções do Utilizador</string>
+    <string name="user_actions_summary" maxLength="41">Executar JavaScript a partir do ecrã de revisão</string>
+    <string name="user_action_1" maxLength="41">Acção de Utilizador 1</string>
+    <string name="user_action_2" maxLength="41">Acção de Utilizador 2</string>
+    <string name="user_action_3" maxLength="41">Acção de Utilizador 3</string>
+    <string name="user_action_4" maxLength="41">Acção de Utilizador 4</string>
+    <string name="user_action_5" maxLength="41">Acção de Utilizador 5</string>
+    <string name="user_action_6" maxLength="41">Acção de Utilizador 6</string>
+    <string name="user_action_7" maxLength="41">Acção de Utilizador 7</string>
+    <string name="user_action_8" maxLength="41">Acção de Utilizador 8</string>
+    <string name="user_action_9" maxLength="41">Acção de Utilizador 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecione o lado da ficha</string>
     <string name="card_side_question">Questão</string>
@@ -289,28 +289,28 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remover ‘%s\'</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="bindings_already_bound">Já associado a ‘%s’</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">O AnkiDroid introduziu um sistema de conversão de texto para fala melhor, compatível com outras aplicações do Anki e que inclui mais vozes e melhorias na reprodução da língua!\n\nEsta definição será removida em breve, por favor, actualize assim que possível</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Por favor, actualize para o novo formato de conversão de texto para fala</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opções de programador</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ativar as opções de programador</string>
     <string name="disable_dev_options">Desativar opções do desenvolvedor</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="dev_options_warning">        Antes de activar as opções de programador, assegure-se que é mesmo isso que quer fazer. Estas opções são perigosas e podem estragar a aplicação ou corromper a sua colecção.\n\nEstas opções são destinadas a programadores, daí não terem tradução e estarem em Inglês.
     </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        O AnkiDroid faz cópias de segurança regularmente.
+        Para libertar espaço, algumas das cópias de segurança são
+        eliminadas passados dois dias da sua criação.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        Ficheiros de multimédia não são guardados.
+        Por cautela, sincronize a sua colecção periodicamente, ou guarde cópias de segurança dela externamente.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        Pode restaurar a sua colecção partir duma cópia de segurança ou exportá-la a partir do menu do ecrã com a lista de baralhos.
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutos entre cópias de segurança automáticas</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Cópias de segurança diárias para manter</string>
@@ -324,8 +324,8 @@
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Erro</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlando&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d arquivo\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d ficheiro\n%2$s</item>
+        <item quantity="other">%1$d ficheiros\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Excluir arquivos de média não utilizados</string>
