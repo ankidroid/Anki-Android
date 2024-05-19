@@ -91,7 +91,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>టాప్</item>
         <item>దిగువ</item>
-        <item>None</item>
+        <item>ఏదీ లేదు</item>
     </string-array>
     <string name="gestures" maxLength="41">సంజ్ఞలను ప్రారంభించండి</string>
     <string name="gestures_summ">కార్డులకు సమాధానం ఇవ్వడం మరియు సవరించడం వంటి చర్యలకు సంజ్ఞలను కేటాయించండి.</string>
@@ -99,7 +99,7 @@
     <string name="gestures_corner_touch_summary">స్క్రీన్ మూలల్లో టచ్ సంజ్ఞలను అనుమతించండి</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">పూర్తి స్క్రీన్ నావిగేషన్ డ్రాయర్</string>
     <string name="gestures_fullscreen_nav_drawer_summary">స్క్రీన్‌పై ఎక్కడి నుండైనా కుడివైపుకు స్వైప్ చేస్తున్నప్పుడు నావిగేషన్ డ్రాయర్‌ను తెరవండి</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">ఏదీ లేదు</string>
     <string name="gestures_swipe_up" maxLength="41">పైకి స్వైప్ చేయండి</string>
     <string name="gestures_swipe_down" maxLength="41">క్రిందకి లాగండి</string>
     <string name="gestures_swipe_left" maxLength="41">ఎడమకు స్వైప్ చేయండి</string>
@@ -159,7 +159,7 @@
     <string name="safe_display_summ">అన్ని యానిమేషన్‌లను నిలిపివేయండి మరియు కార్డ్‌లను గీయడానికి సురక్షితమైన పద్ధతిని ఉపయోగించండి. ఇ-ఇంక్ పరికరాలకు ఇది అవసరం కావచ్చు.</string>
     <string name="disable_extended_text_ui" maxLength="41">సింగిల్-ఫీల్డ్ సవరణ మోడ్‌ను నిలిపివేయండి</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">ల్యాండ్‌స్కేప్ మోడ్‌లో ఉన్నప్పుడు \'క్లోజ్ డిలీట్\' కాంటెక్స్ట్ మెనుని ప్రారంభిస్తుంది.</string>
     <string name="vertical_centering" maxLength="41">సెంటర్ సమలేఖనం</string>
     <string name="vertical_centering_summ">నిలువుగా కార్డుల విషయాన్ని కేంద్రీకరించండి</string>
     <string name="pref_double_tap_time_interval" maxLength="41">డబుల్ ట్యాప్ సమయ విరామం (మిల్లీసెకన్లు)</string>
@@ -204,7 +204,7 @@
     <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">క్లిప్‌బోర్డ్ చిత్రాలను PNGగా అతికించండి</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png_summary">డిఫాల్ట్‌గా Anki డిస్క్ స్థలాన్ని ఆదా చేయడానికి చిత్రాలను JPG ఫైల్‌లుగా క్లిప్‌బోర్డ్‌కు అతికిస్తుంది. బదులుగా PNG చిత్రాల వలె అతికించడానికి మీరు ఈ ఎంపికను ఉపయోగించవచ్చు.</string>
     <string name="exit_via_double_tap_back" maxLength="41">వెనుకకు వెళ్లడానికి/నిష్క్రమించడానికి రెండుసార్లు వెనుకకు నొక్కండి</string>
     <string name="exit_via_double_tap_back_summ">ప్రమాదవశాత్తూ సమీక్షకుడు లేదా యాప్ నుండి నిష్క్రమించడాన్ని నివారించడానికి</string>
     <!-- Allow all files in media imports -->
@@ -213,11 +213,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">అనుకూల సమకాలీకరణ సర్వర్</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ఉపయోగం లో లేదు</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
-        ]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[        AnkiWebతో సమకాలీకరించడానికి ప్రత్యామ్నాయంగా,
+        సమకాలీకరణ కోసం మీరు మీ స్వంత సర్వర్‌ని ఉపయోగించవచ్చు.
+        సెట్ చేయకుంటే, డిఫాల్ట్ AnkiWeb సర్వర్ బదులుగా ఉపయోగించబడుతుంది.
+        <a href="%s">మరింత తెలుసుకోండి</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Url ని సమకాలీకరించండి</string>
     <!-- Key Bindings -->
     <string name="keyboard">కీబోర్డ్</string>
@@ -255,9 +254,9 @@
     <string name="open_changelog">చేంజ్లాగ్ తెరవండి</string>
     <string name="pref_cat_about_title" maxLength="41">గురించి</string>
     <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description"><![CDATA[వీరు మా అద్భుతమైన <a href=\"%1$s\">కంట్రిబ్యూటర్లు</a>. మీరు ప్రోగ్రామింగ్, అనువాదం, విరాళం మరియు <a href=\"%2$s\">మరిన్ని</a> ద్వారా కూడా AnkiDroidకి సహాయం చేయవచ్చు!]]></string>
     <string name="license">లైసెన్స్</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> మరియు <a href=\"%2$s\">AGPL-3.0</a> లైసెన్స్‌ల సోర్స్ కోడ్ <a క్రింద విడుదల చేయబడింది href =\"%3$s\">GitHub</a>లో అందుబాటులో ఉంది]]></string>
     <string name="donate_description"><![CDATA[మీరు <a href=\"%1$s\">దానం చేయడం</a> ద్వారా AnkiDroid అభివృద్ధికి మద్దతు ఇవ్వవచ్చు. ఏదైనా మొత్తం లోతుగా ప్రశంసించబడుతుంది.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">సంజ్ఞను జోడించండి</string>
@@ -284,13 +283,13 @@
     <string name="card_side_answer">సమాధానం</string>
     <string name="card_side_both">ప్రశ్న &amp; సమాధానం</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">ప్ర: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">ఎ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\'ని తీసివేయండి</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="bindings_already_bound">ఇప్పటికే \'%s\'కి కట్టుబడి ఉంది</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">ప్రయోగాత్మకమైనది</string>
     <string name="readtext_deprecation_warn">AnkiDroid మెరుగైన TTS మెకానిజంను ప్రవేశపెట్టింది, ఇది ఇతర Anki క్లయింట్‌లకు అనుకూలంగా ఉంటుంది మరియు భాష ప్లేబ్యాక్‌కు మరిన్ని వాయిస్‌లు మరియు మెరుగుదలలను కలిగి ఉంది!\n\nదయచేసి వీలైనంత త్వరగా అప్‌గ్రేడ్ చేయండి, ఎందుకంటే ఈ సెట్టింగ్ త్వరలో తీసివేయబడుతుంది.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">దయచేసి కొత్త వచనాన్ని ప్రసంగ ఆకృతికి అప్‌గ్రేడ్ చేయండి</string>
     <!-- Developer options -->
@@ -301,15 +300,14 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[AnkiDroid క్రమానుగతంగా మీ సేకరణను బ్యాకప్ చేస్తుంది.
+        బ్యాకప్‌లు రెండు రోజుల కంటే ఎక్కువ పాతబడిన తర్వాత,
+        డిస్క్ స్థలాన్ని ఖాళీ చేయడానికి AnkiDroid వాటిలో కొన్నింటిని తీసివేయడం ప్రారంభిస్తుంది.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        మీడియా ఫైల్‌లు బ్యాకప్ చేయబడలేదని గమనించండి.
+        సురక్షితంగా ఉండటానికి, దయచేసి మీ సేకరణను కాలానుగుణంగా సమకాలీకరించండి లేదా దాని ఎగుమతులను బ్యాకప్ చేయండి.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
-    ]]></string>
+        మీరు బ్యాకప్ నుండి పునరుద్ధరించవచ్చు మరియు డెక్ జాబితా మెనులో మీ సేకరణను ఎగుమతి చేయవచ్చు.]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">స్వయంచాలక బ్యాకప్‌ల మధ్య నిమిషాలు</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">ఉంచడానికి రోజువారీ బ్యాకప్‌లు</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">ఉంచడానికి వీక్లీ బ్యాకప్‌లు</string>
@@ -355,7 +353,7 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">సేకరణ లేదు</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">లోపం</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">పొందుతోంది&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">లెక్కింపు&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">సేకరణ ఉనికిలో లేదు</string>
 </resources>

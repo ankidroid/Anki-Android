@@ -13,32 +13,32 @@ es-ES: Tarjetas AnkiDroid
 et: AnkiDroid mälukaardid
 fa: فلش کارتهای انکی دروید
 fi: AnkiDroid-muistikortit
-fr: AnkiDroid (Cartes mémoire)
 fy-NL: AnkiDroid flitskaarten
+fr: AnkiDroid (Cartes mémoire)
 gl: Cartóns AnkiDroid
+he: קלפי לימוד של AnkiDroid
 he: קלפי לימוד של AnkiDroid
 hi: AnkiDroid फ़्लैशकार्ड
 hu: AnkiDroid Szókártyák
 hy-AM: AnkiDroid քարտեր
 id: Kartu Flash AnkiDroid
-kk: AnkiDroid жаттау карталары
 ka: AnkiDroid: სამეცადინო ბარათები
+kk: AnkiDroid жаттау карталары
 ko: AnkiDroid 플래시 카드
 lt: „AnkiDroid“ atminties kortelės
 mr: अंकीड्रोएड फ़्लँशकार्डस्
 ms: Kad Imbasan AnkiDroid
-pl: AnkiDroid – Fiszki
 nl: AnkiDroid flitskaarten
+pl: AnkiDroid – Fiszki
+ru: AnkiDroid: карточки для запоминания
 sc: Cartas mnemònicas de AnkiDroid
+sk: AnkiDroid kartičky
 sl: Pomnilne kartice AnkiDroid 
 sr: AnkiDroid флеш-картице
-ru: AnkiDroid: карточки для запоминания
 sv-SE: AnkiDroid Flashkort
-sk: AnkiDroid kartičky
 th: บัตรคำ AnkiDroid
 tr: AnkiDroid Bilgi Kartları
 ur-PK: آنکی ڈیرائڈ فلیشکارڈز
 vi: Thẻ thông minh AnkiDroid
 zh-CN: AnkiDroid 记忆卡片
 zh-TW: AnkiDroid 單字卡
-he: קלפי לימוד של AnkiDroid
