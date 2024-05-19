@@ -111,14 +111,6 @@
     <string name="menu_delete_note">Vymazať poznámku</string>
     <string name="menu_flag">Vlajočka</string>
     <string name="menu_flag_card">Červená vlajočka</string>
-    <string name="menu_flag_card_zero">Bez vlajočky</string>
-    <string name="menu_flag_card_one">Červená vlajočka</string>
-    <string name="menu_flag_card_two">Oranžová vlajočka</string>
-    <string name="menu_flag_card_three">Zelená vlajočka</string>
-    <string name="menu_flag_card_four">Modrá vlajočka</string>
-    <string name="menu_flag_card_five">Ružová vlajočka</string>
-    <string name="menu_flag_card_six">Tyrkysová vlajočka</string>
-    <string name="menu_flag_card_seven">Purpurová vlajočka</string>
     <string name="menu_edit_tags">Upraviť štítky</string>
     <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>
     <string name="menu_search">Vyhľadať v %1$s</string>

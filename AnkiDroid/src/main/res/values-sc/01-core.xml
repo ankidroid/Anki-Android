@@ -106,14 +106,6 @@
     <string name="menu_delete_note">Iscantzella sa nota</string>
     <string name="menu_flag">Bandera</string>
     <string name="menu_flag_card">Marca sa carta cun una bandera</string>
-    <string name="menu_flag_card_zero">Peruna bandera</string>
-    <string name="menu_flag_card_one">Bandera ruja</string>
-    <string name="menu_flag_card_two">Bandera arantzu</string>
-    <string name="menu_flag_card_three">Bandera birde</string>
-    <string name="menu_flag_card_four">Bandera biaita</string>
-    <string name="menu_flag_card_five">Bandera rosa</string>
-    <string name="menu_flag_card_six">Bandera turchesa</string>
-    <string name="menu_flag_card_seven">Bandera pùrpura</string>
     <string name="menu_edit_tags">Modìfica sas etichetas</string>
     <string name="delete_note_message">Boles a beru iscantzellare custa nota e totu sas cartas suas?\n
                                              %s</string>

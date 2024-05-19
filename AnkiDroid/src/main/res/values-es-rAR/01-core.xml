@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Eliminar nota</string>
     <string name="menu_flag">Marca</string>
     <string name="menu_flag_card">Marcar tarjeta</string>
-    <string name="menu_flag_card_zero">Sin marca</string>
-    <string name="menu_flag_card_one">Marca roja</string>
-    <string name="menu_flag_card_two">Marca naranja</string>
-    <string name="menu_flag_card_three">Marca verde</string>
-    <string name="menu_flag_card_four">Marca azul</string>
-    <string name="menu_flag_card_five">Bandera rosa</string>
-    <string name="menu_flag_card_six">Bandera turquesa</string>
-    <string name="menu_flag_card_seven">Bandera púrpura</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">¿Realmente eliminar esta nota y todas sus tarjetas?\n%s</string>
     <string name="menu_search">Revisión en %1$s</string>

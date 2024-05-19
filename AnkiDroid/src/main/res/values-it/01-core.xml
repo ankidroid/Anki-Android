@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Elimina nota</string>
     <string name="menu_flag">Bandiera</string>
     <string name="menu_flag_card">Assegna bandiera</string>
-    <string name="menu_flag_card_zero">Nessuna bandiera</string>
-    <string name="menu_flag_card_one">Bandiera rossa</string>
-    <string name="menu_flag_card_two">Bandiera arancione</string>
-    <string name="menu_flag_card_three">Bandiera verde</string>
-    <string name="menu_flag_card_four">Bandiera blu</string>
-    <string name="menu_flag_card_five">Bandiera rosa</string>
-    <string name="menu_flag_card_six">Bandiera turchese</string>
-    <string name="menu_flag_card_seven">Bandiera viola</string>
     <string name="menu_edit_tags">Modifica etichette</string>
     <string name="delete_note_message">Vuoi veramente eliminare questa nota e tutte le sue carte?\n%s</string>
     <string name="menu_search">Ricerca in %1$s</string>

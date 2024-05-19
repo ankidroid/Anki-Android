@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Suprimeix la nota</string>
     <string name="menu_flag">Bandera</string>
     <string name="menu_flag_card">Marcar tarjeta</string>
-    <string name="menu_flag_card_zero">Sense bandera</string>
-    <string name="menu_flag_card_one">Bandera vermella</string>
-    <string name="menu_flag_card_two">Bandera taronja</string>
-    <string name="menu_flag_card_three">Targeta  Verda</string>
-    <string name="menu_flag_card_four">Targeta blava</string>
-    <string name="menu_flag_card_five">Bandera rosa</string>
-    <string name="menu_flag_card_six">Bandera turquesa</string>
-    <string name="menu_flag_card_seven">Bandera porpra</string>
     <string name="menu_edit_tags">Edita etiquetes</string>
     <string name="delete_note_message">Segur que voleu suprimir aquesta nota i totes les seves fitxes?\n%s</string>
     <string name="menu_search">Cerca-ho a %1$s</string>

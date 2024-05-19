@@ -105,14 +105,6 @@
     <string name="menu_delete_note">ନୋଟ୍ ଵିଲୋପ କରିବା</string>
     <string name="menu_flag">ପତାକା</string>
     <string name="menu_flag_card">ପତ୍ରକୁ ଏକ ପତାକା ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
-    <string name="menu_flag_card_zero">ପତାକା ନାହିଁ</string>
-    <string name="menu_flag_card_one">ନାଲି ପତାକା</string>
-    <string name="menu_flag_card_two">କମଳା ପତାକା</string>
-    <string name="menu_flag_card_three">ସବୁଜ ପତାକା</string>
-    <string name="menu_flag_card_four">ନୀଳ ପତାକା</string>
-    <string name="menu_flag_card_five">ଗୋଲାପୀ ପତାକା</string>
-    <string name="menu_flag_card_six">ଫୀରୋଜା ପତାକା</string>
-    <string name="menu_flag_card_seven">ବାଇଗଣୀ ପତାକା</string>
     <string name="menu_edit_tags">ଟ୍ୟାଗ୍ ସମ୍ପାଦନା</string>
     <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏଵଂ ଏହାର ସମସ୍ତ ପତ୍ର ଵିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>
     <string name="menu_search">%1$s ରେ ଦୃଷ୍ଟିପାତ</string>
