@@ -112,14 +112,6 @@
     <string name="menu_delete_note">מחיקת רשומה</string>
     <string name="menu_flag">דגל</string>
     <string name="menu_flag_card">סימון קלף</string>
-    <string name="menu_flag_card_zero">ללא סימון</string>
-    <string name="menu_flag_card_one">דגל אדום</string>
-    <string name="menu_flag_card_two">דגל כתום</string>
-    <string name="menu_flag_card_three">דגל ירוק</string>
-    <string name="menu_flag_card_four">דגל כחול</string>
-    <string name="menu_flag_card_five">דגל ורוד</string>
-    <string name="menu_flag_card_six">דגל טורקיז</string>
-    <string name="menu_flag_card_seven">דגל סגול</string>
     <string name="menu_edit_tags">ערוך תגיות</string>
     <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>
     <string name="menu_search">חפש ב%1$s</string>

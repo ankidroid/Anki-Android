@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Supprimer la note</string>
     <string name="menu_flag">Ajouter un drapeau</string>
     <string name="menu_flag_card">Ajouter un drapeau</string>
-    <string name="menu_flag_card_zero">Aucun drapeau</string>
-    <string name="menu_flag_card_one">Drapeau rouge</string>
-    <string name="menu_flag_card_two">Drapeau orange</string>
-    <string name="menu_flag_card_three">Drapeau vert</string>
-    <string name="menu_flag_card_four">Drapeau bleu</string>
-    <string name="menu_flag_card_five">Marqueur rose</string>
-    <string name="menu_flag_card_six">Marqueur turquoise</string>
-    <string name="menu_flag_card_seven">Marqueur violet</string>
     <string name="menu_edit_tags">Modifier les étiquettes</string>
     <string name="delete_note_message">Voulez-vous vraiment supprimer cette note et toutes ses cartes ?\n%s</string>
     <string name="menu_search">Trouvé en %1$s</string>

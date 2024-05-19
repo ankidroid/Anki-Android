@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Изтрий бележка</string>
     <string name="menu_flag">Знаме</string>
     <string name="menu_flag_card">Маркиране на карта</string>
-    <string name="menu_flag_card_zero">Без флаг</string>
-    <string name="menu_flag_card_one">Червен флаг</string>
-    <string name="menu_flag_card_two">Оранжев флаг</string>
-    <string name="menu_flag_card_three">Зелен флаг</string>
-    <string name="menu_flag_card_four">Син флаг</string>
-    <string name="menu_flag_card_five">Розово знаме</string>
-    <string name="menu_flag_card_six">Тюркоазено знаме</string>
-    <string name="menu_flag_card_seven">Виолетово знаме</string>
     <string name="menu_edit_tags">Редакция на етикети</string>
     <string name="delete_note_message">Наистина изтрий тази бележка и всичките и карти? \n%s</string>
     <string name="menu_search">Търсене в %1$s</string>

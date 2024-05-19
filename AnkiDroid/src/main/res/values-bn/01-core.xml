@@ -105,14 +105,6 @@
     <string name="menu_delete_note">নোট মুছে ফেলুন</string>
     <string name="menu_flag">ফ্ল্যাগ</string>
     <string name="menu_flag_card">ফ্ল্যাগ কার্ড</string>
-    <string name="menu_flag_card_zero">নো ফ্ল্যাগ</string>
-    <string name="menu_flag_card_one">লাল ফ্ল্যাগ</string>
-    <string name="menu_flag_card_two">কমলা ফ্ল্যাগ</string>
-    <string name="menu_flag_card_three">সবুজ ফ্ল্যাগ</string>
-    <string name="menu_flag_card_four">নীল ফ্ল্যাগ</string>
-    <string name="menu_flag_card_five">গোলাপি নিশান</string>
-    <string name="menu_flag_card_six">ফিরোজা নিশান</string>
-    <string name="menu_flag_card_seven">রক্ত-বেগুনী নিশান</string>
     <string name="menu_edit_tags">এডিট ফ্ল্যাগ</string>
     <string name="delete_note_message">সত্যি এই নোট এবং এর কার্ড মুছবেন? \n%s</string>
     <string name="menu_search">অনুসন্ধান করুন %1$s</string>

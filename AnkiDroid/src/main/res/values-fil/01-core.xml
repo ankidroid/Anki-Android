@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Burahin ang tala</string>
     <string name="menu_flag">Watawat</string>
     <string name="menu_flag_card">Lagyan ng watawat ang card</string>
-    <string name="menu_flag_card_zero">Walang watawat</string>
-    <string name="menu_flag_card_one">Pulang watawat</string>
-    <string name="menu_flag_card_two">Kahel na watawat</string>
-    <string name="menu_flag_card_three">Berdeng watawat</string>
-    <string name="menu_flag_card_four">Asul na watawat</string>
-    <string name="menu_flag_card_five">Rosas na watawat</string>
-    <string name="menu_flag_card_six">Turkesa na watawat</string>
-    <string name="menu_flag_card_seven">Lila na watawat</string>
     <string name="menu_edit_tags">Baguhin ang mga tag</string>
     <string name="delete_note_message">Talaga bang gusto mong burahin ang talang ito at pati na rin ang lahat ngmga kard?\n%s</string>
     <string name="menu_search">Hanapin sa %1$s</string>

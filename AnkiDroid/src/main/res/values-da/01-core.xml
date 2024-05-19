@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Slet note</string>
     <string name="menu_flag">Markér</string>
     <string name="menu_flag_card">Markér kort</string>
-    <string name="menu_flag_card_zero">Intet flag</string>
-    <string name="menu_flag_card_one">Rødt flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Grønt flag</string>
-    <string name="menu_flag_card_four">Blåt flag</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turkis flag</string>
-    <string name="menu_flag_card_seven">Lilla flag</string>
     <string name="menu_edit_tags">Redigér tags</string>
     <string name="delete_note_message">Vil du virkelig slette denne note og alle dens kort?\n%s</string>
     <string name="menu_search">Slå op i %1$s</string>
