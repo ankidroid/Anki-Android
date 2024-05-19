@@ -71,12 +71,12 @@
                         android:layout_gravity="center"
                         android:background="#7A7979"
                         android:rotationX="-360"
-                        android:scaleX="1.4"
-                        android:scaleY="1.5"
-                        android:translationX="2mm"
-                        android:translationY="0mm"
+                        android:scaleX="1.1"
+                        android:scaleY="1.1"
+                        android:translationX="0.4mm"
+                        android:translationY="0.2mm"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:srcCompat="@drawable/ankidroid_logo" />
+                        app:srcCompat="@drawable/ankidroid_logo_new" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -101,7 +101,7 @@
                         android:scaleY="0.5"
                         android:translationX="0mm"
                         android:translationY="0mm"
-                        app:srcCompat="@drawable/check" />
+                        app:srcCompat="@drawable/ic_link" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
@@ -136,8 +136,9 @@
                     android:id="@+id/no_account_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="40dp"
                     android:layout_gravity="center"
-                    android:text="Authorize AnkiWeb"
+                    android:text="Connect To AnkiWeb!"
                     android:textSize="@dimen/abc_text_size_title_material"
                     android:textStyle="bold" />
 

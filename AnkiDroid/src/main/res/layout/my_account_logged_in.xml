@@ -34,20 +34,20 @@
                 app:srcCompat="@drawable/ankiweb"
                 android:layout_marginBottom="0dp"
                 android:layout_gravity="center"
-                android:layout_height="20dp"
-                android:translationX="50dp"
+                android:layout_height="50dp"
+                android:translationX="20dp"
                 android:translationY="60dp"
                 />
+
             <ImageView
                 android:id="@+id/ankidroid_logo"
-                android:layout_width="100dp"
+                android:layout_width="69dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
                 android:layout_marginEnd="-90dp"
-                app:srcCompat="@drawable/ankiweb_logo"
                 android:scaleX="1.5"
                 android:scaleY="1.5"
-                android:layout_gravity="center"
-                android:layout_height="100dp"
-                />
+                app:srcCompat="@drawable/ankiweb_logo" />
 
             <com.ichi2.ui.FixedTextView
                 android:layout_width="wrap_content"

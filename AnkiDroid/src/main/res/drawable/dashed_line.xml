@@ -5,16 +5,16 @@
         android:left="-5dp"
         android:right="-5dp"
         android:top="-5dp"
-        android:end="230dp">
+        android:end="240dp">
         <shape
             android:shape="line">
             <!--Give the dashed lines their property
                  like color, width, and dashGap-->
             <stroke
-                android:color="@color/popup_background_theme_dark"
-                android:dashWidth="5dp"
-                android:dashGap="5dp"
-                android:width="5dp"
+                android:color="@color/material_blue_grey_500"
+                android:dashWidth="10dp"
+                android:dashGap="6dp"
+                android:width="2dp"
                 />
         </shape>
     </item>
@@ -22,16 +22,16 @@
         android:left="-5dp"
         android:right="-5dp"
         android:top="-5dp"
-        android:start="220dp">
+        android:start="230dp">
         <shape
             android:shape="line">
             <!--Give the dashed lines their property
                  like color, width, and dashGap-->
             <stroke
-                android:color="@color/popup_background_theme_dark"
-                android:dashWidth="5dp"
-                android:dashGap="5dp"
-                android:width="5dp"
+                android:color="@color/material_blue_grey_500"
+                android:dashWidth="10dp"
+                android:dashGap="6dp"
+                android:width="2dp"
                 />
         </shape>
     </item>
