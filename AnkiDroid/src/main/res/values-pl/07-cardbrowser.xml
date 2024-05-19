@@ -59,16 +59,16 @@
     </plurals>
     <string name="card_browser_all_decks">Wszystkie talie</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="few">Delete cards</item>
-        <item quantity="many">Delete cards</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">Usuń kartę</item>
+        <item quantity="few">Usuń karty</item>
+        <item quantity="many">Usuń karty</item>
+        <item quantity="other">Usuń karty</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="few">Delete notes</item>
-        <item quantity="many">Delete notes</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Usuń notatkę</item>
+        <item quantity="few">Usuń notatki</item>
+        <item quantity="many">Usuń notatki</item>
+        <item quantity="other">Usuń notatki</item>
     </plurals>
     <string name="card_browser_change_deck">Zmień talie</string>
     <string name="delete_card_title">Usuń notatkę</string>
@@ -107,7 +107,7 @@
     <string name="card_browser_search_all_decks">Szukaj w wszystkich taliach</string>
     <string name="card_browser_unknown_deck_name">Nieznany</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Przytnij zawartość</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Dzisiaj jest „0 %1$s”, jutro jest „1 %2$s”, itd&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Eksportuj kartę</item>
         <item quantity="few">Eksportuj karty</item>
