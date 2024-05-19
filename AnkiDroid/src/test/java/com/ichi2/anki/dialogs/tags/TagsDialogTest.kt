@@ -30,8 +30,11 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.ichi2.anki.R
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.testutils.Flaky
+import com.ichi2.testutils.OS
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates
@@ -47,7 +50,9 @@ import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(AndroidJUnit4::class)
-class TagsDialogTest {
+// inheriting from RobolectricTest is required for @Flaky
+@Flaky(OS.WINDOWS, "16404: tests in this class occasionally hang")
+class TagsDialogTest : RobolectricTest() {
     @Test
     fun testTagsDialogCustomStudyOptionInterface() {
         val type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS
