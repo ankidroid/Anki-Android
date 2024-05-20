@@ -235,6 +235,10 @@ fun AlertDialog.Builder.customListAdapterWithDecoration(adapter: RecyclerView.Ad
 }
 
 /**
+ * Note: using [waitForPositiveButton] = true doesn't automatically close the dialog and it
+ * requires a manual call to [android.app.Dialog.dismiss] inside the callback listening for text
+ * input to replicate the standard dialog behavior.
+ *
  * @param hint The hint text to be displayed to the user
  * @param prefill The text to initially appear in the [EditText]
  * @param allowEmpty If true, [DialogInterface.BUTTON_POSITIVE] is disabled if the [EditText] is empty
