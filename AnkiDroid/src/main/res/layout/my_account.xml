@@ -48,7 +48,8 @@
                     android:layout_gravity="center"
                     android:translationX="0dp"
                     android:translationY="0dp"
-                    android:background="#FFFFFF"
+                    app:cardElevation="0dp"
+
                     app:cardCornerRadius="0dp">
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
@@ -57,7 +58,7 @@
                     android:layout_gravity="start"
                     android:translationX="50dp"
                     android:translationY="0dp"
-                    android:background="#434748"
+
                     app:cardCornerRadius="200dp"
                     app:layout_constraintBottom_toTopOf="@+id/button"
                     app:layout_constraintEnd_toEndOf="parent"
