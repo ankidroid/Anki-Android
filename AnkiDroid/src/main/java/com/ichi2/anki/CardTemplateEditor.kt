@@ -324,7 +324,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             // Storing a reference to the templateEditor allows us to use member variables
             templateEditor = activity as CardTemplateEditor
-
             val mainView = inflater.inflate(R.layout.card_template_editor_item, container, false)
             val cardIndex = requireArguments().getInt(CARD_INDEX)
             val tempModel = templateEditor.tempModel
@@ -552,7 +551,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 }
                 message(text = TR.cardTemplatesNoFrontField())
                 positiveButton(R.string.help) {
-                    openUrl(Uri.parse("https://docs.ankiweb.net/templates/errors.html#no-field-replacement-on-front-side"))
+                    openUrl(Uri.parse(getString(R.string.anki_field_replacement_url)))
                 }
                 negativeButton(R.string.dialog_ok)
             }
