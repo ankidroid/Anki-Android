@@ -53,6 +53,7 @@ import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
@@ -106,6 +107,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -316,31 +318,31 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         SAME_NUMBER, INCREMENT_NUMBER
     }
 
+    private var addNoteErrorMessage: String? = null
+
     private fun displayErrorSavingNote() {
-        val errorMessageId = addNoteErrorResource
-        showSnackbar(resources.getString(errorMessageId))
+        val errorMessage = snackbarErrorText
+        // Anki allows to proceed in case we try to add non cloze text in cloze field with warning,
+        // this snackbar helps replicate similar behaviour
+        if (errorMessage == TR.addingYouHaveAClozeDeletionNote()) {
+            showSnackbar(errorMessage, Snackbar.LENGTH_INDEFINITE) {
+                setAction(R.string.dialog_ok) {
+                    lifecycleScope.launch {
+                        saveNoteWithProgress()
+                    }
+                }
+            }
+        } else {
+            showSnackbar(errorMessage)
+        }
     }
-    // COULD_BE_BETTER: We currently don't perform edits inside this class (wat), so we only handle adds.
 
-    // Otherwise, display "no cards created".
-    @get:StringRes
     @VisibleForTesting
-    internal val addNoteErrorResource: Int
-        get() {
-            // COULD_BE_BETTER: We currently don't perform edits inside this class (wat), so we only handle adds.
-            if (isClozeType) {
-                return R.string.note_editor_no_cloze_delations
-            }
-            if (getCurrentFieldText(0).isEmpty()) {
-                return R.string.note_editor_no_first_field
-            }
-            return if (allFieldsHaveContent()) {
-                R.string.note_editor_no_cards_created_all_fields
-            } else {
-                R.string.note_editor_no_cards_created
-            }
-
-            // Otherwise, display "no cards created".
+    val snackbarErrorText: String
+        get() = when {
+            addNoteErrorMessage != null -> addNoteErrorMessage!!
+            allFieldsHaveContent() -> resources.getString(R.string.note_editor_no_cards_created_all_fields)
+            else -> resources.getString(R.string.note_editor_no_cards_created)
         }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
@@ -962,6 +964,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         sourceText = null
         refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
         showSnackbar(TR.addingAdded(), Snackbar.LENGTH_SHORT)
+        addNoteErrorMessage = null
 
         if (caller == CALLER_NOTEEDITOR || aedictIntent) {
             closeEditorAfterSave = true
@@ -981,6 +984,20 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     }
 
+    private suspend fun saveNoteWithProgress() {
+        // adding current note to collection
+        withProgress(resources.getString(R.string.saving_facts)) {
+            undoableOp {
+                editorNote!!.notetype.put("tags", tags)
+                notetypes.save(editorNote!!.notetype)
+                addNote(editorNote!!, deckId)
+            }
+        }
+        // update UI based on the result, noOfAddedCards
+        onNoteAdded()
+        updateFieldsFromStickyText()
+    }
+
     @VisibleForTesting
     @NeedsTest("14664: 'first field must not be empty' no longer applies after saving the note")
     @KotlinCleanup("fix !! on oldModel/newModel")
@@ -993,17 +1010,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         // treat add new note and edit existing note independently
         if (addNote) {
-            // Different from libAnki, block if there are no cloze deletions.
-            // DEFECT: This does not block addition if cloze transpositions are in non-cloze fields.
-            if (isClozeType && !hasClozeDeletions()) {
-                displayErrorSavingNote()
-                return
-            }
-            if (getCurrentFieldText(0).isEmpty()) {
-                displayErrorSavingNote()
-                return
-            }
-
             // load all of the fields into the note
             for (f in editFields!!) {
                 updateField(f)
@@ -1019,17 +1025,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
 
             reloadRequired = true
-            // adding current note to collection
-            withProgress(resources.getString(R.string.saving_facts)) {
-                undoableOp {
-                    editorNote!!.notetype.put("tags", tags)
-                    notetypes.save(editorNote!!.notetype)
-                    addNote(editorNote!!, deckId)
+
+            lifecycleScope.launch {
+                val noteFieldsCheck = checkNoteFieldsResponse(editorNote!!)
+                if (noteFieldsCheck is NoteFieldsCheckResult.Failure) {
+                    addNoteErrorMessage = noteFieldsCheck.getLocalizedMessage(this@NoteEditor)
+                    displayErrorSavingNote()
+                    return@launch
                 }
+                saveNoteWithProgress()
             }
-            // update UI based on the result, noOfAddedCards
-            onNoteAdded()
-            updateFieldsFromStickyText()
         } else {
             // Check whether note type has been changed
             val newModel = currentlySelectedNotetype
