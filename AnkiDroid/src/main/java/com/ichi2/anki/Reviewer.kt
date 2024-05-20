@@ -53,6 +53,7 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
+import com.ichi2.anki.dialogs.flags.FlagsDialogFactory
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKIDROID_JS_PREFIX
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKI_PREFIX
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
@@ -498,6 +499,12 @@ open class Reviewer :
             }
         }
         return true
+    }
+
+    override fun showFlagsDialog() {
+        flagsDialogFactory = FlagsDialogFactory().attachToActivity<FlagsDialogFactory>(this)
+        val dialog = flagsDialogFactory!!.newFlagsDialog().withArguments(this)
+        showDialogFragment(dialog)
     }
 
     public override fun toggleWhiteboard() {
@@ -1276,7 +1283,7 @@ open class Reviewer :
         loadUrlInViewer("javascript: userAction($number);")
     }
 
-    private fun toggleFlag(flag: Flag) {
+    public fun toggleFlag(flag: Flag) {
         if (currentCard!!.userFlag() == flag.code) {
             Timber.i("Toggle flag: unsetting flag")
             onFlag(currentCard, Flag.NONE)

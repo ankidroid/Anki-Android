@@ -62,6 +62,7 @@ import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
 import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
+import com.ichi2.anki.dialogs.flags.FlagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -138,6 +139,7 @@ abstract class AbstractFlashcardViewer :
      */
     private var unmountReceiver: BroadcastReceiver? = null
     private var tagsDialogFactory: TagsDialogFactory? = null
+    var flagsDialogFactory: FlagsDialogFactory? = null
 
     /**
      * Variables to hold preferences
@@ -1629,6 +1631,11 @@ abstract class AbstractFlashcardViewer :
                 true
             }
 
+            ViewerCommand.FLAG_PICK -> {
+                showFlagsDialog()
+                true
+            }
+
             ViewerCommand.BURY_CARD -> buryCard()
             ViewerCommand.BURY_NOTE -> buryNote()
             ViewerCommand.SUSPEND_CARD -> suspendCard()
@@ -2523,6 +2530,10 @@ abstract class AbstractFlashcardViewer :
         val dialog = tagsDialogFactory!!.newTagsDialog()
             .withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
         showDialogFragment(dialog)
+    }
+
+    internal open fun showFlagsDialog() {
+        // intentionally blank
     }
 
     @NeedsTest("14656: adding tags does not flip the card")

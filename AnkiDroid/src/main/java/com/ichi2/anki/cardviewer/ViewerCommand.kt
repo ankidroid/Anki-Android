@@ -51,6 +51,7 @@ enum class ViewerCommand(val resourceId: Int) {
     EXIT(R.string.gesture_abort_learning),
     BURY_NOTE(R.string.menu_bury_note),
     SUSPEND_NOTE(R.string.menu_suspend_note),
+    FLAG_PICK(R.string.gesture_flag_pick),
     TOGGLE_FLAG_RED(R.string.gesture_flag_red),
     TOGGLE_FLAG_ORANGE(R.string.gesture_flag_orange),
     TOGGLE_FLAG_GREEN(R.string.gesture_flag_green),

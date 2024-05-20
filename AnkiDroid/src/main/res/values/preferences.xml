@@ -101,6 +101,7 @@
     <string name="abort_command_key">binding_EXIT</string>
     <string name="bury_note_command_key">binding_BURY_NOTE</string>
     <string name="suspend_note_command_key">binding_SUSPEND_NOTE</string>
+    <string name="flag_pick_command_key">binding_FLAG_PICK</string>
     <string name="flag_red_command_key">binding_TOGGLE_FLAG_RED</string>
     <string name="flag_orange_command_key">binding_TOGGLE_FLAG_ORANGE</string>
     <string name="flag_green_command_key">binding_TOGGLE_FLAG_GREEN</string>

@@ -74,6 +74,11 @@
 
     <PreferenceCategory android:title="@string/filter_by_flags">
         <com.ichi2.preferences.ControlPreference
+            android:key="@string/flag_pick_command_key"
+            android:title="@string/gesture_flag_pick"
+            android:icon="@drawable/ic_flag_transparent"
+            />
+        <com.ichi2.preferences.ControlPreference
             android:key="@string/flag_red_command_key"
             android:title="@string/gesture_flag_red"
             android:icon="@drawable/ic_flag_red"

@@ -71,6 +71,7 @@
     <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Play media</string>
     <string name="gesture_abort_learning">Abort learning</string>
+    <string name="gesture_flag_pick">Pick Flag</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>
     <string name="gesture_flag_orange">Toggle Orange Flag</string>
     <string name="gesture_flag_green">Toggle Green Flag</string>
