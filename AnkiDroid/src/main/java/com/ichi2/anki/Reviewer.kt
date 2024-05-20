@@ -666,8 +666,7 @@ open class Reviewer :
         showDialogFragment(dialog)
     }
 
-    @NeedsTest("Starting animation from swipe is inverse to the finishing one")
-    private fun addNote(fromGesture: Gesture? = null) {
+    fun addNote(fromGesture: Gesture? = null) {
         val intent = Intent(this, NoteEditor::class.java)
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
