@@ -41,6 +41,7 @@ import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import com.ichi2.testutils.getString
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -79,12 +80,13 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    fun errorSavingNoteWithNoFirstFieldDisplaysNoFirstField() {
+    fun errorSavingNoteWithNoFirstFieldDisplaysNoFirstField() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.BASIC)
             .withNoFirstField()
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_first_field))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(actualResourceId, equalTo(CollectionManager.TR.addingTheFirstFieldIsEmpty()))
     }
 
 //    @Test
@@ -111,30 +113,36 @@ class NoteEditorTest : RobolectricTest() {
 //    }
 
     @Test
-    fun errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() {
+    fun errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.CLOZE)
             .withNoFirstField()
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cloze_delations))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(actualResourceId, equalTo(CollectionManager.TR.addingTheFirstFieldIsEmpty()))
     }
 
     @Test
-    fun errorSavingClozeNoteWithNoClozeDeletionsDisplaysClozeError() {
+    fun errorSavingClozeNoteWithNoClozeDeletionsDisplaysClozeError() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.CLOZE)
             .withFirstField("NoCloze")
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cloze_delations))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(
+            actualResourceId,
+            equalTo(CollectionManager.TR.addingYouHaveAClozeDeletionNote())
+        )
     }
 
     @Test
-    fun errorSavingNoteWithNoTemplatesShowsNoCardsCreated() {
+    fun errorSavingNoteWithNoTemplatesShowsNoCardsCreated() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.BACK_TO_FRONT)
             .withFirstField("front is not enough")
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(actualResourceId, equalTo(getString(R.string.note_editor_no_cards_created)))
     }
 
     @Test
