@@ -37,7 +37,6 @@ import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
-import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.launchCatchingIO
@@ -61,8 +60,6 @@ class CongratsPage :
     PageFragment(),
     CustomStudyDialog.CustomStudyListener,
     ChangeManager.Subscriber {
-    override val title: String = ""
-    override val pageName = "congrats"
 
     private val viewModel by viewModels<CongratsViewModel>()
 
@@ -183,7 +180,7 @@ class CongratsPage :
 
     companion object {
         fun getIntent(context: Context): Intent {
-            return SingleFragmentActivity.getIntent(context, CongratsPage::class)
+            return getIntent(context, path = "congrats", clazz = CongratsPage::class)
         }
 
         private fun displayNewCongratsScreen(context: Context): Boolean =
