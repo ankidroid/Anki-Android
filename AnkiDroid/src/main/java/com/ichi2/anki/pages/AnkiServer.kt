@@ -49,9 +49,15 @@ open class AnkiServer(
                     buildResponse(exception.localizedMessage?.encodeToByteArray(), status = Response.Status.INTERNAL_ERROR)
                 }
             }
-            Method.GET -> newFixedLengthResponse(Response.Status.NOT_FOUND, null, null)
+            Method.GET -> {
+                Timber.d("Rejecting GET request to server %s", session.uri)
+                newFixedLengthResponse(Response.Status.NOT_FOUND, null, null)
+            }
             Method.OPTIONS -> buildResponse(null)
-            else -> newFixedLengthResponse(null)
+            else -> {
+                Timber.d("Ignored request of unhandled method %s, uri %s", session.method, session.uri)
+                newFixedLengthResponse(null)
+            }
         }
     }
 
