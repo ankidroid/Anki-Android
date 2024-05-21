@@ -24,9 +24,10 @@ import android.webkit.WebViewClient
 import androidx.core.view.isVisible
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.OnPageFinishedCallback
-import com.ichi2.utils.AssetHelper
+import com.ichi2.utils.AssetHelper.guessMimeType
 import com.ichi2.utils.toRGBHex
 import timber.log.Timber
+import java.io.ByteArrayInputStream
 import java.io.IOException
 
 /**
@@ -44,16 +45,31 @@ open class PageWebViewClient : WebViewClient() {
         request: WebResourceRequest
     ): WebResourceResponse? {
         val path = request.url.path
-        if (request.method == "GET" && path?.startsWith("/backend/web") == true) {
-            try {
-                val mime = AssetHelper.guessMimeType(path)
-                val inputStream = view.context.assets.open(path.substring(1))
-                return WebResourceResponse(mime, null, inputStream)
-            } catch (_: IOException) {
-                Timber.w("%s not found", path)
-            }
+        if (request.method != "GET" || path == null) return null
+        if (path == "/favicon.png") {
+            return WebResourceResponse("image/x-icon", null, ByteArrayInputStream(byteArrayOf()))
         }
-        return super.shouldInterceptRequest(view, request)
+
+        val assetPath = if (path.startsWith("/_app/")) {
+            "backend/sveltekit/app/${path.substring(6)}"
+        } else if (isSvelteKitPage(path.substring(1))) {
+            "backend/sveltekit/index.html"
+        } else {
+            return null
+        }
+
+        try {
+            val mimeType = guessMimeType(assetPath)
+            val inputStream = view.context.assets.open(assetPath)
+            val response = WebResourceResponse(mimeType, null, inputStream)
+            if ("immutable" in path) {
+                response.responseHeaders = mapOf("Cache-Control" to "max-age=31536000")
+            }
+            return response
+        } catch (_: IOException) {
+            Timber.w("Not found %s", assetPath)
+        }
+        return null
     }
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -107,6 +123,22 @@ open class PageWebViewClient : WebViewClient() {
             return true
         }
         return false
+    }
+}
+
+fun isSvelteKitPage(path: String): Boolean {
+    val pageName = path.substringBefore("/")
+    return when (pageName) {
+        "graphs",
+        "congrats",
+        "card-info",
+        "change-notetype",
+        "deck-options",
+        "import-anki-package",
+        "import-csv",
+        "import-page",
+        "image-occlusion" -> true
+        else -> false
     }
 }
 
