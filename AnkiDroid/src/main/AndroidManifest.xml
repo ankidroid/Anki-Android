@@ -425,11 +425,6 @@
             android:configChanges="orientation|screenSize"
             />
         <activity
-            android:name="com.ichi2.anki.ImageOcclusionActivity"
-            android:exported="false"
-            android:configChanges="orientation|screenSize"
-            />
-        <activity
             android:name="com.ichi2.anki.previewer.CardViewerActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize"

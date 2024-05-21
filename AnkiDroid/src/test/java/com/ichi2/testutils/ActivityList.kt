@@ -73,7 +73,6 @@ object ActivityList {
             get(ManageSpaceActivity::class.java),
             get(PermissionsActivity::class.java),
             get(SingleFragmentActivity::class.java),
-            get(ImageOcclusionActivity::class.java),
             get(CardViewerActivity::class.java)
         )
     }
