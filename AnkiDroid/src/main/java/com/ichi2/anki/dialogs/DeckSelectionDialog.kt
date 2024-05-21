@@ -23,10 +23,12 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.BundleCompat
@@ -35,8 +37,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.decks.DeckTreeNode
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
@@ -51,6 +51,10 @@ import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
+import com.ichi2.utils.create
+import com.ichi2.utils.customView
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -72,7 +76,7 @@ import java.util.Locale
 @NeedsTest("test the ordering of decks in search page in the dialog")
 @NeedsTest("test syncing the status of collapsing deck with teh deckPicker")
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
-    private var dialog: MaterialDialog? = null
+    private var dialog: AlertDialog? = null
     private lateinit var expandImage: Drawable
     private lateinit var collapseImage: Drawable
     private lateinit var decksRoot: DeckNode
@@ -117,16 +121,23 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val did = args.getLong("currentDeckId")
             recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
         }
-        // TODO: AlertDialog conversion: [CardBrowser] keyboard appears when searching (#15613)
-        dialog = MaterialDialog(requireActivity())
-            .negativeButton(R.string.dialog_cancel)
-            .customView(view = dialogView, noVerticalPadding = true)
-        if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
-            (dialog as MaterialDialog).positiveButton(R.string.restore_default) {
-                onDeckSelected(null)
+        dialog = AlertDialog.Builder(requireActivity()).create {
+            negativeButton(R.string.dialog_cancel)
+            customView(view = dialogView)
+            if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
+                positiveButton(R.string.restore_default) {
+                    onDeckSelected(null)
+                }
             }
         }
         return dialog!!
+    }
+
+    override fun onResume() {
+        super.onResume()
+        dialog?.window?.clearFlags(
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
+        )
     }
 
     private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>) =
