@@ -26,6 +26,7 @@ import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -46,7 +47,6 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.performClickIfEnabled
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -58,9 +58,9 @@ class PreviewerFragment :
     DispatchKeyEventListener {
 
     override val viewModel: PreviewerViewModel by viewModels {
-        val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(CARD_IDS_FILE_ARG)) {
+        val previewerIdsFile = requireNotNull(BundleCompat.getParcelable(requireArguments(), CARD_IDS_FILE_ARG, PreviewerIdsFile::class.java)) {
             "$CARD_IDS_FILE_ARG is required"
-        } as PreviewerIdsFile
+        }
         val currentIndex = requireArguments().getInt(CURRENT_INDEX_ARG, 0)
         PreviewerViewModel.factory(previewerIdsFile, currentIndex, CardMediaPlayer())
     }
