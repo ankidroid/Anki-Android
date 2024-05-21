@@ -840,7 +840,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         return true
     }
 
-    private fun hasUnsavedChanges(): Boolean {
+    @VisibleForTesting
+    fun hasUnsavedChanges(): Boolean {
         if (!collectionHasLoaded()) {
             return false
         }
@@ -854,7 +855,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
         }
         // changed deck?
-        if (!addNote && currentEditedCard != null && currentEditedCard!!.did != deckId) {
+        if (!addNote && currentEditedCard != null && currentEditedCard!!.currentDeckId().did != deckId) {
             return true
         }
         // changed fields?
@@ -1789,7 +1790,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         fun calculateDeckId(): DeckId {
             if (deckId != 0L) return deckId
             if (note != null && !addNote && currentEditedCard != null) {
-                return currentEditedCard!!.did
+                return currentEditedCard!!.currentDeckId().did
             }
 
             if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
