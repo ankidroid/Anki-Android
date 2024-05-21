@@ -25,10 +25,12 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.config.ConfigKey
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
 import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
+import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.noteeditor.EditCardDestination
 import com.ichi2.anki.noteeditor.toIntent
@@ -375,6 +377,30 @@ class NoteEditorTest : RobolectricTest() {
         // assert
         assertThat("current deck is the home deck", editor.deckId, equalTo(homeDeckId))
         assertThat("no unsaved changes", !editor.hasUnsavedChanges())
+    }
+
+    @Test
+    fun `decide by note type preference - 13931`() = runTest {
+        col.config.setBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK, false)
+        addDeck("Basic")
+        val reversedDeckId = addDeck("Reversed", setAsSelected = true)
+
+        assertThat("setup: deckId", col.notetypes.byName("Basic")!!.did, equalTo(1))
+
+        getNoteEditorAdding(NoteType.BASIC).build().also { editor ->
+            editor.onDeckSelected(SelectableDeck(reversedDeckId, "Reversed"))
+            editor.setField(0, "Hello")
+            editor.saveNote()
+        }
+
+        col.notetypes._clear_cache()
+
+        assertThat("a note was added", col.noteCount(), equalTo(1))
+        assertThat("note type deck is updated", col.notetypes.byName("Basic")!!.did, equalTo(reversedDeckId))
+
+        getNoteEditorAdding(NoteType.BASIC).build().also { editor ->
+            assertThat("Deck ID is remembered", editor.deckId, equalTo(reversedDeckId))
+        }
     }
 
     private fun moveToDynamicDeck(note: Note): DeckId {

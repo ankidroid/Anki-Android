@@ -1009,6 +1009,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 updateField(f)
             }
             // Save deck to model
+            Timber.d("setting 'last deck' of note type %s to %d", editorNote!!.notetype.name, deckId)
             editorNote!!.notetype.put("did", deckId)
             // Save tags to model
             editorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(selectedTags!!))
@@ -1021,7 +1022,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // adding current note to collection
             withProgress(resources.getString(R.string.saving_facts)) {
                 undoableOp {
-                    notetypes.current().put("tags", tags)
+                    editorNote!!.notetype.put("tags", tags)
+                    notetypes.save(editorNote!!.notetype)
                     addNote(editorNote!!, deckId)
                 }
             }
@@ -1885,7 +1887,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
 
             if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-                return getColUnsafe.notetypes.current().did
+                return getColUnsafe.notetypes.current().let {
+                    Timber.d("Adding to deck of note type, noteType: %s", it.name)
+                    return@let it.did
+                }
             }
 
             val currentDeckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1L
