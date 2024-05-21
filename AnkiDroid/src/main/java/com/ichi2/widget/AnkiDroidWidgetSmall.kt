@@ -77,6 +77,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                 .updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context, true))
         }
 
+        @Deprecated("Implement onStartCommand(Intent, int, int) instead.") // TODO
         override fun onStart(intent: Intent, startId: Int) {
             Timber.i("SmallWidget: OnStart")
             val updateViews = buildUpdate(this, true)

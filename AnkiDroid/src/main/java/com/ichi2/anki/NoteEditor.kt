@@ -668,9 +668,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         if (editFields != null && !editFields!!.isEmpty()) {
             // EXTRA_TEXT_FROM_SEARCH_VIEW takes priority over other intent inputs
             if (!getTextFromSearchView.isNullOrEmpty()) {
-                editFields!!.first!!.setText(getTextFromSearchView)
+                editFields!!.first()!!.setText(getTextFromSearchView)
             }
-            editFields!!.first!!.requestFocus()
+            editFields!!.first()!!.requestFocus()
         }
 
         if (caller == CALLER_IMG_OCCLUSION) {
@@ -969,7 +969,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             closeEditorAfterSave = true
             closeIntent = Intent().apply { putExtra(EXTRA_ID, intent.getStringExtra(EXTRA_ID)) }
         } else if (!editFields!!.isEmpty()) {
-            editFields!!.first!!.focusWithKeyboard()
+            editFields!!.first()!!.focusWithKeyboard()
         }
 
         if (closeEditorAfterSave) {
@@ -1261,7 +1261,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Note: We're not being accurate here - the initial value isn't actually what's supplied in the layout.xml
             // So a value of 18sp in the XML won't be 18sp on the TextView, but it's close enough.
             // Values are setFontSize are whole when returned.
-            val sp = TextViewUtil.getTextSizeSp(editFields!!.first!!)
+            val sp = TextViewUtil.getTextSizeSp(editFields!!.first()!!)
             return sp.roundToInt().toString()
         }
 
