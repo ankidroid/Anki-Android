@@ -23,6 +23,7 @@ import android.webkit.CookieManager
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
@@ -37,9 +38,12 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
+import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.packageManager
+import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.themes.Themes
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -121,7 +125,15 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
     }
 
     private fun onCreateWebViewClient(savedInstanceState: Bundle?): WebViewClient {
+        val resourceHandler = ViewerResourceHandler(requireContext())
         return object : WebViewClient() {
+            override fun shouldInterceptRequest(
+                view: WebView?,
+                request: WebResourceRequest
+            ): WebResourceResponse? {
+                return resourceHandler.shouldInterceptRequest(request)
+            }
+
             override fun onPageFinished(view: WebView?, url: String?) {
                 viewModel.onPageFinished(isAfterRecreation = savedInstanceState != null)
             }
@@ -138,30 +150,41 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
             }
 
             private fun handleUrl(url: Uri): Boolean {
-                val urlString = url.toString()
+                when (url.scheme) {
+                    "playsound" -> viewModel.playSoundFromUrl(url.toString())
+                    "videoended" -> viewModel.onVideoFinished()
+                    "videopause" -> viewModel.onVideoPaused()
+                    "tts-voices" -> TtsVoicesDialogFragment().show(childFragmentManager, null)
+                    "android-app" -> handleIntentUrl(url, Intent.URI_ANDROID_APP_SCHEME)
+                    "intent" -> handleIntentUrl(url, Intent.URI_INTENT_SCHEME)
+                    else -> {
+                        try {
+                            openUrl(url)
+                        } catch (_: Throwable) {
+                            Timber.w("Could not open url")
+                            return false
+                        }
+                    }
+                }
+                return true
+            }
 
-                if (urlString.startsWith("playsound:")) {
-                    viewModel.playSoundFromUrl(urlString)
-                    return true
-                }
-                if (urlString.startsWith("videoended:")) {
-                    viewModel.onVideoFinished()
-                    return true
-                }
-                if (urlString.startsWith("videopause:")) {
-                    viewModel.onVideoPaused()
-                    return true
-                }
-                if (urlString.startsWith("tts-voices:")) {
-                    TtsVoicesDialogFragment().show(childFragmentManager, null)
-                    return true
-                }
-                return try {
-                    openUrl(url)
-                    true
-                } catch (_: Throwable) {
-                    Timber.w("Could not open url")
-                    false
+            private fun handleIntentUrl(url: Uri, flags: Int) {
+                try {
+                    val intent = Intent.parseUri(url.toString(), flags)
+                    if (packageManager.resolveActivityCompat(intent) != null) {
+                        startActivity(intent)
+                    } else {
+                        val packageName = intent.getPackage() ?: return
+                        val marketUri = Uri.parse("market://details?id=$packageName")
+                        val marketIntent = Intent(Intent.ACTION_VIEW, marketUri)
+                        Timber.d("Trying to open market uri %s", marketUri)
+                        if (packageManager.resolveActivityCompat(marketIntent) != null) {
+                            startActivity(marketIntent)
+                        }
+                    }
+                } catch (t: Throwable) {
+                    Timber.w("Unable to parse intent uri: %s because: %s", url, t.message)
                 }
             }
 

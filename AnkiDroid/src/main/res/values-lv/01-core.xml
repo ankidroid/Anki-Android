@@ -108,14 +108,6 @@
     <string name="menu_delete_note">Dzēst piezīmi</string>
     <string name="menu_flag">Karogs</string>
     <string name="menu_flag_card">Uzliekt karogu</string>
-    <string name="menu_flag_card_zero">Bez karoga</string>
-    <string name="menu_flag_card_one">Sarkans karogs</string>
-    <string name="menu_flag_card_two">Oranžais karogs</string>
-    <string name="menu_flag_card_three">Zaļš karogs</string>
-    <string name="menu_flag_card_four">Zils karogs</string>
-    <string name="menu_flag_card_five">Rozs karogs</string>
-    <string name="menu_flag_card_six">Tirkīz karogs</string>
-    <string name="menu_flag_card_seven">Violets karogs</string>
     <string name="menu_edit_tags">Mainīt tegus</string>
     <string name="delete_note_message">Tiešām dzēst šo piezīmi un visas pievienotās kārtis?\n%s</string>
     <string name="menu_search">Meklēt iekš %1$s</string>

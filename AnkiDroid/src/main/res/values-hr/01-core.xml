@@ -108,14 +108,6 @@
     <string name="menu_delete_note">Izbriši bilješku</string>
     <string name="menu_flag">Označi</string>
     <string name="menu_flag_card">Označi kartu</string>
-    <string name="menu_flag_card_zero">Bez oznake</string>
-    <string name="menu_flag_card_one">Crvena oznaka</string>
-    <string name="menu_flag_card_two">Narančasta oznaka</string>
-    <string name="menu_flag_card_three">Zelena oznaka</string>
-    <string name="menu_flag_card_four">Plava oznaka</string>
-    <string name="menu_flag_card_five">Roza oznaka</string>
-    <string name="menu_flag_card_six">Tirkizna oznaka</string>
-    <string name="menu_flag_card_seven">Ljubičasta oznaka</string>
     <string name="menu_edit_tags">Uredi oznake</string>
     <string name="delete_note_message">Zaista izbrisati ovu bilješku i sve njezine kartice?\n%s</string>
     <string name="menu_search">Traži u %1$s</string>

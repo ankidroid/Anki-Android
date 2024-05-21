@@ -16,6 +16,6 @@
 
 <resources>
     <style name="ThemeOverlay.DisableKeyboardHighlight" parent="">
-        <item name="android:colorControlHighlight">@color/transparent</item>
+        <item name="android:selectableItemBackground">@android:color/transparent</item>
     </style>
 </resources>

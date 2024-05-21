@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Verwyder nota</string>
     <string name="menu_flag">Merk</string>
     <string name="menu_flag_card">Merk kaart</string>
-    <string name="menu_flag_card_zero">Geen merk</string>
-    <string name="menu_flag_card_one">Rooi merk</string>
-    <string name="menu_flag_card_two">Oranje merk</string>
-    <string name="menu_flag_card_three">Groen merk</string>
-    <string name="menu_flag_card_four">Blou merk</string>
-    <string name="menu_flag_card_five">Pink merk</string>
-    <string name="menu_flag_card_six">Turkoois merk</string>
-    <string name="menu_flag_card_seven">Pers merk</string>
     <string name="menu_edit_tags">Bewerk hegplaatjie</string>
     <string name="delete_note_message">Verwyder regtig hierdie nota en al die samegaande karte?\n%s</string>
     <string name="menu_search">Soek in %1$s</string>

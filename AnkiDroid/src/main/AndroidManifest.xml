@@ -422,6 +422,7 @@
         <activity
             android:name="com.ichi2.anki.SingleFragmentActivity"
             android:exported="false"
+            android:configChanges="orientation|screenSize"
             />
         <activity
             android:name="com.ichi2.anki.ImageOcclusionActivity"

@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Kustuta märge</string>
     <string name="menu_flag">Lipp</string>
     <string name="menu_flag_card">Pane kaardile lipp</string>
-    <string name="menu_flag_card_zero">Liputa</string>
-    <string name="menu_flag_card_one">Punane lipp</string>
-    <string name="menu_flag_card_two">Oranž lipp</string>
-    <string name="menu_flag_card_three">Roheline lipp</string>
-    <string name="menu_flag_card_four">Sinine lipp</string>
-    <string name="menu_flag_card_five">Roosa lipp</string>
-    <string name="menu_flag_card_six">Türkiisne lipp</string>
-    <string name="menu_flag_card_seven">Lilla lipp</string>
     <string name="menu_edit_tags">Muuda silte</string>
     <string name="delete_note_message">Kas tõesti kustutada see märge ja kõik selle kaardid?\n%s</string>
     <string name="menu_search">Otsi %1$s</string>

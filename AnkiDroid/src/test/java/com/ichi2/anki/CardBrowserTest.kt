@@ -34,6 +34,7 @@ import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.scheduling.ForgetCardsViewModel
@@ -41,6 +42,7 @@ import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
@@ -133,6 +135,25 @@ class CardBrowserTest : RobolectricTest() {
         val browser = browserWithMultipleNotes
         selectOneOfManyCards(browser)
         assertThat(browser.isShowingSelectAll, equalTo(true))
+    }
+
+    @Test
+    fun testOnDeckSelected() = withBrowser(noteCount = 1) {
+        // Arrange
+        val deckId = 123L
+        val selectableDeck = DeckSelectionDialog.SelectableDeck(deckId, "Test Deck")
+
+        // Act
+        this.onDeckSelected(selectableDeck)
+
+        // Assert
+        assertEquals(deckId, this.lastDeckId)
+
+        // Act again: select the same deck
+        this.onDeckSelected(selectableDeck)
+
+        // Assert again: the deck selection should not change
+        assertEquals(deckId, this.lastDeckId)
     }
 
     @Test
@@ -1063,6 +1084,27 @@ class CardBrowserTest : RobolectricTest() {
         c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
         Assert.assertEquals("(filtered)", nextDue(col, c))
         Assert.assertEquals("((filtered))", dueString(col, c))
+    }
+
+    @Test
+    fun `tts tags are stripped`() {
+        val note = addNonClozeModel(
+            "test",
+            arrayOf("Front", "Back"),
+            "[anki:tts lang=de_DE voices=com.google.android.tts-de-DE-language]{{Front}}[/anki:tts]",
+            ""
+        ).let { name ->
+            col.notetypes.byName(name)!!
+        }.addNote("Test", "Blank")
+
+        val question = CardCache(note.firstCard().id, col, 1, CARDS)
+            .getColumnHeaderText(CardBrowserColumn.QUESTION)
+
+        assertThat(question, equalTo(""))
+    }
+
+    fun NotetypeJson.addNote(field: String, vararg fields: String): Note {
+        return addNoteUsingModelName(this.name, field, *fields)
     }
 
     @Suppress("SameParameterValue")

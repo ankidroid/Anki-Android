@@ -102,14 +102,6 @@
     <string name="menu_delete_note">Hapus catatan</string>
     <string name="menu_flag">Panji</string>
     <string name="menu_flag_card">Beri kartu panji</string>
-    <string name="menu_flag_card_zero">Tidak ada panji</string>
-    <string name="menu_flag_card_one">Panji merah</string>
-    <string name="menu_flag_card_two">Panji jingga</string>
-    <string name="menu_flag_card_three">Panji hijau</string>
-    <string name="menu_flag_card_four">Panji Biru</string>
-    <string name="menu_flag_card_five">Bendera pink</string>
-    <string name="menu_flag_card_six">Bendera toska</string>
-    <string name="menu_flag_card_seven">Bendera ungu</string>
     <string name="menu_edit_tags">Edit tag</string>
     <string name="delete_note_message">Yakin akan menghapus catatan ini dan semua kartunya?\n%s</string>
     <string name="menu_search">Pencarian di %1$s</string>

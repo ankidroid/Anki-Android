@@ -79,10 +79,10 @@
     <string name="html_size_code_x_large">Bardzo duży</string>
     <string name="html_size_code_xx_large">Największy</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">Odpowiedz \"Powtórz\"</string>
+    <string name="answer_hard">Odpowiedz \"Trudna\"</string>
+    <string name="answer_good">Odpowiedz \"Dobra\"</string>
+    <string name="answer_easy">Odpowiedz \"Łatwa\"</string>
     <string name="gesture_play">Odtwarzaj</string>
     <string name="gesture_abort_learning">Przerwij naukę</string>
     <string name="gesture_flag_red">Włącz/wyłącz czerwoną flagę</string>
@@ -101,5 +101,5 @@
     <string name="gesture_show_all_hints">Pokaż wszystkie podpowiedzi</string>
     <string name="record_voice">Nagraj głos</string>
     <string name="replay_voice">Odtwórz głos</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="save_voice">Zapisz nagranie</string>
 </resources>

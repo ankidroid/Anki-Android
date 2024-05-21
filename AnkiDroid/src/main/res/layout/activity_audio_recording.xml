@@ -71,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:clickable="true"
+                android:contentDescription="@string/record_voice"
                 android:focusable="true"
                 android:padding="10dp"
                 app:backgroundTint="@color/material_grey_100"

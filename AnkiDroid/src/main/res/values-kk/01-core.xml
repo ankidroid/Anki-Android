@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Жазба жою</string>
     <string name="menu_flag">Бөлектеу</string>
     <string name="menu_flag_card">Картаны бөлектеу</string>
-    <string name="menu_flag_card_zero">Белгісіз</string>
-    <string name="menu_flag_card_one">Сары белгі</string>
-    <string name="menu_flag_card_two">Сары белгі</string>
-    <string name="menu_flag_card_three">Жасыл белгі</string>
-    <string name="menu_flag_card_four">Көк белгі</string>
-    <string name="menu_flag_card_five">Қызғылт белгі</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
     <string name="menu_search">Lookup in %1$s</string>

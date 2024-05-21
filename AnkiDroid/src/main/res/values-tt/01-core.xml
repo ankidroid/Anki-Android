@@ -102,14 +102,6 @@
     <string name="menu_delete_note">Язуны бетерү</string>
     <string name="menu_flag">Төс</string>
     <string name="menu_flag_card">Төс кую</string>
-    <string name="menu_flag_card_zero">Төссез</string>
-    <string name="menu_flag_card_one">Кызыл байрак</string>
-    <string name="menu_flag_card_two">Кызыл-сары байрак</string>
-    <string name="menu_flag_card_three">Яшел байрак</string>
-    <string name="menu_flag_card_four">Зәңгәр байрак</string>
-    <string name="menu_flag_card_five">Алсу байрак</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Тегларны үзгәртү</string>
     <string name="delete_note_message">Бу язуны һәм бөтен аның кәртләрен бетерергәме?\n%s</string>
     <string name="menu_search">%1$sдә карарга</string>

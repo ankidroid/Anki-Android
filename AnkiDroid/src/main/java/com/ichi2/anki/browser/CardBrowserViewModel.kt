@@ -16,6 +16,8 @@
 
 package com.ichi2.anki.browser
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -42,6 +44,8 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
+import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.undoableOp
@@ -434,6 +438,47 @@ class CardBrowserViewModel(
         }
     }
 
+    /**
+     * if all cards are buried, unbury all
+     * if no cards are buried, bury all
+     * if there is a mix, bury all
+     *
+     * if no cards are checked, do nothing
+     *
+     * @return Whether the operation was bury/unbury, and the number of affected cards.
+     * `null` if nothing happened
+     */
+    suspend fun toggleBury(): BuryResult? {
+        if (!hasSelectedAnyRows()) {
+            Timber.w("no cards to bury")
+            return null
+        }
+
+        // https://github.com/ankitects/anki/blob/074becc0cee1e9ae59be701ad6c26787f74b4594/qt/aqt/browser/browser.py#L896-L902
+        fun Card.isBuried(): Boolean =
+            queue == QUEUE_TYPE_MANUALLY_BURIED || queue == QUEUE_TYPE_SIBLING_BURIED
+
+        val cardIds = queryAllSelectedCardIds()
+
+        // this variable exists as `undoableOp` needs an OpChanges as return value
+        var wasBuried: Boolean? = null
+        undoableOp {
+            // this differs from Anki Desktop which uses the first selected card to determine the
+            // 'checked' status
+            val wantUnbury = cardIds.all { getCard(it).isBuried() }
+
+            wasBuried = !wantUnbury
+            if (wantUnbury) {
+                Timber.i("unburying %d cards", cardIds.size)
+                sched.unburyCards(cardIds)
+            } else {
+                Timber.i("burying %d cards", cardIds.size)
+                sched.buryCards(cardIds).changes
+            }
+        }
+        return BuryResult(wasBuried = wasBuried!!, count = cardIds.size)
+    }
+
     suspend fun getSelectionExportData(): Pair<ExportDialogFragment.ExportType, List<Long>>? {
         if (!isInMultiSelectMode) return null
         return when (cardsOrNotes) {
@@ -671,6 +716,12 @@ class CardBrowserViewModel(
         }
     }
 
+    /**
+     * @param wasBuried `true` if all cards were buried, `false` if unburied
+     * @param count the number of affected cards
+     */
+    data class BuryResult(val wasBuried: Boolean, val count: Int)
+
     private sealed interface ChangeCardOrder {
         data class OrderChange(val sortType: SortType) : ChangeCardOrder
         data object DirectionChange : ChangeCardOrder
@@ -706,13 +757,14 @@ enum class SaveSearchResult {
 
 /**
  * Temporary file containing the IDs of the cards to be displayed at the previewer
- *
- * @param directory parent directory of the file. Generally it should be the cache directory
- * @param cardIds ids of the cards to be displayed
  */
-class PreviewerIdsFile(directory: File, cardIds: List<CardId>) :
-    File(createTempFile("previewerIds", ".tmp", directory).absolutePath) {
-    init {
+class PreviewerIdsFile(path: String) : File(path), Parcelable {
+
+    /**
+     * @param directory parent directory of the file. Generally it should be the cache directory
+     * @param cardIds ids of the cards to be displayed
+     */
+    constructor(directory: File, cardIds: List<CardId>) : this(createTempFile("previewerIds", ".tmp", directory).path) {
         DataOutputStream(FileOutputStream(this)).use { outputStream ->
             outputStream.writeInt(cardIds.size)
             for (id in cardIds) {
@@ -724,5 +776,25 @@ class PreviewerIdsFile(directory: File, cardIds: List<CardId>) :
     fun getCardIds(): List<Long> = DataInputStream(FileInputStream(this)).use { inputStream ->
         val size = inputStream.readInt()
         List(size) { inputStream.readLong() }
+    }
+
+    override fun describeContents(): Int = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(path)
+    }
+
+    companion object {
+        @JvmField
+        @Suppress("unused")
+        val CREATOR = object : Parcelable.Creator<PreviewerIdsFile> {
+            override fun createFromParcel(source: Parcel?): PreviewerIdsFile {
+                return PreviewerIdsFile(source!!.readString()!!)
+            }
+
+            override fun newArray(size: Int): Array<PreviewerIdsFile> {
+                return arrayOf()
+            }
+        }
     }
 }

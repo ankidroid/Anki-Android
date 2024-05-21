@@ -120,7 +120,6 @@ open class CardBrowser :
     ChangeManager.Subscriber,
     ExportDialogsFactoryProvider {
 
-    @NeedsTest("15448: double-selecting deck does nothing")
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
             launchCatchingTask { selectDeckAndSave(deck.deckId) }
@@ -736,6 +735,7 @@ open class CardBrowser :
             // restore drawer click listener and icon
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
+            setFlagTitles(menu)
             saveSearchItem = menu.findItem(R.id.action_save_search)
             saveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mySearchesItem = menu.findItem(R.id.action_list_my_searches)
@@ -789,6 +789,7 @@ open class CardBrowser :
         } else {
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
+            setMultiSelectFlagTitles(menu)
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         }
@@ -822,26 +823,53 @@ open class CardBrowser :
         }
     }
 
+    private fun setFlagTitles(menu: Menu) {
+        menu.findItem(R.id.action_select_flag_zero).title = Flag.NONE.displayName()
+        menu.findItem(R.id.action_select_flag_one).title = Flag.RED.displayName()
+        menu.findItem(R.id.action_select_flag_two).title = Flag.ORANGE.displayName()
+        menu.findItem(R.id.action_select_flag_three).title = Flag.GREEN.displayName()
+        menu.findItem(R.id.action_select_flag_four).title = Flag.BLUE.displayName()
+        menu.findItem(R.id.action_select_flag_five).title = Flag.PINK.displayName()
+        menu.findItem(R.id.action_select_flag_six).title = Flag.TURQUOISE.displayName()
+        menu.findItem(R.id.action_select_flag_seven).title = Flag.PURPLE.displayName()
+    }
+
+    private fun setMultiSelectFlagTitles(menu: Menu) {
+        menu.findItem(R.id.action_flag_zero).title = Flag.NONE.displayName()
+        menu.findItem(R.id.action_flag_one).title = Flag.RED.displayName()
+        menu.findItem(R.id.action_flag_two).title = Flag.ORANGE.displayName()
+        menu.findItem(R.id.action_flag_three).title = Flag.GREEN.displayName()
+        menu.findItem(R.id.action_flag_four).title = Flag.BLUE.displayName()
+        menu.findItem(R.id.action_flag_five).title = Flag.PINK.displayName()
+        menu.findItem(R.id.action_flag_six).title = Flag.TURQUOISE.displayName()
+        menu.findItem(R.id.action_flag_seven).title = Flag.PURPLE.displayName()
+    }
+
     private fun updatePreviewMenuItem() {
         previewItem?.isVisible = viewModel.rowCount > 0
     }
 
     private fun updateMultiselectMenu() {
         Timber.d("updateMultiselectMenu()")
-        if (actionBarMenu == null || actionBarMenu!!.findItem(R.id.action_suspend_card) == null) {
+        val actionBarMenu = actionBarMenu
+        if (actionBarMenu?.findItem(R.id.action_suspend_card) == null) {
             return
         }
         if (viewModel.hasSelectedAnyRows()) {
-            actionBarMenu!!.findItem(R.id.action_suspend_card).apply {
+            actionBarMenu.findItem(R.id.action_suspend_card).apply {
                 title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
+                // TODO: I don't think this icon is necessary
                 setIcon(R.drawable.ic_suspend)
             }
-            actionBarMenu!!.findItem(R.id.action_mark_card).apply {
+            actionBarMenu.findItem(R.id.action_toggle_bury).apply {
+                title = TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury)
+            }
+            actionBarMenu.findItem(R.id.action_mark_card).apply {
                 title = TR.browsingToggleMark()
                 setIcon(R.drawable.ic_star_border_white)
             }
         }
-        actionBarMenu!!.findItem(R.id.action_export_selected).apply {
+        actionBarMenu.findItem(R.id.action_export_selected).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
                 resources.getQuantityString(
                     R.plurals.card_browser_export_cards,
@@ -854,7 +882,7 @@ open class CardBrowser :
                 )
             }
         }
-        actionBarMenu!!.findItem(R.id.action_delete_card).apply {
+        actionBarMenu.findItem(R.id.action_delete_card).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
                 resources.getQuantityString(
                     R.plurals.card_browser_delete_cards,
@@ -867,12 +895,12 @@ open class CardBrowser :
                 )
             }
         }
-        actionBarMenu!!.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
+        actionBarMenu.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
         // Note: Theoretically should not happen, as this should kick us back to the menu
-        actionBarMenu!!.findItem(R.id.action_select_none).isVisible =
+        actionBarMenu.findItem(R.id.action_select_none).isVisible =
             viewModel.hasSelectedAnyRows()
-        actionBarMenu!!.findItem(R.id.action_edit_note).isVisible = canPerformMultiSelectEditNote()
-        actionBarMenu!!.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
+        actionBarMenu.findItem(R.id.action_edit_note).isVisible = canPerformMultiSelectEditNote()
+        actionBarMenu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
     }
 
     private fun hasSelectedAllCards(): Boolean {
@@ -1059,6 +1087,10 @@ open class CardBrowser :
             }
             R.id.action_suspend_card -> {
                 suspendCards()
+                return true
+            }
+            R.id.action_toggle_bury -> {
+                toggleBury()
                 return true
             }
             R.id.action_change_deck -> {
@@ -1512,6 +1544,17 @@ open class CardBrowser :
     }
 
     private fun suspendCards() = launchCatchingTask { withProgress { viewModel.suspendCards() } }
+
+    /** @see CardBrowserViewModel.toggleBury */
+    private fun toggleBury() = launchCatchingTask {
+        val result = withProgress { viewModel.toggleBury() } ?: return@launchCatchingTask
+        // show a snackbar as there's currently no colored background for buried cards
+        val message = when (result.wasBuried) {
+            true -> TR.studyingCardsBuried(result.count)
+            false -> resources.getQuantityString(R.plurals.unbury_cards_feedback, result.count, result.count)
+        }
+        showUndoSnackbar(message)
+    }
 
     private fun showUndoSnackbar(message: CharSequence) {
         showSnackbar(message, Snackbar.LENGTH_LONG) {

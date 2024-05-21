@@ -105,14 +105,6 @@
     <string name="menu_delete_note">ಟಿಪ್ಪಣಿ ಅಳಿಸಿ</string>
     <string name="menu_flag">ಧ್ವಜ</string>
     <string name="menu_flag_card">ಫ್ಲ್ಯಾಗ್ ಕಾರ್ಡ್</string>
-    <string name="menu_flag_card_zero">ಧ್ವಜವಿಲ್ಲ</string>
-    <string name="menu_flag_card_one">ಕೆಂಪು ಧ್ವಜ</string>
-    <string name="menu_flag_card_two">ಕಿತ್ತಳೆ ಧ್ವಜ</string>
-    <string name="menu_flag_card_three">ಹಸಿರು ಧ್ವಜ</string>
-    <string name="menu_flag_card_four">ನೀಲಿ ಧ್ವಜ</string>
-    <string name="menu_flag_card_five">ಗುಲಾಬಿ ಧ್ವಜ</string>
-    <string name="menu_flag_card_six">ವೈಡೂರ್ಯದ ಧ್ವಜ</string>
-    <string name="menu_flag_card_seven">ನೇರಳೆ ಧ್ವಜ</string>
     <string name="menu_edit_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="delete_note_message">ಈ ಟಿಪ್ಪಣಿ ಮತ್ತು ಅದರ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ನಿಜವಾಗಿಯೂ ಅಳಿಸಿ? \n%s</string>
     <string name="menu_search">%1$s ನಲ್ಲಿ ಹುಡುಕಿ</string>

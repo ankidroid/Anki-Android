@@ -81,6 +81,8 @@
             android:clickable="true"
             android:focusable="true"
 
+            android:contentDescription="@string/record_voice"
+
             android:insetBottom="6dp"
             android:insetLeft="6dp"
             android:insetRight="6dp"

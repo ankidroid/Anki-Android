@@ -102,14 +102,6 @@
     <string name="menu_delete_note">Xoá ghi chú</string>
     <string name="menu_flag">Gắn cờ</string>
     <string name="menu_flag_card">Gắn cờ thẻ</string>
-    <string name="menu_flag_card_zero">Không gắn cờ</string>
-    <string name="menu_flag_card_one">Cờ đỏ</string>
-    <string name="menu_flag_card_two">Cờ cam</string>
-    <string name="menu_flag_card_three">Cờ xanh lá</string>
-    <string name="menu_flag_card_four">Cờ xanh dương</string>
-    <string name="menu_flag_card_five">Cờ hồng</string>
-    <string name="menu_flag_card_six">Cờ xanh ngọc lam</string>
-    <string name="menu_flag_card_seven">Cờ tím</string>
     <string name="menu_edit_tags">Sửa tag</string>
     <string name="delete_note_message">Bạn thực sự muốn xoá ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
     <string name="menu_search">Tra cứu trong %1$s</string>

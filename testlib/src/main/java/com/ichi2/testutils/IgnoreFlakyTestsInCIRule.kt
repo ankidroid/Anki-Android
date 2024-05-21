@@ -52,7 +52,7 @@ annotation class Flaky(val os: OS, val message: String = "")
 class IgnoreFlakyTestsInCIRule : TestRule {
     override fun apply(base: Statement, description: Description): Statement {
         if (!isRunningUnderCI) return base
-        val annotation = description.getAnnotation(Flaky::class.java) ?: return base
+        val annotation = description.getFlakyAnnotation() ?: return base
         if (!annotation.os.isRunning()) return base
         return object : Statement() {
             override fun evaluate() {
@@ -60,6 +60,14 @@ class IgnoreFlakyTestsInCIRule : TestRule {
                 Assume.assumeTrue(message, false)
             }
         }
+    }
+
+    /**
+     * Returns an instance of [Flaky] for the test if annotated,
+     * preferring the method-level annotation over the class-level annotation
+     */
+    private fun Description.getFlakyAnnotation(): Flaky? {
+        return getAnnotation(Flaky::class.java) ?: this.testClass.getAnnotation(Flaky::class.java)
     }
 
     companion object {
