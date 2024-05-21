@@ -57,9 +57,6 @@
 
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
 
-        <!--Dialog-->
-        <item name="md_color_button_text">@color/black</item>
-
         <item name="snackbarButtonTextColor">#96bdce</item>
 
         <!-- Introduction -->
