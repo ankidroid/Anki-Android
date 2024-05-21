@@ -1393,6 +1393,7 @@ open class Reviewer :
             when (val methodName = uri.substring(ANKI_PREFIX.length)) {
                 "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
                 "setSchedulingStates" -> setSchedulingStates(bytes)
+                "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
                 else -> throw IllegalArgumentException("unhandled request: $methodName")
             }
         } else if (uri.startsWith(ANKIDROID_JS_PREFIX)) {
