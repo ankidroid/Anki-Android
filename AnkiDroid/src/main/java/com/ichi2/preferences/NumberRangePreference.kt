@@ -23,7 +23,7 @@ import android.view.View
 import com.ichi2.anki.AnkiDroidApp
 import timber.log.Timber
 
-@Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use NumberRangePreferenceCompat
+@Suppress("deprecation", "OVERRIDE_DEPRECATION") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use NumberRangePreferenceCompat
 open class NumberRangePreference : android.preference.EditTextPreference, AutoFocusable {
     protected val min: Int
     private val max: Int
