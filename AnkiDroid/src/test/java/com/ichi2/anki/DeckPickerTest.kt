@@ -13,8 +13,6 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.internal.rtl.RtlTextView
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
@@ -400,18 +398,10 @@ class DeckPickerTest : RobolectricTest() {
         setFragmentResult(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, arguments)
     }
 
-    // TODO delete test or at least use espresso, this is a poor implementation that can break at any time
     private fun assertDialogTitleEquals(expectedTitle: String) {
-        val actualTitle = when (val dialog = ShadowDialog.getLatestDialog()) {
-            is MaterialDialog ->
-                dialog.view
-                    .findViewById<RtlTextView>(com.afollestad.materialdialogs.R.id.md_text_title)
-                    ?.text
-            is AlertDialog -> dialog.title
-            else -> TODO()
-        }
+        val actualTitle = (ShadowDialog.getLatestDialog() as AlertDialog).title
         Timber.d("titles = \"$actualTitle\", \"$expectedTitle\"")
-        assertEquals(expectedTitle, "$actualTitle")
+        assertEquals(expectedTitle, actualTitle)
     }
 
     @Test
