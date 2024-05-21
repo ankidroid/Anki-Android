@@ -318,6 +318,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         SAME_NUMBER, INCREMENT_NUMBER
     }
 
+    @NeedsTest("Error message should be null after save")
     private var addNoteErrorMessage: String? = null
 
     private fun displayErrorSavingNote() {
@@ -325,15 +326,21 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Anki allows to proceed in case we try to add non cloze text in cloze field with warning,
         // this snackbar helps replicate similar behaviour
         if (errorMessage == TR.addingYouHaveAClozeDeletionNote()) {
-            showSnackbar(errorMessage, Snackbar.LENGTH_INDEFINITE) {
-                setAction(R.string.dialog_ok) {
-                    lifecycleScope.launch {
-                        saveNoteWithProgress()
-                    }
-                }
-            }
+            noClozeDialog(errorMessage)
         } else {
             showSnackbar(errorMessage)
+        }
+    }
+
+    private fun noClozeDialog(errorMessage: String) {
+        AlertDialog.Builder(this).show {
+            message(text = errorMessage)
+            positiveButton(text = TR.actionsSave()) {
+                lifecycleScope.launch {
+                    saveNoteWithProgress()
+                }
+            }
+            negativeButton(R.string.dialog_cancel)
         }
     }
 
@@ -964,7 +971,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         sourceText = null
         refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
         showSnackbar(TR.addingAdded(), Snackbar.LENGTH_SHORT)
-        addNoteErrorMessage = null
 
         if (caller == CALLER_NOTEEDITOR || aedictIntent) {
             closeEditorAfterSave = true
@@ -1033,6 +1039,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     displayErrorSavingNote()
                     return@launch
                 }
+                addNoteErrorMessage = null
                 saveNoteWithProgress()
             }
         } else {
