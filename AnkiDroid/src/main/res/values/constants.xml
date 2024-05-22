@@ -291,6 +291,11 @@
         <item>@string/pref_cat_plugins</item>
     </string-array>
 
+    <!-- Sample deck names and for Deck Picker Widget layout in widget picker screen
+       These strings are marked as `translatable=false` because translating them would defeat the purpose of the example, which relies on specific language usage.-->
+    <string name="deck1Name_deck_picker_widget" translatable="false" comment="Example of a Deck name. Android's widget provider displays it as an example of what the Deck Picker widget may look like">English</string>
+    <string name="deck2Name_deck_picker_widget" translatable="false" comment="Example of a Deck name. Android's widget provider displays it as an example of what the Deck Picker widget may look like">Español</string>
+    <string name="deck3Name_deck_picker_widget" translatable="false" comment="Example of a Deck name. Android's widget provider displays it as an example of what the Deck Picker widget may look like">日本語</string>
 
     <string name="answer_buttons_position_preference" translatable="false">answerButtonPosition</string>
     <string-array name="answer_buttons_position" translatable="false">
