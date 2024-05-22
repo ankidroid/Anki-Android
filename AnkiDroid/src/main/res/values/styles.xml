@@ -29,6 +29,11 @@
         <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>
 
+    <style name="AnswerButton" parent="Widget.Material3.Button">
+        <item name="android:padding">0dp</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
     <!--  Material Design-style persistent footer button -->
     <style name="FooterButtonBase">
         <item name="android:layout_height">48dp</item>
