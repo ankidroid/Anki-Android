@@ -436,7 +436,7 @@ open class RobolectricTest : AndroidTest {
 
     private fun validateRunWithAnnotationPresent() {
         try {
-            ApplicationProvider.getApplicationContext()
+            ApplicationProvider.getApplicationContext<Application>()
         } catch (e: IllegalStateException) {
             if (e.message != null && e.message!!.startsWith("No instrumentation registered!")) {
                 // Explicitly ignore the inner exception - generates line noise
