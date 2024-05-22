@@ -2359,6 +2359,7 @@ open class DeckPicker :
             if (fragmented) {
                 loadStudyOptionsFragment(false)
             }
+            invalidateOptionsMenu()
         }
         createDeckDialog.showDialog()
     }
