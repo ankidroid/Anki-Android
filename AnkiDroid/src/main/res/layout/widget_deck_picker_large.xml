@@ -1,0 +1,20 @@
+<RelativeLayout
+    android:id="@+id/widget_deck_picker"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:clickable="true"
+    android:focusable="false"
+    android:theme="@style/Theme.Material3.DynamicColors.DayNight">
+
+    <LinearLayout
+        android:id="@+id/deckCollection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:background="?attr/colorSurface"
+        android:orientation="vertical">
+
+    </LinearLayout>
+</RelativeLayout>
