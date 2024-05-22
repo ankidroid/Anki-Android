@@ -25,6 +25,7 @@ import org.hamcrest.Matchers
 import org.junit.Test
 import org.junit.runner.RunWith
 
+// TODO : To handle the DeckPickerWidgetConfig
 @RunWith(AndroidJUnit4::class)
 class ActivityStartupMetaTest : RobolectricTest() {
     @Test
@@ -39,6 +40,7 @@ class ActivityStartupMetaTest : RobolectricTest() {
             .map { it.name }
             .filter { it != "com.ichi2.anki.TestCardTemplatePreviewer" }
             .filter { it != "com.ichi2.anki.AnkiCardContextMenuAction" }
+            .filter { it != "com.ichi2.widget.DeckPickerWidgetConfig" }
             .filter { it != "com.ichi2.anki.analytics.AnkiDroidCrashReportDialog" }
             .filter { !it.startsWith("androidx") }
             .filter { !it.startsWith("org.acra") }

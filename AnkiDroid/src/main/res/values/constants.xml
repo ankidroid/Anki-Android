@@ -320,6 +320,17 @@
     <string name="show_onboarding_desc">Display feature tutorial to learn more about the app</string>
     <string name="reset_onboarding_desc">Show all tutorials again</string>
 
+    <!-- sample properties for Deck Picker Widget layout in widget picker screen -->
+    <string name="deck1New_deck_picker_widget">50</string>
+    <string name="deck2New_deck_picker_widget">30</string>
+    <string name="deck3New_deck_picker_widget">25</string>
+    <string name="deck1Due_deck_picker_widget">52</string>
+    <string name="deck2Due_deck_picker_widget">20</string>
+    <string name="deck3Due_deck_picker_widget">15</string>
+    <string name="deck1Learn_deck_picker_widget">54</string>
+    <string name="deck2Learn_deck_picker_widget">10</string>
+    <string name="deck3Learn_deck_picker_widget">5</string>
+
     <!-- Multimedia UI -->
     <string name="new_multimedia_ui">New multimedia UI</string>
 </resources>
