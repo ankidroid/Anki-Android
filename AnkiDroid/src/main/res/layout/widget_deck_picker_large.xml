@@ -1,0 +1,298 @@
+<RelativeLayout
+    android:id="@+id/widget_deck_picker"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:clickable="true"
+    android:focusable="false"
+    android:theme="@style/Theme.Material3.DynamicColors.DayNight">
+
+    <LinearLayout
+        android:id="@+id/deckCollection"
+        android:layout_width="match_parent"
+        android:layout_height="702dp"
+        android:layout_marginTop="0dp"
+        android:background="?attr/colorSurface"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/deck1Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurfaceVariant"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/deck1Name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:height="48dp"
+                android:paddingBottom="4dp"
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="22sp"
+                tools:text="Deck1"/>
+
+            <TextView
+                android:id="@+id/deck1New"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:textColor="@color/flag_reviewer_blue"
+                android:textSize="20sp"
+                android:text=""
+                tools:text="50" />
+
+            <TextView
+                android:id="@+id/deck1Due"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:textColor="@color/material_red_A700"
+                android:textSize="20sp"
+                android:text=""
+                tools:text="50" />
+
+            <TextView
+                android:id="@+id/deck1Learn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:textColor="@color/flag_reviewer_green"
+                android:textSize="20sp"
+                android:text=""
+                tools:text="50" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/deck2Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurfaceVariant"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/deck2Name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:height="48dp"
+                android:paddingBottom="4dp"
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="22sp"
+                tools:text="Deck2"/>
+
+            <TextView
+                android:id="@+id/deck2New"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/flag_reviewer_blue"
+                android:textSize="20sp"
+                tools:text="50" />
+
+            <TextView
+                android:id="@+id/deck2Due"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/material_red_A700"
+                android:textSize="20sp"
+                tools:text="50" />
+
+            <TextView
+                android:id="@+id/deck2Learn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/flag_reviewer_green"
+                android:textSize="20sp"
+                tools:text="50" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/deck3Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurfaceVariant"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/deck3Name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:height="48dp"
+                android:paddingBottom="4dp"
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="22sp"
+                tools:text="Deck3"/>
+
+            <TextView
+                android:id="@+id/deck3New"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/flag_reviewer_blue"
+                android:textSize="20sp"
+                tools:text="50" />
+
+            <TextView
+                android:id="@+id/deck3Due"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/material_red_A700"
+                android:textSize="20sp"
+                tools:text="50" />
+
+            <TextView
+                android:id="@+id/deck3Learn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/flag_reviewer_green"
+                android:textSize="20sp"
+                tools:text="50" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/deck4Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurfaceVariant"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/deck4Name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:height="48dp"
+                android:paddingBottom="4dp"
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="22sp"
+                tools:text="Deck4"/>
+
+            <TextView
+                android:id="@+id/deck4New"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/flag_reviewer_blue"
+                android:textSize="20sp"
+                tools:text="50" />
+
+            <TextView
+                android:id="@+id/deck4Due"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/material_red_A700"
+                android:textSize="20sp"
+                tools:text="50" />
+
+            <TextView
+                android:id="@+id/deck4Learn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/flag_reviewer_green"
+                android:textSize="20sp"
+                tools:text="50" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/deck5Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurfaceVariant"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/deck5Name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:height="48dp"
+                android:paddingBottom="4dp"
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="22sp"
+                tools:text="Deck5"/>
+
+            <TextView
+                android:id="@+id/deck5New"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/flag_reviewer_blue"
+                android:textSize="20sp"
+                tools:text="50" />
+
+            <TextView
+                android:id="@+id/deck5Due"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/material_red_A700"
+                android:textSize="20sp"
+                tools:text="50" />
+
+            <TextView
+                android:id="@+id/deck5Learn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="5dp"
+                android:text=""
+                android:textColor="@color/flag_reviewer_green"
+                android:textSize="20sp"
+                tools:text="50" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

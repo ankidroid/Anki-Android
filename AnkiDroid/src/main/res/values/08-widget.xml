@@ -38,4 +38,5 @@
     </plurals>
 
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
+    <string name="app_widget_description">Deck Picker</string>
 </resources>
