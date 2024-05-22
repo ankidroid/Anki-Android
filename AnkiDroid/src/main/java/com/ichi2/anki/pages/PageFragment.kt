@@ -41,9 +41,6 @@ open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment
     Fragment(contentLayoutId),
     PostRequestHandler {
 
-    open val title: String = "" // it will be removed later
-    open val pageName: String = "" // it will be removed later
-
     lateinit var webView: WebView
     private val server = AnkiServer(this).also { it.start() }
 
