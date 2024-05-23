@@ -351,8 +351,6 @@ dependencies {
     implementation libs.acra.dialog
     implementation libs.acra.http
 
-    implementation libs.materialDialogs.core
-    implementation libs.materialDialogs.input
     implementation libs.commons.compress
     implementation libs.commons.collections4 // SetUniqueList
     implementation libs.commons.io // FileUtils.contentEquals

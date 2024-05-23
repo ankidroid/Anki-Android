@@ -19,23 +19,32 @@ package com.ichi2.anki.browser
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
+import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
+import com.ichi2.libanki.DeckId
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.mockIt
+import kotlinx.coroutines.flow.first
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
+import timber.log.Timber
+import java.io.File
+import kotlin.io.path.createTempDirectory
+import kotlin.io.path.pathString
 import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
@@ -176,6 +185,27 @@ class CardBrowserViewModelTest : JvmTest() {
         assertThat("unbury: queue -> NEW", getQueue(), equalTo(QUEUE_TYPE_NEW))
     }
 
+    @Test
+    fun `default init`() = runTest {
+        viewModel().apply {
+            assertThat(searchTerms, equalTo(""))
+        }
+    }
+
+    @Test
+    fun `Card Browser menu init`() = runTest {
+        viewModel(intent = SystemContextMenu("Hello")).apply {
+            assertThat(searchTerms, equalTo("Hello"))
+        }
+    }
+
+    @Test
+    fun `Deep Link init`() = runTest {
+        viewModel(intent = DeepLink("Hello")).apply {
+            assertThat(searchTerms, equalTo("Hello"))
+        }
+    }
+
     private fun runViewModelTest(notes: Int = 0, testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
         for (i in 0 until notes) {
             addNoteUsingBasicModel()
@@ -183,9 +213,32 @@ class CardBrowserViewModelTest : JvmTest() {
         val viewModel = CardBrowserViewModel(
             lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
             cacheDir = createTransientDirectory(),
+            options = null,
             preferences = AnkiDroidApp.sharedPreferencesProvider
         )
         testBody(viewModel)
+    }
+
+    companion object {
+        private suspend fun viewModel(
+            lastDeckId: DeckId? = null,
+            intent: CardBrowserLaunchOptions? = null,
+            mode: CardsOrNotes = CardsOrNotes.CARDS
+        ): CardBrowserViewModel {
+            val lastDeckIdRepository = object : LastDeckIdRepository {
+                override var lastDeckId: DeckId? = lastDeckId
+            }
+
+            // default is CARDS, do nothing in this case
+            if (mode == CardsOrNotes.NOTES) {
+                CollectionManager.withCol { mode.saveToCollection() }
+            }
+
+            val cache = File(createTempDirectory().pathString)
+            return CardBrowserViewModel(lastDeckIdRepository, cache, intent, AnkiDroidApp.sharedPreferencesProvider).apply {
+                invokeInitialSearch()
+            }
+        }
     }
 }
 
@@ -201,3 +254,17 @@ private suspend fun CardBrowserViewModel.waitForSearchResults() {
 }
 
 private fun CardBrowserViewModel.hasSelectedAllDecks() = lastDeckId == DeckSpinnerSelection.ALL_DECKS_ID
+
+private suspend fun CardBrowserViewModel.waitForInit() {
+    this.flowOfInitCompleted.first { initCompleted -> initCompleted }
+}
+
+internal suspend fun CardBrowserViewModel.invokeInitialSearch() {
+    Timber.d("waiting for init")
+    waitForInit()
+    Timber.d("init completed")
+    // For legacy reasons, we need to know the number of cards to render when performing a search
+    // This will be removed once we handle #11889
+    // numberOfCardsToRenderFlow.emit(1)
+    Timber.v("initial search completed")
+}

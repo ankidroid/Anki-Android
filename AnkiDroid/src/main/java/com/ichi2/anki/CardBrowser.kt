@@ -99,10 +99,12 @@ import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.updateInBackground
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
@@ -131,8 +133,6 @@ open class CardBrowser :
     }
 
     lateinit var viewModel: CardBrowserViewModel
-
-    private var launchOptions: CardBrowserLaunchOptions? = null
 
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
@@ -336,10 +336,10 @@ open class CardBrowser :
         if (!ensureStoragePermissions()) {
             return
         }
+        val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
         // must be called once we have an accessible collection
-        viewModel = createViewModel()
+        viewModel = createViewModel(launchOptions)
 
-        launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
         setContentView(R.layout.card_browser)
         initNavigationDrawer(findViewById(android.R.id.content))
         // initialize the lateinit variables
@@ -379,18 +379,6 @@ open class CardBrowser :
 
         startLoadingCollection()
 
-        when (val options = launchOptions) {
-            is CardBrowserLaunchOptions.DeepLink -> {
-                searchCards(options.search)
-            }
-            is CardBrowserLaunchOptions.SearchQueryJs -> {
-                if (options.allDecks) {
-                    onDeckSelected(SelectableDeck(ALL_DECKS_ID, getString(R.string.card_browser_all_decks)))
-                }
-                searchCards(options.search)
-            }
-            else -> {} // Context Menu handled in onCreateOptionsMenu
-        }
         exportingDelegate.onRestoreInstanceState(savedInstanceState)
 
         // Selected cards aren't restored on activity recreation,
@@ -800,14 +788,6 @@ open class CardBrowser :
 
         actionBarMenu?.findItem(R.id.action_reschedule_cards)?.title =
             TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
-
-        launchOptions?.let { options ->
-            if (options !is CardBrowserLaunchOptions.SystemContextMenu) return@let
-            // Fill in the search.
-            Timber.i("CardBrowser :: Called with search intent: %s", launchOptions.toString())
-            searchWithFilterQuery(options.search.toString())
-            launchOptions = null
-        }
 
         previewItem = menu.findItem(R.id.action_preview)
         onSelectionChanged()
@@ -1280,33 +1260,81 @@ open class CardBrowser :
         if (selectedRowIds.isEmpty()) {
             Timber.d("showEditTagsDialog: called with empty selection")
         }
-        val allTags = getColUnsafe.tags.all()
-        val selectedNotes = selectedRowIds
-            .map { cardId: CardId? -> getColUnsafe.getCard(cardId!!).note(getColUnsafe) }
-            .distinct()
-        val checkedTags = selectedNotes
-            .flatMap { note: Note -> note.tags }
-        if (selectedNotes.size == 1) {
-            Timber.d("showEditTagsDialog: edit tags for one note")
-            tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
-            val dialog = tagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, checkedTags, allTags)
-            showDialogFragment(dialog)
-            return
-        }
-        val uncheckedTags = selectedNotes
-            .flatMap { note: Note ->
-                val noteTags: List<String?> = note.tags
-                allTags.filter { t: String? -> !noteTags.contains(t) }
+
+        var progressMax: Int? = null // this can be made null to blank the dialog
+        var progress = 0
+
+        fun onProgress(progressContext: ProgressContext) {
+            val max = progressMax
+            if (max == null) {
+                progressContext.amount = null
+                progressContext.text = getString(R.string.dialog_processing)
+            } else {
+                progressContext.amount = Pair(progress, max)
             }
-        Timber.d("showEditTagsDialog: edit tags for multiple note")
-        tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
-        val dialog = tagsDialogFactory.newTagsDialog().withArguments(
-            TagsDialog.DialogType.EDIT_TAGS,
-            checkedTags,
-            uncheckedTags,
-            allTags
-        )
-        showDialogFragment(dialog)
+        }
+        launchCatchingTask {
+            withProgress(extractProgress = ::onProgress) {
+                val allTags = withCol { tags.all() }
+                val selectedNoteIds = viewModel.queryAllSelectedNoteIds()
+
+                progressMax = selectedNoteIds.size * 2
+                // TODO!! This is terribly slow on AnKing
+                val checkedTags = withCol {
+                    selectedNoteIds
+                        .asSequence() // reduce memory pressure
+                        .flatMap { nid ->
+                            progress++
+                            getNote(nid).tags // requires withCol
+                        }
+                        .distinct()
+                        .toList()
+                }
+
+                if (selectedNoteIds.size == 1) {
+                    Timber.d("showEditTagsDialog: edit tags for one note")
+                    tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
+                    val dialog = tagsDialogFactory.newTagsDialog().withArguments(
+                        type = TagsDialog.DialogType.EDIT_TAGS,
+                        checkedTags = checkedTags,
+                        allTags = allTags
+                    )
+                    showDialogFragment(dialog)
+                    return@withProgress
+                }
+                // TODO!! This is terribly slow on AnKing
+                // PERF: This MUST be combined with the above sequence - this becomes O(2n) on a
+                // database operation performed over 30k times
+                val uncheckedTags = withCol {
+                    selectedNoteIds
+                        .asSequence() // reduce memory pressure
+                        .flatMap { nid: NoteId ->
+                            progress++
+                            val note = getNote(nid) // requires withCol
+                            val noteTags = note.tags.toSet()
+                            allTags.filter { t: String? -> !noteTags.contains(t) }
+                        }
+                        .distinct()
+                        .toList()
+                }
+
+                progressMax = null
+
+                Timber.d("showEditTagsDialog: edit tags for multiple note")
+                tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
+
+                // withArguments performs IO, can be 18 seconds
+                val dialog = withContext(Dispatchers.IO) {
+                    tagsDialogFactory.newTagsDialog().withArguments(
+                        type = TagsDialog.DialogType.EDIT_TAGS,
+                        checkedTags = checkedTags,
+                        uncheckedTags = uncheckedTags,
+                        allTags = allTags
+                    )
+                }
+                showDialogFragment(dialog)
+            }
+        }
     }
 
     private fun showFilterByTagsDialog() {
@@ -1849,9 +1877,13 @@ open class CardBrowser :
      * @see showedActivityFailedScreen - we may not have AnkiDroidApp.instance and therefore can't
      * create the ViewModel
      */
-    private fun createViewModel() = ViewModelProvider(
+    private fun createViewModel(launchOptions: CardBrowserLaunchOptions?) = ViewModelProvider(
         viewModelStore,
-        CardBrowserViewModel.factory(AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository, cacheDir),
+        CardBrowserViewModel.factory(
+            lastDeckIdRepository = AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository,
+            cacheDir = cacheDir,
+            options = launchOptions
+        ),
         defaultViewModelCreationExtras
     )[CardBrowserViewModel::class.java]
 

@@ -47,6 +47,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
@@ -86,6 +87,7 @@ import kotlin.math.min
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
     private val cacheDir: File,
+    options: CardBrowserLaunchOptions?,
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
 
@@ -166,7 +168,7 @@ class CardBrowserViewModel(
      * * [CardsOrNotes.CARDS] all selected card Ids
      * * [CardsOrNotes.NOTES] one selected Id for every note
      */
-    val selectedRowIds: List<Long>
+    val selectedRowIds: List<CardId>
         get() = selectedRows.map { c -> c.id }
 
     suspend fun queryAllSelectedCardIds(): List<CardId> = when (cardsOrNotes) {
@@ -175,6 +177,10 @@ class CardBrowserViewModel(
             selectedRows
                 .flatMap { row -> withCol { cardIdsOfNote(nid = row.card.nid) } }
     }
+
+    // TODO: move the tag computation to ViewModel
+    suspend fun queryAllSelectedNoteIds(): List<NoteId> =
+        withCol { notesOfCards(selectedRowIds) }
 
     var lastSelectedPosition = 0
 
@@ -254,6 +260,18 @@ class CardBrowserViewModel(
 
     init {
         Timber.d("CardBrowserViewModel::init")
+
+        var selectAllDecks = false
+        when (options) {
+            is CardBrowserLaunchOptions.SystemContextMenu -> { searchTerms = options.search.toString() }
+            is CardBrowserLaunchOptions.SearchQueryJs -> {
+                searchTerms = options.search
+                selectAllDecks = options.allDecks
+            }
+            is CardBrowserLaunchOptions.DeepLink -> { searchTerms = options.search }
+            null -> {}
+        }
+
         flowOfColumnIndex1
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
             .launchIn(viewModelScope)
@@ -277,8 +295,9 @@ class CardBrowserViewModel(
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
+            val initialDeckId = if (selectAllDecks) ALL_DECKS_ID else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
-            setDeckId(getInitialDeck())
+            setDeckId(initialDeckId)
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection() }
             flowOfCardsOrNotes.update { cardsOrNotes }
 
@@ -705,11 +724,17 @@ class CardBrowserViewModel(
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
-        fun factory(lastDeckIdRepository: LastDeckIdRepository, cacheDir: File, preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
+        fun factory(
+            lastDeckIdRepository: LastDeckIdRepository,
+            cacheDir: File,
+            preferencesProvider: SharedPreferencesProvider? = null,
+            options: CardBrowserLaunchOptions?
+        ) = viewModelFactory {
             initializer {
                 CardBrowserViewModel(
                     lastDeckIdRepository,
                     cacheDir,
+                    options,
                     preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider
                 )
             }

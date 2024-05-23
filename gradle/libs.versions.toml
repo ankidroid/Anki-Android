@@ -38,7 +38,6 @@ dokka = "1.9.20"
 espresso = '3.5.1'
 mikehardyGoogleAnalyticsJava7 = "2.0.13"
 hamcrest = "2.2"
-materialDialogs = "3.3.0"
 javaSemver = "0.10.2"
 json = "20240303"
 jsoup = "1.17.2"
@@ -99,8 +98,6 @@ colorpicker = { module = "com.github.mrudultora:Colorpicker", version.ref = "col
 commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
 commons-collections4 = { module = "org.apache.commons:commons-collections4", version.ref = "commonsCollections4" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
-materialDialogs-core = { module = "com.afollestad.material-dialogs:core", version.ref = "materialDialogs" }
-materialDialogs-input = { module = "com.afollestad.material-dialogs:input", version.ref = "materialDialogs" }
 desugar-jdk-libs-nio = { module = "com.android.tools:desugar_jdk_libs_nio", version.ref = "desugar-jdk-libs-nio" }
 drakeet-drawer = { module = "com.drakeet.drawer:drawer", version.ref = "drawer" }
 mikehardy-google-analytics-java7 = { module = "net.mikehardy:google-analytics-java7", version.ref = "mikehardyGoogleAnalyticsJava7" }

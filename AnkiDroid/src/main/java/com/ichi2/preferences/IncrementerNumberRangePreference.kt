@@ -28,7 +28,7 @@ import com.ichi2.utils.KotlinCleanup
 import java.lang.NumberFormatException
 
 // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use IncrementerNumberRangePreferenceCompat
-@Suppress("deprecation")
+@Suppress("deprecation", "OVERRIDE_DEPRECATION")
 @KotlinCleanup("_editText")
 class IncrementerNumberRangePreference : NumberRangePreference {
     private val linearLayout = LinearLayout(context)
