@@ -33,13 +33,20 @@ import org.junit.After
 import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
+import org.junit.rules.RuleChain
 import org.junit.rules.TestName
+import org.robolectric.junit.rules.TimeoutRule
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
 open class JvmTest : TestClass {
     @get:Rule
     val testName = TestName()
+
+    private val rule: TimeoutRule = TimeoutRule.seconds(20)
+
+    @get : Rule
+    var chain: RuleChain = RuleChain.outerRule(rule)
 
     private fun maybeSetupBackend() {
         RustBackendLoader.ensureSetup()
