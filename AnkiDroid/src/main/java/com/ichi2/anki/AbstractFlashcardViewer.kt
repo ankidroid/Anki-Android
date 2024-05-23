@@ -2263,6 +2263,8 @@ abstract class AbstractFlashcardViewer :
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             pageRenderStopwatch.reset()
             pageFinishedFired = false
+            val script = "globalThis.ankidroid = globalThis.ankidroid || {}; ankidroid.postBaseUrl = ``"
+            view?.evaluateJavascript(script, null)
         }
 
         override fun shouldInterceptRequest(
