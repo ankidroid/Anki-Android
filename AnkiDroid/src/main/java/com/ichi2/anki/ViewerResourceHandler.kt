@@ -1,5 +1,6 @@
 /*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
+ *  Copyright (c) 2023 Brayan Oliveira <brayandso.dev@gmail.com>
+ *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -18,37 +19,89 @@ package com.ichi2.anki
 import android.content.Context
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
-import androidx.core.net.toFile
 import com.ichi2.utils.AssetHelper.guessMimeType
 import timber.log.Timber
+import java.io.ByteArrayInputStream
+import java.io.File
 import java.io.FileInputStream
+import java.io.InputStream
+import java.io.RandomAccessFile
+import java.nio.channels.Channels
+
+private const val RANGE_HEADER = "Range"
 
 class ViewerResourceHandler(context: Context) {
-    private val mediaDir = CollectionHelper.getMediaDirectory(context).path
+    private val mediaDir = CollectionHelper.getMediaDirectory(context)
 
-    /**
-     * Loads resources from `collection.media` when requested by JS scripts.
-     *
-     * Differently from common media requests, scripts' requests have an `Origin` header
-     * and are susceptible to CORS policy, so `Access-Control-Allow-Origin` is necessary.
-     */
     fun shouldInterceptRequest(request: WebResourceRequest): WebResourceResponse? {
         val url = request.url
-        if (request.method != "GET" || url.scheme != "file" || "Origin" !in request.requestHeaders) {
+        val path = url.path
+
+        if (request.method != "GET" || path == null) {
             return null
         }
+        if (path == "/favicon.ico") {
+            return WebResourceResponse(null, null, ByteArrayInputStream(ByteArray(0)))
+        }
+
         try {
-            val file = url.toFile()
-            if (file.parent != mediaDir || !file.exists()) {
+            val file = File(mediaDir, path)
+            if (!file.exists()) {
                 return null
             }
-            val inputStream = FileInputStream(file)
-            return WebResourceResponse(guessMimeType(file.path), null, inputStream).apply {
-                responseHeaders = mapOf("Access-Control-Allow-Origin" to "*")
+            request.requestHeaders[RANGE_HEADER]?.let { range ->
+                return handlePartialContent(file, range)
             }
+            val inputStream = FileInputStream(file)
+            val mimeType = guessMimeType(path)
+            return WebResourceResponse(mimeType, null, inputStream)
         } catch (e: Exception) {
-            Timber.d("File couldn't be loaded")
+            Timber.d("File not found")
             return null
         }
+    }
+
+    private fun handlePartialContent(file: File, range: String): WebResourceResponse {
+        val rangeHeader = RangeHeader.from(range, defaultEnd = file.length() - 1)
+
+        val mimeType = guessMimeType(file.path)
+        val inputStream = file.toInputStream(rangeHeader)
+        val (start, end) = rangeHeader
+        val responseHeaders = mapOf(
+            "Content-Range" to "bytes $start-$end/${file.length()}",
+            "Accept-Range" to "bytes"
+        )
+        return WebResourceResponse(
+            mimeType,
+            null,
+            206,
+            "Partial Content",
+            responseHeaders,
+            inputStream
+        )
+    }
+}
+
+/**
+ * Handles the "range" header in a HTTP Request
+ */
+data class RangeHeader(val start: Long, val end: Long) {
+    companion object {
+        fun from(range: String, defaultEnd: Long): RangeHeader {
+            val numbers = range.substring("bytes=".length).split('-')
+            val unspecifiedEnd = numbers.getOrNull(1).isNullOrEmpty()
+            return RangeHeader(
+                start = numbers[0].toLong(),
+                end = if (unspecifiedEnd) defaultEnd else numbers[1].toLong()
+            )
+        }
+    }
+}
+
+fun File.toInputStream(header: RangeHeader): InputStream {
+    // PERF: Test to see if a custom FileInputStream + available() would be faster
+    val randomAccessFile = RandomAccessFile(this, "r")
+    return Channels.newInputStream(randomAccessFile.channel).also {
+        it.skip(header.start)
     }
 }
