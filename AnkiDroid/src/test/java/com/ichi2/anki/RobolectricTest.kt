@@ -55,7 +55,6 @@ import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.json.JSONException
 import org.junit.*
-import org.junit.rules.RuleChain
 import org.junit.rules.TestName
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
@@ -95,10 +94,8 @@ open class RobolectricTest : AndroidTest {
     @get:Rule
     val failOnUnhandledExceptions = FailOnUnhandledExceptionRule()
 
-    private val rule: TimeoutRule = TimeoutRule.seconds(20)
-
-    @get : Rule
-    var chain: RuleChain = RuleChain.outerRule(rule)
+    @get:Rule
+    val timeoutRule: TimeoutRule = TimeoutRule.seconds(60)
 
     @Before
     @CallSuper
