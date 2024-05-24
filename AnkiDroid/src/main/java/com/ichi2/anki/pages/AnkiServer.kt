@@ -53,7 +53,6 @@ open class AnkiServer(
                 Timber.d("Rejecting GET request to server %s", session.uri)
                 newFixedLengthResponse(Response.Status.NOT_FOUND, null, null)
             }
-            Method.OPTIONS -> buildResponse(null)
             else -> {
                 Timber.d("Ignored request of unhandled method %s, uri %s", session.method, session.uri)
                 newFixedLengthResponse(null)
@@ -70,11 +69,6 @@ open class AnkiServer(
             newFixedLengthResponse(null)
         } else {
             newChunkedResponse(status, mimeType, ByteArrayInputStream(data))
-        }.apply {
-            addHeader("Access-Control-Allow-Origin", "*")
-            addHeader("Access-Control-Allow-Headers", "Content-Type")
-            addHeader("Access-Control-Allow-Methods", "POST")
-            addHeader("Access-Control-Max-Age", "7200")
         }
     }
 
