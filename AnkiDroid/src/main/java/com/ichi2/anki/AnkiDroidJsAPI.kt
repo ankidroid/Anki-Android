@@ -333,6 +333,17 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_4)
                 convertToByteArray(apiContract, true)
             }
+
+            "addTagToNote" -> {
+                val jsonObject = JSONObject(apiParams)
+                val noteId = jsonObject.getLong("noteId")
+                val tag = jsonObject.getString("tag")
+                val note = getColUnsafe.getNote(noteId).apply {
+                    addTag(tag)
+                }
+                getColUnsafe.updateNote(note)
+                convertToByteArray(apiContract, true)
+            }
             "sttSetLanguage" -> convertToByteArray(apiContract, speechRecognizer.setLanguage(apiParams))
             "sttStart" -> {
                 val callback = object : JavaScriptSTT.SpeechRecognitionCallback {
