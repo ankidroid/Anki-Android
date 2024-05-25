@@ -953,16 +953,20 @@ open class DeckPicker :
         menu.setGroupVisible(R.id.allItems, optionsMenuState != null)
         optionsMenuState?.run {
             menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
-            updateUndoLabelFromState(menu.findItem(R.id.action_undo), undoLabel)
+            updateUndoLabelFromState(menu.findItem(R.id.action_undo), undoLabel, undoAvailable)
             updateSyncIconFromState(menu.findItem(R.id.action_sync), this)
             menu.findItem(R.id.action_scoped_storage_migrate).isVisible = shouldShowStartMigrationButton
             setupMigrationProgressMenuItem(menu, mediaMigrationState)
         }
     }
 
-    private fun updateUndoLabelFromState(menuItem: MenuItem, undoLabel: String?) {
+    private fun updateUndoLabelFromState(
+        menuItem: MenuItem,
+        undoLabel: String?,
+        undoAvailable: Boolean
+    ) {
         menuItem.run {
-            if (undoLabel != null) {
+            if (undoLabel != null && undoAvailable) {
                 isVisible = true
                 title = undoLabel
             } else {
@@ -1011,13 +1015,14 @@ open class DeckPicker :
         optionsMenuState = withOpenColOrNull {
             val searchIcon = decks.count() >= 10
             val undoLabel = undoLabel()
-            Pair(searchIcon, undoLabel)
-        }?.let { (searchIcon, undoLabel) ->
+            val undoAvailable = undoAvailable()
+            Triple(searchIcon, undoLabel, undoAvailable)
+        }?.let { (searchIcon, undoLabel, undoAvailable) ->
             val syncIcon = fetchSyncStatus()
             val mediaMigrationState = getMediaMigrationState()
             val shouldShowStartMigrationButton = shouldOfferToMigrate() ||
                 mediaMigrationState is MediaMigrationState.Ongoing.PausedDueToError
-            OptionsMenuState(searchIcon, undoLabel, syncIcon, shouldShowStartMigrationButton, mediaMigrationState)
+            OptionsMenuState(searchIcon, undoLabel, syncIcon, shouldShowStartMigrationButton, mediaMigrationState, undoAvailable)
         }
     }
 
@@ -2043,6 +2048,8 @@ open class DeckPicker :
                     Pair(sched.deckDueTree(), this.isEmpty)
                 }
                 onDecksLoaded(deckData.first, deckData.second)
+
+                updateMenuState()
             }
         }
     }
@@ -2704,7 +2711,8 @@ data class OptionsMenuState(
     val undoLabel: String?,
     val syncIcon: SyncIconState,
     val shouldShowStartMigrationButton: Boolean,
-    val mediaMigrationState: MediaMigrationState
+    val mediaMigrationState: MediaMigrationState,
+    val undoAvailable: Boolean
 )
 
 enum class SyncIconState {
