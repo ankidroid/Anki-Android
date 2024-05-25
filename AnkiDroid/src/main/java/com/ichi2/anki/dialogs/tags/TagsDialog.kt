@@ -13,6 +13,7 @@ import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -209,6 +210,11 @@ class TagsDialog : AnalyticsDialogFragment {
         val dialog: MaterialDialog? = dialog
         resizeWhenSoftInputShown(dialog?.window!!)
         return dialog
+    }
+
+    override fun onResume() {
+        super.onResume()
+        dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
 
     private fun radioButtonIdToCardState(id: Int) =
