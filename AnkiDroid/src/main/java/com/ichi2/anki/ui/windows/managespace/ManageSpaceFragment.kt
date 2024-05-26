@@ -29,6 +29,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.preference.Preference
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.dialogs.CustomDialogFragment
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.anki.snackbar.showSnackbar
@@ -240,27 +241,39 @@ class ManageSpaceFragment : SettingsFragment() {
         if (size is Size.FilesAndBytes) {
             val formatter = LocalizedUnambiguousBackupTimeFormatter()
             val backupFiles = size.files
-            val backupNames = backupFiles.map { formatter.getTimeOfBackupAsText(it) }
+            val backupNames = backupFiles.map { formatter.getTimeOfBackupAsText(it) }.toTypedArray()
+            val checkedItems = BooleanArray(backupNames.size) { false }
 
-            val chooseBackupsPromptResult = requireContext().awaitDialog {
-                setTitle(R.string.dialog__delete_backups__title)
-                setMultiChoiceItems(backupNames, CheckedItems.None)
-                setPositiveButton(R.string.dialog_positive_delete)
-                setNegativeButton(R.string.dialog_cancel)
+            val deleteBackupsPromptResult = CompletableDeferred<DialogResult.Ok.MultipleChoice>()
+
+            val dialogFragment = CustomDialogFragment(
+                title = R.string.dialog__delete_backups__title,
+                items = backupNames,
+                checkedItems = checkedItems,
+                positiveButton = R.string.dialog_positive_delete,
+                negativeButton = R.string.dialog_cancel
+            ) { selectedItems ->
+                deleteBackupsPromptResult.complete(
+                    DialogResult.Ok.MultipleChoice(
+                        checkedItems = selectedItems // Use the List<Boolean> directly
+                    )
+                )
             }
 
-            if (chooseBackupsPromptResult is DialogResult.Ok.MultipleChoice) {
-                val checkedItems = chooseBackupsPromptResult.checkedItems
-                val backupsToDelete = backupFiles.filterIndexed { index, _ -> checkedItems[index] }
+            dialogFragment.show(parentFragmentManager, "CustomDialog")
 
-                withProgress(R.string.progress__deleting_backups) {
-                    viewModel.deleteBackups(backupsToDelete)
-                }
+            val result = deleteBackupsPromptResult.await()
+            val backupsToDelete = backupFiles.filterIndexed { index, _ -> result.checkedItems[index] }
+
+            withProgress(R.string.progress__deleting_backups) {
+                viewModel.deleteBackups(backupsToDelete)
             }
         } else {
             showSnackbarIfCalculatingOrError(size)
         }
     }
+
+
 
     /************************************* Delete collection **************************************/
 

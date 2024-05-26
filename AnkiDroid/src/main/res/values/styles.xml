@@ -60,6 +60,32 @@
         <item name="android:fontFamily">@string/font_fontFamily_medium</item>
     </style>
 
+       <!-- Light Theme Dialog ManageSpaceActivity -->
+<style name="CustomDialogTheme.Light" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+    <!-- Background color -->
+    <item name="android:colorBackground">@color/white</item>
+    <!-- Title color -->
+    <item name="android:textColorPrimary">@color/black</item>
+    <!-- Message color -->
+    <item name="android:textColorSecondary">@color/black</item>
+
+    <item name="colorControlActivated">@color/material_light_blue_500</item>
+
+</style>
+
+<!-- Dark Theme Dialog for ManageSpaceActivity -->
+<style name="CustomDialogTheme.Dark" parent="Theme.MaterialComponents.Dialog.Alert">
+    <!-- Background color -->
+    <item name="android:colorBackground">@color/material_theme_grey</item>
+    <!-- Title color -->
+    <item name="android:textColorPrimary">@color/white</item>
+    <!-- Message color -->
+    <item name="android:textColorSecondary">@color/white</item>
+
+    <item name="colorControlActivated">@color/material_light_blue_500</item>
+
+</style>
+
     <!-- Styles for each of the 4 answer buttons -->
     <style name="AgainButton">
         <item name="answerButtonBackground">?attr/againButtonBackground</item>
