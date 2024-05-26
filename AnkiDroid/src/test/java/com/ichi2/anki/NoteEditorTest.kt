@@ -90,10 +90,16 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    fun testErrorNull() = runTest {
+    fun testErrorMessageNull() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.BASIC)
-            .withFirstField("Test")
+            .withNoFirstField()
             .build()
+
+        noteEditor.saveNote()
+        assertThat(noteEditor.addNoteErrorMessage, equalTo(CollectionManager.TR.addingTheFirstFieldIsEmpty()))
+
+        noteEditor.setFieldValueFromUi(0, "Hello")
+
         noteEditor.saveNote()
         assertThat(noteEditor.addNoteErrorMessage, equalTo(null))
     }
