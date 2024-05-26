@@ -67,6 +67,7 @@ sharedPreferencesMock = "1.2.4"
 slf4jTimber = "3.1"
 timber = "5.0.1"
 triplet = "3.9.1"
+turbine = "1.1.0"
 workRuntimeKtx = "2.9.0"
 
 [libraries]
@@ -151,6 +152,7 @@ mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+cashapp-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 [plugins]
 

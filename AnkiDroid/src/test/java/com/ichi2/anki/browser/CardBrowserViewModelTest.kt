@@ -17,6 +17,7 @@
 package com.ichi2.anki.browser
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import app.cash.turbine.test
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager
@@ -214,6 +215,37 @@ class CardBrowserViewModelTest : JvmTest() {
 
         runViewModelTest(notes = 1) {
             assertThat("1 row returned", rowCount, equalTo(1))
+        }
+    }
+
+    fun `selected rows are refreshed`() = runViewModelTest(notes = 2) {
+        flowOfSelectedRows.test {
+            // initially, flowOfSelectedRows should not have emitted anything
+            expectNoEvents()
+
+            selectAll()
+            assertThat("initial selection", awaitItem().size, equalTo(2))
+
+            selectNone()
+            assertThat("deselected all", awaitItem().size, equalTo(0))
+
+            toggleRowSelectionAtPosition(0)
+            assertThat("selected row", awaitItem().size, equalTo(1))
+
+            toggleRowSelectionAtPosition(0)
+            assertThat("deselected rows", awaitItem().size, equalTo(0))
+
+            selectRowAtPosition(0)
+            assertThat("select rows explicitly", awaitItem().size, equalTo(1))
+
+            selectRowAtPosition(0)
+            expectNoEvents()
+
+            selectRowsBetweenPositions(0, 1)
+            assertThat("select rows between positions", awaitItem().size, equalTo(2))
+
+            selectRowsBetweenPositions(0, 1)
+            expectNoEvents()
         }
     }
 
