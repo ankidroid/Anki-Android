@@ -33,7 +33,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.ext.convertToString
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
@@ -409,13 +408,13 @@ class TagsFile(path: String) : File(path), Parcelable {
             // https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/formats.md
             val string = Json.encodeToString(data)
             Timber.d("persisting tags to disk, length: %d", string.length)
-            outputStream.writeBytes(string)
+            outputStream.writeUTF(string)
         }
     }
 
     fun getData() = DataInputStream(FileInputStream(this)).use { inputStream ->
         // PERF!!: This takes ~2 seconds with AnKing
-        Json.decodeFromString<TagsData>(inputStream.convertToString())
+        Json.decodeFromString<TagsData>(inputStream.readUTF())
     }
 
     override fun describeContents(): Int = 0
