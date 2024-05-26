@@ -44,6 +44,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.whenever
+import timber.log.Timber
 import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(AndroidJUnit4::class)
@@ -634,6 +635,21 @@ class TagsDialogTest : RobolectricTest() {
             editText.text.insert(0, " ")
             Assert.assertEquals("Should not crash.", "::", editText.text.toString())
         }
+    }
+
+    @Test
+    fun `unicode tags can be serialized 16576`() {
+        val type = TagsDialog.DialogType.FILTER_BY_TAG
+        val allTags = listOf("02动作状态")
+
+        val args = TagsDialog(ParametersUtils.whatever())
+            .withTestArguments(type, emptyList(), allTags)
+            .arguments
+        val mockListener = Mockito.mock(TagsDialogListener::class.java)
+        val factory = TagsDialogFactory(mockListener)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
+        scenario.moveToState(Lifecycle.State.STARTED)
+        scenario.onFragment { Timber.d("Dialog successfully opened") }
     }
 
     // these are called 'withTestArguments' due to "extension is shadowed by a member" warnings
