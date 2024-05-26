@@ -66,7 +66,6 @@
         <TextView
             android:id="@android:id/summary"
             android:ellipsize="end"
-            android:singleLine="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@android:id/title"
@@ -74,7 +73,6 @@
             android:layout_gravity="start"
             android:textAlignment="viewStart"
             android:textColor="?android:attr/textColorSecondary"
-            android:maxLines="10"
             style="@style/PreferenceSummaryTextStyle"/>
 
     </RelativeLayout>

@@ -167,8 +167,8 @@
     <string name="vertical_centering_summ">Центрувати вміст карт вертикально</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Інтервал подвійного дотику в мілісекундах</string>
     <string name="pref_double_tap_time_interval_summary">Другий дотик відповіді буде проігнорований, якщо час ще не минув. Це запобігає подвійному натисканню</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Тривалість довгого натискання для показу відповіді</string>
+    <string name="pref_show_answer_long_press_time_summary">Мінімальний час натискання для того, щоби кнопка відповіді зареєструвала дотик.</string>
     <string name="show_estimates" maxLength="41">Показувати час кнопки</string>
     <string name="show_estimates_summ">Показувати час наступного повторення над кнопками відповіді</string>
     <string name="show_large_answer_buttons" maxLength="41">Показати великі кнопки відповіді</string>

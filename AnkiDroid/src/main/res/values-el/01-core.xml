@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Διαγραφή Σημείωσης</string>
     <string name="menu_flag">Σήμανση</string>
     <string name="menu_flag_card">Σήμανση κάρτας</string>
-    <string name="menu_flag_card_zero">Καμία σημαία</string>
-    <string name="menu_flag_card_one">Κόκκινη σημαία</string>
-    <string name="menu_flag_card_two">Πορτοκαλί σημαία</string>
-    <string name="menu_flag_card_three">Πράσινη σημαία</string>
-    <string name="menu_flag_card_four">Μπλε σημαία</string>
-    <string name="menu_flag_card_five">Ροζ ετικέτα</string>
-    <string name="menu_flag_card_six">Τυρκουάζ σημαία</string>
-    <string name="menu_flag_card_seven">Μοβ ετικέτα</string>
     <string name="menu_edit_tags">Επεξεργασία ετικετών</string>
     <string name="delete_note_message">Πραγματικά να διαγραφεί αυτή η σημείωση και όλες οι κάρτες της;\n%s</string>
     <string name="menu_search">Αναζήτηση στο %1$s</string>

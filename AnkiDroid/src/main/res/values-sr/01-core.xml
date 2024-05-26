@@ -108,14 +108,6 @@
     <string name="menu_delete_note">Избриши белешку</string>
     <string name="menu_flag">Заставице</string>
     <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Да ли заисте желите да избришете белешку и све повезане карте?\n%s</string>
     <string name="menu_search">Потражи у %1$s</string>

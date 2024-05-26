@@ -45,7 +45,6 @@ class Statistics : PageFragment(R.layout.statistics) {
             }
 
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
-            inflateMenu(R.menu.statistics)
             menu.findItem(R.id.action_export_stats).title = CollectionManager.TR.statisticsSavePdf()
             setOnMenuItemClickListener { item ->
                 if (item.itemId == R.id.action_export_stats) {
@@ -56,7 +55,7 @@ class Statistics : PageFragment(R.layout.statistics) {
         }
     }
 
-    /**Prepares and initiates a printing task for the content(stats) displayed in the WebView.
+    /** Prepares and initiates a printing task for the content(stats) displayed in the WebView.
      * It uses the Android PrintManager service to create a print job, based on the content of the WebView.
      * The resulting output is a PDF document. **/
     private fun exportWebViewContentAsPDF() {

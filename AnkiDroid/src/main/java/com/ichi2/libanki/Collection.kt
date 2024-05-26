@@ -661,9 +661,6 @@ open class Collection(
         return backend.clozeNumbersInNote(n.toBackendNote())
             .sorted()
     }
-    fun addImageOcclusionNotetype() {
-        backend.addImageOcclusionNotetype()
-    }
 
     fun getImageForOcclusionRaw(input: ByteArray): ByteArray {
         return backend.getImageForOcclusionRaw(input = input)

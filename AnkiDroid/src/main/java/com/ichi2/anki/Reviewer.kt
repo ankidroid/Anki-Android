@@ -45,6 +45,7 @@ import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
@@ -665,8 +666,7 @@ open class Reviewer :
         showDialogFragment(dialog)
     }
 
-    @NeedsTest("Starting animation from swipe is inverse to the finishing one")
-    private fun addNote(fromGesture: Gesture? = null) {
+    fun addNote(fromGesture: Gesture? = null) {
         val intent = Intent(this, NoteEditor::class.java)
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
@@ -692,6 +692,7 @@ open class Reviewer :
         Timber.d("onCreateOptionsMenu()")
         // NOTE: This is called every time a new question is shown via invalidate options menu
         menuInflater.inflate(R.menu.reviewer, menu)
+        setFlagTitles(menu)
         displayIcons(menu)
         actionButtons.setCustomButtonsStatus(menu)
         val alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
@@ -846,6 +847,17 @@ open class Reviewer :
         tintOverflowMenuIcons(menu, skipIf = { isFlagResource(it.itemId) })
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setFlagTitles(menu: Menu) {
+        menu.findItem(R.id.action_flag_zero).title = Flag.NONE.displayName()
+        menu.findItem(R.id.action_flag_one).title = Flag.RED.displayName()
+        menu.findItem(R.id.action_flag_two).title = Flag.ORANGE.displayName()
+        menu.findItem(R.id.action_flag_three).title = Flag.GREEN.displayName()
+        menu.findItem(R.id.action_flag_four).title = Flag.BLUE.displayName()
+        menu.findItem(R.id.action_flag_five).title = Flag.PINK.displayName()
+        menu.findItem(R.id.action_flag_six).title = Flag.TURQUOISE.displayName()
+        menu.findItem(R.id.action_flag_seven).title = Flag.PURPLE.displayName()
     }
 
     @SuppressLint("RestrictedApi")

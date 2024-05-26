@@ -173,21 +173,23 @@ class TemplateManager {
                 )
             }
 
-            var qtext = applyCustomFilters(partial.qnodes, this, frontSide = null)
+            val qtext = applyCustomFilters(partial.qnodes, this, frontSide = null)
             val qout = col.backend.extractAvTags(text = qtext, questionSide = true)
+            var qoutText = qout.text
 
-            var atext = applyCustomFilters(partial.anodes, this, frontSide = qout.text)
+            val atext = applyCustomFilters(partial.anodes, this, frontSide = qout.text)
             val aout = col.backend.extractAvTags(text = atext, questionSide = false)
+            var aoutText = aout.text
 
             if (!_browser) {
                 val svg = noteType.optBoolean("latexsvg", false)
-                qtext = LaTeX.mungeQA(qout.text, col, svg)
-                atext = LaTeX.mungeQA(aout.text, col, svg)
+                qoutText = LaTeX.mungeQA(qout.text, col, svg)
+                aoutText = LaTeX.mungeQA(aout.text, col, svg)
             }
 
             return TemplateRenderOutput(
-                questionText = qtext,
-                answerText = atext,
+                questionText = qoutText,
+                answerText = aoutText,
                 questionAvTags = avTagsToNative(qout.avTagsList),
                 answerAvTags = avTagsToNative(aout.avTagsList),
                 css = noteType().getString("css")

@@ -84,9 +84,9 @@ class ManageNotetypes : AnkiActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.locale_dialog_search_bar, menu)
+        menuInflater.inflate(R.menu.search, menu)
 
-        val searchItem = menu.findItem(R.id.locale_dialog_action_search)
+        val searchItem = menu.findItem(R.id.search_item)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = searchItem?.actionView as? SearchView
         searchView?.maxWidth = Integer.MAX_VALUE

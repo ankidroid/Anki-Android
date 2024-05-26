@@ -80,7 +80,7 @@
     <string name="html_size_code_xx_large">xx-పెద్ద</string>
     <!-- gestures_labels -->
     <string name="answer_again">మళ్లీ సమాధానం చెప్పండి</string>
-    <string name="answer_hard">Answer hard</string>
+    <string name="answer_hard">గట్టిగా సమాధానం చెప్పండి</string>
     <string name="answer_good">సమాధానం బాగుంది</string>
     <string name="answer_easy">సులభంగా సమాధానం ఇవ్వండి</string>
     <string name="gesture_play">మీడియాను ప్లే చేయండి</string>
@@ -98,7 +98,7 @@
     <string name="gesture_abort_sync">నేర్చుకోవడం మరియు సమకాలీకరించడం గురించి</string>
     <string name="gesture_toggle_whiteboard">వైట్‌బోర్డ్‌ని టోగుల్ చేయండి</string>
     <string name="gesture_show_hint">సూచనను చూపించు</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_all_hints">అన్ని సూచనలను చూపించు</string>
     <string name="record_voice">వాయిస్ రికార్డ్ చేయండి</string>
     <string name="replay_voice">రీప్లే వాయిస్</string>
     <string name="save_voice">రికార్డింగ్‌ను సేవ్ చేయండి</string>

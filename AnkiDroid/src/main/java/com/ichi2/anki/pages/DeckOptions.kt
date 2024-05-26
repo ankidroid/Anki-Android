@@ -28,6 +28,7 @@ import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.updateDeckConfigsRaw
@@ -111,7 +112,29 @@ class DeckOptions : PageFragment() {
 }
 
 suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
-    val output = CollectionManager.withCol { updateDeckConfigsRaw(input) }
+    val output = withContext(Dispatchers.Main) {
+        withProgress(
+            extractProgress = {
+                text = if (progress.hasComputeWeights()) {
+                    val tr = CollectionManager.TR
+                    val value = progress.computeWeights
+                    val label = tr.deckConfigOptimizingPreset(
+                        currentCount = value.currentPreset,
+                        totalCount = value.totalPresets
+                    )
+                    val pct = if (value.total > 0) (value.current / value.total * 100) else 0
+                    val reviewsLabel = tr.deckConfigPercentOfReviews(pct = pct.toString(), reviews = value.reviews)
+                    label + "\n" + reviewsLabel
+                } else {
+                    getString(R.string.dialog_processing)
+                }
+            }
+        ) {
+            withContext(Dispatchers.IO) {
+                CollectionManager.withCol { updateDeckConfigsRaw(input) }
+            }
+        }
+    }
     undoableOp { OpChanges.parseFrom(output) }
     withContext(Dispatchers.Main) { finish() }
     return output

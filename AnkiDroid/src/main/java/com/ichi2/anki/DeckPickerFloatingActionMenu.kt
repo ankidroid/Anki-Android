@@ -345,7 +345,10 @@ class DeckPickerFloatingActionMenu(
                     CreateDeckDialog.DeckDialogType.DECK,
                     null
                 )
-                createDeckDialog.onNewDeckCreated = { deckPicker.updateDeckList() }
+                createDeckDialog.onNewDeckCreated = {
+                    deckPicker.updateDeckList()
+                    deckPicker.invalidateOptionsMenu()
+                }
                 createDeckDialog.showDialog()
             }
         }

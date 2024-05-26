@@ -185,7 +185,7 @@
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opções</string>
     <string name="menu__deck_options">Opções de baralho</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opções de estudo</string>
-    <string name="select_tts">Definir língua do \"TTS\" (Texto para Fala)</string>
+    <string name="select_tts">Definir língua do sistema de Texto para Fala</string>
     <string name="custom_study">Estudo personalizado</string>
     <string name="more_options">Mais</string>
     <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas serão automaticamente devolvidas aos seus baralhos originais depois das rever. Ao eliminar este baralho da lista de baralhos irá devolver todas as fichas restantes ao seu baralho original.</string>
@@ -286,7 +286,7 @@
     <string name="home">Página Inicial</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Ficha enterrada</string>
+    <string name="card_buried">Ficha adiada</string>
     <plurals name="note_suspended">
         <item quantity="one">%d ficha suspensa.</item>
         <item quantity="other">%d fichas suspensas.</item>
@@ -332,7 +332,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Fichas</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
     <string name="toggle_cards_notes">Alternar entre Fichas e Notas</string>
-    <string name="toggle_browser_mode_help">Alternar entre mostrar cartas e notas no navegador (\"browser\")</string>
+    <string name="toggle_browser_mode_help">Alternar entre mostrar fichas e notas no navegador (\"browser\")</string>
     <string name="truncate_content_help">Mostrar apenas as primeiras três linhas de conteúdo de cada uma das linhas do navegador (\"browser\")</string>
     <string name="browser_options_dialog_heading">Opções do Navegador (\"Browser\")</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Esta funcionalidade está indiponível durante a migração dos dados
@@ -360,5 +360,13 @@
     <string name="deck_description_field_hint">Descrição</string>
     <string name="failed_to_copy">Falha ao copiar</string>
     <string name="card_browser_unavailable_when_notes_mode">Indisponível no modo \"Notas\"</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d ficha com adiamento cancelado</item>
+        <item quantity="other">%d fichas com adiamento cancelado</item>
+    </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Reposicionar</string>
+    <string name="start_recording">Gravar</string>
+    <string name="stop_recording">Interromper</string>
+    <string name="play_recording">Reproduzir</string>
+    <string name="next_recording">Próxima</string>
 </resources>

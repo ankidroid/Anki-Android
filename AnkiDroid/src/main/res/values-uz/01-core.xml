@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Qaydni o\'chirish</string>
     <string name="menu_flag">Bayroq</string>
     <string name="menu_flag_card">Kartaga bayroq qo\'yish</string>
-    <string name="menu_flag_card_zero">Bayroqsiz</string>
-    <string name="menu_flag_card_one">Qizil bayroq</string>
-    <string name="menu_flag_card_two">Apelsinrang bayroq</string>
-    <string name="menu_flag_card_three">Yashil bayroq</string>
-    <string name="menu_flag_card_four">Ko\'k bayroq</string>
-    <string name="menu_flag_card_five">Pushti bayroq</string>
-    <string name="menu_flag_card_six">Feruza bayroq</string>
-    <string name="menu_flag_card_seven">Siyohrang bayroq</string>
     <string name="menu_edit_tags">Teglarni tahrirlash</string>
     <string name="delete_note_message">Rostdan ham bu qayd va uning barcha kartalarini o\'chirish?\n%s</string>
     <string name="menu_search">%1$s dan izlab ko\'rish</string>

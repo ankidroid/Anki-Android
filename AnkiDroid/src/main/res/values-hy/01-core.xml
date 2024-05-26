@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Ջնջել գրառումը</string>
     <string name="menu_flag">Դրոշ</string>
     <string name="menu_flag_card">Ավելացնել դրոշ</string>
-    <string name="menu_flag_card_zero">Առանց դրոշ</string>
-    <string name="menu_flag_card_one">Կարմիր</string>
-    <string name="menu_flag_card_two">Նարնջագույն</string>
-    <string name="menu_flag_card_three">Կանաչ</string>
-    <string name="menu_flag_card_four">Կապույտ</string>
-    <string name="menu_flag_card_five">Վարդագույն </string>
-    <string name="menu_flag_card_six">Փիրուզագույն</string>
-    <string name="menu_flag_card_seven">Մանուշակագույն</string>
     <string name="menu_edit_tags">Խմբագրել պիտակները</string>
     <string name="delete_note_message">Ջնջե՞լ այս գրառումը և նրա բոլոր քարտերը:\n%s</string>
     <string name="menu_search">Որոնում %1$s-ում</string>

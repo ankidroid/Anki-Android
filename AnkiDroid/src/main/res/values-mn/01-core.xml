@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Картын хэсгийг устгах</string>
     <string name="menu_flag">Дарцаг</string>
     <string name="menu_flag_card">Картыг дарцаглах</string>
-    <string name="menu_flag_card_zero">Дарцаггүй</string>
-    <string name="menu_flag_card_one">Улаан дарцаг</string>
-    <string name="menu_flag_card_two">Улбар шар дарцаг</string>
-    <string name="menu_flag_card_three">Ногоон дарцаг</string>
-    <string name="menu_flag_card_four">Цэнхэр дарцаг</string>
-    <string name="menu_flag_card_five">Ягаан дарцаг</string>
-    <string name="menu_flag_card_six">Цэнхэр</string>
-    <string name="menu_flag_card_seven">Нил ягаан дарцаг</string>
     <string name="menu_edit_tags">Шошгийг солих</string>
     <string name="delete_note_message">Та үнэхээр энэ картыг, хэсгүүдтэй нь цуг устгамаар байна уу?\n%s</string>
     <string name="menu_search">%1$s ын дараа дахин харагдана</string>

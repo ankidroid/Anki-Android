@@ -59,6 +59,7 @@ import org.junit.rules.TestName
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.junit.rules.TimeoutRule
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowLooper
@@ -92,6 +93,9 @@ open class RobolectricTest : AndroidTest {
 
     @get:Rule
     val failOnUnhandledExceptions = FailOnUnhandledExceptionRule()
+
+    @get:Rule
+    val timeoutRule: TimeoutRule = TimeoutRule.seconds(60)
 
     @Before
     @CallSuper
@@ -436,7 +440,7 @@ open class RobolectricTest : AndroidTest {
 
     private fun validateRunWithAnnotationPresent() {
         try {
-            ApplicationProvider.getApplicationContext()
+            ApplicationProvider.getApplicationContext<Application>()
         } catch (e: IllegalStateException) {
             if (e.message != null && e.message!!.startsWith("No instrumentation registered!")) {
                 // Explicitly ignore the inner exception - generates line noise

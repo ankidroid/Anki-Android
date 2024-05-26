@@ -218,7 +218,7 @@ object LanguageUtil {
             .getString("language", SYSTEM_LANGUAGE_TAG)!!
 
         val localeLanguage = if (langCode == SYSTEM_LANGUAGE_TAG) {
-            getSystemLocale().language
+            getSystemLocale().toLanguageTag()
         } else {
             langCode
         }

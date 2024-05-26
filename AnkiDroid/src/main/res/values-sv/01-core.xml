@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Ta bort not</string>
     <string name="menu_flag">Flagga</string>
     <string name="menu_flag_card">Flagga kort</string>
-    <string name="menu_flag_card_zero">Ingen flagga</string>
-    <string name="menu_flag_card_one">Röd flagga</string>
-    <string name="menu_flag_card_two">Orange flagga</string>
-    <string name="menu_flag_card_three">Grön flagga</string>
-    <string name="menu_flag_card_four">Blå flagga</string>
-    <string name="menu_flag_card_five">Rosa flagga</string>
-    <string name="menu_flag_card_six">Turkos flagga</string>
-    <string name="menu_flag_card_seven">Lila flagga</string>
     <string name="menu_edit_tags">Redigera taggar</string>
     <string name="delete_note_message">Vill du verkligen ta bort den här noten och alla dess kort?\n%s</string>
     <string name="menu_search">Sökning i %1$s</string>

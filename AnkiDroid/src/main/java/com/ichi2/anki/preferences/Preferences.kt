@@ -54,7 +54,7 @@ class Preferences :
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
 
-    private fun hasLateralNavigation(): Boolean {
+    fun hasLateralNavigation(): Boolean {
         return findViewById<FragmentContainerView>(R.id.lateral_nav_container) != null
     }
 

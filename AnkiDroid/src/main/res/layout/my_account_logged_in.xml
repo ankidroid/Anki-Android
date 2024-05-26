@@ -52,14 +52,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/logged_as"
-                android:textSize="@dimen/md_title_textsize"
+                android:textSize="@dimen/title_textsize"
                 android:layout_margin="@dimen/content_vertical_padding"/>
 
             <com.ichi2.ui.FixedTextView
                 android:id="@+id/username_logged_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/md_title_textsize"
+                android:textSize="@dimen/title_textsize"
                 android:textStyle="bold"
                 android:layout_margin="@dimen/content_vertical_padding"
                 tools:text="user@example.com"

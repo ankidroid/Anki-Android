@@ -16,6 +16,8 @@
 
 package com.ichi2.anki.browser
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -42,7 +44,10 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
+import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
@@ -82,6 +87,7 @@ import kotlin.math.min
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
     private val cacheDir: File,
+    options: CardBrowserLaunchOptions?,
     preferences: SharedPreferencesProvider
 ) : ViewModel(), SharedPreferencesProvider by preferences {
 
@@ -162,7 +168,7 @@ class CardBrowserViewModel(
      * * [CardsOrNotes.CARDS] all selected card Ids
      * * [CardsOrNotes.NOTES] one selected Id for every note
      */
-    val selectedRowIds: List<Long>
+    val selectedRowIds: List<CardId>
         get() = selectedRows.map { c -> c.id }
 
     suspend fun queryAllSelectedCardIds(): List<CardId> = when (cardsOrNotes) {
@@ -171,6 +177,10 @@ class CardBrowserViewModel(
             selectedRows
                 .flatMap { row -> withCol { cardIdsOfNote(nid = row.card.nid) } }
     }
+
+    // TODO: move the tag computation to ViewModel
+    suspend fun queryAllSelectedNoteIds(): List<NoteId> =
+        withCol { notesOfCards(selectedRowIds) }
 
     var lastSelectedPosition = 0
 
@@ -250,6 +260,18 @@ class CardBrowserViewModel(
 
     init {
         Timber.d("CardBrowserViewModel::init")
+
+        var selectAllDecks = false
+        when (options) {
+            is CardBrowserLaunchOptions.SystemContextMenu -> { searchTerms = options.search.toString() }
+            is CardBrowserLaunchOptions.SearchQueryJs -> {
+                searchTerms = options.search
+                selectAllDecks = options.allDecks
+            }
+            is CardBrowserLaunchOptions.DeepLink -> { searchTerms = options.search }
+            null -> {}
+        }
+
         flowOfColumnIndex1
             .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
             .launchIn(viewModelScope)
@@ -273,8 +295,9 @@ class CardBrowserViewModel(
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
+            val initialDeckId = if (selectAllDecks) ALL_DECKS_ID else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
-            setDeckId(getInitialDeck())
+            setDeckId(initialDeckId)
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection() }
             flowOfCardsOrNotes.update { cardsOrNotes }
 
@@ -432,6 +455,47 @@ class CardBrowserViewModel(
                 sched.suspendCards(cardIds).changes
             }
         }
+    }
+
+    /**
+     * if all cards are buried, unbury all
+     * if no cards are buried, bury all
+     * if there is a mix, bury all
+     *
+     * if no cards are checked, do nothing
+     *
+     * @return Whether the operation was bury/unbury, and the number of affected cards.
+     * `null` if nothing happened
+     */
+    suspend fun toggleBury(): BuryResult? {
+        if (!hasSelectedAnyRows()) {
+            Timber.w("no cards to bury")
+            return null
+        }
+
+        // https://github.com/ankitects/anki/blob/074becc0cee1e9ae59be701ad6c26787f74b4594/qt/aqt/browser/browser.py#L896-L902
+        fun Card.isBuried(): Boolean =
+            queue == QUEUE_TYPE_MANUALLY_BURIED || queue == QUEUE_TYPE_SIBLING_BURIED
+
+        val cardIds = queryAllSelectedCardIds()
+
+        // this variable exists as `undoableOp` needs an OpChanges as return value
+        var wasBuried: Boolean? = null
+        undoableOp {
+            // this differs from Anki Desktop which uses the first selected card to determine the
+            // 'checked' status
+            val wantUnbury = cardIds.all { getCard(it).isBuried() }
+
+            wasBuried = !wantUnbury
+            if (wantUnbury) {
+                Timber.i("unburying %d cards", cardIds.size)
+                sched.unburyCards(cardIds)
+            } else {
+                Timber.i("burying %d cards", cardIds.size)
+                sched.buryCards(cardIds).changes
+            }
+        }
+        return BuryResult(wasBuried = wasBuried!!, count = cardIds.size)
     }
 
     suspend fun getSelectionExportData(): Pair<ExportDialogFragment.ExportType, List<Long>>? {
@@ -660,16 +724,28 @@ class CardBrowserViewModel(
     companion object {
         const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
         const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
-        fun factory(lastDeckIdRepository: LastDeckIdRepository, cacheDir: File, preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
+        fun factory(
+            lastDeckIdRepository: LastDeckIdRepository,
+            cacheDir: File,
+            preferencesProvider: SharedPreferencesProvider? = null,
+            options: CardBrowserLaunchOptions?
+        ) = viewModelFactory {
             initializer {
                 CardBrowserViewModel(
                     lastDeckIdRepository,
                     cacheDir,
+                    options,
                     preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider
                 )
             }
         }
     }
+
+    /**
+     * @param wasBuried `true` if all cards were buried, `false` if unburied
+     * @param count the number of affected cards
+     */
+    data class BuryResult(val wasBuried: Boolean, val count: Int)
 
     private sealed interface ChangeCardOrder {
         data class OrderChange(val sortType: SortType) : ChangeCardOrder
@@ -706,13 +782,14 @@ enum class SaveSearchResult {
 
 /**
  * Temporary file containing the IDs of the cards to be displayed at the previewer
- *
- * @param directory parent directory of the file. Generally it should be the cache directory
- * @param cardIds ids of the cards to be displayed
  */
-class PreviewerIdsFile(directory: File, cardIds: List<CardId>) :
-    File(createTempFile("previewerIds", ".tmp", directory).absolutePath) {
-    init {
+class PreviewerIdsFile(path: String) : File(path), Parcelable {
+
+    /**
+     * @param directory parent directory of the file. Generally it should be the cache directory
+     * @param cardIds ids of the cards to be displayed
+     */
+    constructor(directory: File, cardIds: List<CardId>) : this(createTempFile("previewerIds", ".tmp", directory).path) {
         DataOutputStream(FileOutputStream(this)).use { outputStream ->
             outputStream.writeInt(cardIds.size)
             for (id in cardIds) {
@@ -724,5 +801,25 @@ class PreviewerIdsFile(directory: File, cardIds: List<CardId>) :
     fun getCardIds(): List<Long> = DataInputStream(FileInputStream(this)).use { inputStream ->
         val size = inputStream.readInt()
         List(size) { inputStream.readLong() }
+    }
+
+    override fun describeContents(): Int = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(path)
+    }
+
+    companion object {
+        @JvmField
+        @Suppress("unused")
+        val CREATOR = object : Parcelable.Creator<PreviewerIdsFile> {
+            override fun createFromParcel(source: Parcel?): PreviewerIdsFile {
+                return PreviewerIdsFile(source!!.readString()!!)
+            }
+
+            override fun newArray(size: Int): Array<PreviewerIdsFile> {
+                return arrayOf()
+            }
+        }
     }
 }

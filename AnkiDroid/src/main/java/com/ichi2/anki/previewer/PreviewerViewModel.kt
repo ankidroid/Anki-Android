@@ -129,6 +129,14 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
         }
     }
 
+    fun toggleFlag(flag: Flag) {
+        if (flagCode.value == flag.code) {
+            setFlag(Flag.NONE)
+        } else {
+            setFlag(flag)
+        }
+    }
+
     /**
      * Shows the current card's answer
      * or the next question if the answer is already being shown

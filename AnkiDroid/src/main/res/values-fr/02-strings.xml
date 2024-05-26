@@ -359,5 +359,13 @@
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Échec de la copie</string>
     <string name="card_browser_unavailable_when_notes_mode">Non disponible en mode \"Notes\"</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d card unburied</item>
+        <item quantity="other">%d cards unburied</item>
+    </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Repositionner</string>
+    <string name="start_recording">Record</string>
+    <string name="stop_recording">Stop</string>
+    <string name="play_recording">Play</string>
+    <string name="next_recording">Next</string>
 </resources>

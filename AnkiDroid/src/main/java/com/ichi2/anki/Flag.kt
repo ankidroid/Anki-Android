@@ -17,6 +17,7 @@ package com.ichi2.anki
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
@@ -30,6 +31,17 @@ enum class Flag(val code: Int, @DrawableRes val drawableRes: Int, @ColorRes val 
     PINK(5, R.drawable.ic_flag_pink, R.color.flag_pink),
     TURQUOISE(6, R.drawable.ic_flag_turquoise, R.color.flag_turquoise),
     PURPLE(7, R.drawable.ic_flag_purple, R.color.flag_purple);
+
+    fun displayName(): String = when (this) {
+        NONE -> TR.browsingNoFlag()
+        RED -> TR.actionsFlagRed()
+        ORANGE -> TR.actionsFlagOrange()
+        GREEN -> TR.actionsFlagGreen()
+        BLUE -> TR.actionsFlagBlue()
+        PINK -> TR.actionsFlagPink()
+        TURQUOISE -> TR.actionsFlagTurquoise()
+        PURPLE -> TR.actionsFlagPurple()
+    }
 
     companion object {
         fun fromCode(code: Int): Flag {
