@@ -318,8 +318,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         SAME_NUMBER, INCREMENT_NUMBER
     }
 
-    @NeedsTest("Error message should be null after save")
-    private var addNoteErrorMessage: String? = null
+    @VisibleForTesting
+    var addNoteErrorMessage: String? = null
 
     private fun displayErrorSavingNote() {
         val errorMessage = snackbarErrorText
