@@ -83,7 +83,7 @@ open class PageWebViewClient : WebViewClient() {
         }
     }
 
-    @Suppress("DEPRECATION") // still needed for API 23
+    @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION") // still needed for API 23
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
         if (view == null || url == null) return super.shouldOverrideUrlLoading(view, url)
         if (handleUrl(view, url)) {

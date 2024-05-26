@@ -26,6 +26,7 @@ import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -46,7 +47,6 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.performClickIfEnabled
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -58,9 +58,9 @@ class PreviewerFragment :
     DispatchKeyEventListener {
 
     override val viewModel: PreviewerViewModel by viewModels {
-        val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(CARD_IDS_FILE_ARG)) {
+        val previewerIdsFile = requireNotNull(BundleCompat.getParcelable(requireArguments(), CARD_IDS_FILE_ARG, PreviewerIdsFile::class.java)) {
             "$CARD_IDS_FILE_ARG is required"
-        } as PreviewerIdsFile
+        }
         val currentIndex = requireArguments().getInt(CURRENT_INDEX_ARG, 0)
         PreviewerViewModel.factory(previewerIdsFile, currentIndex, CardMediaPlayer())
     }
@@ -97,6 +97,7 @@ class PreviewerFragment :
         }
         /* ************************************* Menu items ************************************* */
         val menu = view.findViewById<Toolbar>(R.id.toolbar).menu
+        setFlagTitles(menu)
 
         lifecycleScope.launch {
             viewModel.backSideOnly
@@ -204,6 +205,17 @@ class PreviewerFragment :
         return true
     }
 
+    private fun setFlagTitles(menu: Menu) {
+        menu.findItem(R.id.action_flag_zero).title = Flag.NONE.displayName()
+        menu.findItem(R.id.action_flag_one).title = Flag.RED.displayName()
+        menu.findItem(R.id.action_flag_two).title = Flag.ORANGE.displayName()
+        menu.findItem(R.id.action_flag_three).title = Flag.GREEN.displayName()
+        menu.findItem(R.id.action_flag_four).title = Flag.BLUE.displayName()
+        menu.findItem(R.id.action_flag_five).title = Flag.PINK.displayName()
+        menu.findItem(R.id.action_flag_six).title = Flag.TURQUOISE.displayName()
+        menu.findItem(R.id.action_flag_seven).title = Flag.PURPLE.displayName()
+    }
+
     private fun setBackSideOnlyButtonIcon(menu: Menu, isBackSideOnly: Boolean) {
         menu.findItem(R.id.action_back_side_only).apply {
             if (isBackSideOnly) {
@@ -229,6 +241,27 @@ class PreviewerFragment :
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action != KeyEvent.ACTION_DOWN) return false
+
+        if (event.isCtrlPressed) {
+            when (event.keyCode) {
+                KeyEvent.KEYCODE_1 -> viewModel.toggleFlag(Flag.RED)
+                KeyEvent.KEYCODE_2 -> viewModel.toggleFlag(Flag.ORANGE)
+                KeyEvent.KEYCODE_3 -> viewModel.toggleFlag(Flag.GREEN)
+                KeyEvent.KEYCODE_4 -> viewModel.toggleFlag(Flag.BLUE)
+                KeyEvent.KEYCODE_5 -> viewModel.toggleFlag(Flag.PINK)
+                KeyEvent.KEYCODE_6 -> viewModel.toggleFlag(Flag.TURQUOISE)
+                KeyEvent.KEYCODE_7 -> viewModel.toggleFlag(Flag.PURPLE)
+                else -> return false
+            }
+            return true
+        }
+
+        when (event.unicodeChar.toChar()) {
+            '*' -> {
+                viewModel.toggleMark()
+                return true
+            }
+        }
 
         when (event.keyCode) {
             KeyEvent.KEYCODE_DPAD_LEFT -> {

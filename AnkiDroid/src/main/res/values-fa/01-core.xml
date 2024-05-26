@@ -105,14 +105,6 @@
     <string name="menu_delete_note">حذف یادداشت</string>
     <string name="menu_flag">نشانه</string>
     <string name="menu_flag_card">کارت های نشان شده</string>
-    <string name="menu_flag_card_zero">بدون نشان</string>
-    <string name="menu_flag_card_one">نشان قرمز</string>
-    <string name="menu_flag_card_two">نشان نارنجی</string>
-    <string name="menu_flag_card_three">نشان سبز</string>
-    <string name="menu_flag_card_four">نشان آبی</string>
-    <string name="menu_flag_card_five">نشان صورتی</string>
-    <string name="menu_flag_card_six">نشان فیروزه‌ای</string>
-    <string name="menu_flag_card_seven">نشان بنفش</string>
     <string name="menu_edit_tags">ویرایش برچسب‌ها</string>
     <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
     <string name="menu_search">جستجو در %1$s</string>

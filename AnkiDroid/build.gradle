@@ -74,8 +74,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21800202
-        versionName="2.18beta2"
+        versionCode=21900102
+        versionName="2.19alpha2"
         minSdk 23 // also in testlib/build.gradle.kts
         // After #13695: change .tests_emulator.yml
         targetSdk 33 // also in [api|testlib]/build.gradle.kts and ../robolectricDownloader.gradle
@@ -245,7 +245,7 @@ android {
 
 play {
     serviceAccountCredentials.set(file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json"))
-    track.set('beta')
+    track.set('alpha')
 }
 
 amazon {
@@ -351,8 +351,6 @@ dependencies {
     implementation libs.acra.dialog
     implementation libs.acra.http
 
-    implementation libs.materialDialogs.core
-    implementation libs.materialDialogs.input
     implementation libs.commons.compress
     implementation libs.commons.collections4 // SetUniqueList
     implementation libs.commons.io // FileUtils.contentEquals

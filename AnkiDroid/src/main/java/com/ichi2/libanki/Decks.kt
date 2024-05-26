@@ -25,6 +25,7 @@
 
 package com.ichi2.libanki
 
+import androidx.annotation.CheckResult
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
@@ -34,6 +35,7 @@ import anki.decks.DeckTreeNode
 import anki.decks.FilteredDeckForUpdate
 import anki.decks.SetDeckCollapsedRequest
 import com.google.protobuf.kotlin.toByteStringUtf8
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.utils.*
 import com.ichi2.utils.jsonObjectIterable
@@ -417,11 +419,10 @@ class Decks(private val col: Collection) {
      *************************************************************
      */
 
-    @RustCleanup("implement and make public")
+    @CheckResult
     @LibAnkiAlias("set_current")
-    @Suppress("unused", "unused_parameter")
-    private fun setCurrent(deck: DeckId): OpChanges {
-        TODO()
+    fun setCurrent(deck: DeckId): OpChanges {
+        return col.backend.setCurrentDeck(deck)
     }
 
     /** @return The currently selected deck ID. */
@@ -461,7 +462,81 @@ class Decks(private val col: Collection) {
      *************************************************************
      */
 
-    // TODO
+    /** The deck of did and all its children, as (name, id). */
+    @LibAnkiAlias("deck_and_child_name_ids")
+    fun deckAndChildNameIds(deckId: DeckId): List<Pair<String, DeckId>> {
+        return col.backend.getDeckAndChildNames(deckId).map { entry ->
+            entry.name to entry.id
+        }
+    }
+
+    /** All children of did, as (name, id). */
+    @LibAnkiAlias("children")
+    fun children(did: DeckId): List<Pair<String, Long>> {
+        return deckAndChildNameIds(did).filter {
+            it.second != did
+        }
+    }
+
+    @LibAnkiAlias("child_ids")
+    fun childIds(parentName: String): List<DeckId> {
+        val parentId = idForName(parentName) ?: return emptyList()
+        return children(parentId).map { it.second }
+    }
+
+    @LibAnkiAlias("deck_and_child_ids")
+    fun deckAndChildIds(deckId: DeckId): List<DeckId> {
+        return col.backend.getDeckAndChildNames(deckId).map { entry ->
+            entry.id
+        }
+    }
+
+    /** All parents of did. */
+    @LibAnkiAlias("parents")
+    fun parents(did: DeckId, nameMap: Map<String, Deck>? = null): List<Deck> {
+        // get parent and grandparent names
+        val parentsNames = mutableListOf<String>()
+        for (part in immediateParentPath(get(did)!!.name)) {
+            if (parentsNames.isEmpty()) {
+                parentsNames.add(part)
+            } else {
+                parentsNames.append("${parentsNames.last()}::$part")
+            }
+        }
+        // convert to objects
+        val parents = mutableListOf<Deck>()
+        for (parentName in parentsNames) {
+            val deck = if (nameMap != null) {
+                nameMap[parentName]
+            } else {
+                get(id(parentName))
+            }!!
+            parents.add(deck)
+        }
+        return parents.toList()
+    }
+
+    /** All existing parents of [name] */
+    @NeedsTest("implementation matches Anki's")
+    @LibAnkiAlias("parents_by_name")
+    fun parentsByName(name: String): List<Deck> {
+        if (!name.contains("::")) {
+            return listOf()
+        }
+        val names = immediateParentPath(name)
+        val head = mutableListOf<String>()
+        val parents = mutableListOf<Deck>()
+
+        for (deckName in names) {
+            head.add(deckName)
+            val deck = byName(head.joinToString("::"))
+            if (deck != null) {
+                parents.append(deck)
+            }
+        }
+
+        return parents.toList()
+    }
 
     /*
      * Filtered decks
@@ -511,6 +586,20 @@ class Decks(private val col: Collection) {
 
         fun basename(name: String): String {
             return path(name).last()
+        }
+
+        @LibAnkiAlias("immediate_parent_path")
+        fun immediateParentPath(name: String): List<String> {
+            return path(name).dropLast(1)
+        }
+
+        @LibAnkiAlias("immediate_parent")
+        fun immediateParent(name: String): String? {
+            val parentPath = immediateParentPath(name)
+            if (parentPath.isNotEmpty()) {
+                return parentPath.joinToString("::")
+            }
+            return null
         }
 
         /** Invalid id, represents an id on an unfound deck  */

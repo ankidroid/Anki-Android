@@ -105,14 +105,6 @@
     <string name="menu_delete_note">గమనికను తొలగించండి</string>
     <string name="menu_flag">జెండా</string>
     <string name="menu_flag_card">ఫ్లాగ్ కార్డ్</string>
-    <string name="menu_flag_card_zero">జెండా లేదు</string>
-    <string name="menu_flag_card_one">ఎర్ర జండా</string>
-    <string name="menu_flag_card_two">నారింజ జెండా</string>
-    <string name="menu_flag_card_three">పచ్చ జెండా</string>
-    <string name="menu_flag_card_four">నీలి జెండా</string>
-    <string name="menu_flag_card_five">గులాబీ జెండా</string>
-    <string name="menu_flag_card_six">మణి జెండా</string>
-    <string name="menu_flag_card_seven">ఊదా జెండా</string>
     <string name="menu_edit_tags">ట్యాగ్‌లను సవరించండి</string>
     <string name="delete_note_message">ఈ గమనికను మరియు దాని అన్ని కార్డ్లను నిజంగా తొలగించాలా?\n%s</string>
     <string name="menu_search">లో చూడండి%1$s</string>
@@ -204,43 +196,39 @@
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">బదిలీ పరిమాణాన్ని గణిస్తోంది&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%2$sలో %1$s తరలించబడింది</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">వలస విజయవంతమైంది</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
-        AnkiDroid is fully functional again, and you can sync.
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">మీ డేటా విజయవంతంగా తరలించబడింది.
+        AnkiDroid మళ్లీ పూర్తిగా పని చేస్తుంది మరియు మీరు సమకాలీకరించవచ్చు.
         \n
-        \nNote that your collection is now located in a folder that is removed when uninstalling the app.
-        Please make sure that your data is safe by regularly syncing or exporting backups.
-    </string>
+        \nమీ సేకరణ ఇప్పుడు యాప్‌ను అన్‌ఇన్‌స్టాల్ చేస్తున్నప్పుడు తీసివేయబడిన ఫోల్డర్‌లో ఉందని గుర్తుంచుకోండి.
+        దయచేసి బ్యాకప్‌లను క్రమం తప్పకుండా సమకాలీకరించడం లేదా ఎగుమతి చేయడం ద్వారా మీ డేటా సురక్షితంగా ఉందని నిర్ధారించుకోండి.</string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">వలస విఫలమైంది</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[       లోపంతో డేటాబేస్ ఫైల్‌లను కాపీ చేయడం విఫలమైంది: %1$s.
         <br><br>
-        The changes were reverted.
+        మార్పులు తిరిగి మార్చబడ్డాయి.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        దయచేసి మైగ్రేషన్‌ని మళ్లీ అమలు చేయడానికి ప్రయత్నించండి.
+        సమస్యను పరిష్కరించడానికి, మీరు కొంత డిస్క్ స్థలాన్ని ఖాళీ చేయవలసి ఉంటుంది,
+        లేదా మీ సేకరణను కలిగి ఉన్న తొలగించగల నిల్వను మళ్లీ కనెక్ట్ చేయండి.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+        <a href="%2$s">మరింత తెలుసుకోండి మరియు సహాయం పొందండి</a>]]></string>
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[లోపంతో విఫలమైన తర్వాత మీడియా ఫైల్‌లను తరలించడం పాజ్ చేయబడింది: %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        మార్పులు <i>కాదు</i> తిరిగి మార్చబడ్డాయి.
+        ఏ డేటాను పోగొట్టుకోకూడదు,
+        మీడియా ఫైల్‌లు పాత మరియు కొత్త ఫోల్డర్‌ల మధ్య విభజించబడవచ్చు.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        దయచేసి మైగ్రేషన్‌ని మళ్లీ అమలు చేయడానికి ప్రయత్నించండి.
+        సమస్యను పరిష్కరించడానికి, మీరు కొంత డిస్క్ స్థలాన్ని ఖాళీ చేయవలసి ఉంటుంది,
+        లేదా మీ సేకరణను కలిగి ఉన్న తొలగించగల నిల్వను మళ్లీ కనెక్ట్ చేయండి.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <a href="%2$s">మరింత తెలుసుకోండి మరియు సహాయం పొందండి</a>]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[లోపంతో విఫలమైన తర్వాత స్టోరేజ్ మైగ్రేషన్ పాజ్ చేయబడింది: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
+        <a href="%2$s">మరింత తెలుసుకోండి మరియు సహాయం పొందండి</a>]]></string>
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">సేకరణ అందుబాటులో లేదు</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store విధానంలో మార్పు కారణంగా AnkiDroid అన్‌ఇన్‌స్టాల్ చేసిన తర్వాత మేము మీ సేకరణను యాక్సెస్ చేయలేకపోతున్నాము\n\nమీ డేటా సురక్షితంగా ఉంది మరియు పునరుద్ధరించబడుతుంది. ఇది\n%s\n\nని పునరుద్ధరించడానికి దిగువన ఉన్న ఎంపికను ఎంచుకోండి:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">యాప్ నిష్క్రియాత్మకత కారణంగా Android AnkiDroid %1$s అనుమతిని తీసివేసింది.\n\nమీ డేటా సురక్షితంగా ఉంది మరియు పునరుద్ధరించబడుతుంది. ఇది\n%2$s\n\nపునరుద్ధరణకు దిగువన ఉన్న ఎంపికను ఎంచుకోండి:</string>
     <string name="restore_data_from_ankiweb">AnkiWeb నుండి పునరుద్ధరించు (సిఫార్సు చేయబడింది)</string>
     <string name="install_non_play_store_ankidroid_recommended">ఫోల్డర్ యాక్సెస్‌ని పునరుద్ధరించు (సిఫార్సు చేయబడింది)</string>
     <string name="install_non_play_store_ankidroid">ఫోల్డర్ యాక్సెస్‌ని పునరుద్ధరించు (అధునాతన)</string>

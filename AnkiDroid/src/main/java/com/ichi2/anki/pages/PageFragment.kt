@@ -17,7 +17,6 @@ package com.ichi2.anki.pages
 
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.CallSuper
@@ -51,15 +50,6 @@ abstract class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_frag
      */
     protected open fun onCreateWebViewClient(savedInstanceState: Bundle?) = PageWebViewClient()
 
-    /**
-     * Override this to set a custom [WebChromeClient] to the page.
-     * This is called in [onViewCreated].
-     *
-     * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state as given here.
-     */
-    protected open fun onCreateWebChromeClient(savedInstanceState: Bundle?) = PageChromeClient()
-
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         webView = view.findViewById<WebView>(R.id.webview).apply {
@@ -70,7 +60,7 @@ abstract class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_frag
                 setSupportZoom(true)
             }
             webViewClient = onCreateWebViewClient(savedInstanceState)
-            webChromeClient = onCreateWebChromeClient(savedInstanceState)
+            webChromeClient = PageChromeClient()
         }
         val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
         val url = server.baseUrl() + "backend/web/$pageName.html$nightMode"

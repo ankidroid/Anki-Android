@@ -102,14 +102,6 @@
     <string name="menu_delete_note">ノートを削除</string>
     <string name="menu_flag">フラグ</string>
     <string name="menu_flag_card">カードにフラグを付ける</string>
-    <string name="menu_flag_card_zero">フラグなし</string>
-    <string name="menu_flag_card_one">レッド</string>
-    <string name="menu_flag_card_two">オレンジ</string>
-    <string name="menu_flag_card_three">グリーン</string>
-    <string name="menu_flag_card_four">ブルー</string>
-    <string name="menu_flag_card_five">ピンク</string>
-    <string name="menu_flag_card_six">ターコイズ</string>
-    <string name="menu_flag_card_seven">パープル</string>
     <string name="menu_edit_tags">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらもすべて削除されます。\n%s</string>
     <string name="menu_search">%1$s で検索</string>

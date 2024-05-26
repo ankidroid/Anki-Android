@@ -390,10 +390,10 @@ open class Card : Cloneable {
     @NotInLibAnki
     open class Cache : Cloneable {
         val col: Collection
-        val id: Long
+        val id: CardId
         private var _card: Card? = null
 
-        constructor(col: Collection, id: Long) {
+        constructor(col: Collection, id: CardId) {
             this.col = col
             this.id = id
         }

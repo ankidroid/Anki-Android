@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Notitie verwijderen</string>
     <string name="menu_flag">Vlag</string>
     <string name="menu_flag_card">Markeer kaart</string>
-    <string name="menu_flag_card_zero">Geen vlag</string>
-    <string name="menu_flag_card_one">Rode vlag</string>
-    <string name="menu_flag_card_two">Oranje vlag</string>
-    <string name="menu_flag_card_three">Groene vlag</string>
-    <string name="menu_flag_card_four">Blauwe vlag</string>
-    <string name="menu_flag_card_five">Roze vlag</string>
-    <string name="menu_flag_card_six">Turquoise vlag</string>
-    <string name="menu_flag_card_seven">Paarse vlag</string>
     <string name="menu_edit_tags">Tags bewerken</string>
     <string name="delete_note_message">Deze memo en al zijn kaarten verwijderen?\n%s</string>
     <string name="menu_search">Opzoeken in %1$s</string>

@@ -81,9 +81,6 @@
         <item name="navDrawerImage">@drawable/nav_drawer_logo_black_theme</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
-        <!--        TODO: Remove it once we migrate to Alert Dialog-->
-        <item name="md_background_color">@color/theme_black_primary_light</item>
-        <item name="md_color_button_text">@color/white</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">#000000</item>
         <item name="popupBackgroundColor">@color/popup_background_theme_black</item>

@@ -43,6 +43,7 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.elapsed
 import com.ichi2.anki.utils.formatAsString
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.audio.AudioRecordingController.RecordingState.AppendToRecording
 import com.ichi2.audio.AudioRecordingController.RecordingState.ImmediatePlayback
 import com.ichi2.compat.CompatHelper
@@ -276,6 +277,8 @@ class AudioRecordingController :
         }
     }
 
+    /** Called on pause, and when 'done' is pressed */
+    @NeedsTest("16321: record -> 'done' without pressing save")
     fun onViewFocusChanged() {
         Timber.i("activity paused: stopping recording/resetting player")
         if (isRecording || isRecordingPaused) {
@@ -298,6 +301,7 @@ class AudioRecordingController :
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     setIconResource(R.drawable.ic_record)
+                    contentDescription = context.getString(R.string.start_recording)
                 }
                 audioWaveform.clear()
                 cancelAudioRecordingButton.isEnabled = false
@@ -308,6 +312,7 @@ class AudioRecordingController :
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
                     setIconResource(R.drawable.ic_stop)
+                    contentDescription = context.getString(R.string.stop_recording)
                 }
                 cancelAudioRecordingButton.isEnabled = true
                 audioProgressBar.isVisible = false
@@ -317,6 +322,7 @@ class AudioRecordingController :
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     setIconResource(R.drawable.ic_skip_next)
+                    contentDescription = context.getString(R.string.next_recording)
                 }
                 cancelAudioRecordingButton.isEnabled = true
                 audioProgressBar.isVisible = true
@@ -327,6 +333,7 @@ class AudioRecordingController :
                     iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
                     setIconResource(R.drawable.ic_play)
+                    contentDescription = context.getString(R.string.play_recording)
                 }
                 cancelAudioRecordingButton.isEnabled = true
                 audioProgressBar.isVisible = true
@@ -434,7 +441,6 @@ class AudioRecordingController :
     fun toggleSave(vibrate: Boolean = true) {
         Timber.i("recording completed")
         if (vibrate) CompatHelper.compat.vibrate(context, 20)
-        setUiState(state.afterSave())
         stopAndSaveRecording()
         // show this snackbar only in the edit field/multimedia activity
         if (inEditField) (context as Activity).showSnackbar(context.resources.getString(R.string.audio_saved))
@@ -571,6 +577,7 @@ class AudioRecordingController :
         }
         isRecording = false
         isAudioRecordingSaved = true
+        setUiState(state.afterSave())
         // save recording only in the edit field not in the reviewer but save it temporarily
         if (inEditField) saveRecording()
     }

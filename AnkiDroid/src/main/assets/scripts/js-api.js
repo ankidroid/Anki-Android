@@ -71,6 +71,7 @@ const jsApiList = {
     ankiSttSetLanguage: "sttSetLanguage",
     ankiSttStart: "sttStart",
     ankiSttStop: "sttStop",
+    ankiAddTagToNote: "addTagToNote",
 };
 
 class AnkiDroidJS {
@@ -85,7 +86,7 @@ class AnkiDroidJS {
     }
 
     handleRequest = async (endpoint, data) => {
-        const url = `${ankidroid.postBaseUrl}jsapi/${endpoint}`;
+        const url = `/jsapi/${endpoint}`;
         try {
             const response = await fetch(url, {
                 method: "POST",
@@ -116,6 +117,13 @@ class AnkiDroidJS {
 }
 
 Object.keys(jsApiList).forEach(method => {
+    if (method === "ankiAddTagToNote") {
+        AnkiDroidJS.prototype[method] = async function (noteId, tag) {
+            const endpoint = jsApiList[method];
+            const data = JSON.stringify({ noteId, tag });
+            return await this.handleRequest(endpoint, data);
+        };
+    }
     if (method === "ankiTtsSpeak") {
         AnkiDroidJS.prototype[method] = async function (text, queueMode = 0) {
             const endpoint = jsApiList[method];
