@@ -16,6 +16,7 @@
 package com.ichi2.anki.previewer
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -131,6 +132,12 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 request: WebResourceRequest
             ): WebResourceResponse? {
                 return resourceHandler.shouldInterceptRequest(request)
+            }
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                // TODO remove this after the backend is upgraded to v0.1.39
+                view?.evaluateJavascript("globalThis.ankidroid = globalThis.ankidroid || {}; ankidroid.postBaseUrl = ``", null)
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {

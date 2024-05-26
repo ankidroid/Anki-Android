@@ -88,6 +88,12 @@ class ReviewerFragment :
                 }
             }
         }
+
+        viewModel.statesMutationEval.collectIn(lifecycleScope) { eval ->
+            webView.evaluateJavascript(eval) {
+                viewModel.onStateMutationCallback()
+            }
+        }
     }
 
     // TODO
