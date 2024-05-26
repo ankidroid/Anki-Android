@@ -44,7 +44,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
                     android:layout_width="400dp"
-                    android:layout_height="90dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:translationX="0dp"
                     android:translationY="0dp"
@@ -58,7 +58,7 @@
                     android:layout_gravity="start"
                     android:translationX="50dp"
                     android:translationY="0dp"
-
+                    app:cardElevation="10dp"
                     app:cardCornerRadius="200dp"
                     app:layout_constraintBottom_toTopOf="@+id/button"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -112,6 +112,7 @@
                     android:translationX="-50dp"
                     android:translationY="0dp"
                     android:background="#000000"
+                    app:cardElevation="10dp"
                     app:cardCornerRadius="200dp"
                     app:layout_constraintBottom_toTopOf="@+id/button"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -139,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:padding="40dp"
                     android:layout_gravity="center"
-                    android:text="Connect To AnkiWeb!"
+                    android:text="@string/connect_to_ankiweb"
                     android:textSize="@dimen/abc_text_size_title_material"
                     android:textStyle="bold" />
 
@@ -237,17 +238,6 @@
                     android:textSize="@dimen/abc_text_size_button_material" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/lost_mail_instructions"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="3dp"
-                    android:singleLine="true"
-                    android:text="@string/lost_mail_instructions"
-                    android:textSize="@dimen/abc_text_size_button_material" />
-
-                <com.google.android.material.button.MaterialButton
                     android:id="@+id/privacy_policy_button"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
@@ -258,6 +248,18 @@
                     android:singleLine="true"
                     android:text="@string/help_title_privacy"
                     android:textSize="@dimen/abc_text_size_button_material" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/lost_mail_instructions"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="3dp"
+                    android:singleLine="true"
+                    android:text="@string/lost_mail_instructions"
+                    android:textSize="@dimen/abc_text_size_button_material" />
+
             </LinearLayout>
         </ScrollView>
 

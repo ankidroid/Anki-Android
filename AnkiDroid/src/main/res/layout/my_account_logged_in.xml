@@ -30,21 +30,20 @@
             <ImageView
                 android:id="@+id/ankidroid_logo"
                 android:layout_width="200dp"
-                android:layout_marginStart="-90dp"
-                app:srcCompat="@drawable/ankiweb"
-                android:layout_marginBottom="0dp"
-                android:layout_gravity="center"
                 android:layout_height="50dp"
-                android:translationX="20dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="0dp"
+                android:layout_marginStart="-90dp"
+                android:translationX="30dp"
                 android:translationY="60dp"
-                />
+                app:srcCompat="@drawable/ankiweb" />
 
             <ImageView
                 android:id="@+id/ankidroid_logo"
                 android:layout_width="69dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center"
-                android:layout_marginEnd="-90dp"
+                android:layout_marginEnd="-100dp"
                 android:scaleX="1.5"
                 android:scaleY="1.5"
                 app:srcCompat="@drawable/ankiweb_logo" />
