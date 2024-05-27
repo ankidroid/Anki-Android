@@ -118,6 +118,8 @@ class ReviewerFragment :
             R.id.action_edit -> launchEditNote()
             R.id.action_mark -> viewModel.toggleMark()
             R.id.action_open_deck_options -> launchDeckOptions()
+            R.id.action_suspend_card -> viewModel.suspendCard()
+            R.id.action_suspend_note -> viewModel.suspendNote()
         }
         return true
     }
@@ -179,6 +181,19 @@ class ReviewerFragment :
                 } else {
                     buryItem.isVisible = false
                     buryCardItem.isVisible = true
+                }
+            }
+
+        val suspendItem = menu.findItem(R.id.action_suspend)
+        val suspendCardItem = menu.findItem(R.id.action_suspend_card)
+        viewModel.canSuspendNoteFlow.flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycleScope) { canSuspendNote ->
+                if (canSuspendNote) {
+                    suspendItem.isVisible = true
+                    suspendCardItem.isVisible = false
+                } else {
+                    suspendItem.isVisible = false
+                    suspendItem.isVisible = true
                 }
             }
     }

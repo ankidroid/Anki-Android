@@ -190,6 +190,28 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
         }
     }
 
+    fun suspendCard() {
+        launchCatchingIO {
+            val cardId = currentCard.await().id
+            undoableOp {
+                sched.suspendCards(ids = listOf(cardId))
+            }.count
+            actionFeedbackFlow.emit(CollectionManager.TR.studyingCardSuspended())
+            updateCurrentCard()
+        }
+    }
+
+    fun suspendNote() {
+        launchCatchingIO {
+            val noteId = currentCard.await().nid
+            undoableOp {
+                sched.suspendNotes(ids = listOf(noteId))
+            }
+            actionFeedbackFlow.emit(CollectionManager.TR.studyingNoteSuspended())
+            updateCurrentCard()
+        }
+    }
+
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
     ********************************************************************************************* */
