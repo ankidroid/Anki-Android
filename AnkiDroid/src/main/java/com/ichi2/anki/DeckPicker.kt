@@ -238,6 +238,53 @@ open class DeckPicker :
         addCallback(activeSnackbarCallback)
     }
 
+    fun changeFabVisibilityToDone() {
+        val fabMain = findViewById<FloatingActionButton>(R.id.fab_main)
+        val fabDone = findViewById<FloatingActionButton>(R.id.fab_done)
+
+        fabMain.visibility = View.GONE // This will make fab_main invisible
+        fabDone.visibility = View.VISIBLE // This will make fab_done visible
+        fabDone.setOnClickListener {
+            // Replace Done button with Add button
+            changeFabVisibilityToAdd()
+            // Replace subtitle of supportActionBar
+            launchCatchingTask {
+                try {
+                    val due = deckListAdapter.due
+                    val res = resources
+
+                    if (due != null && supportActionBar != null) {
+                        val cardCount = withCol {
+                            cardCount()
+                        }
+                        val subTitle: String = if (due == 0) {
+                            res.getQuantityString(R.plurals.deckpicker_title_zero_due, cardCount, cardCount)
+                        } else {
+                            res.getQuantityString(R.plurals.widget_cards_due, due, due)
+                        }
+                        supportActionBar!!.subtitle = subTitle
+                    }
+                } catch (e: RuntimeException) {
+                    Timber.e(e, "RuntimeException setting time remaining")
+                }
+            }
+            // Disable drag and drop
+            deckListAdapter.enableDragNDrop(false)
+            // Enable pull to sync (previously disabled to allow drag down)
+            pullToSyncWrapper.isEnabled = true
+            // show snackbar to inform user that drag and drop (move decks) mode has been exited
+            showSnackbar(R.string.move_decks_mode_exited, Snackbar.LENGTH_LONG)
+        }
+    }
+
+    fun changeFabVisibilityToAdd() {
+        val fabMain = findViewById<FloatingActionButton>(R.id.fab_main)
+        val fabDone = findViewById<FloatingActionButton>(R.id.fab_done)
+
+        fabDone.visibility = View.GONE // This will make fab_done visible
+        fabMain.visibility = View.VISIBLE // This will make fab_main invisible
+    }
+
     private var syncMediaProgressJob: Job? = null
 
     // flag keeping track of when the app has been paused
@@ -378,6 +425,11 @@ open class DeckPicker :
     }
 
     private val deckLongClickListener = OnLongClickListener { v ->
+        // If Drag and Drop is Enabled we don't want to show the long click menu
+        if (deckListAdapter.isDragNDropEnabled()) { //
+            return@OnLongClickListener false
+        }
+
         val deckId = v.tag as DeckId
         Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId)
         launchCatchingTask {
@@ -489,7 +541,7 @@ open class DeckPicker :
         exportingDelegate.onRestoreInstanceState(savedInstanceState)
 
         // create and set an adapter for the RecyclerView
-        deckListAdapter = DeckAdapter(layoutInflater, this).apply {
+        deckListAdapter = DeckAdapter(layoutInflater, this, recyclerView).apply {
             setDeckClickListener(deckClickListener)
             setCountsClickListener(countsClickListener)
             setDeckExpanderClickListener(deckExpanderClickListener)
@@ -1142,6 +1194,17 @@ open class DeckPicker :
                     return true
                 }
                 ExportDialogFragment.newInstance().show(supportFragmentManager, "exportDialog")
+                return true
+            }
+            R.id.move_decks -> {
+                Timber.i("DeckPicker:: Move Decks")
+                supportActionBar!!.subtitle = "Drag and Drop to move Decks"
+                changeFabVisibilityToDone()
+                // remove onLongClickListener to prevent long click on deck while moving
+                deckListAdapter.enableDragNDrop(true)
+                pullToSyncWrapper.isEnabled = false
+                // show snackbar to inform user that drag and drop mode has been entered
+                showSnackbar(R.string.move_decks_mode_entered, Snackbar.LENGTH_LONG)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

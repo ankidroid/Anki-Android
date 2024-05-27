@@ -280,15 +280,13 @@ class Decks(private val col: Collection) {
      *************************************************************
      */
 
-    @RustCleanup("implement and make public")
-    @Suppress("unused", "unused_parameter")
     /**
      * Rename one or more source decks that were dropped on [newParent].
      *
      * If [newParent] is `0`, decks will be placed at the top level.
      */
-    private fun reparent(deckIds: List<DeckId>, newParent: DeckId): OpChangesWithCount {
-        TODO()
+    fun reparent(deckIds: List<DeckId>, newParent: DeckId): OpChangesWithCount {
+        return col.backend.reparentDecks(deckIds, newParent)
     }
 
     /*

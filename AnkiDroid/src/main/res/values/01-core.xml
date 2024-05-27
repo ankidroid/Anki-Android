@@ -63,6 +63,9 @@
     <string name="ease_button_good">Good</string>
     <string name="ease_button_easy">Easy</string>
     <string name="menu_import">Import</string>
+    <string name="move_decks">Move Decks</string>
+    <string name="move_decks_mode_exited">Left Move Decks mode</string>
+    <string name="move_decks_mode_entered">Entered Move Decks mode</string>
     <string name="undo">Undo</string>
     <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of 'Undo' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>

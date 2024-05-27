@@ -16,7 +16,8 @@
 
 package com.ichi2.anki.widgets
 
-import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -25,9 +26,12 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.utils.KotlinCleanup
@@ -37,12 +41,18 @@ import kotlinx.coroutines.sync.withLock
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
+import kotlin.math.abs
 
 @KotlinCleanup("lots to do")
 @RustCleanup("Lots of bad code: should not be using suspend functions inside an adapter")
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
-class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
+class DeckAdapter(
+    private val layoutInflater: LayoutInflater,
+    context: DeckPicker,
+    recyclerView: RecyclerView
+) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
     private var deckTree: DeckNode? = null
+    private val deckPicker: DeckPicker = context
 
     /** The non-collapsed subset of the deck tree that matches the current search. */
     private var filteredDeckList: List<DeckNode> = ArrayList()
@@ -71,9 +81,15 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     // Flags
     private var hasSubdecks = false
+    private var dragNDropEnabled = false
 
     // Whether we have a background (so some items should be partially transparent).
     private var partiallyTransparentForBackground = false
+
+    // ItemTouchHelper for drag and drop
+    private val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(this)).apply {
+        attachToRecyclerView(recyclerView)
+    }
 
     // ViewHolder class to save inflated views for recycling
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -98,6 +114,129 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
     }
 
+    class ItemTouchHelperCallback(private val adapter: DeckAdapter) : ItemTouchHelper.Callback() {
+
+        fun highlightItem(viewHolder: RecyclerView.ViewHolder?) {
+            viewHolder?.itemView?.setBackgroundColor(Color.LTGRAY) // Change this to your desired highlight color
+        }
+
+        fun removeHighlight(viewHolder: RecyclerView.ViewHolder?) {
+            viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT) // Change this to your default color
+        }
+
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ): Int {
+            if (!adapter.isDragNDropEnabled()) {
+                return makeMovementFlags(0, 0)
+            }
+
+            return makeMovementFlags(
+                ItemTouchHelper.UP or ItemTouchHelper.DOWN
+                    or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+                0
+            )
+        }
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return true
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            // Do nothing
+        }
+
+        override fun isLongPressDragEnabled(): Boolean {
+            return adapter.isDragNDropEnabled()
+        }
+
+        private var viewHolderY = 0f
+        override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+            super.onSelectedChanged(viewHolder, actionState)
+
+            // Highlight the item being dragged and record its height
+            if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                viewHolderY = viewHolder?.itemView?.y ?: 0f
+                highlightItem(viewHolder)
+            }
+            // if its been dropped
+            if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
+                adapter.notifyDataSetChanged()
+            }
+        }
+
+        // Change the background of the item when the drag operation has ended
+        override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+            super.clearView(recyclerView, viewHolder)
+
+            // Top and Bottom = null
+            removeHighlight(currentHoveredViewHolder)
+            removeHighlight(viewHolder)
+
+            // get deckId of the dragged item
+            val draggedDeckId = viewHolder.itemView.tag as DeckId
+
+            // get deckId of the item under the dragged item
+            var targetDeckId = currentHoveredViewHolder?.itemView?.tag as DeckId?
+            if (targetDeckId == null) {
+                targetDeckId = 0L
+            }
+
+            val draggedDeckIds = listOf(draggedDeckId)
+
+            adapter.deckPicker.launchCatchingTask {
+                withCol { decks.reparent(draggedDeckIds, targetDeckId) }
+            }
+            // refresh the state of the deck picker in order to get up to date deck list
+            adapter.deckPicker.refreshState()
+        }
+
+        private var currentHoveredViewHolder: RecyclerView.ViewHolder? = null
+        override fun onChildDraw(
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean
+        ) {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+
+            // Align left to avoid bug where the dragged item is the one selected
+            var safeDX = dX
+            if (viewHolder.itemView.x <= 0.1f) {
+                viewHolder.itemView.x = 0.1f
+                safeDX = 0.1f
+            }
+
+            // Get the item under the dragged item (-dX so that X is always 0 when the item is dragged)
+            val itemUnder = recyclerView.findChildViewUnder(viewHolder.itemView.x - safeDX, viewHolder.itemView.y)
+            val newHoveredViewHolder = itemUnder?.let { recyclerView.getChildViewHolder(it) }
+
+            // if it is in the same position as initially assume that it is the same item
+            if (newHoveredViewHolder == null) {
+                if (abs(viewHolderY - viewHolder.itemView.y) < viewHolder.itemView.height.toFloat()) {
+                    removeHighlight(currentHoveredViewHolder)
+                    currentHoveredViewHolder = viewHolder
+                    return
+                }
+            }
+
+            // If the item under the dragged item is different from the previous one, change its background color
+            if (newHoveredViewHolder != currentHoveredViewHolder && newHoveredViewHolder != viewHolder) {
+                removeHighlight(currentHoveredViewHolder)
+                highlightItem(newHoveredViewHolder)
+                currentHoveredViewHolder = newHoveredViewHolder
+            }
+        }
+    }
+
     fun setDeckClickListener(listener: View.OnClickListener?) {
         deckClickListener = listener
     }
@@ -112,6 +251,18 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     fun setDeckLongClickListener(listener: OnLongClickListener?) {
         deckLongClickListener = listener
+    }
+
+    fun enableDragNDrop(enabled: Boolean) {
+        dragNDropEnabled = enabled
+    }
+
+    fun isDragNDropEnabled(): Boolean {
+        return dragNDropEnabled
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        itemTouchHelper.attachToRecyclerView(null)
     }
 
     /** Sets whether the control should have partial transparency to allow a background to be seen  */
