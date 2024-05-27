@@ -36,4 +36,9 @@
         android:icon="@drawable/ic_tune_white"
         android:title="@string/menu__deck_options"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_add_note"
+        android:title="@string/menu_add_note"
+        android:icon="@drawable/ic_add"
+        app:showAsAction="never"/>
 </menu>

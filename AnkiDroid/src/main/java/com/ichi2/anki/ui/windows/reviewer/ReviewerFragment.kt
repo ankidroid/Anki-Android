@@ -32,6 +32,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
+import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.previewer.CardViewerActivity
@@ -100,7 +101,9 @@ class ReviewerFragment :
     // TODO
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_add_note -> launchAddNote()
             R.id.action_card_info -> launchCardInfo()
+            R.id.action_edit -> launchEditNote()
             R.id.action_open_deck_options -> launchDeckOptions()
         }
         return true
@@ -137,6 +140,25 @@ class ReviewerFragment :
                 answerButtonsLayout.isVisible = false
             }
         }
+    }
+
+    private val noteEditorLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            viewModel.handleNoteEditorResult(result)
+        }
+
+    private fun launchEditNote() {
+        lifecycleScope.launch {
+            val intent = viewModel.getEditNoteDestination().toIntent(requireContext())
+            noteEditorLauncher.launch(intent)
+        }
+    }
+
+    private fun launchAddNote() {
+        val intent = Intent(context, NoteEditor::class.java).apply {
+            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
+        }
+        noteEditorLauncher.launch(intent)
     }
 
     private fun launchCardInfo() {

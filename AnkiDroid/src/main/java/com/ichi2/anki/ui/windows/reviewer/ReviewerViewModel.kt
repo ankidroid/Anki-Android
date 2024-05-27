@@ -15,12 +15,14 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
+import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.frontend.SetSchedulingStatesRequest
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Ease
+import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.launchCatchingIO
@@ -28,6 +30,7 @@ import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.previewer.CardViewerViewModel
+import com.ichi2.anki.previewer.NoteEditorDestination
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.undoableOp
@@ -101,6 +104,20 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
 
     fun onStateMutationCallback() {
         statesMutated = true
+    }
+
+    suspend fun getEditNoteDestination(): NoteEditorDestination {
+        return NoteEditorDestination(currentCard.await().id)
+    }
+
+    fun handleNoteEditorResult(result: ActivityResult) {
+        if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
+            result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
+        ) {
+            launchCatchingIO {
+                updateCurrentCard()
+            }
+        }
     }
 
     suspend fun getCardInfoDestination(): CardInfoDestination {
