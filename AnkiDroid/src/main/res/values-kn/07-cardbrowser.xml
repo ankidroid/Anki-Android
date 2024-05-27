@@ -50,8 +50,8 @@
         <item quantity="other">%d ಕಾರ್ಡ್‌ಗಳನ್ನು ತೋರಿಸಲಾಗಿದೆ</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d ಟಿಪ್ಪಣಿ ತೋರಿಸಲಾಗಿದೆ</item>
+        <item quantity="other">%d ಟಿಪ್ಪಣಿ ತೋರಿಸಲಾಗಿದೆ</item>
     </plurals>
     <string name="card_browser_all_decks">ಎಲ್ಲಾ ಡೆಕ್‌ಗಳು</string>
     <plurals name="card_browser_delete_cards">
@@ -85,8 +85,8 @@
         <item>ಟಿಪ್ಪಣಿ ಮಾರ್ಪಾಡು ಸಮಯದ ಮೂಲಕ</item>
         <item>ಕಾರ್ಡ್ ಮಾರ್ಪಾಡು ಸಮಯದ ಮೂಲಕ</item>
         <item>By due time</item>
-        <item>By interval</item>
-        <item>By ease</item>
+        <item>ಮಧ್ಯಂತರದಿಂದ</item>
+        <item>ಸುಲಭವಾಗಿ</item>
         <item>By reviews</item>
         <item>By lapses</item>
     </string-array>
@@ -98,7 +98,7 @@
     <string name="card_browser_no_cards_in_deck">\'%s\' ಡೆಕ್‌ನಲ್ಲಿ ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>
     <string name="card_browser_search_all_decks">ಎಲ್ಲಾ ಡೆಕ್‌ಗಳನ್ನು ಹುಡುಕಿ</string>
     <string name="card_browser_unknown_deck_name">ಅಜ್ಞಾತ</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">ವಿಷಯವನ್ನು ಕಡಿಮೆ ಮಾಡಿ</string>
     <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">ಇಂದು ‘0 %1$s’, ನಾಳೆ ‘1 %2$s’, ಇತ್ಯಾದಿ&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">ರಫ್ತು ಕಾರ್ಡ್</item>

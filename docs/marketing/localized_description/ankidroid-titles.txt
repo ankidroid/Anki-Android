@@ -2,25 +2,25 @@ AnkiDroid Flashcards
 af: AnkiDroid Flitskaarte
 ar: البطاقات التعليميةآنكيدرويد
 az: AnkiDroid Flaş Kartları
-bg: AnkiDroid Флашкарти
 be: Карткі для запамінання AnkiDroid
+bg: AnkiDroid Флашкарти
 ca: AnkiDroid fitxes per memoritzar
-de: AnkiDroid Karteikarten
-es-AR: Tarjetas flash AnkiDroid
 cs: AnkiDroid kartičky
-es-ES: Tarjetas AnkiDroid
-et: AnkiDroid mälukaardid
+de: AnkiDroid Karteikarten
 eo: AnkiDroid
+es-ES: Tarjetas AnkiDroid
+es-AR: Tarjetas flash AnkiDroid
+et: AnkiDroid mälukaardid
 fa: فلش کارتهای انکی دروید
 fi: AnkiDroid-muistikortit
-fy-NL: AnkiDroid flitskaarten
 fr: AnkiDroid (Cartes mémoire)
+fy-NL: AnkiDroid flitskaarten
 gl: Cartóns AnkiDroid
 he: קלפי לימוד של AnkiDroid
-hi: AnkiDroid फ़्लैशकार्ड
 he: קלפי לימוד של AnkiDroid
-hy-AM: AnkiDroid քարտեր
+hi: AnkiDroid फ़्लैशकार्ड
 hu: AnkiDroid Szókártyák
+hy-AM: AnkiDroid քարտեր
 id: Kartu Flash AnkiDroid
 ka: AnkiDroid: სამეცადინო ბარათები
 kk: AnkiDroid жаттау карталары

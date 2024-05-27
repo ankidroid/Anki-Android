@@ -1,36 +1,36 @@
-آنکی ڈیرائڈ کے ساتھ کچھ بھی حفظ کریں!
+AnkiDroid کے ساتھ کچھ بھی یاد رکھیں!
 
-آنکی ڈیرائڈ بہت مؤثر انداز سے آپکو فلیش کارڈ یاد کراتا ہے اور انہیں آپ کے سامنے دوبارہ لے آتا ہے جب اسے لگے کہ آپ وہ فلیش کارڈ بھولنے والے ہوں. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+آنکی ڈیرائڈ بہت مؤثر انداز سے آپکو فلیش کارڈ یاد کراتا ہے اور انہیں آپ کے سامنے دوبارہ لے آتا ہے جب اسے لگے کہ آپ وہ فلیش کارڈ بھولنے والے ہوں. یہ سپیسڈ ریپیٹیشن سافٹ ویئر اینکی (بشمول ہم آہنگی) کے ساتھ مکمل طور پر مطابقت رکھتا ہے، جو ونڈوز، لینکس اور میک او ایس کے لیے دستیاب ہے۔
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+جہاں اور جب چاہیں ہر طرح کی چیزوں کا مطالعہ کریں۔ بس کے سفر پر، سپر مارکیٹ کی قطاروں میں یا کسی اور انتظار کی صورتحال میں بیکار اوقات کا اچھا استعمال کریں!
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
+اپنے فلیش کارڈ ڈیک بنائیں یا بہت سی زبانوں اور عنوانات کے لیے مرتب کردہ مفت ڈیک ڈاؤن لوڈ کریں (6000 سے زیادہ دستیاب)۔
 
-Add material through the desktop application Anki or directly through AnkiDroid. The application even supports adding material automatically from a dictionary!
+ڈیسک ٹاپ ایپلیکیشن Anki کے ذریعے یا براہ راست AnkiDroid کے ذریعے مواد شامل کریں۔ ایپلی کیشن لغت سے خود بخود مواد شامل کرنے کی بھی حمایت کرتی ہے!
 
-★ Key features:
-• supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
-• more than 6000 premade decks
-• progress widget
-• detailed statistics
-• syncing with AnkiWeb
-• open source
+★ اہم خصوصیات:
+• معاون فلیش کارڈ مواد: متن، تصاویر، آوازیں، لیٹیکس
+• فاصلہ والی تکرار (سپر میمو 2 الگورتھم)
+• ٹیکسٹ ٹو اسپیچ انضمام
+• 6000 سے زیادہ پہلے سے تیار ڈیک
+• ترقی ویجیٹ
+• تفصیلی اعدادوشمار
+• AnkiWeb کے ساتھ مطابقت پذیری
+• آزاد مصدر
 
-★ Additional features:
-• write answers (optional)
-• whiteboard
-• card editor/adder
-• card browser
-• tablet layout
-• import existing collection files (via Anki Desktop)
-• add cards by intent from other applications like dictionaries
-• custom font support
-• full backup system
-• navigation by swipe, tap
-• customisable
-• dynamic deck handling
-• night mode
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+★ اضافی خصوصیات:
+• جوابات لکھیں (اختیاری)
+• سفید تختہ
+• کارڈ ایڈیٹر/ ایڈر
+• کارڈ براؤزر
+• گولی لے آؤٹ
+موجودہ کلیکشن فائلیں درآمد کریں (انکی ڈیسک ٹاپ کے ذریعے)
+• دیگر ایپلیکیشنز جیسے لغات سے ارادے سے کارڈز شامل کریں۔
+• اپنی مرضی کے فونٹ کی حمایت
+• مکمل بیک اپ سسٹم
+• سوائپ، ٹیپ کے ذریعے نیویگیشن
+• مرضی کے مطابق
+• متحرک ڈیک ہینڈلنگ
+• نائٹ موڈ
+• 27 لوکلائزیشن
+• تمام سابقہ ​​AnkiDroid ورژن ویب سائٹ سے ڈاؤن لوڈ کیے جا سکتے ہیں۔

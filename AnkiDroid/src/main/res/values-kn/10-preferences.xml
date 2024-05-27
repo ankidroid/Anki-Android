@@ -84,7 +84,7 @@
     <string name="card_browser_hide_media_summary">ಕಾರ್ಡ್ ಬ್ರೌಸರ್ ಪ್ರಶ್ನೆ/ಉತ್ತರ ಕ್ಷೇತ್ರಗಳಲ್ಲಿ ಮಾಧ್ಯಮ ಫೈಲ್ ಹೆಸರುಗಳನ್ನು ಪ್ರದರ್ಶಿಸಿ</string>
     <string name="col_path" maxLength="41">ಅಂಕಿಡ್ರಾಯ್ಡ್ ಡೈರೆಕ್ಟರಿ</string>
     <string name="fullscreen_review" maxLength="41">ಪೂರ್ಣಪರದೆ ಮೋಡ್</string>
-    <string name="full_screen_off">Off</string>
+    <string name="full_screen_off">ಆಫ್</string>
     <string name="full_screen_system">ಸಿಸ್ಟಮ್ ಬಾರ್ಗಳನ್ನು ಮರೆಮಾಡಿ</string>
     <string name="full_screen_complete">ಸಿಸ್ಟಮ್ ಬಾರ್‌ಗಳು ಮತ್ತು ಉತ್ತರ ಬಟನ್‌ಗಳನ್ನು ಮರೆಮಾಡಿ</string>
     <string name="answer_buttons_position" maxLength="41">ಉತ್ತರ ಬಟನ್‌ಗಳ ಸ್ಥಾನ</string>
@@ -99,7 +99,7 @@
     <string name="gestures_corner_touch_summary">ಪರದೆಯ ಮೂಲೆಗಳಲ್ಲಿ ಸ್ಪರ್ಶ ಗೆಸ್ಚರ್‌ಗಳನ್ನು ಅನುಮತಿಸಿ</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">ಪೂರ್ಣ ಪರದೆಯ ನ್ಯಾವಿಗೇಷನ್ ಡ್ರಾಯರ್</string>
     <string name="gestures_fullscreen_nav_drawer_summary">ಪರದೆಯ ಮೇಲೆ ಎಲ್ಲಿಂದಲಾದರೂ ಬಲಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡುವಾಗ ನ್ಯಾವಿಗೇಷನ್ ಡ್ರಾಯರ್ ತೆರೆಯಿರಿ</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">ಯಾವುದೂ</string>
     <string name="gestures_swipe_up" maxLength="41">ಮೇಲಕ್ಕೆ ಎಳಿ</string>
     <string name="gestures_swipe_down" maxLength="41">ಕೆಳಗೆ ಸ್ವೈಪ್ ಮಾಡಿ</string>
     <string name="gestures_swipe_left" maxLength="41">ಎಡಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ</string>
@@ -128,8 +128,7 @@
     <string name="sync_account" maxLength="41">ಅಂಕಿವೆಬ್ ಖಾತೆ</string>
     <string name="sync_account_summ_logged_out">ಲಾಗಿನ್ ಆಗಿಲ್ಲ</string>
     <string name="automatic_sync_choice" maxLength="41">ಸ್ವಯಂಚಾಲಿತ ಸಿಂಕ್ರೊನೈಸೇಶನ್</string>
-    <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+    <string name="automatic_sync_choice_summ">ಕೊನೆಯ ಸಿಂಕ್ 10 ನಿಮಿಷಗಳ ಹಿಂದೆ ಆಗಿದ್ದರೆ ಅಪ್ಲಿಕೇಶನ್ ಪ್ರಾರಂಭ/ನಿರ್ಗಮನದಲ್ಲಿ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಸಿಂಕ್ ಮಾಡಿ.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">ಯಾವಾಗಲೂ</string>
     <string name="sync_media_only_unmetered">ಮೀಟರ್ ಇಲ್ಲದ ಸಂಪರ್ಕಗಳಲ್ಲಿ ಮಾತ್ರ</string>
     <string name="sync_media_never">ಎಂದಿಗೂ</string>
@@ -145,8 +144,8 @@
     <string name="language" maxLength="41">ಭಾಷೆ</string>
     <string name="language_system">ಸಿಸ್ಟಮ್ ಭಾಷೆ</string>
     <string name="notification_pref" maxLength="41">ಅಧಿಸೂಚನೆಗಳು</string>
-    <string name="notification_pref_title" maxLength="41">Notify when</string>
-    <string name="never_notify">Never notify</string>
+    <string name="notification_pref_title" maxLength="41">ಯಾವಾಗ ಸೂಚಿಸಿ</string>
+    <string name="never_notify">ಎಂದಿಗೂ ತಿಳಿಸಬೇಡಿ</string>
     <string name="notify_when_pending">ಬಾಕಿ ಇರುವ ಸಂದೇಶಗಳು ಲಭ್ಯವಿವೆ</string>
     <string name="notification_minimum_cards_due">%d ಕ್ಕಿಂತ ಹೆಚ್ಚು ಕಾರ್ಡ್‌ಗಳು ಬಾಕಿ ಉಳಿದಿವೆ</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">ವೈಬ್ರೇಟ್</string>
@@ -214,18 +213,17 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">ಕಸ್ಟಮ್ ಸಿಂಕ್ ಸರ್ವರ್</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ಬಳಸಲಾಗುವುದಿಲ್ಲ</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
-        ]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[AnkiWeb ನೊಂದಿಗೆ ಸಿಂಕ್ರೊನೈಸ್ ಮಾಡಲು ಪರ್ಯಾಯವಾಗಿ,
+        ಸಿಂಕ್ರೊನೈಸೇಶನ್ಗಾಗಿ ನೀವು ನಿಮ್ಮ ಸ್ವಂತ ಸರ್ವರ್ ಅನ್ನು ಬಳಸಬಹುದು.
+        ಹೊಂದಿಸದಿದ್ದರೆ, ಬದಲಿಗೆ ಡೀಫಾಲ್ಟ್ AnkiWeb ಸರ್ವರ್ ಅನ್ನು ಬಳಸಲಾಗುತ್ತದೆ.
+        <a href="%s">ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">ಸಿಂಕ್ url</string>
     <!-- Key Bindings -->
     <string name="keyboard">Keyboard</string>
     <string name="bluetooth">ಬ್ಲೂಟೂತ್</string>
     <string name="answer_buttons" maxLength="41">ಉತ್ತರ ಬಟನ್‌ಗಳು</string>
     <string name="card" maxLength="41">ಕಾರ್ಡ್</string>
-    <string name="note" maxLength="41">Note</string>
+    <string name="note" maxLength="41">ಸೂಚನೆ</string>
     <string name="navigation" maxLength="41">ನ್ಯಾವಿಗೇಷನ್</string>
     <string name="media" maxLength="41">ಮಾಧ್ಯಮ</string>
     <string name="misc" maxLength="41">Misc</string>
@@ -256,10 +254,10 @@
     <string name="open_changelog">ಚೇಂಜ್ಲಾಗ್ ತೆರೆಯಿರಿ</string>
     <string name="pref_cat_about_title" maxLength="41">ಸುಮಾರು</string>
     <string name="contributors_title">ಕೊಡುಗೆದಾರರು</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description"><![CDATA[ಇವರು ನಮ್ಮ ಅದ್ಭುತ <a href=\"%1$s\">ಕೊಡುಗೆದಾರರು</a>. ಪ್ರೋಗ್ರಾಮಿಂಗ್, ಅನುವಾದ, ದೇಣಿಗೆ ಮತ್ತು <a href=\"%2$s\">ಇನ್ನಷ್ಟು</a> ಮೂಲಕ ನೀವು AnkiDroid ಗೆ ಸಹಾಯ ಮಾಡಬಹುದು!]]></string>
     <string name="license">ಪರವಾನಗಿ</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid ಅನ್ನು <a href=\"%1$s\">GPL-3.0</a> ಮತ್ತು <a href=\"%2$s\">AGPL-3.0</a> ಪರವಾನಗಿಗಳ ಮೂಲ ಕೋಡ್ ಅಡಿಯಲ್ಲಿ ಬಿಡುಗಡೆ ಮಾಡಲಾಗಿದೆ < href=\"%3$s\">GitHub</a> ನಲ್ಲಿ ಲಭ್ಯವಿದೆ]]></string>
+    <string name="donate_description"><![CDATA[<a href=\"%1$s\">ದಾನ ಮಾಡುವ ಮೂಲಕ</a> ನೀವು AnkiDroid ಅಭಿವೃದ್ಧಿಯನ್ನು ಬೆಂಬಲಿಸಬಹುದು. ಯಾವುದೇ ಮೊತ್ತವನ್ನು ಆಳವಾಗಿ ಪ್ರಶಂಸಿಸಲಾಗುತ್ತದೆ.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ಗೆಸ್ಚರ್ ಸೇರಿಸಿ</string>
     <string name="binding_replace_gesture">ಗೆಸ್ಚರ್ ಬದಲಾಯಿಸಿ</string>
@@ -289,10 +287,10 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\' ತೆಗೆದುಹಾಕಿ</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="bindings_already_bound">ಈಗಾಗಲೇ \'%s\' ಗೆ ಬದ್ಧವಾಗಿದೆ</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
+    <string name="readtext_deprecation_warn">AnkiDroid ಇತರ Anki ಕ್ಲೈಂಟ್‌ಗಳಿಗೆ ಹೊಂದಿಕೆಯಾಗುವ ಉತ್ತಮ TTS ಕಾರ್ಯವಿಧಾನವನ್ನು ಪರಿಚಯಿಸಿದೆ ಮತ್ತು ಭಾಷಾ ಪ್ಲೇಬ್ಯಾಕ್‌ಗೆ ಹೆಚ್ಚಿನ ಧ್ವನಿಗಳು ಮತ್ತು ಸುಧಾರಣೆಗಳನ್ನು ಒಳಗೊಂಡಿದೆ!\n\nದಯವಿಟ್ಟು ಸಾಧ್ಯವಾದಷ್ಟು ಬೇಗ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ, ಏಕೆಂದರೆ ಈ ಸೆಟ್ಟಿಂಗ್ ಅನ್ನು ಶೀಘ್ರದಲ್ಲೇ ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">ದಯವಿಟ್ಟು ಹೊಸ ಪಠ್ಯವನ್ನು ಸ್ಪೀಚ್ ಫಾರ್ಮ್ಯಾಟ್‌ಗೆ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
@@ -302,15 +300,14 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[AnkiDroid ನಿಯತಕಾಲಿಕವಾಗಿ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡುತ್ತದೆ.
+        ಬ್ಯಾಕಪ್‌ಗಳು ಎರಡು ದಿನಗಳಿಗಿಂತ ಹೆಚ್ಚು ಹಳೆಯದಾದ ನಂತರ,
+        ಡಿಸ್ಕ್ ಜಾಗವನ್ನು ಮುಕ್ತಗೊಳಿಸಲು AnkiDroid ಅವುಗಳಲ್ಲಿ ಕೆಲವನ್ನು ತೆಗೆದುಹಾಕಲು ಪ್ರಾರಂಭಿಸುತ್ತದೆ.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        ಮಾಧ್ಯಮ ಫೈಲ್‌ಗಳನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡಲಾಗಿಲ್ಲ ಎಂಬುದನ್ನು ಗಮನಿಸಿ.
+        ಸುರಕ್ಷಿತವಾಗಿರಲು, ದಯವಿಟ್ಟು ನಿಯತಕಾಲಿಕವಾಗಿ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಸಿಂಕ್ರೊನೈಸ್ ಮಾಡಿ ಅಥವಾ ಅದರ ರಫ್ತುಗಳನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡಿ.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
-    ]]></string>
+        ನೀವು ಬ್ಯಾಕಪ್‌ನಿಂದ ಮರುಸ್ಥಾಪಿಸಬಹುದು ಮತ್ತು ಡೆಕ್ ಪಟ್ಟಿ ಮೆನುವಿನಲ್ಲಿ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ರಫ್ತು ಮಾಡಬಹುದು.]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">ಸ್ವಯಂಚಾಲಿತ ಬ್ಯಾಕಪ್‌ಗಳ ನಡುವಿನ ನಿಮಿಷಗಳು</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">ಇರಿಸಿಕೊಳ್ಳಲು ದೈನಂದಿನ ಬ್ಯಾಕಪ್‌ಗಳು</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">ಇರಿಸಿಕೊಳ್ಳಲು ಸಾಪ್ತಾಹಿಕ ಬ್ಯಾಕಪ್‌ಗಳು</string>
@@ -321,7 +318,7 @@
     <string name="pref__manage_space__screen_title">ಜಾಗವನ್ನು ನಿರ್ವಹಿಸಿ</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">ದೋಷ</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">ಲೆಕ್ಕಾಚಾರ ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d ಫೈಲ್\n%2$s</item>
         <item quantity="other">%1$d ಫೈಲ್‌ಗಳು\n%2$s</item>
@@ -335,28 +332,28 @@
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">ಬ್ಯಾಕ್‌ಅಪ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
     <string name="progress__deleting_backups">ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">ಸಂಗ್ರಹವನ್ನು ಅಳಿಸಿ</string>
     <string name="pref__delete_collection__summary">ಸಂಗ್ರಹಣೆ, ಮಾಧ್ಯಮ ಮತ್ತು ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಅಳಿಸಿ. ಅಪ್ಲಿಕೇಶನ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗಿಲ್ಲ</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">ಸಂಗ್ರಹವನ್ನು ಅಳಿಸಿ</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ನಿಮ್ಮ ಸಂಗ್ರಹಣೆ, ಮಾಧ್ಯಮ ಮತ್ತು ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಅಳಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?\n\nಗಮನಿಸಿ: ಈ ಕ್ರಿಯೆಯು ವಿಂಡೋವನ್ನು ಮುಚ್ಚುತ್ತದೆ.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="progress__deleting_collection">ಸಂಗ್ರಹವನ್ನು ಅಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">ಎಲ್ಲಾ ಅಳಿಸಿ</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
+    <string name="pref__delete_everything__summary">ಸಂಗ್ರಹಣೆ, ಮಾಧ್ಯಮ, ಬ್ಯಾಕಪ್‌ಗಳು ಮತ್ತು ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಅಳಿಸಿ</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">ಎಲ್ಲಾ ಅಳಿಸಿ</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ಎಲ್ಲಾ ಡೇಟಾವನ್ನು ಅಳಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ? ಇದು ನಿಮ್ಮ ಸಂಗ್ರಹಣೆ, ಮಾಧ್ಯಮ, ಬ್ಯಾಕಪ್‌ಗಳು ಮತ್ತು ಆದ್ಯತೆಗಳನ್ನು ಒಳಗೊಂಡಿರುತ್ತದೆ.\n\nಗಮನಿಸಿ: ಈ ಕ್ರಿಯೆಯು ವಿಂಡೋವನ್ನು ಮುಚ್ಚುತ್ತದೆ.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾವನ್ನು ಅಳಿಸಿ</string>
     <string name="pref__delete_app_data__summary">ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಮತ್ತು ಇತರ ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾವನ್ನು ಅಳಿಸಿ</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾ ಅಳಿಸುವುದೇ</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾವನ್ನು ಅಳಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ? ಇದು ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಮತ್ತು ಇತರ ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾವನ್ನು ಒಳಗೊಂಡಿರುತ್ತದೆ.\n\nಗಮನಿಸಿ: ಈ ಕ್ರಿಯೆಯು ವಿಂಡೋವನ್ನು ಮುಚ್ಚುತ್ತದೆ.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">ಸಂಗ್ರಹವಿಲ್ಲ</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">ದೋಷ</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">ತರುವ&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">ಲೆಕ್ಕಾಚಾರ ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
 </resources>

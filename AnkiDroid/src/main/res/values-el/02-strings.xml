@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Δεν δημιουργήθηκαν κάρτες. Συμπληρώστε περισσότερα πεδία</string>
-    <string name="note_editor_no_first_field">Το πρώτο πεδίο είναι κενό</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">Ο τρέχων τύπος σημείωσης δεν παρήγαγε καμία κάρτα.\nΠαρακαλώ επιλέξτε έναν άλλο τύπο σημείωσης ή κάντε κλικ στο \'Κάρτες\' και προσθέστε μία αντικατάσταση πεδίου</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Αποθήκευση σημείωσης</string>

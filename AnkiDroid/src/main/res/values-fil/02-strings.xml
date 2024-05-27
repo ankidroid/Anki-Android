@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">I-edit ang tala</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Walang nilikha na mga card. Mangyaring magpunan pa ng mga patlang.</string>
-    <string name="note_editor_no_first_field">Walang laman ang unang patlang</string>
-    <string name="note_editor_no_cloze_delations">Dapat maglaman ng cloze deletions ang uri ng tala na ito.</string>
     <string name="note_editor_no_cards_created_all_fields">Hindi nakagawa ng mga card ang kasalukuyang uri ng tala.\nMangyaring pumili ng ibang uri ng tala, o i-click ang \'Mga Card\' at magdagdag ng kapalit na patlang</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Gagana lamang ang mga Cloze deletion sa mga Cloze na uri ng tala.</string>
     <string name="saving_facts">Pag-save ng tala</string>

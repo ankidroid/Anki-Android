@@ -35,6 +35,6 @@
     <string name="basic_model_name">ಮೂಲಭೂತ</string>
     <string name="cloze_model_name">Cloze</string>
     <string name="basic_typing_model_name">ಮೂಲಭೂತ (ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="forward_reverse_model_name">ಮೂಲ (ಮತ್ತು ರಿವರ್ಸ್ ಕಾರ್ಡ್)</string>
+    <string name="forward_optional_reverse_model_name">ಮೂಲ (ಮತ್ತು ರಿವರ್ಸ್ ಕಾರ್ಡ್)</string>
 </resources>

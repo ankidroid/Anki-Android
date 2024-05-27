@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">గమనికను సవరించండి</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">కార్డులు సృష్టించబడలేదు. దయచేసి మరిన్ని ఫీల్డ్‌లను పూరించండి</string>
-    <string name="note_editor_no_first_field">మొదటి ఫీల్డ్ ఖాళీగా ఉంది</string>
-    <string name="note_editor_no_cloze_delations">ఈ నోట్ రకం తప్పనిసరిగా దగ్గరి తొలగింపులను కలిగి ఉండాలి</string>
     <string name="note_editor_no_cards_created_all_fields">ప్రస్తుత గమనిక రకం ఏ కార్డ్‌లను రూపొందించలేదు.\nదయచేసి మరొక గమనిక రకాన్ని ఎంచుకోండి లేదా \'కార్డ్‌లు\' క్లిక్ చేసి ఫీల్డ్ ప్రత్యామ్నాయాన్ని జోడించండి</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">క్లోజ్ డిలీట్‌లు క్లోజ్ నోట్ రకంపై మాత్రమే పని చేస్తాయి</string>
     <string name="saving_facts">గమనికను సేవ్ చేస్తోంది</string>
