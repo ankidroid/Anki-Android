@@ -21,6 +21,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.BundleCompat
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -29,15 +30,18 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.testutils.Flaky
+import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.OS
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.utils.ListUtil
 import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull
 import org.junit.Assert
 import org.junit.Test
@@ -650,6 +654,33 @@ class TagsDialogTest : RobolectricTest() {
         val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { Timber.d("Dialog successfully opened") }
+    }
+
+    @Test
+    fun `huge number of tags`() {
+        val type = TagsDialog.DialogType.FILTER_BY_TAG
+        val allTags = AnKingTags.value
+
+        val args = TagsDialog(ParametersUtils.whatever())
+            .withTestArguments(type, emptyList(), allTags)
+            .arguments
+        val mockListener = Mockito.mock(TagsDialogListener::class.java)
+        val factory = TagsDialogFactory(mockListener)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
+        scenario.moveToState(Lifecycle.State.STARTED)
+        scenario.onFragment { f ->
+            val tagsFile = requireNotNull(
+                BundleCompat.getParcelable(
+                    f.requireArguments(),
+                    "tagsFile",
+                    TagsFile::class.java
+                )
+            )
+
+            val dataFromArguments = tagsFile.getData()
+
+            assertThat(dataFromArguments.allTags, containsInAnyOrder(allTags))
+        }
     }
 
     // these are called 'withTestArguments' due to "extension is shadowed by a member" warnings
