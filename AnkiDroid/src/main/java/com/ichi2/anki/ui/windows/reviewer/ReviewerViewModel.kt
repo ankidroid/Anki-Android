@@ -24,6 +24,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Ease
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.launchCatchingIO
@@ -209,6 +210,12 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
             }
             actionFeedbackFlow.emit(CollectionManager.TR.studyingNoteSuspended())
             updateCurrentCard()
+        }
+    }
+
+    fun userAction(@Reviewer.UserAction number: Int) {
+        launchCatchingIO {
+            eval.emit("javascript: ankidroid.userAction($number);")
         }
     }
 
