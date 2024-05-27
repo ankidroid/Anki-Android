@@ -189,6 +189,9 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <!-- Force avi multimedia format decoding -->
+    <string name="media_force_avi_decoding" maxLength="41">Force .avi file decoding</string>
+    <string name="media_force_avi_decoding_summ">Enable .avi files to be decoded into mp4 for playback.</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used"

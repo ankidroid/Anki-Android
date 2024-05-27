@@ -16,11 +16,15 @@
 package com.ichi2.anki.services
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.arthenica.mobileffmpeg.FFmpeg
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
+import com.ichi2.anki.preferences.get
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.servicelayer.NoteService.convertVideoToMp4
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
@@ -33,6 +37,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
+import org.mockito.MockedStatic
+import org.mockito.Mockito
+import org.mockito.Mockito.mockStatic
 import timber.log.Timber
 import java.io.File
 import java.io.FileWriter
@@ -49,7 +56,6 @@ class NoteServiceTest : RobolectricTest() {
     @get:Rule
     var directory2 = TemporaryFolder()
 
-    // tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
     @Test
     fun updateJsonNoteTest() {
         val testModel = col.notetypes.byName("Basic")
@@ -94,7 +100,7 @@ class NoteServiceTest : RobolectricTest() {
         val audioField = MediaClipField()
         audioField.audioPath = fileAudio.absolutePath
 
-        NoteService.importMediaToDirectory(col, audioField)
+        NoteService.importMediaToDirectory(this.targetContext, col, audioField)
 
         val outFile = File(col.media.dir, fileAudio.name)
 
@@ -113,7 +119,7 @@ class NoteServiceTest : RobolectricTest() {
         val imgField = ImageField()
         imgField.extraImagePathRef = fileImage.absolutePath
 
-        NoteService.importMediaToDirectory(col, imgField)
+        NoteService.importMediaToDirectory(this.targetContext, col, imgField)
 
         val outFile = File(col.media.dir, fileImage.name)
 
@@ -151,13 +157,13 @@ class NoteServiceTest : RobolectricTest() {
         fld3.audioPath = f1.absolutePath
 
         Timber.e("media folder is %s %b", col.media.dir, File(col.media.dir).exists())
-        NoteService.importMediaToDirectory(col, fld1)
+        NoteService.importMediaToDirectory(this.targetContext, col, fld1)
         val o1 = File(col.media.dir, f1.name)
 
-        NoteService.importMediaToDirectory(col, fld2)
+        NoteService.importMediaToDirectory(this.targetContext, col, fld2)
         val o2 = File(col.media.dir, f2.name)
 
-        NoteService.importMediaToDirectory(col, fld3)
+        NoteService.importMediaToDirectory(this.targetContext, col, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one
 
         assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.audioPath)))
@@ -187,13 +193,13 @@ class NoteServiceTest : RobolectricTest() {
         val fld3 = ImageField()
         fld3.extraImagePathRef = f1.absolutePath
 
-        NoteService.importMediaToDirectory(col, fld1)
+        NoteService.importMediaToDirectory(this.targetContext, col, fld1)
         val o1 = File(col.media.dir, f1.name)
 
-        NoteService.importMediaToDirectory(col, fld2)
+        NoteService.importMediaToDirectory(this.targetContext, col, fld2)
         val o2 = File(col.media.dir, f2.name)
 
-        NoteService.importMediaToDirectory(col, fld3)
+        NoteService.importMediaToDirectory(this.targetContext, col, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one
 
         assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.extraImagePathRef)))
@@ -215,7 +221,7 @@ class NoteServiceTest : RobolectricTest() {
             hasTemporaryMedia = true
         }
 
-        NoteService.importMediaToDirectory(col, field)
+        NoteService.importMediaToDirectory(this.targetContext, col, field)
 
         assertThat("Audio temporary file should have been deleted after importing", file, not(anExistingFile()))
     }
@@ -230,7 +236,7 @@ class NoteServiceTest : RobolectricTest() {
             hasTemporaryMedia = true
         }
 
-        NoteService.importMediaToDirectory(col, field)
+        NoteService.importMediaToDirectory(this.targetContext, col, field)
 
         assertThat("Image temporary file should have been deleted after importing", file, not(anExistingFile()))
     }
@@ -293,5 +299,146 @@ class NoteServiceTest : RobolectricTest() {
 
         // no cards are rev or relearning, so avg interval cannot be calculated
         assertEquals(null, NoteService.avgInterval(col, note))
+    }
+
+    /**
+     * Test to verify behavior when an invalid input path is provided.
+     * This test mocks FFmpeg to return 1 (failure) when the function is called.
+     * This test also verifies that the output file does not exist after the conversion fails.
+     */
+    @Test
+    fun testInvalidInputPath() {
+        val invalidInputPath = "invalid/path/to/input.avi"
+        val outputFile = File(directory.root, "output_video.mp4")
+
+        // mock FFmpeg to return 1 (failure)
+        val mockFfmpeg: MockedStatic<FFmpeg> = Mockito.mockStatic(FFmpeg::class.java)
+        mockFfmpeg.use { mocked ->
+            mocked.`when`<Int> { FFmpeg.execute(Mockito.anyString()) }.thenReturn(1)
+
+            val result = convertVideoToMp4(invalidInputPath, outputFile.absolutePath)
+            assertThat("Conversion should fail due to invalid input path", result, equalTo(false))
+            assertThat("Output file should not exist", outputFile, not(anExistingFile()))
+        }
+    }
+
+    /**
+     * Test to verify behavior when an invalid output path is provided.
+     * This test mocks FFmpeg to return 1 (failure) when the function is called.
+     * This test also verifies that the output file does not exist after the conversion fails.
+     */
+    @Test
+    fun testInvalidOutputPath() {
+        val inputFile = directory.newFile("test_video.avi")
+        val invalidOutputPath = "invalid/path/to/output.mp4"
+
+        // write a line in the file so the file's length isn't 0
+        FileWriter(inputFile).use { fileWriter -> fileWriter.write("This is test video data.") }
+
+        // videos use audioPath for the file path
+        val mockFfmpeg: MockedStatic<FFmpeg> = Mockito.mockStatic(FFmpeg::class.java)
+
+        mockFfmpeg.use { mocked ->
+            // mock FFmpeg to return 1 (failure)
+            mocked.`when`<Int> { FFmpeg.execute(Mockito.anyString()) }.thenReturn(1)
+
+            val result = convertVideoToMp4(inputFile.absolutePath, invalidOutputPath)
+            assertThat("Conversion should fail due to invalid output path", result, equalTo(false))
+            assertThat("Output file should not exist", File(invalidOutputPath), not(anExistingFile()))
+        }
+    }
+
+    /**
+     * Test to verify behavior when an invalid input file is provided.
+     * This test mocks FFmpeg to return 1 (failure) when the function is called.
+     * This test also verifies that the output file does not exist after the conversion fails.
+     */
+    @Test
+    fun testInvalidInputFile() {
+        val invalidInputFile = File("invalid/path/to/input.avi")
+        val outputFile = File(directory.root, "output_video.mp4")
+
+        // mock FFmpeg to return 1 (failure)
+        val mockFfmpeg: MockedStatic<FFmpeg> = Mockito.mockStatic(FFmpeg::class.java)
+
+        mockFfmpeg.use { mocked ->
+            mocked.`when`<Int> { FFmpeg.execute(Mockito.anyString()) }.thenReturn(1)
+
+            val result = convertVideoToMp4(invalidInputFile.absolutePath, outputFile.absolutePath)
+            assertThat("Conversion should fail due to invalid input file", result, equalTo(false))
+            assertThat("Output file should not exist", outputFile, not(anExistingFile()))
+        }
+    }
+
+    /**
+     * Test to verify files are not converted if preference is enabled but the file is not an AVI file.
+     * This test mocks FFmpeg to return 1 (failure) when the function is called.
+     * This test also verifies that the preference is set to true after the conversion fails.
+     */
+    @Test
+    @Throws(IOException::class)
+    fun testNonAviFileConversion() {
+        val inputFile = directory.newFile("test_video.mp4")
+        val outputFile = File(directory.root, "output_video.mp4")
+
+        // set preference to true
+        val preferences = this.targetContext.sharedPrefs()
+        preferences.edit().putBoolean("mediaForceAviDecoding", true).apply()
+
+        // write a line in the file so the file's length isn't 0
+        FileWriter(inputFile).use { fileWriter -> fileWriter.write("This is test video data.") }
+
+        val fld = MediaClipField()
+        // videos use audioPath for the file path
+        fld.audioPath = inputFile.absolutePath
+
+        // mock FFmpeg to return 1 (failure)
+        val mockFfmpeg: MockedStatic<FFmpeg> = Mockito.mockStatic(FFmpeg::class.java)
+
+        mockFfmpeg.use { mocked ->
+            mocked.`when`<Int> { FFmpeg.execute(Mockito.anyString()) }.thenReturn(1)
+
+            NoteService.importMediaToDirectory(this.targetContext, col, fld)
+
+            assertThat("Conversion should fail due to input file not being an AVI file", outputFile, not(anExistingFile()))
+            assertThat("Output file should not exist", outputFile, not(anExistingFile()))
+            assertThat("Preference should be true", preferences.get("mediaForceAviDecoding"), equalTo(true))
+        }
+    }
+
+    /**
+     * Test to verify files are not imported nor converted when the force avi decode preference is disabled.
+     * This test mocks FFmpeg to return 1 (failure) when the function is called.
+     * This test also verifies that the preference is set to false after the conversion fails.
+     */
+    @Test
+    @Throws(IOException::class)
+    fun testForceAviDecodeDisabled() {
+        val inputFile = directory.newFile("test_video.avi")
+        val outputFile = File(directory.root, "output_video.mp4")
+
+        // set preference to false
+        val preferences = this.targetContext.sharedPrefs()
+        preferences.edit().putBoolean("mediaForceAviDecoding", false).apply()
+
+        // write a line in the file so the file's length isn't 0
+        FileWriter(inputFile).use { fileWriter -> fileWriter.write("This is test video data.") }
+
+        val fld = MediaClipField()
+        // videos use audioPath for the file path
+        fld.audioPath = inputFile.absolutePath
+
+        // mock FFmpeg to return 1 (failure)
+        val mockFfmpeg: MockedStatic<FFmpeg> = Mockito.mockStatic(FFmpeg::class.java)
+
+        mockFfmpeg.use { mocked ->
+            mocked.`when`<Int> { FFmpeg.execute(Mockito.anyString()) }.thenReturn(1)
+
+            NoteService.importMediaToDirectory(this.targetContext, col, fld)
+
+            assertThat("Conversion should fail due to force avi decode preference being disabled", outputFile, not(anExistingFile()))
+            assertThat("Output file should not exist", outputFile, not(anExistingFile()))
+            assertThat("Preference should be false", preferences.get("mediaForceAviDecoding"), equalTo(false))
+        }
     }
 }

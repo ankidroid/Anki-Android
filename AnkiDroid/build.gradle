@@ -326,6 +326,7 @@ dependencies {
     implementation libs.nanohttpd
     implementation libs.kotlinx.serialization.json
     implementation libs.seismic
+    implementation 'com.arthenica:mobile-ffmpeg-full-gpl:4.4.LTS'
 
     debugImplementation libs.androidx.fragment.testing.manifest
 

@@ -54,6 +54,8 @@ leakcanaryAndroid = "2.14"
 lint = '31.4.1'
 material = "1.12.0"
 materialTapTargetPrompt = "3.3.2"
+mobileFfmpegFull = "4.4.LTS"
+mobileFfmpegFullGpl = "4.4.LTS"
 mockitoInline = "5.2.0"
 mockitoKotlin = "5.3.1"
 mockk = "1.13.11"
@@ -110,6 +112,8 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
 google-material = { module = "com.google.android.material:material", version.ref = "material" }
+mobile-ffmpeg-full = { module = "com.arthenica:mobile-ffmpeg-full", version.ref = "mobileFfmpegFull" }
+mobile-ffmpeg-full-gpl = { module = "com.arthenica:mobile-ffmpeg-full-gpl", version.ref = "mobileFfmpegFullGpl" }
 tapTargetPrompt = { module = "uk.co.samuelwall:material-tap-target-prompt", version.ref = "materialTapTargetPrompt" }
 nanohttpd = { module = "org.nanohttpd:nanohttpd", version.ref = "nanohttpd" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }

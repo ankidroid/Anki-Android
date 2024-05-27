@@ -88,6 +88,12 @@
                 android:key="@string/media_import_allow_all_files_key"
                 android:summary="@string/media_import_allow_all_files_summ"
                 android:title="@string/media_import_allow_all_files" />
+            <!-- Workaround for #15772 -->
+            <SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:key="@string/media_force_avi_decoding_key"
+                android:summary="@string/media_force_avi_decoding_summ"
+                android:title="@string/media_force_avi_decoding" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="@string/pref_cat_plugins_key"

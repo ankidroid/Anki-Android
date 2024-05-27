@@ -224,7 +224,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // Import field media
                 // This goes before setting formattedValue to update
                 // media paths with the checksum when they have the same name
-                NoteService.importMediaToDirectory(col, field)
+                NoteService.importMediaToDirectory(this, col, field)
                 // Completely replace text for text fields (because current text was passed in)
                 val formattedValue = field.formattedValue
                 if (field.type === EFieldType.TEXT) {

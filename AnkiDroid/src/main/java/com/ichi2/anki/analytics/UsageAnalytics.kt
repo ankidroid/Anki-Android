@@ -556,6 +556,7 @@ object UsageAnalytics {
         "noteEditorNewlineReplace", // Replace newlines with HTML
         "autoFocusTypeInAnswer", // Focus ‘type in answer’
         "mediaImportAllowAllFiles", // Allow all files in media imports
+        "mediaForceAviDecoding", // Force AVI decoding
         "providerEnabled", // Enable AnkiDroid API
         // App bar buttons
         "reset_custom_buttons",
