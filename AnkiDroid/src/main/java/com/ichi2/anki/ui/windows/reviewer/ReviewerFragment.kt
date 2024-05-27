@@ -41,6 +41,7 @@ import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.navBarNeedsScrim
@@ -85,6 +86,11 @@ class ReviewerFragment :
             }
         }
 
+        viewModel.actionFeedbackFlow.flowWithLifecycle(lifecycle)
+            .collectIn(lifecycleScope) { message ->
+                showSnackbar(message, duration = 500)
+            }
+
         viewModel.isQueueFinishedFlow.collectIn(lifecycleScope) { isQueueFinished ->
             if (isQueueFinished) {
                 requireActivity().run {
@@ -106,6 +112,7 @@ class ReviewerFragment :
         when (item.itemId) {
             R.id.action_add_note -> launchAddNote()
             R.id.action_card_info -> launchCardInfo()
+            R.id.action_delete -> viewModel.deleteNote()
             R.id.action_edit -> launchEditNote()
             R.id.action_mark -> viewModel.toggleMark()
             R.id.action_open_deck_options -> launchDeckOptions()

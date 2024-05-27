@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.frontend.SetSchedulingStatesRequest
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Ease
 import com.ichi2.anki.NoteEditor
@@ -56,6 +57,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
     }
     var isQueueFinishedFlow = MutableSharedFlow<Boolean>()
     val isMarkedFlow = MutableStateFlow(false)
+    val actionFeedbackFlow = MutableSharedFlow<String>()
 
     override val server = AnkiServer(this).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -147,6 +149,17 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
 
     fun handleDeckOptionsResult() {
         launchCatchingIO {
+            updateCurrentCard()
+        }
+    }
+
+    fun deleteNote() {
+        launchCatchingIO {
+            val cardId = currentCard.await().id
+            val noteCount = undoableOp {
+                removeNotes(cids = listOf(cardId))
+            }.count
+            actionFeedbackFlow.emit(CollectionManager.TR.browsingCardsDeleted(noteCount))
             updateCurrentCard()
         }
     }
