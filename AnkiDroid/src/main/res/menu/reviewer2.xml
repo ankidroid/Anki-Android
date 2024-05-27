@@ -41,4 +41,9 @@
         android:title="@string/menu_add_note"
         android:icon="@drawable/ic_add"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_delete"
+        android:title="@string/menu_delete_note"
+        android:icon="@drawable/ic_delete_white"
+        app:showAsAction="never"/>
 </menu>
