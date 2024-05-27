@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
@@ -100,6 +101,7 @@ class ReviewerFragment :
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_card_info -> launchCardInfo()
+            R.id.action_open_deck_options -> launchDeckOptions()
         }
         return true
     }
@@ -141,6 +143,17 @@ class ReviewerFragment :
         lifecycleScope.launch {
             val intent = viewModel.getCardInfoDestination().toIntent(requireContext())
             startActivity(intent)
+        }
+    }
+
+    private val deckOptionsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        viewModel.handleDeckOptionsResult()
+    }
+
+    private fun launchDeckOptions() {
+        lifecycleScope.launch {
+            val intent = viewModel.getDeckOptionsDestination().getIntent(requireContext())
+            deckOptionsLauncher.launch(intent)
         }
     }
 

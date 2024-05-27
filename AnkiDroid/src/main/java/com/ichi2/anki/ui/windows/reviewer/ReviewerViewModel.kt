@@ -26,6 +26,7 @@ import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CardInfoDestination
+import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.libanki.sched.CurrentQueueState
@@ -104,6 +105,18 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
 
     suspend fun getCardInfoDestination(): CardInfoDestination {
         return CardInfoDestination(currentCard.await().id)
+    }
+
+    suspend fun getDeckOptionsDestination(): DeckOptionsDestination {
+        val deckId = withCol { decks.getCurrentId() }
+        val isFiltered = withCol { decks.isFiltered(deckId) }
+        return DeckOptionsDestination(deckId, isFiltered)
+    }
+
+    fun handleDeckOptionsResult() {
+        launchCatchingIO {
+            updateCurrentCard()
+        }
     }
 
     /* *********************************************************************************************
