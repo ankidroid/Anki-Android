@@ -252,3 +252,13 @@ suspend fun isBuryNoteAvailable(card: Card): Boolean {
         ) == 1
     }
 }
+
+suspend fun isSuspendNoteAvailable(card: Card): Boolean {
+    return withCol {
+        db.queryScalar(
+            "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+            card.nid,
+            card.id
+        ) == 1
+    }
+}
