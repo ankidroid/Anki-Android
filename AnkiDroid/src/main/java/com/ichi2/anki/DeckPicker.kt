@@ -2059,7 +2059,8 @@ open class DeckPicker :
         hideProgressBar()
         // Make sure the fragment is visible
         if (fragmented) {
-            studyoptionsFrame!!.visibility = View.VISIBLE
+            invalidateOptionsMenu()
+            studyoptionsFrame!!.visibility = if (collectionIsEmpty) View.GONE else View.VISIBLE
         }
         dueTree = result
         launchCatchingTask { renderPage(collectionIsEmpty) }
