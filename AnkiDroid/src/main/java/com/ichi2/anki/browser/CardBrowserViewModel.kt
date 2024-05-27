@@ -82,6 +82,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 @NeedsTest("reverseDirectionFlow/sortTypeFlow are not updated on .launch { }")
+@NeedsTest("columIndex1/2 config is not not updated on init")
 @NeedsTest("13442: selected deck is not changed, as this affects the reviewer")
 @NeedsTest("search is called after launch()")
 class CardBrowserViewModel(
@@ -274,11 +275,19 @@ class CardBrowserViewModel(
         }
 
         flowOfColumnIndex1
-            .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
+            .ignoreValuesFromViewModelLaunch()
+            .onEach { index ->
+                Timber.d("updating %s", DISPLAY_COLUMN_1_KEY)
+                sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) }
+            }
             .launchIn(viewModelScope)
 
         flowOfColumnIndex2
-            .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) } }
+            .ignoreValuesFromViewModelLaunch()
+            .onEach { index ->
+                Timber.d("updating %s", DISPLAY_COLUMN_2_KEY)
+                sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) }
+            }
             .launchIn(viewModelScope)
 
         performSearchFlow.onEach {
