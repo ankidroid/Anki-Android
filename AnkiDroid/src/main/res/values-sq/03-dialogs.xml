@@ -44,67 +44,67 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Check database?</string>
-    <string name="check_db_warning">This may take a long time</string>
-    <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
-    <string name="delete_deck_title">Delete deck?</string>
-    <string name="no_tts_available_message">No text-to-speech language available</string>
-    <string name="tts_no_tts">Don’t speak</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="check_db_title">Kontrolloni bazën e të dhënave?</string>
+    <string name="check_db_warning">Kjo mund të marrë një kohë të gjatë</string>
+    <string name="contextmenu_deckpicker_delete_deck">Fshi kuvertën</string>
+    <string name="delete_deck_title">Të fshihet kuverta?</string>
+    <string name="no_tts_available_message">Nuk ka gjuhë tekst-në-fjalë të disponueshme</string>
+    <string name="tts_no_tts">mos fol</string>
+    <string name="unused_strings">\n\nSkedarët e papërdorur:\n</string>
+    <string name="reposition_card_dialog_title">Rivendosni kartën e re</string>
+    <string name="reposition_card_dialog_message">Pozicioni fillestar:</string>
+    <string name="reposition_card_not_new_error">Vetëm kartat e reja mund të ripozicionohen</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d kartë u ripozicionua</item>
+        <item quantity="other">%d karta u ripozicionuan</item>
     </plurals>
-    <string name="reset_card_dialog_title">Reset card progress</string>
+    <string name="reset_card_dialog_title">Rivendos progresin e kartës</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">Rivendosja e %d kartës</item>
+        <item quantity="other">Rivendosja e %d kartave</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d kartë u riplanifikua</item>
+        <item quantity="other">%d karta u riplanifikuan</item>
     </plurals>
-    <string name="answering_error_title">Database error</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-    <string name="answering_error_report">Report error</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
-    <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
-    <string name="intent_aedict_empty">Category “default” is empty</string>
-    <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
-    <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-    <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_random">Select x cards randomly from the deck:</string>
-    <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
-    <string name="restore_backup_title">Restore backup?</string>
-    <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
-    <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
-    <string name="dialog_no">No</string>
-    <string name="dialog_yes">Yes</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
-    <string name="dialog_continue">Continue</string>
-    <string name="dialog_processing">Processing&#8230;</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
-    <string name="dialog_positive_delete">Delete</string>
+    <string name="answering_error_title">Gabim në bazën e të dhënave</string>
+    <string name="answering_error_message">Shkrimi në koleksion dështoi. Baza e të dhënave mund të jetë e dëmtuar ose mund të mos ketë hapësirë ​​boshe të mjaftueshme në disk.\n\nNëse kjo ndodh më shpesh, provo të kontrollosh bazën e të dhënave, të riparosh koleksionin ose ta rivendosësh atë nga një kopje rezervë. Prekni \"opsionet\" për këtë.\n\Ose mund të jetë edhe një gabim i AnkiDroid; ju lutemi raportoni gabimin në mënyrë që ta kontrollojmë këtë.</string>
+    <string name="answering_error_report">Raportoni gabimin</string>
+    <string name="storage_full_message">Nuk ka hapësirë ​​të mjaftueshme të ruajtjes së lirë për të hapur AnkiDroid. Liro pak hapësirë ​​për të vazhduar.</string>
+    <string name="repair_deck_dialog">Dëshiron vërtet të provosh të riparosh bazën e të dhënave?\n\nPara fillimit të përpjekjes, do të krijohet një kopje në nënfolderin \"%s\".</string>
+    <string name="intent_aedict_empty">Kategoria \"e parazgjedhur\" është bosh</string>
+    <string name="intent_aedict_category">Për të shtuar karta në AnkiDroid, hiqni të gjitha kategoritë e Notepad ose shtoni një të quajtur \"default\"</string>
+    <string name="custom_study_new_total_new">Kartat e reja në kuvertë: %d</string>
+    <string name="custom_study_rev_total_rev">Komentet e parapara në kuvertë: %d</string>
+    <string name="custom_study_new_extend">Rrit/zvogëlo (“-3”) kufirin e ri të kartës së sotme me</string>
+    <string name="custom_study_rev_extend">Rrit/zvogëlo (“-3”) kufirin e sotëm të rishikimit me</string>
+    <string name="custom_study_forgotten">Rishikoni kartat e harruara në x ditët e fundit:</string>
+    <string name="custom_study_ahead">Rishikoni përpara për x ditë:</string>
+    <string name="custom_study_random">Zgjidhni x kartat rastësisht nga kuverta:</string>
+    <string name="custom_study_preview">Shikoni paraprakisht kartat e reja të shtuara në x ditët e fundit:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Nuk mund të rindërtohej kuverta e studimit të personalizuar</string>
+    <string name="storage_full_title">Magazinimi plot</string>
+    <string name="storage_almost_full_title">Magazinimi pothuajse i mbushur</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nuk ka hapësirë</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid ka nevojë për %s hapësirë ​​ruajtëse falas për të vazhduar. Ju lutemi lironi pak hapësirë</string>
+    <string name="restore_backup_title">Të rivendoset rezervimi?</string>
+    <string name="restore_backup">Koleksioni juaj do të zëvendësohet me një kopje më të vjetër. Çdo përparim i paruajtur do të humbet.</string>
+    <string name="restore_backup_choose_another">Zgjidhni një tjetër</string>
+    <string name="dialog_cancel">Anulo</string>
+    <string name="dialog_ok">Ne rregull</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Konfirmo</string>
+    <string name="dialog_no">Jo</string>
+    <string name="dialog_yes">Po</string>
+    <string name="dialog_keep">Ruaj</string>
+    <string name="dialog_remove">Hiqe</string>
+    <string name="dialog_continue">Vazhdo</string>
+    <string name="dialog_processing">Po procesohet</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Krijoni</string>
+    <string name="dialog_positive_delete">Fshije</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Çaktivizo</string>
+    <string name="dialog_positive_overwrite">Mbishkruaj</string>
     <string name="dialog_positive_repair">Repair</string>
     <string name="dialog_positive_replace">Replace</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
@@ -174,33 +174,33 @@
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title_new">Caktoni Gjuhën</string>
+    <string name="locale_selection_dialog_summary">Disa tastiera shumëgjuhëshe, si p.sh. GBoard mbështesin ndryshimin e gjuhës kur redaktoni tekstin\n\nJu lutemi, kërkoni funksionin \"setImeHintLocales\" nga prodhuesi i tastierës nëse tastiera juaj nuk ndryshon gjuhën.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_title_using_ankidroid">Duke përdorur AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Manuali AnkiDroid</string>
+    <string name="help_item_anki_manual">Manuali Anki</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_title_get_help">Kerko Ndihme</string>
+    <string name="help_item_mailing_list">Lista e postimeve</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_report_bug">Raporto nje gabim</string>
+    <string name="help_title_support_ankidroid">Mbështet AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Dhuroni</string>
+    <string name="help_item_support_develop_ankidroid">Zhvilloni</string>
+    <string name="help_item_support_rate_ankidroid">Kosto</string>
+    <string name="help_item_support_other_ankidroid">Të tjera</string>
+    <string name="multimedia_editor_trans_translate">Përkthejeni</string>
+    <string name="help_title_community">Komuniteti</string>
+    <string name="help_item_anki_forums">Forumet Anki</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
+    <string name="help_title_privacy">Privatësia</string>
+    <string name="help_item_ankidroid_privacy_policy">Politika e privatësisë së AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Politika e privatësisë së AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Termat dhe Kushtet e AnkiWeb</string>
+    <string name="help_title_send_exception">Dërgo raportin e zgjidhjes së problemeve</string>
     <string name="help_dialog_exception_report_debounce">Report already submitted</string>
     <string name="help_dialog_exception_report_sent">Report was sent!</string>
     <!--Sync-->

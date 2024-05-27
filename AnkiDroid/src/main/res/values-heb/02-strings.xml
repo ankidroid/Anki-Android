@@ -70,8 +70,8 @@
     <string name="hide_whiteboard">הסתר לוח ציור</string>
     <string name="clear_whiteboard">נקה לוח ציור</string>
     <string name="replay_audio">החזר שמע</string>
-    <string name="leech_suspend_notification">קלף מסומן כעלוקה ומושעה</string>
-    <string name="leech_notification">קלף מסומן כעלוקה</string>
+    <string name="leech_suspend_notification">כרטיס מסומן כעלוקה ומושעה</string>
+    <string name="leech_notification">כרטיס מסומן כעלוקה</string>
     <string name="webview_crash_unknown">שגיאה לא מוכרת</string>
     <string name="webview_crash_unknwon_detailed">זה נגרם בגלל שגיאה פנימית בWebView</string>
     <string name="webview_crash_oom">אין זיכרון פנוי</string>
@@ -79,7 +79,7 @@
     <string name="webview_crash_nonfatal">הדמיית ה WebView קרסה. הסיבה: %s</string>
     <string name="webview_crash_fatal">שגיאה קריטית: הדמיית ה WebView קרסה. הסיבה: %s</string>
     <string name="webview_crash_loop_dialog_title">נכשלה הדמיית WebView של המערכת.</string>
-    <string name="webview_crash_loop_dialog_content">מנוע התצוגה נכשל להציג את הקלף: ‚%1$s‏’. \n %2$s</string>
+    <string name="webview_crash_loop_dialog_content">מנוע התצוגה נכשל להציג את הכרטיס: %1$s. \n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>שאלה</item>
@@ -87,7 +87,7 @@
     </string-array>
     <string-array name="browser_column2_headings">
         <item>תשובה</item>
-        <item>קלף</item>
+        <item>כרטיס</item>
         <item>חפיסה</item>
         <item>פתק</item>
         <item>שאלה</item>
@@ -97,7 +97,7 @@
         <item>מרווח זמן</item>
         <item>קלות</item>
         <item>תזמון</item>
-        <item>קלף השתנה</item>
+        <item>כרטיס השתנה</item>
         <item>נוצר</item>
         <item>רשומה השתנתה</item>
     </string-array>
@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">ערוך רשומה</string>
     <string name="discard">ביטול</string>
     <string name="note_editor_no_cards_created">לא נוצרו קלפים. יש למלא יותר שדות</string>
-    <string name="note_editor_no_first_field">השדה הראשון ריק</string>
-    <string name="note_editor_no_cloze_delations">סוג הרשומה חייב לכלול \'השלם את החסר\'</string>
     <string name="note_editor_no_cards_created_all_fields">לסוג הרשומה הנוכחי אין כרטיסים. \n אנא בחר סוג רשומה אחר, או הקש על \'כרטיסים\' והוסף חלופת שדה</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">השלמת החסר פועלת רק בכרטיסים מסוג \'השלם את החסר\'</string>
     <string name="saving_facts">שמירת רשומה</string>
@@ -227,8 +225,8 @@
     <string name="title_whiteboard_editor">עורך לוח</string>
     <string name="user_is_a_robot">זוהה אוטומציה ממוחשבת, אם אתה אנושי, צור קשר עם תמיכת AnkiDroid</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">קלף זה משתמש באפשרויות שאינן נתמכות בAnkiDroid. צור קשר עם המפתח %1$s, או קרא בויקי. %2$s</string>
-    <string name="invalid_json_data">הקלף מכיל תוכן לא תקין. %s</string>
+    <string name="api_version_developer_contact">כרטיס זה משתמש באפשרויות שאינן נתמכות בAnkiDroid. צור קשר עם המפתח %1$s, או קרא בויקי. %2$s</string>
+    <string name="invalid_json_data">הכרטיס מכיל תוכן לא תקין. %s</string>
     <string name="valid_js_api_version">גרסת AnkiDroid JS API לא תקינה.צור קשר עם המפתח %s, או קרא בויקי</string>
     <string name="update_js_api_version">קיים עדכון ל AnkiDroid JS API. צור קשר עם המפתח %s, או קרא בויקי</string>
     <string name="reviewer_invalid_api_version_visit_documentation">תצוגה</string>
@@ -237,7 +235,7 @@
     <string name="about_ankidroid_successfully_copied_debug_info">הועתק מהלוח</string>
     <string name="about_ankidroid_error_copy_debug_info">תקלה בהעתקת הודעת השגיאה</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">תקלה בתוכן הקלף: נכשל בטעינת %s</string>
+    <string name="card_viewer_could_not_find_image">תקלה בתוכן הכרטיס: נכשל בטעינת %s</string>
     <!-- Deck Picker -->
     <string name="search_decks">חיפוש בחפיסות</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">הצג התקדמות ההמרה</string>
@@ -292,7 +290,7 @@
     <string name="home">בית</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">הקלף נקבר</string>
+    <string name="card_buried">הכרטיס הוטמן</string>
     <plurals name="note_suspended">
         <item quantity="one">כרטיס %d הושעה.</item>
         <item quantity="two">%d כרטיסים הושעו.</item>
@@ -321,7 +319,7 @@
     <string name="expand_tag">הרחב את התג \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">הגישה לאוסף נכשלה. בבקשה נסה שוב!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">הוסף סוג רשומה חדש</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">למד פחות</string>
     <string name="intro_ankidroid_tagline_two">זכור יותי</string>
@@ -362,14 +360,14 @@
     <string name="failed_to_copy">ההעתקה נכשלה</string>
     <string name="card_browser_unavailable_when_notes_mode">לא זמין במצב \'פתקים\'</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="two">%d cards unburied</item>
-        <item quantity="many">%d cards unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">כרטיס אחד %d הוצא מהטמנה</item>
+        <item quantity="two">%d כרטיסים הוצאו מהטמנה</item>
+        <item quantity="many">%d כרטיסים הוצאו מהטמנה</item>
+        <item quantity="other">%d כרטיסים הוצאו מהטמנה</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">מיקום מחדש</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="start_recording">הקלטה</string>
+    <string name="stop_recording">עצור</string>
+    <string name="play_recording">השמע</string>
+    <string name="next_recording">הבא</string>
 </resources>

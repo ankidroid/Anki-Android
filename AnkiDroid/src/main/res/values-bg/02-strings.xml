@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">Промяна на бележка</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Няма създадени карти. Моля, попълнете още полета</string>
-    <string name="note_editor_no_first_field">Първото поле е празно</string>
-    <string name="note_editor_no_cloze_delations">Този тип на бележка трябва да съдържа заданието с пропуските </string>
     <string name="note_editor_no_cards_created_all_fields">Текущият тип на бележка не произвежда никакви карти.\nМоля изберете друг тип на бележка или натиснете \'Карти\' и добавете заместване на поле</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Задача с пропуските работи само в тип на бележка с пропуските</string>
     <string name="saving_facts">Записване на бележка</string>

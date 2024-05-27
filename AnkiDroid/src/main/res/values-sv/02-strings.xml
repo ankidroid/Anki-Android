@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">Redigera not</string>
     <string name="discard">Kasta</string>
     <string name="note_editor_no_cards_created">Inga kort skapade. Vänligen fyll i fler fält</string>
-    <string name="note_editor_no_first_field">Det första fältet är tomt</string>
-    <string name="note_editor_no_cloze_delations">Denna nottyp måste innehålla textluckor</string>
     <string name="note_editor_no_cards_created_all_fields">Den aktuella nottypen gav inga kort.\nVälj en annan nottyp, eller klicka på ‘Kort’ och lägg till ett fältbyte</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Textluckor fungerar bara för nottypen Lucktext</string>
     <string name="saving_facts">Sparar not</string>

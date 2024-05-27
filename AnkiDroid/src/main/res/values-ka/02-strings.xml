@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">შენიშვნის რედაქტირება</string>
     <string name="discard">წაშლა</string>
     <string name="note_editor_no_cards_created">ბარათები არ შეიქმნა. გთხოვთ მეტი ველი შეავსოთ</string>
-    <string name="note_editor_no_first_field">პირველი ველი ცარიელია</string>
-    <string name="note_editor_no_cloze_delations">შენიშვნის ეს ტიპი უნდა შეიცავდეს გამოტოვებულ ადგილებს</string>
     <string name="note_editor_no_cards_created_all_fields">მიმდინარე შენიშვნის ტიპმა არ წარმოშვა ბარათები.\nგთხოვთ აირჩიოთ სხვა შენიშვნის ტიპი ან შეეხოთ „ბარათების“ ღილაკს და დაამატოთ ველის შემცვლელი</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">გამოტოვებული ადგილები მხოლოდ გამოტოვებული ადგილებიანი ტიპის შენიშვნებში იმუშავებს</string>
     <string name="saving_facts">შენიშვნის შენახვა</string>

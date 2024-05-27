@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">Edita la nota</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">No s\'ha creat cap carta. Omple més camps si us plau</string>
-    <string name="note_editor_no_first_field">El primer camp és buit</string>
-    <string name="note_editor_no_cloze_delations">Aquest tipus de nota ha de contenir supressions parcials</string>
     <string name="note_editor_no_cards_created_all_fields">El tipus de nota actual no ha produït cap targeta.\nTrieu un altre tipus de nota o feu clic a \'Cartes\' i afegiu una substitució de camp si us plau</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Les supressions parcials només funcionen en una nota de tipus parcial</string>
     <string name="saving_facts">S\'està desant la nota</string>

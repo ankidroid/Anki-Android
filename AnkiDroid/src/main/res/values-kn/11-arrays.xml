@@ -53,12 +53,12 @@
     <string name="cram_deck_conf_order_oldest_seen_first">ಹಿಂದೆ ನೋಡಿದ ಅತ್ಯಂತ ಹಳೆಯದು</string>
     <string name="cram_deck_conf_order_random">ಯಾದೃಚ್ಛಿಕ</string>
     <string name="cram_deck_conf_order_increasing_intervals">ಹೆಚ್ಚುತ್ತಿರುವ ಮಧ್ಯಂತರಗಳು</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">ಮಧ್ಯಂತರಗಳನ್ನು ಕಡಿಮೆ ಮಾಡುವುದು</string>
     <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
     <string name="cram_deck_conf_order_order_added">ಆರ್ಡರ್ ಸೇರಿಸಲಾಗಿದೆ</string>
     <string name="cram_deck_conf_order_order_due">ಆದೇಶ ಬಾಕಿ ಇದೆ</string>
     <string name="cram_deck_conf_order_latest_added_first">ತೀರಾ ಇತ್ತೀಚಿನದನ್ನು ಮೊದಲು ಸೇರಿಸಲಾಗುತ್ತದೆ</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_relative_overdueness">ತುಲನಾತ್ಮಕ ಹೆಚ್ಚುವರಿ</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">ಪ್ರಸ್ತುತ ಡೆಕ್ ಬಳಸಿ</string>
     <string name="add_to_deck_decide_by_note_type">ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವನ್ನು ನಿರ್ಧರಿಸಿ</string>
@@ -66,7 +66,7 @@
     <string name="theme_follow_system">ವ್ಯವಸ್ಥೆಯನ್ನು ಅನುಸರಿಸಿ</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ಬೆಳಕು</string>
-    <string name="day_theme_plain">Plain</string>
+    <string name="day_theme_plain">ಸರಳ</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">ಕಪ್ಪು</string>
     <string name="night_theme_dark">ಕತ್ತಲೆ</string>
@@ -80,8 +80,8 @@
     <string name="html_size_code_xx_large">xx-ದೊಡ್ಡದು</string>
     <!-- gestures_labels -->
     <string name="answer_again">ಮತ್ತೊಮ್ಮೆ ಉತ್ತರಿಸಿ</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
+    <string name="answer_hard">ಕಟುವಾಗಿ ಉತ್ತರಿಸಿ</string>
+    <string name="answer_good">ಚೆನ್ನಾಗಿ ಉತ್ತರಿಸಿ</string>
     <string name="answer_easy">ಸುಲಭವಾಗಿ ಉತ್ತರಿಸಿ</string>
     <string name="gesture_play">ಪ್ಲೇ ಮೀಡಿಯಾ</string>
     <string name="gesture_abort_learning">ಕಲಿಕೆಯ ಬಗ್ಗೆ</string>

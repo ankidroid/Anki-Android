@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">编辑笔记</string>
     <string name="discard">丢弃</string>
     <string name="note_editor_no_cards_created">没有已创建的卡片。请填写更多字段</string>
-    <string name="note_editor_no_first_field">第一字段为空</string>
-    <string name="note_editor_no_cloze_delations">此笔记模板必须包含填空题</string>
     <string name="note_editor_no_cards_created_all_fields">当前笔记模板没有生成任何卡片。\n请选择另一个笔记模板，或点击「卡片」并添加一个字段替换</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">填空题只能在填空题笔记模板上使用</string>
     <string name="saving_facts">保存笔记</string>
