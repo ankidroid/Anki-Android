@@ -38,6 +38,7 @@ import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.mockIt
 import kotlinx.coroutines.flow.first
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
@@ -246,6 +247,30 @@ class CardBrowserViewModelTest : JvmTest() {
 
             selectRowsBetweenPositions(0, 1)
             expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `selected card and note ids`() {
+        val notes = List(2) { addNoteUsingBasicAndReversedModel() }
+
+        val nids = notes.map { it.id }.toTypedArray()
+        val cids = notes.flatMap { it.cids() }.toTypedArray()
+
+        runViewModelTest {
+            setCardsOrNotes(CardsOrNotes.CARDS).join()
+            selectAll()
+            assertThat("cards: rowCount", rowCount, equalTo(4))
+            assertThat("cards: cids", queryAllSelectedCardIds(), containsInAnyOrder(*cids))
+            assertThat("cards: nids", queryAllSelectedNoteIds(), containsInAnyOrder(*nids))
+
+            selectNone()
+
+            setCardsOrNotes(CardsOrNotes.NOTES).join()
+            selectAll()
+            assertThat("notes: rowCount", rowCount, equalTo(2))
+            assertThat("notes: cids", queryAllSelectedCardIds(), containsInAnyOrder(*cids))
+            assertThat("notes: nids", queryAllSelectedNoteIds(), containsInAnyOrder(*nids))
         }
     }
 
