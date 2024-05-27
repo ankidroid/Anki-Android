@@ -18,6 +18,7 @@ package com.ichi2.anki.ui.windows.reviewer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
@@ -28,6 +29,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
@@ -70,6 +72,7 @@ class ReviewerFragment :
             setOnMenuItemClickListener(this@ReviewerFragment)
             setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
             (menu as? MenuBuilder)?.let {
+                setupMenuItems(it)
                 it.setOptionalIconsVisible(true)
                 requireContext().increaseHorizontalPaddingOfOverflowMenuIcons(it)
             }
@@ -104,6 +107,7 @@ class ReviewerFragment :
             R.id.action_add_note -> launchAddNote()
             R.id.action_card_info -> launchCardInfo()
             R.id.action_edit -> launchEditNote()
+            R.id.action_mark -> viewModel.toggleMark()
             R.id.action_open_deck_options -> launchDeckOptions()
         }
         return true
@@ -140,6 +144,21 @@ class ReviewerFragment :
                 answerButtonsLayout.isVisible = false
             }
         }
+    }
+
+    private fun setupMenuItems(menu: Menu) {
+        // TODO show that the card is marked somehow when the menu item is overflowed or not shown
+        val markItem = menu.findItem(R.id.action_mark)
+        viewModel.isMarkedFlow.flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycleScope) { isMarked ->
+                if (isMarked) {
+                    markItem.setIcon(R.drawable.ic_star)
+                    markItem.setTitle(R.string.menu_unmark_note)
+                } else {
+                    markItem.setIcon(R.drawable.ic_star_border_white)
+                    markItem.setTitle(R.string.menu_mark_note)
+                }
+            }
     }
 
     private val noteEditorLauncher =

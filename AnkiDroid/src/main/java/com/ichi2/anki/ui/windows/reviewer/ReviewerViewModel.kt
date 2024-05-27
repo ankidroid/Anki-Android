@@ -32,6 +32,10 @@ import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.previewer.NoteEditorDestination
 import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.servicelayer.MARKED_TAG
+import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.libanki.hasTag
+import com.ichi2.libanki.note
 import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
@@ -39,6 +43,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(cardMediaPlayer) {
 
@@ -50,6 +55,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
         queueState.await()!!.topCard
     }
     var isQueueFinishedFlow = MutableSharedFlow<Boolean>()
+    val isMarkedFlow = MutableStateFlow(false)
 
     override val server = AnkiServer(this).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -101,6 +107,15 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
     fun answerHard() = answerCard(Ease.HARD)
     fun answerGood() = answerCard(Ease.GOOD)
     fun answerEasy() = answerCard(Ease.EASY)
+
+    fun toggleMark() {
+        launchCatchingIO {
+            val card = currentCard.await()
+            val note = withCol { card.note() }
+            NoteService.toggleMark(note)
+            isMarkedFlow.emit(NoteService.isMarked(note))
+        }
+    }
 
     fun onStateMutationCallback() {
         statesMutated = true
@@ -206,6 +221,12 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
         cardMediaPlayer.playAllSoundsForSide(side)
     }
 
+    private suspend fun updateMarkedStatus() {
+        val card = currentCard.await()
+        val isMarkedValue = withCol { card.note().hasTag(MARKED_TAG) }
+        isMarkedFlow.emit(isMarkedValue)
+    }
+
     private suspend fun updateCurrentCard() {
         queueState = asyncIO {
             withCol {
@@ -216,6 +237,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
             currentCard = CompletableDeferred(it.topCard)
             showQuestion()
             loadAndPlaySounds(CardSide.QUESTION)
+            updateMarkedStatus()
         } ?: isQueueFinishedFlow.emit(true)
     }
 
