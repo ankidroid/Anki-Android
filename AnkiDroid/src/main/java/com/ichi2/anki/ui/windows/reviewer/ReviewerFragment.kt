@@ -111,6 +111,8 @@ class ReviewerFragment :
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add_note -> launchAddNote()
+            R.id.action_bury_card -> viewModel.buryCard()
+            R.id.action_bury_note -> viewModel.buryNote()
             R.id.action_card_info -> launchCardInfo()
             R.id.action_delete -> viewModel.deleteNote()
             R.id.action_edit -> launchEditNote()
@@ -164,6 +166,19 @@ class ReviewerFragment :
                 } else {
                     markItem.setIcon(R.drawable.ic_star_border_white)
                     markItem.setTitle(R.string.menu_mark_note)
+                }
+            }
+
+        val buryItem = menu.findItem(R.id.action_bury)
+        val buryCardItem = menu.findItem(R.id.action_bury_card)
+        viewModel.canBuryNoteFlow.flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycleScope) { canBuryNote ->
+                if (canBuryNote) {
+                    buryItem.isVisible = true
+                    buryCardItem.isVisible = false
+                } else {
+                    buryItem.isVisible = false
+                    buryCardItem.isVisible = true
                 }
             }
     }

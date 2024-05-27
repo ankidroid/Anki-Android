@@ -35,6 +35,8 @@ import com.ichi2.anki.previewer.NoteEditorDestination
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.servicelayer.isBuryNoteAvailable
+import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.note
 import com.ichi2.libanki.sched.CurrentQueueState
@@ -58,6 +60,8 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
     var isQueueFinishedFlow = MutableSharedFlow<Boolean>()
     val isMarkedFlow = MutableStateFlow(false)
     val actionFeedbackFlow = MutableSharedFlow<String>()
+    val canBuryNoteFlow = MutableStateFlow(true)
+    val canSuspendNoteFlow = MutableStateFlow(true)
 
     override val server = AnkiServer(this).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -164,6 +168,28 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
         }
     }
 
+    fun buryCard() {
+        launchCatchingIO {
+            val cardId = currentCard.await().id
+            val noteCount = undoableOp {
+                sched.buryCards(cids = listOf(cardId))
+            }.count
+            actionFeedbackFlow.emit(CollectionManager.TR.studyingCardsBuried(noteCount))
+            updateCurrentCard()
+        }
+    }
+
+    fun buryNote() {
+        launchCatchingIO {
+            val noteId = currentCard.await().nid
+            val noteCount = undoableOp {
+                sched.buryNotes(nids = listOf(noteId))
+            }.count
+            actionFeedbackFlow.emit(CollectionManager.TR.studyingCardsBuried(noteCount))
+            updateCurrentCard()
+        }
+    }
+
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
     ********************************************************************************************* */
@@ -252,10 +278,13 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
             return
         }
 
-        currentCard = CompletableDeferred(state.topCard)
+        val card = state.topCard
+        currentCard = CompletableDeferred(card)
         showQuestion()
         loadAndPlaySounds(CardSide.QUESTION)
         updateMarkedStatus()
+        canBuryNoteFlow.emit(isBuryNoteAvailable(card))
+        canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
     }
 
     // TODO
