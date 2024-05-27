@@ -246,12 +246,16 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
                 sched.currentQueueState()
             }
         }
-        queueState.await()?.let {
-            currentCard = CompletableDeferred(it.topCard)
-            showQuestion()
-            loadAndPlaySounds(CardSide.QUESTION)
-            updateMarkedStatus()
-        } ?: isQueueFinishedFlow.emit(true)
+        val state = queueState.await()
+        if (state == null) {
+            isQueueFinishedFlow.emit(true)
+            return
+        }
+
+        currentCard = CompletableDeferred(state.topCard)
+        showQuestion()
+        loadAndPlaySounds(CardSide.QUESTION)
+        updateMarkedStatus()
     }
 
     // TODO
