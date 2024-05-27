@@ -31,4 +31,9 @@
         android:icon="@drawable/ic_dialog_info"
         android:title="@string/card_info_title"
         app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_open_deck_options"
+        android:icon="@drawable/ic_tune_white"
+        android:title="@string/menu__deck_options"
+        app:showAsAction="never"/>
 </menu>
