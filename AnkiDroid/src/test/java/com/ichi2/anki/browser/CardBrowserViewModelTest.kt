@@ -17,6 +17,7 @@
 package com.ichi2.anki.browser
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
@@ -274,6 +275,42 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `changing column index 1`() = runViewModelTest {
+        flowOfColumnIndex1.test {
+            ignoreEventsDuringViewModelInit()
+
+            assertThat("default column1Index value", column1Index, equalTo(0))
+
+            setColumn1Index(1)
+
+            assertThat("flowOfColumnIndex1", awaitItem(), equalTo(1))
+            assertThat("column1Index", column1Index, equalTo(1))
+
+            // expect no change if the value is selected again
+            setColumn1Index(1)
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `changing column index 2`() = runViewModelTest {
+        flowOfColumnIndex2.test {
+            ignoreEventsDuringViewModelInit()
+
+            assertThat("default column2Index value", column2Index, equalTo(0))
+
+            setColumn2Index(1)
+
+            assertThat("flowOfColumnIndex2", awaitItem(), equalTo(1))
+            assertThat("column2Index", column2Index, equalTo(1))
+
+            // expect no change if the value is selected again
+            setColumn2Index(1)
+            expectNoEvents()
+        }
+    }
+
     private fun runViewModelTest(notes: Int = 0, manualInit: Boolean = true, testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
         for (i in 0 until notes) {
             addNoteUsingBasicModel()
@@ -319,6 +356,21 @@ class CardBrowserViewModelTest : JvmTest() {
 private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) {
     for (pos in positions) {
         selectRowAtPosition(pos)
+    }
+}
+
+/**
+ * Helper for testing flows:
+ *
+ * A MutableStateFlow can either emit a value or not emit a value
+ * depending on whether a consumer subscribes before or after the task launched
+ * from init is completed
+ */
+private fun <T> TurbineTestContext<T>.ignoreEventsDuringViewModelInit() {
+    try {
+        expectMostRecentItem()
+    } catch (e: AssertionError) {
+        // explicitly ignored: no items
     }
 }
 
