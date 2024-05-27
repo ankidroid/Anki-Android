@@ -120,6 +120,15 @@ class ReviewerFragment :
             R.id.action_open_deck_options -> launchDeckOptions()
             R.id.action_suspend_card -> viewModel.suspendCard()
             R.id.action_suspend_note -> viewModel.suspendNote()
+            R.id.user_action_1 -> viewModel.userAction(1)
+            R.id.user_action_2 -> viewModel.userAction(2)
+            R.id.user_action_3 -> viewModel.userAction(3)
+            R.id.user_action_4 -> viewModel.userAction(4)
+            R.id.user_action_5 -> viewModel.userAction(5)
+            R.id.user_action_6 -> viewModel.userAction(6)
+            R.id.user_action_7 -> viewModel.userAction(7)
+            R.id.user_action_8 -> viewModel.userAction(8)
+            R.id.user_action_9 -> viewModel.userAction(9)
         }
         return true
     }
