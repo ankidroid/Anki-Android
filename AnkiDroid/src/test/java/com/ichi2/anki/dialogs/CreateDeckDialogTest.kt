@@ -21,6 +21,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
+import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntroductionActivity
@@ -101,6 +102,18 @@ class CreateDeckDialogTest : RobolectricTest() {
             }
             createDeckDialog.createDeck(deckName)
         }
+    }
+
+    @Test
+    fun testToastShownOnCreateDeckSuccess() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val dialog = CreateDeckDialog(context, R.string.new_deck, DeckDialogType.DECK, null)
+        var toastShown = false
+        dialog.onNewDeckCreated = { _ ->
+            toastShown = true
+        }
+        dialog.createDeck("Test Deck")
+        assertThat("Toast should be shown on successful deck creation", toastShown, equalTo(true))
     }
 
     @Test
