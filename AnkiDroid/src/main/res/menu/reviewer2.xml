@@ -15,7 +15,20 @@
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_undo"
+        android:enabled="false"
+        android:icon="@drawable/ic_undo_white"
+        tools:title="Undo"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_redo"
+        android:enabled="false"
+        android:icon="@drawable/ic_redo"
+        tools:title="Redo"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/action_mark"
         android:icon="@drawable/ic_star_border_white"

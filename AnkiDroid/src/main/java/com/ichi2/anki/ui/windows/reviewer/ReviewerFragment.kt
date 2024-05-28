@@ -34,6 +34,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
@@ -118,8 +119,10 @@ class ReviewerFragment :
             R.id.action_edit -> launchEditNote()
             R.id.action_mark -> viewModel.toggleMark()
             R.id.action_open_deck_options -> launchDeckOptions()
+            R.id.action_redo -> viewModel.redo()
             R.id.action_suspend_card -> viewModel.suspendCard()
             R.id.action_suspend_note -> viewModel.suspendNote()
+            R.id.action_undo -> viewModel.undo()
             R.id.user_action_1 -> viewModel.userAction(1)
             R.id.user_action_2 -> viewModel.userAction(2)
             R.id.user_action_3 -> viewModel.userAction(3)
@@ -204,6 +207,20 @@ class ReviewerFragment :
                     suspendItem.isVisible = false
                     suspendItem.isVisible = true
                 }
+            }
+
+        val undoItem = menu.findItem(R.id.action_undo)
+        viewModel.undoLabelFlow.flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycleScope) { label ->
+                undoItem.title = label ?: CollectionManager.TR.undoUndo()
+                undoItem.isEnabled = label != null
+            }
+
+        val redoItem = menu.findItem(R.id.action_redo)
+        viewModel.redoLabelFlow.flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycleScope) { label ->
+                redoItem.title = label ?: CollectionManager.TR.undoRedo()
+                redoItem.isEnabled = label != null
             }
     }
 

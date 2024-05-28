@@ -19,6 +19,7 @@ import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import anki.collection.OpChanges
 import anki.frontend.SetSchedulingStatesRequest
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
@@ -38,9 +39,12 @@ import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.isBuryNoteAvailable
 import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.note
+import com.ichi2.libanki.redo
 import com.ichi2.libanki.sched.CurrentQueueState
+import com.ichi2.libanki.undo
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
 import kotlinx.coroutines.CompletableDeferred
@@ -49,7 +53,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(cardMediaPlayer) {
+class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
+    CardViewerViewModel(cardMediaPlayer),
+    ChangeManager.Subscriber {
 
     private var queueState: Deferred<CurrentQueueState?> = asyncIO {
         // this assumes that the Reviewer won't be launched if there isn't a queueState
@@ -63,6 +69,8 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
     val actionFeedbackFlow = MutableSharedFlow<String>()
     val canBuryNoteFlow = MutableStateFlow(true)
     val canSuspendNoteFlow = MutableStateFlow(true)
+    val undoLabelFlow = MutableStateFlow<String?>(null)
+    val redoLabelFlow = MutableStateFlow<String?>(null)
 
     override val server = AnkiServer(this).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -82,6 +90,13 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
      * been configured.
      */
     private var statesMutated = true
+
+    init {
+        ChangeManager.subscribe(this)
+        launchCatchingIO {
+            updateUndoAndRedoLabels()
+        }
+    }
 
     /* *********************************************************************************************
     ************************ Public methods: meant to be used by the View **************************
@@ -213,6 +228,36 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
         }
     }
 
+    fun undo() {
+        launchCatchingIO {
+            val changes = undoableOp {
+                undo()
+            }
+            val message = if (changes.operation.isEmpty()) {
+                CollectionManager.TR.actionsNothingToUndo()
+            } else {
+                CollectionManager.TR.undoActionUndone(changes.operation)
+            }
+            actionFeedbackFlow.emit(message)
+            updateCurrentCard()
+        }
+    }
+
+    fun redo() {
+        launchCatchingIO {
+            val changes = undoableOp {
+                redo()
+            }
+            val message = if (changes.operation.isEmpty()) {
+                CollectionManager.TR.actionsNothingToRedo()
+            } else {
+                CollectionManager.TR.undoRedoAction(changes.operation)
+            }
+            actionFeedbackFlow.emit(message)
+            updateCurrentCard()
+        }
+    }
+
     fun userAction(@Reviewer.UserAction number: Int) {
         launchCatchingIO {
             eval.emit("javascript: ankidroid.userAction($number);")
@@ -319,6 +364,15 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(
     // TODO
     override suspend fun typeAnsFilter(text: String): String {
         return text
+    }
+
+    private suspend fun updateUndoAndRedoLabels() {
+        undoLabelFlow.emit(withCol { undoLabel() })
+        redoLabelFlow.emit(withCol { redoLabel() })
+    }
+
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        launchCatchingIO { updateUndoAndRedoLabels() }
     }
 
     companion object {
