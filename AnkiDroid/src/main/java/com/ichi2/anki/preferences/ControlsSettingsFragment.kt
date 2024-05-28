@@ -15,9 +15,11 @@
  */
 package com.ichi2.anki.preferences
 
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.preferences.ControlPreference
 
@@ -36,5 +38,13 @@ class ControlsSettingsFragment : SettingsFragment() {
             .filterIsInstance<ControlPreference>()
             .filter { pref -> pref.value == null }
             .forEach { pref -> pref.value = commands[pref.key]?.defaultValue?.toPreferenceString() }
+
+        setDynamicTitle()
+    }
+
+    private fun setDynamicTitle() {
+        findPreference<ControlPreference>(getString(R.string.reschedule_command_key))?.let {
+            it.title = TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+        }
     }
 }
