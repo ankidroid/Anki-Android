@@ -14,27 +14,8 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.logging
+package com.ichi2.anki.common.utils.android
 
-import com.ichi2.anki.BuildConfig
-import com.ichi2.anki.common.utils.android.isRobolectric
-import timber.log.Timber
+import android.os.Build
 
-enum class LogType {
-    /** @see Timber.DebugTree */
-    DEBUG,
-
-    /** @see RobolectricDebugTree */
-    ROBOLECTRIC,
-
-    /** @see ProductionCrashReportingTree */
-    PRODUCTION;
-
-    companion object {
-        val value: LogType
-            get() {
-                if (!BuildConfig.DEBUG) return PRODUCTION
-                return if (isRobolectric) ROBOLECTRIC else DEBUG
-            }
-    }
-}
+val isRobolectric get() = Build.FINGERPRINT?.startsWith("robolectric") ?: false

@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.google.material)
+    implementation(libs.jakewharton.timber)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit.vintage.engine)
     androidTestImplementation(libs.androidx.test.junit)
