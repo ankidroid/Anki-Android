@@ -111,14 +111,6 @@
     <string name="menu_delete_note">Удалить запись</string>
     <string name="menu_flag">Флажок</string>
     <string name="menu_flag_card">Поставить флажок</string>
-    <string name="menu_flag_card_zero">Без флажка</string>
-    <string name="menu_flag_card_one">Красный флажок</string>
-    <string name="menu_flag_card_two">Оранжевый флажок</string>
-    <string name="menu_flag_card_three">Зелёный флажок</string>
-    <string name="menu_flag_card_four">Синий флажок</string>
-    <string name="menu_flag_card_five">Розовый флажок</string>
-    <string name="menu_flag_card_six">Бирюзовый флажок</string>
-    <string name="menu_flag_card_seven">Фиолетовый флажок</string>
     <string name="menu_edit_tags">Редактировать метки</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
     <string name="menu_search">Посмотреть в %1$s</string>
@@ -152,7 +144,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Отменить синхронизацию?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Продолжить синхронизацию</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизация отменена</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Отмена...\nЭто может занять некоторое время.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Отмена&#8230;\nЭто может занять некоторое время.</string>
     <string name="syncing_media">Синхронизация медиафайлов</string>
     <string name="export_deck">Экспортировать колоду</string>
     <string name="nothing">Ничего</string>
@@ -213,7 +205,7 @@
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Перенос файлов базы данных</string>
     <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Копирование&#8230;</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Данные переносятся</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Вычисление размеров файлов для переноса...</string>
+    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Вычисление размеров файлов для переноса&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Перемещено %1$s из %2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Данные успешно перенесены</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Ваши данные успешно перенесены.
@@ -263,4 +255,5 @@
     <string name="storage_access_summary">Сохраняет вашу коллекцию в безопасном месте, чтобы она не исчезла при удалении приложения</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Доступ ко всем файлам</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

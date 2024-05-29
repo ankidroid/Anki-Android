@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Burahin ang tala</string>
     <string name="menu_flag">Watawat</string>
     <string name="menu_flag_card">Lagyan ng watawat ang card</string>
-    <string name="menu_flag_card_zero">Walang watawat</string>
-    <string name="menu_flag_card_one">Pulang watawat</string>
-    <string name="menu_flag_card_two">Kahel na watawat</string>
-    <string name="menu_flag_card_three">Berdeng watawat</string>
-    <string name="menu_flag_card_four">Asul na watawat</string>
-    <string name="menu_flag_card_five">Rosas na watawat</string>
-    <string name="menu_flag_card_six">Turkesa na watawat</string>
-    <string name="menu_flag_card_seven">Lila na watawat</string>
     <string name="menu_edit_tags">Baguhin ang mga tag</string>
     <string name="delete_note_message">Talaga bang gusto mong burahin ang talang ito at pati na rin ang lahat ngmga kard?\n%s</string>
     <string name="menu_search">Hanapin sa %1$s</string>
@@ -146,7 +138,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Gusto mo bang kanselahin ang sync?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Ipagtuloy ang pagsync</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Nakansela ang sync</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Kinakansela...\nIto ay maaaring matagalan.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Kinakansela&#8230;\nIto ay maaaring matagalan.</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">I-export ang deck</string>
     <string name="nothing">Wala</string>
@@ -253,4 +245,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Vertikal centrering av kortinnehåll</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Dubbeltryck tidsintervall (millisekunder)</string>
     <string name="pref_double_tap_time_interval_summary">En andra knapptryckning av svarsknappar kommer att ignoreras om den här tiden inte har förflutit. Detta förhindrar oavsiktliga dubbeltryck</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Visa svar fördröjning långt tryck (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minsta fördröjning för långt tryck innan visa svar-knappen registrerar ett tryck. Kan minska risken för oavsiktliga knapptryckningar. Standard är 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Visa tid på knappar</string>
     <string name="show_estimates_summ">Visa nästa repetitionstid på svarsknapparna</string>
     <string name="show_large_answer_buttons" maxLength="41">Visa stora svarsknappar</string>
@@ -321,7 +321,7 @@
     <string name="pref__manage_space__screen_title">Hantera lagringsutrymme</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Fel</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Be-\nräknar...</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Be-\nräknar&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d fil\n$%2$s</item>
         <item quantity="other">%1$d filer\n$%2$s</item>
@@ -333,13 +333,13 @@
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Ta bort säkerhetskopior</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Ta bort säkerhetskopior</string>
-    <string name="progress__deleting_backups">Tar bort säkerhetskopior...</string>
+    <string name="progress__deleting_backups">Tar bort säkerhetskopior&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Ta bort samling</string>
     <string name="pref__delete_collection__summary">Ta bort samling, media och säkerhetskopior. Appinställningar tas inte bort</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Ta bort samling</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Är du säker på att du vill ta bort din samling, dina media och dina säkerhetskopior?\n\nObs! Denna åtgärd kommer stänga fönstret.</string>
-    <string name="progress__deleting_collection">Tar bort samling...</string>
+    <string name="progress__deleting_collection">Tar bort samling&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Ta bort allt</string>
     <string name="pref__delete_everything__summary">Ta bort samling, media, säkerhetskopior och inställningar</string>

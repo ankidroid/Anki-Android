@@ -111,14 +111,6 @@
     <string name="menu_delete_note">Odstranit poznámku</string>
     <string name="menu_flag">Příznak</string>
     <string name="menu_flag_card">Příznak</string>
-    <string name="menu_flag_card_zero">Žádný příznak</string>
-    <string name="menu_flag_card_one">Červený příznak</string>
-    <string name="menu_flag_card_two">Oranžový příznak</string>
-    <string name="menu_flag_card_three">Zelený příznak</string>
-    <string name="menu_flag_card_four">Modrý příznak</string>
-    <string name="menu_flag_card_five">Růžový příznak</string>
-    <string name="menu_flag_card_six">Tyrkysový příznak</string>
-    <string name="menu_flag_card_seven">Purpurový příznak</string>
     <string name="menu_edit_tags">Upravit štítky</string>
     <string name="delete_note_message">Opravdu smazat poznámku a všechny její karty?\n%s</string>
     <string name="menu_search">Vyhledat v %1$s</string>
@@ -265,4 +257,5 @@
     <string name="storage_access_summary">Uloží vaši kolekci na bezpečné místo, které nebude odstraněno, pokud bude aplikace odinstalována</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Přístup ke všem souborům</string>
     <string name="image_occlusion">Okluze obrázku</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Odebrat účet</string>
 </resources>

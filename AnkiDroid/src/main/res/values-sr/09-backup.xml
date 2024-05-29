@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">Понови отварање</string>
     <string name="backup_error_menu_repair">Обнављање базе података</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Обнављање базе података.\nМолим сачекајте...</string>
+    <string name="backup_repair_deck_progress">Обнављање базе података.\nМолим сачекајте&#8230;</string>
     <string name="backup_invalid_file_error">Изабрана резервна датотека није исправна</string>
     <string name="backup_restore_select_title">Изаберите резервну копију за обнављање</string>
     <string name="backup_restore_no_backups">Нема резервних копија ове колекције на том уређају. Ако имате резервне копије на рачунару, копирајте их ручно у радну фасциклу програма AnkiDroid</string>

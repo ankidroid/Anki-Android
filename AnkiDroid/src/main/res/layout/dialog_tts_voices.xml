@@ -32,7 +32,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
-        app:icon="@drawable/md_nav_back"
+        app:icon="@drawable/ic_baseline_arrow_back_24"
         android:translationX="-16dp"
         app:iconGravity="textStart"
         app:iconPadding="0dp"

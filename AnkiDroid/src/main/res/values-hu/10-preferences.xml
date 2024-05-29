@@ -165,8 +165,8 @@
     <string name="vertical_centering_summ">A kártyák tartalmának középre igazítása függőlegesen</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Két érintés időzítése (millisec)</string>
     <string name="pref_double_tap_time_interval_summary">A második érintést nem fogja figyelembe venni, ha ezen időn belül történik. Ez megakadályozza a véletlen kettős érintéseket</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Válasz nyomva tartási ideje (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Ennyi ideig kell nyomva tartani a \"Válasz\" gombot, hogy regisztráljon egy érintést. Ez csökkentheti a nem kívánt gombnyomások esélyét. Az alapértelmezett érték 0ms.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Idő mutatása a gombokon</string>
     <string name="show_estimates_summ">A gombokon látszódjon a következő esedékesség időpontja</string>
     <string name="show_large_answer_buttons" maxLength="41">Nagy válasz gombok megjelenítése</string>

@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Notu sil</string>
     <string name="menu_flag">Bayrak</string>
     <string name="menu_flag_card">Kartı bayrakla işaretle</string>
-    <string name="menu_flag_card_zero">Bayrak yok</string>
-    <string name="menu_flag_card_one">Kırmızı bayrak</string>
-    <string name="menu_flag_card_two">Turuncu bayrak</string>
-    <string name="menu_flag_card_three">Yeşil bayrak</string>
-    <string name="menu_flag_card_four">Mavi bayrak</string>
-    <string name="menu_flag_card_five">Pembe bayrak</string>
-    <string name="menu_flag_card_six">Turkuaz bayrak</string>
-    <string name="menu_flag_card_seven">Mor bayrak</string>
     <string name="menu_edit_tags">Etiketleri düzenle</string>
     <string name="delete_note_message">Bu not ve bütün kartları gerçekten silinsin mi?\n%s</string>
     <string name="menu_search">%1$s\'de Ara</string>
@@ -127,11 +119,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Lütfen devam etmek için AnkiDroid\'e ‘Depolama’ yetkisini veriniz</string>
-    <string name="rebuild_filtered_deck">Filtreli deste yeniden oluşturuluyor...</string>
+    <string name="rebuild_filtered_deck">Filtreli deste yeniden oluşturuluyor&#8230;</string>
     <string name="rebuild_cram_label">Yeniden Oluştur</string>
     <string name="empty_cram_label">Boşalt</string>
     <string name="create_subdeck">Altdeste oluştur</string>
-    <string name="empty_filtered_deck">Filtreli deste boşaltılıyor...</string>
+    <string name="empty_filtered_deck">Filtreli deste boşaltılıyor&#8230;</string>
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
     <string name="custom_study_deck_exists">Önce mevcut özel çalışma destesini yeniden adlandırın.</string>
     <string name="search_deck" comment="Deck search for selecting it">Deste Ara</string>
@@ -253,4 +245,5 @@
     <string name="storage_access_summary">Koleksiyonunuzu uygulama kaldırılırsa silinmeyecek güvenli bir yerde saklar</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Bütün dosyalara erişim</string>
     <string name="image_occlusion">Resim Örtüsü</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Hesabı sil</string>
 </resources>

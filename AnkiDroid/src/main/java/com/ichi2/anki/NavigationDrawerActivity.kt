@@ -263,6 +263,7 @@ abstract class NavigationDrawerActivity :
         }
 
     @Suppress("deprecation") // onBackPressed
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (isDrawerOpen) {
             Timber.i("Back key pressed")

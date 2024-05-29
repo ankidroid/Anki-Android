@@ -38,6 +38,7 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.utils.FileUtil
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
@@ -950,22 +951,17 @@ class CardContentProvider : ContentProvider() {
             // pass this (hopefully temporary) file to the media.addFile function.
             val fileMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(cR.getType(fileUri)) // return eg "jpeg"
             // should we be enforcing strict mimetypes? which types?
+            val tempMediaDir = FileUtil.getAnkiCacheDirectory(context!!, "temp-media")
+            if (tempMediaDir == null) {
+                Timber.e("insertMediaFile() failed to get cache directory")
+                return null
+            }
             val tempFile: File
-            val externalCacheDir = context!!.externalCacheDir
-            if (externalCacheDir == null) {
-                Timber.e("createUI() unable to get external cache directory")
-                return null
-            }
-            val tempMediaDir = File(externalCacheDir.absolutePath + "/temp-media")
-            if (!tempMediaDir.exists() && !tempMediaDir.mkdir()) {
-                Timber.e("temp-media dir did not exist and could not be created")
-                return null
-            }
             try {
                 tempFile = File.createTempFile(
                     preferredName + "_", // the beginning of the filename.
                     ".$fileMimeType", // this is the extension, if null, '.tmp' is used, need to get the extension from MIME type?
-                    tempMediaDir
+                    File(tempMediaDir)
                 )
                 tempFile.deleteOnExit()
             } catch (e: Exception) {

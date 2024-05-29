@@ -28,7 +28,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
 
-@Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+@Suppress("deprecation", "OVERRIDE_DEPRECATION") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
     private val allowEmpty: Boolean
 

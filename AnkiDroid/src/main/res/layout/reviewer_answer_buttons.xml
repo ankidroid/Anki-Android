@@ -67,7 +67,9 @@
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:theme="@style/AgainButton"
+                >
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime1"
@@ -89,7 +91,9 @@
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:theme="@style/HardButton"
+                >
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime2"
@@ -111,7 +115,9 @@
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:theme="@style/GoodButton"
+                >
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime3"
@@ -132,7 +138,9 @@
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:theme="@style/EasyButton"
+                >
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime4"
@@ -153,7 +161,8 @@
             android:orientation="vertical"
             android:focusable="true"
             android:background="?attr/hardButtonRef"
-            tools:visibility="visible">
+            tools:visibility="visible"
+            android:theme="@style/HardButton">
 
             <com.ichi2.ui.FixedTextView
                 android:layout_width="wrap_content"

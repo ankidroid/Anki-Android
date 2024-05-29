@@ -106,14 +106,6 @@
     <string name="menu_delete_note">မှတ်စုကို ဖျက်ပစ်ပါ</string>
     <string name="menu_flag">အလံ</string>
     <string name="menu_flag_card">ကဒ်အလံ</string>
-    <string name="menu_flag_card_zero">အလံမသတ်မှတ်</string>
-    <string name="menu_flag_card_one">အနီရောင်အလံ</string>
-    <string name="menu_flag_card_two">လိမ္မော်ရောင်အလံ</string>
-    <string name="menu_flag_card_three">အစိမ်းရောင်အလံ</string>
-    <string name="menu_flag_card_four">အပြာရောင်အလံ</string>
-    <string name="menu_flag_card_five">ပန်းရောင်အလံ</string>
-    <string name="menu_flag_card_six">စိမ်းပြာရောင်အလံ</string>
-    <string name="menu_flag_card_seven">ခရမ်းနုရောင်အလံ</string>
     <string name="menu_edit_tags">ကတ်ပြားပြင်ဆင်</string>
     <string name="delete_note_message">မှတ်စု နဲ့ ကတ်တွေဖြတ်မှာကျိန်းသေလား\n%s</string>
     <string name="menu_search">%1$s တိုးတက်လာ</string>
@@ -252,4 +244,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Ta bort not</string>
     <string name="menu_flag">Flagga</string>
     <string name="menu_flag_card">Flagga kort</string>
-    <string name="menu_flag_card_zero">Ingen flagga</string>
-    <string name="menu_flag_card_one">Röd flagga</string>
-    <string name="menu_flag_card_two">Orange flagga</string>
-    <string name="menu_flag_card_three">Grön flagga</string>
-    <string name="menu_flag_card_four">Blå flagga</string>
-    <string name="menu_flag_card_five">Rosa flagga</string>
-    <string name="menu_flag_card_six">Turkos flagga</string>
-    <string name="menu_flag_card_seven">Lila flagga</string>
     <string name="menu_edit_tags">Redigera taggar</string>
     <string name="delete_note_message">Vill du verkligen ta bort den här noten och alla dess kort?\n%s</string>
     <string name="menu_search">Sökning i %1$s</string>
@@ -127,11 +119,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Vänligen ge AnkiDroid behörigheten \"Lagring\" för att fortsätta</string>
-    <string name="rebuild_filtered_deck">Bygger om filtrerad kortlek...</string>
+    <string name="rebuild_filtered_deck">Bygger om filtrerad kortlek&#8230;</string>
     <string name="rebuild_cram_label">Bygg om</string>
     <string name="empty_cram_label">Töm</string>
     <string name="create_subdeck">Skapa underkortlek</string>
-    <string name="empty_filtered_deck">Tömmer filtrerad kortlek...</string>
+    <string name="empty_filtered_deck">Tömmer filtrerad kortlek&#8230;</string>
     <string name="custom_study_deck_name">Anpassad studiesession</string>
     <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
     <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>
@@ -252,4 +244,5 @@
     <string name="storage_access_summary">Sparar din samling på en säker plats som inte raderas om appen avinstalleras</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Åtkomst till alla filer</string>
     <string name="image_occlusion">Bildövertäckning</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

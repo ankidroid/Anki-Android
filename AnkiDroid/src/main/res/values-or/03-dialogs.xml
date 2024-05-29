@@ -99,7 +99,7 @@
     <string name="dialog_keep">ରଖିବା</string>
     <string name="dialog_remove">କାଢ଼ିବା</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>
-    <string name="dialog_processing">ପ୍ରକ୍ରିୟାରତ...</string>
+    <string name="dialog_processing">ପ୍ରକ୍ରିୟାରତ&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="dialog_positive_delete">ଵିଲୋପ</string>
     <!-- Currently unsued, should be useful in the future -->

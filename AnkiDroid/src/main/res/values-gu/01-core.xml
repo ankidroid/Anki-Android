@@ -105,14 +105,6 @@
     <string name="menu_delete_note">નોંધ કાયમ માટે કાઢી નાખો</string>
     <string name="menu_flag">ધ્વજ</string>
     <string name="menu_flag_card">કાર્ડને ચિહ્નિત કરો</string>
-    <string name="menu_flag_card_zero">ચિહ્ન કાઢી નાખો </string>
-    <string name="menu_flag_card_one">લાલ ચિહ્ન</string>
-    <string name="menu_flag_card_two">કેસરી ચિહ્ન </string>
-    <string name="menu_flag_card_three">લીલું ચિહ્ન </string>
-    <string name="menu_flag_card_four">ભૂરૂ ચિહ્ન </string>
-    <string name="menu_flag_card_five">ગુલાબી ચિહ્ન </string>
-    <string name="menu_flag_card_six">મોરપીંછ ચિહ્ન </string>
-    <string name="menu_flag_card_seven">જાંબુડીઓ ચિહ્ન </string>
     <string name="menu_edit_tags">ચિહ્નો બદલો </string>
     <string name="delete_note_message">આ નોંધ અને તેના તમામ કાડઁ ખરેખર કાઢી નાખીએ ?\n%s</string>
     <string name="menu_search">%1$s માં જુઓ </string>
@@ -253,4 +245,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

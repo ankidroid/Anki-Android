@@ -138,6 +138,10 @@ interface TestClass {
         }
     }
 
+    fun selectDefaultDeck() {
+        col.decks.select(Consts.DEFAULT_DECK_ID)
+    }
+
     /** Adds [count] notes in the same deck with the same front & back */
     fun addNotes(count: Int): List<Note> = (0..count).map { addNoteUsingBasicModel() }
 

@@ -50,7 +50,7 @@
         <item quantity="one">%d րոպե</item>
         <item quantity="other">%d րոպե</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s մվ</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Ոչ մի արդյունք</string>
     <!-- preferences.xml categories-->
@@ -76,9 +76,9 @@
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
     <string name="reset_confirmation">All states reset</string>
-    <string name="card_zoom" maxLength="41">Card zoom</string>
-    <string name="image_zoom" maxLength="41">Image zoom</string>
-    <string name="button_size" maxLength="41">Answer button size</string>
+    <string name="card_zoom" maxLength="41">Քարտի խոշորացում</string>
+    <string name="image_zoom" maxLength="41">Նկարի խոշորացում</string>
+    <string name="button_size" maxLength="41">Պատասխանի կոճակների չափ</string>
     <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
@@ -99,24 +99,24 @@
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
-    <string name="gestures_none" maxLength="41">None</string>
-    <string name="gestures_swipe_up" maxLength="41">Swipe up</string>
-    <string name="gestures_swipe_down" maxLength="41">Swipe down</string>
-    <string name="gestures_swipe_left" maxLength="41">Swipe left</string>
-    <string name="gestures_swipe_right" maxLength="41">Swipe right</string>
-    <string name="gestures_double_tap" maxLength="41">Double touch</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
-    <string name="gestures_tap_top" maxLength="41">Touch top</string>
-    <string name="gestures_tap_left" maxLength="41">Touch left</string>
-    <string name="gestures_tap_right" maxLength="41">Touch right</string>
-    <string name="gestures_tap_bottom" maxLength="41">Touch bottom</string>
-    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="gestures_none" maxLength="41">Ոչ մի</string>
+    <string name="gestures_swipe_up" maxLength="41">Քաշել վերև</string>
+    <string name="gestures_swipe_down" maxLength="41">Սահեցնել ներքև</string>
+    <string name="gestures_swipe_left" maxLength="41">Սահեցնել ձախ</string>
+    <string name="gestures_swipe_right" maxLength="41">Սահեցնել աջ</string>
+    <string name="gestures_double_tap" maxLength="41">Սեղմել երկու անգամ</string>
+    <string name="gestures_long_tap" maxLength="41">Երկար սեղմել</string>
+    <string name="gestures_tap_top" maxLength="41">Սեղմել վերևում</string>
+    <string name="gestures_tap_left" maxLength="41">Սեղմել ձախ մասում</string>
+    <string name="gestures_tap_right" maxLength="41">Սեղմել աջ մասում</string>
+    <string name="gestures_tap_bottom" maxLength="41">Սեղմել ներքևում</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Սեղմել վերևի ձախ մասում</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Սեղմել վերևի աջ մասում</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Սեղմել մեջտեղում</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Սեղմել ներքևի ձախ մասում</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Սեղմել ներքևի աջ մասում</string>
+    <string name="gestures_shake" maxLength="41">Թափահարել սարքը</string>
+    <string name="card_browser_enable_external_context_menu">«%s» մենյու</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Double scrolling</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
@@ -153,7 +153,7 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
     <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
     <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
-    <string name="select_locale_title">Select language</string>
+    <string name="select_locale_title">Ընտրել լեզուն</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display" maxLength="41">Safe display mode</string>
@@ -165,8 +165,8 @@
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Show button time</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>

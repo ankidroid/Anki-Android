@@ -105,14 +105,6 @@
     <string name="menu_delete_note">ಟಿಪ್ಪಣಿ ಅಳಿಸಿ</string>
     <string name="menu_flag">ಧ್ವಜ</string>
     <string name="menu_flag_card">ಫ್ಲ್ಯಾಗ್ ಕಾರ್ಡ್</string>
-    <string name="menu_flag_card_zero">ಧ್ವಜವಿಲ್ಲ</string>
-    <string name="menu_flag_card_one">ಕೆಂಪು ಧ್ವಜ</string>
-    <string name="menu_flag_card_two">ಕಿತ್ತಳೆ ಧ್ವಜ</string>
-    <string name="menu_flag_card_three">ಹಸಿರು ಧ್ವಜ</string>
-    <string name="menu_flag_card_four">ನೀಲಿ ಧ್ವಜ</string>
-    <string name="menu_flag_card_five">ಗುಲಾಬಿ ಧ್ವಜ</string>
-    <string name="menu_flag_card_six">ವೈಡೂರ್ಯದ ಧ್ವಜ</string>
-    <string name="menu_flag_card_seven">ನೇರಳೆ ಧ್ವಜ</string>
     <string name="menu_edit_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="delete_note_message">ಈ ಟಿಪ್ಪಣಿ ಮತ್ತು ಅದರ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ನಿಜವಾಗಿಯೂ ಅಳಿಸಿ? \n%s</string>
     <string name="menu_search">%1$s ನಲ್ಲಿ ಹುಡುಕಿ</string>
@@ -199,7 +191,7 @@
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">ಪ್ರಗತಿಯಿಲ್ಲದೆ ಹಲವಾರು ಸತತ ದೋಷಗಳು, ತೀರಾ ಇತ್ತೀಚಿನದು: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">ಡೇಟಾಬೇಸ್ ಫೈಲ್‌ಗಳನ್ನು ಸ್ಥಳಾಂತರಿಸಲಾಗುತ್ತಿದೆ</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">ನಕಲಿಸಲಾಗುತ್ತಿದೆ...</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">ನಕಲಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">ಮಾಧ್ಯಮ ರಫ್ತು</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">ವರ್ಗಾವಣೆ ಗಾತ್ರವನ್ನು ಲೆಕ್ಕಾಚಾರ ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%2$s ರಲ್ಲಿ %1$s ಅನ್ನು ಸರಿಸಲಾಗಿದೆ</string>
@@ -253,4 +245,5 @@
     <string name="storage_access_summary">ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಸುರಕ್ಷಿತ ಸ್ಥಳದಲ್ಲಿ ಉಳಿಸುತ್ತದೆ, ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದರೆ ಅದನ್ನು ಅಳಿಸಲಾಗುವುದಿಲ್ಲ</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ಎಲ್ಲಾ ಫೈಲ್‌ಗಳ ಪ್ರವೇಶ</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">ಖಾತೆಯನ್ನು ತೆಗೆದುಹಾಕಿ</string>
 </resources>

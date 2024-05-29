@@ -106,14 +106,6 @@
     <string name="menu_delete_note">Iscantzella sa nota</string>
     <string name="menu_flag">Bandera</string>
     <string name="menu_flag_card">Marca sa carta cun una bandera</string>
-    <string name="menu_flag_card_zero">Peruna bandera</string>
-    <string name="menu_flag_card_one">Bandera ruja</string>
-    <string name="menu_flag_card_two">Bandera arantzu</string>
-    <string name="menu_flag_card_three">Bandera birde</string>
-    <string name="menu_flag_card_four">Bandera biaita</string>
-    <string name="menu_flag_card_five">Bandera rosa</string>
-    <string name="menu_flag_card_six">Bandera turchesa</string>
-    <string name="menu_flag_card_seven">Bandera pùrpura</string>
     <string name="menu_edit_tags">Modìfica sas etichetas</string>
     <string name="delete_note_message">Boles a beru iscantzellare custa nota e totu sas cartas suas?\n
                                              %s</string>
@@ -257,4 +249,5 @@
     <string name="storage_access_summary">Sarvat sa colletzione tua in unu logu seguru chi non s\'at a iscantzellare si as a disinstallare s\'aplicatzione</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Atzessu a totu sos archìvios</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

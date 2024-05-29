@@ -89,6 +89,8 @@ class DeckPickerTest : InstrumentedTest() {
 
         // For tablet. If it is not a tablet, then test will be ignored.
         assumeTrue(isTablet)
+        closeGetStartedScreenIfExists()
+        closeBackupCollectionDialogIfExists()
         val testString = System.currentTimeMillis().toString() + ""
         createDeckWithCard(testString)
 
@@ -101,8 +103,8 @@ class DeckPickerTest : InstrumentedTest() {
         // Create a new deck
         onView(withId(R.id.fab_main)).perform(click())
         onView(withId(R.id.add_deck_action)).perform(click())
-        onView(withId(R.id.action_edit)).perform(typeText("TestDeck$testString"))
-        onView(withId(com.afollestad.materialdialogs.R.id.md_button_positive)).perform(click())
+        onView(withId(R.id.dialog_text_input)).perform(typeText("TestDeck$testString"))
+        onView(withText(R.string.dialog_ok)).perform(click())
 
         // The deck is currently empty, so if we tap on it, it becomes the selected deck but doesn't enter
         onView(withId(R.id.files)).perform(
@@ -114,7 +116,7 @@ class DeckPickerTest : InstrumentedTest() {
 
         // Create a card belonging to the new deck, using Basic type (guaranteed to exist)
         onView(withId(R.id.fab_main)).perform(click())
-        onView(withId(R.id.add_note_label)).perform(click())
+        onView(withId(R.id.fab_main)).perform(click())
 
         // Close the keyboard, it auto-focuses and obscures enough of the screen
         // on some devices that espresso complains about global visibility being <90%
@@ -127,6 +129,7 @@ class DeckPickerTest : InstrumentedTest() {
         closeSoftKeyboard()
 
         // Go back to Deck Picker
+        pressBack()
         pressBack()
     }
 }

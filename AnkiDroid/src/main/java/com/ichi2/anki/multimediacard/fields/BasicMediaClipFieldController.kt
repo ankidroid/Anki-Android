@@ -36,6 +36,7 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.ExceptionUtil.executeSafe
+import com.ichi2.utils.FileUtil
 import timber.log.Timber
 import java.io.File
 
@@ -44,10 +45,10 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
 
     private lateinit var tvAudioClip: FixedTextView
 
-    private lateinit var selectMediaLauncher: ActivityResultLauncher<Intent?>
+    private lateinit var selectMediaLauncher: ActivityResultLauncher<Intent>
 
     override fun createUI(context: Context, layout: LinearLayout) {
-        ankiCacheDirectory = context.externalCacheDir?.absolutePath
+        ankiCacheDirectory = FileUtil.getAnkiCacheDirectory(context)
         // #9639: .opus is application/octet-stream in API 26,
         // requires a workaround as we don't want to enable application/octet-stream by default
         val btnLibrary = Button(_activity)
@@ -102,13 +103,14 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         super.setEditingActivity(activity)
         val registry = this._activity.activityResultRegistry
 
-        selectMediaLauncher = registry.register(SELECT_MEDIA_LAUNCHER_KEY, ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode != Activity.RESULT_CANCELED) {
-                executeSafe(this._activity, "handleMediaSelection:unhandled") {
-                    handleMediaSelection(result.data!!)
+        selectMediaLauncher =
+            registry.register(SELECT_MEDIA_LAUNCHER_KEY, ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode != Activity.RESULT_CANCELED && result.data != null) {
+                    executeSafe(this._activity, "handleMediaSelection:unhandled") {
+                        handleMediaSelection(result.data!!)
+                    }
                 }
             }
-        }
     }
 
     private fun handleMediaSelection(data: Intent) {

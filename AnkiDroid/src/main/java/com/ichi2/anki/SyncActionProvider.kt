@@ -18,9 +18,11 @@ package com.ichi2.anki
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.view.isVisible
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -56,5 +58,10 @@ class SyncActionProvider(context: Context) : ActionProviderCompat(context) {
         }
 
         return view
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun setTooltipText(value: CharSequence) {
+        syncButton?.tooltipText = value
     }
 }

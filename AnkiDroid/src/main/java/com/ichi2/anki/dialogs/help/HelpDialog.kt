@@ -128,6 +128,18 @@ class HelpDialog : DialogFragment() {
             }
         }
 
+        fun newPrivacyPolicyInstance(): HelpDialog {
+            UsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_PRIVACY)
+            val privacyId = mainHelpMenuItems.single { it.analyticsId == Actions.OPENED_PRIVACY }.id
+            val privacyItems = childHelpMenuItems.filter { it.parentId == privacyId }
+            return HelpDialog().apply {
+                arguments = bundleOf(
+                    ARG_MENU_TITLE to R.string.help_title_privacy,
+                    ARG_MENU_ITEMS to privacyItems.toTypedArray()
+                )
+            }
+        }
+
         /**
          * @param canRateApp a boolean that indicates if the system has an app to open to rate AnkiDroid
          */

@@ -108,14 +108,6 @@
     <string name="menu_delete_note">Ștergere notă</string>
     <string name="menu_flag">Marcaj</string>
     <string name="menu_flag_card">Marchează card</string>
-    <string name="menu_flag_card_zero">Fără steag</string>
-    <string name="menu_flag_card_one">Steag roșu</string>
-    <string name="menu_flag_card_two">Steag portocaliu</string>
-    <string name="menu_flag_card_three">Steag verde</string>
-    <string name="menu_flag_card_four">Steag albastru</string>
-    <string name="menu_flag_card_five">Steag roz</string>
-    <string name="menu_flag_card_six">Steag turcoaz</string>
-    <string name="menu_flag_card_seven">Steag violet</string>
     <string name="menu_edit_tags">Editează etichete </string>
     <string name="delete_note_message">Doriți sigur să ștergeți această notă și toate cardurile sale?\n%s</string>
     <string name="menu_search">Căutare în %1$s</string>
@@ -259,4 +251,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

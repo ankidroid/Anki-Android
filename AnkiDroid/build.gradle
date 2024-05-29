@@ -31,6 +31,7 @@ amazon {
 
 android{
 
+
     defaultConfig{
         testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'
     }
@@ -128,4 +129,3 @@ afterEvaluate {
 
 apply from: "./robolectricDownloader.gradle"
 apply from: "./jacoco.gradle"
-

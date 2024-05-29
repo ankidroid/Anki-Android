@@ -96,7 +96,7 @@ jobs:
               ("0" + now.getUTCHours()).slice(-2) + ":" +
               ("0" + now.getUTCMinutes()).slice(-2);
             try {  
-              github.rest.pulls.create({              
+              await github.rest.pulls.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: "Updated strings from Crowdin " + formattedDate,

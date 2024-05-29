@@ -99,7 +99,7 @@
     <string name="dialog_keep">Bırak</string>
     <string name="dialog_remove">Kaldır</string>
     <string name="dialog_continue">Devam Et</string>
-    <string name="dialog_processing">İşlem yapılıyor...</string>
+    <string name="dialog_processing">İşlem yapılıyor&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Oluştur</string>
     <string name="dialog_positive_delete">Sil</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -119,7 +119,7 @@
     <string name="check_media_no_unused_missing">Kullanılmayan veya eksik dosya bulunmuyor.</string>
     <string name="check_media_db_updated">Medya veritabanı yeniden oluşturuldu.</string>
     <string name="check_media_delete_unused">Kullanılmayanları sil</string>
-    <string name="delete_media_message">Medya siliniyor...</string>
+    <string name="delete_media_message">Medya siliniyor&#8230;</string>
     <string name="delete_media_result_title">Silme sonuçları</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">%d dosya silindi</item>
@@ -236,20 +236,20 @@
     <string name="deck_already_exists">Deste hâlihazırda var</string>
     <string name="create_deck_numeric_hint">Deste sıralamanızda sorun olursa (örn. \"10\"un \"2\"den önce gelmesi), \"2\" yerine \"02\" yazın</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Aralığı aynı değere ayarla</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">Kartı şu kadar zaman sonra göster:</item>
+        <item quantity="other">Kartları şu kadar zaman sonra göster:</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">Kartı şu zamanlar arasında göster:</item>
+        <item quantity="other">Kartları şu zamanlar arasında göster:</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">gün</item>
+        <item quantity="other">gün</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">En erken</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">En geç</string>
 </resources>

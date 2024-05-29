@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Kaksoisnapautuksen aikaväli (millisekuntia)</string>
     <string name="pref_double_tap_time_interval_summary">Toista vastauspainikkeiden napauttamista ei oteta huomioon, jos näin kauan ei ole kulunut. Tämä estää vahingossa tapahtuvat kaksoisnapautukset</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Näytä vastaus: pitkän painalluksen aika (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimi pitkän painalluksen aika, ennen kuin näytä vastaus -painike rekisteröi kosketuksen. Voi vähentää vahingossa tapahtuvien ylimääräisten painallusten mahdollisuutta. Oletusarvo on 0 ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Näytä aika painikkeissa</string>
     <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
     <string name="show_large_answer_buttons" maxLength="41">Näytä suuret vastauspainikkeet</string>
@@ -321,7 +321,7 @@
     <string name="pref__manage_space__screen_title">Hallitse tallennustilaa</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Virhe</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Hetki...</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Hetki&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d tiedosto\n%2$s</item>
         <item quantity="other">%1$d tiedostoa\n%2$s</item>
@@ -339,7 +339,7 @@
     <string name="pref__delete_collection__summary">Poista kokoelma, mediatiedostot ja varmuuskopiot. Sovellusasetuksia ei poisteta</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Poista kokoelma</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Haluatko varmasti poistaa kokoelman, mediatiedostot ja varmuuskopiot?\n\nHuomautus: tämä toiminto sulkee ikkunan.</string>
-    <string name="progress__deleting_collection">Poistetaan kokoelmaa...</string>
+    <string name="progress__deleting_collection">Poistetaan kokoelmaa&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Poista kaikki</string>
     <string name="pref__delete_everything__summary">Poista kokoelma, mediatiedostot, varmuuskopiot ja asetukset</string>

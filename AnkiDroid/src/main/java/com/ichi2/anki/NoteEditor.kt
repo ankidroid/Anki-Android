@@ -29,6 +29,7 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
@@ -46,11 +47,13 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
@@ -58,6 +61,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.bottomsheet.ImageOcclusionBottomSheetFragment
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
@@ -90,6 +94,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.isImageOcclusion
+import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -98,12 +103,15 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
+import java.io.File
 import java.util.*
 import java.util.function.Consumer
 import kotlin.collections.ArrayList
@@ -151,6 +159,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     // non-null after onCollectionLoaded
     private var editorNote: Note? = null
+
+    private var currentImageOccPath: String? = null
 
     /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
     private var currentEditedCard: Card? = null
@@ -308,31 +318,38 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         SAME_NUMBER, INCREMENT_NUMBER
     }
 
+    @NeedsTest("Error message should be null after save")
+    private var addNoteErrorMessage: String? = null
+
     private fun displayErrorSavingNote() {
-        val errorMessageId = addNoteErrorResource
-        showSnackbar(resources.getString(errorMessageId))
+        val errorMessage = snackbarErrorText
+        // Anki allows to proceed in case we try to add non cloze text in cloze field with warning,
+        // this snackbar helps replicate similar behaviour
+        if (errorMessage == TR.addingYouHaveAClozeDeletionNote()) {
+            noClozeDialog(errorMessage)
+        } else {
+            showSnackbar(errorMessage)
+        }
     }
-    // COULD_BE_BETTER: We currently don't perform edits inside this class (wat), so we only handle adds.
 
-    // Otherwise, display "no cards created".
-    @get:StringRes
+    private fun noClozeDialog(errorMessage: String) {
+        AlertDialog.Builder(this).show {
+            message(text = errorMessage)
+            positiveButton(text = TR.actionsSave()) {
+                lifecycleScope.launch {
+                    saveNoteWithProgress()
+                }
+            }
+            negativeButton(R.string.dialog_cancel)
+        }
+    }
+
     @VisibleForTesting
-    internal val addNoteErrorResource: Int
-        get() {
-            // COULD_BE_BETTER: We currently don't perform edits inside this class (wat), so we only handle adds.
-            if (isClozeType) {
-                return R.string.note_editor_no_cloze_delations
-            }
-            if (getCurrentFieldText(0).isEmpty()) {
-                return R.string.note_editor_no_first_field
-            }
-            return if (allFieldsHaveContent()) {
-                R.string.note_editor_no_cards_created_all_fields
-            } else {
-                R.string.note_editor_no_cards_created
-            }
-
-            // Otherwise, display "no cards created".
+    val snackbarErrorText: String
+        get() = when {
+            addNoteErrorMessage != null -> addNoteErrorMessage!!
+            allFieldsHaveContent() -> resources.getString(R.string.note_editor_no_cards_created_all_fields)
+            else -> resources.getString(R.string.note_editor_no_cards_created)
         }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
@@ -430,9 +447,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         startMultimediaFieldEditor(0, note, imageUri)
     }
 
-    override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        addInstanceStateToBundle(savedInstanceState)
-        super.onSaveInstanceState(savedInstanceState)
+    override fun onSaveInstanceState(outState: Bundle) {
+        addInstanceStateToBundle(outState)
+        super.onSaveInstanceState(outState)
     }
 
     private fun addInstanceStateToBundle(savedInstanceState: Bundle) {
@@ -520,17 +537,26 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             else -> {}
         }
 
-        launchCatchingTask {
-            withCol {
-                addImageOcclusionNotetype()
-            }
-        }
-
         if (addNote) {
             editOcclusionsButton?.visibility = View.GONE
             selectImageForOcclusionButton?.setOnClickListener {
-                ioEditorLauncher.launch("image/*")
+                val imageOcclusionBottomSheet = ImageOcclusionBottomSheetFragment()
+                imageOcclusionBottomSheet.listener =
+                    object : ImageOcclusionBottomSheetFragment.ImagePickerListener {
+                        override fun onCameraClicked() {
+                            dispatchCameraEvent()
+                        }
+
+                        override fun onGalleryClicked() {
+                            ioEditorLauncher.launch("image/*")
+                        }
+                    }
+                imageOcclusionBottomSheet.show(
+                    supportFragmentManager,
+                    "ImageOcclusionBottomSheetFragment"
+                )
             }
+
             pasteOcclusionImageButton?.text = TR.notetypesIoPasteImageFromClipboard()
             pasteOcclusionImageButton?.setOnClickListener {
                 // TODO: Support all extensions
@@ -651,9 +677,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         if (editFields != null && !editFields!!.isEmpty()) {
             // EXTRA_TEXT_FROM_SEARCH_VIEW takes priority over other intent inputs
             if (!getTextFromSearchView.isNullOrEmpty()) {
-                editFields!!.first!!.setText(getTextFromSearchView)
+                editFields!!.first()!!.setText(getTextFromSearchView)
             }
-            editFields!!.first!!.requestFocus()
+            editFields!!.first()!!.requestFocus()
         }
 
         if (caller == CALLER_IMG_OCCLUSION) {
@@ -666,6 +692,63 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             } else {
                 Timber.w("Image uri is null")
             }
+        }
+    }
+
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isPictureTaken ->
+            if (isPictureTaken) {
+                currentImageOccPath?.let { imagePath ->
+                    val photoFile = File(imagePath)
+                    val imageUri: Uri = FileProvider.getUriForFile(
+                        this,
+                        this.applicationContext.packageName + ".apkgfileprovider",
+                        photoFile
+                    )
+                    startCrop(imageUri)
+                }
+            } else {
+                Timber.d("Camera aborted or some interruption")
+            }
+        }
+
+    private fun startCrop(imageUri: Uri) {
+        ImageUtils.cropImage(activityResultRegistry, imageUri) { result ->
+            if (result != null && result.isSuccessful) {
+                val uriFilePath = result.getUriFilePath(this)
+                uriFilePath?.let { setupImageOcclusionEditor(it) }
+            } else {
+                Timber.v("Unable to crop the image")
+            }
+        }
+    }
+
+    private fun dispatchCameraEvent() {
+        val photoFile: File? = try {
+            createImageFile()
+        } catch (e: Exception) {
+            Timber.w("Error creating the file", e)
+            return
+        }
+        photoFile?.let {
+            val photoURI: Uri = FileProvider.getUriForFile(
+                this,
+                this.applicationContext.packageName + ".apkgfileprovider",
+                it
+            )
+            cameraLauncher.launch(photoURI)
+        }
+    }
+
+    private fun createImageFile(): File {
+        val currentDateTime = getTimestamp(TimeManager.time)
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "ANKIDROID_$currentDateTime",
+            ".jpg",
+            storageDir
+        ).apply {
+            currentImageOccPath = absolutePath
         }
     }
 
@@ -840,7 +923,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         return true
     }
 
-    private fun hasUnsavedChanges(): Boolean {
+    @VisibleForTesting
+    fun hasUnsavedChanges(): Boolean {
         if (!collectionHasLoaded()) {
             return false
         }
@@ -854,7 +938,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
         }
         // changed deck?
-        if (!addNote && currentEditedCard != null && currentEditedCard!!.did != deckId) {
+        if (!addNote && currentEditedCard != null && currentEditedCard!!.currentDeckId().did != deckId) {
             return true
         }
         // changed fields?
@@ -894,7 +978,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             closeEditorAfterSave = true
             closeIntent = Intent().apply { putExtra(EXTRA_ID, intent.getStringExtra(EXTRA_ID)) }
         } else if (!editFields!!.isEmpty()) {
-            editFields!!.first!!.focusWithKeyboard()
+            editFields!!.first()!!.focusWithKeyboard()
         }
 
         if (closeEditorAfterSave) {
@@ -904,6 +988,20 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             isFieldEdited = false
             isTagsEdited = false
         }
+    }
+
+    private suspend fun saveNoteWithProgress() {
+        // adding current note to collection
+        withProgress(resources.getString(R.string.saving_facts)) {
+            undoableOp {
+                editorNote!!.notetype.put("tags", tags)
+                notetypes.save(editorNote!!.notetype)
+                addNote(editorNote!!, deckId)
+            }
+        }
+        // update UI based on the result, noOfAddedCards
+        onNoteAdded()
+        updateFieldsFromStickyText()
     }
 
     @VisibleForTesting
@@ -918,22 +1016,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         // treat add new note and edit existing note independently
         if (addNote) {
-            // Different from libAnki, block if there are no cloze deletions.
-            // DEFECT: This does not block addition if cloze transpositions are in non-cloze fields.
-            if (isClozeType && !hasClozeDeletions()) {
-                displayErrorSavingNote()
-                return
-            }
-            if (getCurrentFieldText(0).isEmpty()) {
-                displayErrorSavingNote()
-                return
-            }
-
             // load all of the fields into the note
             for (f in editFields!!) {
                 updateField(f)
             }
             // Save deck to model
+            Timber.d("setting 'last deck' of note type %s to %d", editorNote!!.notetype.name, deckId)
             editorNote!!.notetype.put("did", deckId)
             // Save tags to model
             editorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(selectedTags!!))
@@ -943,16 +1031,17 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
 
             reloadRequired = true
-            // adding current note to collection
-            withProgress(resources.getString(R.string.saving_facts)) {
-                undoableOp {
-                    notetypes.current().put("tags", tags)
-                    addNote(editorNote!!, deckId)
+
+            lifecycleScope.launch {
+                val noteFieldsCheck = checkNoteFieldsResponse(editorNote!!)
+                if (noteFieldsCheck is NoteFieldsCheckResult.Failure) {
+                    addNoteErrorMessage = noteFieldsCheck.getLocalizedMessage(this@NoteEditor)
+                    displayErrorSavingNote()
+                    return@launch
                 }
+                addNoteErrorMessage = null
+                saveNoteWithProgress()
             }
-            // update UI based on the result, noOfAddedCards
-            onNoteAdded()
-            updateFieldsFromStickyText()
         } else {
             // Check whether note type has been changed
             val newModel = currentlySelectedNotetype
@@ -1186,7 +1275,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Note: We're not being accurate here - the initial value isn't actually what's supplied in the layout.xml
             // So a value of 18sp in the XML won't be 18sp on the TextView, but it's close enough.
             // Values are setFontSize are whole when returned.
-            val sp = TextViewUtil.getTextSizeSp(editFields!!.first!!)
+            val sp = TextViewUtil.getTextSizeSp(editFields!!.first()!!)
             return sp.roundToInt().toString()
         }
 
@@ -1457,7 +1546,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             editLineView.setEnableAnimation(animationEnabled())
 
             // Use custom implementation of ActionMode.Callback customize selection and insert menus
-            editLineView.setActionModeCallbacks(ActionModeCallback(newEditText))
+            editLineView.setActionModeCallbacks(getActionModeCallback(newEditText, View.generateViewId()))
             editLineView.setHintLocale(getHintLocaleForField(editLineView.name))
             initFieldEditText(newEditText, i, !editModelMode)
             editFields!!.add(newEditText)
@@ -1500,6 +1589,23 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             editLineView.isVisible = i !in indicesToHide
             fieldsLayoutContainer!!.addView(editLineView)
         }
+    }
+
+    private fun getActionModeCallback(textBox: FieldEditText, clozeMenuId: Int): ActionMode.Callback {
+        return CustomActionModeCallback(
+            isClozeType,
+            getString(R.string.multimedia_editor_popup_cloze),
+            clozeMenuId,
+            onActionItemSelected = { mode, item ->
+                if (item.itemId == clozeMenuId) {
+                    convertSelectedTextToCloze(textBox, AddClozeType.INCREMENT_NUMBER)
+                    mode.finish()
+                    true
+                } else {
+                    false
+                }
+            }
+        )
     }
 
     private fun onImagePaste(editText: EditText, uri: Uri): Boolean {
@@ -1789,11 +1895,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         fun calculateDeckId(): DeckId {
             if (deckId != 0L) return deckId
             if (note != null && !addNote && currentEditedCard != null) {
-                return currentEditedCard!!.did
+                return currentEditedCard!!.currentDeckId().did
             }
 
             if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-                return getColUnsafe.notetypes.current().did
+                return getColUnsafe.notetypes.current().let {
+                    Timber.d("Adding to deck of note type, noteType: %s", it.name)
+                    return@let it.did
+                }
             }
 
             val currentDeckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1L
@@ -2233,67 +2342,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
             // Do Nothing
-        }
-    }
-
-    /**
-     * Custom ActionMode.Callback implementation for adding and handling cloze deletion action
-     * button in the text selection menu.
-     */
-    private inner class ActionModeCallback(
-        private val textBox: FieldEditText
-    ) : ActionMode.Callback {
-        private val clozeMenuId = View.generateViewId()
-
-        @RequiresApi(Build.VERSION_CODES.N)
-        private val setLanguageId = View.generateViewId()
-        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            return true
-        }
-
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-            // Adding the cloze deletion floating context menu item, but only once.
-            if (menu.findItem(clozeMenuId) != null) {
-                return false
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(setLanguageId) != null) {
-                return false
-            }
-
-            // Removes paste as plain text from ContextMenu in NoteEditor
-            val item: MenuItem? = menu.findItem(android.R.id.pasteAsPlainText)
-            val platformPasteMenuItem: MenuItem? = menu.findItem(android.R.id.paste)
-            if (item != null && platformPasteMenuItem != null) {
-                item.isVisible = false
-            }
-
-            val initialSize = menu.size()
-            if (isClozeType) {
-                // 10644: Do not pass in a R.string as the final parameter as MIUI on Android 12 crashes.
-                menu.add(
-                    Menu.NONE,
-                    clozeMenuId,
-                    0,
-                    getString(R.string.multimedia_editor_popup_cloze)
-                )
-            }
-            return initialSize != menu.size()
-        }
-
-        @SuppressLint("SetTextI18n")
-        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            val itemId = item.itemId
-            return if (itemId == clozeMenuId) {
-                convertSelectedTextToCloze(textBox, AddClozeType.INCREMENT_NUMBER)
-                mode.finish()
-                true
-            } else {
-                false
-            }
-        }
-
-        override fun onDestroyActionMode(mode: ActionMode) {
-            // Left empty on purpose
         }
     }
 

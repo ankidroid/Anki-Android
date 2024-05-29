@@ -64,7 +64,7 @@
     <string name="log_out">लॉग आउट</string>
     <string name="reset_password">पासवर्ड रीसेट करें</string>
     <string name="lost_mail_instructions">ईमेल भूल गए?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">इन कर रहे हैं</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX के लिए विकल्प</string>
     <string name="sync_title">समकालन</string>
@@ -74,11 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">स्थानीय</string>
     <string name="sync_sanity_remote">दूरस्थ</string>
-    <string name="one_way_sync_title">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title">एक तरफ़ा सिंक</string>
+    <string name="one_way_sync_confirmation">एकतरफ़ा सिंक का अनुरोध किया गया</string>
     <string name="full_sync_confirmation">जब आप अगले अपने संग्रह सिंक्रनाइज़ अनुरोध परिवर्तन डेटाबेस का एक पूर्ण अपलोड की आवश्यकता होगी । यदि आपके पास अभी तक सिंक्रनाइज़ नहीं किए गए किसी अन्य डिवाइस पर प्रतीक्षारत समीक्षाएँ या अन्य परिवर्तन हैं, तो वे खो जाएँगे. जारी?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid के पहले से स्थापित संस्करण में एक बग के कारण, यह एक पूर्ण सिंक मजबूर करने के लिए सिफारिश की है.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_one_way_sync">सिंक (एकतरफ़ा)</string>
     <string name="sync_menu_title_no_account">सिंक (लॉग इन)</string>
 </resources>

@@ -58,7 +58,7 @@ class TemplatePreviewerViewModel(
     private val note: Deferred<Note>
     private val templateNames: Deferred<List<String>>
     private val clozeOrds: Deferred<List<Int>>?
-    override lateinit var currentCard: Deferred<Card>
+    override var currentCard: Deferred<Card>
 
     init {
         note = asyncIO {
@@ -73,7 +73,17 @@ class TemplatePreviewerViewModel(
                 tags = arguments.tags
             }
         }
-
+        currentCard = asyncIO {
+            val note = note.await()
+            withCol {
+                note.ephemeralCard(
+                    col = this,
+                    ord = ordFlow.value,
+                    customNoteType = notetype,
+                    fillEmpty = fillEmpty
+                )
+            }
+        }
         if (isCloze) {
             val clozeNumbers = asyncIO {
                 val note = note.await()
@@ -99,6 +109,7 @@ class TemplatePreviewerViewModel(
     override fun onPageFinished(isAfterRecreation: Boolean) {
         if (isAfterRecreation) {
             launchCatchingIO {
+                // TODO: We should persist showingAnswer to SavedStateHandle
                 if (showingAnswer.value) showAnswerInternal() else showQuestion()
             }
             return

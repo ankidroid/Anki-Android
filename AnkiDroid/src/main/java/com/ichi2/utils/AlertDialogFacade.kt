@@ -24,10 +24,12 @@ import android.content.DialogInterface.OnClickListener
 import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.ListView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -38,6 +40,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
+import com.ichi2.ui.FixedTextView
 
 /** Wraps [DialogInterface.OnClickListener] as we don't need the `which` parameter */
 typealias DialogInterfaceListener = (DialogInterface) -> Unit
@@ -232,6 +235,10 @@ fun AlertDialog.Builder.customListAdapterWithDecoration(adapter: RecyclerView.Ad
 }
 
 /**
+ * Note: using [waitForPositiveButton] = true doesn't automatically close the dialog and it
+ * requires a manual call to [android.app.Dialog.dismiss] inside the callback listening for text
+ * input to replicate the standard dialog behavior.
+ *
  * @param hint The hint text to be displayed to the user
  * @param prefill The text to initially appear in the [EditText]
  * @param allowEmpty If true, [DialogInterface.BUTTON_POSITIVE] is disabled if the [EditText] is empty
@@ -327,4 +334,26 @@ fun AlertDialog.Builder.listItems(items: List<CharSequence>, onClick: (dialog: D
     return this.setItems(items.toTypedArray()) { dialog, which ->
         onClick(dialog, which)
     }
+}
+
+/**
+ * Extension workaround for Displaying ListView & Message Together
+ * Alert Dialog Doesn't allow message and listview together so a customView is used.
+ *
+ * @param message The message which you want to display in the dialog
+ * @param items The items to display in the list.
+ * @param onClick A lambda function that is invoked when an item is clicked.
+ */
+fun AlertDialog.Builder.listItemsAndMessage(message: String?, items: List<CharSequence>, onClick: (dialog: DialogInterface, index: Int) -> Unit): AlertDialog.Builder {
+    val dialogView = View.inflate(this.context, R.layout.dialog_listview_message, null)
+    dialogView.findViewById<FixedTextView>(R.id.dialog_message).text = message
+
+    val listView = dialogView.findViewById<ListView>(R.id.dialog_list_view)
+    listView.adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, items)
+
+    val dialog = this.create()
+    listView.setOnItemClickListener { _, _, index, _ ->
+        onClick(dialog, index)
+    }
+    return this.setView(dialogView)
 }

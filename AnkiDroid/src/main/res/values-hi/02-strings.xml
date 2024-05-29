@@ -125,7 +125,7 @@
     <string name="select">का चयन करें</string>
     <string name="field_remapping">%1$s (\"%2$s\" से)</string>
     <string name="confirm_map_cards_to_nothing">कुछ नहीं के लिए मैप किए गए किसी भी कार्ड को हटा दिया जाएगा । यदि किसी नोट में कोई शेष कार्ड नहीं है, तो वह खो जाएगा । क्या आप निश्चयपूर्वक जारी रखना चाहते हैं?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">कोई नोट प्रकार नहीं मिला</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">टाइमबॉक्स पहुँच गया</string>
     <plurals name="timebox_reached">
@@ -143,7 +143,7 @@
     <string name="card_editor_reset_card">प्रगति को रीसेट</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">पुनः शेड्यूल करें</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">पूर्वावलोकन</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">मार्कडाउन के रूप में कॉपी करें</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d का %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">का नाम बदलें</string>
     <string name="checks_action">जांचें</string>
@@ -152,7 +152,7 @@
     <string name="empty_cards">खाली कार्ड</string>
     <string name="empty_card_warning">यह कार्ड खाली है । डेक सूची स्क्रीन पर मेनू से \"खाली कार्ड\" विकल्प का उपयोग करें ।</string>
     <string name="unknown_type_field_warning">उत्तर टाइप करें: अज्ञात फ़ील्ड %s</string>
-    <string name="delete_deck">हटाने deck...\nPlease रुको।</string>
+    <string name="delete_deck">हटाने deck&#8230;\nPlease रुको।</string>
     <string name="info_rate">दर AnkiDroid</string>
     <string name="import_title">आयात</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">जोड़ें</string>
@@ -166,17 +166,17 @@
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
     <string name="import_error_copy_to_cache">फ़ाइल कैश करने में विफल (संभवतः भंडारण स्थान से बाहर)</string>
     <string name="import_interrupted">आयात बाधित हुआ</string>
-    <string name="export_preparation_in_progress">निर्यात करने की तैयारी है...</string>
+    <string name="export_preparation_in_progress">निर्यात करने की तैयारी है&#8230;</string>
     <string name="export_ready_title">एक्सपोर्ट तैयार  है</string>
-    <string name="export_send_no_handlers">apkg को संभालने के लिए कोई एप्लिकेशन उपलब्ध नहीं है। सहेजा जा रहा है ...</string>
+    <string name="export_send_no_handlers">apkg को संभालने के लिए कोई एप्लिकेशन उपलब्ध नहीं है। सहेजा जा रहा है &#8230;</string>
     <string name="export_save_apkg_successful">सफलतापूर्वक Anki पैकेज को सहेजा गया </string>
     <string name="export_save_apkg_unsuccessful">Anki पैकेज सहेजना विफल रहा </string>
     <string name="export_share_title">Anki पैकेज का उपयोग करके भेजें</string>
     <string name="export_email_subject">AnkiDroid निर्यात किए गए स्पैनिश: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        नमस्ते!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        यह AnkiDroid[1] से भेजा गया Anki फ़्लैशकार्ड डेक है।
+        उपलब्ध Anki वितरणों में से किसी एक का उपयोग करके इसे खोलने का प्रयास करें[2] और आसान और कुशल सीखने का आनंद लें!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -204,13 +204,13 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">सिस्टम में कोई ऐप इंस्टॉल नहीं है जो इस क्रिया को कर सके।</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[कैमरे के चित्र बड़े हो सकते हैं। आप मीडिया फ़ोल्डर में छवियों को संपीड़ित और आकार देना चाह सकते हैं]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">लिंक खोलने के लिए कोई ब्राउज़र नहीं मिला: %s</string>
     <string name="web_page_error">पृष्ठ लोड करने में त्रुटि: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">पृष्ठभूमि</string>
     <string name="choose_an_image">चित्र चुनें</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">पृष्ठभूमि निकालें?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">पहले जैसा कर देना</string>
     <string name="reviewer_tts_cloze_spoken_replacement">रिक्त</string>
@@ -304,7 +304,7 @@
     <string name="migration_part_1_done_resume">आप अंकीड्रॉइड का उपयोग फिर से शुरू कर सकते हैं.
 \nस्टोरेज माइग्रेशन पृष्ठभूमि में जारी रहेगा.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s एक वैध जावास्क्रिप्ट एडऑन पैकेज नहीं है</string>
     <string name="could_not_create_dir">निर्देशिका नहीं बन सका %s</string>
     <string name="malicious_archive_entry_outside">दुर्भावनापूर्ण संग्रह. लक्ष्य निर्देशिका के बाहर प्रविष्टि शामिल है: %s</string>
     <string name="malicious_archive_exceeds_limit">दुर्भावनापूर्ण ढंग से संग्रहीत दस्तावेज़. आकार %1$s से अधिक है या इसमें %2$d से अधिक फ़ाइलें हैं।</string>
@@ -313,7 +313,7 @@
     <string name="expand_tag">टैग \'%s\' विस्तृत करें</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">संग्रह तक पहुंचने में विफल. कृपया पुन: प्रयास करें!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">एक नया नोट प्रकार जोड़ें</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">कम पढ़ें</string>
     <string name="intro_ankidroid_tagline_two">अधिक याद करें</string>
@@ -354,8 +354,16 @@
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">इनस्टॉल</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">टेक्स्ट टू स्पीच सेटिंग खोलने में विफल</string>
     <string name="shared_decks_login_required">कृपया अधिक डेक डाउनलोड करने के लिए लॉग इन करें</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="deck_description_field_hint">विवरण</string>
+    <string name="failed_to_copy">प्रतिलिपि बनाने में विफल</string>
+    <string name="card_browser_unavailable_when_notes_mode">\'नोट्स\' मोड में अनुपलब्ध</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d card unburied</item>
+        <item quantity="other">%d cards unburied</item>
+    </plurals>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">स्थान बदलने</string>
+    <string name="start_recording">Record</string>
+    <string name="stop_recording">Stop</string>
+    <string name="play_recording">Play</string>
+    <string name="next_recording">Next</string>
 </resources>

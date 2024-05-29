@@ -105,14 +105,6 @@
     <string name="menu_delete_note">टीप हटवा</string>
     <string name="menu_flag">झेंडा</string>
     <string name="menu_flag_card">फ्लॅग कार्ड</string>
-    <string name="menu_flag_card_zero">ध्वज नाही</string>
-    <string name="menu_flag_card_one">लाल झेंडा</string>
-    <string name="menu_flag_card_two">केशरी ध्वज</string>
-    <string name="menu_flag_card_three">हिरवा झेंडा</string>
-    <string name="menu_flag_card_four">निळा ध्वज</string>
-    <string name="menu_flag_card_five">गुलाबी रंगाची पट्टी</string>
-    <string name="menu_flag_card_six">हिरव्या रंगाची पट्टी</string>
-    <string name="menu_flag_card_seven">जांभळ्या रंगाची पट्टी</string>
     <string name="menu_edit_tags">टॅग संपादित करा</string>
     <string name="delete_note_message">खरोखर ही टीप आणि त्याची सर्व कार्ड हटवायची?\n%s</string>
     <string name="menu_search">%1$s मध्ये पहा</string>
@@ -127,7 +119,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">कृपया सुरू ठेवण्यासाठी अंकीड्रोइडला ‘स्टोरेज’ परवानगी द्या</string>
-    <string name="rebuild_filtered_deck">फिल्टर केलेले डेक पुन्हा तयार करीत आहे ...</string>
+    <string name="rebuild_filtered_deck">फिल्टर केलेले डेक पुन्हा तयार करीत आहे &#8230;</string>
     <string name="rebuild_cram_label">पुन्हा तयार करा</string>
     <string name="empty_cram_label">रिक्त</string>
     <string name="create_subdeck">सबडेक तयार करा</string>
@@ -146,7 +138,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">आपण संकालन रद्द करू इच्छिता?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">संकालन सुरू ठेवा</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">संकालन रद्द केले</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द करीत आहे... \n यास काही वेळ लागू शकेल.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द करीत आहे&#8230; \n यास काही वेळ लागू शकेल.</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">निर्यात डेक</string>
     <string name="nothing">काही नाही</string>
@@ -253,4 +245,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

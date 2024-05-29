@@ -96,7 +96,7 @@
     <string name="dialog_keep">維持</string>
     <string name="dialog_remove">削除</string>
     <string name="dialog_continue">続行</string>
-    <string name="dialog_processing">処理中です...</string>
+    <string name="dialog_processing">処理中です&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">作成</string>
     <string name="dialog_positive_delete">削除</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -108,7 +108,7 @@
     <!-- Media checking -->
     <string name="check_media_title">メディアをチェックしますか？</string>
     <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかる場合があります。</string>
-    <string name="check_media_message">メディアをチェックしています...</string>
+    <string name="check_media_message">メディアをチェックしています&#8230;</string>
     <string name="check_media_acknowledge">メディアのチェックの完了</string>
     <string name="check_media_invalid">エンコーディングが無効なファイル数: %d</string>
     <string name="check_media_unused">(*) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d個</string>
@@ -218,7 +218,7 @@
     <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">コレクションのバックアップ</string>
-    <string name="backup_collection_message">しばらくの期間、コレクションのバックアップをアプリの外部に作成していません。デバイスの故障・紛失など、アプリ内のデータを失う万一の事態に備え、今すぐアプリ外部（かつ、デバイスの外部）にバックアップを作成することをおすすめします。</string>
+    <string name="backup_collection_message">しばらくの期間、このアプリ内ではない場所にコレクションのバックアップを作成していません。デバイスの故障・紛失など、アプリ内のコレクションを失う万一の事態に備え、今すぐアプリの外（かつ、デバイスの外）にバックアップを作成することをおすすめします。</string>
     <string name="button_backup">バックアップ</string>
     <string name="button_disable_reminder">リマインダーを無効にする</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">後で</string>

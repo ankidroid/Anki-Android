@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Qeydi sil</string>
     <string name="menu_flag">İşarələ</string>
     <string name="menu_flag_card">İşarələnmiş kart</string>
-    <string name="menu_flag_card_zero">İşarə yoxdur</string>
-    <string name="menu_flag_card_one">Qırmızı işarə</string>
-    <string name="menu_flag_card_two">Narıncı işarə</string>
-    <string name="menu_flag_card_three">Yaşıl işarə</string>
-    <string name="menu_flag_card_four">Mavi işarə</string>
-    <string name="menu_flag_card_five">Çəhrayı işarə</string>
-    <string name="menu_flag_card_six">Firuzəyi işarə</string>
-    <string name="menu_flag_card_seven">Bənövşəyi işarə</string>
     <string name="menu_edit_tags">Etiketlərə düzəliş et</string>
     <string name="delete_note_message">Bu qeyd və bütün kartlar həqiqətən də silinsin?\n%s</string>
     <string name="menu_search">%1$s içində axtar</string>
@@ -253,4 +245,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

@@ -102,14 +102,6 @@
     <string name="menu_delete_note">Padam nota</string>
     <string name="menu_flag">Tanda</string>
     <string name="menu_flag_card">Tanda kad</string>
-    <string name="menu_flag_card_zero">Tiada tanda</string>
-    <string name="menu_flag_card_one">Tanda merah</string>
-    <string name="menu_flag_card_two">Tanda jingga</string>
-    <string name="menu_flag_card_three">Tanda hijau</string>
-    <string name="menu_flag_card_four">Tanda biru</string>
-    <string name="menu_flag_card_five">Tanda merah jambu</string>
-    <string name="menu_flag_card_six">Tanda firus</string>
-    <string name="menu_flag_card_seven">Tanda ungu</string>
     <string name="menu_edit_tags">Sunting tag</string>
     <string name="delete_note_message">Pasti padam nota dan semua kadnya?\n%s</string>
     <string name="menu_search">Cari di %1$s</string>
@@ -247,4 +239,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

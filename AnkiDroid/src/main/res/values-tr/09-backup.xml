@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">Açmayı yeniden dene</string>
     <string name="backup_error_menu_repair">Veritabanını onar</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Veritabanı onarılıyor.\nLütfen bekleyin...</string>
+    <string name="backup_repair_deck_progress">Veritabanı onarılıyor.\nLütfen bekleyin&#8230;</string>
     <string name="backup_invalid_file_error">Seçilen yedek dosyası geçersizdi</string>
     <string name="backup_restore_select_title">Geri yüklenecek yedeği seçin</string>
     <string name="backup_restore_no_backups">Bu cihazda bu koleksiyonun yedeği mevcut değil. Eğer masaüstü bilgisayarınızda yedek varsa, lütfen AnkiDroid klasörünüze elle kopyalayın.</string>

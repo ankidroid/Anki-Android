@@ -72,8 +72,8 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">ಏನೋ ತಪ್ಪಾಗಿದೆ</string>
     <string name="multimedia_editor_svg_preview">ಪೂರ್ವವೀಕ್ಷಣೆಗಾಗಿ SVG ಗಳು ಲಭ್ಯವಿಲ್ಲ</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
+    <string name="multimedia_editor_png_paste_error">ಕ್ಲಿಪ್‌ಬೋರ್ಡ್ ಚಿತ್ರವನ್ನು png ಗೆ ಪರಿವರ್ತಿಸುವಲ್ಲಿ ದೋಷ: %s</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s ಕ್ಷೇತ್ರಕ್ಕೆ ಮಲ್ಟಿಮೀಡಿಯಾ ವಿಷಯವನ್ನು ಲಗತ್ತಿಸಿ</string>
     <string name="multimedia_editor_attach_media">ಮಾಧ್ಯಮವನ್ನು ಲಗತ್ತಿಸಿ</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -87,6 +87,6 @@
     <string name="crop_button">ಚಿತ್ರವನ್ನು ಕ್ರಾಪ್ ಮಾಡಿ</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
     <string name="select_image_failed">"ಇಮೇಜ್ ಆಯ್ಕೆ ವಿಫಲವಾಗಿದೆ, ದಯವಿಟ್ಟು ಮರುಪ್ರಯತ್ನಿಸಿ"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="activity_result_unexpected">ಅಪ್ಲಿಕೇಶನ್ ಅನಿರೀಕ್ಷಿತ ಮೌಲ್ಯವನ್ನು ಹಿಂತಿರುಗಿಸಿದೆ. ನೀವು ಬೇರೆ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಬಳಸಬೇಕಾಗಬಹುದು</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

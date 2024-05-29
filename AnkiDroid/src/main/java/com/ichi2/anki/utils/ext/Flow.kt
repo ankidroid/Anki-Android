@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -13,16 +13,23 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.utils.ext
 
-package com.ichi2.utils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-import com.afollestad.materialdialogs.MaterialDialog
+fun <T> Flow<T>.collectLatestIn(scope: CoroutineScope, action: suspend (value: T) -> Unit): Job {
+    return scope.launch {
+        collectLatest(action)
+    }
+}
 
-// Extension methods for MaterialDialog workarounds in Kotlin
-// Previously the methods accepted null into a non-null parameter,
-// and fixing this would break the fluent interface
-
-fun MaterialDialog.contentNullable(message: CharSequence?): MaterialDialog {
-    message?.let { this.message(text = it) }
-    return this
+fun <T> Flow<T>.collectIn(scope: CoroutineScope, collector: FlowCollector<T>): Job {
+    return scope.launch {
+        collect(collector)
+    }
 }
