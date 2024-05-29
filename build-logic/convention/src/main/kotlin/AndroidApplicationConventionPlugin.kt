@@ -53,7 +53,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     implementation(libs.androidx.work.runtime)
                     lintChecks(project(":lint-rules"))
                     coreLibraryDesugaring(libs.desugar.jdk.libs.nio)
-
                     compileOnly(libs.jetbrains.annotations)
                     compileOnly(libs.auto.service.annotations)
                     annotationProcessor(libs.auto.service)
