@@ -45,6 +45,7 @@ private fun Project.configureLintRules() {
             if (System.getenv("CI") == "true") {
                 // 14853: we want this to appear in the IDE, but it adds noise to CI
                 disable += "WrongThread"
+
             }
         }
     }
