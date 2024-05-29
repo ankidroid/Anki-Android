@@ -31,7 +31,7 @@ import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
 import com.ichi2.compat.PackageInfoFlagsCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 
 object AdaptionUtil {
     private var sHasRunWebBrowserCheck = false
@@ -130,23 +130,4 @@ object AdaptionUtil {
             val manufacturer = Build.MANUFACTURER ?: return false
             return manufacturer.lowercase(Locale.ROOT) == "vivo"
         }
-
-    /** make default HTML / JS debugging true for debug build and disable for unit/android tests
-     * isRunningAsUnitTest checks if we are in debug or testing environment by checking if org.junit.Test class
-     * is imported.
-     * https://stackoverflow.com/questions/28550370/how-to-detect-whether-android-app-is-running-ui-test-with-espresso
-     */
-    val isRunningAsUnitTest: Boolean
-        get() {
-            try {
-                Class.forName("org.junit.Test")
-            } catch (ignored: ClassNotFoundException) {
-                Timber.d("isRunningAsUnitTest: %b", false)
-                return false
-            }
-            Timber.d("isRunningAsUnitTest: %b", true)
-            return true
-        }
 }
-
-val isRobolectric get() = Build.FINGERPRINT?.startsWith("robolectric") ?: false
