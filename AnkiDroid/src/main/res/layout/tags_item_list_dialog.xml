@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- -4dp end so the checkbox aligns with the OK button -->
 <LinearLayout android:id="@+id/tags_dialog_tag_item"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +12,7 @@
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="horizontal"
     android:paddingBottom="5dp"
-    android:paddingEnd="8dp"
+    android:paddingEnd="-4dp"
     android:paddingStart="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 

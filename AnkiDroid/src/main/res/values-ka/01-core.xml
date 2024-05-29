@@ -105,14 +105,6 @@
     <string name="menu_delete_note">შენიშვნის წაშლა</string>
     <string name="menu_flag">დროშა</string>
     <string name="menu_flag_card">დროშის მიმაგრება</string>
-    <string name="menu_flag_card_zero">დროშის გარეშე</string>
-    <string name="menu_flag_card_one">წითელი დროშა</string>
-    <string name="menu_flag_card_two">სტაფილოსფერი დროშა</string>
-    <string name="menu_flag_card_three">მწვანე დროშა</string>
-    <string name="menu_flag_card_four">ლურჯი დროშა</string>
-    <string name="menu_flag_card_five">ვარდისფერი დროშა</string>
-    <string name="menu_flag_card_six">ფირუზისფერი დროშა</string>
-    <string name="menu_flag_card_seven">იისფერი დროშა</string>
     <string name="menu_edit_tags">იარლიყის რედაქტირება</string>
     <string name="delete_note_message">ნამდვილად წავშალო ეს შენიშვნა და ყველა მისი ბარათი?\n%s</string>
     <string name="menu_search">მონახულება %1$s-ში</string>
@@ -253,4 +245,5 @@
     <string name="storage_access_summary">თქვენი კოლექცია შეინახება უსაფრთხო ადგილას, რომელიც აპლიკაციის დეინსტალაციის შემთხვევაში არ წაიშლება</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">წვდომა ყველა ფაილზე</string>
     <string name="image_occlusion">სასურათე საფარველები</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

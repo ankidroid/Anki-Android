@@ -96,7 +96,7 @@
     <string name="dialog_keep">保留</string>
     <string name="dialog_remove">移除</string>
     <string name="dialog_continue">继续</string>
-    <string name="dialog_processing">处理中...</string>
+    <string name="dialog_processing">处理中&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">创建</string>
     <string name="dialog_positive_delete">删除</string>
     <!-- Currently unsued, should be useful in the future -->

@@ -96,8 +96,6 @@
     <string name="cardeditor_title_edit_card">Edit note</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Saving note</string>
@@ -155,7 +153,7 @@
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_preparation_in_progress">Preparing export…</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
+    <string name="export_send_no_handlers">No applications available to handle apkg. Saving…</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_share_title">Send Anki package using</string>
@@ -433,5 +431,16 @@ opening the system text to speech settings fails">
 
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
 
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d card unburied</item>
+        <item quantity="other">%d cards unburied</item>
+    </plurals>
+
     <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+
+    <string name="start_recording">Record</string>
+    <string name="stop_recording">Stop</string>
+    <string name="play_recording">Play</string>
+    <string name="next_recording">Next</string>
+
 </resources>

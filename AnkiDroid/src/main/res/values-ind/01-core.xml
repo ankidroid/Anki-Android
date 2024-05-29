@@ -102,14 +102,6 @@
     <string name="menu_delete_note">Hapus catatan</string>
     <string name="menu_flag">Panji</string>
     <string name="menu_flag_card">Beri kartu panji</string>
-    <string name="menu_flag_card_zero">Tidak ada panji</string>
-    <string name="menu_flag_card_one">Panji merah</string>
-    <string name="menu_flag_card_two">Panji jingga</string>
-    <string name="menu_flag_card_three">Panji hijau</string>
-    <string name="menu_flag_card_four">Panji Biru</string>
-    <string name="menu_flag_card_five">Bendera pink</string>
-    <string name="menu_flag_card_six">Bendera toska</string>
-    <string name="menu_flag_card_seven">Bendera ungu</string>
     <string name="menu_edit_tags">Edit tag</string>
     <string name="delete_note_message">Yakin akan menghapus catatan ini dan semua kartunya?\n%s</string>
     <string name="menu_search">Pencarian di %1$s</string>
@@ -248,4 +240,5 @@
     <string name="storage_access_summary">Menyimpan koleksi Anda dalam tempat yang aman yang tidak akan terhapus jika aplikasi dicopot pemasangannya</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Akses semua berkas</string>
     <string name="image_occlusion">Oklusi Gambar</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

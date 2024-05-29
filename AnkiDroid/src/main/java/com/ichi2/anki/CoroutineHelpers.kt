@@ -82,7 +82,7 @@ var throwOnShowError = false
 fun CoroutineScope.launchCatching(
     context: CoroutineContext = EmptyCoroutineContext,
     errorMessageHandler: suspend (String) -> Unit,
-    block: suspend () -> Unit
+    block: suspend CoroutineScope.() -> Unit
 ): Job {
     return launch(context) {
         try {
@@ -111,6 +111,16 @@ fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel
         { onError.emit(it) },
         { block() }
     )
+}
+
+fun <T> T.launchCatchingIO(
+    errorMessageHandler: suspend (String) -> Unit,
+    block: suspend CoroutineScope.() -> Unit
+): Job where T : ViewModel {
+    return viewModelScope.launchCatching(
+        ioDispatcher,
+        errorMessageHandler
+    ) { block() }
 }
 
 fun <T> CoroutineScope.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
@@ -232,7 +242,21 @@ fun Fragment.launchCatchingTask(
     }
 }
 
-private fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
+fun showError(context: Context, msg: String) {
+    if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg")
+    try {
+        AlertDialog.Builder(context).show {
+            title(R.string.vague_error)
+            message(text = msg)
+            positiveButton(R.string.dialog_ok)
+        }
+    } catch (ex: BadTokenException) {
+        // issue 12718: activity provided by `context` was not running
+        Timber.w(ex, "unable to display error dialog")
+    }
+}
+
+fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
     if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg", exception)
     try {
         AlertDialog.Builder(context).show {

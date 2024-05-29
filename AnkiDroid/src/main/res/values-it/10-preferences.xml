@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Centra verticalmente il contenuto delle carte</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervallo di tempo doppio tocco (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un secondo tocco dei pulsanti di risposta verrà ignorato se questo tempo non è trascorso. Questo impedisce doppi tocchi accidentali</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Durata pressione prolungata per mostrare la risposta (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Tempo minimo di pressione prolungata prima che il pulsante di risposta riscontri un tocco. Può ridurre la probabilità di pressioni accidentali aggiuntive. Il valore predefinito è 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Mostra scadenza pulsanti</string>
     <string name="show_estimates_summ">Mostra la prossima scadenza sopra i pulsanti di risposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostra pulsanti risposta grandi</string>
@@ -333,7 +333,7 @@
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Cancellare i backup</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Cancellare i backup</string>
-    <string name="progress__deleting_backups">Eliminazione  dei salvataggi...</string>
+    <string name="progress__deleting_backups">Eliminazione  dei salvataggi&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Cancella la collezione</string>
     <string name="pref__delete_collection__summary">Elimina la collezione, media e backup. Le impostazioni dell\'app non vengono eliminate</string>
@@ -356,7 +356,7 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Nessuna raccolta</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Errore</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Recupero...</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Recupero&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calcolo&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">La raccolta non esiste</string>
 </resources>

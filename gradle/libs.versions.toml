@@ -1,15 +1,15 @@
 [versions]
 acra = '5.11.3'
 amazonappstorepublisher = "0.1.0"
-androidGradlePlugin = "8.2.2"
-androidxActivityKtx = "1.8.2"
-androidxAnnotation = "1.7.1"
-androidxAppCompat = "1.7.0-alpha03"
+androidGradlePlugin = "8.4.1"
+androidxActivity = "1.9.0"
+androidxAnnotation = "1.8.0"
+androidxAppCompat = "1.7.0-rc01"
 androidxBrowser = "1.8.0"
 androidxConstraintlayout = "2.1.4"
-androidxCoreKtx = "1.12.0"
+androidxCoreKtx = "1.13.1"
 androidxExifinterface = "1.3.7"
-androidxFragmentKtx = "1.6.2"
+androidxFragmentKtx = "1.7.1"
 androidxImageCropper = "4.5.0"
 androidxMedia = "1.7.0"
 androidxPreferenceKtx = "1.2.1"
@@ -19,18 +19,18 @@ androidxSqliteFramework = "2.4.0"
 androidxSwiperefreshlayout = "1.1.0"
 androidxTextCore = "1.5.0"
 androidxUiautomator = "2.3.0"
-androidxViewpager2 = "1.0.0"
-androidxWebkit = "1.10.0"
+androidxViewpager2 = "1.1.0"
+androidxWebkit = "1.11.0"
 annotations = "24.1.0"
-ankiBackend = '0.1.37-anki24.04'
+ankiBackend = '0.1.38-anki24.04.1'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 colorpicker = "1.2.0"
 commonsCollections4 = "4.4"
 commonsCompress = "1.26.1"
 commonsExec = "1.4.0"
-commonsIo = "2.15.1"
-coroutines = '1.8.0'
+commonsIo = "2.16.1"
+coroutines = '1.8.1'
 core = "3.3.0"
 desugar-jdk-libs-nio = "2.0.4"
 drawer = "1.0.3"
@@ -38,7 +38,6 @@ dokka = "1.9.20"
 espresso = '3.5.1'
 mikehardyGoogleAnalyticsJava7 = "2.0.13"
 hamcrest = "2.2"
-materialDialogs = "3.3.0"
 javaSemver = "0.10.2"
 json = "20240303"
 jsoup = "1.17.2"
@@ -46,22 +45,22 @@ androidTestJunit = "1.1.5"
 junitJupiter = "5.10.2"
 junitJupiterParams = "5.10.2"
 junitVintageEngine = "5.10.2"
-kotlin = '1.9.23'
-kotlinReflect = "1.9.22"
-kotlinTest = "1.9.23"
+kotlin = '2.0.0'
+kotlinReflect = "2.0.0"
+kotlinTest = "2.0.0"
 kotlinxSerializationJson = "1.6.3"
 ktlint = "11.6.1"
-leakcanaryAndroid = "2.13"
-lint = '31.3.1'
-material = "1.11.0"
+leakcanaryAndroid = "2.14"
+lint = '31.4.1'
+material = "1.12.0"
 materialTapTargetPrompt = "3.3.2"
 mockitoInline = "5.2.0"
-mockitoKotlin = "5.2.1"
-mockk = "1.13.10"
+mockitoKotlin = "5.3.1"
+mockk = "1.13.11"
 nanohttpd = "2.3.1"
 okhttp = "4.12.0"
-protobufKotlinLite = "3.25.3"
-robolectric = "4.11.1"
+protobufKotlinLite = "4.26.1"
+robolectric = "4.12.2"
 searchpreference = "2.5.1"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
@@ -84,7 +83,7 @@ androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidxBrowser" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
-androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivityKtx" }
+androidx-activity = { module = "androidx.activity:activity", version.ref = "androidxActivity" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreferenceKtx" }
 androidx-media = { module = "androidx.media:media", version.ref = "androidxMedia" }
 androidx-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidxUiautomator" }
@@ -100,8 +99,6 @@ colorpicker = { module = "com.github.mrudultora:Colorpicker", version.ref = "col
 commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
 commons-collections4 = { module = "org.apache.commons:commons-collections4", version.ref = "commonsCollections4" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
-materialDialogs-core = { module = "com.afollestad.material-dialogs:core", version.ref = "materialDialogs" }
-materialDialogs-input = { module = "com.afollestad.material-dialogs:input", version.ref = "materialDialogs" }
 desugar-jdk-libs-nio = { module = "com.android.tools:desugar_jdk_libs_nio", version.ref = "desugar-jdk-libs-nio" }
 drakeet-drawer = { module = "com.drakeet.drawer:drawer", version.ref = "drawer" }
 mikehardy-google-analytics-java7 = { module = "net.mikehardy:google-analytics-java7", version.ref = "mikehardyGoogleAnalyticsJava7" }

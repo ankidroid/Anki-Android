@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Bring in each component from separate files as we have fullscreen versions of reviewer -->
     <RelativeLayout
         android:id="@+id/front_frame"
@@ -38,7 +39,10 @@
             android:layout_centerHorizontal="true"
             android:layout_above="@+id/bottom_area_layout"/>
 
-        <include layout="@layout/reviewer_answer_buttons" />
+        <include layout="@layout/reviewer_answer_buttons"
+            tools:layout_width="match_parent"
+            tools:layout_height="wrap_content"
+            tools:layout_alignParentBottom="true"/>
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 <!-- Left navigation drawer -->

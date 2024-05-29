@@ -75,37 +75,37 @@
         <item quantity="other">%d preplánovaných kartičiek</item>
     </plurals>
     <string name="answering_error_title">Chyba databázy</string>
-    <string name="answering_error_message">Zápis zbierky zlyhal. Databáza môže byť poškodená alebo na úložisku nie je dostatok miesta.\n\nAk sa toto stáva častejšie, skúste kontrolu databázy, opravu zbierky alebo jej obnovu zo zálohy. Ak to chcete urobiť, stlačte  “možnosti” .\n\Alebo to mohla byť tiež AnkiDroid chyba; prosím oznámte túto chybu aby sme to mohli skontrolovať.</string>
+    <string name="answering_error_message">Zápis zbierky zlyhal. Databáza môže byť poškodená alebo na úložisku nie je dostatok miesta.\n\nAk sa to stáva častejšie, skontrolujte databázu, opravte zbierku alebo ju obnovte zo zálohy. Ak to chcete urobiť, stlačte  „možnosti” .\n\Môže ísť aj o chybu aplikácie; prosím oznámte túto chybu aby sme to mohli skontrolovať.</string>
     <string name="answering_error_report">Nahlásiť chybu</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Nedostatok voľného miesta. Pre spustenie aplikácie AnkiDroid najprv uvoľnite miesto v pamäti.</string>
     <string name="repair_deck_dialog">Naozaj chcete skúsiť opraviť databázu?\n\nPred začatím pokusu o opravenie bude vytvorená kópia v podpriečinku \"%s\".</string>
     <string name="intent_aedict_empty">Kategória \"predvolený\" je prázdna</string>
     <string name="intent_aedict_category">Ak chcete pridať kartičky do AnkiDroid, odstráňte všetky kategórie poznámkového bloku alebo pridajte jednu s názvom \"predvolený\"</string>
     <string name="custom_study_new_total_new">Nové kartičky v balíčku: %d</string>
     <string name="custom_study_rev_total_rev">Na zopakovanie v balíčku: %d</string>
-    <string name="custom_study_new_extend">Zvýšiť/znížiť (“-3”) dnešný limit nových kartičiek o</string>
-    <string name="custom_study_rev_extend">Zvýšiť/znížiť (“-3”) dnešný limit kartičiek na zopakovanie o</string>
+    <string name="custom_study_new_extend">Zvýšiť/znížiť („-3”) dnešný limit nových kartičiek o</string>
+    <string name="custom_study_rev_extend">Zvýšiť/znížiť („-3”) dnešný limit kartičiek na zopakovanie o</string>
     <string name="custom_study_forgotten">Zopakovať si kartičky zabudnuté za posledných x dní:</string>
     <string name="custom_study_ahead">Opakovať dopredu o x dní:</string>
     <string name="custom_study_random">Náhodne vybrať x kartičiek z balíčka:</string>
     <string name="custom_study_preview">Ukážka nových kartičiek pridaných za posledných x dní:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nepodarilo sa obnoviť balíček vlastného štúdia</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">Úložisko je plné</string>
+    <string name="storage_almost_full_title">Úložisko je takmer plné</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nedostatok miesta</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid potrebuje %s voľného ukladacieho priestoru na pokračovanie. Prosím, uvoľnite priestor</string>
     <string name="restore_backup_title">Obnoviť zálohu?</string>
     <string name="restore_backup">Vaša kolekcia bude nahradená staršou kópiou. Všetky neuložené zmeny budú stratené.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Ďalšie zálohy</string>
     <string name="dialog_cancel">Zrušiť</string>
     <string name="dialog_ok">Ok</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Potvrdiť</string>
     <string name="dialog_no">Nie</string>
     <string name="dialog_yes">Áno</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Ponechať</string>
+    <string name="dialog_remove">Odstrániť</string>
     <string name="dialog_continue">Pokračovať</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Spracovanie&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Vytvoriť</string>
     <string name="dialog_positive_delete">Vymazať</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -125,7 +125,7 @@
     <string name="check_media_no_unused_missing">Neboli nájdené žiadne nepoužívané alebo chýbajúce súbory</string>
     <string name="check_media_db_updated">Databáza multimédií bola opravená</string>
     <string name="check_media_delete_unused">Vymazať nepoužívané</string>
-    <string name="delete_media_message">Médiá sa vymazávajú...</string>
+    <string name="delete_media_message">Médiá sa vymazávajú&#8230;</string>
     <string name="delete_media_result_title">Výsledok vymazania</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">%d vymazaný súbor</item>
@@ -172,7 +172,7 @@
     <string name="failed_to_apply_background_image">Nepodarilo sa použiť obrázok pozadia %s</string>
     <string name="background_image_too_large">Pozadie Deck Picker je príliš veľké</string>
     <string name="image_max_size_allowed">Maximálna povolená veľkosť obrázka %d MB</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">Rozmery obrázka sú priveľké (%1$d x %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Chýbajúce povolenie pre prístup k úložisku. Prosím povoľte prístup k úložisku a akciu zopakujte.</string>
@@ -182,7 +182,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Nepodarilo sa naplánovať pripomienky</string>
     <string name="boot_service_too_many_notifications">Naplánovaných príliš veľa pripomienok. Niektoré sa nezobrazia</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">Nastaviť jazyk</string>
     <string name="locale_selection_dialog_summary">Niektoré multimediálne klávesnice, akými sú GBoard podporujú zmenu jazyka pri úprave textu\n\nProsím, vyžiadajte si od svojho výrobcu klávesnice prvok “setImeHintLocales”, ak vaša klávesnica nemení jazyk.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Používanie AnkiDroid-u</string>
@@ -198,7 +198,7 @@
     <string name="help_item_support_develop_ankidroid">Developér</string>
     <string name="help_item_support_rate_ankidroid">Ohodnotiť</string>
     <string name="help_item_support_other_ankidroid">Ďalšie</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Preložiť</string>
     <string name="help_title_community">Komunita</string>
     <string name="help_item_anki_forums">Fórum Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -210,7 +210,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">Podmienky AnkiWeb</string>
     <string name="help_title_send_exception">Odoslať správu o riešení problémov</string>
     <string name="help_dialog_exception_report_debounce">Správa bola odoslaná</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Hlásenie odoslané.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Automatická synchronizácia sa môže spustiť za %d sekundu</item>
@@ -218,7 +218,7 @@
         <item quantity="many">Automatická synchronizácia sa môže spustiť za %d sekúnd</item>
         <item quantity="other">Automatická synchronizácia sa môže spustiť za %d sekúnd</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">Používanie dát môže byť spoplatnené u Vášho poskytovateľa internetových služieb</string>
     <string name="deck_picker_new">Počet nových kariet na dnes v tomto balíčku</string>
     <string name="deck_picker_rev">Počet kartičiek na preskúšanie na dnes v tomto balíčku</string>
     <string name="deck_picker_lrn">Počet kartičiek v štádiu učenia v tomto balíčku.</string>
@@ -228,44 +228,42 @@
     <string name="deck_picker_counts">Otvoriť stránku prehľadu balíčka obsahujúcu počet kartičiek pre dnes.</string>
     <string name="import_deck_package">Súbor balíčka</string>
     <string name="import_collection_package">Súbor zbierky</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">Textový súbor (.txt .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Nie je možné vytvoriť podbalíček pre všetky balíčky naraz</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
-    </string>
-    <string name="deck_already_exists">Deck already exists</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="backup_your_collection">Zálohovať zbierku</string>
+    <string name="backup_collection_message">Už nejaký čas ste nezálohovali svoju zbierku. Ak sa chcete vyhnúť strate údajov, zálohujte si ju.</string>
+    <string name="button_backup">Zálohy</string>
+    <string name="button_disable_reminder">Vypnúť oznámenie</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Neskôr</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Nabudúce nezobrazovať</string>
+    <string name="dismiss_backup_warning_title">Možná strata údajov!</string>
+    <string name="dismiss_backup_warning_new_user">Z dôvodu zmien ochrany súkromia budú vaše údaje a automatické zálohy odstránené z pamäti ak odinštalujete aplikáciu AnkiDroid.</string>
+    <string name="dismiss_backup_warning_upgrade">Z dôvodu zmien ochrany súkromia budú vaše údaje a automatické zálohy neprístupné ak odinštalujete aplikáciu AnkiDroid.</string>
+    <string name="deck_already_exists">Tento balíček už existuje</string>
+    <string name="create_deck_numeric_hint">Pri problémoch s poradím balíčkov (napr. „10\" v poradí pred „2\") zmeňte názov z „2\" na „02\".</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Nastaviť interval na rovnakú hodnotu</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="few">Show cards in</item>
-        <item quantity="many">Show cards in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">Ukázať kartičku o</item>
+        <item quantity="few">Ukázať kartičky o</item>
+        <item quantity="many">Ukázať kartičky o</item>
+        <item quantity="other">Ukázať kartičky o</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="few">Show cards in range</item>
-        <item quantity="many">Show cards in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">Ukázať kartičku v rozmedzí</item>
+        <item quantity="few">Ukázať kartičky v rozmedzí</item>
+        <item quantity="many">Ukázať kartičky v rozmedzí</item>
+        <item quantity="other">Ukázať kartičky v rozmedzí</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="few">days</item>
-        <item quantity="many">days</item>
-        <item quantity="other">days</item>
+        <item quantity="one">deň</item>
+        <item quantity="few">dni</item>
+        <item quantity="many">dní</item>
+        <item quantity="other">dní</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">od</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">do</string>
 </resources>

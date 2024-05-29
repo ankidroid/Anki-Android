@@ -95,6 +95,11 @@
     <attr name="reviewCountColor" format="color"/>
     <attr name="zeroCountColor" format="color"/>
     <!-- Reviewer button backgrounds -->
+    <attr name="answerButtonBackground" format="color"/>
+    <attr name="againButtonBackground" format="color"/>
+    <attr name="hardButtonBackground" format="color"/>
+    <attr name="goodButtonBackground" format="color"/>
+    <attr name="easyButtonBackground" format="color"/>
     <attr name="showAnswerColor" format="reference"/>
     <attr name="againButtonRef" format="reference"/>
     <attr name="hardButtonRef" format="reference"/>
@@ -155,6 +160,11 @@
     <declare-styleable name="CheckBoxTriStates">
         <attr name="cycle_checked_to_indeterminate" format="boolean" />
         <attr name="cycle_indeterminate_to_checked" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="AudioWaveform">
+        <attr name="display_vertical_line" format="boolean" />
+        <attr name="android:background" />
     </declare-styleable>
 
     <!-- Background color for Tab layout. It is essentially the color of the toolbar.

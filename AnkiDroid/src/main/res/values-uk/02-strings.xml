@@ -94,7 +94,7 @@
         <item>Теги</item>
         <item>Забуті</item>
         <item>Повторення</item>
-        <item>Проміжок</item>
+        <item>Інтервал</item>
         <item>Легкість</item>
         <item>До перегляду</item>
         <item>Картку змінено</item>
@@ -156,7 +156,7 @@
     <string name="empty_cards">Порожні картки</string>
     <string name="empty_card_warning">Ця картка порожня. Скористайтеся опцією \"Порожні картки\" в меню на екрані зі списком колод.</string>
     <string name="unknown_type_field_warning">Введіть відповідь: невідоме поле %s</string>
-    <string name="delete_deck">Видалення колоди...\n Будь ласка, зачекайте.</string>
+    <string name="delete_deck">Видалення колоди&#8230;\n Будь ласка, зачекайте.</string>
     <string name="info_rate">Оцініть AnkiDroid</string>
     <string name="import_title">Імпортування</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додати</string>
@@ -172,7 +172,7 @@
     <string name="import_interrupted">Імпортування перервано</string>
     <string name="export_preparation_in_progress">Підготовка експорту&#8230;</string>
     <string name="export_ready_title">Експорт готовий</string>
-    <string name="export_send_no_handlers">Не знайдено додатків для обробки apkg. Збереження...</string>
+    <string name="export_send_no_handlers">Не знайдено додатків для обробки apkg. Збереження&#8230;</string>
     <string name="export_save_apkg_successful">Пакунок Anki успішно збережено</string>
     <string name="export_save_apkg_unsuccessful">Не вдалося зберегти пакунок Anki</string>
     <string name="export_share_title">Надіслати пакет Anki використовуючи </string>
@@ -366,5 +366,15 @@
     <string name="deck_description_field_hint">Опис</string>
     <string name="failed_to_copy">Не вдалося скопіювати</string>
     <string name="card_browser_unavailable_when_notes_mode">Недоступно в режимі \'Записи\'</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d картку повернуто</item>
+        <item quantity="few">%d картки повернуто</item>
+        <item quantity="many">%d карток повернуто</item>
+        <item quantity="other">%d карток повернуто</item>
+    </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Репозиціонувати</string>
+    <string name="start_recording">Запис</string>
+    <string name="stop_recording">Зупинити</string>
+    <string name="play_recording">Відтворити</string>
+    <string name="next_recording">Наступний</string>
 </resources>

@@ -26,11 +26,18 @@ import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper
+import com.ichi2.preferences.HeaderPreference
 import com.ichi2.utils.AdaptionUtil
 
 class HeaderFragment : PreferenceFragmentCompat() {
+    private var selectedHeaderPreference: HeaderPreference? = null
+    private var selectedHeaderPreferenceKey: String = DEFAULT_SELECTED_HEADER
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preference_headers, rootKey)
+
+        selectedHeaderPreferenceKey = savedInstanceState?.getString(KEY_SELECTED_HEADER_PREF) ?: DEFAULT_SELECTED_HEADER
+
+        highlightHeaderPreference(requirePreference<HeaderPreference>(selectedHeaderPreferenceKey))
 
         requirePreference<Preference>(R.string.pref_advanced_screen_key).apply {
             if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
@@ -46,6 +53,33 @@ class HeaderFragment : PreferenceFragmentCompat() {
             requireActivity() as AppCompatActivity,
             requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration
         )
+    }
+
+    private fun highlightHeaderPreference(headerPreference: HeaderPreference) {
+        if (!(activity as Preferences).hasLateralNavigation()) {
+            return
+        }
+        selectedHeaderPreference?.setHighlighted(false)
+        // highlight the newly selected header
+        selectedHeaderPreference = headerPreference.apply {
+            setHighlighted(true)
+            selectedHeaderPreferenceKey = this.key
+        }
+    }
+
+    override fun onPreferenceTreeClick(preference: Preference): Boolean {
+        highlightHeaderPreference(preference as HeaderPreference)
+        return super.onPreferenceTreeClick(preference)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_SELECTED_HEADER_PREF, selectedHeaderPreferenceKey)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        highlightHeaderPreference(requirePreference<HeaderPreference>(selectedHeaderPreferenceKey))
     }
 
     override fun onStart() {
@@ -66,6 +100,9 @@ class HeaderFragment : PreferenceFragmentCompat() {
     }
 
     companion object {
+        private const val KEY_SELECTED_HEADER_PREF = "selected_header_pref"
+        private const val DEFAULT_SELECTED_HEADER = "generalScreen"
+
         fun configureSearchBar(activity: AppCompatActivity, searchConfiguration: SearchConfiguration) {
             with(searchConfiguration) {
                 setActivity(activity)

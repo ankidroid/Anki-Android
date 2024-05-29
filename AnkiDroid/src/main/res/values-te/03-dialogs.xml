@@ -50,44 +50,46 @@
     <string name="delete_deck_title">డెక్ను త్వలిగించాల?</string>
     <string name="no_tts_available_message">టెక్స్ట్-టు-స్పీచ్ లాంగ్వేజ్ అందుబాటులో లేదు</string>
     <string name="tts_no_tts">మాట్లాడకండి</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="unused_strings">\n\nఉపయోగించని ఫైళ్లు:\n</string>
+    <string name="reposition_card_dialog_title">కొత్త కార్డును భర్తీ చేయండి</string>
+    <string name="reposition_card_dialog_message">ప్రారంభ స్థానం:</string>
+    <string name="reposition_card_not_new_error">కొత్త కార్డ్‌లను మాత్రమే రీపోజిషన్ చేయవచ్చు</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d కార్డ్ రీపోజిషన్ చేయబడింది</item>
+        <item quantity="other">%d కార్డ్‌లు రీపోజిషన్ చేయబడ్డాయి</item>
     </plurals>
     <string name="reset_card_dialog_title">కార్డ్ పురోగతిని రీసెట్ చేయండి</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d కార్డ్ రీసెట్</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="other">%d కార్డ్‌లు రీసెట్ చేయబడ్డాయి</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">ఒకటి
+%d కార్డ్ రీషెడ్యూల్ చేయబడింది</item>
+        <item quantity="other">ఒకటి
+%d కార్డ్ రీషెడ్యూల్ చేయబడింది</item>
     </plurals>
     <string name="answering_error_title">డేటాబేస్ లోపం</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">సేకరణకు వ్రాయడంలో విఫలమైంది. డేటాబేస్ పాడైపోయి ఉండవచ్చు లేదా డిస్క్‌లో తగినంత ఖాళీ స్థలం ఉండకపోవచ్చు.\n\nఇది తరచుగా జరిగితే, డేటాబేస్‌ని తనిఖీ చేయడం, సేకరణను రిపేర్ చేయడం లేదా బ్యాకప్ నుండి పునరుద్ధరించడం వంటివి ప్రయత్నించండి. దాని కోసం \"ఎంపికలు\" తాకండి.\n\లేదా అది AnkiDroid బగ్ కావచ్చు; దయచేసి లోపాన్ని నివేదించండి, తద్వారా మేము దాన్ని తనిఖీ చేయవచ్చు.</string>
     <string name="answering_error_report">నివేదన లోపం</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">AnkiDroidని తెరవడానికి తగినంత ఉచిత నిల్వ లేదు. కొనసాగించడానికి కొంత స్థలాన్ని ఖాళీ చేయండి.</string>
     <string name="repair_deck_dialog">మీరు నిజంగా డాటాబేస్ రిపేరు చేయాలనుకుంటున్నారా? \n\n ప్రయత్నం ప్రారంభించటానికి ముందు, \"కాపీ\" ఫోల్డర్ \"%s\" లో సృష్టించబడుతుంది.</string>
     <string name="intent_aedict_empty">\"default\" వర్గం ఖాళీగా ఉంది</string>
     <string name="intent_aedict_category">AnkiDroid కు కార్డులు జోడించడానికి అన్ని నోట్ప్యాడ్లో కేతగిరీలు తొలగించండి లేదా \"default\" కు ఒక పేరును జోడించండి</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_total_new">డెక్‌లో కొత్త కార్డ్‌లు: %d</string>
+    <string name="custom_study_rev_total_rev">డెక్‌పై రివ్యూలు రావాల్సి ఉంది: %d</string>
+    <string name="custom_study_new_extend">నేటి కొత్త కార్డ్ పరిమితిని పెంచండి/తగ్గించండి (\"-3\").</string>
+    <string name="custom_study_rev_extend">నేటి సమీక్ష పరిమితిని పెంచడం/తగ్గించడం (\"-3\").</string>
     <string name="custom_study_forgotten">గత x రోజుల్లో రిజిస్టర్డ్ కార్డులను మర్చిపోయారు:</string>
     <string name="custom_study_ahead">X రోజుల ముందుగా సమీక్షించండి:</string>
     <string name="custom_study_random">డెక్ నుండి యాదృచ్ఛికంగా x కార్డులను ఎంచుకోండి:</string>
     <string name="custom_study_preview">గత x రోజులలో జోడించిన కొత్త కార్డులను ప్రివ్యూ చేయండి:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="custom_study_rebuild_deck_corrupt">అనుకూల స్టడీ డెక్‌ని పునర్నిర్మించడం సాధ్యపడలేదు</string>
+    <string name="storage_full_title">నిల్వ నిండింది</string>
+    <string name="storage_almost_full_title">నిల్వ దాదాపు నిండింది</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ఖాళీ లేదు</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid కొనసాగడానికి %s ఉచిత నిల్వ స్థలం అవసరం. దయచేసి కొంత ఖాళీని క్లియర్ చేయండి</string>
     <string name="restore_backup_title">బ్యాకప్ను పునరుద్ధరించాలా?</string>
     <string name="restore_backup">మీ సేకరణ పాత కాపీతో భర్తీ చేయబడుతుంది. ఏదైనా సేవ్ చేయని ప్రగతిని కోల్పోతారు.</string>
     <string name="restore_backup_choose_another">మరొకటి ఎంచుకోండి</string>
@@ -99,7 +101,7 @@
     <string name="dialog_keep">ఉంచు</string>
     <string name="dialog_remove">తొలగించు</string>
     <string name="dialog_continue">కొనసాగండి</string>
-    <string name="dialog_processing">ప్రాసెస్ చేస్తోంది...</string>
+    <string name="dialog_processing">ప్రాసెస్ చేస్తోంది&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">సృష్టించు</string>
     <string name="dialog_positive_delete">తొలగించు</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -119,8 +121,8 @@
     <string name="check_media_no_unused_missing">ఉపయోగించని లేదా తప్పిపోయిన ఫైల్లు కనుగొనబడలేదు</string>
     <string name="check_media_db_updated">మీడియా డేటాబేస్ పునర్నిర్మించబడింది</string>
     <string name="check_media_delete_unused">ఉపయోగించనిది తొలగించండి</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">మీడియాను తీసివేస్తోంది&#8230;</string>
+    <string name="delete_media_result_title">తొలగింపు ఫలితం</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">%d ఫైల్ తొలగించబడింది</item>
         <item quantity="other">%d ఫైల్‌లు తొలగించబడ్డాయి</item>
@@ -142,40 +144,40 @@
     <string name="mutimedia_editor_assertion_failed">అధునాతన ఎడిటర్‌ని ప్రదర్శిస్తున్నప్పుడు తెలియని లోపం సంభవించింది</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid అప్‌గ్రేడ్ చేయబడింది</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
+    <string name="integrity_check_startup_content">AnkiDroid అప్‌గ్రేడ్ చేయబడింది. ఈ అప్‌గ్రేడ్ సాధ్యమయ్యే డేటాబేస్ సమస్యలకు పరిష్కారాలను కలిగి ఉంది మరియు డేటాబేస్‌ను ఇప్పుడే తనిఖీ చేయమని మేము మీకు సలహా ఇస్తున్నాము.</string>
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_insufficient_space">డేటాబేస్ పెద్ద మొత్తంలో తాత్కాలిక నిల్వను ఉపయోగిస్తుంది. ఇన్‌స్టాల్ చేసే ముందు మీ పరికరంలో కనీసం %s ఖాళీ స్థలం ఉండాలని గట్టిగా సిఫార్సు చేయబడింది.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nమీకు ప్రస్తుతం %s ఉచితం.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">కార్డ్ నుండి డేటాను డీకోడ్ చేయడంలో లోపం</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">డేటాబేస్ లాక్ చేయబడింది</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <string name="database_locked_summary">AnkiDroid డేటాబేస్ మరొక అప్లికేషన్ ద్వారా ఉపయోగంలో ఉంది. దయచేసి ఇతర అప్లికేషన్‌ను మూసివేసి, ఆపై AnkiDroidని మళ్లీ తెరవండి.</string>
     <string name="incompatible_database_version_title">అననుకూల డేటాబేస్ వెర్షన్</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_summary">డేటాబేస్ అనేది AnkiDroid యొక్క ఈ సంస్కరణతో పని చేయగల దాని కంటే మరింత అధునాతన సంస్కరణ. AnkiDroidని అప్‌గ్రేడ్ చేయండి లేదా డేటాబేస్‌ని తెరవడానికి డౌన్‌గ్రేడ్ చేయండి\n\nమద్దతు ఉన్న సంస్కరణ: %1$d\nడేటాబేస్ వెర్షన్: %2$d\n\nక్రింది పునరుద్ధరణ ఎంపికలు మీ ప్రస్తుత సేకరణను భర్తీ చేస్తాయి, బహుశా అనుకూల డేటాబేస్ వెర్షన్‌తో:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">నేపథ్య చిత్రం వర్తించబడుతుంది</string>
     <string name="background_image_removed">నేపథ్య చిత్రం తీసివేయబడింది</string>
     <string name="no_image_selected">చిత్రం ఏదీ ఎంచుకోబడలేదు</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
+    <string name="error_selecting_image">చిత్రాన్ని ఎంచుకోవడంలో లోపం. దయచేసి మాన్యువల్‌ని చూడండి. %s</string>
     <string name="error_deleting_image">చిత్రాన్ని తొలగించడంలో లోపం</string>
     <string name="failed_to_apply_background_image">నేపథ్య చిత్రం %sని వర్తింపజేయడంలో విఫలమైంది</string>
     <string name="background_image_too_large">డెక్ పికర్ బ్యాక్ గ్రౌండ్ చాలా పెద్దది</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_max_size_allowed">అనుమతించబడిన గరిష్ట చిత్ర పరిమాణం %d MB</string>
+    <string name="image_dimensions_too_large">చిత్ర కొలతలు చాలా పెద్దవి (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">అవసరమైన నిల్వ అనుమతి లేదు. దయచేసి నిల్వ అనుమతిని మంజూరు చేసి, మీ చర్యను మళ్లీ ప్రయత్నించండి.</string>
     <!-- Browser Appearance -->
     <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">రిమైండర్‌లను షెడ్యూల్ చేయడంలో విఫలమైంది</string>
+    <string name="boot_service_too_many_notifications">చాలా ఎక్కువ రిమైండర్‌లు షెడ్యూల్ చేయబడ్డాయి. కొన్ని కనిపించవు</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">భాషను సెట్ చేయండి</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_summary">GBoard వంటి కొన్ని బహుభాషా కీబోర్డ్‌లు, వచనాన్ని సవరించేటప్పుడు భాషను మార్చడానికి మద్దతు ఇస్తాయి\n\nమీ కీబోర్డ్ భాషను మార్చకపోతే, దయచేసి మీ కీబోర్డ్ తయారీదారు నుండి “setImeHintLocales” లక్షణాన్ని అభ్యర్థించండి.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ఉపయోగించి</string>
     <string name="help_item_ankidroid_manual">AnkiDroid మాన్యువల్</string>
@@ -183,7 +185,7 @@
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
     <string name="help_title_get_help">సహాయం పొందు</string>
     <string name="help_item_mailing_list">మెయిలింగ్ జాబితా</string>
-    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_reddit">రెడ్డిట్</string>
     <string name="help_item_report_bug">బగ్‌ని నివేదించండి</string>
     <string name="help_title_support_ankidroid">AnkiDroidకి మద్దతు ఇవ్వండి</string>
     <string name="help_item_support_opencollective_donate">దానం చేయండి</string>
@@ -205,17 +207,17 @@
     <string name="help_dialog_exception_report_sent">నివేదిక పంపబడింది!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">స్వయంచాలక సమకాలీకరణ %d సెకన్లలో ప్రారంభించబడుతుంది</item>
+        <item quantity="other">స్వయంచాలక సమకాలీకరణ %d సెకన్లలో ప్రారంభించబడుతుంది</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
+    <string name="metered_sync_data_warning">డేటా వినియోగం కోసం మీ ఇంటర్నెట్ ప్రొవైడర్ మీకు ఛార్జీ విధించవచ్చు</string>
+    <string name="deck_picker_new">ఈ రోజు ఈ డెక్‌లో చూడాల్సిన కొత్త కార్డ్‌ల సంఖ్య.</string>
     <string name="deck_picker_rev">ఈ డెక్‌లో ఈరోజు చెల్లించాల్సిన కార్డ్‌ల సంఖ్య.</string>
     <string name="deck_picker_lrn">ఈ డెక్‌లో తెలుసుకోవడానికి కార్డ్‌ల సంఖ్య.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">ఈరోజు చూడాల్సిన కార్డ్‌ల సంఖ్యను కలిగి ఉన్న డెక్ ఓవర్‌వ్యూ పేజీని తెరవండి.</string>
     <string name="import_deck_package">డెక్ ప్యాకేజీ (.apkg)</string>
     <string name="import_collection_package">సేకరణ ప్యాకేజీ (.colpkg)</string>
     <string name="import_csv">టెక్స్ట్ ఫైల్ (.txt, .csv)</string>
@@ -223,33 +225,31 @@
     <string name="cannot_create_subdeck_for_all_decks">మీరు అన్ని డెక్‌ల కోసం సబ్‌డెక్‌ని సృష్టించలేరు</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">మీ సేకరణను బ్యాకప్ చేయండి</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="backup_collection_message">మీరు కొంతకాలంగా మీ సేకరణను బ్యాకప్ చేయలేదు. డేటా నష్టాన్ని నివారించడానికి మీరు ఇప్పుడే దీన్ని చేయాలి</string>
     <string name="button_backup">బ్యాకప్</string>
     <string name="button_disable_reminder">రిమైండర్‌ను నిలిపివేయండి</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">తర్వాత</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">దాన్ని మళ్లీ చూపించవద్దు</string>
     <string name="dismiss_backup_warning_title">డేటా నష్టం హెచ్చరిక</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
-    </string>
+    <string name="dismiss_backup_warning_new_user">Android గోప్యతా మార్పుల కారణంగా, యాప్‌ను అన్‌ఇన్‌స్టాల్ చేయడం వలన మీ ఫోన్ నుండి మీ డేటా మరియు ఆటోమేటెడ్ బ్యాకప్ తొలగించబడుతుంది</string>
+    <string name="dismiss_backup_warning_upgrade">Android గోప్యతా మార్పుల కారణంగా, యాప్ అన్‌ఇన్‌స్టాల్ చేయబడితే మీ డేటా మరియు ఆటోమేటెడ్ బ్యాకప్‌లు యాక్సెస్ చేయబడవు</string>
     <string name="deck_already_exists">డెక్ ఇప్పటికే ఉంది</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="create_deck_numeric_hint">మీకు డెక్ ఆర్డరింగ్ సమస్యలు ఉంటే (ఉదా. \'2\'కి ముందు \'10\' కనిపిస్తుంది), \'2\'ని \'02\'తో భర్తీ చేయండి</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">విరామాన్ని అదే విలువకు సెట్ చేయండి</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">కార్డు చూపించు</item>
+        <item quantity="other">కార్డ్‌లను చూపించు</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">పరిధిలో కార్డ్‌ని చూపించు</item>
+        <item quantity="other">పరిధిలో కార్డ్‌లను చూపించు</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">రోజు</item>
+        <item quantity="other">రోజులు</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">నుండి</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">కు</string>
 </resources>

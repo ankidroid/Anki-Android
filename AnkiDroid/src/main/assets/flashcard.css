@@ -1,6 +1,21 @@
 body {
   margin: 0px;
   padding: 0px;
+
+  overflow-wrap: break-word;
+  /* default background setting to fit with toolbar */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  background-attachment: fixed;
+}
+
+li {
+  text-align: start;
+}
+
+pre {
+  text-align: left;
 }
 
 .nightMode .latex {

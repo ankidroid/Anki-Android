@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Ratakan tengah isi kartu secara vertikal</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Interval sentuhan dua kali (milisekon)</string>
     <string name="pref_double_tap_time_interval_summary">Menyentuh tombol jawaban untuk kedua kalinya akan dihiraukan jika jumlah waktu ini belum terlewati. Hal ini akan mencegah melakukan sentuhan dua kali tanpa sengaja</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Waktu lama ketukan tampilkan jawaban (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Waktu pengetukan lama minimum sebelum tombol tampilkan jawaban akan mendaftar ketukan. Dapat mengurangi ketukan tombol tambahan yang tidak disengaja. Bawaan adalah 0 ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Tampilkan waktu di tombol</string>
     <string name="show_estimates_summ">Tampilkan waktu ulasan berikutnya di tombol jawab</string>
     <string name="show_large_answer_buttons" maxLength="41">Tunjukkan tombol jawaban berukuran besar</string>

@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Jegyzet törlése</string>
     <string name="menu_flag">Jelölő</string>
     <string name="menu_flag_card">Kártya megjelölése</string>
-    <string name="menu_flag_card_zero">Jelölő nélküli</string>
-    <string name="menu_flag_card_one">Piros jelölő</string>
-    <string name="menu_flag_card_two">Narancs jelölő</string>
-    <string name="menu_flag_card_three">Zöld jelölő</string>
-    <string name="menu_flag_card_four">Kék jelölő</string>
-    <string name="menu_flag_card_five">Rózsaszín zászló</string>
-    <string name="menu_flag_card_six">Türkiz zászló</string>
-    <string name="menu_flag_card_seven">Lila zászló</string>
     <string name="menu_edit_tags">Címkék szerkesztése</string>
     <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
     <string name="menu_search">Keresés itt: %1$s</string>
@@ -199,9 +191,9 @@
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Több egymást követő hiba előrehaladás nélkül, az utolsó: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Adatbázis fájlok áthelyezése</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Másolás...</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Másolás&#8230;</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Média áthelyezése</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Átviteli méret kiszámítása...</string>
+    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Átviteli méret kiszámítása&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%1$s áthelyezve ide: %2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Áthelyezés sikeres</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Sikerült áttelepíteni az adataidat.
@@ -252,4 +244,5 @@
     <string name="storage_access_summary">Biztonságos helyre menti a gyűjteményed, amely nem törlődik, ha az alkalmazást eltávolítják.</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Hozzáférés minden fájlhoz</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

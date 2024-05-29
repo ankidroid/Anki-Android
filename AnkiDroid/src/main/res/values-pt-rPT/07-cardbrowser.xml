@@ -50,19 +50,19 @@
         <item quantity="other">%d fichas mostradas</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d nota apresentada</item>
+        <item quantity="other">%d notas apresentadas</item>
     </plurals>
     <string name="card_browser_all_decks">Todos os baralhos</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">Apagar ficha</item>
+        <item quantity="other">Apagar fichas</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Apagar nota</item>
+        <item quantity="other">Apagar notas</item>
     </plurals>
-    <string name="card_browser_change_deck">Change deck</string>
+    <string name="card_browser_change_deck">Mudar de baralho</string>
     <string name="delete_card_title">Apagar nota?</string>
     <string name="card_browser_show_marked">Filtro marcado</string>
     <string name="card_browser_show_suspended">Filtro suspenso</string>
@@ -82,8 +82,8 @@
         <item>Sem ordenação (mais rápido)</item>
         <item>Por campo de ordenação</item>
         <item>Por data de criação</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Por data de modificação da nota</item>
+        <item>Por data de modificação da ficha</item>
         <item>Por hora agendada</item>
         <item>Por intervalo</item>
         <item>Por grau de facilidade</item>
@@ -92,23 +92,24 @@
     </string-array>
     <string name="card_browser_select_all">Selecionar todas</string>
     <string name="card_browser_select_none">Desselecionar</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nova)</string>
     <string name="card_browser_due_filtered_card">(filtrado)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_interval_learning_card">(em aprendizagem)</string>
+    <string name="card_browser_no_cards_in_deck">Não foram encontradas fichas no baralho ‘%s’</string>
+    <string name="card_browser_search_all_decks">Procurar em todos os baralhos</string>
+    <string name="card_browser_unknown_deck_name">Desconhecido</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncar conteúdo</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Hoje é ‘0 %1$s’, amanhã é ‘1 %2$s’, etc&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">Exportar ficha</item>
+        <item quantity="other">Exportar fichas</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">Exportar nota</item>
+        <item quantity="other">Exportar notas</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d ficha eliminada</item>
+        <item quantity="other">%d fichas eliminadas</item>
     </plurals>
 </resources>

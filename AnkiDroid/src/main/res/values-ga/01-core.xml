@@ -114,14 +114,6 @@
     <string name="menu_delete_note">Scrios nóta</string>
     <string name="menu_flag">Bratach</string>
     <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">Gan brat</string>
-    <string name="menu_flag_card_one">Brat dhearg</string>
-    <string name="menu_flag_card_two">Brat oráiste</string>
-    <string name="menu_flag_card_three">Brat uaine</string>
-    <string name="menu_flag_card_four">Brat ghorm</string>
-    <string name="menu_flag_card_five">Bratach bhándearg</string>
-    <string name="menu_flag_card_six">Bratach turcaid</string>
-    <string name="menu_flag_card_seven">Bratach chorcra</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
     <string name="menu_search">Lookup in %1$s</string>
@@ -271,4 +263,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

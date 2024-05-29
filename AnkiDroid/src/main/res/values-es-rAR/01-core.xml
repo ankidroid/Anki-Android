@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Eliminar nota</string>
     <string name="menu_flag">Marca</string>
     <string name="menu_flag_card">Marcar tarjeta</string>
-    <string name="menu_flag_card_zero">Sin marca</string>
-    <string name="menu_flag_card_one">Marca roja</string>
-    <string name="menu_flag_card_two">Marca naranja</string>
-    <string name="menu_flag_card_three">Marca verde</string>
-    <string name="menu_flag_card_four">Marca azul</string>
-    <string name="menu_flag_card_five">Bandera rosa</string>
-    <string name="menu_flag_card_six">Bandera turquesa</string>
-    <string name="menu_flag_card_seven">Bandera púrpura</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">¿Realmente eliminar esta nota y todas sus tarjetas?\n%s</string>
     <string name="menu_search">Revisión en %1$s</string>
@@ -199,7 +191,7 @@
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Múltiples errores consecutivos sin progreso, más reciente: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrando archivos de base de datos</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copiando...</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copiando&#8230;</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrando medios</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Calculando el tamaño de transferencia&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Movido %1$s de %2$s</string>
@@ -250,4 +242,5 @@
     <string name="storage_access_summary">Guarda tu colección en un lugar seguro que no será eliminado si la aplicación es desinstalada</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acceso a todos los archivos</string>
     <string name="image_occlusion">Imagen oculta</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

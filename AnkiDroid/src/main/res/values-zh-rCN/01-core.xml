@@ -102,14 +102,6 @@
     <string name="menu_delete_note">删除笔记</string>
     <string name="menu_flag">旗标</string>
     <string name="menu_flag_card">为卡片设置旗标</string>
-    <string name="menu_flag_card_zero">无旗标</string>
-    <string name="menu_flag_card_one">红色旗标</string>
-    <string name="menu_flag_card_two">橙色旗标</string>
-    <string name="menu_flag_card_three">绿色旗标</string>
-    <string name="menu_flag_card_four">蓝色旗标</string>
-    <string name="menu_flag_card_five">粉色旗标</string>
-    <string name="menu_flag_card_six">青色旗标</string>
-    <string name="menu_flag_card_seven">紫色旗标</string>
     <string name="menu_edit_tags">编辑标签​​​​​</string>
     <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
     <string name="menu_search">在%1$s中查找</string>
@@ -247,4 +239,5 @@
     <string name="storage_access_summary">将牌组集合保存在一个即使卸载了应用也不会被删除的安全所在</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">所有文件访问权限</string>
     <string name="image_occlusion">图片遮挡</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">删除账户</string>
 </resources>

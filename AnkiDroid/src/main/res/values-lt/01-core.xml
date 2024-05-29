@@ -111,14 +111,6 @@
     <string name="menu_delete_note">Ištrinti užrašą</string>
     <string name="menu_flag">Pažymėti</string>
     <string name="menu_flag_card">Pažymėti su vėliava</string>
-    <string name="menu_flag_card_zero">Nėra vėliavos</string>
-    <string name="menu_flag_card_one">Raudona vėliava</string>
-    <string name="menu_flag_card_two">Oranžinė vėliava</string>
-    <string name="menu_flag_card_three">Žalia vėliava</string>
-    <string name="menu_flag_card_four">Mėlyna vėliava</string>
-    <string name="menu_flag_card_five">Rožinė vėliava</string>
-    <string name="menu_flag_card_six">Turkio vėliava</string>
-    <string name="menu_flag_card_seven">Violetinė vėliava</string>
     <string name="menu_edit_tags">Redaguoti žymes</string>
     <string name="delete_note_message">Ar tikrai norite ištrinti šį užrašą ir visas su juo susijusias korteles?\n%s</string>
     <string name="menu_search">Ieškoti: %1$s</string>
@@ -133,11 +125,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Norėdami tęsti, suteikite AnkiDroid saugyklos teises.</string>
-    <string name="rebuild_filtered_deck">Perdaromas filtruotas rinkinys...</string>
+    <string name="rebuild_filtered_deck">Perdaromas filtruotas rinkinys&#8230;</string>
     <string name="rebuild_cram_label">Atkurti</string>
     <string name="empty_cram_label">Išvalyti</string>
     <string name="create_subdeck">Kurkite vidinį rinkinį</string>
-    <string name="empty_filtered_deck">Išvalomas filtruotas rinkinys...</string>
+    <string name="empty_filtered_deck">Išvalomas filtruotas rinkinys&#8230;</string>
     <string name="custom_study_deck_name">Individualus mokymosi seansas</string>
     <string name="custom_study_deck_exists">Prašome pirmiausiai pervadinti esamą individualaus mokymosi rinkinį</string>
     <string name="search_deck" comment="Deck search for selecting it">Rinkinio paieška</string>
@@ -265,4 +257,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

@@ -152,7 +152,7 @@
     <string name="empty_cards">Κενές κάρτες</string>
     <string name="empty_card_warning">Αυτή η κάρτα είναι κενή. Χρησιμοποιήστε την επιλογή \"Άδειες κάρτες\" από το μενού στην οθόνη λίστας τραπουλών.</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck">Διαγραφή τράπουλας...\nΠαρακαλούμε περιμένετε.</string>
+    <string name="delete_deck">Διαγραφή τράπουλας&#8230;\nΠαρακαλούμε περιμένετε.</string>
     <string name="info_rate">Αξιολογείστε το Ανκί-Ντρόιντ</string>
     <string name="import_title">Εισαγωγή</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Προσθήκη</string>
@@ -166,9 +166,9 @@
     <string name="import_error_content_provider">Το επιλεγμένο αρχείο δεν μπορεί να εισαχθεί αυτόματα από το AnkiDroid. Παρακαλώ δείτε το εγχειρίδιο χρήστη για το πώς να εισάγετε χειροκίνητα αρχεία anki: \n%s</string>
     <string name="import_error_copy_to_cache">Αποτυχία προσωρινής μνήμης αρχείου (πιθανόν εκτός χώρου αποθήκευσης)</string>
     <string name="import_interrupted">Η εισαγωγή διακόπηκε: Το AnkiDroid έκλεισε</string>
-    <string name="export_preparation_in_progress">Προετοιμασία εξαγωγής...</string>
+    <string name="export_preparation_in_progress">Προετοιμασία εξαγωγής&#8230;</string>
     <string name="export_ready_title">Εξαγωγή έτοιμη</string>
-    <string name="export_send_no_handlers">Δεν υπάρχουν διαθέσιμες εφαρμογές για χειρισμό apkg. Αποθήκευση...</string>
+    <string name="export_send_no_handlers">Δεν υπάρχουν διαθέσιμες εφαρμογές για χειρισμό apkg. Αποθήκευση&#8230;</string>
     <string name="export_save_apkg_successful">Επιτυχής αποθήκευση πακέτου Αnki</string>
     <string name="export_save_apkg_unsuccessful">Αποτυχία αποθήκευσης πακέτου Anki</string>
     <string name="export_share_title">Αποστολή πακέτου Anki με χρήση</string>
@@ -360,5 +360,13 @@
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d card unburied</item>
+        <item quantity="other">%d cards unburied</item>
+    </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="start_recording">Record</string>
+    <string name="stop_recording">Stop</string>
+    <string name="play_recording">Play</string>
+    <string name="next_recording">Next</string>
 </resources>

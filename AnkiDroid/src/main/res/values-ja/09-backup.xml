@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">もう一度開く</string>
     <string name="backup_error_menu_repair">データベースを修復</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">データベースを修復しています...</string>
+    <string name="backup_repair_deck_progress">データベースを修復しています&#8230;</string>
     <string name="backup_invalid_file_error">選択したバックアップファイルは無効です</string>
     <string name="backup_restore_select_title">復元するバックアップを選択</string>
     <string name="backup_restore_no_backups">利用可能なバックアップがこの端末内にありません。PCなど別の端末にバックアップがある場合は、そのバックアップをAnkiDroidフォルダに手動でコピーしてください。</string>

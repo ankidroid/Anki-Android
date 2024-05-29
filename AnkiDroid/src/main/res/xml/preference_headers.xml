@@ -104,15 +104,15 @@
         android:icon="@drawable/ic_tune_white"
         app:summaryEntries="@array/advanced_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
-    <Preference
+    <com.ichi2.preferences.HeaderPreference
         android:key="@string/pref_dev_options_screen_key"
         android:title="@string/pref_cat_dev_options"
         android:icon="@drawable/ic_code"
         android:fragment="com.ichi2.anki.preferences.DevOptionsFragment"
         app:isPreferenceVisible="false">
-    </Preference>
+    </com.ichi2.preferences.HeaderPreference>
     <!-- About -->
-    <Preference
+    <com.ichi2.preferences.HeaderPreference
         android:key="@string/about_screen_key"
         android:icon="@drawable/ic_outline_info_24"
         android:title="@string/pref_cat_about_title"

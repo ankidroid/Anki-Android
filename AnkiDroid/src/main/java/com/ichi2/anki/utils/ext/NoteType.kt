@@ -17,7 +17,9 @@
 package com.ichi2.anki.utils.ext
 
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
+import com.ichi2.anki.utils.CardTemplateJson
 import com.ichi2.libanki.NotetypeJson
+import com.ichi2.utils.jsonObjectIterable
 import org.json.JSONException
 
 /**
@@ -29,3 +31,20 @@ val NotetypeJson.isImageOcclusion: Boolean
     } catch (e: JSONException) {
         false
     }
+
+/**
+ * Regular expression pattern for extracting cloze text fields.
+ */
+private val clozeRegex = "\\{\\{(?:.*?:)?cloze:([^}]*)\\}\\}".toRegex()
+
+val NotetypeJson.templates: List<CardTemplateJson>
+    get() = getJSONArray("tmpls").jsonObjectIterable().map { CardTemplateJson(it) }
+
+fun NotetypeJson.getAllClozeTextFields(): List<String> {
+    if (!this.isCloze) {
+        throw IllegalStateException("getAllClozeTextFields called on non-cloze template")
+    }
+
+    val questionFormat = templates.single().qfmt
+    return clozeRegex.findAll(questionFormat).map { it.groups[1]!!.value }.toList()
+}

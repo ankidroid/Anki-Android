@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un segundo toque de los botones de respuesta será ignorado si este tiempo no ha transcurrido. Esto previene doble toque accidental.</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Mostrar respuesta - pulsación larga (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Tiempo mínimo de pulsación prolongada antes de que el botón Mostrar respuesta registre una pulsación. Puede reducir la posibilidad de pulsaciones adicionales accidentales. Por defecto es 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Mostar el botón tiempo</string>
     <string name="show_estimates_summ">Mostrar el tiempo para el próximo repaso encima de los botones de respuesta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botones de respuestas grandes</string>
@@ -332,13 +332,13 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Eliminar copias de seguridad</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Eliminar copias de seguridad</string>
-    <string name="progress__deleting_backups">Eliminando copias de seguridad...</string>
+    <string name="progress__deleting_backups">Eliminando copias de seguridad&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Eliminar colección</string>
     <string name="pref__delete_collection__summary">Eliminar colección, archivos multimedia y copias de seguridad. Los ajustes no se eliminarán</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Eliminar colección</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">¿Estás seguro de que quieres eliminar tu colección, tus archivos multimedia y tus copias de seguridad?\n\nTen en cuenta: esta acción cerrará la ventana.</string>
-    <string name="progress__deleting_collection">Eliminando colección...</string>
+    <string name="progress__deleting_collection">Eliminando colección&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Eliminar todo</string>
     <string name="pref__delete_everything__summary">Eliminar colección, archivos multimedia, copias de seguridad y ajustes</string>

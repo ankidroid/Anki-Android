@@ -15,18 +15,24 @@
  */
 package com.ichi2.anki
 
+import android.app.Application
 import android.content.Intent
 import android.view.Menu
 import androidx.annotation.CheckResult
+import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_3
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.formatApiResult
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.getDataFromRequest
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
+import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
 import com.ichi2.anki.cardviewer.ViewerCommand.MARK
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ActionButtonStatus
@@ -42,12 +48,17 @@ import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.OS
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertTrue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.json.JSONArray
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows
+import timber.log.Timber
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
@@ -64,6 +75,69 @@ class ReviewerTest : RobolectricTest() {
                 )
             }
         }
+    }
+
+    @Test
+    fun testOnSelectedTags() {
+        // Add a note using basic model
+        addNoteUsingBasicModel()
+
+        // Start the Reviewer activity
+        val viewer = startRegularActivity<Reviewer>()
+
+        // Create a list of tags
+        val tags = listOf("tag1", "tag2")
+
+        // Define an arbitrary filter
+        val ARBITRARY_FILTER = CardStateFilter.DUE
+
+        // Assert that currentCard is not null before calling onSelectedTags
+        assertNotNull("currentCard should not be null", viewer.currentCard)
+        assertTrue(!viewer.isDisplayingAnswer)
+
+        Timber.d("Before first call to onSelectedTags")
+
+        // Call onSelectedTags method
+        viewer.onSelectedTags(tags, emptyList(), ARBITRARY_FILTER)
+
+        Timber.d("After first call to onSelectedTags")
+
+        // Assert that the card is not flipped
+        assertFalse(viewer.isDisplayingAnswer)
+
+        Timber.d("Before second call to onSelectedTags")
+
+        // Call onSelectedTags method again
+        viewer.onSelectedTags(tags, emptyList(), ARBITRARY_FILTER)
+
+        Timber.d("After second call to onSelectedTags")
+
+        // Assert that the card is not flipped
+        assertTrue(!viewer.isDisplayingAnswer)
+    }
+
+    @Test
+    fun testAddNoteAnimation() {
+        // Arrange
+        val reviewer = startRegularActivity<Reviewer>()
+        val fromGesture = Gesture.SWIPE_DOWN
+
+        // Act
+        reviewer.addNote(fromGesture)
+
+        // Assert
+        val shadowApplication = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Application>())
+        val intent = shadowApplication.nextStartedActivity
+        val actualAnimation = IntentCompat.getParcelableExtra(
+            intent,
+            AnkiActivity.FINISH_ANIMATION_EXTRA,
+            ActivityTransitionAnimation.Direction::class.java
+        )
+        val expectedAnimation = ActivityTransitionAnimation.getInverseTransition(
+            AbstractFlashcardViewer.getAnimationTransitionFromGesture(fromGesture)
+        )
+
+        assertEquals("Animation from swipe should be inverse to the finishing one", expectedAnimation, actualAnimation)
     }
 
     @Test

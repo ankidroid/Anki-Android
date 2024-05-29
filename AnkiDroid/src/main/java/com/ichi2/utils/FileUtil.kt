@@ -17,6 +17,7 @@
 package com.ichi2.utils
 
 import android.content.ContentResolver
+import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.os.StatFs
@@ -54,6 +55,31 @@ object FileUtil {
     /** Returns the current download Directory */
     fun getDownloadDirectory(): String {
         return Environment.DIRECTORY_DOWNLOADS
+    }
+
+    /**
+     * Returns a string representing the path to a private cache directory,
+     * or optionally a sub-directory of with the provided name
+     *
+     * @param context the context to use to get directory paths from
+     * @param subdirectoryName  if the caller wants a sub-directory instead of the main directory
+     * @return String file path to cache directory or null if error
+     */
+    fun getAnkiCacheDirectory(context: Context, subdirectoryName: String? = null): String? {
+        val cacheDirRoot = context.cacheDir
+        if (cacheDirRoot == null) {
+            Timber.e("createUI() unable to get cache directory")
+            return null
+        }
+        var cacheDir = cacheDirRoot
+        if (subdirectoryName != null) {
+            cacheDir = File(cacheDir.absolutePath + "/" + subdirectoryName)
+            if (!cacheDir.exists() && !cacheDir.mkdir()) {
+                Timber.e("$subdirectoryName did not exist in cache dir and could not be created")
+                return null
+            }
+        }
+        return cacheDir.absolutePath
     }
 
     /**

@@ -16,12 +16,14 @@
 
 package com.ichi2.anki
 
+import android.content.DialogInterface
 import android.content.Intent
+import android.view.ContextThemeWrapper
 import android.widget.EditText
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.getActionButton
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
@@ -77,8 +79,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
 
         // set field name to forbidden string and click confirm
         fieldNameInput.setText(fieldName)
-        dialog.getActionButton(WhichButton.POSITIVE)
-            .performClick()
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).performClick()
         advanceRobolectricLooperWithSleep()
         return fieldName
     }
@@ -91,9 +92,9 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
      * @return The dialog
      */
     @Throws(RuntimeException::class)
-    private fun buildAddEditFieldDialog(fieldNameInput: EditText, fieldOperationType: FieldOperationType): MaterialDialog {
-        return MaterialDialog(targetContext)
-            .positiveButton {
+    private fun buildAddEditFieldDialog(fieldNameInput: EditText, fieldOperationType: FieldOperationType): AlertDialog {
+        return AlertDialog.Builder(ContextThemeWrapper(targetContext, R.style.Theme_Light)).show {
+            positiveButton(text = "") {
                 try {
                     val modelName = "Basic"
 
@@ -102,7 +103,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
                     intent.putExtra("title", modelName)
                     intent.putExtra("noteTypeID", col.notetypes.id_for_name(modelName)!!)
                     val modelFieldEditor = startActivityNormallyOpenCollectionWithIntent(
-                        this,
+                        this@ModelFieldEditorTest,
                         ModelFieldEditor::class.java,
                         intent
                     )
@@ -116,6 +117,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
                     throw RuntimeException(exception)
                 }
             }
+        }
     }
 
     companion object {

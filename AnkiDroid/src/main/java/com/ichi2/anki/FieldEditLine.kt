@@ -35,7 +35,6 @@ import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.os.ParcelCompat
-import androidx.core.view.ViewCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.ui.AnimationUtil.collapseView
 import com.ichi2.ui.AnimationUtil.expandView
@@ -71,10 +70,10 @@ class FieldEditLine : FrameLayout {
         expandButton = findViewById(R.id.id_expand_button)
         // 7433 -
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            editText.id = ViewCompat.generateViewId()
-            toggleSticky.id = ViewCompat.generateViewId()
-            mediaButton.id = ViewCompat.generateViewId()
-            expandButton.id = ViewCompat.generateViewId()
+            editText.id = View.generateViewId()
+            toggleSticky.id = View.generateViewId()
+            mediaButton.id = View.generateViewId()
+            expandButton.id = View.generateViewId()
             editText.nextFocusForwardId = toggleSticky.id
             toggleSticky.nextFocusForwardId = mediaButton.id
             mediaButton.nextFocusForwardId = expandButton.id

@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Poista merkintä</string>
     <string name="menu_flag">Lippu</string>
     <string name="menu_flag_card">Lisää lippu</string>
-    <string name="menu_flag_card_zero">Ei lippua</string>
-    <string name="menu_flag_card_one">Punainen lippu</string>
-    <string name="menu_flag_card_two">Oranssi lippu</string>
-    <string name="menu_flag_card_three">Vihreä lippu</string>
-    <string name="menu_flag_card_four">Sininen lippu</string>
-    <string name="menu_flag_card_five">Pinkki lippu</string>
-    <string name="menu_flag_card_six">Turkoosi lippu</string>
-    <string name="menu_flag_card_seven">Violetti lippu</string>
     <string name="menu_edit_tags">Muokkaa tageja</string>
     <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
     <string name="menu_search">Haku %1$s</string>
@@ -201,7 +193,7 @@
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Siirretään tietokantatiedostoja</string>
     <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Kopioidaan..</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Siirretään mediaa</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Lasketaan tiedonsiirron kokoa...</string>
+    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Lasketaan tiedonsiirron kokoa&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Siirretty %1$s / %2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Siirto onnistui</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Tietojesi siirtäminen onnistui.
@@ -253,4 +245,5 @@
     <string name="storage_access_summary">Tallentaa kokoelmasi turvalliseen paikkaan, jota ei poisteta, jos sovellus poistetaan.</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Pääsy kaikkiin tiedostoihin</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

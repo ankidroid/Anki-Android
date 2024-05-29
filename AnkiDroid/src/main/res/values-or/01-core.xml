@@ -105,14 +105,6 @@
     <string name="menu_delete_note">ନୋଟ୍ ଵିଲୋପ କରିବା</string>
     <string name="menu_flag">ପତାକା</string>
     <string name="menu_flag_card">ପତ୍ରକୁ ଏକ ପତାକା ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
-    <string name="menu_flag_card_zero">ପତାକା ନାହିଁ</string>
-    <string name="menu_flag_card_one">ନାଲି ପତାକା</string>
-    <string name="menu_flag_card_two">କମଳା ପତାକା</string>
-    <string name="menu_flag_card_three">ସବୁଜ ପତାକା</string>
-    <string name="menu_flag_card_four">ନୀଳ ପତାକା</string>
-    <string name="menu_flag_card_five">ଗୋଲାପୀ ପତାକା</string>
-    <string name="menu_flag_card_six">ଫୀରୋଜା ପତାକା</string>
-    <string name="menu_flag_card_seven">ବାଇଗଣୀ ପତାକା</string>
     <string name="menu_edit_tags">ଟ୍ୟାଗ୍ ସମ୍ପାଦନା</string>
     <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏଵଂ ଏହାର ସମସ୍ତ ପତ୍ର ଵିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>
     <string name="menu_search">%1$s ରେ ଦୃଷ୍ଟିପାତ</string>
@@ -253,4 +245,5 @@
     <string name="storage_access_summary">ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ଏକ ସୁରକ୍ଷିତ ସ୍ଥାନରେ ସଂରକ୍ଷଣ କରେ ଯାହା ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ହେଲେ ବିଲୋପ ହେବ ନାହିଁ</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ସମସ୍ତ ଫାଇଲ୍ ପ୍ରବେଶାଧିକାର</string>
     <string name="image_occlusion">ପ୍ରତିଛବି ଅନ୍ତର୍ଦ୍ଧାନ</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

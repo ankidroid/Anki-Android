@@ -125,5 +125,15 @@
     <!-- Audio Recorder Colors -->
     <color name="audio_recorder_red">#FF4747</color>
     <color name="audio_recorder_green">#6FF06F</color>
+    <color name="audio_recorder_grey">#444444</color>
+
+    <color name="again_button_bg">#ffFFCDD2</color>
+    <color name="again_button_text">@color/material_red_900</color>
+    <color name="hard_button_bg">#FFE0B2</color>
+    <color name="hard_button_text">#B33800</color>
+    <color name="good_button_bg">#C8E6C9</color>
+    <color name="good_button_text">@color/material_green_900</color>
+    <color name="easy_button_bg">@color/material_light_blue_100</color>
+    <color name="easy_button_text">@color/material_light_blue_900</color>
 </resources>
 

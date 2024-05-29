@@ -231,8 +231,6 @@ abstract class AbstractFlashcardViewer :
     @get:VisibleForTesting
     var cardContent: String? = null
         private set
-    private val baseUrl
-        get() = getMediaBaseUrl(CollectionHelper.getMediaDirectory(this).path)
 
     private var viewerUrl: String? = null
     private val fadeDuration = 300
@@ -610,6 +608,7 @@ abstract class AbstractFlashcardViewer :
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (isDrawerOpen) {
+            @Suppress("DEPRECATION")
             super.onBackPressed()
         } else {
             Timber.i("Back key pressed")
@@ -992,6 +991,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun createWebView(): WebView {
+        val resourceHandler = ViewerResourceHandler(this)
         val webView: WebView = MyWebView(this).apply {
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
             with(settings) {
@@ -1009,7 +1009,7 @@ abstract class AbstractFlashcardViewer :
             isScrollbarFadingEnabled = true
             // Set transparent color to prevent flashing white when night mode enabled
             setBackgroundColor(Color.argb(1, 0, 0, 0))
-            CardViewerWebClient(this@AbstractFlashcardViewer).apply {
+            CardViewerWebClient(resourceHandler, this@AbstractFlashcardViewer).apply {
                 webViewClient = this
                 this@AbstractFlashcardViewer.webViewClient = this
             }
@@ -1500,7 +1500,7 @@ abstract class AbstractFlashcardViewer :
         if (card != null) {
             card.settings.mediaPlaybackRequiresUserGesture = !cardMediaPlayer.config.autoplay
             card.loadDataWithBaseURL(
-                baseUrl,
+                server.baseUrl(),
                 content,
                 "text/html",
                 null,
@@ -1790,6 +1790,16 @@ abstract class AbstractFlashcardViewer :
         }
 
         private lateinit var customView: View
+
+        override fun onPermissionRequest(request: PermissionRequest) {
+            if (PermissionRequest.RESOURCE_AUDIO_CAPTURE in request.resources) {
+                Timber.i("Granting audio capture permission to WebView")
+                request.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
+            } else {
+                Timber.i("Denying permissions to WebView")
+                request.deny()
+            }
+        }
 
         // used for displaying `<video>` in fullscreen.
         // This implementation requires configChanges="orientation" in the manifest
@@ -2232,6 +2242,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     inner class CardViewerWebClient internal constructor(
+        private val resourceHandler: ViewerResourceHandler,
         private val onPageFinishedCallback: OnPageFinishedCallback? = null
     ) : WebViewClient(), JavascriptEvaluator {
         private var pageFinishedFired = true
@@ -2252,8 +2263,7 @@ abstract class AbstractFlashcardViewer :
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             pageRenderStopwatch.reset()
             pageFinishedFired = false
-            val script = "globalThis.ankidroid = globalThis.ankidroid || {};" +
-                "ankidroid.postBaseUrl = `${server.baseUrl()}`"
+            val script = "globalThis.ankidroid = globalThis.ankidroid || {}; ankidroid.postBaseUrl = ``"
             view?.evaluateJavascript(script, null)
         }
 
@@ -2265,6 +2275,7 @@ abstract class AbstractFlashcardViewer :
             if (url.toString().startsWith("file://")) {
                 url.path?.let { path -> migrationService?.migrateFileImmediately(File(path)) }
             }
+            resourceHandler.shouldInterceptRequest(request)?.let { return it }
             return null
         }
 
@@ -2539,8 +2550,6 @@ abstract class AbstractFlashcardViewer :
         showDialogFragment(dialog)
     }
 
-    @NeedsTest("14656: adding tags does not flip the card")
-    @NeedsTest("does not hang and can be called twice")
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,

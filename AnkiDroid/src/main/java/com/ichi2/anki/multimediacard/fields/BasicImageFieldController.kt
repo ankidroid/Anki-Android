@@ -32,6 +32,7 @@ import android.hardware.camera2.CameraManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.CancellationSignal
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.text.format.Formatter
@@ -61,7 +62,6 @@ import com.ichi2.anki.DrawingActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.showThemedToast
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.*
 import timber.log.Timber
@@ -95,17 +95,16 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
             return min(height * 0.4, width * 0.6).toInt()
         }
-    private lateinit var cropImageRequest: ActivityResultLauncher<CropImageContractOptions>
 
     @VisibleForTesting
     lateinit var registryToUse: ActivityResultRegistry
 
-    private lateinit var takePictureLauncher: ActivityResultLauncher<Intent?>
+    private lateinit var takePictureLauncher: ActivityResultLauncher<Intent>
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    lateinit var selectImageLauncher: ActivityResultLauncher<Intent?>
+    lateinit var selectImageLauncher: ActivityResultLauncher<Intent>
 
-    private lateinit var drawingLauncher: ActivityResultLauncher<Intent?>
+    private lateinit var drawingLauncher: ActivityResultLauncher<Intent>
 
     private inner class BasicImageFieldControllerResultCallback(
         private val onSuccess: (result: ActivityResult) -> Unit,
@@ -156,19 +155,13 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         viewModel = viewModel.replaceNullValues(_field, _activity)
 
         imagePreview = ImageView(_activity)
-        val externalCacheDirRoot = context.externalCacheDir
-        if (externalCacheDirRoot == null) {
-            Timber.e("createUI() unable to get external cache directory")
+
+        ankiCacheDirectory = FileUtil.getAnkiCacheDirectory(context, "temp-photos")
+        if (ankiCacheDirectory == null) {
             showSomethingWentWrong()
+            Timber.e("createUI() failed to get cache directory")
             return
         }
-        val externalCacheDir = File(externalCacheDirRoot.absolutePath + "/temp-photos")
-        if (!externalCacheDir.exists() && !externalCacheDir.mkdir()) {
-            Timber.e("createUI() externalCacheDir did not exist and could not be created")
-            showSomethingWentWrong()
-            return
-        }
-        ankiCacheDirectory = externalCacheDir.absolutePath
 
         val p = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -230,29 +223,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     override fun setEditingActivity(activity: MultimediaEditFieldActivity) {
         super.setEditingActivity(activity)
         val registryToUse = if (this::registryToUse.isInitialized) registryToUse else this._activity.activityResultRegistry
-        @NeedsTest("check the happy/failure path for the crop action")
-        cropImageRequest = registryToUse.register(CROP_IMAGE_LAUNCHER_KEY, CropImageContract()) { cropResult ->
-            if (cropResult.isSuccessful) {
-                imageFileSizeWarning.visibility = View.GONE
-                if (cropResult != null) {
-                    handleCropResult(cropResult)
-                }
-                setPreviewImage(viewModel.imagePath, maxImageSize)
-            } else {
-                if (!previousImagePath.isNullOrEmpty()) {
-                    revertToPreviousImage()
-                }
-                // cropImage can give us more information. Not sure it is actionable so for now just log it.
-                val error: String = cropResult.error?.toString() ?: "Error info not available"
-                Timber.w(error, "cropImage threw an error")
-                // condition can be removed if #12768 get fixed by Canhub
-                if (cropResult.error is CropException.Cancellation) {
-                    Timber.i("CropException caught, seemingly nothing to do ", error)
-                } else {
-                    CrashReportService.sendExceptionReport(error, "cropImage threw an error")
-                }
-            }
-        }
 
         takePictureLauncher = registryToUse.register(
             TAKE_PICTURE_LAUNCHER_KEY,
@@ -555,9 +525,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     override fun onDone() {
         deletePreviousImage()
-        if (::cropImageRequest.isInitialized) {
-            cropImageRequest.unregister()
-        }
         if (::takePictureLauncher.isInitialized) {
             takePictureLauncher.unregister()
         }
@@ -694,13 +661,30 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         ret = viewModel.beforeCrop(imagePath, imageUri)
         setTemporaryMedia(imagePath)
         Timber.d("requestCrop()  destination image has path/uri %s/%s", ret.imagePath, ret.imageUri)
-        if (this::cropImageRequest.isInitialized) {
-            cropImageRequest.launch(
-                CropImageContractOptions(
-                    viewModel.imageUri,
-                    CropImageOptions()
-                )
-            )
+
+        viewModel.imageUri?.let {
+            ImageUtils.cropImage(_activity.activityResultRegistry, it) { cropResult ->
+                if (cropResult != null) {
+                    if (cropResult.isSuccessful) {
+                        imageFileSizeWarning.visibility = View.GONE
+                        handleCropResult(cropResult)
+                        setPreviewImage(viewModel.imagePath, maxImageSize)
+                    } else {
+                        if (!previousImagePath.isNullOrEmpty()) {
+                            revertToPreviousImage()
+                        }
+                        // cropImage can give us more information. Not sure it is actionable so for now just log it.
+                        val error: String = cropResult.error?.toString() ?: "Error info not available"
+                        Timber.w(error, "cropImage threw an error")
+                        // condition can be removed if #12768 get fixed by Canhub
+                        if (cropResult.error is CropException.Cancellation) {
+                            Timber.i("CropException caught, seemingly nothing to do ", error)
+                        } else {
+                            CrashReportService.sendExceptionReport(error, "cropImage threw an error")
+                        }
+                    }
+                }
+            }
         }
         return ret
     }
@@ -832,7 +816,8 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     private fun getImageNameFromContentResolver(context: Context, uri: Uri, selection: String?): String? {
         Timber.d("getImageNameFromContentResolver() %s", uri)
         val filePathColumns = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
-        ContentResolverCompat.query(context.contentResolver, uri, filePathColumns, selection, null, null, null).use { cursor ->
+        val signal: CancellationSignal? = null // needed to fix the type to non-deprecated android.os.CancellationSignal for use below
+        ContentResolverCompat.query(context.contentResolver, uri, filePathColumns, selection, null, null, signal).use { cursor ->
 
             if (cursor == null) {
                 Timber.w("getImageNameFromContentResolver() cursor was null")

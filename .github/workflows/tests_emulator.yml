@@ -23,6 +23,8 @@ jobs:
     name: Android Emulator Test
     runs-on: ubuntu-latest
     timeout-minutes: 75
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     strategy:
       fail-fast: false
       matrix:
@@ -180,6 +182,6 @@ jobs:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_video
           path: video.webm
 
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         with:
           verbose: true

@@ -111,14 +111,6 @@
     <string name="menu_delete_note">Видалити запис</string>
     <string name="menu_flag">Прапорець</string>
     <string name="menu_flag_card">Додати прапорець</string>
-    <string name="menu_flag_card_zero">Без позначки</string>
-    <string name="menu_flag_card_one">Червоний прапорець</string>
-    <string name="menu_flag_card_two">Помаранчевий прапорець</string>
-    <string name="menu_flag_card_three">Зелений прапорець</string>
-    <string name="menu_flag_card_four">Синій прапорець</string>
-    <string name="menu_flag_card_five">Рожевий прапорець</string>
-    <string name="menu_flag_card_six">Бірюзовий прапорець</string>
-    <string name="menu_flag_card_seven">Фіолетовий прапорець</string>
     <string name="menu_edit_tags">Редагувати примітки</string>
     <string name="delete_note_message">Дійсно видалити цей запис разом з усіма його картками?\n%s</string>
     <string name="menu_search">Пошук у %1$s</string>
@@ -264,4 +256,5 @@
     <string name="storage_access_summary">Зберігає вашу колекцію в безпечному місці, яке не видалиться, якщо ви видалите додаток</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Доступ до всіх файлів</string>
     <string name="image_occlusion">Оклюзія зображення</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Видалити обліковий запис</string>
 </resources>

@@ -16,6 +16,8 @@
 
 package com.ichi2.anki
 
+import android.Manifest
+import android.app.Application
 import android.content.Context
 import android.content.DialogInterface.*
 import android.content.Intent
@@ -57,6 +59,7 @@ import org.junit.rules.TestName
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.junit.rules.TimeoutRule
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowLooper
@@ -87,6 +90,12 @@ open class RobolectricTest : AndroidTest {
 
     @get:Rule
     val testName = TestName()
+
+    @get:Rule
+    val failOnUnhandledExceptions = FailOnUnhandledExceptionRule()
+
+    @get:Rule
+    val timeoutRule: TimeoutRule = TimeoutRule.seconds(60)
 
     @Before
     @CallSuper
@@ -423,9 +432,15 @@ open class RobolectricTest : AndroidTest {
     fun editPreferences(action: SharedPreferences.Editor.() -> Unit) =
         getPreferences().edit(action = action)
 
+    protected fun grantRecordAudioPermission() {
+        val application = ApplicationProvider.getApplicationContext<Application>()
+        val app = Shadows.shadowOf(application)
+        app.grantPermissions(Manifest.permission.RECORD_AUDIO)
+    }
+
     private fun validateRunWithAnnotationPresent() {
         try {
-            ApplicationProvider.getApplicationContext()
+            ApplicationProvider.getApplicationContext<Application>()
         } catch (e: IllegalStateException) {
             if (e.message != null && e.message!!.startsWith("No instrumentation registered!")) {
                 // Explicitly ignore the inner exception - generates line noise

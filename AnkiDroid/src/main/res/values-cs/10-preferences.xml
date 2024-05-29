@@ -166,8 +166,8 @@
     <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Čas dvojklepnutí (milisekundy)</string>
     <string name="pref_double_tap_time_interval_summary">Druhé klepnutí na tlačítka odpovědí bude ignorováno, pokud tento čas neuplynul. Zabraňuje to náhodným dvojím klepnutím</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Čas dlouhého stisknutí pro zobrazení odpovědi (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimální čas dlouhého stisknutí před tím, než tlačítko Zobrazit odpověď registruje dotyk. Může snížit pravděpodobnost nechtěného stisknutí tlačítka. Výchozí hodnota je 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Čas dlouhého stisknutí pro zobrazení odpovědi</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimální doba stisku předtím, než tlačítko zobrazit odpověď zaregistruje dotyk.</string>
     <string name="show_estimates" maxLength="41">Zobrazit čas tlačítek</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
     <string name="show_large_answer_buttons" maxLength="41">Zobrazit velká tlačítka odpovědí</string>

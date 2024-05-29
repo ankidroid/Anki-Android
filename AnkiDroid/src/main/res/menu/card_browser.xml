@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
         android:id="@+id/action_add_note_from_card_browser"
@@ -38,7 +39,37 @@
         android:id="@+id/action_search_by_flag"
         android:title="@string/card_browser_search_by_flag">
         <menu>
-            <!-- flags are dynamically added -->
+            <item
+                android:id="@+id/action_select_flag_zero"
+                tools:title="No Flag"/>
+            <item
+                android:id="@+id/action_select_flag_one"
+                tools:title="Red"
+                android:icon="@drawable/ic_flag_red"/>
+            <item
+                android:id="@+id/action_select_flag_two"
+                tools:title="Orange"
+                android:icon="@drawable/ic_flag_orange"/>
+            <item
+                android:id="@+id/action_select_flag_three"
+                tools:title="Green"
+                android:icon="@drawable/ic_flag_green"/>
+            <item
+                android:id="@+id/action_select_flag_four"
+                tools:title="Blue"
+                android:icon="@drawable/ic_flag_blue"/>
+            <item
+                android:id="@+id/action_select_flag_five"
+                tools:title="Pink"
+                android:icon="@drawable/ic_flag_pink"/>
+            <item
+                android:id="@+id/action_select_flag_six"
+                tools:title="Turquoise"
+                android:icon="@drawable/ic_flag_turquoise"/>
+            <item
+                android:id="@+id/action_select_flag_seven"
+                tools:title="Purple"
+                android:icon="@drawable/ic_flag_purple"/>
         </menu>
     </item>
 

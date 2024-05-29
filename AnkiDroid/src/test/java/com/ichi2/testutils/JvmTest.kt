@@ -34,10 +34,14 @@ import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TestName
+import org.robolectric.junit.rules.TimeoutRule
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
 open class JvmTest : TestClass {
+    @get:Rule
+    val timeoutRule: TimeoutRule = TimeoutRule.seconds(60)
+
     @get:Rule
     val testName = TestName()
 

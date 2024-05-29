@@ -58,8 +58,8 @@
     <com.ichi2.preferences.SliderPreference
         android:defaultValue="0"
         android:key="@string/pref_card_minimal_click_time"
-        android:summary="@string/pref_show_answer_long_press_summary"
-        android:title="@string/pref_show_answer_long_press"
+        android:summary="@string/pref_show_answer_long_press_time_summary"
+        android:title="@string/pref_show_answer_long_press_time"
         android:valueFrom="0"
         android:valueTo="2000"
         app:displayFormat="@string/pref_milliseconds"/>

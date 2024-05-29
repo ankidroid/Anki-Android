@@ -19,6 +19,8 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.core.content.withStyledAttributes
 import androidx.preference.Preference
+import androidx.preference.PreferenceViewHolder
+import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.LanguageUtils
 import com.ichi2.anki.R
 
@@ -33,6 +35,8 @@ constructor(
     defStyleAttr: Int = androidx.preference.R.attr.preferenceStyle,
     defStyleRes: Int = androidx.preference.R.style.Preference
 ) : Preference(context, attrs, defStyleAttr, defStyleRes) {
+    private var isHighlighted = false
+    private val highlightColor: Int = MaterialColors.getColor(context, R.attr.currentDeckBackgroundColor, 0)
 
     init {
         context.withStyledAttributes(attrs, R.styleable.HeaderPreference) {
@@ -41,6 +45,18 @@ constructor(
                 summary = buildHeaderSummary(*entries)
             }
         }
+    }
+
+    override fun onBindViewHolder(holder: PreferenceViewHolder) {
+        super.onBindViewHolder(holder)
+        if (isHighlighted) {
+            holder.itemView.setBackgroundColor(highlightColor)
+        }
+    }
+
+    fun setHighlighted(highlight: Boolean) {
+        isHighlighted = highlight
+        notifyChanged()
     }
 
     companion object {

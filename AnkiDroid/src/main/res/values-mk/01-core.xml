@@ -105,14 +105,6 @@
     <string name="menu_delete_note">Бриши белешка</string>
     <string name="menu_flag">Знаме</string>
     <string name="menu_flag_card">Постави знаме на карта</string>
-    <string name="menu_flag_card_zero">Без знаме</string>
-    <string name="menu_flag_card_one">Црвено знаме</string>
-    <string name="menu_flag_card_two">Портокалово знаме</string>
-    <string name="menu_flag_card_three">Зелено знаме</string>
-    <string name="menu_flag_card_four">Плаво знаме</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Навистина избришете ја оваа белешка и сите нејзини картички?\n%s</string>
     <string name="menu_search">Пребарување во %1$s</string>
@@ -253,4 +245,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

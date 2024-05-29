@@ -46,6 +46,7 @@ open class SingleFragmentActivity : AnkiActivity() {
         setTransparentStatusBar()
 
         // avoid recreating the fragment on configuration changes
+        // the fragment should handle state restoration
         if (savedInstanceState != null) {
             return
         }

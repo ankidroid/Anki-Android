@@ -131,11 +131,11 @@ class ImportFileSelectionFragment : DialogFragment() {
     }
 
     interface ApkgImportResultLauncherProvider {
-        fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent?>
+        fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent>
     }
 
     interface CsvImportResultLauncherProvider {
-        fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent?>
+        fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent>
     }
 
     companion object {

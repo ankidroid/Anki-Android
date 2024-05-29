@@ -15,10 +15,7 @@
  */
 package com.ichi2.anki.multimediacard.activity
 
-import android.Manifest
-import android.app.Application
 import android.content.Intent
-import androidx.test.core.app.ApplicationProvider
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
@@ -29,15 +26,9 @@ import com.ichi2.utils.KotlinCleanup
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
 import org.robolectric.Robolectric
-import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 
 abstract class MultimediaEditFieldActivityTestBase : RobolectricTest() {
-    protected fun grantRecordAudioPermission() {
-        val application = ApplicationProvider.getApplicationContext<Application>()
-        val app = Shadows.shadowOf(application)
-        app.grantPermissions(Manifest.permission.RECORD_AUDIO)
-    }
 
     protected fun getControllerForField(field: IField, note: IMultimediaEditableNote, fieldIndex: Int): IFieldController {
         val intent = Intent(Intent.ACTION_VIEW)

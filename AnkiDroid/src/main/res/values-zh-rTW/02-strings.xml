@@ -150,7 +150,7 @@
     <string name="empty_cards">空白卡片</string>
     <string name="empty_card_warning">這張卡片是空的。請使用牌組列表界面右上角菜單中的“空白卡片”選項來查找空白卡片。</string>
     <string name="unknown_type_field_warning">輸入答案：未知的欄位 %s</string>
-    <string name="delete_deck">刪除牌組中...\n請稍候</string>
+    <string name="delete_deck">刪除牌組中&#8230;\n請稍候</string>
     <string name="info_rate">評價 AnkiDroid</string>
     <string name="import_title">正在匯入&#8230;&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">新增</string>
@@ -169,7 +169,7 @@
     <string name="export_send_no_handlers">無應用程式可用於處理 apkg。儲存中&#8230;</string>
     <string name="export_save_apkg_successful">成功儲存 Anki 套件</string>
     <string name="export_save_apkg_unsuccessful">儲存 Anki 套件失敗</string>
-    <string name="export_share_title">以...傳送Anki牌組包</string>
+    <string name="export_share_title">以&#8230;傳送Anki牌組包</string>
     <string name="export_email_subject">AnkiDroid 已匯出單字卡：%s</string>
     <string name="export_email_text"><![CDATA[        你好！
         <br/><br/>
@@ -356,5 +356,12 @@
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="other">%d cards unburied</item>
+    </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="start_recording">Record</string>
+    <string name="stop_recording">Stop</string>
+    <string name="play_recording">Play</string>
+    <string name="next_recording">Next</string>
 </resources>

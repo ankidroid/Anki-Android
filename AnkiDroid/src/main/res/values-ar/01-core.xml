@@ -117,14 +117,6 @@
     <string name="menu_delete_note">حذف الملحوظة</string>
     <string name="menu_flag">أضف علما</string>
     <string name="menu_flag_card">أضف علما للبطاقة</string>
-    <string name="menu_flag_card_zero">بدون علم</string>
-    <string name="menu_flag_card_one">علم أحمر</string>
-    <string name="menu_flag_card_two">علم برتقالي</string>
-    <string name="menu_flag_card_three">علم أخضر</string>
-    <string name="menu_flag_card_four">علم أزرق</string>
-    <string name="menu_flag_card_five">علم وردي</string>
-    <string name="menu_flag_card_six">علم تركواز</string>
-    <string name="menu_flag_card_seven">علم بنفسجي</string>
     <string name="menu_edit_tags">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>
     <string name="menu_search">البحث في %1$s</string>
@@ -277,4 +269,5 @@
     <string name="storage_access_summary">احفظ مجموعتك في مكان آمن لا يتم حذفه عندما تحذف التطبيق</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">الوصول إلى كل الملفات</string>
     <string name="image_occlusion">صورة معماة</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

@@ -52,7 +52,7 @@
     <string name="CardEditorModel">రకం:</string>
     <string name="CardEditorTags">టాగ్లు:%1$s</string>
     <string name="CardEditorCards">కార్డులు:%1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">మూసివేతలను సవరించండి</string>
     <string name="tag_name">ట్యాగ్ పేరు</string>
     <string name="add_new_filter_tags">జోడించు / వడపోత టాగ్లు</string>
     <string name="add_tag">ట్యాగ్ను జోడించండి</string>
@@ -62,7 +62,7 @@
     <string name="updated_version">సంస్కరణకు నవీకరించబడింది %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">వైట్‌బోర్డ్‌ను సేవ్ చేయండి</string>
-    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="enable_stylus">స్టైలస్ రాయడం ప్రారంభించండి</string>
     <string name="disable_stylus">స్టైలస్ రైటింగ్‌ని నిలిపివేయండి</string>
     <string name="enable_whiteboard">వైట్బోర్డ్ ప్రారంభించండి</string>
     <string name="disable_whiteboard">వైట్బోర్డ్ను ఆపివేయి</string>
@@ -74,12 +74,12 @@
     <string name="leech_notification">కార్డు లీచ్గా గుర్తించబడింది</string>
     <string name="webview_crash_unknown">Unknown error</string>
     <string name="webview_crash_unknwon_detailed">WebViewలో అంతర్గత లోపం కారణంగా ఇది జరిగింది</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_oom">జ్ఞాపకశక్తి కోల్పోవడం</string>
+    <string name="webview_crash_oom_details">సిస్టమ్ ద్వారా WebView నిలిపివేయబడింది. సాధారణంగా పెద్ద ఫాంట్‌లు లేదా మీడియా కారణంగా అప్లికేషన్ మెమరీ అయిపోయినప్పుడు ఇది జరుగుతుంది.</string>
+    <string name="webview_crash_nonfatal">WebView రెండరర్ క్రాష్ అయింది. కారణం: %s</string>
+    <string name="webview_crash_fatal">ఘోరమైన లోపం: WebView రెండరర్ క్రాష్ అయింది. కారణం: %s</string>
+    <string name="webview_crash_loop_dialog_title">సిస్టమ్ WebView రెండరింగ్ వైఫల్యం</string>
+    <string name="webview_crash_loop_dialog_content">\'%1$s\' కార్డ్‌ని రెండర్ చేయడంలో సిస్టమ్ WebView విఫలమైంది.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>ప్రశ్న</item>
@@ -94,8 +94,8 @@
         <item>టాగ్లు</item>
         <item>లాప్సెస్</item>
         <item>సమీక్షలు</item>
-        <item>Interval</item>
-        <item>Ease</item>
+        <item>విరామం</item>
+        <item>సులభంగా</item>
         <item>Due</item>
         <item>కార్డ్ సవరించబడింది</item>
         <item>సృష్టించబడింది</item>
@@ -116,8 +116,8 @@
     <string name="note_editor_no_cards_created">కార్డులు సృష్టించబడలేదు. దయచేసి మరిన్ని ఫీల్డ్‌లను పూరించండి</string>
     <string name="note_editor_no_first_field">మొదటి ఫీల్డ్ ఖాళీగా ఉంది</string>
     <string name="note_editor_no_cloze_delations">ఈ నోట్ రకం తప్పనిసరిగా దగ్గరి తొలగింపులను కలిగి ఉండాలి</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_no_cards_created_all_fields">ప్రస్తుత గమనిక రకం ఏ కార్డ్‌లను రూపొందించలేదు.\nదయచేసి మరొక గమనిక రకాన్ని ఎంచుకోండి లేదా \'కార్డ్‌లు\' క్లిక్ చేసి ఫీల్డ్ ప్రత్యామ్నాయాన్ని జోడించండి</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">క్లోజ్ డిలీట్‌లు క్లోజ్ నోట్ రకంపై మాత్రమే పని చేస్తాయి</string>
     <string name="saving_facts">గమనికను సేవ్ చేస్తోంది</string>
     <string name="saving_model">నోట్ రకాన్ని సేవ్ చేస్తోంది</string>
     <string name="save">సేవ్</string>
@@ -127,7 +127,7 @@
     <string name="confirm_map_cards_to_nothing">ఏదైనా మ్యాప్ చేసిన కార్డ్లు తొలగించబడతాయి. గమనికకు మిగిలిన కార్డులు లేకుంటే, అది కోల్పోతుంది. మీరు ఖచ్చితంగా కొనసాగించాలనుకుంటున్నారా?</string>
     <string name="missing_note_type">గమనిక రకం కనుగొనబడలేదు</string>
     <!-- Timebox -->
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">టైంబాక్స్ వచ్చింది</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d కార్డ్ అధ్యయనం %2$s</item>
         <item quantity="other">%1$d కార్డ్ అధ్యయనం %2$s</item>
@@ -139,12 +139,12 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid కార్డు</string>
     <string name="note_editor_copy_note">నోట్ కాపీ</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Reposition</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">ప్రత్యామ్నాయం</string>
     <string name="card_editor_reset_card">పురోగతిని రీసెట్ చేయండి</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">రీషెడ్యూల్ చేయండి</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ప్రత్యేక ప్రదర్శన</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">మార్క్‌డౌన్‌గా కాపీ చేయండి</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$dలో %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">పేరుమార్చు</string>
     <string name="checks_action">తనిఖీ</string>
     <string name="check_db">డేటాబేస్ను తనిఖీ చేయండి</string>
@@ -157,26 +157,26 @@
     <string name="import_title">దిగుమతి</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">చేర్చు</string>
     <string name="import_message_replace_confirm">ఇది మీ ప్రస్తుత సేకరణను తొలగిస్తుంది మరియు ఫైల్ యొక్క డేటాను భర్తీ చేస్తుంది %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_dialog_message_add">సేకరణకు \"%s\"ని జోడించాలా? దీనికి చాలా సమయం పట్టవచ్చు</string>
+    <string name="import_log_no_apkg">ఇది చెల్లుబాటు అయ్యే Anki ప్యాకేజీ ఫైల్ కాదు</string>
     <string name="import_title_error" comment="Title of error dialog">లోపం</string>
     <string name="import_error_handle_exception">ఫైల్\n\n%sని దిగుమతి చేయడంలో విఫలమైంది</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_error_not_apkg_extension">ఫైల్ పేరు “%s”కి .apkg లేదా .colpkg పొడిగింపు లేదు</string>
+    <string name="import_error_load_imported_database">Anki డేటాబేస్ (.anki2) భర్తీకి ఇంకా మద్దతు లేదు. దయచేసి భర్తీ సూచనల కోసం మాన్యువల్‌ని చూడండి.</string>
     <string name="import_error_content_provider">ఎంచుకున్న ఫైల్ AnkiDroid ద్వారా స్వయంచాలకంగా దిగుమతి కాలేదు. మాన్యువల్గా ఫైళ్లను ఎలా దిగుమతి చేయాలో యూజర్ మాన్యువల్ చూడండి: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
-    <string name="export_preparation_in_progress">ఎగుమతి చేయడానికి సిద్ధమవుతోంది...</string>
+    <string name="import_error_copy_to_cache">ఫైల్‌ను కాష్ చేయడంలో విఫలమైంది (బహుశా నిల్వ స్థలం లేదు)</string>
+    <string name="import_interrupted">దిగుమతికి అంతరాయం ఏర్పడింది: AnkiDroid మూసివేయబడింది</string>
+    <string name="export_preparation_in_progress">ఎగుమతి చేయడానికి సిద్ధమవుతోంది&#8230;</string>
     <string name="export_ready_title">ఎగుమతి సిద్ధంగా ఉంది</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
+    <string name="export_send_no_handlers">apkkని నిర్వహించడానికి అప్లికేషన్‌లు ఏవీ అందుబాటులో లేవు. సేవ్ చేస్తోంది&#8230;</string>
     <string name="export_save_apkg_successful">Anki ప్యాకేజీ విజయవంతంగా సేవ్ చేయబడింది</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
+    <string name="export_save_apkg_unsuccessful">Anki ప్యాకేజీని సేవ్ చేయడంలో విఫలమైంది</string>
     <string name="export_share_title">ఉపయోగించి Anki ప్యాకేజీని పంపండి</string>
     <string name="export_email_subject">AnkiDroid ఫ్లాష్ కార్డ్స్ ఎగుమతి:%s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        హాయ్!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        ఇది AnkiDroid[1] నుండి పంపబడిన Anki ఫ్లాష్ కార్డ్స్ డెక్.
+        అందుబాటులో ఉన్న Anki పంపిణీలలో ఒకదానిని ఉపయోగించి దీన్ని తెరవడానికి ప్రయత్నించండి[2] మరియు సులభమైన మరియు సమర్థవంతమైన అభ్యాసాన్ని ఆస్వాదించండి!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -196,16 +196,16 @@
     <!-- Time spans -->
     <string name="reminder_title">నేడు అధ్యయనం చేయడం మర్చిపోవద్దు!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%1$sలో సమీక్షించడానికి %2$d కార్డ్</item>
+        <item quantity="other">%1$sలో సమీక్షించడానికి %2$d కార్డ్‌లు</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg ఫైల్ను భాగస్వామ్యం చేయడంలో లోపం</string>
     <!-- Import and export v2 feedback -->
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="activity_start_failed">ఈ చర్యను అమలు చేయగల యాప్ ఏదీ సిస్టమ్‌లో ఇన్‌స్టాల్ చేయబడలేదు.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[కెమెరా చిత్రాలు పెద్దవిగా ఉండవచ్చు. మీరు మీడియా డైరెక్టరీలో చిత్రాలను కుదించవచ్చు & పరిమాణం మార్చవచ్చు]]></string>
+    <string name="no_browser_msg">లింక్‌ని తెరవడానికి బ్రౌజర్ కనుగొనబడలేదు: %s</string>
+    <string name="web_page_error">పేజీని లోడ్ చేయడంలో లోపం: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">నేపథ్య</string>
@@ -219,24 +219,24 @@
     <string name="white_board_image_saved">వైట్‌బోర్డ్ చిత్రం %sకి సేవ్ చేయబడింది</string>
     <string name="title_whiteboard_pen_color">వైట్‌బోర్డ్ పెన్ రంగు</string>
     <string name="title_whiteboard_editor">వైట్‌బోర్డ్ ఎడిటర్</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">స్వయంచాలక పరీక్ష కనుగొనబడింది. మీరు మానవులైతే, AnkiDroid మద్దతును సంప్రదించండి</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="api_version_developer_contact">ఈ కార్డ్ AnkiDroid ద్వారా సపోర్ట్ చేయని ఫీచర్‌లను ఉపయోగిస్తుంది. డెవలపర్ %1$sని సంప్రదించండి లేదా వికీని వీక్షించండి. %2$s</string>
+    <string name="invalid_json_data">కార్డ్ చెల్లని డేటాను అందించింది. %s</string>
+    <string name="valid_js_api_version">చెల్లని AnkiDroid JS API వెర్షన్. డెవలపర్ %sని సంప్రదించండి లేదా వికీని వీక్షించండి</string>
+    <string name="update_js_api_version">AnkiDroid JS API అప్‌డేట్ అందుబాటులో ఉంది. డెవలపర్ %sని సంప్రదించండి లేదా వికీని వీక్షించండి</string>
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="anki_js_error_code">(లోపం కోడ్: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">క్లిప్‌బోర్డ్‌కి కాపీ చేయబడింది</string>
+    <string name="about_ankidroid_error_copy_debug_info">డీబగ్ సమాచారాన్ని క్లిప్‌బోర్డ్‌కి కాపీ చేయడంలో లోపం</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image">కార్డ్ కంటెంట్ లోపం: \'%s\'ని లోడ్ చేయడంలో విఫలమైంది</string>
     <!-- Deck Picker -->
     <string name="search_decks">సెర్చ్ డెక్స్</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">వలస పురోగతిని చూపు</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview_title">తీవ్రమైన లోపం</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid అందుబాటులో లేని సిస్టమ్ WebViewపై ఆధారపడుతుంది. సిస్టమ్ అప్‌డేట్‌లను ఇన్‌స్టాల్ చేస్తున్నప్పుడు ఇది జరగవచ్చు. దయచేసి కొన్ని నిమిషాల్లో మళ్లీ ప్రయత్నించండి.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">ఫాంట్ పరిమాణం</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">టూల్ బార్ చూపించు</string>
@@ -246,20 +246,20 @@
     <string name="insert_horizontal_line">క్షితిజ సమాంతర రేఖను చొప్పించండి</string>
     <string name="insert_heading">శీర్షికను చొప్పించండి</string>
     <string name="format_font_size">ఫాంట్ పరిమాణాన్ని మార్చండి</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
-    <string name="before_text">HTML Before Selection</string>
+    <string name="insert_mathjax">MathJax సమీకరణాన్ని చొప్పించండి</string>
+    <string name="note_editor_toolbar_icon">బటన్ టెక్స్ట్</string>
+    <string name="before_text">ఎంపికకు ముందు HTML</string>
     <string name="after_text">ఎంపిక తర్వాత HTML</string>
     <string name="add_toolbar_item">టూల్‌బార్ అంశాన్ని సృష్టించండి</string>
     <string name="edit_toolbar_item">టూల్‌బార్ అంశాన్ని సవరించండి</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">ఎంచుకున్న వచనానికి ముందు మరియు తర్వాత ఇన్సర్ట్ చేయడానికి HTMLని నమోదు చేయండి\n\nటూల్‌బార్ అంశాన్ని సవరించడానికి లేదా తీసివేయడానికి ఎక్కువసేపు నొక్కండి</string>
     <string name="remove_toolbar_item">టూల్‌బార్ అంశాన్ని తీసివేయాలా?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="note_editor_paste_too_large">చిత్రం అతికించడానికి చాలా పెద్దది, దయచేసి చిత్రాన్ని మాన్యువల్‌గా చొప్పించండి</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android బ్యాకప్ ప్రోగ్రెస్‌లో ఉంది. దయచేసి మళ్లీ ప్రయత్నించండి</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">సత్వరమార్గాలను జోడించడానికి AnkiDroidని అనుమతించడానికి మీరు iManagerని ఉపయోగించాల్సి రావచ్చు</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">మీ హోమ్ స్క్రీన్‌కి సత్వరమార్గాలను జోడించడానికి AnkiDroid మిమ్మల్ని అనుమతించదు</string>
     <string name="create_shortcut_error">సత్వరమార్గాన్ని జోడించడంలో లోపం: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">వాక్యాలను క్యాపిటలైజ్ చేయండి</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">స్క్రోల్ టూల్‌బార్</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
@@ -279,53 +279,53 @@
     <string name="import_deck">దిగుమతి డెక్</string>
     <string name="something_wrong">ఏదో తప్పు జరిగింది, దయచేసి మళ్లీ ప్రయత్నించండి</string>
     <string name="download_failed">డౌన్ లోడ్ విఫలం</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="deck_download_progress_message">డౌన్‌లోడ్ రన్ అవుతున్నప్పుడు మీరు ఇతర యాప్‌లను ఉపయోగించవచ్చు</string>
     <string name="check_network">దయచేసి మీ నెట్‌వర్క్ కనెక్షన్‌ని తనిఖీ చేయండి</string>
     <string name="search_using_deck_name">డెక్ పేరును ఉపయోగించి శోధించండి</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">డౌన్‌లోడ్ ఆగిపోయింది, బాహ్య నిల్వ అందుబాటులో లేదు</string>
     <string name="home">హోమ్</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">కార్డు పాతిపెట్టబడింది.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d కార్డ్ తాత్కాలికంగా నిలిపివేయబడింది.</item>
+        <item quantity="other">%d కార్డ్‌లు తాత్కాలికంగా నిలిపివేయబడ్డాయి.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">ఫీల్డ్ %sని అంటుకునేలా చేయండి</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
+    <string name="scoped_storage_title">నిల్వ తరలింపు</string>
     <string name="scoped_storage_learn_more">ఇంకా నేర్చుకో</string>
     <string name="scoped_storage_postpone">వాయిదా వేయండి</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_migrate">వలసపోతారు</string>
     <string name="search_card_js_api_no_results">శోధన ఫలితాలు ఏవీ అందించబడలేదు</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
-\nStorage migration will continue in the background.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Android 10 భద్రతా విధానానికి అనుగుణంగా ఉండటానికి AnkiDroid దాని నిల్వను తరలించాలి.\n\nఇది మీడియా సమకాలీకరణ పనితీరును మెరుగుపరుస్తుంది.&lt;br&gt;&lt;br&gt;మైగ్రేషన్ సమయంలో మీరు సమకాలీకరించలేరు మరియు కొన్ని సెట్టింగ్‌లు నిలిపివేయబడతాయి. మీ డేటాను సురక్షితంగా ఉంచడానికి మైగ్రేషన్ ప్రారంభమయ్యే ముందు మీడియా సమకాలీకరణ జరుగుతుంది.&lt;br&gt;&lt;br&gt;ఈ ప్రక్రియలో AnkiDroidని ఉపయోగించడం లేదా మూసివేయడం సురక్షితం.</string>
+    <string name="start_migration_progress_message">స్టోరేజ్ మైగ్రేషన్‌ను ప్రారంభిస్తోంది. మీరు త్వరలో AnkiDroidని ఉపయోగించడం కొనసాగించవచ్చు.</string>
+    <string name="migration_part_1_done_resume">మీరు AnkiDroidని ఉపయోగించడం కొనసాగించవచ్చు.
+\nస్టోరేజ్ మైగ్రేషన్ నేపథ్యంలో కొనసాగుతుంది.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon_package">%s చెల్లుబాటు అయ్యే JavaScript యాడ్ఆన్ ప్యాకేజీ కాదు</string>
+    <string name="could_not_create_dir">%s డైరెక్టరీని సృష్టించడం సాధ్యపడలేదు</string>
+    <string name="malicious_archive_entry_outside">హానికరమైన ఆర్కైవ్. లక్ష్యం dir వెలుపల ఒక ఎంట్రీని కలిగి ఉంది: %s</string>
+    <string name="malicious_archive_exceeds_limit">హానికరమైన ఆర్కైవ్. పరిమాణం %1$sని మించిపోయింది లేదా %2$d కంటే ఎక్కువ ఫైల్‌లను కలిగి ఉంది</string>
+    <string name="file_extract_exceeds_storage_space">ఫైల్ ఎక్స్‌ట్రాక్ట్ నిల్వ స్థలాన్ని మించిపోయింది</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">\'%s\' ట్యాగ్‌ని విస్తరించండి</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">సేకరణను యాక్సెస్ చేయడంలో విఫలమైంది. దయచేసి మళ్లీ ప్రయత్నించండి!</string>
     <string name="cd_manage_notetypes_add">కొత్త నోట్ రకాన్ని జోడించండి</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Study less</string>
     <string name="intro_ankidroid_tagline_two">మరింత గుర్తుంచుకో</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_short_ankidroid_explanation">Anki కార్డ్ షెడ్యూలర్ మీ బలహీనమైన జ్ఞాపకాలను బలోపేతం చేయడం ద్వారా మరియు మీ బలమైన జ్ఞాపకాలను సంరక్షించడం ద్వారా సమయాన్ని ఆదా చేస్తుంది</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb నుండి సమకాలీకరించండి</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">AnkiDroid ఇంకా ప్రారంభించబడలేదు. దయచేసి AnkiDroidని తెరిచి, మళ్లీ ప్రయత్నించండి</string>
     <string name="already_logged_in">ఇప్పటికే లాగిన్ చేసారు</string>
     <!-- Deck Creation -->
     <string name="deck_created">డెక్ సృష్టించబడింది</string>
-    <string name="deck_renamed">Deck renamed</string>
+    <string name="deck_renamed">డెక్ పేరు మార్చబడింది</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">డెక్ తొలగించబడింది. దయచేసి సత్వరమార్గాన్ని తీసివేయండి</string>
     <!-- Browser Options Dialog -->
@@ -333,12 +333,12 @@
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">గమనికలు</string>
     <string name="toggle_cards_notes">కార్డ్‌లు/నోట్‌లను టోగుల్ చేయండి</string>
     <string name="toggle_browser_mode_help">బ్రౌజర్‌లో కార్డ్‌లు లేదా గమనికలను చూపడాన్ని టోగుల్ చేయండి</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">కంటెంట్‌లోని మొదటి 3 లైన్‌లను మాత్రమే చూపడానికి బ్రౌజర్‌లో ప్రతి అడ్డు వరుస ఎత్తును కుదించండి</string>
     <string name="browser_options_dialog_heading">బ్రౌజర్ ఎంపికలు</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">స్టోరేజ్ మైగ్రేషన్ సమయంలో ఈ ఫంక్షనాలిటీ అందుబాటులో ఉండదు</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">స్టోరేజ్ మైగ్రేషన్ ప్రారంభించడానికి నొక్కండి</string>
     <string name="media_sync_required_title">మీడియా సమకాలీకరణ అవసరం</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="media_sync_unavailable_message">సెట్టింగ్‌లలో మీడియా సమకాలీకరణ నిలిపివేయబడింది. దయచేసి కొనసాగించడానికి ముందు ఏదైనా సమకాలీకరించని మీడియాను సమకాలీకరించండి మరియు బ్యాకప్ చేయండి</string>
     <string name="audio_saved">రికార్డింగ్ సేవ్ చేయబడింది</string>
     <string name="deleting_selected_notes">ఎంచుకున్న గమనికలను తొలగిస్తోంది</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">వినడానికి వాయిస్ నొక్కండి</string>
@@ -353,5 +353,13 @@
     <string name="deck_description_field_hint">వివరణ</string>
     <string name="failed_to_copy">కాపీ చేయడంలో విఫలమైంది</string>
     <string name="card_browser_unavailable_when_notes_mode">\'నోట్స్\' మోడ్‌లో అందుబాటులో లేదు</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d కార్డ్ పాతిపెట్టబడలేదు</item>
+        <item quantity="other">%d కార్డ్‌లు పాతిపెట్టబడలేదు</item>
+    </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="start_recording">దానిని రికార్డ్ చేయండి</string>
+    <string name="stop_recording">ఆపు దాన్ని</string>
+    <string name="play_recording">ఆడండి</string>
+    <string name="next_recording">Next</string>
 </resources>

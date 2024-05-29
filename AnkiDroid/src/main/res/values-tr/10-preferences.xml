@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Çift dokunma zaman aralığı (milisaniye)</string>
     <string name="pref_double_tap_time_interval_summary">Cevaplama düğmelerine ikinci bir tıklama, bu süre geçmediyse, göz ardı edilecektir. Bu, yanlışlıkla çift tıklamayı önler</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Cevabı göster basılı tutma süresi (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Cevabı göster düğmesi dokunmayı kabûl etmeden önce minimum basılı tutma süresi. Yanlışlıkla düğmeye basma ihtimâlini azaltabilir. Varsayılan 0 ms.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Cevabı göster basılı tutma süresi</string>
+    <string name="pref_show_answer_long_press_time_summary">Cevabı göster düğmesi dokunmayı algılayana kadar minimum basma süresi</string>
     <string name="show_estimates" maxLength="41">Düğmede zaman göster</string>
     <string name="show_estimates_summ">Cevap düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
     <string name="show_large_answer_buttons" maxLength="41">Büyük cevap düğmelerini göster</string>

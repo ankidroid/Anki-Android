@@ -133,6 +133,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         slidingTabLayout = findViewById(R.id.sliding_tabs)
+        viewPager = findViewById(R.id.pager)
         setNavigationBarColor(R.attr.appBarColor)
 
         // Disable the home icon
@@ -153,6 +154,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     @Suppress("deprecation") // onBackPressed
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (modelHasChanged()) {
             showDiscardChangesDialog()
@@ -161,6 +163,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             onBackPressed()
@@ -183,9 +186,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
         fieldNames = tempModel!!.notetype.fieldsNames
         // Set up the ViewPager with the sections adapter.
-        viewPager = findViewById<ViewPager2?>(R.id.pager).apply {
-            adapter = TemplatePagerAdapter(this@CardTemplateEditor)
-        }
+        viewPager.adapter = TemplatePagerAdapter(this@CardTemplateEditor)
+
         // Set activity title
         supportActionBar?.let {
             it.setTitle(R.string.title_activity_template_editor)

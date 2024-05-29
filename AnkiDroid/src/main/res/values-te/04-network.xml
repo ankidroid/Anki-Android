@@ -63,8 +63,8 @@
     <string name="logged_as">లాగా లాగిన్ అయ్యింది</string>
     <string name="log_out">లాగ్ అవుట్</string>
     <string name="reset_password">పాస్వర్డ్ మార్చండి</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="lost_mail_instructions">ఇమెయిల్ మర్చిపోయారా?</string>
+    <string name="sign_in">సైన్ ఇన్ చేయండి</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX కోసం ఎంపికలు</string>
     <string name="sync_title">సమకాలీకరణ</string>
@@ -74,11 +74,11 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">స్థానిక</string>
     <string name="sync_sanity_remote">రిమోట్</string>
-    <string name="one_way_sync_title">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title">వన్-వే సింక్</string>
+    <string name="one_way_sync_confirmation">వన్ వే సింక్రొనైజేషన్ అభ్యర్థించబడింది</string>
     <string name="full_sync_confirmation">మీ సేకరణ సమకాలీకరించినప్పుడు అభ్యర్థించిన మార్పుకు మీ డేటాబేస్ యొక్క పూర్తి అప్లోడ్ అవసరం అవుతుంది. ఇప్పటికీ సమీక్షలు లేదా ఇతర మార్పులు ఇప్పటికీ ఇక్కడ సమకాలీకరించబడకపోతే, అవి పోతాయి. కొనసాగించు?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid గతంలో సంస్థాపించిన సంస్కరణలో బగ్, ఇది పూర్తి సమకాలీకరణను బలపరచటానికి మద్దతిస్తుంది.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">సమకాలీకరణ (వన్-వే)</string>
+    <string name="sync_menu_title_no_account">సమకాలీకరణ (లాగిన్)</string>
 </resources>

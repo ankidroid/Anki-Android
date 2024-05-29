@@ -25,19 +25,23 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anim.ActivityTransitionAnimation
+import anki.config.ConfigKey
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
 import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
+import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.noteeditor.EditCardDestination
 import com.ichi2.anki.noteeditor.toIntent
 import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import com.ichi2.testutils.getString
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -76,12 +80,13 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    fun errorSavingNoteWithNoFirstFieldDisplaysNoFirstField() {
+    fun errorSavingNoteWithNoFirstFieldDisplaysNoFirstField() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.BASIC)
             .withNoFirstField()
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_first_field))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(actualResourceId, equalTo(CollectionManager.TR.addingTheFirstFieldIsEmpty()))
     }
 
 //    @Test
@@ -108,30 +113,36 @@ class NoteEditorTest : RobolectricTest() {
 //    }
 
     @Test
-    fun errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() {
+    fun errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.CLOZE)
             .withNoFirstField()
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cloze_delations))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(actualResourceId, equalTo(CollectionManager.TR.addingTheFirstFieldIsEmpty()))
     }
 
     @Test
-    fun errorSavingClozeNoteWithNoClozeDeletionsDisplaysClozeError() {
+    fun errorSavingClozeNoteWithNoClozeDeletionsDisplaysClozeError() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.CLOZE)
             .withFirstField("NoCloze")
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cloze_delations))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(
+            actualResourceId,
+            equalTo(CollectionManager.TR.addingYouHaveAClozeDeletionNote())
+        )
     }
 
     @Test
-    fun errorSavingNoteWithNoTemplatesShowsNoCardsCreated() {
+    fun errorSavingNoteWithNoTemplatesShowsNoCardsCreated() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.BACK_TO_FRONT)
             .withFirstField("front is not enough")
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(actualResourceId, equalTo(getString(R.string.note_editor_no_cards_created)))
     }
 
     @Test
@@ -353,6 +364,61 @@ class NoteEditorTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `edit note in filtered deck from reviewer - 15919`() {
+        // TODO: As a future extension, the filtered deck should be displayed
+        // in the UI
+        addDeck("A")
+
+        // by default, the first deck is selected, so move the card to the second deck
+        val homeDeckId = addDeck("B", setAsSelected = true)
+        val note = addNoteUsingBasicModel().updateCards { did = homeDeckId }
+        moveToDynamicDeck(note)
+
+        // ensure note is correctly setup
+        assertThat("home deck", note.firstCard().oDid, equalTo(homeDeckId))
+        assertThat("current deck", note.firstCard().did, not(equalTo(homeDeckId)))
+
+        // act
+        val editor = getNoteEditorEditingExistingBasicNote(note, REVIEWER, NoteEditor::class.java)
+
+        // assert
+        assertThat("current deck is the home deck", editor.deckId, equalTo(homeDeckId))
+        assertThat("no unsaved changes", !editor.hasUnsavedChanges())
+    }
+
+    @Test
+    fun `decide by note type preference - 13931`() = runTest {
+        col.config.setBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK, false)
+        addDeck("Basic")
+        val reversedDeckId = addDeck("Reversed", setAsSelected = true)
+
+        assertThat("setup: deckId", col.notetypes.byName("Basic")!!.did, equalTo(1))
+
+        getNoteEditorAdding(NoteType.BASIC).build().also { editor ->
+            editor.onDeckSelected(SelectableDeck(reversedDeckId, "Reversed"))
+            editor.setField(0, "Hello")
+            editor.saveNote()
+        }
+
+        col.notetypes._clear_cache()
+
+        assertThat("a note was added", col.noteCount(), equalTo(1))
+        assertThat("note type deck is updated", col.notetypes.byName("Basic")!!.did, equalTo(reversedDeckId))
+
+        getNoteEditorAdding(NoteType.BASIC).build().also { editor ->
+            assertThat("Deck ID is remembered", editor.deckId, equalTo(reversedDeckId))
+        }
+    }
+
+    private fun moveToDynamicDeck(note: Note): DeckId {
+        val dyn = addDynamicDeck("All")
+        col.decks.select(dyn)
+        col.sched.rebuildDyn()
+        assertThat("card is in dynamic deck", note.firstCard().did, equalTo(dyn))
+        return dyn
+    }
+
     private fun getSecondImageOcclusionNoteType(): NotetypeJson {
         val imageOcclusionNotes = col.notetypes.filter { it.isImageOcclusion }
         return if (imageOcclusionNotes.size >= 2) {
@@ -427,7 +493,7 @@ class NoteEditorTest : RobolectricTest() {
         var i = Intent()
         when (from) {
             REVIEWER -> {
-                i = EditCardDestination(n.firstCard().id).toIntent(targetContext, ActivityTransitionAnimation.Direction.DEFAULT)
+                i = EditCardDestination(n.firstCard().id).toIntent(targetContext, DEFAULT)
             }
             DECK_LIST -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
         }

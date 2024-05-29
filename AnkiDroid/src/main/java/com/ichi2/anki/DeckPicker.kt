@@ -117,6 +117,7 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
+import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.worker.SyncMediaWorker
@@ -273,6 +274,7 @@ open class DeckPicker :
 
     var importColpkgListener: ImportColpkgListener? = null
 
+    private var toolbarSearchItem: MenuItem? = null
     private var toolbarSearchView: SearchView? = null
     internal lateinit var customStudyDialogFactory: CustomStudyDialogFactory
 
@@ -384,7 +386,7 @@ open class DeckPicker :
                 Triple(
                     decks.name(deckId),
                     decks.isFiltered(deckId),
-                    sched.haveBuriedInCurrentDeck()
+                    sched.haveBuried()
                 )
             }
             updateDeckList() // focus has changed
@@ -801,8 +803,11 @@ open class DeckPicker :
         menuInflater.inflate(R.menu.deck_picker, menu)
         menu.findItem(R.id.action_export)?.title = TR.exportingExport()
         setupMediaSyncMenuItem(menu)
-        setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
-        toolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as SearchView
+        menu.findItem(R.id.deck_picker_action_filter)?.let {
+            toolbarSearchItem = it
+            setupSearchIcon(it)
+            toolbarSearchView = it.actionView as SearchView
+        }
         toolbarSearchView?.maxWidth = Integer.MAX_VALUE
         // redraw menu synchronously to avoid flicker
         updateMenuFromState(menu)
@@ -995,14 +1000,16 @@ open class DeckPicker :
         }
         menuItem.isVisible = true
 
-        menuItem.setTitle(
-            when (state.syncIcon) {
-                SyncIconState.Normal, SyncIconState.PendingChanges -> R.string.button_sync
-                SyncIconState.OneWay -> R.string.sync_menu_title_one_way_sync
-                SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
-            }
-        )
-        val provider = MenuItemCompat.getActionProvider(menuItem) as? SyncActionProvider ?: return
+        val provider = MenuItemCompat.getActionProvider(menuItem) as? SyncActionProvider
+            ?: return
+        val tooltipText = when (state.syncIcon) {
+            SyncIconState.Normal, SyncIconState.PendingChanges -> R.string.button_sync
+            SyncIconState.OneWay -> R.string.sync_menu_title_one_way_sync
+            SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            provider.setTooltipText(getString(tooltipText))
+        }
         when (state.syncIcon) {
             SyncIconState.Normal -> {
                 BadgeDrawableBuilder.removeBadge(provider)
@@ -1201,17 +1208,17 @@ open class DeckPicker :
         invalidateOptionsMenu()
     }
 
-    public override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        super.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putBoolean("mIsFABOpen", floatingActionMenu.isFABOpen)
-        savedInstanceState.putBoolean("migrateStorageAfterMediaSyncCompleted", migrateStorageAfterMediaSyncCompleted)
+    public override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("mIsFABOpen", floatingActionMenu.isFABOpen)
+        outState.putBoolean("migrateStorageAfterMediaSyncCompleted", migrateStorageAfterMediaSyncCompleted)
         importColpkgListener?.let {
             if (it is DatabaseRestorationListener) {
-                savedInstanceState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
+                outState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
             }
         }
-        exportingDelegate.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
+        exportingDelegate.onSaveInstanceState(outState)
+        outState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
         floatingActionMenu.showFloatingActionButton()
     }
 
@@ -1309,6 +1316,7 @@ open class DeckPicker :
     }
 
     @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
         val preferences = baseContext.sharedPrefs()
         if (isDrawerOpen) {
@@ -1359,7 +1367,13 @@ open class DeckPicker :
                 Timber.i("Sync from keypress")
                 sync()
             }
-            KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_S -> {
+            KeyEvent.KEYCODE_SLASH -> {
+                Timber.d("Search from keypress")
+                if (toolbarSearchItem?.isVisible == true) {
+                    toolbarSearchItem?.expandActionView()
+                }
+            }
+            KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
                 launchCatchingTask {
                     handleDeckSelection(getColUnsafe.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
@@ -2292,8 +2306,12 @@ open class DeckPicker :
     }
 
     private fun openReviewer() {
-        val reviewer = Intent(this, Reviewer::class.java)
-        reviewLauncher.launch(reviewer)
+        val intent = if (sharedPrefs().getBoolean("newReviewer", false)) {
+            ReviewerFragment.getIntent(this)
+        } else {
+            Intent(this, Reviewer::class.java)
+        }
+        reviewLauncher.launch(intent)
     }
 
     override fun onCreateCustomStudySession() {
@@ -2346,6 +2364,7 @@ open class DeckPicker :
             if (fragmented) {
                 loadStudyOptionsFragment(false)
             }
+            invalidateOptionsMenu()
         }
         createDeckDialog.showDialog()
     }
@@ -2634,9 +2653,14 @@ open class DeckPicker :
     }
 
     override fun onImportColpkg(colpkgPath: String?) {
-        invalidateOptionsMenu()
-        updateDeckList()
-        importColpkgListener?.onImportColpkg(colpkgPath)
+        launchCatchingTask {
+            // as the current collection is closed before importing a new collection, make sure the
+            // new collection is open before the code to update the DeckPicker ui runs
+            withCol { }
+            invalidateOptionsMenu()
+            updateDeckList()
+            importColpkgListener?.onImportColpkg(colpkgPath)
+        }
     }
 
     override fun onMediaSyncCompleted(data: SyncCompletion) {
@@ -2681,11 +2705,11 @@ open class DeckPicker :
         REGULAR_DECK_NO_MORE_CARDS_TODAY
     }
 
-    override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent?> {
+    override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent> {
         return apkgFileImportResultLauncher
     }
 
-    override fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent?> {
+    override fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent> {
         return csvImportResultLauncher
     }
 }

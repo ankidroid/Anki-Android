@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">Opnieuw openen</string>
     <string name="backup_error_menu_repair">Herstel database</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Database herstellen.\nEven wachten...</string>
+    <string name="backup_repair_deck_progress">Database herstellen.\nEven wachten&#8230;</string>
     <string name="backup_invalid_file_error">Het geselecteerde back-upbestand is ongeldig</string>
     <string name="backup_restore_select_title">Selecteer de back-up om terug te zetten</string>
     <string name="backup_restore_no_backups">Er zijn geen back-ups van deze collectie beschikbaar op dit toestel. Indien u back-ups op uw PC heeft, kunt u deze handmatig kopiëren naar uw AnkiDroid map.</string>

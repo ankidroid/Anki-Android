@@ -50,18 +50,18 @@
         <item quantity="one">%d min</item>
         <item quantity="other">%d মিনিট</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s মিলিসেকেন্ড</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">কোনো পরিণাম নেই</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">জেনারেল</string>
     <string name="pref_cat_studying" maxLength="41">অধ্যয়ন</string>
     <string name="pref_cat_system_wide" maxLength="41">সিস্টেম বিস্তৃত</string>
-    <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
+    <string name="pref_cat_reviewing" maxLength="41">পরিদর্শন</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">সিঙ্ক</string>
     <string name="pref_cat_scheduling" maxLength="41">সময়সূচি নির্ধারণ</string>
     <string name="pref_cat_whiteboard" maxLength="41">হোয়াইটবোর্ড</string>
-    <string name="pref_cat_appearance" maxLength="41">Appearance</string>
+    <string name="pref_cat_appearance" maxLength="41">রূপ</string>
     <string name="pref_cat_themes" maxLength="41">থিম</string>
     <string name="pref_cat_gestures" maxLength="41">জেসচার</string>
     <string name="pref_cat_controls" maxLength="41">নিয়ন্ত্রণ</string>
@@ -74,8 +74,8 @@
     <string name="use_input_tag_summ">উত্তর টাইপ করার জন্য কার্ডে টেক্সট ইনপুট বক্সের ব্যবহার
 করুন</string>
     <string name="reset_languages" maxLength="41">ভাষা রিসেট করুন</string>
-    <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
-    <string name="reset_languages_question">Reset all language assignments?</string>
+    <string name="reset_languages_summ">প্রত্যেক ডেকের জন্য ভাষা এসাইনমেন্ট রিসেট করুন (text to speech ও শব্দকোষের জন্য)</string>
+    <string name="reset_languages_question">ভাষা এসাইনমেন্ট রিসেট করুন?</string>
     <string name="reset_confirmation">All states reset</string>
     <string name="card_zoom" maxLength="41">Card zoom</string>
     <string name="image_zoom" maxLength="41">Image zoom</string>
@@ -166,8 +166,8 @@
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Show button time</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>

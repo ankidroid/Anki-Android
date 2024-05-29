@@ -18,7 +18,6 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.testutils.JvmTest
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.json.JSONArray
@@ -27,10 +26,6 @@ import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-// Note: These tests can't be run individually but can from the class-level
-// gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.AbstractSchedTest.*"
-@KotlinCleanup("reduce newlines in asserts")
-@KotlinCleanup("improve increaseAndAssertNewCountsIs")
 @RunWith(AndroidJUnit4::class)
 class AbstractSchedTest : JvmTest() {
     @Test

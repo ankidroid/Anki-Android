@@ -168,7 +168,7 @@
     <string name="import_interrupted">Importación interrumpida</string>
     <string name="export_preparation_in_progress">Preparando la exportación&#8230;</string>
     <string name="export_ready_title">Exportación preparada</string>
-    <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando...</string>
+    <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando&#8230;</string>
     <string name="export_save_apkg_successful">Paquete Anki guardado correctamente</string>
     <string name="export_save_apkg_unsuccessful">Error al guardar el paquete Anki</string>
     <string name="export_share_title">Enviar paquete Anki usando</string>
@@ -359,5 +359,13 @@
     <string name="deck_description_field_hint">Descripción</string>
     <string name="failed_to_copy">Error al copiar</string>
     <string name="card_browser_unavailable_when_notes_mode">No disponible en modo \'Notas\'</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d card unburied</item>
+        <item quantity="other">%d cards unburied</item>
+    </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Reposición</string>
+    <string name="start_recording">Record</string>
+    <string name="stop_recording">Stop</string>
+    <string name="play_recording">Play</string>
+    <string name="next_recording">Next</string>
 </resources>

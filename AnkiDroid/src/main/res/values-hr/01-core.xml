@@ -108,14 +108,6 @@
     <string name="menu_delete_note">Izbriši bilješku</string>
     <string name="menu_flag">Označi</string>
     <string name="menu_flag_card">Označi kartu</string>
-    <string name="menu_flag_card_zero">Bez oznake</string>
-    <string name="menu_flag_card_one">Crvena oznaka</string>
-    <string name="menu_flag_card_two">Narančasta oznaka</string>
-    <string name="menu_flag_card_three">Zelena oznaka</string>
-    <string name="menu_flag_card_four">Plava oznaka</string>
-    <string name="menu_flag_card_five">Roza oznaka</string>
-    <string name="menu_flag_card_six">Tirkizna oznaka</string>
-    <string name="menu_flag_card_seven">Ljubičasta oznaka</string>
     <string name="menu_edit_tags">Uredi oznake</string>
     <string name="delete_note_message">Zaista izbrisati ovu bilješku i sve njezine kartice?\n%s</string>
     <string name="menu_search">Traži u %1$s</string>
@@ -205,7 +197,7 @@
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Kopiranje...</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Kopiranje&#8230;</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migriranje medija</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Izračunavanje veličine prijenosa</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>
@@ -259,4 +251,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

@@ -105,14 +105,6 @@
     <string name="menu_delete_note">نوٹ حذف کریں</string>
     <string name="menu_flag">فلیگ</string>
     <string name="menu_flag_card">پرچم کارڈ</string>
-    <string name="menu_flag_card_zero">کوئی جھنڈا نہیں</string>
-    <string name="menu_flag_card_one">لال جھنڈا</string>
-    <string name="menu_flag_card_two">نارنجی جھنڈا</string>
-    <string name="menu_flag_card_three">سبز جھنڈا</string>
-    <string name="menu_flag_card_four">نیلا جھنڈا</string>
-    <string name="menu_flag_card_five">گلابی جھنڈا</string>
-    <string name="menu_flag_card_six">فیروزی جھنڈا</string>
-    <string name="menu_flag_card_seven">جامنی جھنڈا</string>
     <string name="menu_edit_tags">کارڈز میں ترمیم کریں</string>
     <string name="delete_note_message">واقعی یہ نوٹ اور اس کے تمام کارڈز حذف کریں؟ \n%s</string>
     <string name="menu_search">%1$s میں تلاش کریں</string>
@@ -249,4 +241,5 @@
     <string name="storage_access_summary">آپ کے مجموعہ کو ایک محفوظ جگہ پر محفوظ کرتا ہے جسے ایپ کے ان انسٹال ہونے پر حذف نہیں کیا جائے گا۔</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">تمام فائلوں تک رسائی</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>

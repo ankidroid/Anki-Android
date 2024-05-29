@@ -163,8 +163,8 @@
     <string name="vertical_centering_summ">コンテンツを上下方向の中央に配置します</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔（ミリ秒）</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、意図せずに回答してしまう操作ミスを防ぎます</string>
-    <string name="pref_show_answer_long_press" maxLength="41">「解答を表示」ボタンが必要とする長押し時間（ミリ秒）</string>
-    <string name="pref_show_answer_long_press_summary">〈「解答を表示」ボタンが押された〉と判定するために必要とする、ボタンを押し続ける時間。この時間より短い（＝素早い）接触を無視します。揺れのある環境や手の震えなどで意図せず「解答を表示」ボタンを押してしまいがちな場合に調整すると効果的です。デフォルトでは0ミリ秒（つまり、長押し不要）です</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">「解答を表示」ボタンが必要とする長押し時間</string>
+    <string name="pref_show_answer_long_press_time_summary">〈「解答を表示」ボタンが押された〉と判定するために必要とする長押し時間。デフォルトでは0ミリ秒（長押し必要なし）です。</string>
     <string name="show_estimates" maxLength="41">回答ボタンに学習間隔を表示</string>
     <string name="show_estimates_summ">次の学習までの時間の間隔を回答ボタンの中に表示します</string>
     <string name="show_large_answer_buttons" maxLength="41">回答ボタンを幅広に表示</string>
@@ -302,12 +302,12 @@
          ####################################################################################### -->
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroidは一定時間（分）ごとにコレクションのバックアップを作成しています。
         各期間（日／週／月）の代表として保管するバックアップ以外のバックアップは、
-        ディスク領域を空けるために、作成から2日以上経過した後に削除していきます。
+        ストレージ容量を圧迫しないよう、作成から2日以上経過した後に削除していきます。
         <br><br>
-        注意：メディアファイル（画像／音声／動画）はこの自動バックアップの対象外です。
-        アプリ内のデータを失う不測の事態に備えて、コレクションのAnkiWebとの同期や、AnkiWeb以外のアプリ外部の場所へのコレクションのエクスポートを、メディアファイルを含めた状態で定期的に行うことを強くおすすめします。
+        注意：メディアファイル（画像／音声／動画のファイル）はこの自動バックアップの対象外です。
+        デバイスの故障・紛失など、アプリ内のコレクションを失う万一の事態に備えて、AnkiWebとの同期や、AnkiWeb以外のアプリ外部の保存場所（Googleドライブなど）へのエクスポートを、メディアファイルを含めた状態で定期的に行うことを強くおすすめします。
         <br><br>
-        バックアップからのコレクションの復元や、コレクションのエクスポートは、デッキリスト画面右上のメニューから行えます。
+        コレクションのエクスポートや、バックアップからのコレクションの復元は、デッキリスト画面右上のメニューから行えます。
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自動バックアップの間隔（分）</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">各日代表のバックアップ保管数（何日分）</string>
@@ -330,7 +330,7 @@
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">バックアップを削除</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">バックアップを削除</string>
-    <string name="progress__deleting_backups">バックアップを削除しています...</string>
+    <string name="progress__deleting_backups">バックアップを削除しています&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">コレクションを削除</string>
     <string name="pref__delete_collection__summary">コレクション、メディア（画像・音声・動画）、バックアップを削除します。アプリの設定は削除されません</string>

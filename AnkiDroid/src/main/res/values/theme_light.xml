@@ -54,6 +54,10 @@
         <item name="reviewCountColor">@color/material_green_700</item>
         <item name="zeroCountColor">#1f000000</item>
         <!-- Reviewer colors -->
+        <item name="againButtonBackground">@color/material_red_700</item>
+        <item name="hardButtonBackground">@color/material_blue_grey_700</item>
+        <item name="goodButtonBackground">@color/material_green_500</item>
+        <item name="easyButtonBackground">@color/material_light_blue_500</item>
         <item name="topBarColor">@color/material_light_blue_100</item>
         <item name="maxTimerColor">@color/material_red_500</item>
         <item name="answerButtonTextColor">@color/white</item>
@@ -68,10 +72,10 @@
         <item name="hardButtonRef">@drawable/footer_button_hard</item>
         <item name="goodButtonRef">@drawable/footer_button_good</item>
         <item name="easyButtonRef">@drawable/footer_button_easy</item>
-        <item name="againButtonRippleRef">@drawable/footer_button_again_ripple</item>
-        <item name="hardButtonRippleRef">@drawable/footer_button_hard_ripple</item>
-        <item name="goodButtonRippleRef">@drawable/footer_button_good_ripple</item>
-        <item name="easyButtonRippleRef">@drawable/footer_button_easy_ripple</item>
+        <item name="againButtonRippleRef">@drawable/footer_button_ripple</item>
+        <item name="hardButtonRippleRef">@drawable/footer_button_ripple</item>
+        <item name="goodButtonRippleRef">@drawable/footer_button_ripple</item>
+        <item name="easyButtonRippleRef">@drawable/footer_button_ripple</item>
         <!-- Card Browser Colors -->
         <item name="cardBrowserDivider">?attr/dividerHorizontal</item>
         <!-- Browser colors -->
@@ -95,12 +99,9 @@
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
-        <item name="md_color_button_text">@color/black</item>
         <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
         <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
-        <item name="md_corner_radius">@dimen/dialog_corner_radius</item>
         <item name="textAllCaps">false</item>
-        <item name="md_button_casing">literal</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_light_blue_500</item>
         <item name="popupBackgroundColor">@android:color/white</item>

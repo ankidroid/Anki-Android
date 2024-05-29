@@ -102,14 +102,6 @@
     <string name="menu_delete_note">Язуны бетерү</string>
     <string name="menu_flag">Төс</string>
     <string name="menu_flag_card">Төс кую</string>
-    <string name="menu_flag_card_zero">Төссез</string>
-    <string name="menu_flag_card_one">Кызыл байрак</string>
-    <string name="menu_flag_card_two">Кызыл-сары байрак</string>
-    <string name="menu_flag_card_three">Яшел байрак</string>
-    <string name="menu_flag_card_four">Зәңгәр байрак</string>
-    <string name="menu_flag_card_five">Алсу байрак</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Тегларны үзгәртү</string>
     <string name="delete_note_message">Бу язуны һәм бөтен аның кәртләрен бетерергәме?\n%s</string>
     <string name="menu_search">%1$sдә карарга</string>
@@ -124,11 +116,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Зинһар, AnkiDroid өчен \"Storage\" рөхсәтен бирегез</string>
-    <string name="rebuild_filtered_deck">Фильтрлы колода үзгәртелә...</string>
+    <string name="rebuild_filtered_deck">Фильтрлы колода үзгәртелә&#8230;</string>
     <string name="rebuild_cram_label">Яңадан тезү</string>
     <string name="empty_cram_label">Бушату</string>
     <string name="create_subdeck">Колода эчендә колода ясау</string>
-    <string name="empty_filtered_deck">Фильтрлы колода бушатыла...</string>
+    <string name="empty_filtered_deck">Фильтрлы колода бушатыла&#8230;</string>
     <string name="custom_study_deck_name">Шәхси өйрәнү сессиясе</string>
     <string name="custom_study_deck_exists">Башта булган артык өйрәнү колода исемен үзгәртегез</string>
     <string name="search_deck" comment="Deck search for selecting it">Колода эзләү</string>
@@ -143,7 +135,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Синхронизацияне кире кагыргамы?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Синхронизацияне дәвам итү</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизация кире кагылган</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Кире кагу...\nБу бераз вакыт алырга мөмкин </string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Кире кагу&#8230;\nБу бераз вакыт алырга мөмкин </string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Колоданы экспортлау</string>
     <string name="nothing">Берни </string>
@@ -247,4 +239,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
 </resources>
