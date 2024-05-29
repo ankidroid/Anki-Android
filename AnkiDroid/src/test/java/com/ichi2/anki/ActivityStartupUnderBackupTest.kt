@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.app.Activity
 import android.os.Looper.getMainLooper
 import com.canhub.cropper.CropImageActivity
+import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
@@ -54,6 +55,7 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
         notYetHandled(Preferences::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
         notYetHandled(FilteredDeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
         notYetHandled(SingleFragmentActivity::class.java.simpleName, "Implemented, but the test fails because the activity throws if a specific intent extra isn't set")
+        notYetHandled(InstantNoteEditorActivity::class.java.simpleName, "Single instance activity so should be used")
     }
 
     /**
