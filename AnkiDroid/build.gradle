@@ -306,6 +306,9 @@ dependencies {
     compileOnly libs.auto.service.annotations
     annotationProcessor libs.auto.service
 
+    // modules
+    implementation project(":common")
+
     implementation libs.androidx.activity
     implementation libs.androidx.annotation
     implementation libs.androidx.appcompat
