@@ -42,6 +42,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -107,6 +109,17 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     private var tabToViewId: HashMap<Int, Int?> = HashMap()
     private var startingOrdId = 0
 
+    /**
+     * The frame containing the template previewer. Non null only in layout x-large.
+     */
+    private var templatePreviewerFrame: FragmentContainerView? = null
+
+    /**
+     * If true, the view is split in two. The template editor appears on the leading side and the previewer on the trailing side.
+     * This occurs when the view is big enough.
+     */
+    private var fragmented = false
+
     // ----------------------------------------------------------------------------
     // Listeners
     // ----------------------------------------------------------------------------
@@ -118,7 +131,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.card_template_editor_activity)
+        setContentView(R.layout.card_template_editor)
         // Load the args either from the intent or savedInstanceState bundle
         if (savedInstanceState == null) {
             // get model id
@@ -143,6 +156,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             tempModel = CardTemplateNotetype.fromBundle(savedInstanceState)
         }
 
+        templatePreviewerFrame = findViewById(R.id.template_previewer_fragment)
+        /**
+         * Check if templatePreviewerFrame is not null and if its visibility is set to VISIBLE.
+         * If both conditions are true, assign true to the variable [fragmented], otherwise assign false.
+         * [fragmented] will be true if the screen size is large otherwise false
+         */
+        fragmented = templatePreviewerFrame != null && templatePreviewerFrame?.visibility == View.VISIBLE
+
         slidingTabLayout = findViewById(R.id.sliding_tabs)
         viewPager = findViewById(R.id.card_template_editor_pager)
         setNavigationBarColor(R.attr.appBarColor)
@@ -150,6 +171,36 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         // Disable the home icon
         enableToolbar()
         startLoadingCollection()
+
+        // Open TemplatePreviewerFragment if in fragmented mode
+        loadTemplatePreviewerFragmentIfFragmented()
+    }
+
+    /**
+     *  Loads or reloads [tempModel] in [R.id.template_previewer_fragment] if the view is fragmented. Do nothing otherwise.
+     */
+    private fun loadTemplatePreviewerFragmentIfFragmented() {
+        if (!fragmented) {
+            return
+        }
+        launchCatchingTask {
+            val notetype = tempModel!!.notetype
+            val notetypeFile = NotetypeFile(this@CardTemplateEditor, notetype)
+            val ord = viewPager.currentItem
+            val note = withCol { currentFragment?.getNote(this) ?: Note.fromNotetypeId(notetype.id) }
+            val args = TemplatePreviewerArguments(
+                notetypeFile = notetypeFile,
+                id = note.id,
+                ord = ord,
+                fields = note.fields,
+                tags = note.tags,
+                fillEmpty = true
+            )
+            val details = TemplatePreviewerFragment.newInstance(args)
+            supportFragmentManager.commit {
+                replace(R.id.template_previewer_fragment, details)
+            }
+        }
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
@@ -778,7 +829,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             templateEditor.finish()
         }
 
-        private fun getNote(col: Collection): Note? {
+        fun getNote(col: Collection): Note? {
             val nid = requireArguments().getLong(EDITOR_NOTE_ID)
             return if (nid != -1L) col.getNote(nid) else null
         }
