@@ -194,7 +194,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 ord = ord,
                 fields = note.fields,
                 tags = note.tags,
-                fillEmpty = true
+                fillEmpty = true,
+                inFragmentedActivity = fragmented
             )
             val details = TemplatePreviewerFragment.newInstance(args)
             supportFragmentManager.commit {
