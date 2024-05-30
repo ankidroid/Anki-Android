@@ -89,6 +89,21 @@ class NoteEditorTest : RobolectricTest() {
         assertThat(actualResourceId, equalTo(CollectionManager.TR.addingTheFirstFieldIsEmpty()))
     }
 
+    @Test
+    fun testErrorMessageNull() = runTest {
+        val noteEditor = getNoteEditorAdding(NoteType.BASIC)
+            .withNoFirstField()
+            .build()
+
+        noteEditor.saveNote()
+        assertThat(noteEditor.addNoteErrorMessage, equalTo(CollectionManager.TR.addingTheFirstFieldIsEmpty()))
+
+        noteEditor.setFieldValueFromUi(0, "Hello")
+
+        noteEditor.saveNote()
+        assertThat(noteEditor.addNoteErrorMessage, equalTo(null))
+    }
+
 //    @Test
 //    @RustCleanup("needs update for new backend")
 //    fun errorSavingInvalidNoteWithAllFieldsDisplaysInvalidTemplate() {
