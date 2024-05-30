@@ -44,10 +44,16 @@ import timber.log.Timber
 class TemplatePreviewerFragment :
     CardViewerFragment(R.layout.template_previewer),
     BaseSnackbarBuilderProvider {
+    /**
+     * Whether this is displayed in a fragment view.
+     * If true, this fragment is on the trailing side of the card template editor.
+     */
+    private var inFragmentedActivity = false
+    private lateinit var templatePreviewerArguments: TemplatePreviewerArguments
 
     override val viewModel: TemplatePreviewerViewModel by viewModels {
-        val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
-        TemplatePreviewerViewModel.factory(arguments, CardMediaPlayer())
+        templatePreviewerArguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
+        TemplatePreviewerViewModel.factory(templatePreviewerArguments, CardMediaPlayer())
     }
     override val webView: WebView
         get() = requireView().findViewById(R.id.webview)
@@ -58,8 +64,17 @@ class TemplatePreviewerFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        // Retrieve the boolean argument "inFragmentedActivity" from the fragment's arguments bundle
+        inFragmentedActivity = templatePreviewerArguments.inFragmentedActivity
+        // If this fragment is a part of fragmented activity, then there is already a navigation icon an the activity.
+        // We hide the one specific to this fragment
+        if (inFragmentedActivity) {
+            toolbar.navigationIcon = null
+        } else {
+            toolbar.setNavigationOnClickListener {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
         }
 
         val showAnswerButton = view.findViewById<MaterialButton>(R.id.show_answer).apply {
