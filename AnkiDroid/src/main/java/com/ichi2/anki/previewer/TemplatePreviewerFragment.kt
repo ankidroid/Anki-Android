@@ -44,10 +44,15 @@ import timber.log.Timber
 class TemplatePreviewerFragment :
     CardViewerFragment(R.layout.template_previewer),
     BaseSnackbarBuilderProvider {
+    /**
+     * Indicates whether the view is x-large or not.
+     */
+    private var inFragmentedActivity = false
+    private lateinit var templatePreviewerArguments: TemplatePreviewerArguments
 
     override val viewModel: TemplatePreviewerViewModel by viewModels {
-        val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
-        TemplatePreviewerViewModel.factory(arguments, CardMediaPlayer())
+        templatePreviewerArguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
+        TemplatePreviewerViewModel.factory(templatePreviewerArguments, CardMediaPlayer())
     }
     override val webView: WebView
         get() = requireView().findViewById(R.id.webview)
@@ -58,8 +63,19 @@ class TemplatePreviewerFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        // The template previewer fragment is either displayed on the trailing side of the card template editor, on xlarge screen, or as a stand-alone fragment.
+        // Retrieve the boolean argument "inFragmentedActivity" from the fragment's arguments bundle
+        // and assign it to the variable inFragmentedActivity. This indicates whether the fragment
+        // is hosted within a fragmented activity or not.
+        inFragmentedActivity = templatePreviewerArguments.inFragmentedActivity
+        // If this fragment is a part of fragmented activity, we want no navigation icon, otherwise ensure that the arrow request the transmit the "back" action to its parent.
+        if (inFragmentedActivity) {
+            toolbar.navigationIcon = null
+        } else {
+            toolbar.setNavigationOnClickListener {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
         }
 
         val showAnswerButton = view.findViewById<MaterialButton>(R.id.show_answer).apply {
