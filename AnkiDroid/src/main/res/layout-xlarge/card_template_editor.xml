@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/card_template_editor_xl_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground"
+        android:orientation="horizontal">
+        <include layout="@layout/card_template_editor_activity"
+            android:layout_width="1dip"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/template_previewer_fragment"
+            android:layout_weight="1"
+            android:layout_width="1dip"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

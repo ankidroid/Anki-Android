@@ -113,6 +113,12 @@ class TemplatePreviewerFragment :
     companion object {
         const val ARGS_KEY = "templatePreviewerArgs"
 
+        fun newInstance(arguments: TemplatePreviewerArguments): TemplatePreviewerFragment {
+            return TemplatePreviewerFragment().apply {
+                this.arguments = bundleOf(ARGS_KEY to arguments)
+            }
+        }
+
         fun getIntent(context: Context, arguments: TemplatePreviewerArguments): Intent {
             return CardViewerActivity.getIntent(
                 context,
