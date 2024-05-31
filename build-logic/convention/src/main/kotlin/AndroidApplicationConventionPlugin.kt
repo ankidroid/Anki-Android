@@ -166,7 +166,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
 
 
-            //todo migrate task connectedPlayDebugAndroidTest when we know how to solve it's issue
         }
     }
 
