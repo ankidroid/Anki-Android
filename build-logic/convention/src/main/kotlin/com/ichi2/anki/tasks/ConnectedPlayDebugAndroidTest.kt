@@ -20,7 +20,8 @@ import org.gradle.api.Project
 
 
 fun Project.connectedPlayDebugAndroidTest() {
-    tasks.named("connectedPlayDebugAndroidTest")
-        .configure { finalizedBy("assertNonzeroAndroidTests") }
-
+    afterEvaluate {
+        tasks.named("connectedPlayDebugAndroidTest")
+            .configure { finalizedBy("assertNonzeroAndroidTests") }
+    }
 }
