@@ -14,18 +14,18 @@
 
 package com.ichi2.anki.ui.dialogs.tools
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface.BUTTON_POSITIVE
 import androidx.annotation.StringRes
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 
-open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) {
+open class AsyncDialogBuilder(private val alertDialogBuilder: MaterialAlertDialogBuilder) {
     lateinit var continuation: Continuation<DialogResult>
 
-    var onShowListener: ((AlertDialog) -> Unit)? = null
+    var onShowListener: ((androidx.appcompat.app.AlertDialog) -> Unit)? = null
 
     private lateinit var checkedItems: BooleanArray
 
@@ -63,14 +63,14 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
             is CheckedItems.Some -> checkedItems.checkedItems.clone()
         }
 
-        fun enableDisablePositiveButton(dialog: AlertDialog) {
+        fun enableDisablePositiveButton(dialog: androidx.appcompat.app.AlertDialog) {
             dialog.getButton(BUTTON_POSITIVE).isEnabled = this.checkedItems.contains(true)
         }
 
         alertDialogBuilder.setMultiChoiceItems(items.toTypedArray(), this.checkedItems) {
                 dialog, position, isChecked ->
             this.checkedItems[position] = isChecked
-            if (disablePositiveButtonIfNoItemsChosen) enableDisablePositiveButton(dialog as AlertDialog)
+            if (disablePositiveButtonIfNoItemsChosen) enableDisablePositiveButton(dialog as androidx.appcompat.app.AlertDialog)
         }
 
         if (disablePositiveButtonIfNoItemsChosen) onShowListener = ::enableDisablePositiveButton
@@ -78,7 +78,7 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
 }
 
 /**
- * A clutch that delegates calls to [AlertDialog.Builder].
+ * A clutch that delegates calls to [MaterialAlertDialogBuilder].
  * All defined methods have the exact same signature.
  *
  * TODO When context receivers are finalized, remove this class and instead say:
@@ -89,18 +89,18 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
  *       ...
  *   }
  */
-class CompoundDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) : AsyncDialogBuilder(alertDialogBuilder) {
-    /** @see AlertDialog.Builder.setTitle */
-    fun setTitle(@StringRes titleId: Int): AlertDialog.Builder = alertDialogBuilder.setTitle(titleId)
+class CompoundDialogBuilder(private val alertDialogBuilder: MaterialAlertDialogBuilder) : AsyncDialogBuilder(alertDialogBuilder) {
+    /** @see MaterialAlertDialogBuilder.setTitle */
+    fun setTitle(@StringRes titleId: Int): MaterialAlertDialogBuilder = alertDialogBuilder.setTitle(titleId)
 
-    /** @see AlertDialog.Builder.setTitle */
-    fun setTitle(title: CharSequence): AlertDialog.Builder = alertDialogBuilder.setTitle(title)
+    /** @see MaterialAlertDialogBuilder.setTitle */
+    fun setTitle(title: CharSequence): MaterialAlertDialogBuilder = alertDialogBuilder.setTitle(title)
 
-    /** @see AlertDialog.Builder.setMessage */
-    fun setMessage(@StringRes messageId: Int): AlertDialog.Builder = alertDialogBuilder.setMessage(messageId)
+    /** @see MaterialAlertDialogBuilder.setMessage */
+    fun setMessage(@StringRes messageId: Int): MaterialAlertDialogBuilder = alertDialogBuilder.setMessage(messageId)
 
-    /** @see AlertDialog.Builder.setMessage */
-    fun setMessage(message: CharSequence): AlertDialog.Builder = alertDialogBuilder.setMessage(message)
+    /** @see MaterialAlertDialogBuilder.setMessage */
+    fun setMessage(message: CharSequence): MaterialAlertDialogBuilder = alertDialogBuilder.setMessage(message)
 }
 
 sealed interface DialogResult {
@@ -129,11 +129,11 @@ sealed interface DialogResult {
  *     }
  *
  * In order for this to properly work,
- * instead of using [AlertDialog.Builder] methods that take listeners,
+ * instead of using [MaterialAlertDialogBuilder] methods that take listeners,
  * use an [AsyncDialogBuilder] method of the same name without one.
  */
 suspend fun Context.awaitDialog(block: CompoundDialogBuilder.() -> Unit): DialogResult {
-    val alertDialogBuilder = AlertDialog.Builder(this)
+    val alertDialogBuilder = MaterialAlertDialogBuilder(this)
     val compoundDialogBuilder = CompoundDialogBuilder(alertDialogBuilder)
 
     compoundDialogBuilder.block()
