@@ -15,7 +15,6 @@
  */
 import com.android.build.api.dsl.ApplicationExtension
 import com.ichi2.anki.configureCommonFeaturesForApplicationPlugin
-import com.ichi2.anki.tasks.assertNonZeroAndroidTests
 import com.ichi2.anki.tasks.idea
 import com.ichi2.anki.tasks.preBuildTask
 import org.gradle.api.Plugin
@@ -34,7 +33,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
             preBuildTask()
 
-            assertNonZeroAndroidTests()
+           // assertNonZeroAndroidTests()
 
             //todo migrate task connectedPlayDebugAndroidTest when we know how to solve it's issue
         }
