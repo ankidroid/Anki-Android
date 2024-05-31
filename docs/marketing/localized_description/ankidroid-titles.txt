@@ -8,8 +8,8 @@ ca: AnkiDroid fitxes per memoritzar
 cs: AnkiDroid kartičky
 de: AnkiDroid Karteikarten
 eo: AnkiDroid
-es-ES: Tarjetas AnkiDroid
 es-AR: Tarjetas flash AnkiDroid
+es-ES: Tarjetas AnkiDroid
 et: AnkiDroid mälukaardid
 fa: فلش کارتهای انکی دروید
 fi: AnkiDroid-muistikortit

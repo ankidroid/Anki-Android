@@ -240,6 +240,6 @@
     <string name="storage_access_title">ಶೇಖರಣಾ ಪ್ರವೇಶ</string>
     <string name="storage_access_summary">ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಸುರಕ್ಷಿತ ಸ್ಥಳದಲ್ಲಿ ಉಳಿಸುತ್ತದೆ, ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದರೆ ಅದನ್ನು ಅಳಿಸಲಾಗುವುದಿಲ್ಲ</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ಎಲ್ಲಾ ಫೈಲ್‌ಗಳ ಪ್ರವೇಶ</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">ಚಿತ್ರ ಮುಚ್ಚುವಿಕೆ</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">ಖಾತೆಯನ್ನು ತೆಗೆದುಹಾಕಿ</string>
 </resources>

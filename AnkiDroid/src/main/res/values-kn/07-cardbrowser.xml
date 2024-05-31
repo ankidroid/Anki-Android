@@ -84,11 +84,11 @@
         <item>ರಚಿಸಿದ ಸಮಯದಿಂದ</item>
         <item>ಟಿಪ್ಪಣಿ ಮಾರ್ಪಾಡು ಸಮಯದ ಮೂಲಕ</item>
         <item>ಕಾರ್ಡ್ ಮಾರ್ಪಾಡು ಸಮಯದ ಮೂಲಕ</item>
-        <item>By due time</item>
+        <item>ನಿಗದಿತ ಸಮಯದಲ್ಲಿ</item>
         <item>ಮಧ್ಯಂತರದಿಂದ</item>
         <item>ಸುಲಭವಾಗಿ</item>
-        <item>By reviews</item>
-        <item>By lapses</item>
+        <item>ವಿಮರ್ಶೆಗಳ ಮೂಲಕ</item>
+        <item>ಲೋಪಗಳಿಂದ</item>
     </string-array>
     <string name="card_browser_select_all">ಎಲ್ಲವನ್ನು ಆರಿಸು</string>
     <string name="card_browser_select_none">ಯಾವುದನ್ನೂ ಆಯ್ಕೆ ಮಾಡಬೇಡಿ</string>

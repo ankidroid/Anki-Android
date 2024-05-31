@@ -75,8 +75,8 @@
     <string name="repair_deck_dialog">Gusto mo ba talagang subukan ang pag-aayos ng database? \n\n Bago mo simulan ang pagtatangka, isang kopya ang lilikhain sa mga subfolder \"%s\".</string>
     <string name="intent_aedict_empty">Ang kategoryang \"default\" ay walng laman</string>
     <string name="intent_aedict_category">Upang magdagdag ng mga kard sa AnkiDroid alisin lahat ng mga kategorya ng Notepad o magdagdag ng isa na pinangalanang \"default\"</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Mga bagong kard sa deck:%d</string>
+    <string name="custom_study_rev_total_rev">Mga review na nakatakda sa deck:%d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Ang mga review kard na nakalimutan sa huling x araw:</string>
@@ -96,8 +96,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Kumpirmahin</string>
     <string name="dialog_no">Hindi</string>
     <string name="dialog_yes">Oo</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Panatilihin</string>
+    <string name="dialog_remove">Tanggalin</string>
     <string name="dialog_continue">Magpatuloy</string>
     <string name="dialog_processing">Pinoproseso&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Gumawa</string>
@@ -135,7 +135,7 @@ Mga file na may di-wastong pag-encode:%d</string>
     <string name="empty_cards_count">Mga kard na tatanggalin:%d</string>
     <string name="empty_cards_deleted">Ang mga kard ay tinanggal na%d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
+    <string name="multimedia_editor_audio_permission_refused">Nabigong makakuha ng permiso na gamitin ang mikropono.</string>
     <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
     <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
     <!-- Multimedia - Audio View -->

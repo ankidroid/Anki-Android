@@ -302,7 +302,7 @@
     <string name="migration_part_1_done_resume">Puedes seguir usando AnkiDroid.
 \nLa migración del almacenamiento continuará en segundo plano.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s no es un paquete válido de addon de JavaScript</string>
     <string name="could_not_create_dir">No se pudo crear el directorio %s</string>
     <string name="malicious_archive_entry_outside">Archivo malicioso. Contiene entrada fuera del dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Archivo malicioso. El tamaño excede %1$s o contiene más de %2$d archivos</string>
@@ -311,7 +311,7 @@
     <string name="expand_tag">Expandir etiqueta \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Error al acceder a la colección. ¡Por favor, vuelve a intentarlo!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">Añadir un nuevo tipo de nota</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Estudia menos</string>
     <string name="intro_ankidroid_tagline_two">Recuerda más</string>
@@ -358,12 +358,12 @@
     <string name="failed_to_copy">Error al copiar</string>
     <string name="card_browser_unavailable_when_notes_mode">No disponible en modo \'Notas\'</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">%d tarjeta desenterrada</item>
+        <item quantity="other">%d tarjetas desenterradas</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Reposición</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="start_recording">Grabar</string>
+    <string name="stop_recording">Detener</string>
+    <string name="play_recording">Reproducir</string>
+    <string name="next_recording">Siguiente</string>
 </resources>

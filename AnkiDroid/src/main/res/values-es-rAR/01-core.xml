@@ -242,5 +242,5 @@
     <string name="storage_access_summary">Guarda tu colección en un lugar seguro que no será eliminado si la aplicación es desinstalada</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acceso a todos los archivos</string>
     <string name="image_occlusion">Imagen oculta</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Quitar cuenta</string>
 </resources>
