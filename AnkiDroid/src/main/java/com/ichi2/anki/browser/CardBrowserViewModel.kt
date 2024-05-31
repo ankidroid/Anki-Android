@@ -88,7 +88,8 @@ class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
     private val cacheDir: File,
     options: CardBrowserLaunchOptions?,
-    preferences: SharedPreferencesProvider
+    preferences: SharedPreferencesProvider,
+    private val manualInit: Boolean = false
 ) : ViewModel(), SharedPreferencesProvider by preferences {
 
     // Set by the UI to determine the number of cards to preload before returning search results
@@ -306,8 +307,17 @@ class CardBrowserViewModel(
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
             }
             Timber.i("initCompleted")
-            flowOfInitCompleted.update { true }
+
+            if (!manualInit) {
+                flowOfInitCompleted.update { true }
+            }
         }
+    }
+
+    @VisibleForTesting
+    fun manualInit() {
+        require(manualInit) { "'manualInit' should be true" }
+        flowOfInitCompleted.update { true }
     }
 
     /** Whether any rows are selected */

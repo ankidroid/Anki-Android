@@ -206,7 +206,7 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
-    private fun runViewModelTest(notes: Int = 0, testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
+    private fun runViewModelTest(notes: Int = 0, manualInit: Boolean = true, testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
         for (i in 0 until notes) {
             addNoteUsingBasicModel()
         }
@@ -214,8 +214,13 @@ class CardBrowserViewModelTest : JvmTest() {
             lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
             cacheDir = createTransientDirectory(),
             options = null,
-            preferences = AnkiDroidApp.sharedPreferencesProvider
+            preferences = AnkiDroidApp.sharedPreferencesProvider,
+            manualInit = manualInit
         )
+        // makes ignoreValuesFromViewModelLaunch work under test
+        if (manualInit) {
+            viewModel.manualInit()
+        }
         testBody(viewModel)
     }
 
