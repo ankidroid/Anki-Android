@@ -62,7 +62,7 @@ class NoteEditorIntentTest : InstrumentedTest() {
     fun intentLaunchedWithNonImageIntent() {
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
-            type = "text/plain"
+            type = TEXT_PLAIN
         }
         assertFalse(intentLaunchedWithImage(intent))
     }

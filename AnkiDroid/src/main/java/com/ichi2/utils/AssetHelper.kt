@@ -37,6 +37,7 @@ package com.ichi2.utils
 
 import android.net.Uri
 import android.webkit.MimeTypeMap
+import com.ichi2.anki.TEXT_PLAIN
 import java.io.File
 import java.util.Locale
 
@@ -68,7 +69,7 @@ object AssetHelper {
             "js" -> "text/javascript"
             "mjs" -> "text/javascript"
             "json" -> "application/json"
-            else -> MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: "text/plain"
+            else -> MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: TEXT_PLAIN
         }
     }
 }

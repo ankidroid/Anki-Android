@@ -28,6 +28,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.TEXT_PLAIN
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.title
@@ -96,7 +97,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                             multiple = false,
                             mimeType = "*/*",
                             extraMimes = arrayOf(
-                                "text/plain",
+                                TEXT_PLAIN,
                                 "text/comma-separated-values",
                                 "text/csv",
                                 "text/tab-separated-values"
