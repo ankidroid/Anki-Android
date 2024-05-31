@@ -303,7 +303,7 @@ class CardBrowserViewModel(
             flowOfCardsOrNotes.update { cardsOrNotes }
 
             withCol {
-                sortTypeFlow.update { SortType.fromCol(config, sharedPrefs()) }
+                sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, sharedPrefs()) }
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
             }
             Timber.i("initCompleted")
