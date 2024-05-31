@@ -290,7 +290,7 @@
     <string name="home">בית</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">הכרטיס הוטמן</string>
+    <string name="card_buried">הקלף נקבר</string>
     <plurals name="note_suspended">
         <item quantity="one">כרטיס %d הושעה.</item>
         <item quantity="two">%d כרטיסים הושעו.</item>

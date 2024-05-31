@@ -60,16 +60,16 @@
     <string name="expand">></string>
     <string name="collapse">સંકોચવું</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">%d મિનિટ બાકી</item>
+        <item quantity="other">%d મિનિટ બાકી</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="one">%1$d કલાક %2$d બાકી</item>
         <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d દિવસ %2$d બાકી</item>
+        <item quantity="other">%1$d દિવસ %2$d બાકી</item>
     </plurals>
     <string name="no_cards_placeholder_title">સૂચિ ખાલી છે</string>
     <string name="no_cards_placeholder_description">કાર્ડસ જોડવાનું શરૂ કરો \n તે માટે + ચિહ્ન વાપરો.</string>
@@ -84,14 +84,14 @@
     <string name="ease_button_easy">સરળ</string>
     <string name="menu_import">આયાત</string>
     <string name="undo">પૂર્વવત્ કરો</string>
-    <string name="redo">Redo</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
+    <string name="redo">એ ફરી કરો</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">સ્ટ્રોક પૂર્વવત્ કરો</string>
     <string name="move_all_to_deck">બધી થપ્પી ખસેડી</string>
     <string name="unbury">પાછું લાવો</string>
     <string name="rename_deck">થપ્પીનું નામ બદલો </string>
     <string name="create_shortcut">ટૂંકો રસ્તો બનાવો</string>
     <string name="browse_cards">કાર્ડસ જોવો</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">વર્ણન સંપાદિત કરો</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ઉમેરો</string>
     <string name="menu_add_note">નોંધ ઉમેરો</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ખાતું સિંક્રનાઇઝ કરો </string>
@@ -112,49 +112,49 @@
     <string name="menu_unmark_note">ચિહ્નિત નોંધોમાથી કાઢો</string>
     <string name="menu_toggle_mic_tool_bar">ઊચ્ચારણ તપાસો</string>
     <string name="new_deck">થપ્પી ઉમેરો </string>
-    <string name="new_dynamic_deck">Create filtered deck</string>
+    <string name="new_dynamic_deck">ફિલ્ટર કરેલ ડેક બનાવો</string>
     <string name="directory_inaccessible">AnkiDroid શબ્દાવલિ પહોંચ બહાર છે</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">ચાલુ રાખવા માટે AnkiDroid ને ‘Storage’નો હક આપો</string>
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label">Rebuild</string>
-    <string name="empty_cram_label">Empty</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="custom_study_deck_name">Custom study session</string>
-    <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="empty_deck">This deck is empty</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
+    <string name="rebuild_filtered_deck">ફિલ્ટર કરેલ ડેકનું પુનઃનિર્માણ&#8230;</string>
+    <string name="rebuild_cram_label">પુનઃબીલ્ડ</string>
+    <string name="empty_cram_label">ખાલી</string>
+    <string name="create_subdeck">સબડેક બનાવો</string>
+    <string name="empty_filtered_deck">ફિલ્ટર કરેલ ડેક ખાલી કરી રહ્યું છે&#8230;</string>
+    <string name="custom_study_deck_name">કસ્ટમ અભ્યાસ સત્ર</string>
+    <string name="custom_study_deck_exists">પહેલા હાલના કસ્ટમ સ્ટડી ડેકનું નામ બદલો</string>
+    <string name="search_deck" comment="Deck search for selecting it">ડેક શોધ</string>
+    <string name="empty_deck">આ ડેક ખાલી છે</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">ડેક શોધ</string>
+    <string name="invalid_deck_name">અમાન્ય ડેક નામ</string>
+    <string name="studyoptions_congrats_finished">અભિનંદન! તમે હમણાં માટે સમાપ્ત કર્યું છે.</string>
+    <string name="studyoptions_no_cards_due">હજુ સુધી કોઈ કાર્ડ બાકી નથી</string>
+    <string name="sd_card_not_mounted">ઉપકરણ સંગ્રહ માઉન્ટ થયેલ નથી</string>
     <string name="button_sync" comment="Text of the sync button">Sync</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
-    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Do you want to cancel the sync?</string>
-    <string name="continue_sync" tools:ignore="UnusedResources">Continue sync</string>
+    <string name="button_upgrade" comment="Text of the sync button">સ્કોપ્ડ સ્ટોરેજ પર સ્થાનાંતરિત કરો</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">શું તમે સમન્વયન રદ કરવા માંગો છો?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">સિંક કરવાનું ચાલુ રાખો</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sync cancelled</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis may take some time.</string>
     <string name="syncing_media">Syncing media</string>
-    <string name="export_deck">Export deck</string>
-    <string name="nothing">Nothing</string>
+    <string name="export_deck">નિકાસ ડેક</string>
+    <string name="nothing">કંઈ નહીં</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Card types</string>
-    <string name="card_template_editor_front">Front template</string>
-    <string name="card_template_editor_back">Back template</string>
+    <string name="title_activity_template_editor">કાર્ડ પ્રકારો</string>
+    <string name="card_template_editor_front">ફ્રન્ટ ટેમ્પલેટ</string>
+    <string name="card_template_editor_back">પાછળનો નમૂનો</string>
     <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
-    <string name="card_template_editor_cant_delete">At least one card type is required</string>
+    <string name="card_template_editor_menu_card_browser_appearance">કાર્ડ બ્રાઉઝર દેખાવ</string>
+    <string name="card_template_editor_deck_override">ડેક ઓવરરાઇડ</string>
+    <string name="card_template_editor_insert_field">ફીલ્ડ દાખલ કરો</string>
+    <string name="card_template_editor_select_field">એક ક્ષેત્ર પસંદ કરો</string>
+    <string name="card_template_editor_cant_delete">ઓછામાં ઓછો એક કાર્ડ પ્રકાર જરૂરી છે</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">આ %1$d કાર્ડ બનાવશે. શું આપણે આગળ વધીએ?</item>
+        <item quantity="other">આ %1$d કાર્ડ બનાવશે. આગળ વધીએ?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>

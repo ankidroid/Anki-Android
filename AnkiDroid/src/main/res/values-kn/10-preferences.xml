@@ -199,7 +199,7 @@
     <string name="thirdparty_apps_title" maxLength="41">ಮೂರನೇ ವ್ಯಕ್ತಿಯ API ಅಪ್ಲಿಕೇಶನ್‌ಗಳು</string>
     <string name="thirdparty_apps_summary">ನಿಘಂಟುಗಳು, ಉಪಯುಕ್ತತೆಗಳಂತಹ AnkiDroid API ಅನ್ನು ಬಳಸುವ ಅಪ್ಲಿಕೇಶನ್‌ಗಳ ಪಟ್ಟಿಯನ್ನು ನೋಡಿ.</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">ರಿವೈವರ್</string>
     <string name="show_deck_title" maxLength="41">ಡೆಕ್ ಶೀರ್ಷಿಕೆಯನ್ನು ತೋರಿಸಿ</string>
     <string name="accessibility" maxLength="41">ಪ್ರವೇಶಿಸುವಿಕೆ</string>
     <!-- Paste clipboard image as png option -->
@@ -226,18 +226,18 @@
     <string name="note" maxLength="41">ಸೂಚನೆ</string>
     <string name="navigation" maxLength="41">ನ್ಯಾವಿಗೇಷನ್</string>
     <string name="media" maxLength="41">ಮಾಧ್ಯಮ</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="misc" maxLength="41">ಇತರರು</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">ಸಾಮಾನ್ಯ</string>
     <string name="deck_conf_reminders" maxLength="41">ಜ್ಞಾಪನೆಗಳು</string>
     <string name="deck_conf_cram_filter" maxLength="41">ಫಿಲ್ಟರ್</string>
     <string name="deck_conf_cram_search" maxLength="41">ಇದಕ್ಕಾಗಿ ಹುಡುಕು </string>
     <string name="deck_conf_cram_limit" maxLength="41">ಗೆ ಮಿತಿ</string>
     <string name="deck_conf_cram_order" maxLength="41">ಆಯ್ದ ಕಾರ್ಡ್‌ಗಳು</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
-    <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ಮರುಹೊಂದಿಸಿ</string>
+    <string name="deck_conf_cram_reschedule_summ">ಈ ಡೆಕ್‌ನಲ್ಲಿರುವ ನನ್ನ ಉತ್ತರಗಳನ್ನು ಆಧರಿಸಿ ಕಾರ್ಡ್‌ಗಳನ್ನು ಮರುಹೊಂದಿಸಿ</string>
     <string name="deck_conf_cram_filter_2_check">ಎರಡನೇ ಫಿಲ್ಟರ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">ಕಸ್ಟಮ್ ಹಂತಗಳನ್ನು ವಿವರಿಸಿ</string>
     <string name="deck_conf_cram_preview_delays" maxLength="41">ಪೂರ್ವವೀಕ್ಷಣೆ ವಿಳಂಬಗಳು</string>
@@ -282,7 +282,7 @@
     <string name="card_side_question">ಪ್ರಶ್ನೆ</string>
     <string name="card_side_answer">ಉತ್ತರ</string>
     <string name="card_side_both">ಪ್ರಶ್ನೆ &amp; ಉತ್ತರ</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">ಪ್ರಶ್ನೆ: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">ಉ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
@@ -293,7 +293,7 @@
     <string name="readtext_deprecation_warn">AnkiDroid ಇತರ Anki ಕ್ಲೈಂಟ್‌ಗಳಿಗೆ ಹೊಂದಿಕೆಯಾಗುವ ಉತ್ತಮ TTS ಕಾರ್ಯವಿಧಾನವನ್ನು ಪರಿಚಯಿಸಿದೆ ಮತ್ತು ಭಾಷಾ ಪ್ಲೇಬ್ಯಾಕ್‌ಗೆ ಹೆಚ್ಚಿನ ಧ್ವನಿಗಳು ಮತ್ತು ಸುಧಾರಣೆಗಳನ್ನು ಒಳಗೊಂಡಿದೆ!\n\nದಯವಿಟ್ಟು ಸಾಧ್ಯವಾದಷ್ಟು ಬೇಗ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ, ಏಕೆಂದರೆ ಈ ಸೆಟ್ಟಿಂಗ್ ಅನ್ನು ಶೀಘ್ರದಲ್ಲೇ ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">ದಯವಿಟ್ಟು ಹೊಸ ಪಠ್ಯವನ್ನು ಸ್ಪೀಚ್ ಫಾರ್ಮ್ಯಾಟ್‌ಗೆ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="pref_cat_dev_options" maxLength="41">ಅಭಿವೃಧಿಕಾರರ ಸೂಚನೆಗಳು</string>
     <string name="dev_options_enabled_pref" maxLength="41">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="disable_dev_options">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="dev_options_warning">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸುವ ಮೊದಲು ದಯವಿಟ್ಟು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ. ಈ ಆಯ್ಕೆಗಳು ಅಪಾಯಕಾರಿ ಮತ್ತು ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಒಡೆಯಬಹುದು ಅಥವಾ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಭ್ರಷ್ಟಗೊಳಿಸಬಹುದು.\n\nಈ ಆಯ್ಕೆಗಳು ಹೆಚ್ಚಿನ ಬಳಕೆದಾರರಿಗೆ ಸೂಕ್ತವಲ್ಲ ಮತ್ತು ಆದ್ದರಿಂದ ಅನುವಾದಿಸಲಾಗಿಲ್ಲ, ಆದ್ದರಿಂದ ಅವು ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿವೆ.</string>

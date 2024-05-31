@@ -201,7 +201,7 @@
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">సమీక్షకుడు</string>
     <string name="show_deck_title" maxLength="41">డెక్ శీర్షికను చూపించు</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">సౌలభ్యాన్ని</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">క్లిప్‌బోర్డ్ చిత్రాలను PNGగా అతికించండి</string>
     <string name="paste_as_png_summary">డిఫాల్ట్‌గా Anki డిస్క్ స్థలాన్ని ఆదా చేయడానికి చిత్రాలను JPG ఫైల్‌లుగా క్లిప్‌బోర్డ్‌కు అతికిస్తుంది. బదులుగా PNG చిత్రాల వలె అతికించడానికి మీరు ఈ ఎంపికను ఉపయోగించవచ్చు.</string>
@@ -226,7 +226,7 @@
     <string name="note" maxLength="41">గమనిక</string>
     <string name="navigation" maxLength="41">నావిగేషన్</string>
     <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="misc" maxLength="41">ఇతర</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">ట్యాగ్లను ఎంచుకోండి</string>
     <!-- Deck configurations -->
@@ -253,7 +253,7 @@
     <!-- About -->
     <string name="open_changelog">చేంజ్లాగ్ తెరవండి</string>
     <string name="pref_cat_about_title" maxLength="41">గురించి</string>
-    <string name="contributors_title">Contributors</string>
+    <string name="contributors_title">సహకారులు</string>
     <string name="about_contributors_description"><![CDATA[వీరు మా అద్భుతమైన <a href=\"%1$s\">కంట్రిబ్యూటర్లు</a>. మీరు ప్రోగ్రామింగ్, అనువాదం, విరాళం మరియు <a href=\"%2$s\">మరిన్ని</a> ద్వారా కూడా AnkiDroidకి సహాయం చేయవచ్చు!]]></string>
     <string name="license">లైసెన్స్</string>
     <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> మరియు <a href=\"%2$s\">AGPL-3.0</a> లైసెన్స్‌ల సోర్స్ కోడ్ <a క్రింద విడుదల చేయబడింది href =\"%3$s\">GitHub</a>లో అందుబాటులో ఉంది]]></string>
