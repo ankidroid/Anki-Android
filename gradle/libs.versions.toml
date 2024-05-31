@@ -68,6 +68,7 @@ slf4jTimber = "3.1"
 timber = "5.0.1"
 triplet = "3.9.1"
 workRuntimeKtx = "2.9.0"
+commonTools = "31.4.1"
 
 [libraries]
 acra-limiter = { module = "ch.acra:acra-limiter", version.ref = "acra" }
@@ -152,6 +153,12 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 
+
+#for build gradle only
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+android-tools-common = { group = "com.android.tools", name = "common", version.ref = "commonTools" }
+
 [plugins]
 
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -171,4 +178,5 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
-
+#anki custom convention plugins
+anki-application-plugin = { id = "com.anki.application.plugin", version = "unspecified" }
