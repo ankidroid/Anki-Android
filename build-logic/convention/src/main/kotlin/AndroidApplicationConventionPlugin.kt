@@ -14,7 +14,6 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import com.android.build.api.dsl.ApplicationExtension
-import com.ichi2.anki.androidTestImplementation
 import com.ichi2.anki.annotationProcessor
 import com.ichi2.anki.api
 import com.ichi2.anki.compileOnly
@@ -30,12 +29,10 @@ import com.ichi2.anki.tasks.assertNonZeroAndroidTests
 import com.ichi2.anki.tasks.connectedPlayDebugAndroidTest
 import com.ichi2.anki.tasks.idea
 import com.ichi2.anki.tasks.preBuildTask
-import com.ichi2.anki.testImplementation
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.exclude
 import org.gradle.kotlin.dsl.project
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
