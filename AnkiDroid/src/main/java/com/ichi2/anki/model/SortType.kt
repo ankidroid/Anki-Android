@@ -55,6 +55,8 @@ enum class SortType(val ankiSortType: String?, val cardBrowserLabelIndex: Int) {
         config.set("sortType", this.ankiSortType ?: SORT_FIELD.ankiSortType)
         config.set("noteSortType", this.ankiSortType ?: SORT_FIELD.ankiSortType)
         preferences.edit {
+            // TODO: This should be changed to use the collection
+            // and have a different value for cards & notes
             putBoolean("cardBrowserNoSorting", this@SortType == NO_SORTING)
         }
     }
@@ -64,8 +66,9 @@ enum class SortType(val ankiSortType: String?, val cardBrowserLabelIndex: Int) {
         if (this == NO_SORTING) SortOrder.NoOrdering() else SortOrder.UseCollectionOrdering()
 
     companion object {
-        fun fromCol(config: Config, preferences: SharedPreferences): SortType {
-            val colOrder = config.get<String>("sortType")
+        fun fromCol(config: Config, cardsOrNotes: CardsOrNotes, preferences: SharedPreferences): SortType {
+            val configKey = if (cardsOrNotes == CardsOrNotes.CARDS) "sortType" else "noteSortType"
+            val colOrder = config.get<String>(configKey)
             val type = entries.firstOrNull { it.ankiSortType == colOrder } ?: NO_SORTING
             if (type == SORT_FIELD && preferences.getBoolean("cardBrowserNoSorting", false)) {
                 return NO_SORTING
