@@ -206,6 +206,17 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `sort order from notes is selected - 16514`() {
+        col.config.set("sortType", "noteCrt")
+        col.config.set("noteSortType", "_field_Frequency")
+        with(col) { CardsOrNotes.NOTES.saveToCollection() }
+
+        runViewModelTest(notes = 1) {
+            assertThat("1 row returned", rowCount, equalTo(1))
+        }
+    }
+
     private fun runViewModelTest(notes: Int = 0, manualInit: Boolean = true, testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
         for (i in 0 until notes) {
             addNoteUsingBasicModel()
