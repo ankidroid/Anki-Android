@@ -148,7 +148,7 @@
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_toggle_mic_tool_bar"
-        android:title="@string/menu_toggle_mic_tool_bar"
+        android:title="@string/menu_enable_voice_playback"
         android:icon="@drawable/ic_action_mic"
         ankidroid:showAsAction="never"/>
     <item

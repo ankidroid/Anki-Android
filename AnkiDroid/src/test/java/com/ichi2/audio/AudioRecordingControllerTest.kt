@@ -46,7 +46,7 @@ class AudioRecordingControllerAndroidTest : RobolectricTest() {
 
     @Test
     @Ignore("does not fail when expected under Robolectric")
-    fun `Check Pronunciation handles onPause`() = withCheckPronunciation {
+    fun `Voice Playback handles onPause`() = withVoicePlayback {
         Timber.v("start recording")
         layout.findViewById<MaterialButton?>(R.id.action_start_recording).performClick()
         Timber.v("stop recording")
@@ -59,7 +59,7 @@ class AudioRecordingControllerAndroidTest : RobolectricTest() {
     }
 
     /** Applies [block] to a [AudioRecordingController] generated for the [Reviewer] */
-    private fun withCheckPronunciation(block: AudioRecordingController.() -> Unit) {
+    private fun withVoicePlayback(block: AudioRecordingController.() -> Unit) {
         ShadowMediaPlayer.setMediaInfoProvider { ShadowMediaPlayer.MediaInfo(200, 1) }
         val layout = LinearLayout(targetContext)
         Themes.setTheme(targetContext)
