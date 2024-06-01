@@ -602,6 +602,15 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             initTabLayoutMediator()
+            templateEditor.slidingTabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(p0: TabLayout.Tab?) {
+                    templateEditor.loadTemplatePreviewerFragmentIfFragmented()
+                }
+                override fun onTabUnselected(p0: TabLayout.Tab?) {
+                }
+                override fun onTabReselected(p0: TabLayout.Tab?) {
+                }
+            })
             parentFragmentManager.setFragmentResultListener(REQUEST_FIELD_INSERT, viewLifecycleOwner) { key, bundle ->
                 if (key == REQUEST_FIELD_INSERT) {
                     // this is guaranteed to be non null, as we put a non null value on the other side
