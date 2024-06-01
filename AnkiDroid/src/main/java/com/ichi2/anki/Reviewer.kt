@@ -45,7 +45,6 @@ import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
@@ -141,7 +140,7 @@ open class Reviewer :
     // Record Audio
     private var isMicToolBarVisible = false
 
-    /** Controller for 'Check Pronunciation' feature */
+    /** Controller for 'Voice Playback' feature */
     private var audioRecordingController: AudioRecordingController? = null
     private var isAudioUIInitialized = false
     private lateinit var micToolBarLayer: LinearLayout
@@ -330,6 +329,12 @@ open class Reviewer :
             toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
             whiteboard!!.toggleStylus = toggleStylus
         }
+
+        val isMicToolbarEnabled = MetaDB.getMicToolbarState(this, parentDid)
+        if (isMicToolbarEnabled) {
+            openMicToolbar()
+        }
+
         launchCatchingTask {
             withCol { startTimebox() }
             updateCardAndRedraw()
@@ -383,7 +388,7 @@ open class Reviewer :
                 playSounds(true)
             }
             R.id.action_toggle_mic_tool_bar -> {
-                Timber.i("Reviewer:: Record mic")
+                Timber.i("Reviewer:: Voice playback visibility set to %b", !isMicToolBarVisible)
                 // Check permission to record and request if not granted
                 openOrToggleMicToolbar()
             }
@@ -643,6 +648,10 @@ open class Reviewer :
             micToolBarLayer.visibility = View.VISIBLE
         }
         isMicToolBarVisible = !isMicToolBarVisible
+
+        MetaDB.storeMicToolbarState(this, parentDid, isMicToolBarVisible)
+
+        refreshActionBar()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -839,6 +848,13 @@ open class Reviewer :
         if (!buryNoteAvailable() && !actionButtons.status.buryIsDisabled()) {
             menu.findItem(R.id.action_bury).isVisible = false
             menu.findItem(R.id.action_bury_card).isVisible = true
+        }
+
+        val voicePlaybackIcon = menu.findItem(R.id.action_toggle_mic_tool_bar)
+        if (isMicToolBarVisible) {
+            voicePlaybackIcon.setTitle(R.string.menu_disable_voice_playback)
+        } else {
+            voicePlaybackIcon.setTitle(R.string.menu_enable_voice_playback)
         }
 
         onboarding.onCreate()
