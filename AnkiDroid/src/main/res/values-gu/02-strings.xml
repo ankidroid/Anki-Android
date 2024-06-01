@@ -120,10 +120,10 @@
     <string name="saving_model">Saving note type</string>
     <string name="save">Save</string>
     <string name="close">Close</string>
-    <string name="select">Select</string>
-    <string name="field_remapping">%1$s (from “%2$s”)</string>
+    <string name="select">પસંદ કરો</string>
+    <string name="field_remapping">%1$s (“%2$s”માંથી)</string>
     <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">કોઈ નોંધ પ્રકાર મળ્યો નથી</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">

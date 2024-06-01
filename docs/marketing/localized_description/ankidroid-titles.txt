@@ -1,9 +1,9 @@
 AnkiDroid Flashcards
 af: AnkiDroid Flitskaarte
 ar: البطاقات التعليميةآنكيدرويد
-az: AnkiDroid Flaş Kartları
 be: Карткі для запамінання AnkiDroid
 bg: AnkiDroid Флашкарти
+az: AnkiDroid Flaş Kartları
 ca: AnkiDroid fitxes per memoritzar
 cs: AnkiDroid kartičky
 de: AnkiDroid Karteikarten
