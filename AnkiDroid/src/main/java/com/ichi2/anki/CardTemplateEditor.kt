@@ -107,7 +107,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
      * If true, the view is split in two. The template editor appears on the leading side and the previewer on the trailing side.
      * This occurs when the view is big enough.
      */
-    private var fragmented = false
+    var fragmented = false
 
     // ----------------------------------------------------------------------------
     // Listeners
@@ -162,9 +162,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         startLoadingCollection()
 
         // Open TemplatePreviewerFragment if in fragmented mode
-        if (fragmented) {
-            loadTemplatePreviewerFragment()
-        }
+        loadTemplatePreviewerFragmentIfFragmented()
     }
 
     /**
@@ -178,7 +176,10 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
      *  5. Editing  of Card
      *  6. Changing tab on the leading side in template editor.
      */
-    private fun loadTemplatePreviewerFragment() {
+    fun loadTemplatePreviewerFragmentIfFragmented() {
+        if (!fragmented) {
+            return
+        }
         launchCatchingTask {
             val notetype = tempModel!!.notetype
             val notetypeFile = NotetypeFile(this@CardTemplateEditor, notetype)
@@ -516,6 +517,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
                 // update the tab
                 templateEditor.viewPager.adapter!!.notifyDataSetChanged()
+                templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             }
         }
 
@@ -942,6 +944,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             try {
                 templateEditor.getColUnsafe.modSchema()
                 schemaChangingAction.run()
+                templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             } catch (e: ConfirmModSchemaException) {
                 e.log()
                 val d = ConfirmationDialog()
