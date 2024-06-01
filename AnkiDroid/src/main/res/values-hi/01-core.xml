@@ -249,4 +249,6 @@ Back - बैक</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">सभी फ़ाइलों का एक्सेस</string>
     <string name="image_occlusion">छवि अवरोधन</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">खाता हटाएं</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>
