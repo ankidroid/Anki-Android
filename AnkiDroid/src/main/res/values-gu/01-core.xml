@@ -65,7 +65,7 @@
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d કલાક %2$d બાકી</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d કલાક %2$d બાકી</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d દિવસ %2$d બાકી</item>
@@ -166,7 +166,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">કાર્ડ માહિતી</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
@@ -245,5 +245,5 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">એકાઉન્ટ દૂર કરો</string>
 </resources>

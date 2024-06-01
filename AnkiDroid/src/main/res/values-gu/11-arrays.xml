@@ -43,15 +43,15 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">Always report</string>
-    <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_always_report">હંમેશા જાણ કરો</string>
+    <string name="error_reporting_choice_never_report">ક્યારેય જાણ કરશો નહીં</string>
+    <string name="error_reporting_choice_ask_user">મને પૂછો</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_random">Random</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">સૌથી જૂનું પ્રથમ જોયું</string>
+    <string name="cram_deck_conf_order_random">રેન્ડમ</string>
     <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
     <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
@@ -73,15 +73,15 @@
     <!-- html_size_code_labels -->
     <string name="html_size_code_xx_small">xx-small</string>
     <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_small">નાનું</string>
+    <string name="html_size_code_medium">મધ્યમ</string>
+    <string name="html_size_code_large">વિશાળ</string>
+    <string name="html_size_code_x_large">x-મોટા</string>
+    <string name="html_size_code_xx_large">xx-મોટા</string>
     <!-- gestures_labels -->
     <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
+    <string name="answer_hard">સખત જવાબ આપો</string>
+    <string name="answer_good">સરસ જવાબ આપો</string>
     <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Play media</string>
     <string name="gesture_abort_learning">Abort learning</string>
