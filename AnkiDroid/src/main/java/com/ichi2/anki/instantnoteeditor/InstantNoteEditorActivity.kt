@@ -97,9 +97,11 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
         setContentView(R.layout.activity_instant_note_editor)
 
-        if (Intent.ACTION_SEND == intent.action && intent.type != null && "text/plain" == intent.type) {
-            handleSharedText(intent)
-        }
+        // TODO: enable it back when done and remove the direct call
+//        if (Intent.ACTION_SEND == intent.action && intent.type != null && "text/plain" == intent.type) {
+//            handleSharedText(intent)
+//        }
+        handleSharedText(intent)
 
         setupErrorListeners()
         prepareEditorDialog()
@@ -144,8 +146,9 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
     /** Handles the shared text received through an Intent. **/
     private fun handleSharedText(receivedIntent: Intent) {
-        val sharedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT) ?: return
-        sharedIntentText = IntentSharedText(sharedText)
+        val sharedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT) ?: intent.getStringExtra("extra_text_key")
+
+        sharedIntentText = IntentSharedText(sharedText!!)
     }
 
     private fun openNoteEditor() {
