@@ -593,19 +593,20 @@
         Task affinity allows us to separate the activity allowing us to define that an activity belongs to a
         different task, it ensures that the activity does not interfere with other tasks in our application.
          -->
+        <!-- TODO: enable the filter once we are done and set export as true -->
         <activity
             android:name="com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/instant_card"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.SEND" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <data android:mimeType="text/plain" />-->
+<!--            </intent-filter>-->
         </activity>
 
 
