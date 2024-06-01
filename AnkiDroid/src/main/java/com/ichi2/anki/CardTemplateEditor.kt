@@ -570,6 +570,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
                 // update the tab
                 templateEditor.viewPager.adapter!!.notifyDataSetChanged()
+                // Update the tab name in previewer
+                templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             }
         }
 
@@ -1028,12 +1030,21 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         /**
          * Execute an action on the schema, asking the user to confirm that a full sync is ok
+         * If [schemaChangingAction] is successfully executed, then the template is reloaded.
+         *
+         * This method is always useful because all calls to executeWithSyncCheck may need to refresh the previewer.
+         * Due to conditional generation (e.g., {{#c5}}foo{{/c5}} which is non-empty only if it's the 5th card and is
+         * empty otherwise), it's important to reload the template. This is particularly useful for cloze types,
+         * where a card can move from the 5th to the 6th position due to adding an extra card type, causing content
+         * to change or be deleted.
+         *
          * @param schemaChangingAction The action to execute (adding / removing card)
          */
         private fun executeWithSyncCheck(schemaChangingAction: Runnable) {
             try {
                 templateEditor.getColUnsafe.modSchema()
                 schemaChangingAction.run()
+                templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             } catch (e: ConfirmModSchemaException) {
                 e.log()
                 val d = ConfirmationDialog()
