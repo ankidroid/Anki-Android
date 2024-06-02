@@ -114,6 +114,7 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
      * @param skipClozeCheck Indicates whether to skip the cloze field check.
      * @return A [SaveNoteResult] indicating the outcome of the operation.
      */
+    // TODO: remove context from here
     suspend fun checkAndSaveNote(
         context: Context,
         skipClozeCheck: Boolean = false
@@ -154,21 +155,64 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
         }
     }
 
+    /**
+     * Retrieves all cloze text fields from the current editor note's note type.
+     *
+     * This method accesses the `editorNote` property to fetch its associated note type
+     * and then retrieves all cloze text fields using the [getAllClozeTextFields] method.
+     *
+     * @return A list of strings representing the cloze text fields in the current editor note's note type.
+     */
     fun getClozeFields(): List<String> {
         return editorNote.notetype.getAllClozeTextFields()
+    }
+
+    /**
+     * Set the warning message to be displayed in editor dialog
+     */
+    fun setWarningMessage(message: String?) {
+        viewModelScope.launch {
+            instantEditorError.emit(message)
+        }
     }
 }
 
 /**
  * Represents the result of saving a note operation.
+ * Has three possible outcomes: `Success`, `Failure`, and `Warning`.
  */
 sealed class SaveNoteResult {
+    /**
+     * Indicates that the save note operation was successful.
+     */
     data object Success : SaveNoteResult()
 
+    /**
+     * Indicates that the save note operation failed.
+     *
+     * @property message An optional message describing the reason for the failure.
+     */
     data class Failure(val message: String? = null) : SaveNoteResult() {
+
+        /**
+         * Retrieves the error message associated with this failure.
+         *
+         * If a message is provided, it returns that message. Otherwise, it returns a default
+         * error message from the context's resources.
+         *
+         * @param context The context used to retrieve the default error message string.
+         * @return The error message.
+         */
         fun getErrorMessage(context: Context) =
             message ?: context.getString(R.string.something_wrong)
     }
 
+    /**
+     * Indicates that the save note operation completed with a warning.
+     *
+     * Example, when user tries to save cloze field with no cloze
+     *
+     * @property message A message describing the warning.
+     */
     data class Warning(val message: String?) : SaveNoteResult()
 }

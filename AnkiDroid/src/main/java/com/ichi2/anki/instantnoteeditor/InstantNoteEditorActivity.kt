@@ -128,6 +128,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
     }
 
     /** Setup the deck spinner and custom editor dialog layout **/
+    // TODO: subscribe to the flow of deckId to change the control value
     private fun showEditorDialog() {
         showDialog()
         deckSpinnerSelection = DeckSpinnerSelection(
@@ -269,9 +270,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                lifecycleScope.launch {
-                    viewModel.instantEditorError.emit(null)
-                }
+                viewModel.setWarningMessage(null)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -285,14 +284,9 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
      * retrieves the field content, and saves the note
      */
     private fun checkAndSave() {
-        getFieldValues()
+        extractFieldValues()
 
-        lifecycleScope.launch {
-            val result = withProgress(resources.getString(R.string.saving_facts)) {
-                viewModel.checkAndSaveNote(this@InstantNoteEditorActivity)
-            }
-            handleSaveNoteResult(result)
-        }
+        saveNoteWithProgress(skipClozeCheck = false)
     }
 
     private fun handleSaveNoteResult(result: SaveNoteResult) {
@@ -311,7 +305,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
             is SaveNoteResult.Warning -> {
                 Timber.d("Showing warning to the user")
-                lifecycleScope.launch { viewModel.instantEditorError.emit(result.message) }
+                viewModel.setWarningMessage(result.message)
             }
         }
     }
@@ -321,8 +315,8 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         currentClozeNumber = 0
     }
 
-    /** Gets the field content from the editor **/
-    private fun getFieldValues() {
+    /** Gets the field content from the editor, and updates the Note **/
+    private fun extractFieldValues() {
         val editTextValues = mutableListOf<String>()
 
         editFieldsLayout?.let { layout ->
@@ -415,14 +409,18 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         AlertDialog.Builder(this).show {
             message(text = errorMessage)
             positiveButton(text = TR.actionsSave()) {
-                lifecycleScope.launch {
-                    val result = withProgress(resources.getString(R.string.saving_facts)) {
-                        viewModel.checkAndSaveNote(this@InstantNoteEditorActivity, true)
-                    }
-                    handleSaveNoteResult(result)
-                }
+                saveNoteWithProgress(skipClozeCheck = true)
             }
             negativeButton(R.string.dialog_cancel)
+        }
+    }
+
+    private fun saveNoteWithProgress(skipClozeCheck: Boolean) {
+        lifecycleScope.launch {
+            val result = withProgress(resources.getString(R.string.saving_facts)) {
+                viewModel.checkAndSaveNote(this@InstantNoteEditorActivity, skipClozeCheck = skipClozeCheck)
+            }
+            handleSaveNoteResult(result)
         }
     }
 
@@ -508,6 +506,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
     }
 
     companion object {
+        // TODO: Should not be global
         /** Allows to keep track of the current cloze number, reset to 0 when activity is destroyed **/
         var currentClozeNumber: Int = 0
     }
