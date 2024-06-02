@@ -17,17 +17,20 @@ package com.ichi2.anki
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withResourceName
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
+import com.ichi2.anki.testutil.ThreadUtils
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.libanki.Collection
@@ -38,7 +41,7 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.TimeUnit
+import java.lang.AssertionError
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerTest : InstrumentedTest() {
@@ -87,10 +90,21 @@ class ReviewerTest : InstrumentedTest() {
 
         clickShowAnswerAndAnswerGood()
 
-        cardFromDb = col.getCard(card.id).toBackendCard()
-        assertThat(cardFromDb.easeFactor, equalTo(3000))
-        assertThat(cardFromDb.interval, equalTo(123))
-        assertThat(cardFromDb.customData, equalTo("""{"c":2}"""))
+        fun runAssertion() {
+            cardFromDb = col.getCard(card.id).toBackendCard()
+            assertThat(cardFromDb.easeFactor, equalTo(3000))
+            assertThat(cardFromDb.interval, equalTo(123))
+            assertThat(cardFromDb.customData, equalTo("""{"c":2}"""))
+        }
+
+        try {
+            runAssertion()
+        } catch (e: Exception) {
+            // Give separate threads a greater chance of doing the custom scheduling
+            // if the card scheduling values aren't updated immediately
+            ThreadUtils.sleep(2000)
+            runAssertion()
+        }
     }
 
     @Test
@@ -139,11 +153,23 @@ class ReviewerTest : InstrumentedTest() {
     private fun clickShowAnswerAndAnswerGood() {
         clickShowAnswer()
         ensureAnswerButtonsAreDisplayed()
-        onView(withId(R.id.flashcard_layout_ease3)).perform(click())
+        try {
+            // ...on the command line it has resource name "good_button"...
+            onView(withResourceName("good_button")).perform(click())
+        } catch (e: NoMatchingViewException) {
+            // ...but in Android Studio it has resource name "flashcard_layout_ease3" !?
+            onView(withResourceName("flashcard_layout_ease3")).perform(click())
+        }
     }
 
     private fun clickShowAnswer() {
-        onView(withId(R.id.flashcard_layout_flip)).perform(click())
+        try {
+            // ... on the command line, it has resource name "show_answer"...
+            onView(withResourceName("show_answer")).perform(click())
+        } catch (e: NoMatchingViewException) {
+            // ... but in Android Studio it has resource name "flashcard_layout_flip" !?
+            onView(withResourceName("flashcard_layout_flip")).perform(click())
+        }
     }
 
     private fun ensureAnswerButtonsAreDisplayed() {
@@ -151,13 +177,19 @@ class ReviewerTest : InstrumentedTest() {
         // the messages to be passed in and out of the WebView when evaluating
         // the custom JS scheduler code. The ease buttons are hidden until the
         // custom scheduler has finished running
-        onView(withId(R.id.flashcard_layout_ease3)).checkWithTimeout(
-            matches(isDisplayed()),
-            100,
-            // Increase to a max of 30 seconds because CI builds can be very
-            // slow
-            TimeUnit.SECONDS.toMillis(30)
-        )
+        try {
+            // ...on the command line it has resource name "good_button"...
+            onView(withResourceName("good_button")).checkWithTimeout(
+                matches(isDisplayed()),
+                100
+            )
+        } catch (e: AssertionError) {
+            // ...but in Android Studio it has resource name "flashcard_layout_ease3" !?
+            onView(withResourceName("flashcard_layout_ease3")).checkWithTimeout(
+                matches(isDisplayed()),
+                100
+            )
+        }
     }
 }
 
