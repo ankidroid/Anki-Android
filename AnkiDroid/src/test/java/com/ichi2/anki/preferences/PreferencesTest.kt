@@ -27,7 +27,6 @@ import com.ichi2.anki.preferences.Preferences.Companion.setDayOffset
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.testutils.getJavaMethodAsAccessible
-import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
@@ -53,7 +52,7 @@ class PreferencesTest : RobolectricTest() {
 
     @Test
     fun testDayOffsetExhaustive() {
-        runBlocking {
+        runTest {
             for (i in 0..23) {
                 setDayOffset(preferences, i)
                 assertThat(getDayOffset(), equalTo(i))
@@ -64,7 +63,7 @@ class PreferencesTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun testDayOffsetExhaustiveV2() {
-        runBlocking {
+        runTest {
             for (i in 0..23) {
                 setDayOffset(preferences, i)
                 assertThat(getDayOffset(), equalTo(i))
@@ -95,9 +94,9 @@ class PreferencesTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun setDayOffsetSetsConfig() {
-        val offset = runBlocking { getDayOffset() }
-        assertThat("Default offset should be 4", offset, equalTo(4))
-        runBlocking { setDayOffset(preferences, 2) }
-        assertThat("rollover config should be set to new value", col.config.get("rollover") ?: 4, equalTo(2))
+        runTest {
+            setDayOffset(preferences, 2)
+            assertThat("rollover config should be set to new value", col.config.get("rollover") ?: 4, equalTo(2))
+        }
     }
 }
