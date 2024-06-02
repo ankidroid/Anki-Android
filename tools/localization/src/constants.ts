@@ -62,7 +62,6 @@ export const I18N_FILES = [
     "11-arrays",
     "12-dont-translate",
     "14-marketdescription",
-    "15-markettitle",
     "16-multimedia-editor",
     "17-model-manager",
     "18-standard-models",
