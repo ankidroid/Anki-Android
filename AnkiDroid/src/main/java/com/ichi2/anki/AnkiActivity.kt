@@ -596,6 +596,3 @@ fun Fragment.requireAnkiActivity(): AnkiActivity {
     return requireActivity() as? AnkiActivity?
         ?: throw java.lang.IllegalStateException("Fragment $this not attached to an AnkiActivity.")
 }
-
-/** Used for mime type or Intent type when sharing text via other applications **/
-const val TEXT_PLAIN = "text/plain"

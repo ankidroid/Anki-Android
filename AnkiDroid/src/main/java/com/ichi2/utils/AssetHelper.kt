@@ -37,7 +37,6 @@ package com.ichi2.utils
 
 import android.net.Uri
 import android.webkit.MimeTypeMap
-import com.ichi2.anki.TEXT_PLAIN
 import java.io.File
 import java.util.Locale
 
@@ -72,4 +71,7 @@ object AssetHelper {
             else -> MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: TEXT_PLAIN
         }
     }
+
+    /** Used for mime type or Intent type when sharing text via other applications **/
+    const val TEXT_PLAIN = "text/plain"
 }
