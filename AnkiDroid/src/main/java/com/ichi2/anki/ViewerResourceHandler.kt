@@ -19,14 +19,12 @@ package com.ichi2.anki
 import android.content.Context
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.AssetHelper.guessMimeType
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
-import java.io.InputStream
-import java.io.RandomAccessFile
-import java.nio.channels.Channels
 
 private const val RANGE_HEADER = "Range"
 
@@ -61,23 +59,36 @@ class ViewerResourceHandler(context: Context) {
         }
     }
 
+    @NeedsTest("seeking audio - 16513")
     private fun handlePartialContent(file: File, range: String): WebResourceResponse {
         val rangeHeader = RangeHeader.from(range, defaultEnd = file.length() - 1)
 
         val mimeType = guessMimeType(file.path)
-        val inputStream = file.toInputStream(rangeHeader)
         val (start, end) = rangeHeader
         val responseHeaders = mapOf(
             "Content-Range" to "bytes $start-$end/${file.length()}",
-            "Accept-Range" to "bytes"
+            "Accept-Ranges" to "bytes"
         )
+        // WARN: WebResourceResponse appears to handle truncating the stream internally
+        // This is NOT the same as NanoHTTPD
+
+        // sending a truncated stream caused:
+        // -> `net::ERR_FAILED`
+
+        // returning a 'full' input stream with the provided header
+        // returns a 'correct' Content-Length (example below)
+        //
+        // Content-Range: bytes 2916352-2931180/2931181
+        // Content-Length: 14829
+        // The above needs more investigation
+        val fileStream = FileInputStream(file)
         return WebResourceResponse(
             mimeType,
             null,
             206,
             "Partial Content",
             responseHeaders,
-            inputStream
+            fileStream
         )
     }
 }
@@ -95,13 +106,5 @@ data class RangeHeader(val start: Long, val end: Long) {
                 end = if (unspecifiedEnd) defaultEnd else numbers[1].toLong()
             )
         }
-    }
-}
-
-fun File.toInputStream(header: RangeHeader): InputStream {
-    // PERF: Test to see if a custom FileInputStream + available() would be faster
-    val randomAccessFile = RandomAccessFile(this, "r")
-    return Channels.newInputStream(randomAccessFile.channel).also {
-        it.skip(header.start)
     }
 }
