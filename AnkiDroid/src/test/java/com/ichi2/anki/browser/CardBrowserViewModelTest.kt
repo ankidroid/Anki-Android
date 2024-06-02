@@ -29,6 +29,9 @@ import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.SortType.EASE
+import com.ichi2.anki.model.SortType.NO_SORTING
+import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
@@ -308,6 +311,52 @@ class CardBrowserViewModelTest : JvmTest() {
             // expect no change if the value is selected again
             setColumn2Index(1)
             expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `change card order to NO_SORTING is a no-op if done twice`() = runViewModelTest {
+        flowOfSearchState.test {
+            ignoreEventsDuringViewModelInit()
+            assertThat("initial order", order, equalTo(SORT_FIELD))
+            assertThat("initial direction", !orderAsc)
+
+            // changing the order performs a search & changes order
+            changeCardOrder(NO_SORTING)
+            expectMostRecentItem()
+            assertThat("order changed", order, equalTo(NO_SORTING))
+            assertThat("changed direction", !orderAsc)
+
+            waitForSearchResults()
+
+            // pressing 'no sorting' again is a no-op
+            changeCardOrder(NO_SORTING)
+            expectNoEvents()
+            assertThat("order unchanged", order, equalTo(NO_SORTING))
+            assertThat("unchanged direction", !orderAsc)
+        }
+    }
+
+    @Test
+    fun `change direction of results`() = runViewModelTest {
+        flowOfSearchState.test {
+            ignoreEventsDuringViewModelInit()
+            assertThat("initial order", order, equalTo(SORT_FIELD))
+            assertThat("initial direction", !orderAsc)
+
+            // changing the order performs a search & changes order
+            changeCardOrder(EASE)
+            expectMostRecentItem()
+            assertThat("order changed", order, equalTo(EASE))
+            assertThat("changed direction is the default", !orderAsc)
+
+            waitForSearchResults()
+
+            // pressing 'ease' again changes direction
+            changeCardOrder(EASE)
+            expectMostRecentItem()
+            assertThat("order unchanged", order, equalTo(EASE))
+            assertThat("direction is changed", orderAsc)
         }
     }
 
