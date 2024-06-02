@@ -29,13 +29,12 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.tests.InstrumentedTest
+import com.ichi2.anki.tests.libanki.RetryRule
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.ThreadUtils
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.libanki.Collection
-import com.ichi2.testutils.Flaky
-import com.ichi2.testutils.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Rule
@@ -59,8 +58,10 @@ class ReviewerTest : InstrumentedTest() {
     @get:Rule
     val runtimePermissionRule = grantPermissions(storagePermission, notificationPermission)
 
+    @get:Rule
+    val retry = RetryRule(10)
+
     @Test
-    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testCustomSchedulerWithCustomData() {
         col.cardStateCustomizer =
             """
@@ -108,7 +109,6 @@ class ReviewerTest : InstrumentedTest() {
     }
 
     @Test
-    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testCustomSchedulerWithRuntimeError() {
         // Issue 15035 - runtime errors weren't handled
         col.cardStateCustomizer = "states.this_is_not_defined.normal.review = 12;"
