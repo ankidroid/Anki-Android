@@ -1017,7 +1017,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_suspend_card -> {
-                suspendCards()
+                toggleSuspendCards()
                 return true
             }
             R.id.action_toggle_bury -> {
@@ -1522,7 +1522,7 @@ open class CardBrowser :
         updateList()
     }
 
-    private fun suspendCards() = launchCatchingTask { withProgress { viewModel.suspendCards() } }
+    private fun toggleSuspendCards() = launchCatchingTask { withProgress { viewModel.toggleSuspendCards().join() } }
 
     /** @see CardBrowserViewModel.toggleBury */
     private fun toggleBury() = launchCatchingTask {
