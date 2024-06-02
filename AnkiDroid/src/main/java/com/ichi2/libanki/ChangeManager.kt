@@ -42,7 +42,7 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 
 object ChangeManager {
-    interface Subscriber {
+    fun interface Subscriber {
         /**
          * Called after a backend method invoked via col.op() or col.opWithProgress()
          * has modified the collection. Subscriber should inspect the changes, and update
