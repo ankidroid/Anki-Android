@@ -35,15 +35,22 @@ import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
+import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Note
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.ensureNoOpsExecuted
+import com.ichi2.testutils.ensureOpsExecuted
 import com.ichi2.testutils.mockIt
 import kotlinx.coroutines.flow.first
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.lessThan
+import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -360,7 +367,133 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
-    private fun runViewModelTest(notes: Int = 0, manualInit: Boolean = true, testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
+    /*
+     * Note: suspension behavior has been questioned from a performance perspective and is
+     * subject to change
+     *
+     * Needing to know the 'suspended' status of all cards, makes this O(n).
+     * Anki uses the O(1) approach of using the first selected card
+     */
+
+    @Test
+    fun `suspend cards - cards - no selection`() = runViewModelTest(notes = 2) {
+        ensureNoOpsExecuted {
+            toggleSuspendCards()
+
+            assertAllUnsuspended("no selection")
+        }
+    }
+
+    @Test
+    fun `suspend - cards - all suspended`() = runViewModelTest(notes = 2) {
+        suspendAll()
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+
+            assertAllUnsuspended("all suspended: unsuspend")
+        }
+    }
+
+    @Test
+    fun `suspend - cards - some suspended`() = runViewModelTest(notes = 2) {
+        suspend(cards.first())
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+
+            assertAllSuspended("mixed selection: suspend all")
+        }
+    }
+
+    @Test
+    fun `suspend - cards - none suspended`() = runViewModelTest(notes = 2) {
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+
+            assertAllSuspended("none suspended: suspend all")
+        }
+    }
+
+    @Test
+    fun `suspend - notes - no selection`() = runViewModelNotesTest(notes = 2) {
+        ensureNoOpsExecuted {
+            toggleSuspendCards()
+            assertAllUnsuspended("none selected: do nothing")
+        }
+    }
+
+    @Test
+    fun `suspend - notes - all suspended`() = runViewModelNotesTest(notes = 2) {
+        suspendAll()
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+            assertAllUnsuspended("all suspended -> unsuspend")
+        }
+    }
+
+    @Test
+    fun `suspend - notes - some notes suspended`() = runViewModelNotesTest(notes = 2) {
+        val nid = cards.first().card.nid
+        suspend(col.getNote(nid))
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+            assertAllSuspended("mixed selection -> suspend all")
+        }
+    }
+
+    @Test
+    fun `suspend - notes - some cards suspended`() = runViewModelNotesTest(notes = 2) {
+        // this suspends o single cid from a nid
+        suspend(cards.first())
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+            assertAllSuspended("mixed selection -> suspend all")
+        }
+    }
+
+    fun `suspend cards - notes - none suspended`() = runViewModelNotesTest(notes = 2) {
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+            assertAllSuspended("none suspended -> suspend all")
+        }
+    }
+
+    private fun runViewModelNotesTest(
+        notes: Int = 0,
+        manualInit: Boolean = true,
+        testBody: suspend CardBrowserViewModel.() -> Unit
+    ) =
+        runTest {
+            with(col) { CardsOrNotes.NOTES.saveToCollection() }
+            for (i in 0 until notes) {
+                // ensure 1 note = 2 cards
+                addNoteUsingBasicAndReversedModel()
+            }
+            val viewModel = CardBrowserViewModel(
+                lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+                cacheDir = createTransientDirectory(),
+                options = null,
+                preferences = AnkiDroidApp.sharedPreferencesProvider,
+                manualInit = manualInit
+            )
+            // makes ignoreValuesFromViewModelLaunch work under test
+            if (manualInit) {
+                viewModel.manualInit()
+            }
+            testBody(viewModel)
+        }
+
+    private fun runViewModelTest(
+        notes: Int = 0,
+        manualInit: Boolean = true,
+        testBody: suspend CardBrowserViewModel.() -> Unit
+    ) = runTest {
         for (i in 0 until notes) {
             addNoteUsingBasicModel()
         }
@@ -441,4 +574,45 @@ internal suspend fun CardBrowserViewModel.invokeInitialSearch() {
     // This will be removed once we handle #11889
     // numberOfCardsToRenderFlow.emit(1)
     Timber.v("initial search completed")
+}
+
+private fun TestClass.assertAllSuspended(context: String) {
+    val cards = col.findCards("").map { col.getCard(it) }
+    assertThat("performance", cards.size, lessThan(10))
+
+    for (card in cards) {
+        assertThat(
+            "$context: all cards are unsuspended",
+            card.queue,
+            equalTo(QUEUE_TYPE_SUSPENDED)
+        )
+    }
+}
+
+private fun TestClass.assertAllUnsuspended(context: String) {
+    val cards = col.findCards("").map { col.getCard(it) }
+    assertThat("performance", cards.size, lessThan(10))
+
+    for (card in cards) {
+        assertThat(
+            "$context: all cards unsuspended",
+            card.queue,
+            not(equalTo(QUEUE_TYPE_SUSPENDED))
+        )
+    }
+}
+
+private fun TestClass.suspendAll() {
+    col.findCards("").also { cards ->
+        col.sched.suspendCards(col.findCards(""))
+        Timber.d("suspended %d cards", cards.size)
+    }
+}
+
+private fun TestClass.suspend(vararg cards: CardBrowser.CardCache) {
+    col.sched.suspendCards(cards.map { it.id })
+}
+
+private fun TestClass.suspend(note: Note) {
+    col.sched.suspendCards(note.cardIds(col))
 }
