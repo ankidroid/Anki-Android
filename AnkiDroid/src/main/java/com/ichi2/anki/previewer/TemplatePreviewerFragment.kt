@@ -125,6 +125,7 @@ class TemplatePreviewerFragment :
             if (!navBarNeedsScrim) {
                 window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
             }
+            window.statusBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.appBarColor)
         }
         if (inFragmentedActivity) {
             toolbar.setOnMenuItemClickListener(this)

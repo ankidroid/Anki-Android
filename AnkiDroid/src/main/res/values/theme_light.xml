@@ -41,6 +41,7 @@
         <item name="actionModeBackground">?attr/colorPrimary</item>
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">?attr/colorPrimary</item>
+        <item name="tabActiveIconColor">@color/white</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">#ececec</item>
