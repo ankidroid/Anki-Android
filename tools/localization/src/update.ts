@@ -81,7 +81,6 @@ async function replacechars(fileName: string): Promise<boolean> {
  */
 function fileExtFor(f: string): string {
     if (f == "14-marketdescription") return ".txt";
-    else if (f == "15-markettitle") return ".txt";
     else return ".xml";
 }
 
