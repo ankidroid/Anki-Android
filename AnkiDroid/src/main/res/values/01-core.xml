@@ -50,6 +50,7 @@
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="moving_decks">Drag and Drop to move Decks</string>
 
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
 

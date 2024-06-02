@@ -238,12 +238,16 @@ open class DeckPicker :
         addCallback(activeSnackbarCallback)
     }
 
+    /**
+     * When entering move decks mode (drag and drop), remove Add button and show Done button instead
+     */
     fun changeFabVisibilityToDone() {
         val fabMain = findViewById<FloatingActionButton>(R.id.fab_main)
         val fabDone = findViewById<FloatingActionButton>(R.id.fab_done)
 
         fabMain.visibility = View.GONE // This will make fab_main invisible
         fabDone.visibility = View.VISIBLE // This will make fab_done visible
+        // When Done button is clicked, move Decks mode will be exited
         fabDone.setOnClickListener {
             // Replace Done button with Add button
             changeFabVisibilityToAdd()
@@ -277,6 +281,9 @@ open class DeckPicker :
         }
     }
 
+    /**
+     * When exiting move decks mode (drag and drop), remove Done button and show Add button instead
+     */
     fun changeFabVisibilityToAdd() {
         val fabMain = findViewById<FloatingActionButton>(R.id.fab_main)
         val fabDone = findViewById<FloatingActionButton>(R.id.fab_done)
@@ -558,7 +565,9 @@ open class DeckPicker :
                 sync()
             }
             viewTreeObserver.addOnScrollChangedListener {
-                pullToSyncWrapper.isEnabled = recyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
+                if (!deckListAdapter.isDragNDropEnabled()) {
+                    pullToSyncWrapper.isEnabled = recyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
+                }
             }
         }
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
@@ -1198,7 +1207,10 @@ open class DeckPicker :
             }
             R.id.move_decks -> {
                 Timber.i("DeckPicker:: Move Decks")
-                supportActionBar!!.subtitle = "Drag and Drop to move Decks"
+                launchCatchingTask {
+                    supportActionBar!!.subtitle = resources.getString(R.string.moving_decks)
+                }
+                // hide Add button and show Done button
                 changeFabVisibilityToDone()
                 // remove onLongClickListener to prevent long click on deck while moving
                 deckListAdapter.enableDragNDrop(true)
@@ -2212,10 +2224,14 @@ open class DeckPicker :
 
             if (due != null && supportActionBar != null) {
                 val cardCount = withCol { cardCount() }
-                val subTitle: String = if (due == 0) {
-                    res.getQuantityString(R.plurals.deckpicker_title_zero_due, cardCount, cardCount)
+                val subTitle: String = if (deckListAdapter.isDragNDropEnabled()) {
+                    resources.getString(R.string.moving_decks)
                 } else {
-                    res.getQuantityString(R.plurals.widget_cards_due, due, due)
+                    if (due == 0) {
+                        res.getQuantityString(R.plurals.deckpicker_title_zero_due, cardCount, cardCount)
+                    } else {
+                        res.getQuantityString(R.plurals.widget_cards_due, due, due)
+                    }
                 }
                 supportActionBar!!.subtitle = subTitle
             }

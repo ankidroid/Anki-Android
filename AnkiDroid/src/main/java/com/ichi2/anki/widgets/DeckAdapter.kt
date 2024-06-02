@@ -52,7 +52,7 @@ class DeckAdapter(
     recyclerView: RecyclerView
 ) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
     private var deckTree: DeckNode? = null
-    private val deckPicker: DeckPicker = context
+    private val deckPicker: DeckPicker = context // needed for launching tasks
 
     /** The non-collapsed subset of the deck tree that matches the current search. */
     private var filteredDeckList: List<DeckNode> = ArrayList()
@@ -114,16 +114,29 @@ class DeckAdapter(
         }
     }
 
+    /**
+     * This class is a custom callback for the ItemTouchHelper which is used to handle drag and drop
+     * operations in the DeckAdapter. It extends the ItemTouchHelper.Callback provided by the
+     * Android framework.
+     *
+     * Handles visual changes in the DeckPicker during the drag and drop operations and refreshes
+     * state after a deck is dropped.
+     * @param adapter The DeckAdapter instance where the drag and drop will be performed.
+     */
     class ItemTouchHelperCallback(private val adapter: DeckAdapter) : ItemTouchHelper.Callback() {
 
+        /** Change the background color of the deck when dragged or hovered over */
         fun highlightItem(viewHolder: RecyclerView.ViewHolder?) {
-            viewHolder?.itemView?.setBackgroundColor(Color.LTGRAY) // Change this to your desired highlight color
+            viewHolder?.itemView?.setBackgroundColor(Color.LTGRAY)
         }
 
+        /** Change the background color of the deck when dropped or no longer hovered over */
         fun removeHighlight(viewHolder: RecyclerView.ViewHolder?) {
-            viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT) // Change this to your default color
+            viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
         }
 
+        /** Set the movement flags for the drag and drop operation (set movement directions allowed
+         during drag and drop) */
         override fun getMovementFlags(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder
@@ -155,11 +168,11 @@ class DeckAdapter(
             return adapter.isDragNDropEnabled()
         }
 
-        private var viewHolderY = 0f
+        private var viewHolderY = 0f // records Y position of the dragged deck
         override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
             super.onSelectedChanged(viewHolder, actionState)
 
-            // Highlight the item being dragged and record its height
+            // Highlight the item being dragged and record its Y position
             if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
                 viewHolderY = viewHolder?.itemView?.y ?: 0f
                 highlightItem(viewHolder)
@@ -170,29 +183,31 @@ class DeckAdapter(
             }
         }
 
-        // Change the background of the item when the drag operation has ended
+        /** Change the background of the item when the drag operation has ended */
         override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
             super.clearView(recyclerView, viewHolder)
 
-            // Top and Bottom = null
+            // remove highlight from the dragged deck and the deck under it
             removeHighlight(currentHoveredViewHolder)
             removeHighlight(viewHolder)
 
-            // get deckId of the dragged item
+            // get deckId of the dragged deck
             val draggedDeckId = viewHolder.itemView.tag as DeckId
 
-            // get deckId of the item under the dragged item
+            // get deckId of the deck under the dragged deck (in which the dragged deck was dropped)
             var targetDeckId = currentHoveredViewHolder?.itemView?.tag as DeckId?
-            if (targetDeckId == null) {
-                targetDeckId = 0L
+            if (targetDeckId == null) { // if the dragged deck was dropped outside of any deck,
+                targetDeckId = 0L // it should be moved to the root (top level)
             }
 
             val draggedDeckIds = listOf(draggedDeckId)
 
+            // reparent the dragged deck to the target deck
             adapter.deckPicker.launchCatchingTask {
                 withCol { decks.reparent(draggedDeckIds, targetDeckId) }
             }
-            // refresh the state of the deck picker in order to get up to date deck list
+            // refresh the state of the deck picker in order to get up-to-date deck list
+            // for immediate visual feedback
             adapter.deckPicker.refreshState()
         }
 
