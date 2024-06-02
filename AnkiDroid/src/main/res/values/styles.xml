@@ -140,10 +140,10 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
     </style>
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorSecondaryContainer">#fff</item> <!-- Selected item indicator -->
-        <item name="colorOnSecondaryContainer">?attr/tabLayoutBackgroundColor</item> <!-- Active icon -->
-        <item name="colorOnSurface">#fff</item> <!-- Active icon -->
-        <item name="colorOnSurfaceVariant">#fff</item> <!-- Inactive icon & label -->
+        <item name="colorSecondaryContainer">?attr/tabLayoutBackgroundColor</item> <!-- Selected item indicator -->
+        <item name="colorOnSecondaryContainer">?attr/tabActiveIconColor</item> <!-- Active icon -->
+        <item name="colorOnSurface">?attr/colorPrimary</item> <!-- Active icon -->
+        <item name="colorOnSurfaceVariant">?attr/colorPrimary</item> <!-- Inactive icon & label -->
         <item name="textAppearanceTitleSmall">@style/TextAppearance.Material3.TitleSmall</item>
         <item name="textAppearanceLabelLarge">@style/TextAppearance.Material3.LabelLarge</item>
     </style>

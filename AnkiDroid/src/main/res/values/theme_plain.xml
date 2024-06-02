@@ -22,6 +22,7 @@
         <item name="actionModeBackground">@color/theme_plain_primary</item>
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">@color/theme_plain_primary</item>
+        <item name="tabActiveIconColor">@color/white</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_plain_primary_light</item>
         <!-- Reviewer button drawables -->
